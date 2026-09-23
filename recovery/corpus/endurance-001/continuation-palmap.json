@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "date": "2026-09-23",
+  "task": "file_load_shape2d_palmap_init",
+  "model": "gpt-6-luna",
+  "reasoning": "high",
+  "prior_hypothesis_compiler_processes": 41,
+  "additional_hypothesis_compiler_processes": 1,
+  "total_hypothesis_compiler_processes": 42,
+  "authorized_ceiling": 50,
+  "remaining_hypothesis_compiler_processes": 8,
+  "verification_recompiles_counted_as_hypotheses": false,
+  "new_strict_promotions": 0,
+  "attempt": "recovery/attempts/file_load_shape2d_palmap_init/0001/report.json",
+  "boundary_review": "recovery/attempts/file_load_shape2d_palmap_init/boundary-research.md",
+  "established": "Independent _palmap DGROUP mapping enables the existing binding mode; the complete 40-byte object matches the verified 39-byte procedure plus a NOP.",
+  "stop_reason": "Original contribution/TU ownership of the intervening padding byte remains unproven. Explicit production interval blocker preserves the verified extent. This is not source-budget exhaustion or a model-capability conclusion.",
+  "tooling_followup": "tools/inspect_object.py reuses existing generic OMF parsing and diagnostics for archived B4/B6 objects without compiling or enabling acceptance."
+}

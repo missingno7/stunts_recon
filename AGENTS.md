@@ -4,6 +4,8 @@ When delegating source grinding, use GPT-6 Luna with high reasoning (`gpt-6-luna
 
 For autonomous research and escalation, follow `docs/current/worker-research.md`. Keep detailed evidence local and handoffs compact. Workflow gates and research-budget stops are not model-capability failures; account for supervisor traffic in total model-weighted cost.
 
+Use `docs/MATCHING_DECOMP_GUIDELINES.md` as evidence-qualified guidance when preparing work; consult only the relevant cookbook sections. Preserve repository acceptance rules and update the guidance when real experiments contradict a recommendation.
+
 Routine startup: run the baseline validation once, select a task, then use `python tools/context.py FUNCTION_ID`. Expand `--asm`, `--callers`, `--globals`, `--history` or `--full` only as needed. The packet names omitted evidence and raw artifact paths. A stale packet cannot authorize an attempt.
 
 Inspect the automatic compact match diagnosis before full assembly. Preserve byte-exact anchors and investigate the localized mismatch islands and realignment points. `--diagnosis` renders a concise view; expand the referenced full diagnostic only when evidence is insufficient. Check archived source/recipe/engine freshness. Structural similarity and unresolved operand normalization are diagnostic only; distinguish source codegen differences from binding, fixup and translation-unit blockers. History anchor losses are observations, never acceptance authority. Supervisor tooling checks may archive an unchanged-source probe with `probe_module.py NAME --supervisor-diagnostic`; this does not reopen a blocked task or authorize source experiments outside the grinder budget.

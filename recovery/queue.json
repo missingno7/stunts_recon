@@ -1,9 +1,9 @@
 {
   "counts": {
-    "MEDIUM": 2,
-    "SUPERVISOR": 603
+    "MEDIUM": 1,
+    "SUPERVISOR": 604
   },
-  "input_fingerprint": "6380dbb317fae960226353cc61274da8fbc70ea1860d96dc20122b8fab1239c4",
+  "input_fingerprint": "b1198a9b675ffd8e39b7018b972bfa024ee3d0f13a74985a6349c8550b81329b",
   "schema": 2,
   "tasks": [
     {
@@ -24,28 +24,6 @@
         "line_end": 18430,
         "line_start": 18401,
         "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_2acb0.json",
-      "id": "load_2acb0",
-      "name": "file_load_shape2d_palmap_init",
-      "risks": [
-        "Indexed data displacement needs source/symbol review",
-        "Odd extent: verify complete compiler alignment; never trim"
-      ],
-      "size": 39,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 440,
-        "line_start": 404,
-        "path": "src/restunts/asmorig/seg034.asm",
         "repository": "restunts"
       },
       "tier": "MEDIUM"
@@ -13946,6 +13924,28 @@
       "tier": "SUPERVISOR"
     },
     {
+      "attempts_remaining": 2,
+      "blocker": "Complete-contribution ownership review: pinned MSC5.1 emits 40 bytes, matching the verified 39-byte procedure plus a NOP. Pristine next-segment evidence places that pad before the following procedure; original TU/contribution ownership is unproven. No trimming or extent expansion is authorized. Resume production only after new independent ownership/compiler-context evidence; this is an evidence/workflow blocker, not exhausted source budget or a model-capability conclusion.",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/file_load_shape2d_palmap_init.json",
+      "id": "load_2acb0",
+      "name": "file_load_shape2d_palmap_init",
+      "risks": [
+        "Indexed data displacement needs source/symbol review",
+        "Odd extent: verify complete compiler alignment; never trim"
+      ],
+      "size": 39,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 440,
+        "line_start": 404,
+        "path": "src/restunts/asmorig/seg034.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
       "attempts_remaining": 3,
       "blocker": "Calls need supervisor linking/TU review; Hardware/interrupt semantics need supervisor review; Unregistered DGROUP address 0x3669; Unregistered DGROUP address 0x36a6; Unregistered DGROUP address 0x36a7; Unregistered DGROUP address 0x36a8; Unregistered DGROUP address 0x54ae; Unregistered DGROUP address 0x54b0",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -14108,5 +14108,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "78f5dee31dd79cdcea73e3ba92397a7ad99a699cbffffeae6e12d63425e669e7"
+  "workflow_fingerprint": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
 }

@@ -3783,6 +3783,374 @@
         "status": "FAILED"
       }
     ],
+    "file_load_shape2d_palmap_init": [
+      {
+        "category": "EXTENT_MISMATCH",
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": "Complete emitted contribution length differs from target",
+        "evidence_freshness": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "88870000",
+            "control": null,
+            "fixup_fields": [
+              {
+                "kind": "offset16",
+                "offset": 2,
+                "target": "_palmap",
+                "width": 2
+              }
+            ],
+            "implicit_reads": [],
+            "implicit_writes": [],
+            "instruction": "mov byte ptr [bx], al",
+            "load_offset": 21,
+            "mnemonic": "mov",
+            "operand_fields": [
+              [
+                2,
+                4
+              ]
+            ],
+            "operands": [
+              {
+                "base": "bx",
+                "disp": 0,
+                "index": null,
+                "kind": "mem",
+                "scale": 1,
+                "segment": null,
+                "width": 1
+              },
+              {
+                "kind": "reg",
+                "reg": "al",
+                "width": 1
+              }
+            ]
+          },
+          "index": 8,
+          "target": {
+            "bytes": "88877254",
+            "control": null,
+            "fixup_fields": [],
+            "implicit_reads": [],
+            "implicit_writes": [],
+            "instruction": "mov byte ptr [bx + 0x5472], al",
+            "load_offset": 21,
+            "mnemonic": "mov",
+            "operand_fields": [
+              [
+                2,
+                4
+              ]
+            ],
+            "operands": [
+              {
+                "base": "bx",
+                "disp": 21618,
+                "index": null,
+                "kind": "mem",
+                "scale": 1,
+                "segment": null,
+                "width": 1
+              },
+              {
+                "kind": "reg",
+                "reg": "al",
+                "width": 1
+              }
+            ]
+          }
+        },
+        "full_diagnostic": "recovery/attempts/file_load_shape2d_palmap_init/0001/comparison-full.json",
+        "full_diagnostic_identity": {
+          "sha256": "ae5a46d0fc406edb77124f18dfe7bc01e95da2ca18227bb6312da6e8a5fc9b77",
+          "size": 25714
+        },
+        "hypothesis": "For this exact loop, pinned MSC5.1 should emit the complete 39-byte contribution with one zero-addend offset16 fixup to _palmap at displacement field 23; the independently anchored DGROUP map will bind it to 0x5472 and produce exact code. Falsified by different declarations/fixup geometry, extra contribution, nonmatching bound bytes/extent, or unresolved symbol.",
+        "identity": {
+          "sha256": "bf979411c017c34d09897d6d453b97ad54785496c4fc92957fed812cbebf23d7",
+          "size": 16688
+        },
+        "kind": "attempts",
+        "match_summary": {
+          "anchors": [
+            {
+              "basis": "byte-exact, position-independent, unmasked",
+              "candidate": {
+                "bytes": [
+                  0,
+                  21
+                ],
+                "instructions": [
+                  0,
+                  8
+                ]
+              },
+              "kind": "ANCHOR",
+              "target": {
+                "bytes": [
+                  0,
+                  21
+                ],
+                "instructions": [
+                  0,
+                  8
+                ]
+              }
+            },
+            {
+              "basis": "byte-exact, position-independent, unmasked",
+              "candidate": {
+                "bytes": [
+                  25,
+                  39
+                ],
+                "instructions": [
+                  9,
+                  16
+                ]
+              },
+              "kind": "ANCHOR",
+              "target": {
+                "bytes": [
+                  25,
+                  39
+                ],
+                "instructions": [
+                  9,
+                  16
+                ]
+              }
+            }
+          ],
+          "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+          "candidate": {
+            "sha256": "676325865f555896d99ed6b30942d1575ce16c181707a830ee10157879cf8d66",
+            "size": 40
+          },
+          "classifications": [
+            "EXTRA_INSTRUCTIONS",
+            "UNRESOLVED_FIXUP_OPERANDS"
+          ],
+          "comparison": "unbound object",
+          "counts": {
+            "anchors": 2,
+            "byte_equal_aligned_pairs": 15,
+            "candidate_instructions": 17,
+            "decoded_exact_pairs": 0,
+            "exact_instructions": 15,
+            "fixup_normalized_pairs": 1,
+            "mismatch_islands": 2,
+            "structural_pairs": 0,
+            "target_anchored_percent": 93.75,
+            "target_instructions": 16
+          },
+          "decode_complete": true,
+          "decoded_bytes": [
+            39,
+            40
+          ],
+          "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "exact_prefix": {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                0,
+                21
+              ],
+              "instructions": [
+                0,
+                8
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                0,
+                21
+              ],
+              "instructions": [
+                0,
+                8
+              ]
+            }
+          },
+          "exact_suffix": null,
+          "fixup_normalization": {
+            "fields": [
+              {
+                "kind": "offset16",
+                "offset": 23,
+                "target": "_palmap",
+                "width": 2
+              }
+            ],
+            "ignored": [],
+            "mode": "unbound object",
+            "omitted_fields": 0,
+            "omitted_ignored": 0,
+            "rule": "Normalization is alignment-only; affected instructions never count as byte-exact anchors."
+          },
+          "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+          "islands": [
+            {
+              "candidate": {
+                "bytes": [
+                  21,
+                  25
+                ],
+                "instructions": [
+                  8,
+                  9
+                ]
+              },
+              "classifications": [
+                {
+                  "class": "UNRESOLVED_FIXUP_OPERANDS",
+                  "confidence": "high",
+                  "evidence": [
+                    "1 operand-normalized instructions; symbols/values still require binding"
+                  ],
+                  "omitted_evidence": 0
+                }
+              ],
+              "id": 1,
+              "kind": "ISLAND",
+              "resumes_exact": true,
+              "target": {
+                "bytes": [
+                  21,
+                  25
+                ],
+                "instructions": [
+                  8,
+                  9
+                ]
+              }
+            },
+            {
+              "candidate": {
+                "bytes": [
+                  39,
+                  40
+                ],
+                "instructions": [
+                  16,
+                  17
+                ]
+              },
+              "classifications": [
+                {
+                  "class": "EXTRA_INSTRUCTIONS",
+                  "confidence": "medium",
+                  "evidence": [
+                    "1 candidate instructions have no aligned target instruction"
+                  ],
+                  "omitted_evidence": 0
+                }
+              ],
+              "id": 2,
+              "kind": "ISLAND",
+              "resumes_exact": false,
+              "target": {
+                "bytes": [
+                  39,
+                  39
+                ],
+                "instructions": [
+                  16,
+                  16
+                ]
+              }
+            }
+          ],
+          "notes": [],
+          "omitted_anchors": 0,
+          "omitted_islands": 0,
+          "omitted_notes": 0,
+          "patterns": {
+            "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+            "corresponding_branches": [],
+            "corresponding_branches_count": 0,
+            "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+            "families": [],
+            "observation_count": 2,
+            "omitted_corresponding_branches": 0,
+            "omitted_families": 0,
+            "omitted_residuals": 0,
+            "omitted_unresolved_fixups": 0,
+            "residuals": [
+              {
+                "byte_equal": false,
+                "candidate": "nop ",
+                "candidate_index": 16,
+                "candidate_offset": 39,
+                "id": "p16",
+                "islands": [
+                  2
+                ],
+                "level": "EXTRA",
+                "target": null,
+                "target_index": null,
+                "target_offset": null
+              }
+            ],
+            "residuals_count": 1,
+            "unresolved_fixups": [
+              {
+                "byte_equal": false,
+                "candidate": "mov byte ptr [bx], al",
+                "candidate_index": 8,
+                "candidate_offset": 21,
+                "id": "p8",
+                "islands": [
+                  1
+                ],
+                "level": "FIXUP_NORMALIZED",
+                "note": "Symbol identity and full binding obligations remain unresolved, including when raw numbers coincide.",
+                "target": "mov byte ptr [bx + 0x5472], al",
+                "target_index": 8,
+                "target_offset": 21,
+                "unresolved_fixups": [
+                  {
+                    "kind": "offset16",
+                    "offset": 2,
+                    "target": "_palmap",
+                    "width": 2
+                  }
+                ]
+              }
+            ],
+            "unresolved_fixups_count": 1
+          },
+          "schema": 3,
+          "target": {
+            "sha256": "35229ef18471b2224bf093c76128debd079444f0631a3400fe5eae352e8cec23",
+            "size": 39
+          }
+        },
+        "path": "recovery/attempts/file_load_shape2d_palmap_init/0001/report.json",
+        "recipe_identity": {
+          "sha256": "1fbd58ab2db6fbacacb0288e79ec5ebd8405ad55cbdc86012685dd2ccd26ef31",
+          "size": 3424
+        },
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 40,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "source": {
+          "sha256": "600b766970e28be01944698d7d9fef2e644a3c44d555b387af5e7b911cb4e33a",
+          "size": 173
+        },
+        "status": "FAILED"
+      }
+    ],
     "is_facing_camera": [
       {
         "category": null,

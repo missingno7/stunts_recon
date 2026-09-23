@@ -6,7 +6,7 @@ Mapped 237 / 619 procedures; 38 source code segments and 25 proven segment frame
 
 Classification counts are conservative evidence counts, not a complete code/data partition. See status.json for unknown bytes.
 
-Queue: CHEAP=0, MEDIUM=2, SUPERVISOR=603.
+Queue: CHEAP=0, MEDIUM=1, SUPERVISOR=604.
 
 Compiler: MSC5.0/5.1 medium-model optimized, stack checking off; production pins MSC5.1; unique version/flags not proven.
 

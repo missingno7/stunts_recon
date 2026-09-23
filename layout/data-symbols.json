@@ -105,6 +105,18 @@
         }
       ],
       "storage": "bss"
+    },
+    "_palmap": {
+      "evidence": "Pristine target at 0x2ACB5 contains the unrelocated DS:[BX+5472h] store inside the verified file_load_shape2d_palmap_init extent; Restunts seg034.asm:425 identifies that operand as palmap[bx], and dseg.asm:1043/21699 exports palmap with initialized bytes 0..15. DGROUP frame is independently anchored by startup relocation.",
+      "load_address": 199650,
+      "references": [
+        {
+          "hex": "88877254",
+          "operand_offset": 2,
+          "start": 175301
+        }
+      ],
+      "storage": "initialized"
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "acceptance_input_fingerprint": "6380dbb317fae960226353cc61274da8fbc70ea1860d96dc20122b8fab1239c4",
+  "acceptance_input_fingerprint": "b1198a9b675ffd8e39b7018b972bfa024ee3d0f13a74985a6349c8550b81329b",
   "executable": {
     "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
     "size": 210384
@@ -15,19 +15,19 @@
     "size": 200000
   },
   "queue_counts": {
-    "MEDIUM": 2,
-    "SUPERVISOR": 603
+    "MEDIUM": 1,
+    "SUPERVISOR": 604
   },
   "status": "PASS",
   "tests": {
     "failed": 0,
     "log": "build/validation/tests.log",
-    "passed": 134,
+    "passed": 139,
     "skipped": 0
   },
   "toolchain_profiles": [
     "msc500-medium",
     "msc510-medium"
   ],
-  "workflow_fingerprint": "78f5dee31dd79cdcea73e3ba92397a7ad99a699cbffffeae6e12d63425e669e7"
+  "workflow_fingerprint": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
 }
