@@ -59,6 +59,11 @@ def run(task, hypothesis, promote=False):
             log = project_path(receipt['work_directory'])/'compiler.log'
             if log.exists(): (destination/'compiler.log').write_bytes(log.read_bytes())
         if receipt:
+            if receipt.get('effective_code'):
+                report['effective_key']=fingerprint({'code':receipt['effective_code'],
+                    'context':hypothesis_key(recipe,b'')})
+                report['same_effective_as']=[r['sequence'] for r in status['history']
+                    if r.get('effective_key')==report['effective_key']]
             obj = receipt.get('object')
             if obj:
                 report['same_object_as'] = [r['sequence'] for r in status['history']

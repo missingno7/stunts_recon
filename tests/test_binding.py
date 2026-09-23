@@ -110,10 +110,17 @@ class BindingTests(unittest.TestCase):
     def test_missing_symbol_preserves_diagnostics_and_requests_review(self):
         from probe_module import probe, ProbeFailure
         recipe=read_json(ROOT/'recipes/nopsub_378AE.json')
-        with patch('probe_module.resolve_symbols',side_effect=ValueError('Unknown external')):
+        with patch('probe_module.resolve_recipe_symbols',side_effect=ValueError('Unknown external')):
             with self.assertRaises(ProbeFailure) as caught: probe(recipe)
         self.assertEqual(caught.exception.details['category'],'BINDING_REVIEW_REQUIRED')
         self.assertIn('work_directory',caught.exception.details['receipt'])
+
+    def test_reviewed_struct_field_mutation_rejected(self):
+        result=verify(write=False);image=MZ.parse(result[1]).load_image(result[1]);relocs=result[2]['unpacked_mz']['relocations']
+        self.assertEqual(resolve_symbols(['_clip'],image,relocs)['_clip']['load_address'],0x30eb0)
+        bad=read_json(ROOT/'layout/data-symbols.json');bad['symbols']['_clip']['fields'][1]['offset']+=2
+        with patch('data_symbols.read_json',return_value=bad),self.assertRaises(ValueError):
+            resolve_symbols(['_clip'],image,relocs)
 
 
 if __name__ == '__main__': unittest.main()

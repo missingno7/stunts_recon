@@ -6,13 +6,13 @@ import json
 from common import ROOT, read_json, write_json, require, project_path, identity, sha, json_bytes
 from probe_module import probe
 from build_exact import build, inputs
-from workflow import check_workflow_scope, task_name, control_inputs
+from workflow import check_workflow_scope, task_name, control_inputs, load_snapshot
 
 
 def check_scope(card, recipe):
     current = inputs()
     allowed = {recipe['source']}
-    expected = card['scope_snapshot']
+    expected = load_snapshot(card['scope_snapshot'])
     require({k:v for k,v in current.items() if k not in allowed} ==
             {k:v for k,v in expected.items() if k not in allowed},
             'Changes outside candidate source scope; supervisor must refresh reviewed queue')
@@ -50,6 +50,7 @@ def check(task, promote=False, scope=True):
     before = inputs()
     payload, fast = probe(recipe)
     require(inputs() == before, 'Inputs changed during FAST')
+    if scope: require(control_inputs()==control_before, 'Workflow controls changed during FAST')
     if not promote:
         return {'status':'FAST_PASS_ONLY', 'task':task, 'bytes':len(payload), 'receipt':fast}
     lock = ROOT/'build/promotion.lock'

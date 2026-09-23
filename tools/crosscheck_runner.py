@@ -7,7 +7,7 @@ from common import ROOT, read_json, write_json, require, identity
 from compiler import verify_toolchain
 from object_probe import read_object
 from binder import bind_contribution
-from data_symbols import resolve_symbols
+from code_symbols import resolve_recipe_symbols
 from oracle import verify
 from mz import MZ
 from build_exact import inputs
@@ -43,9 +43,10 @@ def main():
                               timeout=45,creationflags=subprocess.CREATE_NO_WINDOW,startupinfo=startup)
         require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
         obj=read_object((work/'UNIT.OBJ').read_bytes())
-        symbols=resolve_symbols({f['target'] for f in r['expected_fixups']},image,oracle[2]['unpacked_mz']['relocations']) if r['expected_fixups'] else None
+        symbols=resolve_recipe_symbols(r,image,oracle[2]['unpacked_mz']['relocations'])
         payload,binding=bind_contribution(obj,r,symbols)
-        require(not any(r['start']-1<=site['load_offset']<r['end'] for site in oracle[2]['unpacked_mz']['relocations']),'Independent contribution has unsupported MZ relocation')
+        relocs=[site for site in oracle[2]['unpacked_mz']['relocations'] if r['start']-1<=site['load_offset']<r['end']]
+        require(binding['generated_relocations']==r['expected_relocations']==relocs,'Independent source relocation mismatch')
         require(payload==image[r['start']:r['end']],'Independent compiler bytes mismatch')
         rows.append({'task':r['id'],'source':identity(source),'object':identity((work/'UNIT.OBJ').read_bytes()),
                      'payload':identity(payload),'binding':binding,'exact':True,'command':cmd,'dos_command':batch[1]})

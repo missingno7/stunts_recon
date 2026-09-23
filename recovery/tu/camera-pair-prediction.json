@@ -1,0 +1,8 @@
+{
+  "prediction": "Adjacent rect_compare_point + canary, shared POINT2D, should coexist without changing canary-relative bytes/fixups; 76-byte rectangle would put canary at4C. This is only a TU experiment, no source recovery claim.",
+  "provenance": "Public Restunts math.c121-136; ordinary source typed from pristine facts",
+  "source": {
+    "sha256": "4fc77ea56b35bcbfef658cc2378960e8b585153c01e3b0e417736c089203c263",
+    "size": 708
+  }
+}

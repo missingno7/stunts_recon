@@ -8,9 +8,10 @@ Run `python tools/validate.py` when taking over the repository and before a hand
 
 ```text
 python tools/reconstruction_factory.py next
+python tools/context.py FUNCTION_ID
 ```
 
-This selects CHEAP first, then MEDIUM, and never silently selects SUPERVISOR. Open the exact `card` path in the returned row. Old unreferenced card files are not current tasks. A MEDIUM task still needs a C hypothesis and reviewed recipe; CHEAP means a recipe is present and prerequisites are supported, not that the source matches.
+Selection chooses CHEAP first, then MEDIUM, and never silently selects SUPERVISOR. Context accepts that stable ID or exact name and follows the queue's card path. Use `--asm`, `--callers`, `--globals`, `--history` and `--full` for explicit expansion. Old unreferenced card files are not current tasks. A MEDIUM task still needs a C hypothesis and reviewed recipe; CHEAP means prerequisites are supported, not that the source matches.
 
 Check disassembly, source evidence, risks and `attempts_remaining`. Odd extent is an alignment risk, not proof of assembly origin. External jumps, calls, CS-relative storage, missing global-address evidence and unverified boundaries belong to supervisor work. Do not make a candidate look eligible by renaming it or changing its machine interval.
 
@@ -26,12 +27,15 @@ Use the stable ID and semantic name from the card. Preparation requires verified
 
 Default recipes accept no fixups. A supervisor must establish external DGROUP addresses and review complete object declarations/fixups before enabling that supported binding mode; see `data-binding.md`. No target addresses or expected bytes are learned from a mismatching compiler object.
 
+The selected larger-function path also supports reviewed zero-addend external pointer32 far CALLs with target frames. Code publics come from pinned library ownership and an independent pristine frame anchor. Ordered source relocations are checked separately from the hybrid header. Other call modes and multi-public production remain blocked. See `workflow-canary.md` before extending a recipe.
+
 ## Iterate or promote
 
 `grind.py` archives each source, hypothesis, compiler log, recipe, object identity and available mismatch diagnostics under `recovery/attempts/NAME/NNNN/`. It refreshes cards after recording the result.
 
 - **FAST_PASS_ONLY:** complete contribution matches; production has not changed.
 - **FAILED:** inspect complete size, fixups and byte differences. Edit only that candidate source to test the next justified hypothesis. Do not refresh after an ordinary source-only edit; the card deliberately permits it.
+- Unequal lengths now include the first differing instruction and a hashed full diagnostic artifact. Instruction comparisons are diagnostic only; full length equality remains mandatory.
 - **ERROR:** fix the toolchain, source-scope or environment problem. Infrastructure errors do not spend source-attempt budget.
 - **Blocked:** stop this task. Unsupported objects/binding escalate immediately; three failed hypotheses exhaust the budget. Identical hypotheses are refused without recompiling. Different source with identical object output is identified in the report.
 

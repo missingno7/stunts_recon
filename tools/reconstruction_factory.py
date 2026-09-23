@@ -2,8 +2,8 @@
 import argparse
 import collections
 from common import ROOT, read_json, write_json, require, sha, identity
-from build_exact import inputs
-from workflow import workflow_inputs, fingerprint, state, attempt_ledger
+from build_exact import inputs, production_inputs
+from workflow import workflow_inputs, fingerprint, state, attempt_ledger, save_snapshot
 from triage import capabilities, recipe_matches_inventory
 from mz import MZ
 
@@ -18,13 +18,22 @@ def refresh():
     from compiler import verify_toolchain
     oracle=verify(write=False)
     image=MZ.parse(oracle[1]).load_image(oracle[1])
+    from function_evidence import apply_reviewed
+    reviewed=apply_reviewed(inventory,image)
     for profile in {o.get('profile') for o in manifest['owners'] if o.get('profile')} | {r['profile'] for r in recipes.values()}:
         verify_toolchain(profile)
     snapshot=inputs()
     workflow_snapshot=workflow_inputs()
+    scope_ref=save_snapshot(snapshot)
+    workflow_ref=save_snapshot(workflow_snapshot)
     ledger=attempt_ledger()
+    control_path=ROOT/'recovery/task-control.json'
+    control_context={'controls':read_json(control_path).get('tasks',{}) if control_path.exists() else {},
+                     'blockers':blockers['attempts']}
     data_layout=read_json(ROOT/'layout/data-symbols.json')
     known_data={s['load_address']-data_layout['frame_load_address'] for s in data_layout['symbols'].values()}
+    known_data.update(s['load_address']-data_layout['frame_load_address']+f['offset']
+                      for s in data_layout['symbols'].values() for f in s.get('fields',[]))
     queue=[]
     small_index={f['name']:f for f in inventory['small_candidates']}
     for f in inventory['functions']:
@@ -33,12 +42,17 @@ def refresh():
         complete=f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'
         if complete:
             require(sha(image[f['start']:f['end']])==f['sha256'],'Inventory target hash mismatch: '+f['name'])
-        disassembly=small_index.get(f['name'],{}).get('disassembly',[])
+        disassembly=reviewed.get(f['name'],small_index.get(f['name'],{})).get('disassembly',[])
         capability_blockers,risks=capabilities(f,disassembly,known_data)
         if f['name'] in recipes:
             recipe=recipes[f['name']]
             if not recipe_matches_inventory(recipe,f):
                 capability_blockers.append('Recipe identity/extent differs from current verified inventory; supervisor remapping required')
+            elif f.get('binding_review')=='external-far-call-v1' and recipe.get('binding',{}).get('mode')==f['binding_review']:
+                # Reviewed bounded non-leaf mode; the strict binder still checks every
+                # declaration, fixup field, public and ordered source relocation.
+                capability_blockers=[b for b in capability_blockers if b not in
+                    ['MZ relocation binding is unsupported','Calls need supervisor linking/TU review']]
         if not small_index.get(f['name'],{}).get('ordinary_c_hint'):
             risks.append('No ordinary-C hint; review source/compiler expressibility')
         if disassembly and complete:
@@ -48,7 +62,7 @@ def refresh():
         if complete and f.get('size',999999)<=80 and not capability_blockers:
             tier='MEDIUM'
         if f['name'] in recipes and not capability_blockers:tier='CHEAP'
-        task_state=state(f['name'],[f['start'],f['end']] if complete else None,ledger)
+        task_state=state(f['name'],[f['start'],f['end']] if complete else None,ledger,control_context)
         if task_state['blocked']:tier='SUPERVISOR'
         identifier=f.get('stable_id') if complete else f['unresolved_evidence_id']
         row={'id':identifier,'name':f['name'],'tier':tier,'size':f.get('size'),
@@ -61,7 +75,7 @@ def refresh():
             recipe=recipes[f['name']]
             card={**row,'oracle_extent':[recipe['start'],recipe['end']],
                   'recipe':'recipes/'+f['name']+'.json','source':recipe['source'],'profile':recipe['profile'],
-                  'evidence':f,'disassembly':disassembly,'scope_snapshot':snapshot,'workflow_snapshot':workflow_snapshot,'attempt_budget':3,
+                  'evidence':f,'disassembly':disassembly,'scope_snapshot':scope_ref,'workflow_snapshot':workflow_ref,'attempt_budget':3,
                   'fast':'python tools/grind.py attempt '+f['name']+' --hypothesis "Explain source change"',
                   'promotion':'python tools/grind.py promote '+f['name']+' --hypothesis "Explain source hypothesis"',
                   'rules':['Complete emitted extent; no trimming, patching, byte arrays or inline assembly.',
@@ -74,9 +88,9 @@ def refresh():
     for row in queue:
         if row['name'] in recipes:continue
         f=by_name[row['name']]
-        card={**row,'evidence':f,'disassembly':small_by_name.get(f['name'],{}).get('disassembly',[]),
+        card={**row,'evidence':f,'disassembly':reviewed.get(f['name'],small_by_name.get(f['name'],{})).get('disassembly',[]),
               'attempt_budget':3,'profile_hypothesis':'msc510-medium',
-              'scope_snapshot':snapshot,'workflow_snapshot':workflow_snapshot,
+              'scope_snapshot':scope_ref,'workflow_snapshot':workflow_ref,
               'dependencies':['Reviewed candidate C source and recipe','Verify full compiler contribution and all OMF fixups'],
               'next_action':'For a fully mapped function: python tools/prepare_candidate.py '+row['id']+' --source recovery/candidates/NAME.c',
               'fast':'Unavailable until a reviewed recipe exists; no raw/unchecked acceptance',
@@ -89,10 +103,16 @@ def refresh():
     write_json(ROOT/'recovery/queue.json',{'schema':2,'counts':counts,'tasks':queue,
                'input_fingerprint':sha(str(sorted(snapshot.items())).encode()),'workflow_fingerprint':fingerprint(workflow_snapshot)})
     lock=read_json(ROOT/'layout/oracle.lock.json')
+    from attempt_index import generate
+    generate()
+    write_json(ROOT/'recovery/context-index.json',{'schema':1,'oracle':lock['load_image'],
+        'attempt_index_sha256':sha((ROOT/'recovery/attempt-index.json').read_bytes()),
+        'workflow_fingerprint':fingerprint(workflow_snapshot),
+        'tasks':[{'id':r['id'],'name':r['name'],'card':r['card'],'card_sha256':sha((ROOT/r['card']).read_bytes())} for r in queue]})
     acceptance_path=ROOT/'build/exact/acceptance.json'
     acceptance=read_json(acceptance_path) if acceptance_path.exists() else None
     executable_path=ROOT/'build/exact/mcga.exe'
-    current=bool(acceptance and acceptance['inputs']==snapshot and executable_path.exists()
+    current=bool(acceptance and acceptance.get('production_inputs')==production_inputs() and executable_path.exists()
                  and identity(executable_path.read_bytes())==acceptance['executable'])
     code=set()
     for f in inventory['functions']:
@@ -129,7 +149,7 @@ def refresh():
             'full_image_status':acceptance['status'] if current else 'NOT_CURRENTLY_VERIFIED',
             'queue_counts':{tier:counts.get(tier,0) for tier in ['CHEAP','MEDIUM','SUPERVISOR']},
             'compiler':'MSC5.0/5.1 medium-model optimized, stack checking off; production pins MSC5.1; unique version/flags not proven',
-            'blockers':['Only external DGROUP offset16 binding is supported; far/self-relative linking and complete TU layout remain open',
+            'blockers':['Supported: external DGROUP offset16 and reviewed zero-addend external far CALLs; general/self-relative linking and multi-public production remain open',
                         'QuickC BAKPAT rejected; full compiler/version fingerprint remains open',
                         *(['Identified runtime bytes remain raw-owned pending library binding'] if lib-bound else []),
                         'Archived CRT startup checksum anomaly and general runtime linking remain unresolved',

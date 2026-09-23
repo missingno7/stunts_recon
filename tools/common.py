@@ -1,6 +1,8 @@
 """Small shared primitives; no implicit lock updates."""
 import hashlib
 import json
+import os
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,7 +23,15 @@ def json_bytes(value):
 def write_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(json_bytes(value))
+    data=json_bytes(value)
+    if path.exists() and path.read_bytes()==data:return
+    # Readers see an old or a complete new file, never partially written JSON.
+    fd,name=tempfile.mkstemp(prefix='.'+path.name+'.',dir=path.parent)
+    try:
+        with os.fdopen(fd,'wb') as stream:stream.write(data)
+        os.replace(name,path)
+    finally:
+        Path(name).unlink(missing_ok=True)
 
 def require(condition, message):
     if not condition:

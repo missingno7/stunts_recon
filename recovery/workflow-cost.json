@@ -1,0 +1,21 @@
+{
+  "bytes_saved": 11345522,
+  "canary_packet": {
+    "bytes_utf8": 7752,
+    "characters": 7752,
+    "scope": "Default bounded packet; explicit expansions preserve access to omitted material. No claimed before/after token savings.",
+    "seconds": 0.02492809999966994
+  },
+  "cards": 607,
+  "equivalent_inline": {
+    "bytes": 13502353,
+    "serialization_seconds_median": 0.08412139999927604
+  },
+  "equivalent_shared": {
+    "bytes": 2156831,
+    "serialization_seconds_median": 0.03666089999751421
+  },
+  "method": "Same current cards and all dependency evidence, once inline per card vs hash references plus unique snapshots. Five warm serialization runs. Not token measurements.",
+  "refresh_seconds": 0.6758871999991243,
+  "snapshot_files": 2
+}

@@ -1,0 +1,188 @@
+{
+  "experiments": [
+    {
+      "changed_bytes": [
+        {
+          "linked": 236,
+          "object": 0,
+          "offset": 18
+        },
+        {
+          "linked": 255,
+          "object": 0,
+          "offset": 19
+        }
+      ],
+      "compiler": {
+        "command": [
+          "C:/tools/msdos/msdos.exe",
+          "-e",
+          "-v5.00",
+          "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+          "/c",
+          "/AM",
+          "/O",
+          "/Gs",
+          "UNIT.C"
+        ],
+        "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+        "effective_code": "7c5f7a4d29c42a8444abe15d9b67e31b64143fd8a93ba6411cb77a30675d69fb",
+        "object": {
+          "sha256": "394fd4e9c9becd6ca498a89513327cedf1c052afc8b464cf4a31d490a15753ed",
+          "size": 286
+        },
+        "profile": "msc510-medium",
+        "source": {
+          "sha256": "b21bea9f1daf24eb005e4a5df1e0dc76aa90bdecea32407b037076bf0a48a63b",
+          "size": 74
+        },
+        "staged_source": {
+          "sha256": "0046f1c024367d7311b41f225cfe805d3f7bd93d15069142f2822307be63760d",
+          "size": 75
+        },
+        "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pscr5r0a4"
+      },
+      "executable": {
+        "sha256": "c90ac0abb7466e9997fcba12ea5f8901dd3cb023b98e5cce9c8774b6a13a9e3a",
+        "size": 554
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_callee",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "_callee",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "link_command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\LINK.EXE",
+        "/NOD /MAP UNIT.OBJ+DATA.OBJ,RESULT.EXE,RESULT.MAP;"
+      ],
+      "linked_text": "558bec8b4606405dcb90558becff76060ee8ecff83c4025dcb90",
+      "map": "LINK : warning L4021: no stack segment\n\n Start  Stop   Length Name                   Class\n 00000H 00019H 0001AH UNIT_TEXT              CODE\n 0001AH 00029H 00010H _DATA                  DATA\n 0002AH 0002AH 00000H CONST                  CONST\n 0002AH 0002AH 00000H _BSS                   BSS\n\n Origin   Group\n 0001:0   DGROUP\n\n  Address         Publics by Name\n\n 0000:0000       _callee\n 0000:000A       _caller\n 0001:000A       _flags\n 0001:000A       __acrtused\n\n  Address         Publics by Value\n\n 0000:0000       _callee\n 0000:000A       _caller\n 0001:000A       __acrtused\n 0001:000A       _flags\n",
+      "object_text": "558bec8b4606405dcb90558becff76060ee8000083c4025dcb90",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_callee",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_caller",
+          "offset": 10,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "relocations": [],
+      "scope": "RESEARCH_ONLY: local-call/TU modes remain unsupported in production",
+      "source": "int callee(int x) { return x+1; } int caller(int x) { return callee(x); }\n"
+    },
+    {
+      "changed_bytes": [
+        {
+          "linked": 236,
+          "object": 0,
+          "offset": 18
+        },
+        {
+          "linked": 255,
+          "object": 0,
+          "offset": 19
+        }
+      ],
+      "compiler": {
+        "command": [
+          "C:/tools/msdos/msdos.exe",
+          "-e",
+          "-v5.00",
+          "D:\\prog\\stunts_recon\\toolchain\\msc500\\CL.EXE",
+          "/c",
+          "/AM",
+          "/O",
+          "/Gs",
+          "UNIT.C"
+        ],
+        "compiler_stdout_sha256": "226ca4ed68b8316603ccfff9892b96cb56d99e865351eac57a8f37e5cb1732fc",
+        "effective_code": "629bb8acdd55b94566bc494fc1d723bf788d3f5ab475c524d509e74249a5b3c8",
+        "object": {
+          "sha256": "ba7c5534e05c7cae3135f8e6f477249225c092e0b67c13580ebf72aabe5029a2",
+          "size": 286
+        },
+        "profile": "msc500-medium",
+        "source": {
+          "sha256": "b21bea9f1daf24eb005e4a5df1e0dc76aa90bdecea32407b037076bf0a48a63b",
+          "size": 74
+        },
+        "staged_source": {
+          "sha256": "0046f1c024367d7311b41f225cfe805d3f7bd93d15069142f2822307be63760d",
+          "size": 75
+        },
+        "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\prsr6q5yr"
+      },
+      "executable": {
+        "sha256": "c90ac0abb7466e9997fcba12ea5f8901dd3cb023b98e5cce9c8774b6a13a9e3a",
+        "size": 554
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_callee",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "_callee",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "link_command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc500\\LINK.EXE",
+        "/NOD /MAP UNIT.OBJ+DATA.OBJ,RESULT.EXE,RESULT.MAP;"
+      ],
+      "linked_text": "558bec8b4606405dcb90558becff76060ee8ecff83c4025dcb90",
+      "map": "LINK : warning L4021: no stack segment\n\n Start  Stop   Length Name                   Class\n 00000H 00019H 0001AH UNIT_TEXT              CODE\n 0001AH 00029H 00010H _DATA                  DATA\n 0002AH 0002AH 00000H CONST                  CONST\n 0002AH 0002AH 00000H _BSS                   BSS\n\n Origin   Group\n 0001:0   DGROUP\n\n  Address         Publics by Name\n\n 0000:0000       _callee\n 0000:000A       _caller\n 0001:000A       _flags\n 0001:000A       __acrtused\n\n  Address         Publics by Value\n\n 0000:0000       _callee\n 0000:000A       _caller\n 0001:000A       __acrtused\n 0001:000A       _flags\n",
+      "object_text": "558bec8b4606405dcb90558becff76060ee8000083c4025dcb90",
+      "profile": "msc500-medium",
+      "publics": [
+        {
+          "name": "_callee",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_caller",
+          "offset": 10,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "relocations": [],
+      "scope": "RESEARCH_ONLY: local-call/TU modes remain unsupported in production",
+      "source": "int callee(int x) { return x+1; } int caller(int x) { return callee(x); }\n"
+    }
+  ]
+}

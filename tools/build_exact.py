@@ -7,11 +7,32 @@ from probe_module import probe
 from library import bind_library
 
 def inputs():
+    """Broad transaction guard; unrelated edits must not enter a promotion."""
     result = {}
     for folder in ['tools', 'src', 'asm', 'include', 'recipes', 'layout', 'recovery/candidates']:
         for path in sorted((ROOT / folder).rglob('*')):
             if path.is_file() and '__pycache__' not in path.parts:
                 result[path.relative_to(ROOT).as_posix()] = sha(path.read_bytes())
+    return result
+
+
+def production_inputs(manifest=None, recipe_overrides=None, snapshot=None):
+    """Conservative active closure; inactive recipes/candidates cannot affect construction.
+
+    All tools, headers, src/ASM and layout remain dependencies until finer closures
+    are proven. Includes remain forbidden by the compiler, but are hashed anyway.
+    """
+    result = {k:v for k,v in (inputs() if snapshot is None else snapshot).items()
+              if not k.startswith(('recipes/', 'recovery/candidates/'))}
+    manifest = manifest or read_json(ROOT/'layout/manifest.json')
+    from common import json_bytes
+    result['@active-manifest'] = sha(json_bytes(manifest))
+    for owner in manifest['owners']:
+        if owner['kind'] != 'MATCHING_C': continue
+        name = owner['recipe']
+        recipe = (recipe_overrides or {}).get(name) or read_json(ROOT/name)
+        result[name] = sha(json_bytes(recipe))
+        result[recipe['source']] = sha((ROOT/recipe['source']).read_bytes())
     return result
 
 def validate_layout(manifest, size):
@@ -41,6 +62,7 @@ def build(manifest=None, recipe_overrides=None, publish=True):
         require(plan['modules']==expected,'Production plan differs from active ownership')
     require(manifest['oracle_sha256']==oracle[2]['load_image']['sha256'],'Manifest belongs to another oracle')
     validate_layout(manifest, len(original))
+    production_before = production_inputs(manifest, recipe_overrides, before)
     chunks, receipts, matching, libraries = [], [], 0, 0
     for owner in manifest['owners']:
         start, end = owner['start'], owner['end']
@@ -70,11 +92,13 @@ def build(manifest=None, recipe_overrides=None, publish=True):
     for profile in {o['profile'] for o in manifest['owners'] if o.get('profile')}:
         verify_toolchain(profile)
     require(inputs() == before, 'Inputs changed during fresh construction')
+    require(production_inputs(manifest, recipe_overrides, before) == production_before, 'Production dependencies changed')
     report = {'status': 'HYBRID_EXACT', 'fully_recovered': matching + libraries == len(image),
               'executable': identity(executable), 'load_image': identity(image),
               'matching_c_bytes': matching, 'matching_asm_bytes': 0,
               'raw_initialized_bytes': len(image) - matching - libraries, 'library_production_bytes':libraries,
-              'relocation_count': len(mz.relocations), 'inputs': before, 'compiler_receipts': receipts}
+              'relocation_count': len(mz.relocations), 'inputs': before,
+              'production_inputs':production_before, 'compiler_receipts': receipts}
     if publish:
         (output / 'mcga.exe').write_bytes(executable)
         write_json(output / 'acceptance.json', report)

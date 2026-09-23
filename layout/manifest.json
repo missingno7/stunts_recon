@@ -4,10 +4,26 @@
   "owners": [
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 91474,
-      "id": "raw_00000_16552",
+      "end": 89826,
+      "id": "raw_00000_15ee2",
       "kind": "UNRESOLVED_RAW",
       "start": 0
+    },
+    {
+      "classification": "GAME_C",
+      "end": 89902,
+      "id": "load_15ee2",
+      "kind": "MATCHING_C",
+      "name": "rect_compare_point",
+      "recipe": "recipes/rect_compare_point.json",
+      "start": 89826
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 91474,
+      "id": "raw_15f2e_16552",
+      "kind": "UNRESOLVED_RAW",
+      "start": 89902
     },
     {
       "classification": "GAME_C",

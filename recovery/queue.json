@@ -1,9 +1,9 @@
 {
   "counts": {
     "MEDIUM": 9,
-    "SUPERVISOR": 599
+    "SUPERVISOR": 598
   },
-  "input_fingerprint": "1fcf1750fed99753333ca3018426fa8d35f7a758fc421cc94b4c443881f74459",
+  "input_fingerprint": "4baa7c368e25df83d6e1a45d6eacb3aec341dcfd8313885043d3b1b6d4ab7212",
   "schema": 2,
   "tasks": [
     {
@@ -4483,6 +4483,27 @@
       "tier": "SUPERVISOR"
     },
     {
+      "attempts_remaining": 2,
+      "blocker": "Source-shape family review: strongest ordinary-C source emits194 vs200; first mismatch +0x37 stores dx1 at BP-8 instead of BP-12, then return lowering differs. Far binding is proven. Nineteen supervisor trials plus one grinder attempt are archived; no blind flag/source retries. Next discriminant: evidence for paired long-delta storage and byte-result materialization, then a bounded ordinary-C probe. Explicit register-long and register-far-parameter probes also preserve the194-byte mismatch.",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/is_facing_camera.json",
+      "id": "load_15f2e",
+      "name": "is_facing_camera",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 200,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 2061,
+        "line_start": 1957,
+        "path": "src/restunts/asmorig/seg006.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
       "attempts_remaining": 3,
       "blocker": "No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -6746,52 +6767,6 @@
         "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
         "line_end": 245,
         "line_start": 164,
-        "path": "src/restunts/asmorig/seg006.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg006_line1908.json",
-      "id": "seg006:line1908",
-      "name": "rect_compare_point",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1956,
-        "line_start": 1908,
-        "path": "src/restunts/asmorig/seg006.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg006_line1957.json",
-      "id": "seg006:line1957",
-      "name": "is_facing_camera",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 2061,
-        "line_start": 1957,
         "path": "src/restunts/asmorig/seg006.asm",
         "repository": "restunts"
       },
@@ -14173,5 +14148,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "2ffb275ba02039a4c6b8fd4d259f8a822b881df4b403afb9c76221cf8437ee13"
+  "workflow_fingerprint": "c44f3643eedbef242c9a6c7c6e3d6d083c9d71f800046fb04b4eac4c0ca539bc"
 }

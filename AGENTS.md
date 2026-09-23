@@ -1,5 +1,7 @@
 # Historical reconstruction rules
 
+Routine startup: run the baseline validation once, select a task, then use `python tools/context.py FUNCTION_ID`. Expand `--asm`, `--callers`, `--globals`, `--history` or `--full` only as needed. The packet names omitted evidence and raw artifact paths. A stale packet cannot authorize an attempt.
+
 Read README.md and docs/current/supervisor-instructions.md before changing acceptance logic. Original assets and layout/oracle.lock.json are authoritative. Do not regenerate expected bytes after a mismatch. Keep matching source and any future modern build separate.
 
 Never commit assets, downloaded compiler tools, generated EXEs/OBJs, or reference binaries. Use the pinned compiler profile and fresh whole-image acceptance for every promotion. Source/manifest promotion is single-writer. No matching claim may depend on ignored OMF records, masked fixups, object trimming, or final binary patching.

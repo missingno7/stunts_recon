@@ -39,6 +39,20 @@
       ],
       "name": "sub_307D2",
       "reason": "MSC zero-extension opcode and complete contribution padding differ; original compiler/TU context unresolved"
+    },
+    {
+      "evidence": [
+        "recovery/canary-bound-diagnostic.json",
+        "recovery/experiments/is_facing_camera",
+        "recovery/tu/camera-pair.json",
+        "recovery/call-topology-proof.json"
+      ],
+      "interval": [
+        89902,
+        90102
+      ],
+      "name": "is_facing_camera",
+      "reason": "Source-shape family review: strongest ordinary-C source emits194 vs200; first mismatch +0x37 stores dx1 at BP-8 instead of BP-12, then return lowering differs. Far binding is proven. Nineteen supervisor trials plus one grinder attempt are archived; no blind flag/source retries. Next discriminant: evidence for paired long-delta storage and byte-result materialization, then a bounded ordinary-C probe. Explicit register-long and register-far-parameter probes also preserve the194-byte mismatch."
     }
   ],
   "schema": 1

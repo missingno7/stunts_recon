@@ -7,7 +7,7 @@ from build_exact import build, inputs
 from oracle import verify
 from compiler import verify_toolchain
 from reconstruction_factory import refresh
-from workflow import workflow_inputs, fingerprint
+from workflow import workflow_inputs, fingerprint, load_snapshot
 
 
 def validate(independent=True):
@@ -45,18 +45,25 @@ def validate(independent=True):
         else:
             report['independent_compiler']={'status':'NOT_RUN'}
         status=refresh();queue=read_json(ROOT/'recovery/queue.json')
+        from attempt_index import generate
+        require(read_json(ROOT/'recovery/attempt-index.json')==generate(write=False),'Attempt index disagrees with immutable archives')
         require(workflow_inputs()==workflow_before and inputs()==before,'Inputs changed during validation')
         require(acceptance['inputs']==before and status['full_image_status']=='HYBRID_EXACT','Full build is stale')
+        resolved_snapshots={}
         for row in queue['tasks']:
             card=read_json(ROOT/row['card'])
             require(card['id']==row['id'] and card['name']==row['name'] and card['tier']==row['tier'],
                     'Queue/card identity mismatch')
-            require(card['workflow_snapshot']==workflow_before,'Stale current card')
+            reference=card['workflow_snapshot'];key=fingerprint(reference)
+            if key not in resolved_snapshots:resolved_snapshots[key]=(reference,load_snapshot(reference))
+            require(resolved_snapshots[key][1]==workflow_before,'Stale current card')
+        for reference,snapshot in resolved_snapshots.values():
+            require(load_snapshot(reference)==snapshot,'Shared snapshot changed during validation')
         report.update(status='PASS', full_image='HYBRID_EXACT', oracle=oracle[2]['load_image'],
                       executable=acceptance['executable'], toolchain_profiles=profiles,
                       acceptance_input_fingerprint=queue['input_fingerprint'],
                       workflow_fingerprint=fingerprint(workflow_before), queue_counts=queue['counts'],
-                      grinding_scope='Verified leaf contributions with supported binding; supervisor work remains')
+                      grinding_scope='Verified complete contributions with reviewed binding; selected non-leaf far CALL mode supported; source/TU supervisor work remains')
         write_json(destination,report)
         summary=('# Latest validation\n\n'
                  f"Tests: **{report['tests']['passed']} passed**, no failures or skips. Full image: **HYBRID_EXACT**.\n\n"

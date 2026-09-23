@@ -1,0 +1,25 @@
+struct POINT2D { int x, y; };
+
+extern struct RECT { int left, right, top, bottom; } clip;
+unsigned rect_compare_point(struct POINT2D *p) {
+    char flag;
+    if (p->y < clip.top) flag=1;
+    else if (p->y > clip.bottom) flag=2;
+    else flag=0;
+    if (p->x < clip.left) flag|=4;
+    else if (p->x > clip.right) flag|=8;
+    return flag;
+}
+
+int is_facing_camera(struct POINT2D far *pts)
+{
+    long dx0, dy0, dx1, dy1;
+
+    dx0 = (long)pts[0].x - pts[1].x;
+    dx1 = (long)pts[2].x - pts[1].x;
+    if (dx0 == 0 && dx1 == 0) return 0;
+    dy0 = pts[0].y - pts[1].y;
+    dy1 = pts[2].y - pts[1].y;
+    if (dy0 == 0 && dy1 == 0) return 0;
+    return dx1 * dy0 - dx0 * dy1 > 0 ? 1 : 0;
+}

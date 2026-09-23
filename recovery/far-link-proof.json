@@ -1,0 +1,465 @@
+{
+  "experiments": [
+    {
+      "binding": {
+        "fixups": [
+          {
+            "load_offset": 41,
+            "offset": 4,
+            "paragraph": 3,
+            "target": "__aFlmul"
+          },
+          {
+            "load_offset": 20,
+            "offset": 4,
+            "paragraph": 3,
+            "target": "__aFlmul"
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 41,
+            "offset": 41,
+            "segment": 0
+          },
+          {
+            "load_offset": 20,
+            "offset": 20,
+            "segment": 0
+          }
+        ],
+        "mode": "external-far-call-v1"
+      },
+      "compiler": {
+        "command": [
+          "C:/tools/msdos/msdos.exe",
+          "-e",
+          "-v5.00",
+          "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+          "/c",
+          "/AM",
+          "/O",
+          "/Gs",
+          "UNIT.C"
+        ],
+        "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+        "object": {
+          "sha256": "5b9395269a659181daa6420475c418b4e60d721451e208448bdb284a9077a7b5",
+          "size": 308
+        },
+        "profile": "msc510-medium",
+        "source": {
+          "sha256": "88432f823273f509cc7ef3cd93cd6e5b41036123c1092f596719e5dd9ae2706b",
+          "size": 65
+        },
+        "staged_source": {
+          "sha256": "754434cef76d1233e93030be9dfd09704a91c87dcc9eee0a2429d7fa9ab096df",
+          "size": 66
+        },
+        "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pqstxqty5"
+      },
+      "executable": {
+        "sha256": "0220a85ea3ea3a5e09a14d3ad2bde483a407ec3a2426382173981eb56a5bfef9",
+        "size": 632
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "historical_link_equal": true,
+      "library_first": false,
+      "link_command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\LINK.EXE",
+        "/NOD /MAP UNIT.OBJ+MUL.OBJ+DATA.OBJ,RESULT.EXE,RESULT.MAP;"
+      ],
+      "linked_text": {
+        "sha256": "055454f35de469fe72729df5a11a921cf52984f134e29ced0651327d168b6d95",
+        "size": 52
+      },
+      "map": "LINK : warning L4021: no stack segment\n\n Start  Stop   Length Name                   Class\n 00000H 00033H 00034H UNIT_TEXT              CODE\n 00034H 00067H 00034H _TEXT                  CODE\n 00068H 00077H 00010H _DATA                  DATA\n 00078H 00078H 00000H CONST                  CONST\n 00078H 00078H 00000H _BSS                   BSS\n\n Origin   Group\n 0006:0   DGROUP\n\n  Address         Publics by Name\n\n 0006:0008       _flags\n 0000:0000       _product\n 0006:0008       __acrtused\n 0003:0004       __aFlmul\n 0003:0004       __aFulmul\n\n  Address         Publics by Value\n\n 0000:0000       _product\n 0003:0004       __aFlmul\n 0003:0004       __aFulmul\n 0006:0008       __acrtused\n 0006:0008       _flags\n",
+      "module_sha256": "735327c000c5ba0bd24b8b79ee7ff4ab37b2f0cba73a69b09c55ad63ae446b98",
+      "profile": "msc510-medium"
+    },
+    {
+      "binding": {
+        "fixups": [
+          {
+            "load_offset": 93,
+            "offset": 0,
+            "paragraph": 0,
+            "target": "__aFlmul"
+          },
+          {
+            "load_offset": 72,
+            "offset": 0,
+            "paragraph": 0,
+            "target": "__aFlmul"
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 93,
+            "offset": 45,
+            "segment": 3
+          },
+          {
+            "load_offset": 72,
+            "offset": 24,
+            "segment": 3
+          }
+        ],
+        "mode": "external-far-call-v1"
+      },
+      "compiler": {
+        "command": [
+          "C:/tools/msdos/msdos.exe",
+          "-e",
+          "-v5.00",
+          "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+          "/c",
+          "/AM",
+          "/O",
+          "/Gs",
+          "UNIT.C"
+        ],
+        "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+        "object": {
+          "sha256": "5b9395269a659181daa6420475c418b4e60d721451e208448bdb284a9077a7b5",
+          "size": 308
+        },
+        "profile": "msc510-medium",
+        "source": {
+          "sha256": "88432f823273f509cc7ef3cd93cd6e5b41036123c1092f596719e5dd9ae2706b",
+          "size": 65
+        },
+        "staged_source": {
+          "sha256": "754434cef76d1233e93030be9dfd09704a91c87dcc9eee0a2429d7fa9ab096df",
+          "size": 66
+        },
+        "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pad1_4zmh"
+      },
+      "executable": {
+        "sha256": "547dd816fbd235a360acc228e828d7bd317e61feef96d3afde6a4c46876eac9c",
+        "size": 632
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "historical_link_equal": true,
+      "library_first": true,
+      "link_command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\LINK.EXE",
+        "/NOD /MAP MUL.OBJ+UNIT.OBJ+DATA.OBJ,RESULT.EXE,RESULT.MAP;"
+      ],
+      "linked_text": {
+        "sha256": "801aee3e97b7e0354efd11efa8b15895cd771c1335762341774eaafc0f3da791",
+        "size": 52
+      },
+      "map": "LINK : warning L4021: no stack segment\n\n Start  Stop   Length Name                   Class\n 00000H 00033H 00034H _TEXT                  CODE\n 00034H 00067H 00034H UNIT_TEXT              CODE\n 00068H 00077H 00010H _DATA                  DATA\n 00078H 00078H 00000H CONST                  CONST\n 00078H 00078H 00000H _BSS                   BSS\n\n Origin   Group\n 0006:0   DGROUP\n\n  Address         Publics by Name\n\n 0006:0008       _flags\n 0003:0004       _product\n 0006:0008       __acrtused\n 0000:0000       __aFlmul\n 0000:0000       __aFulmul\n\n  Address         Publics by Value\n\n 0000:0000       __aFlmul\n 0000:0000       __aFulmul\n 0003:0004       _product\n 0006:0008       __acrtused\n 0006:0008       _flags\n",
+      "module_sha256": "735327c000c5ba0bd24b8b79ee7ff4ab37b2f0cba73a69b09c55ad63ae446b98",
+      "profile": "msc510-medium"
+    },
+    {
+      "binding": {
+        "fixups": [
+          {
+            "load_offset": 41,
+            "offset": 4,
+            "paragraph": 3,
+            "target": "__aFlmul"
+          },
+          {
+            "load_offset": 20,
+            "offset": 4,
+            "paragraph": 3,
+            "target": "__aFlmul"
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 41,
+            "offset": 41,
+            "segment": 0
+          },
+          {
+            "load_offset": 20,
+            "offset": 20,
+            "segment": 0
+          }
+        ],
+        "mode": "external-far-call-v1"
+      },
+      "compiler": {
+        "command": [
+          "C:/tools/msdos/msdos.exe",
+          "-e",
+          "-v5.00",
+          "D:\\prog\\stunts_recon\\toolchain\\msc500\\CL.EXE",
+          "/c",
+          "/AM",
+          "/O",
+          "/Gs",
+          "UNIT.C"
+        ],
+        "compiler_stdout_sha256": "226ca4ed68b8316603ccfff9892b96cb56d99e865351eac57a8f37e5cb1732fc",
+        "object": {
+          "sha256": "542a991e6c28158927e275db6136cadef73fc4f680fa5c49bb8a375f895a17e8",
+          "size": 308
+        },
+        "profile": "msc500-medium",
+        "source": {
+          "sha256": "88432f823273f509cc7ef3cd93cd6e5b41036123c1092f596719e5dd9ae2706b",
+          "size": 65
+        },
+        "staged_source": {
+          "sha256": "754434cef76d1233e93030be9dfd09704a91c87dcc9eee0a2429d7fa9ab096df",
+          "size": 66
+        },
+        "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\p1ho0arc0"
+      },
+      "executable": {
+        "sha256": "0220a85ea3ea3a5e09a14d3ad2bde483a407ec3a2426382173981eb56a5bfef9",
+        "size": 632
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "historical_link_equal": true,
+      "library_first": false,
+      "link_command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc500\\LINK.EXE",
+        "/NOD /MAP UNIT.OBJ+MUL.OBJ+DATA.OBJ,RESULT.EXE,RESULT.MAP;"
+      ],
+      "linked_text": {
+        "sha256": "055454f35de469fe72729df5a11a921cf52984f134e29ced0651327d168b6d95",
+        "size": 52
+      },
+      "map": "LINK : warning L4021: no stack segment\n\n Start  Stop   Length Name                   Class\n 00000H 00033H 00034H UNIT_TEXT              CODE\n 00034H 00067H 00034H _TEXT                  CODE\n 00068H 00077H 00010H _DATA                  DATA\n 00078H 00078H 00000H CONST                  CONST\n 00078H 00078H 00000H _BSS                   BSS\n\n Origin   Group\n 0006:0   DGROUP\n\n  Address         Publics by Name\n\n 0006:0008       _flags\n 0000:0000       _product\n 0006:0008       __acrtused\n 0003:0004       __aFlmul\n 0003:0004       __aFulmul\n\n  Address         Publics by Value\n\n 0000:0000       _product\n 0003:0004       __aFlmul\n 0003:0004       __aFulmul\n 0006:0008       __acrtused\n 0006:0008       _flags\n",
+      "module_sha256": "735327c000c5ba0bd24b8b79ee7ff4ab37b2f0cba73a69b09c55ad63ae446b98",
+      "profile": "msc500-medium"
+    },
+    {
+      "binding": {
+        "fixups": [
+          {
+            "load_offset": 93,
+            "offset": 0,
+            "paragraph": 0,
+            "target": "__aFlmul"
+          },
+          {
+            "load_offset": 72,
+            "offset": 0,
+            "paragraph": 0,
+            "target": "__aFlmul"
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 93,
+            "offset": 45,
+            "segment": 3
+          },
+          {
+            "load_offset": 72,
+            "offset": 24,
+            "segment": 3
+          }
+        ],
+        "mode": "external-far-call-v1"
+      },
+      "compiler": {
+        "command": [
+          "C:/tools/msdos/msdos.exe",
+          "-e",
+          "-v5.00",
+          "D:\\prog\\stunts_recon\\toolchain\\msc500\\CL.EXE",
+          "/c",
+          "/AM",
+          "/O",
+          "/Gs",
+          "UNIT.C"
+        ],
+        "compiler_stdout_sha256": "226ca4ed68b8316603ccfff9892b96cb56d99e865351eac57a8f37e5cb1732fc",
+        "object": {
+          "sha256": "542a991e6c28158927e275db6136cadef73fc4f680fa5c49bb8a375f895a17e8",
+          "size": 308
+        },
+        "profile": "msc500-medium",
+        "source": {
+          "sha256": "88432f823273f509cc7ef3cd93cd6e5b41036123c1092f596719e5dd9ae2706b",
+          "size": 65
+        },
+        "staged_source": {
+          "sha256": "754434cef76d1233e93030be9dfd09704a91c87dcc9eee0a2429d7fa9ab096df",
+          "size": 66
+        },
+        "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\p7uoph5nn"
+      },
+      "executable": {
+        "sha256": "547dd816fbd235a360acc228e828d7bd317e61feef96d3afde6a4c46876eac9c",
+        "size": 632
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "historical_link_equal": true,
+      "library_first": true,
+      "link_command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc500\\LINK.EXE",
+        "/NOD /MAP MUL.OBJ+UNIT.OBJ+DATA.OBJ,RESULT.EXE,RESULT.MAP;"
+      ],
+      "linked_text": {
+        "sha256": "801aee3e97b7e0354efd11efa8b15895cd771c1335762341774eaafc0f3da791",
+        "size": 52
+      },
+      "map": "LINK : warning L4021: no stack segment\n\n Start  Stop   Length Name                   Class\n 00000H 00033H 00034H _TEXT                  CODE\n 00034H 00067H 00034H UNIT_TEXT              CODE\n 00068H 00077H 00010H _DATA                  DATA\n 00078H 00078H 00000H CONST                  CONST\n 00078H 00078H 00000H _BSS                   BSS\n\n Origin   Group\n 0006:0   DGROUP\n\n  Address         Publics by Name\n\n 0006:0008       _flags\n 0003:0004       _product\n 0006:0008       __acrtused\n 0000:0000       __aFlmul\n 0000:0000       __aFulmul\n\n  Address         Publics by Value\n\n 0000:0000       __aFlmul\n 0000:0000       __aFulmul\n 0003:0004       _product\n 0006:0008       __acrtused\n 0006:0008       _flags\n",
+      "module_sha256": "735327c000c5ba0bd24b8b79ee7ff4ab37b2f0cba73a69b09c55ad63ae446b98",
+      "profile": "msc500-medium"
+    }
+  ],
+  "scope": "Bounded pointer32 external CALL, zero addend, target frame; independent fixture only"
+}

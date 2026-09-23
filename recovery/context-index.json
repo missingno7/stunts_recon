@@ -1,0 +1,3653 @@
+{
+  "attempt_index_sha256": "e439880bf2b88aab05c992b5f6ba1d15eae608563574d5b7c9f8615fdef893b3",
+  "oracle": {
+    "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+    "size": 200000
+  },
+  "schema": 1,
+  "tasks": [
+    {
+      "card": "recovery/cards/load_226ba.json",
+      "card_sha256": "d87d79173b6bb98abe5ee4567edf32c428a7001d191f548fa25688f35661daa9",
+      "id": "load_226ba",
+      "name": "nopsub_326BA"
+    },
+    {
+      "card": "recovery/cards/load_18ad6.json",
+      "card_sha256": "f0dc42e0c6abb892f2da30fcd0c41ccb1d3225aa5f1b479ed334c0bdac3b74ad",
+      "id": "load_18ad6",
+      "name": "copy_string"
+    },
+    {
+      "card": "recovery/cards/load_29c84.json",
+      "card_sha256": "d2ac7c7d8f50cbb800410a10f67c136f20449edc66c0e13eaf816b3a48f635c3",
+      "id": "load_29c84",
+      "name": "audioresource_copy_n_bytes"
+    },
+    {
+      "card": "recovery/cards/load_2264a.json",
+      "card_sha256": "f060c75ac27d5582a4efe0759f2f7c8c8b73e0e6a8e4210fef1c9fd49e2af8ef",
+      "id": "load_2264a",
+      "name": "file_get_res_shape_count"
+    },
+    {
+      "card": "recovery/cards/load_1e066.json",
+      "card_sha256": "e388c964e04f9c91d144e3fa2a7e4f08472cf1183a1d08afed0ec4486b76af00",
+      "id": "load_1e066",
+      "name": "unknown_libname_1"
+    },
+    {
+      "card": "recovery/cards/load_270ba.json",
+      "card_sha256": "1e65802d72828e3c97c34d1b8be09ad371744812003643abfe69b81fd86c59e7",
+      "id": "load_270ba",
+      "name": "toupper"
+    },
+    {
+      "card": "recovery/cards/load_2118d.json",
+      "card_sha256": "3398d9d7b6a64f063ddcee930868d1e7d910b06cbcee3fe4bcbe400f77901293",
+      "id": "load_2118d",
+      "name": "mmgr_copy_paras"
+    },
+    {
+      "card": "recovery/cards/load_25de6.json",
+      "card_sha256": "2f12d0696b55623739eccdfe97bd9cec08207cb243ced9e660433aef89d7b666",
+      "id": "load_25de6",
+      "name": "sub_35DE6"
+    },
+    {
+      "card": "recovery/cards/load_2acb0.json",
+      "card_sha256": "cdfc7d8ad59d1defa0ff2f53df78472c8bf0740b26bfa32d43fb4597f0067684",
+      "id": "load_2acb0",
+      "name": "file_load_shape2d_palmap_init"
+    },
+    {
+      "card": "recovery/cards/load_2a9ea.json",
+      "card_sha256": "045ca2832d86817462777328fad1bcb7986357c32ac57da18fd9bdc0c14c3349",
+      "id": "load_2a9ea",
+      "name": "file_load_shape2d_nofatal"
+    },
+    {
+      "card": "recovery/cards/load_2acec.json",
+      "card_sha256": "4c3a175b4296fa3c366697cb99f8075f7fbcadae9bdbbbb781252dca273de649",
+      "id": "load_2acec",
+      "name": "file_load_shape2d_res_nofatal"
+    },
+    {
+      "card": "recovery/cards/load_27456.json",
+      "card_sha256": "a055c2025bbcc842bc3d5106bbe5e993528515e17c4cf0a1a2053333a5f83887",
+      "id": "load_27456",
+      "name": "nopsub_37456"
+    },
+    {
+      "card": "recovery/cards/parse_shape2d_helper.json",
+      "card_sha256": "09ee7949105d1f2d9577b394dda769eccab773d2654fa71d1ed31494b4714fa3",
+      "id": "load_1f314",
+      "name": "parse_shape2d_helper"
+    },
+    {
+      "card": "recovery/cards/load_09dc6.json",
+      "card_sha256": "2a337ee3b5ca06f46ef5a487cf6ce24d2703a08a64dead3ac2fbc9ca83b7db5b",
+      "id": "load_09dc6",
+      "name": "update_rpm_from_speed"
+    },
+    {
+      "card": "recovery/cards/load_2167c.json",
+      "card_sha256": "ccb778caa9e3a423010af39105f4d29a5f1ba81a5076209f817fa48a5c356c45",
+      "id": "load_2167c",
+      "name": "mmgr_get_chunk_size"
+    },
+    {
+      "card": "recovery/cards/load_12532.json",
+      "card_sha256": "79dfe24f4f8125bf662aac20ffbf8371aa9c6b8ce81a9af654a36a3a102139f6",
+      "id": "load_12532",
+      "name": "init_unknown"
+    },
+    {
+      "card": "recovery/cards/load_1913a.json",
+      "card_sha256": "8ef5491d523846cf6d0b5b1709cb5e19acd1721ccc37eae72ad97a3da37b7103",
+      "id": "load_1913a",
+      "name": "input_repeat_check"
+    },
+    {
+      "card": "recovery/cards/load_1637a.json",
+      "card_sha256": "45716722cb17b7d71a15d93dda56e7af22c53d5ae2fce8730070bc510fe95f41",
+      "id": "load_1637a",
+      "name": "rect_adjust_from_point"
+    },
+    {
+      "card": "recovery/cards/load_23848.json",
+      "card_sha256": "7f8319ea72f2e8edca39cb5cff5d7c204baf5ac6bec82c38552d2e13bbd63528",
+      "id": "load_23848",
+      "name": "file_load_shape2d_res_fatal_thunk"
+    },
+    {
+      "card": "recovery/cards/load_2384d.json",
+      "card_sha256": "da5229220e0bf913ad6a46db27831fb2228f827904752318f9036dece7f5a1bd",
+      "id": "load_2384d",
+      "name": "file_load_shape2d_res_nofatal_thunk"
+    },
+    {
+      "card": "recovery/cards/load_23852.json",
+      "card_sha256": "cb66a30393ebc4657c22bf85c714e7ec937342ac62a9d55c9eca40bcbf6c1939",
+      "id": "load_23852",
+      "name": "file_load_shape2d_res_thunk"
+    },
+    {
+      "card": "recovery/cards/load_23857.json",
+      "card_sha256": "ce70ed38279bd9912fdffe90cbdeec4743fcacb36375f2e36664aafe0bde79c5",
+      "id": "load_23857",
+      "name": "parse_shape2d_thunk"
+    },
+    {
+      "card": "recovery/cards/load_2385c.json",
+      "card_sha256": "4f9ff1c14678f9fbba5bc14e696d1e68e72570332865c130e6cc552d337c4600",
+      "id": "load_2385c",
+      "name": "file_load_shape2d_fatal_thunk"
+    },
+    {
+      "card": "recovery/cards/load_23861.json",
+      "card_sha256": "f21483b81b28e6aa93f91f45a79b9df8a86e9f371dd6918c0537ff312f46d275",
+      "id": "load_23861",
+      "name": "file_load_shape2d_nofatal_thunk"
+    },
+    {
+      "card": "recovery/cards/load_1a230.json",
+      "card_sha256": "7f148db33d6dc63e3a98252dd6b35340a6d08ce57039828b340a45f0ae8c6bb7",
+      "id": "load_1a230",
+      "name": "timer_get_delta_alt"
+    },
+    {
+      "card": "recovery/cards/load_1ceae.json",
+      "card_sha256": "e3c1ee3fae84c4b5904f2b778aa6909484c0c69b1b1e7a5a1a7aacb495e46b8b",
+      "id": "load_1ceae",
+      "name": "__fptrap"
+    },
+    {
+      "card": "recovery/cards/load_1d1b6.json",
+      "card_sha256": "b7e0df19f11c1688e45e0be1d21a5fee9651553a454a5c95fdc73b7bae63e080",
+      "id": "load_1d1b6",
+      "name": "__maperror"
+    },
+    {
+      "card": "recovery/cards/load_29e4c.json",
+      "card_sha256": "9c713424e8c8d4f08bf82cd05a27647df38029ecbd5d6956d342b8b94e9e9bdf",
+      "id": "load_29e4c",
+      "name": "file_find_next_alt"
+    },
+    {
+      "card": "recovery/cards/load_20a55.json",
+      "card_sha256": "74c1e8e0ea8d4a6592da719be20b5b742a43dcfc0e403c8537ebdf82b253f604",
+      "id": "load_20a55",
+      "name": "nopsub_kb_get_readchar_callback"
+    },
+    {
+      "card": "recovery/cards/load_09dff.json",
+      "card_sha256": "9869c50bf500f00cd14025cfafef11d37f869c03d6409aaf75a6a4693c95fd2c",
+      "id": "load_09dff",
+      "name": "nopsub_19DFF"
+    },
+    {
+      "card": "recovery/cards/load_09e09.json",
+      "card_sha256": "4c6586a2189d24111e20b69df669807dcd4621820f1eee7d8c8cdfc5e8f706ee",
+      "id": "load_09e09",
+      "name": "nopsub_19E09"
+    },
+    {
+      "card": "recovery/cards/load_1ead4.json",
+      "card_sha256": "a3a92bba9b7c4bfc69ddc74ccd424e03f81d939807d127671d88993cf82ffda8",
+      "id": "load_1ead4",
+      "name": "sub_2EAD4"
+    },
+    {
+      "card": "recovery/cards/load_20a5d.json",
+      "card_sha256": "729fb76529744cc226f7e1e1b3be074540e0bb792d1198ce971a1e7369c0990c",
+      "id": "load_20a5d",
+      "name": "flush_stdin"
+    },
+    {
+      "card": "recovery/cards/load_2031d.json",
+      "card_sha256": "0693d92ca7971de531855a766248b8aad9160d3036ca3cc97bee7f8321f3bfde",
+      "id": "load_2031d",
+      "name": "compare_ds_ss"
+    },
+    {
+      "card": "recovery/cards/load_210f1.json",
+      "card_sha256": "b43a08ee9465bddf2011f691e3813dceb8122525fcecb16b01bd3eaace26a8cc",
+      "id": "load_210f1",
+      "name": "mmgr_alloc_a000"
+    },
+    {
+      "card": "recovery/cards/load_09e13.json",
+      "card_sha256": "2e86ec4c1438c130fbf5f97621848bf1f874cfdd763a1bf50b529cebe6f38536",
+      "id": "load_09e13",
+      "name": "nopsub_19E13"
+    },
+    {
+      "card": "recovery/cards/load_1eb48.json",
+      "card_sha256": "74d4b18ca352fd155836b864139489114a6a3be0c440a56ec48ce41c0a05d0d2",
+      "id": "load_1eb48",
+      "name": "draw_line_related_alt"
+    },
+    {
+      "card": "recovery/cards/load_22fee.json",
+      "card_sha256": "a7f787df93aea99d4f2b774a35ea7ccbe64d36a063c3a502ede3e0742060e808",
+      "id": "load_22fee",
+      "name": "nopsub_32FEE"
+    },
+    {
+      "card": "recovery/cards/load_29e14.json",
+      "card_sha256": "e077f2e0f8fbb102e7be4ac301d6ee7c193a2270cb45498bf24e376d49a6bdbd",
+      "id": "load_29e14",
+      "name": "file_load_shape2d_nofatal2"
+    },
+    {
+      "card": "recovery/cards/load_20a44.json",
+      "card_sha256": "bcd4be7a5143804e3da0d583dc8bbe67db60b0ebf1758b594bb25956f8631a4b",
+      "id": "load_20a44",
+      "name": "nopsub_kb_set_readchar_callback"
+    },
+    {
+      "card": "recovery/cards/load_26af4.json",
+      "card_sha256": "e6976fb92619590e63b7f0c40e9cb9e692f2c0419934909196bc45c15a49ae6b",
+      "id": "load_26af4",
+      "name": "kb_shift_checking1"
+    },
+    {
+      "card": "recovery/cards/load_26b05.json",
+      "card_sha256": "16fef12f62dd14da7a301cc38e4daeddb9d1ce3d8ae0eaff500bee96486d1456",
+      "id": "load_26b05",
+      "name": "kb_shift_checking2"
+    },
+    {
+      "card": "recovery/cards/load_1f424.json",
+      "card_sha256": "5421a49ce7050e732f11edec491587917aa7dab7d13aead5cb154a050cd689bf",
+      "id": "load_1f424",
+      "name": "nopsub_2F424"
+    },
+    {
+      "card": "recovery/cards/load_21157.json",
+      "card_sha256": "74c4b8491f2ad461c5fe653672c28d272fa2549ea093825ca254ba2c82342851",
+      "id": "load_21157",
+      "name": "nopsub_31157"
+    },
+    {
+      "card": "recovery/cards/load_21169.json",
+      "card_sha256": "77be7dae2a0bad8034439828dc3999330d045dc35bc989eb388680f98ffd2e08",
+      "id": "load_21169",
+      "name": "nopsub_31169"
+    },
+    {
+      "card": "recovery/cards/load_2117b.json",
+      "card_sha256": "10e8d2705926ff7d3a5aa6a473c5bdd7f07b08a002c3edf5593ab8cb76497e9d",
+      "id": "load_2117b",
+      "name": "mmgr_get_ofs_diff"
+    },
+    {
+      "card": "recovery/cards/load_228c9.json",
+      "card_sha256": "acf8541c77d77415c9dfd6fa0d64147b3d9a6c285538573c4c8c33a7d57e5d39",
+      "id": "load_228c9",
+      "name": "nopsub_328C9"
+    },
+    {
+      "card": "recovery/cards/load_2a484.json",
+      "card_sha256": "020ea5bfcc2bd08eb6f9fae73ce6e08dcd45e24fe48d56670059a95f681b1b73",
+      "id": "load_2a484",
+      "name": "mmgr_get_res_ofs_diff_scaled"
+    },
+    {
+      "card": "recovery/cards/load_1e052.json",
+      "card_sha256": "4dc28a8a33de3dd1baa479b0362b948cf4062e39187a05f9ff0770a3be33d23e",
+      "id": "load_1e052",
+      "name": "_stackavail"
+    },
+    {
+      "card": "recovery/cards/load_20a21.json",
+      "card_sha256": "92410195867212c3ee814a4227e5934a19b04a20d09f1de3bca03d33edbd4866",
+      "id": "load_20a21",
+      "name": "kb_read_char"
+    },
+    {
+      "card": "recovery/cards/load_227d7.json",
+      "card_sha256": "5282549e6f99adf48f3f6079df4e3e04c70e92f81334e96de2797cf8e1ad69e2",
+      "id": "load_227d7",
+      "name": "timer_wait_for_dx"
+    },
+    {
+      "card": "recovery/cards/load_273e8.json",
+      "card_sha256": "781edba16ce6445e065c1cac0fd1db8b07c319664a985f9ad084487e4df8fb5a",
+      "id": "load_273e8",
+      "name": "audio_toggle_flag2"
+    },
+    {
+      "card": "recovery/cards/load_27708.json",
+      "card_sha256": "943a1f3fb9363f2a342ba357ca610b70b8f03212595f3883d5f036a499549aab",
+      "id": "load_27708",
+      "name": "audio_toggle_flag6"
+    },
+    {
+      "card": "recovery/cards/load_09de8.json",
+      "card_sha256": "6d5027b2e750e537becd3b8160f38a20c147b4e528dc9e38d10dbb26e0034685",
+      "id": "load_09de8",
+      "name": "nopsub_19DE8"
+    },
+    {
+      "card": "recovery/cards/load_1eb07.json",
+      "card_sha256": "b01ac78644edb3175f7a2630f419a340f46f9c10cc43b16c583c47ac221ecc5f",
+      "id": "load_1eb07",
+      "name": "sub_2EB07"
+    },
+    {
+      "card": "recovery/cards/load_227c0.json",
+      "card_sha256": "a63fdee687998caa1edce80784ef0bdc9b9c093ce3d9545270363521a2a0d7c4",
+      "id": "load_227c0",
+      "name": "timer_copy_counter"
+    },
+    {
+      "card": "recovery/cards/load_18d9e.json",
+      "card_sha256": "41bf96d3778b01e721cbc3a14b476542057e6904e541568496fb2b97ed3d08d0",
+      "id": "load_18d9e",
+      "name": "mouse_draw_transparent_check"
+    },
+    {
+      "card": "recovery/cards/load_1ddc4.json",
+      "card_sha256": "5374415c34218ed6e3dacf0d0f940b231925cb53f3a20ded631a1078bbb2313c",
+      "id": "load_1ddc4",
+      "name": "putsign"
+    },
+    {
+      "card": "recovery/cards/load_227eb.json",
+      "card_sha256": "fbed704a8c8aadf91a7723f4aa537776c709bf0d6b1e929c8f8790c0905ef273",
+      "id": "load_227eb",
+      "name": "timer_compare_dx"
+    },
+    {
+      "card": "recovery/cards/load_1255a.json",
+      "card_sha256": "341cebe9e8d32d374e01601a27a2321edaa465c8a18e64a840d700d336bdb0c0",
+      "id": "load_1255a",
+      "name": "set_frame_callback"
+    },
+    {
+      "card": "recovery/cards/load_2262e.json",
+      "card_sha256": "38027c0dc99397fbda0f336a617f4afe2a9755c6da3291babf310bf1cb492e36",
+      "id": "load_2262e",
+      "name": "sprite_copy_arg_to_both"
+    },
+    {
+      "card": "recovery/cards/load_1f3bc.json",
+      "card_sha256": "4cbc8f5685b3e7cf9eea6c020a325eaa460b81aefddb047ad01a3200d16c101b",
+      "id": "load_1f3bc",
+      "name": "criterr_exithandler"
+    },
+    {
+      "card": "recovery/cards/load_207b4.json",
+      "card_sha256": "251442738b99bac909c2f13c1bcfd6771eeafa7db7d5347d9d2eaf4f1594c39e",
+      "id": "load_207b4",
+      "name": "sub_307B4"
+    },
+    {
+      "card": "recovery/cards/load_217c1.json",
+      "card_sha256": "1c0eef2bfd0acaaed85c2609e1ac28af092504277f8bdccf85f7b0119232baed",
+      "id": "load_217c1",
+      "name": "preRender_default_alt"
+    },
+    {
+      "card": "recovery/cards/load_09ec9.json",
+      "card_sha256": "e37825b702b614ad04d23a3eca9179be76b6d4cb7a28d2c1a2eed66c728417ca",
+      "id": "load_09ec9",
+      "name": "intr0_handler"
+    },
+    {
+      "card": "recovery/cards/load_20519.json",
+      "card_sha256": "a83688270ded626bf19e4257fb67314f9c08453b4379030df6aca5bd248baff5",
+      "id": "load_20519",
+      "name": "kb_get_char"
+    },
+    {
+      "card": "recovery/cards/load_210fe.json",
+      "card_sha256": "d3b273f874b40b1b21130628e53324314a3ee689f2a5ae413ea3200137d62daf",
+      "id": "load_210fe",
+      "name": "nopsub_310FE"
+    },
+    {
+      "card": "recovery/cards/load_2a496.json",
+      "card_sha256": "1d3ba503bd4e3086cca8fad09e7bbdb93d90ce316e72453af4c31b7b80aab1dd",
+      "id": "load_2a496",
+      "name": "mmgr_get_chunk_size_bytes"
+    },
+    {
+      "card": "recovery/cards/load_20a77.json",
+      "card_sha256": "2c487a193178de5014bbc7c9cb4aa9fc0e17bc3c903ac77df10977f8addbf405",
+      "id": "load_20a77",
+      "name": "nopsub_30A77"
+    },
+    {
+      "card": "recovery/cards/load_2260e.json",
+      "card_sha256": "8d6bd97a49855653a9d17641c29443a3fbbb0f81b5cf8397b02fa7688d011a54",
+      "id": "load_2260e",
+      "name": "sprite_copy_both_to_arg"
+    },
+    {
+      "card": "recovery/cards/load_1ea08.json",
+      "card_sha256": "9d3ba3826b6b79d7f6c71a7c2bb3fda89e72a0f715838bf778c0840d9b3a7d3c",
+      "id": "load_1ea08",
+      "name": "polarRadius3D"
+    },
+    {
+      "card": "recovery/cards/load_1e1de.json",
+      "card_sha256": "6db4589195733d6b87425e999c46e1216555b65c50149c7c2c5ae700d23ef5b3",
+      "id": "load_1e1de",
+      "name": "__amlink"
+    },
+    {
+      "card": "recovery/cards/load_1e3c6.json",
+      "card_sha256": "1b108581d54d87a8a45a9a12e6769f0ec77799ca752d0e222aa736606b32a27b",
+      "id": "load_1e3c6",
+      "name": "_abort"
+    },
+    {
+      "card": "recovery/cards/load_17466.json",
+      "card_sha256": "41b193dde15014897da30f1e52b65703df5ce2145deb7ec55559aa75918989f3",
+      "id": "load_17466",
+      "name": "audio_op_unk7"
+    },
+    {
+      "card": "recovery/cards/load_1ce8a.json",
+      "card_sha256": "dabbadf0de589d0ec47808516fe2b048a4fc2c4e11aa7168dd72121e0adf7057",
+      "id": "load_1ce8a",
+      "name": "__FF_MSGBANNER"
+    },
+    {
+      "card": "recovery/cards/load_1ceb4.json",
+      "card_sha256": "6690929c455aa6bca854fa02545b75e30d17a0cd58ad608c4adba91b31ed2bb4",
+      "id": "load_1ceb4",
+      "name": "__chkstk"
+    },
+    {
+      "card": "recovery/cards/load_1e918.json",
+      "card_sha256": "7950d8e8b5f43bd41d438ed5ca5b1e9da21d6c8c569fa97aff310c0e3823642e",
+      "id": "load_1e918",
+      "name": "unknown_libname_3"
+    },
+    {
+      "card": "recovery/cards/load_1e93c.json",
+      "card_sha256": "cecf60132d5b40917bff1fa0c2517a414cdda61035af706a028ab3ca27400650",
+      "id": "load_1e93c",
+      "name": "__aFFblmul"
+    },
+    {
+      "card": "recovery/cards/load_1e982.json",
+      "card_sha256": "a6f6a13ac2fc55fca88d7d7e740a9da9bfc4a5f4e61ed523bb91f11eb8bc08ed",
+      "id": "load_1e982",
+      "name": "unknown_libname_5"
+    },
+    {
+      "card": "recovery/cards/load_16bae.json",
+      "card_sha256": "0af91117db647371928517c5b6fadf91fdbb5bbc60b648911d7d76a98bef0248",
+      "id": "load_16bae",
+      "name": "audio_add_driver_timer"
+    },
+    {
+      "card": "recovery/cards/load_225ae.json",
+      "card_sha256": "0a84a782228d0ce2ec0c1b36e87e8678e6733cb38c210f4cc5b54f4045e6d35c",
+      "id": "load_225ae",
+      "name": "video_add_exithandler"
+    },
+    {
+      "card": "recovery/cards/load_268aa.json",
+      "card_sha256": "8d1727a8949f00b6b83fc84f55f4b1cfc6526a48eb75789391d5c2d43fd384da",
+      "id": "load_268aa",
+      "name": "mouse_set_pixratio"
+    },
+    {
+      "card": "recovery/cards/load_26aca.json",
+      "card_sha256": "1e172f3d13bf45e8621fb743d93a8c7c21c2e9774d261bd429a014fbc37be766",
+      "id": "load_26aca",
+      "name": "nopsub_36ACA"
+    },
+    {
+      "card": "recovery/cards/load_29e24.json",
+      "card_sha256": "83cc1cf7321dda6f9e51de70806f82e8c6e86649b87ac56b56d96926fd6604ca",
+      "id": "load_29e24",
+      "name": "file_combine_and_find"
+    },
+    {
+      "card": "recovery/cards/load_1eade.json",
+      "card_sha256": "b05cb23b3ee5dbebb9f890b221d9153e1a0bb220027d4b2962497c78b1593165",
+      "id": "load_1eade",
+      "name": "set_add_value"
+    },
+    {
+      "card": "recovery/cards/load_2327f.json",
+      "card_sha256": "0b58664b029a7c48ea449490e6199db9a42bed4443445b58dbd2b0711a304ad7",
+      "id": "load_2327f",
+      "name": "sprite_set_1_size"
+    },
+    {
+      "card": "recovery/cards/load_1dddc.json",
+      "card_sha256": "b2ca205aa08234347dd147a31fa7927c236cd89666839e793ddc40fd12b2788e",
+      "id": "load_1dddc",
+      "name": "putprefix"
+    },
+    {
+      "card": "recovery/cards/load_1eb1e.json",
+      "card_sha256": "39932e2b76f2d13725893b5675c079783ca00dac6b27c8019811329be211741f",
+      "id": "load_1eb1e",
+      "name": "sub_2EB1E"
+    },
+    {
+      "card": "recovery/cards/load_26bbe.json",
+      "card_sha256": "d5e8173c6098d5874541d0f254894982071bbfbf0f62a18c30cdbba34611f3e9",
+      "id": "load_26bbe",
+      "name": "preRender_sphere_helper"
+    },
+    {
+      "card": "recovery/cards/load_1d129.json",
+      "card_sha256": "bdc82cf8b94533612739c3b670fd61efdf02aed822fcda5dd22622122dbbfabf",
+      "id": "load_1d129",
+      "name": "__NMSG_WRITE"
+    },
+    {
+      "card": "recovery/cards/load_203d8.json",
+      "card_sha256": "04d6711f77a7e2efd311fab72f4e8253d6e701817109b7f21f0b55980b3c5c85",
+      "id": "load_203d8",
+      "name": "set_bios_mode3"
+    },
+    {
+      "card": "recovery/cards/load_09e21.json",
+      "card_sha256": "95dcfc97069cede623acb0e9e80ef407781ee4971fbdfea2b6aea735abaf862c",
+      "id": "load_09e21",
+      "name": "init_kevinrandom"
+    },
+    {
+      "card": "recovery/cards/load_09e4e.json",
+      "card_sha256": "7c99161775cf157f54de255dae6c323035f619fb1137d3588852b34eb70b79df",
+      "id": "load_09e4e",
+      "name": "get_kevinrandom_seed"
+    },
+    {
+      "card": "recovery/cards/load_046e4.json",
+      "card_sha256": "2f7b4de3ba8899bc22cbf69cd1606077b7a8e2f6f9259c303ab892861ac4e28d",
+      "id": "load_046e4",
+      "name": "set_default_car"
+    },
+    {
+      "card": "recovery/cards/load_08cd8.json",
+      "card_sha256": "f9ac00e0540ff893e3acbbed00ec891fdc32661882247283619c31a19494a3b9",
+      "id": "load_08cd8",
+      "name": "audio_unk3"
+    },
+    {
+      "card": "recovery/cards/load_26a9a.json",
+      "card_sha256": "2acc70bd17eba5a5cfc1a7b2534ffcfa9459d1d22e20ff02f79c63da8036034a",
+      "id": "load_26a9a",
+      "name": "nopsub_36A9A"
+    },
+    {
+      "card": "recovery/cards/load_273b8.json",
+      "card_sha256": "28cc8b439a323410fac8a9d88d8f8a35ad8c4027714ddff7d1021384db550270",
+      "id": "load_273b8",
+      "name": "audio_disable_flag2"
+    },
+    {
+      "card": "recovery/cards/load_16bd5.json",
+      "card_sha256": "bf788aed18bfd7e7aa8f91f8f2dd001e166fdd883e5cf0598fee21823642aea6",
+      "id": "load_16bd5",
+      "name": "audio_remove_driver_timer"
+    },
+    {
+      "card": "recovery/cards/load_23816.json",
+      "card_sha256": "7828555a47c88427512bac884afcd20ecf2592f76a3eb41cb338a58fdf76aff2",
+      "id": "load_23816",
+      "name": "video_set_mode_13h"
+    },
+    {
+      "card": "recovery/cards/load_202aa.json",
+      "card_sha256": "cc9939fda4f202085fdda26fd34fc2cad0e00c69a08897c60af35a89a436cb0a",
+      "id": "load_202aa",
+      "name": "timer_reg_callback"
+    },
+    {
+      "card": "recovery/cards/load_26a2c.json",
+      "card_sha256": "2797530dc117bb62fd70cb40d182f7ec46454f6593ae05b0fe3c08160d36141e",
+      "id": "load_26a2c",
+      "name": "mouse_set_position"
+    },
+    {
+      "card": "recovery/cards/load_27696.json",
+      "card_sha256": "be3aa66898739121890bc47237e774120d068c8acd71f8f8a1460b8cfc23c56b",
+      "id": "load_27696",
+      "name": "audio_enable_flag6"
+    },
+    {
+      "card": "recovery/cards/load_2a9a0.json",
+      "card_sha256": "4e4d7aaf66c8353de6b8d80c8de7245e448e9e84fa7e563a728c30720bff3df6",
+      "id": "load_2a9a0",
+      "name": "setup_mcgawnd2"
+    },
+    {
+      "card": "recovery/cards/load_04d6c.json",
+      "card_sha256": "e631ed2d29880f45ad50c04af5234072f975abd75c357ec3c047260034e11cea",
+      "id": "load_04d6c",
+      "name": "mat_mul_vector2"
+    },
+    {
+      "card": "recovery/cards/load_16c06.json",
+      "card_sha256": "5a34e4d8fa86fa37cc4f591de96d87b7ba7b455d92004e1a187f398797cd47e3",
+      "id": "load_16c06",
+      "name": "pad_id"
+    },
+    {
+      "card": "recovery/cards/load_16f6d.json",
+      "card_sha256": "a3f812db47f2b4d177069592f0ae6a42fe03fd6261478a8931b6f3ab6fb318bd",
+      "id": "load_16f6d",
+      "name": "audio_function2"
+    },
+    {
+      "card": "recovery/cards/load_225d6.json",
+      "card_sha256": "95823ca2be267b4c139c85ce68d2204fd0ab77eb16195b024dcedfd6c34592cf",
+      "id": "load_225d6",
+      "name": "video_on_exit"
+    },
+    {
+      "card": "recovery/cards/load_1e1a4.json",
+      "card_sha256": "78d7098817bc56396de12a6db7cf2ac2b23b0bdd1256cc6d30fcdd09373a070c",
+      "id": "load_1e1a4",
+      "name": "__amexpand"
+    },
+    {
+      "card": "recovery/cards/load_2111d.json",
+      "card_sha256": "d2808980abb2f857dc9a35d07d48300da2aa5ae75c95b3ab53984d44f81eed32",
+      "id": "load_2111d",
+      "name": "nopsub_3111D"
+    },
+    {
+      "card": "recovery/cards/load_26a60.json",
+      "card_sha256": "49455d4dcc7d57089022fa03807475087d5f6f91729ba5271aeb4e22d2ab1e09",
+      "id": "load_26a60",
+      "name": "mouse_get_state"
+    },
+    {
+      "card": "recovery/cards/load_21641.json",
+      "card_sha256": "134ba3427f6aedad281b6b0a257be8426605571673c864de6a77435d1c6dfb55",
+      "id": "load_21641",
+      "name": "mmgr_release"
+    },
+    {
+      "card": "recovery/cards/load_17338.json",
+      "card_sha256": "d7eb201ee9fae617ed33ccc5ce292e75f263c6b340813e5b847a88b48835a65e",
+      "id": "load_17338",
+      "name": "audio_op_unk3"
+    },
+    {
+      "card": "recovery/cards/load_17374.json",
+      "card_sha256": "c033f3d83ec4799c3cb93a0f179352d9e4cb1bc5c7b2387dea73dc59fafa7cf6",
+      "id": "load_17374",
+      "name": "audio_op_unk4"
+    },
+    {
+      "card": "recovery/cards/load_1fe1c.json",
+      "card_sha256": "b61c9ce31d10453772c729292b44818e0d13a050a28d05284194ed0ba6f100bc",
+      "id": "load_1fe1c",
+      "name": "add_exit_handler"
+    },
+    {
+      "card": "recovery/cards/load_1fdde.json",
+      "card_sha256": "3a61ec4cc4dd046060c7e466d4dfa195adc191a0b4634fe7689ac8f79e65e7a6",
+      "id": "load_1fdde",
+      "name": "preRender_line"
+    },
+    {
+      "card": "recovery/cards/load_276ca.json",
+      "card_sha256": "05c17212404cd43098d4d9622a17c2254cceca85533d1743a57df5bec72cfbfd",
+      "id": "load_276ca",
+      "name": "audio_disable_flag6"
+    },
+    {
+      "card": "recovery/cards/load_1d21e.json",
+      "card_sha256": "47b636e8a2490144c836f6e90be9f18b37dce2b6a913d05674804cd0f27858a0",
+      "id": "load_1d21e",
+      "name": "_printf"
+    },
+    {
+      "card": "recovery/cards/load_20268.json",
+      "card_sha256": "8df5f893b783ed8b88f065501a62dcb340087f41bac1c8db2acfc6e54a3c5453",
+      "id": "load_20268",
+      "name": "audio_stop_unk"
+    },
+    {
+      "card": "recovery/cards/load_267e4.json",
+      "card_sha256": "a04dfe1c88b71ed77fcc0f478b12fa9227dcbd86bdbea1277d70413913420017",
+      "id": "load_267e4",
+      "name": "nopsub_367E4"
+    },
+    {
+      "card": "recovery/cards/load_26826.json",
+      "card_sha256": "e09a53359b0c61cd3ef7bc9b1b45b96e4d95e314e3970d0c674a2a920f06a3d3",
+      "id": "load_26826",
+      "name": "nopsub_36826"
+    },
+    {
+      "card": "recovery/cards/load_26868.json",
+      "card_sha256": "a0140000b036703de53c21c098dafb05825b25db3d963cb46184fcbdd42d37dd",
+      "id": "load_26868",
+      "name": "nopsub_36868"
+    },
+    {
+      "card": "recovery/cards/load_27d7a.json",
+      "card_sha256": "95a4bd69a260c32c5dc1c5d573168e3a2c5468bd9df5663e887ac39f1e0593a3",
+      "id": "load_27d7a",
+      "name": "nopsub_37D7A"
+    },
+    {
+      "card": "recovery/cards/load_22843.json",
+      "card_sha256": "058e9ec3a40ad963d0cb46bf8ed224179d5d71b915824612bf7651854706bc46",
+      "id": "load_22843",
+      "name": "font_op2"
+    },
+    {
+      "card": "recovery/cards/load_1726c.json",
+      "card_sha256": "34c2c1a1906d055c74d768fe059a734480e5c4310e43a2fe69e4699de3aa5b49",
+      "id": "load_1726c",
+      "name": "nopsub_2726C"
+    },
+    {
+      "card": "recovery/cards/load_172b0.json",
+      "card_sha256": "85b8b7ebffa6da3c82de61579d6e488881fc19ca7a3f476d9e5f09689d1c6bc1",
+      "id": "load_172b0",
+      "name": "nopsub_272B0"
+    },
+    {
+      "card": "recovery/cards/load_172f4.json",
+      "card_sha256": "2b512e0090d0cc6ed54342625fad0c8be736ffec79ac0fec7c5581f715f866ee",
+      "id": "load_172f4",
+      "name": "audio_function2_wrap"
+    },
+    {
+      "card": "recovery/cards/load_1ce03.json",
+      "card_sha256": "7744bbcea417f3e11761e9af47b2dd7cadfb5c87f8d698ae8834fe2d18a0a4f7",
+      "id": "load_1ce03",
+      "name": "libsub_quit_to_dos"
+    },
+    {
+      "card": "recovery/cards/load_13a50.json",
+      "card_sha256": "a609d6a16c31d9bdb0db8aa7388f1137292c82f3003c2ddb43fe212588ab16b3",
+      "id": "load_13a50",
+      "name": "mouse_minmax_position"
+    },
+    {
+      "card": "recovery/cards/load_2a958.json",
+      "card_sha256": "aa20d73876687ae12a5ae4e0d25b105b3fd239d7e101e48433bc98598608b3c6",
+      "id": "load_2a958",
+      "name": "setup_mcgawnd1"
+    },
+    {
+      "card": "recovery/cards/load_27cba.json",
+      "card_sha256": "80f6caefc170fcf50d7877c63538016c14b7a54a71b712f4646186d9e0888e08",
+      "id": "load_27cba",
+      "name": "load_song_file"
+    },
+    {
+      "card": "recovery/cards/load_17220.json",
+      "card_sha256": "02db7afff32f61fddf294af20a655a50533d741143ead5700bbc5466e35c2138",
+      "id": "load_17220",
+      "name": "nopsub_27220"
+    },
+    {
+      "card": "recovery/cards/load_2764a.json",
+      "card_sha256": "a2b0f7ae4154ee9edcce7127feac01f1868f2abc314468fafaa8e378e9f9a770",
+      "id": "load_2764a",
+      "name": "audio_init_chunk2"
+    },
+    {
+      "card": "recovery/cards/load_09e7b.json",
+      "card_sha256": "c639c00d25868d379e4926ccfbfa3386a526a2c96322d704a377bb0400655a05",
+      "id": "load_09e7b",
+      "name": "get_kevinrandom"
+    },
+    {
+      "card": "recovery/cards/load_2863c.json",
+      "card_sha256": "807ebb96b7f7eed2829835acea47a844bd0375d3030fcf6cf97f90160eec9321",
+      "id": "load_2863c",
+      "name": "audiodriver_timer"
+    },
+    {
+      "card": "recovery/cards/load_2963c.json",
+      "card_sha256": "bf4d993c13493d65fbf8b4cf4b3c5d07289b1137fd32b04fe78e593cfb1b3bbc",
+      "id": "load_2963c",
+      "name": "sub_3963C"
+    },
+    {
+      "card": "recovery/cards/load_224aa.json",
+      "card_sha256": "252174a074d9c4b154a4402c9966023bc68f4e8e78605e254402f37d7b46f8b1",
+      "id": "load_224aa",
+      "name": "sprite_free_wnd"
+    },
+    {
+      "card": "recovery/cards/load_2045e.json",
+      "card_sha256": "a57ddf36940fbb2ef2824fd46dfb8c4790e8fd96d5a355883ae31dd22cc7f462",
+      "id": "load_2045e",
+      "name": "kb_reg_callback"
+    },
+    {
+      "card": "recovery/cards/load_211d5.json",
+      "card_sha256": "3bb56e60ecd03218344547221e9dfeb1f4b1da4e9c56375c819574d130a19cfd",
+      "id": "load_211d5",
+      "name": "copy_paras_reverse"
+    },
+    {
+      "card": "recovery/cards/load_26fd8.json",
+      "card_sha256": "8b6dd09a428ab706633fc3f4826dfe8999285d019181eb4d4f8360555655a69b",
+      "id": "load_26fd8",
+      "name": "mat_rot_z"
+    },
+    {
+      "card": "recovery/cards/load_12c92.json",
+      "card_sha256": "11495305d06f4dac88535bc959d2386200646d5a957d738fd747f873b9d78d3c",
+      "id": "load_12c92",
+      "name": "file_load_replay"
+    },
+    {
+      "card": "recovery/cards/load_1e290.json",
+      "card_sha256": "4c5a0d9e0c06d39ad317a3a66a66af31e259099dc76024c8672f2a5fba736f0f",
+      "id": "load_1e290",
+      "name": "sub_2E290"
+    },
+    {
+      "card": "recovery/cards/load_26f80.json",
+      "card_sha256": "4a6953e8fb9064f0f869f6f46325eb2ef8bf44f1d7631456f076e61ddc812e90",
+      "id": "load_26f80",
+      "name": "mat_rot_y"
+    },
+    {
+      "card": "recovery/cards/load_08d06.json",
+      "card_sha256": "2dd3ea8581f55526ec9050d664bc85fb008338de424ec06e9a8b233b63c4b22f",
+      "id": "load_08d06",
+      "name": "sub_18D06"
+    },
+    {
+      "card": "recovery/cards/load_19d9a.json",
+      "card_sha256": "2c3257dd85567da655168c6b8399f5df1631dcd3269a790ab3384e8a87902c3b",
+      "id": "load_19d9a",
+      "name": "do_key_restext"
+    },
+    {
+      "card": "recovery/cards/load_19f5c.json",
+      "card_sha256": "848f52d87da66305de6ab99026d5bad488c14dce49028961359d071d2199b9ce",
+      "id": "load_19f5c",
+      "name": "do_dos_restext"
+    },
+    {
+      "card": "recovery/cards/load_20404.json",
+      "card_sha256": "0972f1baf41806d8ef3a875193085638d3bd93f9471d514288e7a8413203603a",
+      "id": "load_20404",
+      "name": "kb_parse_key"
+    },
+    {
+      "card": "recovery/cards/load_173b0.json",
+      "card_sha256": "8f15bb2f6400110de45e1b719bf20044ea2ec9ef773bf67655e27f52757f6954",
+      "id": "load_173b0",
+      "name": "audio_op_unk5"
+    },
+    {
+      "card": "recovery/cards/load_1740b.json",
+      "card_sha256": "40df36b94367570ab3b9884a5b997bdc4df71485eccb8f727d567c8d2956bb20",
+      "id": "load_1740b",
+      "name": "audio_op_unk6"
+    },
+    {
+      "card": "recovery/cards/load_23014.json",
+      "card_sha256": "9976721074ecb0fc6fe99f103dca24cd987c4c12fa8f08d980c63e2cda2919f1",
+      "id": "load_23014",
+      "name": "vector_op_unk"
+    },
+    {
+      "card": "recovery/cards/load_2477e.json",
+      "card_sha256": "dbd01ef0ce9b273f7d4cbc2359bb5e08c04e1ad34e45db6e00a028033e086d6a",
+      "id": "load_2477e",
+      "name": "sprite_clear_shape"
+    },
+    {
+      "card": "recovery/cards/load_2265b.json",
+      "card_sha256": "5c3989fab4bd381ae63020fffe918b5d3287abd3bc560cd034e0a5ff0fcfa867",
+      "id": "load_2265b",
+      "name": "file_get_shape2d"
+    },
+    {
+      "card": "recovery/cards/load_1dc0e.json",
+      "card_sha256": "e23fb24689e79a181c2c5bac07c25a50818a6d3b529025cff3bd33df95da126d",
+      "id": "load_1dc0e",
+      "name": "putpad"
+    },
+    {
+      "card": "recovery/cards/load_20120.json",
+      "card_sha256": "5ec0917150360fbea52a54cc759dda39014bfe83f8c46056e532d7c801652bc6",
+      "id": "load_20120",
+      "name": "video_set_mode7"
+    },
+    {
+      "card": "recovery/cards/load_18762.json",
+      "card_sha256": "ecacbfe12218e778d891f0e4cfe174211ba0040d3af098ba503ff3fb6e09b323",
+      "id": "load_18762",
+      "name": "parse_filepath_separators"
+    },
+    {
+      "card": "recovery/cards/load_209a5.json",
+      "card_sha256": "305956dc5fa89ecbe07b09e8e48c82513ce2d2591df0ac02e697916b0c41dbf5",
+      "id": "load_209a5",
+      "name": "kb_int16_handler"
+    },
+    {
+      "card": "recovery/cards/load_26ec0.json",
+      "card_sha256": "ac5d4cd2cf06bfaff8d00ec0728d0a69a853edbe5824391edd61a1e41f4062c6",
+      "id": "load_26ec0",
+      "name": "preRender_wheel_helper"
+    },
+    {
+      "card": "recovery/cards/load_200b6.json",
+      "card_sha256": "4709547c3b527910777e446be55a3fa896dd344b270d4a561db0ee55ffff95ab",
+      "id": "load_200b6",
+      "name": "polarRadius2D"
+    },
+    {
+      "card": "recovery/cards/load_20812.json",
+      "card_sha256": "50421e545b4f6b54cb3462115b4997043e383638ed898d74f1c56cb45cb21206",
+      "id": "load_20812",
+      "name": "kb_init_interrupt"
+    },
+    {
+      "card": "recovery/cards/load_2320e.json",
+      "card_sha256": "d75b28dfb8fad820f610d1bc81d19364dd22633843bc1354c9711d09c08400d1",
+      "id": "load_2320e",
+      "name": "nopsub_3320E"
+    },
+    {
+      "card": "recovery/cards/load_10438.json",
+      "card_sha256": "2ae2f6585ccdec509de443aa6a883b4bbe65191ddd2a51685527db5f3ce1bd80",
+      "id": "load_10438",
+      "name": "shape3d_free_car_shapes"
+    },
+    {
+      "card": "recovery/cards/load_19786.json",
+      "card_sha256": "07f02fa6dc6ea9749ecd6493ab23e99f386c9b7677b820ccdf77300e64b1de57",
+      "id": "load_19786",
+      "name": "mouse_timer_sprite_unk"
+    },
+    {
+      "card": "recovery/cards/load_272f4.json",
+      "card_sha256": "973eeebaf2dacdaabd3b0d3c55bfd75b7ea2bc0642c888743dabfd02f0bb8091",
+      "id": "load_272f4",
+      "name": "sub_372F4"
+    },
+    {
+      "card": "recovery/cards/load_2107a.json",
+      "card_sha256": "b177f1a7f26dd6b0c5b4a7ba05629c8806f0127c3aa56e4ea34ac246f6a267f4",
+      "id": "load_2107a",
+      "name": "mmgr_alloc_resmem"
+    },
+    {
+      "card": "recovery/cards/load_16ef4.json",
+      "card_sha256": "eac569c61208933966977a9add92cdac060bb41eb16d5dc2a86492358b1f30a8",
+      "id": "load_16ef4",
+      "name": "audio_op_unk"
+    },
+    {
+      "card": "recovery/cards/load_16572.json",
+      "card_sha256": "6f1d21448b3fe63e2f370732d8f8bbf6214f6813b5a00e0a277466b0a53f1e4b",
+      "id": "load_16572",
+      "name": "rect_union"
+    },
+    {
+      "card": "recovery/cards/load_1deae.json",
+      "card_sha256": "564f9a05ff659b005631a8ef9ed9235f458982114a308c617c90b2cdc659cf8c",
+      "id": "load_1deae",
+      "name": "_lseek"
+    },
+    {
+      "card": "recovery/cards/load_1e40c.json",
+      "card_sha256": "384553c824e2d06ec6cc8cecab227cb01f2d69fafcd6f6577969a7ea45828acf",
+      "id": "load_1e40c",
+      "name": "_int86"
+    },
+    {
+      "card": "recovery/cards/load_229f2.json",
+      "card_sha256": "e5645945218f9e20b292093812bb153df6e8802f0b9705ec8364fb8158602e8b",
+      "id": "load_229f2",
+      "name": "mat_multiply"
+    },
+    {
+      "card": "recovery/cards/load_1fea5.json",
+      "card_sha256": "304e21c7feef037e0c65b8e628339973ff5f71b0cd1ca6c45b052c4520fba23c",
+      "id": "load_1fea5",
+      "name": "file_paras_fatal"
+    },
+    {
+      "card": "recovery/cards/load_29b5a.json",
+      "card_sha256": "1d986570611361eca738baa146fb1958c6cc91cee32b8ea49750b1f5f9987b72",
+      "id": "load_29b5a",
+      "name": "audioresource_get_chunk_index"
+    },
+    {
+      "card": "recovery/cards/load_165ec.json",
+      "card_sha256": "0f5c2a98f981ebea81c7a037586648d1b05406eb4c473cd4a562b68fd9929a4e",
+      "id": "load_165ec",
+      "name": "rect_intersect"
+    },
+    {
+      "card": "recovery/cards/load_189f2.json",
+      "card_sha256": "82462d482a36bff88f71a2e61078721d4c4c46c8fe6a9bbce2f64e3ea55790c7",
+      "id": "load_189f2",
+      "name": "file_load_resfile"
+    },
+    {
+      "card": "recovery/cards/load_1a236.json",
+      "card_sha256": "9202d5e080328a79c7b7ddfe038c3992892e8f24c608569b57fa6d714834ffd7",
+      "id": "load_1a236",
+      "name": "file_load_3dres"
+    },
+    {
+      "card": "recovery/cards/load_261bc.json",
+      "card_sha256": "8a985f650313cdf7e59b310948636564e90c3d051f101c9afd602997a6fc960c",
+      "id": "load_261bc",
+      "name": "sprite_1_unk4"
+    },
+    {
+      "card": "recovery/cards/load_2702e.json",
+      "card_sha256": "bfebe55d69b39a6d118bc3db639431d5ef29d574a1ab5e3fa2a0189c4b90a714",
+      "id": "load_2702e",
+      "name": "sub_3702E"
+    },
+    {
+      "card": "recovery/cards/load_1a118.json",
+      "card_sha256": "62d42cb721a2abbfe3a5a69528de4fb912a05a78f74b7b494fef868dcec44465",
+      "id": "load_1a118",
+      "name": "do_dea_textres"
+    },
+    {
+      "card": "recovery/cards/load_20538.json",
+      "card_sha256": "b7e58b0f977e080a4b942508e1725065bc9cf47fedffb34cc6a42738e1312e75",
+      "id": "load_20538",
+      "name": "get_kb_or_joy_flags"
+    },
+    {
+      "card": "recovery/cards/load_216a2.json",
+      "card_sha256": "285ac003e236239b7ac589357a9a9419c1df5912fc3a34725b060ca0308b0a40",
+      "id": "load_216a2",
+      "name": "mmgr_resize_memory"
+    },
+    {
+      "card": "recovery/cards/load_219cd.json",
+      "card_sha256": "e8312d38db504e96ff8b35a311faf9e08e62968fb86df7f5facd220ab549c1b7",
+      "id": "load_219cd",
+      "name": "preRender_helper"
+    },
+    {
+      "card": "recovery/cards/load_139b4.json",
+      "card_sha256": "e17cb0a49a64331b0895ad907e2084d08e838b0c59674a96f30f59d492b06b03",
+      "id": "load_139b4",
+      "name": "free_player_cars"
+    },
+    {
+      "card": "recovery/cards/load_1e67c.json",
+      "card_sha256": "76b222bd0d84571f7e08af814107147243675e056ef4051442ea0e0ec5d9985f",
+      "id": "load_1e67c",
+      "name": "_signal"
+    },
+    {
+      "card": "recovery/cards/load_2250b.json",
+      "card_sha256": "342b4592a13b6ba4c64dcfe51538d9fd10e3a8298eda49516528439fee4d9f80",
+      "id": "load_2250b",
+      "name": "file_write_fatal"
+    },
+    {
+      "card": "recovery/cards/load_26b16.json",
+      "card_sha256": "9085d448488d914e944d83f5e5972819c944cd662953e7f8d3cd771f7530028f",
+      "id": "load_26b16",
+      "name": "preRender_wheel_helper2"
+    },
+    {
+      "card": "recovery/cards/load_2147c.json",
+      "card_sha256": "c3a4c9e786f8c17c5fb658ddbed16a3fa8714647369eddb5925833c936476e3b",
+      "id": "load_2147c",
+      "name": "mmgr_free"
+    },
+    {
+      "card": "recovery/cards/load_1955a.json",
+      "card_sha256": "873cc96ceb8e575652b283fe4c0470de01419cf28acdffe96039a8b3a8cc2dae",
+      "id": "load_1955a",
+      "name": "shape3d_init_shape"
+    },
+    {
+      "card": "recovery/cards/load_21248.json",
+      "card_sha256": "51e5f4b75e883c1941f32285d4ab1b19838d2e50b8c51c3989dd5396676d5136",
+      "id": "load_21248",
+      "name": "mmgr_alloc_pages"
+    },
+    {
+      "card": "recovery/cards/load_15e24.json",
+      "card_sha256": "84db7f7df891e1cb9c2c2ee6ec77ce12068163a15b5af5b2b06059bb7e736609",
+      "id": "load_15e24",
+      "name": "insert_newest_poly_in_poly_linked_list_40ED6"
+    },
+    {
+      "card": "recovery/cards/load_175c6.json",
+      "card_sha256": "1c8a0386647a1084f552a2af4c7920dd10d68f7dbe1e074982bca67aed03549b",
+      "id": "load_175c6",
+      "name": "sub_275C6"
+    },
+    {
+      "card": "recovery/cards/load_2a896.json",
+      "card_sha256": "c3257a4e209a616efa44698d115fbc96172be2cae4830a8718df2630cc687863",
+      "id": "load_2a896",
+      "name": "read_line_helper2"
+    },
+    {
+      "card": "recovery/cards/is_facing_camera.json",
+      "card_sha256": "09d0aacb110b1751f46c1dc99633e2be14d8db67d58289be5e39e850fc56deeb",
+      "id": "load_15f2e",
+      "name": "is_facing_camera"
+    },
+    {
+      "card": "recovery/cards/load_2367a.json",
+      "card_sha256": "f1de25f2a1de07ae07cba7ea7f339970492fe24c198bc2808a10df697fd253c5",
+      "id": "load_2367a",
+      "name": "sprite_1_unk3"
+    },
+    {
+      "card": "recovery/cards/load_208c6.json",
+      "card_sha256": "f891df5eb1ee402a063ac5939cb427f726d5d60075074931224ff761c1ebff17",
+      "id": "load_208c6",
+      "name": "kb_int9_handler"
+    },
+    {
+      "card": "recovery/cards/load_222f3.json",
+      "card_sha256": "d57a7cd1adec491e74968af4684256c9f9985f1a284469ee3c91f0a533603816",
+      "id": "load_222f3",
+      "name": "set_projection"
+    },
+    {
+      "card": "recovery/cards/load_0069c.json",
+      "card_sha256": "bbfb07bea6bb8f9f094e3f558f40ad045ba0ce260defd5db1a5becf7beca6334",
+      "id": "load_0069c",
+      "name": "run_intro"
+    },
+    {
+      "card": "recovery/cards/load_1712e.json",
+      "card_sha256": "ed1fd49f7a996f81f69ecacb829b3c5957899a3d65b1127fd06eb1eae8d13fa5",
+      "id": "load_1712e",
+      "name": "audio_op_unk2"
+    },
+    {
+      "card": "recovery/cards/load_28aea.json",
+      "card_sha256": "4118adf6ff1bed8d6a378eb9f4b07e2faf999daf2906f398c932f8fddd059db4",
+      "id": "load_28aea",
+      "name": "sub_38AEA"
+    },
+    {
+      "card": "recovery/cards/load_228ee.json",
+      "card_sha256": "44c248dbeb6b300fd51be481c65a501e35e198a2257c49412928c738b5509693",
+      "id": "load_228ee",
+      "name": "mat_mul_vector"
+    },
+    {
+      "card": "recovery/cards/load_27dbc.json",
+      "card_sha256": "407027148d0565f7ff88cae5e9d3642546959914dc2f9670816cd83a69bcfe3d",
+      "id": "load_27dbc",
+      "name": "audio_init_chunk"
+    },
+    {
+      "card": "recovery/cards/load_2219d.json",
+      "card_sha256": "b37c4b5c584d4a5f5c80f2daf770bcfbd9d3ba9bf7bd6b1b9ca02a8a9b0432b8",
+      "id": "load_2219d",
+      "name": "nopsub_3219D"
+    },
+    {
+      "card": "recovery/cards/load_21525.json",
+      "card_sha256": "016585a4ce314db0a8ca1246fe6e49501246247b96f52c0f1f032927a2ac5093",
+      "id": "load_21525",
+      "name": "nopsub_31525"
+    },
+    {
+      "card": "recovery/cards/load_27b14.json",
+      "card_sha256": "44d0e7ca7f7b4529f0b7c5cfb4abb20d74fd4604c30b661be055a7db55c79cd2",
+      "id": "load_27b14",
+      "name": "load_sfx_ge"
+    },
+    {
+      "card": "recovery/cards/load_29966.json",
+      "card_sha256": "e10c4a8303b1e432bd1548b44fada42a757712f35c0170a01302762156932776",
+      "id": "load_29966",
+      "name": "audio_driver_func1E"
+    },
+    {
+      "card": "recovery/cards/load_1916e.json",
+      "card_sha256": "d3638c48d8a3464cad88f518ec378b2b57312ca33a3f041703c6a9ffd51904a7",
+      "id": "load_1916e",
+      "name": "draw_lines_unk"
+    },
+    {
+      "card": "recovery/cards/load_27ec0.json",
+      "card_sha256": "99ddd3938b33396fb26637ee56a2b1ecae3e37f205da692dfd52727be5a1efab",
+      "id": "load_27ec0",
+      "name": "audio_map_song_instruments"
+    },
+    {
+      "card": "recovery/cards/load_2a2c0.json",
+      "card_sha256": "84b329f257656a6868b0d702b68082e104749ab342d080d26525bff6cdb3ee69",
+      "id": "load_2a2c0",
+      "name": "load_palandcursor"
+    },
+    {
+      "card": "recovery/cards/load_26246.json",
+      "card_sha256": "f84bb303119518b78152013a89ebb6318775002d2166028c7d18e87c0296ed4e",
+      "id": "load_26246",
+      "name": "preRender_wheel_helper3"
+    },
+    {
+      "card": "recovery/cards/load_16c3c.json",
+      "card_sha256": "6d2459a9f125df3ef5e48a0c036a951a4c573cde06790df995de834863a4f7ac",
+      "id": "load_16c3c",
+      "name": "audio_init_engine"
+    },
+    {
+      "card": "recovery/cards/load_26412.json",
+      "card_sha256": "da52cbc062c935897a5d160e19ed2927c5547633c399b382ceb770cdbf165331",
+      "id": "load_26412",
+      "name": "preRender_sphere_helper2"
+    },
+    {
+      "card": "recovery/cards/seg000_line1570.json",
+      "card_sha256": "4df6b0e693ca3d64b9d960201821088cc1396133c3aea0750ff2123bfa478582",
+      "id": "seg000:line1570",
+      "name": "run_menu"
+    },
+    {
+      "card": "recovery/cards/seg000_line1734.json",
+      "card_sha256": "f600543e9b263b4fcbe210b2689dff6a23297c91fb838bbbcc65bf919c3b0ac0",
+      "id": "seg000:line1734",
+      "name": "run_tracks_menu"
+    },
+    {
+      "card": "recovery/cards/seg000_line2214.json",
+      "card_sha256": "209818e5e9b778ce65bbcbd9f1d72c223519ffe4e749be7ebeed335d5a619163",
+      "id": "seg000:line2214",
+      "name": "highscore_write_a"
+    },
+    {
+      "card": "recovery/cards/seg000_line2334.json",
+      "card_sha256": "a690eb609ebf6229239065230cd0f42349bfc665ba0f5350f1bbf781da02aff8",
+      "id": "seg000:line2334",
+      "name": "highscore_text_unk"
+    },
+    {
+      "card": "recovery/cards/seg000_line2572.json",
+      "card_sha256": "c73010c4dad5141991065beadfa4f95b5b27113600f156c8feb8168be3d322fa",
+      "id": "seg000:line2572",
+      "name": "print_highscore_entry"
+    },
+    {
+      "card": "recovery/cards/seg000_line2723.json",
+      "card_sha256": "5103ffa35f8976681f1bce71e2054681ed1a79d0f5ed3f8cd39b6aaeb1fc56b5",
+      "id": "seg000:line2723",
+      "name": "enter_hiscore"
+    },
+    {
+      "card": "recovery/cards/seg000_line2908.json",
+      "card_sha256": "3ccbe489a790b607007a02feaa82a2bf68135c400ca7fcfda2ef59f7d90c8420",
+      "id": "seg000:line2908",
+      "name": "highscore_write_b"
+    },
+    {
+      "card": "recovery/cards/seg000_line2975.json",
+      "card_sha256": "e88fc8204e39f9ce517bcefde1882320f21f7dede413f06ca27cecdfd6bc1037",
+      "id": "seg000:line2975",
+      "name": "run_car_menu"
+    },
+    {
+      "card": "recovery/cards/seg000_line4276.json",
+      "card_sha256": "737072d2410640c69f2ae4e210040d09669cb099e9297815d758aaab20edbefb",
+      "id": "seg000:line4276",
+      "name": "run_opponent_menu"
+    },
+    {
+      "card": "recovery/cards/seg000_line4886.json",
+      "card_sha256": "d6cf490bb70c20db55d089e7070bcd5cbbfedcd3dc85d098d8995b9216eabfff",
+      "id": "seg000:line4886",
+      "name": "run_option_menu"
+    },
+    {
+      "card": "recovery/cards/seg000_line5126.json",
+      "card_sha256": "3fda43ea4c1c64a87184f038177c3d2ba1c3fc26e5c37e07e2d6b43573280e5f",
+      "id": "seg000:line5126",
+      "name": "end_hiscore"
+    },
+    {
+      "card": "recovery/cards/seg000_line641.json",
+      "card_sha256": "49f7919ed1a7417f76e020431673bb7d37788436433a1ca745ac6f8b683d7638",
+      "id": "seg000:line641",
+      "name": "run_intro_looped"
+    },
+    {
+      "card": "recovery/cards/seg000_line67.json",
+      "card_sha256": "328a9ce0f7587ef4f669d6d737cf57704a47d1cf3d2defb173367cb9c5eb2d3c",
+      "id": "seg000:line67",
+      "name": "ported_stuntsmain_"
+    },
+    {
+      "card": "recovery/cards/seg000_line7090.json",
+      "card_sha256": "ce5c9f794a02390a63cb6c3d62fe1a3e04373fa44b038379635c38de2ce5ff33",
+      "id": "seg000:line7090",
+      "name": "security_check"
+    },
+    {
+      "card": "recovery/cards/seg000_line828.json",
+      "card_sha256": "1c604f481ee89973829f7a1e857bf3ebdaed18fb26c79b6f0b0c05d85cd25e43",
+      "id": "seg000:line828",
+      "name": "load_intro_resources"
+    },
+    {
+      "card": "recovery/cards/seg001_line3572.json",
+      "card_sha256": "fceca6e0e14d05a33b58b225db87be21513fc01970530acdd925e3d4b8cf2e15",
+      "id": "seg001:line3572",
+      "name": "init_carstate_from_simd"
+    },
+    {
+      "card": "recovery/cards/seg001_line3823.json",
+      "card_sha256": "f427c41f98c32cd952b67b049614f6694a11719f4778d32fde36d83268325359",
+      "id": "seg001:line3823",
+      "name": "init_game_state"
+    },
+    {
+      "card": "recovery/cards/seg001_line4286.json",
+      "card_sha256": "4fa4288eb66c4ed0b8832b7eb6f8bec5b1dab5f148b924a175bdbd9b9e998202",
+      "id": "seg001:line4286",
+      "name": "restore_gamestate"
+    },
+    {
+      "card": "recovery/cards/seg001_line4395.json",
+      "card_sha256": "19e0c34afbe1d3f9f38eaa7d02a9002caec27e27363e991fa2fa9d30fdd0851f",
+      "id": "seg001:line4395",
+      "name": "update_gamestate"
+    },
+    {
+      "card": "recovery/cards/seg001_line4604.json",
+      "card_sha256": "1fcc80f0a5da91ef0e6c7101e967c97c2a53fafc3470c25c5412d0596c383a92",
+      "id": "seg001:line4604",
+      "name": "player_op"
+    },
+    {
+      "card": "recovery/cards/seg001_line5307.json",
+      "card_sha256": "cd5ecfd3055ffe51a1b4b5fb75e453c7ee1b1a56bf5a27aeca053bc6e295e90e",
+      "id": "seg001:line5307",
+      "name": "detect_penalty"
+    },
+    {
+      "card": "recovery/cards/seg001_line5588.json",
+      "card_sha256": "c3b68af8c3f27a7741490f074848ed6e0c0c702b29cc9a78319bb8bd3578749a",
+      "id": "seg001:line5588",
+      "name": "update_car_speed"
+    },
+    {
+      "card": "recovery/cards/seg001_line6171.json",
+      "card_sha256": "6468dafb3e818879b381e6fd2b4fe16373bdd2b63cdeaf0f1ae840f17d06817d",
+      "id": "seg001:line6171",
+      "name": "update_grip"
+    },
+    {
+      "card": "recovery/cards/seg001_line6689.json",
+      "card_sha256": "d964629a308bf2c8c5e7382aac7e12a6eb512298980439beb2131b805e80d7f8",
+      "id": "seg001:line6689",
+      "name": "car_car_speed_adjust_maybe"
+    },
+    {
+      "card": "recovery/cards/seg001_line6863.json",
+      "card_sha256": "2d843115c04a2fe8947ce729a7564da027d0c2110196838b6900f8e35dae2bfc",
+      "id": "seg001:line6863",
+      "name": "carState_rc_op"
+    },
+    {
+      "card": "recovery/cards/seg001_line7057.json",
+      "card_sha256": "080be00ec9cbbc2d7b0e8e3e7141834dbf8422403c6f4710882f62e59ce13c1d",
+      "id": "seg001:line7057",
+      "name": "upd_statef20_from_steer_input"
+    },
+    {
+      "card": "recovery/cards/seg001_line7188.json",
+      "card_sha256": "8040c0bf1c4ac7dd234799f5b78b9db5b8fe357e80c73a38926176698dd7840c",
+      "id": "seg001:line7188",
+      "name": "audio_carstate"
+    },
+    {
+      "card": "recovery/cards/seg001_line77.json",
+      "card_sha256": "37442efb3e730b5298445a57fd9c2aa85edb4faa2d7d94198b314e6034c0121d",
+      "id": "seg001:line77",
+      "name": "opponent_op"
+    },
+    {
+      "card": "recovery/cards/seg001_line7740.json",
+      "card_sha256": "71334718e62b86cdfab567b8cdcd928e9e4a82d7ea54961d396b57a278f6a197",
+      "id": "seg001:line7740",
+      "name": "sub_18D60"
+    },
+    {
+      "card": "recovery/cards/seg001_line8124.json",
+      "card_sha256": "8189c4aeaa4b4251c050a0ace890b31acdbc3bec665fa54b23f8c6e580dca216",
+      "id": "seg001:line8124",
+      "name": "car_car_coll_detect_maybe"
+    },
+    {
+      "card": "recovery/cards/seg001_line849.json",
+      "card_sha256": "a09a1f74aca8cdd485da52674e3e7d70d4f21b65992888ade4e63e7b051db06a",
+      "id": "seg001:line849",
+      "name": "update_player_state"
+    },
+    {
+      "card": "recovery/cards/seg001_line8529.json",
+      "card_sha256": "17f740710b60e2773cfb64bad20da08d74e8133a684f3c5e11ff90e9df9df46b",
+      "id": "seg001:line8529",
+      "name": "init_plantrak"
+    },
+    {
+      "card": "recovery/cards/seg001_line8683.json",
+      "card_sha256": "04b1a589d4c3f770e8f4f1091157fc0d51ac442bb9f3df14e05cdd366d19e35e",
+      "id": "seg001:line8683",
+      "name": "do_opponent_op"
+    },
+    {
+      "card": "recovery/cards/seg001_line8691.json",
+      "card_sha256": "d280885d95914ef7afbcd8486e08e14f4fe150c6acfc56a35aa18e8cd50ded03",
+      "id": "seg001:line8691",
+      "name": "update_crash_state"
+    },
+    {
+      "card": "recovery/cards/seg001_line8887.json",
+      "card_sha256": "f757f55c288109642b44328793df6ef434a920a6a8eda221f58e365b2303add7",
+      "id": "seg001:line8887",
+      "name": "plane_rotate_op"
+    },
+    {
+      "card": "recovery/cards/seg001_line9075.json",
+      "card_sha256": "f0d5e3fa46604cb9201653e65db62c463154e4a00539e7ee6798c0096ebe4a10",
+      "id": "seg001:line9075",
+      "name": "plane_origin_op"
+    },
+    {
+      "card": "recovery/cards/seg001_line9141.json",
+      "card_sha256": "066ddccc9c35caea8509c145901bd9f8b93dfb2a2b088a9ef638bd342520afb6",
+      "id": "seg001:line9141",
+      "name": "vec_normalInnerProduct"
+    },
+    {
+      "card": "recovery/cards/seg001_line9215.json",
+      "card_sha256": "4c6b6be1901ede933ea365536c2f8972a591ea6efe19d2a6be2fc2e1e2069f79",
+      "id": "seg001:line9215",
+      "name": "state_op_unk"
+    },
+    {
+      "card": "recovery/cards/seg001_line9386.json",
+      "card_sha256": "23d7746a39ad74735f2a68c38c31e7a21576237d03bee4663c37c50f8269db33",
+      "id": "seg001:line9386",
+      "name": "sub_19BA0"
+    },
+    {
+      "card": "recovery/cards/seg001_line9508.json",
+      "card_sha256": "de35809e5dac3baec6742325caff3e84fde6c8897a3ca98a2ba22d42bc68dea3",
+      "id": "seg001:line9508",
+      "name": "setup_aero_trackdata"
+    },
+    {
+      "card": "recovery/cards/seg002_line296.json",
+      "card_sha256": "c9e07baded9af9b89967141ba9eb2506acef497a6bf5cc0661ab58c30cd33052",
+      "id": "seg002:line296",
+      "name": "init_div0"
+    },
+    {
+      "card": "recovery/cards/seg003_line239.json",
+      "card_sha256": "ca8c10051a803164bae0e37f6d19fbe50f5a3fcad2310abfc471a2bcff033cc6",
+      "id": "seg003:line239",
+      "name": "init_rect_arrays"
+    },
+    {
+      "card": "recovery/cards/seg003_line305.json",
+      "card_sha256": "cced0c2d1a66e7a36c43aafaad26acfa96819fd7662bca902e1d2e6ae47935b1",
+      "id": "seg003:line305",
+      "name": "update_frame"
+    },
+    {
+      "card": "recovery/cards/seg003_line3792.json",
+      "card_sha256": "c7423f7bc4a146238a3a2fc59bb0f4e3468d6787025679902ea7e1e19e8a9137",
+      "id": "seg003:line3792",
+      "name": "skybox_op_helper2"
+    },
+    {
+      "card": "recovery/cards/seg003_line3942.json",
+      "card_sha256": "ca8e9e7eae6254a7cee55f3db86ae97df5348b3f3d5a31770a0962c8bc04f7d0",
+      "id": "seg003:line3942",
+      "name": "skybox_op"
+    },
+    {
+      "card": "recovery/cards/seg003_line4706.json",
+      "card_sha256": "3e90bd676141d92044f2a5aeeb18953802fbb23f26eaa886b7e9f329d5bb2768",
+      "id": "seg003:line4706",
+      "name": "transformed_shape_add_for_sort"
+    },
+    {
+      "card": "recovery/cards/seg003_line4760.json",
+      "card_sha256": "704d900ebe1e779621266fe96c9583cfa3d0d809d22aed55ad7a09c5dcecc7c8",
+      "id": "seg003:line4760",
+      "name": "draw_track_preview"
+    },
+    {
+      "card": "recovery/cards/seg003_line5361.json",
+      "card_sha256": "7905b098aaf5aabb63b910122145f2cef809f45f1565a5b770e4515b18749e1d",
+      "id": "seg003:line5361",
+      "name": "draw_ingame_text"
+    },
+    {
+      "card": "recovery/cards/seg003_line5790.json",
+      "card_sha256": "c1e4e8a42adf6288b88a67d3ec00163b3722b0bb21bfb7881972e2a72cfb8fa3",
+      "id": "seg003:line5790",
+      "name": "do_sinking"
+    },
+    {
+      "card": "recovery/cards/seg003_line5856.json",
+      "card_sha256": "0163be75f58a33c5b7839144e5d0d14aa5e44b1a622a998c707bc73002203cb0",
+      "id": "seg003:line5856",
+      "name": "init_crak"
+    },
+    {
+      "card": "recovery/cards/seg003_line6084.json",
+      "card_sha256": "824ff14fce0bd4296ed46f29a14ef98b4553656a73768bf26abd4f45505c5a93",
+      "id": "seg003:line6084",
+      "name": "load_skybox"
+    },
+    {
+      "card": "recovery/cards/seg003_line6198.json",
+      "card_sha256": "37de5366f4bd81fd77c5c0b3fae002f9dfaa92fa4411f33280680a45cf9bc05b",
+      "id": "seg003:line6198",
+      "name": "unload_skybox"
+    },
+    {
+      "card": "recovery/cards/seg003_line6212.json",
+      "card_sha256": "d2d07f88f56cf771c0befe56afc98246e6f50921a69806e95657f5f0d2d37303",
+      "id": "seg003:line6212",
+      "name": "load_sdgame2_shapes"
+    },
+    {
+      "card": "recovery/cards/seg003_line6258.json",
+      "card_sha256": "78ed3fbc5d5c0caa88d33a002b2492831216f119cebcda490af5e0df051c33be",
+      "id": "seg003:line6258",
+      "name": "free_sdgame2"
+    },
+    {
+      "card": "recovery/cards/seg003_line6268.json",
+      "card_sha256": "5031415d1b7085c87977acb4090aa23e4cb5469f2a002a5177ddcac3a796e0cc",
+      "id": "seg003:line6268",
+      "name": "setup_intro"
+    },
+    {
+      "card": "recovery/cards/seg003_line6831.json",
+      "card_sha256": "eef7c2e2febb227ad3317522486bd60af9860237bcd79eb3d6f555b970c62684",
+      "id": "seg003:line6831",
+      "name": "intro_op"
+    },
+    {
+      "card": "recovery/cards/seg003_line69.json",
+      "card_sha256": "893198d28518becc557034c18c22587b305e81eee0f56a0d8794160f025178f2",
+      "id": "seg003:line69",
+      "name": "sub_19F14"
+    },
+    {
+      "card": "recovery/cards/seg004_line2757.json",
+      "card_sha256": "b0a7e11cf205e16e229cfa95788e707015860cbaf095cec0088830874413bfdd",
+      "id": "seg004:line2757",
+      "name": "bto_auxiliary1"
+    },
+    {
+      "card": "recovery/cards/seg004_line3184.json",
+      "card_sha256": "d1d90312a2dfc0d23d4542b0c72908b695bf4d2d04ac2a95c7bcc0f7d26726ec",
+      "id": "seg004:line3184",
+      "name": "shape3d_load_all"
+    },
+    {
+      "card": "recovery/cards/seg004_line3272.json",
+      "card_sha256": "4db22ff7d6fbae907b177c5c95adf215d01f9d3afe9f113f646ef7c3a1b7d47c",
+      "id": "seg004:line3272",
+      "name": "shape3d_free_all"
+    },
+    {
+      "card": "recovery/cards/seg004_line3294.json",
+      "card_sha256": "4d63d9f4ebac7e2bbdfc04a50bb7056447c002146c204710966c00e8eb18ca31",
+      "id": "seg004:line3294",
+      "name": "shape3d_load_car_shapes"
+    },
+    {
+      "card": "recovery/cards/seg004_line3831.json",
+      "card_sha256": "d4fa8ca8f4bf50a5090e74da9ff66aa1689dd0aa604afd32c7a2b283a5cc6954",
+      "id": "seg004:line3831",
+      "name": "sub_204AE"
+    },
+    {
+      "card": "recovery/cards/seg004_line4078.json",
+      "card_sha256": "82fbbaf6f2ed04261cc95bebf6f01923ee4a20aabe6b87217b8a273787f75b8c",
+      "id": "seg004:line4078",
+      "name": "track_setup"
+    },
+    {
+      "card": "recovery/cards/seg004_line5843.json",
+      "card_sha256": "55b116f502a54f5e483e8aff3f8d1991d33dc4098e73a5d1f7d87402851f9bb7",
+      "id": "seg004:line5843",
+      "name": "load_opponent_data"
+    },
+    {
+      "card": "recovery/cards/seg004_line61.json",
+      "card_sha256": "57ac949300c39b40f82b6551b1a8b9f0af87848e9f68e4c40a184c0a389c4d92",
+      "id": "seg004:line61",
+      "name": "build_track_object"
+    },
+    {
+      "card": "recovery/cards/seg004_line6110.json",
+      "card_sha256": "f61af2359b82c367d5b5ad65db0ed18ebc47ae895a2e52d083e263f86f431958",
+      "id": "seg004:line6110",
+      "name": "subst_hillroad_track"
+    },
+    {
+      "card": "recovery/cards/seg005_line1078.json",
+      "card_sha256": "9ded21654f082e5aeac68d81e761760dccebe9e6ab9e1bc4e0ae59928c33c4dc",
+      "id": "seg005:line1078",
+      "name": "remove_frame_callback"
+    },
+    {
+      "card": "recovery/cards/seg005_line1096.json",
+      "card_sha256": "3136c0fffc7437e9c00997d1bd8395e5b213a72d5f724d723288127d84d8ff37",
+      "id": "seg005:line1096",
+      "name": "frame_callback"
+    },
+    {
+      "card": "recovery/cards/seg005_line1203.json",
+      "card_sha256": "60dfe8eec6a8cafb0fc3d7f3be07bd16231b834d713c0499a7db49da731c321b",
+      "id": "seg005:line1203",
+      "name": "replay_unk2"
+    },
+    {
+      "card": "recovery/cards/seg005_line1552.json",
+      "card_sha256": "408d20c84ab5581d36bb3bf248e769c52fbe75ede05fc320bdfca8469938a4eb",
+      "id": "seg005:line1552",
+      "name": "sub_2298C"
+    },
+    {
+      "card": "recovery/cards/seg005_line1967.json",
+      "card_sha256": "b7e6fad9fd0c9948dcf5aa336728f3d9e8a48520187f6bd18f3c50a3883845f5",
+      "id": "seg005:line1967",
+      "name": "file_write_replay"
+    },
+    {
+      "card": "recovery/cards/seg005_line2009.json",
+      "card_sha256": "423c754324c9c1bd0f681b062f2e126ee72de9f0291fe5a35347935be292a64d",
+      "id": "seg005:line2009",
+      "name": "setup_car_shapes"
+    },
+    {
+      "card": "recovery/cards/seg005_line2960.json",
+      "card_sha256": "01fd17cb5696c33f34a7a1fb1efa1d266306c41d45c7d011c80650082bb6e351",
+      "id": "seg005:line2960",
+      "name": "setup_player_cars"
+    },
+    {
+      "card": "recovery/cards/seg005_line3301.json",
+      "card_sha256": "0f54b1ae9a88dbd291b48b38d4cb53728ef0f197844bccf02f10e18dd3635a31",
+      "id": "seg005:line3301",
+      "name": "replay_unk"
+    },
+    {
+      "card": "recovery/cards/seg005_line3391.json",
+      "card_sha256": "63dc795fb0e21deb867a56031b73a6f764ec58ac25225f198016376c263d562e",
+      "id": "seg005:line3391",
+      "name": "loop_game"
+    },
+    {
+      "card": "recovery/cards/seg005_line74.json",
+      "card_sha256": "3e95258cec381bb6c590b7b80f43b8f0bc289085eef3b0f8f4118653b601fc55",
+      "id": "seg005:line74",
+      "name": "run_game"
+    },
+    {
+      "card": "recovery/cards/seg005_line890.json",
+      "card_sha256": "066f9dcb5f00857f494fa4bddcf216dba7c92a76ed2f5fcadc65c74cc054bc42",
+      "id": "seg005:line890",
+      "name": "handle_ingame_kb_shortcuts"
+    },
+    {
+      "card": "recovery/cards/seg006_line122.json",
+      "card_sha256": "9c98f896a4096682ccb24535d656884e83fe3bb607a89d9c67540a0e35f88eb3",
+      "id": "seg006:line122",
+      "name": "copy_material_list_pointers"
+    },
+    {
+      "card": "recovery/cards/seg006_line152.json",
+      "card_sha256": "5a0216a5066a57cfd74f2abe09ee188b2770fc2fa47fcb23bee9037456e76c51",
+      "id": "seg006:line152",
+      "name": "polyinfo_reset"
+    },
+    {
+      "card": "recovery/cards/seg006_line164.json",
+      "card_sha256": "c72cca985d3d576df08ae365d551ec82319ff8399b53c043d8308d6928c8bbdb",
+      "id": "seg006:line164",
+      "name": "select_cliprect_rotate"
+    },
+    {
+      "card": "recovery/cards/seg006_line2062.json",
+      "card_sha256": "ec73b28a540379359922081cf4e5800d6f9b3278d284d8a254c1feb90a7b937d",
+      "id": "seg006:line2062",
+      "name": "get_a_poly_info"
+    },
+    {
+      "card": "recovery/cards/seg006_line2293.json",
+      "card_sha256": "176ef7ef933972b2e0a82cc466b693a4b1e0aac6f01542fdbde1f97f3a8d836b",
+      "id": "seg006:line2293",
+      "name": "mat_rot_zxy"
+    },
+    {
+      "card": "recovery/cards/seg006_line246.json",
+      "card_sha256": "58308f7c7f65067941e7b041da6cb4038e1d0d5e7021b82d1297e2a99cd54078",
+      "id": "seg006:line246",
+      "name": "transformed_shape_op"
+    },
+    {
+      "card": "recovery/cards/seg006_line2552.json",
+      "card_sha256": "9620310383d5525960ae94bdc5ea003a2cac4c33c77540975c3ec4534132c954",
+      "id": "seg006:line2552",
+      "name": "vector_op_unk2"
+    },
+    {
+      "card": "recovery/cards/seg006_line2702.json",
+      "card_sha256": "3cb5dd3a361d312096c8ca6cbe09cc91f99e84fe3204a7d6e88c5bf13a60438e",
+      "id": "seg006:line2702",
+      "name": "calc_sincos80"
+    },
+    {
+      "card": "recovery/cards/seg006_line2888.json",
+      "card_sha256": "f5a3c8411cbbd1baaa5016c1ebf65e530f5ab20a2b4f809d42b8512c0d306809",
+      "id": "seg006:line2888",
+      "name": "rectlist_add_rect"
+    },
+    {
+      "card": "recovery/cards/seg006_line3366.json",
+      "card_sha256": "46cf01990e77d4ddb16d0952371bfa2e8593c8f75d872810bbd3faea9bd98bdc",
+      "id": "seg006:line3366",
+      "name": "rect_is_adjacent"
+    },
+    {
+      "card": "recovery/cards/seg006_line3440.json",
+      "card_sha256": "29ecfe2659467fcbd5ce002321c88099f543014ea20bd7a18893df16f62ca824",
+      "id": "seg006:line3440",
+      "name": "rectlist_add_rects"
+    },
+    {
+      "card": "recovery/cards/seg006_line3586.json",
+      "card_sha256": "40582164c5f43b9841d31b9fd44e460f843186a9e79043268ef3842aac218215",
+      "id": "seg006:line3586",
+      "name": "rect_array_sort_by_top"
+    },
+    {
+      "card": "recovery/cards/seg006_line71.json",
+      "card_sha256": "8163f95f1a131213d67310aa8d40fc92c8f6a70bdfdd0a0e19f8b1a9f8750e02",
+      "id": "seg006:line71",
+      "name": "init_polyinfo"
+    },
+    {
+      "card": "recovery/cards/seg007_line1157.json",
+      "card_sha256": "541ab5ce4d12d1549325b775657472539fc032b9862139110983bbc3623e032e",
+      "id": "seg007:line1157",
+      "name": "nopsub_27489"
+    },
+    {
+      "card": "recovery/cards/seg007_line541.json",
+      "card_sha256": "61628f6f6b3f54429d4637951f2383c18dc2e2cccebcee76294bef1cde07a163",
+      "id": "seg007:line541",
+      "name": "audio_driver_timer"
+    },
+    {
+      "card": "recovery/cards/seg008_line112.json",
+      "card_sha256": "9246820351d32d8ea4d9cacb3a81ca0a7c3705542313b4031b3660e017ee76ea",
+      "id": "seg008:line112",
+      "name": "sub_274B0"
+    },
+    {
+      "card": "recovery/cards/seg008_line1207.json",
+      "card_sha256": "e0afcfefd11db1b1f6a3e4589bfafd4d164dc1cbbcfd101d15471bf88e266be1",
+      "id": "seg008:line1207",
+      "name": "do_fileselect_dialog"
+    },
+    {
+      "card": "recovery/cards/seg008_line1985.json",
+      "card_sha256": "6aee3e199ec46850f0c2c1c117f890320f1461f829308f15dae9f72d59c82bb7",
+      "id": "seg008:line1985",
+      "name": "file_build_path"
+    },
+    {
+      "card": "recovery/cards/seg008_line2043.json",
+      "card_sha256": "7254d168b17c62fe305d7014c1e734fc6253b78c6e2f2080fd908893d709b0fb",
+      "id": "seg008:line2043",
+      "name": "do_savefile_dialog"
+    },
+    {
+      "card": "recovery/cards/seg008_line2243.json",
+      "card_sha256": "a1790a5610fc2684a5d338d0ac7e2c7afddf0aa66fe4f2624fc0d2ab3ce8115d",
+      "id": "seg008:line2243",
+      "name": "input_checking"
+    },
+    {
+      "card": "recovery/cards/seg008_line2457.json",
+      "card_sha256": "43302c8dc6115e63dbbf534d86e252cf832a86b65af8ac7ca2f2d4b24b2ced79",
+      "id": "seg008:line2457",
+      "name": "input_do_checking"
+    },
+    {
+      "card": "recovery/cards/seg008_line2540.json",
+      "card_sha256": "b4e73921ee30ccbd2e320d29dc9385a0179174fed16b57480459b67da1db7500",
+      "id": "seg008:line2540",
+      "name": "unload_resource"
+    },
+    {
+      "card": "recovery/cards/seg008_line2557.json",
+      "card_sha256": "bb4007c33bb39bbfd0d0caf6e6856cfc7c757635510af7d63450314e602aa409",
+      "id": "seg008:line2557",
+      "name": "locate_shape_alt"
+    },
+    {
+      "card": "recovery/cards/seg008_line2574.json",
+      "card_sha256": "f041bfe5e983cf8b32222cfb741a59d3eadd12c2055e15195b1980c98e7be96d",
+      "id": "seg008:line2574",
+      "name": "locate_text_res"
+    },
+    {
+      "card": "recovery/cards/seg008_line2640.json",
+      "card_sha256": "885ed7f22a9782654d45b71ef8fbe143b5191e4642180a18638c346b35e369a4",
+      "id": "seg008:line2640",
+      "name": "mouse_track_op"
+    },
+    {
+      "card": "recovery/cards/seg008_line2958.json",
+      "card_sha256": "8e7111cd0e0b595be4ecb7840d7f7f3e58953d4d35b4a013f9e9a74a84f478cc",
+      "id": "seg008:line2958",
+      "name": "mouse_draw_opaque_check"
+    },
+    {
+      "card": "recovery/cards/seg008_line2970.json",
+      "card_sha256": "61927dbe08923443653808f481b26d5de0ed18a4ff8a6f06146596160ff97567",
+      "id": "seg008:line2970",
+      "name": "mouse_draw_opaque"
+    },
+    {
+      "card": "recovery/cards/seg008_line2996.json",
+      "card_sha256": "1194c83e4236bba73776f9a163b60fc865e45e2ae8a33f6fd667d5c9252036d7",
+      "id": "seg008:line2996",
+      "name": "mouse_draw_transparent"
+    },
+    {
+      "card": "recovery/cards/seg008_line3049.json",
+      "card_sha256": "329952b105dd8ebc849b5cba768378d0c9d2faa910f9ece7f5adf1b7473f9b9b",
+      "id": "seg008:line3049",
+      "name": "mouse_multi_hittest"
+    },
+    {
+      "card": "recovery/cards/seg008_line3109.json",
+      "card_sha256": "e01965a21378d9d96a0a6bd0a967dea29fa357d7d34e0fb5ed015730f74ae663",
+      "id": "seg008:line3109",
+      "name": "check_input"
+    },
+    {
+      "card": "recovery/cards/seg008_line3148.json",
+      "card_sha256": "ee6cbe59b5a74df089dcae01039282a7b319a5eca4b7c8fa59c215b1239708c3",
+      "id": "seg008:line3148",
+      "name": "nopsub_28F26"
+    },
+    {
+      "card": "recovery/cards/seg008_line3164.json",
+      "card_sha256": "29f1f05b43d77e7669f6c0ffa280aa38172df73227b7c87d4092235711d96dfc",
+      "id": "seg008:line3164",
+      "name": "sprite_copy_2_to_1_2"
+    },
+    {
+      "card": "recovery/cards/seg008_line3176.json",
+      "card_sha256": "2b231c54ad4f7c22966568c9bfe3ababa06ad9d1d23d8ee1b3f9f15226b00cec",
+      "id": "seg008:line3176",
+      "name": "sprite_copy_2_to_1_clear"
+    },
+    {
+      "card": "recovery/cards/seg008_line3190.json",
+      "card_sha256": "4bb260654b4a6110e28b4585c52249932090f31b6dbb262e1c9285c8fc23febe",
+      "id": "seg008:line3190",
+      "name": "sprite_copy_wnd_to_1"
+    },
+    {
+      "card": "recovery/cards/seg008_line3200.json",
+      "card_sha256": "382866934bd326ce17e679dd39886a76be4a635267557b84e909660090296ec9",
+      "id": "seg008:line3200",
+      "name": "sprite_copy_wnd_to_1_clear"
+    },
+    {
+      "card": "recovery/cards/seg008_line3212.json",
+      "card_sha256": "ec3b4ab87d4b5405963b81b444f79d712ad65785f498befa3e1ce268ca6c03ae",
+      "id": "seg008:line3212",
+      "name": "intro_draw_text"
+    },
+    {
+      "card": "recovery/cards/seg008_line3264.json",
+      "card_sha256": "21c39b295fbf204a5e0f133ef79a02a48b7d8fa341b27a683d7718f8e4aae3b1",
+      "id": "seg008:line3264",
+      "name": "hiscore_draw_text"
+    },
+    {
+      "card": "recovery/cards/seg008_line334.json",
+      "card_sha256": "833ff6a37e3f36d05b866462602ba295093becdf9b429f0a42c8d21ad42830a7",
+      "id": "seg008:line334",
+      "name": "show_dialog"
+    },
+    {
+      "card": "recovery/cards/seg008_line3346.json",
+      "card_sha256": "c0763999e0059e690c383b779558d491f3710b4cbd4b8f781e82120832c4ec02",
+      "id": "seg008:line3346",
+      "name": "call_read_line"
+    },
+    {
+      "card": "recovery/cards/seg008_line3615.json",
+      "card_sha256": "24bc619f0f180f61375e60b5f1bc0d5d273c1a4bef0bdbd919f5015a7c2c68c7",
+      "id": "seg008:line3615",
+      "name": "draw_button"
+    },
+    {
+      "card": "recovery/cards/seg008_line3974.json",
+      "card_sha256": "99e932a3088f9c0ff6294311dff585ac67b75b4458b84b2229abd90343e118e6",
+      "id": "seg008:line3974",
+      "name": "font_op2_alt"
+    },
+    {
+      "card": "recovery/cards/seg008_line3992.json",
+      "card_sha256": "7dfbe4f436eaa6283dd48ce938e76b2905b58709c5ec2e1976e2af594bca4127",
+      "id": "seg008:line3992",
+      "name": "sprite_blit_to_video"
+    },
+    {
+      "card": "recovery/cards/seg008_line4067.json",
+      "card_sha256": "9c3d3a5746fe81ff7b84b3f323910b8241c0150c63708238a7c70d1b6e2e4af8",
+      "id": "seg008:line4067",
+      "name": "show_waiting"
+    },
+    {
+      "card": "recovery/cards/seg008_line4097.json",
+      "card_sha256": "2ad35d9a2951272c927f030804131011af0e90b9c96a71df00aa915d252f7183",
+      "id": "seg008:line4097",
+      "name": "print_int_as_string_maybe"
+    },
+    {
+      "card": "recovery/cards/seg008_line4192.json",
+      "card_sha256": "b6bfe7c2a3b4de7f36e40d5ed48b146a01d44eabe347922ef1eaedbc83ef229a",
+      "id": "seg008:line4192",
+      "name": "sub_29772"
+    },
+    {
+      "card": "recovery/cards/seg008_line4272.json",
+      "card_sha256": "eeb2bfcb290031359afcdf855b0f83bc85f77d9f2e67333a16332048aa2b9b39",
+      "id": "seg008:line4272",
+      "name": "file_load_audiores"
+    },
+    {
+      "card": "recovery/cards/seg008_line4319.json",
+      "card_sha256": "b2cadee7fe3880baae9f4b205a64bcd99d06ea364c7e9edda62a590ac78e33f9",
+      "id": "seg008:line4319",
+      "name": "audio_unload"
+    },
+    {
+      "card": "recovery/cards/seg008_line4336.json",
+      "card_sha256": "4a1df921c8ac97c7dab2ae91d264422fbfd5e28cceb4b99a3e8dffe3ccd131c7",
+      "id": "seg008:line4336",
+      "name": "font_set_fontdef2"
+    },
+    {
+      "card": "recovery/cards/seg008_line4355.json",
+      "card_sha256": "eb5ce7cc16b8e7b22309260b1d1d740b55c484eb062c8eed98c8faf6619dc97e",
+      "id": "seg008:line4355",
+      "name": "font_set_fontdef"
+    },
+    {
+      "card": "recovery/cards/seg008_line4364.json",
+      "card_sha256": "424145e47f4a8d50508fbf48c0e99ed663cc2365babae07b4d531a1942332ac3",
+      "id": "seg008:line4364",
+      "name": "format_frame_as_string"
+    },
+    {
+      "card": "recovery/cards/seg008_line4465.json",
+      "card_sha256": "be01cdd3c98f05e478f0df4984ea5a68f696434c7b6a2ba3bb64e5c2a28712ab",
+      "id": "seg008:line4465",
+      "name": "get_super_random"
+    },
+    {
+      "card": "recovery/cards/seg008_line4503.json",
+      "card_sha256": "eeb40896eb9e9fc2e0ac179311fdcd565352b0ae9307c0565f28599f21d3fd7c",
+      "id": "seg008:line4503",
+      "name": "file_load_resource"
+    },
+    {
+      "card": "recovery/cards/seg008_line4606.json",
+      "card_sha256": "56f87fc909b399d02f6913b3d0623e6482a71190004a74b42dca7a5b429779d3",
+      "id": "seg008:line4606",
+      "name": "sub_29A86"
+    },
+    {
+      "card": "recovery/cards/seg008_line4669.json",
+      "card_sha256": "73bea0ec18b63f2e112f74cf12d131d268738a01997442bad3ae3ba149ad0705",
+      "id": "seg008:line4669",
+      "name": "input_push_status"
+    },
+    {
+      "card": "recovery/cards/seg008_line4686.json",
+      "card_sha256": "347f47ed4a55e503391e510aa8d5fc34d479aa749d00eba4d4cc2ef599f706d1",
+      "id": "seg008:line4686",
+      "name": "input_pop_status"
+    },
+    {
+      "card": "recovery/cards/seg008_line4708.json",
+      "card_sha256": "b37b15ef48e855f300e8867e98315b80d384471d699616f593da53dc7d3eeafa",
+      "id": "seg008:line4708",
+      "name": "do_joy_restext"
+    },
+    {
+      "card": "recovery/cards/seg008_line5031.json",
+      "card_sha256": "dde8b1396a1cf3bfefa2c8ad982aa700302c32cc777484dca3513c80f0f12d65",
+      "id": "seg008:line5031",
+      "name": "do_mou_restext"
+    },
+    {
+      "card": "recovery/cards/seg008_line5069.json",
+      "card_sha256": "d048d0368bfb51871fcd658696056f207a80ae6d4bae57cc01eacf9394989fca",
+      "id": "seg008:line5069",
+      "name": "do_pau_restext"
+    },
+    {
+      "card": "recovery/cards/seg008_line5105.json",
+      "card_sha256": "c39fe1d96e162a8a1f697e136a532e6d1d371bb6ee47726f05edfe78ff062d27",
+      "id": "seg008:line5105",
+      "name": "do_mof_restext"
+    },
+    {
+      "card": "recovery/cards/seg008_line5155.json",
+      "card_sha256": "ffef44e8d4feb5e82533524500aeda43b3d6d0cf4a87c31376c54295fb51a8e0",
+      "id": "seg008:line5155",
+      "name": "do_sonsof_restext"
+    },
+    {
+      "card": "recovery/cards/seg008_line5247.json",
+      "card_sha256": "cfc74f4d24431f4bf408e2295f97b33bb95dc286b54506433eeec24d43b9c0d4",
+      "id": "seg008:line5247",
+      "name": "show_graphic_levels_menu"
+    },
+    {
+      "card": "recovery/cards/seg008_line5501.json",
+      "card_sha256": "37d49249e291acdda4692f019c6f9faffc604d78379fff3a18e2b6a64dfa4a6a",
+      "id": "seg008:line5501",
+      "name": "ensure_file_exists"
+    },
+    {
+      "card": "recovery/cards/seg008_line5554.json",
+      "card_sha256": "95c3cfdfefdcdd3ca78b6610f272be9e81a69029c1357407f5686fd2bca99176",
+      "id": "seg008:line5554",
+      "name": "do_mer_restext"
+    },
+    {
+      "card": "recovery/cards/seg009_line2956.json",
+      "card_sha256": "314694f96f91df4c92a7801c9ea6067d64148b55421bfb67a25e51f370f5fabd",
+      "id": "seg009:line2956",
+      "name": "preRender_icons"
+    },
+    {
+      "card": "recovery/cards/seg009_line3181.json",
+      "card_sha256": "f6da9d671e6c5bbdf65a0cbbfe9998143c9cb19a05b171a008ffc4bfbe004fba",
+      "id": "seg009:line3181",
+      "name": "draw_2DtrackMap"
+    },
+    {
+      "card": "recovery/cards/seg009_line4009.json",
+      "card_sha256": "ccd905a45e0e986554c393b6add9fe0e4dd2377f9613bceea6d4a348c0859b2e",
+      "id": "seg009:line4009",
+      "name": "sub_2C81C"
+    },
+    {
+      "card": "recovery/cards/seg009_line4203.json",
+      "card_sha256": "5c1f32302d02a7f490d22e99a87d552ee6654ec894473c82f88a80834f995217",
+      "id": "seg009:line4203",
+      "name": "sub_2C9B4"
+    },
+    {
+      "card": "recovery/cards/seg009_line54.json",
+      "card_sha256": "c0872dcace6df7021073243eecf50cdf22f01006182dc4cec4a0edb89e59a92c",
+      "id": "seg009:line54",
+      "name": "load_tracks_menu_shapes"
+    },
+    {
+      "card": "recovery/cards/seg010_line1063.json",
+      "card_sha256": "a0e84b123b6e44ad87b89bb5117f013d213e6fd16b6ca61884a45f16087bb8c6",
+      "id": "seg010:line1063",
+      "name": "__flsbuf"
+    },
+    {
+      "card": "recovery/cards/seg010_line1240.json",
+      "card_sha256": "6708529139e4dbb27ab97646ad3903564169e2eba2afd6c09d17b9515a9b4d42",
+      "id": "seg010:line1240",
+      "name": "__getbuf"
+    },
+    {
+      "card": "recovery/cards/seg010_line1297.json",
+      "card_sha256": "f137f4fd7616ef2fb68a1dff50c5310580dbcd0ee187f09c8b10ab2784673452",
+      "id": "seg010:line1297",
+      "name": "__stbuf"
+    },
+    {
+      "card": "recovery/cards/seg010_line1365.json",
+      "card_sha256": "a4f0919e9ec779b0c11c8658c3dbd3ce62c8a50e5d1cbdf03abd43c548cce571",
+      "id": "seg010:line1365",
+      "name": "__ftbuf"
+    },
+    {
+      "card": "recovery/cards/seg010_line1438.json",
+      "card_sha256": "d50a53508f5d5824dac6f80b0425924d423c3c51ba201ca352d796fed0087b51",
+      "id": "seg010:line1438",
+      "name": "_fflush"
+    },
+    {
+      "card": "recovery/cards/seg010_line1499.json",
+      "card_sha256": "ea88095c7afd25730cb1449ac173027ae93c0e6fd160f6eb6db72c3c1af59f1b",
+      "id": "seg010:line1499",
+      "name": "__output"
+    },
+    {
+      "card": "recovery/cards/seg010_line150.json",
+      "card_sha256": "9a2f6205c65d9e13025d7b070ca89be650fd8afe6f6a4363c803850420d76675",
+      "id": "seg010:line150",
+      "name": "start"
+    },
+    {
+      "card": "recovery/cards/seg010_line1871.json",
+      "card_sha256": "0fcdd0e01946639bfba2751e4da7d1115ae7504b709a0fe76dafa5769cb235e8",
+      "id": "seg010:line1871",
+      "name": "iprint"
+    },
+    {
+      "card": "recovery/cards/seg010_line2018.json",
+      "card_sha256": "23ae087280d08da8ab73882fd426b97749ce460177b00c061bf0484430b39966",
+      "id": "seg010:line2018",
+      "name": "sprint"
+    },
+    {
+      "card": "recovery/cards/seg010_line2137.json",
+      "card_sha256": "7c69d3892e64ac527cd7db12aa290ed6981203cbd5785b085f3e3d6bc15bc405",
+      "id": "seg010:line2137",
+      "name": "fprint"
+    },
+    {
+      "card": "recovery/cards/seg010_line2217.json",
+      "card_sha256": "53e49df0faf97b3e7467870b6b449aef4e981ebeda4999d3fb12b231e798953a",
+      "id": "seg010:line2217",
+      "name": "_outc"
+    },
+    {
+      "card": "recovery/cards/seg010_line2311.json",
+      "card_sha256": "d673596a66889f92187b536d5e4e42b2bba59fcd1827dace7fb4225ab8e8788a",
+      "id": "seg010:line2311",
+      "name": "putbuf"
+    },
+    {
+      "card": "recovery/cards/seg010_line2368.json",
+      "card_sha256": "7f3747e5aa050bd7bba64c358c1218b7487c4ca4f9549953bfe50deb2174d6c8",
+      "id": "seg010:line2368",
+      "name": "_out"
+    },
+    {
+      "card": "recovery/cards/seg010_line2514.json",
+      "card_sha256": "7fc5ee399ba13320cf779cdffaedeee52fbe2cf323a51143220f8be7c60fc8c3",
+      "id": "seg010:line2514",
+      "name": "getnum"
+    },
+    {
+      "card": "recovery/cards/seg010_line2584.json",
+      "card_sha256": "b372f34ae3e1f581b1c91c139fe72fd6673f8b64e00ad08936496fc576357286",
+      "id": "seg010:line2584",
+      "name": "flagchar"
+    },
+    {
+      "card": "recovery/cards/seg010_line2688.json",
+      "card_sha256": "85c95b980cecd2bc2af0bc724324971464cb61380fa7e61d6dbdedddc61a1242",
+      "id": "seg010:line2688",
+      "name": "_write"
+    },
+    {
+      "card": "recovery/cards/seg010_line2905.json",
+      "card_sha256": "8736f3f2a601f4ef0e62c038aa1a6cfbde955860055e7d684dcc4bf10bd13d81",
+      "id": "seg010:line2905",
+      "name": "unknown_libname_2"
+    },
+    {
+      "card": "recovery/cards/seg010_line2951.json",
+      "card_sha256": "ae36254b6881596e20947773e869112f9ea14b1f90cf807ecf82d71111e78e9c",
+      "id": "seg010:line2951",
+      "name": "__amalloc"
+    },
+    {
+      "card": "recovery/cards/seg010_line3142.json",
+      "card_sha256": "c8ec01fd32bfb5ef8f7dca6ce738529197819c3f2d9d51a58e031cb5b6c30fae",
+      "id": "seg010:line3142",
+      "name": "__amallocbrk"
+    },
+    {
+      "card": "recovery/cards/seg010_line3169.json",
+      "card_sha256": "bb26c97bfb2ce277680f7515864bfed97636a399dfbe4a2e1fc559b087705c6a",
+      "id": "seg010:line3169",
+      "name": "_brkctl"
+    },
+    {
+      "card": "recovery/cards/seg010_line3287.json",
+      "card_sha256": "23184391cd09b41997d43e91354ac3aae99b959ead7df76d29a79756a7da908b",
+      "id": "seg010:line3287",
+      "name": "_strcat"
+    },
+    {
+      "card": "recovery/cards/seg010_line3327.json",
+      "card_sha256": "613f380960c6861db13b5ea646c2c6285ede5c83d3f19c9f71b51b12fd1aae98",
+      "id": "seg010:line3327",
+      "name": "_strcpy"
+    },
+    {
+      "card": "recovery/cards/seg010_line3361.json",
+      "card_sha256": "d10e399108a82dcba2dae461e1415a5081b4d9e6dc40f0dd2ac14ba4ff214848",
+      "id": "seg010:line3361",
+      "name": "_strcmp"
+    },
+    {
+      "card": "recovery/cards/seg010_line3392.json",
+      "card_sha256": "dffa4ff22b847484f2a1042df3ff35f9dd7ffd49d6c7060022421cca0dfae127",
+      "id": "seg010:line3392",
+      "name": "_strlen"
+    },
+    {
+      "card": "recovery/cards/seg010_line3415.json",
+      "card_sha256": "ffd533e0f17111ae4d05ad7d7676fb307dbab825bb4c4e112f31433b5b549cd4",
+      "id": "seg010:line3415",
+      "name": "_itoa"
+    },
+    {
+      "card": "recovery/cards/seg010_line3439.json",
+      "card_sha256": "23b32220a776a040557eff194effde28296ea3a2262fa48c504f29f8764d5188",
+      "id": "seg010:line3439",
+      "name": "_ultoa"
+    },
+    {
+      "card": "recovery/cards/seg010_line3473.json",
+      "card_sha256": "f4f8c3bdc3b6b5acb62184b52b93465ca9a6d858d4496a77cbbc466411db325d",
+      "id": "seg010:line3473",
+      "name": "_isatty"
+    },
+    {
+      "card": "recovery/cards/seg010_line3569.json",
+      "card_sha256": "525724874182daec01777fe7cb518900d757fa0b14db30508609cc47b5a8e4f1",
+      "id": "seg010:line3569",
+      "name": "_sprintf"
+    },
+    {
+      "card": "recovery/cards/seg010_line3621.json",
+      "card_sha256": "f1788fdfd824b404d5ee9ba3b3762fc8777b1d4ae239d2adb06d9db1c670f94c",
+      "id": "seg010:line3621",
+      "name": "_stricmp"
+    },
+    {
+      "card": "recovery/cards/seg010_line3740.json",
+      "card_sha256": "0cc7b64d9c753c451fb4ee9732e7bea860783c1deac60eaf610b2895f7250094",
+      "id": "seg010:line3740",
+      "name": "_abs"
+    },
+    {
+      "card": "recovery/cards/seg010_line3766.json",
+      "card_sha256": "256e1ac459a4cf970931f266c8a7c2ecfa499f2c2c423fa8cb06f49b7893fdd0",
+      "id": "seg010:line3766",
+      "name": "_raise"
+    },
+    {
+      "card": "recovery/cards/seg010_line3851.json",
+      "card_sha256": "5fa53045cab65751d116591e64dd5e2b8ad7c473804d6ec3df6602e9af6d0780",
+      "id": "seg010:line3851",
+      "name": "_srand"
+    },
+    {
+      "card": "recovery/cards/seg010_line3866.json",
+      "card_sha256": "ddc4c78bc1ddfb45db7bd5b0aadb7fe356b3829aaf92942312858c4bac5b81af",
+      "id": "seg010:line3866",
+      "name": "_rand"
+    },
+    {
+      "card": "recovery/cards/seg010_line3978.json",
+      "card_sha256": "24f64767fe96a9cf5033dc3b31ae38f7e1c7a606a6be438a66199ab378bd53e8",
+      "id": "seg010:line3978",
+      "name": "__sigentry"
+    },
+    {
+      "card": "recovery/cards/seg010_line4111.json",
+      "card_sha256": "0e702822ce3073ee143949c4b1fc2665445d2ae9a7e4c7b985170f74fb00acb5",
+      "id": "seg010:line4111",
+      "name": "_strrchr"
+    },
+    {
+      "card": "recovery/cards/seg010_line4281.json",
+      "card_sha256": "67f88ab5fbd429d165d64ebcb1cc618f0cf92a217b2327de24c1cac595b9de1f",
+      "id": "seg010:line4281",
+      "name": "__aFlshr"
+    },
+    {
+      "card": "recovery/cards/seg010_line4340.json",
+      "card_sha256": "efe76e70b9d541a81cf3af523c0a208b10146ae32388618fd9d898134653bb67",
+      "id": "seg010:line4340",
+      "name": "unknown_libname_4"
+    },
+    {
+      "card": "recovery/cards/seg010_line488.json",
+      "card_sha256": "7f9fabee6432a3eb8576bd1de9fe66ddd1d923707b26377c08a8c272d3ff652f",
+      "id": "seg010:line488",
+      "name": "__nullcheck"
+    },
+    {
+      "card": "recovery/cards/seg010_line511.json",
+      "card_sha256": "bf562ac12af0adc039a9785a3dc0885b477bce09809e4550896f1766f7bb9e46",
+      "id": "seg010:line511",
+      "name": "__setargv"
+    },
+    {
+      "card": "recovery/cards/seg010_line752.json",
+      "card_sha256": "17931804ca84f3d93b99acf59ae28990111ee63ddc13b16c99a0fc53192ae14b",
+      "id": "seg010:line752",
+      "name": "__setenvp"
+    },
+    {
+      "card": "recovery/cards/seg010_line823.json",
+      "card_sha256": "3608e24f733c1f6fe261d0e13787053e972e539c12f0d236d5400c820e765e6f",
+      "id": "seg010:line823",
+      "name": "__NMSG_TEXT"
+    },
+    {
+      "card": "recovery/cards/seg010_line885.json",
+      "card_sha256": "4e4f9e12e50a5e581ee3ef20ce9355474a312bedc1082294bbe0679d715d24ec",
+      "id": "seg010:line885",
+      "name": "__myalloc"
+    },
+    {
+      "card": "recovery/cards/seg010_line960.json",
+      "card_sha256": "0e625b6e1c8e633f226b64c57ce1cf57f1a186588a49ef28f39a8c2393209cbf",
+      "id": "seg010:line960",
+      "name": "sub_2D1BC"
+    },
+    {
+      "card": "recovery/cards/seg010_line990.json",
+      "card_sha256": "56f7f48c27587e0eae9b0e530860469df6f1e3bcf6cf3b31c1978c0880e9ca4c",
+      "id": "seg010:line990",
+      "name": "_flushall"
+    },
+    {
+      "card": "recovery/cards/seg012_line10086.json",
+      "card_sha256": "92042439e6784269ed3665e28c53015c2f550fc19e23106e75369fc5ffccbc8c",
+      "id": "seg012:line10086",
+      "name": "video_get_status"
+    },
+    {
+      "card": "recovery/cards/seg012_line10098.json",
+      "card_sha256": "b4e1cd1938078d8c90b42928e9ebbb7b51ef3cea10e2dbaecf84088e1328ef0b",
+      "id": "seg012:line10098",
+      "name": "nopsub_33006"
+    },
+    {
+      "card": "recovery/cards/seg012_line10165.json",
+      "card_sha256": "b5df11c319b7a12ba69b14c3e5e983165455f19ebbe480e3cc007ac1310e3f96",
+      "id": "seg012:line10165",
+      "name": "preRender_sphere"
+    },
+    {
+      "card": "recovery/cards/seg012_line10447.json",
+      "card_sha256": "81f642e6952a58bc9dae157681c0c4c24188a4aaf6928c235ca0021673b207aa",
+      "id": "seg012:line10447",
+      "name": "video_clear_color"
+    },
+    {
+      "card": "recovery/cards/seg012_line10467.json",
+      "card_sha256": "a686ec4ec5449b9616f8bfea7de253fc80aa56518548c397cf268add7a8265fb",
+      "id": "seg012:line10467",
+      "name": "sprite_clear_1_color"
+    },
+    {
+      "card": "recovery/cards/seg012_line10529.json",
+      "card_sha256": "fcc66810f6a1e515b208054b74102c8c7dddf1e79553547b2d57e986dbd49b98",
+      "id": "seg012:line10529",
+      "name": "nopsub_33330"
+    },
+    {
+      "card": "recovery/cards/seg012_line10547.json",
+      "card_sha256": "5c683304e87f6ab2af9300afdfefa62940081499130ce5a5da81b9f3d3f778a1",
+      "id": "seg012:line10547",
+      "name": "draw_unknown_lines"
+    },
+    {
+      "card": "recovery/cards/seg012_line10617.json",
+      "card_sha256": "fb56b52283f885f9a5616c08f37f64f0a8fa1b4ea665005d73a2bf8fc949132f",
+      "id": "seg012:line10617",
+      "name": "putpixel_line1_maybe"
+    },
+    {
+      "card": "recovery/cards/seg012_line10826.json",
+      "card_sha256": "ea995eb480b324e5d8badc469856582d7e6df94b016da413d348073d1af2f58e",
+      "id": "seg012:line10826",
+      "name": "sprite_1_unk2"
+    },
+    {
+      "card": "recovery/cards/seg012_line10875.json",
+      "card_sha256": "ba1ccd6d5b41c3b7919d36f04fdeb550aa94e30302544dee409917fa1a423858",
+      "id": "seg012:line10875",
+      "name": "sprite_1_unk"
+    },
+    {
+      "card": "recovery/cards/seg012_line11083.json",
+      "card_sha256": "9a7a2778aadb44e61b99518e8427d0f6c091982b1ff5ace2780e6d392c7b608c",
+      "id": "seg012:line11083",
+      "name": "font_draw_text"
+    },
+    {
+      "card": "recovery/cards/seg012_line11241.json",
+      "card_sha256": "51f81d059e182c25bdcab429761e0d2b8293e94d65ab9a9064b77cf062e77634",
+      "id": "seg012:line11241",
+      "name": "file_load_shape2d_thunk"
+    },
+    {
+      "card": "recovery/cards/seg012_line11247.json",
+      "card_sha256": "001213426795aaceae2cff461b1a2b118e6fdcf3818f701fb4081430036b7905",
+      "id": "seg012:line11247",
+      "name": "sprite_putimage_and_alt2"
+    },
+    {
+      "card": "recovery/cards/seg012_line11275.json",
+      "card_sha256": "33393d71098053d84b066a576aa952de1462b7ffb5570a7957d6b5d94cec6a2a",
+      "id": "seg012:line11275",
+      "name": "sprite_putimage_and"
+    },
+    {
+      "card": "recovery/cards/seg012_line11467.json",
+      "card_sha256": "0a5cda2873d72e9052924e0b811c99fdbd4c070671fd9c35aa61ed2f5e2b6e32",
+      "id": "seg012:line11467",
+      "name": "nopsub_339FA"
+    },
+    {
+      "card": "recovery/cards/seg012_line11495.json",
+      "card_sha256": "8cd9a139cfab4df2b5e005e5b4e1aab8729ffbec34fd0f1142a2f76eaa3ad627",
+      "id": "seg012:line11495",
+      "name": "putpixel_iconMask"
+    },
+    {
+      "card": "recovery/cards/seg012_line11595.json",
+      "card_sha256": "b517dcc2af0335c66b6e2ee6036e6b3be9c9ddecc9bfdf6d03e76d3974c14978",
+      "id": "seg012:line11595",
+      "name": "nopsub_33AC0"
+    },
+    {
+      "card": "recovery/cards/seg012_line11623.json",
+      "card_sha256": "e504a0157a0a4032abd944c216f2fdbaf1f91b562dfeb1cb8f1a6015ad64197b",
+      "id": "seg012:line11623",
+      "name": "nopsub_33AE4"
+    },
+    {
+      "card": "recovery/cards/seg012_line11649.json",
+      "card_sha256": "0713165314bb1d9997da501798dedd0ba453ffb574c1f5beaf625eb1f1e162d1",
+      "id": "seg012:line11649",
+      "name": "shape2d_render_bmp_as_mask"
+    },
+    {
+      "card": "recovery/cards/seg012_line11735.json",
+      "card_sha256": "3aa2832b213261acfd4f479c98f234aeb42af9ad10d57ac8b8f4d2c021573b61",
+      "id": "seg012:line11735",
+      "name": "nopsub_33B98"
+    },
+    {
+      "card": "recovery/cards/seg012_line11763.json",
+      "card_sha256": "16a749852af6d655cae7eadcd133ef513e2a39621e27e5a757ccaa9f869290bd",
+      "id": "seg012:line11763",
+      "name": "sprite_putimage_and_alt"
+    },
+    {
+      "card": "recovery/cards/seg012_line11789.json",
+      "card_sha256": "fc12b73a10169c2b113a3c13c6e6c23ac76916f74e4ac7b21729f0a4f554594b",
+      "id": "seg012:line11789",
+      "name": "sprite_putimage"
+    },
+    {
+      "card": "recovery/cards/seg012_line11943.json",
+      "card_sha256": "e2b62652e1ea622f4d41bdd950aa113756dff787165970b8d6eac30a64067249",
+      "id": "seg012:line11943",
+      "name": "nopsub_33D0C"
+    },
+    {
+      "card": "recovery/cards/seg012_line11971.json",
+      "card_sha256": "e28ad4a72a56a8e831121e0be7fb91be9e830c2166c021ed9395e7a0b9f9fade",
+      "id": "seg012:line11971",
+      "name": "sprite_shape_to_1"
+    },
+    {
+      "card": "recovery/cards/seg012_line11997.json",
+      "card_sha256": "1077ff5efa8e86b56410dfcc03bd9dbcb265e9feb79f8109b81154f0a7c07384",
+      "id": "seg012:line11997",
+      "name": "sprite_shape_to_1_alt"
+    },
+    {
+      "card": "recovery/cards/seg012_line12065.json",
+      "card_sha256": "2bf285a648ea527ccb7f8f6edd1d42344664a23ed9f1d602fd109b60373c4896",
+      "id": "seg012:line12065",
+      "name": "nopsub_33DBE"
+    },
+    {
+      "card": "recovery/cards/seg012_line12093.json",
+      "card_sha256": "963105c538d8fda6e406f20e42cb147d1829f1804b8bdb1bc8b8515bbf148816",
+      "id": "seg012:line12093",
+      "name": "shape2d_op_unk5"
+    },
+    {
+      "card": "recovery/cards/seg012_line12119.json",
+      "card_sha256": "4e7fedc6396370374b1c1adbfeff76f7535a823befc1a0f244af063e038c4a6f",
+      "id": "seg012:line12119",
+      "name": "shape2d_op_unk"
+    },
+    {
+      "card": "recovery/cards/seg012_line12205.json",
+      "card_sha256": "0ce1da402d6d6e46ad0b015b8446bdfae78537887ad2483248795fac3bb22780",
+      "id": "seg012:line12205",
+      "name": "nopsub_33E90"
+    },
+    {
+      "card": "recovery/cards/seg012_line12233.json",
+      "card_sha256": "1653928d2615b7aa0147af39de41fdb80a40ebf2d784a62f93a0dc7ac1d72fb0",
+      "id": "seg012:line12233",
+      "name": "shape2d_op_unk2"
+    },
+    {
+      "card": "recovery/cards/seg012_line12259.json",
+      "card_sha256": "91d0cdcc7cbdaa5d56290c82b89f8fe66d0973ca8de3f52b8ab00d911a573159",
+      "id": "seg012:line12259",
+      "name": "shape2d_op_unk3"
+    },
+    {
+      "card": "recovery/cards/seg012_line12478.json",
+      "card_sha256": "80ae43cc9cec92e5c62ae93d5e21e342dbac3bda717df6193f599c312bf9a7b7",
+      "id": "seg012:line12478",
+      "name": "sprite_putimage_or_alt"
+    },
+    {
+      "card": "recovery/cards/seg012_line12506.json",
+      "card_sha256": "58493a370f3266030a33c5e1c8b3824942d6e6e0d803b617b18363309247dac6",
+      "id": "seg012:line12506",
+      "name": "sprite_putimage_or"
+    },
+    {
+      "card": "recovery/cards/seg012_line12716.json",
+      "card_sha256": "577b69b98b2c3f49bd1e91778eae20a23bc3a27f613dd7239f14b4c37beaaf34",
+      "id": "seg012:line12716",
+      "name": "putpixel_iconFillings"
+    },
+    {
+      "card": "recovery/cards/seg012_line12848.json",
+      "card_sha256": "dcc37a7a495767b384c758c81ca2312ec0c026dbea3e73bfdb8bda7104e66186",
+      "id": "seg012:line12848",
+      "name": "shape2d_op_unk4"
+    },
+    {
+      "card": "recovery/cards/seg012_line12951.json",
+      "card_sha256": "5eda2e82a9c2d73b7714e0b81a5fa06071a4343822e778912e5905f3760a7013",
+      "id": "seg012:line12951",
+      "name": "sprite_putimage_transparent"
+    },
+    {
+      "card": "recovery/cards/seg012_line13144.json",
+      "card_sha256": "223c2fd648880ea4a95479276f878e26efe35e614dd43a4e42b0aa281b44ebb5",
+      "id": "seg012:line13144",
+      "name": "sub_34526"
+    },
+    {
+      "card": "recovery/cards/seg012_line13226.json",
+      "card_sha256": "85dada51a83b9df9312f265abb958a60b8a0063c153bfb7a3beec3ef84ae0a08",
+      "id": "seg012:line13226",
+      "name": "sub_345BC"
+    },
+    {
+      "card": "recovery/cards/seg012_line13350.json",
+      "card_sha256": "acfdb9e41cdbe824943c6a154c29347b7516ff23cf006d479c8547b818be9d69",
+      "id": "seg012:line13350",
+      "name": "video_set_palette"
+    },
+    {
+      "card": "recovery/cards/seg012_line13373.json",
+      "card_sha256": "4c68f96da9fb860214ceab874b60ce873990361d053fb29e59b02a685b414fe8",
+      "id": "seg012:line13373",
+      "name": "draw_filled_lines"
+    },
+    {
+      "card": "recovery/cards/seg012_line13448.json",
+      "card_sha256": "47abb2211c7ee29b4247941a11c77c9a9a343ff7d8d0da8720f0da036b5c5bab",
+      "id": "seg012:line13448",
+      "name": "nopsub_34736"
+    },
+    {
+      "card": "recovery/cards/seg012_line13476.json",
+      "card_sha256": "8c31ae8734f0ef2e6a6d8b96dd3dc7b5fdf2d601a73ab750ad81d5709c1e1cd7",
+      "id": "seg012:line13476",
+      "name": "sprite_clear_shape_alt"
+    },
+    {
+      "card": "recovery/cards/seg012_line13557.json",
+      "card_sha256": "204e0f27bef186cff5f4dd1b7fa8c14d33f7ff7c8bb023d2ee1865547914922e",
+      "id": "seg012:line13557",
+      "name": "shape_op_explosion"
+    },
+    {
+      "card": "recovery/cards/seg012_line14000.json",
+      "card_sha256": "709614ba09c7cadb65782c7e6e8bc1b39d5145950e1524009c855717250e02f8",
+      "id": "seg012:line14000",
+      "name": "font_set_unk"
+    },
+    {
+      "card": "recovery/cards/seg012_line14062.json",
+      "card_sha256": "7dbbee7eb68734ffe59556d33bbc764f2edacec226bcf7505f0c7151442d5e32",
+      "id": "seg012:line14062",
+      "name": "set_fontdefseg"
+    },
+    {
+      "card": "recovery/cards/seg012_line14085.json",
+      "card_sha256": "fca750aea3d5981647b558a947f5eaac9889aa01549562859e6ef93ee699b433",
+      "id": "seg012:line14085",
+      "name": "draw_patterned_lines"
+    },
+    {
+      "card": "recovery/cards/seg012_line14155.json",
+      "card_sha256": "9f504919380b949d18f246d657ff5da83097b68c01aeffcdd85f88bb494eaaf4",
+      "id": "seg012:line14155",
+      "name": "sprite_make_wnd"
+    },
+    {
+      "card": "recovery/cards/seg012_line1490.json",
+      "card_sha256": "f35fa20c2b7e45d8f5492a19fa6d0e2b4cad2ab031e0d539f1f5a50c1c20943d",
+      "id": "seg012:line1490",
+      "name": "parse_shape2d_helper2"
+    },
+    {
+      "card": "recovery/cards/seg012_line1519.json",
+      "card_sha256": "1c554052c18f1da491917fd70e4f1ca4c7a65a0dff465570e7d32dd196d1af80",
+      "id": "seg012:line1519",
+      "name": "criterr_interrupt_handler"
+    },
+    {
+      "card": "recovery/cards/seg012_line1544.json",
+      "card_sha256": "7a46f1fe66f537e0aaa794199e6686304dd06d07e284b53c16496e5643de9229",
+      "id": "seg012:line1544",
+      "name": "set_criterr_handler"
+    },
+    {
+      "card": "recovery/cards/seg012_line1594.json",
+      "card_sha256": "0b9f090c72218a2be738685b8fa2281651f786d5d95d059fbcf2c309d02d594b",
+      "id": "seg012:line1594",
+      "name": "preRender_unk"
+    },
+    {
+      "card": "recovery/cards/seg012_line1649.json",
+      "card_sha256": "f60f35ca75ebaa228ba99d159a479864374e257c6ca4240f3f91f0bbd16b9f97",
+      "id": "seg012:line1649",
+      "name": "nopsub_2F436"
+    },
+    {
+      "card": "recovery/cards/seg012_line17848.json",
+      "card_sha256": "9b5310682ec7bb7c6c1f37b40066e9f5a13fa23b754d76c2fda86b650a9aae9e",
+      "id": "seg012:line17848",
+      "name": "sprite_set_1_from_argptr"
+    },
+    {
+      "card": "recovery/cards/seg012_line17873.json",
+      "card_sha256": "f8a404a6e7cc0d0e6b23b7d546f4a8149d835a3bbaa9e9f50c080fd0d76cb735",
+      "id": "seg012:line17873",
+      "name": "sprite_copy_2_to_1"
+    },
+    {
+      "card": "recovery/cards/seg012_line17885.json",
+      "card_sha256": "18cb8f9cae281f833f19a075ea503cb88c45e6b52566e52caf30fc15328c5d63",
+      "id": "seg012:line17885",
+      "name": "putpixel_single_maybe"
+    },
+    {
+      "card": "recovery/cards/seg012_line17931.json",
+      "card_sha256": "31c837a02852292e018891c214e8c76e0f84e478ae7162613b06151b3d474086",
+      "id": "seg012:line17931",
+      "name": "sub_35B76"
+    },
+    {
+      "card": "recovery/cards/seg012_line18050.json",
+      "card_sha256": "3afd80a199515fc10645871f77e4e372496850e500b159153a1c14100b1ac0d2",
+      "id": "seg012:line18050",
+      "name": "sub_35C4E"
+    },
+    {
+      "card": "recovery/cards/seg012_line18376.json",
+      "card_sha256": "2d9a53675434f1940872d8baa0234c0945c5e42ca48efa7783c3e1fa27b102dd",
+      "id": "seg012:line18376",
+      "name": "sub_35DC8"
+    },
+    {
+      "card": "recovery/cards/seg012_line18431.json",
+      "card_sha256": "3ade3903ee4f6833a40208525e74a49e04bb5757ddab483751fce2c666e9dc0c",
+      "id": "seg012:line18431",
+      "name": "sub_35E08"
+    },
+    {
+      "card": "recovery/cards/seg012_line18618.json",
+      "card_sha256": "6b7a0f78b6e84e47f3f1088624d69210699602f7939539d556fbbdd4f425cae2",
+      "id": "seg012:line18618",
+      "name": "file_load_shape2d_palmap_apply"
+    },
+    {
+      "card": "recovery/cards/seg012_line18671.json",
+      "card_sha256": "d1edfb45560108d6b7ef8400e38fcdc7ac3eaff5a83ee547457808ebf756720e",
+      "id": "seg012:line18671",
+      "name": "file_load_shape2d_expand"
+    },
+    {
+      "card": "recovery/cards/seg012_line18849.json",
+      "card_sha256": "5980fd8b2e11fdca44cf2269213807a4867411ade12abfd498184d9965249291",
+      "id": "seg012:line18849",
+      "name": "file_unflip_shape2d_pes"
+    },
+    {
+      "card": "recovery/cards/seg012_line2981.json",
+      "card_sha256": "cd23a5a9e747796c412bdb9b5491fee9223c3ec15608bb14030b3c7002200386",
+      "id": "seg012:line2981",
+      "name": "call_exitlist2"
+    },
+    {
+      "card": "recovery/cards/seg012_line2990.json",
+      "card_sha256": "7b1cc6d2bac09ceeb1fb1f3ec78ff70851d1041e3d149716395f448fc84f249b",
+      "id": "seg012:line2990",
+      "name": "file_paras"
+    },
+    {
+      "card": "recovery/cards/seg012_line3011.json",
+      "card_sha256": "d4f8fe425a662d4ac7acf8794bc819fe2a0d1e584aaa117b6ad9ce5975b3efcf",
+      "id": "seg012:line3011",
+      "name": "file_paras_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line3107.json",
+      "card_sha256": "083865e9aee5f6bff6dffae3b6a388bdb8e03b8561c81639f568b93c62eede50",
+      "id": "seg012:line3107",
+      "name": "file_decomp_paras"
+    },
+    {
+      "card": "recovery/cards/seg012_line3129.json",
+      "card_sha256": "5b203541ba6af5b993425d8e7655379b7632ea785547d72a940789839473f548",
+      "id": "seg012:line3129",
+      "name": "file_decomp_paras_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line3144.json",
+      "card_sha256": "78dfec30ebedae43fa6f1a7b643b0bf86876afd9c8340705a12c857086230714",
+      "id": "seg012:line3144",
+      "name": "file_decomp_paras_fatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line3240.json",
+      "card_sha256": "e9e19abaa49d35e4d60eecde1068b97bc97e3c19d5a31c19fef409be28beb37d",
+      "id": "seg012:line3240",
+      "name": "file_find"
+    },
+    {
+      "card": "recovery/cards/seg012_line3296.json",
+      "card_sha256": "f3f0190e28ffc054d31e1a2bd034be38aef331045d650f8c7fe2d5d89faf4e97",
+      "id": "seg012:line3296",
+      "name": "file_find_next"
+    },
+    {
+      "card": "recovery/cards/seg012_line3315.json",
+      "card_sha256": "c4c8f8e7cd18eceb085b88d00ad348d8618bb3e3d769157686d3798b71f5733f",
+      "id": "seg012:line3315",
+      "name": "multiply_and_scale"
+    },
+    {
+      "card": "recovery/cards/seg012_line3335.json",
+      "card_sha256": "a181382bced41553366c664364742338d85fbc69bdf932f1d519ccdb91ef307e",
+      "id": "seg012:line3335",
+      "name": "video_set_mode4"
+    },
+    {
+      "card": "recovery/cards/seg012_line3495.json",
+      "card_sha256": "298f60abf69fd331532a1b0493a2e7b591b6986e2bd562300df7875a8e4f1e18",
+      "id": "seg012:line3495",
+      "name": "nopsub_30180"
+    },
+    {
+      "card": "recovery/cards/seg012_line3510.json",
+      "card_sha256": "bce814eca48e98b35be5a895c45731750156906bc1e091142569664f642e98cf",
+      "id": "seg012:line3510",
+      "name": "timer_setup_interrupt"
+    },
+    {
+      "card": "recovery/cards/seg012_line3712.json",
+      "card_sha256": "dc8c6c9be5d7ae169644620c632eaacba9e4a84d23456921ee435e476e91dce1",
+      "id": "seg012:line3712",
+      "name": "timer_intr_callback"
+    },
+    {
+      "card": "recovery/cards/seg012_line3788.json",
+      "card_sha256": "9355b4cc26f3401c66f8daaa3365d0396de085ec317f471efe8043f558a29ffe",
+      "id": "seg012:line3788",
+      "name": "sub_303BA"
+    },
+    {
+      "card": "recovery/cards/seg012_line388.json",
+      "card_sha256": "34a50c76babb2bf0f113922b14f1130d7843499ac8d3fd0f58eba27c56a45f18",
+      "id": "seg012:line388",
+      "name": "fatal_error"
+    },
+    {
+      "card": "recovery/cards/seg012_line3937.json",
+      "card_sha256": "202dd5927b87b62a4ff678e8de72026c5664d37e91b5cfd48df7fd1dfe77b537",
+      "id": "seg012:line3937",
+      "name": "nopsub_304B6"
+    },
+    {
+      "card": "recovery/cards/seg012_line409.json",
+      "card_sha256": "ba9fe611ceaba80ed2e15ed4c24deaf7207b9c5116b055311ac0c3d31d86147f",
+      "id": "seg012:line409",
+      "name": "polarAngle"
+    },
+    {
+      "card": "recovery/cards/seg012_line4097.json",
+      "card_sha256": "bb083da146751df923ee829329c88e43d906644dc6aaec38c0077286f5b42e31",
+      "id": "seg012:line4097",
+      "name": "get_joy_flags"
+    },
+    {
+      "card": "recovery/cards/seg012_line4328.json",
+      "card_sha256": "b6aea011004fc451a9590fd66f7f0be766a4ac80e3255ae83b14913c75d8f45c",
+      "id": "seg012:line4328",
+      "name": "nopsub_307FA"
+    },
+    {
+      "card": "recovery/cards/seg012_line4575.json",
+      "card_sha256": "64153723f9adf5a52f2a1de520924a0cc61b8e38a695e01ce01447cfe33fa9be",
+      "id": "seg012:line4575",
+      "name": "kb_get_key_state"
+    },
+    {
+      "card": "recovery/cards/seg012_line4680.json",
+      "card_sha256": "ff69386c96dd3e5837d6bc47a6dff8c88b7b6c7ce17c87ac16c336dc435acbfe",
+      "id": "seg012:line4680",
+      "name": "nopsub_30A97"
+    },
+    {
+      "card": "recovery/cards/seg012_line4716.json",
+      "card_sha256": "40d192b30fe33d669d9bdfd628a982e118e29fa117bcbef0a43592eddc789400",
+      "id": "seg012:line4716",
+      "name": "file_read"
+    },
+    {
+      "card": "recovery/cards/seg012_line4732.json",
+      "card_sha256": "e62d872b2d072b82a5d1cebf2e3613e4a16f00f3ae7dd522c8938595c81db62f",
+      "id": "seg012:line4732",
+      "name": "file_read_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line4745.json",
+      "card_sha256": "3cd41557030f2202dbb60fdffa2dc1ceaf63cb5624b492663816b2e73ca0d64d",
+      "id": "seg012:line4745",
+      "name": "file_read_fatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line4809.json",
+      "card_sha256": "a1b389f1f4102de4bad1679e10842c7252c1883def43f053b321723354ec78b7",
+      "id": "seg012:line4809",
+      "name": "file_decomp_rle"
+    },
+    {
+      "card": "recovery/cards/seg012_line4890.json",
+      "card_sha256": "94880c3f615077404177b60f55ba9cf86ab576bcab1aad1a51bc37d5d8eeb062",
+      "id": "seg012:line4890",
+      "name": "file_decomp_rle_single"
+    },
+    {
+      "card": "recovery/cards/seg012_line5000.json",
+      "card_sha256": "cf60f07c717fb493ae76d234b00fc01e608180dab828ab6a1a599a69a165b085",
+      "id": "seg012:line5000",
+      "name": "file_decomp_rle_seq"
+    },
+    {
+      "card": "recovery/cards/seg012_line5092.json",
+      "card_sha256": "4a3951383de16d6c62e251e153443c8c5ff9d01da78451dde1ca4b396fc7cb7e",
+      "id": "seg012:line5092",
+      "name": "file_load_binary"
+    },
+    {
+      "card": "recovery/cards/seg012_line5107.json",
+      "card_sha256": "78d49dbd158507b96d9e26d9b65cf7bd36788923a70193ab541f4ef26de3faf3",
+      "id": "seg012:line5107",
+      "name": "file_load_binary_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line5154.json",
+      "card_sha256": "e54448263009ce3e9d9693d90801c23857eeb27fd17966ac2a955297c67111a4",
+      "id": "seg012:line5154",
+      "name": "file_decomp"
+    },
+    {
+      "card": "recovery/cards/seg012_line5170.json",
+      "card_sha256": "b6c2e88842bddd4ab1e3f5b6b5f7165ab0a03d692997f4d70dcd09f703e75182",
+      "id": "seg012:line5170",
+      "name": "file_decomp_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line5184.json",
+      "card_sha256": "3326dd6882fc2621db221e28e6a7341a536be35bc2cd9f957a30ae23efb0b617",
+      "id": "seg012:line5184",
+      "name": "file_decomp_fatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line5373.json",
+      "card_sha256": "e3ee49ddc39b1aa8d22b0eeee1b3e77c65b06cd7e0d2d2ca4c2ba36a19faad56",
+      "id": "seg012:line5373",
+      "name": "locate_shape_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line5386.json",
+      "card_sha256": "c055269f2236c4bad7861563c80d3817d5e2b99748c743962f69d7c2a3298635",
+      "id": "seg012:line5386",
+      "name": "locate_shape_fatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line5399.json",
+      "card_sha256": "bb65488e8edd9dee07193c03b5fe29e5afb4e64e7d406323ca5a7df47b4039f5",
+      "id": "seg012:line5399",
+      "name": "locate_sound_fatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line5762.json",
+      "card_sha256": "4d3fa3aa9efb1973faf0bd855c233f7d71efe0e50ef37441627ffbf068414ccc",
+      "id": "seg012:line5762",
+      "name": "mmgr_path_to_name"
+    },
+    {
+      "card": "recovery/cards/seg012_line5872.json",
+      "card_sha256": "d25c55f50fe6aa3bac3db00147457835592726a38c449f91a1b4be992b4007ca",
+      "id": "seg012:line5872",
+      "name": "mmgr_find_free"
+    },
+    {
+      "card": "recovery/cards/seg012_line588.json",
+      "card_sha256": "47180c8112b9536c23460c15515d4962c2c59ad1115f2d90ea2cd9473fa5044a",
+      "id": "seg012:line588",
+      "name": "draw_line_related"
+    },
+    {
+      "card": "recovery/cards/seg012_line5927.json",
+      "card_sha256": "e28240b498c50276fe8f52001500d5250b50e1c7fd4732bb45eaf8d69e473cfd",
+      "id": "seg012:line5927",
+      "name": "mmgr_get_chunk_by_name"
+    },
+    {
+      "card": "recovery/cards/seg012_line6016.json",
+      "card_sha256": "a9222ba289425163e94163b82641b9b72d44ca8b3f0e2c953e2252541687daf8",
+      "id": "seg012:line6016",
+      "name": "nopsub_31429"
+    },
+    {
+      "card": "recovery/cards/seg012_line6406.json",
+      "card_sha256": "5c31e12adea8e1690ec3483fbb8913d82b75c5292510440af85148d013490502",
+      "id": "seg012:line6406",
+      "name": "mmgr_op_unk"
+    },
+    {
+      "card": "recovery/cards/seg012_line6518.json",
+      "card_sha256": "f7b7806d42cd418af0346d17ddf9e5dea984a194008c5914a3392e4fafe0a77c",
+      "id": "seg012:line6518",
+      "name": "preRender_wheel_helper4"
+    },
+    {
+      "card": "recovery/cards/seg012_line6840.json",
+      "card_sha256": "0621d55df32c1a58f0205efbe398a805428009514cdb0ed1289c73ee58151c9d",
+      "id": "seg012:line6840",
+      "name": "preRender_helper2"
+    },
+    {
+      "card": "recovery/cards/seg012_line6969.json",
+      "card_sha256": "6934cea9be248655b856fee9aafa14b0d9e94caf2305e3ad30c34f85e5897a96",
+      "id": "seg012:line6969",
+      "name": "preRender_helper3"
+    },
+    {
+      "card": "recovery/cards/seg012_line7470.json",
+      "card_sha256": "cdc660c6a35a6189524b3ccc846105316b6179205bbe92da6b049ed77223719a",
+      "id": "seg012:line7470",
+      "name": "nopsub_31F39"
+    },
+    {
+      "card": "recovery/cards/seg012_line7505.json",
+      "card_sha256": "02f9677d1e68480cc6820f350955ebbb3df854a8171e46d8e471380cb5fb82bb",
+      "id": "seg012:line7505",
+      "name": "nopsub_31F55"
+    },
+    {
+      "card": "recovery/cards/seg012_line7834.json",
+      "card_sha256": "38ed5a0672795a8a58d9fcec7dfe386fe6d2f5251f8e428ff44b928d085084d1",
+      "id": "seg012:line7834",
+      "name": "nopsub_3215A"
+    },
+    {
+      "card": "recovery/cards/seg012_line7848.json",
+      "card_sha256": "efe68c7644ff7423023aae8bc9da8ff376ff6dfc9f7a2e9e098e7ccf8c2a9667",
+      "id": "seg012:line7848",
+      "name": "nopsub_3216C"
+    },
+    {
+      "card": "recovery/cards/seg012_line7995.json",
+      "card_sha256": "5e6bc349dbd36c6c098df2b647a23c23bd96be4d9ca7d4193c9cbcc442b57f49",
+      "id": "seg012:line7995",
+      "name": "nopsub_322B4"
+    },
+    {
+      "card": "recovery/cards/seg012_line8009.json",
+      "card_sha256": "783cc9b3b021d3f7acb0f1f97adc0b99b7a2bb70da8d428ef5318727bff96cad",
+      "id": "seg012:line8009",
+      "name": "nopsub_322C0"
+    },
+    {
+      "card": "recovery/cards/seg012_line8028.json",
+      "card_sha256": "fd41509b1b5a17ff2288c1110ee6b8334ea7a34cffa1a5368f3c61e65f0f88a6",
+      "id": "seg012:line8028",
+      "name": "nopsub_322DF"
+    },
+    {
+      "card": "recovery/cards/seg012_line8150.json",
+      "card_sha256": "eec9b12648e316f8152c3b874d1bea34c228e0827acd745704446c6d6a324d74",
+      "id": "seg012:line8150",
+      "name": "vector_to_point"
+    },
+    {
+      "card": "recovery/cards/seg012_line8315.json",
+      "card_sha256": "6f38fe82d68ae0b0d835114dda5459f95e6ab0e8d5fc6dd0f2f6cba59dc6ea0a",
+      "id": "seg012:line8315",
+      "name": "file_write_nofatal"
+    },
+    {
+      "card": "recovery/cards/seg012_line8606.json",
+      "card_sha256": "517e855bbf80043571b582b23115246b8bb057cf0aa77660c637b379c606b5f8",
+      "id": "seg012:line8606",
+      "name": "sin_fast"
+    },
+    {
+      "card": "recovery/cards/seg012_line8655.json",
+      "card_sha256": "dede7621997ed08227186eab6b218baa91c28b83b1ff9888ef3a6e5eb3da0306",
+      "id": "seg012:line8655",
+      "name": "cos_fast"
+    },
+    {
+      "card": "recovery/cards/seg012_line8668.json",
+      "card_sha256": "5d02af7f15ca0d548c11b655325e5ed87a8d275ea644b1d5766aa492e4e420b1",
+      "id": "seg012:line8668",
+      "name": "nopsub_32738"
+    },
+    {
+      "card": "recovery/cards/seg012_line8683.json",
+      "card_sha256": "531085161d75551ed782792fd70c2a606b7d63d48081409a61ad5c03e5a42ba5",
+      "id": "seg012:line8683",
+      "name": "nopsub_32746"
+    },
+    {
+      "card": "recovery/cards/seg012_line8695.json",
+      "card_sha256": "9970fb86d8a65f4dcd1fe9fddb18d748b9cbabb5d0d6d039d8e72967e50de7e6",
+      "id": "seg012:line8695",
+      "name": "nopsub_32751"
+    },
+    {
+      "card": "recovery/cards/seg012_line8707.json",
+      "card_sha256": "84897ed65ce63c31d893b90de6f1db8e5ec9bbb09471fabfbf834c244c4edf00",
+      "id": "seg012:line8707",
+      "name": "projectiondata9_times_ratio"
+    },
+    {
+      "card": "recovery/cards/seg012_line8721.json",
+      "card_sha256": "245224888549da54b88bce73404bc04f63d11574c66eaf36d8a97732c1df8b96",
+      "id": "seg012:line8721",
+      "name": "nopsub_3276A"
+    },
+    {
+      "card": "recovery/cards/seg012_line8735.json",
+      "card_sha256": "dff1d2d6f085007bed703b49a08b00b2d0ca6a9be005a768d555df7c7dfac80c",
+      "id": "seg012:line8735",
+      "name": "timer_get_counter"
+    },
+    {
+      "card": "recovery/cards/seg012_line8743.json",
+      "card_sha256": "a4943eec4b79e757d0882ad59d68de58c23e20ecf1e8acf642a2bd7fdc54d5f4",
+      "id": "seg012:line8743",
+      "name": "timer_custom_delta"
+    },
+    {
+      "card": "recovery/cards/seg012_line8762.json",
+      "card_sha256": "855af692cbf165793ccac33091f10256912a75fca4952804cd554e43698cb7dc",
+      "id": "seg012:line8762",
+      "name": "timer_get_delta"
+    },
+    {
+      "card": "recovery/cards/seg012_line8825.json",
+      "card_sha256": "5b1b59bb4aae49adf7ec2778ac8617a47593f2b7d5ef5124848b650a0265d727",
+      "id": "seg012:line8825",
+      "name": "timer_get_counter_unk"
+    },
+    {
+      "card": "recovery/cards/seg012_line8855.json",
+      "card_sha256": "d19d8c9d243ed97ebb102f933f09d98dd1fc192a3a43be85ff0f7b23631d67d8",
+      "id": "seg012:line8855",
+      "name": "font_op"
+    },
+    {
+      "card": "recovery/cards/seg012_line8965.json",
+      "card_sha256": "807ea7f12728db1decb7983ed2abf0e74c5b15954d4c245421b8b4e6d4f84d43",
+      "id": "seg012:line8965",
+      "name": "nopsub_328DB"
+    },
+    {
+      "card": "recovery/cards/seg012_line9194.json",
+      "card_sha256": "a6c81e9a75401d101d66460f9cf4e68cdcc4e089507e849c86fa5bd63dfb9011",
+      "id": "seg012:line9194",
+      "name": "mat_invert"
+    },
+    {
+      "card": "recovery/cards/seg012_line9251.json",
+      "card_sha256": "95e56a6758b14d3706cc2cba900681df9d62e5eced9f5bc13fe8a8718b782128",
+      "id": "seg012:line9251",
+      "name": "file_unflip_shape2d"
+    },
+    {
+      "card": "recovery/cards/seg012_line9741.json",
+      "card_sha256": "aaa8bf37a6e2de4c21f7fd033c34e7f3bc4b0d981fec2e054bf8f1994d667220",
+      "id": "seg012:line9741",
+      "name": "file_decomp_vle"
+    },
+    {
+      "card": "recovery/cards/seg016_line56.json",
+      "card_sha256": "3b62dba6945b698856c66ea710080bb9766015a709f706326e7beec4eb20fa90",
+      "id": "seg016:line56",
+      "name": "locate_many_resources"
+    },
+    {
+      "card": "recovery/cards/seg017_line174.json",
+      "card_sha256": "d0bb1a68db7f181111dfd01598f090696c3e2c9294ba0a2bdd5d2875f9db0577",
+      "id": "seg017:line174",
+      "name": "mouse_set_minmax"
+    },
+    {
+      "card": "recovery/cards/seg017_line91.json",
+      "card_sha256": "eea6c9d10933830f6ac11cdc2badd408080d85e612e5f7d0593d545d8b5e41fe",
+      "id": "seg017:line91",
+      "name": "mouse_init"
+    },
+    {
+      "card": "recovery/cards/seg021_line50.json",
+      "card_sha256": "adfd6c4c70ec23e04ebb0c673ec14cadb9b49da2668f7e85482c15d556df5aa7",
+      "id": "seg021:line50",
+      "name": "heapsort_by_order"
+    },
+    {
+      "card": "recovery/cards/seg022_line50.json",
+      "card_sha256": "8e7df21581c71c975871b88e37f9c6cff5a30dcbfef9cb34d89c0c56af7d6995",
+      "id": "seg022:line50",
+      "name": "preRender_wheel"
+    },
+    {
+      "card": "recovery/cards/seg024_line55.json",
+      "card_sha256": "4fb18a964424265e595bbfdd4582a47ff82ff75f6ee363c9665b58448e7ffff2",
+      "id": "seg024:line55",
+      "name": "mat_rot_x"
+    },
+    {
+      "card": "recovery/cards/seg027_line1097.json",
+      "card_sha256": "d2023b9cf4999c09883a58694ef9c4560b2bb247426542135f168c3f65ac139f",
+      "id": "seg027:line1097",
+      "name": "sub_37868"
+    },
+    {
+      "card": "recovery/cards/seg027_line1132.json",
+      "card_sha256": "a67b89adecd3f7d3ba69318556a6353de78c0e2c907560013b721571d4e713ba",
+      "id": "seg027:line1132",
+      "name": "nopsub_37898"
+    },
+    {
+      "card": "recovery/cards/seg027_line1176.json",
+      "card_sha256": "cfc3ad333686fa423c0beddabc421bc5a907b8c71740184e8e6299e5e9662e8d",
+      "id": "seg027:line1176",
+      "name": "audio_load_driver"
+    },
+    {
+      "card": "recovery/cards/seg027_line1358.json",
+      "card_sha256": "f4995f90b4119903cfe23077e845a28e6347250c33de73d9d7a849015834676f",
+      "id": "seg027:line1358",
+      "name": "audiodrv_atexit"
+    },
+    {
+      "card": "recovery/cards/seg027_line1550.json",
+      "card_sha256": "ae5faba4477de385271695531d600e4d5ab9d493d9b1b34184fdf84614c893ed",
+      "id": "seg027:line1550",
+      "name": "sub_37C38"
+    },
+    {
+      "card": "recovery/cards/seg027_line1564.json",
+      "card_sha256": "87285e92b0399c34a63238072b2c06dcd6cc55cfd27c17f3dfeeba25362e6354",
+      "id": "seg027:line1564",
+      "name": "load_sfx_file"
+    },
+    {
+      "card": "recovery/cards/seg027_line1662.json",
+      "card_sha256": "cef1e01e58cfac376ba5b10b0f959c58dc75dcd59e1fabb85df7b90ba5f5cd84",
+      "id": "seg027:line1662",
+      "name": "load_voice_file"
+    },
+    {
+      "card": "recovery/cards/seg027_line185.json",
+      "card_sha256": "549518b1685488cc41288812e82f4aa10eb8b0182d500edbe0a8bd97b810b850",
+      "id": "seg027:line185",
+      "name": "load_audio_finalize"
+    },
+    {
+      "card": "recovery/cards/seg027_line2032.json",
+      "card_sha256": "2c0b0552511b6026382615cfc0b230ed3999a45ad1c0b4c67785ce61fbf4bcea",
+      "id": "seg027:line2032",
+      "name": "sub_3803C"
+    },
+    {
+      "card": "recovery/cards/seg027_line2168.json",
+      "card_sha256": "44436b0cefd52c3adf71db719bf93bff3c7763ccc3200d83db9bdb76640ec711",
+      "id": "seg027:line2168",
+      "name": "sub_38156"
+    },
+    {
+      "card": "recovery/cards/seg027_line2188.json",
+      "card_sha256": "9a435b5d477ea00f54c139b686710368a5127aa5b2b531662aa2a337889a7311",
+      "id": "seg027:line2188",
+      "name": "sub_38178"
+    },
+    {
+      "card": "recovery/cards/seg027_line2285.json",
+      "card_sha256": "5041a276da0f5f6d9302e419bbcc09830d3ae313911b611b0929909a27b594ed",
+      "id": "seg027:line2285",
+      "name": "audio_map_song_tracks"
+    },
+    {
+      "card": "recovery/cards/seg027_line253.json",
+      "card_sha256": "09b10db3637d2430aec46e511e38161646f413a0d015e47659d9fefd88195da1",
+      "id": "seg027:line253",
+      "name": "audio_unk"
+    },
+    {
+      "card": "recovery/cards/seg027_line2635.json",
+      "card_sha256": "92ad8a4a2fe9bbbe963302d1cd6dd32901b9af8a4b8f99f17be3c7b78fa702e5",
+      "id": "seg027:line2635",
+      "name": "audioresource_get_word"
+    },
+    {
+      "card": "recovery/cards/seg027_line2654.json",
+      "card_sha256": "69fb686efdf4fffc6003114f9dd38c149efb563a7a0fa52b16ff7e82b1bdde54",
+      "id": "seg027:line2654",
+      "name": "audioresource_copy_4_bytes"
+    },
+    {
+      "card": "recovery/cards/seg027_line409.json",
+      "card_sha256": "93e9f9ef9ce2d9ec80f864fb6c8c937e608f6b386c0621175f0eb53f0e8b8b8b",
+      "id": "seg027:line409",
+      "name": "sub_3736A"
+    },
+    {
+      "card": "recovery/cards/seg027_line480.json",
+      "card_sha256": "e098846dc23875e198977ba8e8cd2864c23fda0afaa6aa3af488192ef20b01aa",
+      "id": "seg027:line480",
+      "name": "nopsub_373FE"
+    },
+    {
+      "card": "recovery/cards/seg027_line554.json",
+      "card_sha256": "c33ddf863328e489939c27fad5cb8943db3caa586d941efa6d247aec4548eb89",
+      "id": "seg027:line554",
+      "name": "sub_37470"
+    },
+    {
+      "card": "recovery/cards/seg027_line615.json",
+      "card_sha256": "f188a9054e2fa8e612c829a695a0b2fc7b81fb7051b9b5bc1d2b0385f6966667",
+      "id": "seg027:line615",
+      "name": "sub_374DE"
+    },
+    {
+      "card": "recovery/cards/seg027_line636.json",
+      "card_sha256": "608dac99d421886f844d1b47042647bab7b6bdd195b5824bec1ca66b02b5f531",
+      "id": "seg027:line636",
+      "name": "audio_check_flag2"
+    },
+    {
+      "card": "recovery/cards/seg027_line662.json",
+      "card_sha256": "e2455b92b8e5c7564960913ee03fd34e60617204bc20e847df81ac02ddb8dd97",
+      "id": "seg027:line662",
+      "name": "audio_check_flag"
+    },
+    {
+      "card": "recovery/cards/seg027_line92.json",
+      "card_sha256": "f9781d440c4c719e92640d4ec261c58e7852c01a403e2ad3e5fdf68afb434100",
+      "id": "seg027:line92",
+      "name": "init_audio_resources"
+    },
+    {
+      "card": "recovery/cards/seg027_line936.json",
+      "card_sha256": "320b6264df92d1752ae6845bb6e1261cd64d49629a1d576660346f2af503d176",
+      "id": "seg027:line936",
+      "name": "sub_3771E"
+    },
+    {
+      "card": "recovery/cards/seg027_line966.json",
+      "card_sha256": "cff82b1653116bc6fe35cc974d63cbf1c22010386bd8572fa5960072ae078a9d",
+      "id": "seg027:line966",
+      "name": "nopsub_37750"
+    },
+    {
+      "card": "recovery/cards/seg027_line988.json",
+      "card_sha256": "6b3b9a46ad057083e5d7f2030bac77a9d914d89b848e6fd8780a53a86fa545ef",
+      "id": "seg027:line988",
+      "name": "audio_driver_func3F"
+    },
+    {
+      "card": "recovery/cards/seg028_line1073.json",
+      "card_sha256": "06547a3271e88ef914db218db6a0d1a692019077c2fa496d37e0ac7394f69eda",
+      "id": "seg028:line1073",
+      "name": "sub_38DE6"
+    },
+    {
+      "card": "recovery/cards/seg028_line127.json",
+      "card_sha256": "ae06520d3a560d88fbf555c11ff4b572fcc8f5727f7246ef9b57aacdd0cfecb8",
+      "id": "seg028:line127",
+      "name": "sub_3868A"
+    },
+    {
+      "card": "recovery/cards/seg028_line1346.json",
+      "card_sha256": "c19db56c3569ca797b8c4a760bc2e443e5e8c55d42e159773405e3c7eeb54751",
+      "id": "seg028:line1346",
+      "name": "sub_39050"
+    },
+    {
+      "card": "recovery/cards/seg028_line1376.json",
+      "card_sha256": "5391ca1de54bf726d557e11f202a6189750b1602e0326d155011cfe64a1db9a5",
+      "id": "seg028:line1376",
+      "name": "sub_39088"
+    },
+    {
+      "card": "recovery/cards/seg028_line177.json",
+      "card_sha256": "f0d8671103df8c4a5c2f2503067e230e2d0b4a86daf55ae5fc4bb002beb768d0",
+      "id": "seg028:line177",
+      "name": "sub_386D6"
+    },
+    {
+      "card": "recovery/cards/seg028_line1807.json",
+      "card_sha256": "a7e261a77065ace21bf7b6c74786e38515210ba6dc9235647740706df12a279c",
+      "id": "seg028:line1807",
+      "name": "sub_3945A"
+    },
+    {
+      "card": "recovery/cards/seg028_line2081.json",
+      "card_sha256": "9da01a89a211d47065f81ecf5089d057d5ae95b5ad4f66eede64ce5c93b97900",
+      "id": "seg028:line2081",
+      "name": "sub_3968A"
+    },
+    {
+      "card": "recovery/cards/seg028_line2141.json",
+      "card_sha256": "1a200cd10049426cd5100a66cd2663b1f7a509d829779c75c9c5cbac28453cfa",
+      "id": "seg028:line2141",
+      "name": "sub_39700"
+    },
+    {
+      "card": "recovery/cards/seg028_line216.json",
+      "card_sha256": "a2b0711c93bcb627ff3a7ee5a5a8ca82faa0b0a8395d16472ec0a2a0a891ce1b",
+      "id": "seg028:line216",
+      "name": "sub_38702"
+    },
+    {
+      "card": "recovery/cards/seg028_line672.json",
+      "card_sha256": "f35ad71d8b3abbf4cdb874932286d6190fe4dfcdde272aa2d21864511ccc322f",
+      "id": "seg028:line672",
+      "name": "sub_38AC4"
+    },
+    {
+      "card": "recovery/cards/seg028_line818.json",
+      "card_sha256": "fffbfb6ac19cc618b0c4bb1e4704e1bb9fa60db3474ab3bd127fe8bd2203e1ab",
+      "id": "seg028:line818",
+      "name": "sub_38BEA"
+    },
+    {
+      "card": "recovery/cards/seg028_line871.json",
+      "card_sha256": "805308a2f81933a7110bde7cd33c83d9a984f9c381e97ab6d36dc9b22d660845",
+      "id": "seg028:line871",
+      "name": "audio_unk2"
+    },
+    {
+      "card": "recovery/cards/seg028_line960.json",
+      "card_sha256": "cfe741f4f0b37a80048fa94e9f27050873e70afeeeb633f1dc78108b458e68de",
+      "id": "seg028:line960",
+      "name": "sub_38CF8"
+    },
+    {
+      "card": "recovery/cards/seg029_line224.json",
+      "card_sha256": "4d6135b79962005684db06fc706879de1c6c78046e1d3bd4b39d2a2d4b91538b",
+      "id": "seg029:line224",
+      "name": "audioresource_find"
+    },
+    {
+      "card": "recovery/cards/seg029_line59.json",
+      "card_sha256": "5fb1a2dd660d6071982ccb127566a7e399ba59fe7430dd00b68268aae92d46b0",
+      "id": "seg029:line59",
+      "name": "audioresource_compare_chunknames"
+    },
+    {
+      "card": "recovery/cards/seg030_line56.json",
+      "card_sha256": "7eee97dd4e19bb865a695f9138b58d5f34c95105825cdfd72a29d5f116df024d",
+      "id": "seg030:line56",
+      "name": "audio_make_filename"
+    },
+    {
+      "card": "recovery/cards/seg031_line120.json",
+      "card_sha256": "bb7c7f050ba1e01697a51c7ac67f83cec9df09e24d1a73c3a18fe259e14e1d42",
+      "id": "seg031:line120",
+      "name": "nullsub_1"
+    },
+    {
+      "card": "recovery/cards/seg031_line126.json",
+      "card_sha256": "e9784e7b7938e18c353ec2293e71f8afdcf8ef1d5f25ba3f12ea4a4d288ff129",
+      "id": "seg031:line126",
+      "name": "nullsub_2"
+    },
+    {
+      "card": "recovery/cards/seg031_line132.json",
+      "card_sha256": "5e18e8e294555fe8cd7b302d2a6f948ff2b7185fae07b1913d4907416acaf7ec",
+      "id": "seg031:line132",
+      "name": "init_main"
+    },
+    {
+      "card": "recovery/cards/seg031_line579.json",
+      "card_sha256": "af1cd65b0a5def423c2c7f553993c1d30c7e3f6429a83b1dc587f080b96b4f92",
+      "id": "seg031:line579",
+      "name": "random_wait"
+    },
+    {
+      "card": "recovery/cards/seg031_line795.json",
+      "card_sha256": "fd2c88dee599e0e4f7922cc5599de83f50c8316ab8ed677309ff3e65462aab94",
+      "id": "seg031:line795",
+      "name": "get_0"
+    },
+    {
+      "card": "recovery/cards/seg031_line802.json",
+      "card_sha256": "288a7dd6d748883f77f9a1866fdad095266ee5e0e86d68c61163ba9046e58d00",
+      "id": "seg031:line802",
+      "name": "mmgr_alloc_resbytes"
+    },
+    {
+      "card": "recovery/cards/seg032_line451.json",
+      "card_sha256": "d034f661312c6900c40a81a28283eb99deb80c53df3dfdbe1548ff6de4f87ca4",
+      "id": "seg032:line451",
+      "name": "read_line_helper"
+    },
+    {
+      "card": "recovery/cards/seg032_line55.json",
+      "card_sha256": "8d32310dc9ce86923827c2bdc73b3ae85068ca7d28963c64870c8b2fc32461a9",
+      "id": "seg032:line55",
+      "name": "read_line"
+    },
+    {
+      "card": "recovery/cards/seg034_line104.json",
+      "card_sha256": "13c8e07dc7edf0e0aea2e157ac5f0f3613f1f824785723e3329c3470d4981b1e",
+      "id": "seg034:line104",
+      "name": "file_load_shape2d"
+    },
+    {
+      "card": "recovery/cards/seg034_line56.json",
+      "card_sha256": "b82129bcd1d6ab4265a40ee29bbc9b01839ef02e0cb4b307e2e86a5ee571e035",
+      "id": "seg034:line56",
+      "name": "file_load_shape2d_fatal"
+    },
+    {
+      "card": "recovery/cards/seg035_line104.json",
+      "card_sha256": "c1f11feffa2d8783e711af7e92cd65c2ef72d11b81d5c4ff63b811e1a582dc87",
+      "id": "seg035:line104",
+      "name": "file_load_shape2d_res"
+    },
+    {
+      "card": "recovery/cards/seg035_line184.json",
+      "card_sha256": "e40276597b9f8352ba62dcb94dbc152b46b6905b69b072a441879be63bc2c20e",
+      "id": "seg035:line184",
+      "name": "parse_shape2d"
+    },
+    {
+      "card": "recovery/cards/seg035_line56.json",
+      "card_sha256": "e28c2cb74d2114fbe03c3c893ccb2284e2641adaf4f716e081bd62a0ff9fe360",
+      "id": "seg035:line56",
+      "name": "file_load_shape2d_res_fatal"
+    },
+    {
+      "card": "recovery/cards/seg036_line50.json",
+      "card_sha256": "776b56bbb694d7bbe0cd515635df703e701066163508c6715fcb01098754eee9",
+      "id": "seg036:line50",
+      "name": "file_get_unflip_size"
+    },
+    {
+      "card": "recovery/cards/seg037_line50.json",
+      "card_sha256": "9c759b92fe2ba8ad4ff6a4a7c603c4c29559b5e784eae7b3f773f2f7806de03b",
+      "id": "seg037:line50",
+      "name": "file_load_shape2d_expandedsize"
+    },
+    {
+      "card": "recovery/cards/load_20a1c.json",
+      "card_sha256": "f82fefd11d564d51c8354eb23ade5884d9cf71de0cfab38af66e0f3f1d201204",
+      "id": "load_20a1c",
+      "name": "kb_call_readchar_callback"
+    },
+    {
+      "card": "recovery/cards/load_204af.json",
+      "card_sha256": "eb751308ebde233e7929e3beac69f6a19e65de0dba4d04e8c562ac6ca5481e5d",
+      "id": "load_204af",
+      "name": "nopsub_304AF"
+    },
+    {
+      "card": "recovery/cards/load_227b7.json",
+      "card_sha256": "475848b0af4252811c96e3629de8a2a85e59ca0371f675cb92ba8252f86ee8d1",
+      "id": "load_227b7",
+      "name": "timer_reset"
+    },
+    {
+      "card": "recovery/cards/load_20a35.json",
+      "card_sha256": "f79e1e6d6121fb89083dbaad54bc07674163344e5c6482ec2fd18a7ef7001550",
+      "id": "load_20a35",
+      "name": "kb_checking"
+    },
+    {
+      "card": "recovery/cards/load_20a68.json",
+      "card_sha256": "3fc382d78098d28a5e9a9ffb8e4072a085d639c4d1236c5ae1f7febaef18cb27",
+      "id": "load_20a68",
+      "name": "kb_check"
+    },
+    {
+      "card": "recovery/cards/load_217b2.json",
+      "card_sha256": "c00e8bd43d25ac0acee4b80b253e4b520562dc1261b4289e40a4c6e7f32bed80",
+      "id": "load_217b2",
+      "name": "preRender_default"
+    },
+    {
+      "card": "recovery/cards/load_217df.json",
+      "card_sha256": "391654aeb81449f9e8955c93bfddbac51b17b0f19e66e368b175dd7e66d2234c",
+      "id": "load_217df",
+      "name": "skybox_op_helper"
+    },
+    {
+      "card": "recovery/cards/load_207d2.json",
+      "card_sha256": "46b053f605b8ca7c09696550ec0519a4c50dfac28fe294bb9e4b11523b8d88ac",
+      "id": "load_207d2",
+      "name": "sub_307D2"
+    },
+    {
+      "card": "recovery/cards/load_1ce77.json",
+      "card_sha256": "b501edafb9064eb0b41d91e8f82175d8e465b833bce7e0ca616e7de97a8b0956",
+      "id": "load_1ce77",
+      "name": "sub_2CE77"
+    },
+    {
+      "card": "recovery/cards/load_1cdec.json",
+      "card_sha256": "ee446e6832a004b0c17f54dba86228f826824182e273edc7f12b3136922e384b",
+      "id": "load_1cdec",
+      "name": "libsub_quit_to_dos_alt"
+    },
+    {
+      "card": "recovery/cards/load_207e3.json",
+      "card_sha256": "7c694179920acf4124abd8e2ebac93ba51e56d4c1d49a07279882a56df3c81e4",
+      "id": "load_207e3",
+      "name": "sub_307E3"
+    },
+    {
+      "card": "recovery/cards/load_1ce4a.json",
+      "card_sha256": "c1bb1e879133e2d60b0ea6a8fceaefd8558bc999e21f8560401985d298f4b6ec",
+      "id": "load_1ce4a",
+      "name": "sub_2CE4A"
+    },
+    {
+      "card": "recovery/cards/load_205c8.json",
+      "card_sha256": "573a751cf0cdfae5afced8b2dd3f5f20e01d4c0c51effa0fcfcb8b5bf3fc498d",
+      "id": "load_205c8",
+      "name": "nopsub_305C8"
+    },
+    {
+      "card": "recovery/cards/load_202de.json",
+      "card_sha256": "410f74cf385fd571e53c8f1407a5fe18653ac21603256593b6019831af33f336",
+      "id": "load_202de",
+      "name": "timer_remove_callback"
+    },
+    {
+      "card": "recovery/cards/load_20883.json",
+      "card_sha256": "efdad6bb09fb0d09e2fe3665190948b170fdbbd1d78020087a40665a26b5efb1",
+      "id": "load_20883",
+      "name": "kb_exit_handler"
+    },
+    {
+      "card": "recovery/cards/load_22886.json",
+      "card_sha256": "8c88f323eadb2b4e866d8e32b806cc1472331577db0d7d89f74d82bb969e619b",
+      "id": "load_22886",
+      "name": "preRender_patterned"
+    },
+    {
+      "card": "recovery/cards/load_1fe59.json",
+      "card_sha256": "bddb28c88bb6242ed0367332cd788d22c62daa614df7c146d35fec28d868159b",
+      "id": "load_1fe59",
+      "name": "call_exitlist"
+    }
+  ],
+  "workflow_fingerprint": "c44f3643eedbef242c9a6c7c6e3d6d083c9d71f800046fb04b4eac4c0ca539bc"
+}

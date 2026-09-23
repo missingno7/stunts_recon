@@ -14,6 +14,7 @@ On this machine, Python is bundled with Codex:
 $py = 'C:\Users\Jiri\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
 & $py tools/validate.py
 & $py tools/reconstruction_factory.py next
+& $py tools/context.py FUNCTION_ID
 ```
 
 With Python on PATH, use the same commands prefixed by `python`.
@@ -21,6 +22,8 @@ With Python on PATH, use the same commands prefixed by `python`.
 `assets/`, `toolchain/`, `build/` and references are ignored. Keep your original files there; no game or compiler binary is tracked. `layout/oracle.lock.json` has no automatic update command. Verification never learns new expected bytes.
 
 ## Reading order
+
+Routine work starts with the function packet above and [grinder instructions](docs/current/grinder-instructions.md). The following documents are deeper references, not a requirement to read the whole project on every task. See [the implemented workflow/canary pass](docs/current/workflow-canary.md) for measurements and the remaining larger-function mismatch.
 
 1. [Vision and source claims](docs/current/vision.md)
 2. [Oracle and coordinate systems](docs/current/oracle.md)

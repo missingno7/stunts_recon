@@ -29,6 +29,17 @@ def resolve_symbols(names, image, relocations):
             require(symbol['storage'] == 'initialized' and frame <= address < len(image),
                     'Symbol outside initialized DGROUP')
         require(symbol['references'], 'Data symbol needs original instruction evidence')
+        for field in symbol.get('fields',[]):
+            require(type(field['offset']) is int and field['offset']>=0 and field['width']==2,
+                    'Unsupported reviewed field layout')
+            ref=field['reference'];at=ref['start'];raw=bytes.fromhex(ref['hex']);operand=ref['operand_offset']
+            require(image[at:at+len(raw)]==raw and 0<=operand<=len(raw)-2 and
+                    int.from_bytes(raw[operand:operand+2],'little')==address-frame+field['offset'],
+                    'Data field evidence changed')
+            require(symbol['storage']=='bss' and address+field['offset']+field['width']<=layout['bss_end'],
+                    'Field outside reviewed BSS')
+            require(not any(at+operand-1<=r['load_offset']<at+operand+2 for r in relocations),
+                    'Field operand unexpectedly relocated')
         for ref in symbol['references']:
             start = ref['start']; code = bytes.fromhex(ref['hex']); operand = ref['operand_offset']
             require(image[start:start+len(code)] == code, 'Data symbol instruction evidence changed')

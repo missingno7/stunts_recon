@@ -1,0 +1,883 @@
+{
+  "authority": "Derived search view; immutable archives/control_inputs remain authoritative",
+  "schema": 1,
+  "tasks": {
+    "is_facing_camera": [
+      {
+        "category": "EXTENT_MISMATCH",
+        "epoch": 0,
+        "error": "Complete emitted contribution length differs from target",
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "Strongest ordinary-C baseline: verify complete extent and record the local-slot/return-block mismatch after bounded far-call infrastructure review.",
+        "identity": {
+          "sha256": "361f8c8383d15d59c4413d6a66b2e9d4261a5501d562d2c7269f6758f7bfb97e",
+          "size": 8617
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/is_facing_camera/0001/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "FAILED"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "first",
+        "identity": {
+          "sha256": "a5e7b7b4b9aef348c5a459f5babcc6379bce4eaaa823589b62cf6895d457a069",
+          "size": 3468
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_01/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec14",
+            "instruction": "sub sp, 0x14",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec10",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "second",
+        "identity": {
+          "sha256": "52474a6eadfc58e64133002444862ad73e753badae956343bdfbe91604e0dc40",
+          "size": 3438
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_02/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 200,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "char_return",
+        "identity": {
+          "sha256": "bdf850dca11647da8c24a1bfa6ae1121b5324da8ec15a3c1f8da8f9e13f6d6e1",
+          "size": 3474
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_03/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "cast_result",
+        "identity": {
+          "sha256": "944a21bfa588785e3610d9f15d022c48af5e29aaa8a51e2e297e42800ef28474",
+          "size": 3474
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_04/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 198,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "boolean",
+        "identity": {
+          "sha256": "e35bd3de1e5b720938f77b436a219f28f7cc56194ae602cd7d5e4ebab2f6a682",
+          "size": 3470
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_05/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "ordered_names",
+        "identity": {
+          "sha256": "986834b97a0de30a75698917cdab6c101fdf578b5085c57707728ee934cd138c",
+          "size": 3476
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_06/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec14",
+            "instruction": "sub sp, 0x14",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec10",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "msc510-medium-ox",
+        "identity": {
+          "sha256": "a1dc5283c3e290371a39395e22a69b5a98fce4d93d7b751deddafaa16fefa75e",
+          "size": 3449
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_07/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 200,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec14",
+            "instruction": "sub sp, 0x14",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec10",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "msc500-medium-char-temp",
+        "identity": {
+          "sha256": "d5c39bbdefe37e492543369a6c8da084853c02bdd2d4a985e7b29882020e480d",
+          "size": 3455
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_08/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 200,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "declarations",
+        "identity": {
+          "sha256": "753e174b34e2b31535af956622d321aa96cd33bf9e1e28538a264e96953ca21a",
+          "size": 3475
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_09/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "81ec1000",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec10",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "od",
+        "identity": {
+          "sha256": "98191c74795b7376edc28dc179f2bda2946fb15bad44ffb0670e1027dea5a3bb",
+          "size": 3437
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/prior_10/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 248,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec12",
+            "instruction": "sub sp, 0x12",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec10",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "A named char result should generate AL boolean selection and CBW without an int return shortcut; compare local frame and whether the optimizer allocates a byte slot.",
+        "identity": {
+          "sha256": "7670128d43dccb760ec0c0a4c2d36bf40202c2bfe5354e0ee4d76d508f6bcdb3",
+          "size": 8790
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0001/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 200,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec12",
+            "instruction": "sub sp, 0x12",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec10",
+            "instruction": "sub sp, 0x10",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "Register-qualified char result should remove its stack slot while retaining AL selection plus CBW; longs remain ordinary stack locals.",
+        "identity": {
+          "sha256": "b0393ba5f4dd9b5c95cf752c88f85127a41930425953ae67e6f0b526ec118ad3",
+          "size": 8827
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0002/report.json",
+        "same_effective_as": [
+          "recovery\\experiments\\is_facing_camera\\0001\\report.json"
+        ],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 200,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "CL.HLP documents /Or as disabling inline returns. Test whether it restores the separate byte-boolean/CBW epilogue and shared early-out without changing arithmetic.",
+        "identity": {
+          "sha256": "c3f3c5fc0a516b22f75dbb49496eca663f2e0bb885c95e6a72f08179e26f25d1",
+          "size": 8875
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0003/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 190,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "Legacy character constants may keep the conditional result byte-sized (AL plus CBW) without a named stack temporary. No optimization flag change.",
+        "identity": {
+          "sha256": "65a78e2dfc3ef11427fadbeab2dc160a8f0977fa80116d88e1944a33da0f7dfd",
+          "size": 8991
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0004/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "Compare the strongest 194-byte source under MSC5.00: a version-dependent allocator or boolean epilogue would change the first local slot or return block. Keep production flags unchanged.",
+        "identity": {
+          "sha256": "3133911eb1205a284260164234dabb157132197baf3f8d13a372205a1dd9faee",
+          "size": 9122
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0005/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "CL.HLP /Os selects size optimization; test whether it materializes a byte boolean and alters the return-sharing decision. No source or ABI change.",
+        "identity": {
+          "sha256": "b3a20f34f206049752bd5fc52ebef9ec4f34069ca98ca1541e51ab8fe10b9dd6",
+          "size": 9116
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0006/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 190,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "The public Restunts source uses nonpositive ? 0 : 1. Test that exact predicate polarity without its stored long temporary; this can distinguish boolean lowering from return type.",
+        "identity": {
+          "sha256": "2a556b3b269e1e9ae40ba714e64dfd71d1c6ad12739cff31ed67bae77042f7a7",
+          "size": 9114
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0007/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; no acceptance receipt"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "Explicit long register qualification may force declaration-order spill slots despite unavailable four 32-bit registers.",
+        "identity": {
+          "sha256": "5b6cf2b1bde69ec508aafe9bd0b6eae8bd90365ad39ec52b0e8fcfe8366f4abb",
+          "size": 3365
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0008/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; bounded agent trial, no acceptance"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "8946f8",
+            "instruction": "mov word ptr [bp - 8], ax",
+            "load_offset": 55
+          },
+          "index": 25,
+          "target": {
+            "bytes": "8946f4",
+            "instruction": "mov word ptr [bp - 0xc], ax",
+            "load_offset": 55
+          }
+        },
+        "hypothesis": "Far pointer register qualification may change pointer allocation and long local stack assignment.",
+        "identity": {
+          "sha256": "f2722156c8111458921195bc9629e9cd40c68874227b0484144a2d6a05c15cd5",
+          "size": 3343
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/is_facing_camera/0009/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 194,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "SUPERVISOR_RESEARCH_ONLY; bounded agent trial, no acceptance"
+      }
+    ],
+    "parse_shape2d_helper": [
+      {
+        "category": "EXTENT_MISMATCH",
+        "epoch": 0,
+        "error": "Complete emitted contribution length differs from target",
+        "first_difference": null,
+        "hypothesis": "Convert segment and offset to a 32-bit linear address using unsigned shift and addition",
+        "identity": {
+          "sha256": "66c02c4548a4875e55252bdc826694f625a9a9eb429968498e924b7802243d99",
+          "size": 2841
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/parse_shape2d_helper/0001/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 26,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "FAILED"
+      },
+      {
+        "category": "EXTENT_MISMATCH",
+        "epoch": 0,
+        "error": "Complete emitted contribution length differs from target",
+        "first_difference": null,
+        "hypothesis": "Express four separate single-bit shifts to test unrolled carry propagation instead of a counted shift loop",
+        "identity": {
+          "sha256": "9ba7d2361fa9186193a3f81128412caf738e674c861d6ff8b2ac3b6a52427b71",
+          "size": 2869
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/parse_shape2d_helper/0002/report.json",
+        "same_effective_as": [
+          1
+        ],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 26,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "FAILED"
+      },
+      {
+        "category": "EXTENT_MISMATCH",
+        "epoch": 0,
+        "error": "Complete emitted contribution length differs from target",
+        "first_difference": null,
+        "hypothesis": "Use multiplication by sixteen to test an alternative optimized long arithmetic lowering",
+        "identity": {
+          "sha256": "545b69791c1ee8f825d73043fc820f6130d032d471e1a6d147a9b08d43241ce4",
+          "size": 2857
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/parse_shape2d_helper/0003/report.json",
+        "same_effective_as": [
+          1,
+          2
+        ],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 26,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "FAILED"
+      }
+    ],
+    "parse_shape2d_helper3": [
+      {
+        "category": null,
+        "epoch": 0,
+        "error": null,
+        "first_difference": null,
+        "hypothesis": "Count the initial run of equal bytes with a post-incremented far pointer and two locals",
+        "identity": {
+          "sha256": "b21c9b70f418d57cbab8d8827f4d36abdaed0b12ded0adee8c0977eb998f5e25",
+          "size": 2397
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/parse_shape2d_helper3/0001/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "FAST_PASS_ONLY"
+      },
+      {
+        "category": null,
+        "epoch": 0,
+        "error": null,
+        "first_difference": null,
+        "hypothesis": "Promote the complete 46-byte byte-run counter already proven by FAST",
+        "identity": {
+          "sha256": "74af3861713a832a592cd85f3ebf54b455ca731ddebe9acb7d0da143665fff94",
+          "size": 2688
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/parse_shape2d_helper3/0002/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "PROMOTED"
+      }
+    ],
+    "rect_compare_point": [
+      {
+        "category": null,
+        "epoch": 0,
+        "error": null,
+        "first_difference": null,
+        "hypothesis": "A used local register POINT2D pointer reproduces SI and its stack home; signed char clipping flags and four proven DGROUP fields reproduce the complete76-byte contribution.",
+        "identity": {
+          "sha256": "2e8f1a0f78fa8fdeefdfec47fd33d1d866689e6d832a12d8b082fa161f34ce7b",
+          "size": 8296
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/rect_compare_point/0001/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "PROMOTED"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec02",
+            "instruction": "sub sp, 2",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec04",
+            "instruction": "sub sp, 4",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "plain pointer parameter",
+        "identity": {
+          "sha256": "136b18941a127412d9786be72f2dc8b74f6339d9a2037f1251d38a09d06ed2bb",
+          "size": 3975
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/rect_compare_point/prior_01/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 76,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "RESEARCH_ONLY, original compiler receipt archived later; subsequently fresh canonical promotion is separate"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": {
+            "bytes": "83ec02",
+            "instruction": "sub sp, 2",
+            "load_offset": 3
+          },
+          "index": 2,
+          "target": {
+            "bytes": "83ec04",
+            "instruction": "sub sp, 4",
+            "load_offset": 3
+          }
+        },
+        "hypothesis": "register pointer parameter",
+        "identity": {
+          "sha256": "b902462fa14cca97d6b22390957740eb951c99a433c3356c825f15dc08e5dc99",
+          "size": 3978
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/rect_compare_point/prior_02/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 76,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "RESEARCH_ONLY, original compiler receipt archived later; subsequently fresh canonical promotion is separate"
+      },
+      {
+        "category": null,
+        "epoch": null,
+        "error": null,
+        "first_difference": {
+          "candidate": null,
+          "index": 32,
+          "target": null
+        },
+        "hypothesis": "used local register pointer alias",
+        "identity": {
+          "sha256": "85212f1d4da5efe8c738f2b5a3f45d92bfecc21d3f67d57f0db4f6f9b1d6085d",
+          "size": 3879
+        },
+        "kind": "experiments",
+        "path": "recovery/experiments/rect_compare_point/prior_03/report.json",
+        "same_effective_as": [],
+        "sizes": {
+          "CONST": 0,
+          "UNIT_TEXT": 76,
+          "_BSS": 0,
+          "_DATA": 0
+        },
+        "status": "RESEARCH_ONLY, original compiler receipt archived later; subsequently fresh canonical promotion is separate"
+      }
+    ]
+  }
+}

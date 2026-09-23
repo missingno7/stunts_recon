@@ -1,0 +1,121 @@
+{
+  "comparison": {
+    "candidate": {
+      "sha256": "be72c5f9153d15b36372dd6da75f69110602c7958841ee6716526f048278d383",
+      "size": 248
+    },
+    "comparison": "unbound object; relocation operands are expected to differ",
+    "decoded_bytes": [
+      200,
+      248
+    ],
+    "first_differing_instruction": {
+      "candidate": {
+        "bytes": "81ec1000",
+        "instruction": "sub sp, 0x10",
+        "load_offset": 3
+      },
+      "index": 2,
+      "target": {
+        "bytes": "83ec10",
+        "instruction": "sub sp, 0x10",
+        "load_offset": 3
+      }
+    },
+    "full_diagnostic": "D:\\prog\\stunts_recon\\build\\probes\\pxd8bsnr1\\diagnostic.json",
+    "full_diagnostic_identity": {
+      "sha256": "2d98f3e805b9ef27db817fc3ad6d44a4327b7194701dcbead329c05fe50a01ee",
+      "size": 19968
+    },
+    "omitted": "Full instruction lists and fixups are in full_diagnostic; diagnostic only.",
+    "target": {
+      "sha256": "6fc29d78db5106925aa06f76eb06ed2f7fdb5a6dfb0e597d1e94b56e0558e929",
+      "size": 200
+    }
+  },
+  "emitted_sizes": {
+    "CONST": 0,
+    "UNIT_TEXT": 248,
+    "_BSS": 0,
+    "_DATA": 0
+  },
+  "fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "__aFlmul",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 200,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "__aFlmul",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "__aFlmul",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 179,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "__aFlmul",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "hypothesis": "od",
+  "prediction_record": "Before-compile predictions were in session tool calls; this archive was created later. Do not treat it as a precommitted prediction file.",
+  "publics": [
+    {
+      "name": "_is_facing_camera",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "receipt": {
+    "command": [
+      "C:/tools/msdos/msdos.exe",
+      "-e",
+      "-v5.00",
+      "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+      "/c",
+      "/AM",
+      "/Od",
+      "/Gs",
+      "UNIT.C"
+    ],
+    "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+    "object": {
+      "sha256": "952c2b9e4781c31422b71db44e27f960c98d25018cbc39100438f387233f7706",
+      "size": 521
+    },
+    "profile": "msc510-medium",
+    "source": {
+      "sha256": "41e61f3fdaf21ab4049855a86abcb5ffb5a50dc3d07590577fc44fea4d65f8bd",
+      "size": 373
+    },
+    "staged_source": {
+      "sha256": "78f54c96587d39206b54d93143d520dd693f7faf57687073199dd21c994e37c0",
+      "size": 387
+    },
+    "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pxd8bsnr1"
+  },
+  "scope": "SUPERVISOR_RESEARCH_ONLY; original early compile archived retrospectively, NOT freshly rerun",
+  "source": {
+    "sha256": "78f54c96587d39206b54d93143d520dd693f7faf57687073199dd21c994e37c0",
+    "size": 387
+  },
+  "source_form": "Exact staged compiler input; original and normalized source hashes are retained in receipt"
+}

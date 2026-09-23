@@ -62,10 +62,60 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
 
 def bind_contribution(obj, recipe, symbols=None):
     args = (obj, recipe['object_segment'], recipe['public'], recipe['end'] - recipe['start'])
-    require(recipe['expected_relocations'] == [], 'Relocating contributions not yet supported')
+    if recipe.get('binding',{}).get('mode') == 'external-far-call-v1':
+        return bind_far_calls(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
+                              recipe['start'], recipe['expected_relocations'])
+    require(recipe['expected_relocations'] == [], 'Relocating contributions not supported in this mode')
     if not recipe['expected_fixups']:
         require('binding' not in recipe, 'Unexpected binding for fixup-free recipe')
         return extract_no_fixups(*args), {'mode': 'no-fixups', 'generated_relocations': []}
     binding = recipe['binding']
     require(binding['mode'] == 'external-dgroup-offset16-v1', 'Unsupported recipe binding mode')
     return bind_data_offsets(*args, recipe['expected_fixups'], binding['declarations'], symbols)
+
+
+def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
+                   symbols, start, expected_relocations):
+    """Bounded unoptimized intersegment CALL; no far-to-near rewriting.
+
+    Only zero-addend external pointer32 at a 9A operand, target frame, is proven.
+    The offset and paragraph are derived from reviewed symbol/frame identities.
+    MZ entry representation/order remains an explicit hybrid layout obligation.
+    """
+    require(expected_fixups and obj.linker_fixups==expected_fixups, 'Complete ordered far FIXUPP differs')
+    require(declarations=={'segments':obj.segment_defs,'groups':obj.groups,
+                          'publics':obj.publics,'externals':obj.externals}, 'Far object declarations differ')
+    require(obj.publics==[{'name':public,'segment':segment,'offset':0}], 'Far contribution public mismatch')
+    require(obj.segment_length(segment)==length and len(obj.segment_bytes(segment))==length,
+            'Complete far contribution length differs')
+    require(all(n==segment or size==0 for n,size in obj.segment_lengths.items()), 'Unowned far-call data/BSS')
+    used={f['target'] for f in expected_fixups}
+    require(set(symbols)==used and set(obj.externals)<=used|{'__acrtused',public}, 'Far external set differs')
+    payload=bytearray(obj.segment_bytes(segment)); obligations=[]; occupied=set()
+    for fix in expected_fixups:
+        require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],fix['target_kind'],fix['target_method'])
+                ==(segment,'pointer32',4,False,'external',2), 'Unsupported far fixup kind/width/target')
+        require((fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
+                ==(5,'target',fix['target'],0), 'Unsupported far frame')
+        require(1<=fix['target_index']<=len(obj.externals) and obj.externals[fix['target_index']-1]==fix['target'],
+                'Invalid far external index')
+        at=fix['offset']; require(type(at)is int and 1<=at<=length-4, 'Far operand outside contribution')
+        require(not occupied.intersection(range(at,at+4)), 'Overlapping far fixups')
+        occupied.update(range(at,at+4))
+        require(payload[at-1]==0x9a, 'Far binding supports CALL operands only')
+        require(fix['displacement']==0 and fix['encoded_addend']=='00000000' and payload[at:at+4]==bytes(4),
+                'Nonzero far addend/displacement unsupported')
+        target=symbols[fix['target']]; frame=target['frame_load_address']; address=target['load_address']
+        require(target['kind']=='far-code' and type(frame)is int and type(address)is int and
+                0<=frame<=0xffff0 and frame%16==0 and 0<=address-frame<=65535, 'Invalid far symbol/frame')
+        struct.pack_into('<HH',payload,at,address-frame,frame//16)
+        obligations.append({'load_offset':start+at+2,'target':fix['target'],
+                            'offset':address-frame,'paragraph':frame//16})
+    require([r['load_offset'] for r in expected_relocations]==[r['load_offset'] for r in obligations],
+            'Ordered source relocation obligations differ')
+    for entry in expected_relocations:
+        require(set(entry)=={'segment','offset','load_offset'} and 0<=entry['segment']<=65535 and
+                0<=entry['offset']<=65535 and entry['segment']*16+entry['offset']==entry['load_offset'],
+                'Invalid MZ relocation representation')
+    return bytes(payload), {'mode':'external-far-call-v1','fixups':obligations,
+                           'generated_relocations':expected_relocations}

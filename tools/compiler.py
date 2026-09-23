@@ -65,4 +65,9 @@ def compile_source(source, profile, flags=None):
         obj = read_object(data)
     except ValueError as error:
         raise CompileFailure(str(error), receipt, 'UNSUPPORTED_OBJECT') from error
+    from common import json_bytes
+    receipt['effective_code']=sha(json_bytes({'segments':{k:identity(v) for k,v in obj.segments.items()},
+        'declarations':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,
+        'externals':obj.externals,'fixups':obj.linker_fixups,'profile':profile,'flags':argv[5:-1]}))
+    write_json(work/'receipt.json',receipt)
     return obj, receipt

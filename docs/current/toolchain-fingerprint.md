@@ -2,6 +2,8 @@
 
 Production pins Microsoft C 5.10 with `/c /AM /O /Gs`, invoked by the hash-pinned ReC98 MS-DOS Player. Complete Microsoft C 5.00 and 5.10 distributions and their bundled QuickC 1.00/1.01 are available under ignored `toolchain/`. Every extracted executable, header, library and startup object is SHA-256 pinned in `layout/toolchain.json`.
 
+The larger canary pass is recorded in `workflow-canary.md`. Both MSC versions emit the same 194-byte strongest canary hypothesis, which does not match its 200-byte pristine extent. Explicit `/Ox`, `/Od`, `/Or`, `/Os` experiments and the adjacent-function TU probe did not establish a matching profile. Production flags remain unchanged; unique version/flags remain unproven. Two-call historical LINK fixtures and same-TU near-call fixtures agree under both linkers.
+
 The following fixed examples establish compiler-family compatibility; current production ownership is generated in `status.json`:
 
 | Function | Load offset | Owned bytes | Construct |

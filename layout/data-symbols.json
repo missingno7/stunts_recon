@@ -55,6 +55,56 @@
         }
       ],
       "storage": "bss"
+    },
+    "_clip": {
+      "evidence": "Pristine clipping loads in reviewed rect_compare_point; ordered four signed-word RECT fields, pinned DGROUP frame.",
+      "fields": [
+        {
+          "offset": 0,
+          "reference": {
+            "hex": "a14057",
+            "operand_offset": 1,
+            "start": 89868
+          },
+          "width": 2
+        },
+        {
+          "offset": 2,
+          "reference": {
+            "hex": "a14257",
+            "operand_offset": 1,
+            "start": 89882
+          },
+          "width": 2
+        },
+        {
+          "offset": 4,
+          "reference": {
+            "hex": "a14457",
+            "operand_offset": 1,
+            "start": 89836
+          },
+          "width": 2
+        },
+        {
+          "offset": 6,
+          "reference": {
+            "hex": "a14657",
+            "operand_offset": 1,
+            "start": 89850
+          },
+          "width": 2
+        }
+      ],
+      "load_address": 200368,
+      "references": [
+        {
+          "hex": "a14057",
+          "operand_offset": 1,
+          "start": 89868
+        }
+      ],
+      "storage": "bss"
     }
   }
 }

@@ -5,7 +5,7 @@ from oracle import verify
 from mz import MZ
 from compiler import compile_source, CompileFailure
 from binder import bind_contribution
-from data_symbols import resolve_symbols
+from code_symbols import resolve_recipe_symbols
 
 
 class ProbeFailure(ValueError):
@@ -20,8 +20,7 @@ def probe(recipe, oracle_result=None):
     require(0 <= start < end <= len(image), 'Invalid candidate extent')
     require(identity(image[start:end]) == recipe['target'], 'Candidate target lock mismatch')
     relocs = [r for r in result[2]['unpacked_mz']['relocations'] if start - 1 <= r['load_offset'] < end]
-    require(not relocs, 'Relocating candidate requires supervisor binder implementation')
-    require(recipe['expected_relocations']==[], 'Recipe requests unsupported relocation obligations')
+    require(relocs==recipe['expected_relocations'], 'Complete ordered candidate relocation obligations differ')
     source = project_path(recipe['source']).read_bytes()
     try:
         obj, receipt = compile_source(source, recipe['profile'])
@@ -31,13 +30,15 @@ def probe(recipe, oracle_result=None):
     details = {'receipt':receipt, 'expected_size':end-start, 'emitted_sizes':obj.segment_lengths,
                'publics':obj.publics, 'externals':obj.externals, 'fixups':obj.linker_fixups,
                'object_segments':{n:identity(b) for n,b in obj.segments.items()}}
+    from diagnostics import diagnose
+    details['comparison'] = diagnose(image[start:end], obj.segments.get(segment,b''), receipt, obj.linker_fixups)
     if obj.segment_length(segment) != end-start or len(obj.segments.get(segment,b'')) != end-start:
         raise ProbeFailure('Complete emitted contribution length differs from target',
                            {**details, 'category':'EXTENT_MISMATCH'})
     try:
-        symbols = resolve_symbols({f['target'] for f in recipe['expected_fixups']}, image,
-                                  result[2]['unpacked_mz']['relocations']) if recipe['expected_fixups'] else None
+        symbols = resolve_recipe_symbols(recipe, image, result[2]['unpacked_mz']['relocations'])
         payload, binding = bind_contribution(obj, recipe, symbols)
+        require(binding['generated_relocations']==relocs, 'Generated source relocation obligations differ')
     except ValueError as error:
         raise ProbeFailure(str(error), {**details, 'category':'BINDING_REVIEW_REQUIRED'}) from error
     receipt['binding'] = binding

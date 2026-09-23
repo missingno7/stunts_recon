@@ -8,6 +8,11 @@
   "mode": "ordered-hybrid-image",
   "modules": [
     {
+      "owner": "load_15ee2",
+      "recipe": "recipes/rect_compare_point.json",
+      "source": "src/rect_compare_point.c"
+    },
+    {
       "owner": "load_16552",
       "recipe": "recipes/nopsub_26552.json",
       "source": "src/nopsub_26552.c"
