@@ -34,8 +34,8 @@ The selected larger-function path also supports reviewed zero-addend external po
 `grind.py` archives each source, hypothesis, compiler log, recipe, object identity and available mismatch diagnostics under `recovery/attempts/NAME/NNNN/`. It refreshes cards after recording the result.
 
 - **FAST_PASS_ONLY:** complete contribution matches; production has not changed.
-- **FAILED:** inspect complete size, fixups and byte differences. Edit only that candidate source to test the next justified hypothesis. Do not refresh after an ordinary source-only edit; the card deliberately permits it.
-- Unequal lengths now include the first differing instruction and a hashed full diagnostic artifact. Instruction comparisons are diagnostic only; full length equality remains mandatory.
+- **FAILED:** inspect the compact mismatch summary first. Preserve exact anchors; form the next justified hypothesis around the local islands, their evidence and explicit realignment. Check complete size/fixups and distinguish codegen evidence from binding/TU problems. Edit only that candidate source. Do not refresh after an ordinary source-only edit; the card deliberately permits it.
+- Unequal lengths include unbound instruction alignment with unresolved operand fields marked. Equal lengths that bind but differ include a bound-payload diagnosis plus separate object evidence. Neither normalization nor structural similarity counts as exact acceptance. Full length and byte equality remain mandatory.
 - **ERROR:** fix the toolchain, source-scope or environment problem. Infrastructure errors do not spend source-attempt budget.
 - **Blocked:** stop this task. Unsupported objects/binding escalate immediately; three failed hypotheses exhaust the budget. Identical hypotheses are refused without recompiling. Different source with identical object output is identified in the report.
 
@@ -49,6 +49,16 @@ python tools/validate.py
 Promotion freshly recompiles FAST and both staged/canonical complete images under a serial writer lock. It checks exact expected input fingerprints and workflow controls, rolls back failed metadata changes, and refreshes the queue. No test-total or documentation edits are needed after promotion. Independent parity consumes active manifest recipes only; failed candidates do not become production tests.
 
 `check_candidate.py` remains a compatible CLI but routes through the same ledger. `probe_module.py` and `toolchain_probe.py` are research diagnostics, not promotion commands or a way to bypass budgets.
+
+## Read local mismatch evidence
+
+Default `context.py FUNCTION_ID` automatically includes the latest bounded `match_diagnosis`, exact anchor ranges, classifications/confidence, source/recipe/engine freshness, realignment and full artifact identity/path. `context.py FUNCTION_ID --diagnosis` prints the concise text view. Reports use half-open byte and instruction ranges relative to each contribution. Counts include the entire linear decode, including alignment NOPs; an anchored percentage is not semantic correctness or a reachable-instruction count.
+
+Read the compact islands first, then open the referenced full JSON or use `--asm` only if needed. The full JSON holds both decoded streams and every aligned pair. Grinder attempts copy it durably beside `report.json`; the report and derived index carry bounded summaries without instruction arrays. `--history` expands prior evidence; comparable consecutive diagnostics show lost exact target ranges. Omitted ranges and incomparable engine/target/mode evidence are explicit and never decide acceptance.
+
+Unique four-instruction sequences of at least eight bytes seed deterministic monotonic alignment. Local bounded edit alignment connects anchors; register/stack substitutions are operand evidence, not source-level explanations. Tiny repeated epilogues are not independent anchors. Byte equality, decoded equality, structural similarity and unresolved fixup normalization stay separate. Diagnostic errors cannot turn a strict probe failure into a pass.
+
+For supervisor tooling verification of an unchanged candidate, `python tools/probe_module.py NAME --supervisor-diagnostic` freshly compiles and archives a failure under `recovery/diagnostics`, then refreshes context. It never promotes, spends a source attempt or reopens a blocker. Do not use it for unbudgeted source trials. An extent mismatch exits with failure even when its diagnostic is useful.
 
 ## Supervisor re-entry
 

@@ -2,6 +2,8 @@
 
 Routine startup: run the baseline validation once, select a task, then use `python tools/context.py FUNCTION_ID`. Expand `--asm`, `--callers`, `--globals`, `--history` or `--full` only as needed. The packet names omitted evidence and raw artifact paths. A stale packet cannot authorize an attempt.
 
+Inspect the automatic compact match diagnosis before full assembly. Preserve byte-exact anchors and investigate the localized mismatch islands and realignment points. `--diagnosis` renders a concise view; expand the referenced full diagnostic only when evidence is insufficient. Check archived source/recipe/engine freshness. Structural similarity and unresolved operand normalization are diagnostic only; distinguish source codegen differences from binding, fixup and translation-unit blockers. History anchor losses are observations, never acceptance authority. Supervisor tooling checks may archive an unchanged-source probe with `probe_module.py NAME --supervisor-diagnostic`; this does not reopen a blocked task or authorize source experiments outside the grinder budget.
+
 Read README.md and docs/current/supervisor-instructions.md before changing acceptance logic. Original assets and layout/oracle.lock.json are authoritative. Do not regenerate expected bytes after a mismatch. Keep matching source and any future modern build separate.
 
 Never commit assets, downloaded compiler tools, generated EXEs/OBJs, or reference binaries. Use the pinned compiler profile and fresh whole-image acceptance for every promotion. Source/manifest promotion is single-writer. No matching claim may depend on ignored OMF records, masked fixups, object trimming, or final binary patching.

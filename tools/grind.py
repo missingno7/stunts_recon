@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from common import ROOT, read_json, write_json, require, project_path, identity, sha, json_bytes
 from build_exact import inputs
 from check_candidate import check
-from probe_module import ProbeFailure
+from probe_module import ProbeFailure, archive_diagnostics
 from workflow import attempts, state, task_name, require_eligible, hypothesis_key, fingerprint
 
 
@@ -68,6 +68,7 @@ def run(task, hypothesis, promote=False):
             if obj:
                 report['same_object_as'] = [r['sequence'] for r in status['history']
                     if (r.get('diagnostics',{}).get('receipt',{}).get('object') == obj)]
+        archive_diagnostics(report.get('diagnostics',{}),destination)
         write_json(destination/'report.json', report)
         from reconstruction_factory import refresh
         refresh()
@@ -109,6 +110,11 @@ def main():
     result=run(a.task,a.hypothesis,a.command=='promote')
     print(result['status'], result['report_path'])
     if result['status'] in ['FAILED','ERROR']:
+        from diagnostics import format_summary
+        comparison=result.get('diagnostics',{}).get('comparison',{})
+        if comparison.get('match_summary'):
+            print(format_summary(comparison['match_summary'],a.task,'FAIL'))
+            print('Full diagnostic:',comparison.get('full_diagnostic'))
         print(result['error']);raise SystemExit(1)
 
 

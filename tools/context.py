@@ -1,7 +1,7 @@
 """Small actionable task packet; expand evidence explicitly, never silently truncate."""
 import argparse
 import json
-from common import ROOT, read_json, require, sha
+from common import ROOT, read_json, require, sha, identity, json_bytes
 
 
 def packet(identifier, expansions=()):
@@ -47,6 +47,21 @@ def packet(identifier, expansions=()):
     out['hypotheses']=history if 'history' in expansions else history[-3:]
     out['omitted_history']=max(0,len(history)-len(out['hypotheses']))
     if history:out['next_discriminator']=history[-1].get('next_discriminator','Change the predicted instruction/ABI outcome, not just the prose hypothesis')
+    latest=next((r for r in reversed(history) if r.get('match_summary')),None)
+    if latest:
+        out['match_diagnosis']={k:latest.get(k) for k in ['path','match_summary','full_diagnostic','full_diagnostic_identity','anchor_regression']}
+        out['match_diagnosis']['source_matches_current']=bool(recipe and (latest.get('source') or {}).get('sha256')==out['candidate']['sha256'])
+        out['match_diagnosis']['recipe_matches_current']=bool(recipe and latest.get('recipe_identity')==identity(json_bytes(recipe)))
+        import diagnostics
+        from pathlib import Path
+        out['match_diagnosis']['engine_matches_current']=latest['match_summary']['engine_sha256']==sha(Path(diagnostics.__file__).read_bytes())
+        out['match_diagnosis']['freshness']='Archived observation, not a fresh FAST result; check source, target, compiler and engine before drawing conclusions.'
+        out['next_discriminator']='Inspect the localized '+', '.join(latest['match_summary']['classifications'])+' evidence; preserve exact anchors. Resolve binding/TU blockers separately; no source-level cause is inferred.'
+        # Keep a single summary in the default packet; --history explicitly expands older ones.
+        if 'history' not in expansions:
+            def reference(r):return {k:v for k,v in r.items() if k not in ('match_summary','anchor_regression')}
+            out['hypotheses']=[reference(r) for r in out['hypotheses']]
+            if formal:out['latest_grinder_attempt']=reference(formal[-1])
     out['expansion']='--asm --callers --globals --history --full; full raw artifacts stay at referenced paths'
     if 'asm' in expansions:out['assembly']=card.get('disassembly',[])
     else:out['omitted_assembly_rows']=len(card.get('disassembly',[]))
@@ -61,7 +76,15 @@ def packet(identifier, expansions=()):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('function')
     for name in ['asm','callers','globals','history','full']:p.add_argument('--'+name,action='store_true')
-    a=p.parse_args();print(json.dumps(packet(a.function,[n for n in ['asm','callers','globals','history','full'] if getattr(a,n)]),indent=2))
+    p.add_argument('--diagnosis',action='store_true',help='Print concise match diagnosis and full artifact path')
+    a=p.parse_args();result=packet(a.function,[n for n in ['asm','callers','globals','history','full'] if getattr(a,n)])
+    if a.diagnosis:
+        from diagnostics import format_summary
+        diagnosis=result.get('match_diagnosis',{})
+        print(format_summary(diagnosis.get('match_summary'),result['name'],'ARCHIVED OBSERVATION'))
+        print('Source matches current:',diagnosis.get('source_matches_current'))
+        print('Full diagnostic:',diagnosis.get('full_diagnostic'))
+    else:print(json.dumps(result,indent=2))
 
 
 if __name__=='__main__':main()

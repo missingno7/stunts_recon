@@ -58,7 +58,16 @@ The plain classifier source emitted 76 bytes with BX and a two-byte local frame,
 
 ## Continue
 
+The local mismatch diagnostic now records a fresh unchanged-source supervisor probe under `recovery/diagnostics/is_facing_camera`; the latest entry is exposed automatically by context. This probe remains `EXTENT_MISMATCH` (200-byte target, 194-byte candidate). It does not consume a source attempt or reopen the family.
+
+Previously the compact report stopped at instruction 25, +0x37 (`[bp-0xC]` versus `[bp-8]`). The aligned report identifies **63 of 87 linear target instructions in 10 byte-exact anchors (72.41%)**, with 82 candidate instructions and nine local islands. The exact prefix is target/candidate +0x0..+0x37. The exact suffix is target +0xB9..+0xC8 versus candidate +0xB3..+0xC2. These counts include alignment NOPs, unlike CFG-reachable counts; they are diagnostic metrics only.
+
+The first island, +0x37..+0x3D in both streams, shows paired BP-0xC/BP-0xA to BP-8/BP-6 stores with high-confidence stack-slot evidence; exact code resumes at +0x3D. Further slot islands recur at +0x45, +0x58, +0x6D and +0x88. The two far CALL operand fields appear as unresolved fixup evidence, never exact anchors. Near branches expose aligned versus unproven destination correspondence. The final island is target +0xAE..+0xB9 versus candidate +0xAE..+0xB3: byte/word result materialization, changed control operations and missing instructions, followed by the exact suffix.
+
+The engine does not label that final island `EPILOGUE_OR_RETURN_LOWERING`: its return instruction belongs to the subsequent exact suffix. It also does not infer a source temporary, register allocation cause, original variable names or semantic branch equivalence. Where operands or alignment do not establish a class, `LOCAL_CODEGEN_UNCLASSIFIED` remains the fallback. The diagnostic does not override the existing bound-call evidence or any complete-contribution requirement.
+
 ```text
+python tools/context.py is_facing_camera --diagnosis
 python tools/context.py is_facing_camera --history
 python tools/context.py load_226ba
 python tools/reconstruction_factory.py next
