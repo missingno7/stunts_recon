@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+  "effective_code": "f33bac3690c5f1ecec06bcf61768af2a3152e273ba4faec2713c515fe7fc40d1",
+  "object": {
+    "sha256": "95530ba8f8ee6109c76060dc399336735dd2864e0e66e0f8aadf35512fb5d930",
+    "size": 316
+  },
+  "profile": "msc510-medium",
+  "source": {
+    "sha256": "e31814dba579c07aaed8a539f99b767c0d618c25238ecea3feb5f25067755792",
+    "size": 177
+  },
+  "staged_source": {
+    "sha256": "5392b974579effd94f977f7ede383db0742cd51c5788aa875091eb2e95a12cd6",
+    "size": 181
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\recovery\\corpus\\endurance-001\\file_load_shape2d_nofatal\\trial-02\\compiler-work"
+}

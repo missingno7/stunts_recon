@@ -1,0 +1,11 @@
+{
+  "meaningful_hypothesis_number": 4,
+  "analysis_level": "pinned compiler-version differential; research-only",
+  "hypothesis": "MSC 5.0 might inline the exact unsigned-long high-word product differently from MSC 5.1 and produce a direct 16x16 MUL rather than `__aFulmul`.",
+  "prediction": "Compile the byte-identical associated C body under verified pinned MSC 5.0, preserve its full toolchain receipt/profile, and compare the entire 34-byte target. If the same helper relocation remains, version alone does not resolve the long-multiply blocker.",
+  "falsifier": "Alternate profile fails verification or output changes without removing the helper / matching target multiply, argument frame, and compare flow.",
+  "prior_output_classes": ["MSC 5.1 associated C: 48B, one pointer32 __aFulmul fixup", "MSC 5.1 inline byte partials: 154B, no fixups, four products and explicit carry code"],
+  "discriminating_question": "Is helper emission specific to MSC 5.1 or stable across the two pinned MSC versions?",
+  "research_only": true,
+  "no_acceptance_claim": true
+}

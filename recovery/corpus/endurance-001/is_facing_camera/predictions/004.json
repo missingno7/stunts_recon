@@ -1,0 +1,9 @@
+{
+  "meaningful_hypothesis_number": 7,
+  "analysis_level": "reference declaration and local temporary/result materialization",
+  "hypothesis": "The associated Restunts source uses `char` return and an explicit signed-long `temp` storing the determinant before testing <=0. The temporary may reuse delta storage and the byte return may produce the target's AL/CBW epilogue, changing both local allocation and the final island.",
+  "prediction": "Expect candidate code to change from hypotheses 4-6; specifically inspect whether stack offsets for delta slots match the target and whether the final return path becomes `mov al,1` plus a zero-result path with `sub al,al`/`cbw`. A strict 200-byte equality would be research-only and require serial review.",
+  "falsifier": "Effective output remains 194 bytes with the same local-slot layout and final island, or introduces new helper/fixup differences without preserving more target instructions.",
+  "prior_output_classes": ["H4 local-order change: 194 bytes/75 exact target instructions", "H5 signed-char return changed no effective code", "H6 same source under pinned MSC 5.0 retained the exact same 194-byte machine code"],
+  "discriminating_question": "Does the documented source-level temp variable explain target local lifetime/materialization when combined with the actual char return declaration?"
+}

@@ -1,0 +1,9 @@
+{
+  "analysis_level": "far-pointer representation and parameter access strategy",
+  "discriminating_question": "Can declaration representation remove the cast-generated spill and expose how much remaining mismatch is ABI versus linker/TU structure?",
+  "falsifier": "No simplification or direct BP+8 load; remaining code/fixups show external binding or shared-tail TU context still block strict identity.",
+  "iteration": 3,
+  "prediction": "A union view of the far pointer should access its segment word directly at BP+8 with fewer stack spills than the long cast, while retaining far RETF, resptr1/resptr2 OMF fixups, and fatal_error call.",
+  "prior_effective_output": "trial-02: 72-byte output d77985402126676899c942bdd668bc4da3bd72085e5176181cb3ffa3664f9217",
+  "transition_reason": "Trial 02 verified the far-function ABI: output changed 84 to 72 bytes, but a long-cast shift introduced stack temporaries and the target expects a direct argument word load. Test the equivalent union view from trial 01 under the corrected far declaration to isolate representation lowering."
+}

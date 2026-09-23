@@ -1,0 +1,8 @@
+{
+  "iteration": 2,
+  "analysis_level": "near callee declaration and OMF relocation requirements",
+  "transition_reason": "Trial 01 produced target-like 20-byte code shape except it used an unbound pointer32 far CALL to the external callee, while target emits PUSH CS plus near CALL and has two exact anchors around that sequence. Test an explicitly near callee declaration while preserving far wrapper/return type.",
+  "prediction": "MSC should change lcall into near relative CALL. If callee remains external, object should expose a self-relative near fixup to _file_load_shape2d, demonstrating the same-segment/TU binding required to settle displacement.",
+  "falsifier": "Compiler chooses pointer32 call, mismatches wrapper sequence, or cannot encode near external call.",
+  "discriminating_question": "Can the source declaration recover target call mode, and is exact linkage resolution an independent gate?"
+}

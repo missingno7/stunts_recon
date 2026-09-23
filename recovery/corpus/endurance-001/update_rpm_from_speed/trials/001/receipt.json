@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+  "effective_code": "56f31e985076b18fde21af71c65e694eb0712ece2ebee348180bd8b5af96c8f6",
+  "object": {
+    "sha256": "5183913f5a47f44853b48c28f290238410ec71e0db08da88de7d486a73c667ed",
+    "size": 329
+  },
+  "profile": "msc510-medium",
+  "source": {
+    "sha256": "015a43f30878365b63538aabf38fea66bcd1e11000cf0e29ef6a7ee37818b3eb",
+    "size": 376
+  },
+  "staged_source": {
+    "sha256": "e6ae59c2581905ac0f070bea850e6044a16f8878cec7f5a98509a8e1af93d6d4",
+    "size": 385
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\py53j5srj"
+}

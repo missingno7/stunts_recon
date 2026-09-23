@@ -1,0 +1,8 @@
+{
+  "analysis_level": "function ABI plus local/register allocation baseline",
+  "discriminating_question": "Does matching the target function distance resolve the known extent gap before testing local lifetime/type choices?",
+  "falsifier": "Compiler emits non-76 extent or different full bytes; far qualification alone fails to explain the archived 84-byte Restunts mismatch.",
+  "iteration": 1,
+  "prediction": "The pristine function is a far procedure but its two struct pointers are near DS pointers. Marking only the function far while preserving int fields and shared temp should correct RETF/frame assumptions and reveal whether the 84-versus-76 mismatch is just distance or remains local allocation/codegen. Target saves DI/SI, uses one 2-byte local at BP-6, and reserves six bytes.",
+  "target_source": "Restunts math.c rect_adjust_from_point with only far function distance added."
+}

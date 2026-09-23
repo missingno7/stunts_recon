@@ -1,0 +1,845 @@
+{
+  "case": "update_rpm_from_speed",
+  "complete_bytes_equal": false,
+  "complete_contribution": {
+    "sha256": "98e1e56adc3a5c4e5a768cc9df9a0016810b69ac41ccc31511236f0343fabccf",
+    "size": 170
+  },
+  "complete_extent_equal": false,
+  "diagnostic": {
+    "candidate": {
+      "sha256": "98e1e56adc3a5c4e5a768cc9df9a0016810b69ac41ccc31511236f0343fabccf",
+      "size": 170
+    },
+    "comparison": "unbound object",
+    "decoded_bytes": [
+      34,
+      170
+    ],
+    "first_differing_instruction": {
+      "candidate": {
+        "bytes": "83ec12",
+        "control": null,
+        "fixup_fields": [],
+        "implicit_reads": [],
+        "implicit_writes": [
+          "flags"
+        ],
+        "instruction": "sub sp, 0x12",
+        "load_offset": 3,
+        "mnemonic": "sub",
+        "operand_fields": [
+          [
+            2,
+            3
+          ]
+        ],
+        "operands": [
+          {
+            "kind": "reg",
+            "reg": "sp",
+            "width": 2
+          },
+          {
+            "kind": "imm",
+            "value": 18,
+            "width": 2
+          }
+        ]
+      },
+      "index": 2,
+      "target": {
+        "bytes": "55",
+        "control": null,
+        "fixup_fields": [],
+        "implicit_reads": [
+          "esp"
+        ],
+        "implicit_writes": [
+          "esp"
+        ],
+        "instruction": "push bp",
+        "load_offset": 3,
+        "mnemonic": "push",
+        "operand_fields": [],
+        "operands": [
+          {
+            "kind": "reg",
+            "reg": "bp",
+            "width": 2
+          }
+        ]
+      }
+    },
+    "full_diagnostic_identity": {
+      "sha256": "66334a19e16a786ea441fa4ce18a48327188b6e52883b05a9f1079a454749e54",
+      "size": 83378
+    },
+    "match_summary": {
+      "anchors": [
+        {
+          "basis": "byte-exact, position-independent, unmasked",
+          "candidate": {
+            "bytes": [
+              0,
+              3
+            ],
+            "instructions": [
+              0,
+              2
+            ]
+          },
+          "kind": "ANCHOR",
+          "target": {
+            "bytes": [
+              0,
+              3
+            ],
+            "instructions": [
+              0,
+              2
+            ]
+          }
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+      "candidate": {
+        "sha256": "98e1e56adc3a5c4e5a768cc9df9a0016810b69ac41ccc31511236f0343fabccf",
+        "size": 170
+      },
+      "classifications": [
+        "BRANCH_TARGET_OR_LAYOUT",
+        "CALL_FRAME_OR_SEGMENT_REGISTER",
+        "CONTROL_FLOW_SHAPE",
+        "EPILOGUE_OR_RETURN_LOWERING",
+        "EXTRA_INSTRUCTIONS",
+        "LOCAL_CODEGEN_UNCLASSIFIED",
+        "REGISTER_ALLOCATION",
+        "TEMPORARY_OR_SPILL",
+        "WIDTH_OR_EXTENSION"
+      ],
+      "comparison": "unbound object",
+      "counts": {
+        "anchors": 1,
+        "byte_equal_aligned_pairs": 7,
+        "candidate_instructions": 70,
+        "decoded_exact_pairs": 0,
+        "exact_instructions": 2,
+        "fixup_normalized_pairs": 0,
+        "mismatch_islands": 1,
+        "structural_pairs": 3,
+        "target_anchored_percent": 12.5,
+        "target_instructions": 16
+      },
+      "decode_complete": true,
+      "decoded_bytes": [
+        34,
+        170
+      ],
+      "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+      "exact_prefix": {
+        "basis": "byte-exact, position-independent, unmasked",
+        "candidate": {
+          "bytes": [
+            0,
+            3
+          ],
+          "instructions": [
+            0,
+            2
+          ]
+        },
+        "kind": "ANCHOR",
+        "target": {
+          "bytes": [
+            0,
+            3
+          ],
+          "instructions": [
+            0,
+            2
+          ]
+        }
+      },
+      "exact_suffix": null,
+      "fixup_normalization": {
+        "fields": [
+          {
+            "kind": "offset16",
+            "offset": 143,
+            "target": "high_word_product",
+            "width": 2
+          }
+        ],
+        "ignored": [],
+        "mode": "unbound object",
+        "omitted_fields": 0,
+        "omitted_ignored": 0,
+        "rule": "Normalization is alignment-only; affected instructions never count as byte-exact anchors."
+      },
+      "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+      "islands": [
+        {
+          "candidate": {
+            "bytes": [
+              3,
+              170
+            ],
+            "instructions": [
+              2,
+              70
+            ]
+          },
+          "classifications": [
+            {
+              "class": "CALL_FRAME_OR_SEGMENT_REGISTER",
+              "confidence": "high",
+              "evidence": [
+                "+0x1D mov ax, cx -> +0x9F mov ax, word ptr [bp + 6]"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "REGISTER_ALLOCATION",
+              "confidence": "medium",
+              "evidence": [
+                "+0x1A mov cx, word ptr [bp + 0xe] -> +0x97 mov ax, word ptr [bp + 0xe]"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "WIDTH_OR_EXTENSION",
+              "confidence": "high",
+              "evidence": [
+                "+0x4 mov cx, word ptr [bp + 6] -> +0x18 mov al, byte ptr [bp + 8]"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "BRANCH_TARGET_OR_LAYOUT",
+              "confidence": "medium",
+              "evidence": [
+                "+0xE jne 0x15 -> +0x85 jne 0x97",
+                "Destination correspondence not proven by alignment"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "CONTROL_FLOW_SHAPE",
+              "confidence": "high",
+              "evidence": [
+                "Control operations (3 -> 6), first eight: ['jne', 'jae', 'retf'] -> ['retf', 'jne', 'call', 'jb', 'retf', 'retf']; no semantic equivalence inferred"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "EPILOGUE_OR_RETURN_LOWERING",
+              "confidence": "medium",
+              "evidence": [
+                "Return-containing regions have different instruction/control sequences"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "EXTRA_INSTRUCTIONS",
+              "confidence": "medium",
+              "evidence": [
+                "54 candidate instructions have no aligned target instruction"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "TEMPORARY_OR_SPILL",
+              "confidence": "medium",
+              "evidence": [
+                "candidate unmatched BP store/reload fields (5), first four: [(-18, 2), (-8, 2), (-6, 2), (-4, 2)]; purpose unproven"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "LOCAL_CODEGEN_UNCLASSIFIED",
+              "confidence": "low",
+              "evidence": [
+                "+0x3 push bp -> +0x15 mov word ptr [bp - 0xe], ax",
+                "+0x10 mul word ptr [bp + 0xa] -> +0x8D push cs",
+                "+0x13 mov cx, dx -> +0x8E call 0x91",
+                "+0x15 cmp cx, word ptr [bp + 0xe] -> +0x91 add sp, 4"
+              ],
+              "omitted_evidence": 2
+            }
+          ],
+          "id": 1,
+          "kind": "ISLAND",
+          "resumes_exact": false,
+          "target": {
+            "bytes": [
+              3,
+              34
+            ],
+            "instructions": [
+              2,
+              16
+            ]
+          }
+        }
+      ],
+      "notes": [],
+      "omitted_anchors": 0,
+      "omitted_islands": 0,
+      "omitted_notes": 0,
+      "patterns": {
+        "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+        "corresponding_branches": [],
+        "corresponding_branches_count": 0,
+        "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+        "families": [],
+        "observation_count": 63,
+        "omitted_corresponding_branches": 0,
+        "omitted_families": 0,
+        "omitted_residuals": 50,
+        "omitted_unresolved_fixups": 0,
+        "residuals": [
+          {
+            "byte_equal": false,
+            "candidate": "sub sp, 0x12",
+            "candidate_index": 2,
+            "candidate_offset": 3,
+            "id": "p2",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov al, byte ptr [bp + 6]",
+            "candidate_index": 3,
+            "candidate_offset": 6,
+            "id": "p3",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "sub ah, ah",
+            "candidate_index": 4,
+            "candidate_offset": 9,
+            "id": "p4",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov word ptr [bp - 8], ax",
+            "candidate_index": 5,
+            "candidate_offset": 11,
+            "id": "p5",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov ax, word ptr [bp + 6]",
+            "candidate_index": 6,
+            "candidate_offset": 14,
+            "id": "p6",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov cl, 8",
+            "candidate_index": 7,
+            "candidate_offset": 17,
+            "id": "p7",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "shr ax, cl",
+            "candidate_index": 8,
+            "candidate_offset": 19,
+            "id": "p8",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov word ptr [bp - 0xe], ax",
+            "candidate_index": 9,
+            "candidate_offset": 21,
+            "id": "p9",
+            "islands": [
+              1
+            ],
+            "level": "MISMATCH",
+            "target": "push bp",
+            "target_index": 2,
+            "target_offset": 3
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov al, byte ptr [bp + 8]",
+            "candidate_index": 10,
+            "candidate_offset": 24,
+            "id": "p10",
+            "islands": [
+              1
+            ],
+            "level": "STRUCTURAL",
+            "target": "mov cx, word ptr [bp + 6]",
+            "target_index": 3,
+            "target_offset": 4
+          },
+          {
+            "byte_equal": false,
+            "candidate": "sub ah, ah",
+            "candidate_index": 11,
+            "candidate_offset": 27,
+            "id": "p11",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "mov word ptr [bp - 0xc], ax",
+            "candidate_index": 12,
+            "candidate_offset": 29,
+            "id": "p12",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "shr ax, cl",
+            "candidate_index": 14,
+            "candidate_offset": 35,
+            "id": "p14",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          }
+        ],
+        "residuals_count": 62,
+        "unresolved_fixups": [
+          {
+            "byte_equal": false,
+            "candidate": "call 0x91",
+            "candidate_index": 57,
+            "candidate_offset": 142,
+            "id": "p57",
+            "islands": [
+              1
+            ],
+            "level": "MISMATCH",
+            "note": "Symbol identity and full binding obligations remain unresolved, including when raw numbers coincide.",
+            "target": "mov cx, dx",
+            "target_index": 8,
+            "target_offset": 19,
+            "unresolved_fixups": [
+              {
+                "kind": "offset16",
+                "offset": 1,
+                "target": "high_word_product",
+                "width": 2
+              }
+            ]
+          }
+        ],
+        "unresolved_fixups_count": 1
+      },
+      "schema": 3,
+      "target": {
+        "sha256": "4afb8b21289f00001ec1020411ad72fa713728e1a9dd0404419e0f9ef70d7f72",
+        "size": 34
+      }
+    },
+    "omitted": "Full instructions, pair alignment and any omitted islands/evidence are in full_diagnostic; diagnostic only.",
+    "target": {
+      "sha256": "4afb8b21289f00001ec1020411ad72fa713728e1a9dd0404419e0f9ef70d7f72",
+      "size": 34
+    }
+  },
+  "diagnostic_engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+  "externals_with_LEXTDEF_and_EXTDEF_merged": [
+    "__acrtused",
+    "high_word_product",
+    "_update_rpm_from_speed"
+  ],
+  "fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "high_word_product",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 143,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "high_word_product",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "full_diagnostic_path": "recovery/corpus/endurance-001/update_rpm_from_speed/trials/002/research-full-diagnostic.json",
+  "groups": [
+    {
+      "index": 1,
+      "name": "DGROUP",
+      "segment_indices": [
+        3,
+        4,
+        2
+      ],
+      "segments": [
+        "CONST",
+        "_BSS",
+        "_DATA"
+      ]
+    }
+  ],
+  "publics_including_LPUBDEF": [
+    {
+      "name": "high_word_product",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    },
+    {
+      "name": "_update_rpm_from_speed",
+      "offset": 126,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "raw_object": {
+    "sha256": "9a23e23b46c2cf5aa7fb9de341588b195824886d6a2341461d9855701c3b27a2",
+    "size": 494
+  },
+  "record_inventory": [
+    {
+      "body_hex": null,
+      "body_sha256": "bffc69620c00040c934a0506e6f8af50d94c4ed969e9ef63b442bc64b60ba7ca",
+      "checksum_ok": true,
+      "length": 8,
+      "name": "THEADR",
+      "offset": 0,
+      "type": "0x80"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "787d65a608f6024ea34c34562ab5fe45ab33e6100ddfbb52d2a81920017fed2e",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "COMENT",
+      "offset": 11,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "6c49a3e297f9113c40a9d73fea0fbd525c319fca7be813fef47cdcac5b253768",
+      "checksum_ok": true,
+      "length": 9,
+      "name": "COMENT",
+      "offset": 21,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "014aaba5d51da06507f9b2ec40a87cc12c39f8e36d81b767b3f737f2c75fb314",
+      "checksum_ok": true,
+      "length": 6,
+      "name": "COMENT",
+      "offset": 33,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "efb5182cf2f7dcfcc710fdac9fcf332d86c1f008a590f5e599e1ca4373535e80",
+      "checksum_ok": true,
+      "length": 6,
+      "name": "COMENT",
+      "offset": 42,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "59ce2ed3858910d0eae9528ae1266e41f81a9bf8787bac1aa9c18eb8b6eff9ac",
+      "checksum_ok": true,
+      "length": 50,
+      "name": "LNAMES",
+      "offset": 51,
+      "type": "0x96"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "2f8beb596dab58bd9119ae9ea60a485a51b5ef57386e11d02e81127c2b694f4e",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 104,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "d19cee73ec314be690693e00e2c99e9d5bf61e4630d8750d12ac0455d56e3647",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 114,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "2244fd4d2224c8ccb251383854f3baed291a6ae31a415ffe875c1aba83fdedeb",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 124,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "1c31ad5adf6db131bdef4c44b44e13e28212418c6aaa64474bd2b99182aef761",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 134,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "3975dc8a3056b38727b9cb6ea6132082f3cb34e261c25e57b676a3fa853de937",
+      "checksum_ok": true,
+      "length": 8,
+      "name": "GRPDEF",
+      "offset": 144,
+      "type": "0x9a"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "9f86e1a36c4d78338d59d527686cd706c3cc453ea741f038d23f822be43feb56",
+      "checksum_ok": true,
+      "length": 13,
+      "name": "FIXUPP",
+      "offset": 155,
+      "type": "0x9c"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "58a745ad9947653c22a1d885bfa093fca79d4ebc8c7f5106f648ecda20362ebc",
+      "checksum_ok": true,
+      "length": 13,
+      "name": "EXTDEF",
+      "offset": 171,
+      "type": "0x8c"
+    },
+    {
+      "body_hex": "11686967685f776f72645f70726f6475637400",
+      "body_sha256": "5eb24d983709713c7ae5da370770fbe2c898a521b574f8c3f2e9fe0d2e7d12fb",
+      "checksum_ok": true,
+      "length": 20,
+      "name": "LEXTDEF",
+      "offset": 187,
+      "type": "0xb4"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "03a77a12cab93d739ee2eba8a6f38298b56f50b7694ee0d8321f6312d2e3368a",
+      "checksum_ok": true,
+      "length": 25,
+      "name": "EXTDEF",
+      "offset": 210,
+      "type": "0x8c"
+    },
+    {
+      "body_hex": "000111686967685f776f72645f70726f64756374000000",
+      "body_sha256": "c8c99490364c9a9b0f91fcf7106d3553b24b89e607be9753023c320516142300",
+      "checksum_ok": true,
+      "length": 24,
+      "name": "LPUBDEF",
+      "offset": 238,
+      "type": "0xb6"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "ef53b3e21c856d1a43511f2717cc1cda5e385510e53957eb59d0fe8fbdf1837e",
+      "checksum_ok": true,
+      "length": 29,
+      "name": "PUBDEF",
+      "offset": 265,
+      "type": "0x90"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "fd47f9fd11ee91a44ab31c40b4a2771341d5ba747d2b0f2954d92d6ea2137a48",
+      "checksum_ok": true,
+      "length": 4,
+      "name": "COMENT",
+      "offset": 297,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "a18d17a607f1d8f1a4e5dc216ca06819b8c3f48a77558d920741109fab6b3393",
+      "checksum_ok": true,
+      "length": 174,
+      "name": "LEDATA",
+      "offset": 304,
+      "type": "0xa0"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "5da0c1e057bb03c68a7ce8116f4c8b2b3366a9d6aaf0553a3254f2ca892e9d4e",
+      "checksum_ok": true,
+      "length": 5,
+      "name": "FIXUPP",
+      "offset": 481,
+      "type": "0x9c"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "checksum_ok": true,
+      "length": 2,
+      "name": "MODEND",
+      "offset": 489,
+      "type": "0x8a"
+    }
+  ],
+  "scope": "Existing generic OmfReader and frozen diagnostics used for research only; strict object_probe/acceptance was not changed or bypassed for promotion.",
+  "segment_definitions": [
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CODE",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 1,
+      "length": 170,
+      "name": "UNIT_TEXT",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "DATA",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 2,
+      "length": 0,
+      "name": "_DATA",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CONST",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 3,
+      "length": 0,
+      "name": "CONST",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "BSS",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 4,
+      "length": 0,
+      "name": "_BSS",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    }
+  ],
+  "segment_lengths": {
+    "CONST": 0,
+    "UNIT_TEXT": 170,
+    "_BSS": 0,
+    "_DATA": 0
+  },
+  "segments": {
+    "UNIT_TEXT": {
+      "sha256": "98e1e56adc3a5c4e5a768cc9df9a0016810b69ac41ccc31511236f0343fabccf",
+      "size": 170
+    }
+  },
+  "strict_reader_result": "Invalid/unsupported OMF record b4",
+  "target": {
+    "sha256": "4afb8b21289f00001ec1020411ad72fa713728e1a9dd0404419e0f9ef70d7f72",
+    "size": 34
+  },
+  "trial": "002"
+}

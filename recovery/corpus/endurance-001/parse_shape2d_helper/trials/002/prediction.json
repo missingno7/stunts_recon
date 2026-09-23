@@ -1,0 +1,14 @@
+{
+  "analysis_level": "pinned compiler optimization-flag differential; research-only",
+  "discriminating_question": "Does disabling the pinned compiler's strength reduction recover the target's repeated long-shift sequence?",
+  "falsifier": "The candidate still collapses to an immediate shift, or unoptimized stack temporaries/parameter moves make the output diverge materially from the 32-byte target.",
+  "hypothesis": "The target's four explicit SHL AX,1 / RCL DX,1 pairs may come from compiling the same expression without MSC's `/O` strength reduction; `/Od` should preserve the source's repeated shifts instead of collapsing them to a four-bit shift.",
+  "meaningful_hypothesis_number": 5,
+  "no_acceptance_claim": true,
+  "prediction": "Compile the archived four-shift C source with the verified MSC 5.1 binary using exactly `/AM /Od /Gs`. Expect four interleaved shifts; inspect prologue, add-with-carry, full contribution extent and all OMF semantics. This is a research-only flags experiment, not a pinned acceptance profile.",
+  "prior_output_classes": [
+    "MSC 5.1 `/AM /O /Gs`, hypotheses 1-3: the exact expression and four separate shifts all produced the same 26-byte code",
+    "MSC 5.0 `/AM /O /Gs`, hypothesis 4: same 26-byte code"
+  ],
+  "research_only": true
+}

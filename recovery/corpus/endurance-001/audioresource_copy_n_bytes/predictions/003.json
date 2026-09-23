@@ -1,0 +1,9 @@
+{
+  "meaningful_hypothesis_number": 6,
+  "analysis_level": "ABI/register allocation with independent loop counter",
+  "hypothesis": "The target may result from assigning both far-pointer formal parameters to registers while an explicit independent count variable is kept live, allowing MSC to map pointers to SI/DI and count to CX rather than selecting SI for the count and spilling pointers.",
+  "prediction": "Expect a distinct register-allocation class from H4 and from short-budget H3; inspect whether code loads DS:SI and ES:DI once, emits LOOP, and writes complete segment:offset pointer values back. Falsifier is any continued LES BX/repeated stack loading or output identical to an earlier code class.",
+  "falsifier": "Compiler ignores far-pointer register qualifiers under this ABI or uses SI for count, fails to establish DS/ES roles, or repeats an earlier object output.",
+  "prior_output_classes": ["H4 ordinary far params plus register count: 46B; SI counter with repeated LES BX", "MSC 5.0 repeats the identical H4 code", "short-budget register-qualified far params/postincrement alone: 38B, target pointer roles not reproduced"],
+  "discriminating_question": "Do the parameter qualifiers and separate count interact to change MSC's allocation, or are far pointer arguments still ignored as register candidates?"
+}

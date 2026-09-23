@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+  "effective_code": "a4ac868949db8e9ac3dd75e4c09f46fd53515b70f873128061b36b8ad0efa244",
+  "object": {
+    "sha256": "7d2e04de0b629025ed26d80ef4c6590459178b7340c58f1d1db1daa6f19d7200",
+    "size": 468
+  },
+  "profile": "msc510-medium",
+  "source": {
+    "sha256": "66a36fa365161b63baf76a0239a8ec85f1ee1d6d5b529915cddfe8ef4951f54f",
+    "size": 372
+  },
+  "staged_source": {
+    "sha256": "af494a9c891fb50addbcdf9ad20608587f7f3cba6b427a245ce7e11371148341",
+    "size": 383
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\recovery\\corpus\\endurance-001\\is_facing_camera\\trials\\001\\compiler-work"
+}

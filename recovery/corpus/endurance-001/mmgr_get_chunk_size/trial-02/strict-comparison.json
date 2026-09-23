@@ -1,0 +1,13 @@
+{
+  "bytes_equal": false,
+  "candidate": {
+    "sha256": "94b764fdf3b9f287c6950432e6a92372ceeec51309cec6d12ef50ecbd99a7c8e",
+    "size": 72
+  },
+  "extent_equal": false,
+  "fixup_free": false,
+  "target": {
+    "sha256": "4981ce0e781e5b9d402147f8588255f57c61b1f6c8cade357ce919378d166f89",
+    "size": 38
+  }
+}

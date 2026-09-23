@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc500\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "226ca4ed68b8316603ccfff9892b96cb56d99e865351eac57a8f37e5cb1732fc",
+  "effective_code": "3810752e9abea7345168bc04a05872ed7a6b4db086a354d569b7d11b7d12d05f",
+  "object": {
+    "sha256": "00095da3660c2f4d912b2cbc8ed968befe966d87f5b502410ea4f185290c2506",
+    "size": 468
+  },
+  "profile": "msc500-medium",
+  "source": {
+    "sha256": "592dfcb479afc549bb4c1d170119a2bac8170d04626e84df1ab5fd85e683f0f0",
+    "size": 380
+  },
+  "staged_source": {
+    "sha256": "a0f741e6830fd507920778c0ffbf99bb080de5b9be19a298949d56eff944395e",
+    "size": 391
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\ppbhefsvn"
+}

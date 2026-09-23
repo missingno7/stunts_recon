@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+    "/c",
+    "/AM",
+    "/Od",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+  "effective_code": "f72d804250db63a6b921e11cf1776d277cba7aa83d919c8e197c3a8a9609fa37",
+  "object": {
+    "sha256": "f8908857e3f1262419201d5c25af1aa9cfe08a975e749bb7eb22c5dbe92fa765",
+    "size": 315
+  },
+  "profile": "msc510-medium",
+  "source": {
+    "sha256": "f6711bc848e53bd6625657888220b373ed7dbcafb5a1de1380fa30a7f4b85365",
+    "size": 154
+  },
+  "staged_source": {
+    "sha256": "65a0317a3e8aae7f9214f824e8264bf8284fbd80b667d1a1d52937152758e8a4",
+    "size": 158
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\p2cgz06ql"
+}

@@ -1,0 +1,7 @@
+{
+  "analysis_level": "isolated declarations, far-pointer and 64K chunk lowering",
+  "discriminating_question": "Is preprocessor closure the sole first gate, and can ordinary C in the pinned profile express the target copy structure?",
+  "falsifier": "Compiler closure still rejects the source, or complete emitted code has no REP MOVSW / chunk-loop structure; mismatch in extent or object declarations also falsifies exact-source compatibility.",
+  "iteration": 1,
+  "prediction": "Replacing the blocked <dos.h>/MK_FP surface with explicit far-pointer casts should compile and produce selector advancement plus word-copy code. Target uses a 0x8000-word loop, then (paras-0x1000)<<3 for the final chunk, REP MOVSW, advances both segment selectors by 0x1000, and far-returns."
+}

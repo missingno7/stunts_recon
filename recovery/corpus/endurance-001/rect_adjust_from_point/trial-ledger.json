@@ -1,0 +1,40 @@
+{
+  "case": "rect_adjust_from_point",
+  "stable_id": "load_1637a",
+  "profile": "msc510-medium",
+  "target": {
+    "size": 76,
+    "sha256": "7a66ad05b0867d74d0feb0da20b8c216595645babc1f7607739adc239af8e16a"
+  },
+  "api_compiler_invocations": 2,
+  "compiler_processes_launched": 2,
+  "failures_outside_compiler": 0,
+  "hypothesis_count": 2,
+  "outputs": [
+    {
+      "trial": 1,
+      "identity": "9061afeabf0550f337eb9b9eeeded8b234db42772b780fdbe70ee4daafd9f899",
+      "code": {
+        "size": 84,
+        "sha256": "1d41e7d6603f6356bbcbdb917ae8d294a55f56307a658af085b43b91350b39a2"
+      },
+      "strict_extent_equal": false,
+      "strict_bytes_equal": false
+    },
+    {
+      "trial": 2,
+      "identity": "53d6ca6222ff14a728a01df393d1709c54fef24ef39f45d9afebde01680cd7ec",
+      "code": {
+        "size": 86,
+        "sha256": "7aa7bc3c4f15c123ef3e98fff918fba3db583af31eecf0d09e2d7061696acf87"
+      },
+      "strict_extent_equal": false,
+      "strict_bytes_equal": false
+    }
+  ],
+  "unique_output_classes": 2,
+  "repeats": 0,
+  "quota_remaining": 0,
+  "status": "budget_censored",
+  "token_usage": null
+}

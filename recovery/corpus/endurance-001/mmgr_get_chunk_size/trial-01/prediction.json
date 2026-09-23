@@ -1,0 +1,7 @@
+{
+  "analysis_level": "symbol/type mapping and isolated OMF binding facts",
+  "discriminating_question": "Can isolated C express the symbol/field accesses and expose the exact object-level binding gate independently from missing absolute DGROUP addresses and cross-function tail jump?",
+  "falsifier": "Compiler rejects far-pointer/union source, declares wrong global types/fields, or emits no relocations for the external pointer globals.",
+  "iteration": 1,
+  "prediction": "Declare the verified MEMCHUNK layout and near pointer globals as unresolved externals; extract the segment word from the far char* argument. The compiler should emit exact object declarations/fixups naming those symbols. Struct field offsets 0x0c/0x0e follow the 18-byte packed record evidence. A call or helper may be emitted for the adjacent fatal path."
+}

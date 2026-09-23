@@ -1,0 +1,11 @@
+{
+  "analysis_level": "global symbol address-space and far-data relocation",
+  "discriminating_question": "Can an ordinary far external array preserve the table's code-segment binding in the emitted OMF and expose an ordinary-C path to CS-relative destination access?",
+  "falsifier": "The compiler rejects a far array object, emits the same near offset16 _incnums relocation and DS/DGROUP access as H1, or emits far access that still cannot select CS or compactly express the indexed copy.",
+  "hypothesis": "Declaring the assembly-exported incnums byte table as a far external makes the C destination carry the target CODE-segment identity instead of a near DGROUP offset; the compiler should emit a pointer32 relocation and use a segment register for destination stores.",
+  "meaningful_hypothesis_number": 2,
+  "prediction": "Expect a segment:offset external relocation to _incnums and code that loads/use the destination segment, potentially ES, while source remains far. The decisive comparisons are relocation target/frame, emitted segment transfers and exact extent versus target's mov ax,cs / mov es,ax / lea di,incnums[si] / rep movsb.",
+  "prior_output_classes": [
+    "H1 ordinary near external: offset16 _incnums relocation but generated DS/BX access, 54-byte code; target is same-CODE-segment table accessed through CS/ES and REP MOVSB."
+  ]
+}

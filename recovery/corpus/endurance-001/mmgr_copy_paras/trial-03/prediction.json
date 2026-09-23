@@ -1,0 +1,9 @@
+{
+  "analysis_level": "integer width/signedness and chunk-boundary CFG",
+  "discriminating_question": "Was the observed JNS/target JAE gap caused by source signedness and threshold formulation?",
+  "falsifier": "Disassembly retains signed JNS semantics or has no unsigned threshold branch; unchanged effective output, larger mismatch, or unresolved far-pointer semantics rules the hypothesis out.",
+  "iteration": 3,
+  "prediction": "Using unsigned short paras and an explicit >=0x1000 chunk test should produce a carry/unsigned branch closer to target and simplify signed final-chunk logic; it will not necessarily recover REP MOVSW because MSC emitted scalar far-memory stores in trial 02.",
+  "prior_effective_output": "9144a7cebcc5b7cd3619da6a64bfadc433258104119f28308715531ca217687b",
+  "transition_reason": "Trial 02 showed signed short comparison lowered to JNS and a 108-byte scalar loop. The pristine target subtracts 0x1000 then uses JAE, indicating an unsigned carry test around the chunk boundary. Test a uint16-like threshold formulation explicitly."
+}

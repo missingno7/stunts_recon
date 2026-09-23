@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+  "effective_code": "351f2b8a5b02f0c9b530b0fdc45d8ad08db4b78abd884fd7471a9755f769544f",
+  "object": {
+    "sha256": "989739d26f331966b5a02eb055d6025861fdc6a1debc59dc29ef7612910ab8ed",
+    "size": 316
+  },
+  "profile": "msc510-medium",
+  "source": {
+    "sha256": "59d63e7d9842eebd7d4064eb6ed207cf59c27cc570fc8389aa6e52f791767c21",
+    "size": 391
+  },
+  "staged_source": {
+    "sha256": "9b208c03813bf2198f498b0c7f562144995393dc0ba55898ef892c81790aa450",
+    "size": 402
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pvv1o3nke"
+}

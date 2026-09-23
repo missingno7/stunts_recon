@@ -1,0 +1,7 @@
+{
+  "analysis_level": "cross-contribution near CALL and far wrapper ABI",
+  "discriminating_question": "Can Luna isolate the wrapper and make MSC emit target-style PUSH CS plus near CALL, and what exact OMF relationship remains to link it?",
+  "falsifier": "Compiler chooses far pointer32 call, mismatches the wrapper stack/return sequence, or rejects/exposes another required calling convention.",
+  "iteration": 1,
+  "prediction": "Under pinned medium model, the wrapper should export far and CALL a near external callee. Its object should show CALL rel16 semantics plus PUSH CS, equivalent to target order. A self-relative/external fixup should identify the unresolved same-code-segment/link/TU gate; the source argument is near char* and far pointer return."
+}

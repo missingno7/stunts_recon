@@ -1,0 +1,13 @@
+{
+  "analysis_level": "pinned compiler-version differential; research-only",
+  "discriminating_question": "Does a pinned version change resolve the compiler's register placement for this declaration?",
+  "falsifier": "The alternate pinned profile cannot be verified or a different output does not improve target SI/ES roles or exact target anchors.",
+  "hypothesis": "MSC 5.0 may treat a register-qualified far-pointer formal differently from MSC 5.1 and select SI, which would explain the target-only push SI split loads.",
+  "meaningful_hypothesis_number": 5,
+  "no_acceptance_claim": true,
+  "prediction": "Compile the byte-identical register-qualified candidate under verified pinned MSC 5.0. Record the different profile context and complete object. If code remains the 12-byte LES BX class, both pinned MSC releases collapse this source form and version alone is not the explanation.",
+  "prior_output_classes": [
+    "MSC 5.1 register-qualified formal: 12-byte LES BX; identical effective output to exact reference body despite different source qualifier"
+  ],
+  "research_only": true
+}

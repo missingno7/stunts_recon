@@ -1,0 +1,12 @@
+{
+  "analysis_level": "compiler object format and isolated source structure",
+  "discriminating_question": "Can isolated C expose inline partial-product code to the existing object reader, or is the format gate independent of helper contribution structure?",
+  "falsifier": "The flattened source still produces B4 or a distinct unsupported OMF record, or it emits the original `__aFulmul` pointer32 fixup instead of partial product code.",
+  "hypothesis": "The prior `UNSUPPORTED_OBJECT` record B4 was triggered by the static helper's separate contribution/visibility. Inlining the byte-partial products into the target function should avoid the unsupported record and expose the real code-generation comparison.",
+  "meaningful_hypothesis_number": 3,
+  "prediction": "Compiler should still emit four inlined 8x8 product paths, but the OMF parser should successfully read the complete object without B4. If record B4 persists, record exact object hash/bytes/log and classify parser support as a workflow gate.",
+  "prior_output_classes": [
+    "Trial 1 exact Restunts source: 48-byte code, one __aFulmul pointer32 fixup",
+    "Trial 2 static partial-product helper: compiler returned object, but object reader rejected OMF record B4; raw object size/hash archived"
+  ]
+}

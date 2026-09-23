@@ -1,0 +1,712 @@
+{
+  "complete_contribution_byte_equal": false,
+  "complete_contribution_code": {
+    "sha256": "2377112fe5435be967707088ca2473a4bfc863225ccda3af215dc40b2ee0b1bf",
+    "size": 24
+  },
+  "complete_contribution_extent_equal": false,
+  "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+  "externals": [
+    "__acrtused",
+    "file_load_shape2d",
+    "_file_load_shape2d_nofatal"
+  ],
+  "fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "file_load_shape2d",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 11,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "file_load_shape2d",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "frozen_diagnostic": {
+    "candidate": {
+      "sha256": "2377112fe5435be967707088ca2473a4bfc863225ccda3af215dc40b2ee0b1bf",
+      "size": 24
+    },
+    "comparison": "unbound object",
+    "decoded_bytes": [
+      18,
+      24
+    ],
+    "first_differing_instruction": {
+      "candidate": {
+        "bytes": "e80000",
+        "control": "call",
+        "fixup_fields": [
+          {
+            "kind": "offset16",
+            "offset": 1,
+            "target": "file_load_shape2d",
+            "width": 2
+          }
+        ],
+        "implicit_reads": [
+          "esp",
+          "eip"
+        ],
+        "implicit_writes": [
+          "esp"
+        ],
+        "instruction": "call 0xd",
+        "load_offset": 10,
+        "mnemonic": "call",
+        "operand_fields": [
+          [
+            1,
+            3
+          ]
+        ],
+        "operands": [
+          {
+            "kind": "imm",
+            "value": 13,
+            "width": 2
+          }
+        ]
+      },
+      "index": 6,
+      "target": {
+        "bytes": "e80500",
+        "control": "call",
+        "fixup_fields": [],
+        "implicit_reads": [
+          "esp",
+          "eip"
+        ],
+        "implicit_writes": [
+          "esp"
+        ],
+        "instruction": "call 0x12",
+        "load_offset": 10,
+        "mnemonic": "call",
+        "operand_fields": [
+          [
+            1,
+            3
+          ]
+        ],
+        "operands": [
+          {
+            "kind": "imm",
+            "value": 18,
+            "width": 2
+          }
+        ]
+      }
+    },
+    "full_diagnostic_identity": {
+      "sha256": "a3649e562a715b099bfe7ae1e947c9ba1bea2d5ebf0d05d0d48d627e096cf19a",
+      "size": 20354
+    },
+    "match_summary": {
+      "anchors": [
+        {
+          "basis": "byte-exact, position-independent, unmasked",
+          "candidate": {
+            "bytes": [
+              0,
+              10
+            ],
+            "instructions": [
+              0,
+              6
+            ]
+          },
+          "kind": "ANCHOR",
+          "target": {
+            "bytes": [
+              0,
+              10
+            ],
+            "instructions": [
+              0,
+              6
+            ]
+          }
+        }
+      ],
+      "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+      "candidate": {
+        "sha256": "2377112fe5435be967707088ca2473a4bfc863225ccda3af215dc40b2ee0b1bf",
+        "size": 24
+      },
+      "classifications": [
+        "CONTROL_FLOW_SHAPE",
+        "EPILOGUE_OR_RETURN_LOWERING",
+        "EXTRA_INSTRUCTIONS",
+        "UNRESOLVED_FIXUP_OPERANDS"
+      ],
+      "comparison": "unbound object",
+      "counts": {
+        "anchors": 1,
+        "byte_equal_aligned_pairs": 9,
+        "candidate_instructions": 15,
+        "decoded_exact_pairs": 0,
+        "exact_instructions": 6,
+        "fixup_normalized_pairs": 1,
+        "mismatch_islands": 1,
+        "structural_pairs": 0,
+        "target_anchored_percent": 60.0,
+        "target_instructions": 10
+      },
+      "decode_complete": true,
+      "decoded_bytes": [
+        18,
+        24
+      ],
+      "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+      "exact_prefix": {
+        "basis": "byte-exact, position-independent, unmasked",
+        "candidate": {
+          "bytes": [
+            0,
+            10
+          ],
+          "instructions": [
+            0,
+            6
+          ]
+        },
+        "kind": "ANCHOR",
+        "target": {
+          "bytes": [
+            0,
+            10
+          ],
+          "instructions": [
+            0,
+            6
+          ]
+        }
+      },
+      "exact_suffix": null,
+      "fixup_normalization": {
+        "fields": [
+          {
+            "kind": "offset16",
+            "offset": 11,
+            "target": "file_load_shape2d",
+            "width": 2
+          }
+        ],
+        "ignored": [],
+        "mode": "unbound object",
+        "omitted_fields": 0,
+        "omitted_ignored": 0,
+        "rule": "Normalization is alignment-only; affected instructions never count as byte-exact anchors."
+      },
+      "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+      "islands": [
+        {
+          "candidate": {
+            "bytes": [
+              10,
+              24
+            ],
+            "instructions": [
+              6,
+              15
+            ]
+          },
+          "classifications": [
+            {
+              "class": "CONTROL_FLOW_SHAPE",
+              "confidence": "high",
+              "evidence": [
+                "Control operations (2 -> 3), first eight: ['call', 'retf'] -> ['call', 'retf', 'retf']; no semantic equivalence inferred"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "EPILOGUE_OR_RETURN_LOWERING",
+              "confidence": "medium",
+              "evidence": [
+                "Return-containing regions have different instruction/control sequences"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "EXTRA_INSTRUCTIONS",
+              "confidence": "medium",
+              "evidence": [
+                "5 candidate instructions have no aligned target instruction"
+              ],
+              "omitted_evidence": 0
+            },
+            {
+              "class": "UNRESOLVED_FIXUP_OPERANDS",
+              "confidence": "high",
+              "evidence": [
+                "1 operand-normalized instructions; symbols/values still require binding"
+              ],
+              "omitted_evidence": 0
+            }
+          ],
+          "id": 1,
+          "kind": "ISLAND",
+          "resumes_exact": false,
+          "target": {
+            "bytes": [
+              10,
+              18
+            ],
+            "instructions": [
+              6,
+              10
+            ]
+          }
+        }
+      ],
+      "notes": [
+        "Repeated terminal sequence was not used as a suffix anchor."
+      ],
+      "omitted_anchors": 0,
+      "omitted_islands": 0,
+      "omitted_notes": 0,
+      "patterns": {
+        "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+        "corresponding_branches": [],
+        "corresponding_branches_count": 0,
+        "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+        "families": [],
+        "observation_count": 6,
+        "omitted_corresponding_branches": 0,
+        "omitted_families": 0,
+        "omitted_residuals": 0,
+        "omitted_unresolved_fixups": 0,
+        "residuals": [
+          {
+            "byte_equal": false,
+            "candidate": "pop bp",
+            "candidate_index": 8,
+            "candidate_offset": 16,
+            "id": "p8",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "retf ",
+            "candidate_index": 9,
+            "candidate_offset": 17,
+            "id": "p9",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "push bp",
+            "candidate_index": 10,
+            "candidate_offset": 18,
+            "id": "p10",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "sub ax, ax",
+            "candidate_index": 11,
+            "candidate_offset": 19,
+            "id": "p11",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          },
+          {
+            "byte_equal": false,
+            "candidate": "cwd ",
+            "candidate_index": 12,
+            "candidate_offset": 21,
+            "id": "p12",
+            "islands": [
+              1
+            ],
+            "level": "EXTRA",
+            "target": null,
+            "target_index": null,
+            "target_offset": null
+          }
+        ],
+        "residuals_count": 5,
+        "unresolved_fixups": [
+          {
+            "byte_equal": false,
+            "candidate": "call 0xd",
+            "candidate_index": 6,
+            "candidate_offset": 10,
+            "id": "p6",
+            "islands": [
+              1
+            ],
+            "level": "FIXUP_NORMALIZED",
+            "note": "Symbol identity and full binding obligations remain unresolved, including when raw numbers coincide.",
+            "target": "call 0x12",
+            "target_index": 6,
+            "target_offset": 10,
+            "unresolved_fixups": [
+              {
+                "kind": "offset16",
+                "offset": 1,
+                "target": "file_load_shape2d",
+                "width": 2
+              }
+            ]
+          }
+        ],
+        "unresolved_fixups_count": 1
+      },
+      "schema": 3,
+      "target": {
+        "sha256": "8c0aee23fb3b48de8f827aa81776bc9619edb46ef9a326b248d548968486d7cf",
+        "size": 18
+      }
+    },
+    "omitted": "Full instructions, pair alignment and any omitted islands/evidence are in full_diagnostic; diagnostic only.",
+    "target": {
+      "sha256": "8c0aee23fb3b48de8f827aa81776bc9619edb46ef9a326b248d548968486d7cf",
+      "size": 18
+    }
+  },
+  "full_diagnostic_path": "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trials/002/research-full-diagnostic.json",
+  "generic_reader": "tools/omf.py OmfReader existing implementation; parsed without modifying tools.",
+  "groups": [
+    {
+      "index": 1,
+      "name": "DGROUP",
+      "segment_indices": [
+        3,
+        4,
+        2
+      ],
+      "segments": [
+        "CONST",
+        "_BSS",
+        "_DATA"
+      ]
+    }
+  ],
+  "module_name": null,
+  "publics": [
+    {
+      "name": "file_load_shape2d",
+      "offset": 18,
+      "segment": "UNIT_TEXT"
+    },
+    {
+      "name": "_file_load_shape2d_nofatal",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "purpose": "Read-only research: establish whether generic existing OmfReader can inspect an object that strict object_probe rejects at LEXTDEF/B4. This does not change production parser/tool behavior or acceptance.",
+  "raw_object": {
+    "sha256": "7f66e3d5c97545f22df1398cb560cdba800b48354ecddfa9a02ba27e6a38761b",
+    "size": 356
+  },
+  "record_inventory": [
+    {
+      "body_hex": null,
+      "body_sha256": "bffc69620c00040c934a0506e6f8af50d94c4ed969e9ef63b442bc64b60ba7ca",
+      "checksum_ok": true,
+      "length": 8,
+      "name": "THEADR",
+      "offset": 0,
+      "type": "0x80"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "787d65a608f6024ea34c34562ab5fe45ab33e6100ddfbb52d2a81920017fed2e",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "COMENT",
+      "offset": 11,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "6c49a3e297f9113c40a9d73fea0fbd525c319fca7be813fef47cdcac5b253768",
+      "checksum_ok": true,
+      "length": 9,
+      "name": "COMENT",
+      "offset": 21,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "014aaba5d51da06507f9b2ec40a87cc12c39f8e36d81b767b3f737f2c75fb314",
+      "checksum_ok": true,
+      "length": 6,
+      "name": "COMENT",
+      "offset": 33,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "efb5182cf2f7dcfcc710fdac9fcf332d86c1f008a590f5e599e1ca4373535e80",
+      "checksum_ok": true,
+      "length": 6,
+      "name": "COMENT",
+      "offset": 42,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "59ce2ed3858910d0eae9528ae1266e41f81a9bf8787bac1aa9c18eb8b6eff9ac",
+      "checksum_ok": true,
+      "length": 50,
+      "name": "LNAMES",
+      "offset": 51,
+      "type": "0x96"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "578664bf4a1ef27c83427f54f22b06510eecc6dfc6e761977d547c762a5283a6",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 104,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "d19cee73ec314be690693e00e2c99e9d5bf61e4630d8750d12ac0455d56e3647",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 114,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "2244fd4d2224c8ccb251383854f3baed291a6ae31a415ffe875c1aba83fdedeb",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 124,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "1c31ad5adf6db131bdef4c44b44e13e28212418c6aaa64474bd2b99182aef761",
+      "checksum_ok": true,
+      "length": 7,
+      "name": "SEGDEF",
+      "offset": 134,
+      "type": "0x98"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "3975dc8a3056b38727b9cb6ea6132082f3cb34e261c25e57b676a3fa853de937",
+      "checksum_ok": true,
+      "length": 8,
+      "name": "GRPDEF",
+      "offset": 144,
+      "type": "0x9a"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "9f86e1a36c4d78338d59d527686cd706c3cc453ea741f038d23f822be43feb56",
+      "checksum_ok": true,
+      "length": 13,
+      "name": "FIXUPP",
+      "offset": 155,
+      "type": "0x9c"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "58a745ad9947653c22a1d885bfa093fca79d4ebc8c7f5106f648ecda20362ebc",
+      "checksum_ok": true,
+      "length": 13,
+      "name": "EXTDEF",
+      "offset": 171,
+      "type": "0x8c"
+    },
+    {
+      "body_hex": "1166696c655f6c6f61645f7368617065326400",
+      "body_sha256": "699e305a591ac79b44da8bf8d0754136bc4265195b56ddea8d533be08cfbe51f",
+      "checksum_ok": true,
+      "length": 20,
+      "name": "LEXTDEF",
+      "offset": 187,
+      "type": "0xb4"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "fdf7f7801b79c4e26fc23d19ae7199da410ee13a02973b60461bdf5ddab3147e",
+      "checksum_ok": true,
+      "length": 29,
+      "name": "EXTDEF",
+      "offset": 210,
+      "type": "0x8c"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "74d029531b60ee79ae83a5709ad6c999cde325279a6166360ddcb0c7a5c09da4",
+      "checksum_ok": true,
+      "length": 24,
+      "name": "unknown",
+      "offset": 242,
+      "type": "0xb6"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "ca046ae39e9ade976549eafa0a4732c37481c86903cdd6451a6c938f8f9014b4",
+      "checksum_ok": true,
+      "length": 33,
+      "name": "PUBDEF",
+      "offset": 269,
+      "type": "0x90"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "fd47f9fd11ee91a44ab31c40b4a2771341d5ba747d2b0f2954d92d6ea2137a48",
+      "checksum_ok": true,
+      "length": 4,
+      "name": "COMENT",
+      "offset": 305,
+      "type": "0x88"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "f94371d1adbda397b0ff3fc793cc8178823e6e7253cef573c2a7d9c66eab9feb",
+      "checksum_ok": true,
+      "length": 28,
+      "name": "LEDATA",
+      "offset": 312,
+      "type": "0xa0"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "20e9481e3e9519815e8eac3e938650acde0f34e4128f84872e2a03a384878a8a",
+      "checksum_ok": true,
+      "length": 5,
+      "name": "FIXUPP",
+      "offset": 343,
+      "type": "0x9c"
+    },
+    {
+      "body_hex": null,
+      "body_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "checksum_ok": true,
+      "length": 2,
+      "name": "MODEND",
+      "offset": 351,
+      "type": "0x8a"
+    }
+  ],
+  "segment_definitions": [
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CODE",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 1,
+      "length": 24,
+      "name": "UNIT_TEXT",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "DATA",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 2,
+      "length": 0,
+      "name": "_DATA",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CONST",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 3,
+      "length": 0,
+      "name": "CONST",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "BSS",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 4,
+      "length": 0,
+      "name": "_BSS",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    }
+  ],
+  "segment_lengths": {
+    "CONST": 0,
+    "UNIT_TEXT": 24,
+    "_BSS": 0,
+    "_DATA": 0
+  },
+  "segments": {
+    "UNIT_TEXT": {
+      "sha256": "2377112fe5435be967707088ca2473a4bfc863225ccda3af215dc40b2ee0b1bf",
+      "size": 24
+    }
+  },
+  "strict_status": "object_probe rejected LEXTDEF record 0xB4 before generic object interpretation; do not treat this as a compiler failure.",
+  "target": {
+    "sha256": "8c0aee23fb3b48de8f827aa81776bc9619edb46ef9a326b248d548968486d7cf",
+    "size": 18
+  },
+  "trial": "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trials/002/trial.json"
+}

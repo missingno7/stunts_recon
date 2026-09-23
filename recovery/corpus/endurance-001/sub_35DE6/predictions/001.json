@@ -1,0 +1,9 @@
+{
+  "meaningful_hypothesis_number": 1,
+  "analysis_level": "global mapping and ordinary-C segment declaration",
+  "hypothesis": "Declaring the assembly-exported `incnums` table as an external C array should make the object expose an offset16 relocation for the target data displacement; the compiler will probably bind its access as near/DGROUP, revealing the remaining CS-relative requirement.",
+  "prediction": "Expect an `_incnums` external symbol or relocation and ordinary C source/destination loop code; compare segment/class, fixup kind and emitted code to target's ES=CS plus REP MOVSB. If the compiler instead generates a 34-byte contribution with correct CS:DI behavior and no unresolved binding, the hypothesis is falsified.",
+  "falsifier": "The object contains no incnums symbol/fixup, an unsupported OMF record, or code accesses DGROUP/DS rather than target CS/ES and cannot express the source loop compactly.",
+  "prior_output_classes": ["Frozen selection: no ordinary-C hint; target uses DS:SI source, ES=CS and `lea di,incnums[si]`, `rep movsb`; target table `incnums` is a public byte table in the same segment, no recipe/source trial existed."],
+  "discriminating_question": "Can an ordinary isolated C external declaration expose the required symbol/fixup relation, and does it inherently select DS/DGROUP instead of CS?"
+}

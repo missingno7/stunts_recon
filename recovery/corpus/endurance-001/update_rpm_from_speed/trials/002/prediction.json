@@ -1,0 +1,11 @@
+{
+  "analysis_level": "integer width and arithmetic decomposition",
+  "discriminating_question": "Can ordinary pinned C express the target high-word result through 8-bit partial products without invoking the helper?",
+  "falsifier": "Compiler still emits __aFulmul or arithmetic result/unsigned carry sequence is not equivalent; an output near 34 bytes with a single MUL would challenge the current helper-only blocker.",
+  "hypothesis": "Splitting the unsigned 16x16 product into four 8x8 products and explicit carry columns should avoid MSC's __aFulmul path while computing the exact high word with ordinary C operations.",
+  "meaningful_hypothesis_number": 2,
+  "prediction": "The object should have no __aFulmul pointer32 relocation and should contain multiple inline MULs/16-bit additions; the code will likely exceed the target's 34 bytes but establish that the only direct-C alternative is a larger partial-product sequence.",
+  "prior_output_classes": [
+    "Associated exact long product expression produced 48B and an external __aFulmul pointer32 fixup at offset20; target is 34B and has one hardware MUL with DX consumed as high word."
+  ]
+}

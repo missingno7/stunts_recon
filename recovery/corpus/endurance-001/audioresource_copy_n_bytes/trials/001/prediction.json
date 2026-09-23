@@ -1,0 +1,13 @@
+{
+  "analysis_level": "register allocation and loop-count lifetime",
+  "discriminating_question": "Can explicitly separating the register loop counter from far-pointer parameters recover CX/LOOP without changing target pointer storage roles?",
+  "falsifier": "The compiler fails to choose CX/LOOP, still routes far accesses through ES:BX, or emits an object equivalent to an earlier class with no target anchor improvement.",
+  "hypothesis": "A separate register unsigned count may keep the loop counter in CX so MSC emits target LOOP while preserving the direct far-pointer parameters in their stack slots, unlike the tested local far-pointer cursor and register-qualified pointer variants.",
+  "meaningful_hypothesis_number": 4,
+  "prediction": "Expect a register counter loaded from size and decremented independently; the candidate may use LOOP and reduce stack count updates. Falsifier is continued DEC/JG on stack, inability to preserve SI/DI and DS/ES roles, or output collapsing to a known effective class.",
+  "prior_output_classes": [
+    "Short-budget 36B direct dereference loop",
+    "70B stack-local far-pointer cursors (wrong allocation, repeated far loads, no full argument writeback)",
+    "38B register-qualified far-pointer parameters (target SI/DI and DS/ES not reproduced)"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+  "effective_code": "cc0141218b8351e4f9c7115cd33fcc3f122c5661968c6c8e733ffc0f38a59775",
+  "object": {
+    "sha256": "93b66a5eeb0541ef068323a58c83d7a45409d31f36473a79861618bf7178d4e5",
+    "size": 435
+  },
+  "profile": "msc510-medium",
+  "source": {
+    "sha256": "aac1fb66e06ff56e839fe23443ae9d02abc715b65e9677a78155d300e2367e02",
+    "size": 792
+  },
+  "staged_source": {
+    "sha256": "cfd27028b33538df1cc4a2e278db6abc4981b92486c3d234b2e4c6d36b808acb",
+    "size": 814
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\recovery\\corpus\\endurance-001\\mmgr_get_chunk_size\\trial-03\\compiler-work"
+}

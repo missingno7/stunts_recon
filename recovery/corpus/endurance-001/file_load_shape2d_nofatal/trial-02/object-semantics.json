@@ -1,0 +1,129 @@
+{
+  "code": {
+    "sha256": "291b5ffe922c7d43b9cb1b6d2ced33dff185cacdc3a663d3e4a89e609826b6e5",
+    "size": 18
+  },
+  "externals": [
+    "__acrtused",
+    "_file_load_shape2d",
+    "_file_load_shape2d_nofatal"
+  ],
+  "fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_file_load_shape2d",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 10,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_file_load_shape2d",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "groups": [
+    {
+      "index": 1,
+      "name": "DGROUP",
+      "segment_indices": [
+        3,
+        4,
+        2
+      ],
+      "segments": [
+        "CONST",
+        "_BSS",
+        "_DATA"
+      ]
+    }
+  ],
+  "object": {
+    "sha256": "95530ba8f8ee6109c76060dc399336735dd2864e0e66e0f8aadf35512fb5d930",
+    "size": 316
+  },
+  "publics": [
+    {
+      "name": "_file_load_shape2d_nofatal",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "segment_defs": [
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CODE",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 1,
+      "length": 18,
+      "name": "UNIT_TEXT",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "DATA",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 2,
+      "length": 0,
+      "name": "_DATA",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CONST",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 3,
+      "length": 0,
+      "name": "CONST",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "BSS",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 4,
+      "length": 0,
+      "name": "_BSS",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    }
+  ],
+  "segments": {
+    "UNIT_TEXT": {
+      "sha256": "291b5ffe922c7d43b9cb1b6d2ced33dff185cacdc3a663d3e4a89e609826b6e5",
+      "size": 18
+    }
+  }
+}

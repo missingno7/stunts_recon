@@ -1,0 +1,11 @@
+{
+  "meaningful_hypothesis_number": 6,
+  "analysis_level": "pinned compiler-version differential; research-only",
+  "hypothesis": "MSC 5.0 versus pinned MSC 5.1 may use different far-CALL/result lowering or local allocation for the same source, explaining why the target's final boolean block differs from the 5.1 194-byte candidate.",
+  "prediction": "Compile the byte-identical signed-char/reordered-local source with the other verified pinned medium profile. Record full profile, flags, compiler/runtime hashes and all object identities; an exact target contribution would be a research observation only, while a distinct output/diagnostic could identify profile-sensitive sites.",
+  "falsifier": "Profile validation fails, outputs are identical, or any changed code occurs outside the target-mismatch sites with no useful displacement/result evidence.",
+  "prior_output_classes": ["MSC 5.1: candidates 001 and 002 have the same 194-byte effective output despite source return-type change; two source forms collapsed."],
+  "discriminating_question": "Does a second repository-pinned compiler version change this function's complete contribution in a way tied to the six-byte gap?",
+  "research_only": true,
+  "no_acceptance_claim": true
+}

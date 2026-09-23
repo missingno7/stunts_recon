@@ -1,0 +1,65 @@
+{
+  "candidate_path": "recovery/corpus/endurance-001/sub_35DE6/trials/003/candidate.c",
+  "case_id": "load_25de6",
+  "category": "COMPILER_ERROR",
+  "compiler_invoked": true,
+  "error": "Compiler failed; see D:\\prog\\stunts_recon\\build\\probes\\pa_2s4xt7\\compiler.log",
+  "expected_target": {
+    "sha256": "8dfa3dded6b770b638827127409ee920a0e19a07d2e5b342a90907411fc2c05b",
+    "size": 34
+  },
+  "flags_override": null,
+  "function": "sub_35DE6",
+  "iteration": 3,
+  "meaningful_hypothesis_number": 3,
+  "prediction": {
+    "analysis_level": "fixed based-segment declaration and code-segment data access",
+    "discriminating_question": "Can a fixed based-segment declaration expose the exact code-segment-relative table access class in ordinary MSC C?",
+    "falsifier": "MSC rejects `_based(_segname(...))`, emits the same DS/DGROUP/ordinary far access as H1/H2, or emits an unsupported relocation unable to identify the target segment.",
+    "hypothesis": "Declaring the assembly-exported table as an external object based on its actual `seg012` segment may make MSC emit a segment-framed relocation and a fixed-segment memory access, addressing the CS/DGROUP mismatch observed with near and far ordinary external declarations.",
+    "meaningful_hypothesis_number": 3,
+    "prediction": "Expect OMF to retain the external table identity with a segment-specific base or segment relocation tied to `seg012`; inspect generated addressing for CS override and compare the full 34B contribution, fixups and bytes with target. If compiler cannot resolve the named segment, that is a concrete feature/toolchain boundary rather than a compiler-source failure.",
+    "prior_output_classes": [
+      "H1 near external incnums: offset16 symbol fixup and DS/DGROUP access, 54B",
+      "H2 far external incnums: base16 plus offset16 symbol fixups but no CS selection, 60B"
+    ]
+  },
+  "profile": "msc510-medium",
+  "receipt": {
+    "command": [
+      "C:/tools/msdos/msdos.exe",
+      "-e",
+      "-v5.00",
+      "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+      "/c",
+      "/AM",
+      "/O",
+      "/Gs",
+      "UNIT.C"
+    ],
+    "compiler_stdout_sha256": "87b04d553b95006df3efc56f48aba82976107659fe723c94756f96d901573547",
+    "object": null,
+    "profile": "msc510-medium",
+    "source": {
+      "sha256": "b7e00ac55fcebc991be9825e48ce5e7f2761f681bbf6b29353a74b6f47cd6153",
+      "size": 279
+    },
+    "staged_source": {
+      "sha256": "8033366650a5f941cd9d859fe54855a12b65e13a49c747a79c5fbdab51c66d02",
+      "size": 285
+    },
+    "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pa_2s4xt7"
+  },
+  "source": {
+    "sha256": "b7e00ac55fcebc991be9825e48ce5e7f2761f681bbf6b29353a74b6f47cd6153",
+    "size": 279
+  },
+  "started_utc": "2026-09-23T14:17:16.890313+00:00",
+  "status": "COMPILE_FAILURE",
+  "target": {
+    "end": 155144,
+    "sha256": "8dfa3dded6b770b638827127409ee920a0e19a07d2e5b342a90907411fc2c05b",
+    "size": 34,
+    "start": 155110
+  }
+}

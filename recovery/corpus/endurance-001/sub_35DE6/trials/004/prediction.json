@@ -1,0 +1,11 @@
+{
+  "analysis_level": "documented Microsoft based-segment keyword spelling",
+  "discriminating_question": "Is H3 blocked only by keyword spelling, or does pinned MSC 5.10 not support the named-segment based declaration needed for this table?",
+  "falsifier": "The documented double-underscore spelling also fails, or compilation succeeds but access remains DS/DGROUP/ordinary far without a fixed segment relation.",
+  "hypothesis": "The underscore form failed at the `_segname(` token; the Microsoft-documented double-underscore extension spelling may be the actual MSC 5.10 syntax and may compile the same fixed-segment experiment.",
+  "meaningful_hypothesis_number": 4,
+  "prediction": "If syntax is accepted, inspect the complete OMF external/fixup identity and addressing mode for `seg012`; if compiler still rejects at the same token, fixed named-segment based declarations are unavailable through this pinned C mode. No other source or profile change is made.",
+  "prior_output_classes": [
+    "H1 near external and H2 far external both produced data/DS access; H3 single-underscore `_based(_segname(...))` reached the compiler but failed at the parser token with C2059."
+  ]
+}

@@ -1,0 +1,4058 @@
+{
+  "algorithm": "unique 4-instruction >=8-byte monotonic anchors + bounded edit alignment; ties diagonal, deletion, insertion",
+  "alignment": [
+    {
+      "candidate_index": 0,
+      "level": "BYTE_EXACT",
+      "protected": true,
+      "target_index": 0
+    },
+    {
+      "candidate_index": 1,
+      "level": "BYTE_EXACT",
+      "protected": true,
+      "target_index": 1
+    },
+    {
+      "candidate_index": 2,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 3,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 4,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 5,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 6,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 7,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 8,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 9,
+      "level": "MISMATCH",
+      "protected": false,
+      "target_index": 2
+    },
+    {
+      "candidate_index": 10,
+      "level": "STRUCTURAL",
+      "protected": false,
+      "target_index": 3
+    },
+    {
+      "candidate_index": 11,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 12,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 13,
+      "level": "BYTE_EXACT",
+      "protected": false,
+      "target_index": 4
+    },
+    {
+      "candidate_index": 14,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 15,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 16,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 17,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 18,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 19,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 20,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 21,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 22,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 23,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 24,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 25,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 26,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 27,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 28,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 29,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 30,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 31,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 32,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 33,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 34,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 35,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 36,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 37,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 38,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 39,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 40,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 41,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 42,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 43,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 44,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 45,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 46,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 47,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 48,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 49,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 50,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 51,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 52,
+      "level": "BYTE_EXACT",
+      "protected": false,
+      "target_index": 5
+    },
+    {
+      "candidate_index": 53,
+      "level": "STRUCTURAL",
+      "protected": false,
+      "target_index": 6
+    },
+    {
+      "candidate_index": 54,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 55,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 56,
+      "level": "MISMATCH",
+      "protected": false,
+      "target_index": 7
+    },
+    {
+      "candidate_index": 57,
+      "level": "MISMATCH",
+      "protected": false,
+      "target_index": 8
+    },
+    {
+      "candidate_index": 58,
+      "level": "MISMATCH",
+      "protected": false,
+      "target_index": 9
+    },
+    {
+      "candidate_index": 59,
+      "level": "MISMATCH",
+      "protected": false,
+      "target_index": 10
+    },
+    {
+      "candidate_index": 60,
+      "level": "STRUCTURAL",
+      "protected": false,
+      "target_index": 11
+    },
+    {
+      "candidate_index": 61,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 62,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 63,
+      "level": "MISMATCH",
+      "protected": false,
+      "target_index": 12
+    },
+    {
+      "candidate_index": 64,
+      "level": "BYTE_EXACT",
+      "protected": false,
+      "target_index": 13
+    },
+    {
+      "candidate_index": 65,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 66,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    },
+    {
+      "candidate_index": 67,
+      "level": "BYTE_EXACT",
+      "protected": false,
+      "target_index": 14
+    },
+    {
+      "candidate_index": 68,
+      "level": "BYTE_EXACT",
+      "protected": false,
+      "target_index": 15
+    },
+    {
+      "candidate_index": 69,
+      "level": "EXTRA",
+      "protected": false,
+      "target_index": null
+    }
+  ],
+  "anchors": [
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          0,
+          3
+        ],
+        "instructions": [
+          0,
+          2
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          0,
+          3
+        ],
+        "instructions": [
+          0,
+          2
+        ]
+      }
+    }
+  ],
+  "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+  "candidate": {
+    "sha256": "98e1e56adc3a5c4e5a768cc9df9a0016810b69ac41ccc31511236f0343fabccf",
+    "size": 170
+  },
+  "candidate_instructions": [
+    {
+      "bytes": "55",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push bp",
+      "load_offset": 0,
+      "mnemonic": "push",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8bec",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov bp, sp",
+      "load_offset": 1,
+      "mnemonic": "mov",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "83ec12",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "sub sp, 0x12",
+      "load_offset": 3,
+      "mnemonic": "sub",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        },
+        {
+          "kind": "imm",
+          "value": 18,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8a4606",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov al, byte ptr [bp + 6]",
+      "load_offset": 6,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "al",
+          "width": 1
+        },
+        {
+          "base": "bp",
+          "disp": 6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "2ae4",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "sub ah, ah",
+      "load_offset": 9,
+      "mnemonic": "sub",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ah",
+          "width": 1
+        },
+        {
+          "kind": "reg",
+          "reg": "ah",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "8946f8",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 8], ax",
+      "load_offset": 11,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b4606",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp + 6]",
+      "load_offset": 14,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "b108",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov cl, 8",
+      "load_offset": 17,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          1,
+          2
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        },
+        {
+          "kind": "imm",
+          "value": 8,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "d3e8",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "cl"
+      ],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "shr ax, cl",
+      "load_offset": 19,
+      "mnemonic": "shr",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "8946f2",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 0xe], ax",
+      "load_offset": 21,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8a4608",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov al, byte ptr [bp + 8]",
+      "load_offset": 24,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "al",
+          "width": 1
+        },
+        {
+          "base": "bp",
+          "disp": 8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "2ae4",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "sub ah, ah",
+      "load_offset": 27,
+      "mnemonic": "sub",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ah",
+          "width": 1
+        },
+        {
+          "kind": "reg",
+          "reg": "ah",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "8946f4",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 0xc], ax",
+      "load_offset": 29,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -12,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b4608",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp + 8]",
+      "load_offset": 32,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "d3e8",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "cl"
+      ],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "shr ax, cl",
+      "load_offset": 35,
+      "mnemonic": "shr",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "8946f0",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 0x10], ax",
+      "load_offset": 37,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -16,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b46f8",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp - 8]",
+      "load_offset": 40,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "f766f4",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "ax"
+      ],
+      "implicit_writes": [
+        "ax",
+        "dx",
+        "flags"
+      ],
+      "instruction": "mul word ptr [bp - 0xc]",
+      "load_offset": 43,
+      "mnemonic": "mul",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -12,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8946fe",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 2], ax",
+      "load_offset": 46,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -2,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b46f8",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp - 8]",
+      "load_offset": 49,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "f766f0",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "ax"
+      ],
+      "implicit_writes": [
+        "ax",
+        "dx",
+        "flags"
+      ],
+      "instruction": "mul word ptr [bp - 0x10]",
+      "load_offset": 52,
+      "mnemonic": "mul",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -16,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8946fa",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 6], ax",
+      "load_offset": 55,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b46f2",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp - 0xe]",
+      "load_offset": 58,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "f766f4",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "ax"
+      ],
+      "implicit_writes": [
+        "ax",
+        "dx",
+        "flags"
+      ],
+      "instruction": "mul word ptr [bp - 0xc]",
+      "load_offset": 61,
+      "mnemonic": "mul",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -12,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8946fc",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 4], ax",
+      "load_offset": 64,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -4,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b46f2",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp - 0xe]",
+      "load_offset": 67,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "f766f0",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "ax"
+      ],
+      "implicit_writes": [
+        "ax",
+        "dx",
+        "flags"
+      ],
+      "instruction": "mul word ptr [bp - 0x10]",
+      "load_offset": 70,
+      "mnemonic": "mul",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -16,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8946f6",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 0xa], ax",
+      "load_offset": 73,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -10,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8a46fa",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov al, byte ptr [bp - 6]",
+      "load_offset": 76,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "al",
+          "width": 1
+        },
+        {
+          "base": "bp",
+          "disp": -6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "2ae4",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "sub ah, ah",
+      "load_offset": 79,
+      "mnemonic": "sub",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ah",
+          "width": 1
+        },
+        {
+          "kind": "reg",
+          "reg": "ah",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "8a4efc",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov cl, byte ptr [bp - 4]",
+      "load_offset": 81,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        },
+        {
+          "base": "bp",
+          "disp": -4,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "2aed",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "sub ch, ch",
+      "load_offset": 84,
+      "mnemonic": "sub",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ch",
+          "width": 1
+        },
+        {
+          "kind": "reg",
+          "reg": "ch",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "03c1",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "add ax, cx",
+      "load_offset": 86,
+      "mnemonic": "add",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cx",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b56fe",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov dx, word ptr [bp - 2]",
+      "load_offset": 88,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -2,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "b108",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov cl, 8",
+      "load_offset": 91,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          1,
+          2
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        },
+        {
+          "kind": "imm",
+          "value": 8,
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "d3ea",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "cl"
+      ],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "shr dx, cl",
+      "load_offset": 93,
+      "mnemonic": "shr",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "03c2",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "add ax, dx",
+      "load_offset": 95,
+      "mnemonic": "add",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8946ee",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp - 0x12], ax",
+      "load_offset": 97,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": -18,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b46fa",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp - 6]",
+      "load_offset": 100,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "d3e8",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "cl"
+      ],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "shr ax, cl",
+      "load_offset": 103,
+      "mnemonic": "shr",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "8b56fc",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov dx, word ptr [bp - 4]",
+      "load_offset": 105,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -4,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "d3ea",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "cl"
+      ],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "shr dx, cl",
+      "load_offset": 108,
+      "mnemonic": "shr",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "03c2",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "add ax, dx",
+      "load_offset": 110,
+      "mnemonic": "add",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b56ee",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov dx, word ptr [bp - 0x12]",
+      "load_offset": 112,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -18,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "d3ea",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "cl"
+      ],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "shr dx, cl",
+      "load_offset": 115,
+      "mnemonic": "shr",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cl",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "bytes": "03c2",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "add ax, dx",
+      "load_offset": 117,
+      "mnemonic": "add",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "0346f6",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "add ax, word ptr [bp - 0xa]",
+      "load_offset": 119,
+      "mnemonic": "add",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": -10,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8be5",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov sp, bp",
+      "load_offset": 122,
+      "mnemonic": "mov",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "5d",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "pop bp",
+      "load_offset": 124,
+      "mnemonic": "pop",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "cb",
+      "control": "return",
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "retf ",
+      "load_offset": 125,
+      "mnemonic": "retf",
+      "operand_fields": [],
+      "operands": []
+    },
+    {
+      "bytes": "55",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push bp",
+      "load_offset": 126,
+      "mnemonic": "push",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8bec",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov bp, sp",
+      "load_offset": 127,
+      "mnemonic": "mov",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "837e0c00",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "cmp word ptr [bp + 0xc], 0",
+      "load_offset": 129,
+      "mnemonic": "cmp",
+      "operand_fields": [
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 12,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "imm",
+          "value": 0,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "7510",
+      "control": "jump",
+      "fixup_fields": [],
+      "implicit_reads": [
+        "flags"
+      ],
+      "implicit_writes": [],
+      "instruction": "jne 0x97",
+      "load_offset": 133,
+      "mnemonic": "jne",
+      "operand_fields": [
+        [
+          1,
+          2
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "imm",
+          "value": 151,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "ff760a",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push word ptr [bp + 0xa]",
+      "load_offset": 135,
+      "mnemonic": "push",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 10,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "ff7608",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push word ptr [bp + 8]",
+      "load_offset": 138,
+      "mnemonic": "push",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "0e",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "push cs",
+      "load_offset": 141,
+      "mnemonic": "push",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cs",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "e80000",
+      "control": "call",
+      "fixup_fields": [
+        {
+          "kind": "offset16",
+          "offset": 1,
+          "target": "high_word_product",
+          "width": 2
+        }
+      ],
+      "implicit_reads": [
+        "esp",
+        "eip"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "call 0x91",
+      "load_offset": 142,
+      "mnemonic": "call",
+      "operand_fields": [
+        [
+          1,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "imm",
+          "value": 145,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "83c404",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "add sp, 4",
+      "load_offset": 145,
+      "mnemonic": "add",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        },
+        {
+          "kind": "imm",
+          "value": 4,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "894606",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov word ptr [bp + 6], ax",
+      "load_offset": 148,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b460e",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp + 0xe]",
+      "load_offset": 151,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "394606",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "cmp word ptr [bp + 6], ax",
+      "load_offset": 154,
+      "mnemonic": "cmp",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "7205",
+      "control": "jump",
+      "fixup_fields": [],
+      "implicit_reads": [
+        "flags"
+      ],
+      "implicit_writes": [],
+      "instruction": "jb 0xa4",
+      "load_offset": 157,
+      "mnemonic": "jb",
+      "operand_fields": [
+        [
+          1,
+          2
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "imm",
+          "value": 164,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b4606",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp + 6]",
+      "load_offset": 159,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "5d",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "pop bp",
+      "load_offset": 162,
+      "mnemonic": "pop",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "cb",
+      "control": "return",
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "retf ",
+      "load_offset": 163,
+      "mnemonic": "retf",
+      "operand_fields": [],
+      "operands": []
+    },
+    {
+      "bytes": "8b460e",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp + 0xe]",
+      "load_offset": 164,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "5d",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "pop bp",
+      "load_offset": 167,
+      "mnemonic": "pop",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "cb",
+      "control": "return",
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "retf ",
+      "load_offset": 168,
+      "mnemonic": "retf",
+      "operand_fields": [],
+      "operands": []
+    },
+    {
+      "bytes": "90",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "nop ",
+      "load_offset": 169,
+      "mnemonic": "nop",
+      "operand_fields": [],
+      "operands": []
+    }
+  ],
+  "comparison": "unbound object",
+  "counts": {
+    "anchors": 1,
+    "byte_equal_aligned_pairs": 7,
+    "candidate_instructions": 70,
+    "decoded_exact_pairs": 0,
+    "exact_instructions": 2,
+    "fixup_normalized_pairs": 0,
+    "mismatch_islands": 1,
+    "structural_pairs": 3,
+    "target_anchored_percent": 12.5,
+    "target_instructions": 16
+  },
+  "decode_complete": true,
+  "decoded_bytes": [
+    34,
+    170
+  ],
+  "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+  "exact_prefix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        3
+      ],
+      "instructions": [
+        0,
+        2
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        3
+      ],
+      "instructions": [
+        0,
+        2
+      ]
+    }
+  },
+  "exact_suffix": null,
+  "first_differing_instruction": {
+    "candidate": {
+      "bytes": "83ec12",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "sub sp, 0x12",
+      "load_offset": 3,
+      "mnemonic": "sub",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        },
+        {
+          "kind": "imm",
+          "value": 18,
+          "width": 2
+        }
+      ]
+    },
+    "index": 2,
+    "target": {
+      "bytes": "55",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push bp",
+      "load_offset": 3,
+      "mnemonic": "push",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    }
+  },
+  "fixup_normalization": {
+    "fields": [
+      {
+        "kind": "offset16",
+        "offset": 143,
+        "target": "high_word_product",
+        "width": 2
+      }
+    ],
+    "ignored": [],
+    "mode": "unbound object",
+    "rule": "Normalization is alignment-only; affected instructions never count as byte-exact anchors."
+  },
+  "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+  "islands": [
+    {
+      "candidate": {
+        "bytes": [
+          3,
+          170
+        ],
+        "instructions": [
+          2,
+          70
+        ]
+      },
+      "classifications": [
+        {
+          "class": "CALL_FRAME_OR_SEGMENT_REGISTER",
+          "confidence": "high",
+          "evidence": [
+            "+0x1D mov ax, cx -> +0x9F mov ax, word ptr [bp + 6]"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "REGISTER_ALLOCATION",
+          "confidence": "medium",
+          "evidence": [
+            "+0x1A mov cx, word ptr [bp + 0xe] -> +0x97 mov ax, word ptr [bp + 0xe]"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "WIDTH_OR_EXTENSION",
+          "confidence": "high",
+          "evidence": [
+            "+0x4 mov cx, word ptr [bp + 6] -> +0x18 mov al, byte ptr [bp + 8]"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "BRANCH_TARGET_OR_LAYOUT",
+          "confidence": "medium",
+          "evidence": [
+            "+0xE jne 0x15 -> +0x85 jne 0x97",
+            "Destination correspondence not proven by alignment"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "CONTROL_FLOW_SHAPE",
+          "confidence": "high",
+          "evidence": [
+            "Control operations (3 -> 6), first eight: ['jne', 'jae', 'retf'] -> ['retf', 'jne', 'call', 'jb', 'retf', 'retf']; no semantic equivalence inferred"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "EPILOGUE_OR_RETURN_LOWERING",
+          "confidence": "medium",
+          "evidence": [
+            "Return-containing regions have different instruction/control sequences"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "EXTRA_INSTRUCTIONS",
+          "confidence": "medium",
+          "evidence": [
+            "54 candidate instructions have no aligned target instruction"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "TEMPORARY_OR_SPILL",
+          "confidence": "medium",
+          "evidence": [
+            "candidate unmatched BP store/reload fields (5), first four: [(-18, 2), (-8, 2), (-6, 2), (-4, 2)]; purpose unproven"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "LOCAL_CODEGEN_UNCLASSIFIED",
+          "confidence": "low",
+          "evidence": [
+            "+0x3 push bp -> +0x15 mov word ptr [bp - 0xe], ax",
+            "+0x10 mul word ptr [bp + 0xa] -> +0x8D push cs",
+            "+0x13 mov cx, dx -> +0x8E call 0x91",
+            "+0x15 cmp cx, word ptr [bp + 0xe] -> +0x91 add sp, 4"
+          ],
+          "omitted_evidence": 2
+        }
+      ],
+      "id": 1,
+      "kind": "ISLAND",
+      "resumes_exact": false,
+      "target": {
+        "bytes": [
+          3,
+          34
+        ],
+        "instructions": [
+          2,
+          16
+        ]
+      }
+    }
+  ],
+  "notes": [],
+  "patterns": {
+    "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+    "corresponding_branches": [],
+    "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+    "families": [],
+    "observations": [
+      {
+        "byte_equal": false,
+        "candidate": "sub sp, 0x12",
+        "candidate_index": 2,
+        "candidate_offset": 3,
+        "id": "p2",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov al, byte ptr [bp + 6]",
+        "candidate_index": 3,
+        "candidate_offset": 6,
+        "id": "p3",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "sub ah, ah",
+        "candidate_index": 4,
+        "candidate_offset": 9,
+        "id": "p4",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 8], ax",
+        "candidate_index": 5,
+        "candidate_offset": 11,
+        "id": "p5",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp + 6]",
+        "candidate_index": 6,
+        "candidate_offset": 14,
+        "id": "p6",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov cl, 8",
+        "candidate_index": 7,
+        "candidate_offset": 17,
+        "id": "p7",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "shr ax, cl",
+        "candidate_index": 8,
+        "candidate_offset": 19,
+        "id": "p8",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 0xe], ax",
+        "candidate_index": 9,
+        "candidate_offset": 21,
+        "id": "p9",
+        "islands": [
+          1
+        ],
+        "level": "MISMATCH",
+        "target": "push bp",
+        "target_index": 2,
+        "target_offset": 3
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov al, byte ptr [bp + 8]",
+        "candidate_index": 10,
+        "candidate_offset": 24,
+        "id": "p10",
+        "islands": [
+          1
+        ],
+        "level": "STRUCTURAL",
+        "target": "mov cx, word ptr [bp + 6]",
+        "target_index": 3,
+        "target_offset": 4
+      },
+      {
+        "byte_equal": false,
+        "candidate": "sub ah, ah",
+        "candidate_index": 11,
+        "candidate_offset": 27,
+        "id": "p11",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 0xc], ax",
+        "candidate_index": 12,
+        "candidate_offset": 29,
+        "id": "p12",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "shr ax, cl",
+        "candidate_index": 14,
+        "candidate_offset": 35,
+        "id": "p14",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 0x10], ax",
+        "candidate_index": 15,
+        "candidate_offset": 37,
+        "id": "p15",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp - 8]",
+        "candidate_index": 16,
+        "candidate_offset": 40,
+        "id": "p16",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mul word ptr [bp - 0xc]",
+        "candidate_index": 17,
+        "candidate_offset": 43,
+        "id": "p17",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 2], ax",
+        "candidate_index": 18,
+        "candidate_offset": 46,
+        "id": "p18",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp - 8]",
+        "candidate_index": 19,
+        "candidate_offset": 49,
+        "id": "p19",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mul word ptr [bp - 0x10]",
+        "candidate_index": 20,
+        "candidate_offset": 52,
+        "id": "p20",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 6], ax",
+        "candidate_index": 21,
+        "candidate_offset": 55,
+        "id": "p21",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp - 0xe]",
+        "candidate_index": 22,
+        "candidate_offset": 58,
+        "id": "p22",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mul word ptr [bp - 0xc]",
+        "candidate_index": 23,
+        "candidate_offset": 61,
+        "id": "p23",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 4], ax",
+        "candidate_index": 24,
+        "candidate_offset": 64,
+        "id": "p24",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp - 0xe]",
+        "candidate_index": 25,
+        "candidate_offset": 67,
+        "id": "p25",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mul word ptr [bp - 0x10]",
+        "candidate_index": 26,
+        "candidate_offset": 70,
+        "id": "p26",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 0xa], ax",
+        "candidate_index": 27,
+        "candidate_offset": 73,
+        "id": "p27",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov al, byte ptr [bp - 6]",
+        "candidate_index": 28,
+        "candidate_offset": 76,
+        "id": "p28",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "sub ah, ah",
+        "candidate_index": 29,
+        "candidate_offset": 79,
+        "id": "p29",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov cl, byte ptr [bp - 4]",
+        "candidate_index": 30,
+        "candidate_offset": 81,
+        "id": "p30",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "sub ch, ch",
+        "candidate_index": 31,
+        "candidate_offset": 84,
+        "id": "p31",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "add ax, cx",
+        "candidate_index": 32,
+        "candidate_offset": 86,
+        "id": "p32",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov dx, word ptr [bp - 2]",
+        "candidate_index": 33,
+        "candidate_offset": 88,
+        "id": "p33",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov cl, 8",
+        "candidate_index": 34,
+        "candidate_offset": 91,
+        "id": "p34",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "shr dx, cl",
+        "candidate_index": 35,
+        "candidate_offset": 93,
+        "id": "p35",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "add ax, dx",
+        "candidate_index": 36,
+        "candidate_offset": 95,
+        "id": "p36",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp - 0x12], ax",
+        "candidate_index": 37,
+        "candidate_offset": 97,
+        "id": "p37",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp - 6]",
+        "candidate_index": 38,
+        "candidate_offset": 100,
+        "id": "p38",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "shr ax, cl",
+        "candidate_index": 39,
+        "candidate_offset": 103,
+        "id": "p39",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov dx, word ptr [bp - 4]",
+        "candidate_index": 40,
+        "candidate_offset": 105,
+        "id": "p40",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "shr dx, cl",
+        "candidate_index": 41,
+        "candidate_offset": 108,
+        "id": "p41",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "add ax, dx",
+        "candidate_index": 42,
+        "candidate_offset": 110,
+        "id": "p42",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov dx, word ptr [bp - 0x12]",
+        "candidate_index": 43,
+        "candidate_offset": 112,
+        "id": "p43",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "shr dx, cl",
+        "candidate_index": 44,
+        "candidate_offset": 115,
+        "id": "p44",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "add ax, dx",
+        "candidate_index": 45,
+        "candidate_offset": 117,
+        "id": "p45",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "add ax, word ptr [bp - 0xa]",
+        "candidate_index": 46,
+        "candidate_offset": 119,
+        "id": "p46",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov sp, bp",
+        "candidate_index": 47,
+        "candidate_offset": 122,
+        "id": "p47",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "pop bp",
+        "candidate_index": 48,
+        "candidate_offset": 124,
+        "id": "p48",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "retf ",
+        "candidate_index": 49,
+        "candidate_offset": 125,
+        "id": "p49",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "push bp",
+        "candidate_index": 50,
+        "candidate_offset": 126,
+        "id": "p50",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov bp, sp",
+        "candidate_index": 51,
+        "candidate_offset": 127,
+        "id": "p51",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "branch": {
+          "basis": "weak or unavailable destination alignment; no semantic equivalence",
+          "candidate_destination": 151,
+          "confidence": "low",
+          "state": "UNRESOLVED_DESTINATION",
+          "target_destination": 21
+        },
+        "byte_equal": false,
+        "candidate": "jne 0x97",
+        "candidate_index": 53,
+        "candidate_offset": 133,
+        "id": "p53",
+        "islands": [
+          1
+        ],
+        "level": "STRUCTURAL",
+        "target": "jne 0x15",
+        "target_index": 6,
+        "target_offset": 14
+      },
+      {
+        "byte_equal": false,
+        "candidate": "push word ptr [bp + 0xa]",
+        "candidate_index": 54,
+        "candidate_offset": 135,
+        "id": "p54",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "push word ptr [bp + 8]",
+        "candidate_index": 55,
+        "candidate_offset": 138,
+        "id": "p55",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "push cs",
+        "candidate_index": 56,
+        "candidate_offset": 141,
+        "id": "p56",
+        "islands": [
+          1
+        ],
+        "level": "MISMATCH",
+        "target": "mul word ptr [bp + 0xa]",
+        "target_index": 7,
+        "target_offset": 16
+      },
+      {
+        "byte_equal": false,
+        "candidate": "call 0x91",
+        "candidate_index": 57,
+        "candidate_offset": 142,
+        "id": "p57",
+        "islands": [
+          1
+        ],
+        "level": "MISMATCH",
+        "note": "Symbol identity and full binding obligations remain unresolved, including when raw numbers coincide.",
+        "target": "mov cx, dx",
+        "target_index": 8,
+        "target_offset": 19,
+        "unresolved_fixups": [
+          {
+            "kind": "offset16",
+            "offset": 1,
+            "target": "high_word_product",
+            "width": 2
+          }
+        ]
+      },
+      {
+        "byte_equal": false,
+        "candidate": "add sp, 4",
+        "candidate_index": 58,
+        "candidate_offset": 145,
+        "id": "p58",
+        "islands": [
+          1
+        ],
+        "level": "MISMATCH",
+        "target": "cmp cx, word ptr [bp + 0xe]",
+        "target_index": 9,
+        "target_offset": 21
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov word ptr [bp + 6], ax",
+        "candidate_index": 59,
+        "candidate_offset": 148,
+        "id": "p59",
+        "islands": [
+          1
+        ],
+        "level": "MISMATCH",
+        "target": "jae 0x1d",
+        "target_index": 10,
+        "target_offset": 24
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp + 0xe]",
+        "candidate_index": 60,
+        "candidate_offset": 151,
+        "id": "p60",
+        "islands": [
+          1
+        ],
+        "level": "STRUCTURAL",
+        "operand_changes": [
+          {
+            "candidate": "ax",
+            "field": "reg",
+            "operand": 0,
+            "target": "cx",
+            "width": 2
+          }
+        ],
+        "target": "mov cx, word ptr [bp + 0xe]",
+        "target_index": 11,
+        "target_offset": 26
+      },
+      {
+        "byte_equal": false,
+        "candidate": "cmp word ptr [bp + 6], ax",
+        "candidate_index": 61,
+        "candidate_offset": 154,
+        "id": "p61",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "jb 0xa4",
+        "candidate_index": 62,
+        "candidate_offset": 157,
+        "id": "p62",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp + 6]",
+        "candidate_index": 63,
+        "candidate_offset": 159,
+        "id": "p63",
+        "islands": [
+          1
+        ],
+        "level": "MISMATCH",
+        "target": "mov ax, cx",
+        "target_index": 12,
+        "target_offset": 29
+      },
+      {
+        "byte_equal": false,
+        "candidate": "retf ",
+        "candidate_index": 65,
+        "candidate_offset": 163,
+        "id": "p65",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "mov ax, word ptr [bp + 0xe]",
+        "candidate_index": 66,
+        "candidate_offset": 164,
+        "id": "p66",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      },
+      {
+        "byte_equal": false,
+        "candidate": "nop ",
+        "candidate_index": 69,
+        "candidate_offset": 169,
+        "id": "p69",
+        "islands": [
+          1
+        ],
+        "level": "EXTRA",
+        "target": null,
+        "target_index": null,
+        "target_offset": null
+      }
+    ],
+    "residuals": [
+      "p2",
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p7",
+      "p8",
+      "p9",
+      "p10",
+      "p11",
+      "p12",
+      "p14",
+      "p15",
+      "p16",
+      "p17",
+      "p18",
+      "p19",
+      "p20",
+      "p21",
+      "p22",
+      "p23",
+      "p24",
+      "p25",
+      "p26",
+      "p27",
+      "p28",
+      "p29",
+      "p30",
+      "p31",
+      "p32",
+      "p33",
+      "p34",
+      "p35",
+      "p36",
+      "p37",
+      "p38",
+      "p39",
+      "p40",
+      "p41",
+      "p42",
+      "p43",
+      "p44",
+      "p45",
+      "p46",
+      "p47",
+      "p48",
+      "p49",
+      "p50",
+      "p51",
+      "p53",
+      "p54",
+      "p55",
+      "p56",
+      "p58",
+      "p59",
+      "p60",
+      "p61",
+      "p62",
+      "p63",
+      "p65",
+      "p66",
+      "p69"
+    ],
+    "unresolved_fixups": [
+      "p57"
+    ]
+  },
+  "schema": 3,
+  "target": {
+    "sha256": "4afb8b21289f00001ec1020411ad72fa713728e1a9dd0404419e0f9ef70d7f72",
+    "size": 34
+  },
+  "target_instructions": [
+    {
+      "bytes": "55",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push bp",
+      "load_offset": 0,
+      "mnemonic": "push",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8bec",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov bp, sp",
+      "load_offset": 1,
+      "mnemonic": "mov",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "sp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "55",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "push bp",
+      "load_offset": 3,
+      "mnemonic": "push",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b4e06",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov cx, word ptr [bp + 6]",
+      "load_offset": 4,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cx",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 6,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b4608",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, word ptr [bp + 8]",
+      "load_offset": 7,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 8,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "837e0c00",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "cmp word ptr [bp + 0xc], 0",
+      "load_offset": 10,
+      "mnemonic": "cmp",
+      "operand_fields": [
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 12,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        },
+        {
+          "kind": "imm",
+          "value": 0,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "7505",
+      "control": "jump",
+      "fixup_fields": [],
+      "implicit_reads": [
+        "flags"
+      ],
+      "implicit_writes": [],
+      "instruction": "jne 0x15",
+      "load_offset": 14,
+      "mnemonic": "jne",
+      "operand_fields": [
+        [
+          1,
+          2
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "imm",
+          "value": 21,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "f7660a",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "ax"
+      ],
+      "implicit_writes": [
+        "ax",
+        "dx",
+        "flags"
+      ],
+      "instruction": "mul word ptr [bp + 0xa]",
+      "load_offset": 16,
+      "mnemonic": "mul",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "base": "bp",
+          "disp": 10,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8bca",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov cx, dx",
+      "load_offset": 19,
+      "mnemonic": "mov",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cx",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "dx",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "3b4e0e",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [
+        "flags"
+      ],
+      "instruction": "cmp cx, word ptr [bp + 0xe]",
+      "load_offset": 21,
+      "mnemonic": "cmp",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cx",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "7303",
+      "control": "jump",
+      "fixup_fields": [],
+      "implicit_reads": [
+        "flags"
+      ],
+      "implicit_writes": [],
+      "instruction": "jae 0x1d",
+      "load_offset": 24,
+      "mnemonic": "jae",
+      "operand_fields": [
+        [
+          1,
+          2
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "imm",
+          "value": 29,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8b4e0e",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov cx, word ptr [bp + 0xe]",
+      "load_offset": 26,
+      "mnemonic": "mov",
+      "operand_fields": [
+        [
+          2,
+          3
+        ]
+      ],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "cx",
+          "width": 2
+        },
+        {
+          "base": "bp",
+          "disp": 14,
+          "index": null,
+          "kind": "mem",
+          "scale": 1,
+          "segment": null,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "8bc1",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "mov ax, cx",
+      "load_offset": 29,
+      "mnemonic": "mov",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "ax",
+          "width": 2
+        },
+        {
+          "kind": "reg",
+          "reg": "cx",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "5d",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "pop bp",
+      "load_offset": 31,
+      "mnemonic": "pop",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "5d",
+      "control": null,
+      "fixup_fields": [],
+      "implicit_reads": [
+        "esp"
+      ],
+      "implicit_writes": [
+        "esp"
+      ],
+      "instruction": "pop bp",
+      "load_offset": 32,
+      "mnemonic": "pop",
+      "operand_fields": [],
+      "operands": [
+        {
+          "kind": "reg",
+          "reg": "bp",
+          "width": 2
+        }
+      ]
+    },
+    {
+      "bytes": "cb",
+      "control": "return",
+      "fixup_fields": [],
+      "implicit_reads": [],
+      "implicit_writes": [],
+      "instruction": "retf ",
+      "load_offset": 33,
+      "mnemonic": "retf",
+      "operand_fields": [],
+      "operands": []
+    }
+  ]
+}

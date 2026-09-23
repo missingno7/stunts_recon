@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:/tools/msdos/msdos.exe",
+    "-e",
+    "-v5.00",
+    "D:\\prog\\stunts_recon\\toolchain\\msc500\\CL.EXE",
+    "/c",
+    "/AM",
+    "/O",
+    "/Gs",
+    "UNIT.C"
+  ],
+  "compiler_stdout_sha256": "226ca4ed68b8316603ccfff9892b96cb56d99e865351eac57a8f37e5cb1732fc",
+  "effective_code": "fee9dcf9ba918dd47a499224a7de63480ce273d7427fd9fdcf2dac85cb5f24eb",
+  "object": {
+    "sha256": "c0124f751f574e384e9c71172b2c476739b593b88bee0280778277868d066b41",
+    "size": 329
+  },
+  "profile": "msc500-medium",
+  "source": {
+    "sha256": "015a43f30878365b63538aabf38fea66bcd1e11000cf0e29ef6a7ee37818b3eb",
+    "size": 376
+  },
+  "staged_source": {
+    "sha256": "e6ae59c2581905ac0f070bea850e6044a16f8878cec7f5a98509a8e1af93d6d4",
+    "size": 385
+  },
+  "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pswxoy857"
+}

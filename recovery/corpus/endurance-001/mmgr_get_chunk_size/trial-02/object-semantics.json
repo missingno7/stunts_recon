@@ -1,0 +1,186 @@
+{
+  "code": {
+    "sha256": "94b764fdf3b9f287c6950432e6a92372ceeec51309cec6d12ef50ecbd99a7c8e",
+    "size": 72
+  },
+  "externals": [
+    "__acrtused",
+    "_resptr1",
+    "_resptr2",
+    "_fatal_error",
+    "_mmgr_get_chunk_size"
+  ],
+  "fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_fatal_error",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 35,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_fatal_error",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 30,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_resptr1",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 19,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_resptr1",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_resptr2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 13,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_resptr2",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "groups": [
+    {
+      "index": 1,
+      "name": "DGROUP",
+      "segment_indices": [
+        3,
+        4,
+        2
+      ],
+      "segments": [
+        "CONST",
+        "_BSS",
+        "_DATA"
+      ]
+    }
+  ],
+  "object": {
+    "sha256": "3eee0235cba70e707101b1f784448eca5c0fcde39de6469ef2d76b79ae55a745",
+    "size": 423
+  },
+  "publics": [
+    {
+      "name": "_mmgr_get_chunk_size",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "segment_defs": [
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CODE",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 1,
+      "length": 72,
+      "name": "UNIT_TEXT",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "DATA",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 2,
+      "length": 33,
+      "name": "_DATA",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "CONST",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 3,
+      "length": 0,
+      "name": "CONST",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    },
+    {
+      "acbp": 72,
+      "alignment": "word",
+      "alignment_code": 2,
+      "big": false,
+      "class": "BSS",
+      "combine": "public",
+      "combine_code": 2,
+      "frame": null,
+      "index": 4,
+      "length": 0,
+      "name": "_BSS",
+      "offset": null,
+      "overlay_index": 1,
+      "use_32bit_offset": false
+    }
+  ],
+  "segments": {
+    "UNIT_TEXT": {
+      "sha256": "94b764fdf3b9f287c6950432e6a92372ceeec51309cec6d12ef50ecbd99a7c8e",
+      "size": 72
+    },
+    "_DATA": {
+      "sha256": "12b64abdf186d6ae0c92346f78237ad3f64d0720aaf752a9add19d7981946201",
+      "size": 33
+    }
+  }
+}
