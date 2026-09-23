@@ -1,12 +1,12 @@
 # Current generated status
 
-Full image: **HYBRID_EXACT**. Matching C: **328 bytes**; raw initialized: **198947 bytes**.
+Full image: **HYBRID_EXACT**. Matching C: **408 bytes**; raw initialized: **198867 bytes**.
 
 Mapped 237 / 619 procedures; 38 source code segments and 25 proven segment frames.
 
 Classification counts are conservative evidence counts, not a complete code/data partition. See status.json for unknown bytes.
 
-Queue: CHEAP=0, MEDIUM=9, SUPERVISOR=598.
+Queue: CHEAP=0, MEDIUM=2, SUPERVISOR=603.
 
 Compiler: MSC5.0/5.1 medium-model optimized, stack checking off; production pins MSC5.1; unique version/flags not proven.
 

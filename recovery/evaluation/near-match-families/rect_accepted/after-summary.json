@@ -1,0 +1,136 @@
+{
+  "anchors": [
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          0,
+          76
+        ],
+        "instructions": [
+          0,
+          32
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          0,
+          76
+        ],
+        "instructions": [
+          0,
+          32
+        ]
+      }
+    }
+  ],
+  "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+  "candidate": {
+    "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+    "size": 76
+  },
+  "classifications": [],
+  "comparison": "bound payload",
+  "counts": {
+    "anchors": 1,
+    "byte_equal_aligned_pairs": 32,
+    "candidate_instructions": 32,
+    "decoded_exact_pairs": 0,
+    "exact_instructions": 32,
+    "fixup_normalized_pairs": 0,
+    "mismatch_islands": 0,
+    "structural_pairs": 0,
+    "target_anchored_percent": 100.0,
+    "target_instructions": 32
+  },
+  "decode_complete": true,
+  "decoded_bytes": [
+    76,
+    76
+  ],
+  "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+  "exact_prefix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    }
+  },
+  "exact_suffix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    }
+  },
+  "fixup_normalization": {
+    "fields": [],
+    "ignored": [],
+    "mode": "bound payload",
+    "omitted_fields": 0,
+    "omitted_ignored": 0,
+    "rule": "No normalization: every bound byte is compared."
+  },
+  "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+  "islands": [],
+  "notes": [],
+  "omitted_anchors": 0,
+  "omitted_islands": 0,
+  "omitted_notes": 0,
+  "patterns": {
+    "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+    "corresponding_branches": [],
+    "corresponding_branches_count": 0,
+    "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+    "families": [],
+    "observation_count": 0,
+    "omitted_corresponding_branches": 0,
+    "omitted_families": 0,
+    "omitted_residuals": 0,
+    "omitted_unresolved_fixups": 0,
+    "residuals": [],
+    "residuals_count": 0,
+    "unresolved_fixups": [],
+    "unresolved_fixups_count": 0
+  },
+  "schema": 3,
+  "target": {
+    "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+    "size": 76
+  }
+}

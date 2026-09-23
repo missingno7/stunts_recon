@@ -1,0 +1,750 @@
+{
+  "schema": 1,
+  "selection_id": "batch-001",
+  "created_local_date": "2026-09-23",
+  "mode": "read-only corpus selection; no source/tool/recipe/queue mutation",
+  "baseline_queue_input_fingerprint": "675b5e72355eccb1a556a303a14473eac416cb19fb400d466e4f39af98ee48ee",
+  "baseline_queue_counts": {
+    "MEDIUM": 7,
+    "SUPERVISOR": 599
+  },
+  "selection_counts": {
+    "routine_source_eligible": 7,
+    "supervisor_nonexecuting_triage": 24,
+    "solved_exact_controls": 5,
+    "total_cases": 36
+  },
+  "eligibility_note": "Eligibility is frozen from the baseline queue/context snapshot before the root sole-writer began source attempts. Later card/queue changes do not change this baseline record.",
+  "items": [
+    {
+      "id": "load_29c84",
+      "name": "audioresource_copy_n_bytes",
+      "card_path": "recovery/cards/load_29c84.json",
+      "size": 70,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Review compact diagnosis, source hint, and recipe freshness; record a C-level machine prediction and falsifier before first attempt.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_2264a",
+      "name": "file_get_res_shape_count",
+      "card_path": "recovery/cards/load_2264a.json",
+      "size": 17,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Resolve the odd 17-byte complete extent and review source/symbol hint; preserve all bytes and record prediction/falsifier.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_1e066",
+      "name": "unknown_libname_1",
+      "card_path": "recovery/cards/load_1e066.json",
+      "size": 18,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Review why no ordinary-C hint exists and inspect compiler expressibility before first candidate.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_270ba",
+      "name": "toupper",
+      "card_path": "recovery/cards/load_270ba.json",
+      "size": 24,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Review source/compiler expressibility for this library-like function; write a bounded C hypothesis and prediction.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_2118d",
+      "name": "mmgr_copy_paras",
+      "card_path": "recovery/cards/load_2118d.json",
+      "size": 72,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Review allocation/copy semantics and source hint; record ABI/types and predicted instructions.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_25de6",
+      "name": "sub_35DE6",
+      "card_path": "recovery/cards/load_25de6.json",
+      "size": 34,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Review indexed-data displacement and source symbols; establish types/widths and a machine prediction.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_2acb0",
+      "name": "file_load_shape2d_palmap_init",
+      "card_path": "recovery/cards/load_2acb0.json",
+      "size": 39,
+      "tier": "MEDIUM",
+      "starting_blocker": [],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "routine source reconstruction / candidate comparison"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Included because every current routine MEDIUM task is in scope for the empirical batch; no cherry-picking.",
+      "minimum_next_evidence": "Resolve indexed-data displacement/symbol evidence and odd full extent; preserve exact size in candidate hypothesis.",
+      "allowed_action": "SOURCE_EXPERIMENT_ELIGIBLE at baseline: prepare an evidence-grounded ordinary-C candidate and use the durable grinder within the recorded budget; inspect/falsify each result.",
+      "baseline_eligibility": "eligible"
+    },
+    {
+      "id": "load_2a9ea",
+      "name": "file_load_shape2d_nofatal",
+      "card_path": "recovery/cards/load_2a9ea.json",
+      "size": 18,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Calls need supervisor linking/TU review"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "call/link boundary"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Small clean extent, but the call requires supervisor translation-unit/link review.",
+      "minimum_next_evidence": "Document call target, calling convention, and reviewed compiler/link support before any C candidate.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_09dc6",
+      "name": "update_rpm_from_speed",
+      "card_path": "recovery/cards/load_09dc6.json",
+      "size": 34,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "MSC ordinary long multiply emits __aFulmul; original direct mul/register/frame pattern unresolved"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "compiler lowering / long multiply"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified 34-byte extent isolates long-multiply lowering against an ordinary-C helper-call mismatch.",
+      "minimum_next_evidence": "Recover source types and original multiply/register/frame evidence; form a bounded machine-level hypothesis.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_2167c",
+      "name": "mmgr_get_chunk_size",
+      "card_path": "recovery/cards/load_2167c.json",
+      "size": 38,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "External/indirect jump needs supervisor linking/TU review; Unregistered DGROUP address 0x4ba0; Unregistered DGROUP address 0x4ba2"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "indirect control flow + globals"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified extent combines an indirect jump with two unresolved DGROUP addresses.",
+      "minimum_next_evidence": "Map jump target and both data addresses from authoritative layout evidence; review binding capability.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_12532",
+      "name": "init_unknown",
+      "card_path": "recovery/cards/load_12532.json",
+      "size": 40,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Unregistered DGROUP address 0x7592; Unregistered DGROUP address 0x81cc; Unregistered DGROUP address 0x926a; Unregistered DGROUP address 0x931a; Unregistered DGROUP address 0x965a; Unregistered DGROUP address 0x9dbf"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "multiple global bindings"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified compact initializer touches six unregistered DGROUP addresses.",
+      "minimum_next_evidence": "Resolve all referenced globals to named symbols and confirm access widths/roles.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_20a35",
+      "name": "kb_checking",
+      "card_path": "recovery/cards/load_20a35.json",
+      "size": 15,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Hardware/interrupt semantics need supervisor review"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "hardware / interrupt semantics"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified small keyboard-check routine is blocked on hardware semantics.",
+      "minimum_next_evidence": "Establish hardware/interrupt effects and supported C expression of the behavior.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_2031d",
+      "name": "compare_ds_ss",
+      "card_path": "recovery/cards/load_2031d.json",
+      "size": 12,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Explicit SS register value needs supervisor source review"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "segment register semantics"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified 12-byte routine explicitly reads SS, which needs supervisor source review.",
+      "minimum_next_evidence": "Determine segment/frame role and whether pinned C can express it without hidden assembly.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_207d2",
+      "name": "sub_307D2",
+      "card_path": "recovery/cards/load_207d2.json",
+      "size": 17,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "MSC zero-extension opcode and complete contribution padding differ; original compiler/TU context unresolved"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "opcode and padding / compiler context"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified 17-byte contribution differs in zero-extension opcode and complete contribution padding.",
+      "minimum_next_evidence": "Find original compiler/TU context or independent evidence for opcode and full-extent padding.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_09de8",
+      "name": "nopsub_19DE8",
+      "card_path": "recovery/cards/load_09de8.json",
+      "size": 23,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Straightforward sign function differs across MSC5.0/5.1 and QuickC1.00/1.01; QuickC BAKPAT support required"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "compiler-family variation"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified sign helper varies across MSC and QuickC versions; BAKPAT support is named as a blocker.",
+      "minimum_next_evidence": "Establish which compiler identity owns the bytes and whether required QuickC BAKPAT behavior is supported.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_1f314",
+      "name": "parse_shape2d_helper",
+      "card_path": "recovery/cards/parse_shape2d_helper.json",
+      "size": 32,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Three distinct failed hypotheses; supervisor review required"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "exhausted source hypotheses"
+      ],
+      "current_attempt_budget": 0,
+      "reason_selected": "Verified extent has three distinct failed hypotheses and zero source-attempt budget.",
+      "minimum_next_evidence": "Supervisor review of archived attempts and genuinely new evidence; do not compile another source variant.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_15f2e",
+      "name": "is_facing_camera",
+      "card_path": "recovery/cards/is_facing_camera.json",
+      "size": 200,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Source-shape family review: strongest ordinary-C source emits194 vs200; first mismatch +0x37 stores dx1 at BP-8 instead of BP-12, then return lowering differs. Far binding is proven. Nineteen supervisor trials plus one grinder attempt are archived; no blind flag/source retries. Next discriminant: evidence for paired long-delta storage and byte-result materialization, then a bounded ordinary-C probe. Explicit register-long and register-far-parameter probes also preserve the194-byte mismatch."
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "large source-shape mismatch / constrained historical retries"
+      ],
+      "current_attempt_budget": 2,
+      "reason_selected": "200-byte verified-entry extent documents a 194-byte strongest ordinary-C result; blind retries are ruled out.",
+      "minimum_next_evidence": "Obtain evidence for paired long-delta storage and byte-result materialization before considering the bounded next probe.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_1f3bc",
+      "name": "criterr_exithandler",
+      "card_path": "recovery/cards/load_1f3bc.json",
+      "size": 30,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "CS-relative storage is unsupported; Hardware/interrupt semantics need supervisor review"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "CS-relative storage + interrupt behavior"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified handler needs unsupported CS-relative storage and hardware/interrupt review.",
+      "minimum_next_evidence": "Identify the CS-relative object and establish semantics/capability for storage and interrupt behavior.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_16572",
+      "name": "rect_union",
+      "card_path": "recovery/cards/load_16572.json",
+      "size": 122,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "No complete instruction evidence for triage"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "instruction evidence gap"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Boundary is verified, but context reports no complete instruction evidence for triage.",
+      "minimum_next_evidence": "Inspect referenced raw disassembly/diagnostic for full instruction coverage before source-level reasoning.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_20404",
+      "name": "kb_parse_key",
+      "card_path": "recovery/cards/load_20404.json",
+      "size": 90,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "No complete instruction evidence for triage"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "instruction evidence gap"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified extent lacks complete instruction evidence for triage.",
+      "minimum_next_evidence": "Inspect referenced raw evidence and recover a complete instruction sequence / unresolved ranges.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_272f4",
+      "name": "sub_372F4",
+      "card_path": "recovery/cards/load_272f4.json",
+      "size": 118,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "MZ relocation binding is unsupported; No complete instruction evidence for triage"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "relocation binding + instruction evidence gap"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified extent has unsupported MZ relocation binding and incomplete instruction evidence.",
+      "minimum_next_evidence": "Establish complete instruction evidence and all relocation targets/addends; supervisor must review binding support.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_2327f",
+      "name": "sprite_set_1_size",
+      "card_path": "recovery/cards/load_2327f.json",
+      "size": 41,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "CS-relative storage is unsupported"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "CS-relative storage"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified function references CS-relative storage, unsupported by current ordinary binding path.",
+      "minimum_next_evidence": "Identify storage and prove a supported C/TU representation without hiding relocation ownership.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_09e21",
+      "name": "init_kevinrandom",
+      "card_path": "recovery/cards/load_09e21.json",
+      "size": 45,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Unregistered DGROUP address 0xa1da; Unregistered DGROUP address 0xa1db; Unregistered DGROUP address 0xa1dc; Unregistered DGROUP address 0xa1dd; Unregistered DGROUP address 0xa1de; Unregistered DGROUP address 0xa1df"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "DGROUP byte-array references"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified initializer refers to six consecutive unregistered DGROUP byte addresses.",
+      "minimum_next_evidence": "Map the addresses and widths to authoritative symbols; validate source object layout.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_1ddc4",
+      "name": "putsign",
+      "card_path": "recovery/cards/load_1ddc4.json",
+      "size": 24,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Calls need supervisor linking/TU review; Unregistered DGROUP address 0x7132"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "call + DGROUP binding"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified helper combines a call with unresolved global address 0x7132.",
+      "minimum_next_evidence": "Resolve call ABI/target and map the global address before considering a source candidate.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_20883",
+      "name": "kb_exit_handler",
+      "card_path": "recovery/cards/load_20883.json",
+      "size": 67,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Hardware/interrupt semantics need supervisor review; Unregistered DGROUP address 0x43d8; Unregistered DGROUP address 0x43da; Unregistered DGROUP address 0x43dc; Unregistered DGROUP address 0x43de"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "interrupt handler + globals"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified exit handler reads unregistered DGROUP words and has hardware semantics.",
+      "minimum_next_evidence": "Establish handler ABI and map every global word before a source explanation.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_22886",
+      "name": "preRender_patterned",
+      "card_path": "recovery/cards/load_22886.json",
+      "size": 67,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "External/indirect jump needs supervisor linking/TU review; Unregistered DGROUP address 0x4bae; Unregistered DGROUP address 0x4bb2; Unregistered DGROUP address 0x4bb6"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "indirect control flow + globals"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified renderer combines an indirect jump with three unresolved DGROUP words.",
+      "minimum_next_evidence": "Recover dispatch target and data symbol mapping/widths from authoritative evidence.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "load_1637a",
+      "name": "rect_adjust_from_point",
+      "card_path": "recovery/cards/load_1637a.json",
+      "size": 76,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Restunts C hypothesis emits 84 bytes instead of 76; register/local layout requires targeted source work"
+      ],
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "apparent_mechanism_strata": [
+        "register/local layout mismatch"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Verified extent; current C hypothesis is 84 bytes and blocker calls for targeted source work.",
+      "minimum_next_evidence": "Inspect mismatch islands and source declaration/allocation evidence; state predicted register/local lowering and falsifier.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "seg035:line184",
+      "name": "parse_shape2d",
+      "card_path": "recovery/cards/seg035_line184.json",
+      "size": null,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Unverified function boundaries"
+      ],
+      "boundary_status": "UNRESOLVED_BOUNDARY",
+      "apparent_mechanism_strata": [
+        "unresolved function boundary"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Large source region is only partially mapped; function extent is not established.",
+      "minimum_next_evidence": "Establish entry/end with disassembly, callers, and neighboring control flow; no source experiment before extent verification.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "seg000:line1570",
+      "name": "run_menu",
+      "card_path": "recovery/cards/seg000_line1570.json",
+      "size": null,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Unverified function boundaries"
+      ],
+      "boundary_status": "UNRESOLVED_BOUNDARY",
+      "apparent_mechanism_strata": [
+        "unresolved function boundary"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "Menu routine is a partial mapping with unverified end boundary.",
+      "minimum_next_evidence": "Establish full function extent and instruction anchors from disassembly/callers.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "seg001:line9141",
+      "name": "vec_normalInnerProduct",
+      "card_path": "recovery/cards/seg001_line9141.json",
+      "size": null,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Unverified function boundaries"
+      ],
+      "boundary_status": "UNRESOLVED_BOUNDARY",
+      "apparent_mechanism_strata": [
+        "unmapped address / unresolved boundary"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "No address anchor or verified function extent is available for the named vector helper.",
+      "minimum_next_evidence": "Find an authoritative entry address and complete boundaries before interpreting or experimenting.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    },
+    {
+      "id": "seg003:line4706",
+      "name": "transformed_shape_add_for_sort",
+      "card_path": "recovery/cards/seg003_line4706.json",
+      "size": null,
+      "tier": "SUPERVISOR",
+      "starting_blocker": [
+        "Unverified function boundaries"
+      ],
+      "boundary_status": "UNRESOLVED_BOUNDARY",
+      "apparent_mechanism_strata": [
+        "unmapped address / unresolved boundary"
+      ],
+      "current_attempt_budget": 3,
+      "reason_selected": "No address anchor or verified function extent is available for this shape-sort helper.",
+      "minimum_next_evidence": "Find an authoritative entry address and complete boundaries before interpreting or experimenting.",
+      "allowed_action": "NONEXECUTING_TRIAGE_ONLY: inspect bounded context, listed evidence, and archive; do not compile/source-edit/reopen. Source experiments require supervisor review and a documented reopen where applicable.",
+      "baseline_eligibility": "not routine-source-eligible"
+    }
+  ],
+  "controls": [
+    {
+      "id": "load_284fa",
+      "name": "audioresource_get_dword",
+      "card_path": "recovery/cards/audioresource_get_dword.json",
+      "promotion_record_path": "recovery/promotions/audioresource_get_dword.json",
+      "size": 26,
+      "tier": "CONTROL_PROMOTED_EXACT",
+      "starting_blocker": [],
+      "apparent_mechanism_strata": [
+        "historical strict exact-promotion control"
+      ],
+      "current_attempt_budget": null,
+      "reason_selected": "Previously promoted exact contribution provides a solved positive control for interpreting case-study outcomes.",
+      "minimum_next_evidence": "Freeze the promotion record as of the selection cutoff; compare its strict status, size, binding mode, and canonical image fingerprint.",
+      "allowed_action": "READ_ONLY_CONTROL: no new source attempt and no promotion change.",
+      "baseline_eligibility": "historical exact control",
+      "historical_cutoff": {
+        "record_status": "PROMOTED",
+        "candidate_compiled_fresh_at_least": 3,
+        "record_sha256": "5512de8bbd2643b5fe46465a5e7dea6e1bf839b4f60f976e30c398e9ae21d7e0",
+        "canonical_full_image_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615"
+      }
+    },
+    {
+      "id": "load_18ad6",
+      "name": "copy_string",
+      "card_path": "recovery/cards/copy_string.json",
+      "promotion_record_path": "recovery/promotions/copy_string.json",
+      "size": 56,
+      "tier": "CONTROL_PROMOTED_EXACT",
+      "starting_blocker": [],
+      "apparent_mechanism_strata": [
+        "historical strict exact-promotion control"
+      ],
+      "current_attempt_budget": null,
+      "reason_selected": "Previously promoted exact contribution provides a solved positive control for interpreting case-study outcomes.",
+      "minimum_next_evidence": "Freeze the promotion record as of the selection cutoff; compare its strict status, size, binding mode, and canonical image fingerprint.",
+      "allowed_action": "READ_ONLY_CONTROL: no new source attempt and no promotion change.",
+      "baseline_eligibility": "historical exact control",
+      "historical_cutoff": {
+        "record_status": "PROMOTED",
+        "candidate_compiled_fresh_at_least": 3,
+        "record_sha256": "6f17d3901a31471f04f2f0cb1ad03511841de5a274bf7e14bca15998850a46cb",
+        "canonical_full_image_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615"
+      }
+    },
+    {
+      "id": "load_15ee2",
+      "name": "rect_compare_point",
+      "card_path": "recovery/cards/rect_compare_point.json",
+      "promotion_record_path": "recovery/promotions/rect_compare_point.json",
+      "size": 76,
+      "tier": "CONTROL_PROMOTED_EXACT",
+      "starting_blocker": [],
+      "apparent_mechanism_strata": [
+        "historical strict exact-promotion control"
+      ],
+      "current_attempt_budget": null,
+      "reason_selected": "Previously promoted exact contribution provides a solved positive control for interpreting case-study outcomes.",
+      "minimum_next_evidence": "Freeze the promotion record as of the selection cutoff; compare its strict status, size, binding mode, and canonical image fingerprint.",
+      "allowed_action": "READ_ONLY_CONTROL: no new source attempt and no promotion change.",
+      "baseline_eligibility": "historical exact control",
+      "historical_cutoff": {
+        "record_status": "PROMOTED",
+        "candidate_compiled_fresh_at_least": 3,
+        "record_sha256": "41df2319cde1cee78b466804370bfd0f5250fd4a2d328a92b26ef22653ccae15",
+        "canonical_full_image_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615"
+      }
+    },
+    {
+      "id": "load_16552",
+      "name": "nopsub_26552",
+      "card_path": "recovery/cards/nopsub_26552.json",
+      "promotion_record_path": "recovery/promotions/nopsub_26552.json",
+      "size": 32,
+      "tier": "CONTROL_PROMOTED_EXACT",
+      "starting_blocker": [],
+      "apparent_mechanism_strata": [
+        "historical strict exact-promotion control"
+      ],
+      "current_attempt_budget": null,
+      "reason_selected": "Previously promoted exact contribution provides a solved positive control for interpreting case-study outcomes.",
+      "minimum_next_evidence": "Freeze the promotion record as of the selection cutoff; compare its strict status, size, binding mode, and canonical image fingerprint.",
+      "allowed_action": "READ_ONLY_CONTROL: no new source attempt and no promotion change.",
+      "baseline_eligibility": "historical exact control",
+      "historical_cutoff": {
+        "record_status": "PROMOTED",
+        "candidate_compiled_fresh_at_least": 3,
+        "record_sha256": "d4438662b64f5f7be94dceb7b3a184981f9d9584b8c009a65ad18650bd35e488",
+        "canonical_full_image_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615"
+      }
+    },
+    {
+      "id": "load_2b08c",
+      "name": "parse_shape2d_helper3",
+      "card_path": "recovery/cards/parse_shape2d_helper3.json",
+      "promotion_record_path": "recovery/promotions/parse_shape2d_helper3.json",
+      "size": 46,
+      "tier": "CONTROL_PROMOTED_EXACT",
+      "starting_blocker": [],
+      "apparent_mechanism_strata": [
+        "historical strict exact-promotion control"
+      ],
+      "current_attempt_budget": null,
+      "reason_selected": "Previously promoted exact contribution provides a solved positive control for interpreting case-study outcomes.",
+      "minimum_next_evidence": "Freeze the promotion record as of the selection cutoff; compare its strict status, size, binding mode, and canonical image fingerprint.",
+      "allowed_action": "READ_ONLY_CONTROL: no new source attempt and no promotion change.",
+      "baseline_eligibility": "historical exact control",
+      "historical_cutoff": {
+        "record_status": "PROMOTED",
+        "candidate_compiled_fresh_at_least": 3,
+        "record_sha256": "cfa3652f7be17f630aacfc50095234af29851ac42d370001dadaa19e53df9386",
+        "canonical_full_image_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615"
+      }
+    }
+  ],
+  "triage_partitions": [
+    {
+      "worker_packet": "triage-A",
+      "case_ids": [
+        "load_2a9ea",
+        "load_09dc6",
+        "load_2167c",
+        "load_12532",
+        "load_20a35",
+        "load_2031d",
+        "load_207d2",
+        "load_09de8",
+        "load_1f314",
+        "load_15f2e",
+        "load_1f3bc",
+        "load_16572"
+      ]
+    },
+    {
+      "worker_packet": "triage-B",
+      "case_ids": [
+        "load_20404",
+        "load_272f4",
+        "load_2327f",
+        "load_09e21",
+        "load_1ddc4",
+        "load_20883",
+        "load_22886",
+        "load_1637a",
+        "seg035:line184",
+        "seg000:line1570",
+        "seg001:line9141",
+        "seg003:line4706"
+      ]
+    }
+  ],
+  "supervisor_readonly_partition_note": "Five controls are shared fixed references for both triage packets.",
+  "historical_cutoff": "Promotion record SHA-256 and canonical image fingerprint recorded per control; records contain no wall-clock timestamp. Snapshot cutoff is 2026-09-23 plus baseline queue fingerprint."
+}

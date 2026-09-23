@@ -1,0 +1,17 @@
+MATCH DIAGNOSIS: rect_plain (bound payload)
+Target 76 bytes / 32 instructions; candidate 76 bytes / 32 instructions.
+Protected byte-exact: 5 instructions (15.62% of target), 2 anchors; 2 islands. Diagnostic metrics only.
+Preserve target: +0x0..+0x3, +0x35..+0x3B
+#1 target +0x3..+0x35 / candidate +0x3..+0x35: STACK_SLOT_ALLOCATION [high], REGISTER_ALLOCATION [high], IMMEDIATE_VALUE [high], BRANCH_TARGET_OR_LAYOUT [high], EXTRA_INSTRUCTIONS [medium], MISSING_INSTRUCTIONS [medium]
+  +0x12 mov byte ptr [bp - 4], 1 -> +0x11 mov byte ptr [bp - 2], 1
+  +0x20 mov byte ptr [bp - 4], 2 -> +0x20 mov byte ptr [bp - 2], 2
+  13 further evidence items in structured/full diagnosis.
+  Exact stream resumes after this island.
+#2 target +0x3B..+0x4C / candidate +0x3B..+0x4C: STACK_SLOT_ALLOCATION [high], REGISTER_ALLOCATION [medium], EPILOGUE_OR_RETURN_LOWERING [medium], EXTRA_INSTRUCTIONS [medium], MISSING_INSTRUCTIONS [medium]
+  +0x3F or byte ptr [bp - 4], 8 -> +0x3F or byte ptr [bp - 2], 8
+  +0x43 mov al, byte ptr [bp - 4] -> +0x43 mov al, byte ptr [bp - 2]
+  4 further evidence items in structured/full diagnosis.
+Exact suffix: not independently anchored
+Fixup normalization: 0 fields, alignment only; No normalization: every bound byte is compared.
+Omitted: 0 anchors, 0 islands, 0 notes; use full diagnostic artifact.
+Acceptance: BOUND_BYTES_MISMATCH_RESEARCH; diagnostic alignment never relaxes byte, extent or fixup checks.

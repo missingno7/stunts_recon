@@ -28,6 +28,11 @@
       "source": "src/rect_is_inside.c"
     },
     {
+      "owner": "load_18ad6",
+      "recipe": "recipes/copy_string.json",
+      "source": "src/copy_string.c"
+    },
+    {
       "library": "toolchain/msc510/MLIBCR.LIB",
       "module": "strcat.asm",
       "owner": "library_strcat"
@@ -86,6 +91,11 @@
       "library": "toolchain/msc510/LIBH.LIB",
       "module": "uldiv.asm",
       "owner": "library_uldiv"
+    },
+    {
+      "owner": "load_270ba",
+      "recipe": "recipes/toupper.json",
+      "source": "src/toupper.c"
     },
     {
       "owner": "load_273b2",

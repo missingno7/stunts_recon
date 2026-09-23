@@ -1,0 +1,46 @@
+MATCH DIAGNOSIS: is_facing_camera (unbound object)
+Target 200 bytes / 87 instructions; candidate 194 bytes / 82 instructions.
+Protected byte-exact: 63 instructions (72.41% of target), 10 anchors; 9 islands. Diagnostic metrics only.
+Preserve target: +0x0..+0x37, +0x3D..+0x45, +0x4C..+0x58, +0x5E..+0x6D, +0x73..+0x7A, +0x7C..+0x88, +0x99..+0x9D, +0xA2..+0xA8, +0xAA..+0xAE, +0xB9..+0xC8
+#1 target +0x37..+0x3D / candidate +0x37..+0x3D: STACK_SLOT_ALLOCATION [high]
+  +0x37 mov word ptr [bp - 0xc], ax -> +0x37 mov word ptr [bp - 8], ax
+  +0x3A mov word ptr [bp - 0xa], dx -> +0x3A mov word ptr [bp - 6], dx
+  Exact stream resumes after this island.
+#2 target +0x45..+0x4C / candidate +0x45..+0x4C: STACK_SLOT_ALLOCATION [medium], BRANCH_TARGET_OR_LAYOUT [high]
+  +0x45 mov ax, word ptr [bp - 0xc] -> +0x45 mov ax, word ptr [bp - 8]
+  +0x4A je 0xc0 -> +0x4A je 0xba
+  1 further evidence items in structured/full diagnosis.
+  Exact stream resumes after this island.
+#3 target +0x58..+0x5E / candidate +0x58..+0x5E: STACK_SLOT_ALLOCATION [high]
+  +0x58 mov word ptr [bp - 8], ax -> +0x58 mov word ptr [bp - 0xc], ax
+  +0x5B mov word ptr [bp - 6], dx -> +0x5B mov word ptr [bp - 0xa], dx
+  Exact stream resumes after this island.
+#4 target +0x6D..+0x73 / candidate +0x6D..+0x73: STACK_SLOT_ALLOCATION [high]
+  +0x6D mov ax, word ptr [bp - 8] -> +0x6D mov ax, word ptr [bp - 0xc]
+  +0x70 or ax, word ptr [bp - 6] -> +0x70 or ax, word ptr [bp - 0xa]
+  Exact stream resumes after this island.
+#5 target +0x7A..+0x7C / candidate +0x7A..+0x7C: BRANCH_TARGET_OR_LAYOUT [high]
+  +0x7A je 0xc0 -> +0x7A je 0xba
+  Destination follows aligned instruction
+  Exact stream resumes after this island.
+#6 target +0x88..+0x99 / candidate +0x88..+0x99: STACK_SLOT_ALLOCATION [high], UNRESOLVED_FIXUP_OPERANDS [high]
+  +0x8D push word ptr [bp - 6] -> +0x8D push word ptr [bp - 0xa]
+  +0x90 push word ptr [bp - 8] -> +0x90 push word ptr [bp - 0xc]
+  3 further evidence items in structured/full diagnosis.
+  Exact stream resumes after this island.
+#7 target +0x9D..+0xA2 / candidate +0x9D..+0xA2: UNRESOLVED_FIXUP_OPERANDS [high]
+  1 operand-normalized instructions; symbols/values still require binding
+  Exact stream resumes after this island.
+#8 target +0xA8..+0xAA / candidate +0xA8..+0xAA: BRANCH_TARGET_OR_LAYOUT [medium]
+  +0xA8 jl 0xb6 -> +0xA8 jl 0xba
+  Destination correspondence not proven by alignment
+  Exact stream resumes after this island.
+#9 target +0xAE..+0xB9 / candidate +0xAE..+0xB3: WIDTH_OR_EXTENSION [high], BRANCH_TARGET_OR_LAYOUT [medium], CONTROL_FLOW_SHAPE [high], MISSING_INSTRUCTIONS [medium]
+  +0xB0 mov al, 1 -> +0xB0 mov ax, 1
+  +0xAE je 0xb6 -> +0xAE je 0xba
+  3 further evidence items in structured/full diagnosis.
+  Exact stream resumes after this island.
+Exact suffix: +0xB9..+0xC8 / +0xB3..+0xC2
+Fixup normalization: 2 fields, alignment only; Normalization is alignment-only; affected instructions never count as byte-exact anchors.
+Omitted: 0 anchors, 0 islands, 0 notes; use full diagnostic artifact.
+Acceptance: DIAGNOSTIC_ONLY_FAIL / EXTENT_MISMATCH; diagnostic alignment never relaxes byte, extent or fixup checks.

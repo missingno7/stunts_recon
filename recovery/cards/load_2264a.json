@@ -116,8 +116,8 @@
     "Odd extent: verify complete compiler alignment; never trim"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/c20f1aa1bdc1e18fe409b2bcda43c251fe662f9a59aaddaeb58e45c1d48fc75d.json",
-    "sha256": "c20f1aa1bdc1e18fe409b2bcda43c251fe662f9a59aaddaeb58e45c1d48fc75d"
+    "path": "recovery/snapshots/cd0c89831f3f44fcf410a58adcabcd1024962a65d2943e31f8e54aa7b27dd0f1.json",
+    "sha256": "cd0c89831f3f44fcf410a58adcabcd1024962a65d2943e31f8e54aa7b27dd0f1"
   },
   "size": 17,
   "source": {
@@ -129,7 +129,7 @@
   },
   "tier": "MEDIUM",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/f701b562a6c60e85c65f46e450558cfd02dcb03a75ab7dc679d6c12513f6f193.json",
-    "sha256": "f701b562a6c60e85c65f46e450558cfd02dcb03a75ab7dc679d6c12513f6f193"
+    "path": "recovery/snapshots/2f6d1abb0ff67163bce3fa06ae04011cecea024f743b7f7800988d390903cf47.json",
+    "sha256": "2f6d1abb0ff67163bce3fa06ae04011cecea024f743b7f7800988d390903cf47"
   }
 }

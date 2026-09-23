@@ -50,19 +50,29 @@ def packet(identifier, expansions=()):
     latest=next((r for r in reversed(history) if r.get('match_summary')),None)
     if latest:
         out['match_diagnosis']={k:latest.get(k) for k in ['path','match_summary','full_diagnostic','full_diagnostic_identity','anchor_regression']}
+        out['match_diagnosis']['strict_observation']={'status':latest.get('status'),'category':latest.get('category'),'error':latest.get('error')}
+        newer=history[history.index(latest)+1:]
+        out['match_diagnosis']['newer_observations_without_summary']=[{k:r.get(k) for k in ('path','status','category','error','diagnostic_error')} for r in newer[-3:]]
+        out['match_diagnosis']['omitted_newer_observations']=max(0,len(newer)-3)
         out['match_diagnosis']['source_matches_current']=bool(recipe and (latest.get('source') or {}).get('sha256')==out['candidate']['sha256'])
         out['match_diagnosis']['recipe_matches_current']=bool(recipe and latest.get('recipe_identity')==identity(json_bytes(recipe)))
         import diagnostics
         from pathlib import Path
         out['match_diagnosis']['engine_matches_current']=latest['match_summary']['engine_sha256']==sha(Path(diagnostics.__file__).read_bytes())
-        out['match_diagnosis']['freshness']='Archived observation, not a fresh FAST result; check source, target, compiler and engine before drawing conclusions.'
+        out['match_diagnosis']['freshness']=latest.get('evidence_freshness') or 'Archived observation, not a fresh FAST result; check source, target, compiler and engine before drawing conclusions.'
         out['next_discriminator']='Inspect the localized '+', '.join(latest['match_summary']['classifications'])+' evidence; preserve exact anchors. Resolve binding/TU blockers separately; no source-level cause is inferred.'
+        patterns=latest['match_summary'].get('patterns')
+        if patterns:
+            out['next_discriminator']='Check whether the supported operand mappings persist in a justified controlled hypothesis; inspect residuals independently. Byte anchors are preservation evidence, not fixed C-line boundaries. Existing budgets/blockers still apply.'
+            out['match_diagnosis']['drill_down']='python tools/context.py '+row['id']+' --diagnosis --islands'
+            if 'islands' not in expansions and 'full' not in expansions:
+                out['match_diagnosis']['match_summary']=diagnostics.routine_summary(latest['match_summary'])
         # Keep a single summary in the default packet; --history explicitly expands older ones.
         if 'history' not in expansions:
             def reference(r):return {k:v for k,v in r.items() if k not in ('match_summary','anchor_regression')}
             out['hypotheses']=[reference(r) for r in out['hypotheses']]
             if formal:out['latest_grinder_attempt']=reference(formal[-1])
-    out['expansion']='--asm --callers --globals --history --full; full raw artifacts stay at referenced paths'
+    out['expansion']='--islands --asm --callers --globals --history --full; full raw artifacts stay at referenced paths'
     if 'asm' in expansions:out['assembly']=card.get('disassembly',[])
     else:out['omitted_assembly_rows']=len(card.get('disassembly',[]))
     if 'callers' in expansions:out['callers']=e.get('callers','No complete caller index; indirect references remain unbounded')
@@ -75,14 +85,18 @@ def packet(identifier, expansions=()):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('function')
-    for name in ['asm','callers','globals','history','full']:p.add_argument('--'+name,action='store_true')
+    for name in ['islands','asm','callers','globals','history','full']:p.add_argument('--'+name,action='store_true')
     p.add_argument('--diagnosis',action='store_true',help='Print concise match diagnosis and full artifact path')
-    a=p.parse_args();result=packet(a.function,[n for n in ['asm','callers','globals','history','full'] if getattr(a,n)])
+    a=p.parse_args();result=packet(a.function,[n for n in ['islands','asm','callers','globals','history','full'] if getattr(a,n)])
     if a.diagnosis:
         from diagnostics import format_summary
         diagnosis=result.get('match_diagnosis',{})
-        print(format_summary(diagnosis.get('match_summary'),result['name'],'ARCHIVED OBSERVATION'))
-        print('Source matches current:',diagnosis.get('source_matches_current'))
+        strict=diagnosis.get('strict_observation',{})
+        print(format_summary(diagnosis.get('match_summary'),result['name'],'ARCHIVED '+str(strict.get('status'))+' '+str(strict.get('category')),islands=a.islands))
+        print('Matches current source/recipe/engine:',diagnosis.get('source_matches_current'),diagnosis.get('recipe_matches_current'),diagnosis.get('engine_matches_current'))
+        print('Evidence freshness:',diagnosis.get('freshness','Unavailable'))
+        if diagnosis.get('newer_observations_without_summary'):
+            print('Newer observations have no summary:',json.dumps(diagnosis['newer_observations_without_summary']))
         print('Full diagnostic:',diagnosis.get('full_diagnostic'))
     else:print(json.dumps(result,indent=2))
 

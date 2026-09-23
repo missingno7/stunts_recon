@@ -1,0 +1,6 @@
+MATCH DIAGNOSIS: parse_shape2d_helper3 (bound payload)
+Strict status: FAST_PASS_ONLY; diagnostics cannot discharge extent/byte/fixup obligations.
+Target/candidate: 46/46 bytes, 18/18 linear instructions.
+Byte preservation evidence: 18 target instructions, 1 anchors, 0 islands; not source-line boundaries.
+Ungrouped residual observations: 0 (not a count of independent fixes).
+Observed patterns only; 0 omitted entries. Full artifact retains every site/island and contradictions; --islands expands localization. Exact stream resumes at the original anchor boundaries.

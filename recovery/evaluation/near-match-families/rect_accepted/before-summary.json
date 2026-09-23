@@ -1,0 +1,120 @@
+{
+  "anchors": [
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          0,
+          76
+        ],
+        "instructions": [
+          0,
+          32
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          0,
+          76
+        ],
+        "instructions": [
+          0,
+          32
+        ]
+      }
+    }
+  ],
+  "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+  "candidate": {
+    "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+    "size": 76
+  },
+  "classifications": [],
+  "comparison": "bound payload",
+  "counts": {
+    "anchors": 1,
+    "byte_equal_aligned_pairs": 32,
+    "candidate_instructions": 32,
+    "decoded_exact_pairs": 0,
+    "exact_instructions": 32,
+    "fixup_normalized_pairs": 0,
+    "mismatch_islands": 0,
+    "structural_pairs": 0,
+    "target_anchored_percent": 100.0,
+    "target_instructions": 32
+  },
+  "decode_complete": true,
+  "decoded_bytes": [
+    76,
+    76
+  ],
+  "engine_sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+  "exact_prefix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    }
+  },
+  "exact_suffix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        76
+      ],
+      "instructions": [
+        0,
+        32
+      ]
+    }
+  },
+  "fixup_normalization": {
+    "fields": [],
+    "ignored": [],
+    "mode": "bound payload",
+    "omitted_fields": 0,
+    "omitted_ignored": 0,
+    "rule": "No normalization: every bound byte is compared."
+  },
+  "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+  "islands": [],
+  "notes": [],
+  "omitted_anchors": 0,
+  "omitted_islands": 0,
+  "omitted_notes": 0,
+  "schema": 2,
+  "target": {
+    "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+    "size": 76
+  }
+}

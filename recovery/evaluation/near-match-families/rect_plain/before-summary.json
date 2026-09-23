@@ -1,0 +1,282 @@
+{
+  "anchors": [
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          0,
+          3
+        ],
+        "instructions": [
+          0,
+          2
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          0,
+          3
+        ],
+        "instructions": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          53,
+          59
+        ],
+        "instructions": [
+          20,
+          23
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          53,
+          59
+        ],
+        "instructions": [
+          20,
+          23
+        ]
+      }
+    }
+  ],
+  "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+  "candidate": {
+    "sha256": "43ac5faa19101d876a13230ee0925a4a6ce72d1652e527f805d8f8c324012444",
+    "size": 76
+  },
+  "classifications": [
+    "BRANCH_TARGET_OR_LAYOUT",
+    "EPILOGUE_OR_RETURN_LOWERING",
+    "EXTRA_INSTRUCTIONS",
+    "IMMEDIATE_VALUE",
+    "MISSING_INSTRUCTIONS",
+    "REGISTER_ALLOCATION",
+    "STACK_SLOT_ALLOCATION"
+  ],
+  "comparison": "bound payload",
+  "counts": {
+    "anchors": 2,
+    "byte_equal_aligned_pairs": 16,
+    "candidate_instructions": 32,
+    "decoded_exact_pairs": 0,
+    "exact_instructions": 5,
+    "fixup_normalized_pairs": 0,
+    "mismatch_islands": 2,
+    "structural_pairs": 14,
+    "target_anchored_percent": 15.62,
+    "target_instructions": 32
+  },
+  "decode_complete": true,
+  "decoded_bytes": [
+    76,
+    76
+  ],
+  "engine_sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+  "exact_prefix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        3
+      ],
+      "instructions": [
+        0,
+        2
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        3
+      ],
+      "instructions": [
+        0,
+        2
+      ]
+    }
+  },
+  "exact_suffix": null,
+  "fixup_normalization": {
+    "fields": [],
+    "ignored": [],
+    "mode": "bound payload",
+    "omitted_fields": 0,
+    "omitted_ignored": 0,
+    "rule": "No normalization: every bound byte is compared."
+  },
+  "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+  "islands": [
+    {
+      "candidate": {
+        "bytes": [
+          3,
+          53
+        ],
+        "instructions": [
+          2,
+          20
+        ]
+      },
+      "classifications": [
+        {
+          "class": "STACK_SLOT_ALLOCATION",
+          "confidence": "high",
+          "evidence": [
+            "+0x12 mov byte ptr [bp - 4], 1 -> +0x11 mov byte ptr [bp - 2], 1",
+            "+0x20 mov byte ptr [bp - 4], 2 -> +0x20 mov byte ptr [bp - 2], 2",
+            "+0x26 mov byte ptr [bp - 4], 0 -> +0x26 mov byte ptr [bp - 2], 0",
+            "+0x31 or byte ptr [bp - 4], 4 -> +0x31 or byte ptr [bp - 2], 4"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "REGISTER_ALLOCATION",
+          "confidence": "high",
+          "evidence": [
+            "+0x7 mov si, word ptr [bp + 6] -> +0x6 mov bx, word ptr [bp + 6]",
+            "+0xD cmp word ptr [si + 2], ax -> +0xC cmp word ptr [bx + 2], ax",
+            "+0x1B cmp word ptr [si + 2], ax -> +0x1B cmp word ptr [bx + 2], ax",
+            "+0x2D cmp word ptr [si], ax -> +0x2D cmp word ptr [bx], ax"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "IMMEDIATE_VALUE",
+          "confidence": "high",
+          "evidence": [
+            "+0x3 sub sp, 4 -> +0x3 sub sp, 2"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "BRANCH_TARGET_OR_LAYOUT",
+          "confidence": "high",
+          "evidence": [
+            "+0x10 jge 0x18 -> +0xF jge 0x18",
+            "Destination follows aligned instruction",
+            "+0x16 jmp 0x2a -> +0x15 jmp 0x2a",
+            "Destination follows aligned instruction"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "EXTRA_INSTRUCTIONS",
+          "confidence": "medium",
+          "evidence": [
+            "1 candidate instructions have no aligned target instruction"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "MISSING_INSTRUCTIONS",
+          "confidence": "medium",
+          "evidence": [
+            "1 target instructions have no aligned candidate instruction"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 1,
+      "kind": "ISLAND",
+      "resumes_exact": true,
+      "target": {
+        "bytes": [
+          3,
+          53
+        ],
+        "instructions": [
+          2,
+          20
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "bytes": [
+          59,
+          76
+        ],
+        "instructions": [
+          23,
+          32
+        ]
+      },
+      "classifications": [
+        {
+          "class": "STACK_SLOT_ALLOCATION",
+          "confidence": "high",
+          "evidence": [
+            "+0x3F or byte ptr [bp - 4], 8 -> +0x3F or byte ptr [bp - 2], 8",
+            "+0x43 mov al, byte ptr [bp - 4] -> +0x43 mov al, byte ptr [bp - 2]"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "REGISTER_ALLOCATION",
+          "confidence": "medium",
+          "evidence": [
+            "+0x3B cmp word ptr [si], ax -> +0x3B cmp word ptr [bx], ax"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "EPILOGUE_OR_RETURN_LOWERING",
+          "confidence": "medium",
+          "evidence": [
+            "Return-containing regions have different instruction/control sequences"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "EXTRA_INSTRUCTIONS",
+          "confidence": "medium",
+          "evidence": [
+            "1 candidate instructions have no aligned target instruction"
+          ],
+          "omitted_evidence": 0
+        },
+        {
+          "class": "MISSING_INSTRUCTIONS",
+          "confidence": "medium",
+          "evidence": [
+            "1 target instructions have no aligned candidate instruction"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 2,
+      "kind": "ISLAND",
+      "resumes_exact": false,
+      "target": {
+        "bytes": [
+          59,
+          76
+        ],
+        "instructions": [
+          23,
+          32
+        ]
+      }
+    }
+  ],
+  "notes": [],
+  "omitted_anchors": 0,
+  "omitted_islands": 0,
+  "omitted_notes": 0,
+  "schema": 2,
+  "target": {
+    "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+    "size": 76
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "complete_codes_identical": true,
+  "consequence": "A trailing goto alone supplies no new basis to reopen the canary. No game candidate changed or source budget consumed.",
+  "early_return_code": {
+    "sha256": "c64bf7521db456abea7bd59daee83dbe2f8a153c47ca0a602daebd5c19ece745",
+    "size": 38
+  },
+  "fresh_compilations": 2,
+  "observation": "MSC 5.1 canonicalized the explicit trailing label to the same leading zero-return block. Both retain AL/CBW and no two-NOP gap inside the boolean diamond.",
+  "oracle_pattern_scan": {
+    "matches": [
+      {
+        "hex": "0x15fde",
+        "load_offset": 90078,
+        "mapped_functions": []
+      }
+    ],
+    "pattern": "b001eb0490902ac098",
+    "scope": "Exact byte-pattern search over immutable load image; matches are not function-boundary or source-language proof"
+  },
+  "outcome": "PREDICTION_REFUTED",
+  "trailing_zero_code": {
+    "sha256": "c64bf7521db456abea7bd59daee83dbe2f8a153c47ca0a602daebd5c19ece745",
+    "size": 38
+  },
+  "whole_contribution_probe_only": true
+}

@@ -58,6 +58,8 @@ The plain classifier source emitted 76 bytes with BX and a two-byte local frame,
 
 ## Continue
 
+The subsequent measured family pass is documented in `near-match-families.md`. It retains all nine islands and exposes one 11-site BP-displacement permutation, two corresponding anchored branch destinations, the two unresolved calls, and eight ungrouped result-region observations. These are operand patterns, not proven source causes or eight independent repairs; the family remains blocked. Use `--diagnosis --islands` to expand the original view.
+
 The local mismatch diagnostic now records a fresh unchanged-source supervisor probe under `recovery/diagnostics/is_facing_camera`; the latest entry is exposed automatically by context. This probe remains `EXTENT_MISMATCH` (200-byte target, 194-byte candidate). It does not consume a source attempt or reopen the family.
 
 Previously the compact report stopped at instruction 25, +0x37 (`[bp-0xC]` versus `[bp-8]`). The aligned report identifies **63 of 87 linear target instructions in 10 byte-exact anchors (72.41%)**, with 82 candidate instructions and nine local islands. The exact prefix is target/candidate +0x0..+0x37. The exact suffix is target +0xB9..+0xC8 versus candidate +0xB3..+0xC2. These counts include alignment NOPs, unlike CFG-reachable counts; they are diagnostic metrics only.

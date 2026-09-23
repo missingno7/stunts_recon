@@ -47,6 +47,8 @@ def generate(write=True):
              'kind':folder,'epoch':r.get('epoch'),'status':r.get('status',r.get('scope')),
              'hypothesis':r.get('hypothesis',r.get('prediction')),
              'category':diagnostic.get('category'),'error':r.get('error'),
+             'diagnostic_error':comparison.get('diagnostic_error'),
+             'evidence_freshness':r.get('evidence_freshness'),
              'sizes':diagnostic.get('emitted_sizes',r.get('emitted_sizes')),
              'first_difference':comparison.get('first_differing_instruction'),
              'same_effective_as':r.get('same_effective_as',r.get('same_object_as',[]))}

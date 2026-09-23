@@ -1,0 +1,23 @@
+{
+  "falsifier": "Both contributions are identical, or trailing_zero lacks the byte-result conversion or trailing zero-return block.",
+  "flags": [
+    "/AM",
+    "/O",
+    "/Gs"
+  ],
+  "prediction": "Moving the zero return behind the char-converted comparison using an explicit label will retain the byte-result/CBW sequence while moving the early-zero path to a separate trailing epilogue. Investigate whether compiler-generated NOPs resemble the target, without adding any padding.",
+  "prior_evidence": "is_facing_camera prior_04 has AL/CBW but arithmetic/calls start eight bytes later and only one final epilogue; ternary baseline has the separate trailing zero tail but word result.",
+  "production_candidate_unchanged": true,
+  "profile": "msc510-medium",
+  "scope": "Two isolated compiler fixtures, not canary source variants; no acceptance or reopen",
+  "sources": {
+    "early_return": {
+      "sha256": "165c76dfe5050606631eece47aa9abf20624d9207c7ca81e758d076e345518a1",
+      "size": 99
+    },
+    "trailing_zero": {
+      "sha256": "48f1707825c94b0d2f1a35d75b4c8e69a5405a3b910eba27ceca65da5aafc79d",
+      "size": 120
+    }
+  }
+}

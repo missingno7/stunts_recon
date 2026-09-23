@@ -1,0 +1,71 @@
+{
+  "function": "is_facing_camera",
+  "profile": "msc510-medium",
+  "flags": [
+    "/AM",
+    "/O",
+    "/Gs"
+  ],
+  "source_identity": {
+    "sha256": "41e61f3fdaf21ab4049855a86abcb5ffb5a50dc3d07590577fc44fea4d65f8bd",
+    "size": 373
+  },
+  "target": {
+    "sha256": "6fc29d78db5106925aa06f76eb06ed2f7fdb5a6dfb0e597d1e94b56e0558e929",
+    "size": 200
+  },
+  "candidate": {
+    "sha256": "c894e4871684e3b1ab8680217a63906b515a8a17d315f5c64b0a996d6bc4b6d7",
+    "size": 194
+  },
+  "object_identity": {
+    "sha256": "4e94bbf610a6dd73c743ee589c68eb5f51914616229f5d726f958dba20f1a180",
+    "size": 468
+  },
+  "comparison_mode": "unbound",
+  "strict_status": "DIAGNOSTIC_ONLY_FAIL / EXTENT_MISMATCH",
+  "fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "__aFlmul",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 158,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "__aFlmul",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "__aFlmul",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 137,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "__aFlmul",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "scope": "Proposal only. No execution, mutation, network, or reading outside this case packet. Historical observation cutoff; do not seek later repairs.",
+  "budget": "Blocked: no source experiment authorized without independent new evidence.",
+  "evidence_files": [
+    "full.json",
+    "history.json"
+  ],
+  "history_count": 20,
+  "evidence_limit": "At most four additional file reads, only the two evidence files listed (rereads count). Initial context/source/presentation are free. Same allowance in both conditions."
+}

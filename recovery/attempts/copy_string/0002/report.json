@@ -1,0 +1,998 @@
+{
+  "budget_charge": true,
+  "diagnostics": {
+    "bound_payload": {
+      "sha256": "53854142b0fe324b2eda648f78c62f9ee15799a7a594fcf0ee28eb71f358458b",
+      "size": 56
+    },
+    "category": "BYTE_MISMATCH",
+    "comparison": {
+      "candidate": {
+        "sha256": "53854142b0fe324b2eda648f78c62f9ee15799a7a594fcf0ee28eb71f358458b",
+        "size": 56
+      },
+      "comparison": "bound payload",
+      "decoded_bytes": [
+        56,
+        56
+      ],
+      "first_differing_instruction": {
+        "candidate": {
+          "bytes": "ff4606",
+          "control": null,
+          "fixup_fields": [],
+          "implicit_reads": [],
+          "implicit_writes": [
+            "flags"
+          ],
+          "instruction": "inc word ptr [bp + 6]",
+          "load_offset": 22,
+          "mnemonic": "inc",
+          "operand_fields": [
+            [
+              2,
+              3
+            ]
+          ],
+          "operands": [
+            {
+              "base": "bp",
+              "disp": 6,
+              "index": null,
+              "kind": "mem",
+              "scale": 1,
+              "segment": null,
+              "width": 2
+            }
+          ]
+        },
+        "index": 9,
+        "target": {
+          "bytes": "c476fc",
+          "control": null,
+          "fixup_fields": [],
+          "implicit_reads": [],
+          "implicit_writes": [],
+          "instruction": "les si, ptr [bp - 4]",
+          "load_offset": 22,
+          "mnemonic": "les",
+          "operand_fields": [
+            [
+              2,
+              3
+            ]
+          ],
+          "operands": [
+            {
+              "kind": "reg",
+              "reg": "si",
+              "width": 2
+            },
+            {
+              "base": "bp",
+              "disp": -4,
+              "index": null,
+              "kind": "mem",
+              "scale": 1,
+              "segment": null,
+              "width": 2
+            }
+          ]
+        }
+      },
+      "full_diagnostic": "recovery/attempts/copy_string/0002/comparison-full.json",
+      "full_diagnostic_identity": {
+        "sha256": "49617bca09ed3b0d2c9bfdf38ca54995edbdf5613abeb625969daaef2c39a855",
+        "size": 35280
+      },
+      "match_summary": {
+        "anchors": [
+          {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                0,
+                22
+              ],
+              "instructions": [
+                0,
+                9
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                0,
+                22
+              ],
+              "instructions": [
+                0,
+                9
+              ]
+            }
+          },
+          {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                31,
+                36
+              ],
+              "instructions": [
+                12,
+                14
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                25,
+                30
+              ],
+              "instructions": [
+                10,
+                12
+              ]
+            }
+          },
+          {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                36,
+                56
+              ],
+              "instructions": [
+                14,
+                23
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                36,
+                56
+              ],
+              "instructions": [
+                14,
+                23
+              ]
+            }
+          }
+        ],
+        "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+        "candidate": {
+          "sha256": "53854142b0fe324b2eda648f78c62f9ee15799a7a594fcf0ee28eb71f358458b",
+          "size": 56
+        },
+        "classifications": [
+          "EXTRA_INSTRUCTIONS",
+          "MISSING_INSTRUCTIONS"
+        ],
+        "comparison": "bound payload",
+        "counts": {
+          "anchors": 3,
+          "byte_equal_aligned_pairs": 21,
+          "candidate_instructions": 23,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 20,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 2,
+          "structural_pairs": 0,
+          "target_anchored_percent": 86.96,
+          "target_instructions": 23
+        },
+        "decode_complete": true,
+        "decoded_bytes": [
+          56,
+          56
+        ],
+        "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+        "exact_prefix": {
+          "basis": "byte-exact, position-independent, unmasked",
+          "candidate": {
+            "bytes": [
+              0,
+              22
+            ],
+            "instructions": [
+              0,
+              9
+            ]
+          },
+          "kind": "ANCHOR",
+          "target": {
+            "bytes": [
+              0,
+              22
+            ],
+            "instructions": [
+              0,
+              9
+            ]
+          }
+        },
+        "exact_suffix": {
+          "basis": "byte-exact, position-independent, unmasked",
+          "candidate": {
+            "bytes": [
+              36,
+              56
+            ],
+            "instructions": [
+              14,
+              23
+            ]
+          },
+          "kind": "ANCHOR",
+          "target": {
+            "bytes": [
+              36,
+              56
+            ],
+            "instructions": [
+              14,
+              23
+            ]
+          }
+        },
+        "fixup_normalization": {
+          "fields": [],
+          "ignored": [],
+          "mode": "bound payload",
+          "omitted_fields": 0,
+          "omitted_ignored": 0,
+          "rule": "No normalization: every bound byte is compared."
+        },
+        "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+        "islands": [
+          {
+            "candidate": {
+              "bytes": [
+                22,
+                31
+              ],
+              "instructions": [
+                9,
+                12
+              ]
+            },
+            "classifications": [
+              {
+                "class": "EXTRA_INSTRUCTIONS",
+                "confidence": "medium",
+                "evidence": [
+                  "2 candidate instructions have no aligned target instruction"
+                ],
+                "omitted_evidence": 0
+              }
+            ],
+            "id": 1,
+            "kind": "ISLAND",
+            "resumes_exact": true,
+            "target": {
+              "bytes": [
+                22,
+                25
+              ],
+              "instructions": [
+                9,
+                10
+              ]
+            }
+          },
+          {
+            "candidate": {
+              "bytes": [
+                36,
+                36
+              ],
+              "instructions": [
+                14,
+                14
+              ]
+            },
+            "classifications": [
+              {
+                "class": "MISSING_INSTRUCTIONS",
+                "confidence": "medium",
+                "evidence": [
+                  "2 target instructions have no aligned candidate instruction"
+                ],
+                "omitted_evidence": 0
+              }
+            ],
+            "id": 2,
+            "kind": "ISLAND",
+            "resumes_exact": true,
+            "target": {
+              "bytes": [
+                30,
+                36
+              ],
+              "instructions": [
+                12,
+                14
+              ]
+            }
+          }
+        ],
+        "notes": [],
+        "omitted_anchors": 0,
+        "omitted_islands": 0,
+        "omitted_notes": 0,
+        "patterns": {
+          "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+          "corresponding_branches": [],
+          "corresponding_branches_count": 0,
+          "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+          "families": [],
+          "observation_count": 4,
+          "omitted_corresponding_branches": 0,
+          "omitted_families": 0,
+          "omitted_residuals": 0,
+          "omitted_unresolved_fixups": 0,
+          "residuals": [
+            {
+              "byte_equal": false,
+              "candidate": "inc word ptr [bp + 6]",
+              "candidate_index": 9,
+              "candidate_offset": 22,
+              "id": "p9",
+              "islands": [
+                1
+              ],
+              "level": "EXTRA",
+              "target": null,
+              "target_index": null,
+              "target_offset": null
+            },
+            {
+              "byte_equal": false,
+              "candidate": "inc word ptr [bp - 4]",
+              "candidate_index": 11,
+              "candidate_offset": 28,
+              "id": "p11",
+              "islands": [
+                1
+              ],
+              "level": "EXTRA",
+              "target": null,
+              "target_index": null,
+              "target_offset": null
+            },
+            {
+              "byte_equal": false,
+              "candidate": null,
+              "candidate_index": null,
+              "candidate_offset": null,
+              "id": "p14",
+              "islands": [
+                2
+              ],
+              "level": "MISSING",
+              "target": "inc word ptr [bp + 6]",
+              "target_index": 12,
+              "target_offset": 30
+            },
+            {
+              "byte_equal": false,
+              "candidate": null,
+              "candidate_index": null,
+              "candidate_offset": null,
+              "id": "p15",
+              "islands": [
+                2
+              ],
+              "level": "MISSING",
+              "target": "inc word ptr [bp - 4]",
+              "target_index": 13,
+              "target_offset": 33
+            }
+          ],
+          "residuals_count": 4,
+          "unresolved_fixups": [],
+          "unresolved_fixups_count": 0
+        },
+        "schema": 3,
+        "target": {
+          "sha256": "80e6eb902d5b097152e6c3e748fbf20a76102d1d1a6eda6f408c106f094913b9",
+          "size": 56
+        }
+      },
+      "omitted": "Full instructions, pair alignment and any omitted islands/evidence are in full_diagnostic; diagnostic only.",
+      "original_full_diagnostic": "D:\\prog\\stunts_recon\\build\\probes\\p06gau7s2\\diagnostic-49617bca09ed3b0d2c9bfdf38ca54995edbdf5613abeb625969daaef2c39a855.json",
+      "target": {
+        "sha256": "80e6eb902d5b097152e6c3e748fbf20a76102d1d1a6eda6f408c106f094913b9",
+        "size": 56
+      }
+    },
+    "difference_count": 14,
+    "emitted_sizes": {
+      "CONST": 0,
+      "UNIT_TEXT": 56,
+      "_BSS": 0,
+      "_DATA": 0
+    },
+    "expected_size": 56,
+    "externals": [
+      "__acrtused",
+      "_copy_string"
+    ],
+    "first_differences": [
+      {
+        "actual": 255,
+        "expected": 196,
+        "load_offset": 101100,
+        "offset": 22
+      },
+      {
+        "actual": 70,
+        "expected": 118,
+        "load_offset": 101101,
+        "offset": 23
+      },
+      {
+        "actual": 6,
+        "expected": 252,
+        "load_offset": 101102,
+        "offset": 24
+      },
+      {
+        "actual": 196,
+        "expected": 38,
+        "load_offset": 101103,
+        "offset": 25
+      },
+      {
+        "actual": 118,
+        "expected": 138,
+        "load_offset": 101104,
+        "offset": 26
+      },
+      {
+        "actual": 252,
+        "expected": 4,
+        "load_offset": 101105,
+        "offset": 27
+      },
+      {
+        "actual": 255,
+        "expected": 136,
+        "load_offset": 101106,
+        "offset": 28
+      },
+      {
+        "actual": 70,
+        "expected": 7,
+        "load_offset": 101107,
+        "offset": 29
+      },
+      {
+        "actual": 252,
+        "expected": 255,
+        "load_offset": 101108,
+        "offset": 30
+      },
+      {
+        "actual": 38,
+        "expected": 70,
+        "load_offset": 101109,
+        "offset": 31
+      },
+      {
+        "actual": 138,
+        "expected": 6,
+        "load_offset": 101110,
+        "offset": 32
+      },
+      {
+        "actual": 4,
+        "expected": 255,
+        "load_offset": 101111,
+        "offset": 33
+      },
+      {
+        "actual": 136,
+        "expected": 70,
+        "load_offset": 101112,
+        "offset": 34
+      },
+      {
+        "actual": 7,
+        "expected": 252,
+        "load_offset": 101113,
+        "offset": 35
+      }
+    ],
+    "fixups": [],
+    "object_comparison": {
+      "candidate": {
+        "sha256": "53854142b0fe324b2eda648f78c62f9ee15799a7a594fcf0ee28eb71f358458b",
+        "size": 56
+      },
+      "comparison": "unbound object",
+      "decoded_bytes": [
+        56,
+        56
+      ],
+      "first_differing_instruction": {
+        "candidate": {
+          "bytes": "ff4606",
+          "control": null,
+          "fixup_fields": [],
+          "implicit_reads": [],
+          "implicit_writes": [
+            "flags"
+          ],
+          "instruction": "inc word ptr [bp + 6]",
+          "load_offset": 22,
+          "mnemonic": "inc",
+          "operand_fields": [
+            [
+              2,
+              3
+            ]
+          ],
+          "operands": [
+            {
+              "base": "bp",
+              "disp": 6,
+              "index": null,
+              "kind": "mem",
+              "scale": 1,
+              "segment": null,
+              "width": 2
+            }
+          ]
+        },
+        "index": 9,
+        "target": {
+          "bytes": "c476fc",
+          "control": null,
+          "fixup_fields": [],
+          "implicit_reads": [],
+          "implicit_writes": [],
+          "instruction": "les si, ptr [bp - 4]",
+          "load_offset": 22,
+          "mnemonic": "les",
+          "operand_fields": [
+            [
+              2,
+              3
+            ]
+          ],
+          "operands": [
+            {
+              "kind": "reg",
+              "reg": "si",
+              "width": 2
+            },
+            {
+              "base": "bp",
+              "disp": -4,
+              "index": null,
+              "kind": "mem",
+              "scale": 1,
+              "segment": null,
+              "width": 2
+            }
+          ]
+        }
+      },
+      "full_diagnostic": "recovery/attempts/copy_string/0002/object_comparison-full.json",
+      "full_diagnostic_identity": {
+        "sha256": "93f908cc389364644ff3a6bf2a32a8d2ae57c6bcd1e2c6af33243881baa7d156",
+        "size": 35324
+      },
+      "match_summary": {
+        "anchors": [
+          {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                0,
+                22
+              ],
+              "instructions": [
+                0,
+                9
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                0,
+                22
+              ],
+              "instructions": [
+                0,
+                9
+              ]
+            }
+          },
+          {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                31,
+                36
+              ],
+              "instructions": [
+                12,
+                14
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                25,
+                30
+              ],
+              "instructions": [
+                10,
+                12
+              ]
+            }
+          },
+          {
+            "basis": "byte-exact, position-independent, unmasked",
+            "candidate": {
+              "bytes": [
+                36,
+                56
+              ],
+              "instructions": [
+                14,
+                23
+              ]
+            },
+            "kind": "ANCHOR",
+            "target": {
+              "bytes": [
+                36,
+                56
+              ],
+              "instructions": [
+                14,
+                23
+              ]
+            }
+          }
+        ],
+        "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+        "candidate": {
+          "sha256": "53854142b0fe324b2eda648f78c62f9ee15799a7a594fcf0ee28eb71f358458b",
+          "size": 56
+        },
+        "classifications": [
+          "EXTRA_INSTRUCTIONS",
+          "MISSING_INSTRUCTIONS"
+        ],
+        "comparison": "unbound object",
+        "counts": {
+          "anchors": 3,
+          "byte_equal_aligned_pairs": 21,
+          "candidate_instructions": 23,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 20,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 2,
+          "structural_pairs": 0,
+          "target_anchored_percent": 86.96,
+          "target_instructions": 23
+        },
+        "decode_complete": true,
+        "decoded_bytes": [
+          56,
+          56
+        ],
+        "engine_sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+        "exact_prefix": {
+          "basis": "byte-exact, position-independent, unmasked",
+          "candidate": {
+            "bytes": [
+              0,
+              22
+            ],
+            "instructions": [
+              0,
+              9
+            ]
+          },
+          "kind": "ANCHOR",
+          "target": {
+            "bytes": [
+              0,
+              22
+            ],
+            "instructions": [
+              0,
+              9
+            ]
+          }
+        },
+        "exact_suffix": {
+          "basis": "byte-exact, position-independent, unmasked",
+          "candidate": {
+            "bytes": [
+              36,
+              56
+            ],
+            "instructions": [
+              14,
+              23
+            ]
+          },
+          "kind": "ANCHOR",
+          "target": {
+            "bytes": [
+              36,
+              56
+            ],
+            "instructions": [
+              14,
+              23
+            ]
+          }
+        },
+        "fixup_normalization": {
+          "fields": [],
+          "ignored": [],
+          "mode": "unbound object",
+          "omitted_fields": 0,
+          "omitted_ignored": 0,
+          "rule": "Normalization is alignment-only; affected instructions never count as byte-exact anchors."
+        },
+        "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+        "islands": [
+          {
+            "candidate": {
+              "bytes": [
+                22,
+                31
+              ],
+              "instructions": [
+                9,
+                12
+              ]
+            },
+            "classifications": [
+              {
+                "class": "EXTRA_INSTRUCTIONS",
+                "confidence": "medium",
+                "evidence": [
+                  "2 candidate instructions have no aligned target instruction"
+                ],
+                "omitted_evidence": 0
+              }
+            ],
+            "id": 1,
+            "kind": "ISLAND",
+            "resumes_exact": true,
+            "target": {
+              "bytes": [
+                22,
+                25
+              ],
+              "instructions": [
+                9,
+                10
+              ]
+            }
+          },
+          {
+            "candidate": {
+              "bytes": [
+                36,
+                36
+              ],
+              "instructions": [
+                14,
+                14
+              ]
+            },
+            "classifications": [
+              {
+                "class": "MISSING_INSTRUCTIONS",
+                "confidence": "medium",
+                "evidence": [
+                  "2 target instructions have no aligned candidate instruction"
+                ],
+                "omitted_evidence": 0
+              }
+            ],
+            "id": 2,
+            "kind": "ISLAND",
+            "resumes_exact": true,
+            "target": {
+              "bytes": [
+                30,
+                36
+              ],
+              "instructions": [
+                12,
+                14
+              ]
+            }
+          }
+        ],
+        "notes": [],
+        "omitted_anchors": 0,
+        "omitted_islands": 0,
+        "omitted_notes": 0,
+        "patterns": {
+          "authority": "OBSERVATIONS_AND_SUPPORTED_GROUPINGS_ONLY",
+          "corresponding_branches": [],
+          "corresponding_branches_count": 0,
+          "coverage": "Every non-byte-exact aligned pair and byte-exact transfer with unproven destination is retained. Families may overlap; counts are not independent repairs.",
+          "families": [],
+          "observation_count": 4,
+          "omitted_corresponding_branches": 0,
+          "omitted_families": 0,
+          "omitted_residuals": 0,
+          "omitted_unresolved_fixups": 0,
+          "residuals": [
+            {
+              "byte_equal": false,
+              "candidate": "inc word ptr [bp + 6]",
+              "candidate_index": 9,
+              "candidate_offset": 22,
+              "id": "p9",
+              "islands": [
+                1
+              ],
+              "level": "EXTRA",
+              "target": null,
+              "target_index": null,
+              "target_offset": null
+            },
+            {
+              "byte_equal": false,
+              "candidate": "inc word ptr [bp - 4]",
+              "candidate_index": 11,
+              "candidate_offset": 28,
+              "id": "p11",
+              "islands": [
+                1
+              ],
+              "level": "EXTRA",
+              "target": null,
+              "target_index": null,
+              "target_offset": null
+            },
+            {
+              "byte_equal": false,
+              "candidate": null,
+              "candidate_index": null,
+              "candidate_offset": null,
+              "id": "p14",
+              "islands": [
+                2
+              ],
+              "level": "MISSING",
+              "target": "inc word ptr [bp + 6]",
+              "target_index": 12,
+              "target_offset": 30
+            },
+            {
+              "byte_equal": false,
+              "candidate": null,
+              "candidate_index": null,
+              "candidate_offset": null,
+              "id": "p15",
+              "islands": [
+                2
+              ],
+              "level": "MISSING",
+              "target": "inc word ptr [bp - 4]",
+              "target_index": 13,
+              "target_offset": 33
+            }
+          ],
+          "residuals_count": 4,
+          "unresolved_fixups": [],
+          "unresolved_fixups_count": 0
+        },
+        "schema": 3,
+        "target": {
+          "sha256": "80e6eb902d5b097152e6c3e748fbf20a76102d1d1a6eda6f408c106f094913b9",
+          "size": 56
+        }
+      },
+      "omitted": "Full instructions, pair alignment and any omitted islands/evidence are in full_diagnostic; diagnostic only.",
+      "original_full_diagnostic": "D:\\prog\\stunts_recon\\build\\probes\\p06gau7s2\\diagnostic-93f908cc389364644ff3a6bf2a32a8d2ae57c6bcd1e2c6af33243881baa7d156.json",
+      "target": {
+        "sha256": "80e6eb902d5b097152e6c3e748fbf20a76102d1d1a6eda6f408c106f094913b9",
+        "size": 56
+      }
+    },
+    "object_segments": {
+      "UNIT_TEXT": {
+        "sha256": "53854142b0fe324b2eda648f78c62f9ee15799a7a594fcf0ee28eb71f358458b",
+        "size": 56
+      }
+    },
+    "publics": [
+      {
+        "name": "_copy_string",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "receipt": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "3e84db4562011001d074c6e9e0170c526d5118a03f10ee5b38aa90000d13417f",
+      "object": {
+        "sha256": "aca854f61d36ef317e86c37367e0c683952f8f70f9889118c021e81dd94d1384",
+        "size": 298
+      },
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "826db76e4054bf17af4550140c5e589ee518dd0b53967727d6ec9d3a45184c30",
+        "size": 195
+      },
+      "staged_source": {
+        "sha256": "53f804021d109a042bb57a57ea68cd5271b9472e4d8251286ad52438c7886fab",
+        "size": 205
+      },
+      "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\p06gau7s2"
+    }
+  },
+  "effective_key": "ed4038fc6f7031d7026d268ef8e5432fde1cd38e58ec97fb61537fb658d8fa3d",
+  "epoch": 0,
+  "error": "Candidate bytes differ from full pristine extent",
+  "escalate": false,
+  "hypothesis": "Copy the far source argument to a separate local far cursor and increment the local cursor in the existing do-while loop, matching the reference's stack slot.",
+  "hypothesis_key": "4889e12dba31900099fb62b66cdc42fdd2f2d106439237c09651f1e202cb0472",
+  "input_fingerprint": "375455d2716147e95781c5411351231c7b0425cfa6479bdf6cf38010a8755614",
+  "recipe": {
+    "end": 101134,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2639,
+      "line_start": 2608,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "copy_string",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_copy_string",
+    "source": "recovery/candidates/copy_string.c",
+    "stable_id": "load_18ad6",
+    "start": 101078,
+    "target": {
+      "sha256": "80e6eb902d5b097152e6c3e748fbf20a76102d1d1a6eda6f408c106f094913b9",
+      "size": 56
+    }
+  },
+  "same_effective_as": [],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "826db76e4054bf17af4550140c5e589ee518dd0b53967727d6ec9d3a45184c30",
+    "size": 195
+  },
+  "started_utc": "2026-09-23T12:57:08.869765+00:00",
+  "status": "FAILED",
+  "task": "copy_string"
+}

@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
-from common import identity,write_json,sha
+from common import identity,write_json,read_json,sha
 from diagnostics import compare_streams,compact,format_summary
 import attempt_index
 import context
@@ -165,7 +165,22 @@ class IntegrationTests(unittest.TestCase):
                 packet=context.packet('id')
             self.assertEqual(packet['match_diagnosis']['match_summary']['counts'],summary['counts'])
             self.assertTrue(packet['match_diagnosis']['source_matches_current'])
+            self.assertIn('patterns',packet['match_diagnosis']['match_summary'])
+            self.assertNotIn('islands',packet['match_diagnosis']['match_summary'])
+            self.assertIn('--islands',packet['match_diagnosis']['drill_down'])
             self.assertNotIn('assembly',packet)
+            write_json(root/'recovery/attempts/fixture/0002/report.json',{
+                'task':'fixture','status':'FAILED','diagnostics':{'category':'BYTE_MISMATCH',
+                'comparison':{'diagnostic_error':'decoder unavailable'}}})
+            with patch('attempt_index.ROOT',root):attempt_index.generate()
+            index=read_json(root/'recovery/context-index.json')
+            index['attempt_index_sha256']=sha((root/'recovery/attempt-index.json').read_bytes())
+            write_json(root/'recovery/context-index.json',index)
+            with patch('context.ROOT',root),patch('workflow.workflow_inputs',return_value={}),\
+                 patch('workflow.fingerprint',return_value='fingerprint'),patch('workflow.state',return_value={'reason':None,'blocked':True,'remaining':1}):
+                newer=context.packet('id')['match_diagnosis']['newer_observations_without_summary']
+            self.assertEqual(newer[0]['category'],'BYTE_MISMATCH')
+            self.assertEqual(newer[0]['diagnostic_error'],'decoder unavailable')
 
     def test_anchor_loss_is_diagnostic_and_comparable(self):
         old=compact(compare(PREFIX+SUFFIX,PREFIX+SUFFIX))

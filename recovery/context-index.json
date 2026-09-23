@@ -1,5 +1,5 @@
 {
-  "attempt_index_sha256": "a359a6d79c345e66d8863718ad77e9b43684be23bc7aab337b71cb0910a18c85",
+  "attempt_index_sha256": "f5a6df3e2a5592492867bb08983be9c4783830a8b9a68505eb88ea02d99c9e70",
   "oracle": {
     "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
     "size": 200000
@@ -7,3647 +7,3635 @@
   "schema": 1,
   "tasks": [
     {
-      "card": "recovery/cards/load_226ba.json",
-      "card_sha256": "fee6f802fc66eb33639263cc523bc30eb30dfdf5b1a53400f424b3be83c3b835",
-      "id": "load_226ba",
-      "name": "nopsub_326BA"
-    },
-    {
-      "card": "recovery/cards/load_18ad6.json",
-      "card_sha256": "5cfc6a9798072eddfbcdc3f8e76a8f68ac9f048e4209d76f960fadb900061305",
-      "id": "load_18ad6",
-      "name": "copy_string"
-    },
-    {
-      "card": "recovery/cards/load_29c84.json",
-      "card_sha256": "57b92cfbc888aa601fb0a278079d3d8331b9fe5233b3fef21454da9c3a8de25e",
-      "id": "load_29c84",
-      "name": "audioresource_copy_n_bytes"
-    },
-    {
-      "card": "recovery/cards/load_2264a.json",
-      "card_sha256": "4382aecaffc6485d0590f2250ea4dbd7ceab822568c0bba882f7e19daab8976a",
-      "id": "load_2264a",
-      "name": "file_get_res_shape_count"
-    },
-    {
-      "card": "recovery/cards/load_1e066.json",
-      "card_sha256": "59814ed3fd14847a5210d9c1af24b8f8afca67ccb0954e3d11c0bbf3b977b61f",
-      "id": "load_1e066",
-      "name": "unknown_libname_1"
-    },
-    {
-      "card": "recovery/cards/load_270ba.json",
-      "card_sha256": "0ba3469f060161ad00946ea67b28e3692931364da17cfea37cd7e9f662d129a3",
-      "id": "load_270ba",
-      "name": "toupper"
-    },
-    {
-      "card": "recovery/cards/load_2118d.json",
-      "card_sha256": "dae8167da026e76d600c4b2cf8fdb5984ffcab4f8f317964dfdb1929b6805343",
-      "id": "load_2118d",
-      "name": "mmgr_copy_paras"
-    },
-    {
       "card": "recovery/cards/load_25de6.json",
-      "card_sha256": "d5dcac145b8ae8b4415c5db0487ffcb9a654165f81abb1a5c6a4e8393ac99566",
+      "card_sha256": "3be08a61d37736e6b4c92c8eaeb5eff68673b915792910294caa1c2af7c5d1a5",
       "id": "load_25de6",
       "name": "sub_35DE6"
     },
     {
       "card": "recovery/cards/load_2acb0.json",
-      "card_sha256": "1f62cf2bde73b989caecc86fa777ed9f0a8c509e2e9bac68081659fa179ef023",
+      "card_sha256": "e8cc9933aaca60b517501ff908699ec8a5c878ec104e34118152c861ae2a7a27",
       "id": "load_2acb0",
       "name": "file_load_shape2d_palmap_init"
     },
     {
       "card": "recovery/cards/load_2a9ea.json",
-      "card_sha256": "5bf391becf5fcd62f09f8d865b87c0e0b2f8e984bb0fcd44e49b0baa0071bde4",
+      "card_sha256": "f2b7c4d8ebaf835a0d3c06a101787a2acf5559d9e068b589552ddb48562351b5",
       "id": "load_2a9ea",
       "name": "file_load_shape2d_nofatal"
     },
     {
       "card": "recovery/cards/load_2acec.json",
-      "card_sha256": "e3cb472628ad22b8e3c57e84753f81a7a5e85ef3a13a658e012071f24f55545c",
+      "card_sha256": "e994d60263a0e42a51e71b148e732772321f72c4827d7d8ffff71893aa79de2d",
       "id": "load_2acec",
       "name": "file_load_shape2d_res_nofatal"
     },
     {
       "card": "recovery/cards/load_27456.json",
-      "card_sha256": "dc9444ee6ebc99d67e39d01d417b71194132c112ec4b2f01a3168906d9c800df",
+      "card_sha256": "3f902e8d8dcae91f71a0c42f690c7686d4164c05fa0ad94f7f33a31c8288d798",
       "id": "load_27456",
       "name": "nopsub_37456"
     },
     {
       "card": "recovery/cards/parse_shape2d_helper.json",
-      "card_sha256": "cc6c0d99630e39d13df3002fa2740f6fa2788c1042c180337f5b97f5b1173584",
+      "card_sha256": "7537b94b303746e636648c83eeaf99f11e7a2d7572ef974c63c6ae6e331f2009",
       "id": "load_1f314",
       "name": "parse_shape2d_helper"
     },
     {
       "card": "recovery/cards/load_09dc6.json",
-      "card_sha256": "9b0aa270844b214e5c758d79b74842aaf092cfacb7ae2327d4a19b21cd8a0710",
+      "card_sha256": "e3e1355fff3766aac8a3378ab43d563c84ff0475974b5f937b5dbd5e87321ab3",
       "id": "load_09dc6",
       "name": "update_rpm_from_speed"
     },
     {
+      "card": "recovery/cards/nopsub_326BA.json",
+      "card_sha256": "adde3c5d669c036ac02b73c242238d97f5661994d9285b6e451f9b32aa516d8c",
+      "id": "load_226ba",
+      "name": "nopsub_326BA"
+    },
+    {
       "card": "recovery/cards/load_2167c.json",
-      "card_sha256": "363933788cf8a1404f8611d0c746ce9d4816d8dcb18376bebc665df2d2324cd1",
+      "card_sha256": "fafbf9d5240d294c25806ef536b3dae0cbc906c080970655a91200aef52b3f2c",
       "id": "load_2167c",
       "name": "mmgr_get_chunk_size"
     },
     {
       "card": "recovery/cards/load_12532.json",
-      "card_sha256": "e36c47c716f6b45f840afefbd41788bb08f5158cdc6ecade329f0c6862687d1b",
+      "card_sha256": "6cd04950c45f5531a40f6575f41e4097865fa325d682895c619d15fadb8b28a6",
       "id": "load_12532",
       "name": "init_unknown"
     },
     {
       "card": "recovery/cards/load_1913a.json",
-      "card_sha256": "bf5dd2c0435339ab985acf30373a4a5e4bd5dfee7d8882283e079fc51fd6c327",
+      "card_sha256": "d0d4d880de45413225ca33a5d0bbfced4c7e7505ec7b9d7065dbc0c227f93763",
       "id": "load_1913a",
       "name": "input_repeat_check"
     },
     {
+      "card": "recovery/cards/audioresource_copy_n_bytes.json",
+      "card_sha256": "b536b4fe9d84fc5afb13cebf9db89b0c98e638dab22f5b4cd09d5ef5346230b7",
+      "id": "load_29c84",
+      "name": "audioresource_copy_n_bytes"
+    },
+    {
       "card": "recovery/cards/load_1637a.json",
-      "card_sha256": "63547516d500510fdaec3ac4b920557c69cf44ac0f234d91aeb925f6bfe67852",
+      "card_sha256": "ef8e76d27a040faf2d2c036e66d9c95af83c7d54e69f2de78628258526d8fd84",
       "id": "load_1637a",
       "name": "rect_adjust_from_point"
     },
     {
       "card": "recovery/cards/load_23848.json",
-      "card_sha256": "11c514bec3f77a373889e7c34ba60a89263db204a70ab44b6975308c1ce291a9",
+      "card_sha256": "ea212a1b1bc10f7725416b7454be975409505a4ae23ef7c7f875427c6c635419",
       "id": "load_23848",
       "name": "file_load_shape2d_res_fatal_thunk"
     },
     {
       "card": "recovery/cards/load_2384d.json",
-      "card_sha256": "1f2df130dad3048174a0e5cc8975c509edccd711287f84dd92f149b666858d7e",
+      "card_sha256": "561f12cd505ac904eaa687ce0f6a266f62c1ebaeb96acd3b1a06fbf11f3b233a",
       "id": "load_2384d",
       "name": "file_load_shape2d_res_nofatal_thunk"
     },
     {
       "card": "recovery/cards/load_23852.json",
-      "card_sha256": "ce6e71700ff7f7a6cf28b68c98823b0e1de601bcf1635bd4405bd82516c3cb54",
+      "card_sha256": "acace49ebf6b379e16331a5c2ba68cb7e582ac5e1da8c65c526d411cfd171e6f",
       "id": "load_23852",
       "name": "file_load_shape2d_res_thunk"
     },
     {
       "card": "recovery/cards/load_23857.json",
-      "card_sha256": "878bf534634d6ad876479c2b35ebde601eb0ac54a2864f7792da8b7561b9da5d",
+      "card_sha256": "7f276617ec596a433789825ab003e4d8eca59d0fa5dbde6e3e28df98a9a2ba95",
       "id": "load_23857",
       "name": "parse_shape2d_thunk"
     },
     {
       "card": "recovery/cards/load_2385c.json",
-      "card_sha256": "27dd5fa7692846ba6a5da0fb1093ccf074b9e35220b5196f6ea85d9d29a803c4",
+      "card_sha256": "9648e1619fd36342ba1247592df07d206cfc046cfa84d8e4673bd3bfeacb52be",
       "id": "load_2385c",
       "name": "file_load_shape2d_fatal_thunk"
     },
     {
       "card": "recovery/cards/load_23861.json",
-      "card_sha256": "1c3d38c7c3b8d0bf065e311aea40ed50ff81fbfa156232b033fa55297885535e",
+      "card_sha256": "65b8419568b53342d33f2ba0f46f3ab1743becb32cf452e5b827f4a702e8b1d7",
       "id": "load_23861",
       "name": "file_load_shape2d_nofatal_thunk"
     },
     {
       "card": "recovery/cards/load_1a230.json",
-      "card_sha256": "7510a0e3ace56db2423a9c0731da39543b7ab6545f9f56173a8eebe47543a5df",
+      "card_sha256": "4e5f521b341c182ce2fea061caa6eff873f51643c931d26cb00e96b08870bac8",
       "id": "load_1a230",
       "name": "timer_get_delta_alt"
     },
     {
       "card": "recovery/cards/load_1ceae.json",
-      "card_sha256": "687896880a558e01d6e7a64a14282984f8d7de2178e5d62747a9c08b426c5b02",
+      "card_sha256": "ba077700753ec74eb7dc7ad784c201510486c61fc9dcd8f81b099723bfd6d32d",
       "id": "load_1ceae",
       "name": "__fptrap"
     },
     {
       "card": "recovery/cards/load_1d1b6.json",
-      "card_sha256": "ba3801977ffd5d5e973befa8686c987d4ecc2607af32417ae5cee713522550b6",
+      "card_sha256": "e936eef658230ec61e0c98992a22ad2c9f02b2a41abe76b9b1582c7a2c27b88e",
       "id": "load_1d1b6",
       "name": "__maperror"
     },
     {
       "card": "recovery/cards/load_29e4c.json",
-      "card_sha256": "460047c3510308f15997f40213d2318cb22540054360b863762761d87e7f6dc6",
+      "card_sha256": "356d24a33258b63bb0ec393112b7e0a806b0b73d2b2915e01acecc1df1706b2f",
       "id": "load_29e4c",
       "name": "file_find_next_alt"
     },
     {
       "card": "recovery/cards/load_20a55.json",
-      "card_sha256": "d51363e0f52dc690426a7ecccce65ff46f6714ce254684c53070bababc22814a",
+      "card_sha256": "a63391eb9c24d6b5749bc79db0b7e9cbe16a384cc0f03d7f33a752ba96ee7bfa",
       "id": "load_20a55",
       "name": "nopsub_kb_get_readchar_callback"
     },
     {
       "card": "recovery/cards/load_09dff.json",
-      "card_sha256": "03cf121bd9994b2a757128a1aae24323e42ce470bf3ffbd9b82a639e67c36f90",
+      "card_sha256": "49cf064e5a267bbae5d51a7a61dabd3e8e2cbb3048d786e97c085d28424e92e2",
       "id": "load_09dff",
       "name": "nopsub_19DFF"
     },
     {
       "card": "recovery/cards/load_09e09.json",
-      "card_sha256": "d8c4121e167b34f89ef6dac9c732a24378569ee79c54b83bdeddfbeab0c490b0",
+      "card_sha256": "5c8661b9da4a1b03000d6164390b1bbcbf4ed72de59343019c9bc784743016a1",
       "id": "load_09e09",
       "name": "nopsub_19E09"
     },
     {
       "card": "recovery/cards/load_1ead4.json",
-      "card_sha256": "5a2eebd586a9e2732fa9f94fc74a86bd6b4bfa87def1fef8c2ffdfab7691c541",
+      "card_sha256": "c5565604dfb12e427103d878b487c300ee2e0f2622b4bc970637d8e7047de554",
       "id": "load_1ead4",
       "name": "sub_2EAD4"
     },
     {
       "card": "recovery/cards/load_20a5d.json",
-      "card_sha256": "8fdd5cb863639918887767d3a025db067d2a98d0accbaf862e253c9eb9c2bd31",
+      "card_sha256": "909f223028b776a568f1c4b4c4a52e97c6a737d9018e7f100c55b6017594176e",
       "id": "load_20a5d",
       "name": "flush_stdin"
     },
     {
       "card": "recovery/cards/load_2031d.json",
-      "card_sha256": "d10a1e23562704735e05833aedd4da30eadb7f0e35838aeee848c622588038d7",
+      "card_sha256": "1af3594d98378a89a44e6ad8451715bcb0f42e77889abd0ddbbccddf93398bc4",
       "id": "load_2031d",
       "name": "compare_ds_ss"
     },
     {
       "card": "recovery/cards/load_210f1.json",
-      "card_sha256": "77b837051d11948be1756a66019a93b61ac2196100c5206a332c52a161da7071",
+      "card_sha256": "b89f90c4d7730bc381705050db91de9c915d9cb2cf1701beabd73184fb40d6cf",
       "id": "load_210f1",
       "name": "mmgr_alloc_a000"
     },
     {
       "card": "recovery/cards/load_09e13.json",
-      "card_sha256": "58bfbb59c9b0d1db722c9e2d929ef8c09269d847323f9c997cb68b7386c70a09",
+      "card_sha256": "1688dd40e82394e11f35415584e8801d351b39f76c249bcd860ea63804219489",
       "id": "load_09e13",
       "name": "nopsub_19E13"
     },
     {
       "card": "recovery/cards/load_1eb48.json",
-      "card_sha256": "19c2cdded37ec2dc4f8d60e2c8ed6ff39a9ef7c8404b7c3754a1f872525f5bb1",
+      "card_sha256": "0bfafcd3ef56ec0ead991b85b4ab9768284253f2fe4d88a99fd3c6b6f90b907e",
       "id": "load_1eb48",
       "name": "draw_line_related_alt"
     },
     {
       "card": "recovery/cards/load_22fee.json",
-      "card_sha256": "e2924dda58ab7c4d7a937ffdb34220e7a9a6526827e7d17ef3fd5d3be1ad6c0e",
+      "card_sha256": "978a150251b3fa667c95c3bc3fadcf039bf58b608f0ea1cf95c60fc8bbbba0ff",
       "id": "load_22fee",
       "name": "nopsub_32FEE"
     },
     {
       "card": "recovery/cards/load_29e14.json",
-      "card_sha256": "8b56fb48c81d48bd121a3fb8f3ce47107f05a194e52fa6a25bd877994ff7955f",
+      "card_sha256": "05b8842c9389722ddd9f38e5ba18d761c780669d1342a291b2fcd63f9f1b1d6c",
       "id": "load_29e14",
       "name": "file_load_shape2d_nofatal2"
     },
     {
       "card": "recovery/cards/load_20a44.json",
-      "card_sha256": "a1d6244ad6609549b36eef25703a25069dbf0b1ccb2341dd6dae991a08bee21b",
+      "card_sha256": "054465f217f4d6166ebe41bebd8eec47606f907f1dff0c03ac991e580eab3586",
       "id": "load_20a44",
       "name": "nopsub_kb_set_readchar_callback"
     },
     {
+      "card": "recovery/cards/file_get_res_shape_count.json",
+      "card_sha256": "812ad73993f5a274e88034b01112595a3008f8bc11d279c557388853c4a91606",
+      "id": "load_2264a",
+      "name": "file_get_res_shape_count"
+    },
+    {
       "card": "recovery/cards/load_26af4.json",
-      "card_sha256": "d9bdeb9e716f01a92a8ee1daafa3e947e038c6d9e465fc54abe02fd029028585",
+      "card_sha256": "093b9d27228926c6c4a8b88fe21475d016edf26a5f03486b33390391aac2276d",
       "id": "load_26af4",
       "name": "kb_shift_checking1"
     },
     {
       "card": "recovery/cards/load_26b05.json",
-      "card_sha256": "80eacec47932b006494a6f92331ab23aa6f945808584fe648c53eed9157c5822",
+      "card_sha256": "b9035ec1b7574240b9df81dca94812bf6b22f0a033e4a0a446501d4dc318f64b",
       "id": "load_26b05",
       "name": "kb_shift_checking2"
     },
     {
+      "card": "recovery/cards/unknown_libname_1.json",
+      "card_sha256": "5b5889de4c9b12027013f289ea6b3d9a3f7e6c229b171c3046a1030fcc187fc1",
+      "id": "load_1e066",
+      "name": "unknown_libname_1"
+    },
+    {
       "card": "recovery/cards/load_1f424.json",
-      "card_sha256": "fca1be771f593fcf25aaeb208f701b08ad294faaafe9e1aac6ca29347bce7a40",
+      "card_sha256": "fd3b5c91689e75c062f0aaebdc9f244fb9b9a569f28cb98c73f9b1eb64a5c040",
       "id": "load_1f424",
       "name": "nopsub_2F424"
     },
     {
       "card": "recovery/cards/load_21157.json",
-      "card_sha256": "320f183df327e3a168bd97e7850c16f02046b26de6a187f068f73c5375bee581",
+      "card_sha256": "f2adcb8a4b7f9103e8603c977b64ffe7038f705c28c15d4a391ee5f9cc9e167a",
       "id": "load_21157",
       "name": "nopsub_31157"
     },
     {
       "card": "recovery/cards/load_21169.json",
-      "card_sha256": "161e0e9d430ea245743da9352039a4fe29c6e42cb70625e687a2ad29fe1e9f6a",
+      "card_sha256": "e985a46796875e542bb8a4f6bf93ebf4c54b197dc302c5e019c62d5cb73cb897",
       "id": "load_21169",
       "name": "nopsub_31169"
     },
     {
       "card": "recovery/cards/load_2117b.json",
-      "card_sha256": "8665c7b1ebae0f03881c148b1ea8119aa11eaf9cfd69f3bc7a1ced14033e67da",
+      "card_sha256": "24b01ae481152243f3909ed03527c0b59d046114ecc10d80da4871eb5fdffe12",
       "id": "load_2117b",
       "name": "mmgr_get_ofs_diff"
     },
     {
       "card": "recovery/cards/load_228c9.json",
-      "card_sha256": "d6fdb4dec83a54d61019504cf1aeecbf75dcce0fd10a613aceb67516872ad65a",
+      "card_sha256": "4abb613932cac4b0c18951a90885e22651dc9a57fdf8509a880f4e1ddb1a97d6",
       "id": "load_228c9",
       "name": "nopsub_328C9"
     },
     {
       "card": "recovery/cards/load_2a484.json",
-      "card_sha256": "58e891c43871c68ea960f0be6caf0e90353cfe24fd1aca30f24cb04338ef0418",
+      "card_sha256": "4c53213bf364a9cb267658dcb453142d5c5aeb8be91b8c29e921cd517a18751e",
       "id": "load_2a484",
       "name": "mmgr_get_res_ofs_diff_scaled"
     },
     {
       "card": "recovery/cards/load_1e052.json",
-      "card_sha256": "dc6fdc9784345d94552ab00fcb0026788aac41419f1b6ab5739fa2e4c32ba39b",
+      "card_sha256": "43f4551510abe50fd3f3a8d77f6b45257ca6d184ed61b0a0567effb970ac1408",
       "id": "load_1e052",
       "name": "_stackavail"
     },
     {
       "card": "recovery/cards/load_20a21.json",
-      "card_sha256": "69774aa61f0e3fb35296a584acb7170cb462051eecc58fc4dddf7f3be8af69a5",
+      "card_sha256": "29ac1489a3f581ae863b40367fdf966817b589bc6ff64ca8020927c1d35e4a99",
       "id": "load_20a21",
       "name": "kb_read_char"
     },
     {
       "card": "recovery/cards/load_227d7.json",
-      "card_sha256": "5f144e28d171c55e65a444e006e7c29b9824175b511425c2952377d6534f5e76",
+      "card_sha256": "7fbc7619b63966004746bef479706e3f20e6b717c7e30fc2d2176521e52dc8cf",
       "id": "load_227d7",
       "name": "timer_wait_for_dx"
     },
     {
       "card": "recovery/cards/load_273e8.json",
-      "card_sha256": "9038ad9810cebdbdb332349e565f19c78ea9f76d6cc065e01613ecf3ac31f933",
+      "card_sha256": "2435a58cf0d6765f721f0d2079c333a02becfee5cc29b73eb3f816c182fd132e",
       "id": "load_273e8",
       "name": "audio_toggle_flag2"
     },
     {
       "card": "recovery/cards/load_27708.json",
-      "card_sha256": "d063062c44c70f71eba72efa79e7a06e3942fbc6a439e9c0ada14a9b6ac0ec26",
+      "card_sha256": "35a295083e992e45581dcadf3cbf091b06bfd1e98a94351725fbcf8d56aae0f2",
       "id": "load_27708",
       "name": "audio_toggle_flag6"
     },
     {
       "card": "recovery/cards/load_09de8.json",
-      "card_sha256": "44190e05d9699d220a548f8864792732e69114c4b7a81001365b538f281c472c",
+      "card_sha256": "fad55ee7d677401e1b8bf822bfd158f98a75417835eedaeba5ca92ea4bab9bcf",
       "id": "load_09de8",
       "name": "nopsub_19DE8"
     },
     {
       "card": "recovery/cards/load_1eb07.json",
-      "card_sha256": "78a76c7ba3d519bb16d682d1ad2eaf8d744c7fbd19a0d6cb0b21ea4cf380c034",
+      "card_sha256": "19337f0dddb9d8a0cece452a0b216b595602b96804d6ec79ef4ee64ec2345f83",
       "id": "load_1eb07",
       "name": "sub_2EB07"
     },
     {
       "card": "recovery/cards/load_227c0.json",
-      "card_sha256": "0181dd7f72ca214a9376945c277d17d62d423e3a39540909fbc9a1f067de5a59",
+      "card_sha256": "176324d23abc50f7cf5a4f32c66d9eb4748b5fca16333e8c3fd29f94c3a97ceb",
       "id": "load_227c0",
       "name": "timer_copy_counter"
     },
     {
       "card": "recovery/cards/load_18d9e.json",
-      "card_sha256": "eed1590f7579d2a6adcb0fc0fad616a43b5ceb896782c728af2e85374cc9efc3",
+      "card_sha256": "beae32d9a8861088f2673ec7db5fa226326e9ba69925afa222743fd1d3652a54",
       "id": "load_18d9e",
       "name": "mouse_draw_transparent_check"
     },
     {
       "card": "recovery/cards/load_1ddc4.json",
-      "card_sha256": "0ad75d2fb922a4eaa49bd35f54ccaebd92e700bdef2c37302b3a3f742873b1d5",
+      "card_sha256": "0d1bc98bcff29867fd5bfe9370a4a8c4b05c81a8f953b0e0cb7369d05ceb1756",
       "id": "load_1ddc4",
       "name": "putsign"
     },
     {
       "card": "recovery/cards/load_227eb.json",
-      "card_sha256": "a0b94b3252e096df54694a724ac640f54cb87bcfb2d14103938864fa878764d9",
+      "card_sha256": "47a0de75142f03985a99f9e5f8e95ca76238111c1d4b88bb7f9ecb047ed689a0",
       "id": "load_227eb",
       "name": "timer_compare_dx"
     },
     {
       "card": "recovery/cards/load_1255a.json",
-      "card_sha256": "72cfdfae44e36b2d59e70e0c26346654d11ad284b35cd703d86b0f90e2244c65",
+      "card_sha256": "3062f77bacc38330fbf6304f5136ef8144590640ae8a11ae4d9094c421610792",
       "id": "load_1255a",
       "name": "set_frame_callback"
     },
     {
       "card": "recovery/cards/load_2262e.json",
-      "card_sha256": "64953369211df63ad2df86c11713be35dea5b2568ae5d4d4b0b34f7bdf0a27d6",
+      "card_sha256": "7e41f628028f2ee4e3a6e3b17ee3dd3bcb4b4dda74499d4c3b75285ebbdb6f14",
       "id": "load_2262e",
       "name": "sprite_copy_arg_to_both"
     },
     {
       "card": "recovery/cards/load_1f3bc.json",
-      "card_sha256": "df13bc7320712430a785c81fbdd84f6c5ce613a274c9fe2b034f740574f6d9f5",
+      "card_sha256": "e21112a914e91565088a124a4531aa75ef085355260f86c16f180896e0f40095",
       "id": "load_1f3bc",
       "name": "criterr_exithandler"
     },
     {
       "card": "recovery/cards/load_207b4.json",
-      "card_sha256": "339e20cb158e292984c84a7d8f30747e34f8a237209732bf3516050507673898",
+      "card_sha256": "1deacb4c194f7e00f2c81aa2ac4f6bdbe89034d2ed7eba6790f6edc87fa0cc13",
       "id": "load_207b4",
       "name": "sub_307B4"
     },
     {
       "card": "recovery/cards/load_217c1.json",
-      "card_sha256": "80f73ee30e4ad00da7de2e49d41a67b2bdea83c1b7d6c3b6c0ca1fac6c8e9219",
+      "card_sha256": "74b7053b05cf3359c7356ef5fac8478e115e1f0dc455a578091712a2bc6a19f8",
       "id": "load_217c1",
       "name": "preRender_default_alt"
     },
     {
       "card": "recovery/cards/load_09ec9.json",
-      "card_sha256": "b4dc0894ba149d5aa4e64b3979154cc2d2521815d1578a2a91178c6a959291b5",
+      "card_sha256": "8a5cf820b9346d061489bf2db767f443b4f2ad183e1798dd753a0a9311fc7acb",
       "id": "load_09ec9",
       "name": "intr0_handler"
     },
     {
       "card": "recovery/cards/load_20519.json",
-      "card_sha256": "f2805e375c921205a24f2a3011c2b0bd40cff3fb1358ba2dd1c8acba53c91aae",
+      "card_sha256": "2017269c22bc6ca6ad5f4769ed5a9d8ababeeb9521e29d891598b735ddd45fef",
       "id": "load_20519",
       "name": "kb_get_char"
     },
     {
       "card": "recovery/cards/load_210fe.json",
-      "card_sha256": "b409ce459f07216261e866dac905564e1a1553f508ec8ec02222f4bef9183b87",
+      "card_sha256": "a93c904d2a01270990b653c2219cea306d9c67ba096c4b49ed1a3f7d70b94157",
       "id": "load_210fe",
       "name": "nopsub_310FE"
     },
     {
       "card": "recovery/cards/load_2a496.json",
-      "card_sha256": "809dd79454507c2fdfe76d9f2641ef67fd17fccbb18b53be189aa5edaa89bdf8",
+      "card_sha256": "81214e4cb5a68890155cadd74591ec2c3da227bdf1016bf11a0ff550c04dad23",
       "id": "load_2a496",
       "name": "mmgr_get_chunk_size_bytes"
     },
     {
       "card": "recovery/cards/load_20a77.json",
-      "card_sha256": "62a919cae1355899420747c814ece66fc947e8571753ff48ed99d87614db817e",
+      "card_sha256": "699aada3282136f4d7a67d0f18f7d77dbe68d481f66314cdc7f325c97d0ec977",
       "id": "load_20a77",
       "name": "nopsub_30A77"
     },
     {
       "card": "recovery/cards/load_2260e.json",
-      "card_sha256": "714e0e8b1baae9eae7cea65d8666a8746c4c43df7ef68e765fca4228f58e6703",
+      "card_sha256": "d18a1bdc2df56b99a85ec3aa7c80ea569bc8391bb0357bba239e9b6e71a8e342",
       "id": "load_2260e",
       "name": "sprite_copy_both_to_arg"
     },
     {
       "card": "recovery/cards/load_1ea08.json",
-      "card_sha256": "87230298295100b2f3774d6b6c0bcff4b212f54b1357ee64c0d06417e145b69b",
+      "card_sha256": "6aee19d64af86450f2c868596049826be4d8d91ffc723fdfd9db82c5e656ba9b",
       "id": "load_1ea08",
       "name": "polarRadius3D"
     },
     {
       "card": "recovery/cards/load_1e1de.json",
-      "card_sha256": "7fc680c17484e60e3d29ecde363bbf569aea20c7ae5b59a98d1191a4ee4f6639",
+      "card_sha256": "211ec5ac826bcbe587c81aa25d25f59100ce2a7bb67d76728aba6831200a4ea5",
       "id": "load_1e1de",
       "name": "__amlink"
     },
     {
       "card": "recovery/cards/load_1e3c6.json",
-      "card_sha256": "3c2c6c669b97f2f0cc9fc976dae10c2c37166b1defc30575fd34b96b6f539d0e",
+      "card_sha256": "47aa648ea00ceeb1fb2d1167d9b23d563c0e671ee0d2de53aac2422b2534d1d6",
       "id": "load_1e3c6",
       "name": "_abort"
     },
     {
       "card": "recovery/cards/load_17466.json",
-      "card_sha256": "83cf79aa85113c40787a660402a588a6c55c641fdfbcf41a401c4c6c9a1de448",
+      "card_sha256": "a683450fe279d8f350bcab1e6b4e518bcd05d17e1ed6b4e1ff819debc73e6da2",
       "id": "load_17466",
       "name": "audio_op_unk7"
     },
     {
       "card": "recovery/cards/load_1ce8a.json",
-      "card_sha256": "e34f8ef57ae4cf50ad1cc8b62b99156d8eca9bde6634c18786d4b6852e312da6",
+      "card_sha256": "3721f1a9f636e8e0a24c49e9e524b49e9690e185e84e70ff7be1156d18defca5",
       "id": "load_1ce8a",
       "name": "__FF_MSGBANNER"
     },
     {
       "card": "recovery/cards/load_1ceb4.json",
-      "card_sha256": "ae460afb3601da03498b1fe62a0af4595aa4fc32b818dcfaf2dbabdd20c145fc",
+      "card_sha256": "80c06b7c7e6dc310230610b8a7404a12a3a2fd4dbc4e8d8d10059a1d73d093a6",
       "id": "load_1ceb4",
       "name": "__chkstk"
     },
     {
       "card": "recovery/cards/load_1e918.json",
-      "card_sha256": "2c3a48445bd4e4278c8cd0382e0ab563682d28a573707d3a1537dd2062e52738",
+      "card_sha256": "a158bac01c3e92f90cf5d286932b4e01c45fb213ee13648742701e8fac2d9cf4",
       "id": "load_1e918",
       "name": "unknown_libname_3"
     },
     {
       "card": "recovery/cards/load_1e93c.json",
-      "card_sha256": "adf33e3eae748186464f7caf7d7c009f60f3fd868390dce281e2c7556ceebf3c",
+      "card_sha256": "0aa2597c437eb088bd9afcdea838d3c1e341eb5397e78bcedd1ab9ae8847b8dc",
       "id": "load_1e93c",
       "name": "__aFFblmul"
     },
     {
       "card": "recovery/cards/load_1e982.json",
-      "card_sha256": "71db9fe2802992fb2ac056c994992e58582695f792e23006e24ad9c90156a722",
+      "card_sha256": "618ef90c086526588cf61492c1737c72962fbac675731171ebdccd2161b18f80",
       "id": "load_1e982",
       "name": "unknown_libname_5"
     },
     {
       "card": "recovery/cards/load_16bae.json",
-      "card_sha256": "26640f33780a152140f2e3bb6411192a6c2ee6f80c5cd72446243f7f2706246c",
+      "card_sha256": "f3746afe0bcea20aea86bb1afd51d632182ac4b951b4524bfd7354b00106a53b",
       "id": "load_16bae",
       "name": "audio_add_driver_timer"
     },
     {
       "card": "recovery/cards/load_225ae.json",
-      "card_sha256": "9541931cd2ceb16196a97290792fe7abbf11b54f9294b10eaa81cfa842c98504",
+      "card_sha256": "e071f1427c6fd69e09432b7ac7ed28c2c760f8a06e85f054bef30c383d136ce2",
       "id": "load_225ae",
       "name": "video_add_exithandler"
     },
     {
       "card": "recovery/cards/load_268aa.json",
-      "card_sha256": "d3b4c2cebe638967cc4e1fa54c6340e94e945324a37b1dc6b03b06e1545737e2",
+      "card_sha256": "f7c76fb084755498cd778cab0d68ec07d313bff0997103a96780accf487f3578",
       "id": "load_268aa",
       "name": "mouse_set_pixratio"
     },
     {
       "card": "recovery/cards/load_26aca.json",
-      "card_sha256": "a8ee3511b5b5035d3945fb16588026332700898ffc9304c3c48cc6af270709cf",
+      "card_sha256": "d3a10088bf907896c17a6af167082bede57066976140933b0516357f495eed58",
       "id": "load_26aca",
       "name": "nopsub_36ACA"
     },
     {
       "card": "recovery/cards/load_29e24.json",
-      "card_sha256": "3fa1c82632499ea160d81527c489b79346269f38d7cc375fa1ab5fb3b918a37e",
+      "card_sha256": "8cd762f7c5a61878334462ec8fad09a2ce2df1462f566d478a32acf9199bbac9",
       "id": "load_29e24",
       "name": "file_combine_and_find"
     },
     {
       "card": "recovery/cards/load_1eade.json",
-      "card_sha256": "de6fb9dd71d7ab372034330798ba90bd211c40aaa04367475b54305631bff336",
+      "card_sha256": "6c8da0a573fb3cfebb4ec36b2e7aaa5974a4eb361aeddaa488ec2e20e03e0695",
       "id": "load_1eade",
       "name": "set_add_value"
     },
     {
       "card": "recovery/cards/load_2327f.json",
-      "card_sha256": "5756151d5ff29822d1e754d32919428e6693cb594c23af06296ea245f1d4b614",
+      "card_sha256": "2a49d0df9af83a331d4ab473274f9f6b1752440e78209c7d5c30a7fcbc7e25f3",
       "id": "load_2327f",
       "name": "sprite_set_1_size"
     },
     {
       "card": "recovery/cards/load_1dddc.json",
-      "card_sha256": "2c5fff8617b9739531d5584026a8f56f90e5f5289967f4a8608bc6be524a35cc",
+      "card_sha256": "6d3caa4cb597bf5d4dd3302a941f16d2ad3285bf15a8b0839e623ea18afcc8d6",
       "id": "load_1dddc",
       "name": "putprefix"
     },
     {
       "card": "recovery/cards/load_1eb1e.json",
-      "card_sha256": "e8d98ca9244b204710f59aa8cfece1ed7ac94b5c8f3c5f14294c8b0740c67be6",
+      "card_sha256": "278414d25a3786ee65495b7bdde90d1cb610f21bf823031db543a904f955db97",
       "id": "load_1eb1e",
       "name": "sub_2EB1E"
     },
     {
       "card": "recovery/cards/load_26bbe.json",
-      "card_sha256": "4ea1660ee31f4988bb8b4f670a03415f763b2071531e5ce5d6e9b59fe6daf817",
+      "card_sha256": "5f3321dc5c235147d2bc9d20ae1986e35171244dbd62d76c1108417b21db4dc0",
       "id": "load_26bbe",
       "name": "preRender_sphere_helper"
     },
     {
       "card": "recovery/cards/load_1d129.json",
-      "card_sha256": "fa3971b52c5f64423de0d22e5f6aa1b99ac3992b408a463e60e47d5ab46ad995",
+      "card_sha256": "1301da82a4944fb8b49c890823598a29c204321d2ef0759d47a7db2c494d2d27",
       "id": "load_1d129",
       "name": "__NMSG_WRITE"
     },
     {
       "card": "recovery/cards/load_203d8.json",
-      "card_sha256": "c93051e37b01816951c62b2c5b595c0a68846a79a2f365324f0aa783e9094052",
+      "card_sha256": "2e6d34c8a9e73c3e5bd6e5915b3d6f4b6ae434e881c5f2c5206cb5d4734d65e9",
       "id": "load_203d8",
       "name": "set_bios_mode3"
     },
     {
       "card": "recovery/cards/load_09e21.json",
-      "card_sha256": "e7e6ddc82deb84c58ebee5bfcffd1dc4514b31453e407a63e27dbf559d514c60",
+      "card_sha256": "b505edc77deb35406fa00aaa20c260ab88e3df34bf10dbbedca539ae25bd6b30",
       "id": "load_09e21",
       "name": "init_kevinrandom"
     },
     {
       "card": "recovery/cards/load_09e4e.json",
-      "card_sha256": "99a5ca4117288011e11f0b63d7e0328293a000a7ac75dc29ba282806da856aac",
+      "card_sha256": "ca039fb1dd6c1b2e76de11bac4f252b6a99fefc8e2d7c89a0faeb07e0c0f5f74",
       "id": "load_09e4e",
       "name": "get_kevinrandom_seed"
     },
     {
       "card": "recovery/cards/load_046e4.json",
-      "card_sha256": "7675ed5ec570876fbf7ff0da007c00c0988b0f7e7156545d91483b3cd514f196",
+      "card_sha256": "5c3aacc1b1a2634de66fc1ab50b10ba44724fab3dfb8ee0b840538932cb993cf",
       "id": "load_046e4",
       "name": "set_default_car"
     },
     {
       "card": "recovery/cards/load_08cd8.json",
-      "card_sha256": "28f00afb9ef0fba5d245bab81e8c19ba075182caa024edb2d6ae30bce376449d",
+      "card_sha256": "9c830551ef4cdf476a4ab79d3a729c112ac2de58f1fc0c2d016b8d98c8a313d0",
       "id": "load_08cd8",
       "name": "audio_unk3"
     },
     {
       "card": "recovery/cards/load_26a9a.json",
-      "card_sha256": "330279e365af9fd0f23e772fb6fef713ac64f1c10c8c087b87af9bed7f0e3246",
+      "card_sha256": "610a44ab35fe0498e38efdc50c34aa6aec640f52c2235456e107c143812d124f",
       "id": "load_26a9a",
       "name": "nopsub_36A9A"
     },
     {
       "card": "recovery/cards/load_273b8.json",
-      "card_sha256": "3a9d77164cf3fe007eba622b2bb07462b498e8fe4a219e8385a63daa3d4ba628",
+      "card_sha256": "2da8160c104280994e7a8a1ff0f75ad1c81b24272e0230c12085d8fbd3e040a8",
       "id": "load_273b8",
       "name": "audio_disable_flag2"
     },
     {
       "card": "recovery/cards/load_16bd5.json",
-      "card_sha256": "fb1175122b0b80369f1bb9e8983665cd716ff4ce117e249f0b518635541d0565",
+      "card_sha256": "bf1ec7e676e25b594bd66900a1adf4597b0eddfac1f85fd79dbdc88b9f766115",
       "id": "load_16bd5",
       "name": "audio_remove_driver_timer"
     },
     {
       "card": "recovery/cards/load_23816.json",
-      "card_sha256": "a697162501cfca592a75a443d4af100d2dbfb27b5285ddba93a2e1485a44d56a",
+      "card_sha256": "9640778e38d8fa8fd196570017e15401d4366082ac2532f208041ba1caa9febf",
       "id": "load_23816",
       "name": "video_set_mode_13h"
     },
     {
       "card": "recovery/cards/load_202aa.json",
-      "card_sha256": "74bd8410c5264d3de1a4175b588116182347637d0c4e8c53db2328f41a39544f",
+      "card_sha256": "974a926a1084c7b236a5a132c69b5469c629f6dd1c97d18d2c067816812c2e3e",
       "id": "load_202aa",
       "name": "timer_reg_callback"
     },
     {
       "card": "recovery/cards/load_26a2c.json",
-      "card_sha256": "7ffd828629255d2b435ef790fab3819e2adcd9cd9647f467a878fed1698d0b6a",
+      "card_sha256": "febde7a6c7772b1c0c6b4282ec70724ca14c435a764408ece3ce1ae4a1a6a0c6",
       "id": "load_26a2c",
       "name": "mouse_set_position"
     },
     {
       "card": "recovery/cards/load_27696.json",
-      "card_sha256": "61cddd1b558ee6d44a182092525243328e1d20b5d11b1a22f0f279e6efcde906",
+      "card_sha256": "849a505adb7f623c743081e62cd894a74152a8cec078c988ad7dd802bcfadbed",
       "id": "load_27696",
       "name": "audio_enable_flag6"
     },
     {
       "card": "recovery/cards/load_2a9a0.json",
-      "card_sha256": "b6b5cc2fab6265815c2d56cac9f55fd39ca93b784627d32b0f9ae542fe471ada",
+      "card_sha256": "542d1603dd559b0ccf432de604bdabf2f833c3d430fad046c052a9907d9f83f7",
       "id": "load_2a9a0",
       "name": "setup_mcgawnd2"
     },
     {
       "card": "recovery/cards/load_04d6c.json",
-      "card_sha256": "aedfe01e17e3e51f2366c87485aebd69eed768ea171f37c6938fb8104bce8a0f",
+      "card_sha256": "3cdfa313a35be1fbcec7e9edf943da5c31a7594de719e55a6dbf6d81da3eb2a3",
       "id": "load_04d6c",
       "name": "mat_mul_vector2"
     },
     {
       "card": "recovery/cards/load_16c06.json",
-      "card_sha256": "56e115aa795cec40baa8424a72533ff7f0df83084aafa2184aeef3077cd6ba0b",
+      "card_sha256": "aaa2dc72929429e2736f23325dd3c618a390e9773e5d49a8bf3e309de70d0340",
       "id": "load_16c06",
       "name": "pad_id"
     },
     {
       "card": "recovery/cards/load_16f6d.json",
-      "card_sha256": "39c85a401461212ec208bd7d7b03fe541b599f4f76441c03b31965447cef13df",
+      "card_sha256": "74ce852a6db9771c3269a8107afc98c1b0d7ace120ed18d2cc99ab9d3425a3f6",
       "id": "load_16f6d",
       "name": "audio_function2"
     },
     {
       "card": "recovery/cards/load_225d6.json",
-      "card_sha256": "60fe81ee16f11880e49671d7a02140401fb6fa50d5f85c44cc829fef558b2409",
+      "card_sha256": "5730af0094f05e1b7225692de825c47b30999c4c6c3f111d9533c1cca270c641",
       "id": "load_225d6",
       "name": "video_on_exit"
     },
     {
       "card": "recovery/cards/load_1e1a4.json",
-      "card_sha256": "66c045595c3d3a3f7ebeefe9f39f0fed35ccacf73e9cc6f8c2dcac260890e4f4",
+      "card_sha256": "b347b5b92d30f6d69fef200109fb33a5ca0a49a327ad5c3ee41df2abc6d7c90f",
       "id": "load_1e1a4",
       "name": "__amexpand"
     },
     {
       "card": "recovery/cards/load_2111d.json",
-      "card_sha256": "99bb8dd3e50558f129df4f8086e0caa10d61a841629b253aa53eb8166ba4d978",
+      "card_sha256": "7b33cdb15350f935209a2312d26cff309e7c17cfb39fe07537bd3122b48f5084",
       "id": "load_2111d",
       "name": "nopsub_3111D"
     },
     {
       "card": "recovery/cards/load_26a60.json",
-      "card_sha256": "00c80292d9acc4ea1563ce6aedde165ec289b46884683ff4f0cee3b41c3fe8cc",
+      "card_sha256": "7df6bb013bd9300df3137e5a325e30307c7995abe75937451538c4dbfb58bfbd",
       "id": "load_26a60",
       "name": "mouse_get_state"
     },
     {
       "card": "recovery/cards/load_21641.json",
-      "card_sha256": "a353dee4d4c9d52edecda7bdc82c8b830a600e27c577a76f50d8e6ded7642c41",
+      "card_sha256": "fd61581b03dc2685018e5acc7a528e45310fe70abbf1044ed0c28ee613f83824",
       "id": "load_21641",
       "name": "mmgr_release"
     },
     {
       "card": "recovery/cards/load_17338.json",
-      "card_sha256": "89dbbc0733ccc20e53fffe54a60dbec79974aa30690a34d27610cd4b96928f7f",
+      "card_sha256": "e73f4b23556d3f25d085a693ea57fca07b92de68606f84aff8388103bfe21f05",
       "id": "load_17338",
       "name": "audio_op_unk3"
     },
     {
       "card": "recovery/cards/load_17374.json",
-      "card_sha256": "ed3f6185de3187bbdf73407054105e969a05dc146f6f0d9f70606169de984de2",
+      "card_sha256": "ff9cd0f51371ef0a6e7fa2ddfa46923ed880bfa090c4e70df1af0dde9b8f9c8f",
       "id": "load_17374",
       "name": "audio_op_unk4"
     },
     {
       "card": "recovery/cards/load_1fe1c.json",
-      "card_sha256": "e7ce1d6569212841222595e56522558f85fdc6e2aebd508f2cc95802e2349c2f",
+      "card_sha256": "4a7a95f68060895db987c54e1587e8f201297320292ddc44212c3948e51a5247",
       "id": "load_1fe1c",
       "name": "add_exit_handler"
     },
     {
       "card": "recovery/cards/load_1fdde.json",
-      "card_sha256": "9c26d202cc8ce5ff68799bd668e3a68b5ab18085d20e9de65c48022a24a29338",
+      "card_sha256": "b16f79f935f45d66299b4e62a337f023f8c1f96b80fb598334474f630bab26ec",
       "id": "load_1fdde",
       "name": "preRender_line"
     },
     {
       "card": "recovery/cards/load_276ca.json",
-      "card_sha256": "77b1d1c49e397e0187479c54da91063d63a89a6233d3801e1283944d48492a50",
+      "card_sha256": "421feceba269984329e58cbad56d2e61f10363b3ca4a30729384e71f8790e7da",
       "id": "load_276ca",
       "name": "audio_disable_flag6"
     },
     {
       "card": "recovery/cards/load_1d21e.json",
-      "card_sha256": "85c2f1797502dfb9d39b58689f17255732fd0b12ea0d27671e474a359615fedb",
+      "card_sha256": "211a15287c6916ae7bd4ad557d4829c556d69453462602e7e5e0b9d0219effd3",
       "id": "load_1d21e",
       "name": "_printf"
     },
     {
       "card": "recovery/cards/load_20268.json",
-      "card_sha256": "5aa1f654ca5f91fbb2eef951d1b78e41bcf2fe82476ff7359c39c9ecc008d656",
+      "card_sha256": "3af6c17b15e91be19163f45c48c7d26304e6bdb984ca667cc2a09513050d3c89",
       "id": "load_20268",
       "name": "audio_stop_unk"
     },
     {
       "card": "recovery/cards/load_267e4.json",
-      "card_sha256": "6b3b8ac22e9df33b948b3060279757ce8eec2a07b6f2670968d6ce98905c9e86",
+      "card_sha256": "854f5dfa329dd126d3922bf0523c018fbf171d158c3a6cf7a78346f228ab3ed2",
       "id": "load_267e4",
       "name": "nopsub_367E4"
     },
     {
       "card": "recovery/cards/load_26826.json",
-      "card_sha256": "1b6c9ffeca0869f78473cd30ffcb5560eee2a3846ffac1cf62232d6f35ecd439",
+      "card_sha256": "669d7c5e435f522131a855e9c9712b03b5c2b833da0740cfad3432dd880b9bd6",
       "id": "load_26826",
       "name": "nopsub_36826"
     },
     {
       "card": "recovery/cards/load_26868.json",
-      "card_sha256": "5fbf01907a644a5f4937ff0bdc5abaa8c111fc08abe373c10825f4b5136b1ce4",
+      "card_sha256": "7ab78802a583174d1389bcd67460d772f333d433cfada936d535d6337ca99b8e",
       "id": "load_26868",
       "name": "nopsub_36868"
     },
     {
       "card": "recovery/cards/load_27d7a.json",
-      "card_sha256": "5e5c4a79da2ac34b1946d54eaf7a44599420f77e0ca8d2d56e881fc374879d4c",
+      "card_sha256": "8c5b455aaadb4d0f550589dd1878ee8243f0d248ea462147d20b16b7266a133f",
       "id": "load_27d7a",
       "name": "nopsub_37D7A"
     },
     {
       "card": "recovery/cards/load_22843.json",
-      "card_sha256": "94fc8f84eb44303da30ce3e82b525937a0e67a6e30f13bcedfd48b05894da8b2",
+      "card_sha256": "87fd3d661ca999c91f25323824255b5b5d7c272ad0e660a2ecfc755fe4ee9a92",
       "id": "load_22843",
       "name": "font_op2"
     },
     {
       "card": "recovery/cards/load_1726c.json",
-      "card_sha256": "fa51aba6f5502b31778963b21f09561354cae5daf8e4406926bef67c04f5ec79",
+      "card_sha256": "cda28c023f90470bdcd9b5d77a8d88c8f978de8ed873abe612bf5fab0bc4537d",
       "id": "load_1726c",
       "name": "nopsub_2726C"
     },
     {
       "card": "recovery/cards/load_172b0.json",
-      "card_sha256": "574a9f957fde9a58620fbf0898b90e8e09dc1d8002dfeddd2d2b9793e577ff7b",
+      "card_sha256": "54280c7686d303c96d77da8bbc9ffdf4622b8e0d96da548bf189d15bbeca60b4",
       "id": "load_172b0",
       "name": "nopsub_272B0"
     },
     {
       "card": "recovery/cards/load_172f4.json",
-      "card_sha256": "38425e85e8707b2ff9dbe422198e0be106560ab34212b162db331eb6fd268fb5",
+      "card_sha256": "db029de6cc6f37ba1fec49f712499c7dc95c7127a97eb6091d8c6db67734e810",
       "id": "load_172f4",
       "name": "audio_function2_wrap"
     },
     {
       "card": "recovery/cards/load_1ce03.json",
-      "card_sha256": "67a1b8a1ee696040f910f139fa992193174ca74d0ae42d1d10abeeba19293e17",
+      "card_sha256": "0487e103df4fc48bbcc0e17745c98480c37cf06264806656447ba4b36abe3a2a",
       "id": "load_1ce03",
       "name": "libsub_quit_to_dos"
     },
     {
       "card": "recovery/cards/load_13a50.json",
-      "card_sha256": "39b05909ac25cb93d1e5f1df30ea287ba737a749ebf6b73cbbd9d5716a4b3b23",
+      "card_sha256": "4d2eee46c2b51762c072f713d10ed17f601fa8d576920c95313df5e125b3e8bc",
       "id": "load_13a50",
       "name": "mouse_minmax_position"
     },
     {
+      "card": "recovery/cards/mmgr_copy_paras.json",
+      "card_sha256": "764aa508d49829e8942e414540e85e77b3bb1ce3807353edceeb1cd515c0cf29",
+      "id": "load_2118d",
+      "name": "mmgr_copy_paras"
+    },
+    {
       "card": "recovery/cards/load_2a958.json",
-      "card_sha256": "66d66f6d9f146d23416d2560c50b188e59f6f442a4efc41d963c823cb439d5c9",
+      "card_sha256": "d120b7120a48742d0b67cacae8d2ce4aa9661bec91b3d73d3eeefdf98b1b5b76",
       "id": "load_2a958",
       "name": "setup_mcgawnd1"
     },
     {
       "card": "recovery/cards/load_27cba.json",
-      "card_sha256": "3a25fe7e94818e2ed8e315dd31935edd8ba2e7eb8441bc6fd7efada87eaa4fde",
+      "card_sha256": "01a0a1de264fa33151beef836594e67b129e1bc5bee04da4f6d2fde5cd2d9ea9",
       "id": "load_27cba",
       "name": "load_song_file"
     },
     {
       "card": "recovery/cards/load_17220.json",
-      "card_sha256": "5c22cff6bfe5efc8c4208c87cf5857355255d26695a06ae47e1860de47110eaf",
+      "card_sha256": "279c1086cb8bc3715193ad0deb6a9aaa55432f823a23ea19a72a0d0650b650e3",
       "id": "load_17220",
       "name": "nopsub_27220"
     },
     {
       "card": "recovery/cards/load_2764a.json",
-      "card_sha256": "5e4d53c6166ada452b49ec65e43e7cb7231bf8de9ba1e8132884d1f402f109a0",
+      "card_sha256": "101e8403898a9f31d674255b54ebf0f2ffe3e52a629654defecc646640d2bb7b",
       "id": "load_2764a",
       "name": "audio_init_chunk2"
     },
     {
       "card": "recovery/cards/load_09e7b.json",
-      "card_sha256": "1645af4b78d48de285db4f6f374d40d11451614217d62fe00c2ac1721d078c76",
+      "card_sha256": "5df20b1fc5f368b68679559370f80dab4584148baaeaccabddeca4f0cacd25de",
       "id": "load_09e7b",
       "name": "get_kevinrandom"
     },
     {
       "card": "recovery/cards/load_2863c.json",
-      "card_sha256": "99f15797575b9120ccd80f69e94ee697eea88736fdc5c451d95b29ddd206ada1",
+      "card_sha256": "3326eb7cadaaf646ec4ad8178f121522a36723aa4d9bef61ea48d0db7cc082ee",
       "id": "load_2863c",
       "name": "audiodriver_timer"
     },
     {
       "card": "recovery/cards/load_2963c.json",
-      "card_sha256": "ecfcc585708362b8bc30afeb1fa6432ad7731d6d8d379159ebd7ba6f293e9845",
+      "card_sha256": "ab7ece6e993f32a74c595345a6ee64fc6c235c3e4e8d846a3d09ea8a96b38bfc",
       "id": "load_2963c",
       "name": "sub_3963C"
     },
     {
       "card": "recovery/cards/load_224aa.json",
-      "card_sha256": "7bff70401f3d9ac2bf0ad7ebc2f5ddb5d19656838b91f36a63f9a7b75ccd5615",
+      "card_sha256": "3d4568a2be6babb011efaf84023f577fac59a96f3356e3328ce570e85639d34e",
       "id": "load_224aa",
       "name": "sprite_free_wnd"
     },
     {
       "card": "recovery/cards/load_2045e.json",
-      "card_sha256": "95fdcbd607ef12287b6451f5f434428500dd2e57227d127a1df4857f1e9aa438",
+      "card_sha256": "c312cf0d74abb399ceccb93bd278a5df396c69fe4febc02403387d6aa1f5d97a",
       "id": "load_2045e",
       "name": "kb_reg_callback"
     },
     {
       "card": "recovery/cards/load_211d5.json",
-      "card_sha256": "9c812c63b1f64ae49f2b89da9e0a22a03f25b8b436cc8c700e34b154563bc9f9",
+      "card_sha256": "dc24a2d29473ab99d9567952ac3668abf610d71dce43dadf6316d2a4a7350b3f",
       "id": "load_211d5",
       "name": "copy_paras_reverse"
     },
     {
       "card": "recovery/cards/load_26fd8.json",
-      "card_sha256": "1775a6bfb443627bd402e5ed7539b8a2745584328575485207b69c3ca0ba65f7",
+      "card_sha256": "d1834f83340e4691ddb8863384233309b213a007b5302e5d3126c844b90ec2a7",
       "id": "load_26fd8",
       "name": "mat_rot_z"
     },
     {
       "card": "recovery/cards/load_12c92.json",
-      "card_sha256": "5a10fce7319681e29670ff9dd704a410a8e70fa891fcfd8880df25b8c17c8ddf",
+      "card_sha256": "530778a6445306b02bc9adb1a3c99d5de68a966bcb1c04798da0f8a6e31331ad",
       "id": "load_12c92",
       "name": "file_load_replay"
     },
     {
       "card": "recovery/cards/load_1e290.json",
-      "card_sha256": "471dea39d170150a67c681758c42f1a6c607ddec987f67ee534acdbfec478fbe",
+      "card_sha256": "80df4cf5e0d5c186d4bd1499925e79d84f32b40d919aef302f5a15c066adba1c",
       "id": "load_1e290",
       "name": "sub_2E290"
     },
     {
       "card": "recovery/cards/load_26f80.json",
-      "card_sha256": "6f2cc0419194ffe6bcac0e4fa1fa57c49efcb585e62452dc226d370c475f3d21",
+      "card_sha256": "754c650e222cec9d1dc2518c6b9ae73744f3b5f7aab6a46e80059398e71b74f1",
       "id": "load_26f80",
       "name": "mat_rot_y"
     },
     {
       "card": "recovery/cards/load_08d06.json",
-      "card_sha256": "385e5e51c33826e4c4264c8251afa409b32b41baa65a03cc4c016cf411c2bbdb",
+      "card_sha256": "8790e97a4b9face24cf19aa9067c9f0addb23adee3187573447ca8a0b26048d8",
       "id": "load_08d06",
       "name": "sub_18D06"
     },
     {
       "card": "recovery/cards/load_19d9a.json",
-      "card_sha256": "6fe2e9ab73e4f6e179ff49cb6acaf069eaefec8d6420474b45c3fec264e63154",
+      "card_sha256": "fb2749466ca06ffad5e69de9222fe75f670dc0ddb8e3abd6227289a6b68e663c",
       "id": "load_19d9a",
       "name": "do_key_restext"
     },
     {
       "card": "recovery/cards/load_19f5c.json",
-      "card_sha256": "647886ea958041a1a4339ce37f14da6785daa38e3bafd66acdcae5bf7fba125a",
+      "card_sha256": "ac65575ab1fda1ba8ac260b52bc17c590e208b4e08144ed52a2bb8b435ce09be",
       "id": "load_19f5c",
       "name": "do_dos_restext"
     },
     {
       "card": "recovery/cards/load_20404.json",
-      "card_sha256": "1e561d49c25b621220118264eef8e66115da2aa9b5980fa0527a3bf38683ba5e",
+      "card_sha256": "e8817c840c0f6d5be82d81d8c2a7cf5f1d5c8efaf95b54b5999f2c3838b75a29",
       "id": "load_20404",
       "name": "kb_parse_key"
     },
     {
       "card": "recovery/cards/load_173b0.json",
-      "card_sha256": "072368d2e63bf5ea7a2119706d094c35ce835f0ad2c9a42f73bee4ed2c9b91d7",
+      "card_sha256": "b0025c91f35ef2e18ea8e13165dd2b95d9a22a89dedaf76e0a47a188c07d73c1",
       "id": "load_173b0",
       "name": "audio_op_unk5"
     },
     {
       "card": "recovery/cards/load_1740b.json",
-      "card_sha256": "713bcd2d0eb4a291090bee2dd7cc50eb5894091420e4600e2b8b0f68a42dfee1",
+      "card_sha256": "65e3fd110041937294f523a93f2c16eb87710e3899c28aca21ee069fbd888eb6",
       "id": "load_1740b",
       "name": "audio_op_unk6"
     },
     {
       "card": "recovery/cards/load_23014.json",
-      "card_sha256": "82924271600906c81a2105f8479dbd2e3031a2df40f4aceb9d148e749dc4e48c",
+      "card_sha256": "db69aa6a877978e73d14e970d94bf147905718dd92353ee2f6e8a4e07233626c",
       "id": "load_23014",
       "name": "vector_op_unk"
     },
     {
       "card": "recovery/cards/load_2477e.json",
-      "card_sha256": "2f60df6a6fcd48234771ad1a8797eea95a1dca176f746a94a5fea48345118868",
+      "card_sha256": "cf95af3b44c25ca6d84515244de1dfccfcf334c1a346eb3cdf0fe788647b9804",
       "id": "load_2477e",
       "name": "sprite_clear_shape"
     },
     {
       "card": "recovery/cards/load_2265b.json",
-      "card_sha256": "9e8c2bd932586b695f4aa891fe303ea58c4552a82c6c7ebd779fc6eace13d998",
+      "card_sha256": "41f0463273b47b9b04fa2670c352eb6168ddd34ad3191edcd6353bb58c843316",
       "id": "load_2265b",
       "name": "file_get_shape2d"
     },
     {
       "card": "recovery/cards/load_1dc0e.json",
-      "card_sha256": "e31392b3721244728377a1f136ef6386eeb97fd1f0663c114b86f8043c11e4c3",
+      "card_sha256": "3ef8387eb2a66a3535084b242c23e29c0217a26a9371eccfa1f6bb0aab161037",
       "id": "load_1dc0e",
       "name": "putpad"
     },
     {
       "card": "recovery/cards/load_20120.json",
-      "card_sha256": "b1a1e65f1e107e7a963b893143258e9e913ebf6af71c1811c91ee88652e66ec5",
+      "card_sha256": "52de634305a37bdab594e2942c95ff82a2210789de133f9131916b53675801d1",
       "id": "load_20120",
       "name": "video_set_mode7"
     },
     {
       "card": "recovery/cards/load_18762.json",
-      "card_sha256": "a6f176cfa195b2aa3d0f809078958c3a0ac61469b18223044121e1c2500cf200",
+      "card_sha256": "c78caa558d70904e4d6c7d0a120e3c579c2ec3d356214e1b923eb2a9a23f4f16",
       "id": "load_18762",
       "name": "parse_filepath_separators"
     },
     {
       "card": "recovery/cards/load_209a5.json",
-      "card_sha256": "a2f93072871baabbbcd168df38c70abd622ae7cde6825e4d31378c720002a3ef",
+      "card_sha256": "5592a5a5be9948546d5ceb532b158ceb72fc5e73e354ba5d426089e898e46fae",
       "id": "load_209a5",
       "name": "kb_int16_handler"
     },
     {
       "card": "recovery/cards/load_26ec0.json",
-      "card_sha256": "69fdc00d70a7fe8d693c1051e76617c720b1d88a2509a756d49733a29e7260e1",
+      "card_sha256": "662eb47a622ef1bd3d40a155feb34e11c2d004129d4e1b87ca0f3d7f74bd978c",
       "id": "load_26ec0",
       "name": "preRender_wheel_helper"
     },
     {
       "card": "recovery/cards/load_200b6.json",
-      "card_sha256": "2de49ad0a67d06be7ac37c93f82b7db3d046d95215d7ee0347fd3061c8a67c47",
+      "card_sha256": "f1c9044e5df271588a9b3c746ef20e2601aec7101501b229751b0a5af2bc4d55",
       "id": "load_200b6",
       "name": "polarRadius2D"
     },
     {
       "card": "recovery/cards/load_20812.json",
-      "card_sha256": "47a41a452d8f49fda447b5448b4c8281f240f79c8bc9c6594552a10b0897f913",
+      "card_sha256": "08f95aeca2dfc248f8cfa0cc99e8b20592b22ac79c7a2fd532e75eba2de8a77f",
       "id": "load_20812",
       "name": "kb_init_interrupt"
     },
     {
       "card": "recovery/cards/load_2320e.json",
-      "card_sha256": "af999bb75585cd98db22d1d012fb6bd99033af3a2f517061ab5f29e19ffbecb9",
+      "card_sha256": "509dcd5591b7c47a54c6649808ce2181cd7d4d921fea1eaf3c8e1852bdf10aa6",
       "id": "load_2320e",
       "name": "nopsub_3320E"
     },
     {
       "card": "recovery/cards/load_10438.json",
-      "card_sha256": "09d136498e77d8a46e625dcc668e132e9371c30fbca8b93bd02b639966401701",
+      "card_sha256": "08729db3c5a8a8fd74f08aaa32282f8ec625846cf44c5348b408ae50bceb371f",
       "id": "load_10438",
       "name": "shape3d_free_car_shapes"
     },
     {
       "card": "recovery/cards/load_19786.json",
-      "card_sha256": "8ade2cd96dc01ad5e625c1a36bfd3178122b65ecfc706be96ecb07b7dc8d36fe",
+      "card_sha256": "7661dc9c4e6fc3e73bb46c65870c8713f62b5aeece5314716d3566e1177d4a5c",
       "id": "load_19786",
       "name": "mouse_timer_sprite_unk"
     },
     {
       "card": "recovery/cards/load_272f4.json",
-      "card_sha256": "2bf1e261677112025476209ef2c6fe56dc41cc161b1170821599219c3f6721c8",
+      "card_sha256": "fb8d3791fc99b74306f23970bfd5e12a7133254529d924325e877eecb8232fa1",
       "id": "load_272f4",
       "name": "sub_372F4"
     },
     {
       "card": "recovery/cards/load_2107a.json",
-      "card_sha256": "581c40f3faa90c8eb56048f0b933acc21ee3ae087c8df514b5a91d13278bbcb2",
+      "card_sha256": "43c19f5ec5fcd617061485572c6087203f0cffa65e6f36aefad9a3b206697d51",
       "id": "load_2107a",
       "name": "mmgr_alloc_resmem"
     },
     {
       "card": "recovery/cards/load_16ef4.json",
-      "card_sha256": "e4c8645986fc60906016059057a7b428ce4198e28142e4681035ab5a4eba89b0",
+      "card_sha256": "416ce55d1007ceaba0f344d43be0668334c06a6cb8d059fe9a42794eab0b55c3",
       "id": "load_16ef4",
       "name": "audio_op_unk"
     },
     {
       "card": "recovery/cards/load_16572.json",
-      "card_sha256": "54e95939373b90e5bfce0313367654a74883bb3c477d864482a1dbd9a78d754a",
+      "card_sha256": "a12f651beb2f8c7673dea13645d2744ad706e3822e156f3f23bd3f1ec537fa05",
       "id": "load_16572",
       "name": "rect_union"
     },
     {
       "card": "recovery/cards/load_1deae.json",
-      "card_sha256": "621c33c2db33f895e24de2cd7c5e9c796e28ccd34a0b59dd1f9c4f7ae0525957",
+      "card_sha256": "5ba0ae8ae426c6ed986102cba71e9b8eaf3c846a637b5ba6cb048b402176b1c9",
       "id": "load_1deae",
       "name": "_lseek"
     },
     {
       "card": "recovery/cards/load_1e40c.json",
-      "card_sha256": "4d412499e360d92aef5e66906576c3ddbd1616ccade8cf82631e464e7e3644af",
+      "card_sha256": "9f4b25fdd89d6d3eae8b7674384ba3295e4fe2dae710e2bbd527990e215730a6",
       "id": "load_1e40c",
       "name": "_int86"
     },
     {
       "card": "recovery/cards/load_229f2.json",
-      "card_sha256": "0c28fd761957a9335cc21d26150712c1e17c48f9b3873fae11ea8e94d04932eb",
+      "card_sha256": "9766a18979692e973b4e6da9510043579ddf183150ada70e76d5fb67df3f4774",
       "id": "load_229f2",
       "name": "mat_multiply"
     },
     {
       "card": "recovery/cards/load_1fea5.json",
-      "card_sha256": "06d7ea7ccefe6cceaced13c8e3a465be4d296f46de0efba34c829c9e34806cdf",
+      "card_sha256": "9eded17d9c5191e6b3cc92ed42a4aa70d3fe398632ffdae8f24165d972132e91",
       "id": "load_1fea5",
       "name": "file_paras_fatal"
     },
     {
       "card": "recovery/cards/load_29b5a.json",
-      "card_sha256": "f8833f0b4feef931bbda00ef8d6ae5bf5118d31b42c88a27cb382065d28e2cf8",
+      "card_sha256": "5dc608b4e7775abf60850e06356b2ed0e94ee400178f7b72fcd5b3b100983eda",
       "id": "load_29b5a",
       "name": "audioresource_get_chunk_index"
     },
     {
       "card": "recovery/cards/load_165ec.json",
-      "card_sha256": "f71dd0609778957be7412c848794b36a3f2758c621fc02b611a63275ddb4e7ff",
+      "card_sha256": "02da30a5dbb1fae323b993d941862a76fd4927fa901a775f32b7206fcc5ea672",
       "id": "load_165ec",
       "name": "rect_intersect"
     },
     {
       "card": "recovery/cards/load_189f2.json",
-      "card_sha256": "cb4bbc97bbe69324b6a7e96d99bde226bfa5d42e34cdea395a19136456b4eee4",
+      "card_sha256": "d28c790302a2023747ee02a980f9714353d2d05b3751a525fee7febf10014f6e",
       "id": "load_189f2",
       "name": "file_load_resfile"
     },
     {
       "card": "recovery/cards/load_1a236.json",
-      "card_sha256": "c12ad66ab2a2d3229171f86b0a8349f9e3b8760fc8d5996ffdd55d4ff0570963",
+      "card_sha256": "c592fd76432a43843af0c86d666c9c4721d5b11243d4e4def7d2440bd6da2102",
       "id": "load_1a236",
       "name": "file_load_3dres"
     },
     {
       "card": "recovery/cards/load_261bc.json",
-      "card_sha256": "0e636f716c08ed24ffac3ffd048478d2d0d7a599969ab8b4b79b676eb0fcb221",
+      "card_sha256": "8c0be0987967d81ea9442badba30d049ad9e2d22d65a57cb99087185b23745cf",
       "id": "load_261bc",
       "name": "sprite_1_unk4"
     },
     {
       "card": "recovery/cards/load_2702e.json",
-      "card_sha256": "efd1d503ee88debadfc07cf410d2cc62ac2bc7c9f5bc99accd3eb20d532f3148",
+      "card_sha256": "73673b8235eba4de163ab87278f9b357ceb6b13935f4b789e7586ad705bcc6f4",
       "id": "load_2702e",
       "name": "sub_3702E"
     },
     {
       "card": "recovery/cards/load_1a118.json",
-      "card_sha256": "f344e9154b07aff644a4ea0f93853090e350a8db09d44918c5c9789d75f4e726",
+      "card_sha256": "10d7ffaa2254fa1c209e5cd2e2e14568c1cc9e08f3516fc5042d656b00222d77",
       "id": "load_1a118",
       "name": "do_dea_textres"
     },
     {
       "card": "recovery/cards/load_20538.json",
-      "card_sha256": "3e2816a93285bf39ec358d92a8cd94b86e741191cab06a812070e5ecd2a54b3e",
+      "card_sha256": "9c1f3c60681c7e8ad3741c24123e81a0d3d2e75926ae47d0b649ee29a6a8d832",
       "id": "load_20538",
       "name": "get_kb_or_joy_flags"
     },
     {
       "card": "recovery/cards/load_216a2.json",
-      "card_sha256": "755e6d74331f4e03512b0ac22fe4436526087c5f133c2a111de45e37c0d9eaa2",
+      "card_sha256": "d1fcb08250243af7f8be524f81230ec966f6431ac216fdd7f302d3f886b05c41",
       "id": "load_216a2",
       "name": "mmgr_resize_memory"
     },
     {
       "card": "recovery/cards/load_219cd.json",
-      "card_sha256": "84e2979e23012cb218da80eb7ec3dbae46b91d41c5639546baf1e083955be727",
+      "card_sha256": "076a444a60e79b2fb4a5b750b254bbfdefe028d1d8a2fe2b944595257aa08d29",
       "id": "load_219cd",
       "name": "preRender_helper"
     },
     {
       "card": "recovery/cards/load_139b4.json",
-      "card_sha256": "5d447e648029d6ca638007d4aceba3146e4ac63cf67244e0e8d24640ed80691b",
+      "card_sha256": "56b554fb3db30a15c9cfb8ffeb0a7ccef7b4f47a22f45be517cce02afe72c7da",
       "id": "load_139b4",
       "name": "free_player_cars"
     },
     {
       "card": "recovery/cards/load_1e67c.json",
-      "card_sha256": "8fb1ea42817b164aa2afc2704cd932d3b3946e65f37eccf20f99a8730ae2d580",
+      "card_sha256": "8aacada33bf98b6adba6ad8ffa63f24029bf268fc38a4edcc021c2c8ccd6defd",
       "id": "load_1e67c",
       "name": "_signal"
     },
     {
       "card": "recovery/cards/load_2250b.json",
-      "card_sha256": "1bcb43b684d4d9d2c1a7dc1202d09f0f7a446fc7e85ad50c8f2b7627cb4d7b2a",
+      "card_sha256": "84a15c6545287e0aa8a658fdfb8b7e3152096cfc38953e3934114806196edfa1",
       "id": "load_2250b",
       "name": "file_write_fatal"
     },
     {
       "card": "recovery/cards/load_26b16.json",
-      "card_sha256": "f1c65bb3c48b424a8006b2acc66ea85e84784327f95146e8ad3ab9df9a794389",
+      "card_sha256": "c0ec45396546614160d09e0fa7fb18aef8a776c2a86b208b0cacb09e299860a7",
       "id": "load_26b16",
       "name": "preRender_wheel_helper2"
     },
     {
       "card": "recovery/cards/load_2147c.json",
-      "card_sha256": "5f70cddc1d1d2f7cec5bdcfc29a67c6f17977d3b5a792682109b1b7b1ee21113",
+      "card_sha256": "934064a5425b4dcc9e9492c977ee978ca774fb641c3de4d63897a3acb17d5468",
       "id": "load_2147c",
       "name": "mmgr_free"
     },
     {
       "card": "recovery/cards/load_1955a.json",
-      "card_sha256": "75a930697354db61526dcd07d1a390aaf308c9f035d2493b82b5f12cb88ebdfd",
+      "card_sha256": "6f3a72fa5d0a4abdf8bd921a2c04b79c605207320ad6946998b45ec2a135e9dc",
       "id": "load_1955a",
       "name": "shape3d_init_shape"
     },
     {
       "card": "recovery/cards/load_21248.json",
-      "card_sha256": "a4b78f26ec6db78c7e71feb6fc9075a4dceb4c525228e70662f6802e18ca4395",
+      "card_sha256": "1ebafb7464b768908e6c0645558b32d9c91fda5effc05be7c9f464a2dda5c99e",
       "id": "load_21248",
       "name": "mmgr_alloc_pages"
     },
     {
       "card": "recovery/cards/load_15e24.json",
-      "card_sha256": "e38968ca23e84c7664271a088812169753f1786e6f0ecde9cf3abb8e8b95b3a2",
+      "card_sha256": "9b3032f0bf4412b022d10cbb98fdaea4232fc97c96c52d0b810badd0d1931d28",
       "id": "load_15e24",
       "name": "insert_newest_poly_in_poly_linked_list_40ED6"
     },
     {
       "card": "recovery/cards/load_175c6.json",
-      "card_sha256": "f16bbe972d279622c4b4ea74079eda0f4268dcf5717d8279702e2b07b5979ccc",
+      "card_sha256": "5f831c86472586169e4e264eb6ab7e7aacbdf86377379bad11f099f9fb070235",
       "id": "load_175c6",
       "name": "sub_275C6"
     },
     {
       "card": "recovery/cards/load_2a896.json",
-      "card_sha256": "7012c4d98b0ba29c51253fc62387e75302124888d382649c04ed84a24e5ca5bf",
+      "card_sha256": "c2af828611c706fc1c306a4dc65dfcd87f20aed7f5ab2bdf09676fdb7b90d52b",
       "id": "load_2a896",
       "name": "read_line_helper2"
     },
     {
       "card": "recovery/cards/is_facing_camera.json",
-      "card_sha256": "ea1e57694a5347f2892b5b9b33056536b4822580704ad2fbec3c4b05a49a4737",
+      "card_sha256": "c5e67278a09df50c21ee2013c37d918372b84a02bdcd3f264583c1294b890490",
       "id": "load_15f2e",
       "name": "is_facing_camera"
     },
     {
       "card": "recovery/cards/load_2367a.json",
-      "card_sha256": "a61508c901ee8c1f5e1687b8e991462e190c3f2b00918609ccb4b49dbc4c75fb",
+      "card_sha256": "754b67f54f6ca91d4f060ae7604f594b0d2111c5e8f9db8095be042b2eed9b36",
       "id": "load_2367a",
       "name": "sprite_1_unk3"
     },
     {
       "card": "recovery/cards/load_208c6.json",
-      "card_sha256": "4832f1b00a1576f37978dee77a60298423f3ba1da3f6aeb524a2ad0cb8606f30",
+      "card_sha256": "bc282df24c1bc4cd116b8c52cce9e7538c352e3f6601226a26a3eb179759824d",
       "id": "load_208c6",
       "name": "kb_int9_handler"
     },
     {
       "card": "recovery/cards/load_222f3.json",
-      "card_sha256": "135884ededd33f9de4133a90c7bdedc1221158451326ec6304335aad6bae4a5d",
+      "card_sha256": "2f37be0e10da3af166be6ad38139071c57c56f1d3faddacdda57ad15e32821e6",
       "id": "load_222f3",
       "name": "set_projection"
     },
     {
       "card": "recovery/cards/load_0069c.json",
-      "card_sha256": "32d62775d6deab85bd1dab4874a054a26fd138c9395dfd825d991259c57c11be",
+      "card_sha256": "529ba2e3cca054f4f20ce877da91984b7c97aece6d78bc832755c040308996c7",
       "id": "load_0069c",
       "name": "run_intro"
     },
     {
       "card": "recovery/cards/load_1712e.json",
-      "card_sha256": "576703a87c459cbc667baca0b42f0a97c9150832b9809a16e5d6c92c48fa36c5",
+      "card_sha256": "75f7228c15bb455a0771f2fa2576678994aa99b4661256ee56af0d7898163cf3",
       "id": "load_1712e",
       "name": "audio_op_unk2"
     },
     {
       "card": "recovery/cards/load_28aea.json",
-      "card_sha256": "7699940abef0888c17275fafe429cb65ebea94ff9516fcaa8c872261a54d4342",
+      "card_sha256": "7a7a07deaa381adf85d08c859535c1d50cd526609575eee0353e1abd1b22365b",
       "id": "load_28aea",
       "name": "sub_38AEA"
     },
     {
       "card": "recovery/cards/load_228ee.json",
-      "card_sha256": "8bcd5ac090f08c7ac14d45a6d848f4a1e31a72cb1d1fe78f960486e8de4b6b6e",
+      "card_sha256": "9fdcfddd2e0c4ac3257e5495e762d35c20a214b5204b86be695f7703d7ca48f0",
       "id": "load_228ee",
       "name": "mat_mul_vector"
     },
     {
       "card": "recovery/cards/load_27dbc.json",
-      "card_sha256": "a3d704f463e312adcb3856d0ada3bd21d066da4dcbf2f420d4fb9023d1f5888b",
+      "card_sha256": "17dc1dc35f77b201185d34f0a75e3ef1aa94c0df8d0241ae9250e6cbd7edb6da",
       "id": "load_27dbc",
       "name": "audio_init_chunk"
     },
     {
       "card": "recovery/cards/load_2219d.json",
-      "card_sha256": "30830065c161c52b014ab8bf647a6446750e607ac2e9c0cbec5d104bb0f6ac91",
+      "card_sha256": "f47c4e40aae13f180d7b687d1c8177b7ee2fa0706b4ef7716ee2b5962744e809",
       "id": "load_2219d",
       "name": "nopsub_3219D"
     },
     {
       "card": "recovery/cards/load_21525.json",
-      "card_sha256": "a586f28c85c4013a747162028726514137b8e400cadb6a0ef51e90190f14521a",
+      "card_sha256": "88d75fad1a939b37202463e2c66d54f9644fd2fb5b7231869d6e150c03177763",
       "id": "load_21525",
       "name": "nopsub_31525"
     },
     {
       "card": "recovery/cards/load_27b14.json",
-      "card_sha256": "29cc242885d370be2c041eb9832ebe697bad41ab3f1b7a6cf92c1d027cd8cd3f",
+      "card_sha256": "7c58be9cc9ac8394487687dbde3d94466783d18797340757b9c487ed667c7c46",
       "id": "load_27b14",
       "name": "load_sfx_ge"
     },
     {
       "card": "recovery/cards/load_29966.json",
-      "card_sha256": "b795f3ec43cd2b71a88bc56d8fbd58c67382a0b25817f08a7fb8e1a739934488",
+      "card_sha256": "bae049b938dedf83f79d57ea0d44e1d41bfa3401e98dcdbe8bac6eff01ad0e7c",
       "id": "load_29966",
       "name": "audio_driver_func1E"
     },
     {
       "card": "recovery/cards/load_1916e.json",
-      "card_sha256": "64b655f442df53205e028387ced6c14e8ee8eb30bcee7f18e6a363d3ac38d71d",
+      "card_sha256": "5a37a9fd981cc3fb7cdffb0292a9bac809983f09a05bfde116b29c880f559021",
       "id": "load_1916e",
       "name": "draw_lines_unk"
     },
     {
       "card": "recovery/cards/load_27ec0.json",
-      "card_sha256": "580d103fd2a161746fa308e3e2485fa7884dbb8c1020cb3d3f938a9b7d437e30",
+      "card_sha256": "57c224d58a390aec01902cfc403e058c8ce4336e61c75c5a13f9b1f7d4582c5d",
       "id": "load_27ec0",
       "name": "audio_map_song_instruments"
     },
     {
       "card": "recovery/cards/load_2a2c0.json",
-      "card_sha256": "21dc67240a336ffd26cb187e0a03fdd6005ee1e2b4b48d8914df1fc7b988ffd2",
+      "card_sha256": "c857a86ee139c92ed8368f844b0c5308bdac42bcb7d82b6ec42f6366837c6a7c",
       "id": "load_2a2c0",
       "name": "load_palandcursor"
     },
     {
       "card": "recovery/cards/load_26246.json",
-      "card_sha256": "66371fe79c6d94018c09a9855b44c9b74282593820a79e9dc3bafcbda2f86a91",
+      "card_sha256": "062bdfeb0c495c72cc73ce2d7381c891c8a77bc1c79999999fe603dff660065f",
       "id": "load_26246",
       "name": "preRender_wheel_helper3"
     },
     {
       "card": "recovery/cards/load_16c3c.json",
-      "card_sha256": "d4fb1954fe49a7cf5b2ec30ffcfb1d999d4a3a79aa3a01a650bc89166f73f3fb",
+      "card_sha256": "c69bf6995feeac30563d43f49b7f4b17393151391d8c9b9986c7153f77f570b1",
       "id": "load_16c3c",
       "name": "audio_init_engine"
     },
     {
       "card": "recovery/cards/load_26412.json",
-      "card_sha256": "5314851b3bce59b17ef6ca40b18bda6f027e501fb56349fd7d60f7c7d85f9531",
+      "card_sha256": "fb317afe04525b93b0f344998dd1e8c1be9537b371f5d39f9978b7419bdebae8",
       "id": "load_26412",
       "name": "preRender_sphere_helper2"
     },
     {
       "card": "recovery/cards/seg000_line1570.json",
-      "card_sha256": "c6f6c28a351a0a8bc101075b45460354e36b3f6b1af41703d8b0595051d8e61a",
+      "card_sha256": "bbbe8ad33ee21fac1ae480a4eb29c10de313b9d027c0498e1cd86472cc654a8a",
       "id": "seg000:line1570",
       "name": "run_menu"
     },
     {
       "card": "recovery/cards/seg000_line1734.json",
-      "card_sha256": "6efb87a13a6192eb5edd68da049d5bbbbce2bcb2c705ea9b2c72c3e2feee6575",
+      "card_sha256": "0a75890c6dcbf69dc3ff0bba5f914c43ee1a9b6dc71d4654f5c0453db4b46732",
       "id": "seg000:line1734",
       "name": "run_tracks_menu"
     },
     {
       "card": "recovery/cards/seg000_line2214.json",
-      "card_sha256": "4e558d72203519158f04488619461c0951abb7239f2fe969b1c1366b6eb32b59",
+      "card_sha256": "395bc135326f8e321f4f00dfe8a77b3b5942872810288972677b663d4e0bcd77",
       "id": "seg000:line2214",
       "name": "highscore_write_a"
     },
     {
       "card": "recovery/cards/seg000_line2334.json",
-      "card_sha256": "1d034fc35cffa4ac88e2ea5e5233c411d5f8264eb4b5feb8bebf092593cdaaca",
+      "card_sha256": "ea566fe3526e9a9f67247e7e723aaac8a22b6c50d29ead9c4837232ddc516a84",
       "id": "seg000:line2334",
       "name": "highscore_text_unk"
     },
     {
       "card": "recovery/cards/seg000_line2572.json",
-      "card_sha256": "9b71f7b6dc8a8ad13c59dddcf8606236cecd6e7107301f8b5a8439ba08d1f714",
+      "card_sha256": "6c63c9101588bce419560de82f077e789b6a3562780f227af1422cc4f277be3f",
       "id": "seg000:line2572",
       "name": "print_highscore_entry"
     },
     {
       "card": "recovery/cards/seg000_line2723.json",
-      "card_sha256": "49f6cac3f2e9f8d2a81388e7a84f260c8eccf2807a5355bf6250bc990ebd8f5a",
+      "card_sha256": "e7781b1afdc98d91505b5cad604d29497ea5d0c11cb49a6bde10918c01205212",
       "id": "seg000:line2723",
       "name": "enter_hiscore"
     },
     {
       "card": "recovery/cards/seg000_line2908.json",
-      "card_sha256": "0f58ce2c55b33299cccb67ab56521e2035b8993ff00bdb281dd804776ea472f8",
+      "card_sha256": "dccdaa05a551485c390598bd0ff99b46ec3141b0a6bd6d0055183faeb94d5bbc",
       "id": "seg000:line2908",
       "name": "highscore_write_b"
     },
     {
       "card": "recovery/cards/seg000_line2975.json",
-      "card_sha256": "9b239c6bf411a10e027ce1eb02eb9e44c138ce47aafd1790009da6589c18afeb",
+      "card_sha256": "a9a1d55f3430491d083d06bfa116de5d3faf20a3ba996247818f6801b146ba1c",
       "id": "seg000:line2975",
       "name": "run_car_menu"
     },
     {
       "card": "recovery/cards/seg000_line4276.json",
-      "card_sha256": "067d565bf386cd8bc1a8a28fd78025ac3b9ae5ffe167d944a7927291e337ac48",
+      "card_sha256": "fc8c9fbd14cb1528483758e5232815645ce845b0c066a5f9e54f2474d9be86b2",
       "id": "seg000:line4276",
       "name": "run_opponent_menu"
     },
     {
       "card": "recovery/cards/seg000_line4886.json",
-      "card_sha256": "177d8ce1ac916b1975e0524dca90d6fd1ccd084c149d371211f94884277148c1",
+      "card_sha256": "41a4e3a920837a5aac17230b549d12ca34250874388bc75063757e90d2ffb0d3",
       "id": "seg000:line4886",
       "name": "run_option_menu"
     },
     {
       "card": "recovery/cards/seg000_line5126.json",
-      "card_sha256": "213c522af559fd34cdabc35d21339439bea839121f5bee6be51386304a521abe",
+      "card_sha256": "436d547ae0b35aba0d4904b2456b1752dc2e238c5af05e8180a40d8a84606fef",
       "id": "seg000:line5126",
       "name": "end_hiscore"
     },
     {
       "card": "recovery/cards/seg000_line641.json",
-      "card_sha256": "367cd65c7a0908d6817e8fbfe67672add9b982949295c466a32a40d1439edce5",
+      "card_sha256": "45f4ae373acaefe08dad330742bf87807cb2e39a363b2b6c5de684a1f9e851a4",
       "id": "seg000:line641",
       "name": "run_intro_looped"
     },
     {
       "card": "recovery/cards/seg000_line67.json",
-      "card_sha256": "02f11ad330835e25f71ee0dbba4e57145a85d8e913533a146474dadeb28e6687",
+      "card_sha256": "cd94b6f94c146b4d9bc5bc3cd65d8c92ba0df6dcd49b41cdce9b151a585616c1",
       "id": "seg000:line67",
       "name": "ported_stuntsmain_"
     },
     {
       "card": "recovery/cards/seg000_line7090.json",
-      "card_sha256": "7485347528c1e507a82d2c8324adda45a818d202b90030b2e66551f750ca2c7a",
+      "card_sha256": "3245fc2757e6988de63b657968dd65cef65dce0a1c9c4d0db9d4f9e74993fff4",
       "id": "seg000:line7090",
       "name": "security_check"
     },
     {
       "card": "recovery/cards/seg000_line828.json",
-      "card_sha256": "d1fa91c19f7ea402c556254a7e827d776dfe9d4685042f9a967203a69d3ef1b4",
+      "card_sha256": "41e99b07232bbbd70436830e7cb92a8ed1cc6cffc3af27959a9b5833167ea7d7",
       "id": "seg000:line828",
       "name": "load_intro_resources"
     },
     {
       "card": "recovery/cards/seg001_line3572.json",
-      "card_sha256": "74f3f82513adbb6dedbec4135d0e1c8afc1fbefca40db4a3fd5a2b73c8829827",
+      "card_sha256": "b3abf17a1e47be4bf267646f748b884d15d0ae815b67c8f7dade69758fa8a84f",
       "id": "seg001:line3572",
       "name": "init_carstate_from_simd"
     },
     {
       "card": "recovery/cards/seg001_line3823.json",
-      "card_sha256": "5243ac238347c4cbe85c5050b3fd44636b232f270b7a7e24ebb29ee9e8470451",
+      "card_sha256": "c5ade958805c2c938f4a5bde8a2e0ec88d659efc8c972c46c6ed229ab5e303fb",
       "id": "seg001:line3823",
       "name": "init_game_state"
     },
     {
       "card": "recovery/cards/seg001_line4286.json",
-      "card_sha256": "631cb33df7165bbc7338e6ed2d711d8fa280c1866a707459efef3306d8afe868",
+      "card_sha256": "7ad27a1817b5c418c48c8adc29f665bf19dd259e6415fa8bc774d4508985d334",
       "id": "seg001:line4286",
       "name": "restore_gamestate"
     },
     {
       "card": "recovery/cards/seg001_line4395.json",
-      "card_sha256": "78ca1cee8a3b07b7560751c7f6c9e981525ea874b1f00c5d19d73dcf8b5b0bda",
+      "card_sha256": "af66ceda1d19f88b293722d01cf4f7a66f13a34577cb7b6d7517425a2a7c72aa",
       "id": "seg001:line4395",
       "name": "update_gamestate"
     },
     {
       "card": "recovery/cards/seg001_line4604.json",
-      "card_sha256": "78637c5ad912865021bf1150426da88c0f2b82c0942417a8cf77d8f895d2cbe9",
+      "card_sha256": "044d3fb3ee703e40265efb14ae192ec86d183fb32fe26d64d24ffbce8fa4a491",
       "id": "seg001:line4604",
       "name": "player_op"
     },
     {
       "card": "recovery/cards/seg001_line5307.json",
-      "card_sha256": "dc65bc4daf13398a7712b51d17cc699bb77611e06fec81b563677dfaa46e60bc",
+      "card_sha256": "05eaf94e2cbca88a7f47d4f66518b5599f6554c35b4bdf6cbbf45259a8afb997",
       "id": "seg001:line5307",
       "name": "detect_penalty"
     },
     {
       "card": "recovery/cards/seg001_line5588.json",
-      "card_sha256": "fad89c9ba7da005f150ca9fab7e43453f8d2b0e9b4c1ce586c7b1df72b7c2947",
+      "card_sha256": "424c4967b7b6fad9b0de0a86705c0c8dd79315641bb547562b4cc2373b5e786d",
       "id": "seg001:line5588",
       "name": "update_car_speed"
     },
     {
       "card": "recovery/cards/seg001_line6171.json",
-      "card_sha256": "11fddcb375c133dfc7bb27f88eaa164abdd6bc5dee8bdfdb07d23c6357ecfdbf",
+      "card_sha256": "4411b497898390b43f1aaf0d705f4ec814a94a7bad5946171926107d1e44e5cf",
       "id": "seg001:line6171",
       "name": "update_grip"
     },
     {
       "card": "recovery/cards/seg001_line6689.json",
-      "card_sha256": "97f62c75618acdfec5ed5a6c3e9e7b07134c5c3742be499d6595ab75045aacc6",
+      "card_sha256": "1d52f3018cd64a7527c4dcb3abd1d69216529237ea6517f0d0ac88a4ac6c5750",
       "id": "seg001:line6689",
       "name": "car_car_speed_adjust_maybe"
     },
     {
       "card": "recovery/cards/seg001_line6863.json",
-      "card_sha256": "d24b6fcd6e685463e944f6c68ee5c2d2f55a7c212718b25928b5d63bde459901",
+      "card_sha256": "a8aec0b95fbe06474a808630b456243664c3a4b034d4fb5f280c93555122e89d",
       "id": "seg001:line6863",
       "name": "carState_rc_op"
     },
     {
       "card": "recovery/cards/seg001_line7057.json",
-      "card_sha256": "2c748dab3a33fb903ddfe08e8e5586121cc8f9becbc529033ad28691995a8154",
+      "card_sha256": "8bcbc9e5206809039df8e939ea848bafbb142b7b06f183fa9e840e43a4a05723",
       "id": "seg001:line7057",
       "name": "upd_statef20_from_steer_input"
     },
     {
       "card": "recovery/cards/seg001_line7188.json",
-      "card_sha256": "f7a9d9e464d05c8fbb3314edaf0460764331b6d9977de72cf980c96f64ec527e",
+      "card_sha256": "c2b1ef0ed9d619ab5bab27a0075af0eb81ff97587325d7540c41e49ca42efe10",
       "id": "seg001:line7188",
       "name": "audio_carstate"
     },
     {
       "card": "recovery/cards/seg001_line77.json",
-      "card_sha256": "4ab5933ba52492c739fdb49565a86e5707f01e8868ed8fd99d560fa7394fcb81",
+      "card_sha256": "12eeda22c2164eac948c966af0da9ac38aa5af34d4e70c0b9eb128c88a6862d3",
       "id": "seg001:line77",
       "name": "opponent_op"
     },
     {
       "card": "recovery/cards/seg001_line7740.json",
-      "card_sha256": "068b01f4646bf940c29ac2d548db484c2cd3c767d6e8919435e95721ae54c139",
+      "card_sha256": "dba615247c5dfd2bb29ede03c4a9363acdbb0bcc23dd7e49c4001438cffbd564",
       "id": "seg001:line7740",
       "name": "sub_18D60"
     },
     {
       "card": "recovery/cards/seg001_line8124.json",
-      "card_sha256": "99e7aa79c5e41982a76f991bc633267975d13467d3714980f666f6de1b98de25",
+      "card_sha256": "37d2eb5b680d4cc89a75418c3d002643f2eefdc06f8529dee9102360e161ca3e",
       "id": "seg001:line8124",
       "name": "car_car_coll_detect_maybe"
     },
     {
       "card": "recovery/cards/seg001_line849.json",
-      "card_sha256": "14f8f06ca067e68d0b98e376119239d728abfb10fec587ace4dd17f240ca2bde",
+      "card_sha256": "5447d24ffc2b6f87ece5a41759f31da819512659205126cf2a3f735f40fe86d7",
       "id": "seg001:line849",
       "name": "update_player_state"
     },
     {
       "card": "recovery/cards/seg001_line8529.json",
-      "card_sha256": "1fc8f81af34122ebc27fc20926b11d7ce89c6b23dca1ac9acc6b8516e2be1ab3",
+      "card_sha256": "dcbb30cc470a509511323d48f2dc87f77b259404a478c8a0ebb75e90bc45e58e",
       "id": "seg001:line8529",
       "name": "init_plantrak"
     },
     {
       "card": "recovery/cards/seg001_line8683.json",
-      "card_sha256": "8bc6d77530d73d45454216e08e30d8719f3c5db64473a7c173419a0198e8908b",
+      "card_sha256": "1b0990bcb452e77e3d2d9533f4e14a4846be1a68b66464c01be212f1eda27691",
       "id": "seg001:line8683",
       "name": "do_opponent_op"
     },
     {
       "card": "recovery/cards/seg001_line8691.json",
-      "card_sha256": "250b153726605ed34be953c8f22fbcdfd7d980df34c7c65857daf581a19c28b3",
+      "card_sha256": "795bd876a10d9506f7d4632fb8877774c417ae557fa635e762c4c8c5040b2c18",
       "id": "seg001:line8691",
       "name": "update_crash_state"
     },
     {
       "card": "recovery/cards/seg001_line8887.json",
-      "card_sha256": "32f57609973782ef8e59e0ef821e57c301e15f530fd849fa4eb427418d9e448c",
+      "card_sha256": "dfa34e937bd5754afe035926ba3fe7f82affe428e2566b5487339774eee57a14",
       "id": "seg001:line8887",
       "name": "plane_rotate_op"
     },
     {
       "card": "recovery/cards/seg001_line9075.json",
-      "card_sha256": "36768df7bb01a8e09b3de37dbc79874c07be9cef283eed04af159706082f71ef",
+      "card_sha256": "5e924c88427756364cf071d69606cf9a71aab11c8554ce9a78b4b0a2ffd8cb56",
       "id": "seg001:line9075",
       "name": "plane_origin_op"
     },
     {
       "card": "recovery/cards/seg001_line9141.json",
-      "card_sha256": "d108a509ff0c194bc906500dbe64f8cb19ec2defa7431f4c48eb298ba27a0119",
+      "card_sha256": "a93d11300a95ccef29e6a3fc7eea1707ef0ef438009766c8b6405389fed1dd01",
       "id": "seg001:line9141",
       "name": "vec_normalInnerProduct"
     },
     {
       "card": "recovery/cards/seg001_line9215.json",
-      "card_sha256": "52539c3cd47d151434cbc161332ac44a4bff8f0a24f4ff8fd9b1f5b595bf1b0c",
+      "card_sha256": "4b893207fe8833b93527993ff2e7c9a5f807e16133270242cae16fe06e6005f8",
       "id": "seg001:line9215",
       "name": "state_op_unk"
     },
     {
       "card": "recovery/cards/seg001_line9386.json",
-      "card_sha256": "794e2c864d19d4d204ff7d21ef695821892b5d7288b66f8f407cffba5bbf6f0e",
+      "card_sha256": "c0fb2b3369f0cd599809003f5a061afe8a2d503cbfaeb45e9960df3921842d79",
       "id": "seg001:line9386",
       "name": "sub_19BA0"
     },
     {
       "card": "recovery/cards/seg001_line9508.json",
-      "card_sha256": "b9c7c66cd210a71b727f05bbd23cf1a158f41326869f6512477da3391b036c86",
+      "card_sha256": "b7547db04dd7178a66762580eca24cd5447ad286eb7cc56c0163cda47c7ca357",
       "id": "seg001:line9508",
       "name": "setup_aero_trackdata"
     },
     {
       "card": "recovery/cards/seg002_line296.json",
-      "card_sha256": "75caf18588e841aa42326a2b170c9968a8032c2225563e1932892f0f7e39d863",
+      "card_sha256": "c9a313d430954868ba733351de4bc862ff6afab8363d9d2379ff2f35e08e08ef",
       "id": "seg002:line296",
       "name": "init_div0"
     },
     {
       "card": "recovery/cards/seg003_line239.json",
-      "card_sha256": "6ab648a09704f16a3b4346a42bd7eb2a6b5398a0d37a262f6aff5d589260cfc5",
+      "card_sha256": "bbad79189bf56b30f13388c65c3b61315d62836c53bb7bfd42236af9e6d55994",
       "id": "seg003:line239",
       "name": "init_rect_arrays"
     },
     {
       "card": "recovery/cards/seg003_line305.json",
-      "card_sha256": "09c34682c8e3663f7b8573c8818a86a90b61e77b3455533839b65667e1fbdbb7",
+      "card_sha256": "187c9ad44fee9383a2f87dfc21fda785c97345049fdd775ff35a1b928143b93a",
       "id": "seg003:line305",
       "name": "update_frame"
     },
     {
       "card": "recovery/cards/seg003_line3792.json",
-      "card_sha256": "4bbb4ad6452f9370afb06105114616997bf0009543507a3946aa132895e5bbee",
+      "card_sha256": "cf4cdcb0797fc7f30b2fffab92470a5429ef04ba62d0f4392d209963de2541cb",
       "id": "seg003:line3792",
       "name": "skybox_op_helper2"
     },
     {
       "card": "recovery/cards/seg003_line3942.json",
-      "card_sha256": "ea9917bd42b7f81ccf7edaf148307e8f5fa0d5a8fd682bcd568c043afe1a5a98",
+      "card_sha256": "a671fa9ff5077073933189a855ec816838a0126d65eb760e7f2065c922c0561e",
       "id": "seg003:line3942",
       "name": "skybox_op"
     },
     {
       "card": "recovery/cards/seg003_line4706.json",
-      "card_sha256": "7595d8e26668319a641e62752e2de8e32e929312a229bb854d71f807814fbc3c",
+      "card_sha256": "20e37f82c81f1fccd4180ad1121fc771afa3831cff1ab130e0a760118978d034",
       "id": "seg003:line4706",
       "name": "transformed_shape_add_for_sort"
     },
     {
       "card": "recovery/cards/seg003_line4760.json",
-      "card_sha256": "f0c22ab71ac5cae907fd50f4e3468bd054744941e2abecb389de9f4e46b7855b",
+      "card_sha256": "76bdc4135efb5c070221fb1a41a04ceaa685e6bff2040c46aaf9c53bd8b5e065",
       "id": "seg003:line4760",
       "name": "draw_track_preview"
     },
     {
       "card": "recovery/cards/seg003_line5361.json",
-      "card_sha256": "05bb1bd74932bd01ab90403b3b1185b1e6a224c663bb76a6d6c43a7dd9d69082",
+      "card_sha256": "e167692d7e92aa078e1d78d4f9f26a40eabb1fe1791f5fe8b700911d16ae948b",
       "id": "seg003:line5361",
       "name": "draw_ingame_text"
     },
     {
       "card": "recovery/cards/seg003_line5790.json",
-      "card_sha256": "393919cf44bb08ee9bae0463ed8f34c8ed55dda2ec17d87ead30f9da1ccc33e8",
+      "card_sha256": "be51bd31d9ab1a84c8bfd66c72b5e1e7d593a87c497fba0d1368ee70e29a1d8f",
       "id": "seg003:line5790",
       "name": "do_sinking"
     },
     {
       "card": "recovery/cards/seg003_line5856.json",
-      "card_sha256": "4d306294524ccdd472ab5019daed9073b72c60be03472faeb4d5b9a02b645d84",
+      "card_sha256": "8aa48b28fc831b57011c63c50a774af53fa72ee1f99c29ea275fa58a6e2d06c2",
       "id": "seg003:line5856",
       "name": "init_crak"
     },
     {
       "card": "recovery/cards/seg003_line6084.json",
-      "card_sha256": "8ec2f689c297d03921f9a4d95e2dcd41b79acf212a05e8c1507efd6ac2d17c95",
+      "card_sha256": "37ab1633e2017105c96a9e29908ef04a987e0e1f3ad95db72f7d35ff5cf00eed",
       "id": "seg003:line6084",
       "name": "load_skybox"
     },
     {
       "card": "recovery/cards/seg003_line6198.json",
-      "card_sha256": "4a1f3fb0c634a620934fd0d29dd9e79bdaaa6b2b079b6b8a77e32c6db0ef9f43",
+      "card_sha256": "b767e1e8afe2795426721e0b1d3bb82287a3f5e608f72ed29102bd07ee96636c",
       "id": "seg003:line6198",
       "name": "unload_skybox"
     },
     {
       "card": "recovery/cards/seg003_line6212.json",
-      "card_sha256": "b7beefc770c0661257526cf27a0107b078c3f21e94e0d21ec8c5ee6bfc5a3b32",
+      "card_sha256": "4d66feccd2f5d6a94778299f36892189023b44cbe7820ee09cd86be27a1d233e",
       "id": "seg003:line6212",
       "name": "load_sdgame2_shapes"
     },
     {
       "card": "recovery/cards/seg003_line6258.json",
-      "card_sha256": "262f3e424f2b0acf10b0e8d36d9c2a3302aa66b5610995b38acea06718d1b0d4",
+      "card_sha256": "e591e9dd38df7744f6b356eaa3ac936933fc0d6ab7e91ac361afb9a361e26c9e",
       "id": "seg003:line6258",
       "name": "free_sdgame2"
     },
     {
       "card": "recovery/cards/seg003_line6268.json",
-      "card_sha256": "ba3e40ad64c38b8857d1603fba20a6005b0e8121ee634902022259945fe0ded3",
+      "card_sha256": "c9fd3315a46ff88e40ffdc51172ea705c01d2354ce15cd35653a10ce91db35ea",
       "id": "seg003:line6268",
       "name": "setup_intro"
     },
     {
       "card": "recovery/cards/seg003_line6831.json",
-      "card_sha256": "37b99cf233dca400eb878b0ec781a8a52832ff3642f0ec019b277641a6dace1f",
+      "card_sha256": "47059370f3e4faf3e2913840a4ab3017416a980f48ee04165884d5c960c6ad14",
       "id": "seg003:line6831",
       "name": "intro_op"
     },
     {
       "card": "recovery/cards/seg003_line69.json",
-      "card_sha256": "078774f04535e4838a324e428d554212ca57dc1b82f0050ca1514afc2263f19c",
+      "card_sha256": "4a334a3c9d31ddaec3c7c52227b927733bbdd33499ff1d31dfac1b907fd43f72",
       "id": "seg003:line69",
       "name": "sub_19F14"
     },
     {
       "card": "recovery/cards/seg004_line2757.json",
-      "card_sha256": "a3e6ba3f3b96065c5937db5b8741ebd3e44fdb37311df80b5efce33f878ebd38",
+      "card_sha256": "010e460e1e99faa1990e34a5a2e8b8b8b8ace6e5a1c93445650d59e1c4fc57fe",
       "id": "seg004:line2757",
       "name": "bto_auxiliary1"
     },
     {
       "card": "recovery/cards/seg004_line3184.json",
-      "card_sha256": "a68623288749c1550c9371619e5cca181ffc263c23f9204dbbbe36c81e386e97",
+      "card_sha256": "79aa6749d888697ba385487b0b6f5dd0e938662f852d9b5daf99eeec5fcc9abb",
       "id": "seg004:line3184",
       "name": "shape3d_load_all"
     },
     {
       "card": "recovery/cards/seg004_line3272.json",
-      "card_sha256": "7fbc8c6f1bae611c6a6c001e80373764802271fc0ca5195b5b9e22288617e426",
+      "card_sha256": "06961cef6f863a0c73aea5a2bf7076f0ff7f46e578d1b3d50d8178db0f8a2fae",
       "id": "seg004:line3272",
       "name": "shape3d_free_all"
     },
     {
       "card": "recovery/cards/seg004_line3294.json",
-      "card_sha256": "344096fdfd06e1a4e3aaaf9b6c96379b9188ba161e24c62a50eea186cca7439f",
+      "card_sha256": "44305d4a50875f7887a0d710b8ef38b4a7ba7ed27bc1bc99b8b1c4c8d45b24f8",
       "id": "seg004:line3294",
       "name": "shape3d_load_car_shapes"
     },
     {
       "card": "recovery/cards/seg004_line3831.json",
-      "card_sha256": "80d23539ebcccb16fa171c66b37b9569e46bffc28af916747b929a049130d45a",
+      "card_sha256": "918bfa88c3f749abfe057707dcefc400f1908104617fe380d291914e0fb71b73",
       "id": "seg004:line3831",
       "name": "sub_204AE"
     },
     {
       "card": "recovery/cards/seg004_line4078.json",
-      "card_sha256": "1ef33d14e8aa32024af3ef897a4772f8ce81faca1a6687ef9cc65b92edac3e4e",
+      "card_sha256": "42463b0e3cc1fff0b6aa60b5f22494d9ff61d25e0ed93446836f7cf262e3d902",
       "id": "seg004:line4078",
       "name": "track_setup"
     },
     {
       "card": "recovery/cards/seg004_line5843.json",
-      "card_sha256": "807ee71b8d8305c5ef4abeef066ae890c07f4545c4331aa8cf13282a4157a86b",
+      "card_sha256": "a0b41152e04552045725c1a3461c9134339f2e4191cf9ba2e905bea821618618",
       "id": "seg004:line5843",
       "name": "load_opponent_data"
     },
     {
       "card": "recovery/cards/seg004_line61.json",
-      "card_sha256": "e4903f7b8d7c19cda2b82ddaec000457a7ee2ec12be9b4fb2e0ede5c0a9c70af",
+      "card_sha256": "48cf48fed4c9f191fcd5d0f22666b4b69c54d258fa8c1d35c725ee6ecbe71ebd",
       "id": "seg004:line61",
       "name": "build_track_object"
     },
     {
       "card": "recovery/cards/seg004_line6110.json",
-      "card_sha256": "e5e06c88767921c822379df15635a6a1a1216b9d99f2a3eed700673331f72ebe",
+      "card_sha256": "158fbcedb61154f7cd2ebdae6edd92ee99a9743d242f90f5282415e7758e2de0",
       "id": "seg004:line6110",
       "name": "subst_hillroad_track"
     },
     {
       "card": "recovery/cards/seg005_line1078.json",
-      "card_sha256": "9740f4506cee7df492729993536fe40d550eff7810a4983a4606720b46a5da10",
+      "card_sha256": "8e101eacaabe6f9d31ce03c331753baff623a95c7046ab64a3acef3482391e98",
       "id": "seg005:line1078",
       "name": "remove_frame_callback"
     },
     {
       "card": "recovery/cards/seg005_line1096.json",
-      "card_sha256": "e7aa609e0f3e8f68574296b7364789319b48166930f2150ff359edc0cc8a6b8d",
+      "card_sha256": "8fea040548cb3616bcc5e37202914931120f5a9e79794a5479669fc9b2e5d1ef",
       "id": "seg005:line1096",
       "name": "frame_callback"
     },
     {
       "card": "recovery/cards/seg005_line1203.json",
-      "card_sha256": "4acf1a38f64632d1f1713a83afdc04ee33655c999994dec93398741b5c951c9f",
+      "card_sha256": "818bff1bf0b5b9a2fe007f476bb034152fe17d18c41a3924b3515b9038c2b49c",
       "id": "seg005:line1203",
       "name": "replay_unk2"
     },
     {
       "card": "recovery/cards/seg005_line1552.json",
-      "card_sha256": "554e5add3dea3f8e179a4e3d532f9494b74bb42254038621e29aed50030adcbc",
+      "card_sha256": "1f07df8b5e498f501ab41f54e1d98357da24e993e5fed1f7ac04b414b045d681",
       "id": "seg005:line1552",
       "name": "sub_2298C"
     },
     {
       "card": "recovery/cards/seg005_line1967.json",
-      "card_sha256": "ed489a431cd981fdcc9eb53bae54b6d672079d605b6ee545c3d2e523f280bee0",
+      "card_sha256": "dcf6649a02f2064ab8c97061f23f47c80c0775ef48c6b96f928fadf658f3944a",
       "id": "seg005:line1967",
       "name": "file_write_replay"
     },
     {
       "card": "recovery/cards/seg005_line2009.json",
-      "card_sha256": "c8731bc2c92cd1b7a85a0aa2977b01c397e6b91b1ed10495c22d5ce261b7a20e",
+      "card_sha256": "9577b83c0aa08dec4f67ab25c20120d6105958feacf08f5e5016607fcd17157d",
       "id": "seg005:line2009",
       "name": "setup_car_shapes"
     },
     {
       "card": "recovery/cards/seg005_line2960.json",
-      "card_sha256": "2843e5780f35535a1ef8f799e95291a30e4ba965cbcf45a023f735c7bb8952ac",
+      "card_sha256": "1b112eaba2fb21f526151f3cde436b45276166360ce0c3d388990ed36a7e0405",
       "id": "seg005:line2960",
       "name": "setup_player_cars"
     },
     {
       "card": "recovery/cards/seg005_line3301.json",
-      "card_sha256": "fbe1f60e482e7d4603771bff89930a14eb048755fb5b54321901214c48fbef58",
+      "card_sha256": "2b975407b6236926c2d0e74e318e48cd3011626005731010e9a1a6d10e88adbc",
       "id": "seg005:line3301",
       "name": "replay_unk"
     },
     {
       "card": "recovery/cards/seg005_line3391.json",
-      "card_sha256": "4180bc8b9c83c382d94b341fcd6c2716642bf6deed5abaf9655ed3eafd97a95b",
+      "card_sha256": "22091f60dcf36e141bf26d3c3671d1c4b57842d764dce082c7fb30274187dd27",
       "id": "seg005:line3391",
       "name": "loop_game"
     },
     {
       "card": "recovery/cards/seg005_line74.json",
-      "card_sha256": "a98b32083bbcc295cb44f78be8cb8672ca19722dc2e34e04e354b8cd55064aab",
+      "card_sha256": "69c092a8853ec9e52a375af7d9b91d269a3f5a67e05094fc49e7d3a33d9d297f",
       "id": "seg005:line74",
       "name": "run_game"
     },
     {
       "card": "recovery/cards/seg005_line890.json",
-      "card_sha256": "f1bfc86728b58a24b1ce88d9c392ba9127f3a659e467dcfa0567f26c448d7391",
+      "card_sha256": "0bf70ba1b156ea6e9beb8cc37a9b18e128d5013fe87f43c6cf4ab957c313a7fa",
       "id": "seg005:line890",
       "name": "handle_ingame_kb_shortcuts"
     },
     {
       "card": "recovery/cards/seg006_line122.json",
-      "card_sha256": "9d642bc9b381e24a8283f2221c40e679768d85192eb1246932b8e8e4de1f1b33",
+      "card_sha256": "57cc39eca60786d0a9093cdbb408803a5e79e909a3f4016858bc739aaf54f219",
       "id": "seg006:line122",
       "name": "copy_material_list_pointers"
     },
     {
       "card": "recovery/cards/seg006_line152.json",
-      "card_sha256": "92f3b9af3ecf36880ed2bac1cf4c753c6986569031414ccd47206ed7201d5d9f",
+      "card_sha256": "65d61991c01e08bc2f7eccb15c357e1fce0ac4766125c152f5436534a5901ae7",
       "id": "seg006:line152",
       "name": "polyinfo_reset"
     },
     {
       "card": "recovery/cards/seg006_line164.json",
-      "card_sha256": "887c703345ce8f93ebd5bffe9ddeb50f12da34b914f0d318bb187ed4cd221ed8",
+      "card_sha256": "1b223a53406dcb2b1a9988b3ef86c22dd041f8340f86361e960dc4fa1504f490",
       "id": "seg006:line164",
       "name": "select_cliprect_rotate"
     },
     {
       "card": "recovery/cards/seg006_line2062.json",
-      "card_sha256": "030f72ccf691b6ca0b263ffd873bcba07536d02c42dacfb8253bc659944841eb",
+      "card_sha256": "b53dbbd06373c5a85a399310c9ff8b978b3ad3ef804d3b317760b6b0635a677d",
       "id": "seg006:line2062",
       "name": "get_a_poly_info"
     },
     {
       "card": "recovery/cards/seg006_line2293.json",
-      "card_sha256": "210b82b9c5d326f6361b23e2a92d0525f49787366b5e82d78603d868c5c98f41",
+      "card_sha256": "3c3f64a6e700d3c207714b388fb557efd1804bffc6646549e70bbb8f3f8c09f3",
       "id": "seg006:line2293",
       "name": "mat_rot_zxy"
     },
     {
       "card": "recovery/cards/seg006_line246.json",
-      "card_sha256": "11d5c9d8480f98e5da586ae9a19b5cb7081cd0f9e94177c2eefda872f469a3c6",
+      "card_sha256": "9777e41bbc80ba04bdb88d576402dfd3612ee651e0744a38827950d5639fe0fd",
       "id": "seg006:line246",
       "name": "transformed_shape_op"
     },
     {
       "card": "recovery/cards/seg006_line2552.json",
-      "card_sha256": "46c6adcbffccf7f39b3ab8d5414f5f86c330d45803b21c8ad2f8fb495d71c594",
+      "card_sha256": "a13a7ced41f606953957fe052c6a37bd75da25c9e2b091c06457ab70b59849c3",
       "id": "seg006:line2552",
       "name": "vector_op_unk2"
     },
     {
       "card": "recovery/cards/seg006_line2702.json",
-      "card_sha256": "ca8b2f6da92c6217a538f28b15b4ce221f5c03d0dba608bae5d3da355659d9c4",
+      "card_sha256": "ea9e3be31c44d982a3020ccf2129adedbe3396b16c996e41c166c21d63ec5e99",
       "id": "seg006:line2702",
       "name": "calc_sincos80"
     },
     {
       "card": "recovery/cards/seg006_line2888.json",
-      "card_sha256": "361296646bb120f146505a2a5aa3c5beec485fcc80ac3730ff36d588ff17dcb8",
+      "card_sha256": "1b08149e02018937f4f41f6c4b070d42d5980fa1962f8613a1da175a03720255",
       "id": "seg006:line2888",
       "name": "rectlist_add_rect"
     },
     {
       "card": "recovery/cards/seg006_line3366.json",
-      "card_sha256": "c8b9dc14df0127fa049b0a90ec06877716cb91120771f27190976e7253d0e949",
+      "card_sha256": "2600a57dc851e168b18b97bbe08674add58f55bc82a0db01feec3e6c133158d7",
       "id": "seg006:line3366",
       "name": "rect_is_adjacent"
     },
     {
       "card": "recovery/cards/seg006_line3440.json",
-      "card_sha256": "e8f71690b95e9a4ec3786125ce8d48d0baf445c815b133141b7b478ff7becc75",
+      "card_sha256": "d373aa1dfecad9e91f55ba2faf444e8ca35d92435e319a082012bf51558ec461",
       "id": "seg006:line3440",
       "name": "rectlist_add_rects"
     },
     {
       "card": "recovery/cards/seg006_line3586.json",
-      "card_sha256": "25452bc1741b6da02d03e0335f60e3030a3bdcdefb5e5888e40791e661125730",
+      "card_sha256": "5815766ae8e76106b40ec8f484d15442d58064621a6d266c9634f21308a11e2a",
       "id": "seg006:line3586",
       "name": "rect_array_sort_by_top"
     },
     {
       "card": "recovery/cards/seg006_line71.json",
-      "card_sha256": "6a09ded7b38411a1e6637b14fca9a627bc1102aed01a2c82c13c4b36cbfea68e",
+      "card_sha256": "c8a1d972f9a3dbc92b6c29d6f1533d953bb2c5465a2ff5e9475d8aeb6fa6d656",
       "id": "seg006:line71",
       "name": "init_polyinfo"
     },
     {
       "card": "recovery/cards/seg007_line1157.json",
-      "card_sha256": "1f74f7302b9ce4e3046539c909d27bd870230f09f531300a92a227f1020efe08",
+      "card_sha256": "ce539472f5d406ba0af6226fae6fda3f5aceda75e3b0fe1f0214bc4f3cbfd590",
       "id": "seg007:line1157",
       "name": "nopsub_27489"
     },
     {
       "card": "recovery/cards/seg007_line541.json",
-      "card_sha256": "fd931b5c0ce88f2ba9080ba0c345a903a65a90dfd56a7323f34e4ba1e5ce3062",
+      "card_sha256": "dfa34de36135c6dc51f70163f73c364cbc15874a3a14fcdccfc3eeac85b3c5a9",
       "id": "seg007:line541",
       "name": "audio_driver_timer"
     },
     {
       "card": "recovery/cards/seg008_line112.json",
-      "card_sha256": "b04715a6663c4c8935c559a9e24590b4ce7517ed76f0aa27a0f5b694a2f44e0d",
+      "card_sha256": "b5bf56a0ee9c83fdcde5579af85cc1eab7b2c10c468889993bb089f29165dab5",
       "id": "seg008:line112",
       "name": "sub_274B0"
     },
     {
       "card": "recovery/cards/seg008_line1207.json",
-      "card_sha256": "ecd6e35f8318534934b67db6aa311e7f5e67e871174e1f641f54e69eacc4998d",
+      "card_sha256": "03b7a4faee3fb305de053c8116ec113ee1a0c4078d3d46a4d97bb216c129e532",
       "id": "seg008:line1207",
       "name": "do_fileselect_dialog"
     },
     {
       "card": "recovery/cards/seg008_line1985.json",
-      "card_sha256": "6a3587729431f4f99d2cda8f36e44eb44cab20392e7a6b16f3312b673812cc36",
+      "card_sha256": "ad6f5e5b184e24483301d8a7f45a623ace5b1ae7d0378f7c7a2a6456e3c77556",
       "id": "seg008:line1985",
       "name": "file_build_path"
     },
     {
       "card": "recovery/cards/seg008_line2043.json",
-      "card_sha256": "121c543d8fb5027dcc21cecaa587c042838e0ed9602aa62fdf3a7e554b6b0ad7",
+      "card_sha256": "3c81b51af025b51008f099bd141e9a9b15d40f832f49f141c4a35829eff3d3bb",
       "id": "seg008:line2043",
       "name": "do_savefile_dialog"
     },
     {
       "card": "recovery/cards/seg008_line2243.json",
-      "card_sha256": "70581758ff5e040641a3da9d8e082c2ae73d585b40601c12e4315a7944e8b3c1",
+      "card_sha256": "d395e488ec9255a309ad8ff39bc942e45687db31e1049c39d44522f13439bf56",
       "id": "seg008:line2243",
       "name": "input_checking"
     },
     {
       "card": "recovery/cards/seg008_line2457.json",
-      "card_sha256": "1c404d22e8843fe9f870abc5440a6056efa716e439bf7b878ddacdd55a881e46",
+      "card_sha256": "1c5dca1c74037ff1859306513d8afa70e2cb50fb6cbc7df4080bb1fafd271743",
       "id": "seg008:line2457",
       "name": "input_do_checking"
     },
     {
       "card": "recovery/cards/seg008_line2540.json",
-      "card_sha256": "0b373a7cc623823e07a084265d6667d5c667d55f0b7dddee5e2eaa6803fcf83e",
+      "card_sha256": "678133b073344528ed58825a91ce28f12816373a815577b23925c335e46100a7",
       "id": "seg008:line2540",
       "name": "unload_resource"
     },
     {
       "card": "recovery/cards/seg008_line2557.json",
-      "card_sha256": "c25c0d0cf40c2b23b9602654308a3865c156087398764c19a8d0132ace04ceea",
+      "card_sha256": "7cc63ee7fada6bbf84f5ed09892544ecd7542a11d2a1b061df8826b956f333f8",
       "id": "seg008:line2557",
       "name": "locate_shape_alt"
     },
     {
       "card": "recovery/cards/seg008_line2574.json",
-      "card_sha256": "be027ed3710a38cd1923b8803ab4f0468c27940e1329dd28276aa6544ea319d6",
+      "card_sha256": "774d63d7df67bdbb4f63df5a86ae0d1e63beccb18acbf0cfef012d4b83ba4a79",
       "id": "seg008:line2574",
       "name": "locate_text_res"
     },
     {
       "card": "recovery/cards/seg008_line2640.json",
-      "card_sha256": "b67f75525046f515ecec5d6a193f9d482088a42621888bf4fb16cc643ee6e64c",
+      "card_sha256": "ef9d8922552fb6ffcd6c45716e1f710809267109d53afaaf2dafcece8277d13b",
       "id": "seg008:line2640",
       "name": "mouse_track_op"
     },
     {
       "card": "recovery/cards/seg008_line2958.json",
-      "card_sha256": "7debf47c219f108a0090f7140d724f6b490d3dd119dc78b1ee93fe542209ff63",
+      "card_sha256": "1b6c46c53c6b4987fe0394d59aa30394174d0ff954ba3f009c9f37b78514c412",
       "id": "seg008:line2958",
       "name": "mouse_draw_opaque_check"
     },
     {
       "card": "recovery/cards/seg008_line2970.json",
-      "card_sha256": "6dff9383be4846f7aee7a7b7845a1c07ac0a8f3579e0d7922e2f928dca1b86d2",
+      "card_sha256": "6dca7c447bbf10c68aecbe123b27595b02b8b43afb91e987fcb8a8c4e127b5a7",
       "id": "seg008:line2970",
       "name": "mouse_draw_opaque"
     },
     {
       "card": "recovery/cards/seg008_line2996.json",
-      "card_sha256": "4974c9f411c86e636e991b0bcc42ebdcc9ce8901d311ef99aebd59ae941792d9",
+      "card_sha256": "cb46b768aff0698b25cff994dfedb7b80dc747d6d86ea5da12b3699cefe59164",
       "id": "seg008:line2996",
       "name": "mouse_draw_transparent"
     },
     {
       "card": "recovery/cards/seg008_line3049.json",
-      "card_sha256": "53d5b9a916adc39de229112d897a3ae7af22a691a47f205554f33a61ffd62599",
+      "card_sha256": "4669268a369d2d17841c590e9db290bcfe9dfaf9efc56e00629e778617add453",
       "id": "seg008:line3049",
       "name": "mouse_multi_hittest"
     },
     {
       "card": "recovery/cards/seg008_line3109.json",
-      "card_sha256": "a856cde00717c79115aeb6dea8993632f2cd77ad4ee9b07d942a50abe1c45c5d",
+      "card_sha256": "7e23dc220d0b0cdd32ff77a3464a788f86009da29d26571842a31f3a4d6e1de1",
       "id": "seg008:line3109",
       "name": "check_input"
     },
     {
       "card": "recovery/cards/seg008_line3148.json",
-      "card_sha256": "cde613e156f792708e569d9c672042f9368eac0dfd86677e21b90cb63e15d125",
+      "card_sha256": "e51c768e692a36960619f883a9ad215180c312f242d5931cd6b1232121daef4e",
       "id": "seg008:line3148",
       "name": "nopsub_28F26"
     },
     {
       "card": "recovery/cards/seg008_line3164.json",
-      "card_sha256": "50a3f2b038142887a2b0402eea411f2b9beaf30b53f48fae37c619cbf3a420ed",
+      "card_sha256": "c358eca10554ad2150966bc7e61538f659640f2b04ed01a2ace784205303eb9e",
       "id": "seg008:line3164",
       "name": "sprite_copy_2_to_1_2"
     },
     {
       "card": "recovery/cards/seg008_line3176.json",
-      "card_sha256": "1b3c1a5fcd4488cbc5f67f8567c5c70c21242b96f571ce622d29d18094bc5fea",
+      "card_sha256": "91386d750fae9cc9b698bcee872b5d24fb5e8ccde7d7d29b1b30861caed46c21",
       "id": "seg008:line3176",
       "name": "sprite_copy_2_to_1_clear"
     },
     {
       "card": "recovery/cards/seg008_line3190.json",
-      "card_sha256": "e5df45133ec0f4d5fe4e851346ce81df93242bf06ef0827e3d198ce8f5cc05a4",
+      "card_sha256": "51b9846cefd29416df109090de9bbc016f3b22a161a7dbfb572a522ca8fc4021",
       "id": "seg008:line3190",
       "name": "sprite_copy_wnd_to_1"
     },
     {
       "card": "recovery/cards/seg008_line3200.json",
-      "card_sha256": "528caa86ee68752192b4fcc832ab3c5a78bd156dc7cc2de90d3a6ff1233fe13d",
+      "card_sha256": "36196c872b24a0f9a232e5f63a24b8567f1f26ddbc41bb7a344ddc458ebdf891",
       "id": "seg008:line3200",
       "name": "sprite_copy_wnd_to_1_clear"
     },
     {
       "card": "recovery/cards/seg008_line3212.json",
-      "card_sha256": "d6724b60a23b099d531cf14484495e4b4574ed8140316f23e3f33a6a28f9a600",
+      "card_sha256": "63b8156a9f5bfd8503738051ddb29a831fce397ae76ee1524884ee6a89ff52d1",
       "id": "seg008:line3212",
       "name": "intro_draw_text"
     },
     {
       "card": "recovery/cards/seg008_line3264.json",
-      "card_sha256": "1a02a14a9b93300f80bfdcce93d992e555369d75a19b728cc05288c3d61fa259",
+      "card_sha256": "321dd856fd11db481b02a88571520cbd82b1ead5a10ebd16a11693727085e55b",
       "id": "seg008:line3264",
       "name": "hiscore_draw_text"
     },
     {
       "card": "recovery/cards/seg008_line334.json",
-      "card_sha256": "da4e793d76d27b80d17c561c026d7ba9c2baf2a960ff6e3cb7bb81d8c6e8da63",
+      "card_sha256": "c52490e33c24ec4f5062c5b331b4bc82fa175f9c97f742b6b7d0e061e0237baa",
       "id": "seg008:line334",
       "name": "show_dialog"
     },
     {
       "card": "recovery/cards/seg008_line3346.json",
-      "card_sha256": "3afc4666ebc11f7f41f550d2dc26101b365607b136695c00f5e211d5af3e31d0",
+      "card_sha256": "6868a062def65ca4b1c1214b2d89650ee7c2243fe9f725d782213563b5a6a546",
       "id": "seg008:line3346",
       "name": "call_read_line"
     },
     {
       "card": "recovery/cards/seg008_line3615.json",
-      "card_sha256": "838360e926b37a2f1b8bc5a817f8a0571f42d5771658c7797d40d1b6981ac760",
+      "card_sha256": "2b601d09bea6692db8050651817c05dc2e9ab9086a9b656888ec1912d7263353",
       "id": "seg008:line3615",
       "name": "draw_button"
     },
     {
       "card": "recovery/cards/seg008_line3974.json",
-      "card_sha256": "e190fa14adde885c7ddc49fec4057d275b2233f1bdb20659c75a6e503ce74cda",
+      "card_sha256": "af3df623e6dd446cd0b5e3ab133901580c80833a6cad5cb8d9becd391922c08a",
       "id": "seg008:line3974",
       "name": "font_op2_alt"
     },
     {
       "card": "recovery/cards/seg008_line3992.json",
-      "card_sha256": "b0c6bb9bc9b871cb1f431c0d7719c3b2b60398da2bef6bfb32f24f9ae1d3e001",
+      "card_sha256": "ac5bac24aa1a8a277c166552b73545df4e76ae8db386e5255ec680d7357bb21a",
       "id": "seg008:line3992",
       "name": "sprite_blit_to_video"
     },
     {
       "card": "recovery/cards/seg008_line4067.json",
-      "card_sha256": "9a57723acd5e7e35d56ef861b22a1639345186074cd12c2e275a4a2a8dd553fc",
+      "card_sha256": "6a0e43f9d7370f61eef733fbb3ef8d3b63bd34cf7ea0e2300280d50fbf67eaeb",
       "id": "seg008:line4067",
       "name": "show_waiting"
     },
     {
       "card": "recovery/cards/seg008_line4097.json",
-      "card_sha256": "324f44d4157fa6498bbd57be83b0063c41ae59eb5636a840050b4e9cb4579d9f",
+      "card_sha256": "bbf3b6ed59aba74e2297708ae9c062fa5ee0eca732a112baf2a23acc97944c38",
       "id": "seg008:line4097",
       "name": "print_int_as_string_maybe"
     },
     {
       "card": "recovery/cards/seg008_line4192.json",
-      "card_sha256": "f9e0b2504202848117db82468dd2470070e3fc56a0394be3d78a16ec7db917cc",
+      "card_sha256": "b05ef995d26e983d0963386af7a317952446638308ac85098ea38a1438fcf5db",
       "id": "seg008:line4192",
       "name": "sub_29772"
     },
     {
       "card": "recovery/cards/seg008_line4272.json",
-      "card_sha256": "3ad65ba24bc80e9b365115a5e3f563cba705b6257ab311a2a1256e192baf45ac",
+      "card_sha256": "fa94c81fb0e5e7ace816a685ab36a7f57d2de5be67f22216ffb5355bc88dde96",
       "id": "seg008:line4272",
       "name": "file_load_audiores"
     },
     {
       "card": "recovery/cards/seg008_line4319.json",
-      "card_sha256": "3e97607ee104fe816a889590b0a5156dea9570571c4297f9a379ba427bc6cf6e",
+      "card_sha256": "17c99dd5edd121836e5e9a7f3df864459bd9373e90aa7d795cb9fb154e164fc3",
       "id": "seg008:line4319",
       "name": "audio_unload"
     },
     {
       "card": "recovery/cards/seg008_line4336.json",
-      "card_sha256": "a2da1af20ef2b701316957ab7e6d38fe8851e6e42ecdfefd030c18f3b4cc9ebf",
+      "card_sha256": "880cc824ca9a8402a606efe63c039901377542bce4db7bf97e68d7bc38080a8b",
       "id": "seg008:line4336",
       "name": "font_set_fontdef2"
     },
     {
       "card": "recovery/cards/seg008_line4355.json",
-      "card_sha256": "dd022c0bd52faf9ea402fef5e6efd6d2a4c1e8d5d9dc8ecf1e194adeb5c0cb99",
+      "card_sha256": "96b25452674f18c87339edbe0aaa54a36b16d2597e6ee4352637607ad8da5704",
       "id": "seg008:line4355",
       "name": "font_set_fontdef"
     },
     {
       "card": "recovery/cards/seg008_line4364.json",
-      "card_sha256": "1e635ebd156a360a33c5645a17038db9148e0a7e39d037fba4167e8d0b672ba0",
+      "card_sha256": "aea4980f2280122a453ac4a4c6d0893ca80caf734df503baafb7b99f8bf2571b",
       "id": "seg008:line4364",
       "name": "format_frame_as_string"
     },
     {
       "card": "recovery/cards/seg008_line4465.json",
-      "card_sha256": "10a61b7a3e1d8c42010fe24add441176c121c2543d18c58e9fb3364836f06306",
+      "card_sha256": "50371febe6df8ccf3b72d0a8a76eeaa0733f21f559737d8fb043ed3619b437ca",
       "id": "seg008:line4465",
       "name": "get_super_random"
     },
     {
       "card": "recovery/cards/seg008_line4503.json",
-      "card_sha256": "fc2c6157d554b9554bc22970f7645fafe083c8dfb4096c745f38ebb902441bfe",
+      "card_sha256": "d0bb657b1263c7d9a581a14de3a197bdca82f918765ec81967e90c0dfc773bc2",
       "id": "seg008:line4503",
       "name": "file_load_resource"
     },
     {
       "card": "recovery/cards/seg008_line4606.json",
-      "card_sha256": "56eec98bc3dcd201e0d7f9e3de72843179abacc60fe1392b7251567b2555ae5e",
+      "card_sha256": "d5f5a0ad4a1a53c2d58c47356003df10cfefe8700e9ff2feeaae91d9131ee205",
       "id": "seg008:line4606",
       "name": "sub_29A86"
     },
     {
       "card": "recovery/cards/seg008_line4669.json",
-      "card_sha256": "eee128e9bc2f82438c8c55cd94f4f8553ca59b69d950be1afafd5f531eec05fe",
+      "card_sha256": "0c94e88914e9a43b371d7a2399cba567891a60998c65ebb6baea4f16a9b4d9e2",
       "id": "seg008:line4669",
       "name": "input_push_status"
     },
     {
       "card": "recovery/cards/seg008_line4686.json",
-      "card_sha256": "b81c6d66e0f3ecd8f571434dda0fd040e30b467282c19b4f9a5c0bfe7dcce20e",
+      "card_sha256": "359af92e35b81e05c3fcebfeb35a6a7be9e36e4f978f142e24c07e398106a296",
       "id": "seg008:line4686",
       "name": "input_pop_status"
     },
     {
       "card": "recovery/cards/seg008_line4708.json",
-      "card_sha256": "e3ddd977f3cfc70bdb09446788c284cbd5ccb9fc4ef5b6a279fb97be291db0f9",
+      "card_sha256": "8364fc2c4721ca8fa5bf16f5588dfa98bab3598473e431ad58161a5c55f18844",
       "id": "seg008:line4708",
       "name": "do_joy_restext"
     },
     {
       "card": "recovery/cards/seg008_line5031.json",
-      "card_sha256": "cc22395e83a9c56850b874b8dd7a2039b4942eaf532ccaca71aa40997a162e9d",
+      "card_sha256": "08f57391fb8d3f31bcc8ff7c6d5fb7f1947c6c6c31c9770dcc9fa5486c2e44e1",
       "id": "seg008:line5031",
       "name": "do_mou_restext"
     },
     {
       "card": "recovery/cards/seg008_line5069.json",
-      "card_sha256": "bf0b9a68de04f8fd7e67273c3f6a3a3447ce71306948424216300d2cc4d84350",
+      "card_sha256": "4327f4795a3389a94d8328556cccd7242f8db18b0d5a4f98b3e052edb9579731",
       "id": "seg008:line5069",
       "name": "do_pau_restext"
     },
     {
       "card": "recovery/cards/seg008_line5105.json",
-      "card_sha256": "142734542ca20a4ac4692d78679144e583cb1dcd8abd743525c1897692086b3b",
+      "card_sha256": "7ed63932b8c9d2c4783105cf9ec325dc7a53628cc84b419b462593f4ea164376",
       "id": "seg008:line5105",
       "name": "do_mof_restext"
     },
     {
       "card": "recovery/cards/seg008_line5155.json",
-      "card_sha256": "aee5f541f50f2c4939b18e96c56a791160c0ab05eb48b97c79c95360fab9c89d",
+      "card_sha256": "9ba11ffe1af1f27fa0f357688f99e71b97097d3d693198d4c01430ba79041890",
       "id": "seg008:line5155",
       "name": "do_sonsof_restext"
     },
     {
       "card": "recovery/cards/seg008_line5247.json",
-      "card_sha256": "614039ce39340292e2dc1f21de5957150f49ac6a099212f05daca8806440a718",
+      "card_sha256": "c4f4f423e240ca1e60c5639c5eaaf689088fc264835ea9df90c2f79c5ed2fd6d",
       "id": "seg008:line5247",
       "name": "show_graphic_levels_menu"
     },
     {
       "card": "recovery/cards/seg008_line5501.json",
-      "card_sha256": "3f27744f099a806857f739b48c3fa814d8f21cf739fc048261a12400a74f1901",
+      "card_sha256": "44af3524d811fa30713c1e2c713e245baaa83a5c60213a9aa53d830bcd1aebf5",
       "id": "seg008:line5501",
       "name": "ensure_file_exists"
     },
     {
       "card": "recovery/cards/seg008_line5554.json",
-      "card_sha256": "c491e80fa5ec35c513fd96d5121438651b67e7ed2d811f20449fd2f9165cdf99",
+      "card_sha256": "cd82243a9eb8df9d414efbe8082c0a90100bcd209d7a1888e978ce627511fd67",
       "id": "seg008:line5554",
       "name": "do_mer_restext"
     },
     {
       "card": "recovery/cards/seg009_line2956.json",
-      "card_sha256": "13103594f98f85fe4064fc4eb0969e39f0c19ebc52efaddd9a540c6817fc0fb3",
+      "card_sha256": "9f5a60d4c828b34d7c680b02a165ae13e3d527d09dbe219a0479b7e72b1365ff",
       "id": "seg009:line2956",
       "name": "preRender_icons"
     },
     {
       "card": "recovery/cards/seg009_line3181.json",
-      "card_sha256": "c8ba62bd35fbcf1abbf7eb9bc314fa35493ef7c00ca2b97f3ea7796027342be7",
+      "card_sha256": "d2ff718705e571aeeabc2aec61dbdea475fc250a48b5357ec485dc533283c9a3",
       "id": "seg009:line3181",
       "name": "draw_2DtrackMap"
     },
     {
       "card": "recovery/cards/seg009_line4009.json",
-      "card_sha256": "47777a87cd18c5f881d9ec5125a2ad124e316d755f6789aabd292413a2a1e5f7",
+      "card_sha256": "603e2cca652be7401735de216dfe3326d11d87a0e4db41939c32bd28a7045601",
       "id": "seg009:line4009",
       "name": "sub_2C81C"
     },
     {
       "card": "recovery/cards/seg009_line4203.json",
-      "card_sha256": "ce7b5908b4598730f1e57be69e5cb35395f2e9e9c94269721638c483f89f7174",
+      "card_sha256": "5279f1611b2c8683d29e2e1c607a1cb919434ee9f5f6077b43220ac8365f3638",
       "id": "seg009:line4203",
       "name": "sub_2C9B4"
     },
     {
       "card": "recovery/cards/seg009_line54.json",
-      "card_sha256": "ec69fa6c1513acc175c541efd46243100a33e621677e69b5affbbd541f3ff278",
+      "card_sha256": "c77b25aaed04b067bbec5aebe2d42f4b483160f8d1aad4e01d3b2888efd7dc0e",
       "id": "seg009:line54",
       "name": "load_tracks_menu_shapes"
     },
     {
       "card": "recovery/cards/seg010_line1063.json",
-      "card_sha256": "07378094194698b88721becf595eb3635dfc1e4dc621be6b07761ee8bca58a8c",
+      "card_sha256": "db1d46104c9be41e38fe947a14e76fed53beb36917583c743ae13fbc45b41802",
       "id": "seg010:line1063",
       "name": "__flsbuf"
     },
     {
       "card": "recovery/cards/seg010_line1240.json",
-      "card_sha256": "478079a61f0f4cd0d581399ff1ab02c7d2d13914bb6cf8f3c9352bad5f50d4dd",
+      "card_sha256": "d3777d0e554014446f023d0e12848b6c4053d0da5b70d4934bddd7e3fa0313b3",
       "id": "seg010:line1240",
       "name": "__getbuf"
     },
     {
       "card": "recovery/cards/seg010_line1297.json",
-      "card_sha256": "6104f59dc364c0a166b85fcadc76584758acb0902f74afabe3de10ba98fb44de",
+      "card_sha256": "86861efb828bf9bc5b16b07a8f26803b5117d977b5802f757224def4630f8dc7",
       "id": "seg010:line1297",
       "name": "__stbuf"
     },
     {
       "card": "recovery/cards/seg010_line1365.json",
-      "card_sha256": "55bfd56d4a5003acfabad9155cbb2929f8747281c01a0e4511214c65b07678ca",
+      "card_sha256": "20374e03ccdb88f8812dcd5ee3b3a849ce692982e2787e2235a462724cf8b4e4",
       "id": "seg010:line1365",
       "name": "__ftbuf"
     },
     {
       "card": "recovery/cards/seg010_line1438.json",
-      "card_sha256": "3292a67e66302e9fd0118a3527722faa6875dd3d1db7e0b33251b54d5b2e7268",
+      "card_sha256": "de4a227a2fcc645b9038ecd063b25d5bcb356e9a91171dc240dbb161b6545eb4",
       "id": "seg010:line1438",
       "name": "_fflush"
     },
     {
       "card": "recovery/cards/seg010_line1499.json",
-      "card_sha256": "627640a05e042430990a21cbe70860126881b6dc3cf9048f03dff1d1c8a034fc",
+      "card_sha256": "b9103670071aae72eefa42329ef40c42df7cf0cc9993d19dd228128d94db1d23",
       "id": "seg010:line1499",
       "name": "__output"
     },
     {
       "card": "recovery/cards/seg010_line150.json",
-      "card_sha256": "057eddd03a378dc7ae2b3d11fe2c9b65606554db7510417d4be49ece0c3b18b6",
+      "card_sha256": "7cb583582a272e52e796bdfe4bb7f04cfcbdc6260743771dbbe32a4538034148",
       "id": "seg010:line150",
       "name": "start"
     },
     {
       "card": "recovery/cards/seg010_line1871.json",
-      "card_sha256": "aee195b1664913f7a8cc093b854fbd7b5f0e61289cf16401623fca495a213d94",
+      "card_sha256": "6687489ec1a34a845f5b007446daf923c21eb000ec3133662d38d671342bf634",
       "id": "seg010:line1871",
       "name": "iprint"
     },
     {
       "card": "recovery/cards/seg010_line2018.json",
-      "card_sha256": "d0b823395874d657f4ae8684a4ecc935693d23693d52ce1e76f9bd7afd1613f8",
+      "card_sha256": "de8b6b91e55cd2ff41e65baa87fc9fa57abf11897bc121b69733b96ab33b7695",
       "id": "seg010:line2018",
       "name": "sprint"
     },
     {
       "card": "recovery/cards/seg010_line2137.json",
-      "card_sha256": "92b74d9316840b1f4cdfa8433872ed10f44ee5ae3aadb3af914e735d5a78c933",
+      "card_sha256": "2d9b015c73da9fae64c4cd03b51e06ecc50976c3993dda718072ec09cfffde0e",
       "id": "seg010:line2137",
       "name": "fprint"
     },
     {
       "card": "recovery/cards/seg010_line2217.json",
-      "card_sha256": "a24ebe04c7a679bed97a9e8c7025a43fa60111179da34ddb31c03e26f0f5f249",
+      "card_sha256": "9dd520b43ad29f4111a0ad815e85973354cd397bc6453f4184350080a946d7d6",
       "id": "seg010:line2217",
       "name": "_outc"
     },
     {
       "card": "recovery/cards/seg010_line2311.json",
-      "card_sha256": "5132d3e6edab2e5b8db7443bd29b6adfede77960ad43b3d5086f6008bc6b6216",
+      "card_sha256": "657f7e3115e1f36b1bfd2fde0c388a21f37d2c28689951d8ebbd6fa20ea63025",
       "id": "seg010:line2311",
       "name": "putbuf"
     },
     {
       "card": "recovery/cards/seg010_line2368.json",
-      "card_sha256": "1a3a449168124806de3fc9bd5f4e3cbaccef812db734ce595e58ab9852c601d1",
+      "card_sha256": "e9f26b7438cfc944b05304be7a4f8d9f872bd32a42e0e5eb217d683ca8589d9d",
       "id": "seg010:line2368",
       "name": "_out"
     },
     {
       "card": "recovery/cards/seg010_line2514.json",
-      "card_sha256": "bbe67afb9a7fea4773f371c71d71b0f084f10b03ad294cf3d7d107f79ae0959a",
+      "card_sha256": "f41a6a0ea08149c84192bf07e08b69782b7eccd31c546631ab4ac82aa1fa3b57",
       "id": "seg010:line2514",
       "name": "getnum"
     },
     {
       "card": "recovery/cards/seg010_line2584.json",
-      "card_sha256": "d5343ebafd0a1fda8ea93f0c4212a62f92ab4fe167a76c9946846c5ca9b7cd25",
+      "card_sha256": "c716ba534510a0358faf4d980ffeac1e8416e5a36dffa779ad1f4f59c9df7fe0",
       "id": "seg010:line2584",
       "name": "flagchar"
     },
     {
       "card": "recovery/cards/seg010_line2688.json",
-      "card_sha256": "2d7e3507d981a76d1b63920abb1c3a98909e075dacb132a0471ba7025619f325",
+      "card_sha256": "7f3839ded553819596b68c726439b7da53273c6c4dfb69a536de589163027c44",
       "id": "seg010:line2688",
       "name": "_write"
     },
     {
       "card": "recovery/cards/seg010_line2905.json",
-      "card_sha256": "197915160d65d8c89d2dd55253bad530fec961e2923c28568a2c7299f26e0e04",
+      "card_sha256": "06f59ac21380eb2ed9bac9cfc91e84399b041b9e453e5341624a7427dd443438",
       "id": "seg010:line2905",
       "name": "unknown_libname_2"
     },
     {
       "card": "recovery/cards/seg010_line2951.json",
-      "card_sha256": "d2e6c9599040dc28d3d5e5892e0bbe971b4f2da37da31e70f0a180ba8ae4dd2d",
+      "card_sha256": "e0d348a0958edc9d3756c49e6d4650aa6237fd865d53b558d158e46a1d4cf644",
       "id": "seg010:line2951",
       "name": "__amalloc"
     },
     {
       "card": "recovery/cards/seg010_line3142.json",
-      "card_sha256": "d2d70be6acf08f19095387a38d4c0363fda09db7564dc7366d67a4d04be4b9ce",
+      "card_sha256": "a13055c0c5a6234c53248a500b8e1679ee3b161ea45c3d74cb4a69f7be6e1d0f",
       "id": "seg010:line3142",
       "name": "__amallocbrk"
     },
     {
       "card": "recovery/cards/seg010_line3169.json",
-      "card_sha256": "d56fe184bca206101debfa175596cf9429832dded26a6b92b55176f6bc480267",
+      "card_sha256": "ef5988c111d1cddbbd46075be83151acef1d066cbfbc879cef9847de1e434646",
       "id": "seg010:line3169",
       "name": "_brkctl"
     },
     {
       "card": "recovery/cards/seg010_line3287.json",
-      "card_sha256": "f94ddb006ba735f73a98a462eebdf00b5cde197eb021b40d0eb96e0553eb4eb2",
+      "card_sha256": "14c82c147ebf11f286f06448dbc1a12dfbf86196cf91595f184461ed42ae6c36",
       "id": "seg010:line3287",
       "name": "_strcat"
     },
     {
       "card": "recovery/cards/seg010_line3327.json",
-      "card_sha256": "ff0dbb060abd5ed074b63c5fe6c0d37971a628ab259dda180907d6d46b2dcba3",
+      "card_sha256": "cefd940d6694fb5e6227e6a80cf1d154efa1852c532f149f25eca2de675aa837",
       "id": "seg010:line3327",
       "name": "_strcpy"
     },
     {
       "card": "recovery/cards/seg010_line3361.json",
-      "card_sha256": "92f8bd863a23681780fefbbfcf2a3575a82ca357fb44bd2fc076ce172225124a",
+      "card_sha256": "8cd1a7ed2ce6fd0b2590c27cf66c9fd360d9b54eac60b0da9a31c36a981d3911",
       "id": "seg010:line3361",
       "name": "_strcmp"
     },
     {
       "card": "recovery/cards/seg010_line3392.json",
-      "card_sha256": "2cae0dbd0f007b811235bfdef696be719a7010bcd0c233f28d6359cde00a16cd",
+      "card_sha256": "aafa37a35b1a2ae2f75a9689ae2ae8763952493ce2519cd48329af6eec94e2e6",
       "id": "seg010:line3392",
       "name": "_strlen"
     },
     {
       "card": "recovery/cards/seg010_line3415.json",
-      "card_sha256": "40345e1df49a1304dbfef572f314ecaf4c489d31ffdf3201dda1388ea7fda00d",
+      "card_sha256": "1d9fb93726efafeaae6af30d42b43904854d3957e1a5caddad87d84bd4054351",
       "id": "seg010:line3415",
       "name": "_itoa"
     },
     {
       "card": "recovery/cards/seg010_line3439.json",
-      "card_sha256": "e0558ca113a52234043eb59b3e32729993854f4502fb731be4eaf4beb9edceb8",
+      "card_sha256": "c1462fd9cc258e0a23b6a6934ebc06d37c10be0bdd0152ceb442257bd9672490",
       "id": "seg010:line3439",
       "name": "_ultoa"
     },
     {
       "card": "recovery/cards/seg010_line3473.json",
-      "card_sha256": "9765962d30e51ee6a6233bdbe66244e9db043a29c6a4130182fe20eaecbb720b",
+      "card_sha256": "75d8b948277ffa50527e732cb3bfdb55e067805dd28479c92f7e36407c43e353",
       "id": "seg010:line3473",
       "name": "_isatty"
     },
     {
       "card": "recovery/cards/seg010_line3569.json",
-      "card_sha256": "54cfae849b2f4792bd5ecb3039d3dab9d96d638384de12bce355896925f7f74b",
+      "card_sha256": "98c1ad98e4afb751256b67c85d60f9c4beb79230d0b166358f11fba8839547bc",
       "id": "seg010:line3569",
       "name": "_sprintf"
     },
     {
       "card": "recovery/cards/seg010_line3621.json",
-      "card_sha256": "5a794560921b5242c9dbb5c2ace30c875e37982262394bae339a369619d3ea24",
+      "card_sha256": "3fa0afa749438eadacd4a9f6c156412cd295f9775a151b2bb9c55e4962488ad2",
       "id": "seg010:line3621",
       "name": "_stricmp"
     },
     {
       "card": "recovery/cards/seg010_line3740.json",
-      "card_sha256": "3092edb58b0d2050a3675e65a12a1d0a979f0e0800478d4e63fb620358cdcca1",
+      "card_sha256": "704eca396bc412064308d9d4e492683d12125051c77c9f14bfaa66b8d725930e",
       "id": "seg010:line3740",
       "name": "_abs"
     },
     {
       "card": "recovery/cards/seg010_line3766.json",
-      "card_sha256": "bba316a1e61bac7db8c4f3ed136a8eb9784655f7af6ec5bd791e892092d6282e",
+      "card_sha256": "16ddde1fa2afa70c92390cde4480017a9cf7d0d4a6f2d45febf890b325a604b3",
       "id": "seg010:line3766",
       "name": "_raise"
     },
     {
       "card": "recovery/cards/seg010_line3851.json",
-      "card_sha256": "7b3a2eaf3a9a4c1741bd8dc70eb7390e0462a0c84d357b2108c3bf0289c70418",
+      "card_sha256": "205ffac6d8ff5d38f39d32f334f2cbdfd81d3a64e9a4c6bfdf16cd4246ff89c1",
       "id": "seg010:line3851",
       "name": "_srand"
     },
     {
       "card": "recovery/cards/seg010_line3866.json",
-      "card_sha256": "ee5e1c92f083c1bd70452894d378ffa1fecef7991815763761bd4068bfad4d9e",
+      "card_sha256": "87c1accf7a139589e9d020c642b0f408c34875debb10d28963eb92c8174836aa",
       "id": "seg010:line3866",
       "name": "_rand"
     },
     {
       "card": "recovery/cards/seg010_line3978.json",
-      "card_sha256": "3aace9597872a20cc699c2a1f7c10b18b387016a12fab9437de644d2f98fa520",
+      "card_sha256": "1ce01892e0a928fe784d7f0efd68f57e18b113ea67d9d8e032e8c43694b70c6e",
       "id": "seg010:line3978",
       "name": "__sigentry"
     },
     {
       "card": "recovery/cards/seg010_line4111.json",
-      "card_sha256": "6eacf9219f98d44c29069c70f0287860255c98c17d42c4c8a089bc0f9c03ef81",
+      "card_sha256": "8e0930498b565a4504a2e2e71c2b5cdc68a368256a120729b8c26f30fa803297",
       "id": "seg010:line4111",
       "name": "_strrchr"
     },
     {
       "card": "recovery/cards/seg010_line4281.json",
-      "card_sha256": "737f34356151c6133c13d39dfa86c7c13727cf294b4545df79d329709affe58c",
+      "card_sha256": "d6a8921812644e1fec75ccfdec49bb041e4dbc3ff37a6c0dc036b01402f8a4a0",
       "id": "seg010:line4281",
       "name": "__aFlshr"
     },
     {
       "card": "recovery/cards/seg010_line4340.json",
-      "card_sha256": "ca3251bcfd439ff9eedc332e8375c05a86936c7504483668b58bbc5e59fb303f",
+      "card_sha256": "557605a3f60243b618c991fa705fa858533be89f2d7cc8fdf1b2cbe1808c4102",
       "id": "seg010:line4340",
       "name": "unknown_libname_4"
     },
     {
       "card": "recovery/cards/seg010_line488.json",
-      "card_sha256": "8aae1d63677f1a8dc639c4e894b81c71886ecd90c37294df0373cbece7d5c5de",
+      "card_sha256": "9ff3685448e818c3108f4fc5d52f8a57b1abb0c85e7e03a6461cc5c75ef7e968",
       "id": "seg010:line488",
       "name": "__nullcheck"
     },
     {
       "card": "recovery/cards/seg010_line511.json",
-      "card_sha256": "6ec8783e9c04a2eeee484185dade19549fadfc322f07da5c9516bde5c7614562",
+      "card_sha256": "ce8a2f3c83e5a9b50a642dd9abe18f0e7db906f2d70f64a81aa2f3662634f4a8",
       "id": "seg010:line511",
       "name": "__setargv"
     },
     {
       "card": "recovery/cards/seg010_line752.json",
-      "card_sha256": "fecb3ea18dd4d1e20087195ec04a521ee9ae83f725197caaa5b8d73741b878f8",
+      "card_sha256": "3520e3ab312c782f33a3cd9e2db9104b43f8cc3e797f3ec08753da3ce4eedab0",
       "id": "seg010:line752",
       "name": "__setenvp"
     },
     {
       "card": "recovery/cards/seg010_line823.json",
-      "card_sha256": "1528532cc25fc90ed1a1e9aeb278d7ed6b584f48508fa5cb2ecc535e77c5b49a",
+      "card_sha256": "4e2ec9d9e3527d375e6608723a241a0d0e89cb7c5ac57b7a8a627ffaed54e0cb",
       "id": "seg010:line823",
       "name": "__NMSG_TEXT"
     },
     {
       "card": "recovery/cards/seg010_line885.json",
-      "card_sha256": "51f7d9576d49e03a3e0d1b56438c37a93aac0c6dc861794618817fa0ba765d42",
+      "card_sha256": "e9dbdefb28e8961e834e4326d7459d1f473a4336887639f8cc8bf3d36f91d196",
       "id": "seg010:line885",
       "name": "__myalloc"
     },
     {
       "card": "recovery/cards/seg010_line960.json",
-      "card_sha256": "8ef7dbf235ec90f41f75eb4e867acb10cc26a066e480cca59ce6a2ddf06ce7ca",
+      "card_sha256": "8c73566d460268ba6c9f805598914f127d01644cb4c25973ed012e0b44f067bb",
       "id": "seg010:line960",
       "name": "sub_2D1BC"
     },
     {
       "card": "recovery/cards/seg010_line990.json",
-      "card_sha256": "a020acaf04db9bf3c3c5da267be78ba4c5647c0b1735cff768082c55d906d9db",
+      "card_sha256": "fd852236061c5d3c23175ca9fb58a31d5394a38b47d128edf6c2a3569d22d7f4",
       "id": "seg010:line990",
       "name": "_flushall"
     },
     {
       "card": "recovery/cards/seg012_line10086.json",
-      "card_sha256": "1ea53444509456664577dd83107be1a941c384640add25490f3faf93e6746545",
+      "card_sha256": "7996f3d1e6bde02e2e03d60b5c5b86aaa01a6debeaeabd7a3397fdcb21f03622",
       "id": "seg012:line10086",
       "name": "video_get_status"
     },
     {
       "card": "recovery/cards/seg012_line10098.json",
-      "card_sha256": "fd7d56d4dbb671a8a4a2a279528eb156ac7e3792d6811a8202b9f21a6a63017a",
+      "card_sha256": "e959ab2b839257cef7c019fafef6cec68b1b643a18440ab5de84bf2b8ae3fc3f",
       "id": "seg012:line10098",
       "name": "nopsub_33006"
     },
     {
       "card": "recovery/cards/seg012_line10165.json",
-      "card_sha256": "67cf23e35f0d91794b25d44c73eabeed067e4a28a865c537be450a8b2e21b32f",
+      "card_sha256": "dfef3e367ae72484fc04a7b29c33af89b7e8ac93ef9a715cb5a5bab85c23b1bb",
       "id": "seg012:line10165",
       "name": "preRender_sphere"
     },
     {
       "card": "recovery/cards/seg012_line10447.json",
-      "card_sha256": "938233d6db190413fa084fca02405b134780c7827349b2c307437eb2d95196bc",
+      "card_sha256": "5d3df7c2e82d765065a9cba76c658f34f34ee008fb15f90265668a8e50e70316",
       "id": "seg012:line10447",
       "name": "video_clear_color"
     },
     {
       "card": "recovery/cards/seg012_line10467.json",
-      "card_sha256": "7543b7d265c8e09dd0cfe99a88b4a7f359a7f97378c1c07d6c894a5a52845aee",
+      "card_sha256": "f657e000dc11c5422c08f45eb338d582341b8fb27b335dc5f8ed7a190f9454ea",
       "id": "seg012:line10467",
       "name": "sprite_clear_1_color"
     },
     {
       "card": "recovery/cards/seg012_line10529.json",
-      "card_sha256": "f86b9cf412189d4543055ab6668dd1b0c0c76b8b7d2b4ea08c571231e3c59707",
+      "card_sha256": "5fc9cb13357e7ebf5a5e5b6d0bcc3481bc4b0771b2e54fe7cca3867346cfc64e",
       "id": "seg012:line10529",
       "name": "nopsub_33330"
     },
     {
       "card": "recovery/cards/seg012_line10547.json",
-      "card_sha256": "6143e78864f9e27124d6448f9cdeb1cacc2d9b6072afb41ccdf0f573cdfd5f1e",
+      "card_sha256": "86cd3a8540f463789782e91b8ec638e7d7f398b189636691444c9fa8def90038",
       "id": "seg012:line10547",
       "name": "draw_unknown_lines"
     },
     {
       "card": "recovery/cards/seg012_line10617.json",
-      "card_sha256": "3bfe94d5b092b072c14e2249724ec0d0b6ef00ae2e97911e188e53b887ce1e7c",
+      "card_sha256": "211a262deaf326981b836e503ca1572b1f615a08b09f9bbf68a0632a67181ba9",
       "id": "seg012:line10617",
       "name": "putpixel_line1_maybe"
     },
     {
       "card": "recovery/cards/seg012_line10826.json",
-      "card_sha256": "f84cf1576f410f9f3bf21ee83bd2c274518194738dff88b5293520e52ef3828e",
+      "card_sha256": "da5d220943bff40dceacb7db7147c30ee75bb672246a23ed3c83480a39e8623b",
       "id": "seg012:line10826",
       "name": "sprite_1_unk2"
     },
     {
       "card": "recovery/cards/seg012_line10875.json",
-      "card_sha256": "a309afbeb8e915df4329ac716a5a991c58a0313e8f002cae34cdfa94dc0fe75e",
+      "card_sha256": "917e42bbda1070ffa9b0da0c67e79cf5c85dfb746ec07004999c027e8e8aac36",
       "id": "seg012:line10875",
       "name": "sprite_1_unk"
     },
     {
       "card": "recovery/cards/seg012_line11083.json",
-      "card_sha256": "1423f4eb6969aa94204f5fedcd8cea6f5061b2496afccdc8dbaad680000c5b95",
+      "card_sha256": "c6b3dc594099de98caf81b217d07dacce8db9d80d9103617df36ee1a9cf7bb3c",
       "id": "seg012:line11083",
       "name": "font_draw_text"
     },
     {
       "card": "recovery/cards/seg012_line11241.json",
-      "card_sha256": "255d51c40a962dacc2ca23ccebb25aa5b1deb5e700745f576eb22b03ffa5e818",
+      "card_sha256": "4f0f8b3870fdc1343aa3d5454b404adfba561b4463de8c0d7fe0098381a3862e",
       "id": "seg012:line11241",
       "name": "file_load_shape2d_thunk"
     },
     {
       "card": "recovery/cards/seg012_line11247.json",
-      "card_sha256": "a3e7f64a1fc3050a06dd96f36f369970d19f2ea9e0e48c1179cc5cf360380e86",
+      "card_sha256": "1cccd6dd172f17b450ef25662b994babb099118ad3521724dede51f0e81cf955",
       "id": "seg012:line11247",
       "name": "sprite_putimage_and_alt2"
     },
     {
       "card": "recovery/cards/seg012_line11275.json",
-      "card_sha256": "984333c769c45bdbfb551ce334621e454fef1b29c582f7f96aa9eb7248363f31",
+      "card_sha256": "c3c50226474640f686f080da7cc034715b624432eb5bb64772daf5a9628871dd",
       "id": "seg012:line11275",
       "name": "sprite_putimage_and"
     },
     {
       "card": "recovery/cards/seg012_line11467.json",
-      "card_sha256": "98ae98c58995f22074db84012a2146bc9bd7eaa1dd627292dc2a3853a84536a4",
+      "card_sha256": "dcf49e92686e910e72957a0421c9e4009dfb450c0e14a1c5724127d2eb6ab1d6",
       "id": "seg012:line11467",
       "name": "nopsub_339FA"
     },
     {
       "card": "recovery/cards/seg012_line11495.json",
-      "card_sha256": "41aa799313089568c22e3522bcbd367a0ea2c2ad62cf89c9a26c8a29b933c3af",
+      "card_sha256": "39168dd31e061c4932e331a60c4b45c3f26e49d9d2e6ca9901b75f0fe5a8dd27",
       "id": "seg012:line11495",
       "name": "putpixel_iconMask"
     },
     {
       "card": "recovery/cards/seg012_line11595.json",
-      "card_sha256": "d2e068a1caf9ccc6c9150584355fd1f0d7968eb4041773f74cacc5ae5a952a93",
+      "card_sha256": "710a82ff936350c849f9692f45700a19069199664b95867b1e98c2f1791e8ab2",
       "id": "seg012:line11595",
       "name": "nopsub_33AC0"
     },
     {
       "card": "recovery/cards/seg012_line11623.json",
-      "card_sha256": "8b3ac8a2d7aeb649ce7a2ce1cea9f8dc9fb13023e1465d3850c9b206e0780e4c",
+      "card_sha256": "3d1392d1c6426a0ce24bc1b3d4c1007c907384c9e9983f553758faac32f37ed7",
       "id": "seg012:line11623",
       "name": "nopsub_33AE4"
     },
     {
       "card": "recovery/cards/seg012_line11649.json",
-      "card_sha256": "50623944bef78523d5111f3026c99e80e060a54a3c2be1461203464183f42ef3",
+      "card_sha256": "5973a878a78b52535aa774283927a57825be090e250a1620c2878de3795e06e6",
       "id": "seg012:line11649",
       "name": "shape2d_render_bmp_as_mask"
     },
     {
       "card": "recovery/cards/seg012_line11735.json",
-      "card_sha256": "4a3a1e3d991d750df3fcdca2ca583987cd981f56abbb4eb2dcbb254a3caccb8d",
+      "card_sha256": "68924a71447ec5998f86f3d8c11bfcc8b743cc6ec84f93e1904e18815ee2e9f7",
       "id": "seg012:line11735",
       "name": "nopsub_33B98"
     },
     {
       "card": "recovery/cards/seg012_line11763.json",
-      "card_sha256": "c93bbf9100c307d06f3cd7cf4ad94fa9f26b2f9c76bec59699d922528f040b3a",
+      "card_sha256": "c28eac4229eeffe92c25edd0c6c38aaa9a0d71785c59e218468bf769c58c6804",
       "id": "seg012:line11763",
       "name": "sprite_putimage_and_alt"
     },
     {
       "card": "recovery/cards/seg012_line11789.json",
-      "card_sha256": "96792495f39f2070db3c0eaff2b6f025b2fc3b2ed8ca1b62989e333720063c3b",
+      "card_sha256": "e5a122bcca3ae39119526bf697c7d81cd9d687013500b766bac26b772bd48287",
       "id": "seg012:line11789",
       "name": "sprite_putimage"
     },
     {
       "card": "recovery/cards/seg012_line11943.json",
-      "card_sha256": "903f68699c5c4a0c2d28126599098b1224a21a72a2501894f9b3e33747b8a1f4",
+      "card_sha256": "e71f862f838ff7eba3197f441c2082e0c94eb1d29874209fa55d7d5bac0e1c9a",
       "id": "seg012:line11943",
       "name": "nopsub_33D0C"
     },
     {
       "card": "recovery/cards/seg012_line11971.json",
-      "card_sha256": "460189b605b2d263f91ec75092e291446e9b3dc174e854c584b88b28a6e7854c",
+      "card_sha256": "6302c21180636a8a822fdc6e598a166a9e90d5b92ef63fab11802fb0074c2f55",
       "id": "seg012:line11971",
       "name": "sprite_shape_to_1"
     },
     {
       "card": "recovery/cards/seg012_line11997.json",
-      "card_sha256": "066a1d25ab8b9e5cb0b21f328fb6d32bc4492555598cda4c0e9beaf62ab74b90",
+      "card_sha256": "c71b88ec3d9faffd75253091aa2fc85a2ae0f260e301a3f7ce1f123b003e5fcf",
       "id": "seg012:line11997",
       "name": "sprite_shape_to_1_alt"
     },
     {
       "card": "recovery/cards/seg012_line12065.json",
-      "card_sha256": "b8de825a0e7c769dc6b15940e4b52ce99db3593c61dcef16173f0a46353bb6f5",
+      "card_sha256": "835426ceee46181d07b2729df941680d1e7739d6f802e62b7dad634f3bad9250",
       "id": "seg012:line12065",
       "name": "nopsub_33DBE"
     },
     {
       "card": "recovery/cards/seg012_line12093.json",
-      "card_sha256": "1d6d3f94b3d835e666e4518e15eb968ac5cc392578e081542824c4e9e0261941",
+      "card_sha256": "5a1d6d209082af6f5cc39220db4fac5c1040262cc6455a596507942f07ee1c03",
       "id": "seg012:line12093",
       "name": "shape2d_op_unk5"
     },
     {
       "card": "recovery/cards/seg012_line12119.json",
-      "card_sha256": "65a5e90fc4d5e0d13c037d8859c309d3f0f374f369e19f215b4163cb92a82e94",
+      "card_sha256": "3339244c532d06914667a03ba9bb30b93b32552687c75ba756e95514593c9d46",
       "id": "seg012:line12119",
       "name": "shape2d_op_unk"
     },
     {
       "card": "recovery/cards/seg012_line12205.json",
-      "card_sha256": "c533794805557973cbbdb360ed4714ee9774f597213ea7cdfebaa9e5d95c8319",
+      "card_sha256": "4ac5d8c6f4daf545cb68c320d08e396c399d6a3da1e30aec6aff380dc5179b70",
       "id": "seg012:line12205",
       "name": "nopsub_33E90"
     },
     {
       "card": "recovery/cards/seg012_line12233.json",
-      "card_sha256": "d6184223136dad1681a1655ed3fa684f3bf8351f32e4ba0ff99a22cdf24eeadd",
+      "card_sha256": "df392e215de73f6031d5f841fce268bf7244275c3ebeab5fae42c941ad15d24a",
       "id": "seg012:line12233",
       "name": "shape2d_op_unk2"
     },
     {
       "card": "recovery/cards/seg012_line12259.json",
-      "card_sha256": "e2dc3d83c76df97b2507dcc10ca1b0a6cbe1d6ae26db8b9cbe53127d782971dd",
+      "card_sha256": "d079d6479b1e8d876f0f0379bebf9c0ec92ce40cb7af13bb213a611145f5eeec",
       "id": "seg012:line12259",
       "name": "shape2d_op_unk3"
     },
     {
       "card": "recovery/cards/seg012_line12478.json",
-      "card_sha256": "4652b7ef06bf3f700f1b1f294aed3db295a3b740404bbf07eef6b8280be2a078",
+      "card_sha256": "c455e5cf5e341b14ec76bf31ceee4cdc6a6e5e2c5b53fa05ddd2ed34939b749b",
       "id": "seg012:line12478",
       "name": "sprite_putimage_or_alt"
     },
     {
       "card": "recovery/cards/seg012_line12506.json",
-      "card_sha256": "5333d3c4093ae8d8f8cdf1eb026e85ad5799a5d415c38a60f6e92314d3807c51",
+      "card_sha256": "1ddfc45178b85a74c61a7a3692fbf6b04e8264a1a0815b2a84f8bd98369a0699",
       "id": "seg012:line12506",
       "name": "sprite_putimage_or"
     },
     {
       "card": "recovery/cards/seg012_line12716.json",
-      "card_sha256": "701f0dd7f5c4bde348400627bfa8ada55481cf3214b8dc7957a41c27cca2e493",
+      "card_sha256": "cd1f5700438ac44eac5ad9b382d5b0efecb22dd2cec8e65df9fe2eaf8126cf23",
       "id": "seg012:line12716",
       "name": "putpixel_iconFillings"
     },
     {
       "card": "recovery/cards/seg012_line12848.json",
-      "card_sha256": "34f2c0b59fe27924e1bac03526ba1355a2b287cde5460b16a05bc2cd38b13ed6",
+      "card_sha256": "d7f66532aee109f49c2a20c4ca4065a8f54fbd83bbf13edeb7ff0f8bd62377b7",
       "id": "seg012:line12848",
       "name": "shape2d_op_unk4"
     },
     {
       "card": "recovery/cards/seg012_line12951.json",
-      "card_sha256": "8709a6219d533611b7f2b4fa8dde5dea9aa23149a719b8abf815dfb78486fbef",
+      "card_sha256": "6a6cb745d435521cdf91d3d86e92fe439be1f88f96f72303601d10aafb5c0f1d",
       "id": "seg012:line12951",
       "name": "sprite_putimage_transparent"
     },
     {
       "card": "recovery/cards/seg012_line13144.json",
-      "card_sha256": "38dae583f1dfc90b4f5bd985b4c5b9484e201d88c93992923a70917859768995",
+      "card_sha256": "1bb013845d9c8cc7731042ddf5399624cd4e677f7daf256ba41368f750445233",
       "id": "seg012:line13144",
       "name": "sub_34526"
     },
     {
       "card": "recovery/cards/seg012_line13226.json",
-      "card_sha256": "dc30eb3a843eb0ddfd9e4460a743ff8ef85e576eba8409d6ed03001186acb1d9",
+      "card_sha256": "e3f000f4c25fccc6da728019fb32f0e6ded7dc199fcdfa51f2e996f8eb09350d",
       "id": "seg012:line13226",
       "name": "sub_345BC"
     },
     {
       "card": "recovery/cards/seg012_line13350.json",
-      "card_sha256": "988c505f09e1a3ba56b65c6d432ac9f318e23098d3a345dae62275bab59bd634",
+      "card_sha256": "e527eb1a8ddf1b08ef83581e21443c3cc03120aa61de54b9ad88427c167250f1",
       "id": "seg012:line13350",
       "name": "video_set_palette"
     },
     {
       "card": "recovery/cards/seg012_line13373.json",
-      "card_sha256": "7b818231f64468ae8850aa4c719ef6f33423f9bf7f31ff7cb0786918a4744276",
+      "card_sha256": "ce582c18a329fbd9042548e7a6cca624919339f2d12298aa38e10b05aeaec4f1",
       "id": "seg012:line13373",
       "name": "draw_filled_lines"
     },
     {
       "card": "recovery/cards/seg012_line13448.json",
-      "card_sha256": "bcc841d0faed4e14b754eedebcd1d2a80e9c07b81e9bfe3feb2daaa7c22bafcb",
+      "card_sha256": "1d6fe061a1988b5d67d564bc51c5ee9d608086bf055bed87f1e0822573ee619d",
       "id": "seg012:line13448",
       "name": "nopsub_34736"
     },
     {
       "card": "recovery/cards/seg012_line13476.json",
-      "card_sha256": "ab0caff96558e23dfb9d94eb905091eb90d09475a1addff70dcaca72a2187855",
+      "card_sha256": "6994f4e456dd779e2c86542ee248c168573ba79afa9d99ec19586127ca60a1dd",
       "id": "seg012:line13476",
       "name": "sprite_clear_shape_alt"
     },
     {
       "card": "recovery/cards/seg012_line13557.json",
-      "card_sha256": "6abd13f1dba6ed1faab4b70fbed166dad10ab2717547c88ba28cc096cc73f806",
+      "card_sha256": "50da3fb50bdc7a0a289e9d9bef780354531c14462c634f518375ec3028f1df29",
       "id": "seg012:line13557",
       "name": "shape_op_explosion"
     },
     {
       "card": "recovery/cards/seg012_line14000.json",
-      "card_sha256": "5f10c8e1412c993d2d0aaf908bc92673a1b3b34f44c962f3594a5bc2614094ac",
+      "card_sha256": "189e4bc20ae4dc4b8b57afbce7be7015442b9ddd14b08aea5ef62850de156eaf",
       "id": "seg012:line14000",
       "name": "font_set_unk"
     },
     {
       "card": "recovery/cards/seg012_line14062.json",
-      "card_sha256": "9500a8652866136d7b941c5edc423d18bd8bc4d2366d6f9a71ee1c317618e08e",
+      "card_sha256": "2380b984b5d8abee64842244675b56f91c6af5ca11f856e3e23ad81aa655d038",
       "id": "seg012:line14062",
       "name": "set_fontdefseg"
     },
     {
       "card": "recovery/cards/seg012_line14085.json",
-      "card_sha256": "9cef2e60ce2e0ef695fb5e50482cf738d4ed066da2b53cff29913e76cf901be6",
+      "card_sha256": "f452efe0cb5fd45ce182291e26014debc1ee2f92cc4aad73c76a1e7b80a597b5",
       "id": "seg012:line14085",
       "name": "draw_patterned_lines"
     },
     {
       "card": "recovery/cards/seg012_line14155.json",
-      "card_sha256": "e254a81486d0e03e287a2e5df3c69fab01393a2563848979bcee62453c01d256",
+      "card_sha256": "0bc71fa3f81a106d374a116d98f5dc31631a00508c7fb41824f9d98ea2696c94",
       "id": "seg012:line14155",
       "name": "sprite_make_wnd"
     },
     {
       "card": "recovery/cards/seg012_line1490.json",
-      "card_sha256": "1b7e139065006d72d8e629bcb6c431c508f702a2c2a750819626990d4dc824fd",
+      "card_sha256": "6e014047efd34b06c11575d889b949027b601090883f897c576254ef8615b5b6",
       "id": "seg012:line1490",
       "name": "parse_shape2d_helper2"
     },
     {
       "card": "recovery/cards/seg012_line1519.json",
-      "card_sha256": "33d2da4f8fc57869869765876b832943997a60069bf902f137c901b90d877c0f",
+      "card_sha256": "36fa15b0411af507d704c4b733c5a0abbf04170db97933d56b092d52bc57f473",
       "id": "seg012:line1519",
       "name": "criterr_interrupt_handler"
     },
     {
       "card": "recovery/cards/seg012_line1544.json",
-      "card_sha256": "10315933e83d0e16bc3c13f742db8d45c89b8078a6c341d371956078d0d059f0",
+      "card_sha256": "fa902f0a4978da9af6e054403642a2b5f67b4b4ec18136d8f866f22b138f0009",
       "id": "seg012:line1544",
       "name": "set_criterr_handler"
     },
     {
       "card": "recovery/cards/seg012_line1594.json",
-      "card_sha256": "955b30b824f8e26ebc7e9f6abbee56be3b4f4f06ebdb90ea8ae42a73b87e66ab",
+      "card_sha256": "63b475a2fe19bf7098937fbe5fc3635f72ed8204d1a701b74ba50f8836d6e7e7",
       "id": "seg012:line1594",
       "name": "preRender_unk"
     },
     {
       "card": "recovery/cards/seg012_line1649.json",
-      "card_sha256": "c13bedcbdd500fec66072623a75ac789ea17a63a3181ca5af9ea1b06afdfd52b",
+      "card_sha256": "c8602d863e3501e30138511dee3bdcb5d282bf54cdff942f6f29827346483b1a",
       "id": "seg012:line1649",
       "name": "nopsub_2F436"
     },
     {
       "card": "recovery/cards/seg012_line17848.json",
-      "card_sha256": "6aa6f92c01fb536569d93035f0cec5e8d70c1d57ce9a770d63959c7469334fd4",
+      "card_sha256": "9fb56e38c31bfa4c2dd595cac7d2bde04684894250015aa2dcfcf3543de3e236",
       "id": "seg012:line17848",
       "name": "sprite_set_1_from_argptr"
     },
     {
       "card": "recovery/cards/seg012_line17873.json",
-      "card_sha256": "6c9f5b13b1b588779f343d656c5722f47b44ad80c56bc4f96f4a61e56aa6cf90",
+      "card_sha256": "839b08741e2cf9ac49e622df3de4534d39ca553b1e0bdac5e9aaad4e9f4a3c67",
       "id": "seg012:line17873",
       "name": "sprite_copy_2_to_1"
     },
     {
       "card": "recovery/cards/seg012_line17885.json",
-      "card_sha256": "648b66966376da8bc6858727f61d0d721c0d121a798b8e1f5041423826f162ba",
+      "card_sha256": "5724f1a7d956ed10478871255311ace494da392a7e9b3413026f40f3051ab5ec",
       "id": "seg012:line17885",
       "name": "putpixel_single_maybe"
     },
     {
       "card": "recovery/cards/seg012_line17931.json",
-      "card_sha256": "ff81f5c4198ad51c4cae5eee54eccbec51569a17508b93810861ac96b64ac807",
+      "card_sha256": "ca4e1b8f700dc2cf3b86a08b1227bfb5e6847b9da2d1f83b92ec98470531b694",
       "id": "seg012:line17931",
       "name": "sub_35B76"
     },
     {
       "card": "recovery/cards/seg012_line18050.json",
-      "card_sha256": "bc420b942eb3e4ab06fd76e417d5ab88d1684420ca8c608a7ef08fafd4329f5b",
+      "card_sha256": "ab22b27394ee437ae4871969fc9f2c81486ef51d57c5dd630b2cbf6720f79dfb",
       "id": "seg012:line18050",
       "name": "sub_35C4E"
     },
     {
       "card": "recovery/cards/seg012_line18376.json",
-      "card_sha256": "b0c83260498cc5b7e9d6e23a896312059fe38ea7c6fa7b4bd83701eaed632c27",
+      "card_sha256": "8dbe8839e22f9fa4fb363c44e3b3da64576bd281d28a688c03de736df492c3d3",
       "id": "seg012:line18376",
       "name": "sub_35DC8"
     },
     {
       "card": "recovery/cards/seg012_line18431.json",
-      "card_sha256": "556610229c6975f9024881ef6992ba21810967574b7d310fa06396b78c3c0ef9",
+      "card_sha256": "0dd63ce0e69d323646bd3a2adfd88c08123dcd835f00ea2bde87525934982f0f",
       "id": "seg012:line18431",
       "name": "sub_35E08"
     },
     {
       "card": "recovery/cards/seg012_line18618.json",
-      "card_sha256": "3845697c4f6ac8dca7858f88e11f18d7a9449c90bb235e2364813dc0767980bf",
+      "card_sha256": "c457cbb4c42966188529e245a8a8ca0be6e60aef29593fee9c273d29d26f0f28",
       "id": "seg012:line18618",
       "name": "file_load_shape2d_palmap_apply"
     },
     {
       "card": "recovery/cards/seg012_line18671.json",
-      "card_sha256": "8c82bc8f85fd8148dbcff4c3bac3ae1320e969aecfd3871e048d582b7e77790c",
+      "card_sha256": "0db4dcf2866eaa1a292a0eb7c1ced8fe09d76b578000ad8329d19e26bd9e0dd3",
       "id": "seg012:line18671",
       "name": "file_load_shape2d_expand"
     },
     {
       "card": "recovery/cards/seg012_line18849.json",
-      "card_sha256": "9d4db8b5468ce055968fd6c5edc9fe03929fc942b6dba762af94934b828887bb",
+      "card_sha256": "d6a3c542826723b2d4ff2078157774d665a86f5059c21dd8fe1e47970ab8dfef",
       "id": "seg012:line18849",
       "name": "file_unflip_shape2d_pes"
     },
     {
       "card": "recovery/cards/seg012_line2981.json",
-      "card_sha256": "d842bff8047130198676e6d1ddb0dc608f5d8480142e4438555d6177a0aa5bbd",
+      "card_sha256": "ff85f2a6a9f4b3e4ccc7da95a2552b286086151203ca7f712d50c10a71abc9bd",
       "id": "seg012:line2981",
       "name": "call_exitlist2"
     },
     {
       "card": "recovery/cards/seg012_line2990.json",
-      "card_sha256": "0ea4849bef09b9d9cb19e4b87166c3b358b663ab976357d462c65851dd3a5e5b",
+      "card_sha256": "e6f6dcc651e689f00eb78bdf4c20b5978e13c3f913e69fc8d8078fc69505fd9f",
       "id": "seg012:line2990",
       "name": "file_paras"
     },
     {
       "card": "recovery/cards/seg012_line3011.json",
-      "card_sha256": "c809401eb7536d845c8a6bf8de717463c1ba380859f44c071966b4bc5784adba",
+      "card_sha256": "587cdec15ad6e7127b97ef9066da3c47d21463e450e8dc5f63cc0fece3bd4b25",
       "id": "seg012:line3011",
       "name": "file_paras_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line3107.json",
-      "card_sha256": "a1281e1aa67238057a25e78e2b2abe571366cdb12c0fc68fa914b009b166de1d",
+      "card_sha256": "7d3b4fd425b6eefbf6570c3a3d989b29c9415d213fa75b035b708503bcd4946f",
       "id": "seg012:line3107",
       "name": "file_decomp_paras"
     },
     {
       "card": "recovery/cards/seg012_line3129.json",
-      "card_sha256": "ba1a37c9dd3f9cf68bba2416f99ae1077432f872e75e5016db60fe5e7bcd8a41",
+      "card_sha256": "b4ac09caa6df673015abb7a999966c9db15ed2a09f604028589fe32bb801d262",
       "id": "seg012:line3129",
       "name": "file_decomp_paras_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line3144.json",
-      "card_sha256": "8ca3ac1143e3618f603b539da6b13c8a43f74cea7dfb4b3d0180e76c33f6a671",
+      "card_sha256": "46350443da0ba6fe20dcb3f4c2bf3c8ed2bba85e572fbf9d65cf6620fb82d4d6",
       "id": "seg012:line3144",
       "name": "file_decomp_paras_fatal"
     },
     {
       "card": "recovery/cards/seg012_line3240.json",
-      "card_sha256": "3fea98e9ee1ab29f9daae6f46bf5ebaf1090d36f148ac6b4313b2a625497557b",
+      "card_sha256": "1763bfd72d4a784dfd7fa6c9b254f503cea57cdb5cf7d117bad3dc27c4636ccc",
       "id": "seg012:line3240",
       "name": "file_find"
     },
     {
       "card": "recovery/cards/seg012_line3296.json",
-      "card_sha256": "aa0b2722e1a015c41b31273c829a1d8ed332c6e98006af7ae05b9b6e0ee2edb8",
+      "card_sha256": "80cc0899f7c307d87a41b7870bccd9685c4f22f128e6f16c240d50ed0aff8e61",
       "id": "seg012:line3296",
       "name": "file_find_next"
     },
     {
       "card": "recovery/cards/seg012_line3315.json",
-      "card_sha256": "734d32d996534b5fa678c959017e4081135765d0777a0debb7c036f85281298f",
+      "card_sha256": "aaac4478fc205dfb51a834c1800e40d6ca6855cd28eb27a0cffff7c7f6c6e8cb",
       "id": "seg012:line3315",
       "name": "multiply_and_scale"
     },
     {
       "card": "recovery/cards/seg012_line3335.json",
-      "card_sha256": "3bd4baba8a57789302d745e740f5e337309a4a0b125dbc28d1aa25bebc107419",
+      "card_sha256": "b2011c15d23f48d3b33dd9b9d94e09a2b66208d52c7e569e7477086993f9ae74",
       "id": "seg012:line3335",
       "name": "video_set_mode4"
     },
     {
       "card": "recovery/cards/seg012_line3495.json",
-      "card_sha256": "4ac3c6b623ced85bed144bbbc3c38442337ed35b8d3f59218835e0cce90c4759",
+      "card_sha256": "eed2870affd873f8572a6f8b0c676771c9c6cbe267cd1be4687daddcc18070ef",
       "id": "seg012:line3495",
       "name": "nopsub_30180"
     },
     {
       "card": "recovery/cards/seg012_line3510.json",
-      "card_sha256": "935ed0992ce1f4b99a6d39cdd7448a88f88257e1324445ce722c92f005839264",
+      "card_sha256": "229fe4afb464bc6a089774f0db5517768199c7853e1b1f48165287cae9ec858d",
       "id": "seg012:line3510",
       "name": "timer_setup_interrupt"
     },
     {
       "card": "recovery/cards/seg012_line3712.json",
-      "card_sha256": "4a0eb12abd9bc70fabcd545a7cbdaa956c5aefe8b3d8f5ce6e716cde4ed45bd7",
+      "card_sha256": "b28258f07512af37d442d236638e3d5de2b942c421e78e80894fe5a4f62bfa5d",
       "id": "seg012:line3712",
       "name": "timer_intr_callback"
     },
     {
       "card": "recovery/cards/seg012_line3788.json",
-      "card_sha256": "47c9de8a25118d58795a7300b77352d37c87d0264b3c40a017442eea79acb2c3",
+      "card_sha256": "0535fa9305676fbd44fad786b6b1d7b3f32ce7bbfaa8e7f9009e928ccec521aa",
       "id": "seg012:line3788",
       "name": "sub_303BA"
     },
     {
       "card": "recovery/cards/seg012_line388.json",
-      "card_sha256": "f447df65c4bdad5ea96858bf93263feace39ff7ede25d9a1c05c740d032c0e89",
+      "card_sha256": "5e30c58eba53f5ca6bc1e6ee5e2f22a51e2dbcb904a7c8f07ff118d54124d0e5",
       "id": "seg012:line388",
       "name": "fatal_error"
     },
     {
       "card": "recovery/cards/seg012_line3937.json",
-      "card_sha256": "e5fe94cffb43db225a50b2885e1ffbe39c0f86ea117d345f69210a76d93243a2",
+      "card_sha256": "c0270dc604d48df91bfe20efe6e8db58970a70d182105f15bc3c4c39ad639c4e",
       "id": "seg012:line3937",
       "name": "nopsub_304B6"
     },
     {
       "card": "recovery/cards/seg012_line409.json",
-      "card_sha256": "cc8aae049f43bdf96305248d2f837ed3939c6a5396ca88116b1ac7af1e4a99c1",
+      "card_sha256": "a6ee70dd24315c9502b1cc78de5607faf2230805ae6a72997d9f1b1676f975ea",
       "id": "seg012:line409",
       "name": "polarAngle"
     },
     {
       "card": "recovery/cards/seg012_line4097.json",
-      "card_sha256": "6b77cff8453b1b83349873d2d5980062fc71840bffe9a4ea7c55315020232f7d",
+      "card_sha256": "2e304815bad4d2011ee1f0520b0e139065310a39a72fa6086a3c4d1636d52ef1",
       "id": "seg012:line4097",
       "name": "get_joy_flags"
     },
     {
       "card": "recovery/cards/seg012_line4328.json",
-      "card_sha256": "5962c2ea7a1705859c092eea94ea9db255ebb2c54deaf80955144e55fb3b44fc",
+      "card_sha256": "5c404dd27626c61ba42be5476f59b451a079799eb1f490e356ce18a1df49524b",
       "id": "seg012:line4328",
       "name": "nopsub_307FA"
     },
     {
       "card": "recovery/cards/seg012_line4575.json",
-      "card_sha256": "680a55def7131dd48200e6b193681184469ec0b7355a92ee15df0ba7064a46fa",
+      "card_sha256": "63a8ebd0939ee6bb11fad5a1cc5781bf6cf3e10830760c4d695f058df757a7fb",
       "id": "seg012:line4575",
       "name": "kb_get_key_state"
     },
     {
       "card": "recovery/cards/seg012_line4680.json",
-      "card_sha256": "974545c3859c90a434f862291805a215a80308c6e93810996b15e36933732dfe",
+      "card_sha256": "3e7112c29dd211df853b0d82a6a8d230adf0eb4ae01bbc84dfae2b0d9a42746c",
       "id": "seg012:line4680",
       "name": "nopsub_30A97"
     },
     {
       "card": "recovery/cards/seg012_line4716.json",
-      "card_sha256": "975df881ddb34b724bfcb6890d10cc383bade637efaf7c8b570e113b8342d4ad",
+      "card_sha256": "5182ac18c862a648fe61f2a8bad27790615b5c8bc606e0661c77f8d48a0536ad",
       "id": "seg012:line4716",
       "name": "file_read"
     },
     {
       "card": "recovery/cards/seg012_line4732.json",
-      "card_sha256": "1e4b67321de38124fa68eed41d0285e0f564dcdf04a458e0d721009fe5e1179f",
+      "card_sha256": "6d16b3f1899f8c7eadae02a7df0e25deeb93f8f7b3b2c4211b3f974fac1e744b",
       "id": "seg012:line4732",
       "name": "file_read_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line4745.json",
-      "card_sha256": "3790181854e9851b62423ccd73384768398ea3ee908d261c222cfdf0a9e7f05c",
+      "card_sha256": "ae0b2eaac5cc1bcc89f88606657025d6fa7a59b20bc5f6510386c8d3d1bbd7f3",
       "id": "seg012:line4745",
       "name": "file_read_fatal"
     },
     {
       "card": "recovery/cards/seg012_line4809.json",
-      "card_sha256": "fca6236748c84bd1e04b1247db4f6d0b56e9dace423e35aee5748000675dfa4b",
+      "card_sha256": "e629689c41d7aa252eb3bc8336ff5d5863d92096c5a25778f20bb7ce4673a0b1",
       "id": "seg012:line4809",
       "name": "file_decomp_rle"
     },
     {
       "card": "recovery/cards/seg012_line4890.json",
-      "card_sha256": "43b109d9d4dac97d3b46c44c4fd03dbc2e73eedc657ca79b4327ec82f058a00d",
+      "card_sha256": "49fa32774cd41dce2f3782c68dd084a8857169eea68a434617f3462c6e151646",
       "id": "seg012:line4890",
       "name": "file_decomp_rle_single"
     },
     {
       "card": "recovery/cards/seg012_line5000.json",
-      "card_sha256": "55850cc7b1547e14659d834dffaa7bcafe660655e9594291b65ff9d1c2366a0d",
+      "card_sha256": "4630db1ab3b1f75b5fee11cf2025cfb55fed648f06db894da5d7c6c857fb90c2",
       "id": "seg012:line5000",
       "name": "file_decomp_rle_seq"
     },
     {
       "card": "recovery/cards/seg012_line5092.json",
-      "card_sha256": "042ef581ed35dab885a96d74fc710fb8957735ca5cf7f296556071245825119c",
+      "card_sha256": "b5d3848010163c090d50dd0c92371b77fb45373e1449327d4d37b5ccfd5822c4",
       "id": "seg012:line5092",
       "name": "file_load_binary"
     },
     {
       "card": "recovery/cards/seg012_line5107.json",
-      "card_sha256": "9c6feb9479e1ff7afae51042ad2ecbeff005b8d18f70c81f65eb77f4890cd903",
+      "card_sha256": "825ac253deaf063cf344dbd8ba2fd27ac532b9c20a7a5e0258a1c423adf45c12",
       "id": "seg012:line5107",
       "name": "file_load_binary_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line5154.json",
-      "card_sha256": "802c378a1413b8ce0dca8f672dc96ee36944e8f63fa3db76cdfb66af436c307b",
+      "card_sha256": "43ec803122305361bdcf295eac36def7bfd3644d5943dff767c93bb2cb6b6f26",
       "id": "seg012:line5154",
       "name": "file_decomp"
     },
     {
       "card": "recovery/cards/seg012_line5170.json",
-      "card_sha256": "1ac234a8f2d225551244482fa2cdb1fb444bfde73da8990136cd22b325412dd7",
+      "card_sha256": "dfb53d707eb2eb8f36ae651c3fe26bbdde54b0abd1bc0aeeca223417c6c6be98",
       "id": "seg012:line5170",
       "name": "file_decomp_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line5184.json",
-      "card_sha256": "e74ca1d715621f28392c82fa99ce4f4fbd681b17ff1bc2196835eaf5446f8072",
+      "card_sha256": "d032f033b8603f05659e1683c9645ae33c8df195aa4606016a9d2ed849b7d590",
       "id": "seg012:line5184",
       "name": "file_decomp_fatal"
     },
     {
       "card": "recovery/cards/seg012_line5373.json",
-      "card_sha256": "03ab5669d0f4762bb951b9ddac061921d482c5c808eeb49a6227083972449067",
+      "card_sha256": "0d675c681e887fd7812277c668770bb07a6a08986d6ebb61285056ae6549c2da",
       "id": "seg012:line5373",
       "name": "locate_shape_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line5386.json",
-      "card_sha256": "441fb284b7eb3d651ca9dcc1bf758561091952d6ae78fa94d5b3bee8282e2954",
+      "card_sha256": "2307833853958bbfa61868ef99a6be027d254114049bede393c62fa179f64303",
       "id": "seg012:line5386",
       "name": "locate_shape_fatal"
     },
     {
       "card": "recovery/cards/seg012_line5399.json",
-      "card_sha256": "d1ee3fcaa53e9bef573df17f720afaf3384892bb379f68473f51751fb86093f2",
+      "card_sha256": "435028af3ebc7a84c9deccbc9342f2984122bb8243712dfbe0b62d5222430502",
       "id": "seg012:line5399",
       "name": "locate_sound_fatal"
     },
     {
       "card": "recovery/cards/seg012_line5762.json",
-      "card_sha256": "f3bee52470810f58d6ef89682a35ccb500133c6c3a5c0a7138c70bffa7d0d03f",
+      "card_sha256": "c26eea4fc2713b8902c5189beff0cb19ce3e395f909233c6bcd30ed6675c7dc6",
       "id": "seg012:line5762",
       "name": "mmgr_path_to_name"
     },
     {
       "card": "recovery/cards/seg012_line5872.json",
-      "card_sha256": "76a216110995b128b4cf6d30a52532af24f67938c9c1110f1de19463c9332822",
+      "card_sha256": "f8d6909afaa115a8c981d55a586c020015daee0f65ca47a2d481c3a5346351bb",
       "id": "seg012:line5872",
       "name": "mmgr_find_free"
     },
     {
       "card": "recovery/cards/seg012_line588.json",
-      "card_sha256": "f6cf332ec73b3d22008214d7797699261b6f87cf15195377d374d05ff8bbac7d",
+      "card_sha256": "19dd0a058d39c90b82639d4b0c0c8e88b66f11e24fbbb048d6e916d7a058dac0",
       "id": "seg012:line588",
       "name": "draw_line_related"
     },
     {
       "card": "recovery/cards/seg012_line5927.json",
-      "card_sha256": "c2a8dc9e1d80815e1a22caf6fffaf64dce1dcea6f702a9a375eeffd9e0c91c0b",
+      "card_sha256": "1b07018afd4c393347b2ab493a22cbf68c9985e5c10e6468f5b2c82f29d9d9df",
       "id": "seg012:line5927",
       "name": "mmgr_get_chunk_by_name"
     },
     {
       "card": "recovery/cards/seg012_line6016.json",
-      "card_sha256": "fe9727f28084e9f36ba6c94bd50ede8369a8eb5248157909f23cc8ceae9159a2",
+      "card_sha256": "7982153ffec3dc393fb34e56ef7785d9c5d6d9b2541af4135207208fa20a1120",
       "id": "seg012:line6016",
       "name": "nopsub_31429"
     },
     {
       "card": "recovery/cards/seg012_line6406.json",
-      "card_sha256": "22e067bf626699fa2d6d097271851566262e573285831645ee6911e16c5f1a25",
+      "card_sha256": "dbb4e6bbfc64bfce75b16a0456110c44848595ff2f20cf644fe2a19de0f26fee",
       "id": "seg012:line6406",
       "name": "mmgr_op_unk"
     },
     {
       "card": "recovery/cards/seg012_line6518.json",
-      "card_sha256": "812561a34b13cba55c0835c9c2342db78e8f0b1f873d674bc0bc0dda2721de90",
+      "card_sha256": "a0a581b45ee8d9bbdee72f51e590bd58bead502fb21ed5c0259c2b75907e2bbe",
       "id": "seg012:line6518",
       "name": "preRender_wheel_helper4"
     },
     {
       "card": "recovery/cards/seg012_line6840.json",
-      "card_sha256": "652bff94cfc5a3d522bb78617dbda3b86a938a05319a751d1914c9d1ee477bcd",
+      "card_sha256": "44b7ff3a2bee0eef729d90f5133b77a08d00c00e41ec1a632dee40ea15fd2371",
       "id": "seg012:line6840",
       "name": "preRender_helper2"
     },
     {
       "card": "recovery/cards/seg012_line6969.json",
-      "card_sha256": "0be7f03a948bd91dc3501785fe59c369a32da0cc8c512a58d05784d40ecbaaaf",
+      "card_sha256": "e628032c19fd5709dd368d87aa551e43f4dae6af935ac3162d3e3e2c2dd364ef",
       "id": "seg012:line6969",
       "name": "preRender_helper3"
     },
     {
       "card": "recovery/cards/seg012_line7470.json",
-      "card_sha256": "324cf3ce4a1fe8d87817e927aec52cfbff5900c378b440175adc7bbdb1c7f60e",
+      "card_sha256": "b6ccd33548f9bd1a7d5b8b38ddd91e0db740664a93cd1654361bf61dcb707075",
       "id": "seg012:line7470",
       "name": "nopsub_31F39"
     },
     {
       "card": "recovery/cards/seg012_line7505.json",
-      "card_sha256": "08c8733af9e46d5d062c87f5e5897539a1121f642d4c9660513319f53abc09bf",
+      "card_sha256": "9affa82613de8b05b5ba45b783ebd05240d08538b9f939b0a955b37866f0a592",
       "id": "seg012:line7505",
       "name": "nopsub_31F55"
     },
     {
       "card": "recovery/cards/seg012_line7834.json",
-      "card_sha256": "3df971b39a10cb18a219991e16e583ef42bcdbc607ac08628e15ebfcd70b1031",
+      "card_sha256": "e8b5d78181f1f7eabf400a47c386bf451ffed4f0605a342cfe5faed240b6319e",
       "id": "seg012:line7834",
       "name": "nopsub_3215A"
     },
     {
       "card": "recovery/cards/seg012_line7848.json",
-      "card_sha256": "81db427cf4356af24b1f001cb3947844e130c0087c94f38b02b3c1ba2951deb3",
+      "card_sha256": "45c27ad6d6d6de8d5465182c0b9c62466b37d324381bdf5ae014ddd3a695538f",
       "id": "seg012:line7848",
       "name": "nopsub_3216C"
     },
     {
       "card": "recovery/cards/seg012_line7995.json",
-      "card_sha256": "8941fafa60a16a5d6abe3b6e856886f20c2de1d471158ff6cf221af5610ee5ff",
+      "card_sha256": "998e5560c107d21d7e7a23f752b8748c7041821e0e8803de51d9b57138c186eb",
       "id": "seg012:line7995",
       "name": "nopsub_322B4"
     },
     {
       "card": "recovery/cards/seg012_line8009.json",
-      "card_sha256": "31706b2ba80c419c16d52a3c26ffc388a793d798de2edae7efc0a78a5eb64269",
+      "card_sha256": "d26555f6e31db92736d3b2becedb677a9edf0949cf6a01d7a70eb26482d43de7",
       "id": "seg012:line8009",
       "name": "nopsub_322C0"
     },
     {
       "card": "recovery/cards/seg012_line8028.json",
-      "card_sha256": "eded97225fe96688de3c498f71e364e67043289811eacd3463e1de6a677e03ab",
+      "card_sha256": "7d0bab5e03d593489330d3d5a2097bdfeaae2cbca2fae13b05885a308ebf13c0",
       "id": "seg012:line8028",
       "name": "nopsub_322DF"
     },
     {
       "card": "recovery/cards/seg012_line8150.json",
-      "card_sha256": "1a57e984a0d22e5c7ce5815e74fffee4202456222d2a5deb02ce1ed5a61fdc7f",
+      "card_sha256": "cc733bd1b53b48b985bf528bf34d257137bfe1b9b161ec8341283316b2e31b0f",
       "id": "seg012:line8150",
       "name": "vector_to_point"
     },
     {
       "card": "recovery/cards/seg012_line8315.json",
-      "card_sha256": "68c011b4f34a12f5fe43b9b58c01eeb0d141ad400496bc9f8657cff2353c60c8",
+      "card_sha256": "6cf22323ed77315cb0c2cc0f47122ea971253f8b77bc934029cec021ede9b993",
       "id": "seg012:line8315",
       "name": "file_write_nofatal"
     },
     {
       "card": "recovery/cards/seg012_line8606.json",
-      "card_sha256": "4e954b7964a03deb0be38ab8f232280df3a9d09c16df7ff5b46232f80ba6f642",
+      "card_sha256": "87f321db5606fe07ee6996568736caaf1b4356d5d3ef4452b6366e68f13b79e7",
       "id": "seg012:line8606",
       "name": "sin_fast"
     },
     {
       "card": "recovery/cards/seg012_line8655.json",
-      "card_sha256": "a155713f2074d0b6d58601cb1146b497606d7c41e1d3b61ab761c09ed71fb638",
+      "card_sha256": "77d079ce970a6963a05249a7f47b2a24eaf79bc56e873e50561f0692c6bfa976",
       "id": "seg012:line8655",
       "name": "cos_fast"
     },
     {
       "card": "recovery/cards/seg012_line8668.json",
-      "card_sha256": "a1e4b2cad5bb4874c352226fc6fc80a561b71546d8f719a2f851aa9cbd2fb2a5",
+      "card_sha256": "2fc24ce8bb3b8834c28dafae8b254d79f44b289494de974919c5e622dcd1e20f",
       "id": "seg012:line8668",
       "name": "nopsub_32738"
     },
     {
       "card": "recovery/cards/seg012_line8683.json",
-      "card_sha256": "dcb354cd5e74545f4e6bbc40371e8061ea362fae9eefa88b4f945ea7b94c4040",
+      "card_sha256": "92f150618b57c775e1a340434dfca4950c7e954b69b6764af26f7ea75c2ee762",
       "id": "seg012:line8683",
       "name": "nopsub_32746"
     },
     {
       "card": "recovery/cards/seg012_line8695.json",
-      "card_sha256": "c50aa041b76f2d201b43740774523360351477dfd437ae7b9a041f049fe65243",
+      "card_sha256": "706e5be6b0f2140eda779b6adf872725ef5e1b56319f3960af275fb0a484f46c",
       "id": "seg012:line8695",
       "name": "nopsub_32751"
     },
     {
       "card": "recovery/cards/seg012_line8707.json",
-      "card_sha256": "7b189d0a16172b5c795df824f19ca8c725943370b6eebbec5042408dbe37da27",
+      "card_sha256": "4ac6e0b0dfd3ac9fb5171f8015113dc9cfd8b08038de58ba56c103d04bd4305b",
       "id": "seg012:line8707",
       "name": "projectiondata9_times_ratio"
     },
     {
       "card": "recovery/cards/seg012_line8721.json",
-      "card_sha256": "d9c554999c2a942f3efec6e5d9224ce03442bccc47055281c51c65409de59747",
+      "card_sha256": "81f7168823f661432d45959fdd33cee79958f07199bdfc8037a7385b5fed3ccf",
       "id": "seg012:line8721",
       "name": "nopsub_3276A"
     },
     {
       "card": "recovery/cards/seg012_line8735.json",
-      "card_sha256": "79f719af539a7ab7f98a382eca8993d320ab01b88d4da9900ca042cf470041f1",
+      "card_sha256": "815d79919c237710c14d9a6aac54ea1cf56ae6e3b90f32c7dd43e13f6db81ef3",
       "id": "seg012:line8735",
       "name": "timer_get_counter"
     },
     {
       "card": "recovery/cards/seg012_line8743.json",
-      "card_sha256": "43b9876a9508349f3b4433c5066eec34fd600f0d94ff7e523934dede60c814da",
+      "card_sha256": "12dfc64fa3191bf9631e4fd33717a4bcffb6a1d45c34aa5485d96596dee072d0",
       "id": "seg012:line8743",
       "name": "timer_custom_delta"
     },
     {
       "card": "recovery/cards/seg012_line8762.json",
-      "card_sha256": "6135a0f15ee9a84164dd5e691fc3574bfe22deac1b83130320cdaba19537036a",
+      "card_sha256": "9f8bb38b9a30d58279fe2425243049285598553b54b7be2f6ce3c696e2376b7a",
       "id": "seg012:line8762",
       "name": "timer_get_delta"
     },
     {
       "card": "recovery/cards/seg012_line8825.json",
-      "card_sha256": "a9e668db9de7e42909850667cf8ccc33aa91f5c64b5d3019a0cffd0ab4dd66b7",
+      "card_sha256": "1d694cd1d23f5ab03a95f19688358a5fcab91e6317bc47e950b06080d51c6ebc",
       "id": "seg012:line8825",
       "name": "timer_get_counter_unk"
     },
     {
       "card": "recovery/cards/seg012_line8855.json",
-      "card_sha256": "e1262c14d63767f33f40b60e3f91b5aaf5bb0b172e482970cd8730761aa32b11",
+      "card_sha256": "6bd69dca4273d31f5fe8b4a5e21e70a5b639d6499f471133e9eb832f126a6e91",
       "id": "seg012:line8855",
       "name": "font_op"
     },
     {
       "card": "recovery/cards/seg012_line8965.json",
-      "card_sha256": "ddd64d6fd51b5b52be3e198415642a47f0228fbd8d26cc8689a96bb28af882b8",
+      "card_sha256": "2123a29b6e58b67012dbe128cfcbba7449534d8eeadfd8ae2cf91d8d4da9d4e4",
       "id": "seg012:line8965",
       "name": "nopsub_328DB"
     },
     {
       "card": "recovery/cards/seg012_line9194.json",
-      "card_sha256": "d4e00f30d3d4a67ffa2b3d859890a375344566440848836ade3064abafb3f799",
+      "card_sha256": "90647e04ba0442e2e71f66320cf676297bbe5e040ff752a35c6ad8e9eadff984",
       "id": "seg012:line9194",
       "name": "mat_invert"
     },
     {
       "card": "recovery/cards/seg012_line9251.json",
-      "card_sha256": "ee8a1c94c106ee08f858688d45809581df90baf4fa901426bd6d7ef0fa73edd5",
+      "card_sha256": "6b4d0b3026b586037f098c20004ebc14af3143fe46bfbe6d493264b7888dc610",
       "id": "seg012:line9251",
       "name": "file_unflip_shape2d"
     },
     {
       "card": "recovery/cards/seg012_line9741.json",
-      "card_sha256": "9b96a1aca1bed47e85a1c0e8cdf03cd75e5ead79f3f888994688aaf7b18e4522",
+      "card_sha256": "88b47170e9cde8a0896462ac0eeab98a068304b14f80552fa0f9ae6bdbaa526c",
       "id": "seg012:line9741",
       "name": "file_decomp_vle"
     },
     {
       "card": "recovery/cards/seg016_line56.json",
-      "card_sha256": "22d396f2c43b4a541fbfc7e0a79535e4370a619474ace9da00f658635eabd31f",
+      "card_sha256": "41d2db1e9b26287262916d4e2fcb5de3d31c2246708bbc39156fc83605d161c9",
       "id": "seg016:line56",
       "name": "locate_many_resources"
     },
     {
       "card": "recovery/cards/seg017_line174.json",
-      "card_sha256": "4750b53c31e28a45fdc930051a5f8ff071df995ddc819a6c21650f93ffce3180",
+      "card_sha256": "55c837bb2c350c75680d378c550d7faa799e463434fab526e828c8a0080d6554",
       "id": "seg017:line174",
       "name": "mouse_set_minmax"
     },
     {
       "card": "recovery/cards/seg017_line91.json",
-      "card_sha256": "e2601da8362315984ca4cab8c38c8789abb1c23bde730b44e88218a19f29d6ae",
+      "card_sha256": "c4b6b243b616b6e2e0299167c1581c34086ff31c8fef1befb0b253fcd636cde8",
       "id": "seg017:line91",
       "name": "mouse_init"
     },
     {
       "card": "recovery/cards/seg021_line50.json",
-      "card_sha256": "e0dc1f02ac92d9b3e12f9d1127b9bfd93b56520e0df9ca2b0a0507c067945edf",
+      "card_sha256": "e588e60d034cb3e9768c6cccdfd730a2fe0b77908c0b3308471291de4fb2a401",
       "id": "seg021:line50",
       "name": "heapsort_by_order"
     },
     {
       "card": "recovery/cards/seg022_line50.json",
-      "card_sha256": "ec1201ac239f36bb9216a0e13a9ee4187765766c18af8df83525de7374b683d5",
+      "card_sha256": "db8ccccf30b03f848fd1a9c3d45ff79f618bc4465bbe4a76ed32ff11ad07187f",
       "id": "seg022:line50",
       "name": "preRender_wheel"
     },
     {
       "card": "recovery/cards/seg024_line55.json",
-      "card_sha256": "608bcc60c1d6cbc4ab2e1d234fb01cd80b38a46b740a648fc2daa4dfca8204df",
+      "card_sha256": "8b25b2bb898ba748627764d27eea0aee9e60a29fb549a1d7d1a29df9d8b9c894",
       "id": "seg024:line55",
       "name": "mat_rot_x"
     },
     {
       "card": "recovery/cards/seg027_line1097.json",
-      "card_sha256": "679c1db2797510862fa5fbb79d4256db298e3d09dce3cb2a4717a93a49f8a4ba",
+      "card_sha256": "dcefef8045b581e104018b8fd5059d23f87370d6d81c9145b6deec4c88eac7a9",
       "id": "seg027:line1097",
       "name": "sub_37868"
     },
     {
       "card": "recovery/cards/seg027_line1132.json",
-      "card_sha256": "a2e27eb952db9caa774faa7e596b47492182326463d8821f8c0ae8dfb9f80e18",
+      "card_sha256": "19da89836f53585540493d43b3757e1942d9516a53d1ea255abb9880d63ee94b",
       "id": "seg027:line1132",
       "name": "nopsub_37898"
     },
     {
       "card": "recovery/cards/seg027_line1176.json",
-      "card_sha256": "f27c15aa064674b2e6e98d3f773103ee5e8803e3b613e4c6c4e757bc09cdf97d",
+      "card_sha256": "2cf1db7bac9973a5f42bc7d8d26180268c8b0e5239640fe61327bf86f0442d70",
       "id": "seg027:line1176",
       "name": "audio_load_driver"
     },
     {
       "card": "recovery/cards/seg027_line1358.json",
-      "card_sha256": "faffb315168c8f2e00344149b4488b1adae70b2c965f17dc80500a43d9a2b153",
+      "card_sha256": "ff995e2902a9f21a32b0da9c14ab9fa228ca362046a30d2b5dd7b0cf4dc5b16d",
       "id": "seg027:line1358",
       "name": "audiodrv_atexit"
     },
     {
       "card": "recovery/cards/seg027_line1550.json",
-      "card_sha256": "7f340a94c00839d581bce5d190daa9b667d7b02428a8d8767b87156c46543f07",
+      "card_sha256": "58e471b43053c50a6cf0d4108cfb73908969dc8a118f35ed79ad78d4feb40161",
       "id": "seg027:line1550",
       "name": "sub_37C38"
     },
     {
       "card": "recovery/cards/seg027_line1564.json",
-      "card_sha256": "faed8830de9a8b55185eed804ea4b1117381eb1d6ab36ce280a9d4abfec34e5e",
+      "card_sha256": "853ad653ad614f7ae56e46383e523e4a083e1de1628a6c872b8f1710e2e3da64",
       "id": "seg027:line1564",
       "name": "load_sfx_file"
     },
     {
       "card": "recovery/cards/seg027_line1662.json",
-      "card_sha256": "e57918019edb9dd3295df069a59eb339a561ade1f1af5ca4f37e608f02c5abfe",
+      "card_sha256": "9d928322fb8629202829f13bfe1c72784d8003bddcea156ef639bfcd6c7cbd16",
       "id": "seg027:line1662",
       "name": "load_voice_file"
     },
     {
       "card": "recovery/cards/seg027_line185.json",
-      "card_sha256": "f0b44b7166b56ba5b8d88f604e1c15b542c91efaf41528b51493bee2b6d5bbbd",
+      "card_sha256": "efb8d806e22cb28516e0cfb1f14b21088d8cdeacfb64d7e707fb618fbe31de64",
       "id": "seg027:line185",
       "name": "load_audio_finalize"
     },
     {
       "card": "recovery/cards/seg027_line2032.json",
-      "card_sha256": "9c6e9d1c9e98ca2a4740702e59175aa0202ed184fc0253e8fbe0fd59c02dee26",
+      "card_sha256": "2b56e55729931255a54b25ff0a24c6beb13c2ae2ab1d796bdc82521f8f0497b7",
       "id": "seg027:line2032",
       "name": "sub_3803C"
     },
     {
       "card": "recovery/cards/seg027_line2168.json",
-      "card_sha256": "7a446a150be905aa9870d1aa57401cb92aa06c08ba770c78fe1afbd30bc20b04",
+      "card_sha256": "fd1c4a4ed4eb842c63c064b66a23cd0f3182972b322ec66cf8b5e72d7c503dd4",
       "id": "seg027:line2168",
       "name": "sub_38156"
     },
     {
       "card": "recovery/cards/seg027_line2188.json",
-      "card_sha256": "6c4b8115ffd7e7c5c8c438cbd9ba0714cf7ef90bfdfbaa545d72a89845b3ab94",
+      "card_sha256": "2eb2389497f5636a04c8fbd000a1651364db443214f3e0c52fad117856b0ae87",
       "id": "seg027:line2188",
       "name": "sub_38178"
     },
     {
       "card": "recovery/cards/seg027_line2285.json",
-      "card_sha256": "bc635dc0b2a5cf80236ada2c0be1f84bc7698cae6337ef28ae03c111bd8f3767",
+      "card_sha256": "68340d77ac1dde2d830ef7a52fd18531646be512f96fd9f962e3e7e863faec3d",
       "id": "seg027:line2285",
       "name": "audio_map_song_tracks"
     },
     {
       "card": "recovery/cards/seg027_line253.json",
-      "card_sha256": "5a47b22b8dc7be1acb69c1e1ab08786adc3e87256f7f1a7b8ecc952ff9b8091e",
+      "card_sha256": "b70207c9d0d33574912e3ae29eb30405e392d98b3850b0b7832b89c915fa45ba",
       "id": "seg027:line253",
       "name": "audio_unk"
     },
     {
       "card": "recovery/cards/seg027_line2635.json",
-      "card_sha256": "158cdc9b88332cf50322cea91ca3305cbf73e1574057d3097dfea322ad98d441",
+      "card_sha256": "67606f46488eba40236147481d7f5b708902d8591006f16196ff595fa9fa2a62",
       "id": "seg027:line2635",
       "name": "audioresource_get_word"
     },
     {
       "card": "recovery/cards/seg027_line2654.json",
-      "card_sha256": "4e2c000b8617f42076a57466e54ceb00c1eca2fa099e4c21b20cd97649bedb58",
+      "card_sha256": "e2adc6617d95fc579b215ecd55d66f31767c1782fe6ad73b12862378646acc67",
       "id": "seg027:line2654",
       "name": "audioresource_copy_4_bytes"
     },
     {
       "card": "recovery/cards/seg027_line409.json",
-      "card_sha256": "4da51dbcb1191870f9b58939e7e5862c9be82eb860ee5e736cb366bafc20a816",
+      "card_sha256": "422b6ab9a80ad8e6d4d6ab3753d4fc9f5ae67a116781070532b82b0c17cacf44",
       "id": "seg027:line409",
       "name": "sub_3736A"
     },
     {
       "card": "recovery/cards/seg027_line480.json",
-      "card_sha256": "3f2996378a0a281e4212db8c260a5c4f97b892130f7fd37858e3f9e88fd2ba23",
+      "card_sha256": "cbfb455748ca2ef9cd35e58410f4d1bc89af760aa78517564f355c4b8c1163e7",
       "id": "seg027:line480",
       "name": "nopsub_373FE"
     },
     {
       "card": "recovery/cards/seg027_line554.json",
-      "card_sha256": "26ad8b3ca875ff579387f45f16e18ff28aeb32fbbd7c4409524b0f2e202fa3df",
+      "card_sha256": "de3f50df8257f2e14e8ac0b1158d30f59aff7f89001d61c42a8062da528fd57b",
       "id": "seg027:line554",
       "name": "sub_37470"
     },
     {
       "card": "recovery/cards/seg027_line615.json",
-      "card_sha256": "1d3b925351a4bed12c074ddb76ddf1c9623bacbdd938fd592b3356fdcbf4d490",
+      "card_sha256": "b464d8508e9761dc27c0a427b2a523dcfe9394cbb06bae23c1287b9de5667e87",
       "id": "seg027:line615",
       "name": "sub_374DE"
     },
     {
       "card": "recovery/cards/seg027_line636.json",
-      "card_sha256": "54b53708f2679b146f87ad1f830103d1479d489e7ac817a2d9ed5657e98adeb0",
+      "card_sha256": "09074533769604338b42bf90c63f264fdd2cda11242c2c4bedebea1d0dd60cd4",
       "id": "seg027:line636",
       "name": "audio_check_flag2"
     },
     {
       "card": "recovery/cards/seg027_line662.json",
-      "card_sha256": "a4fa0c522fb8df860d47bd58ca4aae985da3c3e012f196473dbb343eaa8ac9da",
+      "card_sha256": "29a6223f0095f5acfde30f5800011d1e626e8ca6428ed9e3b3137c4357e4a1d7",
       "id": "seg027:line662",
       "name": "audio_check_flag"
     },
     {
       "card": "recovery/cards/seg027_line92.json",
-      "card_sha256": "188c47cca040314c5fecf5ccffab9adedf72b51c92c254e883f471cfcff29a88",
+      "card_sha256": "7a20edf5c94b2ae89ad72d25afbcd870c551efa52ac5d0d94db56b3f607fce72",
       "id": "seg027:line92",
       "name": "init_audio_resources"
     },
     {
       "card": "recovery/cards/seg027_line936.json",
-      "card_sha256": "09bad1992b9da456234cd76ce7a509200114827ade6a2cf23064f4d520c884ff",
+      "card_sha256": "25448d434b77f82133774519424f5eeec5bcafed8ad6b06bfaaf43f8cf6ae63e",
       "id": "seg027:line936",
       "name": "sub_3771E"
     },
     {
       "card": "recovery/cards/seg027_line966.json",
-      "card_sha256": "c800d3a168a2532afc2175721cf8b885da2ebdfcd8767b87dfe53efe6b83af1b",
+      "card_sha256": "4666ed78bd1c779dc02f3d198076cc6b29043e81554c90e83374ccd497d040f1",
       "id": "seg027:line966",
       "name": "nopsub_37750"
     },
     {
       "card": "recovery/cards/seg027_line988.json",
-      "card_sha256": "ee229930ba584bdc105cd288243f6d18dbbc9bd6899b163bfca9b6531726d700",
+      "card_sha256": "94600da60c05495a1727799c6789cb5f0f880632b79d3f174ff1ee65b55dacc6",
       "id": "seg027:line988",
       "name": "audio_driver_func3F"
     },
     {
       "card": "recovery/cards/seg028_line1073.json",
-      "card_sha256": "a7a86041c44b2f62bdfc1919b96ec8a2ff4b9cf1311a5803d647799e983abed0",
+      "card_sha256": "2e7dd8f853efe496520349e394788f79ef8a42fe60dacffb2105f5f55b643c9a",
       "id": "seg028:line1073",
       "name": "sub_38DE6"
     },
     {
       "card": "recovery/cards/seg028_line127.json",
-      "card_sha256": "364ba1cc7e198041c44fdfeec91e11dd2efadaff37c4638deab87dd20e2a80e0",
+      "card_sha256": "08e3a366f6546c255a89d7f86210ee3566dc5bda6201704a15f8c01b47dbe181",
       "id": "seg028:line127",
       "name": "sub_3868A"
     },
     {
       "card": "recovery/cards/seg028_line1346.json",
-      "card_sha256": "2eadf1d227d80a051dde9ae8f9d72dc9449a8e31e4b8e4815fe171b6c1773f54",
+      "card_sha256": "b6c9eedd784a5dd2d1823a23b742f4f2bfad373e26744c4cc1fbf24bdb87b47d",
       "id": "seg028:line1346",
       "name": "sub_39050"
     },
     {
       "card": "recovery/cards/seg028_line1376.json",
-      "card_sha256": "d62d7d222513f08d44c07e0bd7a453bef5acda57ed8e537a53d3a32f9dd4332d",
+      "card_sha256": "f401dec75b36f0845bcdf320384cbdb0f7209973154cf8f9655efb184a3c2f9b",
       "id": "seg028:line1376",
       "name": "sub_39088"
     },
     {
       "card": "recovery/cards/seg028_line177.json",
-      "card_sha256": "91c34378d888cb757404fc2618008c40e6e82293c8606e19fe34dfc763ae3d1d",
+      "card_sha256": "fafa548dd4bfd1d70eacbec5e29c280e1b698612a4e08522d0f6df706c7be87c",
       "id": "seg028:line177",
       "name": "sub_386D6"
     },
     {
       "card": "recovery/cards/seg028_line1807.json",
-      "card_sha256": "4698243d99d0c594f2a376bbea9d3d32ec9484d1aad157de89421e148e1ce803",
+      "card_sha256": "f681a463d18a3e51b8f4848b90f7974da416803d64d010c0287daf5edf2a35c1",
       "id": "seg028:line1807",
       "name": "sub_3945A"
     },
     {
       "card": "recovery/cards/seg028_line2081.json",
-      "card_sha256": "1b4cb5a40eca85767b06d2239dc48eac40637310b315faf4f23e0ce4a4181ab1",
+      "card_sha256": "6d6710b6bf94606410d247b7d3fb3d39fe964bce5747b983bb4fd2b219fcfa22",
       "id": "seg028:line2081",
       "name": "sub_3968A"
     },
     {
       "card": "recovery/cards/seg028_line2141.json",
-      "card_sha256": "89f91d47d8b8ee8d22f282388db4f75ae0d44e19257c19e7527899360b74392c",
+      "card_sha256": "fef62fb3aa6b5598c646da8089d479a176e13ea6d1185442489908f1c8404401",
       "id": "seg028:line2141",
       "name": "sub_39700"
     },
     {
       "card": "recovery/cards/seg028_line216.json",
-      "card_sha256": "f6f0709b706d4aa5fdb97a2febf03d99763cd5bb2ca7a4ccfda8581cbe7cbb78",
+      "card_sha256": "6e07c81316b1175785695f8a91cd57d6d31f344330624851555d875b8600dc8f",
       "id": "seg028:line216",
       "name": "sub_38702"
     },
     {
       "card": "recovery/cards/seg028_line672.json",
-      "card_sha256": "6205b326a3c064ce3856dc5e9cda9c87cebb268353b312e699087944c283ca3c",
+      "card_sha256": "cc897f5d269fdf0c30b8847ac76c04df65871236349f3f9932ea76d151d43608",
       "id": "seg028:line672",
       "name": "sub_38AC4"
     },
     {
       "card": "recovery/cards/seg028_line818.json",
-      "card_sha256": "50c16899344a5225e38e85ee0d26e097caf0064c55f95bafd0028c95a8777527",
+      "card_sha256": "7a631ae9eebdfef4a18b0e613833e3b530ee4566bbf2177f243ef767af68286e",
       "id": "seg028:line818",
       "name": "sub_38BEA"
     },
     {
       "card": "recovery/cards/seg028_line871.json",
-      "card_sha256": "ce07923360e5f88bb94dea083232505c8a26d3e1c08895fdb29c5f7a1962fa7a",
+      "card_sha256": "23564b414afcf9dde273fa286d6d3467db60dbd3becf6e9bc812e7aafb0d4560",
       "id": "seg028:line871",
       "name": "audio_unk2"
     },
     {
       "card": "recovery/cards/seg028_line960.json",
-      "card_sha256": "b731ca4a7c03f842b28e2b108e8552a201b2720ab12467969932ec95b6a6e763",
+      "card_sha256": "53439d18f5b9c9d8953044053751cc7acb299726e154c5fa20fe2d7ef020d53f",
       "id": "seg028:line960",
       "name": "sub_38CF8"
     },
     {
       "card": "recovery/cards/seg029_line224.json",
-      "card_sha256": "ea8a388327f91069a2838b5444e59a778f63898d1f03ee6164ebb2708ab11ec7",
+      "card_sha256": "2fa33136cedeff28fa5a211dfc9062379ae53a4f9482939da97cdb6db324ecd7",
       "id": "seg029:line224",
       "name": "audioresource_find"
     },
     {
       "card": "recovery/cards/seg029_line59.json",
-      "card_sha256": "b0026ed6052467e2dfe8fa72865149f8ac36359839cb1e2065f06aa7da2e51df",
+      "card_sha256": "b9664880c2d6371debcfa05fbc418a496313df552fd9c62afd498a9b7249b68f",
       "id": "seg029:line59",
       "name": "audioresource_compare_chunknames"
     },
     {
       "card": "recovery/cards/seg030_line56.json",
-      "card_sha256": "2bc0b7a44a4b3b9187c823e5238d58099597ece9cc4894db4c60fac849fcda05",
+      "card_sha256": "89c796684ffc9aa451998a9f3c86b30cfc4a2cf71c69b1e128e88a32f6ec8872",
       "id": "seg030:line56",
       "name": "audio_make_filename"
     },
     {
       "card": "recovery/cards/seg031_line120.json",
-      "card_sha256": "11e779afefc4b8a4ac884be434d7105820121cff0f003a3f3a6b0dff3e0a58ac",
+      "card_sha256": "d0b3c497e746f769f13f24101fbd7d25be4e07e60a8140f79766e5aefc4037aa",
       "id": "seg031:line120",
       "name": "nullsub_1"
     },
     {
       "card": "recovery/cards/seg031_line126.json",
-      "card_sha256": "4beab1c876da0c903fe6f3b65ec46b0da43aaa78a88f8886b14f556403e2e6fc",
+      "card_sha256": "ca3d2926e572292c02a5802233a87eca286245f6391346dd7884b99ae14058f4",
       "id": "seg031:line126",
       "name": "nullsub_2"
     },
     {
       "card": "recovery/cards/seg031_line132.json",
-      "card_sha256": "71df7453eec741a07a57445a12cefdf67fc6f490cc1719326134c163404998b0",
+      "card_sha256": "a71ce3853ebfae938eb487df1755e186c0abac5c16b9f4e9340ee0ce1486330d",
       "id": "seg031:line132",
       "name": "init_main"
     },
     {
       "card": "recovery/cards/seg031_line579.json",
-      "card_sha256": "f4b83c55affaece6b6ec223bcf715b8f4952b11e202637beff12416983012356",
+      "card_sha256": "543c98494eee2c1fe80ebc1e8467321420130fe4e25cad33ca0a29d573a7f4e5",
       "id": "seg031:line579",
       "name": "random_wait"
     },
     {
       "card": "recovery/cards/seg031_line795.json",
-      "card_sha256": "81d336f5e64af20ecac3a15395a08cb980782316a4aec166ef185c10894d1cb6",
+      "card_sha256": "a10a930469870b888de0a56ba3f4c7801dd91290148410c25d90aa9ff6e8543f",
       "id": "seg031:line795",
       "name": "get_0"
     },
     {
       "card": "recovery/cards/seg031_line802.json",
-      "card_sha256": "c1cf0a95db04984c8e6a11a5a4d14c098b11c7ece075e5059d5dc1efdcdb2d6c",
+      "card_sha256": "55a1c8c3dd633d0f243d9978d51eca97f6bd58d6adcd1349d4266cdf85dc7000",
       "id": "seg031:line802",
       "name": "mmgr_alloc_resbytes"
     },
     {
       "card": "recovery/cards/seg032_line451.json",
-      "card_sha256": "f01b54ddfa471af7a135d1c4d597115c7e133e756711b5e395a69d5f86744062",
+      "card_sha256": "11c977d16e0c8250c3dc784bb467ad2bba47fb906a87a8167aef91dd18703555",
       "id": "seg032:line451",
       "name": "read_line_helper"
     },
     {
       "card": "recovery/cards/seg032_line55.json",
-      "card_sha256": "896452d7da13f5737cdf8bfd829da5156d7c2cc993fa03beb273ee4bedcd5e92",
+      "card_sha256": "547b7221ece1e618f0183c513cbf5e933ac0134b662e0db32eea43428630a405",
       "id": "seg032:line55",
       "name": "read_line"
     },
     {
       "card": "recovery/cards/seg034_line104.json",
-      "card_sha256": "78e9597537068676166725b8c55675dd58209dcba00f512ff4ca9193f5d61907",
+      "card_sha256": "55fe8ebf063f9740e11ec45b12c6a1f4127956b3ea46799904e02e5288701456",
       "id": "seg034:line104",
       "name": "file_load_shape2d"
     },
     {
       "card": "recovery/cards/seg034_line56.json",
-      "card_sha256": "89cdf3965e6064edb9b414f2cbb0851a2496c4dd11afb68d024c11eda041007f",
+      "card_sha256": "f1bcaf20c89d26a45d873205d515c8e80c6d7df0cc925ee7d5766138dcfee9d2",
       "id": "seg034:line56",
       "name": "file_load_shape2d_fatal"
     },
     {
       "card": "recovery/cards/seg035_line104.json",
-      "card_sha256": "c8061bcdfba3968bf550fd8ff049bdf54385d2f590d7c53ba89a2c161ff6a2b7",
+      "card_sha256": "bde4ef397cc7da41b8cf2f26219dd987af767f347e60f744ee84903bf12de947",
       "id": "seg035:line104",
       "name": "file_load_shape2d_res"
     },
     {
       "card": "recovery/cards/seg035_line184.json",
-      "card_sha256": "8057f2d32f2421f08417b7bda8addef5c79f2b6d1d36e34e8ea8d2f378f0988c",
+      "card_sha256": "84f324862aaa5c7cbce0bdc8a63c87f005321f9c3439c28de4416ddfe050e30b",
       "id": "seg035:line184",
       "name": "parse_shape2d"
     },
     {
       "card": "recovery/cards/seg035_line56.json",
-      "card_sha256": "5ee3dbf72758c4254c37d101c7a5378b79171e1dd52ccfa1e7725e2f77e1c2be",
+      "card_sha256": "86c5cc9f969af2bd631aef575e8696a61057ef13b442adfedf2e00ff4eb7f88b",
       "id": "seg035:line56",
       "name": "file_load_shape2d_res_fatal"
     },
     {
       "card": "recovery/cards/seg036_line50.json",
-      "card_sha256": "b701d0b319bece0634a43e19fb50cec3897101bfacb8da9c0394477fb76f8f75",
+      "card_sha256": "0ef637fc96e2eab5286141557a3cb3bb3a69dea55389a26ad6ff4604256bfc05",
       "id": "seg036:line50",
       "name": "file_get_unflip_size"
     },
     {
       "card": "recovery/cards/seg037_line50.json",
-      "card_sha256": "823e250be2713e8cb07259ed54ae20c7cd4f43885251ee745e7b2bade8db77fc",
+      "card_sha256": "5d1b3e8ce40264a7b0196a5d3b8305ed2d28b324f0e97c7c0ee9169c71d56975",
       "id": "seg037:line50",
       "name": "file_load_shape2d_expandedsize"
     },
     {
       "card": "recovery/cards/load_20a1c.json",
-      "card_sha256": "95c1e0545f3c6d0beb983dd4f3a23e3c4ad889b2240cec4966ec8128bb8a6f1f",
+      "card_sha256": "1fc1f41a86894aae39bcff2d6f87c2c1a30d38c79ab9fb4b806c7db140252268",
       "id": "load_20a1c",
       "name": "kb_call_readchar_callback"
     },
     {
       "card": "recovery/cards/load_204af.json",
-      "card_sha256": "227d2c4f1788594516576a543f3d5c1e3d2b64a54758551eb953d08d95b94ef1",
+      "card_sha256": "515b07f24994974558e54c783dc545e2d1b16627a7b6f3e8ed090e25f398fcd1",
       "id": "load_204af",
       "name": "nopsub_304AF"
     },
     {
       "card": "recovery/cards/load_227b7.json",
-      "card_sha256": "30c589893c042244ef1bf54411717b61aa24a549f8b490fbb511d11b8100e42c",
+      "card_sha256": "54ce22283d8a38e83acf942ccfd87d3d76007e446abab14ad562d7121901aa77",
       "id": "load_227b7",
       "name": "timer_reset"
     },
     {
       "card": "recovery/cards/load_20a35.json",
-      "card_sha256": "6a4230ca246e4c5b5b8cb751a8a7f75812ec3b7285c2a2644b0dc34bf981eec2",
+      "card_sha256": "d1d87c55fe65cd60663287bcc47660e4d14e0d74869b262f21e4245c33ff3ac4",
       "id": "load_20a35",
       "name": "kb_checking"
     },
     {
       "card": "recovery/cards/load_20a68.json",
-      "card_sha256": "0dfc377912156f2aa102cd94d1d86e7d341fe8959998436b338a0000101ce004",
+      "card_sha256": "934638236218e99749957e389a5023066da23f2176177fff0586cd43fff016af",
       "id": "load_20a68",
       "name": "kb_check"
     },
     {
       "card": "recovery/cards/load_217b2.json",
-      "card_sha256": "bbd6937ef6588bb61f6da2208d7d64352df29d0e1ce02a36d1bccd4450ddf917",
+      "card_sha256": "b6573762a440c4e0d76a42da3fbecd1b95ec748d6f9fd182fdc24dc9d3d8ea7e",
       "id": "load_217b2",
       "name": "preRender_default"
     },
     {
       "card": "recovery/cards/load_217df.json",
-      "card_sha256": "f6f35580c3ee464f19eaeb1d9a4172a268dafe7818c8fbb7550ed6ddd650d1df",
+      "card_sha256": "03b7cc7ef8d267ff5788184d08e2f9806798b72686166e69a778ec88d055f408",
       "id": "load_217df",
       "name": "skybox_op_helper"
     },
     {
       "card": "recovery/cards/load_207d2.json",
-      "card_sha256": "655beeddf5bd61a7d7bd748691471fdb25bd637ada7019291d11a11fa48ba548",
+      "card_sha256": "a0cb26a51cfd724d7648594b350693cb0b06bd619544761dcb277c70f0bafffb",
       "id": "load_207d2",
       "name": "sub_307D2"
     },
     {
       "card": "recovery/cards/load_1ce77.json",
-      "card_sha256": "b760f554e45117499576547ed4bfb6afc4722c8b907342df3c608e3b0e591909",
+      "card_sha256": "dd6e40ca7924a6ffe161601db823eedf5e35bcf25fac51f628412c46810dbc79",
       "id": "load_1ce77",
       "name": "sub_2CE77"
     },
     {
       "card": "recovery/cards/load_1cdec.json",
-      "card_sha256": "061ad860addc6502eb83e54bbe9b3b19684c52e3dd44f15f7608c196d77abd3e",
+      "card_sha256": "26e2edcc395fd7efc16736eafaf7327316603358a625c6497dfcef46585cc06c",
       "id": "load_1cdec",
       "name": "libsub_quit_to_dos_alt"
     },
     {
       "card": "recovery/cards/load_207e3.json",
-      "card_sha256": "7651a306ca4f0be9c008d5f3560635f273fb2be91ec5014f7c490844a907bd1c",
+      "card_sha256": "c14cf9e88dee859bf5832f2c641cadbe5bb7fed472264081df29e1a96e6b2fdf",
       "id": "load_207e3",
       "name": "sub_307E3"
     },
     {
       "card": "recovery/cards/load_1ce4a.json",
-      "card_sha256": "c77ac3baa28f9155d77a86c6534fa898c4929a639573affe9b652ee6bfa86db5",
+      "card_sha256": "33e01822af864f8ae28c5fc1e9a24ff65e690dbcd194a82701ec70da457733bc",
       "id": "load_1ce4a",
       "name": "sub_2CE4A"
     },
     {
       "card": "recovery/cards/load_205c8.json",
-      "card_sha256": "bc0d67c7a9b8a561cd2e5202995627eeb1ccd8b99dd445f266a037f1d137faa0",
+      "card_sha256": "af5d2a450889b5901bbf602aacf2d8f24de706dbdd7ab07cc247cef95fe1d21c",
       "id": "load_205c8",
       "name": "nopsub_305C8"
     },
     {
       "card": "recovery/cards/load_202de.json",
-      "card_sha256": "51250f57f65614be0223c9cdea5a8a666dfa71217847e35eaba4981c84822179",
+      "card_sha256": "0f0855350cd6cec9adea48eb8e0bacc3611f31ad2a96671f1b56f476107f434c",
       "id": "load_202de",
       "name": "timer_remove_callback"
     },
     {
       "card": "recovery/cards/load_20883.json",
-      "card_sha256": "c2266108ad687dd6f108fa82d9e26770ccb6c989d024d8f526d79c912e451953",
+      "card_sha256": "db15fff838329e55411590bc0416a3daa70434f5c6bb3c596cfdefb31ffe7dc9",
       "id": "load_20883",
       "name": "kb_exit_handler"
     },
     {
       "card": "recovery/cards/load_22886.json",
-      "card_sha256": "50eb7510ccde07182b7cf78381327c123d17a0573f034e2478e63142f46fd162",
+      "card_sha256": "84bbc627186b2b461e3e659f71d89a101ad32b252fb4014030e84a923a74cf3c",
       "id": "load_22886",
       "name": "preRender_patterned"
     },
     {
       "card": "recovery/cards/load_1fe59.json",
-      "card_sha256": "6d0026b5ceafe1bc683c4048f5fe9c1a188fb30ad45cbf14b736fd64cb2afa61",
+      "card_sha256": "877753dfb7d8df69657ee361d98a6e654b525b63546bb3b4c20bb1cf9d90453e",
       "id": "load_1fe59",
       "name": "call_exitlist"
     }
   ],
-  "workflow_fingerprint": "f701b562a6c60e85c65f46e450558cfd02dcb03a75ab7dc679d6c12513f6f193"
+  "workflow_fingerprint": "78f5dee31dd79cdcea73e3ba92397a7ad99a699cbffffeae6e12d63425e669e7"
 }

@@ -1,0 +1,52 @@
+{
+  "budget_charge": true,
+  "diagnostics": {
+    "category": "UNSUPPORTED_SOURCE",
+    "receipt": {
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "9e88e1b51195e882b2bb23d5f4d2cd882c227f09ced32e75b26b36980d05f671",
+        "size": 676
+      },
+      "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pvo73c_66"
+    }
+  },
+  "epoch": 0,
+  "error": "Preprocessor closure not implemented: directives blocked",
+  "escalate": true,
+  "hypothesis": "Compile the associated paragraph-copy C body with its far segment pointers and 64K word chunks to test whether MSC510 emits the target REP MOVSW inner loop.",
+  "hypothesis_key": "cf57d58d11b9c0d8d44f1721ac103353d33085c9574da8b9e7beb4127ce1ee76",
+  "input_fingerprint": "979dfdb3717f882dc0136737954d5a463e1f50b5dbdcc5d09f5577afe3b27e89",
+  "recipe": {
+    "end": 135637,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 5706,
+      "line_start": 5660,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "mmgr_copy_paras",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_mmgr_copy_paras",
+    "source": "recovery/candidates/mmgr_copy_paras.c",
+    "stable_id": "load_2118d",
+    "start": 135565,
+    "target": {
+      "sha256": "fd89188541b8f5e7b5b4c49930b436c762fb41875db0281e25841e4bd555fc50",
+      "size": 72
+    }
+  },
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "9e88e1b51195e882b2bb23d5f4d2cd882c227f09ced32e75b26b36980d05f671",
+    "size": 676
+  },
+  "started_utc": "2026-09-23T13:23:30.977553+00:00",
+  "status": "FAILED",
+  "task": "mmgr_copy_paras"
+}

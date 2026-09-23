@@ -21,6 +21,8 @@ With Python on PATH, use the same commands prefixed by `python`.
 
 Context automatically shows compact mismatch islands and exact anchors when an archived diagnosis exists. Use `python tools/context.py FUNCTION_ID --diagnosis` for a concise text view, then consult the referenced full artifact if needed. Preserve exact anchors while investigating local differences; diagnostic similarity never relaxes byte/fixup acceptance.
 
+The routine view groups supported cross-island operand patterns while retaining unresolved symbols and ungrouped residuals. Add `--islands` for the original localization. See [the measured Stunts evaluation](docs/current/near-match-families.md) for evidence, negative controls and limitations; a grouping is not a proven source explanation.
+
 `assets/`, `toolchain/`, `build/` and references are ignored. Keep your original files there; no game or compiler binary is tracked. `layout/oracle.lock.json` has no automatic update command. Verification never learns new expected bytes.
 
 ## Reading order

@@ -17,7 +17,7 @@
   "library_production_bytes": 725,
   "mapped_functions": 237,
   "matching_asm_bytes": 0,
-  "matching_c_bytes": 328,
+  "matching_c_bytes": 408,
   "oracle": {
     "load_image": {
       "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
@@ -36,22 +36,24 @@
   "promoted_game_functions": [
     "audio_enable_flag2",
     "audioresource_get_dword",
+    "copy_string",
     "nopsub_26552",
     "nopsub_378AE",
     "nopsub_378BC",
     "parse_shape2d_helper3",
     "rect_compare_point",
     "rect_is_inside",
-    "rect_is_overlapping"
+    "rect_is_overlapping",
+    "toupper"
   ],
   "queue_counts": {
     "CHEAP": 0,
-    "MEDIUM": 9,
-    "SUPERVISOR": 598
+    "MEDIUM": 2,
+    "SUPERVISOR": 603
   },
-  "raw_executable_bytes_confirmed_minimum": 18774,
+  "raw_executable_bytes_confirmed_minimum": 18694,
   "raw_executable_bytes_exact": "unknown until all code/data boundaries are established",
-  "raw_initialized_bytes": 198947,
+  "raw_initialized_bytes": 198867,
   "segment_frames_proven": 25,
   "source_code_segments": 38,
   "source_data_segments": 3

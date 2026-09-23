@@ -1,152 +1,11 @@
 {
   "counts": {
-    "MEDIUM": 9,
-    "SUPERVISOR": 598
+    "MEDIUM": 2,
+    "SUPERVISOR": 603
   },
-  "input_fingerprint": "e0dfb6d2f105485a1ca6adfd11d63c04146996a7a4b187616fb3c8456b7d20dc",
+  "input_fingerprint": "6380dbb317fae960226353cc61274da8fbc70ea1860d96dc20122b8fab1239c4",
   "schema": 2,
   "tasks": [
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_226ba.json",
-      "id": "load_226ba",
-      "name": "nopsub_326BA",
-      "risks": [],
-      "size": 36,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 8605,
-        "line_start": 8581,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_18ad6.json",
-      "id": "load_18ad6",
-      "name": "copy_string",
-      "risks": [],
-      "size": 56,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 2639,
-        "line_start": 2608,
-        "path": "src/restunts/asmorig/seg008.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_29c84.json",
-      "id": "load_29c84",
-      "name": "audioresource_copy_n_bytes",
-      "risks": [],
-      "size": 70,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 365,
-        "line_start": 312,
-        "path": "src/restunts/asmorig/seg029.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_2264a.json",
-      "id": "load_2264a",
-      "name": "file_get_res_shape_count",
-      "risks": [
-        "Odd extent: verify complete compiler alignment; never trim"
-      ],
-      "size": 17,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 8526,
-        "line_start": 8511,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_1e066.json",
-      "id": "load_1e066",
-      "name": "unknown_libname_1",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": 18,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 2904,
-        "line_start": 2887,
-        "path": "src/restunts/asmorig/seg010.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_270ba.json",
-      "id": "load_270ba",
-      "name": "toupper",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": 24,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 66,
-        "line_start": 50,
-        "path": "src/restunts/asmorig/seg026.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_2118d.json",
-      "id": "load_2118d",
-      "name": "mmgr_copy_paras",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": 72,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 5706,
-        "line_start": 5660,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
     {
       "attempts_remaining": 3,
       "blocker": null,
@@ -293,6 +152,25 @@
       "tier": "SUPERVISOR"
     },
     {
+      "attempts_remaining": 0,
+      "blocker": "Three distinct failed hypotheses; supervisor review required",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/nopsub_326BA.json",
+      "id": "load_226ba",
+      "name": "nopsub_326BA",
+      "risks": [],
+      "size": 36,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 8605,
+        "line_start": 8581,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
       "attempts_remaining": 3,
       "blocker": "External/indirect jump needs supervisor linking/TU review; Unregistered DGROUP address 0x4ba0; Unregistered DGROUP address 0x4ba2",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -358,6 +236,25 @@
         "line_end": 3452,
         "line_start": 3415,
         "path": "src/restunts/asmorig/seg008.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 0,
+      "blocker": "Three distinct failed hypotheses; supervisor review required",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/audioresource_copy_n_bytes.json",
+      "id": "load_29c84",
+      "name": "audioresource_copy_n_bytes",
+      "risks": [],
+      "size": 70,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 365,
+        "line_start": 312,
+        "path": "src/restunts/asmorig/seg029.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -903,6 +800,27 @@
       "tier": "SUPERVISOR"
     },
     {
+      "attempts_remaining": 0,
+      "blocker": "Three distinct failed hypotheses; supervisor review required",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/file_get_res_shape_count.json",
+      "id": "load_2264a",
+      "name": "file_get_res_shape_count",
+      "risks": [
+        "Odd extent: verify complete compiler alignment; never trim"
+      ],
+      "size": 17,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 8526,
+        "line_start": 8511,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
       "attempts_remaining": 3,
       "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -946,6 +864,27 @@
         "line_end": 81,
         "line_start": 68,
         "path": "src/restunts/asmorig/seg018.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 0,
+      "blocker": "Three distinct failed hypotheses; supervisor review required",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/unknown_libname_1.json",
+      "id": "load_1e066",
+      "name": "unknown_libname_1",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 18,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 2904,
+        "line_start": 2887,
+        "path": "src/restunts/asmorig/seg010.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -3028,6 +2967,27 @@
         "line_end": 3300,
         "line_start": 3261,
         "path": "src/restunts/asmorig/seg005.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 2,
+      "blocker": "Preprocessor closure not implemented: directives blocked",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/mmgr_copy_paras.json",
+      "id": "load_2118d",
+      "name": "mmgr_copy_paras",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 72,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 5706,
+        "line_start": 5660,
+        "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -14148,5 +14108,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "f701b562a6c60e85c65f46e450558cfd02dcb03a75ab7dc679d6c12513f6f193"
+  "workflow_fingerprint": "78f5dee31dd79cdcea73e3ba92397a7ad99a699cbffffeae6e12d63425e669e7"
 }

@@ -1,0 +1,92 @@
+{
+  "budget_charge": false,
+  "effective_key": "0e82ffb98d4908ac9f5d4c3d17c2c326270d749fdc2fa6c52817467700b5db55",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Promote the complete 56-byte contribution proven by FAST attempt 3: explicit far source local and read-store-increment statement order; require fresh compilation and whole-image equality.",
+  "hypothesis_key": "f61d5560b4160f2defc78e94218b849c9126129e6dd57748569ab552d6611d39",
+  "input_fingerprint": "bff6284f1601ef84b8e299c33ef63dca3e48bd5537851aefe36b9914f562ec7b",
+  "recipe": {
+    "end": 101134,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2639,
+      "line_start": 2608,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "copy_string",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_copy_string",
+    "source": "recovery/candidates/copy_string.c",
+    "stable_id": "load_18ad6",
+    "start": 101078,
+    "target": {
+      "sha256": "80e6eb902d5b097152e6c3e748fbf20a76102d1d1a6eda6f408c106f094913b9",
+      "size": 56
+    }
+  },
+  "result": {
+    "bytes": 56,
+    "candidate_compiled_fresh_at_least": 3,
+    "canonical_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "fast": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+      "object": {
+        "sha256": "a41c0607ee8afe5ce05950bdb7823e354882c44e5404e29daa08ce667e0d0e55",
+        "size": 298
+      },
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "63d3dea96e0a6745cb9835e9ddd90c41efad0eb4b79dbfc1e34fa84736939309",
+        "size": 233
+      },
+      "staged_source": {
+        "sha256": "3bd1b0c7e7285ace109a225cb7b7094ff444f06f44ee1798a8a082a9976ece83",
+        "size": 245
+      },
+      "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\p7ot6i2m1"
+    },
+    "staged_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "status": "PROMOTED",
+    "task": "copy_string"
+  },
+  "same_effective_as": [
+    3
+  ],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 4,
+  "source": {
+    "sha256": "63d3dea96e0a6745cb9835e9ddd90c41efad0eb4b79dbfc1e34fa84736939309",
+    "size": 233
+  },
+  "started_utc": "2026-09-23T12:59:12.677646+00:00",
+  "status": "PROMOTED",
+  "task": "copy_string"
+}

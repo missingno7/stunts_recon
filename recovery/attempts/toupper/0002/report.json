@@ -1,0 +1,92 @@
+{
+  "budget_charge": false,
+  "effective_key": "ea4f9805a62d64d8d55d9817f9fcedd58eecbc667e2cdf2dc8c1a33541d0cae4",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Promote the complete inclusive ASCII toupper contribution proven by FAST.",
+  "hypothesis_key": "41b1f6970c7950b6406a7f49ca5c7dfdf1eabc6a153467aa43785f36bfc0f733",
+  "input_fingerprint": "4eac40187026a2ae2664b7fbd0fd1e68f0b4a72c181b56882f741d5ddab6f57e",
+  "recipe": {
+    "end": 159954,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 66,
+      "line_start": 50,
+      "path": "src/restunts/asmorig/seg026.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "toupper",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_toupper",
+    "source": "recovery/candidates/toupper.c",
+    "stable_id": "load_270ba",
+    "start": 159930,
+    "target": {
+      "sha256": "ab9c02292544bcf36522a5dff2e1ac2f4592e0659055198774480202b8a61763",
+      "size": 24
+    }
+  },
+  "result": {
+    "bytes": 24,
+    "candidate_compiled_fresh_at_least": 3,
+    "canonical_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "fast": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "d9e07718e1a2bcc0ce27e6480665a22034371cf87f7133cc0b38c2bc72208111",
+      "object": {
+        "sha256": "aa20ebeee0ffe5b6e58036cf987f7d37838ada65b140a23a19d0d5e351995dd7",
+        "size": 258
+      },
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "8bd5b8ec080cbf9fc32728a3106019f489c8b432d0d1750a3bc77d2c39936fe4",
+        "size": 97
+      },
+      "staged_source": {
+        "sha256": "a96ad25b8c1a12001637fbda581647410c55cbf1af3d6067743bb57e788df4f9",
+        "size": 103
+      },
+      "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pnhw5rbuu"
+    },
+    "staged_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "status": "PROMOTED",
+    "task": "toupper"
+  },
+  "same_effective_as": [
+    1
+  ],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "8bd5b8ec080cbf9fc32728a3106019f489c8b432d0d1750a3bc77d2c39936fe4",
+    "size": 97
+  },
+  "started_utc": "2026-09-23T13:21:27.255845+00:00",
+  "status": "PROMOTED",
+  "task": "toupper"
+}

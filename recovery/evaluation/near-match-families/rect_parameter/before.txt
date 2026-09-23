@@ -1,0 +1,25 @@
+MATCH DIAGNOSIS: rect_parameter (bound payload)
+Target 76 bytes / 32 instructions; candidate 76 bytes / 32 instructions.
+Protected byte-exact: 24 instructions (75.0% of target), 6 anchors; 5 islands. Diagnostic metrics only.
+Preserve target: +0x0..+0x3, +0x6..+0x12, +0x16..+0x20, +0x2A..+0x31, +0x35..+0x3F, +0x46..+0x4C
+#1 target +0x3..+0x6 / candidate +0x3..+0x6: IMMEDIATE_VALUE [high]
+  +0x3 sub sp, 4 -> +0x3 sub sp, 2
+  Exact stream resumes after this island.
+#2 target +0x12..+0x16 / candidate +0x12..+0x16: STACK_SLOT_ALLOCATION [medium]
+  +0x12 mov byte ptr [bp - 4], 1 -> +0x12 mov byte ptr [bp - 2], 1
+  Exact stream resumes after this island.
+#3 target +0x20..+0x2A / candidate +0x20..+0x2A: STACK_SLOT_ALLOCATION [high]
+  +0x20 mov byte ptr [bp - 4], 2 -> +0x20 mov byte ptr [bp - 2], 2
+  +0x26 mov byte ptr [bp - 4], 0 -> +0x26 mov byte ptr [bp - 2], 0
+  Exact stream resumes after this island.
+#4 target +0x31..+0x35 / candidate +0x31..+0x35: STACK_SLOT_ALLOCATION [medium]
+  +0x31 or byte ptr [bp - 4], 4 -> +0x31 or byte ptr [bp - 2], 4
+  Exact stream resumes after this island.
+#5 target +0x3F..+0x46 / candidate +0x3F..+0x46: STACK_SLOT_ALLOCATION [high]
+  +0x3F or byte ptr [bp - 4], 8 -> +0x3F or byte ptr [bp - 2], 8
+  +0x43 mov al, byte ptr [bp - 4] -> +0x43 mov al, byte ptr [bp - 2]
+  Exact stream resumes after this island.
+Exact suffix: +0x46..+0x4C / +0x46..+0x4C
+Fixup normalization: 0 fields, alignment only; No normalization: every bound byte is compared.
+Omitted: 0 anchors, 0 islands, 0 notes; use full diagnostic artifact.
+Acceptance: BOUND_BYTES_MISMATCH_RESEARCH; diagnostic alignment never relaxes byte, extent or fixup checks.

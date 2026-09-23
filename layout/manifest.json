@@ -61,10 +61,26 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 123622,
-      "id": "raw_169d0_1e2e6",
+      "end": 101078,
+      "id": "raw_169d0_18ad6",
       "kind": "UNRESOLVED_RAW",
       "start": 92624
+    },
+    {
+      "classification": "GAME_C",
+      "end": 101134,
+      "id": "load_18ad6",
+      "kind": "MATCHING_C",
+      "name": "copy_string",
+      "recipe": "recipes/copy_string.json",
+      "start": 101078
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 123622,
+      "id": "raw_18b0e_1e2e6",
+      "kind": "UNRESOLVED_RAW",
+      "start": 101134
     },
     {
       "classification": "RUNTIME_LIBRARY",
@@ -481,10 +497,26 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 160690,
-      "id": "raw_1ea07_273b2",
+      "end": 159930,
+      "id": "raw_1ea07_270ba",
       "kind": "UNRESOLVED_RAW",
       "start": 125447
+    },
+    {
+      "classification": "GAME_C",
+      "end": 159954,
+      "id": "load_270ba",
+      "kind": "MATCHING_C",
+      "name": "toupper",
+      "recipe": "recipes/toupper.json",
+      "start": 159930
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 160690,
+      "id": "raw_270d2_273b2",
+      "kind": "UNRESOLVED_RAW",
+      "start": 159954
     },
     {
       "classification": "GAME_C",

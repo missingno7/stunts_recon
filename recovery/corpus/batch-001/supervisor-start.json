@@ -1,0 +1,19 @@
+{
+  "root_session_id": "01a0cd2e-e829-7ad2-9c8a-965d9991a1cf",
+  "rollout_file": "rollout-2026-09-23T09-33-18-01a0cd2e-e829-7ad2-9c8a-965d9991a1cf.jsonl",
+  "task_start": {
+    "timestamp": "2026-09-23T13:03:13.647Z",
+    "ordinal": 3398,
+    "type": "event_msg",
+    "payload": {
+      "type": "task_started",
+      "turn_id": "01a0ce5c-f4c9-7421-b18f-b5662f4abc95",
+      "root_turn_id": "01a0ce5c-f4c9-7421-b18f-b5662f4abc95",
+      "started_at": 1790168593,
+      "model_context_window": 258400,
+      "collaboration_mode_kind": "default"
+    }
+  },
+  "accounting": "Sum last_token_usage for token_count events from this task start through final checkpoint; separate model identities. Final answer and collection overhead after checkpoint excluded.",
+  "design": "Frozen diagnostics. Luna/high routine grinding and corpus work. One serial source/promotion writer; independent read-only selection/archive audits. Current blockers/budgets preserved."
+}

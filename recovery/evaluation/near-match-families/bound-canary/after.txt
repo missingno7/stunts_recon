@@ -1,0 +1,16 @@
+MATCH DIAGNOSIS: canary bound research (bound payload)
+Strict status: EXTENT_MISMATCH; no fresh binding claim; diagnostics cannot discharge extent/byte/fixup obligations.
+Target/candidate: 200/194 bytes, 87/82 linear instructions.
+Byte preservation evidence: 65 target instructions, 9 anchors, 8 islands; not source-line boundaries.
+f1 BP_DISPLACEMENT SUPPORTED_GROUPING [medium]: -12->-8 (2B), -10->-6 (2B), -8->-12 (2B), -6->-10 (2B); 11 sites, islands [1, 2, 3, 4, 6], 0 contradictions.
+Corresponding anchored branch destinations: 2 sites (decimal offsets 74->74, 122->122); encoding/layout changes remain byte differences.
+Ungrouped residual observations: 8 (not a count of independent fixes).
+  p65 islands [7]: 168 jl 0xb6 -> 168 jl 0xba; UNRESOLVED_DESTINATION
+  p68 islands [8]: 174 je 0xb6 -> 174 je 0xba; UNRESOLVED_DESTINATION
+  p69 islands [8]: 176 mov al, 1 -> 176 mov ax, 1; STRUCTURAL
+  p70 islands [8]: 178 jmp 0xb8 -> None None; MISSING
+  p71 islands [8]: 180 nop  -> None None; MISSING
+  p72 islands [8]: 181 nop  -> None None; MISSING
+  p73 islands [8]: 182 sub al, al -> None None; MISSING
+  p74 islands [8]: 184 cbw  -> None None; MISSING
+Observed patterns only; 0 omitted entries. Full artifact retains every site/island and contradictions; --islands expands localization. Exact stream resumes at the original anchor boundaries.

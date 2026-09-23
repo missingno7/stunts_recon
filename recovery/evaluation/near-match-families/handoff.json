@@ -1,0 +1,50 @@
+{
+  "canary_status": "SUPERVISOR",
+  "current_context_verified": true,
+  "ending_ref": "98be0015e3354f54d7b045a136d783965d1eaaa5",
+  "full_artifact_identity_verified": true,
+  "implementation_compilation_cost": "One unchanged-source tooling compile; corpus evaluation zero compiles; baseline/handoff validation compiles excluded.",
+  "latest_diagnostic": "recovery/diagnostics/is_facing_camera/20260923T123318745786Z/report.json",
+  "new_promotions": 0,
+  "new_source_hypotheses": 0,
+  "remaining_canary_budget": 2,
+  "starting_ref": "98be0015e3354f54d7b045a136d783965d1eaaa5",
+  "uncommitted_implementation": true,
+  "validation": {
+    "acceptance_input_fingerprint": "fc29dba87c1e60f91b85887fe24bf0381413da3074d19e3cf32ee57ee9a36ef7",
+    "executable": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "full_image": "HYBRID_EXACT",
+    "grinding_scope": "Verified complete contributions with reviewed binding; selected non-leaf far CALL mode supported; source/TU supervisor work remains",
+    "independent_compiler": {
+      "active_functions": 9,
+      "status": "PASS"
+    },
+    "oracle": {
+      "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+      "size": 200000
+    },
+    "queue_counts": {
+      "MEDIUM": 9,
+      "SUPERVISOR": 598
+    },
+    "status": "PASS",
+    "tests": {
+      "failed": 0,
+      "log": "build/validation/tests.log",
+      "passed": 134,
+      "skipped": 0
+    },
+    "toolchain_profiles": [
+      "msc500-medium",
+      "msc510-medium"
+    ],
+    "workflow_fingerprint": "7864fc94c50793a6c7aeb0f32b3ffc1dd33789b092ea85aef9b2a9bc49cc5636"
+  },
+  "validation_identity": {
+    "sha256": "cb7f6d2f86c670cb9adc5eebbe9f9a5daf6021dbbbd2749273e10951201379af",
+    "size": 979
+  }
+}

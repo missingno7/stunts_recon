@@ -1,0 +1,1757 @@
+{
+  "cases": [
+    {
+      "after": {
+        "counts": {
+          "anchors": 10,
+          "byte_equal_aligned_pairs": 64,
+          "candidate_instructions": 82,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 63,
+          "fixup_normalized_pairs": 2,
+          "mismatch_islands": 9,
+          "structural_pairs": 16,
+          "target_anchored_percent": 72.41,
+          "target_instructions": 87
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 17,
+        "max_ms": 11.069,
+        "median_ms": 10.545,
+        "min_ms": 9.738,
+        "utf8_bytes": 1423
+      },
+      "artifact": null,
+      "before": {
+        "counts": {
+          "anchors": 10,
+          "byte_equal_aligned_pairs": 64,
+          "candidate_instructions": 82,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 63,
+          "fixup_normalized_pairs": 2,
+          "mismatch_islands": 9,
+          "structural_pairs": 16,
+          "target_anchored_percent": 72.41,
+          "target_instructions": 87
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 46,
+        "max_ms": 12.416,
+        "median_ms": 10.961,
+        "min_ms": 10.121,
+        "utf8_bytes": 3123
+      },
+      "bound": false,
+      "candidate": {
+        "sha256": "c894e4871684e3b1ab8680217a63906b515a8a17d315f5c64b0a996d6bc4b6d7",
+        "size": 194
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": null,
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "2b1af4f19ae57c81b765e1fe2a5cf465b418164acb0ff18a59321c0ad37340e5",
+          "size": 3814
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 158,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 137,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "historical_failure",
+      "held_out": false,
+      "name": "canary",
+      "object": {
+        "sha256": "4e94bbf610a6dd73c743ee589c68eb5f51914616229f5d726f958dba20f1a180",
+        "size": 468
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\pjrxwrh55\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "binding": {
+          "declarations": {
+            "externals": [
+              "__acrtused",
+              "__aFlmul",
+              "_is_facing_camera"
+            ],
+            "groups": [
+              {
+                "index": 1,
+                "name": "DGROUP",
+                "segment_indices": [
+                  3,
+                  4,
+                  2
+                ],
+                "segments": [
+                  "CONST",
+                  "_BSS",
+                  "_DATA"
+                ]
+              }
+            ],
+            "publics": [
+              {
+                "name": "_is_facing_camera",
+                "offset": 0,
+                "segment": "UNIT_TEXT"
+              }
+            ],
+            "segments": [
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CODE",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 1,
+                "length": 200,
+                "name": "UNIT_TEXT",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "DATA",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 2,
+                "length": 0,
+                "name": "_DATA",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CONST",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 3,
+                "length": 0,
+                "name": "CONST",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "BSS",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 4,
+                "length": 0,
+                "name": "_BSS",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              }
+            ]
+          },
+          "mode": "external-far-call-v1"
+        },
+        "end": 90102,
+        "evidence": "layout/function-evidence.json; direct pristine extent and independent helper frame; no unique original TU claim",
+        "expected_fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "00000000",
+            "frame": "__aFlmul",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "pointer32",
+            "offset": 158,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "__aFlmul",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 4
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "00000000",
+            "frame": "__aFlmul",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "pointer32",
+            "offset": 137,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "__aFlmul",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 4
+          }
+        ],
+        "expected_relocations": [
+          {
+            "load_offset": 90062,
+            "offset": 24526,
+            "segment": 4096
+          },
+          {
+            "load_offset": 90041,
+            "offset": 24505,
+            "segment": 4096
+          }
+        ],
+        "id": "is_facing_camera",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_is_facing_camera",
+        "source": "recovery/candidates/is_facing_camera.c",
+        "stable_id": "load_15f2e",
+        "start": 89902,
+        "target": {
+          "sha256": "6fc29d78db5106925aa06f76eb06ed2f7fdb5a6dfb0e597d1e94b56e0558e929",
+          "size": 200
+        }
+      },
+      "report": "recovery/diagnostics/is_facing_camera/20260923T115355338643Z/report.json",
+      "report_identity": {
+        "sha256": "5e5dd25d24beb6d788cd7bf1a0b40805a84abaf5e6f2dd4738e014f4990ab565",
+        "size": 27960
+      },
+      "source": {
+        "sha256": "41e61f3fdaf21ab4049855a86abcb5ffb5a50dc3d07590577fc44fea4d65f8bd",
+        "size": 373
+      },
+      "source_path": "recovery/candidates/is_facing_camera.c",
+      "source_representation": "original",
+      "strict_status": "DIAGNOSTIC_ONLY_FAIL / EXTENT_MISMATCH",
+      "target": {
+        "sha256": "6fc29d78db5106925aa06f76eb06ed2f7fdb5a6dfb0e597d1e94b56e0558e929",
+        "size": 200
+      },
+      "target_extent": [
+        89902,
+        90102
+      ],
+      "task": "is_facing_camera"
+    },
+    {
+      "after": {
+        "counts": {
+          "anchors": 2,
+          "byte_equal_aligned_pairs": 16,
+          "candidate_instructions": 32,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 5,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 2,
+          "structural_pairs": 14,
+          "target_anchored_percent": 15.62,
+          "target_instructions": 32
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 15,
+        "max_ms": 25.208,
+        "median_ms": 15.661,
+        "min_ms": 14.499,
+        "utf8_bytes": 1180
+      },
+      "artifact": "recovery/experiments/rect_compare_point/prior_01/diagnostic.json",
+      "before": {
+        "counts": {
+          "anchors": 2,
+          "byte_equal_aligned_pairs": 16,
+          "candidate_instructions": 32,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 5,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 2,
+          "structural_pairs": 14,
+          "target_anchored_percent": 15.62,
+          "target_instructions": 32
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 17,
+        "max_ms": 17.165,
+        "median_ms": 14.548,
+        "min_ms": 13.141,
+        "utf8_bytes": 1427
+      },
+      "bound": true,
+      "candidate": {
+        "sha256": "43ac5faa19101d876a13230ee0925a4a6ce72d1652e527f805d8f8c324012444",
+        "size": 76
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": null,
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "b179c9d25c2b90cbfa37af114c93f0f7b626797bdaec6e4053a6057a6afe2225",
+          "size": 4467
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 57,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 43,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0600",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 25,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0400",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 10,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "historical_failure",
+      "held_out": false,
+      "name": "rect_plain",
+      "object": {
+        "sha256": "9d56abb0d49fd596ed939d518801775dc1569cf5e56d366bbf4785fb8f01a923",
+        "size": 359
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\pyzdb9je5\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "binding": {
+          "declarations": {
+            "externals": [
+              "__acrtused",
+              "_clip",
+              "_rect_compare_point"
+            ],
+            "groups": [
+              {
+                "index": 1,
+                "name": "DGROUP",
+                "segment_indices": [
+                  3,
+                  4,
+                  2
+                ],
+                "segments": [
+                  "CONST",
+                  "_BSS",
+                  "_DATA"
+                ]
+              }
+            ],
+            "publics": [
+              {
+                "name": "_rect_compare_point",
+                "offset": 0,
+                "segment": "UNIT_TEXT"
+              }
+            ],
+            "segments": [
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CODE",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 1,
+                "length": 76,
+                "name": "UNIT_TEXT",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "DATA",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 2,
+                "length": 0,
+                "name": "_DATA",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CONST",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 3,
+                "length": 0,
+                "name": "CONST",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "BSS",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 4,
+                "length": 0,
+                "name": "_BSS",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              }
+            ]
+          },
+          "mode": "external-dgroup-offset16-v1"
+        },
+        "end": 89902,
+        "evidence": "layout/function-evidence.json; layout/data-symbols.json; public Restunts math.c121-136; local register pointer compiler hypothesis, not unique source recovery",
+        "expected_fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "0200",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 57,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 43,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0600",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 25,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0400",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 11,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          }
+        ],
+        "expected_relocations": [],
+        "id": "rect_compare_point",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_rect_compare_point",
+        "source": "src/rect_compare_point.c",
+        "stable_id": "load_15ee2",
+        "start": 89826,
+        "target": {
+          "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+          "size": 76
+        }
+      },
+      "report": "recovery/experiments/rect_compare_point/prior_01/report.json",
+      "report_identity": {
+        "sha256": "136b18941a127412d9786be72f2dc8b74f6339d9a2037f1251d38a09d06ed2bb",
+        "size": 3975
+      },
+      "source": {
+        "sha256": "42fd5cf87f91e17dbeebb9db35b4ad84bfa1a61a73b877137b4813fb7b027272",
+        "size": 354
+      },
+      "source_path": "recovery/experiments/rect_compare_point/prior_01/source.c",
+      "source_representation": "original",
+      "strict_status": "BOUND_BYTES_MISMATCH_RESEARCH",
+      "target": {
+        "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+        "size": 76
+      },
+      "target_extent": [
+        89826,
+        89902
+      ],
+      "task": "rect_compare_point"
+    },
+    {
+      "after": {
+        "counts": {
+          "anchors": 6,
+          "byte_equal_aligned_pairs": 25,
+          "candidate_instructions": 32,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 24,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 5,
+          "structural_pairs": 7,
+          "target_anchored_percent": 75.0,
+          "target_instructions": 32
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 8,
+        "max_ms": 7.25,
+        "median_ms": 6.11,
+        "min_ms": 5.135,
+        "utf8_bytes": 742
+      },
+      "artifact": "recovery/experiments/rect_compare_point/prior_02/diagnostic.json",
+      "before": {
+        "counts": {
+          "anchors": 6,
+          "byte_equal_aligned_pairs": 25,
+          "candidate_instructions": 32,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 24,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 5,
+          "structural_pairs": 7,
+          "target_anchored_percent": 75.0,
+          "target_instructions": 32
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 25,
+        "max_ms": 6.192,
+        "median_ms": 4.931,
+        "min_ms": 3.936,
+        "utf8_bytes": 1665
+      },
+      "bound": true,
+      "candidate": {
+        "sha256": "437998d74c6c6b48ab83f7b662611d83dc7fd2d90788e78beddb46df2bf712b0",
+        "size": 76
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": null,
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "b179c9d25c2b90cbfa37af114c93f0f7b626797bdaec6e4053a6057a6afe2225",
+          "size": 4467
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 57,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 43,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0600",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 25,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0400",
+          "frame": "_clip",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 11,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_clip",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "historical_failure",
+      "held_out": false,
+      "name": "rect_parameter",
+      "object": {
+        "sha256": "90a309fbdb815ffc2c4deea074261d3de44d8182c1775ee9676777e9e5f031cb",
+        "size": 359
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\pw7qrb66w\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "binding": {
+          "declarations": {
+            "externals": [
+              "__acrtused",
+              "_clip",
+              "_rect_compare_point"
+            ],
+            "groups": [
+              {
+                "index": 1,
+                "name": "DGROUP",
+                "segment_indices": [
+                  3,
+                  4,
+                  2
+                ],
+                "segments": [
+                  "CONST",
+                  "_BSS",
+                  "_DATA"
+                ]
+              }
+            ],
+            "publics": [
+              {
+                "name": "_rect_compare_point",
+                "offset": 0,
+                "segment": "UNIT_TEXT"
+              }
+            ],
+            "segments": [
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CODE",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 1,
+                "length": 76,
+                "name": "UNIT_TEXT",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "DATA",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 2,
+                "length": 0,
+                "name": "_DATA",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CONST",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 3,
+                "length": 0,
+                "name": "CONST",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "BSS",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 4,
+                "length": 0,
+                "name": "_BSS",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              }
+            ]
+          },
+          "mode": "external-dgroup-offset16-v1"
+        },
+        "end": 89902,
+        "evidence": "layout/function-evidence.json; layout/data-symbols.json; public Restunts math.c121-136; local register pointer compiler hypothesis, not unique source recovery",
+        "expected_fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "0200",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 57,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 43,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0600",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 25,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0400",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 11,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          }
+        ],
+        "expected_relocations": [],
+        "id": "rect_compare_point",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_rect_compare_point",
+        "source": "src/rect_compare_point.c",
+        "stable_id": "load_15ee2",
+        "start": 89826,
+        "target": {
+          "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+          "size": 76
+        }
+      },
+      "report": "recovery/experiments/rect_compare_point/prior_02/report.json",
+      "report_identity": {
+        "sha256": "b902462fa14cca97d6b22390957740eb951c99a433c3356c825f15dc08e5dc99",
+        "size": 3978
+      },
+      "source": {
+        "sha256": "af957318e293c62c550f8913a2df1f2463fc7bc2bebb3094ebe274ef537cf90e",
+        "size": 363
+      },
+      "source_path": "recovery/experiments/rect_compare_point/prior_02/source.c",
+      "source_representation": "original",
+      "strict_status": "BOUND_BYTES_MISMATCH_RESEARCH",
+      "target": {
+        "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+        "size": 76
+      },
+      "target_extent": [
+        89826,
+        89902
+      ],
+      "task": "rect_compare_point"
+    },
+    {
+      "after": {
+        "counts": {
+          "anchors": 1,
+          "byte_equal_aligned_pairs": 32,
+          "candidate_instructions": 32,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 32,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 0,
+          "structural_pairs": 0,
+          "target_anchored_percent": 100.0,
+          "target_instructions": 32
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 6,
+        "max_ms": 2.84,
+        "median_ms": 1.619,
+        "min_ms": 1.428,
+        "utf8_bytes": 571
+      },
+      "artifact": "recovery/experiments/rect_compare_point/prior_03/diagnostic.json",
+      "before": {
+        "counts": {
+          "anchors": 1,
+          "byte_equal_aligned_pairs": 32,
+          "candidate_instructions": 32,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 32,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 0,
+          "structural_pairs": 0,
+          "target_anchored_percent": 100.0,
+          "target_instructions": 32
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 8,
+        "max_ms": 3.01,
+        "median_ms": 2.316,
+        "min_ms": 1.344,
+        "utf8_bytes": 563
+      },
+      "bound": true,
+      "candidate": {
+        "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+        "size": 76
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": null,
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "b179c9d25c2b90cbfa37af114c93f0f7b626797bdaec6e4053a6057a6afe2225",
+          "size": 4467
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame": "_select_rect_rc",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 57,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_select_rect_rc",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_select_rect_rc",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 43,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_select_rect_rc",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0600",
+          "frame": "_select_rect_rc",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 25,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_select_rect_rc",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0400",
+          "frame": "_select_rect_rc",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 11,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_select_rect_rc",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "accepted_control",
+      "held_out": false,
+      "name": "rect_accepted",
+      "object": {
+        "sha256": "82d8066fd063591b8ad9b6c1ab49a0ab6cf9d0a60076dc42ae0aa09a9b4fc3e2",
+        "size": 369
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\p4pdc46qk\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "binding": {
+          "declarations": {
+            "externals": [
+              "__acrtused",
+              "_clip",
+              "_rect_compare_point"
+            ],
+            "groups": [
+              {
+                "index": 1,
+                "name": "DGROUP",
+                "segment_indices": [
+                  3,
+                  4,
+                  2
+                ],
+                "segments": [
+                  "CONST",
+                  "_BSS",
+                  "_DATA"
+                ]
+              }
+            ],
+            "publics": [
+              {
+                "name": "_rect_compare_point",
+                "offset": 0,
+                "segment": "UNIT_TEXT"
+              }
+            ],
+            "segments": [
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CODE",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 1,
+                "length": 76,
+                "name": "UNIT_TEXT",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "DATA",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 2,
+                "length": 0,
+                "name": "_DATA",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "CONST",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 3,
+                "length": 0,
+                "name": "CONST",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              },
+              {
+                "acbp": 72,
+                "alignment": "word",
+                "alignment_code": 2,
+                "big": false,
+                "class": "BSS",
+                "combine": "public",
+                "combine_code": 2,
+                "frame": null,
+                "index": 4,
+                "length": 0,
+                "name": "_BSS",
+                "offset": null,
+                "overlay_index": 1,
+                "use_32bit_offset": false
+              }
+            ]
+          },
+          "mode": "external-dgroup-offset16-v1"
+        },
+        "end": 89902,
+        "evidence": "layout/function-evidence.json; layout/data-symbols.json; public Restunts math.c121-136; local register pointer compiler hypothesis, not unique source recovery",
+        "expected_fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "0200",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 57,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 43,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0600",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 25,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0400",
+            "frame": "_clip",
+            "frame_index": 0,
+            "frame_kind": "target",
+            "frame_method": 5,
+            "loc": "offset16",
+            "offset": 11,
+            "segment": "UNIT_TEXT",
+            "self_relative": false,
+            "target": "_clip",
+            "target_index": 2,
+            "target_kind": "external",
+            "target_method": 2,
+            "width": 2
+          }
+        ],
+        "expected_relocations": [],
+        "id": "rect_compare_point",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_rect_compare_point",
+        "source": "src/rect_compare_point.c",
+        "stable_id": "load_15ee2",
+        "start": 89826,
+        "target": {
+          "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+          "size": 76
+        }
+      },
+      "report": "recovery/experiments/rect_compare_point/prior_03/report.json",
+      "report_identity": {
+        "sha256": "85212f1d4da5efe8c738f2b5a3f45d92bfecc21d3f67d57f0db4f6f9b1d6085d",
+        "size": 3879
+      },
+      "source": {
+        "sha256": "beb1757cb1ace27d116045f51d6ef7659a0dce901d0d7351e51e37b868f68a06",
+        "size": 399
+      },
+      "source_path": "recovery/experiments/rect_compare_point/prior_03/source.c",
+      "source_representation": "compiler-staged CRLF",
+      "strict_status": "BOUND_BYTES_EXACT_RESEARCH",
+      "target": {
+        "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+        "size": 76
+      },
+      "target_extent": [
+        89826,
+        89902
+      ],
+      "task": "rect_compare_point"
+    },
+    {
+      "after": {
+        "counts": {
+          "anchors": 2,
+          "byte_equal_aligned_pairs": 9,
+          "candidate_instructions": 13,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 7,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 1,
+          "structural_pairs": 0,
+          "target_anchored_percent": 43.75,
+          "target_instructions": 16
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 13,
+        "max_ms": 2.172,
+        "median_ms": 1.728,
+        "min_ms": 1.621,
+        "utf8_bytes": 951
+      },
+      "artifact": null,
+      "before": {
+        "counts": {
+          "anchors": 2,
+          "byte_equal_aligned_pairs": 9,
+          "candidate_instructions": 13,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 7,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 1,
+          "structural_pairs": 0,
+          "target_anchored_percent": 43.75,
+          "target_instructions": 16
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 13,
+        "max_ms": 1.834,
+        "median_ms": 1.673,
+        "min_ms": 1.48,
+        "utf8_bytes": 1009
+      },
+      "bound": false,
+      "candidate": {
+        "sha256": "e33f45e998051208240c30ca06718b58e0e1ab1b16264cf1cbcb559c854e3516",
+        "size": 26
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": "59dd34ce5e61a13f53581a5da007d07012e1ecc91a53b8816d21a9e6b6a0989f",
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "3d04a438e20ffe9eb18297d401ecef5fd2b233961cb9be35d44d2abf125b25cd",
+          "size": 630
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "historical_failure",
+      "held_out": false,
+      "name": "parse_failure",
+      "object": {
+        "sha256": "6465f75dc507b0c13d446fae8543babd93487c2aeb6bbc1e1ee94fa5325ff42f",
+        "size": 286
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\pdmfu7nkb\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "end": 127796,
+        "evidence": {
+          "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+          "line_end": 1489,
+          "line_start": 1467,
+          "path": "src/restunts/asmorig/seg012.asm",
+          "repository": "restunts"
+        },
+        "expected_fixups": [],
+        "expected_relocations": [],
+        "id": "parse_shape2d_helper",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_parse_shape2d_helper",
+        "source": "recovery/candidates/parse_shape2d_helper.c",
+        "stable_id": "load_1f314",
+        "start": 127764,
+        "target": {
+          "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+          "size": 32
+        }
+      },
+      "report": "recovery/attempts/parse_shape2d_helper/0001/report.json",
+      "report_identity": {
+        "sha256": "66c02c4548a4875e55252bdc826694f625a9a9eb429968498e924b7802243d99",
+        "size": 2841
+      },
+      "source": {
+        "sha256": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+        "size": 133
+      },
+      "source_path": "recovery/attempts/parse_shape2d_helper/0001/source.c",
+      "source_representation": "original",
+      "strict_status": "FAILED / EXTENT_MISMATCH",
+      "target": {
+        "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+        "size": 32
+      },
+      "target_extent": [
+        127764,
+        127796
+      ],
+      "task": "parse_shape2d_helper"
+    },
+    {
+      "after": {
+        "counts": {
+          "anchors": 2,
+          "byte_equal_aligned_pairs": 9,
+          "candidate_instructions": 13,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 7,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 1,
+          "structural_pairs": 0,
+          "target_anchored_percent": 43.75,
+          "target_instructions": 16
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 13,
+        "max_ms": 5.739,
+        "median_ms": 4.291,
+        "min_ms": 3.698,
+        "utf8_bytes": 951
+      },
+      "artifact": null,
+      "before": {
+        "counts": {
+          "anchors": 2,
+          "byte_equal_aligned_pairs": 9,
+          "candidate_instructions": 13,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 7,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 1,
+          "structural_pairs": 0,
+          "target_anchored_percent": 43.75,
+          "target_instructions": 16
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 13,
+        "max_ms": 4.85,
+        "median_ms": 1.651,
+        "min_ms": 1.495,
+        "utf8_bytes": 1009
+      },
+      "bound": false,
+      "candidate": {
+        "sha256": "e33f45e998051208240c30ca06718b58e0e1ab1b16264cf1cbcb559c854e3516",
+        "size": 26
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": "2f9f829bce04dec1f84e130962e44208310faf4765a10a6c9fb2f58c2fdcc2f1",
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "3d04a438e20ffe9eb18297d401ecef5fd2b233961cb9be35d44d2abf125b25cd",
+          "size": 630
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "historical_failure",
+      "held_out": true,
+      "name": "parse_heldout",
+      "object": {
+        "sha256": "6465f75dc507b0c13d446fae8543babd93487c2aeb6bbc1e1ee94fa5325ff42f",
+        "size": 286
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\p3jr0s063\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "end": 127796,
+        "evidence": {
+          "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+          "line_end": 1489,
+          "line_start": 1467,
+          "path": "src/restunts/asmorig/seg012.asm",
+          "repository": "restunts"
+        },
+        "expected_fixups": [],
+        "expected_relocations": [],
+        "id": "parse_shape2d_helper",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_parse_shape2d_helper",
+        "source": "recovery/candidates/parse_shape2d_helper.c",
+        "stable_id": "load_1f314",
+        "start": 127764,
+        "target": {
+          "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+          "size": 32
+        }
+      },
+      "report": "recovery/attempts/parse_shape2d_helper/0003/report.json",
+      "report_identity": {
+        "sha256": "545b69791c1ee8f825d73043fc820f6130d032d471e1a6d147a9b08d43241ce4",
+        "size": 2857
+      },
+      "source": {
+        "sha256": "486eb9c3b58de51f04a28a1e01c9c8db9b87f1567d374ea1fd1dc1f8258fcc40",
+        "size": 133
+      },
+      "source_path": "recovery/attempts/parse_shape2d_helper/0003/source.c",
+      "source_representation": "original",
+      "strict_status": "FAILED / EXTENT_MISMATCH",
+      "target": {
+        "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+        "size": 32
+      },
+      "target_extent": [
+        127764,
+        127796
+      ],
+      "task": "parse_shape2d_helper"
+    },
+    {
+      "after": {
+        "counts": {
+          "anchors": 1,
+          "byte_equal_aligned_pairs": 18,
+          "candidate_instructions": 18,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 18,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 0,
+          "structural_pairs": 0,
+          "target_anchored_percent": 100.0,
+          "target_instructions": 18
+        },
+        "engine": {
+          "sha256": "a5df723b30e4581e53434d32dea82798c625c34e84bf55330c56a7f81c23ccc3",
+          "size": 40612
+        },
+        "lines": 6,
+        "max_ms": 2.026,
+        "median_ms": 1.765,
+        "min_ms": 1.582,
+        "utf8_bytes": 554
+      },
+      "artifact": null,
+      "before": {
+        "counts": {
+          "anchors": 1,
+          "byte_equal_aligned_pairs": 18,
+          "candidate_instructions": 18,
+          "decoded_exact_pairs": 0,
+          "exact_instructions": 18,
+          "fixup_normalized_pairs": 0,
+          "mismatch_islands": 0,
+          "structural_pairs": 0,
+          "target_anchored_percent": 100.0,
+          "target_instructions": 18
+        },
+        "engine": {
+          "sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+          "size": 25971
+        },
+        "lines": 8,
+        "max_ms": 1.904,
+        "median_ms": 1.616,
+        "min_ms": 1.245,
+        "utf8_bytes": 546
+      },
+      "bound": true,
+      "candidate": {
+        "sha256": "1c81f94a02413ee72f440cf2e167678f087f7bf0615c478a33d3478bf7c9596d",
+        "size": 46
+      },
+      "dependency_context": {
+        "historical_input_fingerprint": "2f9f829bce04dec1f84e130962e44208310faf4765a10a6c9fb2f58c2fdcc2f1",
+        "limitation": "Historical complete dependency snapshot not inferred; current lock recorded separately.",
+        "recipe_identity": {
+          "sha256": "402891e75c1c4726f44cd167755836ff4cc4b9f9c839853ab9bcd2cc03988fa4",
+          "size": 631
+        },
+        "toolchain_lock": {
+          "sha256": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+          "size": 66914
+        }
+      },
+      "fixups": [],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "freshness": "Historical bytes, source and object identities rechecked against fresh oracle; no compilation",
+      "group": "accepted_control",
+      "held_out": false,
+      "name": "parse_accepted",
+      "object": {
+        "sha256": "b994c5c6fa9101281613e89ec79126988dd603d289840dc96353298246c18941",
+        "size": 308
+      },
+      "object_path": "D:\\prog\\stunts_recon\\build\\probes\\pj_cfxhmq\\UNIT.OBJ",
+      "profile": "msc510-medium",
+      "recipe": {
+        "end": 176314,
+        "evidence": {
+          "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+          "line_end": 524,
+          "line_start": 497,
+          "path": "src/restunts/asmorig/seg035.asm",
+          "repository": "restunts"
+        },
+        "expected_fixups": [],
+        "expected_relocations": [],
+        "id": "parse_shape2d_helper3",
+        "object_segment": "UNIT_TEXT",
+        "profile": "msc510-medium",
+        "public": "_parse_shape2d_helper3",
+        "source": "recovery/candidates/parse_shape2d_helper3.c",
+        "stable_id": "load_2b08c",
+        "start": 176268,
+        "target": {
+          "sha256": "1c81f94a02413ee72f440cf2e167678f087f7bf0615c478a33d3478bf7c9596d",
+          "size": 46
+        }
+      },
+      "report": "recovery/attempts/parse_shape2d_helper3/0002/report.json",
+      "report_identity": {
+        "sha256": "74af3861713a832a592cd85f3ebf54b455ca731ddebe9acb7d0da143665fff94",
+        "size": 2688
+      },
+      "source": {
+        "sha256": "7151de0d539518a0773d031e5da0cd3e05086f60a0711850f6eb03f9f3cc132b",
+        "size": 159
+      },
+      "source_path": "recovery/attempts/parse_shape2d_helper3/0002/source.c",
+      "source_representation": "original",
+      "strict_status": "PROMOTED",
+      "target": {
+        "sha256": "1c81f94a02413ee72f440cf2e167678f087f7bf0615c478a33d3478bf7c9596d",
+        "size": 46
+      },
+      "target_extent": [
+        176268,
+        176314
+      ],
+      "task": "parse_shape2d_helper3"
+    }
+  ],
+  "limitation": "Selected small corpus; three rect variants and two parse failures are correlated, not independent functions.",
+  "measurement": "Nine warm same-process decode+alignment+compact+format timings; I/O excluded. No token counts.",
+  "new_compilations": 0,
+  "starting_ref": "98be0015e3354f54d7b045a136d783965d1eaaa5"
+}

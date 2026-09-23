@@ -1,0 +1,15 @@
+MATCH DIAGNOSIS: rect_plain (bound payload)
+Strict status: BOUND_BYTES_MISMATCH_RESEARCH; diagnostics cannot discharge extent/byte/fixup obligations.
+Target/candidate: 76/76 bytes, 32/32 linear instructions.
+Byte preservation evidence: 5 target instructions, 2 anchors, 2 islands; not source-line boundaries.
+f1 BP_DISPLACEMENT SUPPORTED_GROUPING [medium]: -4->-2 (1B); 6 sites, islands [1, 2], 0 contradictions.
+f2 REGISTER_ROLE SUPPORTED_GROUPING [medium]: si->bx (2B); 5 sites, islands [1, 2], 0 contradictions.
+Ungrouped residual observations: 7 (not a count of independent fixes).
+  p2 islands [1]: 3 sub sp, 4 -> 3 sub sp, 2; STRUCTURAL
+  p3 islands [1]: 6 push si -> None None; MISSING
+  p7 islands [1]: 16 jge 0x18 -> 15 jge 0x18; ALIGNED_DESTINATION_UNCERTAIN
+  p9 islands [1]: 22 jmp 0x2a -> 21 jmp 0x2a; ALIGNED_DESTINATION_UNCERTAIN
+  p10 islands [1]: None None -> 23 nop ; EXTRA
+  p29 islands [2]: 71 pop si -> None None; MISSING
+  p33 islands [2]: None None -> 75 nop ; EXTRA
+Observed patterns only; 0 omitted entries. Full artifact retains every site/island and contradictions; --islands expands localization. Exact stream resumes at the original anchor boundaries.

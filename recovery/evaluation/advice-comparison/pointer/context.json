@@ -1,0 +1,36 @@
+{
+  "function": "parse_shape2d_helper",
+  "profile": "msc510-medium",
+  "flags": [
+    "/AM",
+    "/O",
+    "/Gs"
+  ],
+  "source_identity": {
+    "sha256": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+    "size": 133
+  },
+  "target": {
+    "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+    "size": 32
+  },
+  "candidate": {
+    "sha256": "e33f45e998051208240c30ca06718b58e0e1ab1b16264cf1cbcb559c854e3516",
+    "size": 26
+  },
+  "object_identity": {
+    "sha256": "6465f75dc507b0c13d446fae8543babd93487c2aeb6bbc1e1ee94fa5325ff42f",
+    "size": 286
+  },
+  "comparison_mode": "unbound",
+  "strict_status": "FAILED / EXTENT_MISMATCH",
+  "fixups": [],
+  "scope": "Proposal only. No execution, mutation, network, or reading outside this case packet. Historical observation cutoff; do not seek later repairs.",
+  "budget": "One proposed next experiment only; executable authorization requires current queue/budget. Exact bytes require fresh full-image promotion, not more source edits.",
+  "evidence_files": [
+    "full.json",
+    "history.json"
+  ],
+  "history_count": 0,
+  "evidence_limit": "At most four additional file reads, only the two evidence files listed (rereads count). Initial context/source/presentation are free. Same allowance in both conditions."
+}

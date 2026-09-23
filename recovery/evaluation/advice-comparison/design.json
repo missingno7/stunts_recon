@@ -1,0 +1,72 @@
+{
+  "baseline": "98be0015e3354f54d7b045a136d783965d1eaaa5",
+  "conditions": {
+    "x": "existing mismatch islands",
+    "y": "family summary"
+  },
+  "sample": "Four selected real functions; three mismatches, one already exact contribution. No synthetic controls. One independent proposal per condition/case.",
+  "isolation": "Fresh agent contexts; only assigned packet permitted. Root prepared packets and knows historical outcomes; assessment is not blinded.",
+  "allowance": "Initial context/source/presentation plus up to four evidence-file reads, one proposal, no compilation.",
+  "rubric": [
+    "Concrete observation and machine-level prediction",
+    "Falsifiable and distinguishes at least one explanation",
+    "Does not repeat a documented ineffective trial",
+    "Respects exactness and blockers",
+    "Additional evidence reads; self-reported, not token-normalized"
+  ],
+  "cases": [
+    {
+      "case": "camera",
+      "input_case": "canary",
+      "historical_report": "recovery/diagnostics/is_facing_camera/20260923T115355338643Z/report.json",
+      "files": {
+        "context.json": "18b9bc84e2ffcd35678936641a33b7d2901c50393bfc7df52f9ed3dd9b3f7b41",
+        "full.json": "3230c8646872b381c3f07db1dbf7df79dfc803b06d8ebca5d9e772ebe781c514",
+        "history.json": "7e695e63caca608e7c3c05efc0d8365458ffacd10c77848e5c4a57c90d74f323",
+        "source.c": "41e61f3fdaf21ab4049855a86abcb5ffb5a50dc3d07590577fc44fea4d65f8bd",
+        "x.txt": "b3fcca3321694ac6804d041e011ece0dc8425bcf006a9f12a18f61ba0b51bb5a",
+        "y.txt": "d2d99a99428259ac627f8b63421f81441140afc624b505c28c45896ae0716e7e"
+      }
+    },
+    {
+      "case": "rectangle",
+      "input_case": "rect_plain",
+      "historical_report": "recovery/experiments/rect_compare_point/prior_01/report.json",
+      "files": {
+        "context.json": "b335f0b685904bf77a1dc39a8448e395ee336ffca1e07582d0ed2e3d32258c96",
+        "full.json": "5090dcfb06209c69adc7789ab17ecdf2bb343c8eae17aae93eea603ec4881903",
+        "history.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+        "source.c": "42fd5cf87f91e17dbeebb9db35b4ad84bfa1a61a73b877137b4813fb7b027272",
+        "x.txt": "f5b1c8593e5a93352aacaac6e5046725f98c8bda2129d9d05e2546d5cf527439",
+        "y.txt": "c82c68d489af8995fce611bdc9b73f02a67fbbe1d696d4d712834f47686a66fc"
+      }
+    },
+    {
+      "case": "pointer",
+      "input_case": "parse_failure",
+      "historical_report": "recovery/attempts/parse_shape2d_helper/0001/report.json",
+      "files": {
+        "context.json": "0a5da30d705adaaf8679f7de8a2d528ad700cca6c433c209bc04ee8f41ae6f84",
+        "full.json": "3da03773de99225652951edb9d69ed3d6dd1c1ec6fdb5403850c8db0a0c896e3",
+        "history.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+        "source.c": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+        "x.txt": "43d8888a7cefe9d19e2dd3b129c5de04a18d90cf58c01acc8740489a522e12e0",
+        "y.txt": "05eb2560a39bb946d4d9754ce6a3f5094bbb082c9e88a690940ab4c2ae0a8969"
+      }
+    },
+    {
+      "case": "run_count",
+      "input_case": "parse_accepted",
+      "historical_report": "recovery/attempts/parse_shape2d_helper3/0001/report.json",
+      "files": {
+        "context.json": "4e0c38254f4459bbc319284428b507fcfa9f5e893407fb618d7cc5b5a2f5580b",
+        "full.json": "43b7c867290606b64779f506e455d40d0c3ff2285b04a46dc07bc6526994bfde",
+        "history.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+        "source.c": "7151de0d539518a0773d031e5da0cd3e05086f60a0711850f6eb03f9f3cc132b",
+        "x.txt": "0e066e034c9dd57a75299eae75552c81084c86449e33bef82ef3538e067af52f",
+        "y.txt": "8714b8222afcfd0478bca20269cf8263af7d5950480af6972f9ebc0ae3b886ad"
+      }
+    }
+  ],
+  "claim_limit": "Measures proposal choice on selected archives, not accepted recovery per unit of work."
+}

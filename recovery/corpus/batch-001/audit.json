@@ -1,0 +1,689 @@
+{
+  "schema": 1,
+  "audit_kind": "partial batch record audit; read-only except audit outputs",
+  "snapshot_utc": "2026-09-23T13:26:58+00:00",
+  "batch_dir": "recovery/corpus/batch-001",
+  "snapshot_inputs": {
+    "selection.json": {
+      "exists": true,
+      "sha256": "7d3534a88114dbd3e926b21ef86d36a3fa72c1f65efe84e7afc6a514330599e8"
+    },
+    "new-attempts.jsonl": {
+      "exists": true,
+      "sha256": "2a86237884d97b463067fcbd4b3c0dcc401afce3e788c6b7e0fede491e073910"
+    },
+    "triage-A.jsonl": {
+      "exists": true,
+      "sha256": "61fd4b93040e98448689b98e3a610de50fcc7e0912899bfcded380cf37cd1337"
+    },
+    "triage-B.jsonl": {
+      "exists": true,
+      "sha256": "c912065b81f519f34f72d9a62fefb57ce8bee8074ef361aa6b7f16efdf1dd049"
+    },
+    "historical-summary.md": {
+      "exists": true,
+      "sha256": "965cb7f4ad58489951dd7b6e18b57d0d2a8ec00ccd3a1f3cf685d41974edd132"
+    },
+    "worker-summary.md": {
+      "exists": true,
+      "sha256": "7feebe3a9fa61a33a43a53011972b5e5ff4d84793cbe5fcde2859cf0b9eb698c"
+    },
+    "triage-B-summary.md": {
+      "exists": true,
+      "sha256": "84b13fd5cc57b209cbe0fd0104b6524e4b013e3644ad5c1ec8c96871ee42c441"
+    }
+  },
+  "selection": {
+    "selected_cases": {
+      "routine_source_eligible": 7,
+      "supervisor_nonexecuting_triage": 24,
+      "solved_exact_controls": 5,
+      "total_cases": 36
+    },
+    "routine_eligible_ids": [
+      "load_29c84",
+      "load_2264a",
+      "load_1e066",
+      "load_270ba",
+      "load_2118d",
+      "load_25de6",
+      "load_2acb0"
+    ]
+  },
+  "counts": {
+    "new_attempt_rows": 11,
+    "unique_round_ids": 11,
+    "charged_workflow_attempts": 10,
+    "compiler_invocations_with_receipt": 10,
+    "precompiler_blocked_attempts": 1,
+    "strict_matches": 1,
+    "promotions": 1,
+    "new_compiler_categories": {
+      "EXTENT_MISMATCH": 6,
+      "BYTE_MISMATCH": 3,
+      "UNSUPPORTED_SOURCE": 1
+    },
+    "corpus_verdicts": {
+      "informative_negative": 8,
+      "neutral_redundant": 1,
+      "MATCH": 1,
+      "blocked": 1
+    },
+    "triage_A_supervisor_cases": 12,
+    "triage_A_exact_controls": 3,
+    "triage_B_present": true,
+    "triage_B_supervisor_cases": 12,
+    "triage_B_exact_controls": 2,
+    "triage_total_supervisor_cases": 24,
+    "triage_total_exact_controls": 5
+  },
+  "budgets": {
+    "user_caps": {
+      "experimental_reasoning_rounds": 15,
+      "hypothesis_compiles": 50
+    },
+    "recorded_rounds": 11,
+    "actual_hypothesis_compiles": 10,
+    "charged_grinder_attempts": 10,
+    "per_function": {
+      "audioresource_copy_n_bytes": {
+        "selected_budget": 3,
+        "charged_attempts": 3,
+        "remaining_recorded": 0
+      },
+      "file_get_res_shape_count": {
+        "selected_budget": 3,
+        "charged_attempts": 3,
+        "remaining_recorded": 0
+      },
+      "unknown_libname_1": {
+        "selected_budget": 3,
+        "charged_attempts": 3,
+        "remaining_recorded": 0
+      },
+      "toupper": {
+        "selected_budget": 3,
+        "charged_attempts": 0,
+        "remaining_recorded": 3
+      },
+      "mmgr_copy_paras": {
+        "selected_budget": 3,
+        "charged_attempts": 1,
+        "remaining_recorded": 2
+      }
+    },
+    "promotion_rebuilds": "toupper promotion report says candidate compiled fresh at least 3 times; these are verification builds, not additional hypotheses."
+  },
+  "actual_attempts": [
+    {
+      "round_id": 1,
+      "id": "load_29c84",
+      "function": "audioresource_copy_n_bytes",
+      "analysis_level": "source expression/body",
+      "hypothesis": "A far routine taking two far byte pointers and signed int count, using a positive-count copy loop, models the verified stack slots and DS/ES roles.",
+      "predicted_machinechange": "Expect far frame, positive signed guard, LES destination, LDS source, byte transfer, pointer writeback and far return; loop control may differ.",
+      "falsifier": "Candidate has incompatible frame/argument offsets, incorrect segment restoration, or loop/control flow differs substantially with no supported alignment explanation.",
+      "size": {
+        "target": 70,
+        "emitted": 36
+      },
+      "compileroutcome": "FAILED EXTENT_MISMATCH; unbound contribution has 36 bytes versus target 70. Anchors preserve push bp/mov bp,sp; one residual island, no unresolved fixups.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 2,
+      "actualreportpath": "recovery/attempts/audioresource_copy_n_bytes/0001/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "EXTENT_MISMATCH",
+      "payload_sha256": "887765067d3d471aa444c4bff6e6c981787dd6c1d7dbe9095ebd360e6e45c11e",
+      "payload_size": 36,
+      "effective_code_sha256": "9590dc042a8634244ac583fc3ad9ad88053320bd844b8ba2bbe7e979e9112e5f",
+      "object_sha256": "3795ac0e497a4f37a2a2058c1d9d681c4eaa0c1bf52607524d8dc3619c6631a1",
+      "object_size": 308,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/audioresource_copy_n_bytes/0001/report.json"
+    },
+    {
+      "round_id": 2,
+      "id": "load_29c84",
+      "function": "audioresource_copy_n_bytes",
+      "analysis_level": "locals and register allocation",
+      "hypothesis": "Local far-pointer cursors might let MSC510 keep source in DS:SI and destination in ES:DI across the loop; use a separate signed remaining count.",
+      "predicted_machinechange": "Expect frame locals, retained source/destination cursor registers and fewer repeated LES loads; target predicts LDS SI/LES DI, DS save/restore and LOOP.",
+      "falsifier": "Compiler still emits per-byte far-pointer loads or a materially different frame/control flow, with no anchor continuation.",
+      "size": {
+        "target": 70,
+        "emitted": 70
+      },
+      "compileroutcome": "FAILED BYTE_MISMATCH; bound contribution is exactly 70 bytes but differs strictly.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 1,
+      "actualreportpath": "recovery/attempts/audioresource_copy_n_bytes/0002/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "BYTE_MISMATCH",
+      "payload_sha256": "ffd4271b36864dc443569b6291e137fdfd212bdc1e3e1cecba22ec668affad56",
+      "payload_size": 70,
+      "effective_code_sha256": "ed03e4f82e9098be00da5942722daea7521dad7fa91272d2c5d0071881effed3",
+      "object_sha256": "1dcf2a71446d90d6704d785cab08f807a87d135795e23cc34e5af31c509a95f4",
+      "object_size": 342,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/audioresource_copy_n_bytes/0002/report.json"
+    },
+    {
+      "round_id": 3,
+      "id": "load_29c84",
+      "function": "audioresource_copy_n_bytes",
+      "analysis_level": "loop form and register qualifiers",
+      "hypothesis": "Register far-pointer cursors may force MSC510 to map the source to DS:SI and destination to ES:DI, matching the target register and segment roles; post-increment assignment may expose the copy idiom.",
+      "predicted_machinechange": "Expect SI/DI saves and cursor assignments to DS:SI and ES:DI; byte move via [si] to ES:[di], loop lowering, and possible stack argument writeback.",
+      "falsifier": "Compiler still routes both far accesses through ES/LES or fails to use SI/DI and does not make a meaningfully better anchor/length match.",
+      "size": {
+        "target": 70,
+        "emitted": 38
+      },
+      "compileroutcome": "FAILED EXTENT_MISMATCH; 38-byte candidate versus 70-byte target.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 0,
+      "actualreportpath": "recovery/attempts/audioresource_copy_n_bytes/0003/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "EXTENT_MISMATCH",
+      "payload_sha256": "e20d5f516d74712cf5c1d668ec3306d6fa6730ab73133014e67da0f2b0ebafa6",
+      "payload_size": 38,
+      "effective_code_sha256": "635958ba96a3d1c4a1354d2254cb4adb87a6fabcec26212980fdfacc5cdb69e0",
+      "object_sha256": "4b6d8b568c227ef1208dfb30647a981c2cf2c1b4db9e46805fbce94d92b119cb",
+      "object_size": 310,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/audioresource_copy_n_bytes/0003/report.json"
+    },
+    {
+      "round_id": 4,
+      "id": "load_2264a",
+      "function": "file_get_res_shape_count",
+      "analysis_level": "source semantics",
+      "hypothesis": "The reference C source directly explains the load from far pointer element index 2; reproduce the exact function with its unsigned-short return and far pointer parameter.",
+      "predicted_machinechange": "Expect push bp/mov bp,sp, save SI, load ES from pointer segment at BP+8, load offset into SI from BP+6, read ES:[SI+4] into AX, restore SI/BP, RETF; complete 17 bytes.",
+      "falsifier": "Any contribution length or byte mismatch under standalone msc510-medium compilation indicates TU/context/codegen dependency or source translation difference.",
+      "size": {
+        "target": 17,
+        "emitted": 12
+      },
+      "compileroutcome": "FAILED EXTENT_MISMATCH; unbound 12-byte candidate versus 17-byte target.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 2,
+      "actualreportpath": "recovery/attempts/file_get_res_shape_count/0001/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "EXTENT_MISMATCH",
+      "payload_sha256": "2f332bd907e4714a81a1426d7943a1df284862570c2bb8608b4f8d8f004a01c4",
+      "payload_size": 12,
+      "effective_code_sha256": "5658587ce20df452e10913651ee3332185c2170ac42db1bfd4fcfb54e5eb4161",
+      "object_sha256": "81f486be96ef49c373f43e2f96c16697a968aaf410ccb60a53df5e1e91a2991a",
+      "object_size": 280,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/file_get_res_shape_count/0001/report.json"
+    },
+    {
+      "round_id": 5,
+      "id": "load_2264a",
+      "function": "file_get_res_shape_count",
+      "analysis_level": "locals and register allocation",
+      "hypothesis": "An explicit register far-pointer local to the unsigned-short array may make MSC510 allocate the offset to SI with segment in ES, matching the target split loads and preserving SI.",
+      "predicted_machinechange": "Expect push SI; separate MOV ES from pointer segment and SI from pointer offset; load ES:[SI+4]; pop SI and far return.",
+      "falsifier": "Compiler continues to use LES BX with a shorter frame or the register declaration has no relevant effect.",
+      "size": {
+        "target": 17,
+        "emitted": 30
+      },
+      "compileroutcome": "FAILED EXTENT_MISMATCH; 30-byte candidate versus 17-byte target.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 1,
+      "actualreportpath": "recovery/attempts/file_get_res_shape_count/0002/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "EXTENT_MISMATCH",
+      "payload_sha256": "807ef5dc2d57578e0376461e64b389efe8f86e1e2b0117736e212169ca63d09c",
+      "payload_size": 30,
+      "effective_code_sha256": "4a45744d0fc62ce766f23b3677baf278511dd68818e6865946991965e0834cee",
+      "object_sha256": "b4fd1b940873db9b33a34f204724f4de3a70a479bd1a80346c63eadad19e74f1",
+      "object_size": 298,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/file_get_res_shape_count/0002/report.json"
+    },
+    {
+      "round_id": 6,
+      "id": "load_2264a",
+      "function": "file_get_res_shape_count",
+      "analysis_level": "ABI/declarations",
+      "hypothesis": "Hoisting the cast from the reference C body into a typed far-pointer parameter may let MSC510 directly select SI for the offset and ES for the segment.",
+      "predicted_machinechange": "Expect the same seven-byte ES:SI load core, push/pop SI and complete 17-byte body; no local stack spill.",
+      "falsifier": "The typed parameter still compiles to LES BX and ES:[BX+4], or any other nonmatching contribution.",
+      "size": {
+        "target": 17,
+        "emitted": 12
+      },
+      "compileroutcome": "FAILED EXTENT_MISMATCH; 12-byte candidate versus 17-byte target.",
+      "finalverdict": "neutral_redundant",
+      "rootcause": null,
+      "remainingbudget": 0,
+      "actualreportpath": "recovery/attempts/file_get_res_shape_count/0003/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "EXTENT_MISMATCH",
+      "payload_sha256": "2f332bd907e4714a81a1426d7943a1df284862570c2bb8608b4f8d8f004a01c4",
+      "payload_size": 12,
+      "effective_code_sha256": "5658587ce20df452e10913651ee3332185c2170ac42db1bfd4fcfb54e5eb4161",
+      "object_sha256": "81f486be96ef49c373f43e2f96c16697a968aaf410ccb60a53df5e1e91a2991a",
+      "object_size": 280,
+      "fixup_count": 0,
+      "same_effective_as_report": [
+        1
+      ],
+      "same_object_as_report": [
+        1
+      ],
+      "report_path": "recovery/attempts/file_get_res_shape_count/0003/report.json"
+    },
+    {
+      "round_id": 7,
+      "id": "load_1e066",
+      "function": "unknown_libname_1",
+      "analysis_level": "source expression/body",
+      "hypothesis": "A far function taking a near byte pointer, checking nonzero, then setting bit 0 at pointer-2 expresses the complete verified machine operation.",
+      "predicted_machinechange": "Expect far frame, load word argument into BX, OR BX,BX and JE around byte memory OR [BX-2],1, far return; extent 18 bytes.",
+      "falsifier": "Standalone compiler produces a different operand width/offset, control flow, function distance, or extent.",
+      "size": {
+        "target": 18,
+        "emitted": 18
+      },
+      "compileroutcome": "FAILED BYTE_MISMATCH; equal 18-byte contribution but differs.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 2,
+      "actualreportpath": "recovery/attempts/unknown_libname_1/0001/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "BYTE_MISMATCH",
+      "payload_sha256": "94cf2786082561803a00f35492155d810ab27a0583dd85c4732f4ced951f456d",
+      "payload_size": 18,
+      "effective_code_sha256": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+      "object_sha256": "041880e85567eaa6a7e426531c577af1a59255f1fb1c27c53fcd4ba30a186ead",
+      "object_size": 272,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/unknown_libname_1/0001/report.json"
+    },
+    {
+      "round_id": 8,
+      "id": "load_1e066",
+      "function": "unknown_libname_1",
+      "analysis_level": "locals and register allocation",
+      "hypothesis": "A register near-pointer local may force MSC510 to load argument into BX before testing it and reuse BX for the byte update, matching the target OR BX,BX flow.",
+      "predicted_machinechange": "Expect MOV BX,[BP+6], OR BX,BX, JE, OR byte [BX-2],1; perhaps local/register allocation also restores explicit MOV SP,BP.",
+      "falsifier": "Compiler keeps a direct CMP of the stack argument or otherwise fails to reproduce the target sequence/extent.",
+      "size": {
+        "target": 18,
+        "emitted": 24
+      },
+      "compileroutcome": "FAILED EXTENT_MISMATCH; 24 bytes emitted for 18-byte target.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 1,
+      "actualreportpath": "recovery/attempts/unknown_libname_1/0002/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "EXTENT_MISMATCH",
+      "payload_sha256": "b7ed86b5b50f0fde18a502d8acd92a794bb1a1044f182946e146434f14e9cd9f",
+      "payload_size": 24,
+      "effective_code_sha256": "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+      "object_sha256": "81f8ee138a1cc7a15cbcac7d698110f55b57891f3b0777e03549bbf0471e2cce",
+      "object_size": 278,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/unknown_libname_1/0002/report.json"
+    },
+    {
+      "round_id": 9,
+      "id": "load_1e066",
+      "function": "unknown_libname_1",
+      "analysis_level": "ABI/declarations",
+      "hypothesis": "Qualifying the near-pointer parameter itself as register may bind it differently than the register local and expose the target caller-clobbered BX role.",
+      "predicted_machinechange": "Expect argument loaded into BX before OR BX,BX and reused for byte OR [BX-2], with no saved SI.",
+      "falsifier": "Compiler selects SI or another preserved register, producing save/restore code unlike target.",
+      "size": {
+        "target": 18,
+        "emitted": 18
+      },
+      "compileroutcome": "FAILED BYTE_MISMATCH; equal 18-byte contribution but differs from target.",
+      "finalverdict": "informative_negative",
+      "rootcause": null,
+      "remainingbudget": 0,
+      "actualreportpath": "recovery/attempts/unknown_libname_1/0003/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": null,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "BYTE_MISMATCH",
+      "payload_sha256": "82a5ada617a693618203c71711e6c832d4b4a83f7c6ea28fa06436996d06eddc",
+      "payload_size": 18,
+      "effective_code_sha256": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+      "object_sha256": "dfa8a9897033fb082807ef81bb99231f5bb80bc024f49218801815d101fbb2e1",
+      "object_size": 272,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/unknown_libname_1/0003/report.json"
+    },
+    {
+      "round_id": 10,
+      "id": "load_270ba",
+      "function": "toupper",
+      "analysis_level": "source semantics",
+      "hypothesis": "The target implements inclusive ASCII lowercase range [a,z] with int parameter/return; a direct ordinary C body using <=z should produce its observed signed comparisons, subtract 0x20, return and far function under medium model.",
+      "predicted_machinechange": "Expect compare word argument to 0x61/JL, compare to 0x7A/JG, subtract 0x20, load AX with modified argument, pop BP, RETF; exact 24 bytes.",
+      "falsifier": "Pinned compiler emits different signedness, condition boundary, width or frame/return lowering.",
+      "size": {
+        "target": 24,
+        "emitted": 24
+      },
+      "compileroutcome": "FAST_PASS_ONLY; exact 24-byte contribution matched strict bytes.",
+      "finalverdict": "MATCH",
+      "rootcause": "The inclusive C range and signed int parameter compile exactly to the target. The repository source uses < 'z'; provenance for the target inclusive condition remains unknown.",
+      "remainingbudget": 3,
+      "actualreportpath": "recovery/attempts/toupper/0001/report.json",
+      "promotion_status": "PROMOTED",
+      "compiler_experiment_count": null,
+      "report_status": "FAST_PASS_ONLY",
+      "budget_charge": false,
+      "emitted_category": null,
+      "payload_sha256": "ab9c02292544bcf36522a5dff2e1ac2f4592e0659055198774480202b8a61763",
+      "payload_size": 24,
+      "effective_code_sha256": "d9e07718e1a2bcc0ce27e6480665a22034371cf87f7133cc0b38c2bc72208111",
+      "object_sha256": "aa20ebeee0ffe5b6e58036cf987f7d37838ada65b140a23a19d0d5e351995dd7",
+      "object_size": 258,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/toupper/0001/report.json"
+    },
+    {
+      "round_id": 11,
+      "id": "load_2118d",
+      "function": "mmgr_copy_paras",
+      "analysis_level": "source body and preprocessing scope",
+      "hypothesis": "The associated C segmented-paragraph copy routine with a 64K-word fast path and a remainder loop explains the target DS/ES setup, REP MOVSW copy, and 0x1000 paragraph stepping.",
+      "predicted_machinechange": "Expect far frame, saved DS/SI/DI, CLD, DS/ES set from first two arguments, outer paras!=0 loop, CX=0x8000 with remainder shift by 3, REP MOVSW, segment advances by 0x1000, far return.",
+      "falsifier": "Compiler fails to combine the word-copy loop, uses different count/signedness control flow, or emits a different contribution extent.",
+      "size": {
+        "target": 72,
+        "emitted": null
+      },
+      "compileroutcome": "UNSUPPORTED_SOURCE; include directive blocked during preprocessing; no compiler invocation or code/object output. Durable grinder report charges workflow budget.",
+      "finalverdict": "blocked",
+      "rootcause": null,
+      "remainingbudget": 2,
+      "actualreportpath": "recovery/attempts/mmgr_copy_paras/0001/report.json",
+      "promotion_status": null,
+      "compiler_experiment_count": 0,
+      "report_status": "FAILED",
+      "budget_charge": true,
+      "emitted_category": "UNSUPPORTED_SOURCE",
+      "payload_sha256": null,
+      "payload_size": null,
+      "effective_code_sha256": null,
+      "object_sha256": null,
+      "object_size": null,
+      "fixup_count": 0,
+      "same_effective_as_report": [],
+      "same_object_as_report": [],
+      "report_path": "recovery/attempts/mmgr_copy_paras/0001/report.json"
+    }
+  ],
+  "claimed_vs_receipt_identities": [
+    {
+      "round_id": 7,
+      "claimed": {
+        "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+        "object_sha256": "041880e85567eaa6a7e426531c577af1a59255f1fb1c27c53fcd4ba30a186ead",
+        "segment_sha256": "94cf2786082561803a00f35492155d810ab27a0583dd85c4732f4ced951f456d"
+      },
+      "receipt_derived": {
+        "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+        "object_sha256": "041880e85567eaa6a7e426531c577af1a59255f1fb1c27c53fcd4ba30a186ead",
+        "segment_sha256": "94cf2786082561803a00f35492155d810ab27a0583dd85c4732f4ced951f456d"
+      },
+      "effective_match": true,
+      "object_match": true,
+      "segment_match": true
+    },
+    {
+      "round_id": 8,
+      "claimed": {
+        "effective_code": "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+        "object_sha256": "81f8ee138a1cc7a15cbcac7d698110f55b57891f3b0777e03549bbf0471e2cce",
+        "segment_sha256": "b7ed86b5b50f0fde18a502d8acd92a794bb1a1044f182946e146434f14e9cd9f"
+      },
+      "receipt_derived": {
+        "effective_code": "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+        "object_sha256": "81f8ee138a1cc7a15cbcac7d698110f55b57891f3b0777e03549bbf0471e2cce",
+        "segment_sha256": "b7ed86b5b50f0fde18a502d8acd92a794bb1a1044f182946e146434f14e9cd9f"
+      },
+      "effective_match": true,
+      "object_match": true,
+      "segment_match": true
+    },
+    {
+      "round_id": 9,
+      "claimed": {
+        "effective_code": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+        "object_sha256": "dfa8a9897033fb082807ef81bb99231f5bb80bc024f49218801815d101fbb2e1",
+        "segment_sha256": "82a5ada617a693618203c71711e6c832d4b4a83f7c6ea28fa06436996d06eddc"
+      },
+      "receipt_derived": {
+        "effective_code": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+        "object_sha256": "dfa8a9897033fb082807ef81bb99231f5bb80bc024f49218801815d101fbb2e1",
+        "segment_sha256": "82a5ada617a693618203c71711e6c832d4b4a83f7c6ea28fa06436996d06eddc"
+      },
+      "effective_match": true,
+      "object_match": true,
+      "segment_match": true
+    },
+    {
+      "round_id": 10,
+      "claimed": {
+        "effective_code": "d9e07718e1a2bcc0ce27e6480665a22034371cf87f7133cc0b38c2bc72208111",
+        "object_sha256": "aa20ebeee0ffe5b6e58036cf987f7d37838ada65b140a23a19d0d5e351995dd7",
+        "segment_sha256": null
+      },
+      "receipt_derived": {
+        "effective_code": "d9e07718e1a2bcc0ce27e6480665a22034371cf87f7133cc0b38c2bc72208111",
+        "object_sha256": "aa20ebeee0ffe5b6e58036cf987f7d37838ada65b140a23a19d0d5e351995dd7",
+        "segment_sha256": "ab9c02292544bcf36522a5dff2e1ac2f4592e0659055198774480202b8a61763"
+      },
+      "effective_match": true,
+      "object_match": true,
+      "segment_match": null,
+      "segment_note": "ledger leaves segment hash null; strict FAST acceptance supports target equality, but the attempt ledger did not record the hash"
+    }
+  ],
+  "identity_audit": {
+    "claims_checked": 4,
+    "mismatches": 0,
+    "missing_identity_claim_rows": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "information_gain": {
+    "compiler_results_supporting_specific_prediction_and_observed_outcome": 9,
+    "informative_negative_rows": 8,
+    "neutral_repeated_codegen_rows": 1,
+    "strictly_matched_sufficient_candidate_rows": 1,
+    "basis": "Eight distinct negative outputs plus one repeated-output row and one strict toupper match are grounded in linked receipts; the mmgr preprocessing rejection is workflow evidence only, not generated-code information. The toupper compile establishes a sufficient source candidate, while historical source provenance remains unknown."
+  },
+  "triage_A_blockers": {
+    "call/link boundary and cross-contribution control flow": [
+      {
+        "id": "load_2a9ea",
+        "name": "file_load_shape2d_nofatal"
+      },
+      {
+        "id": "load_2167c",
+        "name": "mmgr_get_chunk_size"
+      }
+    ],
+    "ordinary-C lowering / missing source or compiler context": [
+      {
+        "id": "load_09dc6",
+        "name": "update_rpm_from_speed"
+      },
+      {
+        "id": "load_207d2",
+        "name": "sub_307D2"
+      },
+      {
+        "id": "load_09de8",
+        "name": "nopsub_19DE8"
+      }
+    ],
+    "global or segment-relative data binding": [
+      {
+        "id": "load_12532",
+        "name": "init_unknown"
+      },
+      {
+        "id": "load_1f3bc",
+        "name": "criterr_exithandler"
+      }
+    ],
+    "hardware, interrupt, or segment-register semantics": [
+      {
+        "id": "load_20a35",
+        "name": "kb_checking"
+      },
+      {
+        "id": "load_2031d",
+        "name": "compare_ds_ss"
+      },
+      {
+        "id": "load_1f3bc",
+        "name": "criterr_exithandler"
+      }
+    ],
+    "exhausted source budget / measured syntax collapse": [
+      {
+        "id": "load_1f314",
+        "name": "parse_shape2d_helper"
+      }
+    ],
+    "known source-shape mismatch; no distinct supported next hypothesis": [
+      {
+        "id": "load_15f2e",
+        "name": "is_facing_camera"
+      }
+    ],
+    "missing decoded machine evidence": [
+      {
+        "id": "load_16572",
+        "name": "rect_union"
+      }
+    ]
+  },
+  "promotion_vs_fast": {
+    "function": "toupper",
+    "fast_report": "recovery/attempts/toupper/0001/report.json",
+    "promotion_report": "recovery/attempts/toupper/0002/report.json",
+    "fast_status": "FAST_PASS_ONLY",
+    "promotion_status": "PROMOTED",
+    "target_bytes": 24,
+    "fixups": 0,
+    "fresh_candidate_compiles_at_least": 3,
+    "full_image_hashes_match": true,
+    "historical_source_cause_proven": false
+  },
+  "data_quality_gaps": [
+    "historical-summary is explicitly archive-only and contributes no new batch trials; keep its 43 archived outcomes out of current attempt/compiler counts.",
+    "new-attempt rows omit effective/object/output identities for most compiler rows even though linked receipts contain them; see identity_audit.",
+    "worker-summary accounting was updated after the initial partial snapshot; its earlier counters were stale. Current input hash is recorded above.",
+    "per-row model/reasoning metadata is absent, so model/reasoning consistency cannot be independently checked from the corpus rows.",
+    "Triage A and B each use different row schemas; combined case counts include only supervisor cases and exact controls, and triage facts are not compiler outcomes."
+  ],
+  "interpretation_boundary": "The three-failure stops and exhausted per-function budgets describe the original short-budget workflow snapshot. They are workflow gates, not evidence of model exhaustion. User subsequently authorized extended Luna isolated research; that later cohort must be reported separately and must not be folded into this first-batch snapshot.",
+  "triage_B_summary": {
+    "source": "triage-B-summary.md",
+    "supervisor_cases": 12,
+    "exact_controls": 2,
+    "explicit_higher_level_blockers": [
+      "MZ relocation binding",
+      "CS-relative storage binding",
+      "hardware/interrupt review"
+    ],
+    "mapping_or_address_gaps": [
+      "g_kevinrandom_seed six-byte data range",
+      "putsign word_428A2",
+      "keyboard restore old-vector words",
+      "preRender_patterned dispatch pointers and word_4031E",
+      "preRender_patterned external jump targets/storage"
+    ],
+    "missing_or_incomplete_machine_evidence": [
+      "kb_parse_key incomplete decode; indirect far callback",
+      "rect_adjust_from_point incomplete/mismatched diagnosis provenance",
+      "parse_shape2d and run_menu partial label mappings",
+      "vec_normalInnerProduct and transformed_shape_add_for_sort lack image anchors"
+    ],
+    "status": "nonexecuting triage; no source experiment or promotion authorization"
+  },
+  "post_snapshot_observations": {
+    "scope": "Later live-ledger rows observed after the dated snapshot; excluded from snapshot totals and outcome summaries.",
+    "live_ledger_sha256": "c07edd9442889a6ad5cc8fd5d54fed76b45917b36fb3cbc8341270a1f6da7d05",
+    "live_row_count": 12,
+    "rows": [
+      {
+        "round_id": 12,
+        "function": "sub_35DE6",
+        "id": "load_25de6",
+        "verdict": "blocked",
+        "outcome": "SKIPPED_BLOCKED; no source candidate or compiler attempt.",
+        "compiler_experiment_count": 0,
+        "actualreportpath": "recovery/cards/load_25de6.json"
+      }
+    ]
+  }
+}

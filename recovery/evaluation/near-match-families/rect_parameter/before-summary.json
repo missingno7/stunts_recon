@@ -1,0 +1,421 @@
+{
+  "anchors": [
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          0,
+          3
+        ],
+        "instructions": [
+          0,
+          2
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          0,
+          3
+        ],
+        "instructions": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          6,
+          18
+        ],
+        "instructions": [
+          3,
+          8
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          6,
+          18
+        ],
+        "instructions": [
+          3,
+          8
+        ]
+      }
+    },
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          22,
+          32
+        ],
+        "instructions": [
+          9,
+          13
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          22,
+          32
+        ],
+        "instructions": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          42,
+          49
+        ],
+        "instructions": [
+          16,
+          19
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          42,
+          49
+        ],
+        "instructions": [
+          16,
+          19
+        ]
+      }
+    },
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          53,
+          63
+        ],
+        "instructions": [
+          20,
+          25
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          53,
+          63
+        ],
+        "instructions": [
+          20,
+          25
+        ]
+      }
+    },
+    {
+      "basis": "byte-exact, position-independent, unmasked",
+      "candidate": {
+        "bytes": [
+          70,
+          76
+        ],
+        "instructions": [
+          27,
+          32
+        ]
+      },
+      "kind": "ANCHOR",
+      "target": {
+        "bytes": [
+          70,
+          76
+        ],
+        "instructions": [
+          27,
+          32
+        ]
+      }
+    }
+  ],
+  "authority": "DIAGNOSTIC_ONLY; no acceptance decision",
+  "candidate": {
+    "sha256": "437998d74c6c6b48ab83f7b662611d83dc7fd2d90788e78beddb46df2bf712b0",
+    "size": 76
+  },
+  "classifications": [
+    "IMMEDIATE_VALUE",
+    "STACK_SLOT_ALLOCATION"
+  ],
+  "comparison": "bound payload",
+  "counts": {
+    "anchors": 6,
+    "byte_equal_aligned_pairs": 25,
+    "candidate_instructions": 32,
+    "decoded_exact_pairs": 0,
+    "exact_instructions": 24,
+    "fixup_normalized_pairs": 0,
+    "mismatch_islands": 5,
+    "structural_pairs": 7,
+    "target_anchored_percent": 75.0,
+    "target_instructions": 32
+  },
+  "decode_complete": true,
+  "decoded_bytes": [
+    76,
+    76
+  ],
+  "engine_sha256": "03b3ff8a51ebdfc2ad1b9943e502350d3dfebd0770abd1aff18f581e9be2bc1f",
+  "exact_prefix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        0,
+        3
+      ],
+      "instructions": [
+        0,
+        2
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        0,
+        3
+      ],
+      "instructions": [
+        0,
+        2
+      ]
+    }
+  },
+  "exact_suffix": {
+    "basis": "byte-exact, position-independent, unmasked",
+    "candidate": {
+      "bytes": [
+        70,
+        76
+      ],
+      "instructions": [
+        27,
+        32
+      ]
+    },
+    "kind": "ANCHOR",
+    "target": {
+      "bytes": [
+        70,
+        76
+      ],
+      "instructions": [
+        27,
+        32
+      ]
+    }
+  },
+  "fixup_normalization": {
+    "fields": [],
+    "ignored": [],
+    "mode": "bound payload",
+    "omitted_fields": 0,
+    "omitted_ignored": 0,
+    "rule": "No normalization: every bound byte is compared."
+  },
+  "instruction_count_note": "Linear decode includes alignment NOPs; not a reachable-CFG instruction count.",
+  "islands": [
+    {
+      "candidate": {
+        "bytes": [
+          3,
+          6
+        ],
+        "instructions": [
+          2,
+          3
+        ]
+      },
+      "classifications": [
+        {
+          "class": "IMMEDIATE_VALUE",
+          "confidence": "high",
+          "evidence": [
+            "+0x3 sub sp, 4 -> +0x3 sub sp, 2"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 1,
+      "kind": "ISLAND",
+      "resumes_exact": true,
+      "target": {
+        "bytes": [
+          3,
+          6
+        ],
+        "instructions": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "bytes": [
+          18,
+          22
+        ],
+        "instructions": [
+          8,
+          9
+        ]
+      },
+      "classifications": [
+        {
+          "class": "STACK_SLOT_ALLOCATION",
+          "confidence": "medium",
+          "evidence": [
+            "+0x12 mov byte ptr [bp - 4], 1 -> +0x12 mov byte ptr [bp - 2], 1"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 2,
+      "kind": "ISLAND",
+      "resumes_exact": true,
+      "target": {
+        "bytes": [
+          18,
+          22
+        ],
+        "instructions": [
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "bytes": [
+          32,
+          42
+        ],
+        "instructions": [
+          13,
+          16
+        ]
+      },
+      "classifications": [
+        {
+          "class": "STACK_SLOT_ALLOCATION",
+          "confidence": "high",
+          "evidence": [
+            "+0x20 mov byte ptr [bp - 4], 2 -> +0x20 mov byte ptr [bp - 2], 2",
+            "+0x26 mov byte ptr [bp - 4], 0 -> +0x26 mov byte ptr [bp - 2], 0"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 3,
+      "kind": "ISLAND",
+      "resumes_exact": true,
+      "target": {
+        "bytes": [
+          32,
+          42
+        ],
+        "instructions": [
+          13,
+          16
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "bytes": [
+          49,
+          53
+        ],
+        "instructions": [
+          19,
+          20
+        ]
+      },
+      "classifications": [
+        {
+          "class": "STACK_SLOT_ALLOCATION",
+          "confidence": "medium",
+          "evidence": [
+            "+0x31 or byte ptr [bp - 4], 4 -> +0x31 or byte ptr [bp - 2], 4"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 4,
+      "kind": "ISLAND",
+      "resumes_exact": true,
+      "target": {
+        "bytes": [
+          49,
+          53
+        ],
+        "instructions": [
+          19,
+          20
+        ]
+      }
+    },
+    {
+      "candidate": {
+        "bytes": [
+          63,
+          70
+        ],
+        "instructions": [
+          25,
+          27
+        ]
+      },
+      "classifications": [
+        {
+          "class": "STACK_SLOT_ALLOCATION",
+          "confidence": "high",
+          "evidence": [
+            "+0x3F or byte ptr [bp - 4], 8 -> +0x3F or byte ptr [bp - 2], 8",
+            "+0x43 mov al, byte ptr [bp - 4] -> +0x43 mov al, byte ptr [bp - 2]"
+          ],
+          "omitted_evidence": 0
+        }
+      ],
+      "id": 5,
+      "kind": "ISLAND",
+      "resumes_exact": true,
+      "target": {
+        "bytes": [
+          63,
+          70
+        ],
+        "instructions": [
+          25,
+          27
+        ]
+      }
+    }
+  ],
+  "notes": [],
+  "omitted_anchors": 0,
+  "omitted_islands": 0,
+  "omitted_notes": 0,
+  "schema": 2,
+  "target": {
+    "sha256": "c1c97620bb82b97d8824715cc0949cbd917bc931a4a4347a5530941a30be9ec0",
+    "size": 76
+  }
+}

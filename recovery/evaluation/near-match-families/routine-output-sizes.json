@@ -1,0 +1,40 @@
+{
+  "cases": [
+    {
+      "case": "canary",
+      "new_routine_summary_json_utf8_bytes": 8869,
+      "old_summary_json_utf8_bytes": 14236
+    },
+    {
+      "case": "rect_plain",
+      "new_routine_summary_json_utf8_bytes": 6378,
+      "old_summary_json_utf8_bytes": 6792
+    },
+    {
+      "case": "rect_parameter",
+      "new_routine_summary_json_utf8_bytes": 3607,
+      "old_summary_json_utf8_bytes": 7802
+    },
+    {
+      "case": "rect_accepted",
+      "new_routine_summary_json_utf8_bytes": 1567,
+      "old_summary_json_utf8_bytes": 2392
+    },
+    {
+      "case": "parse_failure",
+      "new_routine_summary_json_utf8_bytes": 3508,
+      "old_summary_json_utf8_bytes": 4189
+    },
+    {
+      "case": "parse_heldout",
+      "new_routine_summary_json_utf8_bytes": 3508,
+      "old_summary_json_utf8_bytes": 4189
+    },
+    {
+      "case": "parse_accepted",
+      "new_routine_summary_json_utf8_bytes": 1567,
+      "old_summary_json_utf8_bytes": 2392
+    }
+  ],
+  "scope": "Indented match_summary JSON only, not the complete context packet and not tokens"
+}
