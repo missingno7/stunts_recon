@@ -1,0 +1,84 @@
+{
+  "attempt_budget": 3,
+  "evidence": {
+    "c_sources": [
+      "src/restunts/c/math.c"
+    ],
+    "calls": [],
+    "confidence": "unresolved_boundary",
+    "distance": "far",
+    "issues": [
+      "label_interval_mismatch:0x269ca"
+    ],
+    "label_count": 1,
+    "line_end": 3365,
+    "line_start": 3331,
+    "name": "rect_is_inside",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3365,
+      "line_start": 3331,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "segment": "seg006",
+    "segment_offset": 7228,
+    "segment_paragraph": 5334,
+    "source": "build/references/restunts/src/restunts/asmorig/seg006.asm",
+    "start": 92572,
+    "start_candidates": [
+      92572
+    ],
+    "status": "PARTIAL_UNMAPPED",
+    "unresolved_evidence_id": "seg006:line3331",
+    "verified_labels": 0
+  },
+  "fast": "python tools/check_candidate.py rect_is_inside",
+  "id": "seg006:line3331",
+  "name": "rect_is_inside",
+  "oracle_extent": [
+    92572,
+    92624
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/check_candidate.py rect_is_inside --promote",
+  "recipe": "recipes/rect_is_inside.json",
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "layout/manifest.json": "44117ec3ca220e8c07e675c32781c81a8e55d4bed007894c674111e20c35371d",
+    "layout/oracle.lock.json": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "layout/production-plan.json": "4e2aaac1198eb9e07c1e0b99678772f9893e569f08f0742d35218aa300b96be2",
+    "layout/references.json": "99761030df3845368ee95e4f5aad28a720170dd3e6d8086e88b636079218dc7d",
+    "layout/toolchain.json": "8b6e70f722ce03a3a7cd3403616482502a398d91b2ae9d17f30768538bfbd734",
+    "recipes/audioresource_get_dword.json": "e05594ac0c3cd0ef30f2a460fac4d7f544829505f5e8480648e6377a1879f463",
+    "recipes/rect_is_inside.json": "0b55b01d99db2f7263ce20c93f131fabfac2f684a0b4649e7523d9c0249ad484",
+    "recipes/rect_is_overlapping.json": "52e7b04ceec7f43b1ed6442fffd25e9bc9def54f98781f59100f6341bf947248",
+    "recovery/candidates/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "recovery/candidates/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "recovery/candidates/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "src/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "tools/build_exact.py": "ff021e750c4cb1f9025833146ebc1610d3af441d57dd2057f72c9d1746a52883",
+    "tools/check_candidate.py": "3bed3b6a0116781fee7ddeb6961bec796088963d6902c40350ef280cdd0c0130",
+    "tools/common.py": "6b30828c3b73b181d57c7aaea2495db5c9233410efe711b7711404de93cba7d1",
+    "tools/compiler.py": "34ca5e285c4b1bed218a3708a16b55e127cd79e78d64e5e2dd0f24fd1cebd23b",
+    "tools/coordinates.py": "732ff4889873bff0a6c7b8344d9dacd36a12b11fb132b70531068f8d74643e96",
+    "tools/dsi.py": "7afb38485a232eca05eb65734c6eafc3d8db4c86096bf09586105cefafcc916c",
+    "tools/exepack.py": "4e1f5e3a1f629d556be07e822a4c64ea29daef3bbaef818f5aaa675d7278e1db",
+    "tools/import_restunts.py": "a71f05c79afb8f112b5efc597bd2dbba3c0a53fa272d2b31ef9b0cfa508d2710",
+    "tools/mz.py": "7b886df739b405b3d4c4ef420af5f3806f287980098b37c62838ebbc0c89ff16",
+    "tools/object_probe.py": "936543cf534d49d95cdb6b50c940e687d3969b60a6d914815216fee5bffe18ae",
+    "tools/omf.py": "50cc22b15581be3c73012efd6295ddb0856322e1f470a85a674f42a611b07efe",
+    "tools/oracle.py": "01c57bb2b64f9cd7107a49d0bc1b050cab4014406590ffc7b24f51b5874fc3b5",
+    "tools/probe_module.py": "9b49e1ee7ad2cc4653a77457b85abb6c69ff3538aee8a7be5256a2384b15ff0a",
+    "tools/probe_tu.py": "eb34885502f35385fcc09f4fad775d057a39e25add54f9895979c7bd6a0dce17",
+    "tools/reconstruction_factory.py": "77c107c14e25626e5d98cdaefa577eb2f4e06de2b138c329a0868b76d1fe3601",
+    "tools/restunts_base.py": "4c4350f3a9a8c3de01597230374a9b2125e047a49f550d91f8d2c95816b4719c"
+  },
+  "source": "recovery/candidates/rect_is_inside.c",
+  "tier": "CHEAP"
+}

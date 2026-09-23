@@ -1,0 +1,33 @@
+{
+  "bytes": 420,
+  "fresh_full_image": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "modules": [
+    "strcat.asm",
+    "strcpy.asm",
+    "strcmp.asm",
+    "strlen.asm",
+    "stricmp.asm",
+    "strrchr.asm",
+    "xtoa.asm",
+    "abs.c",
+    "lshr.asm"
+  ],
+  "skipped": [
+    {
+      "module": "ldiv.asm",
+      "reason": "Overlapping LEDATA"
+    },
+    {
+      "module": "lmul.asm",
+      "reason": "Overlapping LEDATA"
+    },
+    {
+      "module": "uldiv.asm",
+      "reason": "Overlapping LEDATA"
+    }
+  ],
+  "status": "PROMOTED_PINNED_LIBRARY"
+}

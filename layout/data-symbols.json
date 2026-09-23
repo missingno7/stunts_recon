@@ -1,0 +1,60 @@
+{
+  "bss_end": 222352,
+  "bss_start": 199994,
+  "frame_load_address": 178032,
+  "frame_relocation": {
+    "load_offset": 117869,
+    "offset": 52333,
+    "segment": 4096
+  },
+  "oracle_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+  "schema": 1,
+  "startup_anchors": [
+    {
+      "hex": "bf772b8b3602002bf781fe00107203be0010fa8ed7",
+      "start": 117868
+    },
+    {
+      "hex": "bfca55b920ad2bcf33c0f3aa161f",
+      "start": 117964
+    }
+  ],
+  "symbols": {
+    "_audioflag2": {
+      "evidence": "docs/current/data-binding.md",
+      "load_address": 198193,
+      "references": [
+        {
+          "hex": "c606c14e01cb",
+          "operand_offset": 2,
+          "start": 160690
+        }
+      ],
+      "storage": "initialized"
+    },
+    "_byte_44ACA": {
+      "evidence": "docs/current/data-binding.md",
+      "load_address": 215754,
+      "references": [
+        {
+          "hex": "558bec8b5e068a875a932ae45dcb",
+          "operand_offset": 8,
+          "start": 161980
+        }
+      ],
+      "storage": "bss"
+    },
+    "_byte_44D06": {
+      "evidence": "docs/current/data-binding.md",
+      "load_address": 216326,
+      "references": [
+        {
+          "hex": "558bec8b5e068a8796952ae45dcb",
+          "operand_offset": 8,
+          "start": 161966
+        }
+      ],
+      "storage": "bss"
+    }
+  }
+}

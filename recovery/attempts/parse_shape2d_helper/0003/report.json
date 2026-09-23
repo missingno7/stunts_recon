@@ -1,0 +1,101 @@
+{
+  "budget_charge": true,
+  "diagnostics": {
+    "category": "EXTENT_MISMATCH",
+    "emitted_sizes": {
+      "CONST": 0,
+      "UNIT_TEXT": 26,
+      "_BSS": 0,
+      "_DATA": 0
+    },
+    "expected_size": 32,
+    "externals": [
+      "__acrtused",
+      "_parse_shape2d_helper"
+    ],
+    "fixups": [],
+    "object_segments": {
+      "UNIT_TEXT": {
+        "sha256": "e33f45e998051208240c30ca06718b58e0e1ab1b16264cf1cbcb559c854e3516",
+        "size": 26
+      }
+    },
+    "publics": [
+      {
+        "name": "_parse_shape2d_helper",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "receipt": {
+      "command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "object": {
+        "sha256": "6465f75dc507b0c13d446fae8543babd93487c2aeb6bbc1e1ee94fa5325ff42f",
+        "size": 286
+      },
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "486eb9c3b58de51f04a28a1e01c9c8db9b87f1567d374ea1fd1dc1f8258fcc40",
+        "size": 133
+      },
+      "staged_source": {
+        "sha256": "e2de303c607221e7db514a7fd54fcd7b231765da8e205a7da03117a4aaf77c1e",
+        "size": 137
+      },
+      "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\p3jr0s063"
+    }
+  },
+  "epoch": 0,
+  "error": "Complete emitted contribution length differs from target",
+  "escalate": false,
+  "hypothesis": "Use multiplication by sixteen to test an alternative optimized long arithmetic lowering",
+  "hypothesis_key": "1a4df7903ab8e0c33d7433e484c740caa8acc372e6b90974b7e4f8455f490f5c",
+  "input_fingerprint": "2f9f829bce04dec1f84e130962e44208310faf4765a10a6c9fb2f58c2fdcc2f1",
+  "recipe": {
+    "end": 127796,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 1489,
+      "line_start": 1467,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "parse_shape2d_helper",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_parse_shape2d_helper",
+    "source": "recovery/candidates/parse_shape2d_helper.c",
+    "stable_id": "load_1f314",
+    "start": 127764,
+    "target": {
+      "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+      "size": 32
+    }
+  },
+  "same_object_as": [
+    1,
+    2
+  ],
+  "schema": 1,
+  "sequence": 3,
+  "source": {
+    "sha256": "486eb9c3b58de51f04a28a1e01c9c8db9b87f1567d374ea1fd1dc1f8258fcc40",
+    "size": 133
+  },
+  "started_utc": "2026-09-23T09:14:45.590008+00:00",
+  "status": "FAILED",
+  "task": "parse_shape2d_helper"
+}

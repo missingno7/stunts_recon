@@ -1,0 +1,114 @@
+{
+  "future_owner_kinds": [
+    "MATCHING_ASM",
+    "KNOWN_TOOLCHAIN_LIBRARY",
+    "EXACT_DATA"
+  ],
+  "header": "synthetic oracle metadata",
+  "mode": "ordered-hybrid-image",
+  "modules": [
+    {
+      "owner": "load_16552",
+      "recipe": "recipes/nopsub_26552.json",
+      "source": "src/nopsub_26552.c"
+    },
+    {
+      "owner": "load_1695e",
+      "recipe": "recipes/rect_is_overlapping.json",
+      "source": "src/rect_is_overlapping.c"
+    },
+    {
+      "owner": "load_1699c",
+      "recipe": "recipes/rect_is_inside.json",
+      "source": "src/rect_is_inside.c"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "strcat.asm",
+      "owner": "library_strcat"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "strcpy.asm",
+      "owner": "library_strcpy"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "strcmp.asm",
+      "owner": "library_strcmp"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "strlen.asm",
+      "owner": "library_strlen"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "stricmp.asm",
+      "owner": "library_stricmp"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "xtoa.asm",
+      "owner": "library_xtoa"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "abs.c",
+      "owner": "library_abs"
+    },
+    {
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "module": "strrchr.asm",
+      "owner": "library_strrchr"
+    },
+    {
+      "library": "toolchain/msc510/LIBH.LIB",
+      "module": "ldiv.asm",
+      "owner": "library_ldiv"
+    },
+    {
+      "library": "toolchain/msc510/LIBH.LIB",
+      "module": "lmul.asm",
+      "owner": "library_lmul"
+    },
+    {
+      "library": "toolchain/msc510/LIBH.LIB",
+      "module": "lshr.asm",
+      "owner": "library_lshr"
+    },
+    {
+      "library": "toolchain/msc510/LIBH.LIB",
+      "module": "uldiv.asm",
+      "owner": "library_uldiv"
+    },
+    {
+      "owner": "load_273b2",
+      "recipe": "recipes/audio_enable_flag2.json",
+      "source": "src/audio_enable_flag2.c"
+    },
+    {
+      "owner": "load_278ae",
+      "recipe": "recipes/nopsub_378AE.json",
+      "source": "src/nopsub_378AE.c"
+    },
+    {
+      "owner": "load_278bc",
+      "recipe": "recipes/nopsub_378BC.json",
+      "source": "src/nopsub_378BC.c"
+    },
+    {
+      "owner": "load_284fa",
+      "recipe": "recipes/audioresource_get_dword.json",
+      "source": "src/audioresource_get_dword.c"
+    },
+    {
+      "owner": "load_2b08c",
+      "recipe": "recipes/parse_shape2d_helper3.json",
+      "source": "src/parse_shape2d_helper3.c"
+    }
+  ],
+  "raw_policy": "explicit manifest partitions only",
+  "schema": 1,
+  "unsupported_kinds_fail_closed": true
+}

@@ -1,0 +1,891 @@
+{
+  "empires": {
+    "adapted_files": {
+      "mz.py": {
+        "sha256": "7b886df739b405b3d4c4ef420af5f3806f287980098b37c62838ebbc0c89ff16",
+        "size": 5627
+      },
+      "omf.py": {
+        "sha256": "50cc22b15581be3c73012efd6295ddb0856322e1f470a85a674f42a611b07efe",
+        "size": 22803
+      }
+    },
+    "branch": "historical-exact-oracle-v1",
+    "commit": "c0a672d5daba74256aefa596e0b78f205d2b169d",
+    "license": "not found in pinned tree",
+    "url": "https://github.com/missingno7/empires_reconstruction"
+  },
+  "exepack-viiri": {
+    "commit": "a42f2c8fb1018feeb2c32fc7f7b1f01240d824c4",
+    "local_path": "build/references/exepack-viiri",
+    "url": "https://github.com/viiri/exepack"
+  },
+  "restunts": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "evidence_files": {
+      "src/drvcombiner/main.cpp": {
+        "sha256": "d50184dfce116f73b97de482e0f73cb2643523787d9d9971752b4b2f0db59fa0",
+        "size": 32579
+      },
+      "src/execombiner/main.cpp": {
+        "sha256": "77b697d0a67ab6c5b14c5bd82623e9d806f3f38db3ab4bb716747ecf7d80cb20",
+        "size": 2739
+      },
+      "src/fake16bit/asm_16/asm_16.cpp": {
+        "sha256": "b99bfd35a4e64e8bd66cdc917cc3074a39777e8b1e875acdf88377e3fe702976",
+        "size": 8504
+      },
+      "src/fake16bit/asm_16/dos_file.cpp": {
+        "sha256": "d44bd3356cac43a04298469be7913054be2ae724387e5817093d3865c750b9f5",
+        "size": 2403
+      },
+      "src/fake16bit/asm_16/dos_mem.cpp": {
+        "sha256": "18f882adee4ad520a0672de1e53bbc7b16e0673436c1b6339393899abc9b3af4",
+        "size": 7179
+      },
+      "src/fake16bit/emulator/emulator.cpp": {
+        "sha256": "c72361fd9e28dcde81072a97357c61ade9c78df1ab312cfd5b0fabcb6e47aaf2",
+        "size": 29020
+      },
+      "src/fake16bit/emulator/emulator_test.cpp": {
+        "sha256": "afcd12a5ec4c26bb783859c666f8388882685671ee234f39d8a57c25e4cce6a5",
+        "size": 7044
+      },
+      "src/fake16bit/emulator/main.cpp": {
+        "sha256": "99a5e7f41b96ee47e0d748af38b146baf47ff86bb790971810d010ed01d10d47",
+        "size": 4557
+      },
+      "src/fake16bit/emulator/on_access.cpp": {
+        "sha256": "31aafa571ae9be7bd244f564c0faa16f633b504e006e47dcb906d4686741f406",
+        "size": 896
+      },
+      "src/fake16bit/emulator/stopwatch.cpp": {
+        "sha256": "9ffc9640d9a52b25acb2100cde62bf030ff7f6575c828d3c7438aabf9516f622",
+        "size": 667
+      },
+      "src/fake16bit/emulator/tools.cpp": {
+        "sha256": "1040b9efa1a474d1fd37451dfb6f9c8584eff9b485fdcbfdfcdf9af57a00d9d0",
+        "size": 1726
+      },
+      "src/fake16bit/emulator/word_pair.cpp": {
+        "sha256": "f9db90fa0768134f1fb9d471c7036427743e4a02f983922018a1d60766c2d915",
+        "size": 490
+      },
+      "src/fake16bit/fake16bit/main.cpp": {
+        "sha256": "6e8bde123185145d4190304bb29d2f3485353e82344f7e6b5b95392e46f502a9",
+        "size": 5578
+      },
+      "src/fake16bit/idc/to_fake_asm.idc": {
+        "sha256": "6232caddd349ba42eb5a43da252b273078f9b3537b3aabba84c93856be565665",
+        "size": 4592
+      },
+      "src/hello/hello.c": {
+        "sha256": "4e968592e02ae92b5363f57818dcba8f8af5ba0bbf92240756c5932b5fd2f4d1",
+        "size": 79
+      },
+      "src/hello/qc25/EMPTY.C": {
+        "sha256": "ba7d83112a274572c89dfb9c4bf4ff9fd78756459de614663da16409c1ec6730",
+        "size": 14
+      },
+      "src/hello/qc25/HELLO.C": {
+        "sha256": "ca8b0a2e5571e6fbb806f3b83d5497e208b3764a5af08caf8929d90af067f9b3",
+        "size": 60
+      },
+      "src/idc/anders.idc": {
+        "sha256": "6bb0598b1645974825f553fce0ede3752ace5aa0b8c4fa76f6e84cb2647d4891",
+        "size": 37788
+      },
+      "src/resfile/resfile.cpp": {
+        "sha256": "cea38760553a95072da7fca8336e6f4d5a94d64d608d66a7723402ee9bd51e43",
+        "size": 2427
+      },
+      "src/resfile/shape.cpp": {
+        "sha256": "f1f4926ab306845e97dca78da1238dfd89539e5b4d87065908600731d9cd9fd6",
+        "size": 2122
+      },
+      "src/restunts/asm/custom.inc": {
+        "sha256": "b6229faffb73c4478870cb4b2ba709d0946b110e672e98cabb7a16fa7848553b",
+        "size": 6507
+      },
+      "src/restunts/asm/dseg.asm": {
+        "sha256": "7fe7d864611fe810f93811c3a12851d2161cbfda89c290526e435fb55218723d",
+        "size": 475675
+      },
+      "src/restunts/asm/dseg.inc": {
+        "sha256": "353b5690f20b5391dbe3693239e80bd8cd24b78d1a96f413ee269c62fbdd4dcb",
+        "size": 39941
+      },
+      "src/restunts/asm/seg000.asm": {
+        "sha256": "ebc7455c2c426c621a8a0f38ec9327ad396b13d84239663ad3574e4240c96ae4",
+        "size": 180812
+      },
+      "src/restunts/asm/seg000.inc": {
+        "sha256": "9d970e3f79b9b96cb23d35497bc605014f1e3f34e36649c9d6f37996a76d27bb",
+        "size": 636
+      },
+      "src/restunts/asm/seg001.asm": {
+        "sha256": "0ee1492ed9ac339016a1940500112a2a0385b0decfebc2500a8df84bc3bf8ee9",
+        "size": 251750
+      },
+      "src/restunts/asm/seg001.inc": {
+        "sha256": "6d217f1c9ae4f5cb23bf439e9db4876cb4fe5139aae81f1676630a05f0e21063",
+        "size": 1077
+      },
+      "src/restunts/asm/seg002.asm": {
+        "sha256": "5bfdd72c83dfadeabb8bb9676ab3dea260422694018000fec4e15e4be6ad332f",
+        "size": 7300
+      },
+      "src/restunts/asm/seg002.inc": {
+        "sha256": "7bdf9f527f6c14a624299117f7bd0e958d39ad2461452f3ee6b7d20ede800ef6",
+        "size": 436
+      },
+      "src/restunts/asm/seg003.asm": {
+        "sha256": "0e6ac8717685762408eba8128e903bbda5442b13d6d4581f73af92bf4a684e47",
+        "size": 187226
+      },
+      "src/restunts/asm/seg003.inc": {
+        "sha256": "ee9bcdb1b08407a198f2a5d0594a55dcb93439b00a65e962df057b4eac5fb0a7",
+        "size": 557
+      },
+      "src/restunts/asm/seg004.asm": {
+        "sha256": "9b0e7d8e1fda4b2eb9480bc5fa12085062942bdc09c6c55423efaf6fc0379376",
+        "size": 163521
+      },
+      "src/restunts/asm/seg004.inc": {
+        "sha256": "93a638381aed3353b20d7dde397478a93993fe6c497197e364159372ee54be64",
+        "size": 487
+      },
+      "src/restunts/asm/seg005.asm": {
+        "sha256": "f739aeac965bc9cb9b846a02e6187f1c49cc27903bd6298d62ef3f50b595f526",
+        "size": 129778
+      },
+      "src/restunts/asm/seg005.inc": {
+        "sha256": "22047b0fdb38d54fe731c1cb973494220926c91511e5dadf6ef6c20df21e98d3",
+        "size": 774
+      },
+      "src/restunts/asm/seg006.asm": {
+        "sha256": "5fadc2dee2cfa70f7d1fa862241db28ddf1514b044ce130bb8dd2bc37c4682a6",
+        "size": 94677
+      },
+      "src/restunts/asm/seg006.inc": {
+        "sha256": "1f8d0ef711b1279542ff5523931c4f405e4883f22e01696d6415fe1033331ae5",
+        "size": 982
+      },
+      "src/restunts/asm/seg007.asm": {
+        "sha256": "2afb86267e4c60e3873bf4df78feabfe16a30d5512a4c175432ca330f0913403",
+        "size": 26758
+      },
+      "src/restunts/asm/seg007.inc": {
+        "sha256": "6c485a9755e09f7449f405837141d3d94505a8a1a324711b52f5be55247bb331",
+        "size": 624
+      },
+      "src/restunts/asm/seg008.asm": {
+        "sha256": "b4bc64bbc0ab357b23efdc45546b5bd7788d422c2f5729ae35948e52487030e4",
+        "size": 131927
+      },
+      "src/restunts/asm/seg008.inc": {
+        "sha256": "d19b61b5b0985db47d93126e1a5add0854d73419b6981ffe0fff0d3041830fba",
+        "size": 2278
+      },
+      "src/restunts/asm/seg009.asm": {
+        "sha256": "6d6049a5e731a212869ff4274a516c7b7f6323c3131e89bcff0972196765a13c",
+        "size": 106165
+      },
+      "src/restunts/asm/seg009.inc": {
+        "sha256": "1af9ce80cf7cb70da15245cd4eb7ba347d048d7eff6c180ade4e6dbdcbe83b65",
+        "size": 213
+      },
+      "src/restunts/asm/seg010.asm": {
+        "sha256": "59adf13ebda18a9bf8a5e6cae49d94c980f36a31ebd3ffae41480c35f2520789",
+        "size": 96061
+      },
+      "src/restunts/asm/seg010.inc": {
+        "sha256": "92ed87148c5c810d0f1bc7fe608146e1da827a0f5a9d9a0190af70323cc41a1a",
+        "size": 2251
+      },
+      "src/restunts/asm/seg011.asm": {
+        "sha256": "8fd00017470806266ad161e7c79af2b58531dcb9f7b9db21532ce69baef1e868",
+        "size": 1776
+      },
+      "src/restunts/asm/seg011.inc": {
+        "sha256": "bf62e85c63161cd34fa32d40deb9166836ad942d050c8d7d22a15de3c2323c9d",
+        "size": 95
+      },
+      "src/restunts/asm/seg012.asm": {
+        "sha256": "69fd5f1f25b8c8b54a4d7dd2871105b79f43d8476911e1cd99042fb8d615285b",
+        "size": 370907
+      },
+      "src/restunts/asm/seg012.inc": {
+        "sha256": "2b782889627decd1ba1959750673d6c945b860b439b3fe85512f64132cff5fbb",
+        "size": 11125
+      },
+      "src/restunts/asm/seg013.asm": {
+        "sha256": "7f224ff9938c34ffe7c35527b558b48a3896bf6ec65546f4c7414bec8eb5d1f9",
+        "size": 3090
+      },
+      "src/restunts/asm/seg013.inc": {
+        "sha256": "083d98136095c381f53121cb13d5a5316820ae0806fe3d2f34afe26b0888cb52",
+        "size": 87
+      },
+      "src/restunts/asm/seg014.asm": {
+        "sha256": "9c4557b9e6b2544236cf251b2c92484c46a0a563719bd6b24ef6ea2b00a2eb17",
+        "size": 6486
+      },
+      "src/restunts/asm/seg014.inc": {
+        "sha256": "f010d79b38efa2d600975d8b8aba0459605ae747f260f15ab37082ce94158338",
+        "size": 97
+      },
+      "src/restunts/asm/seg015.asm": {
+        "sha256": "16caa365ae33888c5aac4988f2372cd4a3c72b47258077166c9a240d1d9ef463",
+        "size": 10158
+      },
+      "src/restunts/asm/seg015.inc": {
+        "sha256": "66c90206b51b2da5efb55070ba230eda79c6ee5b373cf987c6b34efd0eff9125",
+        "size": 98
+      },
+      "src/restunts/asm/seg016.asm": {
+        "sha256": "ccf47b6efaa78567f7992d6dfac286326e8fa2089910802dd02bb265c9583e19",
+        "size": 5171
+      },
+      "src/restunts/asm/seg016.inc": {
+        "sha256": "1934ab55c8c91634e145d6402ddc58d498dbc8ef64e99d832625c76929681b70",
+        "size": 190
+      },
+      "src/restunts/asm/seg017.asm": {
+        "sha256": "72bb22a1774dc7683a7d0da5e46da039c466ebe6cd6e7242bccb6ff16bad4568",
+        "size": 9467
+      },
+      "src/restunts/asm/seg017.inc": {
+        "sha256": "70e1b24bd6cbb5b8bf6b1a08973fe1bfbe9f9a3de304821d4fb3abd977809196",
+        "size": 277
+      },
+      "src/restunts/asm/seg018.asm": {
+        "sha256": "8fa0b7ee51146af15375aebc48a88ff5986e026be440dc6a4f93f9abcb6f5cd2",
+        "size": 1837
+      },
+      "src/restunts/asm/seg018.inc": {
+        "sha256": "b015c640b918c933ccea05f772d7501ad93e0d35f0aac4e2edb7c3690161a770",
+        "size": 127
+      },
+      "src/restunts/asm/seg019.asm": {
+        "sha256": "2abafaade5dd7367f621d8a870ea4ab421b13b23208e8c87f5146c54dd8105f8",
+        "size": 3573
+      },
+      "src/restunts/asm/seg019.inc": {
+        "sha256": "4ab8b340e209663fea41d2affd884a28d3d81e00a44cfecf1048340b9687a6c1",
+        "size": 97
+      },
+      "src/restunts/asm/seg020.asm": {
+        "sha256": "a32575c1885f6e9276c1773ce2e287609c913d79263248927c8d67e18f2b3a36",
+        "size": 1951
+      },
+      "src/restunts/asm/seg020.inc": {
+        "sha256": "92ffe8a5254cba6c57148a61772b31d2dafde04757d636f0e5a83664278fc3bd",
+        "size": 97
+      },
+      "src/restunts/asm/seg021.asm": {
+        "sha256": "2d1a383e70a90b70b0ccf42ddeeeae7673dedbdfe4a7bd2778c0ae671991d035",
+        "size": 3367
+      },
+      "src/restunts/asm/seg021.inc": {
+        "sha256": "a37c44c40997b475833dff376972bfc5515c50e532c58435e0b29ef724f7b125",
+        "size": 99
+      },
+      "src/restunts/asm/seg022.asm": {
+        "sha256": "f90aa0f7c23fdbd76654e08a0e6e4ec63d866de6c8c599fc70392a6f1edd8c8d",
+        "size": 7104
+      },
+      "src/restunts/asm/seg022.inc": {
+        "sha256": "ad7155b580d6cd8e5c7ae3ee212acd064f312039ac3b60dd77ca8731810c908b",
+        "size": 89
+      },
+      "src/restunts/asm/seg023.asm": {
+        "sha256": "ddb07b45e17e06fa9e5d7535548726f4131ea4a66eee87994c44f20555b86f94",
+        "size": 2881
+      },
+      "src/restunts/asm/seg023.inc": {
+        "sha256": "1278ef34e9d82649e364c1eccaa7b5e909a0e4f8cc418b476db5d48f21077372",
+        "size": 96
+      },
+      "src/restunts/asm/seg024.asm": {
+        "sha256": "c6ed470c4b3ef3c7d55a12260572aa505fc2c2490a716fbb8d7c35e819a9a924",
+        "size": 4347
+      },
+      "src/restunts/asm/seg024.inc": {
+        "sha256": "341bd66d5390bf0cbe0daa5cd5d54e5f7ab85bae131da12920371fa4dd4b084a",
+        "size": 159
+      },
+      "src/restunts/asm/seg025.asm": {
+        "sha256": "bffc63e8395a51557e9ea7dd3a0dd934963dc1c2a260dde760f6a49e57091452",
+        "size": 3214
+      },
+      "src/restunts/asm/seg025.inc": {
+        "sha256": "2793f22f4e60d6e17b0fba4410005709dd622f47d33ef626311479980364ba7f",
+        "size": 83
+      },
+      "src/restunts/asm/seg026.asm": {
+        "sha256": "7891717d7f6257a81d1a0c46505ca2fd7a8a8d829d9a7c252054925ba2e92811",
+        "size": 1592
+      },
+      "src/restunts/asm/seg026.inc": {
+        "sha256": "714e67fb40895f9bf24190906180bdf0d585893c044c599c16ed9b003c29e9d4",
+        "size": 89
+      },
+      "src/restunts/asm/seg027.asm": {
+        "sha256": "b5898097e005017182519d5301a99560152a5058409531a913fc2b7db01ab557",
+        "size": 68014
+      },
+      "src/restunts/asm/seg027.inc": {
+        "sha256": "92dd48570ab6b28ffd08c6501870ffcc2e42f46ec0b6c42cc56ba9670e401d35",
+        "size": 1417
+      },
+      "src/restunts/asm/seg028.asm": {
+        "sha256": "317a2da4d7bfdd74213ee0a349aba1811180c3c84aad4c480e46b4f61faeff5f",
+        "size": 60220
+      },
+      "src/restunts/asm/seg028.inc": {
+        "sha256": "27a3a84c79e6573866b80420aba61211a6c7d15b5420a612066fab64553a47c6",
+        "size": 649
+      },
+      "src/restunts/asm/seg029.asm": {
+        "sha256": "8b8ecfdd2a146af95a40749687bac94ca699cd8289b1e1589c5d28e55f05531d",
+        "size": 8986
+      },
+      "src/restunts/asm/seg029.inc": {
+        "sha256": "735022a9dec3d10fd594511bafb6d1a5851bf788d05c226673051880312ebe28",
+        "size": 257
+      },
+      "src/restunts/asm/seg030.asm": {
+        "sha256": "cec923ee5c205ddd3dcc2e0ebe49607a1170e46af23396fb972150bf3a814b4d",
+        "size": 5058
+      },
+      "src/restunts/asm/seg030.inc": {
+        "sha256": "37eb3352bd28db83a856090750ba484c0b6bfd7c1621a063bcded494efedb766",
+        "size": 147
+      },
+      "src/restunts/asm/seg031.asm": {
+        "sha256": "9382884aaf3806bf1c541432dc68af63994c4325549adc93ce6eb27095a22a64",
+        "size": 20297
+      },
+      "src/restunts/asm/seg031.inc": {
+        "sha256": "96d7091f5a509253e9330170e94c7211a54acee1e788f7457a11aaef1b7169ac",
+        "size": 530
+      },
+      "src/restunts/asm/seg032.asm": {
+        "sha256": "0f51af599242075eff364e90a4fe5dc126b9a1b3a13a7e46988b49717b5bd39d",
+        "size": 14013
+      },
+      "src/restunts/asm/seg032.inc": {
+        "sha256": "5a81bc2a1f573628cf26a719735a28d04bafac527a1f8465d03cb5d97182caa4",
+        "size": 150
+      },
+      "src/restunts/asm/seg033.asm": {
+        "sha256": "e33bd8bed2451a01199d7c87ce9401fdb9edd267e5176f1c3916e6d2da88bea7",
+        "size": 2769
+      },
+      "src/restunts/asm/seg033.inc": {
+        "sha256": "80861f479abd49bfac87f10e278bfaeb22f16e7a14c81c57a141668ff4d966ed",
+        "size": 135
+      },
+      "src/restunts/asm/seg034.asm": {
+        "sha256": "c8b2463fdb46b704cd75874cba5b5a74305e11668a190231b223a3a85b421d31",
+        "size": 11063
+      },
+      "src/restunts/asm/seg034.inc": {
+        "sha256": "8c7d0d499ee0531f35d0b8c45421cba90f43fde57746c330e74b34700b434518",
+        "size": 251
+      },
+      "src/restunts/asm/seg035.asm": {
+        "sha256": "a28218dd35d7554b1c4a37a1160a8f22c7b3f3002bfb889e8c30ae71905ec7a8",
+        "size": 13364
+      },
+      "src/restunts/asm/seg035.inc": {
+        "sha256": "fb289fe134789f0d8328173d78c4eec023f35708b135649e28560e4fb0b1b30e",
+        "size": 277
+      },
+      "src/restunts/asm/seg036.asm": {
+        "sha256": "cda015d807c469be1b4db9203a123765a5daa88a6d017ea9737b0171c07c44fb",
+        "size": 2819
+      },
+      "src/restunts/asm/seg036.inc": {
+        "sha256": "6a25f48aaa01c79d97a6012d23a8577e5d59529e636fc50d45ff4ef5ca72937b",
+        "size": 102
+      },
+      "src/restunts/asm/seg037.asm": {
+        "sha256": "33f4b05f403870f85a3a32a90ec1cd7dd2e9dfee9082d0a1ec4962f54624f47a",
+        "size": 3350
+      },
+      "src/restunts/asm/seg037.inc": {
+        "sha256": "0daeb848eb527962557e7d2a8af53b99790795370548f1472f448dbc2f3af31c",
+        "size": 112
+      },
+      "src/restunts/asm/seg038.asm": {
+        "sha256": "9a44777698b573c2150258d04dd4bfee964c4b338ef2c0134c40aa0ef77c72f9",
+        "size": 1924
+      },
+      "src/restunts/asm/seg038.inc": {
+        "sha256": "fa397731d6233d17ca8bf88b78dd7c17985cb50729fff68dcc6b3652146b307f",
+        "size": 268
+      },
+      "src/restunts/asm/seg039.asm": {
+        "sha256": "5400e9d1afae9e9575a5e3c7e783d02f7683cf24f20f010b3ba8319074823355",
+        "size": 18690
+      },
+      "src/restunts/asm/seg039.inc": {
+        "sha256": "3dcbe996e960b49e1f8269af141e0617d009f99e77f873e42f6f0f52e831d3ea",
+        "size": 1939
+      },
+      "src/restunts/asm/seg041.asm": {
+        "sha256": "e4679d92fe1a42e324beb54e4620c765d6c2ac213e5e0296d45d39239a528dec",
+        "size": 1218
+      },
+      "src/restunts/asm/seg041.inc": {
+        "sha256": "f7c42be2d7c051182fb8165f092be2ba7ea5b23d02a1e7ef64b44bc138e97863",
+        "size": 55
+      },
+      "src/restunts/asm/segments.asm": {
+        "sha256": "5ac702d4defe630d8a4db4994f3ce40f4547df87f498b8d4932f49b6e624cb9c",
+        "size": 931
+      },
+      "src/restunts/asm/structs.inc": {
+        "sha256": "fc7b57252c56051a881c403b60f834f9087fc3095e16b5f4a05958a0744f6233",
+        "size": 6105
+      },
+      "src/restunts/asmorig/custom.inc": {
+        "sha256": "2c1c2b91dc0740453ddea26c909ab65ffccc11477620a7b45c7bda29c803409b",
+        "size": 265
+      },
+      "src/restunts/asmorig/dseg.asm": {
+        "sha256": "7fe7d864611fe810f93811c3a12851d2161cbfda89c290526e435fb55218723d",
+        "size": 475675
+      },
+      "src/restunts/asmorig/dseg.inc": {
+        "sha256": "353b5690f20b5391dbe3693239e80bd8cd24b78d1a96f413ee269c62fbdd4dcb",
+        "size": 39941
+      },
+      "src/restunts/asmorig/seg000.asm": {
+        "sha256": "a4b3695f28d8b085719a3dae37482f1bc4e007f49588a063e502301a142a5a35",
+        "size": 180780
+      },
+      "src/restunts/asmorig/seg000.inc": {
+        "sha256": "e88718db41ae14f87b161c37e5e5678968373eb82e16701253e86bc8a83bd474",
+        "size": 628
+      },
+      "src/restunts/asmorig/seg001.asm": {
+        "sha256": "babe0b470c7baf0465cc675e3623855c93da7881dee1f06ec8e50fd8719be7ff",
+        "size": 251166
+      },
+      "src/restunts/asmorig/seg001.inc": {
+        "sha256": "24f9b724f82ea335759dfbc6210eaf5f5459f2e586e7544c1f9981f76084b5d6",
+        "size": 973
+      },
+      "src/restunts/asmorig/seg002.asm": {
+        "sha256": "6fe0d2b4586c6c096171cde6eea0792ffd478e4255ecd2f6acce736ecd1d515f",
+        "size": 7180
+      },
+      "src/restunts/asmorig/seg002.inc": {
+        "sha256": "d3df3ab1b8c87d605fd041bf3e90dfb1df5c2e44c381896412a2b938399249ed",
+        "size": 396
+      },
+      "src/restunts/asmorig/seg003.asm": {
+        "sha256": "59fef7879073a0c17ec2873b886304097d616864640b3a9997abcb09b4f97e2d",
+        "size": 187202
+      },
+      "src/restunts/asmorig/seg003.inc": {
+        "sha256": "4b1659080a0db67adbe8cd41980bc455ef0ba5826b740ea59667957846731fcb",
+        "size": 549
+      },
+      "src/restunts/asmorig/seg004.asm": {
+        "sha256": "47dc85d9f9b8f318c3ad86257d7b778dffc7f28c7586d49da04a9843aba1e151",
+        "size": 163385
+      },
+      "src/restunts/asmorig/seg004.inc": {
+        "sha256": "34fa91387ea6603807f5d2b91787fbc39ff6f3e7c0ff631d9220e4f9c2083f44",
+        "size": 447
+      },
+      "src/restunts/asmorig/seg005.asm": {
+        "sha256": "f982764a01ab89e945ed09542d47381860651ab6f2bb7477f291fa492b95ae9c",
+        "size": 129570
+      },
+      "src/restunts/asmorig/seg005.inc": {
+        "sha256": "63d76926c9ff1a725a119580ec49871d1de29ea9681b7067cb83bb004943ca75",
+        "size": 726
+      },
+      "src/restunts/asmorig/seg006.asm": {
+        "sha256": "dabe4327db026bf0374563755a0c4b8e9cce7d9cf0f2f8666812f38ede71c79a",
+        "size": 93899
+      },
+      "src/restunts/asmorig/seg006.inc": {
+        "sha256": "4a7f61c298d2a054b7ef1094bba72c3b6292da9b0d1f1e27f6cc8907afc78a90",
+        "size": 822
+      },
+      "src/restunts/asmorig/seg007.asm": {
+        "sha256": "2afb86267e4c60e3873bf4df78feabfe16a30d5512a4c175432ca330f0913403",
+        "size": 26758
+      },
+      "src/restunts/asmorig/seg007.inc": {
+        "sha256": "6c485a9755e09f7449f405837141d3d94505a8a1a324711b52f5be55247bb331",
+        "size": 624
+      },
+      "src/restunts/asmorig/seg008.asm": {
+        "sha256": "7e10a090b097c5c5dd7cb8ddb0ddf7bc4d87ed3369de523eb0375fde4fd68a9e",
+        "size": 131247
+      },
+      "src/restunts/asmorig/seg008.inc": {
+        "sha256": "1f617e05f5ec78122752eee78994e8ff0ed18683066d7aa1517bd6c6dd323676",
+        "size": 2158
+      },
+      "src/restunts/asmorig/seg009.asm": {
+        "sha256": "6d6049a5e731a212869ff4274a516c7b7f6323c3131e89bcff0972196765a13c",
+        "size": 106165
+      },
+      "src/restunts/asmorig/seg009.inc": {
+        "sha256": "1af9ce80cf7cb70da15245cd4eb7ba347d048d7eff6c180ade4e6dbdcbe83b65",
+        "size": 213
+      },
+      "src/restunts/asmorig/seg010.asm": {
+        "sha256": "59adf13ebda18a9bf8a5e6cae49d94c980f36a31ebd3ffae41480c35f2520789",
+        "size": 96061
+      },
+      "src/restunts/asmorig/seg010.inc": {
+        "sha256": "92ed87148c5c810d0f1bc7fe608146e1da827a0f5a9d9a0190af70323cc41a1a",
+        "size": 2251
+      },
+      "src/restunts/asmorig/seg011.asm": {
+        "sha256": "512f35d237be7f2633db62c8f09c643eb635b1f614bf01fdc548dd4af82476ed",
+        "size": 1752
+      },
+      "src/restunts/asmorig/seg011.inc": {
+        "sha256": "bcb4b2882218453c37fc9dfc9dcbd2807d5c698fc90d64c859aa4901320f8b5d",
+        "size": 87
+      },
+      "src/restunts/asmorig/seg012.asm": {
+        "sha256": "870869ef92c5378be74e03694326f95de3379deae29e3ab835ab1bafc0ca2a7f",
+        "size": 368574
+      },
+      "src/restunts/asmorig/seg012.inc": {
+        "sha256": "c73d20fd1d26bbf8dad24ef91b0c8dc2d992517835d27af16c2a2214bb3a71ce",
+        "size": 10397
+      },
+      "src/restunts/asmorig/seg013.asm": {
+        "sha256": "7f224ff9938c34ffe7c35527b558b48a3896bf6ec65546f4c7414bec8eb5d1f9",
+        "size": 3090
+      },
+      "src/restunts/asmorig/seg013.inc": {
+        "sha256": "083d98136095c381f53121cb13d5a5316820ae0806fe3d2f34afe26b0888cb52",
+        "size": 87
+      },
+      "src/restunts/asmorig/seg014.asm": {
+        "sha256": "9c4557b9e6b2544236cf251b2c92484c46a0a563719bd6b24ef6ea2b00a2eb17",
+        "size": 6486
+      },
+      "src/restunts/asmorig/seg014.inc": {
+        "sha256": "f010d79b38efa2d600975d8b8aba0459605ae747f260f15ab37082ce94158338",
+        "size": 97
+      },
+      "src/restunts/asmorig/seg015.asm": {
+        "sha256": "16caa365ae33888c5aac4988f2372cd4a3c72b47258077166c9a240d1d9ef463",
+        "size": 10158
+      },
+      "src/restunts/asmorig/seg015.inc": {
+        "sha256": "66c90206b51b2da5efb55070ba230eda79c6ee5b373cf987c6b34efd0eff9125",
+        "size": 98
+      },
+      "src/restunts/asmorig/seg016.asm": {
+        "sha256": "3e8b58bc1171a5e377799d1c0189686ed317f28f746b59cf71d8359da911c699",
+        "size": 5147
+      },
+      "src/restunts/asmorig/seg016.inc": {
+        "sha256": "3e90c2c1747af8bb6aad04cc4e3e71981cce47548bbe39e1fc770a2e9158c05e",
+        "size": 182
+      },
+      "src/restunts/asmorig/seg017.asm": {
+        "sha256": "72bb22a1774dc7683a7d0da5e46da039c466ebe6cd6e7242bccb6ff16bad4568",
+        "size": 9467
+      },
+      "src/restunts/asmorig/seg017.inc": {
+        "sha256": "70e1b24bd6cbb5b8bf6b1a08973fe1bfbe9f9a3de304821d4fb3abd977809196",
+        "size": 277
+      },
+      "src/restunts/asmorig/seg018.asm": {
+        "sha256": "8fa0b7ee51146af15375aebc48a88ff5986e026be440dc6a4f93f9abcb6f5cd2",
+        "size": 1837
+      },
+      "src/restunts/asmorig/seg018.inc": {
+        "sha256": "b015c640b918c933ccea05f772d7501ad93e0d35f0aac4e2edb7c3690161a770",
+        "size": 127
+      },
+      "src/restunts/asmorig/seg019.asm": {
+        "sha256": "2abafaade5dd7367f621d8a870ea4ab421b13b23208e8c87f5146c54dd8105f8",
+        "size": 3573
+      },
+      "src/restunts/asmorig/seg019.inc": {
+        "sha256": "4ab8b340e209663fea41d2affd884a28d3d81e00a44cfecf1048340b9687a6c1",
+        "size": 97
+      },
+      "src/restunts/asmorig/seg020.asm": {
+        "sha256": "a32575c1885f6e9276c1773ce2e287609c913d79263248927c8d67e18f2b3a36",
+        "size": 1951
+      },
+      "src/restunts/asmorig/seg020.inc": {
+        "sha256": "92ffe8a5254cba6c57148a61772b31d2dafde04757d636f0e5a83664278fc3bd",
+        "size": 97
+      },
+      "src/restunts/asmorig/seg021.asm": {
+        "sha256": "3bd753c76f8bafd4cf5522da87421708ecb3baa46d726d0c5d143e3a5f369448",
+        "size": 3343
+      },
+      "src/restunts/asmorig/seg021.inc": {
+        "sha256": "76c91748971998109decb53daffc67e66460c2f8f8ecfb17a843df0e4a291342",
+        "size": 91
+      },
+      "src/restunts/asmorig/seg022.asm": {
+        "sha256": "f90aa0f7c23fdbd76654e08a0e6e4ec63d866de6c8c599fc70392a6f1edd8c8d",
+        "size": 7104
+      },
+      "src/restunts/asmorig/seg022.inc": {
+        "sha256": "ad7155b580d6cd8e5c7ae3ee212acd064f312039ac3b60dd77ca8731810c908b",
+        "size": 89
+      },
+      "src/restunts/asmorig/seg023.asm": {
+        "sha256": "ddb07b45e17e06fa9e5d7535548726f4131ea4a66eee87994c44f20555b86f94",
+        "size": 2881
+      },
+      "src/restunts/asmorig/seg023.inc": {
+        "sha256": "1278ef34e9d82649e364c1eccaa7b5e909a0e4f8cc418b476db5d48f21077372",
+        "size": 96
+      },
+      "src/restunts/asmorig/seg024.asm": {
+        "sha256": "b1dd27fc7007e03edce4b0ef0837d36037312c0f6360bfb0db8c6971acdd1e94",
+        "size": 4275
+      },
+      "src/restunts/asmorig/seg024.inc": {
+        "sha256": "a9265a585e5f7ed77a7a8f1f3b5d32b11ade3a1592c7a0bbc5327ecab04abde3",
+        "size": 135
+      },
+      "src/restunts/asmorig/seg025.asm": {
+        "sha256": "bffc63e8395a51557e9ea7dd3a0dd934963dc1c2a260dde760f6a49e57091452",
+        "size": 3214
+      },
+      "src/restunts/asmorig/seg025.inc": {
+        "sha256": "2793f22f4e60d6e17b0fba4410005709dd622f47d33ef626311479980364ba7f",
+        "size": 83
+      },
+      "src/restunts/asmorig/seg026.asm": {
+        "sha256": "7382cf8934c054a61b8961cf9244ce56e6cdc12ec47562c406ee77c81cfb702a",
+        "size": 1568
+      },
+      "src/restunts/asmorig/seg026.inc": {
+        "sha256": "253d505d5f386a69be78df1a73d73727bfcd8e8498dea10477a6982c8441ac28",
+        "size": 81
+      },
+      "src/restunts/asmorig/seg027.asm": {
+        "sha256": "b5898097e005017182519d5301a99560152a5058409531a913fc2b7db01ab557",
+        "size": 68014
+      },
+      "src/restunts/asmorig/seg027.inc": {
+        "sha256": "92dd48570ab6b28ffd08c6501870ffcc2e42f46ec0b6c42cc56ba9670e401d35",
+        "size": 1417
+      },
+      "src/restunts/asmorig/seg028.asm": {
+        "sha256": "317a2da4d7bfdd74213ee0a349aba1811180c3c84aad4c480e46b4f61faeff5f",
+        "size": 60220
+      },
+      "src/restunts/asmorig/seg028.inc": {
+        "sha256": "27a3a84c79e6573866b80420aba61211a6c7d15b5420a612066fab64553a47c6",
+        "size": 649
+      },
+      "src/restunts/asmorig/seg029.asm": {
+        "sha256": "8b8ecfdd2a146af95a40749687bac94ca699cd8289b1e1589c5d28e55f05531d",
+        "size": 8986
+      },
+      "src/restunts/asmorig/seg029.inc": {
+        "sha256": "735022a9dec3d10fd594511bafb6d1a5851bf788d05c226673051880312ebe28",
+        "size": 257
+      },
+      "src/restunts/asmorig/seg030.asm": {
+        "sha256": "cec923ee5c205ddd3dcc2e0ebe49607a1170e46af23396fb972150bf3a814b4d",
+        "size": 5058
+      },
+      "src/restunts/asmorig/seg030.inc": {
+        "sha256": "37eb3352bd28db83a856090750ba484c0b6bfd7c1621a063bcded494efedb766",
+        "size": 147
+      },
+      "src/restunts/asmorig/seg031.asm": {
+        "sha256": "ff8e846f047e8a50cd317aacd81cc4e8622611bc31db27f19886ded29f0baac4",
+        "size": 20073
+      },
+      "src/restunts/asmorig/seg031.inc": {
+        "sha256": "af8c559ace66774249caaa6cdc0488162c6d763cf6a96198a1bb21e28af3086a",
+        "size": 458
+      },
+      "src/restunts/asmorig/seg032.asm": {
+        "sha256": "0f51af599242075eff364e90a4fe5dc126b9a1b3a13a7e46988b49717b5bd39d",
+        "size": 14013
+      },
+      "src/restunts/asmorig/seg032.inc": {
+        "sha256": "5a81bc2a1f573628cf26a719735a28d04bafac527a1f8465d03cb5d97182caa4",
+        "size": 150
+      },
+      "src/restunts/asmorig/seg033.asm": {
+        "sha256": "ddba798675a2f7abcdf47abc22d66f445c30dd4f74f18a63755cac50da5c77a8",
+        "size": 2721
+      },
+      "src/restunts/asmorig/seg033.inc": {
+        "sha256": "13c2b9c3ab8a718b2787d853bc989da7f99cebd1f320b0f4b455af51762b0f2f",
+        "size": 119
+      },
+      "src/restunts/asmorig/seg034.asm": {
+        "sha256": "6242df1335090df7fb26e78c387365528032a51be8863d9640988102d1ff8ba8",
+        "size": 10943
+      },
+      "src/restunts/asmorig/seg034.inc": {
+        "sha256": "5e3fc161395130cae8120486e9950a6cba71ba48b94c98d057498db0fe07c88d",
+        "size": 219
+      },
+      "src/restunts/asmorig/seg035.asm": {
+        "sha256": "609edf436962aacc885f366a033f315a1e5e1d6090a22ef0417e99c33db1f4cc",
+        "size": 13276
+      },
+      "src/restunts/asmorig/seg035.inc": {
+        "sha256": "81fba72af3eaae7cfcf50e2646200bacd7f0e8706411f78cfdeb83853b8e290c",
+        "size": 253
+      },
+      "src/restunts/asmorig/seg036.asm": {
+        "sha256": "cd056c81180a6dfa413e4858b6a1dbaac031db06d18afdedddf676ff04eef306",
+        "size": 2795
+      },
+      "src/restunts/asmorig/seg036.inc": {
+        "sha256": "b92b8bab3c10e99a8cf9b876c4432282fb816ba4d73594bbc86d4c10f7dc75b5",
+        "size": 94
+      },
+      "src/restunts/asmorig/seg037.asm": {
+        "sha256": "fd85a0e3026637d0d04270c7e071dc95c83313288bd48f0a0c3c57248e89edea",
+        "size": 3326
+      },
+      "src/restunts/asmorig/seg037.inc": {
+        "sha256": "3ceddf1476c1c3332e1103664766900a74bc75083481f8d33cc821766317bc63",
+        "size": 104
+      },
+      "src/restunts/asmorig/seg038.asm": {
+        "sha256": "9a44777698b573c2150258d04dd4bfee964c4b338ef2c0134c40aa0ef77c72f9",
+        "size": 1924
+      },
+      "src/restunts/asmorig/seg038.inc": {
+        "sha256": "fa397731d6233d17ca8bf88b78dd7c17985cb50729fff68dcc6b3652146b307f",
+        "size": 268
+      },
+      "src/restunts/asmorig/seg039.asm": {
+        "sha256": "5400e9d1afae9e9575a5e3c7e783d02f7683cf24f20f010b3ba8319074823355",
+        "size": 18690
+      },
+      "src/restunts/asmorig/seg039.inc": {
+        "sha256": "3dcbe996e960b49e1f8269af141e0617d009f99e77f873e42f6f0f52e831d3ea",
+        "size": 1939
+      },
+      "src/restunts/asmorig/seg041.asm": {
+        "sha256": "e4679d92fe1a42e324beb54e4620c765d6c2ac213e5e0296d45d39239a528dec",
+        "size": 1218
+      },
+      "src/restunts/asmorig/seg041.inc": {
+        "sha256": "f7c42be2d7c051182fb8165f092be2ba7ea5b23d02a1e7ef64b44bc138e97863",
+        "size": 55
+      },
+      "src/restunts/asmorig/segments.asm": {
+        "sha256": "5ac702d4defe630d8a4db4994f3ce40f4547df87f498b8d4932f49b6e624cb9c",
+        "size": 931
+      },
+      "src/restunts/asmorig/structs.inc": {
+        "sha256": "fc7b57252c56051a881c403b60f834f9087fc3095e16b5f4a05958a0744f6233",
+        "size": 6105
+      },
+      "src/restunts/c/fileio.c": {
+        "sha256": "98b273062ef19a5e3f43850bd583a001344efe8e67b1a45c73447beae6f47567",
+        "size": 23075
+      },
+      "src/restunts/c/frame.c": {
+        "sha256": "8d3ef2af9582f75acb3efd73e8135be274b3ca537f63104559dc9d0da7083151",
+        "size": 44713
+      },
+      "src/restunts/c/heapsort.c": {
+        "sha256": "98509835b2fd035c5fc55c788cfa7565e9bc608bb52d176ca326b0cab982b5cb",
+        "size": 1676
+      },
+      "src/restunts/c/keyboard.c": {
+        "sha256": "953bed23f532f82a5171298a6a14ac0f05ea7c7d6ccd268b743b0c802f4852d6",
+        "size": 5341
+      },
+      "src/restunts/c/math.c": {
+        "sha256": "a908e707367b560fd4b2b1746d29e908d58252fdcfccc9ddb50679310ffdc7ba",
+        "size": 27502
+      },
+      "src/restunts/c/memmgr.c": {
+        "sha256": "5db90e864fbd661444b2a6db66e4b3437c894eca5ba718e95646b04ade0cfedb",
+        "size": 14722
+      },
+      "src/restunts/c/restunts.c": {
+        "sha256": "cb1621be220524fbd0ec1b11cd2f0065fbb9da811c2016e9fb77b640c32b25e5",
+        "size": 43200
+      },
+      "src/restunts/c/shape2d.c": {
+        "sha256": "e36567289660174549ca65fcfd901bdd849f0b699fc3af41030fec67dd8fba39",
+        "size": 17571
+      },
+      "src/restunts/c/shape3d.c": {
+        "sha256": "0f6b9b449c1a5c70357ccb6e6f861b4284c16fc7e210dff6c5127575be61a8d8",
+        "size": 127287
+      },
+      "src/restunts/c/state.c": {
+        "sha256": "5c6d0fa3d07a7a822c5b09e7da441d889264b6715663261690feb09e42ef490a",
+        "size": 8821
+      },
+      "src/restunts/c/statecar.c": {
+        "sha256": "c4ddbb22c7147e5f31c4e08885896eb25d004e1a4e8987c1534f7a9a8af90da0",
+        "size": 25566
+      },
+      "src/restunts/c/statecrs.c": {
+        "sha256": "ab7d4716e8c294694b6c91a9c0d1fb436d04d3612f2facd4b8a0eae8b1faf942",
+        "size": 8539
+      },
+      "src/restunts/c/stateply.c": {
+        "sha256": "1bfab78e671458a6e869521fa8057a0f2cdab0c881b70a084225e7257e7261bc",
+        "size": 95222
+      },
+      "src/restunts/dos/main.c": {
+        "sha256": "e156b76e07349711f63355dcb05374084f5fcaf0c0ba922135a6d5eb83abe643",
+        "size": 377
+      },
+      "src/restunts/game.asm": {
+        "sha256": "31b9569012fba40519dea61e23552d73492b49b2dc5cec8a96e687b5f89c57c0",
+        "size": 2497443
+      },
+      "src/restunts/game2.asm": {
+        "sha256": "46400167ba493618d292fa5dbfa5024c3913b334185508d6d56e6a6660a4c02e",
+        "size": 2348920
+      },
+      "src/restunts/repldump/repldump.c": {
+        "sha256": "e55f4e526f05bf8fb92c3f97f72ee8080c5ff7d68d1375ee8179c0ceef61763b",
+        "size": 6218
+      },
+      "src/restunts/sdl/data3d.cpp": {
+        "sha256": "274baf4bcf1fd158a7ab97cb6d17b0c47613136e4340935b57e3abc0c1696af1",
+        "size": 59200
+      },
+      "src/restunts/sdl/main.cpp": {
+        "sha256": "079b87dacffb7be6b49da976beca2cc3aa44934d259c5ac61dae9cb17c1be2da",
+        "size": 14881
+      },
+      "src/restunts/status.html": {
+        "sha256": "431b9330a8cd2da6b7441fd05eb92880cdbd6379d3a3a1689f269542b93d1e5e",
+        "size": 115543
+      }
+    },
+    "local_path": "build/references/restunts",
+    "url": "https://github.com/4d-stunts/restunts"
+  },
+  "stunpack": {
+    "commit": "ee616c4b3bfa122d44f56782121b6dabe9504ecb",
+    "local_path": "build/references/stunpack",
+    "url": "https://github.com/dstien/stunpack"
+  }
+}

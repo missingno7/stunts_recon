@@ -1,0 +1,286 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/load_1f314.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 127764
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 127765
+    },
+    {
+      "bytes": "8b4608",
+      "instruction": "mov ax, word ptr [bp + 8]",
+      "load_offset": 127767
+    },
+    {
+      "bytes": "33d2",
+      "instruction": "xor dx, dx",
+      "load_offset": 127770
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 127772
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 127774
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 127776
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 127778
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 127780
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 127782
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 127784
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 127786
+    },
+    {
+      "bytes": "034606",
+      "instruction": "add ax, word ptr [bp + 6]",
+      "load_offset": 127788
+    },
+    {
+      "bytes": "83d200",
+      "instruction": "adc dx, 0",
+      "load_offset": 127791
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 127794
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 127795
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec8b460833d2d1e0d1d2d1e0d1d2d1e0d1d2d1e0d1d203460683d2005dcb",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 127796,
+    "end_evidence": {
+      "instructions": 18,
+      "label": {
+        "ida": 193295,
+        "index": 872,
+        "line": 1463
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 1489,
+    "line_start": 1467,
+    "name": "parse_shape2d_helper",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 1489,
+      "line_start": 1467,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 2292,
+    "segment_paragraph": 7842,
+    "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+    "size": 32,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_1f314",
+    "start": 127764,
+    "start_evidence": {
+      "instructions": 2,
+      "label": {
+        "ida": 193295,
+        "index": 872,
+        "line": 1463
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_1f314",
+  "name": "parse_shape2d_helper",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_1f314 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [],
+  "scope_snapshot": {
+    "asm/README.md": "3dded7052fc26c77aee7f2f8ef61c42d9fd9e01e5cef7b8bddcbfcffd9d7960d",
+    "include/README.md": "0576d657eabdbd9b998ae33da38b0b660338a5aae4639d5884faac2bcec0d35b",
+    "layout/classification.json": "0eda06585979b04798a38fb3de55bb6e81f97741ab2006a9843faa362323d4a7",
+    "layout/data-symbols.json": "c54806f697ed9af875a67279e1eb576855849336e8eaacb5d76a9c47d56b4b2b",
+    "layout/library-candidates.json": "3ef9ed030a409f57c038c5a8bb9d5a480ccf858407b303c0c28c0ec68e66bff7",
+    "layout/manifest.json": "c8f6770448835a490653940cfeea2bf5307672da81079ef030427ad9e2681aff",
+    "layout/oracle.lock.json": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "layout/production-plan.json": "02adae646fb3ed75916629efef1b7242251f55c9fc3cf6da65cfa2aef9aa9de7",
+    "layout/references.json": "99761030df3845368ee95e4f5aad28a720170dd3e6d8086e88b636079218dc7d",
+    "layout/toolchain.json": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+    "recipes/audio_enable_flag2.json": "6160875c12b51080b31f0f0992303e32fc1f9d8079125c12260fc00a6a78c1ac",
+    "recipes/audioresource_get_dword.json": "426f508d90f51d03b4e47ddd480eb6b430a629163ff61a670f4066899cf2a081",
+    "recipes/nopsub_26552.json": "e7bb8f983a14e8cf6d8c3609f17361c0c869326cab8b78546797c4b53daeba4b",
+    "recipes/nopsub_378AE.json": "b7cf2688582a4fed725b9cf6cd5e81ea8f6f640a7526adfcae6fa8f64639e773",
+    "recipes/nopsub_378BC.json": "e16d9ba676a3e9502cbee20a38552cdde54a5cb5e80f3c79aafa2818b0be0e98",
+    "recipes/rect_is_inside.json": "958a31b6cb2d8752da87eeb35862efc15ad06d27e216cf44bec25b089b435f35",
+    "recipes/rect_is_overlapping.json": "52e7b04ceec7f43b1ed6442fffd25e9bc9def54f98781f59100f6341bf947248",
+    "recovery/candidates/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "recovery/candidates/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "recovery/candidates/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "recovery/candidates/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "recovery/candidates/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "recovery/candidates/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "recovery/candidates/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "src/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "src/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "src/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "src/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "src/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "src/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "src/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "tools/binder.py": "173c5af41fd7de1a962c6b5217dae725c707b518791d7f347b719e0eb2f67333",
+    "tools/build_exact.py": "2fa50745a85c42eeac37e364de45700d350799e35ae18f5988d2d76d01bced23",
+    "tools/check_candidate.py": "593b05c6a3afbe4222538630e79dac0616a05d4d0f26f401fc4764fa445c99c7",
+    "tools/check_library.py": "b40fc0198eba5a79c7517c5b66459d0a7e10915ba231662fb0b07e574957facd",
+    "tools/common.py": "8625c425e656f6cfb6ff3b88b4ccd4a84a603183d7c21326999ab4df8e2e3183",
+    "tools/compiler.py": "b63eb2594ab52e707c56537f94eb06878d6376c61bd16448a55175ca05b28af5",
+    "tools/coordinates.py": "732ff4889873bff0a6c7b8344d9dacd36a12b11fb132b70531068f8d74643e96",
+    "tools/crosscheck_runner.py": "4fa7f3865cd9753fc33f31354f469922bf07f4ba4587c0b3be5cc425a5a330c2",
+    "tools/data_symbols.py": "fc9245d766d967da4f3c0bf6f8c4928d5726ecbf11b6866b97aa97ce5c8c273b",
+    "tools/dsi.py": "7afb38485a232eca05eb65734c6eafc3d8db4c86096bf09586105cefafcc916c",
+    "tools/exepack.py": "4e1f5e3a1f629d556be07e822a4c64ea29daef3bbaef818f5aaa675d7278e1db",
+    "tools/grind.py": "444444fdae45e56d4c7dbeca5dafc91516853ca3517357a1822022ef338fedc1",
+    "tools/import_restunts.py": "a71f05c79afb8f112b5efc597bd2dbba3c0a53fa272d2b31ef9b0cfa508d2710",
+    "tools/library.py": "55cadd6ff216899b2ead30d3d8f0e4a0af10f51a7f58099c28a1b945758f69a9",
+    "tools/linker_probe.py": "d3ecaca7e3769941d3888f26b257e1c72a9b603f34acb95a9fa4ad3d2fca8c7f",
+    "tools/mz.py": "7b886df739b405b3d4c4ef420af5f3806f287980098b37c62838ebbc0c89ff16",
+    "tools/object_probe.py": "7caf47671ae287aab879a5e57a3644c91e9e22a5ad86b85a4ea3a1f3a62963a4",
+    "tools/omf.py": "e9e356e99cf6132d5fe69f0946a33d6fcbe70d8c1f21242f0ec4f05a7dae66d8",
+    "tools/oracle.py": "01c57bb2b64f9cd7107a49d0bc1b050cab4014406590ffc7b24f51b5874fc3b5",
+    "tools/prepare_candidate.py": "6f8a040db07d517145d014dcdcb4f7f0d57b7278b7d34d1c7ea26cd6a9b93db1",
+    "tools/probe_module.py": "5499db9bf5d27367262b9e0a17851a4bbb50d11f6b7ccbdbf15bca6142c16a86",
+    "tools/probe_tu.py": "1f5dd0bb237734e5873fceeb94ca21314fbe97fd84e8bdc37bd928d01bf17dbc",
+    "tools/reconstruction_factory.py": "762715a48c68d59644e2ec4e28ab02b91b1f70879be590fff780cfc05805d1e4",
+    "tools/restunts_base.py": "4c4350f3a9a8c3de01597230374a9b2125e047a49f550d91f8d2c95816b4719c",
+    "tools/runtime_link_probe.py": "641e43a6baea35561f1ecaeb2807dd63924ab145e52454b7ef70a1ab0acbcdf9",
+    "tools/toolchain_probe.py": "cd5e5785f21d950c30cce76838b8258b4e660e03bf511b11dcca1d80724c4d98",
+    "tools/triage.py": "abda8ad3f68ff1495948e2031a2df0019e9d72e1888a957e6cabdc4451e875c6",
+    "tools/validate.py": "8345af064740ff0e0382e330f110f33ddbbfca6f772173be1a8ecadc18a38f91",
+    "tools/workflow.py": "6fb6b46cff322cca00a17c95cb79c427f5d8abf423ac2ab145482810f412bf58"
+  },
+  "size": 32,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 1489,
+    "line_start": 1467,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "MEDIUM",
+  "workflow_snapshot": {
+    "asm/README.md": "3dded7052fc26c77aee7f2f8ef61c42d9fd9e01e5cef7b8bddcbfcffd9d7960d",
+    "include/README.md": "0576d657eabdbd9b998ae33da38b0b660338a5aae4639d5884faac2bcec0d35b",
+    "layout/classification.json": "0eda06585979b04798a38fb3de55bb6e81f97741ab2006a9843faa362323d4a7",
+    "layout/data-symbols.json": "c54806f697ed9af875a67279e1eb576855849336e8eaacb5d76a9c47d56b4b2b",
+    "layout/library-candidates.json": "3ef9ed030a409f57c038c5a8bb9d5a480ccf858407b303c0c28c0ec68e66bff7",
+    "layout/manifest.json": "c8f6770448835a490653940cfeea2bf5307672da81079ef030427ad9e2681aff",
+    "layout/oracle.lock.json": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "layout/production-plan.json": "02adae646fb3ed75916629efef1b7242251f55c9fc3cf6da65cfa2aef9aa9de7",
+    "layout/references.json": "99761030df3845368ee95e4f5aad28a720170dd3e6d8086e88b636079218dc7d",
+    "layout/toolchain.json": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+    "recipes/audio_enable_flag2.json": "6160875c12b51080b31f0f0992303e32fc1f9d8079125c12260fc00a6a78c1ac",
+    "recipes/audioresource_get_dword.json": "426f508d90f51d03b4e47ddd480eb6b430a629163ff61a670f4066899cf2a081",
+    "recipes/nopsub_26552.json": "e7bb8f983a14e8cf6d8c3609f17361c0c869326cab8b78546797c4b53daeba4b",
+    "recipes/nopsub_378AE.json": "b7cf2688582a4fed725b9cf6cd5e81ea8f6f640a7526adfcae6fa8f64639e773",
+    "recipes/nopsub_378BC.json": "e16d9ba676a3e9502cbee20a38552cdde54a5cb5e80f3c79aafa2818b0be0e98",
+    "recipes/rect_is_inside.json": "958a31b6cb2d8752da87eeb35862efc15ad06d27e216cf44bec25b089b435f35",
+    "recipes/rect_is_overlapping.json": "52e7b04ceec7f43b1ed6442fffd25e9bc9def54f98781f59100f6341bf947248",
+    "recovery/blockers.json": "0b7e146cfb91ad25f8356f984cdce86c682f2e56607896948d4841fbd96e0d62",
+    "recovery/candidates/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "recovery/candidates/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "recovery/candidates/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "recovery/candidates/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "recovery/candidates/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "recovery/candidates/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "recovery/candidates/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "recovery/library-evidence.json": "64c9c0039cdd45124fff9f7201465a1ecc0dece66dc0845acd43bc9c7a6b90c3",
+    "recovery/restunts-inventory.json": "b51c2025297959c2715fb4ff41c84c84658b0be977ab72d48baf29fdca7899b5",
+    "recovery/task-control.json": null,
+    "src/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "src/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "src/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "src/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "src/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "src/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "src/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "tools/binder.py": "173c5af41fd7de1a962c6b5217dae725c707b518791d7f347b719e0eb2f67333",
+    "tools/build_exact.py": "2fa50745a85c42eeac37e364de45700d350799e35ae18f5988d2d76d01bced23",
+    "tools/check_candidate.py": "593b05c6a3afbe4222538630e79dac0616a05d4d0f26f401fc4764fa445c99c7",
+    "tools/check_library.py": "b40fc0198eba5a79c7517c5b66459d0a7e10915ba231662fb0b07e574957facd",
+    "tools/common.py": "8625c425e656f6cfb6ff3b88b4ccd4a84a603183d7c21326999ab4df8e2e3183",
+    "tools/compiler.py": "b63eb2594ab52e707c56537f94eb06878d6376c61bd16448a55175ca05b28af5",
+    "tools/coordinates.py": "732ff4889873bff0a6c7b8344d9dacd36a12b11fb132b70531068f8d74643e96",
+    "tools/crosscheck_runner.py": "4fa7f3865cd9753fc33f31354f469922bf07f4ba4587c0b3be5cc425a5a330c2",
+    "tools/data_symbols.py": "fc9245d766d967da4f3c0bf6f8c4928d5726ecbf11b6866b97aa97ce5c8c273b",
+    "tools/dsi.py": "7afb38485a232eca05eb65734c6eafc3d8db4c86096bf09586105cefafcc916c",
+    "tools/exepack.py": "4e1f5e3a1f629d556be07e822a4c64ea29daef3bbaef818f5aaa675d7278e1db",
+    "tools/grind.py": "444444fdae45e56d4c7dbeca5dafc91516853ca3517357a1822022ef338fedc1",
+    "tools/import_restunts.py": "a71f05c79afb8f112b5efc597bd2dbba3c0a53fa272d2b31ef9b0cfa508d2710",
+    "tools/library.py": "55cadd6ff216899b2ead30d3d8f0e4a0af10f51a7f58099c28a1b945758f69a9",
+    "tools/linker_probe.py": "d3ecaca7e3769941d3888f26b257e1c72a9b603f34acb95a9fa4ad3d2fca8c7f",
+    "tools/mz.py": "7b886df739b405b3d4c4ef420af5f3806f287980098b37c62838ebbc0c89ff16",
+    "tools/object_probe.py": "7caf47671ae287aab879a5e57a3644c91e9e22a5ad86b85a4ea3a1f3a62963a4",
+    "tools/omf.py": "e9e356e99cf6132d5fe69f0946a33d6fcbe70d8c1f21242f0ec4f05a7dae66d8",
+    "tools/oracle.py": "01c57bb2b64f9cd7107a49d0bc1b050cab4014406590ffc7b24f51b5874fc3b5",
+    "tools/prepare_candidate.py": "6f8a040db07d517145d014dcdcb4f7f0d57b7278b7d34d1c7ea26cd6a9b93db1",
+    "tools/probe_module.py": "5499db9bf5d27367262b9e0a17851a4bbb50d11f6b7ccbdbf15bca6142c16a86",
+    "tools/probe_tu.py": "1f5dd0bb237734e5873fceeb94ca21314fbe97fd84e8bdc37bd928d01bf17dbc",
+    "tools/reconstruction_factory.py": "762715a48c68d59644e2ec4e28ab02b91b1f70879be590fff780cfc05805d1e4",
+    "tools/restunts_base.py": "4c4350f3a9a8c3de01597230374a9b2125e047a49f550d91f8d2c95816b4719c",
+    "tools/runtime_link_probe.py": "641e43a6baea35561f1ecaeb2807dd63924ab145e52454b7ef70a1ab0acbcdf9",
+    "tools/toolchain_probe.py": "cd5e5785f21d950c30cce76838b8258b4e660e03bf511b11dcca1d80724c4d98",
+    "tools/triage.py": "abda8ad3f68ff1495948e2031a2df0019e9d72e1888a957e6cabdc4451e875c6",
+    "tools/validate.py": "8345af064740ff0e0382e330f110f33ddbbfca6f772173be1a8ecadc18a38f91",
+    "tools/workflow.py": "6fb6b46cff322cca00a17c95cb79c427f5d8abf423ac2ab145482810f412bf58"
+  }
+}

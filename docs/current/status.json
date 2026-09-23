@@ -1,0 +1,57 @@
+{
+  "blockers": [
+    "Only external DGROUP offset16 binding is supported; far/self-relative linking and complete TU layout remain open",
+    "QuickC BAKPAT rejected; full compiler/version fingerprint remains open",
+    "Archived CRT startup checksum anomaly and general runtime linking remain unresolved",
+    "Unmapped functions and internal code/data ambiguity remain"
+  ],
+  "classification_bytes": {
+    "code_evidence_excluding_library": 18826,
+    "data_evidence": 21968,
+    "library_identified": 725,
+    "unknown": 158481
+  },
+  "compiler": "MSC5.0/5.1 medium-model optimized, stack checking off; production pins MSC5.1; unique version/flags not proven",
+  "full_image_status": "HYBRID_EXACT",
+  "identified_library_bytes_still_raw": 0,
+  "library_production_bytes": 725,
+  "mapped_functions": 235,
+  "matching_asm_bytes": 0,
+  "matching_c_bytes": 252,
+  "oracle": {
+    "load_image": {
+      "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+      "size": 200000
+    },
+    "packed": {
+      "sha256": "f57ac2775b6156b0413775eb61a1c48743f64248f72d13ca970dc645029eb41d",
+      "size": 199125
+    },
+    "unpacked": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    }
+  },
+  "procedures": 619,
+  "promoted_game_functions": [
+    "audio_enable_flag2",
+    "audioresource_get_dword",
+    "nopsub_26552",
+    "nopsub_378AE",
+    "nopsub_378BC",
+    "parse_shape2d_helper3",
+    "rect_is_inside",
+    "rect_is_overlapping"
+  ],
+  "queue_counts": {
+    "CHEAP": 0,
+    "MEDIUM": 9,
+    "SUPERVISOR": 599
+  },
+  "raw_executable_bytes_confirmed_minimum": 18574,
+  "raw_executable_bytes_exact": "unknown until all code/data boundaries are established",
+  "raw_initialized_bytes": 199023,
+  "segment_frames_proven": 25,
+  "source_code_segments": 38,
+  "source_data_segments": 3
+}

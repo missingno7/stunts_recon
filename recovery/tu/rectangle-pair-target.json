@@ -1,0 +1,21 @@
+{
+  "end": 92624,
+  "publics": [
+    {
+      "name": "_rect_is_overlapping",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    },
+    {
+      "name": "_rect_is_inside",
+      "offset": 62,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "segment": "UNIT_TEXT",
+  "start": 92510,
+  "target": {
+    "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287",
+    "size": 114
+  }
+}

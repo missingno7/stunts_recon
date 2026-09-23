@@ -1,0 +1,64 @@
+[
+  {
+    "options": [
+      "/O",
+      "/Gs"
+    ],
+    "bytes": "558bec837e0c0075142bc050ff760a50ff76089a000000008bc28946068b460e39460672058b46065dcb8b460e5dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  },
+  {
+    "options": [
+      "/Oa",
+      "/Gs"
+    ],
+    "bytes": "558bec837e0c0075142bc050ff760a50ff76089a000000008bc28946068b460e39460672058b46065dcb8b460e5dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  },
+  {
+    "options": [
+      "/Ox",
+      "/Gs"
+    ],
+    "bytes": "558bec837e0c0075142bc050ff760a50ff76089a000000008bc28946068b460e39460672058b46065dcb8b460e5dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  },
+  {
+    "options": [
+      "/Od",
+      "/Gs"
+    ],
+    "bytes": "558bec81ec00005756837e0c007403e916002bc050ff760a2bc050ff76089a000000008bc28946068b460e3946067303e906008b4606e906008b460ee900005e5f8be55dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  },
+  {
+    "options": [
+      "/Ot",
+      "/Gs"
+    ],
+    "bytes": "558bec837e0c0075142bc050ff760a50ff76089a000000008bc28946068b460e39460672058b46065dcb8b460e5dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  },
+  {
+    "options": [
+      "/Os",
+      "/Gs"
+    ],
+    "bytes": "558bec837e0c0075142bc050ff760a50ff76089a000000008bc28946068b460e39460672058b4606eb038b460e5dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  },
+  {
+    "options": [
+      "/O"
+    ],
+    "bytes": "558bec33c09a00000000837e0c0075142bc050ff760a50ff76089a000000008bc28946068b460e39460672068b46065dcb908b460e5dcb90",
+    "match": false,
+    "log": "Microsoft (R) C Optimizing Compiler Version 5.10\r\r\nCopyright (c) Microsoft Corp 1984, 1985, 1986, 1987, 1988. All rights reserved.\r\r\n\r\r\nRPM.C\r\r\n"
+  }
+]

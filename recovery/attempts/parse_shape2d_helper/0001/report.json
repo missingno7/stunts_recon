@@ -1,0 +1,98 @@
+{
+  "budget_charge": true,
+  "diagnostics": {
+    "category": "EXTENT_MISMATCH",
+    "emitted_sizes": {
+      "CONST": 0,
+      "UNIT_TEXT": 26,
+      "_BSS": 0,
+      "_DATA": 0
+    },
+    "expected_size": 32,
+    "externals": [
+      "__acrtused",
+      "_parse_shape2d_helper"
+    ],
+    "fixups": [],
+    "object_segments": {
+      "UNIT_TEXT": {
+        "sha256": "e33f45e998051208240c30ca06718b58e0e1ab1b16264cf1cbcb559c854e3516",
+        "size": 26
+      }
+    },
+    "publics": [
+      {
+        "name": "_parse_shape2d_helper",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "receipt": {
+      "command": [
+        "C:/tools/msdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "object": {
+        "sha256": "6465f75dc507b0c13d446fae8543babd93487c2aeb6bbc1e1ee94fa5325ff42f",
+        "size": 286
+      },
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+        "size": 133
+      },
+      "staged_source": {
+        "sha256": "84540153d0c5fb4dea06dd95ae9890760cefd2321c3c2a969d9dc1f46c10b815",
+        "size": 137
+      },
+      "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pdmfu7nkb"
+    }
+  },
+  "epoch": 0,
+  "error": "Complete emitted contribution length differs from target",
+  "escalate": false,
+  "hypothesis": "Convert segment and offset to a 32-bit linear address using unsigned shift and addition",
+  "hypothesis_key": "77918760191a9b68f257fb6472b75b46cd6517cc5091b4512549ccea8a799c5c",
+  "input_fingerprint": "59dd34ce5e61a13f53581a5da007d07012e1ecc91a53b8816d21a9e6b6a0989f",
+  "recipe": {
+    "end": 127796,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 1489,
+      "line_start": 1467,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "parse_shape2d_helper",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_parse_shape2d_helper",
+    "source": "recovery/candidates/parse_shape2d_helper.c",
+    "stable_id": "load_1f314",
+    "start": 127764,
+    "target": {
+      "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+      "size": 32
+    }
+  },
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+    "size": 133
+  },
+  "started_utc": "2026-09-23T09:12:49.584568+00:00",
+  "status": "FAILED",
+  "task": "parse_shape2d_helper"
+}

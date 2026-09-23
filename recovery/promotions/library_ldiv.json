@@ -1,0 +1,48 @@
+{
+  "bytes": 156,
+  "canonical_full_build": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "fast": {
+    "ledata_policy": {
+      "mode": "pinned-ordered-ledata-v1",
+      "module_sha256": "01b72a2dee4ccd4c95fd6ef9d7152cf850c285213f8cb4a1466c8bfbcc8a0228",
+      "records": [
+        {
+          "offset": 0,
+          "overlap_offsets": [],
+          "record_offset": 112,
+          "segment_index": 1,
+          "sha256": "b4475a768d9763bc3e78b623c78634b0f6bb5ec7349068f5a05ced22293404a7",
+          "size": 154
+        },
+        {
+          "offset": 153,
+          "overlap_offsets": [
+            153
+          ],
+          "record_offset": 273,
+          "segment_index": 1,
+          "sha256": "5941aef3951678344b59a818b9f6a0caf3748aadfe03a3afebe49830a3b5d1d5",
+          "size": 3
+        }
+      ]
+    },
+    "library": "toolchain/msc510/LIBH.LIB",
+    "module": "ldiv.asm",
+    "module_sha256": "01b72a2dee4ccd4c95fd6ef9d7152cf850c285213f8cb4a1466c8bfbcc8a0228",
+    "payload": {
+      "sha256": "c12e61988352afbd2e3a9b113f5bdbe2866a3800e72318d244da74a06af851b8",
+      "size": 156
+    },
+    "segment": "_TEXT"
+  },
+  "library_reopened_fresh_at_least": 3,
+  "staged_full_build": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "status": "PROMOTED",
+  "task": "library_ldiv"
+}

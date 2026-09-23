@@ -1,0 +1,3 @@
+# Preserve the exact bytes recorded in source/evidence fingerprints.
+# Disable automatic line-ending conversion; text files remain diffable.
+* -text

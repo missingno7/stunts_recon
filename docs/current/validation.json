@@ -1,0 +1,33 @@
+{
+  "acceptance_input_fingerprint": "1fcf1750fed99753333ca3018426fa8d35f7a758fc421cc94b4c443881f74459",
+  "executable": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "full_image": "HYBRID_EXACT",
+  "grinding_scope": "Verified leaf contributions with supported binding; supervisor work remains",
+  "independent_compiler": {
+    "active_functions": 8,
+    "status": "PASS"
+  },
+  "oracle": {
+    "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+    "size": 200000
+  },
+  "queue_counts": {
+    "MEDIUM": 9,
+    "SUPERVISOR": 599
+  },
+  "status": "PASS",
+  "tests": {
+    "failed": 0,
+    "log": "build/validation/tests.log",
+    "passed": 87,
+    "skipped": 0
+  },
+  "toolchain_profiles": [
+    "msc500-medium",
+    "msc510-medium"
+  ],
+  "workflow_fingerprint": "2ffb275ba02039a4c6b8fd4d259f8a822b881df4b403afb9c76221cf8437ee13"
+}

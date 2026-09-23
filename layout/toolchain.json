@@ -1,0 +1,1773 @@
+{
+  "profiles": {
+    "msc500-medium": {
+      "directory": "toolchain/msc500",
+      "executable": "CL.EXE",
+      "files": [
+        {
+          "path": "toolchain/msc500/C1.ERR",
+          "sha256": "dd02a004e8912c96b90a5b3317dcfeed6f9e76374edfd90979705035c8097233",
+          "size": 13577
+        },
+        {
+          "path": "toolchain/msc500/C1.EXE",
+          "sha256": "3ef764476cb56dd14ae3c955a0b7717976d3b40f862fdff675ec8c6adc0ed791",
+          "size": 109957
+        },
+        {
+          "path": "toolchain/msc500/C1L.EXE",
+          "sha256": "ff28dbe0e9cc8ca3682a93c7a4ee8f59bb462d3d01220ce54648a7172c874565",
+          "size": 140667
+        },
+        {
+          "path": "toolchain/msc500/C2.EXE",
+          "sha256": "19fbe7914ba6ebe929a0e98e012fd5e8522643e5e40b6fcd89bef0e5f650f1f1",
+          "size": 199431
+        },
+        {
+          "path": "toolchain/msc500/C23.ERR",
+          "sha256": "75132883ac6507cccaa7d7105df6492f511ba029e4a12ee4a1fcc989517bfd18",
+          "size": 3062
+        },
+        {
+          "path": "toolchain/msc500/C3.EXE",
+          "sha256": "ca4d82b90423086e68eb8d3af8f1c1c1034f164d0a0b98530c3b3a0fb0501669",
+          "size": 117403
+        },
+        {
+          "path": "toolchain/msc500/CL.ERR",
+          "sha256": "b153605db3fbc0fa79e2f0d2ad5d814fbb70bfbebc1dbc0d2ed614194666621a",
+          "size": 2159
+        },
+        {
+          "path": "toolchain/msc500/CL.EXE",
+          "sha256": "11e3c7d53b3efc085b7ad90c2190a1ddb395c8874f57aef3a5cfc0a4a0a0f504",
+          "size": 32969
+        },
+        {
+          "path": "toolchain/msc500/CL.HLP",
+          "sha256": "8bda7a5b3c6196c330037e3e62b75c1efdeca80aa7e1efd954472a0a786d5934",
+          "size": 1990
+        },
+        {
+          "path": "toolchain/msc500/CLIBC.LIB",
+          "sha256": "01559911add50d22c7f0ac78d7ccca7c6c18a9db0ef8ab3b18449fad6dc47744",
+          "size": 139237
+        },
+        {
+          "path": "toolchain/msc500/CLIBFA.LIB",
+          "sha256": "1582c8965b2270739d9f41880c59d010e24e3cf345622f56dad5c50f5f61d207",
+          "size": 47625
+        },
+        {
+          "path": "toolchain/msc500/CLIBFP.LIB",
+          "sha256": "a9c097a59db978dfd4b1c16780ffededfddf50ebf890fefe14167f8b2b4112bb",
+          "size": 38309
+        },
+        {
+          "path": "toolchain/msc500/CV.EXE",
+          "sha256": "edb7f939fd115978b6df5a9edae39eafc3c950d0bdd9aa50c305488dcfda3745",
+          "size": 220066
+        },
+        {
+          "path": "toolchain/msc500/CV.HLP",
+          "sha256": "e6f2797409c43a3b2255ffd79328b1c7f72631b79c8d0f6ac0e4a6231dbbc7f8",
+          "size": 18348
+        },
+        {
+          "path": "toolchain/msc500/CVARSTCK.OBJ",
+          "sha256": "ec29393a84d6ddcf897908426f82f7f184823bca6993ebd4294103aeeacdf93b",
+          "size": 476
+        },
+        {
+          "path": "toolchain/msc500/CVPACK.EXE",
+          "sha256": "465c1a2dd9184c620e679297f875d1c2de594ab416b3be88bf5ea88b0ec5ebb5",
+          "size": 38241
+        },
+        {
+          "path": "toolchain/msc500/ERRMSG.DOC",
+          "sha256": "6b33e256e954ad8fde986f4dcf4697a6f47ce040b2dfce38e5f4ca440d17e16b",
+          "size": 13025
+        },
+        {
+          "path": "toolchain/msc500/ERROUT.EXE",
+          "sha256": "058b37a5a85a5d87843ca563cc3579964aa75339790d9f8798575ad53b6bbc0a",
+          "size": 10369
+        },
+        {
+          "path": "toolchain/msc500/EXEMOD.EXE",
+          "sha256": "fd748f313aebe4ab16d8fbc0be5b752887f40f1e98f27f44e826da1e98173b71",
+          "size": 11749
+        },
+        {
+          "path": "toolchain/msc500/EXEPACK.EXE",
+          "sha256": "64e46a10375bd5fd14bcf3d2b0a06cdc8dfe24a178edee6fede455c0b091e26b",
+          "size": 14803
+        },
+        {
+          "path": "toolchain/msc500/FIXSHIFT.COM",
+          "sha256": "1d8ec4446a2a1099a2f0134ec902257c4f460b3ff5cad6a203e5108a0be974ad",
+          "size": 690
+        },
+        {
+          "path": "toolchain/msc500/FORTRAN/F4COMPAT.BAT",
+          "sha256": "4d49d62213ddf1fd31e78ac0b1464136f66ad612a9affc4c46a1d131a085c6e1",
+          "size": 3022
+        },
+        {
+          "path": "toolchain/msc500/FORTRAN/LDBGMSG.OBJ",
+          "sha256": "8358f622b63bca443e6ba8a4ece023e93cab5f47aed15d67dd33f54ab541d9a2",
+          "size": 542
+        },
+        {
+          "path": "toolchain/msc500/FORTRAN/MDBGMSG.OBJ",
+          "sha256": "ec59581d8356668261a8501240899598958e7f5e927a696526aced985b9411c9",
+          "size": 538
+        },
+        {
+          "path": "toolchain/msc500/FPEXCEPT.DOC",
+          "sha256": "224a8b3a9a80966dc7373d635d603a6841240fdad56649216b78737bd97d03bc",
+          "size": 16176
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/ASSERT.H",
+          "sha256": "e61246d0a7f6958f85d2ad14ac6f5a1f00b0185ec853c2bd2db7577851076f67",
+          "size": 670
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/BIOS.H",
+          "sha256": "7495097475678d4796f9e9cf024728b52f608e8477b4cd01f50e922186fff757",
+          "size": 4857
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/CONIO.H",
+          "sha256": "6d73630e721c6834c3b6b0ba9523d5f635d3a82c8983f2722bb10fbdb6415015",
+          "size": 950
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/CTYPE.H",
+          "sha256": "a8ff592175be449f3077e06c5fa997a5837d4ff2dd032cefd25552760b315c75",
+          "size": 2469
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/DIRECT.H",
+          "sha256": "900f98743fc94779fe1d80b6409044e47ebdb7e9a918c459aca3b41191ff6a78",
+          "size": 690
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/DOS.H",
+          "sha256": "22dc0faf7220d97991a54c55441c7ec84025034338a35cd7fbd3945eac09e97c",
+          "size": 5917
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/ERRNO.H",
+          "sha256": "426abd585933cd3ec69af7b2aa6ee8e6245a0bef4b349614afa02b3c90db2e0f",
+          "size": 1283
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/FCNTL.H",
+          "sha256": "d2fc96c9c3f77bbb00025b9e7c402005847a9570def0c306453762f0697306cc",
+          "size": 1255
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/FLOAT.H",
+          "sha256": "930c5521e483bb3ae8c45319747f8e31631c135dd5802545cf570814793ca119",
+          "size": 6011
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/GRAPH.H",
+          "sha256": "93ffce8b5597d7b5b4a0b8ec3cb43570e16e3714be9fb1848ea3c77ddd8bbbf0",
+          "size": 7294
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/IO.H",
+          "sha256": "2cd5d874a32871f3b262dcc5411212450b149d8ee4016388c8828cfc3c17f3a3",
+          "size": 1296
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/LIMITS.H",
+          "sha256": "cb91887efc2189d76f0f48a53853a6753edeec938b3caefd9ccf8f1068d8c84d",
+          "size": 1553
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/MALLOC.H",
+          "sha256": "ae39b143d8d0a81bd5285da881afe63b0ab66740dd0614920cd80197305c6180",
+          "size": 3099
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/MATH.H",
+          "sha256": "e8837c58f422d8f1727ef303ef0da83179dcdb120e2ed1794c504d82ae61df51",
+          "size": 3308
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/MEMORY.H",
+          "sha256": "fccdb18445659e4921549f78898f0568e6776df47347074591ecd0c120fc0a9d",
+          "size": 1065
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/PROCESS.H",
+          "sha256": "8dcfab5b6d0c0f65deebe7850c55cf3f843fa234df56222aca4a72f158223ee4",
+          "size": 1799
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SEARCH.H",
+          "sha256": "1c60c9e95f5df8a079dab7b921278b9c9f0c99836c538362c373d6fbcca1f8ef",
+          "size": 1024
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SETJMP.H",
+          "sha256": "046027bb9a00197d3c4aa517c78f31ed902cea080bcc825b316f47fbfc44d545",
+          "size": 905
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SHARE.H",
+          "sha256": "4cdb53bf306c8a13ce76bea2d7b2db1da2bb71f16c47b296a032941243cadc1f",
+          "size": 554
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SIGNAL.H",
+          "sha256": "4afd08ac59c24571529877d4c2b283a5f84113269e7dbc83d44c0c638f86a3c8",
+          "size": 1531
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/STDARG.H",
+          "sha256": "4fdcc383531d0df76adfb773378e95e27560fd661d0b0df21d9df0337ca7a3a6",
+          "size": 613
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/STDDEF.H",
+          "sha256": "b7dcb16927c81331ef41af87818fe4f80684f01a6fc9cc1b9c8b42343bdffe49",
+          "size": 1098
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/STDIO.H",
+          "sha256": "38eca92164b750bb141858100fd9b5430cfae59f83acacf3abc3f94b98813dd7",
+          "size": 4470
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/STDLIB.H",
+          "sha256": "136c44d2155e8e38dfcdb167bba9226d8d26d9c4ba106999764ba5def9ae4ea7",
+          "size": 4690
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/STRING.H",
+          "sha256": "9864df1ed0d2ccb8f7084f50d41b096dfdbea3dae90bd77bf3a66c003c6b5c48",
+          "size": 2209
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SYS/LOCKING.H",
+          "sha256": "d51026c29abbf00908c5058b3763fccba7e8764a455d3f18bf1b6d8a81c73b30",
+          "size": 573
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SYS/STAT.H",
+          "sha256": "150c652c9936c41ac862f1595b0109ff16f8b9f7be11cba0c113cae4c58bc23c",
+          "size": 1497
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SYS/TIMEB.H",
+          "sha256": "832a1ef1a79b1e465ddd971efe4e2c9119abf5233038eeafb2912f89b34e3e8b",
+          "size": 846
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SYS/TYPES.H",
+          "sha256": "e4a6d3c73613deea6a15aada08c4f0bb1c8b7ccd684191d012962088f48fe9fc",
+          "size": 849
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/SYS/UTIME.H",
+          "sha256": "17d152c401569416b03e3503b932a3a946232f4f81322fdefe0986813ca44c30",
+          "size": 1061
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/TIME.H",
+          "sha256": "92259042da596aae656d4149f8cdf5ffe75a4b7016f51c5ec0728355c2292f0d",
+          "size": 2342
+        },
+        {
+          "path": "toolchain/msc500/INCLUDE/VARARGS.H",
+          "sha256": "db30df57ade02a5971e51b213992b3054fee121d4811ad581f4bb7c9c3749e6b",
+          "size": 641
+        },
+        {
+          "path": "toolchain/msc500/LIB/87.LIB",
+          "sha256": "3c7eb36a6fca2590dc96ec0dbba973440990612391b12d0349ac20a4d0e96f6e",
+          "size": 4121
+        },
+        {
+          "path": "toolchain/msc500/LIB/BINMODE.OBJ",
+          "sha256": "f373b6ee1096e1e8e92f3a6d57ad0a28eaca7329b574f6b47480c98b0d668673",
+          "size": 122
+        },
+        {
+          "path": "toolchain/msc500/LIB/EM.LIB",
+          "sha256": "c7de4ccfe690252bfc27acee18afe00c2ed8af95af67e9b2f8680d8b63af98d2",
+          "size": 16409
+        },
+        {
+          "path": "toolchain/msc500/LIB/GRAPHICS.LIB",
+          "sha256": "badce017e71afa215ec175c40339e182d6605993eaa70cef93ae470ad0514d2a",
+          "size": 57289
+        },
+        {
+          "path": "toolchain/msc500/LIB/LIBH.LIB",
+          "sha256": "768bfe171ebcad6d44aeca830ec8d19b31f02ce84ab35c81fc48fcf3f1e14858",
+          "size": 13689
+        },
+        {
+          "path": "toolchain/msc500/LIB/SETARGV.OBJ",
+          "sha256": "ce4b6224761e3f523ce954ec5e78f823c785a76a7c7f21030a5d83027de75319",
+          "size": 132
+        },
+        {
+          "path": "toolchain/msc500/LIB.EXE",
+          "sha256": "2512d3f175665f5283780cc10bb333ec26daeda218b84ed9d5f0b73e4bc2386f",
+          "size": 35211
+        },
+        {
+          "path": "toolchain/msc500/LIBBUILD.EXE",
+          "sha256": "0c72175639c64513fe996aef0e23733081234a833ba46a66b6e2b0ab89ee0f73",
+          "size": 27091
+        },
+        {
+          "path": "toolchain/msc500/LINK.EXE",
+          "sha256": "1d80eab0f7828e4fa42b387892fa40d38d656b96ee4d6aed6b2100fb8ae3d31a",
+          "size": 64319
+        },
+        {
+          "path": "toolchain/msc500/LLIBC.LIB",
+          "sha256": "63b48b26376d335b96a32bd23659526809df07e6ee8ed2679f348e374b5fa82c",
+          "size": 140773
+        },
+        {
+          "path": "toolchain/msc500/LLIBFA.LIB",
+          "sha256": "32c05335c27c531a3591f84bad6f4849f05835ffaa8a188d6a1f6e4e60b45227",
+          "size": 48649
+        },
+        {
+          "path": "toolchain/msc500/LLIBFP.LIB",
+          "sha256": "75b9a4a9b3b31ec7c812755b825ab2b9673d0fdabd8797f5f6b3ce0b68966608",
+          "size": 39845
+        },
+        {
+          "path": "toolchain/msc500/LVARSTCK.OBJ",
+          "sha256": "4b5ee9116b549465b0334f2a1a0c232fdd43ca64186f97d036cd92fc99c86c53",
+          "size": 476
+        },
+        {
+          "path": "toolchain/msc500/MAKE.EXE",
+          "sha256": "d8f827dca546559be3503c6b01195ad917ff055187a51f3f76cf9ed29bc5c321",
+          "size": 24187
+        },
+        {
+          "path": "toolchain/msc500/MLIBC.LIB",
+          "sha256": "7c2453479dac10695c89d42b8f76ac961b17e9aa44b1e27a0f7b80183c29d4d5",
+          "size": 131009
+        },
+        {
+          "path": "toolchain/msc500/MLIBFA.LIB",
+          "sha256": "eefb3bcf406093d937963d36c9315f93c7dfb4a03fd71740f1cb300a45cb4155",
+          "size": 47625
+        },
+        {
+          "path": "toolchain/msc500/MLIBFP.LIB",
+          "sha256": "03533f71bdc9ee930ddb09df725c89d39c07e8ca5116ca7225f26ae49d4c67f9",
+          "size": 38307
+        },
+        {
+          "path": "toolchain/msc500/MOUSE.COM",
+          "sha256": "b6608c9125e9c91ea36e3a70c4fdd33495f194e2e8647a03141e0d5a6a007265",
+          "size": 14455
+        },
+        {
+          "path": "toolchain/msc500/MVARSTCK.OBJ",
+          "sha256": "f79fd48ee66cfcf8080ae1a65bfcee9721be25b81c9d262b5b1492745ea484c3",
+          "size": 508
+        },
+        {
+          "path": "toolchain/msc500/PACKING.LST",
+          "sha256": "5976a1e9d52c45bc1a8bec16d6e637b6509aa31e05a346a49799b83521fd2a99",
+          "size": 6021
+        },
+        {
+          "path": "toolchain/msc500/PATCH/README.DOC",
+          "sha256": "17f4ca2136468cd31c8314cc6aebc0fa2c7b62e40140702168d8aae62c0a2822",
+          "size": 1192
+        },
+        {
+          "path": "toolchain/msc500/PATCH/RMRHS.EXE",
+          "sha256": "ae4584bb3a64a937061806332de7a224bfe0a70f11cc3a030c2f70e35be36ee6",
+          "size": 543
+        },
+        {
+          "path": "toolchain/msc500/PATCH/SETRHS.EXE",
+          "sha256": "32d24dd626a0770d214905f82611e20e487c6378e0ed71bd547a677e589ecf0f",
+          "size": 543
+        },
+        {
+          "path": "toolchain/msc500/PATCH/STKPAT.BAT",
+          "sha256": "a0850e8d751a2e4b3cb706e25702d6fde20cd3c0d29fc337a071d8bc5c4c8a83",
+          "size": 94
+        },
+        {
+          "path": "toolchain/msc500/PATCH/STKPAT.SCR",
+          "sha256": "69d23991d62a0fbaa0d00951ba31e696bd891805ac44edc782bcca075e18dc39",
+          "size": 30
+        },
+        {
+          "path": "toolchain/msc500/QC.EXE",
+          "sha256": "1abe3985e47c278e7f1219d6699ff33686abca9eae030a2662bc62f6342debdc",
+          "size": 327472
+        },
+        {
+          "path": "toolchain/msc500/QC.HLP",
+          "sha256": "d6d52d6c734072c4da498346efd6738b65b68651ddb4003f33d910bda51b2903",
+          "size": 50435
+        },
+        {
+          "path": "toolchain/msc500/QCL.EXE",
+          "sha256": "7a15110542fdc37af373d7ec996af398b253d6305ef5c6375e85bb55f9ed0419",
+          "size": 29961
+        },
+        {
+          "path": "toolchain/msc500/QCL.HLP",
+          "sha256": "12e48ed0f92568a1d83a51d69f3b0b1e36516a97ee1a7324d89196782aa2861e",
+          "size": 1314
+        },
+        {
+          "path": "toolchain/msc500/QLIB.DOC",
+          "sha256": "6a1291249da71bb28228868013bcd9435e32ca910c1adc972e166ed826d6f457",
+          "size": 12047
+        },
+        {
+          "path": "toolchain/msc500/QLIB.EXE",
+          "sha256": "50b34ec98a61a96c53a83091189d78cf8a841f12f3f289da5f39976ec54b5c33",
+          "size": 24557
+        },
+        {
+          "path": "toolchain/msc500/QLIB.INI",
+          "sha256": "7e0351e2239be55d1de56beea74ae07da81bdae27c5443c8f1b4b1e4397f3266",
+          "size": 2905
+        },
+        {
+          "path": "toolchain/msc500/QUICKLIB.OBJ",
+          "sha256": "89525ce6ccea67eb0310bc53ffd9cf766eacf2dd0d139979c8e4942d61e13cbc",
+          "size": 8453
+        },
+        {
+          "path": "toolchain/msc500/README.DOC",
+          "sha256": "153e2e00a592689ccb0d584df4e653528177a9f5947ff26a373745e833d165c3",
+          "size": 47588
+        },
+        {
+          "path": "toolchain/msc500/README.QC",
+          "sha256": "13a322356474c214155da8f2ea7a2b10cd18760ff49d57a3526a341105c43d3e",
+          "size": 22462
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/ADAPT.BAT",
+          "sha256": "8fdeea87100d709bac391fdcb17e4ea162972a492cc540e18a1fcef67cf690bf",
+          "size": 133
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/C_AUTO.CV",
+          "sha256": "614dfd4f94c1c733ebd855181ebe4e52844a4307fb692d19810ebdf028a5179b",
+          "size": 3571
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/DEMOB.BAT",
+          "sha256": "23005636cb56364c3b6f497a8448a232054acb90298ca32d44746244b6c6394f",
+          "size": 254
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/E_AUTO.CV",
+          "sha256": "8300cb98456524f59e02001fb4136bb5b4c749e60a5dc5bed2a835679ab5430a",
+          "size": 6788
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/L_AUTO.CV",
+          "sha256": "d910e6a983abef5bf7bd34000e8a8ca6e89f8091cf589d85a489136d4b353077",
+          "size": 13272
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/LIFE.C",
+          "sha256": "ed402cb8b5686106abe4b2b7d7a892527d38264cf5d9bdfb393b88adb496980e",
+          "size": 14713
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/LIFE.EXE",
+          "sha256": "5c1d5cd9c816fb29b48a1419519a7c03a09193192a2cb59749c7be2975bf903f",
+          "size": 33237
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/LIFE.R",
+          "sha256": "e622241b3d0dd4482cc653d4455e9c9920a441f7d9cc0c5697c8467686982e7f",
+          "size": 5282
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/LIFEB.BAT",
+          "sha256": "0800fdf66ad0606413160193333d9b84c9b2e38c15260a40af3d530a6c0e008e",
+          "size": 336
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/LIFEEB.BAT",
+          "sha256": "47cd531361487eff01484722d9443d87a09116358fb1d9decb2d90e9e736009b",
+          "size": 402
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/M_AUTO.CV",
+          "sha256": "938c18aecda2e28e6b3d48777ade38b734ee6d60cf110983f31d1fcf5aa2e279",
+          "size": 733
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/MENU.BAT",
+          "sha256": "a90c6110616b9c53d811dbfc995b27faa40d842dea77de434c04b3bd98c003bd",
+          "size": 550
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/Q_AUTO.CV",
+          "sha256": "ee81a0ed32fac1ec9370fe8d6726e1376391ad83fbdd9a0667ee8ebbae11feb6",
+          "size": 15
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/RESPOND.COM",
+          "sha256": "7cb32066d0c6ebf6b17b8c79a85d38a2cc1e057d295d854617ecac76b41712cd",
+          "size": 124
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S1.@@@",
+          "sha256": "733c40e7d412ccc0e33db20cf25329706d4b24e6fa8771771e34d6cc7372d1bb",
+          "size": 230
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S12.@@@",
+          "sha256": "604cdcf1acbdaf1fea8caaf3b01c917df206866aef2b76dcc550c1caace767ad",
+          "size": 926
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S13.@@@",
+          "sha256": "9651d9d01cc8c71e2f683d02f82c1f52bde9ea3114bf8edd042b69adae368803",
+          "size": 368
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S14.@@@",
+          "sha256": "98c109cf5cccbfa25b710ed6e039fbb29851b2575f5bfe374e0fe9ebedd40fe7",
+          "size": 520
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S2.@@@",
+          "sha256": "af45ab5e431816c3556f8aedb801bb13edd18a95486c61dfa90b46800297504b",
+          "size": 752
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S3.@@@",
+          "sha256": "5b7f50932974928a9d535146cf7202417aaaf3f394aef201c514e86ccc14fe6e",
+          "size": 276
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S4.@@@",
+          "sha256": "19bf71c1b3bed07253fb368ccd966bdb2a79320825d92e81705874d0eddb871f",
+          "size": 354
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S5.@@@",
+          "sha256": "89e2f9f0647360adaa1132327fa53adfb93889cc9dbe109347f824e3dcb7e8d9",
+          "size": 554
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S6.@@@",
+          "sha256": "0be440fa38944ed4facf0414a503b8db8f87aa27ca60b04b99725660245f4730",
+          "size": 432
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S7.@@@",
+          "sha256": "9a16bd2db57091567e98c102ed0471e5a90b96f2e2da840c204c9b9ec89ca991",
+          "size": 427
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S8.@@@",
+          "sha256": "d72a9f5d6a74e17ac0ae51a97f4d62ab65dfd6aac45f6d5a63ed196225feeb54",
+          "size": 479
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S9.@@@",
+          "sha256": "22160e9940ff257555d69d6129384561e7e62527720efa8348b612887fb9c0e0",
+          "size": 865
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/S_AUTO.CV",
+          "sha256": "ddc0c8e340e903b82f9daeaf31d1b5450cb00b71bfc080213556dd7d4f37759b",
+          "size": 9091
+        },
+        {
+          "path": "toolchain/msc500/SAMPLE/SAMPLE.BAT",
+          "sha256": "8f6ad03442475f4bfd2e35d11b3537e759e50f2082495eea6056dc362c54b865",
+          "size": 1059
+        },
+        {
+          "path": "toolchain/msc500/SETENV.EXE",
+          "sha256": "1d0436c9c8c074f2c4d1bf54cff22fc95398a7616e66aa6645d17c702e3d76c1",
+          "size": 10812
+        },
+        {
+          "path": "toolchain/msc500/SETUP.DOC",
+          "sha256": "6ba2feac9740f59a397a8437f0023dffa6a88fd5568391c92dd2dc6f83e7261a",
+          "size": 6112
+        },
+        {
+          "path": "toolchain/msc500/SETUP.EXE",
+          "sha256": "f5c602d720cdae0d1ff33e89a23cac0cf2fd2c28f0519ac18c381a5d2fbe1bf7",
+          "size": 28035
+        },
+        {
+          "path": "toolchain/msc500/SETUP.HLP",
+          "sha256": "1aeea5539f49920c35d55b23846982b40817c390d6c2251ae8428961d85b311d",
+          "size": 803
+        },
+        {
+          "path": "toolchain/msc500/SLIBC.LIB",
+          "sha256": "7eabd615308e9a05de24f6e6e82e61a65f733eb64d12b5318d8b3ed569e389b9",
+          "size": 129473
+        },
+        {
+          "path": "toolchain/msc500/SLIBFA.LIB",
+          "sha256": "b25ac6f5b21e6bd9de5ee88dde3959dd13229ec233b19daff717b51d7fb42d62",
+          "size": 46601
+        },
+        {
+          "path": "toolchain/msc500/SLIBFP.LIB",
+          "sha256": "0c5f88ec906adbaae285ea2cde9c0cc015acc377e9403be54b27bcfa816d24ae",
+          "size": 37795
+        },
+        {
+          "path": "toolchain/msc500/SOURCE/CFLOW.C",
+          "sha256": "814c339af811211e0eb9acb6d7d9c8378cfa969ffd1b5670ad9f07a5d0231b2b",
+          "size": 36841
+        },
+        {
+          "path": "toolchain/msc500/SOURCE/CFLOW.DOC",
+          "sha256": "d37e8b225335b9d36319ea9c141865d7417976b60f54bb7b24e2fa3bf7f5148a",
+          "size": 3763
+        },
+        {
+          "path": "toolchain/msc500/SOURCE/DEMO.C",
+          "sha256": "c4353b9f50662c39fedfd336ceba0163e5c8d5cf5b990bec558a1fc75d02471c",
+          "size": 419
+        },
+        {
+          "path": "toolchain/msc500/SOURCE/EMOEM.ASM",
+          "sha256": "978c9512af02fb5ce13615c7eab261672073ed4c537485ee918ae77c9b58f19f",
+          "size": 12221
+        },
+        {
+          "path": "toolchain/msc500/SOURCE/GRDEMO.C",
+          "sha256": "11595837353b91084b2ada3ec726057d14e17443c3d49c334b2763f8674ff31c",
+          "size": 20457
+        },
+        {
+          "path": "toolchain/msc500/SOURCE/SIEVE.C",
+          "sha256": "a55554dc180412049eab54837d8c282ea1cf9e042d685d6154ce3d9536c4ad68",
+          "size": 788
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/BRKCTL.INC",
+          "sha256": "43e9bf1470f26a42eb73dff39e0248bb525e1b4f756b39d4463ff6f3c6a6c278",
+          "size": 717
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/C/VERSION.INC",
+          "sha256": "e8e9cb62dfde55ff97848dcbffb3cbe86e9509fe5109193145c238927c8f272f",
+          "size": 330
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CHKSTK.ASM",
+          "sha256": "06a6bc7139436efc514a16897681cdc541e2f74ba341f5544aa784df720dc7f1",
+          "size": 2297
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CHKSUM.ASM",
+          "sha256": "3dc6697806f7d9a67d53f2518250e72c5c66a09cbe04e12a9559357bd1208b1a",
+          "size": 3506
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CMACROS.INC",
+          "sha256": "e9881eec2d1adae88251d7de92ef4bc33ee64e21c2fa06183b76338ba33bb7d3",
+          "size": 12079
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CRT0.ASM",
+          "sha256": "db70668d4dc3fbc8c1ca7ba4a5bf927279978847e1ba74accbfb59cb2ed9d861",
+          "size": 9358
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CRT0DAT.ASM",
+          "sha256": "853c8978a4151a6ff63308e33935b1089c0ccd6d980155c4a00df5416396bd29",
+          "size": 13065
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CRT0FP.ASM",
+          "sha256": "16469bc8ea5befbc773c40ca2533dcd0595e29433d99962336e6d79e06f96aa9",
+          "size": 2207
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/CRT0MSG.ASM",
+          "sha256": "b0071576407e2da21e10e58b42d58d7c4ba1a2bcb4ab8da23e98e5d8b8b8f8cd",
+          "size": 2916
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/DOSSEG.EXE",
+          "sha256": "6bc96018e8adf1f559461599d2380ac612c32edde92bfc729dbf742b9b282f0c",
+          "size": 7636
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/EXECMSG.ASM",
+          "sha256": "6614a05034f2bb089acfa19b07486df24d349546b9bf5caceb9f29f956cc0058",
+          "size": 1332
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/FMSGHDR.ASM",
+          "sha256": "824eb27d8f0560648191c6ed3152a7c458355d85e3e1b6cb85c428fdb3719a71",
+          "size": 2417
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/L/VERSION.INC",
+          "sha256": "40e064952babcf22a99de8e8f93c04ed0bb323ab8b58eaecb38070c504f01bf0",
+          "size": 328
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/M/VERSION.INC",
+          "sha256": "deaf1d79e122c2b8cddf2516d06c55ce5e3d9626f8e2f2323684ac84ee98c6ff",
+          "size": 329
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/MAKEFILE",
+          "sha256": "f05e5b2948ed83c172a6f285855c0e2ebf27fe5ed23e970faf6382805cb5a6d1",
+          "size": 2336
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/MSDOS.H",
+          "sha256": "d0a00bf44c3895f489861f10f28e9520ce616a183f4121fe172bf18a589bf6fa",
+          "size": 6846
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/MSDOS.INC",
+          "sha256": "e68ffd7d184d75c5c79cdd4c7491954e658f8140c2f7a00b904537ee613aec00",
+          "size": 5943
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/NMSGHDR.ASM",
+          "sha256": "61ed8cbfc7918eb33520c91a19407028c394553b60ff03ecef5ea8021346eab1",
+          "size": 3006
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/NULBODY.C",
+          "sha256": "37d45ed198ffeba252c0d12519dabd7011abad17e009cafbc54bd04aec441f8c",
+          "size": 13
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/NULBODY.LNK",
+          "sha256": "170e4a39ecd61f499e8efb058153c10307ae48662bf05ec2174ef0373c0f4031",
+          "size": 109
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/README.DOC",
+          "sha256": "4e17799c26283fe48c1d357eb1e5e5de364c4424f363fbcd9aa2a2bfc851ed6c",
+          "size": 2740
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/REGISTER.H",
+          "sha256": "82ab0b53dd2a544b0e7c1ae77d2de785d8dd8f2a147135b2661c2719cfbc7db8",
+          "size": 923
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/S/VERSION.INC",
+          "sha256": "e03978de03e06f76b5d27862573ad5a0f85c05a3ab22f79c93c29c6e24d8ad0a",
+          "size": 328
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/SETARGV.ASM",
+          "sha256": "cceac59e4fde07e528e63d2d9bb9637ee62971792bc69205f666cf3a741b97b3",
+          "size": 959
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/STARTUP.BAT",
+          "sha256": "758aa5644d81498ba76804f7f76fd07abee2af53a902e20396c31d1cfe74ab73",
+          "size": 1507
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/STDALLOC.ASM",
+          "sha256": "6eb2e8dcc1cab1cb795395f2b1262bca4bf1e07d3afac525037e99668a455c57",
+          "size": 3124
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/STDARGV.ASM",
+          "sha256": "f7e78488dbf188aef27047fc383323e84d5eda5aa09969d667df0829ef9a12ef",
+          "size": 14570
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/STDENVP.ASM",
+          "sha256": "d77cb58331a01eec06dafc05eb0cd0bc5818d1250ef2a56afed795a68f1f5dd8",
+          "size": 3692
+        },
+        {
+          "path": "toolchain/msc500/STARTUP/WILD.C",
+          "sha256": "77e3cb668a863e712558bb4320b2199afec3fd6ea8fc8bfdcd02c67cc6caf41e",
+          "size": 7182
+        },
+        {
+          "path": "toolchain/msc500/SVARSTCK.OBJ",
+          "sha256": "34a7e7f7e98ca19c9e9d8655a73b6bf9ac752c1eab065acd5d61e9137f02b288",
+          "size": 508
+        }
+      ],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "historical_version_proven": false,
+      "status": "multiple local game matches; 5.0 and 5.1 remain indistinguishable on accepted functions"
+    },
+    "msc510-medium": {
+      "directory": "toolchain/msc510",
+      "executable": "CL.EXE",
+      "files": [
+        {
+          "path": "toolchain/msc510/87.LIB",
+          "sha256": "a16589e9e633c9229e09f99f35954cf137bdd357ad3f19e035301d7416cb01c5",
+          "size": 4121
+        },
+        {
+          "path": "toolchain/msc510/BINMODE.OBJ",
+          "sha256": "30c5cd37a76033a243029f1f6b933b911bdc50425914be251030324f748d853d",
+          "size": 127
+        },
+        {
+          "path": "toolchain/msc510/C1.ERR",
+          "sha256": "53c4d172d684080c45c1b94f5eeaa7c514ce0147aa2fd2d52cadc29a04671217",
+          "size": 14393
+        },
+        {
+          "path": "toolchain/msc510/C1.EXE",
+          "sha256": "8d33c6d87aa74b042b7d7cb01a23241c4cc3b1b8b446b8f1548bd167e3c7bf62",
+          "size": 114521
+        },
+        {
+          "path": "toolchain/msc510/C1L.EXE",
+          "sha256": "bdd8189be005009331ff61dd3cb7a0ce9b246ea522dd8ab2c83a8339e5c30f09",
+          "size": 149303
+        },
+        {
+          "path": "toolchain/msc510/C2.EXE",
+          "sha256": "a513c98bc2ce11bd00901b560252b5727ab9b6bacd9319b9eaba08f9e314b99b",
+          "size": 202919
+        },
+        {
+          "path": "toolchain/msc510/C23.ERR",
+          "sha256": "f9edb742d0b3a4d17e489d672334ef0fac46767063122d338f55e5933f533b07",
+          "size": 3272
+        },
+        {
+          "path": "toolchain/msc510/C3.EXE",
+          "sha256": "c1269628534d5deb48171ba9e42f761dcb1c28a0087c73780db0ee2e4352e6fa",
+          "size": 125221
+        },
+        {
+          "path": "toolchain/msc510/CALLTREE.EXE",
+          "sha256": "84f394cd6a0c1436803374ece070fe29ed822635f79713c4f3e3e9a424d75b32",
+          "size": 19391
+        },
+        {
+          "path": "toolchain/msc510/CL.ERR",
+          "sha256": "031c67018ab843db00765009611ea1fcb70c5fffd9fb8fa5635fddd84dc6828f",
+          "size": 2276
+        },
+        {
+          "path": "toolchain/msc510/CL.EXE",
+          "sha256": "cad40cef732beea3455225fbd62286c664166db7c3f87e2402e22b2e3f107771",
+          "size": 31329
+        },
+        {
+          "path": "toolchain/msc510/CL.HLP",
+          "sha256": "1443b8e9d7eb34417fb77986efb9a667b85a489dd7b44a337211d809efdfa783",
+          "size": 2169
+        },
+        {
+          "path": "toolchain/msc510/CLIBCR.LIB",
+          "sha256": "adedef4ea1deef051c56d9cf4863fcdc2a3722eddc3602d0d73df03b96d4ed0d",
+          "size": 141301
+        },
+        {
+          "path": "toolchain/msc510/CLIBFA.LIB",
+          "sha256": "4f8ebf6c863268c63cb5119df7753539d82b4585725fa3ac2096f852af7d9ecd",
+          "size": 47113
+        },
+        {
+          "path": "toolchain/msc510/CLIBFP.LIB",
+          "sha256": "412c4bf1866549e0ac0dc8bbe7e33b95751c58e50a1f987f4aa66ffa2ce32178",
+          "size": 38307
+        },
+        {
+          "path": "toolchain/msc510/CV.EXE",
+          "sha256": "55cbe9a51d313b857b0c3bc703d0d4eabd3feae244b315b1973769204d9ccc77",
+          "size": 232896
+        },
+        {
+          "path": "toolchain/msc510/CV.HLP",
+          "sha256": "c13e05f0dd95ba29203ee7ae0b2280143b6f9e8933c967e49e33c6b54e1bf859",
+          "size": 21552
+        },
+        {
+          "path": "toolchain/msc510/CVARSTCK.OBJ",
+          "sha256": "4a91fd60365061e64f243abcd77cf96eea085c6228b077014223eaac12d56f7e",
+          "size": 487
+        },
+        {
+          "path": "toolchain/msc510/CVPACK.EXE",
+          "sha256": "e8a389d7b6d7dd56e03a8bde2c545bb45621625053012cd61a51728d97d8f3e0",
+          "size": 38897
+        },
+        {
+          "path": "toolchain/msc510/ECH.EXE",
+          "sha256": "2082ea628e27d9baf062c3c1319b490f6b06e96276ec206eced0722d499acd3d",
+          "size": 8270
+        },
+        {
+          "path": "toolchain/msc510/EM.LIB",
+          "sha256": "77620fa639ac91fad940c3539a66f47adbbb124958b38e540d386de79f582403",
+          "size": 16921
+        },
+        {
+          "path": "toolchain/msc510/ERRMSG.DOC",
+          "sha256": "138dc720f732306fdb7b0cacd5a7de16a20e420e692ae03310e87d2c0cf674f0",
+          "size": 17293
+        },
+        {
+          "path": "toolchain/msc510/ERROUT.EXE",
+          "sha256": "e8cabb826503809830941eacb77c9aab59468471b1d46619dff2ce1ddbda2909",
+          "size": 10729
+        },
+        {
+          "path": "toolchain/msc510/EXEC.EXE",
+          "sha256": "f1ba635fda038d541645318de86094e04e69e3bdc4c79896b02b9758666b57de",
+          "size": 9299
+        },
+        {
+          "path": "toolchain/msc510/EXEHDR.EXE",
+          "sha256": "a4c889c5a8d4b2af16b021ea5d34a6e3743ef9f1f907f1987858f52d7b14dd06",
+          "size": 18043
+        },
+        {
+          "path": "toolchain/msc510/EXEMOD.EXE",
+          "sha256": "efe11a2f61d257c2737ca0ab2b731fd9e2ddcf0f06bb79e77aa6cefdb4c0c399",
+          "size": 12336
+        },
+        {
+          "path": "toolchain/msc510/EXEPACK.EXE",
+          "sha256": "568554322d29e46f79c0c760ac2391cb0689dc7acb9aed79a428194ec6fb83e7",
+          "size": 14803
+        },
+        {
+          "path": "toolchain/msc510/EXP.EXE",
+          "sha256": "25f0014e089e6f350341b958db12512509a75067ca6949bf00e71672d1640976",
+          "size": 15409
+        },
+        {
+          "path": "toolchain/msc510/EXT/EXT.DOC",
+          "sha256": "dd1afb0b04055c2a970b6e20a93b807bbd7d055a41ff98a2241c9f23a61aa555",
+          "size": 15877
+        },
+        {
+          "path": "toolchain/msc510/EXT/EXT.H",
+          "sha256": "09a47ca372a09dbe96ee87ddfe2d70f575391acff1eedb0d81e6908eb0ce43e8",
+          "size": 8730
+        },
+        {
+          "path": "toolchain/msc510/EXT/EXTHDR.OBJ",
+          "sha256": "73b220891abecc622b1436338cbe872eebfd73d3a8b868e7d98c5b62ed877750",
+          "size": 1893
+        },
+        {
+          "path": "toolchain/msc510/EXT/SKEL.C",
+          "sha256": "0fc7441f2e85653e5716922ef0149cd214c364d89e0441275f541206c1f3b7ca",
+          "size": 2457
+        },
+        {
+          "path": "toolchain/msc510/EXT/WS.ZXT",
+          "sha256": "39890188fdc9bf296d4b5e4d9b6df1f58175bbb322df5461221612eff9a036fb",
+          "size": 2084
+        },
+        {
+          "path": "toolchain/msc510/FIXSHIFT.COM",
+          "sha256": "bb2d09e71981e4f7ae7d8295910027b5ead0cddd14169d1a8098c371aa8f3f6c",
+          "size": 688
+        },
+        {
+          "path": "toolchain/msc510/FORTRAN/F4COMPAT.BAT",
+          "sha256": "eae51dfaa01771d99ab5c76f43ec88ada6385a11b97018795f9e7d3ef31ec696",
+          "size": 3107
+        },
+        {
+          "path": "toolchain/msc510/FORTRAN/LDBGMSG.OBJ",
+          "sha256": "05f828fe18637cdfda34db7d04e62469e846f6f8a576ba996fe9e6050b24d3a9",
+          "size": 544
+        },
+        {
+          "path": "toolchain/msc510/FORTRAN/MDBGMSG.OBJ",
+          "sha256": "a2ff5050838f331b01bc8d9446ebde8cd47e1d60296e50fc223cf8d221c15c8e",
+          "size": 540
+        },
+        {
+          "path": "toolchain/msc510/FPEXCEPT.DOC",
+          "sha256": "823e06d8fc5da6f2d50b31605b2dfed6b4f87b03ff0652a703fd13b90c4db351",
+          "size": 16254
+        },
+        {
+          "path": "toolchain/msc510/GRAPHICS.LIB",
+          "sha256": "4a4fc3a026bf99d503c77bc8208cf3a06bc57188df4540d705ff57f789189fd0",
+          "size": 59357
+        },
+        {
+          "path": "toolchain/msc510/ILINK.EXE",
+          "sha256": "ecc915e9637ed615e616ebc44789bcdd78b1821d88b945703cbae5c64b3bc407",
+          "size": 43593
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/ASSERT.H",
+          "sha256": "6a32b3d4b878a7caffdb6ea632b951d5a6cafa4cb1e81e00c112d9dd8fe97cdc",
+          "size": 699
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/BIOS.H",
+          "sha256": "e90adf1f14f8759007492240785feefef435ab1c2d2b6736b2f4b31c625e21bb",
+          "size": 4866
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/CONIO.H",
+          "sha256": "4c58132772ffb983e70d2ec2f6eab920e518de251094623abc34718618b45ede",
+          "size": 952
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/CTYPE.H",
+          "sha256": "c96d2c704a0ea7b026b541703a57e2773f3c25d07843273cdc48bdce5d9d2ff4",
+          "size": 2465
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/DIRECT.H",
+          "sha256": "687ecc8484732c72da3c8b340bb1319a31d0580539baed457aa73d82a1037b5d",
+          "size": 690
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/DOS.H",
+          "sha256": "dd9f790b37b77707adca97d7c9024d3445c80c5401d29ed724b25dfcba5e283e",
+          "size": 5917
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/ERRNO.H",
+          "sha256": "55e3ced19f97845a0461dc54359c6ec10c3fbc9b893cf64ccbc1ce553bf1642a",
+          "size": 1283
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/FCNTL.H",
+          "sha256": "79915ee9a0e6d182c4d7f1a0bca12d3b07cec3a0dbea033dbe58821fd99e0857",
+          "size": 1255
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/FLOAT.H",
+          "sha256": "386d2dd80397de6a2cb9ab66743878167b253b11f57b19bc6ef00089f03d94ba",
+          "size": 6011
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/GRAPH.H",
+          "sha256": "3a2d85ce58b3c9009e0c57727a84962e167a3f2168c778377a1bffc4a35875c3",
+          "size": 7480
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/IO.H",
+          "sha256": "41a51f1eab9e46fb62f21c69f2412f02f9d6a2e522734340f222832d565de9d9",
+          "size": 1294
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/LIMITS.H",
+          "sha256": "afe7f9b89ded5925deb4f4ff02c5bd6c7105f5770ee42fa6d6b2eceff20c193d",
+          "size": 1553
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/MALLOC.H",
+          "sha256": "aa0cb86f9d6b0f475f339f0452fee810f321c61b3f0c9e23562077a5d32a76e4",
+          "size": 3097
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/MATH.H",
+          "sha256": "4df668bf2766dcade39669a9a4dc5280ff7a8c573af5a71ac8a00f725b93d825",
+          "size": 3324
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/MEMORY.H",
+          "sha256": "ad17bb794def6cbfe18a83f786dd1940bed498af4566f2a5f6242e0e5c7b1bda",
+          "size": 1065
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/PROCESS.H",
+          "sha256": "0d005443e2782762cd7f0146cc570e5e774cce11d59e91dac2c07cbe046875fa",
+          "size": 1988
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SEARCH.H",
+          "sha256": "2d476b5f3629ab2126835923b724310fed71d0cd5b84408f4c2ed9109358d34a",
+          "size": 1025
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SETJMP.H",
+          "sha256": "1a3265e579c8c7c226429b67531879d7a750b1756bc3069fad3cd5dc88093a48",
+          "size": 907
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SHARE.H",
+          "sha256": "f72afe01ccafd4541e7289fc2d640056564d3e35a0948a03c8fbfd0368b1312d",
+          "size": 554
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SIGNAL.H",
+          "sha256": "8ade415619a7af677df7b0b57522de0a1e25a4b6b17f6b9433948be80ae04e5e",
+          "size": 1905
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/STDARG.H",
+          "sha256": "1375a4706d03a1258c7f75f786abdd645c15b646f1c131f19400be91a1e19ca3",
+          "size": 614
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/STDDEF.H",
+          "sha256": "ef005074dbc269245308884f36e549698d5791726c0e6f50b7fecd063935701f",
+          "size": 1100
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/STDIO.H",
+          "sha256": "5f33039b1deea27b376dc48ebf42d2716aa074c59a520744e01534229d373434",
+          "size": 4500
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/STDLIB.H",
+          "sha256": "9f2969d0ff20ad4f24506bd3ee06ed04b357894e8b08fb2129d0c705861d026a",
+          "size": 4900
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/STRING.H",
+          "sha256": "b1643c5775110a0222c4b0862ee9c385e8ea58130d19f8e995c31098d9bf9bf0",
+          "size": 2209
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SYS/LOCKING.H",
+          "sha256": "f44015d9c3efcc1965d28ae027fbfc9813a807f01c32f601e96565635e3ea118",
+          "size": 573
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SYS/STAT.H",
+          "sha256": "eea113b024f896a5920aff276b2859dac276dcd03c8907e4f1a1366b2edc7c29",
+          "size": 1497
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SYS/TIMEB.H",
+          "sha256": "d94ae6ac1cb993610c3f7c664d7b8a5e1b79790bc89d92236943546e27851741",
+          "size": 844
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SYS/TYPES.H",
+          "sha256": "af324b11b71ebfc8404e8f726764f91308c6b3fea20c9441234087fafaa724ea",
+          "size": 849
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/SYS/UTIME.H",
+          "sha256": "d83af1cee3c85c53dd2766b0b42e672de6e9b3260236def298a371d7dbfd19d5",
+          "size": 1061
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/TIME.H",
+          "sha256": "9b26227e1f2edaa5e428f08d62baf0c686d89b8d6c0046ce5a3b918c5675b561",
+          "size": 2342
+        },
+        {
+          "path": "toolchain/msc510/INCLUDE/VARARGS.H",
+          "sha256": "9d4d6f8357b276acdc49e9ab509f6c253a9eebb5060ad3e29b0215c0669f8005",
+          "size": 642
+        },
+        {
+          "path": "toolchain/msc510/INI/BRIEF.INI",
+          "sha256": "896cd9adea17b75229ae39d11002ed0ded956c358f9f4a9b2d129b3ebf0ca2f7",
+          "size": 2094
+        },
+        {
+          "path": "toolchain/msc510/INI/EPSILON.INI",
+          "sha256": "0f6d609ac1065d585aa3d5aefc7e786e6cd4b9e27b2cfc860756f2179ccb75bc",
+          "size": 978
+        },
+        {
+          "path": "toolchain/msc510/INI/QUICK.INI",
+          "sha256": "476d5eb2ebce1d225b8eea3361ca812d98520d19105f63215ef3cf6919953a7c",
+          "size": 1058
+        },
+        {
+          "path": "toolchain/msc510/LIB.EXE",
+          "sha256": "cb76479346b20fe29cac2b387e8358cda2456779213657d1d60b05104b71efc7",
+          "size": 34895
+        },
+        {
+          "path": "toolchain/msc510/LIBH.LIB",
+          "sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+          "size": 14209
+        },
+        {
+          "path": "toolchain/msc510/LINK.EXE",
+          "sha256": "124a3c800edc16b60f696d35a9dfec798b68b78fe2ca90c5988ea76bdeab1a8a",
+          "size": 65539
+        },
+        {
+          "path": "toolchain/msc510/LLIBCR.LIB",
+          "sha256": "7961eafce689dbf17acc3fd6fe34be6bc000f60d0f02fb1af2602b09112f3d2e",
+          "size": 142837
+        },
+        {
+          "path": "toolchain/msc510/LLIBFA.LIB",
+          "sha256": "b4f3d8e9fb999261ac51f8dfb08022e6dff72250edbe800d57da46152dd854e7",
+          "size": 47625
+        },
+        {
+          "path": "toolchain/msc510/LLIBFP.LIB",
+          "sha256": "35769669c1330a4c854ca1c265b78cc25a1d5c2489b0515a89c877d37b68d008",
+          "size": 39331
+        },
+        {
+          "path": "toolchain/msc510/LVARSTCK.OBJ",
+          "sha256": "670a8a7ee92a7cc81d2a7282cb3b756ec207d994aee6cc214f795f794844a191",
+          "size": 487
+        },
+        {
+          "path": "toolchain/msc510/M.EXE",
+          "sha256": "24fe1e02eb9983c3b8d17739a88ffb1a171049c5aedd1e2b62f42bc784e3b4d9",
+          "size": 94821
+        },
+        {
+          "path": "toolchain/msc510/MAKE.EXE",
+          "sha256": "575b32ee118e82bb1d5c745abfdd9987b6c08775bc3316dc0f7b14004794ee67",
+          "size": 23675
+        },
+        {
+          "path": "toolchain/msc510/MEGREP.EXE",
+          "sha256": "d93a6e962cdef982519c106328c3766d56defbeef87c0ae967786e67f758fb24",
+          "size": 20741
+        },
+        {
+          "path": "toolchain/msc510/MLIBCR.LIB",
+          "sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+          "size": 133071
+        },
+        {
+          "path": "toolchain/msc510/MLIBFA.LIB",
+          "sha256": "59454d62f1cb50e98abcc862778f7bf3bf1d397d6cd32a3f7dd1dc07bd69105a",
+          "size": 46601
+        },
+        {
+          "path": "toolchain/msc510/MLIBFP.LIB",
+          "sha256": "a6aed77cab170658aa7010b297008621e8f4a047553f3e43caaa00fa8b423314",
+          "size": 38305
+        },
+        {
+          "path": "toolchain/msc510/MOUSE.COM",
+          "sha256": "bfad51a67f192aeb3a7ae8bf24c8b3c6d94a75a4dc1cf021b59eb1c5d62f4efa",
+          "size": 14545
+        },
+        {
+          "path": "toolchain/msc510/MSHERC.COM",
+          "sha256": "1bee0a22524209823bd88edb39956c86105be491d6d500bc5fe3aef42a026328",
+          "size": 6749
+        },
+        {
+          "path": "toolchain/msc510/MVARSTCK.OBJ",
+          "sha256": "f4c9daffeafd50af0e26e1f8cae176174e075fc617a2f574463fbc9e79867b9d",
+          "size": 507
+        },
+        {
+          "path": "toolchain/msc510/PACKING.LST",
+          "sha256": "07b2d7c3c871ae2137eb405961343a68a570c96b2f61c445559461beeff94dcd",
+          "size": 7817
+        },
+        {
+          "path": "toolchain/msc510/PATCH/PATCH320.DOC",
+          "sha256": "f7ff247e19095bdc31f312f5f21bd33ee4d50e513849f65a2ed8d98bb8ba093c",
+          "size": 2169
+        },
+        {
+          "path": "toolchain/msc510/PATCH/PATCH87.DOC",
+          "sha256": "b265f8560f87f905dfa08e8a7f547a69bfbce785ebceaf28dd644b37365251c8",
+          "size": 3937
+        },
+        {
+          "path": "toolchain/msc510/PATCH/PATCH87.EXE",
+          "sha256": "8e8e9e22b35ec2ea120f061bd398b63f7d3a38ce4b7959a182f29f77cc8de114",
+          "size": 4206
+        },
+        {
+          "path": "toolchain/msc510/PATCH/RMRHS.EXE",
+          "sha256": "ae4584bb3a64a937061806332de7a224bfe0a70f11cc3a030c2f70e35be36ee6",
+          "size": 543
+        },
+        {
+          "path": "toolchain/msc510/PATCH/SETRHS.EXE",
+          "sha256": "32d24dd626a0770d214905f82611e20e487c6378e0ed71bd547a677e589ecf0f",
+          "size": 543
+        },
+        {
+          "path": "toolchain/msc510/PATCH/STKPAT.BAT",
+          "sha256": "a0850e8d751a2e4b3cb706e25702d6fde20cd3c0d29fc337a071d8bc5c4c8a83",
+          "size": 94
+        },
+        {
+          "path": "toolchain/msc510/PATCH/STKPAT.SCR",
+          "sha256": "69d23991d62a0fbaa0d00951ba31e696bd891805ac44edc782bcca075e18dc39",
+          "size": 30
+        },
+        {
+          "path": "toolchain/msc510/QC.EXE",
+          "sha256": "5d35fdf4ab359be1369d50aa38945de8d50b89def023e309163f12c6c8171d71",
+          "size": 326656
+        },
+        {
+          "path": "toolchain/msc510/QC.HLP",
+          "sha256": "4c6c974231866a1427d81ff6656176ab665f0cc6bb28a83de6155342bc0f3617",
+          "size": 50649
+        },
+        {
+          "path": "toolchain/msc510/QCL.EXE",
+          "sha256": "3f36c1d35a20f9bba692e77cbffcfa0efa8dd05d8c1d7ff81650ff7451de1e63",
+          "size": 28065
+        },
+        {
+          "path": "toolchain/msc510/QCL.HLP",
+          "sha256": "283a5e14ea78aad1329c113f424d578ea668b3c754b934c961d1897663b7edbf",
+          "size": 1456
+        },
+        {
+          "path": "toolchain/msc510/QLIB.DOC",
+          "sha256": "6a1291249da71bb28228868013bcd9435e32ca910c1adc972e166ed826d6f457",
+          "size": 12047
+        },
+        {
+          "path": "toolchain/msc510/QLIB.EXE",
+          "sha256": "50b34ec98a61a96c53a83091189d78cf8a841f12f3f289da5f39976ec54b5c33",
+          "size": 24557
+        },
+        {
+          "path": "toolchain/msc510/QLIB.INI",
+          "sha256": "7e0351e2239be55d1de56beea74ae07da81bdae27c5443c8f1b4b1e4397f3266",
+          "size": 2905
+        },
+        {
+          "path": "toolchain/msc510/QUICKLIB.OBJ",
+          "sha256": "6e29cb86dd4e2908bc82b3e10a1868f6cc760a3df3721c010d0737249466fb4a",
+          "size": 7917
+        },
+        {
+          "path": "toolchain/msc510/README.DOC",
+          "sha256": "e81738b5304e362968cbfcf9d6d70a8d51c0c245a87b3d7f686a12877ce83cff",
+          "size": 53046
+        },
+        {
+          "path": "toolchain/msc510/README.QC",
+          "sha256": "3a081393dd421b1b5532606b66fe7ec0f3ea44ee259f33e2c6edca01fcc52254",
+          "size": 28931
+        },
+        {
+          "path": "toolchain/msc510/RM.EXE",
+          "sha256": "1ca3524c32adbd9f0e6fffb4d15683c80e6fb4ed37abed35a4cb326c6d883876",
+          "size": 12424
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/ADAPT.BAT",
+          "sha256": "8fdeea87100d709bac391fdcb17e4ea162972a492cc540e18a1fcef67cf690bf",
+          "size": 133
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/C_AUTO.CV",
+          "sha256": "614dfd4f94c1c733ebd855181ebe4e52844a4307fb692d19810ebdf028a5179b",
+          "size": 3571
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/CODEVIEW.DOC",
+          "sha256": "e090d158a9e7bb715cea934e163a83226fbc1013fb9728157c4f5301516b917e",
+          "size": 12928
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/DEMOB.BAT",
+          "sha256": "23005636cb56364c3b6f497a8448a232054acb90298ca32d44746244b6c6394f",
+          "size": 254
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/E_AUTO.CV",
+          "sha256": "8300cb98456524f59e02001fb4136bb5b4c749e60a5dc5bed2a835679ab5430a",
+          "size": 6788
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/L_AUTO.CV",
+          "sha256": "d910e6a983abef5bf7bd34000e8a8ca6e89f8091cf589d85a489136d4b353077",
+          "size": 13272
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/LIFE.C",
+          "sha256": "ed402cb8b5686106abe4b2b7d7a892527d38264cf5d9bdfb393b88adb496980e",
+          "size": 14713
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/LIFE.EXE",
+          "sha256": "5c1d5cd9c816fb29b48a1419519a7c03a09193192a2cb59749c7be2975bf903f",
+          "size": 33237
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/LIFE.R",
+          "sha256": "e622241b3d0dd4482cc653d4455e9c9920a441f7d9cc0c5697c8467686982e7f",
+          "size": 5282
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/LIFEB.BAT",
+          "sha256": "0800fdf66ad0606413160193333d9b84c9b2e38c15260a40af3d530a6c0e008e",
+          "size": 336
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/LIFEEB.BAT",
+          "sha256": "47cd531361487eff01484722d9443d87a09116358fb1d9decb2d90e9e736009b",
+          "size": 402
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/M_AUTO.CV",
+          "sha256": "938c18aecda2e28e6b3d48777ade38b734ee6d60cf110983f31d1fcf5aa2e279",
+          "size": 733
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/MENU.BAT",
+          "sha256": "a90c6110616b9c53d811dbfc995b27faa40d842dea77de434c04b3bd98c003bd",
+          "size": 550
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/Q_AUTO.CV",
+          "sha256": "ee81a0ed32fac1ec9370fe8d6726e1376391ad83fbdd9a0667ee8ebbae11feb6",
+          "size": 15
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/RESPOND.COM",
+          "sha256": "7cb32066d0c6ebf6b17b8c79a85d38a2cc1e057d295d854617ecac76b41712cd",
+          "size": 124
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S1.@@@",
+          "sha256": "733c40e7d412ccc0e33db20cf25329706d4b24e6fa8771771e34d6cc7372d1bb",
+          "size": 230
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S12.@@@",
+          "sha256": "604cdcf1acbdaf1fea8caaf3b01c917df206866aef2b76dcc550c1caace767ad",
+          "size": 926
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S13.@@@",
+          "sha256": "9651d9d01cc8c71e2f683d02f82c1f52bde9ea3114bf8edd042b69adae368803",
+          "size": 368
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S14.@@@",
+          "sha256": "98c109cf5cccbfa25b710ed6e039fbb29851b2575f5bfe374e0fe9ebedd40fe7",
+          "size": 520
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S2.@@@",
+          "sha256": "af45ab5e431816c3556f8aedb801bb13edd18a95486c61dfa90b46800297504b",
+          "size": 752
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S3.@@@",
+          "sha256": "5b7f50932974928a9d535146cf7202417aaaf3f394aef201c514e86ccc14fe6e",
+          "size": 276
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S4.@@@",
+          "sha256": "19bf71c1b3bed07253fb368ccd966bdb2a79320825d92e81705874d0eddb871f",
+          "size": 354
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S5.@@@",
+          "sha256": "89e2f9f0647360adaa1132327fa53adfb93889cc9dbe109347f824e3dcb7e8d9",
+          "size": 554
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S6.@@@",
+          "sha256": "0be440fa38944ed4facf0414a503b8db8f87aa27ca60b04b99725660245f4730",
+          "size": 432
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S7.@@@",
+          "sha256": "9a16bd2db57091567e98c102ed0471e5a90b96f2e2da840c204c9b9ec89ca991",
+          "size": 427
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S8.@@@",
+          "sha256": "d72a9f5d6a74e17ac0ae51a97f4d62ab65dfd6aac45f6d5a63ed196225feeb54",
+          "size": 479
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S9.@@@",
+          "sha256": "22160e9940ff257555d69d6129384561e7e62527720efa8348b612887fb9c0e0",
+          "size": 865
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/S_AUTO.CV",
+          "sha256": "ddc0c8e340e903b82f9daeaf31d1b5450cb00b71bfc080213556dd7d4f37759b",
+          "size": 9091
+        },
+        {
+          "path": "toolchain/msc510/SAMPLE/SAMPLE.BAT",
+          "sha256": "8f6ad03442475f4bfd2e35d11b3537e759e50f2082495eea6056dc362c54b865",
+          "size": 1059
+        },
+        {
+          "path": "toolchain/msc510/SETARGV.OBJ",
+          "sha256": "fadc39236423ad7d6c86a5a6c7c1085c8e619fd5876af0b4ad2eebc7e0d09751",
+          "size": 143
+        },
+        {
+          "path": "toolchain/msc510/SETENV.EXE",
+          "sha256": "0959c65b9e0e78e12779aee7ed235d1654ac0145c891a4cd18408da615412cd3",
+          "size": 10870
+        },
+        {
+          "path": "toolchain/msc510/SETUP.DOC",
+          "sha256": "e4a9d5d98d487e8619dacb9333203805aeb8016df651679e93fad388da8976d9",
+          "size": 11917
+        },
+        {
+          "path": "toolchain/msc510/SETUP.EXE",
+          "sha256": "07a9a7c6906e22e91f8fe9ed8fe85398ae3e8f208db878148e25d53c57a455a2",
+          "size": 83253
+        },
+        {
+          "path": "toolchain/msc510/SLIBCR.LIB",
+          "sha256": "ce2dc6d740ae477135e2d9f11802c2357914994835e82a165423b43ccd30728f",
+          "size": 132047
+        },
+        {
+          "path": "toolchain/msc510/SLIBFA.LIB",
+          "sha256": "d07656aa28b8038e9b95e7b45343f8099a306d89c6ebf4d91b45bab8617a8e2d",
+          "size": 46089
+        },
+        {
+          "path": "toolchain/msc510/SLIBFP.LIB",
+          "sha256": "7a712089189bc34d66e579fc76be411bcd24a39863e6e8fb7203b71a1fcfdc9e",
+          "size": 37281
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/CFLOW.C",
+          "sha256": "6b8a7a42690fabe81cfb20babb11a34b0da1cd684bbdfb1487a062fba66659d1",
+          "size": 44796
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/CFLOW.DOC",
+          "sha256": "8c1c0d99595a228bd517dcf47ff048cfd6979b8948715cc3081bd3b805953aab",
+          "size": 3764
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/DEMO.C",
+          "sha256": "c4353b9f50662c39fedfd336ceba0163e5c8d5cf5b990bec558a1fc75d02471c",
+          "size": 419
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/EMOEM.ASM",
+          "sha256": "802654673bf694adee25ace0d62c63858f499b273fdbc65a7176318cdd329716",
+          "size": 12129
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/GRDEMO.C",
+          "sha256": "13bd0b9bcb634150f23f98a7b87e6b2af484a2ccfe731c29448fc05337549712",
+          "size": 20907
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/SAMPLES.DOC",
+          "sha256": "4cca3283fb6e71949a1593335970744abecaa766331e7597b6ca49ade197d390",
+          "size": 843
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/SIEVE.C",
+          "sha256": "a55554dc180412049eab54837d8c282ea1cf9e042d685d6154ce3d9536c4ad68",
+          "size": 788
+        },
+        {
+          "path": "toolchain/msc510/SOURCE/SORTDEMO.C",
+          "sha256": "54fbbbbdf8929fd8acbc5fbd8d2285a6aaa2aba0a23ce78eef1deef94734d807",
+          "size": 25399
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/_FILE.C",
+          "sha256": "fe92f020ec12015cb1bbeecb2492088462eeefaf8c3383af20496f887fe2279a",
+          "size": 1691
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/BRKCTL.INC",
+          "sha256": "e6500e25dc174d8f7ccf4501ae69b029a50f2035b39e7dfe966d34f32ad98d37",
+          "size": 784
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/CHKSTK.ASM",
+          "sha256": "009f88f80cce835eb5b2a71a84a06db5b03cb87e14679243d73a064bc9405bb0",
+          "size": 2044
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/CHKSUM.ASM",
+          "sha256": "76e1aadaf535d260a9c4315938e716beb1220ac8e4c258d3cf3beb00518d03d8",
+          "size": 3524
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/CMACROS.INC",
+          "sha256": "0cc0bd4d72efdd2ea8ef7130feefa82c79809a76b3ad88f1508a4b11bbef116c",
+          "size": 12066
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/CRT0FP.ASM",
+          "sha256": "fcf0a6e89dbbed8e4ef3730f1f7da2197a1d9d0b8cc548c411d8b39e6c7878d4",
+          "size": 2223
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/CRT0.ASM",
+          "sha256": "0762bc0cbf34b5c5722988e0af9aa365bc06d3020d17b66612c8b667a83e2945",
+          "size": 7612
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/CRT0DAT.ASM",
+          "sha256": "ea573fc547c62f64f34abc8dad440a302b693299aeee920b54858657a23ab9d0",
+          "size": 14175
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/CRT0MSG.ASM",
+          "sha256": "4453152c66f97212fbf3c37a9cc23867f55ebaf26e05f06fddb6dcdc047a17ac",
+          "size": 2840
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/EXECMSG.ASM",
+          "sha256": "3206966d387d1efeb35721221ca19797482f16815bf5c7ae3edc293b25661af3",
+          "size": 1337
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/NMSGHDR.ASM",
+          "sha256": "58384b1e38c6ba11fd988d9e60e7062bec5fc36b7a83832e426f64ff81842f80",
+          "size": 3010
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/NULBODY.LNK",
+          "sha256": "d9fbf15f2439a8511652577d58ba8d56bb61f1d1088835e83c85a4967e812922",
+          "size": 149
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/STDALLOC.ASM",
+          "sha256": "cb271dbbc438c1228d4171f73a3b8153c0161de24cf6e2f026b68faea5512f4f",
+          "size": 2825
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/STDARGV.ASM",
+          "sha256": "6c40436a25873fa016dcb5dfdcfd980869b3c3e5b45486a25153430a5885f8d8",
+          "size": 13852
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/DOS/STDENVP.ASM",
+          "sha256": "d0c966272997a01f1fa2668c93e291cd6ee0b205c2d8f009f83fe304177d0616",
+          "size": 3780
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/FILE2.H",
+          "sha256": "081a67a6740c4ff0c6890cead8427a4f0bbe71f7de95a344b169508b6870c0d1",
+          "size": 1027
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/FMSGHDR.ASM",
+          "sha256": "9b24671958e3c97f149d653df88e29875d5bed934057e2608fd48d3935f4050d",
+          "size": 2429
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/MAKEFILE",
+          "sha256": "15fe7391cf9f301de0701d8de9da7aecf88e253bc5db256c66f16beee15d7fee",
+          "size": 4148
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/MSDOS.H",
+          "sha256": "3c64dac8682add4de4b9bbac22f5b4183a88c0aaf7641f127938106c62f38668",
+          "size": 6849
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/MSDOS.INC",
+          "sha256": "1263518c855099f02fe14fc0eb6d31008a143366515274adca2dc28812ed4d89",
+          "size": 6181
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/NULBODY.C",
+          "sha256": "37d45ed198ffeba252c0d12519dabd7011abad17e009cafbc54bd04aec441f8c",
+          "size": 13
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/README.DOC",
+          "sha256": "8789e4c863948d053667ffd89578009acaf2759b711b0ea1c42b84427f0657a9",
+          "size": 3199
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/REGISTER.H",
+          "sha256": "1ec861ff431895af5a5fafbfbf9ebffe2666f5c7e981ea2dc4afbd6f3b704a79",
+          "size": 922
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/SETARGV.ASM",
+          "sha256": "f195e7c950278a12ef11eccd78f5adff1284ae5d7bb0622d52804d4a81bb0a76",
+          "size": 971
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/STARTUP.BAT",
+          "sha256": "4fe3640b8f9b890bc8b742ffb95fa0ad5aab37fb3759ce32d7c080de040534b6",
+          "size": 1663
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/VERSION.INC",
+          "sha256": "c3fa9315baced76ee80ba988ef05d13e01a64eddf4e77be02c061d7c926d7c0a",
+          "size": 503
+        },
+        {
+          "path": "toolchain/msc510/STARTUP/WILD.C",
+          "sha256": "db6d723fcb26b554785449fd9c2b3bb7f648a2c53179efa40951163641e91614",
+          "size": 7182
+        },
+        {
+          "path": "toolchain/msc510/SVARSTCK.OBJ",
+          "sha256": "8b882552be5f0d4dea0608a8da96021245589fb10bea5a473300a0b5e345d36a",
+          "size": 507
+        },
+        {
+          "path": "toolchain/msc510/UNDEL.EXE",
+          "sha256": "615a16c11060d78ca4f4b55336a9da6eb276f9d10e8a514adb2c27af455915dd",
+          "size": 17003
+        },
+        {
+          "path": "toolchain/msc510/UTILITY.DOC",
+          "sha256": "b85d91bf0c222ec3a690d0e31068a17d4e2e3f53ae349596548954a1c4e0a5d4",
+          "size": 15432
+        }
+      ],
+      "flags": [
+        "/AM",
+        "/O",
+        "/Gs"
+      ],
+      "historical_version_proven": false,
+      "status": "multiple local game matches; 5.0 and 5.1 remain indistinguishable on accepted functions"
+    }
+  },
+  "provenance": "recovery/msc510-provenance.json and recovery/msc500-provenance.json",
+  "quickc": "1.00/1.01 available under same directories, BAKPAT rejected for production; 2.x not investigated",
+  "runner": {
+    "path": "C:/tools/msdos/msdos.exe",
+    "sha256": "f7f6cb0a3e816c5edb13112d327c1bddbf7463fe7bf9a005ca1eb5317751bd02",
+    "size": 686592
+  },
+  "schema": 1
+}

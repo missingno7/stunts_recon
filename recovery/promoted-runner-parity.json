@@ -1,0 +1,333 @@
+{
+  "inputs": {
+    "asm/README.md": "3dded7052fc26c77aee7f2f8ef61c42d9fd9e01e5cef7b8bddcbfcffd9d7960d",
+    "include/README.md": "0576d657eabdbd9b998ae33da38b0b660338a5aae4639d5884faac2bcec0d35b",
+    "layout/classification.json": "0eda06585979b04798a38fb3de55bb6e81f97741ab2006a9843faa362323d4a7",
+    "layout/data-symbols.json": "c54806f697ed9af875a67279e1eb576855849336e8eaacb5d76a9c47d56b4b2b",
+    "layout/library-candidates.json": "3ef9ed030a409f57c038c5a8bb9d5a480ccf858407b303c0c28c0ec68e66bff7",
+    "layout/manifest.json": "b232efbe8fd1606cc496836d628c05baeab8f542bfb97c7e2f1fe48a8e009afa",
+    "layout/oracle.lock.json": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "layout/production-plan.json": "c98a8f411f6a6cb981dd7acc67b47158381eb049be24f304494956445c21ea01",
+    "layout/references.json": "99761030df3845368ee95e4f5aad28a720170dd3e6d8086e88b636079218dc7d",
+    "layout/toolchain.json": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+    "recipes/audio_enable_flag2.json": "6160875c12b51080b31f0f0992303e32fc1f9d8079125c12260fc00a6a78c1ac",
+    "recipes/audioresource_get_dword.json": "426f508d90f51d03b4e47ddd480eb6b430a629163ff61a670f4066899cf2a081",
+    "recipes/nopsub_26552.json": "e7bb8f983a14e8cf6d8c3609f17361c0c869326cab8b78546797c4b53daeba4b",
+    "recipes/nopsub_378AE.json": "b7cf2688582a4fed725b9cf6cd5e81ea8f6f640a7526adfcae6fa8f64639e773",
+    "recipes/nopsub_378BC.json": "e16d9ba676a3e9502cbee20a38552cdde54a5cb5e80f3c79aafa2818b0be0e98",
+    "recipes/parse_shape2d_helper.json": "3d04a438e20ffe9eb18297d401ecef5fd2b233961cb9be35d44d2abf125b25cd",
+    "recipes/parse_shape2d_helper3.json": "d82f2f4be96eb312b1ead12c500fd9c38b7620f241d46ade6eb97850b8eed5a5",
+    "recipes/rect_is_inside.json": "958a31b6cb2d8752da87eeb35862efc15ad06d27e216cf44bec25b089b435f35",
+    "recipes/rect_is_overlapping.json": "52e7b04ceec7f43b1ed6442fffd25e9bc9def54f98781f59100f6341bf947248",
+    "recovery/candidates/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "recovery/candidates/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "recovery/candidates/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "recovery/candidates/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "recovery/candidates/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "recovery/candidates/parse_shape2d_helper.c": "486eb9c3b58de51f04a28a1e01c9c8db9b87f1567d374ea1fd1dc1f8258fcc40",
+    "recovery/candidates/parse_shape2d_helper3.c": "7151de0d539518a0773d031e5da0cd3e05086f60a0711850f6eb03f9f3cc132b",
+    "recovery/candidates/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "recovery/candidates/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "src/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "src/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "src/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "src/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "src/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "src/parse_shape2d_helper3.c": "7151de0d539518a0773d031e5da0cd3e05086f60a0711850f6eb03f9f3cc132b",
+    "src/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "src/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "tools/binder.py": "173c5af41fd7de1a962c6b5217dae725c707b518791d7f347b719e0eb2f67333",
+    "tools/build_exact.py": "2fa50745a85c42eeac37e364de45700d350799e35ae18f5988d2d76d01bced23",
+    "tools/check_candidate.py": "4f332d8e4e73e8235c61c63074b2194d46cd6f9ea3034cabe2cafe305e0d454c",
+    "tools/check_library.py": "b40fc0198eba5a79c7517c5b66459d0a7e10915ba231662fb0b07e574957facd",
+    "tools/common.py": "8625c425e656f6cfb6ff3b88b4ccd4a84a603183d7c21326999ab4df8e2e3183",
+    "tools/compiler.py": "845db7b6f0119faf0ba1ae98f959661aac1a66f9aac46eee4ce1a64485ca350f",
+    "tools/coordinates.py": "732ff4889873bff0a6c7b8344d9dacd36a12b11fb132b70531068f8d74643e96",
+    "tools/crosscheck_runner.py": "4fa7f3865cd9753fc33f31354f469922bf07f4ba4587c0b3be5cc425a5a330c2",
+    "tools/data_symbols.py": "fc9245d766d967da4f3c0bf6f8c4928d5726ecbf11b6866b97aa97ce5c8c273b",
+    "tools/dsi.py": "7afb38485a232eca05eb65734c6eafc3d8db4c86096bf09586105cefafcc916c",
+    "tools/exepack.py": "4e1f5e3a1f629d556be07e822a4c64ea29daef3bbaef818f5aaa675d7278e1db",
+    "tools/grind.py": "01c9689d883d0e5b07a50ff3d64622a5f617f63b84edb5a1fc473ca043d44a5e",
+    "tools/import_restunts.py": "a71f05c79afb8f112b5efc597bd2dbba3c0a53fa272d2b31ef9b0cfa508d2710",
+    "tools/library.py": "55cadd6ff216899b2ead30d3d8f0e4a0af10f51a7f58099c28a1b945758f69a9",
+    "tools/linker_probe.py": "d3ecaca7e3769941d3888f26b257e1c72a9b603f34acb95a9fa4ad3d2fca8c7f",
+    "tools/mz.py": "7b886df739b405b3d4c4ef420af5f3806f287980098b37c62838ebbc0c89ff16",
+    "tools/object_probe.py": "7caf47671ae287aab879a5e57a3644c91e9e22a5ad86b85a4ea3a1f3a62963a4",
+    "tools/omf.py": "e9e356e99cf6132d5fe69f0946a33d6fcbe70d8c1f21242f0ec4f05a7dae66d8",
+    "tools/oracle.py": "01c57bb2b64f9cd7107a49d0bc1b050cab4014406590ffc7b24f51b5874fc3b5",
+    "tools/prepare_candidate.py": "6f8a040db07d517145d014dcdcb4f7f0d57b7278b7d34d1c7ea26cd6a9b93db1",
+    "tools/probe_module.py": "0c8aadcfeb309b6289517bce3ec710fbd2436764e11b28ee8f19b2a7c8d7498b",
+    "tools/probe_tu.py": "1f5dd0bb237734e5873fceeb94ca21314fbe97fd84e8bdc37bd928d01bf17dbc",
+    "tools/reconstruction_factory.py": "1d18182d5dc0133b62ec0800ac0467e58daceaf356c220aa8eeccdfffca5adcf",
+    "tools/restunts_base.py": "4c4350f3a9a8c3de01597230374a9b2125e047a49f550d91f8d2c95816b4719c",
+    "tools/runtime_link_probe.py": "641e43a6baea35561f1ecaeb2807dd63924ab145e52454b7ef70a1ab0acbcdf9",
+    "tools/toolchain_probe.py": "cd5e5785f21d950c30cce76838b8258b4e660e03bf511b11dcca1d80724c4d98",
+    "tools/triage.py": "c6187c297c498c77683f994434893e7ff5d9e82831da8ce6f7c138a20f48b1aa",
+    "tools/validate.py": "208a1d6adcfbc8a74c56804826f1ea74024e79cffbbfaab518094ca64c136e0f",
+    "tools/workflow.py": "fb992dc47d2bdd2e1e319bc28c6820b07da42d261fc81657f4123d9673fb477c"
+  },
+  "results": [
+    {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\r0s5cxvaw\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "9200b0c5b87d453e4780d2663b78ee369f8994eee8afbec16fbe159c102a7d07",
+        "size": 276
+      },
+      "payload": {
+        "sha256": "bd18f931f36ead4bd4b11f076875f115daa889e921e2f1d4c3e946c6aeccbb3f",
+        "size": 32
+      },
+      "source": {
+        "sha256": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+        "size": 78
+      },
+      "task": "nopsub_26552"
+    },
+    {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\rv_bagsxn\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "1a15a0a17d294aca693b1b5b4493b6d21d7205c8c3ca83d02d040e1002b33c42",
+        "size": 320
+      },
+      "payload": {
+        "sha256": "4aa067d829e42c5c54ea3ac1a39c20ce31ad7bffb6b8a53332217228250ed776",
+        "size": 62
+      },
+      "source": {
+        "sha256": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+        "size": 338
+      },
+      "task": "rect_is_overlapping"
+    },
+    {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\rvdurjgjm\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "151c5643cc9c388de43812ead5bcc781492003896f14ba197607fb0ca56b2738",
+        "size": 300
+      },
+      "payload": {
+        "sha256": "20532c3c1432e839438f3871609dffd3d1082049e57205229e3a6d7b76a8eef8",
+        "size": 52
+      },
+      "source": {
+        "sha256": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+        "size": 175
+      },
+      "task": "rect_is_inside"
+    },
+    {
+      "binding": {
+        "fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame_load_address": 178032,
+            "linked_value": 20161,
+            "offset": 2,
+            "target": "_audioflag2",
+            "target_load_address": 198193
+          }
+        ],
+        "generated_relocations": [],
+        "mode": "external-dgroup-offset16-v1"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\rq8z4p70c\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "6e61d3904abf83e63ebbd13026e7264a10904e748433a9eade90836be77b6e5f",
+        "size": 283
+      },
+      "payload": {
+        "sha256": "dbe660ac8e5d0f55a01a97cb014a5c77c55413e2bad4e3f6b73d9754689d8b96",
+        "size": 6
+      },
+      "source": {
+        "sha256": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+        "size": 85
+      },
+      "task": "audio_enable_flag2"
+    },
+    {
+      "binding": {
+        "fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame_load_address": 178032,
+            "linked_value": 38294,
+            "offset": 8,
+            "target": "_byte_44D06",
+            "target_load_address": 216326
+          }
+        ],
+        "generated_relocations": [],
+        "mode": "external-dgroup-offset16-v1"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\r5iskmt67\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "b8bf7288992bb469ec98d0b9b9fe7ab5d55947aaac1baa10919dfdd8deb934a6",
+        "size": 279
+      },
+      "payload": {
+        "sha256": "5f40728e0c3174d7bde0f114d23bd95b0f851587cb196cdc309eedfd90225a2f",
+        "size": 14
+      },
+      "source": {
+        "sha256": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+        "size": 104
+      },
+      "task": "nopsub_378AE"
+    },
+    {
+      "binding": {
+        "fixups": [
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame_load_address": 178032,
+            "linked_value": 37722,
+            "offset": 8,
+            "target": "_byte_44ACA",
+            "target_load_address": 215754
+          }
+        ],
+        "generated_relocations": [],
+        "mode": "external-dgroup-offset16-v1"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\r962ly4wx\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "157ecb3ea8040cb1b3c0b333edc0841fbaccb8cc5e445eb1ccb3cadcaf3b78b8",
+        "size": 279
+      },
+      "payload": {
+        "sha256": "441b1bac7d9a516b6578695cecddebc116106b22d7fb0e3913fc0de987163019",
+        "size": 14
+      },
+      "source": {
+        "sha256": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+        "size": 104
+      },
+      "task": "nopsub_378BC"
+    },
+    {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\rgkc2m053\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "3f4b49adc546d40ffdfd2f6f70556623d40047af139d13db484390cd41735935",
+        "size": 292
+      },
+      "payload": {
+        "sha256": "222353c6afa5b0f41d46128123130bd5267c2518f384985364258165de64d15b",
+        "size": 26
+      },
+      "source": {
+        "sha256": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+        "size": 106
+      },
+      "task": "audioresource_get_dword"
+    },
+    {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\prog\\stunts_recon\\build\\crosschecks\\rgt4hzfvr\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "b994c5c6fa9101281613e89ec79126988dd603d289840dc96353298246c18941",
+        "size": 308
+      },
+      "payload": {
+        "sha256": "1c81f94a02413ee72f440cf2e167678f087f7bf0615c478a33d3478bf7c9596d",
+        "size": 46
+      },
+      "source": {
+        "sha256": "7151de0d539518a0773d031e5da0cd3e05086f60a0711850f6eb03f9f3cc132b",
+        "size": 159
+      },
+      "task": "parse_shape2d_helper3"
+    }
+  ],
+  "runner": {
+    "path": "C:\\DOSBox-X\\dosbox-x.exe",
+    "sha256": "a261594d0444b3d43c4309a00f66df2c0c20d6ea5b467bfa144db18f2dff6950",
+    "size": 21634048
+  }
+}

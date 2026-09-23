@@ -1,0 +1,23 @@
+{
+  "end": 127796,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 1489,
+    "line_start": 1467,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "parse_shape2d_helper",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_parse_shape2d_helper",
+  "source": "recovery/candidates/parse_shape2d_helper.c",
+  "stable_id": "load_1f314",
+  "start": 127764,
+  "target": {
+    "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+    "size": 32
+  }
+}

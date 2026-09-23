@@ -1,0 +1,55 @@
+{
+  "emitted": {
+    "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287",
+    "size": 114
+  },
+  "end": 92624,
+  "expected": {
+    "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287",
+    "size": 114
+  },
+  "fixups": [],
+  "limitation": "Shows two functions can coexist exactly in one TU; does not establish original TU boundaries or remaining segment context",
+  "publics": [
+    {
+      "name": "_rect_is_overlapping",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    },
+    {
+      "name": "_rect_is_inside",
+      "offset": 62,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "receipt": {
+    "command": [
+      "C:/tools/msdos/msdos.exe",
+      "-e",
+      "-v5.00",
+      "D:\\prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+      "/c",
+      "/AM",
+      "/O",
+      "/Gs",
+      "UNIT.C"
+    ],
+    "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+    "object": {
+      "sha256": "2022e7d1af2802425777bd6a0db841cd74fe086b794eb76bfb8466c4a4ebc644",
+      "size": 408
+    },
+    "profile": "msc510-medium",
+    "source": {
+      "sha256": "70298124624295b2691287cb70d4338435e8912f183d30d4ff80851a4f92b73f",
+      "size": 514
+    },
+    "staged_source": {
+      "sha256": "168c14bee829d55c6a0c23f98812790173be5fdd84f66084d6d79cbb66fa7df7",
+      "size": 515
+    },
+    "work_directory": "D:\\prog\\stunts_recon\\build\\probes\\pmrmurx2a"
+  },
+  "start": 92510,
+  "status": "EXACT_CONTIGUOUS_CONTRIBUTION_EXPERIMENT"
+}

@@ -1,0 +1,15 @@
+{
+  "code_evidence": "recovery/restunts-inventory.json fully anchored functions plus MATCHING_C manifest extents",
+  "data_evidence": [
+    {
+      "confidence": "structural data-segment evidence; not reconstructed data source",
+      "end": 200000,
+      "provenance": "Restunts asmorig/dseg.asm first public word_3B770; game.asm IDA base10000; entire region covered by binary anchors",
+      "start": 178032
+    }
+  ],
+  "library_evidence": "recovery/library-evidence.json",
+  "origin_policy": "No Restunts ASM representation alone establishes historical assembler authorship",
+  "policy": "conservative non-overlapping evidence ranges; unknown means unclassified, not data",
+  "unresolved_assembly_origin": true
+}

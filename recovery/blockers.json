@@ -1,0 +1,45 @@
+{
+  "attempts": [
+    {
+      "attempts": 7,
+      "evidence": "recovery/rpm-experiments.json",
+      "interval": [
+        40390,
+        40424
+      ],
+      "name": "update_rpm_from_speed",
+      "reason": "MSC ordinary long multiply emits __aFulmul; original direct mul/register/frame pattern unresolved"
+    },
+    {
+      "attempts": 28,
+      "evidence": "recovery/sign-experiments.json",
+      "interval": [
+        40424,
+        40447
+      ],
+      "name": "nopsub_19DE8",
+      "reason": "Straightforward sign function differs across MSC5.0/5.1 and QuickC1.00/1.01; QuickC BAKPAT support required"
+    },
+    {
+      "attempts": 1,
+      "evidence": "recovery/blocked/rect_adjust_from_point.c",
+      "interval": [
+        91002,
+        91078
+      ],
+      "name": "rect_adjust_from_point",
+      "reason": "Restunts C hypothesis emits 84 bytes instead of 76; register/local layout requires targeted source work"
+    },
+    {
+      "attempts": 3,
+      "evidence": "recovery/blocked/sub_307D2.json",
+      "interval": [
+        133074,
+        133091
+      ],
+      "name": "sub_307D2",
+      "reason": "MSC zero-extension opcode and complete contribution padding differ; original compiler/TU context unresolved"
+    }
+  ],
+  "schema": 1
+}

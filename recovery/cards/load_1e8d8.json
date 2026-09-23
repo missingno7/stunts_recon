@@ -1,0 +1,251 @@
+{
+  "attempt_budget": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 125144
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 125145
+    },
+    {
+      "bytes": "8b4608",
+      "instruction": "mov ax, word ptr [bp + 8]",
+      "load_offset": 125147
+    },
+    {
+      "bytes": "8b5e0c",
+      "instruction": "mov bx, word ptr [bp + 0xc]",
+      "load_offset": 125150
+    },
+    {
+      "bytes": "0bd8",
+      "instruction": "or bx, ax",
+      "load_offset": 125153
+    },
+    {
+      "bytes": "8b5e0a",
+      "instruction": "mov bx, word ptr [bp + 0xa]",
+      "load_offset": 125155
+    },
+    {
+      "bytes": "750b",
+      "instruction": "jne 0x1e8f3",
+      "load_offset": 125158
+    },
+    {
+      "bytes": "8b4606",
+      "instruction": "mov ax, word ptr [bp + 6]",
+      "load_offset": 125160
+    },
+    {
+      "bytes": "f7e3",
+      "instruction": "mul bx",
+      "load_offset": 125163
+    },
+    {
+      "bytes": "8be5",
+      "instruction": "mov sp, bp",
+      "load_offset": 125165
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 125167
+    },
+    {
+      "bytes": "ca0800",
+      "instruction": "retf 8",
+      "load_offset": 125168
+    },
+    {
+      "bytes": "f7e3",
+      "instruction": "mul bx",
+      "load_offset": 125171
+    },
+    {
+      "bytes": "8bc8",
+      "instruction": "mov cx, ax",
+      "load_offset": 125173
+    },
+    {
+      "bytes": "8b4606",
+      "instruction": "mov ax, word ptr [bp + 6]",
+      "load_offset": 125175
+    },
+    {
+      "bytes": "f7660c",
+      "instruction": "mul word ptr [bp + 0xc]",
+      "load_offset": 125178
+    },
+    {
+      "bytes": "03c8",
+      "instruction": "add cx, ax",
+      "load_offset": 125181
+    },
+    {
+      "bytes": "8b4606",
+      "instruction": "mov ax, word ptr [bp + 6]",
+      "load_offset": 125183
+    },
+    {
+      "bytes": "f7e3",
+      "instruction": "mul bx",
+      "load_offset": 125186
+    },
+    {
+      "bytes": "03d1",
+      "instruction": "add dx, cx",
+      "load_offset": 125188
+    },
+    {
+      "bytes": "8be5",
+      "instruction": "mov sp, bp",
+      "load_offset": 125190
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 125192
+    },
+    {
+      "bytes": "ca0800",
+      "instruction": "retf 8",
+      "load_offset": 125193
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec8b46088b5e0c0bd88b5e0a750b8b4606f7e38be55dca0800f7e38bc88b4606f7660c03c88b4606f7e303d18be55dca0800",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 125196,
+    "end_evidence": {
+      "instructions": 3,
+      "label": {
+        "ida": 190726,
+        "index": 3204,
+        "line": 4276
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 4,
+    "line_end": 4280,
+    "line_start": 4245,
+    "name": "__aFlmul",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 4280,
+      "line_start": 4245,
+      "path": "src/restunts/asmorig/seg010.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg010",
+    "segment_offset": 7304,
+    "segment_paragraph": 7365,
+    "sha256": "56cbf2a7e75a5d414ad8462c9bc8af6357aa371744833aa5ad910ffe2190cd48",
+    "size": 52,
+    "source": "build/references/restunts/src/restunts/asmorig/seg010.asm",
+    "stable_id": "load_1e8d8",
+    "start": 125144,
+    "start_candidates": [
+      125144
+    ],
+    "start_evidence": {
+      "instructions": 3,
+      "label": {
+        "ida": 190674,
+        "index": 3181,
+        "line": 4240
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 4
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_1e8d8",
+  "name": "__aFlmul",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_1e8d8 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "scope_snapshot": {
+    "asm/README.md": "3dded7052fc26c77aee7f2f8ef61c42d9fd9e01e5cef7b8bddcbfcffd9d7960d",
+    "include/README.md": "0576d657eabdbd9b998ae33da38b0b660338a5aae4639d5884faac2bcec0d35b",
+    "layout/classification.json": "0eda06585979b04798a38fb3de55bb6e81f97741ab2006a9843faa362323d4a7",
+    "layout/data-symbols.json": "c54806f697ed9af875a67279e1eb576855849336e8eaacb5d76a9c47d56b4b2b",
+    "layout/library-candidates.json": "3ef9ed030a409f57c038c5a8bb9d5a480ccf858407b303c0c28c0ec68e66bff7",
+    "layout/manifest.json": "fc85eb024fb54b4d60b05ef472268107dcfc543eb65d47df5e6064aa313e217a",
+    "layout/oracle.lock.json": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "layout/production-plan.json": "0fa3f5781854156c1ba7c1cb076bac2308f633573da8cb212faf8b4785e25f10",
+    "layout/references.json": "99761030df3845368ee95e4f5aad28a720170dd3e6d8086e88b636079218dc7d",
+    "layout/toolchain.json": "197ccc1ac4a4521fd285a1f18ec693adccfa900d79c1017b54b6eb3fb0cd205a",
+    "recipes/audio_enable_flag2.json": "6160875c12b51080b31f0f0992303e32fc1f9d8079125c12260fc00a6a78c1ac",
+    "recipes/audioresource_get_dword.json": "426f508d90f51d03b4e47ddd480eb6b430a629163ff61a670f4066899cf2a081",
+    "recipes/nopsub_26552.json": "b97996c33fa399c94da2fed91efabf9f987951b4bd7709c97d41f058eb36b094",
+    "recipes/nopsub_378AE.json": "b7cf2688582a4fed725b9cf6cd5e81ea8f6f640a7526adfcae6fa8f64639e773",
+    "recipes/nopsub_378BC.json": "e16d9ba676a3e9502cbee20a38552cdde54a5cb5e80f3c79aafa2818b0be0e98",
+    "recipes/rect_is_inside.json": "958a31b6cb2d8752da87eeb35862efc15ad06d27e216cf44bec25b089b435f35",
+    "recipes/rect_is_overlapping.json": "52e7b04ceec7f43b1ed6442fffd25e9bc9def54f98781f59100f6341bf947248",
+    "recovery/candidates/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "recovery/candidates/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "recovery/candidates/nopsub_26552.c": "a230776c235a731aafe7784ef161b836ee6528f919772e2b36b954e85f127670",
+    "recovery/candidates/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "recovery/candidates/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "recovery/candidates/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "recovery/candidates/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "src/audio_enable_flag2.c": "d66aceccbefcbcae9681207b6eda93c06d9c17507bb8027372d9032b63328e1e",
+    "src/audioresource_get_dword.c": "3e39104c8a2f7c208c39f84ff179bad423d42976c9598edf61d7ed5bade6287e",
+    "src/nopsub_378AE.c": "1e8e2191ed344fffb52a3fe7619f60d44e170c4c90fa734148aebe125a441cbf",
+    "src/nopsub_378BC.c": "826c2ad21964303c6e6136915504e2b3f38989a1404e1a320a47d3ebecab2e75",
+    "src/rect_is_inside.c": "bec03afc8eb1e03287e5fd8f60c3f1147366a72c582ced3c1518fcdff7c143f0",
+    "src/rect_is_overlapping.c": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+    "tools/binder.py": "173c5af41fd7de1a962c6b5217dae725c707b518791d7f347b719e0eb2f67333",
+    "tools/build_exact.py": "2fa50745a85c42eeac37e364de45700d350799e35ae18f5988d2d76d01bced23",
+    "tools/check_candidate.py": "56b0283d1ea8780d099397cfda79a06e6d1bfaf5a21e0bf35ba94ba11748904d",
+    "tools/check_library.py": "b40fc0198eba5a79c7517c5b66459d0a7e10915ba231662fb0b07e574957facd",
+    "tools/common.py": "8625c425e656f6cfb6ff3b88b4ccd4a84a603183d7c21326999ab4df8e2e3183",
+    "tools/compiler.py": "007ba9ce038fb2284c66c0c64fb0c5cbd64218a283df1198871bd44196545545",
+    "tools/coordinates.py": "732ff4889873bff0a6c7b8344d9dacd36a12b11fb132b70531068f8d74643e96",
+    "tools/crosscheck_runner.py": "b19e8507f6084bc0c2b89f970f67d4d837c5197d6deeab3111442d73351a5955",
+    "tools/data_symbols.py": "fc9245d766d967da4f3c0bf6f8c4928d5726ecbf11b6866b97aa97ce5c8c273b",
+    "tools/dsi.py": "7afb38485a232eca05eb65734c6eafc3d8db4c86096bf09586105cefafcc916c",
+    "tools/exepack.py": "4e1f5e3a1f629d556be07e822a4c64ea29daef3bbaef818f5aaa675d7278e1db",
+    "tools/import_restunts.py": "a71f05c79afb8f112b5efc597bd2dbba3c0a53fa272d2b31ef9b0cfa508d2710",
+    "tools/library.py": "55cadd6ff216899b2ead30d3d8f0e4a0af10f51a7f58099c28a1b945758f69a9",
+    "tools/linker_probe.py": "d3ecaca7e3769941d3888f26b257e1c72a9b603f34acb95a9fa4ad3d2fca8c7f",
+    "tools/mz.py": "7b886df739b405b3d4c4ef420af5f3806f287980098b37c62838ebbc0c89ff16",
+    "tools/object_probe.py": "7caf47671ae287aab879a5e57a3644c91e9e22a5ad86b85a4ea3a1f3a62963a4",
+    "tools/omf.py": "e9e356e99cf6132d5fe69f0946a33d6fcbe70d8c1f21242f0ec4f05a7dae66d8",
+    "tools/oracle.py": "01c57bb2b64f9cd7107a49d0bc1b050cab4014406590ffc7b24f51b5874fc3b5",
+    "tools/prepare_candidate.py": "36800ff12948e9476e0790e15af21faeaca5998532c5b74c2f8a25e58bf8b58d",
+    "tools/probe_module.py": "ef307a78454c9cc43a111402bd72696dcc191539b8faf039c21d56062820445b",
+    "tools/probe_tu.py": "1f5dd0bb237734e5873fceeb94ca21314fbe97fd84e8bdc37bd928d01bf17dbc",
+    "tools/reconstruction_factory.py": "890fb22370f389c27b1722c49acee1333bed3b1dbf5d1b5cd919dc3b39e7ae97",
+    "tools/restunts_base.py": "4c4350f3a9a8c3de01597230374a9b2125e047a49f550d91f8d2c95816b4719c",
+    "tools/runtime_link_probe.py": "641e43a6baea35561f1ecaeb2807dd63924ab145e52454b7ef70a1ab0acbcdf9",
+    "tools/toolchain_probe.py": "cd5e5785f21d950c30cce76838b8258b4e660e03bf511b11dcca1d80724c4d98"
+  },
+  "size": 52,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 4280,
+    "line_start": 4245,
+    "path": "src/restunts/asmorig/seg010.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR"
+}
