@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "scope": {
+    "project": "Stunts",
+    "matched_cases": [
+      "copy_string",
+      "rect_compare_point",
+      "parse_shape2d_helper",
+      "unknown_libname_1"
+    ],
+    "models": [
+      "gpt-6-luna",
+      "gpt-6-astra"
+    ],
+    "reasoning_effort": "high",
+    "telemetry": "build/model-routing-pilot/run-telemetry.json"
+  },
+  "aggregate": {
+    "meaningful_hypotheses": 44,
+    "identity_bearing_trials": 40,
+    "no_identity_trials": 4,
+    "unique_effective_identities_case_level": 24,
+    "within_run_repeat_occurrences": 10,
+    "cross_arm_shared_identities": 6,
+    "compiler_processes": 50,
+    "compiler_trial_seconds": 25.111,
+    "model_launch_seconds": 2341.796,
+    "identity_definition": "Effective compiler identity includes profile and flags; counts do not assert physical machine-code uniqueness.",
+    "no_identity_refs": [
+      {
+        "case": "rect_compare_point",
+        "model": "gpt-6-luna",
+        "trial": 3,
+        "cause": "optional MSC500 profile unavailable before compiler launch"
+      },
+      {
+        "case": "parse_shape2d_helper",
+        "model": "gpt-6-luna",
+        "trial": 2,
+        "cause": "compiler error; no accepted effective identity"
+      },
+      {
+        "case": "parse_shape2d_helper",
+        "model": "gpt-6-luna",
+        "trial": 7,
+        "cause": "optional MSC500 profile unavailable before compiler launch"
+      },
+      {
+        "case": "unknown_libname_1",
+        "model": "gpt-6-astra",
+        "trial": 6,
+        "cause": "QuickC object rejected by OMF parser on BAKPAT record"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case": "copy_string",
+      "hypotheses": 2,
+      "identity_bearing_trials": 2,
+      "unique_identities_across_pair": 1,
+      "within_run_repeats": 0,
+      "cross_arm_shared_identities": 1,
+      "no_identity_trials": 0,
+      "strict_exact_both_arms": true
+    },
+    {
+      "case": "rect_compare_point",
+      "hypotheses": 5,
+      "identity_bearing_trials": 4,
+      "unique_identities_across_pair": 3,
+      "within_run_repeats": 0,
+      "cross_arm_shared_identities": 1,
+      "no_identity_trials": 1,
+      "strict_exact_both_arms": true,
+      "repeat_refs": [
+        {
+          "left": "gpt-6-luna t04",
+          "right": "gpt-6-astra t01"
+        }
+      ]
+    },
+    {
+      "case": "parse_shape2d_helper",
+      "hypotheses": 18,
+      "identity_bearing_trials": 16,
+      "unique_identities_across_pair": 8,
+      "within_run_repeats": 6,
+      "cross_arm_shared_identities": 2,
+      "no_identity_trials": 2,
+      "strict_exact_both_arms": false,
+      "repeat_refs": [
+        {
+          "model": "gpt-6-astra",
+          "identity_prefix": "0cbdd103",
+          "trials": [
+            1,
+            2,
+            5
+          ]
+        },
+        {
+          "model": "gpt-6-astra",
+          "identity_prefix": "d5a82bc5",
+          "trials": [
+            4,
+            8
+          ]
+        },
+        {
+          "model": "gpt-6-luna",
+          "identity_prefix": "0cbdd103",
+          "trials": [
+            1,
+            4,
+            9
+          ]
+        },
+        {
+          "model": "gpt-6-luna",
+          "identity_prefix": "d5a82bc5",
+          "trials": [
+            3,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "case": "unknown_libname_1",
+      "hypotheses": 19,
+      "identity_bearing_trials": 18,
+      "unique_identities_across_pair": 12,
+      "within_run_repeats": 4,
+      "cross_arm_shared_identities": 2,
+      "no_identity_trials": 1,
+      "strict_exact_both_arms": false,
+      "repeat_refs": [
+        {
+          "model": "gpt-6-luna",
+          "identity_prefix": "bed77c46",
+          "trials": [
+            1,
+            3,
+            5,
+            10,
+            11
+          ]
+        },
+        {
+          "identity_prefix": "249d877c",
+          "refs": [
+            "gpt-6-luna t02",
+            "gpt-6-astra t03"
+          ]
+        },
+        {
+          "identity_prefix": "91ac56b2",
+          "refs": [
+            "gpt-6-luna t07",
+            "gpt-6-astra t01"
+          ]
+        }
+      ]
+    }
+  ],
+  "batchability": {
+    "conservative_prespecifiable_batch_size": "2-4 hypotheses for one unresolved case",
+    "selected_case": "unknown_libname_1",
+    "why_later_hypotheses_depend_on_outcomes": "Later profiles, optimization, register allocation, and source-shape pivots respond to observed mismatches and effective-identity convergence.",
+    "proposal": {
+      "seed": "recovery/attempts/unknown_libname_1/0001/source.c",
+      "seed_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+      "history": [
+        "recovery/attempts/unknown_libname_1/0001/report.json"
+      ],
+      "conditions": [
+        "adaptive sequential review",
+        "preregistered bounded batch"
+      ],
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "same_capsule_inputs": true,
+      "hypothesis_cap": 4,
+      "compiler_process_cap": 8,
+      "archive_all_predictions_before_first_compile": "batch only; sequential archives before each trial",
+      "omit_known_pilot_outputs_from_task_packet": true,
+      "supervisor_side_deduplication": true,
+      "launched": true
+    }
+  },
+  "prepared_pair": {
+    "base": "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1",
+    "condition_a": "condition-a",
+    "condition_b": "condition-b",
+    "identical_capsule_inputs_except_task_prompt": true,
+    "input_file_count_each": 451,
+    "manifest_validation": "all hashes match",
+    "research_directories_empty": "at preparation only",
+    "same_seed_and_history_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+    "launch_commands": [
+      "python build/model-routing-pilot/launch_run.py --root C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-a --model gpt-6-luna --label batching_unknown_sequential_20260923",
+      "python build/model-routing-pilot/launch_run.py --root C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-b --model gpt-6-luna --label batching_unknown_fixed_20260923"
+    ],
+    "launch_gate": "User explicitly approved two additional runs and data transfer; both completed."
+  },
+  "limitations": [
+    "Different arms did not test identical candidate sequences.",
+    "Retrospective alone measures no batching savings; subsequent controlled-pair results are in batching-decision.md.",
+    "Effective-identity deduplication is profile/flags-sensitive and is not a parsed object-code equivalence proof.",
+    "No claim of independent test performance is made."
+  ]
+}

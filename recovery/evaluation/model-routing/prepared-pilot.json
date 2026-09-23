@@ -42,8 +42,8 @@
     }
   },
   "launch_gate": {
-    "detail": "The launcher escalation for network access to api.openai.com was rejected because the request did not provide specific approval to transfer private Stunts data. The supervisor has asked the user; do not retry or launch models until that response arrives. Preparation is unaffected.",
-    "status": "blocked_by_auto_review_pending_user_response"
+    "status": "approved_and_completed",
+    "detail": "User approved the specific source/evidence/diagnostics transfer to api.openai.com and eight matched Luna/high plus Astra/high runs. See results.json and decision.md. Five preflight failures are separately accounted."
   },
   "limitations": [
     "Procedural blinding and copied roots are not an adversarial sandbox.",
@@ -57,6 +57,8 @@
   "reasoning": "high for both paired model contexts",
   "run_launcher": "build/model-routing-pilot/launch_run.py",
   "schema": 1,
-  "status": "prepared_waiting_launch_approval",
-  "trial_helper": "build/model-routing-pilot/trial_capsule.py"
+  "status": "completed_primary_runs",
+  "trial_helper": "build/model-routing-pilot/trial_capsule.py",
+  "results": "recovery/evaluation/model-routing/results.json",
+  "updated_capsule_roots": "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-pilot-w0qj5nri"
 }

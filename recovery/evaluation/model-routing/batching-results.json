@@ -1,0 +1,304 @@
+{
+  "schema": 1,
+  "case": "unknown_libname_1",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "hypothesis_cap": 4,
+  "compiler_process_cap": 8,
+  "cohort": "separate approved batching pair",
+  "runs": [
+    {
+      "arm": "sequential",
+      "capsule": "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-a",
+      "launch": {
+        "label": "batching_unknown_sequential_20260923",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "high",
+        "root": "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-a",
+        "command": [
+          "C:\\Users\\Jiri\\AppData\\Local\\OpenAI\\Codex\\bin\\80f78947ad880e6e\\codex.exe",
+          "exec",
+          "--cd",
+          "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-a",
+          "--skip-git-repo-check",
+          "--ignore-user-config",
+          "--model",
+          "gpt-6-luna",
+          "-c",
+          "model_reasoning_effort=\"high\"",
+          "--approve-for-me",
+          "--json",
+          "--color",
+          "never",
+          "--output-last-message",
+          "D:\\prog\\stunts_recon\\build\\model-routing-pilot\\runs\\batching_unknown_sequential_20260923\\final.txt",
+          "-"
+        ],
+        "started_utc": "2026-09-23T18:45:56.619268+00:00",
+        "pid": 9260,
+        "exit_code": 0,
+        "elapsed_seconds": 336.0,
+        "finished_utc": "2026-09-23T18:51:32.620929+00:00"
+      },
+      "final": {
+        "actual_compiler_process_count": 4,
+        "analysis_advice": null,
+        "facts": [
+          {
+            "trial": 1,
+            "status": "FAILED",
+            "finding": "Register-qualified formal produced an 18-byte contribution but allocated SI, with PUSH SI/POP SI; strict byte mismatch.",
+            "effective_identities": [
+              "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+            ],
+            "evidence": "research/trial-01/result.json"
+          },
+          {
+            "trial": 2,
+            "status": "FAILED",
+            "finding": "Unsigned 16-bit pointer copy produced a 28-byte contribution, AX/stack-local code, and extent mismatch.",
+            "effective_identities": [
+              "390e36cacbe6ef5630311037ca555571468e857ed4e35a7e4f0b577c14fe910d"
+            ],
+            "evidence": "research/trial-02/result.json"
+          },
+          {
+            "trial": 3,
+            "status": "FAILED",
+            "finding": "Post-increment condition preserved an increment of the argument slot and a second pointer load; contribution was 22 bytes.",
+            "effective_identities": [
+              "b6261c61e2b9baf7056972fbb505727854c27d73699343967c7ef3892297fe1d"
+            ],
+            "evidence": "research/trial-03/result.json"
+          },
+          {
+            "trial": 4,
+            "status": "FAILED",
+            "finding": "Register-qualified local incurred stack-local and SI save/restore code; contribution was 24 bytes.",
+            "effective_identities": [
+              "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+            ],
+            "evidence": "research/trial-04/result.json"
+          }
+        ],
+        "insight_index": [
+          {
+            "id": "trial-01",
+            "path": "research/trial-01/result.json"
+          },
+          {
+            "id": "trial-02",
+            "path": "research/trial-02/result.json"
+          },
+          {
+            "id": "trial-03",
+            "path": "research/trial-03/result.json"
+          },
+          {
+            "id": "trial-04",
+            "path": "research/trial-04/result.json"
+          }
+        ],
+        "meaningful_hypothesis_count": 4,
+        "precompiler_failure_count": 0,
+        "remaining_question": "Can another ordinary-C source shape make MSC 5.1 load the near pointer into BX before its null test and reuse BX for [BX-2], without extra spills or instructions? Untested because the meaningful-hypothesis cap was reached.",
+        "status": "CENSORED",
+        "stop_reason": "HYPOTHESIS_CAP",
+        "unique_outputs": [
+          "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+          "390e36cacbe6ef5630311037ca555571468e857ed4e35a7e4f0b577c14fe910d",
+          "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+          "b6261c61e2b9baf7056972fbb505727854c27d73699343967c7ef3892297fe1d"
+        ],
+        "unique_effective_compiler_identities": [
+          "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+          "390e36cacbe6ef5630311037ca555571468e857ed4e35a7e4f0b577c14fe910d",
+          "b6261c61e2b9baf7056972fbb505727854c27d73699343967c7ef3892297fe1d",
+          "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+        ]
+      },
+      "helper_seconds": 1.8926069736480713,
+      "trials": [
+        {
+          "trial": 1,
+          "hypothesis": "Register-qualify the pointer parameter to keep the far-call argument in a general register across the null test and byte update.",
+          "prediction": "Optimized code begins 55 8B EC 8B 5E 06 0B DB; uses the same BX through conditional update and matches all 18 target bytes.",
+          "falsifier": "A memory-operand null compare, another pointer load/register/stack temporary, or any strict byte mismatch falsifies the register-parameter prediction.",
+          "effective_identities": [
+            "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189244.7736442,
+          "finished_unix": 1790189245.285661
+        },
+        {
+          "trial": 2,
+          "hypothesis": "Copy the near pointer value into an unsigned 16-bit integer and use that scalar for both the null test and byte update, steering temporary allocation to BX without the register-parameter save.",
+          "prediction": "The 16-bit scalar is loaded from [bp+6] into BX once, tested with OR BX,BX, and reused for [BX-2], with no PUSH SI/POP SI; expected target stream is 18 bytes.",
+          "falsifier": "A memory compare, different temporary register, extra conversion/stack code, or strict mismatch falsifies integer-copy register coalescing.",
+          "effective_identities": [
+            "390e36cacbe6ef5630311037ca555571468e857ed4e35a7e4f0b577c14fe910d"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189297.7405994,
+          "finished_unix": 1790189298.1998339
+        },
+        {
+          "trial": 3,
+          "hypothesis": "Use the post-increment result as the null-tested pointer and compensate in the body with index -3, so the original pointer value is materialized once and shared by condition and addressing.",
+          "prediction": "Optimization eliminates the unobservable parameter update while retaining a BX value for both OR BX,BX and the byte OR at [BX-2], producing the target 18-byte instruction stream.",
+          "falsifier": "Any increment/decrement instruction, changed memory slot, duplicated load, non-BX role, or strict byte/extent mismatch disproves the proposed coalescing.",
+          "effective_identities": [
+            "b6261c61e2b9baf7056972fbb505727854c27d73699343967c7ef3892297fe1d"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189353.6903293,
+          "finished_unix": 1790189354.1474943
+        },
+        {
+          "trial": 4,
+          "hypothesis": "Move the parameter into a register-qualified local pointer and test/use that local, allowing local allocation to differ from the formal register mapping seen previously.",
+          "prediction": "The optimizer will keep the pointer in BX across OR BX,BX and [BX-2] with no preserved-register prologue/epilogue, matching the exact 18-byte target.",
+          "falsifier": "If the compiler maps the local to SI with PUSH SI/POP SI as in trial 1, or emits a memory compare, duplicate load, or strict mismatch, this local-allocation path fails.",
+          "effective_identities": [
+            "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189411.0714903,
+          "finished_unix": 1790189411.535681
+        }
+      ]
+    },
+    {
+      "arm": "batch",
+      "capsule": "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-b",
+      "launch": {
+        "label": "batching_unknown_fixed_20260923",
+        "model": "gpt-6-luna",
+        "reasoning_effort": "high",
+        "root": "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-b",
+        "command": [
+          "C:\\Users\\Jiri\\AppData\\Local\\OpenAI\\Codex\\bin\\80f78947ad880e6e\\codex.exe",
+          "exec",
+          "--cd",
+          "C:\\Users\\Jiri\\AppData\\Local\\Temp\\stunts-model-routing-batching-20260923\\unknown_libname_1\\condition-b",
+          "--skip-git-repo-check",
+          "--ignore-user-config",
+          "--model",
+          "gpt-6-luna",
+          "-c",
+          "model_reasoning_effort=\"high\"",
+          "--approve-for-me",
+          "--json",
+          "--color",
+          "never",
+          "--output-last-message",
+          "D:\\prog\\stunts_recon\\build\\model-routing-pilot\\runs\\batching_unknown_fixed_20260923\\final.txt",
+          "-"
+        ],
+        "started_utc": "2026-09-23T18:46:10.000540+00:00",
+        "pid": 34584,
+        "exit_code": 0,
+        "elapsed_seconds": 304.89,
+        "finished_utc": "2026-09-23T18:51:14.902844+00:00"
+      },
+      "final": {
+        "actual_compiler_process_count": 3,
+        "analysis_advice": "At least two hypotheses produced an already-seen effective compiler output; change analysis level.",
+        "insight_index": [
+          {
+            "id": "trial-01",
+            "path": "research/trial-01/result.json"
+          },
+          {
+            "id": "trial-02",
+            "path": "research/trial-02/result.json"
+          },
+          {
+            "id": "trial-03",
+            "path": "research/trial-03/result.json"
+          }
+        ],
+        "meaningful_hypothesis_count": 3,
+        "precompiler_failure_count": 0,
+        "remaining_question": "Can ordinary C source under the fixed MSC 5.1 profile preserve the incoming pointer in BX without the compiler choosing SI and saving it, while also emitting the target stack restoration (mov sp,bp) and exact short branch displacement?",
+        "status": "STOPPED",
+        "stop_reason": "REPEATED_EFFECTIVE_IDENTITY_WITHOUT_NEW_ANALYSIS_DIRECTION",
+        "unique_outputs": [
+          "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+          "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+        ],
+        "unique_effective_identities": [
+          "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+          "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+        ],
+        "facts": [
+          {
+            "trial": 1,
+            "fact": "Register-qualified parameter did load the pointer into a register and test/reuse it, but MSC selected SI, emitted push SI/pop SI, and failed strict bytes.",
+            "evidence": "research/trial-01/result.json",
+            "effective_identity": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+          },
+          {
+            "trial": 2,
+            "fact": "Register local forced stack storage and produced a 24-byte extent with stack allocation, so the target 18-byte extent failed.",
+            "evidence": "research/trial-02/result.json",
+            "effective_identity": "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+          },
+          {
+            "trial": 3,
+            "fact": "Positive-body form produced the same effective compiler identity as trial 1; no strict candidate succeeded.",
+            "evidence": "research/trial-03/result.json",
+            "effective_identity": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+          }
+        ]
+      },
+      "helper_seconds": 1.474536418914795,
+      "trials": [
+        {
+          "trial": 1,
+          "hypothesis": "Register-qualified far function parameter with early return",
+          "prediction": "With the fixed MSC 5.1 medium /O /Gs pipeline, the parameter should be fetched into BX before the null test; predicted core bytes after mov bp,sp are 8b 5e 06 0b db 74 04, followed by the existing byte OR and standard far epilogue.",
+          "falsifier": "Falsified if the compiled target range compares [bp+6] directly, tests a register other than BX, places any different conditional branch/body ordering, or fails the unchanged strict whole-image check.",
+          "effective_identities": [
+            "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189379.6854694,
+          "finished_unix": 1790189380.1757522
+        },
+        {
+          "trial": 2,
+          "hypothesis": "Explicit register local plus early-return guard",
+          "prediction": "The local register hint should make MSC materialize the near pointer as BX before the test; predicted bytes at offsets 3..9 are 8b 5e 06 0b db 74 04 and the body addresses [bx-2].",
+          "falsifier": "Falsified by a memory cmp/test of [bp+6], a register other than BX in the OR/test or body, extra spill/setup bytes, a nonmatching branch displacement, or strict-check failure.",
+          "effective_identities": [
+            "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189380.318492,
+          "finished_unix": 1790189380.7767463
+        },
+        {
+          "trial": 3,
+          "hypothesis": "Register-qualified parameter with positive conditional body",
+          "prediction": "Register qualification should force the incoming pointer into BX, and a positive body guard should branch over the body with the target short JE displacement; predicted core is mov bx,[bp+6]; or bx,bx; je +4; or byte ptr [bx-2],1.",
+          "falsifier": "Falsified if the optimizer still emits cmp [bp+6],0, chooses a different pointer register, uses an alternate branch/body shape or displacement, or strict exactness fails.",
+          "effective_identities": [
+            "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+          ],
+          "strict_success": false,
+          "compiler_processes_this_trial": 1,
+          "started_unix": 1790189380.9127822,
+          "finished_unix": 1790189381.4387815
+        }
+      ]
+    }
+  ]
+}

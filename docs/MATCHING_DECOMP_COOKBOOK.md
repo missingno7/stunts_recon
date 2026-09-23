@@ -38,6 +38,8 @@ RESULT: candidate + reproducible evidence, or a precise unresolved question
 
 Do not make each worker rediscover the repository. Do not omit critical evidence merely to shorten the packet. Keep one worker on a family while its accumulated context remains useful; checkpoint or restart when unrelated history dominates.
 
+Validate every advertised research dependency inside the actual worker directory and execution account, not just the strict acceptance compiler. The Stunts model-routing pilot passed its raw/runtime whole-image baseline while omitting MSC 5.0 files needed by an allowed diagnostic profile. Those precompiler failures are setup defects, not negative compiler evidence or model-capability failures. The corrected capsule builder copies and hash-verifies every advertised pinned profile; existing trial records remain unchanged. Count proposed hypotheses, executed experiments, and unique effective outcomes separately when a setup failure interrupts a trial.
+
 Check the repository's actual transaction closure before parallel edits. In Stunts, every file under `tools/` participates in promotion fingerprints, even a research-only CLI. Stage independent tool development under an ignored private build directory while a source writer is active, then integrate and refresh/validate serially. A new filename alone does not make shared writes independent.
 
 In Stunts endurance-001, an initial allocation was mistakenly treated as a hard stop even though the worker already had shared-budget reallocation authority. Clarifying that authority enabled its own proposed same-TU experiment. This was an assignment/control interpretation problem, not evidence that Astra supplied a necessary source insight. Nine shared slots ultimately remained unused; neither per-case stops nor that incomplete sample establish global hypothesis exhaustion. [T3]
@@ -142,6 +144,15 @@ Protect the oracle and acceptance implementation from incidental worker edits. N
 | Stunts' corpus cost checkpoint attributed about 96% of the priced API-equivalent subtotal to Astra ($21.44 versus $0.91 for Luna). [T4] | Supervisor traffic can dominate cost even with extensive cheap-worker research. | Setup, triage and reporting are included; no autonomous-Luna or Astra-only counterfactual was measured, and these are not subscription charges. |
 
 ## Evidence and sources
+
+Stunts' [bounded batching pair](../recovery/evaluation/model-routing/batching-decision.md)
+used 10 model requests versus 13 sequentially and about 15% less direct model cost,
+but found two unique outputs versus four and no exact solution in either arm.
+Use small batches for independently justified alternatives; retain sequential
+feedback when the next hypothesis depends on the last result. Deduplicate outcomes
+under the same compiler recipe, and do not confuse fewer requests or cheaper runs
+with improved recovery. This one-pair result excludes supervision costs and does
+not establish an optimal batch size.
 
 Sources are primary project documentation or official pricing. Historical figures above illustrate mechanisms; they are not live progress dashboards. Reproduce the relevant experiment before relying on its behavior in another project.
 

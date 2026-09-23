@@ -1,0 +1,250 @@
+{
+  "schema": 1,
+  "scope": "Direct workers only; excludes preparation, supervision and reporting. API-equivalent scenario, not invoice.",
+  "pricing_url": "https://developers.openai.com/api/docs/pricing",
+  "rates_per_million": {
+    "input": 0.1,
+    "cached_input": 0.01,
+    "cache_write": 0.125,
+    "output": 0.5
+  },
+  "reasoning_is_subset_of_output": true,
+  "runs": [
+    {
+      "arm": "sequential",
+      "session_id": "01a0cf96-b966-7251-90c6-e1d9d237daff",
+      "session_path": "C:\\Users\\Jiri\\.codex\\sessions\\2026\\09\\23\\rollout-2026-09-23T20-45-56-01a0cf96-b966-7251-90c6-e1d9d237daff.jsonl",
+      "request_count": 13,
+      "max_request_input_tokens": 52967,
+      "usage": {
+        "input_tokens": 488523,
+        "cached_input_tokens": 440064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10816,
+        "reasoning_output_tokens": 6207,
+        "total_tokens": 499339
+      },
+      "cli_usage": {
+        "input_tokens": 488523,
+        "cached_input_tokens": 440064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10816,
+        "reasoning_output_tokens": 6207
+      },
+      "cli_reconciled": true,
+      "standard_api_equivalent_usd": 0.01465454,
+      "requests": [
+        {
+          "input_tokens": 14546,
+          "cached_input_tokens": 11008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 235,
+          "reasoning_output_tokens": 76,
+          "total_tokens": 14781
+        },
+        {
+          "input_tokens": 20443,
+          "cached_input_tokens": 14080,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 187,
+          "reasoning_output_tokens": 49,
+          "total_tokens": 20630
+        },
+        {
+          "input_tokens": 30026,
+          "cached_input_tokens": 20224,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 330,
+          "reasoning_output_tokens": 144,
+          "total_tokens": 30356
+        },
+        {
+          "input_tokens": 31391,
+          "cached_input_tokens": 29440,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 156,
+          "reasoning_output_tokens": 56,
+          "total_tokens": 31547
+        },
+        {
+          "input_tokens": 32229,
+          "cached_input_tokens": 30464,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1294,
+          "reasoning_output_tokens": 762,
+          "total_tokens": 33523
+        },
+        {
+          "input_tokens": 34428,
+          "cached_input_tokens": 31488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 973,
+          "reasoning_output_tokens": 795,
+          "total_tokens": 35401
+        },
+        {
+          "input_tokens": 39171,
+          "cached_input_tokens": 33536,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 796,
+          "reasoning_output_tokens": 227,
+          "total_tokens": 39967
+        },
+        {
+          "input_tokens": 41105,
+          "cached_input_tokens": 38656,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1911,
+          "reasoning_output_tokens": 1350,
+          "total_tokens": 43016
+        },
+        {
+          "input_tokens": 44147,
+          "cached_input_tokens": 40704,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2170,
+          "reasoning_output_tokens": 1610,
+          "total_tokens": 46317
+        },
+        {
+          "input_tokens": 47272,
+          "cached_input_tokens": 43776,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 581,
+          "reasoning_output_tokens": 426,
+          "total_tokens": 47853
+        },
+        {
+          "input_tokens": 49265,
+          "cached_input_tokens": 46848,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1336,
+          "reasoning_output_tokens": 441,
+          "total_tokens": 50601
+        },
+        {
+          "input_tokens": 51533,
+          "cached_input_tokens": 48896,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 409,
+          "reasoning_output_tokens": 93,
+          "total_tokens": 51942
+        },
+        {
+          "input_tokens": 52967,
+          "cached_input_tokens": 50944,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 438,
+          "reasoning_output_tokens": 178,
+          "total_tokens": 53405
+        }
+      ]
+    },
+    {
+      "arm": "batch",
+      "session_id": "01a0cf96-edbb-7473-a488-fa044eb8114f",
+      "session_path": "C:\\Users\\Jiri\\.codex\\sessions\\2026\\09\\23\\rollout-2026-09-23T20-46-10-01a0cf96-edbb-7473-a488-fa044eb8114f.jsonl",
+      "request_count": 10,
+      "max_request_input_tokens": 61716,
+      "usage": {
+        "input_tokens": 440617,
+        "cached_input_tokens": 381440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5385,
+        "reasoning_output_tokens": 2613,
+        "total_tokens": 446002
+      },
+      "cli_usage": {
+        "input_tokens": 440617,
+        "cached_input_tokens": 381440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5385,
+        "reasoning_output_tokens": 2613
+      },
+      "cli_reconciled": true,
+      "standard_api_equivalent_usd": 0.012424600000000001,
+      "requests": [
+        {
+          "input_tokens": 14585,
+          "cached_input_tokens": 11008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 177,
+          "reasoning_output_tokens": 40,
+          "total_tokens": 14762
+        },
+        {
+          "input_tokens": 21441,
+          "cached_input_tokens": 11008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 225,
+          "reasoning_output_tokens": 68,
+          "total_tokens": 21666
+        },
+        {
+          "input_tokens": 32336,
+          "cached_input_tokens": 21248,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 464,
+          "reasoning_output_tokens": 355,
+          "total_tokens": 32800
+        },
+        {
+          "input_tokens": 45641,
+          "cached_input_tokens": 31488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2096,
+          "reasoning_output_tokens": 1257,
+          "total_tokens": 47737
+        },
+        {
+          "input_tokens": 47760,
+          "cached_input_tokens": 44800,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 101,
+          "reasoning_output_tokens": 17,
+          "total_tokens": 47861
+        },
+        {
+          "input_tokens": 48455,
+          "cached_input_tokens": 46848,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 352,
+          "reasoning_output_tokens": 148,
+          "total_tokens": 48807
+        },
+        {
+          "input_tokens": 49343,
+          "cached_input_tokens": 47872,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 299,
+          "reasoning_output_tokens": 94,
+          "total_tokens": 49642
+        },
+        {
+          "input_tokens": 59056,
+          "cached_input_tokens": 48896,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1205,
+          "reasoning_output_tokens": 538,
+          "total_tokens": 60261
+        },
+        {
+          "input_tokens": 60284,
+          "cached_input_tokens": 58112,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 142,
+          "reasoning_output_tokens": 34,
+          "total_tokens": 60426
+        },
+        {
+          "input_tokens": 61716,
+          "cached_input_tokens": 60160,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 324,
+          "reasoning_output_tokens": 62,
+          "total_tokens": 62040
+        }
+      ]
+    }
+  ]
+}

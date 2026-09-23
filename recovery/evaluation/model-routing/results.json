@@ -1,0 +1,2956 @@
+{
+  "generated_utc": "2026-09-23T20:30:39.736487+02:00",
+  "paired_output_comparisons": {
+    "copy_string": {
+      "astra_launch_minus_trial_seconds": 94.195,
+      "astra_launch_seconds": 97.063,
+      "astra_trial_elapsed_seconds": 2.868,
+      "astra_unique_count": 1,
+      "luna_launch_minus_trial_seconds": 93.264,
+      "luna_launch_seconds": 96.125,
+      "luna_trial_elapsed_seconds": 2.861,
+      "luna_unique_count": 1,
+      "pair_wall_span_seconds": 138.425,
+      "parallel_overlap_seconds": 54.761,
+      "same_nonempty_output_set": true,
+      "shared_output_count": 1
+    },
+    "parse_shape2d_helper": {
+      "astra_launch_minus_trial_seconds": 404.306,
+      "astra_launch_seconds": 407.312,
+      "astra_trial_elapsed_seconds": 3.006,
+      "astra_unique_count": 6,
+      "luna_launch_minus_trial_seconds": 381.006,
+      "luna_launch_seconds": 384.671,
+      "luna_trial_elapsed_seconds": 3.665,
+      "luna_unique_count": 4,
+      "pair_wall_span_seconds": 407.306,
+      "parallel_overlap_seconds": 384.68,
+      "same_nonempty_output_set": false,
+      "shared_output_count": 2
+    },
+    "rect_compare_point": {
+      "astra_launch_minus_trial_seconds": 114.308,
+      "astra_launch_seconds": 116.953,
+      "astra_trial_elapsed_seconds": 2.645,
+      "astra_unique_count": 1,
+      "luna_launch_minus_trial_seconds": 220.329,
+      "luna_launch_seconds": 223.844,
+      "luna_trial_elapsed_seconds": 3.515,
+      "luna_unique_count": 3,
+      "pair_wall_span_seconds": 223.84,
+      "parallel_overlap_seconds": 116.948,
+      "same_nonempty_output_set": false,
+      "shared_output_count": 1
+    },
+    "unknown_libname_1": {
+      "astra_launch_minus_trial_seconds": 374.882,
+      "astra_launch_seconds": 376.875,
+      "astra_trial_elapsed_seconds": 1.993,
+      "astra_unique_count": 7,
+      "luna_launch_minus_trial_seconds": 634.395,
+      "luna_launch_seconds": 638.953,
+      "luna_trial_elapsed_seconds": 4.558,
+      "luna_unique_count": 7,
+      "pair_wall_span_seconds": 638.963,
+      "parallel_overlap_seconds": 376.882,
+      "same_nonempty_output_set": false,
+      "shared_output_count": 2
+    }
+  },
+  "run_map": "D:\\prog\\stunts_recon\\build\\model-routing-pilot\\usage-run-map.json",
+  "runs": [
+    {
+      "case": "copy_string",
+      "elapsed_seconds": 0.047,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {},
+        "comparable_deltas_cli_minus_session": {},
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 0
+        },
+        "status": "unavailable",
+        "turn_completed_events": 0
+      },
+      "exit_code": 2,
+      "failed_preflight": true,
+      "finished_utc": "2026-09-23T19:15:28.333554+02:00",
+      "label": "copy_string-astra",
+      "launch_minus_trial_elapsed_seconds": 0.047,
+      "meaningful_hypotheses": 0,
+      "model": "gpt-6-astra",
+      "preflight_classification": "cli_argument_validation",
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 0,
+        "capsule_status": "not_started",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 0,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 0,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 0,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 0,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 0
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 0,
+        "stop_reason": null,
+        "strict_receipt": {
+          "receipts": [],
+          "success": false
+        },
+        "trial_audit": [],
+        "trial_elapsed_seconds_sum": 0,
+        "unique_effective_outputs": []
+      },
+      "started_utc": "2026-09-23T19:15:28.296589+02:00",
+      "thread_id": null,
+      "turn_started": false,
+      "usage": {
+        "fast_usd_scenario": 0.0,
+        "long_context_request_count": 0,
+        "request_count": 0,
+        "standard_usd_scenario": 0.0,
+        "status": "session_log_not_found",
+        "totals": {},
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "copy_string",
+      "elapsed_seconds": 97.063,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 180736,
+          "input_tokens": 212899,
+          "output_tokens": 1444,
+          "reasoning_output_tokens": 45
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 180736,
+          "input_tokens": 212899,
+          "output_tokens": 1444,
+          "reasoning_output_tokens": 45,
+          "total_tokens": 214343
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:05:16.140024+02:00",
+      "label": "copy_string-astra-approved",
+      "launch_minus_trial_elapsed_seconds": 94.195,
+      "meaningful_hypotheses": 1,
+      "model": "gpt-6-astra",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 3,
+        "capsule_status": "STRICT_EXACT",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 1,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": 1,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31"
+          ],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 1,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 16,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 1,
+        "stop_reason": "STRICT_EXACT",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+              "path": "research/trial-01/probes/pdv1o8i1j/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+              "path": "research/trial-01/probes/prn91a8es/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+              "path": "research/trial-01/probes/pv0xx7ra1/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": true
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 3,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "PROMOTED",
+            "raw_failure_class": null,
+            "source_after_sha256": "467713d88b571836d0d679bc0f5f5b56c45af9290e3fa58fa021b7960920b479",
+            "source_before_sha256": "467713d88b571836d0d679bc0f5f5b56c45af9290e3fa58fa021b7960920b479",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 2.868,
+        "unique_effective_outputs": [
+          "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31"
+        ]
+      },
+      "started_utc": "2026-09-23T20:03:39.069766+02:00",
+      "thread_id": "01a0cf70-012b-71d3-8c7a-eee241355bde",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 1.149132,
+        "long_context_request_count": 0,
+        "request_count": 7,
+        "standard_usd_scenario": 0.574566,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 180736,
+          "input_tokens": 212899,
+          "output_tokens": 1444,
+          "reasoning_output_tokens": 45,
+          "total_tokens": 214343,
+          "uncached_input_tokens": 32163
+        },
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "copy_string",
+      "elapsed_seconds": 33.844,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {},
+        "comparable_deltas_cli_minus_session": {},
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 0
+        },
+        "status": "unavailable",
+        "turn_completed_events": 0
+      },
+      "exit_code": 4294967295,
+      "failed_preflight": true,
+      "finished_utc": "2026-09-23T19:16:26.039445+02:00",
+      "label": "copy_string-astra-r2",
+      "launch_minus_trial_elapsed_seconds": 33.844,
+      "meaningful_hypotheses": 0,
+      "model": "gpt-6-astra",
+      "preflight_classification": "network_transport_failure",
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 0,
+        "capsule_status": "not_started",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 0,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 0,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 0,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 0,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 0
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 0,
+        "stop_reason": null,
+        "strict_receipt": {
+          "receipts": [],
+          "success": false
+        },
+        "trial_audit": [],
+        "trial_elapsed_seconds_sum": 0,
+        "unique_effective_outputs": []
+      },
+      "started_utc": "2026-09-23T19:15:52.191384+02:00",
+      "thread_id": "01a0cf44-42a4-7133-88ea-308f331a287d",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 0.0,
+        "long_context_request_count": 0,
+        "request_count": 0,
+        "standard_usd_scenario": 0.0,
+        "status": "session_log_not_found",
+        "totals": {},
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "copy_string",
+      "elapsed_seconds": 0.031,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {},
+        "comparable_deltas_cli_minus_session": {},
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 0
+        },
+        "status": "unavailable",
+        "turn_completed_events": 0
+      },
+      "exit_code": 2,
+      "failed_preflight": true,
+      "finished_utc": "2026-09-23T19:15:28.213553+02:00",
+      "label": "copy_string-luna",
+      "launch_minus_trial_elapsed_seconds": 0.031,
+      "meaningful_hypotheses": 0,
+      "model": "gpt-6-luna",
+      "preflight_classification": "cli_argument_validation",
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 0,
+        "capsule_status": "not_started",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 0,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 0,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 0,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 0,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 0
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 0,
+        "stop_reason": null,
+        "strict_receipt": {
+          "receipts": [],
+          "success": false
+        },
+        "trial_audit": [],
+        "trial_elapsed_seconds_sum": 0,
+        "unique_effective_outputs": []
+      },
+      "started_utc": "2026-09-23T19:15:28.172554+02:00",
+      "thread_id": null,
+      "turn_started": false,
+      "usage": {
+        "fast_usd_scenario": 0.0,
+        "long_context_request_count": 0,
+        "request_count": 0,
+        "standard_usd_scenario": 0.0,
+        "status": "session_log_not_found",
+        "totals": {},
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "copy_string",
+      "elapsed_seconds": null,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {},
+        "comparable_deltas_cli_minus_session": {},
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 0
+        },
+        "status": "unavailable",
+        "turn_completed_events": 0
+      },
+      "exit_code": null,
+      "failed_preflight": true,
+      "finished_utc": null,
+      "label": "copy_string-luna-approved",
+      "launch_minus_trial_elapsed_seconds": null,
+      "meaningful_hypotheses": 0,
+      "model": "gpt-6-luna",
+      "preflight_classification": "launcher_permission_error",
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 0,
+        "capsule_status": "not_started",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 0,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 0,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 0,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 0,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 0
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 0,
+        "stop_reason": null,
+        "strict_receipt": {
+          "receipts": [],
+          "success": false
+        },
+        "trial_audit": [],
+        "trial_elapsed_seconds_sum": 0,
+        "unique_effective_outputs": []
+      },
+      "started_utc": "2026-09-23T20:01:37.986444+02:00",
+      "thread_id": null,
+      "turn_started": false,
+      "usage": {
+        "fast_usd_scenario": 0.0,
+        "long_context_request_count": 0,
+        "request_count": 0,
+        "standard_usd_scenario": 0.0,
+        "status": "session_log_not_found",
+        "totals": {},
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "copy_string",
+      "elapsed_seconds": 96.125,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 125440,
+          "input_tokens": 152142,
+          "output_tokens": 3042,
+          "reasoning_output_tokens": 1602
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 125440,
+          "input_tokens": 152142,
+          "output_tokens": 3042,
+          "reasoning_output_tokens": 1602,
+          "total_tokens": 155184
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:04:33.830681+02:00",
+      "label": "copy_string-luna-approved2",
+      "launch_minus_trial_elapsed_seconds": 93.264,
+      "meaningful_hypotheses": 1,
+      "model": "gpt-6-luna",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 3,
+        "capsule_status": "STRICT_EXACT",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 1,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": 1,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31"
+          ],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 1,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 18,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 1,
+        "stop_reason": "STRICT_EXACT",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+              "path": "research/trial-01/probes/pl412zfke/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+              "path": "research/trial-01/probes/ps1ndnsu1/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31",
+              "path": "research/trial-01/probes/pw_uk4l2u/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": true
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 3,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "PROMOTED",
+            "raw_failure_class": null,
+            "source_after_sha256": "1ea689e843ea1072c61f8ec31d649d8db06039e109531d6f516dad7b5252a7e9",
+            "source_before_sha256": "1ea689e843ea1072c61f8ec31d649d8db06039e109531d6f516dad7b5252a7e9",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 2.861,
+        "unique_effective_outputs": [
+          "df705813bd07968ecb1c9acf7231cffd75bf63fa614bca2a047008a27e181e31"
+        ]
+      },
+      "started_utc": "2026-09-23T20:02:57.715231+02:00",
+      "thread_id": "01a0cf6f-5fa0-7540-a5a9-cfd5f8f54541",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 0.0108912,
+        "long_context_request_count": 0,
+        "request_count": 6,
+        "standard_usd_scenario": 0.0054456,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 125440,
+          "input_tokens": 152142,
+          "output_tokens": 3042,
+          "reasoning_output_tokens": 1602,
+          "total_tokens": 155184,
+          "uncached_input_tokens": 26702
+        },
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "copy_string",
+      "elapsed_seconds": 33.969,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {},
+        "comparable_deltas_cli_minus_session": {},
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 0
+        },
+        "status": "unavailable",
+        "turn_completed_events": 0
+      },
+      "exit_code": 4294967295,
+      "failed_preflight": true,
+      "finished_utc": "2026-09-23T19:16:26.045448+02:00",
+      "label": "copy_string-luna-r2",
+      "launch_minus_trial_elapsed_seconds": 33.969,
+      "meaningful_hypotheses": 0,
+      "model": "gpt-6-luna",
+      "preflight_classification": "network_transport_failure",
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 0,
+        "capsule_status": "not_started",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 0,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 0,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 0,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 0,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 0
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 0,
+        "stop_reason": null,
+        "strict_receipt": {
+          "receipts": [],
+          "success": false
+        },
+        "trial_audit": [],
+        "trial_elapsed_seconds_sum": 0,
+        "unique_effective_outputs": []
+      },
+      "started_utc": "2026-09-23T19:15:52.073385+02:00",
+      "thread_id": "01a0cf44-4245-78e1-88cb-7decb6124a44",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 0.0,
+        "long_context_request_count": 0,
+        "request_count": 0,
+        "standard_usd_scenario": 0.0,
+        "status": "session_log_not_found",
+        "totals": {},
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "parse_shape2d_helper",
+      "elapsed_seconds": 407.312,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 978432,
+          "input_tokens": 1041955,
+          "output_tokens": 8144,
+          "reasoning_output_tokens": 2257
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 978432,
+          "input_tokens": 1041955,
+          "output_tokens": 8144,
+          "reasoning_output_tokens": 2257,
+          "total_tokens": 1050099
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:16:33.235111+02:00",
+      "label": "parse_shape2d_helper-astra-approved",
+      "launch_minus_trial_elapsed_seconds": 404.306,
+      "meaningful_hypotheses": 9,
+      "model": "gpt-6-astra",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 9,
+        "capsule_status": "STOPPED",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 9,
+        "effective_output_repeats": {
+          "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615": 3,
+          "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe": 2
+        },
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "f72d804250db63a6b921e11cf1776d277cba7aa83d919c8e197c3a8a9609fa37"
+          ],
+          "new_current_outputs": [
+            "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+            "76bff96b4253e6900a617a90be28b7f08d469ae7af2383bf399d15922f54b52b",
+            "a5a7ed03b945c38cdbc422bfb07f83243b8c508430c1803daaecd1a236179ffa",
+            "a9c47e0be12523a5aea3c63bfaba381baeb1a0d0f379ca6ccad34451c834a2c9",
+            "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+          ],
+          "prior_unique_effective_output_count": 2
+        },
+        "meaningful_hypotheses": 9,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 60,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 9,
+        "stop_reason": "SUPPORTED_EXPLANATIONS_EXHAUSTED",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+              "path": "research/trial-01/probes/pr2qk1vge/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+              "path": "research/trial-02/probes/pp_7j6hu3/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "76bff96b4253e6900a617a90be28b7f08d469ae7af2383bf399d15922f54b52b",
+              "path": "research/trial-03/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "76bff96b4253e6900a617a90be28b7f08d469ae7af2383bf399d15922f54b52b",
+              "path": "research/trial-03/probes/pzcf_aed2/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe",
+              "path": "research/trial-04/probes/px_6bb03j/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+              "path": "research/trial-05/probes/p8qztq13d/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "a5a7ed03b945c38cdbc422bfb07f83243b8c508430c1803daaecd1a236179ffa",
+              "path": "research/trial-06/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "a5a7ed03b945c38cdbc422bfb07f83243b8c508430c1803daaecd1a236179ffa",
+              "path": "research/trial-06/probes/p2t2hgvwx/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "f72d804250db63a6b921e11cf1776d277cba7aa83d919c8e197c3a8a9609fa37",
+              "path": "research/trial-07/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "f72d804250db63a6b921e11cf1776d277cba7aa83d919c8e197c3a8a9609fa37",
+              "path": "research/trial-07/probes/pyp54v4rd/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe",
+              "path": "research/trial-08/probes/pa9pupg0l/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "a9c47e0be12523a5aea3c63bfaba381baeb1a0d0f379ca6ccad34451c834a2c9",
+              "path": "research/trial-09/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "a9c47e0be12523a5aea3c63bfaba381baeb1a0d0f379ca6ccad34451c834a2c9",
+              "path": "research/trial-09/probes/pvztlx8md/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": false
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "ff0c5d09f66675217b2659a798a729e9bc1c8cc0b15a66b701743a3960ba81d2",
+            "source_before_sha256": "ff0c5d09f66675217b2659a798a729e9bc1c8cc0b15a66b701743a3960ba81d2",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 2,
+            "effective_identities": [
+              "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 2,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "67cfec9411ff0dd8061fde16e816a697d14d5c38b98bc4263c333b3c970ba7fa",
+            "source_before_sha256": "67cfec9411ff0dd8061fde16e816a697d14d5c38b98bc4263c333b3c970ba7fa",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 3,
+            "effective_identities": [
+              "76bff96b4253e6900a617a90be28b7f08d469ae7af2383bf399d15922f54b52b"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 3,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "67cfec9411ff0dd8061fde16e816a697d14d5c38b98bc4263c333b3c970ba7fa",
+            "source_before_sha256": "67cfec9411ff0dd8061fde16e816a697d14d5c38b98bc4263c333b3c970ba7fa",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 4,
+            "effective_identities": [
+              "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 4,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "3d1920edb9d5401ee1bcf8e94d74945a6a56e4d1b58d52b4744312747c50c41e",
+            "source_before_sha256": "3d1920edb9d5401ee1bcf8e94d74945a6a56e4d1b58d52b4744312747c50c41e",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 5,
+            "effective_identities": [
+              "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 5,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "d1e3a012d4321a37658d5f59cdb35c43b6c452d07d17395e6245abcf28f69c03",
+            "source_before_sha256": "d1e3a012d4321a37658d5f59cdb35c43b6c452d07d17395e6245abcf28f69c03",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 6,
+            "effective_identities": [
+              "a5a7ed03b945c38cdbc422bfb07f83243b8c508430c1803daaecd1a236179ffa"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 6,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "d1e3a012d4321a37658d5f59cdb35c43b6c452d07d17395e6245abcf28f69c03",
+            "source_before_sha256": "d1e3a012d4321a37658d5f59cdb35c43b6c452d07d17395e6245abcf28f69c03",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 7,
+            "effective_identities": [
+              "f72d804250db63a6b921e11cf1776d277cba7aa83d919c8e197c3a8a9609fa37"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 7,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "d1e3a012d4321a37658d5f59cdb35c43b6c452d07d17395e6245abcf28f69c03",
+            "source_before_sha256": "d1e3a012d4321a37658d5f59cdb35c43b6c452d07d17395e6245abcf28f69c03",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 8,
+            "effective_identities": [
+              "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 8,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "bcab93dcbf8d84ddf7749d201d95af3f1cd57b1fd2ad7d45a346914f5d2997ec",
+            "source_before_sha256": "bcab93dcbf8d84ddf7749d201d95af3f1cd57b1fd2ad7d45a346914f5d2997ec",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 9,
+            "effective_identities": [
+              "a9c47e0be12523a5aea3c63bfaba381baeb1a0d0f379ca6ccad34451c834a2c9"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 9,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "bcab93dcbf8d84ddf7749d201d95af3f1cd57b1fd2ad7d45a346914f5d2997ec",
+            "source_before_sha256": "bcab93dcbf8d84ddf7749d201d95af3f1cd57b1fd2ad7d45a346914f5d2997ec",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 3.006,
+        "unique_effective_outputs": [
+          "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+          "76bff96b4253e6900a617a90be28b7f08d469ae7af2383bf399d15922f54b52b",
+          "a5a7ed03b945c38cdbc422bfb07f83243b8c508430c1803daaecd1a236179ffa",
+          "a9c47e0be12523a5aea3c63bfaba381baeb1a0d0f379ca6ccad34451c834a2c9",
+          "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe",
+          "f72d804250db63a6b921e11cf1776d277cba7aa83d919c8e197c3a8a9609fa37"
+        ]
+      },
+      "started_utc": "2026-09-23T20:09:45.929468+02:00",
+      "thread_id": "01a0cf75-9a13-7900-9e15-35142651f6c8",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 4.041724,
+        "long_context_request_count": 0,
+        "request_count": 20,
+        "standard_usd_scenario": 2.020862,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 978432,
+          "input_tokens": 1041955,
+          "output_tokens": 8144,
+          "reasoning_output_tokens": 2257,
+          "total_tokens": 1050099,
+          "uncached_input_tokens": 63523
+        },
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "parse_shape2d_helper",
+      "elapsed_seconds": 384.671,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 682496,
+          "input_tokens": 746144,
+          "output_tokens": 15959,
+          "reasoning_output_tokens": 9218
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 682496,
+          "input_tokens": 746144,
+          "output_tokens": 15959,
+          "reasoning_output_tokens": 9218,
+          "total_tokens": 762103
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:16:10.609182+02:00",
+      "label": "parse_shape2d_helper-luna-approved",
+      "launch_minus_trial_elapsed_seconds": 381.006,
+      "meaningful_hypotheses": 9,
+      "model": "gpt-6-luna",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 8,
+        "capsule_status": "STOPPED",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 8,
+        "effective_output_repeats": {
+          "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615": 3,
+          "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe": 2
+        },
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [],
+          "new_current_outputs": [
+            "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+            "90d386e05dd115db7cd9eb8776b4e0637d263565cff404477bebc1b42a53b9f0",
+            "9c17d2b6850b704bc3f5d15ddb9cd56fe9b27b33a68f72c83a936ad23ac4cddd",
+            "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+          ],
+          "prior_unique_effective_output_count": 2
+        },
+        "meaningful_hypotheses": 9,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 34,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 1,
+        "precompiler_failures": 1,
+        "proposed_distinct_hypotheses": 9,
+        "stop_reason": "SUPPORTED_EXPLANATIONS_EXHAUSTED",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+              "path": "research/trial-01/probes/plrtvqyc4/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": null,
+              "path": "research/trial-02/probes/pksmwq039/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe",
+              "path": "research/trial-03/probes/pkt49whxt/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+              "path": "research/trial-04/probes/pnp7dwnib/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "90d386e05dd115db7cd9eb8776b4e0637d263565cff404477bebc1b42a53b9f0",
+              "path": "research/trial-05/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "90d386e05dd115db7cd9eb8776b4e0637d263565cff404477bebc1b42a53b9f0",
+              "path": "research/trial-05/probes/p5m95e40s/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe",
+              "path": "research/trial-06/probes/pjubme6y1/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "9c17d2b6850b704bc3f5d15ddb9cd56fe9b27b33a68f72c83a936ad23ac4cddd",
+              "path": "research/trial-08/probes/pv4hd485c/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+              "path": "research/trial-09/probes/pfzhffq47/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": false
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+            "source_before_sha256": "2be3410c8936e7ca6f43a0e31baa21a7b522a883aac119ad2ebf8e6fc978b4ea",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 2,
+            "effective_identities": [],
+            "failure_class": "COMPILER_ERROR",
+            "helper_trial_index": 2,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "COMPILER_ERROR",
+            "source_after_sha256": "caa039b4ad52721fa46fce7dfc39bcd0f41a1045e070c10bc9ad97b0288d9afe",
+            "source_before_sha256": "caa039b4ad52721fa46fce7dfc39bcd0f41a1045e070c10bc9ad97b0288d9afe",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 3,
+            "effective_identities": [
+              "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 3,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "158ad9debde83994d4e69926d4e951040b45473b7579f12844783052d76146aa",
+            "source_before_sha256": "158ad9debde83994d4e69926d4e951040b45473b7579f12844783052d76146aa",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 4,
+            "effective_identities": [
+              "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 4,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "74b392f59dc43e628cbff1e45903d5616b05b8369f1cce4b56b82b27e4166662",
+            "source_before_sha256": "74b392f59dc43e628cbff1e45903d5616b05b8369f1cce4b56b82b27e4166662",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 5,
+            "effective_identities": [
+              "90d386e05dd115db7cd9eb8776b4e0637d263565cff404477bebc1b42a53b9f0"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 5,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "74b392f59dc43e628cbff1e45903d5616b05b8369f1cce4b56b82b27e4166662",
+            "source_before_sha256": "74b392f59dc43e628cbff1e45903d5616b05b8369f1cce4b56b82b27e4166662",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 6,
+            "effective_identities": [
+              "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 6,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "c0ca42a3e29ac0511b558ec74a15942a99445403ecd26f61a9bbe9e558e1d0de",
+            "source_before_sha256": "c0ca42a3e29ac0511b558ec74a15942a99445403ecd26f61a9bbe9e558e1d0de",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 0,
+            "deduplicated_hypothesis_index": 7,
+            "effective_identities": [],
+            "failure_class": "optional_toolchain_profile_omitted",
+            "helper_trial_index": 7,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "toolchain_hash_mismatch",
+            "source_after_sha256": "c0ca42a3e29ac0511b558ec74a15942a99445403ecd26f61a9bbe9e558e1d0de",
+            "source_before_sha256": "c0ca42a3e29ac0511b558ec74a15942a99445403ecd26f61a9bbe9e558e1d0de",
+            "tooling_blocked": true
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 8,
+            "effective_identities": [
+              "9c17d2b6850b704bc3f5d15ddb9cd56fe9b27b33a68f72c83a936ad23ac4cddd"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 8,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "c796e29c79ca5aedcc0501dc65171b8f6b84282487c8ac03801029c61c925112",
+            "source_before_sha256": "c796e29c79ca5aedcc0501dc65171b8f6b84282487c8ac03801029c61c925112",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 9,
+            "effective_identities": [
+              "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 9,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "62725e9d3ec415263de4b964285d50321674ece0936e5be72e6c478ff4aff691",
+            "source_before_sha256": "62725e9d3ec415263de4b964285d50321674ece0936e5be72e6c478ff4aff691",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 3.665,
+        "unique_effective_outputs": [
+          "0cbdd103f2dcf64c4a2e9bf7c2d1186ec29c70f67b35db954739fe1b91adf615",
+          "90d386e05dd115db7cd9eb8776b4e0637d263565cff404477bebc1b42a53b9f0",
+          "9c17d2b6850b704bc3f5d15ddb9cd56fe9b27b33a68f72c83a936ad23ac4cddd",
+          "d5a82bc580d82243455dee7eecb2abb014918c60f51a0e74cc203f20dc3d94fe"
+        ]
+      },
+      "started_utc": "2026-09-23T20:09:45.929468+02:00",
+      "thread_id": "01a0cf75-9a2a-79b0-850f-23c8009aef47",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 0.04233852,
+        "long_context_request_count": 0,
+        "request_count": 18,
+        "standard_usd_scenario": 0.02116926,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 682496,
+          "input_tokens": 746144,
+          "output_tokens": 15959,
+          "reasoning_output_tokens": 9218,
+          "total_tokens": 762103,
+          "uncached_input_tokens": 63648
+        },
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "rect_compare_point",
+      "elapsed_seconds": 116.953,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 254720,
+          "input_tokens": 288162,
+          "output_tokens": 1626,
+          "reasoning_output_tokens": 79
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 254720,
+          "input_tokens": 288162,
+          "output_tokens": 1626,
+          "reasoning_output_tokens": 79,
+          "total_tokens": 289788
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:07:58.972119+02:00",
+      "label": "rect_compare_point-astra-approved",
+      "launch_minus_trial_elapsed_seconds": 114.308,
+      "meaningful_hypotheses": 1,
+      "model": "gpt-6-astra",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 3,
+        "capsule_status": "STRICT_EXACT",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 1,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": 1,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c"
+          ],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 4
+        },
+        "meaningful_hypotheses": 1,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 16,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 1,
+        "stop_reason": null,
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+              "path": "research/trial-01/probes/p3341uqop/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+              "path": "research/trial-01/probes/p6afg4fzg/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+              "path": "research/trial-01/probes/pf8sugo03/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": true
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 3,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "PROMOTED",
+            "raw_failure_class": null,
+            "source_after_sha256": "4cfb73c072d14dce85675c65cc7af2a6c7b782d81a4fc4c43df4152d8ace9613",
+            "source_before_sha256": "4cfb73c072d14dce85675c65cc7af2a6c7b782d81a4fc4c43df4152d8ace9613",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 2.645,
+        "unique_effective_outputs": [
+          "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c"
+        ]
+      },
+      "started_utc": "2026-09-23T20:06:02.023688+02:00",
+      "thread_id": "01a0cf72-2fa1-7d12-bf0b-afafaac53466",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 1.34088,
+        "long_context_request_count": 0,
+        "request_count": 9,
+        "standard_usd_scenario": 0.67044,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 254720,
+          "input_tokens": 288162,
+          "output_tokens": 1626,
+          "reasoning_output_tokens": 79,
+          "total_tokens": 289788,
+          "uncached_input_tokens": 33442
+        },
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "rect_compare_point",
+      "elapsed_seconds": 223.844,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 481024,
+          "input_tokens": 536363,
+          "output_tokens": 8863,
+          "reasoning_output_tokens": 5188
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 481024,
+          "input_tokens": 536363,
+          "output_tokens": 8863,
+          "reasoning_output_tokens": 5188,
+          "total_tokens": 545226
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:09:45.861026+02:00",
+      "label": "rect_compare_point-luna-approved",
+      "launch_minus_trial_elapsed_seconds": 220.329,
+      "meaningful_hypotheses": 4,
+      "model": "gpt-6-luna",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 5,
+        "capsule_status": "STRICT_EXACT",
+        "compiler_executed_distinct_before_first_success": 2,
+        "compiler_executed_distinct_hypotheses": 3,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": 4,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+            "b6a9c2802f96e474b128fdb48b26b9239a9f52464b3c3ecacf013471515895b9",
+            "f83f10e1fa420d43a3078185e839fb8908392b2b1d9d0880bb086cb6609cbab5"
+          ],
+          "new_current_outputs": [],
+          "prior_unique_effective_output_count": 4
+        },
+        "meaningful_hypotheses": 4,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 24,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 1,
+        "precompiler_failures": 1,
+        "proposed_distinct_hypotheses": 4,
+        "stop_reason": "STRICT_EXACT",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "b6a9c2802f96e474b128fdb48b26b9239a9f52464b3c3ecacf013471515895b9",
+              "path": "research/trial-01/probes/pw0cf52uo/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "f83f10e1fa420d43a3078185e839fb8908392b2b1d9d0880bb086cb6609cbab5",
+              "path": "research/trial-02/probes/pw72qo_bi/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+              "path": "research/trial-04/probes/p810jlnz3/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+              "path": "research/trial-04/probes/plojqxyut/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+              "path": "research/trial-04/probes/pojfrxis_/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": true
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "b6a9c2802f96e474b128fdb48b26b9239a9f52464b3c3ecacf013471515895b9"
+            ],
+            "failure_class": "BINDING_REVIEW_REQUIRED",
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BINDING_REVIEW_REQUIRED",
+            "source_after_sha256": "42fd5cf87f91e17dbeebb9db35b4ad84bfa1a61a73b877137b4813fb7b027272",
+            "source_before_sha256": "42fd5cf87f91e17dbeebb9db35b4ad84bfa1a61a73b877137b4813fb7b027272",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 2,
+            "effective_identities": [
+              "f83f10e1fa420d43a3078185e839fb8908392b2b1d9d0880bb086cb6609cbab5"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 2,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "af957318e293c62c550f8913a2df1f2463fc7bc2bebb3094ebe274ef537cf90e",
+            "source_before_sha256": "af957318e293c62c550f8913a2df1f2463fc7bc2bebb3094ebe274ef537cf90e",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 0,
+            "deduplicated_hypothesis_index": 3,
+            "effective_identities": [],
+            "failure_class": "optional_toolchain_profile_omitted",
+            "helper_trial_index": 3,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "toolchain_hash_mismatch",
+            "source_after_sha256": "af957318e293c62c550f8913a2df1f2463fc7bc2bebb3094ebe274ef537cf90e",
+            "source_before_sha256": "af957318e293c62c550f8913a2df1f2463fc7bc2bebb3094ebe274ef537cf90e",
+            "tooling_blocked": true
+          },
+          {
+            "compiler_processes": 3,
+            "deduplicated_hypothesis_index": 4,
+            "effective_identities": [
+              "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 4,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "PROMOTED",
+            "raw_failure_class": null,
+            "source_after_sha256": "670796c623af7e72206886dc26d9911ddf98d3b505f843a4d64af1e1f015e428",
+            "source_before_sha256": "670796c623af7e72206886dc26d9911ddf98d3b505f843a4d64af1e1f015e428",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 3.515,
+        "unique_effective_outputs": [
+          "073f269efc1ebfdfdf4db2888df0183ceb31ee7dc8a0372fb28dec2643a9b29c",
+          "b6a9c2802f96e474b128fdb48b26b9239a9f52464b3c3ecacf013471515895b9",
+          "f83f10e1fa420d43a3078185e839fb8908392b2b1d9d0880bb086cb6609cbab5"
+        ]
+      },
+      "started_utc": "2026-09-23T20:06:02.020681+02:00",
+      "thread_id": "01a0cf72-2f98-7603-88b0-6e99c54ba867",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 0.02955128,
+        "long_context_request_count": 0,
+        "request_count": 13,
+        "standard_usd_scenario": 0.01477564,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 481024,
+          "input_tokens": 536363,
+          "output_tokens": 8863,
+          "reasoning_output_tokens": 5188,
+          "total_tokens": 545226,
+          "uncached_input_tokens": 55339
+        },
+        "unpriced_request_count": 0
+      }
+    },
+    {
+      "case": "unknown_libname_1",
+      "elapsed_seconds": 376.875,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 874112,
+          "input_tokens": 945596,
+          "output_tokens": 7247,
+          "reasoning_output_tokens": 2240
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 874112,
+          "input_tokens": 945596,
+          "output_tokens": 7247,
+          "reasoning_output_tokens": 2240,
+          "total_tokens": 952843
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:22:50.181895+02:00",
+      "label": "unknown_libname_1-astra-approved",
+      "launch_minus_trial_elapsed_seconds": 374.882,
+      "meaningful_hypotheses": 8,
+      "model": "gpt-6-astra",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 8,
+        "capsule_status": "NOT_RECOVERED",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 8,
+        "effective_output_repeats": {},
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+          ],
+          "new_current_outputs": [
+            "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e",
+            "996dfc9d340ff88693018b18ed6563342e623e66619abc346ede4f33c07af1ae",
+            "c3241e29203f74823b19c177dfdcc8253222ce892dd33a7b91aa867958200fc3",
+            "cc7aed3a654871ac157f81e2d3811f702e3a1b694db2031269593944aed53872",
+            "e7a6002a98d7046307e4362d7cd12fb3237b4af42ff1491c54c36681fe86e7a3",
+            "e941579d03502d2f0cc54ddc64317d7b4453a503374bdc310a589d9235731dc1"
+          ],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 8,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 54,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 8,
+        "stop_reason": "SUPPORTED_EXPLANATIONS_EXHAUSTED",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e",
+              "path": "research/trial-01/probes/phtwkwamh/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "cc7aed3a654871ac157f81e2d3811f702e3a1b694db2031269593944aed53872",
+              "path": "research/trial-02/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "cc7aed3a654871ac157f81e2d3811f702e3a1b694db2031269593944aed53872",
+              "path": "research/trial-02/probes/pjs0g6475/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+              "path": "research/trial-03/probes/pls8mz51_/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "e7a6002a98d7046307e4362d7cd12fb3237b4af42ff1491c54c36681fe86e7a3",
+              "path": "research/trial-04/probes/pojc7_h63/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "c3241e29203f74823b19c177dfdcc8253222ce892dd33a7b91aa867958200fc3",
+              "path": "research/trial-05/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "c3241e29203f74823b19c177dfdcc8253222ce892dd33a7b91aa867958200fc3",
+              "path": "research/trial-05/probes/p7sdapuyh/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": null,
+              "path": "research/trial-06/probes/pqbmgd7sw/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "e941579d03502d2f0cc54ddc64317d7b4453a503374bdc310a589d9235731dc1",
+              "path": "research/trial-07/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "e941579d03502d2f0cc54ddc64317d7b4453a503374bdc310a589d9235731dc1",
+              "path": "research/trial-07/probes/pkdy0gnm8/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "996dfc9d340ff88693018b18ed6563342e623e66619abc346ede4f33c07af1ae",
+              "path": "research/trial-08/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "996dfc9d340ff88693018b18ed6563342e623e66619abc346ede4f33c07af1ae",
+              "path": "research/trial-08/probes/pbdslvucf/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": false
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "b082a0b1951aa63d876df7251e7aae00210f8a9c426a70ff51ae8afa66accc4c",
+            "source_before_sha256": "b082a0b1951aa63d876df7251e7aae00210f8a9c426a70ff51ae8afa66accc4c",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 2,
+            "effective_identities": [
+              "cc7aed3a654871ac157f81e2d3811f702e3a1b694db2031269593944aed53872"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 2,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "source_before_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 3,
+            "effective_identities": [
+              "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 3,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "943cc07fb8fce8b7a833a9638a23bdd272bbb16217a14f545c1c80344f2c3deb",
+            "source_before_sha256": "943cc07fb8fce8b7a833a9638a23bdd272bbb16217a14f545c1c80344f2c3deb",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 4,
+            "effective_identities": [
+              "e7a6002a98d7046307e4362d7cd12fb3237b4af42ff1491c54c36681fe86e7a3"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 4,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "9821c5bb3217d34ae60e759d61559947d45500698c6424412acbbfc10641fc2b",
+            "source_before_sha256": "9821c5bb3217d34ae60e759d61559947d45500698c6424412acbbfc10641fc2b",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 5,
+            "effective_identities": [
+              "c3241e29203f74823b19c177dfdcc8253222ce892dd33a7b91aa867958200fc3"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 5,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "source_before_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 6,
+            "effective_identities": [],
+            "failure_class": "UNSUPPORTED_OBJECT",
+            "helper_trial_index": 6,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "UNSUPPORTED_OBJECT",
+            "source_after_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "source_before_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 7,
+            "effective_identities": [
+              "e941579d03502d2f0cc54ddc64317d7b4453a503374bdc310a589d9235731dc1"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 7,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "source_before_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 8,
+            "effective_identities": [
+              "996dfc9d340ff88693018b18ed6563342e623e66619abc346ede4f33c07af1ae"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 8,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "source_before_sha256": "5ae4906f76b9557643ae57b0559eef56799b49e34a2ed897c0f5c7434abe1f7c",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 1.993,
+        "unique_effective_outputs": [
+          "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+          "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e",
+          "996dfc9d340ff88693018b18ed6563342e623e66619abc346ede4f33c07af1ae",
+          "c3241e29203f74823b19c177dfdcc8253222ce892dd33a7b91aa867958200fc3",
+          "cc7aed3a654871ac157f81e2d3811f702e3a1b694db2031269593944aed53872",
+          "e7a6002a98d7046307e4362d7cd12fb3237b4af42ff1491c54c36681fe86e7a3",
+          "e941579d03502d2f0cc54ddc64317d7b4453a503374bdc310a589d9235731dc1"
+        ]
+      },
+      "started_utc": "2026-09-23T20:16:33.300114+02:00",
+      "thread_id": "01a0cf7b-d16f-7573-9b27-22da1d3547d6",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 3.902604,
+        "long_context_request_count": 0,
+        "request_count": 18,
+        "standard_usd_scenario": 1.951302,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 874112,
+          "input_tokens": 945596,
+          "output_tokens": 7247,
+          "reasoning_output_tokens": 2240,
+          "total_tokens": 952843,
+          "uncached_input_tokens": 71484
+        },
+        "unpriced_request_count": 0
+      },
+      "terminal_report_tooling_note": "Terminal report mentions QuickC BAKPAT rejection; treated as a tooling-blocked diagnostic attempt. No extra invocation beyond reconciled compiler/process/probe/receipt counts."
+    },
+    {
+      "case": "unknown_libname_1",
+      "elapsed_seconds": 638.953,
+      "event_usage_crosscheck": {
+        "cli_turn_completed_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 1715712,
+          "input_tokens": 1811810,
+          "output_tokens": 26294,
+          "reasoning_output_tokens": 18196
+        },
+        "comparable_deltas_cli_minus_session": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "session_request_usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 1715712,
+          "input_tokens": 1811810,
+          "output_tokens": 26294,
+          "reasoning_output_tokens": 18196,
+          "total_tokens": 1838104
+        },
+        "status": "match",
+        "turn_completed_events": 1
+      },
+      "exit_code": 0,
+      "failed_preflight": false,
+      "finished_utc": "2026-09-23T20:27:12.262811+02:00",
+      "label": "unknown_libname_1-luna-approved",
+      "launch_minus_trial_elapsed_seconds": 634.395,
+      "meaningful_hypotheses": 11,
+      "model": "gpt-6-luna",
+      "preflight_classification": null,
+      "reasoning_effort": "high",
+      "result": {
+        "actual_compiler_processes": 11,
+        "capsule_status": "EXPLORATION_STOPPED",
+        "compiler_executed_distinct_before_first_success": 0,
+        "compiler_executed_distinct_hypotheses": 11,
+        "effective_output_repeats": {
+          "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f": 5
+        },
+        "first_strict_success_trial_index": null,
+        "frozen_input_edits": [],
+        "historical_output_comparison": {
+          "historically_seen_current_outputs": [
+            "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+            "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+            "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f"
+          ],
+          "new_current_outputs": [
+            "104928af93d49a5dc2c51c0c008b3559e00d48b1be3f8cbce27f73490fbc581e",
+            "1391f8bf21d58358d1f3d846581bc52aef6719088e245692516fa2ee8312ecf5",
+            "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e",
+            "e7e0814ebe5a4b0c61927711f3f4324001973c6fddef0abf6009826598d0010e"
+          ],
+          "prior_unique_effective_output_count": 3
+        },
+        "meaningful_hypotheses": 11,
+        "outside_root_access": {
+          "calls_with_explicit_paths": 2,
+          "explicit_paths_outside_capsule": [],
+          "observed_tool_call_count": 58,
+          "outside_root_access_status": "explicit_command_argument_paths_only",
+          "recognized_runtime_path_count": 2
+        },
+        "precompiler_blocked_distinct_hypotheses": 0,
+        "precompiler_failures": 0,
+        "proposed_distinct_hypotheses": 11,
+        "stop_reason": "SUPPORTED_SOURCE_SHAPES_EXHAUSTED",
+        "strict_receipt": {
+          "receipts": [
+            {
+              "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+              "path": "research/trial-01/probes/pbfnszdr2/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+              "path": "research/trial-02/probes/p9psiafw8/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+              "path": "research/trial-03/probes/pw87th1yo/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "e7e0814ebe5a4b0c61927711f3f4324001973c6fddef0abf6009826598d0010e",
+              "path": "research/trial-04/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "e7e0814ebe5a4b0c61927711f3f4324001973c6fddef0abf6009826598d0010e",
+              "path": "research/trial-04/probes/pk54l5772/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+              "path": "research/trial-05/probes/p7w3al0o5/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+              "path": "research/trial-06/probes/pqodqmw7d/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e",
+              "path": "research/trial-07/probes/p88ssv2os/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "1391f8bf21d58358d1f3d846581bc52aef6719088e245692516fa2ee8312ecf5",
+              "path": "research/trial-08/diagnostic-object/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "1391f8bf21d58358d1f3d846581bc52aef6719088e245692516fa2ee8312ecf5",
+              "path": "research/trial-08/probes/p0r8gkh60/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "104928af93d49a5dc2c51c0c008b3559e00d48b1be3f8cbce27f73490fbc581e",
+              "path": "research/trial-09/probes/pk_6ste61/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+              "path": "research/trial-10/probes/pp2akcdpo/receipt.json",
+              "profile": "msc510-medium"
+            },
+            {
+              "effective_code": "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+              "path": "research/trial-11/probes/pjrg9_0uz/receipt.json",
+              "profile": "msc510-medium"
+            }
+          ],
+          "success": false
+        },
+        "trial_audit": [
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 1,
+            "effective_identities": [
+              "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 1,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "04734c6a76be86c7a75d7ace04923f1ac61fac1e99ac21b20fd7e93be226c454",
+            "source_before_sha256": "04734c6a76be86c7a75d7ace04923f1ac61fac1e99ac21b20fd7e93be226c454",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 2,
+            "effective_identities": [
+              "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 2,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "226a1f445870862de7e3ffde17f6e0b7860af70cabd132898461757274733abf",
+            "source_before_sha256": "226a1f445870862de7e3ffde17f6e0b7860af70cabd132898461757274733abf",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 3,
+            "effective_identities": [
+              "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 3,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "9db4ab21d18b4a4089f228c3f871657da580617a8fd755f1443bdee82de6e6b8",
+            "source_before_sha256": "9db4ab21d18b4a4089f228c3f871657da580617a8fd755f1443bdee82de6e6b8",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 4,
+            "effective_identities": [
+              "e7e0814ebe5a4b0c61927711f3f4324001973c6fddef0abf6009826598d0010e"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 4,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "05f0901402b503eb01a56405eb2e312b1cad4aa3b3c865d9b77a281ce3b1da3a",
+            "source_before_sha256": "05f0901402b503eb01a56405eb2e312b1cad4aa3b3c865d9b77a281ce3b1da3a",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 5,
+            "effective_identities": [
+              "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 5,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "5135eea02063fec464f700eec75a16efc8effa1f97e5d75892e344dc54873ef4",
+            "source_before_sha256": "5135eea02063fec464f700eec75a16efc8effa1f97e5d75892e344dc54873ef4",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 6,
+            "effective_identities": [
+              "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 6,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "714c547799393d0c3fdd6c6fe3cc7bcd4952b2037a035ee5bcf431da1cb59385",
+            "source_before_sha256": "714c547799393d0c3fdd6c6fe3cc7bcd4952b2037a035ee5bcf431da1cb59385",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 7,
+            "effective_identities": [
+              "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 7,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "902ac543505c35d44c37f2be24ef1e4dbfceea7fe825d6e255106484f036a45e",
+            "source_before_sha256": "902ac543505c35d44c37f2be24ef1e4dbfceea7fe825d6e255106484f036a45e",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 8,
+            "effective_identities": [
+              "1391f8bf21d58358d1f3d846581bc52aef6719088e245692516fa2ee8312ecf5"
+            ],
+            "failure_class": null,
+            "helper_trial_index": 8,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "DIAGNOSTIC_COMPILE_ONLY",
+            "raw_failure_class": null,
+            "source_after_sha256": "0cb297dea7645a457b037a46e7a4c9d3f1d7cbe801c64fe93e0bbfd2331de1ae",
+            "source_before_sha256": "0cb297dea7645a457b037a46e7a4c9d3f1d7cbe801c64fe93e0bbfd2331de1ae",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 9,
+            "effective_identities": [
+              "104928af93d49a5dc2c51c0c008b3559e00d48b1be3f8cbce27f73490fbc581e"
+            ],
+            "failure_class": "EXTENT_MISMATCH",
+            "helper_trial_index": 9,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "EXTENT_MISMATCH",
+            "source_after_sha256": "0cb297dea7645a457b037a46e7a4c9d3f1d7cbe801c64fe93e0bbfd2331de1ae",
+            "source_before_sha256": "0cb297dea7645a457b037a46e7a4c9d3f1d7cbe801c64fe93e0bbfd2331de1ae",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 10,
+            "effective_identities": [
+              "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 10,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "bb9107464f54068e2c74ff349a5727255a50b53b1f83af79ab042ad3ce50b25d",
+            "source_before_sha256": "bb9107464f54068e2c74ff349a5727255a50b53b1f83af79ab042ad3ce50b25d",
+            "tooling_blocked": false
+          },
+          {
+            "compiler_processes": 1,
+            "deduplicated_hypothesis_index": 11,
+            "effective_identities": [
+              "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f"
+            ],
+            "failure_class": "BYTE_MISMATCH",
+            "helper_trial_index": 11,
+            "hypothesis_classification": "distinct_prediction_or_source",
+            "outcome_status": "FAILED",
+            "raw_failure_class": "BYTE_MISMATCH",
+            "source_after_sha256": "5ece01a2a6cae3a8cce49c271d288c91590ba0cf56d1f47fa1dcf3a0a51aa377",
+            "source_before_sha256": "5ece01a2a6cae3a8cce49c271d288c91590ba0cf56d1f47fa1dcf3a0a51aa377",
+            "tooling_blocked": false
+          }
+        ],
+        "trial_elapsed_seconds_sum": 4.558,
+        "unique_effective_outputs": [
+          "104928af93d49a5dc2c51c0c008b3559e00d48b1be3f8cbce27f73490fbc581e",
+          "1391f8bf21d58358d1f3d846581bc52aef6719088e245692516fa2ee8312ecf5",
+          "249d877cae0d00c3b8d72c7187674409e02d8bd6e3f9fc69277532aaf3ec1e0f",
+          "91ac56b2e75e4336cb35b1ec3fe1007b87951345d21f954102ddb260d35d824e",
+          "a734344f24d0a11298559bf845da0413908e86b1e71c146912992fe0b3f88690",
+          "bed77c46cb9a47b4cf1a50aa2989e0fc77d2b1c9a257e887e6733f475fa3067f",
+          "e7e0814ebe5a4b0c61927711f3f4324001973c6fddef0abf6009826598d0010e"
+        ]
+      },
+      "started_utc": "2026-09-23T20:16:33.300114+02:00",
+      "thread_id": "01a0cf7b-d18d-78e0-a39e-2918f59d8c29",
+      "turn_started": true,
+      "usage": {
+        "fast_usd_scenario": 0.07982784,
+        "long_context_request_count": 0,
+        "request_count": 30,
+        "standard_usd_scenario": 0.03991392,
+        "status": "collected",
+        "totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 1715712,
+          "input_tokens": 1811810,
+          "output_tokens": 26294,
+          "reasoning_output_tokens": 18196,
+          "total_tokens": 1838104,
+          "uncached_input_tokens": 96098
+        },
+        "unpriced_request_count": 0
+      }
+    }
+  ],
+  "schema": 1,
+  "supervision_overhead": {
+    "actual_invoice": "unknown",
+    "all_preparation": {
+      "fast_usd_scenario": null,
+      "group_count": 10,
+      "request_count": 471,
+      "standard_usd_scenario": null,
+      "unpriced_group_count": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 46056320,
+        "input_tokens": 47289097,
+        "output_tokens": 268944,
+        "reasoning_output_tokens": 150314,
+        "total_tokens": 47598518
+      }
+    },
+    "other_preparation": {
+      "fast_usd_scenario": null,
+      "group_count": 9,
+      "request_count": 289,
+      "standard_usd_scenario": null,
+      "unpriced_group_count": 3,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 25994240,
+        "input_tokens": 26902327,
+        "output_tokens": 210095,
+        "reasoning_output_tokens": 115227,
+        "total_tokens": 27131044
+      }
+    },
+    "pricing_are_alternative_scenarios": true,
+    "root": {
+      "fast_usd_scenario": 52.50286,
+      "group_count": 1,
+      "request_count": 182,
+      "standard_usd_scenario": 26.25143,
+      "unpriced_group_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20062080,
+        "input_tokens": 20386770,
+        "output_tokens": 58849,
+        "reasoning_output_tokens": 35087,
+        "total_tokens": 20467474
+      }
+    }
+  },
+  "supervision_usage_groups": [
+    {
+      "fast_usd_scenario": 0.24806068,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 149562,
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "request_count": 85,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 0.12403034,
+      "task_id": "approved_pilot_accounting",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 7884544,
+        "input_tokens": 8044208,
+        "output_tokens": 58437,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 29169,
+        "total_tokens": 8102645,
+        "uncached_input_tokens": 159664
+      }
+    },
+    {
+      "fast_usd_scenario": 0.03020036,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 75842,
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "request_count": 12,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 0.01510018,
+      "task_id": "batching_retrospective",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 606208,
+        "input_tokens": 664114,
+        "output_tokens": 6495,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 3610,
+        "total_tokens": 670609,
+        "uncached_input_tokens": 57906
+      }
+    },
+    {
+      "fast_usd_scenario": 0.17787576,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 182740,
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "request_count": 35,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 0.08893788,
+      "task_id": "corpus_fact_audit",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 5092608,
+        "input_tokens": 5218086,
+        "output_tokens": 50928,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 29623,
+        "total_tokens": 5269014,
+        "uncached_input_tokens": 125478
+      }
+    },
+    {
+      "fast_usd_scenario": 0.07908912,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 201199,
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "request_count": 22,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 0.03954456,
+      "task_id": "endurance_coordinator",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 1728256,
+        "input_tokens": 1831396,
+        "output_tokens": 23896,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 18512,
+        "total_tokens": 1873914,
+        "uncached_input_tokens": 103140
+      }
+    },
+    {
+      "fast_usd_scenario": 0.18753516,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 140248,
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "request_count": 58,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 0.09376758,
+      "task_id": "pilot_capsules",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 6184448,
+        "input_tokens": 6319304,
+        "output_tokens": 36875,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 16866,
+        "total_tokens": 6356179,
+        "uncached_input_tokens": 134856
+      }
+    },
+    {
+      "fast_usd_scenario": 0.10632812,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 103426,
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "request_count": 38,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 0.05316406,
+      "task_id": "pilot_usage_audit",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 2899456,
+        "input_tokens": 2995296,
+        "output_tokens": 29171,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 15602,
+        "total_tokens": 3024467,
+        "uncached_input_tokens": 95840
+      }
+    },
+    {
+      "fast_usd_scenario": null,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 0,
+      "model": "codex-auto-review",
+      "reasoning_effort": "low",
+      "request_count": 4,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": null,
+      "task_id": "preparation_01a0cf44",
+      "unpriced_request_count": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 108544,
+        "input_tokens": 146308,
+        "output_tokens": 724,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 470,
+        "total_tokens": 147032,
+        "uncached_input_tokens": 37764
+      }
+    },
+    {
+      "fast_usd_scenario": null,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 0,
+      "model": "codex-auto-review",
+      "reasoning_effort": "low",
+      "request_count": 31,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": null,
+      "task_id": "preparation_01a0cf6e",
+      "unpriced_request_count": 31,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 1449216,
+        "input_tokens": 1618673,
+        "output_tokens": 3081,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 1155,
+        "total_tokens": 1621754,
+        "uncached_input_tokens": 169457
+      }
+    },
+    {
+      "fast_usd_scenario": null,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 0,
+      "model": "codex-auto-review",
+      "reasoning_effort": "low",
+      "request_count": 4,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": null,
+      "task_id": "preparation_01a0cf86",
+      "unpriced_request_count": 4,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 40960,
+        "input_tokens": 64942,
+        "output_tokens": 488,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 220,
+        "total_tokens": 65430,
+        "uncached_input_tokens": 23982
+      }
+    },
+    {
+      "fast_usd_scenario": 52.50286,
+      "long_context_request_count": 0,
+      "max_request_input_tokens": 181970,
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "request_count": 182,
+      "role": "preparation_supervision",
+      "standard_usd_scenario": 26.25143,
+      "task_id": "root_supervisor",
+      "unpriced_request_count": 0,
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 20062080,
+        "input_tokens": 20386770,
+        "output_tokens": 58849,
+        "reasoning_is_subset_of_output": true,
+        "reasoning_output_tokens": 35087,
+        "total_tokens": 20467474,
+        "uncached_input_tokens": 324690
+      }
+    }
+  ],
+  "usage_report": "usage.json",
+  "pilot_metadata": {
+    "initial_cases": 4,
+    "matched_runs": 8,
+    "model_effort": "gpt-6-luna/high and gpt-6-astra/high",
+    "context_ablation": "none",
+    "all_eight_cli_session_usage_crosschecks": "match",
+    "request_events_after_cutoff": 592,
+    "session_ids_in_usage_ledger": 59,
+    "primary_standard_cost_by_model": {
+      "astra": 5.21717,
+      "luna": 0.08130442,
+      "astra_to_luna_ratio": 64.1683
+    },
+    "root_standard_overhead": 26.25143,
+    "priced_nonroot_preparation_standard_overhead": 0.4145446,
+    "unpriced_preparation_groups": [
+      {
+        "fast_usd_scenario": null,
+        "long_context_request_count": 0,
+        "max_request_input_tokens": 0,
+        "model": "codex-auto-review",
+        "reasoning_effort": "low",
+        "request_count": 4,
+        "role": "preparation_supervision",
+        "standard_usd_scenario": null,
+        "task_id": "preparation_01a0cf44",
+        "unpriced_request_count": 4,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 108544,
+          "input_tokens": 146308,
+          "output_tokens": 724,
+          "reasoning_is_subset_of_output": true,
+          "reasoning_output_tokens": 470,
+          "total_tokens": 147032,
+          "uncached_input_tokens": 37764
+        }
+      },
+      {
+        "fast_usd_scenario": null,
+        "long_context_request_count": 0,
+        "max_request_input_tokens": 0,
+        "model": "codex-auto-review",
+        "reasoning_effort": "low",
+        "request_count": 31,
+        "role": "preparation_supervision",
+        "standard_usd_scenario": null,
+        "task_id": "preparation_01a0cf6e",
+        "unpriced_request_count": 31,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 1449216,
+          "input_tokens": 1618673,
+          "output_tokens": 3081,
+          "reasoning_is_subset_of_output": true,
+          "reasoning_output_tokens": 1155,
+          "total_tokens": 1621754,
+          "uncached_input_tokens": 169457
+        }
+      },
+      {
+        "fast_usd_scenario": null,
+        "long_context_request_count": 0,
+        "max_request_input_tokens": 0,
+        "model": "codex-auto-review",
+        "reasoning_effort": "low",
+        "request_count": 4,
+        "role": "preparation_supervision",
+        "standard_usd_scenario": null,
+        "task_id": "preparation_01a0cf86",
+        "unpriced_request_count": 4,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 40960,
+          "input_tokens": 64942,
+          "output_tokens": 488,
+          "reasoning_is_subset_of_output": true,
+          "reasoning_output_tokens": 220,
+          "total_tokens": 65430,
+          "uncached_input_tokens": 23982
+        }
+      }
+    ],
+    "failed_preflights": [
+      {
+        "case": "copy_string",
+        "elapsed_seconds": 0.047,
+        "event_usage_crosscheck": {
+          "cli_turn_completed_usage": {},
+          "comparable_deltas_cli_minus_session": {},
+          "session_request_usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 0
+          },
+          "status": "unavailable",
+          "turn_completed_events": 0
+        },
+        "exit_code": 2,
+        "failed_preflight": true,
+        "finished_utc": "2026-09-23T19:15:28.333554+02:00",
+        "label": "copy_string-astra",
+        "launch_minus_trial_elapsed_seconds": 0.047,
+        "meaningful_hypotheses": 0,
+        "model": "gpt-6-astra",
+        "preflight_classification": "cli_argument_validation",
+        "reasoning_effort": "high",
+        "result": {
+          "actual_compiler_processes": 0,
+          "capsule_status": "not_started",
+          "compiler_executed_distinct_before_first_success": 0,
+          "compiler_executed_distinct_hypotheses": 0,
+          "effective_output_repeats": {},
+          "first_strict_success_trial_index": null,
+          "frozen_input_edits": [],
+          "historical_output_comparison": {
+            "historically_seen_current_outputs": [],
+            "new_current_outputs": [],
+            "prior_unique_effective_output_count": 3
+          },
+          "meaningful_hypotheses": 0,
+          "outside_root_access": {
+            "calls_with_explicit_paths": 0,
+            "explicit_paths_outside_capsule": [],
+            "observed_tool_call_count": 0,
+            "outside_root_access_status": "explicit_command_argument_paths_only",
+            "recognized_runtime_path_count": 0
+          },
+          "precompiler_blocked_distinct_hypotheses": 0,
+          "precompiler_failures": 0,
+          "proposed_distinct_hypotheses": 0,
+          "stop_reason": null,
+          "strict_receipt": {
+            "receipts": [],
+            "success": false
+          },
+          "trial_audit": [],
+          "trial_elapsed_seconds_sum": 0,
+          "unique_effective_outputs": []
+        },
+        "started_utc": "2026-09-23T19:15:28.296589+02:00",
+        "thread_id": null,
+        "turn_started": false,
+        "usage": {
+          "fast_usd_scenario": 0.0,
+          "long_context_request_count": 0,
+          "request_count": 0,
+          "standard_usd_scenario": 0.0,
+          "status": "session_log_not_found",
+          "totals": {},
+          "unpriced_request_count": 0
+        }
+      },
+      {
+        "case": "copy_string",
+        "elapsed_seconds": 33.844,
+        "event_usage_crosscheck": {
+          "cli_turn_completed_usage": {},
+          "comparable_deltas_cli_minus_session": {},
+          "session_request_usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 0
+          },
+          "status": "unavailable",
+          "turn_completed_events": 0
+        },
+        "exit_code": 4294967295,
+        "failed_preflight": true,
+        "finished_utc": "2026-09-23T19:16:26.039445+02:00",
+        "label": "copy_string-astra-r2",
+        "launch_minus_trial_elapsed_seconds": 33.844,
+        "meaningful_hypotheses": 0,
+        "model": "gpt-6-astra",
+        "preflight_classification": "network_transport_failure",
+        "reasoning_effort": "high",
+        "result": {
+          "actual_compiler_processes": 0,
+          "capsule_status": "not_started",
+          "compiler_executed_distinct_before_first_success": 0,
+          "compiler_executed_distinct_hypotheses": 0,
+          "effective_output_repeats": {},
+          "first_strict_success_trial_index": null,
+          "frozen_input_edits": [],
+          "historical_output_comparison": {
+            "historically_seen_current_outputs": [],
+            "new_current_outputs": [],
+            "prior_unique_effective_output_count": 3
+          },
+          "meaningful_hypotheses": 0,
+          "outside_root_access": {
+            "calls_with_explicit_paths": 0,
+            "explicit_paths_outside_capsule": [],
+            "observed_tool_call_count": 0,
+            "outside_root_access_status": "explicit_command_argument_paths_only",
+            "recognized_runtime_path_count": 0
+          },
+          "precompiler_blocked_distinct_hypotheses": 0,
+          "precompiler_failures": 0,
+          "proposed_distinct_hypotheses": 0,
+          "stop_reason": null,
+          "strict_receipt": {
+            "receipts": [],
+            "success": false
+          },
+          "trial_audit": [],
+          "trial_elapsed_seconds_sum": 0,
+          "unique_effective_outputs": []
+        },
+        "started_utc": "2026-09-23T19:15:52.191384+02:00",
+        "thread_id": "01a0cf44-42a4-7133-88ea-308f331a287d",
+        "turn_started": true,
+        "usage": {
+          "fast_usd_scenario": 0.0,
+          "long_context_request_count": 0,
+          "request_count": 0,
+          "standard_usd_scenario": 0.0,
+          "status": "session_log_not_found",
+          "totals": {},
+          "unpriced_request_count": 0
+        }
+      },
+      {
+        "case": "copy_string",
+        "elapsed_seconds": 0.031,
+        "event_usage_crosscheck": {
+          "cli_turn_completed_usage": {},
+          "comparable_deltas_cli_minus_session": {},
+          "session_request_usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 0
+          },
+          "status": "unavailable",
+          "turn_completed_events": 0
+        },
+        "exit_code": 2,
+        "failed_preflight": true,
+        "finished_utc": "2026-09-23T19:15:28.213553+02:00",
+        "label": "copy_string-luna",
+        "launch_minus_trial_elapsed_seconds": 0.031,
+        "meaningful_hypotheses": 0,
+        "model": "gpt-6-luna",
+        "preflight_classification": "cli_argument_validation",
+        "reasoning_effort": "high",
+        "result": {
+          "actual_compiler_processes": 0,
+          "capsule_status": "not_started",
+          "compiler_executed_distinct_before_first_success": 0,
+          "compiler_executed_distinct_hypotheses": 0,
+          "effective_output_repeats": {},
+          "first_strict_success_trial_index": null,
+          "frozen_input_edits": [],
+          "historical_output_comparison": {
+            "historically_seen_current_outputs": [],
+            "new_current_outputs": [],
+            "prior_unique_effective_output_count": 3
+          },
+          "meaningful_hypotheses": 0,
+          "outside_root_access": {
+            "calls_with_explicit_paths": 0,
+            "explicit_paths_outside_capsule": [],
+            "observed_tool_call_count": 0,
+            "outside_root_access_status": "explicit_command_argument_paths_only",
+            "recognized_runtime_path_count": 0
+          },
+          "precompiler_blocked_distinct_hypotheses": 0,
+          "precompiler_failures": 0,
+          "proposed_distinct_hypotheses": 0,
+          "stop_reason": null,
+          "strict_receipt": {
+            "receipts": [],
+            "success": false
+          },
+          "trial_audit": [],
+          "trial_elapsed_seconds_sum": 0,
+          "unique_effective_outputs": []
+        },
+        "started_utc": "2026-09-23T19:15:28.172554+02:00",
+        "thread_id": null,
+        "turn_started": false,
+        "usage": {
+          "fast_usd_scenario": 0.0,
+          "long_context_request_count": 0,
+          "request_count": 0,
+          "standard_usd_scenario": 0.0,
+          "status": "session_log_not_found",
+          "totals": {},
+          "unpriced_request_count": 0
+        }
+      },
+      {
+        "case": "copy_string",
+        "elapsed_seconds": null,
+        "event_usage_crosscheck": {
+          "cli_turn_completed_usage": {},
+          "comparable_deltas_cli_minus_session": {},
+          "session_request_usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 0
+          },
+          "status": "unavailable",
+          "turn_completed_events": 0
+        },
+        "exit_code": null,
+        "failed_preflight": true,
+        "finished_utc": null,
+        "label": "copy_string-luna-approved",
+        "launch_minus_trial_elapsed_seconds": null,
+        "meaningful_hypotheses": 0,
+        "model": "gpt-6-luna",
+        "preflight_classification": "launcher_permission_error",
+        "reasoning_effort": "high",
+        "result": {
+          "actual_compiler_processes": 0,
+          "capsule_status": "not_started",
+          "compiler_executed_distinct_before_first_success": 0,
+          "compiler_executed_distinct_hypotheses": 0,
+          "effective_output_repeats": {},
+          "first_strict_success_trial_index": null,
+          "frozen_input_edits": [],
+          "historical_output_comparison": {
+            "historically_seen_current_outputs": [],
+            "new_current_outputs": [],
+            "prior_unique_effective_output_count": 3
+          },
+          "meaningful_hypotheses": 0,
+          "outside_root_access": {
+            "calls_with_explicit_paths": 0,
+            "explicit_paths_outside_capsule": [],
+            "observed_tool_call_count": 0,
+            "outside_root_access_status": "explicit_command_argument_paths_only",
+            "recognized_runtime_path_count": 0
+          },
+          "precompiler_blocked_distinct_hypotheses": 0,
+          "precompiler_failures": 0,
+          "proposed_distinct_hypotheses": 0,
+          "stop_reason": null,
+          "strict_receipt": {
+            "receipts": [],
+            "success": false
+          },
+          "trial_audit": [],
+          "trial_elapsed_seconds_sum": 0,
+          "unique_effective_outputs": []
+        },
+        "started_utc": "2026-09-23T20:01:37.986444+02:00",
+        "thread_id": null,
+        "turn_started": false,
+        "usage": {
+          "fast_usd_scenario": 0.0,
+          "long_context_request_count": 0,
+          "request_count": 0,
+          "standard_usd_scenario": 0.0,
+          "status": "session_log_not_found",
+          "totals": {},
+          "unpriced_request_count": 0
+        }
+      },
+      {
+        "case": "copy_string",
+        "elapsed_seconds": 33.969,
+        "event_usage_crosscheck": {
+          "cli_turn_completed_usage": {},
+          "comparable_deltas_cli_minus_session": {},
+          "session_request_usage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0,
+            "total_tokens": 0
+          },
+          "status": "unavailable",
+          "turn_completed_events": 0
+        },
+        "exit_code": 4294967295,
+        "failed_preflight": true,
+        "finished_utc": "2026-09-23T19:16:26.045448+02:00",
+        "label": "copy_string-luna-r2",
+        "launch_minus_trial_elapsed_seconds": 33.969,
+        "meaningful_hypotheses": 0,
+        "model": "gpt-6-luna",
+        "preflight_classification": "network_transport_failure",
+        "reasoning_effort": "high",
+        "result": {
+          "actual_compiler_processes": 0,
+          "capsule_status": "not_started",
+          "compiler_executed_distinct_before_first_success": 0,
+          "compiler_executed_distinct_hypotheses": 0,
+          "effective_output_repeats": {},
+          "first_strict_success_trial_index": null,
+          "frozen_input_edits": [],
+          "historical_output_comparison": {
+            "historically_seen_current_outputs": [],
+            "new_current_outputs": [],
+            "prior_unique_effective_output_count": 3
+          },
+          "meaningful_hypotheses": 0,
+          "outside_root_access": {
+            "calls_with_explicit_paths": 0,
+            "explicit_paths_outside_capsule": [],
+            "observed_tool_call_count": 0,
+            "outside_root_access_status": "explicit_command_argument_paths_only",
+            "recognized_runtime_path_count": 0
+          },
+          "precompiler_blocked_distinct_hypotheses": 0,
+          "precompiler_failures": 0,
+          "proposed_distinct_hypotheses": 0,
+          "stop_reason": null,
+          "strict_receipt": {
+            "receipts": [],
+            "success": false
+          },
+          "trial_audit": [],
+          "trial_elapsed_seconds_sum": 0,
+          "unique_effective_outputs": []
+        },
+        "started_utc": "2026-09-23T19:15:52.073385+02:00",
+        "thread_id": "01a0cf44-4245-78e1-88cb-7decb6124a44",
+        "turn_started": true,
+        "usage": {
+          "fast_usd_scenario": 0.0,
+          "long_context_request_count": 0,
+          "request_count": 0,
+          "standard_usd_scenario": 0.0,
+          "status": "session_log_not_found",
+          "totals": {},
+          "unpriced_request_count": 0
+        }
+      }
+    ],
+    "per_request_detail": "usage.json",
+    "actual_invoice": "unknown",
+    "token_semantics": "reasoning_output_tokens are a subset of output_tokens"
+  },
+  "compiler_integrity_audit": {
+    "status": "reconciled",
+    "runs_checked": 8,
+    "checks": [
+      "state actual_compiler_processes equals sum of per-trial compiler counts",
+      "equals archived compiler_processes rows",
+      "equals fresh probe directories",
+      "equals receipt files"
+    ],
+    "direct_compiler_or_acceptance_commands_outside_pilot_trial": 0,
+    "note": "Recorded effective identities derive from strict receipts and do not establish physical-code uniqueness across profile/flag variants."
+  },
+  "historical_comparison_semantics": "new_current_outputs / historically_seen_current_outputs mean absent/present in the indexed archive at aggregation time. The archive includes records that may postdate these runs; this does not prove worker exposure."
+}

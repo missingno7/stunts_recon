@@ -1,7 +1,12 @@
-# Model-routing pilot: current checkpoint
+# Model-routing pilot: completed checkpoint
+
+The separately approved two-run batching comparison is also complete: see
+[batching-decision.md](batching-decision.md). It reduced direct worker requests
+and cost in one pair, but produced fewer distinct outputs and no strict recovery;
+it does not establish better recovery throughput.
 
 The existing-data audit is complete; see [audit.md](audit.md) and
-[existing-evidence.json](existing-evidence.json). No existing comparison isolates
+[existing-evidence.json](existing-evidence.json). Before this pilot, no existing comparison isolated
 Luna versus Astra on strict source recovery. Proposal quality, compiler outcomes,
 and strict recovery remain separate outcomes.
 
@@ -29,20 +34,13 @@ evidence, and invokes the unchanged strict candidate and whole-image checks.
 Diagnostic profile/flag probes consume the same allowance but cannot earn strict
 credit. Source/manifest changes in these capsules are research outcomes only.
 
-## Launch blocker
+## Run status
 
-No primary model has performed a recovery experiment. Initial CLI invocations
-failed argument validation; the corrected invocations encountered a network
-restriction and were stopped before model execution. Automatic approval review
-then rejected the network-enabled retry because it would transmit private Stunts
-source/research evidence to the OpenAI Codex service without sufficiently specific
-data-transfer authorization. Specific approval has been requested. Do not retry
-through another route to bypass that rejection.
-
-Raw preflight records are under `build/model-routing-pilot/runs/`. These failures
-are orchestration/access failures, not model search failures. All eight primary
-budgets remain unused. There are no new solve rates, attempt curves, late wins,
-or per-solve cost comparisons to report yet.
+The specific transfer and eight matched high/high runs were approved and completed.
+Five earlier launch preflights are retained separately from the eight completed
+runs; they were access/orchestration failures with no model-token usage. See the
+compact report at [decision.md](decision.md), the machine-readable
+[results.json](results.json), and the request-level [usage.json](usage.json).
 
 ## Accounting and validation
 
