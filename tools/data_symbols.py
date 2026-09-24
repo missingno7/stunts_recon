@@ -25,6 +25,10 @@ def resolve_symbols(names, image, relocations):
         require(0 <= address-frame < 65536, 'Data symbol outside DGROUP')
         if symbol['storage'] == 'bss':
             require(layout['bss_start'] <= address < layout['bss_end'], 'Symbol outside verified BSS')
+            if 'width' in symbol:
+                require(type(symbol['width']) is int and symbol['width'] in (1, 2, 4) and
+                        address + symbol['width'] <= layout['bss_end'],
+                        'Reviewed data extent outside verified BSS')
         else:
             require(symbol['storage'] == 'initialized' and frame <= address < len(image),
                     'Symbol outside initialized DGROUP')

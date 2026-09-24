@@ -1296,6 +1296,27 @@
         "start": 104632
       }
     },
+    "_frame_callback": {
+      "evidence": "Independent remove_frame_callback MOV AX offset / MOV DX segment pair points to mapped frame_callback entry; alias only, historical PUBDEF/TU unproved.",
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 75416,
+        "name": "frame_callback",
+        "sha256": "7a6ec5121b5ed566117151fef0dbb77f4f8a14043a5d74791af1e3e9e73bde80",
+        "stable_id": "load_12596",
+        "start": 75158
+      },
+      "pointer_anchor": {
+        "caller_task": "load_12576",
+        "hex": "b8260abab711",
+        "relocation": {
+          "load_offset": 75144,
+          "offset": 9608,
+          "segment": 4096
+        },
+        "site": 75140
+      }
+    },
     "_get_0": {
       "anchors": [
         {

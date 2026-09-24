@@ -20,10 +20,26 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 89826,
-      "id": "raw_0d93c_15ee2",
+      "end": 75098,
+      "id": "raw_0d93c_1255a",
       "kind": "UNRESOLVED_RAW",
       "start": 55612
+    },
+    {
+      "classification": "GAME_C",
+      "end": 75126,
+      "id": "load_1255a",
+      "kind": "MATCHING_C",
+      "name": "set_frame_callback",
+      "recipe": "recipes/set_frame_callback.json",
+      "start": 75098
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 89826,
+      "id": "raw_12576_15ee2",
+      "kind": "UNRESOLVED_RAW",
+      "start": 75126
     },
     {
       "classification": "GAME_C",

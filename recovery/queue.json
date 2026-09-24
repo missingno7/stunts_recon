@@ -1,9 +1,9 @@
 {
   "counts": {
     "MEDIUM": 7,
-    "SUPERVISOR": 577
+    "SUPERVISOR": 576
   },
-  "input_fingerprint": "3956d828adfea504f90f5b8d2a5e51754c0dcdd0547c2dfa074a90714f071a37",
+  "input_fingerprint": "4350cfb89d618bfc8f44ef997619d5d818084f4b7431e22c90839d9daaccd1e7",
   "schema": 2,
   "tasks": [
     {
@@ -2363,30 +2363,6 @@
         "line_end": 14084,
         "line_start": 14062,
         "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [
-        "MZ relocation binding is unsupported",
-        "No complete instruction evidence for triage"
-      ],
-      "card": "recovery/cards/load_1255a.json",
-      "id": "load_1255a",
-      "name": "set_frame_callback",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": 28,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1077,
-        "line_start": 1066,
-        "path": "src/restunts/asmorig/seg005.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -13846,5 +13822,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "2f2da7546f32de8cfb33eeee73abd438711ef490c320153a1aaee026745dfb6b"
+  "workflow_fingerprint": "a12c23ceeeeef81a0574a32f2e468c294c7b473d63c50c4dee47abe46234a905"
 }

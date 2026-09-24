@@ -2978,6 +2978,90 @@
       "size": 52,
       "stable_id": "load_18aa2",
       "start": 101026
+    },
+    {
+      "binding_review": "external-frame-callback-v1",
+      "boundary_anchors": [
+        {
+          "hex": "8be55dcbc706f8ac",
+          "site": 75094
+        },
+        {
+          "hex": "748b00cbb80a0099",
+          "site": 75122
+        }
+      ],
+      "boundary_proof": "Existing uniquely decoded source-label interval; original adjacent bytes and complete pristine CFG rechecked by function_evidence.py",
+      "disassembly": [
+        {
+          "bytes": "c706f8ac0000",
+          "instruction": "mov word ptr [0xacf8], 0",
+          "load_offset": 75098
+        },
+        {
+          "bytes": "b8260a",
+          "instruction": "mov ax, 0xa26",
+          "load_offset": 75104
+        },
+        {
+          "bytes": "bab711",
+          "instruction": "mov dx, 0x11b7",
+          "load_offset": 75107
+        },
+        {
+          "bytes": "52",
+          "instruction": "push dx",
+          "load_offset": 75110
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 75111
+        },
+        {
+          "bytes": "9a8a18a21e",
+          "instruction": "lcall 0x1ea2, 0x188a",
+          "load_offset": 75112
+        },
+        {
+          "bytes": "83c404",
+          "instruction": "add sp, 4",
+          "load_offset": 75117
+        },
+        {
+          "bytes": "c606748b00",
+          "instruction": "mov byte ptr [0x8b74], 0",
+          "load_offset": 75120
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 75125
+        }
+      ],
+      "end": 75126,
+      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
+      "name": "set_frame_callback",
+      "padding_offsets": [],
+      "reachable_instruction_offsets": [
+        75098,
+        75104,
+        75107,
+        75110,
+        75111,
+        75112,
+        75117,
+        75120,
+        75125
+      ],
+      "relocation_sites": [
+        75108,
+        75115
+      ],
+      "sha256": "b4961cb6c6969fd3321bd91030f17964fd42f4857139d50141c9b617eb5997dc",
+      "size": 28,
+      "stable_id": "load_1255a",
+      "start": 75098
     }
   ],
   "oracle_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e"

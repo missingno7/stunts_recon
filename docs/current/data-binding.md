@@ -33,4 +33,15 @@ Restunts commit `5c38f258f482e7d28f1ccce73da8992dccbbee89` supplies names and se
 | `_sdgame2ptr` | `0xAC68` / `0x363D8`, four bytes | Verified `load_sdgame2_shapes` writes AX at `0xD8EA` and DX at `0xD8ED`, then reads the low word at `0xD8FA`; `free_sdgame2` independently reads both words | Address and two-word extent; original PUBDEF/TU unproved |
 | `_textresprefix` | `0xACEE` / `0x3645E`, one byte | Verified `init_main` writes `C6 06 EE AC 65` at `0x29F48`; `locate_text_res` independently reads `A0 EE AC` at `0x18AA8` | Address and byte access; original PUBDEF/TU unproved |
 
+The callback registration recovery adds two reviewed BSS aliases. `_byte_442E4`
+is DS:`0x8B74` / load `0x342E4`; pristine `frame_callback` compares it at
+75170 and increments it at 75180. `_word_46468` is DS:`0xACF8` / load
+`0x36468`; `frame_callback` increments it at 75338 and the separate mapped
+`update_frame` reads it at 42205. Both addresses and the complete two-byte
+word fall inside the startup-cleared BSS. `tools/data_symbols.py` rechecks
+the operands, absence of operand relocations, width and BSS extent. These
+names are binding aliases, not original PUBDEF/TU ownership claims. The
+complete five-fixup code-pointer/far-call differential and strict promotion
+are in `recovery/experiments/frame-callback-promotion-20260924.md`.
+
 The referenced pristine instruction bytes, lack of operand relocations, DGROUP frame relocation, BSS bounds and oracle hash are rechecked by `tools/data_symbols.py`. Restunts labels identify plausible names but are not the sole address proof. These entries are binding aliases for exact source experiments; they do not confer initialized-byte ownership or establish original object boundaries.

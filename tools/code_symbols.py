@@ -10,6 +10,7 @@ def resolve_code_symbols(names, image, relocations):
     for name in names:
         require(name in layout['symbols'], 'Unknown far code symbol: '+name)
         symbol=layout['symbols'][name]
+        require('anchors' in symbol, 'Code symbol is not a reviewed far-CALL alias: '+name)
         if 'owner' in symbol:
             found=[o for o in owners if o['id']==symbol['owner'] and o['kind']=='KNOWN_TOOLCHAIN_LIBRARY']
             require(len(found)==1, 'Code symbol lacks pinned active library owner')
@@ -61,6 +62,52 @@ def resolve_code_symbols(names, image, relocations):
     return result
 
 
+def resolve_callback_pointer(image, relocations):
+    """Resolve one code-pointer alias from an independent pristine MOV pair.
+
+    This alias does not claim an original PUBDEF name or TU. The source target
+    is mapped independently of the candidate set_frame_callback operand.
+    """
+    layout = read_json(ROOT/'layout/code-symbols.json')
+    require(layout['oracle_sha256'] == sha(image), 'Callback alias belongs to another oracle')
+    symbol = layout['symbols']['_frame_callback']
+    target = symbol['mapped_target']
+    inventory = read_json(ROOT/'recovery/restunts-inventory.json')
+    matches = [f for f in inventory['functions']
+               if f.get('stable_id') == target['stable_id'] and f.get('name') == target['name']
+               and f.get('start') == target['start'] and f.get('end') == target['end']
+               and f.get('sha256') == target['sha256']
+               and f['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED']
+    require(len(matches) == 1 and sha(image[target['start']:target['end']]) == target['sha256'],
+            'Callback pointer lacks unique verified mapped target')
+    owners = read_json(ROOT/'layout/manifest.json')['owners']
+    require(any((o['kind'] == 'UNRESOLVED_RAW' and o['start'] <= target['start']
+                 and target['end'] <= o['end']) or
+                (o['kind'] == 'MATCHING_C' and o.get('name') == target['name']
+                 and o['start'] == target['start'] and o['end'] == target['end'])
+                for o in owners), 'Callback target lacks complete raw or exact C owner')
+    anchor = symbol['pointer_anchor']
+    callers = [f for f in inventory['functions'] if f.get('stable_id') == anchor['caller_task']
+               and f['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'
+               and f.get('start', 10**9) <= anchor['site']
+               and anchor['site'] + 6 <= f.get('end', -1)
+               and f['name'] != 'set_frame_callback']
+    require(len(callers) == 1, 'Callback pointer anchor is not an independent mapped caller')
+    at = anchor['site']; raw = bytes.fromhex(anchor['hex'])
+    require(len(raw) == 6 and raw[0] == 0xb8 and raw[3] == 0xba
+            and image[at:at+6] == raw, 'Callback MOV offset/segment pair changed')
+    require(anchor['relocation'] in relocations and
+            anchor['relocation']['load_offset'] == at+4,
+            'Callback pointer segment lacks reviewed MZ relocation')
+    frame = symbol['frame_load_address']
+    require(type(frame) is int and frame % 16 == 0 and
+            int.from_bytes(raw[4:6], 'little')*16 == frame and
+            frame + int.from_bytes(raw[1:3], 'little') == target['start'],
+            'Callback pointer address/frame differs from mapped target')
+    return {'kind': 'far-code', 'frame_load_address': frame,
+            'load_address': target['start']}
+
+
 def resolve_recipe_symbols(recipe, image, relocations):
     names={f['target'] for f in recipe['expected_fixups']}
     if not names:return None
@@ -75,5 +122,12 @@ def resolve_recipe_symbols(recipe, image, relocations):
         from data_symbols import resolve_symbols
         return {**resolve_code_symbols(code,image,relocations),
                 **resolve_symbols(data,image,relocations)}
+    if mode=='external-frame-callback-v1':
+        require(names == {'_byte_442E4', '_word_46468', '_timer_reg_callback',
+                          '_frame_callback'}, 'Callback binding external set changed')
+        from data_symbols import resolve_symbols
+        return {**resolve_symbols({'_byte_442E4', '_word_46468'}, image, relocations),
+                **resolve_code_symbols({'_timer_reg_callback'}, image, relocations),
+                '_frame_callback': resolve_callback_pointer(image, relocations)}
     from data_symbols import resolve_symbols
     return resolve_symbols(names,image,relocations)

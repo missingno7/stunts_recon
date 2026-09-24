@@ -48,7 +48,8 @@ def refresh():
             recipe=recipes[f['name']]
             if not recipe_matches_inventory(recipe,f):
                 capability_blockers.append('Recipe identity/extent differs from current verified inventory; supervisor remapping required')
-            elif f.get('binding_review') in ('external-far-call-v1','external-far-call-dgroup-offset16-v1') and recipe.get('binding',{}).get('mode')==f['binding_review']:
+            elif f.get('binding_review') in ('external-far-call-v1','external-far-call-dgroup-offset16-v1',
+                                              'external-frame-callback-v1') and recipe.get('binding',{}).get('mode')==f['binding_review']:
                 # Reviewed bounded non-leaf mode; the strict binder still checks every
                 # declaration, fixup field, public and ordered source relocation.
                 capability_blockers=[b for b in capability_blockers if b not in
@@ -149,7 +150,7 @@ def refresh():
             'full_image_status':acceptance['status'] if current else 'NOT_CURRENTLY_VERIFIED',
             'queue_counts':{tier:counts.get(tier,0) for tier in ['CHEAP','MEDIUM','SUPERVISOR']},
             'compiler':'MSC5.0/5.1 medium-model optimized, stack checking off; production pins MSC5.1; unique version/flags not proven',
-            'blockers':['Supported: external DGROUP offset16 and reviewed zero-addend external far CALLs; general/self-relative linking and multi-public production remain open',
+            'blockers':['Supported: external DGROUP offset16, reviewed zero-addend external far CALLs, and the exact callback-pointer object mode; general/self-relative linking and multi-public production remain open',
                         'QuickC BAKPAT rejected; full compiler/version fingerprint remains open',
                         *(['Identified runtime bytes remain raw-owned pending library binding'] if lib-bound else []),
                         'Archived CRT startup checksum anomaly and general runtime linking remain unresolved',

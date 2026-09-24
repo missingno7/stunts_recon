@@ -8,6 +8,40 @@ from common import require
 from object_probe import extract_no_fixups
 
 
+_FRAME_CALLBACK_OBJECT = bytes.fromhex(
+    'c70600000000b80000ba000052509a0000000083c404c606000000cb')
+_FRAME_CALLBACK_FIXUPS = [
+    (24, 'offset16', 2, '_byte_442E4', 5),
+    (15, 'pointer32', 4, '_timer_reg_callback', 3),
+    (10, 'base16', 2, '_frame_callback', 2),
+    (7, 'loader-offset16', 2, '_frame_callback', 2),
+    (2, 'offset16', 2, '_word_46468', 4),
+]
+_FRAME_CALLBACK_EXTERNALS = [
+    '__acrtused', '_frame_callback', '_timer_reg_callback',
+    '_word_46468', '_byte_442E4', '_set_frame_callback',
+]
+_FRAME_CALLBACK_SEGMENTS = [
+    {'index': index, 'name': name, 'class': segment_class, 'length': length,
+     'alignment_code': 2, 'alignment': 'word', 'combine_code': 2,
+     'combine': 'public', 'big': False, 'use_32bit_offset': False,
+     'frame': None, 'offset': None, 'overlay_index': 1, 'acbp': 72}
+    for index, name, segment_class, length in (
+        (1, 'UNIT_TEXT', 'CODE', 28), (2, '_DATA', 'DATA', 0),
+        (3, 'CONST', 'CONST', 0), (4, '_BSS', 'BSS', 0))
+]
+_FRAME_CALLBACK_SYMBOLS = {
+    '_frame_callback': {'kind': 'far-code', 'frame_load_address': 0x11b70,
+                        'load_address': 0x12596},
+    '_timer_reg_callback': {'kind': 'far-code', 'frame_load_address': 0x1ea20,
+                            'load_address': 0x202aa},
+    '_word_46468': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
+                    'load_address': 0x36468},
+    '_byte_442E4': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
+                    'load_address': 0x342e4},
+}
+
+
 def bind_data_offsets(obj, segment, public, length, expected_fixups, declarations, symbols):
     require(obj.linker_fixups == expected_fixups and expected_fixups,
             'Complete ordered FIXUPP obligations differ or are empty')
@@ -62,6 +96,9 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
 
 def bind_contribution(obj, recipe, symbols=None):
     args = (obj, recipe['object_segment'], recipe['public'], recipe['end'] - recipe['start'])
+    if recipe.get('binding',{}).get('mode') == 'external-frame-callback-v1':
+        return bind_frame_callback(*args, recipe['expected_fixups'], recipe['binding']['declarations'],
+                                   symbols, recipe['start'], recipe['expected_relocations'])
     if recipe.get('binding',{}).get('mode') == 'external-far-call-v1':
         return bind_far_calls(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
                               recipe['start'], recipe['expected_relocations'])
@@ -212,3 +249,93 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
     return bytes(payload), {'mode': 'external-far-call-dgroup-offset16-v1',
                             'fixups': fixup_rows,
                             'generated_relocations': expected_relocations}
+
+
+def bind_frame_callback(obj, segment, public, length, expected_fixups, declarations,
+                        symbols, start, expected_relocations):
+    """Bind only the reviewed complete 28-byte set_frame_callback contribution.
+
+    The zero-addend object skeleton and ordered OMF obligations are fixed here;
+    target addresses must also come from the independently checked resolvers.
+    No original PUBDEF or translation-unit ownership is inferred.
+    """
+    require((segment, public, length, start) ==
+            ('UNIT_TEXT', '_set_frame_callback', 28, 0x1255a),
+            'Frame callback identity/extent differs')
+    require(obj.linker_fixups == expected_fixups and len(expected_fixups) == 5,
+            'Complete ordered frame callback FIXUPP differs')
+    require(declarations == {'segments': obj.segment_defs, 'groups': obj.groups,
+                             'publics': obj.publics, 'externals': obj.externals},
+            'Frame callback declarations differ')
+    require(obj.publics == [{'name': public, 'segment': segment, 'offset': 0}] and
+            obj.externals == _FRAME_CALLBACK_EXTERNALS,
+            'Frame callback public/external declarations differ')
+    require(obj.segment_defs == _FRAME_CALLBACK_SEGMENTS and
+            obj.groups == [{'index': 1, 'name': 'DGROUP', 'segment_indices': [3, 4, 2],
+                            'segments': ['CONST', '_BSS', '_DATA']}],
+            'Frame callback segment/group declarations differ')
+    require(obj.segment_length(segment) == length and
+            obj.segment_bytes(segment) == _FRAME_CALLBACK_OBJECT and
+            all(name == segment or size == 0 for name, size in obj.segment_lengths.items()),
+            'Incomplete or altered frame callback object contribution')
+    require(type(symbols) is dict and symbols == _FRAME_CALLBACK_SYMBOLS,
+            'Frame callback symbol kinds, frames or addresses differ')
+
+    payload = bytearray(_FRAME_CALLBACK_OBJECT)
+    occupied = set()
+    rows = []
+    relocations = []
+    for fix, (at, loc, width, name, index) in zip(expected_fixups, _FRAME_CALLBACK_FIXUPS):
+        require((fix['segment'], fix['offset'], fix['loc'], fix['width'], fix['target'],
+                 fix['target_index']) == (segment, at, loc, width, name, index) and
+                fix['target_kind'] == 'external' and fix['target_method'] == 2 and
+                (fix['frame_method'], fix['frame_kind'], fix['frame'], fix['frame_index']) ==
+                (5, 'target', name, 0) and not fix['self_relative'] and
+                type(fix['displacement']) is int and fix['displacement'] == 0 and
+                fix['encoded_addend'] == '00' * width and
+                obj.externals[index - 1] == name,
+                'Unsupported frame callback FIXUPP mode, datum or addend')
+        require(0 <= at <= length - width and
+                not occupied.intersection(range(at, at + width)) and
+                payload[at:at + width] == bytes(width),
+                'Frame callback fixup overlaps or leaves object contribution')
+        occupied.update(range(at, at + width))
+        target = symbols[name]
+        frame, address = target['frame_load_address'], target['load_address']
+        require(type(frame) is int and type(address) is int and
+                0 <= frame <= 0xffff0 and frame % 16 == 0 and
+                0 <= address - frame <= 0xffff,
+                'Invalid frame callback symbol frame/address')
+        if loc == 'offset16':
+            require(target['group'] == 'DGROUP', 'Frame callback data target is not DGROUP')
+            value = address - frame
+            struct.pack_into('<H', payload, at, value)
+        elif loc == 'pointer32':
+            require(target['kind'] == 'far-code' and payload[at - 1] == 0x9a,
+                    'Frame callback pointer32 is not a far CALL')
+            value = (address - frame, frame // 16)
+            struct.pack_into('<HH', payload, at, *value)
+            relocations.append({'segment': 4096, 'offset': start + at + 2 - 65536,
+                                'load_offset': start + at + 2})
+        elif loc == 'base16':
+            require(target['kind'] == 'far-code' and payload[at - 1] == 0xba,
+                    'Frame callback base16 is not the reviewed MOV DX immediate')
+            value = frame // 16
+            struct.pack_into('<H', payload, at, value)
+            relocations.append({'segment': 4096, 'offset': start + at - 65536,
+                                'load_offset': start + at})
+        else:
+            require(loc == 'loader-offset16' and target['kind'] == 'far-code' and
+                    payload[at - 1] == 0xb8,
+                    'Frame callback loader offset is not the reviewed MOV AX immediate')
+            value = address - frame
+            struct.pack_into('<H', payload, at, value)
+        rows.append({'offset': at, 'loc': loc, 'target': name, 'linked_value': value})
+    require(relocations == expected_relocations and
+            [r['load_offset'] for r in relocations] == [0x1256b, 0x12564] and
+            all(set(r) == {'segment', 'offset', 'load_offset'} and
+                0 <= r['segment'] <= 0xffff and 0 <= r['offset'] <= 0xffff and
+                r['segment'] * 16 + r['offset'] == r['load_offset'] for r in relocations),
+            'Frame callback ordered MZ relocation coordinates differ')
+    return bytes(payload), {'mode': 'external-frame-callback-v1', 'fixups': rows,
+                            'generated_relocations': relocations}

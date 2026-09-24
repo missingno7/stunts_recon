@@ -13,6 +13,11 @@
       "source": "src/free_sdgame2.c"
     },
     {
+      "owner": "load_1255a",
+      "recipe": "recipes/set_frame_callback.json",
+      "source": "src/set_frame_callback.c"
+    },
+    {
       "owner": "load_15ee2",
       "recipe": "recipes/rect_compare_point.json",
       "source": "src/rect_compare_point.c"

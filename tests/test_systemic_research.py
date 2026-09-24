@@ -8,7 +8,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'tools'))
 
 from blocker_census import classify, primary_category
-from code_symbols import resolve_code_symbols
+from code_symbols import resolve_code_symbols, resolve_callback_pointer
 from candidate_omf_census import compare_nonfixup, effective_output_sha
 from data_symbols import resolve_symbols
 from compiler import CompileFailure, compile_source
@@ -162,7 +162,10 @@ class SystemicResearchTests(unittest.TestCase):
         image = MZ.parse(unpacked).load_image(unpacked)
         relocations = report['unpacked_mz']['relocations']
         layout = read_json(ROOT/'layout/code-symbols.json')
-        resolved = resolve_code_symbols(set(layout['symbols']), image, relocations)
+        far_names = {name for name, symbol in layout['symbols'].items()
+                     if 'anchors' in symbol}
+        resolved = resolve_code_symbols(far_names, image, relocations)
+        resolved['_frame_callback'] = resolve_callback_pointer(image, relocations)
         self.assertEqual(set(resolved), set(layout['symbols']))
         raw_name = next(name for name, symbol in layout['symbols'].items()
                         if 'mapped_target' in symbol)
@@ -187,6 +190,23 @@ class SystemicResearchTests(unittest.TestCase):
         with patch('code_symbols.read_json', side_effect=read_without_promoted_owner):
             with self.assertRaises(ValueError):
                 resolve_code_symbols({promoted_name}, image, relocations)
+
+    def test_callback_pointer_alias_needs_independent_mapped_relocated_pair(self):
+        _, unpacked, oracle_report, _ = verify(write=False)
+        image = MZ.parse(unpacked).load_image(unpacked)
+        relocations = oracle_report['unpacked_mz']['relocations']
+        self.assertEqual(resolve_callback_pointer(image, relocations),
+                         {'kind': 'far-code', 'frame_load_address': 0x11b70,
+                          'load_address': 0x12596})
+        without_pointer = [row for row in relocations if row['load_offset'] != 75144]
+        with self.assertRaises(ValueError):
+            resolve_callback_pointer(image, without_pointer)
+        changed = read_json(ROOT/'layout/code-symbols.json')
+        changed['symbols']['_frame_callback']['mapped_target']['sha256'] = '0'*64
+        def read_with_bad_callback(path):
+            return changed if path == ROOT/'layout/code-symbols.json' else read_json(path)
+        with patch('code_symbols.read_json', side_effect=read_with_bad_callback), self.assertRaises(ValueError):
+            resolve_callback_pointer(image, relocations)
 
     def test_far_call_preparation_requires_original_call_sites(self):
         _, unpacked, _, _ = verify(write=False)
@@ -223,12 +243,18 @@ class SystemicResearchTests(unittest.TestCase):
         _, unpacked, oracle_report, _ = verify(write=False)
         image = MZ.parse(unpacked).load_image(unpacked)
         relocations = oracle_report['unpacked_mz']['relocations']
-        names = {'_sdgame2ptr', '_textresprefix'}
+        names = {'_sdgame2ptr', '_textresprefix', '_word_46468', '_byte_442E4'}
         symbols = resolve_symbols(names, image, relocations)
         self.assertEqual(symbols['_sdgame2ptr']['load_address']+2, 0x363da)
         self.assertEqual(symbols['_textresprefix']['load_address'], 0x3645e)
+        self.assertEqual(symbols['_word_46468']['load_address'], 0x36468)
+        self.assertEqual(symbols['_byte_442E4']['load_address'], 0x342e4)
         corrupted = read_json(ROOT/'layout/data-symbols.json')
         corrupted['symbols']['_sdgame2ptr']['references'][0]['start'] += 1
+        with patch('data_symbols.read_json', return_value=corrupted), self.assertRaises(ValueError):
+            resolve_symbols(names, image, relocations)
+        corrupted = read_json(ROOT/'layout/data-symbols.json')
+        corrupted['symbols']['_word_46468']['width'] = 64
         with patch('data_symbols.read_json', return_value=corrupted), self.assertRaises(ValueError):
             resolve_symbols(names, image, relocations)
 

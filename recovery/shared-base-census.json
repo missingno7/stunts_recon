@@ -1,9 +1,9 @@
 {
   "authority": "RESEARCH_ONLY_PLACEMENT_DIAGNOSTIC",
-  "candidate_objects": 64,
+  "candidate_objects": 66,
   "input_sha256": {
-    "layout/data-symbols.json": "dfb47d3bab2e73c19f6d425b42c69232361990a1fcd5b194fa24b30d3dc9fdb4",
-    "recovery/candidate-omf-census.json": "bcb4ba07fe9b769ae7f91be18dd7c6731067efdf7ce9e8d9dede79e14b493758",
+    "layout/data-symbols.json": "cde9d637154e9aa181da8de3c38e702275ce72eb99a850b5e677c1bca404e233",
+    "recovery/candidate-omf-census.json": "06b33ab39e49a6567b7375c98dc73484e888eeea6d4653d302fdb415cfe4e23e",
     "recovery/restunts-inventory.json": "b185982c090f31f851371110e17358531e343a679e4580ff068691f92ae9f8c7",
     "recovery/shared-base-anchors.json": "fbd9bef9d892527d423e64b6e7bc6bb53edf816e8593a7acd229e2dc831f7261"
   },

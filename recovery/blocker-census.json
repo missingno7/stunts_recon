@@ -15,30 +15,30 @@
       "verified_tasks": 20
     },
     "BINDING_OR_FIXUP_CANDIDATE": {
-      "affected_tasks_upper_bound": 284,
+      "affected_tasks_upper_bound": 283,
       "current_testability": "direct call target addresses available",
       "emission_extent_bytes": 0,
-      "exact_target_bytes": 113295,
+      "exact_target_bytes": 113267,
       "shared_capability_cost": "medium",
       "single_change_production_unlock": "UNKNOWN; overlapping blockers and untested source remain",
       "smallest_discriminating_experiment": "review target public/frame, then complete candidate object",
       "source_table_span_bytes": 0,
-      "tasks": 284,
+      "tasks": 283,
       "unlock_confidence": "medium for target addressing; low for whole-function unlock",
-      "verified_tasks": 284
+      "verified_tasks": 283
     },
     "BINDING_OR_FIXUP_MODE_UNKNOWN": {
-      "affected_tasks_upper_bound": 292,
+      "affected_tasks_upper_bound": 291,
       "current_testability": "MZ context available; OMF mode requires candidate source",
       "emission_extent_bytes": 0,
-      "exact_target_bytes": 113815,
+      "exact_target_bytes": 113787,
       "shared_capability_cost": "medium",
       "single_change_production_unlock": "UNKNOWN; overlapping blockers and untested source remain",
       "smallest_discriminating_experiment": "compile one complete candidate and compare historical LINK fixups",
       "source_table_span_bytes": 0,
-      "tasks": 292,
+      "tasks": 291,
       "unlock_confidence": "unknown until OMF modes sampled",
-      "verified_tasks": 292
+      "verified_tasks": 291
     },
     "BOUNDARY_OR_EXTENT": {
       "affected_tasks_upper_bound": 17,
@@ -106,30 +106,30 @@
       "verified_tasks": 0
     },
     "INSTRUCTION_EVIDENCE_MISSING": {
-      "affected_tasks_upper_bound": 350,
+      "affected_tasks_upper_bound": 349,
       "current_testability": "complete research decode available",
       "emission_extent_bytes": 0,
-      "exact_target_bytes": 127061,
+      "exact_target_bytes": 127033,
       "shared_capability_cost": "low",
       "single_change_production_unlock": "UNKNOWN; overlapping blockers and untested source remain",
       "smallest_discriminating_experiment": "review pristine linear decode and CFG/ownership",
       "source_table_span_bytes": 0,
-      "tasks": 350,
+      "tasks": 349,
       "unlock_confidence": "high for diagnostic unlock; low for production alone",
-      "verified_tasks": 350
+      "verified_tasks": 349
     },
     "LOCAL_SOURCE_SHAPE_OR_UNTESTED": {
-      "affected_tasks_upper_bound": 12,
+      "affected_tasks_upper_bound": 13,
       "current_testability": "research_batch.py available",
       "emission_extent_bytes": 0,
-      "exact_target_bytes": 529,
+      "exact_target_bytes": 543,
       "shared_capability_cost": "low",
       "single_change_production_unlock": "UNKNOWN; overlapping blockers and untested source remain",
       "smallest_discriminating_experiment": "prepare reviewed source and compare complete object",
       "source_table_span_bytes": 0,
-      "tasks": 12,
+      "tasks": 13,
       "unlock_confidence": "medium",
-      "verified_tasks": 12
+      "verified_tasks": 13
     },
     "MAPPING_OR_CODE_DATA_CLASSIFICATION": {
       "affected_tasks_upper_bound": 2,
@@ -11901,22 +11901,14 @@
       ]
     },
     {
-      "calls": 3,
-      "distinct_caller_tasks": 3,
+      "calls": 2,
+      "distinct_caller_tasks": 2,
       "load_target": 131754,
       "mapped_function_names": [
         "timer_reg_callback"
       ],
-      "relocated_segment_words": 3,
+      "relocated_segment_words": 2,
       "sites": [
-        {
-          "caller": "load_1255a",
-          "load_target": 131754,
-          "offset": 6282,
-          "paragraph": 7842,
-          "segment_word_relocated": true,
-          "site": 75112
-        },
         {
           "caller": "load_16bae",
           "load_target": 131754,
@@ -21124,37 +21116,37 @@
       ]
     }
   ],
-  "far_call_tasks_with_all_target_addresses_reviewed": 78,
+  "far_call_tasks_with_all_target_addresses_reviewed": 77,
   "note": "Research decode and categories do not replace reviewed instruction evidence, establish an original object or reopen a source budget.",
   "observed_call_instruction_modes": {
-    "direct_far_9a": 2156,
+    "direct_far_9a": 2155,
     "direct_near_e8": 441,
     "indirect_ff": 46,
     "other_call": 1
   },
   "observed_mz_relocation_instruction_contexts": {
-    "call_far_operand": 2156,
+    "call_far_operand": 2155,
     "jump_far_operand": 6,
-    "other_instruction_operand": 42
+    "other_instruction_operand": 41
   },
   "omf_mode_population": "UNKNOWN: pristine MZ relocation entries do not carry OMF frame/target methods",
   "oracle_load_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
   "primary_family_counts": {
     "ABI_OR_DECLARATION": 9,
     "BINDING_OR_FIXUP_CANDIDATE": 2,
-    "BINDING_OR_FIXUP_MODE_UNKNOWN": 283,
+    "BINDING_OR_FIXUP_MODE_UNKNOWN": 282,
     "BOUNDARY_OR_EXTENT": 17,
     "BOUNDARY_OR_EXTENT_CANDIDATE": 36,
     "CODE_SEGMENT_DATA_OWNERSHIP": 3,
     "DATA_OR_GLOBAL_OWNERSHIP": 29,
     "EMISSION_BYTES_CFG_REVIEW": 65,
     "INSTRUCTION_EVIDENCE_MISSING": 53,
-    "LOCAL_SOURCE_SHAPE_OR_UNTESTED": 12,
+    "LOCAL_SOURCE_SHAPE_OR_UNTESTED": 13,
     "SINGLE_ENTRY_CFG_UNREACHABLE_CANDIDATE": 18,
     "TU_OR_OBJECT_CONTEXT_CANDIDATE": 14,
     "UNKNOWN": 35
   },
-  "queue_fingerprint": "fc68a4f56b17fe5a1617a6a769728fd3fdaf3d6d08f2207d65f14554a80495cc",
+  "queue_fingerprint": "9a7ef23d2c98f9f146796f4d5b3613ef143f6e40c014a25b03d27cabc67e2a1d",
   "reviewed_far_code_addresses": [
     27394,
     34980,
@@ -21169,6 +21161,7 @@
     65426,
     66616,
     72282,
+    75158,
     85510,
     85662,
     90102,
@@ -21296,6 +21289,46 @@
   "schema": 1,
   "supervisor_tasks": 576,
   "tasks": [
+    {
+      "automatic_reopen": false,
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "card": "recovery/cards/nopsub_32738.json",
+      "categories": [
+        "LOCAL_SOURCE_SHAPE_OR_UNTESTED"
+      ],
+      "confidence": "DIRECT_BYTES_OR_QUEUE",
+      "current_capability_blockers": [],
+      "emission_extent_bytes": null,
+      "exact_target_bytes": 14,
+      "far_target_address_coverage": {
+        "all_reviewed": false,
+        "reviewed_sites": 0,
+        "sites": 0
+      },
+      "historical_blocker": "The 14-byte original loads DX:AX and uses inline DIV. Five archived private hypotheses and one duplicate grinder attempt under pinned MSC5.1 emitted larger bodies; the 32-bit quotient form uses __aFuldiv and emits 22 bytes. Do not retry cosmetic division spellings until new compiler/TU or source-lowering evidence predicts direct inline DIV. Preserve two unused production attempts.",
+      "id": "load_22738",
+      "name": "nopsub_32738",
+      "observations": {
+        "calls": {},
+        "card_instruction_evidence": true,
+        "far_targets": [],
+        "instruction_count": 7,
+        "jumps": {},
+        "near_targets": [],
+        "relocation_context": {},
+        "relocation_sites": 0,
+        "relocation_sites_without_instruction": 0,
+        "research_disassembly": [],
+        "sample_count": 0,
+        "samples": [],
+        "state": "LINEAR_DECODE_COMPLETE_RESEARCH_ONLY"
+      },
+      "primary_category": "LOCAL_SOURCE_SHAPE_OR_UNTESTED",
+      "primary_confidence": "CANDIDATE_NOT_SOURCE_CAUSE",
+      "single_entry_cfg_finding": null,
+      "source_table_span_bytes": 0,
+      "source_table_spans": []
+    },
     {
       "automatic_reopen": false,
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -26395,126 +26428,6 @@
         "state": "EMISSION_BYTES_VERIFIED_CFG_UNREVIEWED"
       },
       "primary_category": "EMISSION_BYTES_CFG_REVIEW",
-      "primary_confidence": "HIGH_FOR_GATE_ONLY",
-      "single_entry_cfg_finding": null,
-      "source_table_span_bytes": 0,
-      "source_table_spans": []
-    },
-    {
-      "automatic_reopen": false,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "card": "recovery/cards/load_1255a.json",
-      "categories": [
-        "INSTRUCTION_EVIDENCE_MISSING",
-        "BINDING_OR_FIXUP_MODE_UNKNOWN",
-        "BINDING_OR_FIXUP_CANDIDATE"
-      ],
-      "confidence": "DIRECT_BYTES_OR_QUEUE",
-      "current_capability_blockers": [
-        "MZ relocation binding is unsupported",
-        "No complete instruction evidence for triage"
-      ],
-      "emission_extent_bytes": null,
-      "exact_target_bytes": 28,
-      "far_target_address_coverage": {
-        "all_reviewed": true,
-        "reviewed_sites": 1,
-        "sites": 1
-      },
-      "historical_blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
-      "id": "load_1255a",
-      "name": "set_frame_callback",
-      "observations": {
-        "calls": {
-          "direct_far_9a": 1
-        },
-        "card_instruction_evidence": false,
-        "far_targets": [
-          {
-            "load_target": 131754,
-            "offset": 6282,
-            "paragraph": 7842,
-            "segment_word_relocated": true,
-            "site": 75112
-          }
-        ],
-        "instruction_count": 9,
-        "jumps": {},
-        "near_targets": [],
-        "relocation_context": {
-          "call_far_operand": 1,
-          "other_instruction_operand": 1
-        },
-        "relocation_sites": 2,
-        "relocation_sites_without_instruction": 0,
-        "research_disassembly": [
-          {
-            "bytes": "c706f8ac0000",
-            "instruction": "mov word ptr [0xacf8], 0",
-            "load_offset": 75098
-          },
-          {
-            "bytes": "b8260a",
-            "instruction": "mov ax, 0xa26",
-            "load_offset": 75104
-          },
-          {
-            "bytes": "bab711",
-            "instruction": "mov dx, 0x11b7",
-            "load_offset": 75107
-          },
-          {
-            "bytes": "52",
-            "instruction": "push dx",
-            "load_offset": 75110
-          },
-          {
-            "bytes": "50",
-            "instruction": "push ax",
-            "load_offset": 75111
-          },
-          {
-            "bytes": "9a8a18a21e",
-            "instruction": "lcall 0x1ea2, 0x188a",
-            "load_offset": 75112
-          },
-          {
-            "bytes": "83c404",
-            "instruction": "add sp, 4",
-            "load_offset": 75117
-          },
-          {
-            "bytes": "c606748b00",
-            "instruction": "mov byte ptr [0x8b74], 0",
-            "load_offset": 75120
-          },
-          {
-            "bytes": "cb",
-            "instruction": "retf",
-            "load_offset": 75125
-          }
-        ],
-        "sample_count": 3,
-        "samples": [
-          {
-            "instruction": "mov dx, 0x11b7",
-            "kind": "mz_relocation_other_instruction_operand",
-            "offset": 10
-          },
-          {
-            "bytes": "9a8a18a21e",
-            "kind": "direct_far_9a",
-            "offset": 14
-          },
-          {
-            "instruction": "lcall 0x1ea2, 0x188a",
-            "kind": "mz_relocation_call_far_operand",
-            "offset": 17
-          }
-        ],
-        "state": "LINEAR_DECODE_COMPLETE_RESEARCH_ONLY"
-      },
-      "primary_category": "BINDING_OR_FIXUP_MODE_UNKNOWN",
       "primary_confidence": "HIGH_FOR_GATE_ONLY",
       "single_entry_cfg_finding": null,
       "source_table_span_bytes": 0,

@@ -84,7 +84,8 @@ def straight_line_overlay(function, image, fixups, binding_mode='external-far-ca
 
 
 def run(stable_id, source_arg, binding_mode='external-far-call-v1'):
-    require(binding_mode in ('external-far-call-v1','external-far-call-dgroup-offset16-v1'),
+    require(binding_mode in ('external-far-call-v1','external-far-call-dgroup-offset16-v1',
+                             'external-frame-callback-v1'),
             'Unsupported preparation binding mode')
     inventory = read_json(ROOT/'recovery/restunts-inventory.json')
     found = [f for f in inventory['functions'] if f.get('stable_id') == stable_id
@@ -158,7 +159,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('stable_id')
     parser.add_argument('--source', required=True)
-    parser.add_argument('--binding', choices=('external-far-call-v1','external-far-call-dgroup-offset16-v1'),
+    parser.add_argument('--binding', choices=('external-far-call-v1','external-far-call-dgroup-offset16-v1',
+                                               'external-frame-callback-v1'),
                         default='external-far-call-v1')
     args = parser.parse_args()
     run(args.stable_id, args.source, args.binding)

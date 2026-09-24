@@ -13756,6 +13756,46 @@
         "status": "PROMOTED"
       }
     ],
+    "set_frame_callback": [
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": null,
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Fresh pinned MSC5.1 recompilation of the exact 28-byte callback registration source will reproduce all nonfixup bytes and five ordered OMF fixups; independently reviewed code and DGROUP aliases plus the bounded LINK-proven mode will bind both original MZ relocation entries and the complete pristine interval. Falsifier: any altered extent, public, object skeleton, fixup, alias, relocation, or byte.",
+        "identity": {
+          "sha256": "8e388a6a9e10fd38643352ee6c8ceecffa90465f3c604382a52211e85ea4d040",
+          "size": 9106
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/set_frame_callback/0001/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "FAST_PASS_ONLY"
+      },
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": null,
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Promote the unchanged FAST-passing complete callback registration contribution after independent alias resolution, historical LINK differential, exact ordered relocation binding, and fresh whole-image acceptance.",
+        "identity": {
+          "sha256": "5154b3fadf29d80d27ca14f1488ea9386d729dfbb8e3b5fc4003b0fe8e99949c",
+          "size": 9237
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/set_frame_callback/0002/report.json",
+        "same_effective_as": [
+          1
+        ],
+        "sizes": null,
+        "status": "PROMOTED"
+      }
+    ],
     "shape3d_init_shape": [
       {
         "category": "EXTENT_MISMATCH",

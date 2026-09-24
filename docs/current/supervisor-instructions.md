@@ -12,6 +12,15 @@ Prioritize complete candidate OMF modes for the direct far-call population. `too
 
 `tools/candidate_omf_census.py` now refreshes the current local candidate-object mode inventory during `reclassify`, deduplicating copied archives by object hash. Its mode counts are sampled compiler outputs, not original OMF population estimates. `tools/shared_base_probe.py` then intersects independently mapped public offsets and reviewed private-DATA reference hypotheses for the eligible candidate objects. Its placement result stays separate from complete extent, fixups, historical LINK behavior and native acceptance; see `recovery/experiments/shared-base-checkpoint-20260924.md`. For a single-public direct-flow wrapper with reviewed zero-addend external far CALLs, `tools/prepare_far_call_candidate.py STABLE_ID --source recovery/candidates/NAME.c` freshly checks the complete object, original MZ order, address aliases, bound pristine bytes and CFG before creating a recipe and overlay. Add `--binding external-far-call-dgroup-offset16-v1` only for the historically tested one-far-CALL plus reviewed DGROUP-offset subset. Its CFG review admits direct conditional/unconditional branches and rejects indirect flow; the original OMF/MZ relocation order remains binding authority even if mapped site lists are sorted. Review both outputs, refresh, then use `grind.py attempt` and `grind.py promote`; preparation itself is not acceptance. See `recovery/experiments/far-wrapper-promotions-20260924.md` and `recovery/experiments/mixed-far-data-link-20260924.md`.
 
+`set_frame_callback` now uses the dedicated `external-frame-callback-v1`
+mode for its complete 28-byte object and exact five-fixup order. Three
+historical LINK placements, including a nonzero code paragraph, establish
+the bounded linker arithmetic. Fresh MSC output and whole-image promotion
+passed; the original PUBDEF/data owner/TU are still unknown. The reviewed
+aliases and negative controls are documented in
+`recovery/experiments/frame-callback-promotion-20260924.md`. This mode is
+specific to the callback object and is not general pointer binding.
+
 `is_facing_camera` remains explicitly blocked. Its true 200-byte pristine extent and bounded far-call capability are proven; the ordinary-C hypothesis still emits 194 bytes. Reopen only for new source-layout or boolean-lowering evidence, not another arbitrary flag sweep. See `python tools/context.py is_facing_camera --history` and `workflow-canary.md` when a new systemic result is relevant.
 
 The desktop declaration-order experiment in `recovery/experiments/is_facing_camera/declaration-order-20260923.md` explained the paired BP-home permutation for one source/profile. Its byte-result cast cross-test emitted 198 bytes and AL/CBW, but kept the wrong early zero-return topology and lacked the trailing false epilogue. It does not reopen the canary.

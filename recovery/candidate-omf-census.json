@@ -1,17 +1,15 @@
 {
-  "archive_files": 82,
+  "archive_files": 85,
   "archive_roots": [
     "recovery/corpus/endurance-001",
     "build/private/research-batches"
   ],
   "authority": "CANDIDATE_OBJECT_RESEARCH_ONLY",
-  "complete_nonfixup_shape_objects": 1,
-  "complete_nonfixup_shape_tasks": [
-    "load_1255a"
-  ],
+  "complete_nonfixup_shape_objects": 0,
+  "complete_nonfixup_shape_tasks": [],
   "current_supervisor_tasks": 576,
-  "distinct_effective_outputs": 60,
-  "distinct_task_objects": 64,
+  "distinct_effective_outputs": 62,
+  "distinct_task_objects": 66,
   "effective_output_groups_by_task": {
     "load_09dc6": [
       {
@@ -81,50 +79,6 @@
         },
         "target_extent_bytes": 30,
         "unit_text_bytes": 30
-      }
-    ],
-    "load_1255a": [
-      {
-        "effective_output_sha256": "27a473388aa20666e0d223bc9c00fdd4bcc19ad39c0e3d8d061a6cca774da068",
-        "fixup_modes": [
-          "base16:self=False:frame=5/target:target=2/external",
-          "loader-offset16:self=False:frame=5/target:target=2/external",
-          "offset16:self=False:frame=5/target:target=2/external",
-          "pointer32:self=False:frame=5/target:target=2/external"
-        ],
-        "object_sha256": [
-          "9332a083e91d7d9a0610d32cc8ad3a4a11ccb5715802ec98282f23ee8a658c40"
-        ],
-        "object_variants": 1,
-        "oracle_nonfixup_comparison": {
-          "state": "EXTENT_MISMATCH"
-        },
-        "target_extent_bytes": 28,
-        "unit_text_bytes": 44
-      },
-      {
-        "effective_output_sha256": "af9695ec4348924a88f0d17a3ea0fcf73cda643b83b2ed74b480c955b1945dd8",
-        "fixup_modes": [
-          "base16:self=False:frame=5/target:target=2/external",
-          "loader-offset16:self=False:frame=5/target:target=2/external",
-          "offset16:self=False:frame=5/target:target=2/external",
-          "pointer32:self=False:frame=5/target:target=2/external"
-        ],
-        "object_sha256": [
-          "fd3f9f5921964435405c6e30e51b599f3d67bf6621f0b320caaf3cab5c8e0758"
-        ],
-        "object_variants": 1,
-        "oracle_nonfixup_comparison": {
-          "nonfixup_equal": true,
-          "nonfixup_equal_bytes": 16,
-          "nonfixup_total_bytes": 16,
-          "other_segments_zero": true,
-          "single_public_at_zero": true,
-          "state": "COMPARED",
-          "unresolved_fixup_bytes": 12
-        },
-        "target_extent_bytes": 28,
-        "unit_text_bytes": 28
       }
     ],
     "load_15f2e": [
@@ -738,6 +692,68 @@
         "unit_text_bytes": 138
       }
     ],
+    "load_22738": [
+      {
+        "effective_output_sha256": "008aa0130c5cca0ec08b4faf7363bcd8c6782963e0aee29d765e78d1eebbe0f8",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "3b205970ecab1e3eec3359177b461817f7227592edce83e1b960360f00590102"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 14,
+        "unit_text_bytes": 22
+      },
+      {
+        "effective_output_sha256": "3aa9bf171825b74815a017780d737887ec5a5ce79afe58bca1b289d790d7adf3",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "8ff13f18952e7345eb22afb9f5418379468657cd22e6e8799de5244893e16cdc"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 14,
+        "unit_text_bytes": 22
+      },
+      {
+        "effective_output_sha256": "b308ce489a31158a2907a884b99787b1fccddd188fbc4d6700496cacde62dc0b",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "8b7efb31e113a87f074120f19c2d56cffd77e6d21bbe7557ec2fbe40b58faf39"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 14,
+        "unit_text_bytes": 22
+      },
+      {
+        "effective_output_sha256": "cad57aff6ee45255429e41ed2cc7b3009bd83d872a6e8e78e767d135fda6609b",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "d7c2a00c26005708166bd6d72c60b1fd3b071ee284b6f859e45d860ed3cdc7fa"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 14,
+        "unit_text_bytes": 38
+      }
+    ],
     "load_25de6": [
       {
         "effective_output_sha256": "bcc4885ae0ddbb0d6d1b52d986de723472da591de227298d862f84a0a8cb6fd5",
@@ -987,20 +1003,18 @@
   "limitation": "Only locally archived candidate compiler objects are counted. MZ relocations do not disclose OMF modes; candidate mode frequency is not a population estimate.",
   "mode_families": {
     "base16:self=False:frame=5/target:target=2/external": {
-      "distinct_object_payloads": 5,
-      "records_in_distinct_task_objects": 6,
+      "distinct_object_payloads": 3,
+      "records_in_distinct_task_objects": 3,
       "task_ids": [
-        "load_1255a",
         "load_16bae",
         "load_225ae",
         "load_25de6"
       ]
     },
     "loader-offset16:self=False:frame=5/target:target=2/external": {
-      "distinct_object_payloads": 4,
-      "records_in_distinct_task_objects": 5,
+      "distinct_object_payloads": 2,
+      "records_in_distinct_task_objects": 2,
       "task_ids": [
-        "load_1255a",
         "load_16bae",
         "load_225ae"
       ]
@@ -1013,11 +1027,10 @@
       ]
     },
     "offset16:self=False:frame=5/target:target=2/external": {
-      "distinct_object_payloads": 17,
-      "records_in_distinct_task_objects": 50,
+      "distinct_object_payloads": 15,
+      "records_in_distinct_task_objects": 46,
       "task_ids": [
         "load_0d8b4",
-        "load_1255a",
         "load_16c06",
         "load_1eb07",
         "load_2045e",
@@ -1036,12 +1049,11 @@
       ]
     },
     "pointer32:self=False:frame=5/target:target=2/external": {
-      "distinct_object_payloads": 32,
-      "records_in_distinct_task_objects": 44,
+      "distinct_object_payloads": 34,
+      "records_in_distinct_task_objects": 46,
       "task_ids": [
         "load_09dc6",
         "load_0d8b4",
-        "load_1255a",
         "load_15f2e",
         "load_16bae",
         "load_17466",
@@ -1053,6 +1065,7 @@
         "load_210fe",
         "load_2167c",
         "load_225ae",
+        "load_22738",
         "load_26af4",
         "load_26b05",
         "load_273b8",
@@ -1385,268 +1398,6 @@
       "target_extent_bytes": 30,
       "task_id": "load_0d8b4",
       "unit_text_bytes": 30
-    },
-    {
-      "archive_paths": [
-        "build/private/research-batches/set_frame_callback/a058284caef3/frame-local-pointer.obj"
-      ],
-      "effective_output_sha256": "27a473388aa20666e0d223bc9c00fdd4bcc19ad39c0e3d8d061a6cca774da068",
-      "externals": [
-        "__acrtused",
-        "_frame_callback",
-        "_timer_reg_callback",
-        "_word_46468",
-        "_byte_442E4",
-        "_set_frame_callback"
-      ],
-      "fixup_modes": [
-        "base16:self=False:frame=5/target:target=2/external",
-        "loader-offset16:self=False:frame=5/target:target=2/external",
-        "offset16:self=False:frame=5/target:target=2/external",
-        "pointer32:self=False:frame=5/target:target=2/external"
-      ],
-      "fixups": [
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "offset16",
-          "offset": 37,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_byte_442E4",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "00000000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "pointer32",
-          "offset": 31,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_timer_reg_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 4
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "base16",
-          "offset": 26,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_frame_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "loader-offset16",
-          "offset": 23,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_frame_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "base16",
-          "offset": 20,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_frame_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "loader-offset16",
-          "offset": 15,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_frame_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "offset16",
-          "offset": 8,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_word_46468",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        }
-      ],
-      "local_symbol_records": [],
-      "name": "set_frame_callback",
-      "object_sha256": "9332a083e91d7d9a0610d32cc8ad3a4a11ccb5715802ec98282f23ee8a658c40",
-      "oracle_nonfixup_comparison": {
-        "state": "EXTENT_MISMATCH"
-      },
-      "publics": [
-        {
-          "name": "_set_frame_callback",
-          "offset": 0,
-          "segment": "UNIT_TEXT"
-        }
-      ],
-      "segment_lengths": {
-        "CONST": 0,
-        "UNIT_TEXT": 44,
-        "_BSS": 0,
-        "_DATA": 0
-      },
-      "target_extent_bytes": 28,
-      "task_id": "load_1255a",
-      "unit_text_bytes": 44
-    },
-    {
-      "archive_paths": [
-        "build/private/research-batches/set_frame_callback/a058284caef3/frame-direct-pointer.obj"
-      ],
-      "effective_output_sha256": "af9695ec4348924a88f0d17a3ea0fcf73cda643b83b2ed74b480c955b1945dd8",
-      "externals": [
-        "__acrtused",
-        "_frame_callback",
-        "_timer_reg_callback",
-        "_word_46468",
-        "_byte_442E4",
-        "_set_frame_callback"
-      ],
-      "fixup_modes": [
-        "base16:self=False:frame=5/target:target=2/external",
-        "loader-offset16:self=False:frame=5/target:target=2/external",
-        "offset16:self=False:frame=5/target:target=2/external",
-        "pointer32:self=False:frame=5/target:target=2/external"
-      ],
-      "fixups": [
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "offset16",
-          "offset": 24,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_byte_442E4",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "00000000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "pointer32",
-          "offset": 15,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_timer_reg_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 4
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "base16",
-          "offset": 10,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_frame_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "loader-offset16",
-          "offset": 7,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_frame_callback",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        },
-        {
-          "displacement": 0,
-          "encoded_addend": "0000",
-          "frame_kind": "target",
-          "frame_method": 5,
-          "loc": "offset16",
-          "offset": 2,
-          "segment": "UNIT_TEXT",
-          "self_relative": false,
-          "target": "_word_46468",
-          "target_kind": "external",
-          "target_method": 2,
-          "width": 2
-        }
-      ],
-      "local_symbol_records": [],
-      "name": "set_frame_callback",
-      "object_sha256": "fd3f9f5921964435405c6e30e51b599f3d67bf6621f0b320caaf3cab5c8e0758",
-      "oracle_nonfixup_comparison": {
-        "nonfixup_equal": true,
-        "nonfixup_equal_bytes": 16,
-        "nonfixup_total_bytes": 16,
-        "other_segments_zero": true,
-        "single_public_at_zero": true,
-        "state": "COMPARED",
-        "unresolved_fixup_bytes": 12
-      },
-      "publics": [
-        {
-          "name": "_set_frame_callback",
-          "offset": 0,
-          "segment": "UNIT_TEXT"
-        }
-      ],
-      "segment_lengths": {
-        "CONST": 0,
-        "UNIT_TEXT": 28,
-        "_BSS": 0,
-        "_DATA": 0
-      },
-      "target_extent_bytes": 28,
-      "task_id": "load_1255a",
-      "unit_text_bytes": 28
     },
     {
       "archive_paths": [
@@ -4279,6 +4030,215 @@
       "target_extent_bytes": 95,
       "task_id": "load_2265b",
       "unit_text_bytes": 138
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_22738/3a9823792d45/remainder_ulong.obj"
+      ],
+      "effective_output_sha256": "008aa0130c5cca0ec08b4faf7363bcd8c6782963e0aee29d765e78d1eebbe0f8",
+      "externals": [
+        "__acrtused",
+        "__aFulrem",
+        "_nopsub_32738"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 16,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFulrem",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "nopsub_32738",
+      "object_sha256": "3b205970ecab1e3eec3359177b461817f7227592edce83e1b960360f00590102",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_nopsub_32738",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 22,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 14,
+      "task_id": "load_22738",
+      "unit_text_bytes": 22
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_22738/3a9823792d45/signed_quotient.obj"
+      ],
+      "effective_output_sha256": "b308ce489a31158a2907a884b99787b1fccddd188fbc4d6700496cacde62dc0b",
+      "externals": [
+        "__acrtused",
+        "__aFldiv",
+        "_nopsub_32738"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 16,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFldiv",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "nopsub_32738",
+      "object_sha256": "8b7efb31e113a87f074120f19c2d56cffd77e6d21bbe7557ec2fbe40b58faf39",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_nopsub_32738",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 22,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 14,
+      "task_id": "load_22738",
+      "unit_text_bytes": 22
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_22738/3a9823792d45/quotient_long_return.obj",
+        "build/private/research-batches/load_22738/3a9823792d45/quotient_ulong.obj"
+      ],
+      "effective_output_sha256": "3aa9bf171825b74815a017780d737887ec5a5ce79afe58bca1b289d790d7adf3",
+      "externals": [
+        "__acrtused",
+        "__aFuldiv",
+        "_nopsub_32738"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 16,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFuldiv",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "nopsub_32738",
+      "object_sha256": "8ff13f18952e7345eb22afb9f5418379468657cd22e6e8799de5244893e16cdc",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_nopsub_32738",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 22,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 14,
+      "task_id": "load_22738",
+      "unit_text_bytes": 22
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_22738/3a9823792d45/quotient_split_words.obj"
+      ],
+      "effective_output_sha256": "cad57aff6ee45255429e41ed2cc7b3009bd83d872a6e8e78e767d135fda6609b",
+      "externals": [
+        "__acrtused",
+        "__aFuldiv",
+        "_nopsub_32738"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 29,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFuldiv",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "nopsub_32738",
+      "object_sha256": "d7c2a00c26005708166bd6d72c60b1fd3b071ee284b6f859e45d860ed3cdc7fa",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_nopsub_32738",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 38,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 14,
+      "task_id": "load_22738",
+      "unit_text_bytes": 38
     },
     {
       "archive_paths": [

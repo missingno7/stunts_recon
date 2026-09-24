@@ -32,6 +32,24 @@
       ],
       "storage": "initialized"
     },
+    "_byte_442E4": {
+      "evidence": "Verified frame_callback comparison and increment outside set_frame_callback use DS:8B74. Startup-pinned DGROUP places this byte in cleared BSS; Restunts name is a binding alias, original PUBDEF/TU owner unproved.",
+      "load_address": 213732,
+      "references": [
+        {
+          "hex": "803e748b00",
+          "operand_offset": 2,
+          "start": 75170
+        },
+        {
+          "hex": "fe06748b",
+          "operand_offset": 2,
+          "start": 75180
+        }
+      ],
+      "storage": "bss",
+      "width": 1
+    },
     "_byte_44ACA": {
       "evidence": "docs/current/data-binding.md",
       "load_address": 215754,
@@ -191,6 +209,24 @@
         }
       ],
       "storage": "bss"
+    },
+    "_word_46468": {
+      "evidence": "Verified frame_callback increment and separate update_frame load use DS:ACF8. Startup-pinned DGROUP places the full word in cleared BSS; Restunts name is a binding alias, original PUBDEF/TU owner unproved.",
+      "load_address": 222312,
+      "references": [
+        {
+          "hex": "ff06f8ac",
+          "operand_offset": 2,
+          "start": 75338
+        },
+        {
+          "hex": "8b1ef8ac",
+          "operand_offset": 2,
+          "start": 42205
+        }
+      ],
+      "storage": "bss",
+      "width": 2
     }
   }
 }

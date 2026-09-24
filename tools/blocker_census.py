@@ -167,10 +167,17 @@ def run():
         if span['state'] == 'EXACT_BRACKETED_TABLE_BYTES':
             table_spans[span['function_id']].append({'label': span['label'],
                 'start': span['start'], 'end': span['end'], 'size': span['size']})
-    from code_symbols import resolve_code_symbols
+    from code_symbols import resolve_code_symbols, resolve_callback_pointer
+    code_aliases = read_json(ROOT/'layout/code-symbols.json')['symbols']
+    far_names = {name for name, row in code_aliases.items() if 'anchors' in row}
+    pointer_names = {name for name, row in code_aliases.items() if 'pointer_anchor' in row}
+    require(far_names | pointer_names == set(code_aliases) and
+            pointer_names <= {'_frame_callback'}, 'Unreviewed code-alias evidence family')
     reviewed_code_symbols = resolve_code_symbols(
-        set(read_json(ROOT/'layout/code-symbols.json')['symbols']), image,
-        oracle_report['unpacked_mz']['relocations'])
+        far_names, image, oracle_report['unpacked_mz']['relocations'])
+    if pointer_names:
+        reviewed_code_symbols['_frame_callback'] = resolve_callback_pointer(
+            image, oracle_report['unpacked_mz']['relocations'])
     reviewed_targets = {value['load_address'] for value in reviewed_code_symbols.values()}
     decoder = Cs(CS_ARCH_X86, CS_MODE_16)
     cfg_decoder = Cs(CS_ARCH_X86, CS_MODE_16)

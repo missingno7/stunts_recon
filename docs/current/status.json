@@ -1,6 +1,6 @@
 {
   "blockers": [
-    "Supported: external DGROUP offset16 and reviewed zero-addend external far CALLs; general/self-relative linking and multi-public production remain open",
+    "Supported: external DGROUP offset16, reviewed zero-addend external far CALLs, and the exact callback-pointer object mode; general/self-relative linking and multi-public production remain open",
     "QuickC BAKPAT rejected; full compiler/version fingerprint remains open",
     "Archived CRT startup checksum anomaly and general runtime linking remain unresolved",
     "Unmapped functions and internal code/data ambiguity remain"
@@ -17,7 +17,7 @@
   "library_production_bytes": 725,
   "mapped_functions": 531,
   "matching_asm_bytes": 0,
-  "matching_c_bytes": 1090,
+  "matching_c_bytes": 1118,
   "oracle": {
     "load_image": {
       "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
@@ -56,6 +56,7 @@
     "rect_is_inside",
     "rect_is_overlapping",
     "rect_union",
+    "set_frame_callback",
     "shape3d_init_shape",
     "toupper",
     "unload_resource"
@@ -63,11 +64,11 @@
   "queue_counts": {
     "CHEAP": 0,
     "MEDIUM": 7,
-    "SUPERVISOR": 577
+    "SUPERVISOR": 576
   },
-  "raw_executable_bytes_confirmed_minimum": 131717,
+  "raw_executable_bytes_confirmed_minimum": 131689,
   "raw_executable_bytes_exact": "unknown until all code/data boundaries are established",
-  "raw_initialized_bytes": 198185,
+  "raw_initialized_bytes": 198157,
   "segment_frames_proven": 36,
   "source_code_segments": 38,
   "source_data_segments": 3
