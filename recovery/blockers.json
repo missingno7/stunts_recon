@@ -73,6 +73,19 @@
       "reason": "The Restunts huge-pointer form emits 114 bytes and an unsupported __AHSHIFT helper fixup against a pristine 95-byte inline normalization body. Two bounded explicit-linearization forms removed the helper but emitted 138 and 146 bytes with little target alignment. The original source/TU lowering mechanism is unresolved; retain the two unused production attempts until new evidence predicts the complete code."
     },
     {
+      "attempts": 1,
+      "evidence": [
+        "recovery/attempts/nopsub_32738/0001/report.json",
+        "recovery/experiments/round-review-followup-20260924.md"
+      ],
+      "interval": [
+        141112,
+        141126
+      ],
+      "name": "nopsub_32738",
+      "reason": "The 14-byte original loads DX:AX and uses inline DIV. Five archived private hypotheses and one duplicate grinder attempt under pinned MSC5.1 emitted larger bodies; the 32-bit quotient form uses __aFuldiv and emits 22 bytes. Do not retry cosmetic division spellings until new compiler/TU or source-lowering evidence predicts direct inline DIV. Preserve two unused production attempts."
+    },
+    {
       "evidence": [
         "recovery/corpus/endurance-001/handoff.md",
         "recovery/cs-data-family-20260923.md"

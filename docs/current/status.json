@@ -62,8 +62,8 @@
   ],
   "queue_counts": {
     "CHEAP": 0,
-    "MEDIUM": 8,
-    "SUPERVISOR": 576
+    "MEDIUM": 7,
+    "SUPERVISOR": 577
   },
   "raw_executable_bytes_confirmed_minimum": 131717,
   "raw_executable_bytes_exact": "unknown until all code/data boundaries are established",

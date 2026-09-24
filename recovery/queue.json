@@ -1,30 +1,11 @@
 {
   "counts": {
-    "MEDIUM": 8,
-    "SUPERVISOR": 576
+    "MEDIUM": 7,
+    "SUPERVISOR": 577
   },
-  "input_fingerprint": "6d170bfbc3c3b67639e957f3f23646e5424589b73a593468d57967cb9ef3d509",
+  "input_fingerprint": "3956d828adfea504f90f5b8d2a5e51754c0dcdd0547c2dfa074a90714f071a37",
   "schema": 2,
   "tasks": [
-    {
-      "attempts_remaining": 3,
-      "blocker": null,
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [],
-      "card": "recovery/cards/load_22738.json",
-      "id": "load_22738",
-      "name": "nopsub_32738",
-      "risks": [],
-      "size": 14,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 8682,
-        "line_start": 8668,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "MEDIUM"
-    },
     {
       "attempts_remaining": 3,
       "blocker": null,
@@ -167,6 +148,25 @@
         "repository": "restunts"
       },
       "tier": "MEDIUM"
+    },
+    {
+      "attempts_remaining": 2,
+      "blocker": "The 14-byte original loads DX:AX and uses inline DIV. Five archived private hypotheses and one duplicate grinder attempt under pinned MSC5.1 emitted larger bodies; the 32-bit quotient form uses __aFuldiv and emits 22 bytes. Do not retry cosmetic division spellings until new compiler/TU or source-lowering evidence predicts direct inline DIV. Preserve two unused production attempts.",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [],
+      "card": "recovery/cards/nopsub_32738.json",
+      "id": "load_22738",
+      "name": "nopsub_32738",
+      "risks": [],
+      "size": 14,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 8682,
+        "line_start": 8668,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
     },
     {
       "attempts_remaining": 3,
@@ -13846,5 +13846,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "240b8d27103f1a4f0d15655ddc994001fe514beb0c9deb2533d7b7407873f915"
+  "workflow_fingerprint": "2f2da7546f32de8cfb33eeee73abd438711ef490c320153a1aaee026745dfb6b"
 }

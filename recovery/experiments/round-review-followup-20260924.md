@@ -70,9 +70,11 @@ experiment families but contradicted the four stored effective identities.
 All original trial receipts and hashes remain in place.
 
 `python tools/validate.py` passed 173 tests, independently compiled and bound
-all 25 active game-C functions, verified the exact whole-image build, and
-refreshed the queue to CHEAP 0 / MEDIUM 8 / SUPERVISOR 576. Native strict gain
-this follow-up: **zero functions and zero bytes**. No new production binder
+all 25 active game-C functions, and verified the exact whole-image build.
+The first checkpoint was CHEAP 0 / MEDIUM 8 / SUPERVISOR 576; after the
+documented duplicate attempt and supervisor block, the final queue is
+CHEAP 0 / MEDIUM 7 / SUPERVISOR 577. Native strict gain this follow-up:
+**zero functions and zero bytes**. No new production binder
 mode, historical TU boundary, or private-data owner was claimed.
 
 Next private-DATA test: seek another independently mapped instruction or an
@@ -80,3 +82,17 @@ original object/data contribution that establishes the 46-byte message owner.
 If neither exists, keep this branch parked and continue with the complete
 `set_frame_callback` five-fixup LINK fixture rather than another placement-only
 wrapper or private-string retry.
+
+## Normal recovery follow-up
+
+The next MEDIUM card, `nopsub_32738` (14 bytes), was selected after this review.
+One durable grinder attempt tested 32-bit unsigned division and emitted a
+22-byte `__aFuldiv` helper-call object, with no FAST or strict gain. The
+earlier private five-hypothesis batch under
+`build/private/research-batches/load_22738/3a9823792d45/` already included
+that same effective result. The new attempt was therefore duplicate work,
+not a new mechanism or a recovery speedup. Its receipt remains in
+`recovery/attempts/nopsub_32738/0001/`; a supervisor interval blocker now
+parks further routine spellings while preserving the two unused production
+attempts. Reopen only for evidence that predicts direct inline `DIV` under a
+historically plausible compiler/TU context.

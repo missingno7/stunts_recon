@@ -1,0 +1,120 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 2,
+  "blocker": "The 14-byte original loads DX:AX and uses inline DIV. Five archived private hypotheses and one duplicate grinder attempt under pinned MSC5.1 emitted larger bodies; the 32-bit quotient form uses __aFuldiv and emits 22 bytes. Do not retry cosmetic division spellings until new compiler/TU or source-lowering evidence predicts direct inline DIV. Preserve two unused production attempts.",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/nopsub_32738.json",
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 141112
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 141113
+    },
+    {
+      "bytes": "8b5608",
+      "instruction": "mov dx, word ptr [bp + 8]",
+      "load_offset": 141115
+    },
+    {
+      "bytes": "8b4606",
+      "instruction": "mov ax, word ptr [bp + 6]",
+      "load_offset": 141118
+    },
+    {
+      "bytes": "f7760a",
+      "instruction": "div word ptr [bp + 0xa]",
+      "load_offset": 141121
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 141124
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 141125
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec8b56088b4606f7760a5dcb",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 141126,
+    "end_evidence": {
+      "instructions": 20,
+      "label": {
+        "ida": 206621,
+        "index": 6612,
+        "line": 8646
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 8682,
+    "line_start": 8668,
+    "name": "nopsub_32738",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 8682,
+      "line_start": 8668,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 15640,
+    "segment_paragraph": 7842,
+    "sha256": "444db9d5e46fc14671a5d97febb352bd416e145441e3321f29cf7c28cdbec49e",
+    "size": 14,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_22738",
+    "start": 141112,
+    "start_evidence": {
+      "instructions": 13,
+      "label": {
+        "ida": 206621,
+        "index": 6612,
+        "line": 8646
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "python tools/grind.py attempt nopsub_32738 --hypothesis \"Explain source change\"",
+  "id": "load_22738",
+  "name": "nopsub_32738",
+  "oracle_extent": [
+    141112,
+    141126
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote nopsub_32738 --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/nopsub_32738.json",
+  "risks": [],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/944a9b61b7fe916218b4001d9fc053fb0b8d55a4a7144ac98bddff1cb77eb9d5.json",
+    "sha256": "944a9b61b7fe916218b4001d9fc053fb0b8d55a4a7144ac98bddff1cb77eb9d5"
+  },
+  "size": 14,
+  "source": "recovery/candidates/nopsub_32738.c",
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/2f2da7546f32de8cfb33eeee73abd438711ef490c320153a1aaee026745dfb6b.json",
+    "sha256": "2f2da7546f32de8cfb33eeee73abd438711ef490c320153a1aaee026745dfb6b"
+  }
+}
