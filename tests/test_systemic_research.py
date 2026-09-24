@@ -16,7 +16,7 @@ from common import ROOT, read_json
 from mz import MZ
 from oracle import verify
 from prepare_far_call_candidate import straight_line_overlay
-from tu_context import _variant_source, public_window
+from tu_context import _variant_source, public_window, protected_window, protected_component
 from x86_16_encoding import conversion_matches_source, reviewed_nop_literal, bare_string_opcode_matches_source
 
 
@@ -87,6 +87,30 @@ class SystemicResearchTests(unittest.TestCase):
         self.assertEqual(window['bytes'], bytes(range(3, 8)))
         self.assertEqual(window['fixups'],
                          [{'segment': 'UNIT_TEXT', 'offset': 2, 'width': 2, 'target': '_x'}])
+
+    def test_protected_neighbor_requires_complete_literal_fixup_free_window(self):
+        self.assertEqual(protected_window(FakeObject(), '_first', bytes(range(3)))['state'],
+                         'EXACT_LITERAL_WINDOW')
+        self.assertEqual(protected_window(FakeObject(), '_target', bytes(range(3, 8)))['state'],
+                         'DIFFERS')
+        self.assertEqual(protected_window(FakeObject(), '_absent', b'abc')['state'],
+                         'MISSING_PUBLIC')
+
+    def test_protected_component_keeps_complete_public_and_fixup_topology(self):
+        class Candidate(FakeObject):
+            segment_lengths = {'UNIT_TEXT': 12}
+        candidate = Candidate()
+        lock = {'segment': 'UNIT_TEXT', 'publics': candidate.publics,
+                'fixups': candidate.linker_fixups}
+        self.assertEqual(protected_component(candidate, lock, bytes(range(12)))['state'],
+                         'EXACT_LITERAL_COMPONENT')
+        changed = {**lock, 'publics': [*candidate.publics[:-1],
+                   {**candidate.publics[-1], 'offset': 9}]}
+        self.assertEqual(protected_component(candidate, changed, bytes(range(12)))['state'],
+                         'DIFFERS')
+        changed = {**lock, 'fixups': candidate.linker_fixups[:-1]}
+        self.assertEqual(protected_component(candidate, changed, bytes(range(12)))['state'],
+                         'DIFFERS')
 
     def test_context_composition_preserves_frozen_target_bytes(self):
         target = b'int target(void) { return 7; }'

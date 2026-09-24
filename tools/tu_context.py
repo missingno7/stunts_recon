@@ -38,6 +38,37 @@ def public_window(obj, symbol):
             'limitation': 'Bounded by the next public or SEGDEF end; private emitted code may be included'}
 
 
+def protected_window(obj, symbol, oracle_bytes):
+    """Research guard for one independently locked exact neighbor window."""
+    if not any(p['name'] == symbol for p in obj.publics):
+        return {'public': symbol, 'state': 'MISSING_PUBLIC', 'literal_equal': False}
+    window = public_window(obj, symbol)
+    exact = window['bytes'] == oracle_bytes and not window['fixups']
+    return {'public': symbol, 'state': 'EXACT_LITERAL_WINDOW' if exact else 'DIFFERS',
+            'literal_equal': window['bytes'] == oracle_bytes,
+            'extent': len(window['bytes']), 'oracle_extent': len(oracle_bytes),
+            'offset': window['start'], 'segment': window['segment'],
+            'bytes': identity(window['bytes']), 'fixups': window['fixups'],
+            'limitation': window['limitation']}
+
+
+def protected_component(obj, lock, oracle_bytes):
+    """Check a complete candidate code contribution and declared OMF topology."""
+    segment = lock['segment']
+    code = obj.segment_bytes(segment) if segment in obj.segment_lengths else b''
+    checks = {'code_equal': code == oracle_bytes,
+              'declared_extent_equal': obj.segment_lengths.get(segment) == len(oracle_bytes),
+              'publics_equal': obj.publics == lock['publics'],
+              'fixups_equal': obj.linker_fixups == lock['fixups'],
+              'other_segments_zero': all(name == segment or size == 0
+                                         for name, size in obj.segment_lengths.items())}
+    return {'state': 'EXACT_LITERAL_COMPONENT' if all(checks.values()) else 'DIFFERS',
+            'checks': checks, 'segment': segment, 'segment_lengths': obj.segment_lengths,
+            'code': identity(code), 'oracle_extent': len(oracle_bytes),
+            'publics': obj.publics, 'fixups': obj.linker_fixups,
+            'limitation': 'Complete candidate OMF topology; original historical object membership remains unproved'}
+
+
 def _source(path):
     data = project_path(path).read_bytes()
     require(data and b'\x00' not in data, 'Empty or binary context snippet')
@@ -78,6 +109,50 @@ def run(manifest_path):
         oracle_bytes = MZ.parse(whole).load_image(whole)[start:end]
         require(sha(oracle_bytes) == lock['sha256'] and len(oracle_bytes) == end-start,
                 'Oracle target identity differs from manifest')
+    protections = plan.get('protected_neighbors', [])
+    require(isinstance(protections, list) and len(protections) <= 8,
+            'Expected at most eight protected neighbors')
+    require(len({p['public'] for p in protections}) == len(protections),
+            'Repeated protected public')
+    protected_oracles = {}
+    if protections:
+        whole = verify(write=False)[1]
+        image = MZ.parse(whole).load_image(whole)
+        for protection in protections:
+            require(set(protection) == {'public', 'variants', 'oracle'} and
+                    isinstance(protection['public'], str) and protection['public'] != plan['target_public'] and
+                    isinstance(protection['variants'], list) and protection['variants'] and
+                    len(set(protection['variants'])) == len(protection['variants']) and
+                    set(protection['variants']) <= set(labels), 'Invalid protected neighbor declaration')
+            lock = protection['oracle']
+            require(set(lock) == {'start', 'end', 'sha256'} and
+                    type(lock['start']) is int and type(lock['end']) is int and
+                    0 <= lock['start'] < lock['end'] <= len(image),
+                    'Invalid protected neighbor oracle interval')
+            data = image[lock['start']:lock['end']]
+            require(sha(data) == lock['sha256'], 'Protected neighbor oracle identity differs')
+            protected_oracles[protection['public']] = data
+    component_lock = plan.get('protected_component')
+    component_oracle = None
+    if component_lock is not None:
+        require(set(component_lock) == {'segment', 'variants', 'oracle', 'publics', 'fixups'} and
+                isinstance(component_lock['segment'], str) and
+                isinstance(component_lock['variants'], list) and component_lock['variants'] and
+                len(set(component_lock['variants'])) == len(component_lock['variants']) and
+                set(component_lock['variants']) <= set(labels) and
+                isinstance(component_lock['publics'], list) and component_lock['publics'] and
+                isinstance(component_lock['fixups'], list), 'Invalid protected component declaration')
+        lock = component_lock['oracle']
+        whole = verify(write=False)[1]
+        image = MZ.parse(whole).load_image(whole)
+        require(set(lock) == {'start', 'end', 'sha256'} and
+                type(lock['start']) is int and type(lock['end']) is int and
+                0 <= lock['start'] < lock['end'] <= len(image),
+                'Invalid protected component oracle interval')
+        component_oracle = image[lock['start']:lock['end']]
+        require(sha(component_oracle) == lock['sha256'],
+                'Protected component oracle identity differs')
+    root = ROOT/'build/private/tu-context'/uuid.uuid4().hex[:12]
     root = ROOT/'build/private/tu-context'/uuid.uuid4().hex[:12]
     root.mkdir(parents=True, exist_ok=False)
     frozen = {'authority': 'RESEARCH_ONLY', 'manifest': plan,
@@ -102,10 +177,21 @@ def run(manifest_path):
                        target_window_limitation=window['limitation'],
                        oracle_literal_equal=window['bytes'] == oracle_bytes if oracle_bytes is not None else None,
                        all_publics=obj.publics, all_segment_defs=obj.segment_defs,
+                       all_segment_lengths=obj.segment_lengths,
                        all_groups=obj.groups, all_externals=obj.externals,
                        local_symbol_records=obj.local_symbol_records,
                        all_fixups=obj.linker_fixups,
                        all_segment_identities={n: identity(bytes(v)) for n, v in obj.segments.items()})
+            guards = [protected_window(obj, protection['public'],
+                                       protected_oracles[protection['public']])
+                      for protection in protections if name in protection['variants']]
+            row['protected_neighbors'] = guards
+            row['protected_neighbors_all_exact'] = (all(g['state'] == 'EXACT_LITERAL_WINDOW'
+                                                         for g in guards) if guards else None)
+            row['protected_component'] = (protected_component(obj, component_lock, component_oracle)
+                                          if component_lock is not None and name in component_lock['variants']
+                                          else None)
+            (root/(name+'-target.bin')).write_bytes(window['bytes'])
             (root/(name+'-target.bin')).write_bytes(window['bytes'])
             work = Path(receipt['work_directory'])/'UNIT.OBJ'
             shutil.copyfile(work, root/(name+'.obj'))
@@ -134,6 +220,9 @@ def run(manifest_path):
               'complete': True, 'question': plan['question'], 'prediction': plan['prediction'],
               'falsifier': plan['falsifier'], 'target_public': plan['target_public'],
               'target_source': identity(target), 'effective_target_groups': list(groups.values()),
+              'protected_neighbor_policy': 'Exact literal public windows with no fixups; diagnostic only',
+              'protected_neighbors': protections,
+              'protected_component': component_lock,
               'variants': rows, 'note': 'Public-bounded target equality is diagnostic; complete TU, binding, neighbors and whole-image acceptance remain separate. OMF local PUBDEF/EXTDEF names appear in the parser public/external lists; local_symbol_records preserves their actual record kinds.'}
     write_json(root/'results.json', report)
     print(json.dumps({'report': str((root/'results.json').relative_to(ROOT)),
@@ -141,6 +230,9 @@ def run(manifest_path):
                       'variants': [{'id': r['id'], 'status': r['status'],
                                     'target_extent': r.get('target_extent'),
                                     'oracle_literal_equal': r.get('oracle_literal_equal'),
+                                    'protected_neighbors_all_exact': r.get('protected_neighbors_all_exact'),
+                                    'protected_component_state': (r['protected_component']['state']
+                                        if r.get('protected_component') else None),
                                     'vs_baseline': r.get('vs_baseline')} for r in rows]}, indent=2))
     return report
 

@@ -1,6 +1,6 @@
 # Latest validation
 
-Tests: **160 passed**, no failures or skips. Full image: **HYBRID_EXACT**.
+Tests: **162 passed**, no failures or skips. Full image: **HYBRID_EXACT**.
 
 Independent compiler: **PASS**. Queue: **{'MEDIUM': 8, 'SUPERVISOR': 576}**.
 

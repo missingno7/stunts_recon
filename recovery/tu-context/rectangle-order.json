@@ -18,8 +18,62 @@
     "rectangle_neighbor": "src/rect_is_inside.c"
   },
   "variants": [
-    {"id": "isolated", "before": [], "after": []},
-    {"id": "predecessor", "before": ["rectangle_neighbor"], "after": []},
-    {"id": "successor", "before": [], "after": ["rectangle_neighbor"]}
-  ]
+    {
+      "id": "isolated",
+      "before": [],
+      "after": []
+    },
+    {
+      "id": "predecessor",
+      "before": [
+        "rectangle_neighbor"
+      ],
+      "after": []
+    },
+    {
+      "id": "successor",
+      "before": [],
+      "after": [
+        "rectangle_neighbor"
+      ]
+    }
+  ],
+  "protected_neighbors": [
+    {
+      "public": "_rect_is_inside",
+      "variants": [
+        "predecessor",
+        "successor"
+      ],
+      "oracle": {
+        "start": 92572,
+        "end": 92624,
+        "sha256": "20532c3c1432e839438f3871609dffd3d1082049e57205229e3a6d7b76a8eef8"
+      }
+    }
+  ],
+  "protected_component": {
+    "segment": "UNIT_TEXT",
+    "variants": [
+      "successor"
+    ],
+    "oracle": {
+      "start": 92510,
+      "end": 92624,
+      "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287"
+    },
+    "publics": [
+      {
+        "name": "_rect_is_overlapping",
+        "segment": "UNIT_TEXT",
+        "offset": 0
+      },
+      {
+        "name": "_rect_is_inside",
+        "segment": "UNIT_TEXT",
+        "offset": 62
+      }
+    ],
+    "fixups": []
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "acceptance_input_fingerprint": "9b3eafc0264b9b62b026553df41aa835aa94bb34ec1367df01e62121c7aa1e04",
+  "acceptance_input_fingerprint": "f1f650413b0984a9b90fc77fb6c4cec1d8cece943fbde7d1eb54b55252ef1233",
   "executable": {
     "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
     "size": 210384
@@ -22,12 +22,12 @@
   "tests": {
     "failed": 0,
     "log": "build/validation/tests.log",
-    "passed": 160,
+    "passed": 162,
     "skipped": 0
   },
   "toolchain_profiles": [
     "msc500-medium",
     "msc510-medium"
   ],
-  "workflow_fingerprint": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  "workflow_fingerprint": "7a09c9396c01f75e2363a57f1e9a272d9b6bb3249a775e0fedc64a6c4b3555e0"
 }

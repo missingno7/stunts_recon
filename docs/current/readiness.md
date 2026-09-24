@@ -4,7 +4,7 @@ The routine loop is established for **verified complete contributions with revie
 
 This is not yet a project-wide “just grind every function” state. The queue distinguishes work supported today from supervisor research. Consult generated `status.json` and each row's capability blockers rather than interpreting a short function as easy C.
 
-For a current, machine-readable supervisor census and evidence-qualified code-frame topology, run `python tools/reconstruction_factory.py reclassify`. It regenerates `recovery/blocker-census.json`, `recovery/build-topology.json`, `recovery/candidate-omf-census.json`, and `recovery/partial-mapping-census.json` after the queue refresh. These research reports do not change eligibility or reopen attempts. `tools/tu_context.py` compares frozen target source under bounded compilation contexts; its public-bounded target windows are diagnostic only. See the dated systemic experiment under `recovery/experiments` for the measured population and remaining proof gaps.
+For a current, machine-readable supervisor census and evidence-qualified code-frame topology, run `python tools/reconstruction_factory.py reclassify`. It regenerates `recovery/blocker-census.json`, `recovery/build-topology.json`, `recovery/candidate-omf-census.json`, and `recovery/partial-mapping-census.json` after the queue refresh. These research reports do not change eligibility or reopen attempts. `tools/tu_context.py` compares frozen target source under bounded compilation contexts and can guard independently locked exact neighbors and a complete literal component; all windows remain diagnostic. See the dated systemic experiment under `recovery/experiments` for the measured population and remaining proof gaps.
 
 ## Evidence that the process works
 
