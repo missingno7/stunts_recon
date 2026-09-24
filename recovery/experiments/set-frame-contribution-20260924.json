@@ -1,0 +1,90 @@
+{
+  "authority": "RESEARCH_ONLY_COMPLETE_SHAPE_AND_OPERAND_CHECK",
+  "candidate_extent": [
+    75098,
+    75126
+  ],
+  "independent_pristine_sites": [
+    {
+      "description": "frame_callback pointer in remove_frame_callback",
+      "hex": "b8260abab711",
+      "load_offset": 75140
+    },
+    {
+      "description": "timer_reg_callback call in another function",
+      "hex": "9a8a18a21e",
+      "load_offset": 93133
+    },
+    {
+      "description": "word_46468 increment in frame_callback",
+      "hex": "ff06f8ac",
+      "load_offset": 75338
+    },
+    {
+      "description": "byte_442E4 comparison in frame_callback",
+      "hex": "803e748b00",
+      "load_offset": 75170
+    }
+  ],
+  "missing_proof": [
+    "original data ownership/PUBDEFs",
+    "historical LINK differential for this complete five-fixup mode",
+    "fresh native whole-image acceptance"
+  ],
+  "nonfixup_equal_bytes": 16,
+  "object_sha256": "fd3f9f5921964435405c6e30e51b599f3d67bf6621f0b320caaf3cab5c8e0758",
+  "oracle_load_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+  "ordered_fixups": [
+    {
+      "loc": "offset16",
+      "offset": 24,
+      "pristine_operand": "748b",
+      "target": "_byte_442E4"
+    },
+    {
+      "loc": "pointer32",
+      "offset": 15,
+      "pristine_operand": "8a18a21e",
+      "target": "_timer_reg_callback"
+    },
+    {
+      "loc": "base16",
+      "offset": 10,
+      "pristine_operand": "b711",
+      "target": "_frame_callback"
+    },
+    {
+      "loc": "loader-offset16",
+      "offset": 7,
+      "pristine_operand": "260a",
+      "target": "_frame_callback"
+    },
+    {
+      "loc": "offset16",
+      "offset": 2,
+      "pristine_operand": "f8ac",
+      "target": "_word_46468"
+    }
+  ],
+  "ordered_original_mz_relocations": [
+    75115,
+    75108
+  ],
+  "ordered_publics": [
+    {
+      "name": "_set_frame_callback",
+      "offset": 0,
+      "segment": "UNIT_TEXT"
+    }
+  ],
+  "result": "FULL_SHAPE_AND_OPERAND_CONSISTENT_RESEARCH_ONLY",
+  "schema": 1,
+  "segment_lengths": {
+    "CONST": 0,
+    "UNIT_TEXT": 28,
+    "_BSS": 0,
+    "_DATA": 0
+  },
+  "task_id": "load_1255a",
+  "unresolved_fixup_bytes": 12
+}

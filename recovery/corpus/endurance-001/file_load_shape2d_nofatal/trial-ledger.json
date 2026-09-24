@@ -65,10 +65,11 @@
       "strict_bytes_equal": false
     }
   ],
-  "unique_output_classes": 2,
+  "unique_output_classes": 4,
+  "accounting_correction": "The previous unique_output_classes value 2 was undefined and conflicts with four distinct effective_identity hashes. It may have grouped external-declaration versus local-definition experiment families, but it was not an effective-output collapse count. Original receipts and all four identities are retained.",
   "repeats": 0,
   "quota_remaining": 0,
   "status": "budget_censored_with_strict_reader_gate; both B4 objects parsed in isolated research via the existing generic OmfReader, with full frozen diagnostics; production object_probe remains fail-closed",
-  "unrun_material_hypothesis": "same-TU local far-callee definition may explain target PUSH CS plus near CALL and resolved +5 call displacement",
+  "unrun_material_hypothesis": "A sufficiently complete, independently evidenced contribution covering the anchored 710-byte wrapper-plus-callee interval has not been compiled; a 6-byte local stub is not that contribution",
   "token_usage": null
 }
