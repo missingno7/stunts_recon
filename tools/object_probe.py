@@ -7,7 +7,7 @@ import struct
 from common import require, sha
 from omf import OmfReader
 
-def read_object(data, *, ledata_policy=None):
+def read_object(data, *, ledata_policy=None, research_local_symbols=False):
     if ledata_policy is not None:
         require(set(ledata_policy) == {'mode', 'module_sha256', 'records'}
                 and ledata_policy['mode'] == 'pinned-ordered-ledata-v1'
@@ -16,6 +16,11 @@ def read_object(data, *, ledata_policy=None):
     initialized = {}
     writes, had_overlap = [], False
     allowed = {0x80, 0x88, 0x8A, 0x8C, 0x90, 0x94, 0x96, 0x98, 0x9A, 0x9C, 0xA0}
+    if research_local_symbols:
+        # MSC emits these for static same-TU helpers. Parsing them is needed to
+        # observe complete research objects; production still rejects them.
+        allowed.update({0xB4, 0xB6})
+    local_symbol_records = []
     while at < len(data):
         require(at + 3 <= len(data), 'Truncated OMF record header')
         kind, length = data[at], struct.unpack_from('<H', data, at + 1)[0]
@@ -24,6 +29,9 @@ def read_object(data, *, ledata_policy=None):
                 f'Invalid/unsupported OMF record {kind:02x}')
         require(not first or kind == 0x80, 'Object must start with THEADR')
         require(data[end - 1] == 0 or sum(data[at:end]) & 255 == 0, 'OMF checksum mismatch')
+        if kind in (0xB4, 0xB6):
+            local_symbol_records.append({'kind': 'LEXTDEF' if kind == 0xB4 else 'LPUBDEF',
+                                         'record_offset': at, 'body_sha256': sha(data[at+3:end-1])})
         if kind==0xA0:
             body=data[at+3:end-1]
             require(len(body)>=3,'Truncated LEDATA')
@@ -44,6 +52,7 @@ def read_object(data, *, ledata_policy=None):
     if ledata_policy is not None:
         require(had_overlap and writes == ledata_policy['records'], 'Ordered LEDATA trace differs from reviewed policy')
     obj = OmfReader().read(data)
+    obj.local_symbol_records = local_symbol_records
     require(not had_overlap or not obj.linker_fixups, 'Overlapping LEDATA with fixups is unsupported')
     names = [s['name'] for s in obj.segment_defs]
     require(len(names) == len(set(names)), 'Duplicate SEGDEF names unsupported')

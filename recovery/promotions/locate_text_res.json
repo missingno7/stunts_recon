@@ -1,0 +1,73 @@
+{
+  "bytes": 52,
+  "candidate_compiled_fresh_at_least": 3,
+  "canonical_full_build": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "fast": {
+    "binding": {
+      "fixups": [
+        {
+          "kind": "far-call",
+          "load_offset": 101071,
+          "offset": 9597,
+          "paragraph": 7842,
+          "target": "_locate_shape_fatal"
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_load_address": 178032,
+          "kind": "dgroup-offset16",
+          "linked_value": 44270,
+          "offset": 7,
+          "target": "_textresprefix",
+          "target_load_address": 222302
+        }
+      ],
+      "generated_relocations": [
+        {
+          "load_offset": 101071,
+          "offset": 35535,
+          "segment": 4096
+        }
+      ],
+      "mode": "external-far-call-dgroup-offset16-v1"
+    },
+    "command": [
+      "C:/tools/nmlgcdos/msdos.exe",
+      "-e",
+      "-v5.00",
+      "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+      "/c",
+      "/AM",
+      "/O",
+      "/Gs",
+      "UNIT.C"
+    ],
+    "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+    "effective_code": "2356c361283eb004c5231f1a4cd3c5a4194626321985380f0e685f1b504d5f6c",
+    "object": {
+      "sha256": "03c6c5102b60df96c9a4a7e95d1ef68486c2dbb10a19135a0640f46c4b2d745d",
+      "size": 351
+    },
+    "profile": "msc510-medium",
+    "research_local_symbols": false,
+    "source": {
+      "sha256": "5c96bff382c556f5988ea1c4dbb640ec947ccfe4a7deb8aea93ecb35bebad706",
+      "size": 344
+    },
+    "staged_source": {
+      "sha256": "2fe4aab2d4162648dc543487c101724a040e1264bb0da02a0fc7d47bfe8e488c",
+      "size": 354
+    },
+    "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pkd7xby9n"
+  },
+  "staged_full_build": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "status": "PROMOTED",
+  "task": "locate_text_res"
+}

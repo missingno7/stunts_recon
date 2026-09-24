@@ -1,0 +1,202 @@
+{
+  "authority": "RESEARCH_ONLY",
+  "question": "Do two exact rectangle members in one compatible TU distinguish MSC 5.0 from 5.1?",
+  "rows": [
+    {
+      "code": {
+        "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287",
+        "size": 114
+      },
+      "exact_component_bytes": true,
+      "fixups": [],
+      "object": {
+        "sha256": "eea0ca6b6e1b71e99388b8c37e295a865ffc438befc3d346ed26c0a1e7e9366e",
+        "size": 408
+      },
+      "profile": "msc500-medium",
+      "publics": [
+        {
+          "name": "_rect_is_overlapping",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_rect_is_inside",
+          "offset": 62,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_defs": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 114,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ],
+      "source": {
+        "sha256": "70298124624295b2691287cb70d4338435e8912f183d30d4ff80851a4f92b73f",
+        "size": 514
+      }
+    },
+    {
+      "code": {
+        "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287",
+        "size": 114
+      },
+      "exact_component_bytes": true,
+      "fixups": [],
+      "object": {
+        "sha256": "2022e7d1af2802425777bd6a0db841cd74fe086b794eb76bfb8466c4a4ebc644",
+        "size": 408
+      },
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_rect_is_overlapping",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_rect_is_inside",
+          "offset": 62,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_defs": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 114,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ],
+      "source": {
+        "sha256": "70298124624295b2691287cb70d4338435e8912f183d30d4ff80851a4f92b73f",
+        "size": 514
+      }
+    }
+  ],
+  "same_code_and_fixups": true,
+  "strict_acceptance": "NOT_EVALUATED",
+  "target": {
+    "sha256": "7f7043cdcd62603b379b98b4727d8b18e35d041fbc8e22812a161832a0236287",
+    "size": 114
+  }
+}

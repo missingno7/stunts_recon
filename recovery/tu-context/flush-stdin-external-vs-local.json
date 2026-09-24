@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "authority": "RESEARCH_ONLY",
+  "question": "Does the 11-byte Stunts flush_stdin caller keep its call form when its mapped callee changes from external declaration to a same-TU static predecessor?",
+  "prediction": "External compilation emits a pointer32 far CALL fixup, while a static predecessor emits a self-relative near-call fixup and changes the frozen target bytes.",
+  "falsifier": "Both complete compiled target windows have the same bytes and fixups, or the external variant does not emit a far-call fixup.",
+  "profile": "msc510-medium",
+  "target_source": "recovery/tu-context/fixtures/flush_stdin_target.c",
+  "target_sha256": "7154d123d9c78e72a88322309bf91c72b62c921960ec0ee74ad0baf84b566aea",
+  "target_public": "_flush_stdin",
+  "oracle": {
+    "start": 133725,
+    "end": 133736,
+    "sha256": "eeb02e55b93ec6ed8c86142b45145bbbdb79c47aa4808cfb87e79585b27e2c00"
+  },
+  "baseline": "external",
+  "snippets": {
+    "external": "recovery/tu-context/fixtures/callback_external.c",
+    "local": "recovery/tu-context/fixtures/callback_local.c"
+  },
+  "variants": [
+    {"id": "external", "before": ["external"], "after": []},
+    {"id": "local-predecessor", "before": ["local"], "after": []}
+  ]
+}

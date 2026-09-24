@@ -128,16 +128,9 @@
     ],
     "confidence": "unresolved_boundary",
     "distance": "far",
+    "end": 12664,
     "issues": [
-      "label_interval_mismatch:0x13004",
-      "label_interval_mismatch:0x1304e",
-      "label_interval_mismatch:0x1305c",
-      "label_interval_mismatch:0x1306e",
-      "label_interval_mismatch:0x130da",
-      "label_interval_mismatch:0x13134",
-      "label_interval_mismatch:0x1313c",
-      "label_interval_mismatch:0x13144",
-      "label_interval_mismatch:0x13163"
+      "label_interval_mismatch:0x13144"
     ],
     "label_count": 21,
     "line_end": 5125,
@@ -152,6 +145,8 @@
       "repository": "restunts"
     },
     "segment": "seg000",
+    "segment_offset": 12106,
+    "segment_paragraph": 0,
     "source": "build/references/restunts/src/restunts/asmorig/seg000.asm",
     "start": 12106,
     "start_candidates": [
@@ -159,7 +154,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg000:line4886",
-    "verified_labels": 12
+    "verified_labels": 20
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg000:line4886",
@@ -171,8 +166,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": null,
   "source": {
@@ -184,7 +179,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

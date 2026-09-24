@@ -69,8 +69,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/5a756d64b192426d05799a6b0a2319eab34dace8e1ea9101aeb05d6098f631f2.json",
+    "sha256": "5a756d64b192426d05799a6b0a2319eab34dace8e1ea9101aeb05d6098f631f2"
   },
   "size": null,
   "source": {
@@ -82,7 +82,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/98d4c9209a8985b4c845e6fe38c9b5817e59f00c0fd184f95dbf8c1f85a9ef94.json",
+    "sha256": "98d4c9209a8985b4c845e6fe38c9b5817e59f00c0fd184f95dbf8c1f85a9ef94"
   }
 }

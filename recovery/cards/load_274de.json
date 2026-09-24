@@ -1,0 +1,166 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "Calls need supervisor linking/TU review",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "Calls need supervisor linking/TU review"
+  ],
+  "card": "recovery/cards/load_274de.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 160990
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 160991
+    },
+    {
+      "bytes": "837e06ff",
+      "instruction": "cmp word ptr [bp + 6], -1",
+      "load_offset": 160993
+    },
+    {
+      "bytes": "7e10",
+      "instruction": "jle 0x274f7",
+      "load_offset": 160997
+    },
+    {
+      "bytes": "8b5e06",
+      "instruction": "mov bx, word ptr [bp + 6]",
+      "load_offset": 160999
+    },
+    {
+      "bytes": "c6872aa600",
+      "instruction": "mov byte ptr [bx - 0x59d6], 0",
+      "load_offset": 161002
+    },
+    {
+      "bytes": "53",
+      "instruction": "push bx",
+      "load_offset": 161007
+    },
+    {
+      "bytes": "0e",
+      "instruction": "push cs",
+      "load_offset": 161008
+    },
+    {
+      "bytes": "e85601",
+      "instruction": "call 0x2764a",
+      "load_offset": 161009
+    },
+    {
+      "bytes": "83c402",
+      "instruction": "add sp, 2",
+      "load_offset": 161012
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 161015
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 161016
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 161017
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec837e06ff7e108b5e06c6872aa600530ee8560183c4025dcb90",
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_init_chunk2"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 161018,
+    "end_evidence": {
+      "instructions": 3,
+      "label": {
+        "ida": 226551,
+        "index": 417,
+        "line": 630
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 1,
+    "line_end": 635,
+    "line_start": 615,
+    "name": "sub_374DE",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 635,
+      "line_start": 615,
+      "path": "src/restunts/asmorig/seg027.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg027",
+    "segment_offset": 1038,
+    "segment_paragraph": 9997,
+    "sha256": "604778f43636c2906a15790c802cb5b7e8261d3a61a3a2ff8c584d42dd7944f0",
+    "size": 28,
+    "source": "build/references/restunts/src/restunts/asmorig/seg027.asm",
+    "stable_id": "load_274de",
+    "start": 160990,
+    "start_candidates": [
+      160990
+    ],
+    "start_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 226510,
+        "index": 401,
+        "line": 606
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 1
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_274de",
+  "name": "sub_374DE",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_274de --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "Indexed data displacement needs source/symbol review",
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 28,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 635,
+    "line_start": 615,
+    "path": "src/restunts/asmorig/seg027.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

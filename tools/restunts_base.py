@@ -3,6 +3,7 @@ import sys,re,json,hashlib,collections
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'build/python'))
 from capstone import Cs,CS_ARCH_X86,CS_MODE_16
+from x86_16_encoding import conversion_matches_source, reviewed_nop_literal, STRING_OPCODES, bare_string_opcode_matches_source
 md=Cs(CS_ARCH_X86,CS_MODE_16); md.detail=True
 from oracle import verify
 verify()
@@ -13,6 +14,12 @@ relocs={r['load_offset'] for r in oracle['unpacked_mz']['relocations']}
 base=ROOT/'build/references/restunts/src/restunts/asmorig'
 alias={'retn':'ret','sal':'shl','jz':'je','jnz':'jne','jnb':'jae','jnae':'jb','jna':'jbe','jnbe':'ja','jng':'jle','jnle':'jg','jnge':'jl','jnl':'jge','loopnz':'loopne','loopz':'loope','repz':'repe','repnz':'repne'}
 regs=set('ax bx cx dx si di bp sp al ah bl bh cl ch dl dh cs ds es ss'.split())
+class ExactRawByte:
+    """Source-declared emission, never an inferred instruction or CFG edge."""
+    def __init__(self,address,value):
+        self.address=address;self.bytes=bytes((value,));self.size=1
+        self.mnemonic='db';self.op_str=str(value);self.operands=[]
+    def group(self,group):return False
 mnems=set('aaa aad aam aas adc add and arpl bound call cbw clc cld cli cmc cmp cmpsb cmpsw cwd daa das dec div enter hlt idiv imul in inc insb insw int into iret ja jae jb jbe jcxz je jg jge jl jle jmp jne jno jnp jns jo jp jpe jpo js lahf lds lea leave les lodsb lodsw loop loope loopne mov movsb movsw mul neg nop not or out outsb outsw pop popa popf push pusha pushf rcl rcr ret retf rol ror sahf sar sbb scasb scasw shl shr stc std sti stosb stosw sub test wait xchg xlat xlatb xor fadd fsub fmul fdiv fld fst fstp fnstsw fstsw'.split())|set(alias)|{'rep','repe','repne','lock'}
 def norm(m):
     return alias.get(m,m).replace('lcall','call').replace('ljmp','jmp')
@@ -20,11 +27,28 @@ def source_ins(s,line):
     s=s.split(';',1)[0].strip().lower()
     if not s or '=' in s or s.endswith(':'): return None
     tok=s.split()[0]
+    # Restunts emits explicit single-byte NOP padding as `db 144` inside many
+    # PROC intervals. An exact `db 0` is a separate raw emission; other
+    # DB/data directives remain unsupported and block boundary inference.
+    literal=reviewed_nop_literal(s)
+    if literal is not None:
+        return {'line':line,'source':s,'mnemonic':'nop','regs':[],
+                'literal_emission_hex':literal.hex()}
+    if s=='db 0':
+        return {'line':line,'source':s,'raw_emission_hex':'00'}
     if tok in ('db','dw','dd','dq','dt','align','even','org') or re.match(r'^\w+\s+d[bwdqt]\b',s): return {'line':line,'source':s,'unsupported':True}
     if tok not in mnems: return None
     return {'line':line,'source':s,'mnemonic':norm(tok),'regs':re.findall(r'\b(?:ax|bx|cx|dx|si|di|bp|sp|al|ah|bl|bh|cl|ch|dl|dh)\b',s)}
 def agree(src, ins):
     if src.get('unsupported'):return False
+    if src.get('raw_emission_hex'):
+        return bytes(ins.bytes).hex()==src['raw_emission_hex']
+    if src.get('literal_emission_hex'):
+        return ins.mnemonic==src['mnemonic'] and bytes(ins.bytes).hex()==src['literal_emission_hex']
+    if src['mnemonic'] in ('cbw','cwd'):
+        return conversion_matches_source(src['mnemonic'], bytes(ins.bytes))
+    if src['mnemonic'] in STRING_OPCODES:
+        return bare_string_opcode_matches_source(src['mnemonic'], bytes(ins.bytes))
     m=norm(ins.mnemonic)
     if src['mnemonic'] in ('rep','repe','repne','lock'):
         want=' '.join(src['source'].split()[:2]); got=' '.join((ins.mnemonic+' '+ins.op_str).split()[:2])
@@ -59,8 +83,20 @@ for path in sorted(list(base.glob('seg[0-9]*.asm'))+[base/'dseg.asm']):
 
 def decode_match(start,items,end=None):
     if start<0 or start>=len(blob):return None
-    code=list(md.disasm(blob[start:min(len(blob),start+15*len(items))],start,count=len(items)))
-    if len(code)!=len(items) or any(not agree(s,i) for s,i in zip(items,code)):return None
+    if any('raw_emission_hex' in item for item in items):
+        code=[];cursor=start
+        for src in items:
+            if 'raw_emission_hex' in src:
+                raw=bytes.fromhex(src['raw_emission_hex'])
+                if blob[cursor:cursor+len(raw)]!=raw:return None
+                code.append(ExactRawByte(cursor,raw[0]));cursor+=len(raw)
+                continue
+            instruction=next(md.disasm(blob[cursor:min(len(blob),cursor+15)],cursor,count=1),None)
+            if instruction is None or not agree(src,instruction):return None
+            code.append(instruction);cursor+=instruction.size
+    else:
+        code=list(md.disasm(blob[start:min(len(blob),start+15*len(items))],start,count=len(items)))
+        if len(code)!=len(items) or any(not agree(s,i) for s,i in zip(items,code)):return None
     finish=code[-1].address+code[-1].size if code else start
     if end is not None and finish!=end:return None
     return code
@@ -90,7 +126,8 @@ for f in funcs:
             anchors.append({'function':f['name'],'segment':f['segment'],**record});verified.append(record)
     f['issues']=issues;f['verified_labels']=len(verified);f['label_count']=len(labels)
     if 'start' in f and 'end' in f and f['start']<f['end'] and not issues:
-        f['status']='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'
+        f['status']=('BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' if any('raw_emission_hex' in item for item in f['items'])
+                     else 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED')
         f['size']=f['end']-f['start'];f['sha256']=hashlib.sha256(blob[f['start']:f['end']]).hexdigest();f['relocation_sites']=[r for r in sorted(relocs) if f['start']<=r<f['end']]
         f['bytes_hex']=blob[f['start']:f['end']].hex() if f['size']<=80 else None
     else:f['status']='PARTIAL_UNMAPPED'

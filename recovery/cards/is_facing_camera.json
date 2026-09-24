@@ -1,7 +1,7 @@
 {
   "attempt_budget": 3,
   "attempts_remaining": 2,
-  "blocker": "Source-shape family review: strongest ordinary-C source emits194 vs200; first mismatch +0x37 stores dx1 at BP-8 instead of BP-12, then return lowering differs. Far binding is proven. Nineteen supervisor trials plus one grinder attempt are archived; no blind flag/source retries. Next discriminant: evidence for paired long-delta storage and byte-result materialization, then a bounded ordinary-C probe. Explicit register-long and register-far-parameter probes also preserve the194-byte mismatch.",
+  "blocker": "Source-shape family review: declaration order explains paired long-delta BP homes under pinned MSC5.1. A byte-result cast with that order selects AL/CBW and emits 198 bytes, but keeps the wrong early zero-return topology and lacks the target trailing false epilogue/NOP sequence; the complete target remains 200 bytes. Far binding is proven. Historical supervisor/grinder trials and desktop probes are archived. No blind flag/source retries; reopen only for evidence-backed return placement or TU/compiler-context evidence.",
   "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
   "capability_blockers": [],
   "card": "recovery/cards/is_facing_camera.json",
@@ -469,6 +469,7 @@
         "site": 88567
       }
     ],
+    "bytes_hex": null,
     "c_sources": [
       "src/restunts/c/shape3d.c"
     ],
@@ -934,6 +935,15 @@
     ],
     "distance": "far",
     "end": 90102,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 155630,
+        "index": 1712,
+        "line": 2054
+      },
+      "method": "forward_from_dense_label"
+    },
     "evidence_class": "pristine byte/branch/caller proof; private semantic lead separately referenced",
     "issues": [],
     "label_count": 6,
@@ -946,12 +956,7 @@
       90083,
       90093
     ],
-    "prior_mapping_issues": [
-      "ambiguous_or_mismatching_prefix",
-      "label_interval_mismatch:0x25f7a",
-      "label_interval_mismatch:0x25fde",
-      "label_interval_mismatch:0x25fe6"
-    ],
+    "prior_mapping_issues": [],
     "provenance": {
       "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
       "line_end": 2061,
@@ -1050,15 +1055,27 @@
       90041
     ],
     "segment": "seg006",
+    "segment_offset": 4558,
+    "segment_paragraph": 5334,
     "sha256": "6fc29d78db5106925aa06f76eb06ed2f7fdb5a6dfb0e597d1e94b56e0558e929",
     "size": 200,
     "source": "build/references/restunts/src/restunts/asmorig/seg006.asm",
     "stable_id": "load_15f2e",
     "start": 89902,
-    "start_candidates": [],
+    "start_candidates": [
+      89902
+    ],
+    "start_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 155429,
+        "index": 1625,
+        "line": 1949
+      },
+      "method": "forward_from_dense_label"
+    },
     "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-    "unresolved_evidence_id": "seg006:line1957",
-    "verified_labels": 3
+    "verified_labels": 6
   },
   "fast": "python tools/grind.py attempt is_facing_camera --hypothesis \"Explain source change\"",
   "id": "load_15f2e",
@@ -1079,14 +1096,14 @@
     "Archive repeated compiler/ABI failures and escalate."
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": 200,
   "source": "recovery/candidates/is_facing_camera.c",
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

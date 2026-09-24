@@ -38,7 +38,8 @@ for meta in filemeta:
         offsets=[i.address for i in dec]+[b[0]]
         if any(offsets[l['index']]!=l['ida']-65536 for l in f['labels']):continue
         if f['status']!='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED':new+=1
-        f.update(start=a[0],end=b[0],start_evidence=a[1],end_evidence=b[1],status='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED',issues=[],size=b[0]-a[0],sha256=hashlib.sha256(blob[a[0]:b[0]]).hexdigest(),relocation_sites=[r for r in sorted(relocs)if a[0]<=r<b[0]],bytes_hex=blob[a[0]:b[0]].hex()if b[0]-a[0]<=80 else None)
+        emission_status=('BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' if any('raw_emission_hex' in item for item in subset) else 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED')
+        f.update(start=a[0],end=b[0],start_evidence=a[1],end_evidence=b[1],status=emission_status,issues=[],size=b[0]-a[0],sha256=hashlib.sha256(blob[a[0]:b[0]]).hexdigest(),relocation_sites=[r for r in sorted(relocs)if a[0]<=r<b[0]],bytes_hex=blob[a[0]:b[0]].hex()if b[0]-a[0]<=80 else None)
 byname={f['name'].lower():f for f in funcs if f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'}
 frames=collections.defaultdict(list)
 for f in funcs:
@@ -118,7 +119,9 @@ csources=list((refroot/'src/restunts/c').glob('*.c'))
 ctext={p:p.read_text(encoding='latin1') for p in csources}
 for f in report['functions']:
     f['provenance']={'repository':'restunts','commit':references['restunts']['commit'],'path':f['source'].removeprefix('build/references/restunts/'),'line_start':f['line_start'],'line_end':f['line_end']}
-    f['confidence']='verified_instruction_boundaries' if f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' else 'unresolved_boundary'
+    f['confidence']=('verified_instruction_boundaries' if f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' else
+                     'verified_emission_coordinates_cfg_unreviewed' if f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' else
+                     'unresolved_boundary')
     if f['confidence']=='verified_instruction_boundaries':f['stable_id']='load_%05x'%f['start']
     else:
         f.pop('stable_id',None)

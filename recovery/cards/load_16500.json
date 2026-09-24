@@ -1,0 +1,114 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_16500.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/shape3d.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "sin_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "cos_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sin_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "cos_fast"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 91474,
+    "end_evidence": {
+      "instructions": 42,
+      "label": {
+        "ida": 156907,
+        "index": 2214,
+        "line": 2688
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 2735,
+    "line_start": 2702,
+    "name": "calc_sincos80",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2735,
+      "line_start": 2702,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      91399,
+      91419,
+      91439,
+      91459
+    ],
+    "segment": "seg006",
+    "segment_offset": 6048,
+    "segment_paragraph": 5334,
+    "sha256": "3d23b11379bce4ef4775ed57ee57c42f98edb1eb7fde6c5638a1c984cc2547a6",
+    "size": 82,
+    "source": "build/references/restunts/src/restunts/asmorig/seg006.asm",
+    "stable_id": "load_16500",
+    "start": 91392,
+    "start_evidence": {
+      "instructions": 12,
+      "label": {
+        "ida": 156907,
+        "index": 2214,
+        "line": 2688
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_16500",
+  "name": "calc_sincos80",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_16500 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 82,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 2735,
+    "line_start": 2702,
+    "path": "src/restunts/asmorig/seg006.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

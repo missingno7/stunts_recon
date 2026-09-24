@@ -1,0 +1,136 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_16fa3.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "compare_ds_ss"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_unk2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_unk2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_unk2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_39088"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_init_chunk2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_3771E"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_op_unk"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 94510,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 160039,
+        "index": 530,
+        "line": 710
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 17,
+    "line_end": 718,
+    "line_start": 541,
+    "name": "audio_driver_timer",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 718,
+      "line_start": 541,
+      "path": "src/restunts/asmorig/seg007.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      94126,
+      94245,
+      94272,
+      94290,
+      94412,
+      94442,
+      94452
+    ],
+    "segment": "seg007",
+    "segment_offset": 1027,
+    "segment_paragraph": 5818,
+    "sha256": "9574d08ab15ed104065999fff07ad4e4a209f80867c84dd64e7532ff2e3a6354",
+    "size": 395,
+    "source": "build/references/restunts/src/restunts/asmorig/seg007.asm",
+    "stable_id": "load_16fa3",
+    "start": 94115,
+    "start_candidates": [
+      94115
+    ],
+    "start_evidence": {
+      "instructions": 4,
+      "label": {
+        "ida": 159646,
+        "index": 379,
+        "line": 535
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 17
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_16fa3",
+  "name": "audio_driver_timer",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_16fa3 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 395,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 718,
+    "line_start": 541,
+    "path": "src/restunts/asmorig/seg007.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

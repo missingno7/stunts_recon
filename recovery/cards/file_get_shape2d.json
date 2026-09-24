@@ -1,0 +1,595 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 2,
+  "blocker": "The Restunts huge-pointer form emits 114 bytes and an unsupported __AHSHIFT helper fixup against a pristine 95-byte inline normalization body. Two bounded explicit-linearization forms removed the helper but emitted 138 and 146 bytes with little target alignment. The original source/TU lowering mechanism is unresolved; retain the two unused production attempts until new evidence predicts the complete code.",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/file_get_shape2d.json",
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 140891
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 140892
+    },
+    {
+      "bytes": "56",
+      "instruction": "push si",
+      "load_offset": 140894
+    },
+    {
+      "bytes": "8e4608",
+      "instruction": "mov es, word ptr [bp + 8]",
+      "load_offset": 140895
+    },
+    {
+      "bytes": "8b7606",
+      "instruction": "mov si, word ptr [bp + 6]",
+      "load_offset": 140898
+    },
+    {
+      "bytes": "268b4404",
+      "instruction": "mov ax, word ptr es:[si + 4]",
+      "load_offset": 140901
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 140905
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 140907
+    },
+    {
+      "bytes": "8b5e0a",
+      "instruction": "mov bx, word ptr [bp + 0xa]",
+      "load_offset": 140909
+    },
+    {
+      "bytes": "d1e3",
+      "instruction": "shl bx, 1",
+      "load_offset": 140912
+    },
+    {
+      "bytes": "d1e3",
+      "instruction": "shl bx, 1",
+      "load_offset": 140914
+    },
+    {
+      "bytes": "03d8",
+      "instruction": "add bx, ax",
+      "load_offset": 140916
+    },
+    {
+      "bytes": "83c306",
+      "instruction": "add bx, 6",
+      "load_offset": 140918
+    },
+    {
+      "bytes": "d1e0",
+      "instruction": "shl ax, 1",
+      "load_offset": 140921
+    },
+    {
+      "bytes": "050600",
+      "instruction": "add ax, 6",
+      "load_offset": 140923
+    },
+    {
+      "bytes": "8cc1",
+      "instruction": "mov cx, es",
+      "load_offset": 140926
+    },
+    {
+      "bytes": "33d2",
+      "instruction": "xor dx, dx",
+      "load_offset": 140928
+    },
+    {
+      "bytes": "d1e1",
+      "instruction": "shl cx, 1",
+      "load_offset": 140930
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 140932
+    },
+    {
+      "bytes": "d1e1",
+      "instruction": "shl cx, 1",
+      "load_offset": 140934
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 140936
+    },
+    {
+      "bytes": "d1e1",
+      "instruction": "shl cx, 1",
+      "load_offset": 140938
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 140940
+    },
+    {
+      "bytes": "d1e1",
+      "instruction": "shl cx, 1",
+      "load_offset": 140942
+    },
+    {
+      "bytes": "d1d2",
+      "instruction": "rcl dx, 1",
+      "load_offset": 140944
+    },
+    {
+      "bytes": "03c1",
+      "instruction": "add ax, cx",
+      "load_offset": 140946
+    },
+    {
+      "bytes": "83d200",
+      "instruction": "adc dx, 0",
+      "load_offset": 140948
+    },
+    {
+      "bytes": "260307",
+      "instruction": "add ax, word ptr es:[bx]",
+      "load_offset": 140951
+    },
+    {
+      "bytes": "26135702",
+      "instruction": "adc dx, word ptr es:[bx + 2]",
+      "load_offset": 140954
+    },
+    {
+      "bytes": "8bd8",
+      "instruction": "mov bx, ax",
+      "load_offset": 140958
+    },
+    {
+      "bytes": "83e30f",
+      "instruction": "and bx, 0xf",
+      "load_offset": 140960
+    },
+    {
+      "bytes": "d1ea",
+      "instruction": "shr dx, 1",
+      "load_offset": 140963
+    },
+    {
+      "bytes": "d1d8",
+      "instruction": "rcr ax, 1",
+      "load_offset": 140965
+    },
+    {
+      "bytes": "d1ea",
+      "instruction": "shr dx, 1",
+      "load_offset": 140967
+    },
+    {
+      "bytes": "d1d8",
+      "instruction": "rcr ax, 1",
+      "load_offset": 140969
+    },
+    {
+      "bytes": "d1ea",
+      "instruction": "shr dx, 1",
+      "load_offset": 140971
+    },
+    {
+      "bytes": "d1d8",
+      "instruction": "rcr ax, 1",
+      "load_offset": 140973
+    },
+    {
+      "bytes": "d1ea",
+      "instruction": "shr dx, 1",
+      "load_offset": 140975
+    },
+    {
+      "bytes": "d1d8",
+      "instruction": "rcr ax, 1",
+      "load_offset": 140977
+    },
+    {
+      "bytes": "8bd0",
+      "instruction": "mov dx, ax",
+      "load_offset": 140979
+    },
+    {
+      "bytes": "8bc3",
+      "instruction": "mov ax, bx",
+      "load_offset": 140981
+    },
+    {
+      "bytes": "5e",
+      "instruction": "pop si",
+      "load_offset": 140983
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 140984
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 140985
+    }
+  ],
+  "evidence": {
+    "abi": {
+      "arguments": "far resource pointer at BP+6/+8, signed 16-bit index at BP+10",
+      "flow": "shape-count/index offset and normalized huge-pointer addition; no branches or calls",
+      "return": "far normalized pointer in DX:AX"
+    },
+    "boundary_anchors": [
+      {
+        "hex": "045e5dcb558bec56",
+        "site": 140887
+      },
+      {
+        "hex": "5e5dcb558bec56",
+        "site": 140983
+      }
+    ],
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/shape2d.c"
+    ],
+    "calls": [],
+    "confidence": "reviewed_pristine_entry_extent_cfg",
+    "disassembly": [
+      {
+        "bytes": "55",
+        "instruction": "push bp",
+        "load_offset": 140891
+      },
+      {
+        "bytes": "8bec",
+        "instruction": "mov bp, sp",
+        "load_offset": 140892
+      },
+      {
+        "bytes": "56",
+        "instruction": "push si",
+        "load_offset": 140894
+      },
+      {
+        "bytes": "8e4608",
+        "instruction": "mov es, word ptr [bp + 8]",
+        "load_offset": 140895
+      },
+      {
+        "bytes": "8b7606",
+        "instruction": "mov si, word ptr [bp + 6]",
+        "load_offset": 140898
+      },
+      {
+        "bytes": "268b4404",
+        "instruction": "mov ax, word ptr es:[si + 4]",
+        "load_offset": 140901
+      },
+      {
+        "bytes": "d1e0",
+        "instruction": "shl ax, 1",
+        "load_offset": 140905
+      },
+      {
+        "bytes": "d1e0",
+        "instruction": "shl ax, 1",
+        "load_offset": 140907
+      },
+      {
+        "bytes": "8b5e0a",
+        "instruction": "mov bx, word ptr [bp + 0xa]",
+        "load_offset": 140909
+      },
+      {
+        "bytes": "d1e3",
+        "instruction": "shl bx, 1",
+        "load_offset": 140912
+      },
+      {
+        "bytes": "d1e3",
+        "instruction": "shl bx, 1",
+        "load_offset": 140914
+      },
+      {
+        "bytes": "03d8",
+        "instruction": "add bx, ax",
+        "load_offset": 140916
+      },
+      {
+        "bytes": "83c306",
+        "instruction": "add bx, 6",
+        "load_offset": 140918
+      },
+      {
+        "bytes": "d1e0",
+        "instruction": "shl ax, 1",
+        "load_offset": 140921
+      },
+      {
+        "bytes": "050600",
+        "instruction": "add ax, 6",
+        "load_offset": 140923
+      },
+      {
+        "bytes": "8cc1",
+        "instruction": "mov cx, es",
+        "load_offset": 140926
+      },
+      {
+        "bytes": "33d2",
+        "instruction": "xor dx, dx",
+        "load_offset": 140928
+      },
+      {
+        "bytes": "d1e1",
+        "instruction": "shl cx, 1",
+        "load_offset": 140930
+      },
+      {
+        "bytes": "d1d2",
+        "instruction": "rcl dx, 1",
+        "load_offset": 140932
+      },
+      {
+        "bytes": "d1e1",
+        "instruction": "shl cx, 1",
+        "load_offset": 140934
+      },
+      {
+        "bytes": "d1d2",
+        "instruction": "rcl dx, 1",
+        "load_offset": 140936
+      },
+      {
+        "bytes": "d1e1",
+        "instruction": "shl cx, 1",
+        "load_offset": 140938
+      },
+      {
+        "bytes": "d1d2",
+        "instruction": "rcl dx, 1",
+        "load_offset": 140940
+      },
+      {
+        "bytes": "d1e1",
+        "instruction": "shl cx, 1",
+        "load_offset": 140942
+      },
+      {
+        "bytes": "d1d2",
+        "instruction": "rcl dx, 1",
+        "load_offset": 140944
+      },
+      {
+        "bytes": "03c1",
+        "instruction": "add ax, cx",
+        "load_offset": 140946
+      },
+      {
+        "bytes": "83d200",
+        "instruction": "adc dx, 0",
+        "load_offset": 140948
+      },
+      {
+        "bytes": "260307",
+        "instruction": "add ax, word ptr es:[bx]",
+        "load_offset": 140951
+      },
+      {
+        "bytes": "26135702",
+        "instruction": "adc dx, word ptr es:[bx + 2]",
+        "load_offset": 140954
+      },
+      {
+        "bytes": "8bd8",
+        "instruction": "mov bx, ax",
+        "load_offset": 140958
+      },
+      {
+        "bytes": "83e30f",
+        "instruction": "and bx, 0xf",
+        "load_offset": 140960
+      },
+      {
+        "bytes": "d1ea",
+        "instruction": "shr dx, 1",
+        "load_offset": 140963
+      },
+      {
+        "bytes": "d1d8",
+        "instruction": "rcr ax, 1",
+        "load_offset": 140965
+      },
+      {
+        "bytes": "d1ea",
+        "instruction": "shr dx, 1",
+        "load_offset": 140967
+      },
+      {
+        "bytes": "d1d8",
+        "instruction": "rcr ax, 1",
+        "load_offset": 140969
+      },
+      {
+        "bytes": "d1ea",
+        "instruction": "shr dx, 1",
+        "load_offset": 140971
+      },
+      {
+        "bytes": "d1d8",
+        "instruction": "rcr ax, 1",
+        "load_offset": 140973
+      },
+      {
+        "bytes": "d1ea",
+        "instruction": "shr dx, 1",
+        "load_offset": 140975
+      },
+      {
+        "bytes": "d1d8",
+        "instruction": "rcr ax, 1",
+        "load_offset": 140977
+      },
+      {
+        "bytes": "8bd0",
+        "instruction": "mov dx, ax",
+        "load_offset": 140979
+      },
+      {
+        "bytes": "8bc3",
+        "instruction": "mov ax, bx",
+        "load_offset": 140981
+      },
+      {
+        "bytes": "5e",
+        "instruction": "pop si",
+        "load_offset": 140983
+      },
+      {
+        "bytes": "5d",
+        "instruction": "pop bp",
+        "load_offset": 140984
+      },
+      {
+        "bytes": "cb",
+        "instruction": "retf ",
+        "load_offset": 140985
+      }
+    ],
+    "distance": "far",
+    "end": 140986,
+    "end_evidence": {
+      "instructions": 93,
+      "label": {
+        "ida": 206342,
+        "index": 6474,
+        "line": 8457
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 8580,
+    "line_start": 8527,
+    "name": "file_get_shape2d",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "padding_offsets": [],
+    "prior_mapping_issues": [],
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 8580,
+      "line_start": 8527,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "reachable_instruction_offsets": [
+      140891,
+      140892,
+      140894,
+      140895,
+      140898,
+      140901,
+      140905,
+      140907,
+      140909,
+      140912,
+      140914,
+      140916,
+      140918,
+      140921,
+      140923,
+      140926,
+      140928,
+      140930,
+      140932,
+      140934,
+      140936,
+      140938,
+      140940,
+      140942,
+      140944,
+      140946,
+      140948,
+      140951,
+      140954,
+      140958,
+      140960,
+      140963,
+      140965,
+      140967,
+      140969,
+      140971,
+      140973,
+      140975,
+      140977,
+      140979,
+      140981,
+      140983,
+      140984,
+      140985
+    ],
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 15419,
+    "segment_paragraph": 7842,
+    "sha256": "89258c68d62b065a0ae09f36b9bb7c75c3a4f365b6313aad5d54ac7a7400cc05",
+    "size": 95,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_2265b",
+    "start": 140891,
+    "start_evidence": {
+      "instructions": 49,
+      "label": {
+        "ida": 206342,
+        "index": 6474,
+        "line": 8457
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "python tools/grind.py attempt file_get_shape2d --hypothesis \"Explain source change\"",
+  "id": "load_2265b",
+  "name": "file_get_shape2d",
+  "oracle_extent": [
+    140891,
+    140986
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote file_get_shape2d --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/file_get_shape2d.json",
+  "risks": [
+    "Odd extent: verify complete compiler alignment; never trim",
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 95,
+  "source": "recovery/candidates/file_get_shape2d.c",
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

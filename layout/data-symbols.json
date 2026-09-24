@@ -117,6 +117,80 @@
         }
       ],
       "storage": "initialized"
+    },
+    "_sdgame2ptr": {
+      "evidence": "Verified independent load_sdgame2_shapes stores AX/DX to adjacent DGROUP BSS words then reads the low word; free_sdgame2 independently reads both. Restunts dseg name is corroborative, not original object/TU proof.",
+      "fields": [
+        {
+          "offset": 2,
+          "reference": {
+            "hex": "89166aac",
+            "operand_offset": 2,
+            "start": 55533
+          },
+          "width": 2
+        }
+      ],
+      "load_address": 222168,
+      "references": [
+        {
+          "hex": "a368ac",
+          "operand_offset": 1,
+          "start": 55530
+        },
+        {
+          "hex": "ff3668ac",
+          "operand_offset": 2,
+          "start": 55546
+        },
+        {
+          "hex": "ff3668ac",
+          "operand_offset": 2,
+          "start": 55598
+        }
+      ],
+      "storage": "bss"
+    },
+    "_textresprefix": {
+      "evidence": "Verified init_main writes ASCII e to this DGROUP BSS byte; separate locate_text_res reads it. Restunts dseg name is corroborative, not original object/TU proof.",
+      "load_address": 222302,
+      "references": [
+        {
+          "hex": "c606eeac65",
+          "operand_offset": 2,
+          "start": 171848
+        },
+        {
+          "hex": "a0eeac",
+          "operand_offset": 1,
+          "start": 101032
+        }
+      ],
+      "storage": "bss"
+    },
+    "_video_flag2_is1": {
+      "evidence": "docs/current/rect-union-binding.md",
+      "load_address": 216520,
+      "references": [
+        {
+          "hex": "c70658960100",
+          "operand_offset": 2,
+          "start": 171815
+        }
+      ],
+      "storage": "bss"
+    },
+    "_video_flag3_isFFFF": {
+      "evidence": "docs/current/rect-union-binding.md",
+      "load_address": 218324,
+      "references": [
+        {
+          "hex": "c706649dffff",
+          "operand_offset": 2,
+          "start": 171821
+        }
+      ],
+      "storage": "bss"
     }
   }
 }

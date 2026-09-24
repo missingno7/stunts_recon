@@ -2,6 +2,8 @@
 
 When delegating source grinding, use GPT-6 Luna with high reasoning (`gpt-6-luna`, `high`). Keep source/manifest promotion single-writer. Controlled diagnostic comparisons must hold the agent model and reasoning setting constant across conditions.
 
+Use GPT-6 Sol/high for systemic supervisor research, not routine grinding. Earlier notebook wall-clock timings are host-specific; record desktop timing in a separate host cohort. Preserve strict solve and total model-weighted cost evidence when evaluating workflow changes.
+
 For autonomous research and escalation, follow `docs/current/worker-research.md`. Keep detailed evidence local and handoffs compact. Workflow gates and research-budget stops are not model-capability failures; account for supervisor traffic in total model-weighted cost.
 
 Use `docs/MATCHING_DECOMP_GUIDELINES.md` as evidence-qualified guidance when preparing work; consult only the relevant cookbook sections. Preserve repository acceptance rules and update the guidance when real experiments contradict a recommendation.

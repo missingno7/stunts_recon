@@ -1765,7 +1765,7 @@
   "provenance": "recovery/msc510-provenance.json and recovery/msc500-provenance.json",
   "quickc": "1.00/1.01 available under same directories, BAKPAT rejected for production; 2.x not investigated",
   "runner": {
-    "path": "C:/tools/msdos/msdos.exe",
+    "path": "C:/tools/nmlgcdos/msdos.exe",
     "sha256": "f7f6cb0a3e816c5edb13112d327c1bddbf7463fe7bf9a005ca1eb5317751bd02",
     "size": 686592
   },

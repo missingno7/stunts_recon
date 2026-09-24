@@ -1,0 +1,497 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_04da2.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/state.c",
+      "src/restunts/c/stateply.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFuldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_zxy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_zxy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_rotate_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "build_track_object"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_origin_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_y"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "vector_op_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarRadius3D"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_zxy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_origin_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_invert"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_rotate_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_origin_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_rotate_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "vector_op_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarRadius3D"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_rotate_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_origin_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "carState_rc_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarAngle"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_y"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarAngle"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_x"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarAngle"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_unk3"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_rot_zxy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "build_track_object"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_origin_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "build_track_object"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "plane_origin_op"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "car_car_coll_detect_maybe"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "car_car_speed_adjust_maybe"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "bto_auxiliary1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "car_car_coll_detect_maybe"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "car_car_coll_detect_maybe"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFuldiv"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "state_op_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sin_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "cos_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "car_car_coll_detect_maybe"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sin_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "cos_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "car_car_coll_detect_maybe"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 26776,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 92306,
+        "index": 3100,
+        "line": 3565
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 179,
+    "line_end": 3571,
+    "line_start": 849,
+    "name": "update_player_state",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3571,
+      "line_start": 849,
+      "path": "src/restunts/asmorig/seg001.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      20041,
+      20048,
+      20078,
+      20146,
+      20205,
+      20268,
+      20326,
+      20579,
+      20616,
+      20950,
+      21240,
+      21262,
+      21284,
+      21441,
+      21495,
+      21636,
+      21661,
+      21965,
+      21972,
+      22016,
+      22023,
+      22067,
+      22074,
+      22549,
+      22571,
+      22593,
+      23151,
+      23205,
+      23282,
+      23289,
+      23333,
+      23340,
+      23384,
+      23391,
+      24237,
+      24713,
+      24733,
+      24793,
+      24874,
+      24927,
+      24987,
+      25065,
+      25207,
+      25274,
+      25461,
+      25590,
+      26072,
+      26354,
+      26361,
+      26426,
+      26435,
+      26484,
+      26493,
+      26567,
+      26576,
+      26613,
+      26622
+    ],
+    "segment": "seg001",
+    "segment_offset": 1682,
+    "segment_paragraph": 1137,
+    "sha256": "b57a1db970b566d4d5c1f9a074ed1b578d36bcfc7dbc4fcbf7fb4789820c2ba2",
+    "size": 6902,
+    "source": "build/references/restunts/src/restunts/asmorig/seg001.asm",
+    "stable_id": "load_04da2",
+    "start": 19874,
+    "start_candidates": [
+      19874
+    ],
+    "start_evidence": {
+      "instructions": 32,
+      "label": {
+        "ida": 85350,
+        "index": 609,
+        "line": 805
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 179
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_04da2",
+  "name": "update_player_state",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_04da2 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 6902,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 3571,
+    "line_start": 849,
+    "path": "src/restunts/asmorig/seg001.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

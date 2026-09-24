@@ -198,34 +198,14 @@
     ],
     "confidence": "unresolved_boundary",
     "distance": "far",
+    "end": 89636,
     "issues": [
-      "label_interval_mismatch:0x24eae",
-      "label_interval_mismatch:0x24ed6",
-      "label_interval_mismatch:0x24f45",
       "label_interval_mismatch:0x24f50",
-      "label_interval_mismatch:0x25077",
       "label_interval_mismatch:0x2514b",
       "label_interval_mismatch:0x25196",
-      "label_interval_mismatch:0x251f6",
-      "label_interval_mismatch:0x25282",
-      "label_interval_mismatch:0x25335",
       "label_interval_mismatch:0x25370",
       "label_interval_mismatch:0x253a8",
-      "label_interval_mismatch:0x253fd",
-      "label_interval_mismatch:0x254b3",
-      "label_interval_mismatch:0x255fa",
-      "label_interval_mismatch:0x25776",
-      "label_interval_mismatch:0x25839",
-      "label_interval_mismatch:0x2590d",
-      "label_interval_mismatch:0x25997",
-      "label_interval_mismatch:0x25a71",
-      "label_interval_mismatch:0x25a7c",
-      "label_interval_mismatch:0x25b9c",
-      "label_interval_mismatch:0x25c01",
-      "label_interval_mismatch:0x25cf4",
-      "label_interval_mismatch:0x25d6d",
-      "label_interval_mismatch:0x25db3",
-      "label_interval_mismatch:0x25e04"
+      "label_interval_mismatch:0x25c01"
     ],
     "label_count": 116,
     "line_end": 1819,
@@ -249,7 +229,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg006:line246",
-    "verified_labels": 89
+    "verified_labels": 110
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg006:line246",
@@ -261,8 +241,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f.json",
+    "sha256": "9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f"
   },
   "size": null,
   "source": {
@@ -274,7 +254,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768.json",
+    "sha256": "e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768"
   }
 }

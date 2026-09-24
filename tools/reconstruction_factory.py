@@ -48,7 +48,7 @@ def refresh():
             recipe=recipes[f['name']]
             if not recipe_matches_inventory(recipe,f):
                 capability_blockers.append('Recipe identity/extent differs from current verified inventory; supervisor remapping required')
-            elif f.get('binding_review')=='external-far-call-v1' and recipe.get('binding',{}).get('mode')==f['binding_review']:
+            elif f.get('binding_review') in ('external-far-call-v1','external-far-call-dgroup-offset16-v1') and recipe.get('binding',{}).get('mode')==f['binding_review']:
                 # Reviewed bounded non-leaf mode; the strict binder still checks every
                 # declaration, fixup field, public and ordered source relocation.
                 capability_blockers=[b for b in capability_blockers if b not in
@@ -170,10 +170,22 @@ def refresh():
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('command',choices=['refresh','next'])
+    p.add_argument('command',choices=['refresh','reclassify','next'])
     p.add_argument('--tier',choices=['READY','CHEAP','MEDIUM','SUPERVISOR'],default='READY')
     args=p.parse_args()
     if args.command=='refresh':refresh()
+    elif args.command=='reclassify':
+        # One current-state transaction for supervisor research. Neither
+        # report changes eligibility, attempt budgets, source, or ownership.
+        refresh()
+        from blocker_census import run as census
+        from build_topology import run as topology
+        from candidate_omf_census import run as candidate_omf
+        from partial_mapping_census import run as partial_mapping
+        census()
+        topology()
+        candidate_omf()
+        partial_mapping()
     else:
         q=read_json(ROOT/'recovery/queue.json')
         require(q.get('workflow_fingerprint')==fingerprint(workflow_inputs()),'Queue is stale; run refresh after reviewing changes')

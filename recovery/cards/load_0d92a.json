@@ -1,0 +1,99 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_0d92a.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": "ff366aacff3668ac9a5c2aa21e83c404cb90",
+    "c_sources": [
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_free"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 55612,
+    "end_evidence": {
+      "instructions": 23,
+      "label": {
+        "ida": 121096,
+        "index": 5357,
+        "line": 6238
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 6267,
+    "line_start": 6258,
+    "name": "free_sdgame2",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 6267,
+      "line_start": 6258,
+      "path": "src/restunts/asmorig/seg003.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      55605
+    ],
+    "segment": "seg003",
+    "segment_offset": 14874,
+    "segment_paragraph": 2545,
+    "sha256": "d4b60a9e9deee936afbead2edb434c9b7a25830ce839cc1e57b889f999d57e82",
+    "size": 18,
+    "source": "build/references/restunts/src/restunts/asmorig/seg003.asm",
+    "stable_id": "load_0d92a",
+    "start": 55594,
+    "start_evidence": {
+      "instructions": 17,
+      "label": {
+        "ida": 121096,
+        "index": 5357,
+        "line": 6238
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_0d92a",
+  "name": "free_sdgame2",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_0d92a --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/5221d04ae858e0832fe1f109dd32030f0cc989ba9156d14cb483dba617265474.json",
+    "sha256": "5221d04ae858e0832fe1f109dd32030f0cc989ba9156d14cb483dba617265474"
+  },
+  "size": 18,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 6267,
+    "line_start": 6258,
+    "path": "src/restunts/asmorig/seg003.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/f0e23943874f0cfa7b124bc80faa260bfa936a1365285fdb9079c0a3bac6e0eb.json",
+    "sha256": "f0e23943874f0cfa7b124bc80faa260bfa936a1365285fdb9079c0a3bac6e0eb"
+  }
+}

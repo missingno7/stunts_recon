@@ -1,0 +1,224 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/load_1d0fe.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 119038
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 119039
+    },
+    {
+      "bytes": "56",
+      "instruction": "push si",
+      "load_offset": 119041
+    },
+    {
+      "bytes": "57",
+      "instruction": "push di",
+      "load_offset": 119042
+    },
+    {
+      "bytes": "1e",
+      "instruction": "push ds",
+      "load_offset": 119043
+    },
+    {
+      "bytes": "07",
+      "instruction": "pop es",
+      "load_offset": 119044
+    },
+    {
+      "bytes": "8b5606",
+      "instruction": "mov dx, word ptr [bp + 6]",
+      "load_offset": 119045
+    },
+    {
+      "bytes": "bec654",
+      "instruction": "mov si, 0x54c6",
+      "load_offset": 119048
+    },
+    {
+      "bytes": "ad",
+      "instruction": "lodsw ax, word ptr [si]",
+      "load_offset": 119051
+    },
+    {
+      "bytes": "3bc2",
+      "instruction": "cmp ax, dx",
+      "load_offset": 119052
+    },
+    {
+      "bytes": "7410",
+      "instruction": "je 0x1d120",
+      "load_offset": 119054
+    },
+    {
+      "bytes": "40",
+      "instruction": "inc ax",
+      "load_offset": 119056
+    },
+    {
+      "bytes": "96",
+      "instruction": "xchg si, ax",
+      "load_offset": 119057
+    },
+    {
+      "bytes": "740c",
+      "instruction": "je 0x1d120",
+      "load_offset": 119058
+    },
+    {
+      "bytes": "97",
+      "instruction": "xchg di, ax",
+      "load_offset": 119060
+    },
+    {
+      "bytes": "33c0",
+      "instruction": "xor ax, ax",
+      "load_offset": 119061
+    },
+    {
+      "bytes": "b9ffff",
+      "instruction": "mov cx, 0xffff",
+      "load_offset": 119063
+    },
+    {
+      "bytes": "f2ae",
+      "instruction": "repne scasb al, byte ptr es:[di]",
+      "load_offset": 119066
+    },
+    {
+      "bytes": "8bf7",
+      "instruction": "mov si, di",
+      "load_offset": 119068
+    },
+    {
+      "bytes": "ebeb",
+      "instruction": "jmp 0x1d10b",
+      "load_offset": 119070
+    },
+    {
+      "bytes": "96",
+      "instruction": "xchg si, ax",
+      "load_offset": 119072
+    },
+    {
+      "bytes": "5f",
+      "instruction": "pop di",
+      "load_offset": 119073
+    },
+    {
+      "bytes": "5e",
+      "instruction": "pop si",
+      "load_offset": 119074
+    },
+    {
+      "bytes": "8be5",
+      "instruction": "mov sp, bp",
+      "load_offset": 119075
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 119077
+    },
+    {
+      "bytes": "ca0200",
+      "instruction": "retf 2",
+      "load_offset": 119078
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec56571e078b5606bec654ad3bc274104096740c9733c0b9fffff2ae8bf7ebeb965f5e8be55dca0200",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 119081,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 184608,
+        "index": 580,
+        "line": 849
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 2,
+    "line_end": 856,
+    "line_start": 823,
+    "name": "__NMSG_TEXT",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 856,
+      "line_start": 823,
+      "path": "src/restunts/asmorig/seg010.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg010",
+    "segment_offset": 1198,
+    "segment_paragraph": 7365,
+    "sha256": "1b5e030bc1231a8c083423d1def1893a91674a403aaee1f2bb08d880b8065412",
+    "size": 43,
+    "source": "build/references/restunts/src/restunts/asmorig/seg010.asm",
+    "stable_id": "load_1d0fe",
+    "start": 119038,
+    "start_candidates": [
+      119038
+    ],
+    "start_evidence": {
+      "instructions": 7,
+      "label": {
+        "ida": 184564,
+        "index": 553,
+        "line": 814
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 2
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_1d0fe",
+  "name": "__NMSG_TEXT",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_1d0fe --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "Odd extent: verify complete compiler alignment; never trim",
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 43,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 856,
+    "line_start": 823,
+    "path": "src/restunts/asmorig/seg010.asm",
+    "repository": "restunts"
+  },
+  "tier": "MEDIUM",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

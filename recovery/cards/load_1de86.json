@@ -1,0 +1,203 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/load_1de86.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 122502
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 122503
+    },
+    {
+      "bytes": "83ec02",
+      "instruction": "sub sp, 2",
+      "load_offset": 122505
+    },
+    {
+      "bytes": "56",
+      "instruction": "push si",
+      "load_offset": 122508
+    },
+    {
+      "bytes": "bef837",
+      "instruction": "mov si, 0x37f8",
+      "load_offset": 122509
+    },
+    {
+      "bytes": "8a4e06",
+      "instruction": "mov cl, byte ptr [bp + 6]",
+      "load_offset": 122512
+    },
+    {
+      "bytes": "eb02",
+      "instruction": "jmp 0x1de97",
+      "load_offset": 122515
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 122517
+    },
+    {
+      "bytes": "46",
+      "instruction": "inc si",
+      "load_offset": 122518
+    },
+    {
+      "bytes": "803c00",
+      "instruction": "cmp byte ptr [si], 0",
+      "load_offset": 122519
+    },
+    {
+      "bytes": "740a",
+      "instruction": "je 0x1dea6",
+      "load_offset": 122522
+    },
+    {
+      "bytes": "3a0c",
+      "instruction": "cmp cl, byte ptr [si]",
+      "load_offset": 122524
+    },
+    {
+      "bytes": "75f6",
+      "instruction": "jne 0x1de96",
+      "load_offset": 122526
+    },
+    {
+      "bytes": "b80100",
+      "instruction": "mov ax, 1",
+      "load_offset": 122528
+    },
+    {
+      "bytes": "eb03",
+      "instruction": "jmp 0x1dea8",
+      "load_offset": 122531
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 122533
+    },
+    {
+      "bytes": "2bc0",
+      "instruction": "sub ax, ax",
+      "load_offset": 122534
+    },
+    {
+      "bytes": "5e",
+      "instruction": "pop si",
+      "load_offset": 122536
+    },
+    {
+      "bytes": "8be5",
+      "instruction": "mov sp, bp",
+      "load_offset": 122537
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 122539
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 122540
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 122541
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec83ec0256bef8378a4e06eb029046803c00740a3a0c75f6b80100eb03902bc05e8be55dcb90",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 122542,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 188072,
+        "index": 1953,
+        "line": 2611
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 4,
+    "line_end": 2618,
+    "line_start": 2584,
+    "name": "flagchar",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2618,
+      "line_start": 2584,
+      "path": "src/restunts/asmorig/seg010.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg010",
+    "segment_offset": 4662,
+    "segment_paragraph": 7365,
+    "sha256": "f7d2db5de960e13d4548b69f6362c9aca7bff1f9674b93ff89abd48e7015add8",
+    "size": 40,
+    "source": "build/references/restunts/src/restunts/asmorig/seg010.asm",
+    "stable_id": "load_1de86",
+    "start": 122502,
+    "start_candidates": [
+      122502
+    ],
+    "start_evidence": {
+      "instructions": 12,
+      "label": {
+        "ida": 188017,
+        "index": 1924,
+        "line": 2569
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 4
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_1de86",
+  "name": "flagchar",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_1de86 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 40,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 2618,
+    "line_start": 2584,
+    "path": "src/restunts/asmorig/seg010.asm",
+    "repository": "restunts"
+  },
+  "tier": "MEDIUM",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

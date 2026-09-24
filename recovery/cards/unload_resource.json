@@ -1,0 +1,216 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/unload_resource.json",
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 100984
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 100985
+    },
+    {
+      "bytes": "ff7608",
+      "instruction": "push word ptr [bp + 8]",
+      "load_offset": 100987
+    },
+    {
+      "bytes": "ff7606",
+      "instruction": "push word ptr [bp + 6]",
+      "load_offset": 100990
+    },
+    {
+      "bytes": "9a5c2aa21e",
+      "instruction": "lcall 0x1ea2, 0x2a5c",
+      "load_offset": 100993
+    },
+    {
+      "bytes": "83c404",
+      "instruction": "add sp, 4",
+      "load_offset": 100998
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 101001
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf",
+      "load_offset": 101002
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop",
+      "load_offset": 101003
+    }
+  ],
+  "evidence": {
+    "binding_review": "external-far-call-v1",
+    "boundary_anchors": [
+      {
+        "hex": "8be55dcb558becff",
+        "site": 100980
+      },
+      {
+        "hex": "045dcb90558becff",
+        "site": 101000
+      }
+    ],
+    "boundary_proof": "Existing uniquely decoded source-label interval; original adjacent bytes and complete pristine CFG rechecked by function_evidence.py",
+    "bytes_hex": "558becff7608ff76069a5c2aa21e83c4045dcb90",
+    "c_sources": [
+      "src/restunts/c/fileio.c",
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_free"
+      }
+    ],
+    "confidence": "reviewed_pristine_entry_extent_cfg",
+    "disassembly": [
+      {
+        "bytes": "55",
+        "instruction": "push bp",
+        "load_offset": 100984
+      },
+      {
+        "bytes": "8bec",
+        "instruction": "mov bp, sp",
+        "load_offset": 100985
+      },
+      {
+        "bytes": "ff7608",
+        "instruction": "push word ptr [bp + 8]",
+        "load_offset": 100987
+      },
+      {
+        "bytes": "ff7606",
+        "instruction": "push word ptr [bp + 6]",
+        "load_offset": 100990
+      },
+      {
+        "bytes": "9a5c2aa21e",
+        "instruction": "lcall 0x1ea2, 0x2a5c",
+        "load_offset": 100993
+      },
+      {
+        "bytes": "83c404",
+        "instruction": "add sp, 4",
+        "load_offset": 100998
+      },
+      {
+        "bytes": "5d",
+        "instruction": "pop bp",
+        "load_offset": 101001
+      },
+      {
+        "bytes": "cb",
+        "instruction": "retf",
+        "load_offset": 101002
+      },
+      {
+        "bytes": "90",
+        "instruction": "nop",
+        "load_offset": 101003
+      }
+    ],
+    "distance": "far",
+    "end": 101004,
+    "end_evidence": {
+      "instructions": 14,
+      "label": {
+        "ida": 166510,
+        "index": 2015,
+        "line": 2533
+      },
+      "method": "forward_from_dense_label"
+    },
+    "evidence_class": "pristine mapped interval, straight-line CFG, relocated far CALL and reviewed address aliases",
+    "issues": [],
+    "line_end": 2556,
+    "line_start": 2540,
+    "name": "unload_resource",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "padding_offsets": [
+      101003
+    ],
+    "prior_mapping_issues": [],
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2556,
+      "line_start": 2540,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "reachable_instruction_offsets": [
+      100984,
+      100985,
+      100987,
+      100990,
+      100993,
+      100998,
+      101001,
+      101002
+    ],
+    "relocation_sites": [
+      100996
+    ],
+    "segment": "seg008",
+    "segment_offset": 5576,
+    "segment_paragraph": 5963,
+    "sha256": "35e25187b7b29320655f071c43fb111e5f08e1fc7ed3b7b9384249b0cbbda628",
+    "size": 20,
+    "source": "build/references/restunts/src/restunts/asmorig/seg008.asm",
+    "stable_id": "load_18a78",
+    "start": 100984,
+    "start_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 166510,
+        "index": 2015,
+        "line": 2533
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "python tools/grind.py attempt unload_resource --hypothesis \"Explain source change\"",
+  "id": "load_18a78",
+  "name": "unload_resource",
+  "oracle_extent": [
+    100984,
+    101004
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote unload_resource --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/unload_resource.json",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/257d24657ed6c391eadba0448b29f9c0565ed8de199b9a3c75688a141c310f6f.json",
+    "sha256": "257d24657ed6c391eadba0448b29f9c0565ed8de199b9a3c75688a141c310f6f"
+  },
+  "size": 20,
+  "source": "recovery/candidates/unload_resource.c",
+  "tier": "CHEAP",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/7ce7301ab99dbbb4d63bb95fe9310c1192bd86cecfab3a0cecbaca9dc8a91c6a.json",
+    "sha256": "7ce7301ab99dbbb4d63bb95fe9310c1192bd86cecfab3a0cecbaca9dc8a91c6a"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "budget_charge": false,
+  "effective_key": "70ceb55632090e956cd42a25631f7a81e0f8f37ce3547a5a819ea26e48ce4d2d",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Far pointer local spill and dereference emits full exact 20-byte contribution without fixups",
+  "hypothesis_key": "c1dc078bc17537d9e1e5382dde600e840f4ba1e47f1b244c183bde844c1259f1",
+  "input_fingerprint": "b2075e85e522f3dfef4e5efecadceb3d7b845fb86988d677a8d4b2c1f12f6110",
+  "recipe": {
+    "end": 165160,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2653,
+      "line_start": 2635,
+      "path": "src/restunts/asmorig/seg027.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "audioresource_get_word",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_audioresource_get_word",
+    "source": "recovery/candidates/audioresource_get_word.c",
+    "stable_id": "load_28514",
+    "start": 165140,
+    "target": {
+      "sha256": "7abf98da6a822503fc7022e32a72f564fb633ff1e264501072cefca9890edfc4",
+      "size": 20
+    }
+  },
+  "result": {
+    "bytes": 20,
+    "receipt": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "9efa95ec52c79d9ccc63962e5018735e704dd88f9ff718615e90194bdce425c0",
+      "object": {
+        "sha256": "6b084f7456087f2039e6882f707acca7cccac918f94d412822bd9eb019db3df2",
+        "size": 284
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "f327fbe5eb2ab89522390785e86f60f961d577338c47bdf70f88ffd541bbf85e",
+        "size": 112
+      },
+      "staged_source": {
+        "sha256": "f327fbe5eb2ab89522390785e86f60f961d577338c47bdf70f88ffd541bbf85e",
+        "size": 112
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pqhiy_m1g"
+    },
+    "status": "FAST_PASS_ONLY",
+    "task": "audioresource_get_word"
+  },
+  "same_effective_as": [],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "f327fbe5eb2ab89522390785e86f60f961d577338c47bdf70f88ffd541bbf85e",
+    "size": 112
+  },
+  "started_utc": "2026-09-23T21:54:45.576461+00:00",
+  "status": "FAST_PASS_ONLY",
+  "task": "audioresource_get_word"
+}

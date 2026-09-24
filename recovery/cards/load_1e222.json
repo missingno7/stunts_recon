@@ -1,0 +1,103 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_1e222.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_2E290"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_2E290"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 123536,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 189065,
+        "index": 2416,
+        "line": 3228
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 5,
+    "line_end": 3235,
+    "line_start": 3169,
+    "name": "_brkctl",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3235,
+      "line_start": 3169,
+      "path": "src/restunts/asmorig/seg010.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg010",
+    "segment_offset": 5586,
+    "segment_paragraph": 7365,
+    "sha256": "cb63673a0366e1ef0123e9655568575921abae4fabf6ee0f2d7eb9693bc2781a",
+    "size": 110,
+    "source": "build/references/restunts/src/restunts/asmorig/seg010.asm",
+    "stable_id": "load_1e222",
+    "start": 123426,
+    "start_candidates": [
+      123426
+    ],
+    "start_evidence": {
+      "instructions": 2,
+      "label": {
+        "ida": 188960,
+        "index": 2367,
+        "line": 3164
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 5
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_1e222",
+  "name": "_brkctl",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_1e222 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 110,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 3235,
+    "line_start": 3169,
+    "path": "src/restunts/asmorig/seg010.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

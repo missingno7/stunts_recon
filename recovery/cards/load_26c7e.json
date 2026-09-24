@@ -1,0 +1,127 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_26c7e.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "preRender_wheel_helper"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "preRender_wheel_helper4"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "preRender_wheel_helper4"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "preRender_default_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "preRender_default_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "preRender_default_alt"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 159424,
+    "end_evidence": {
+      "instructions": 18,
+      "label": {
+        "ida": 224916,
+        "index": 159,
+        "line": 281
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 43,
+    "line_end": 300,
+    "line_start": 50,
+    "name": "preRender_wheel",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 300,
+      "line_start": 50,
+      "path": "src/restunts/asmorig/seg022.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      158868,
+      158926,
+      158988,
+      159228,
+      159394,
+      159414
+    ],
+    "segment": "seg022",
+    "segment_offset": 14,
+    "segment_paragraph": 9927,
+    "sha256": "7a9945bcbc9ccf081161d33d031c8998957f1e3d871eaab31a98b0c8ece621c9",
+    "size": 578,
+    "source": "build/references/restunts/src/restunts/asmorig/seg022.asm",
+    "stable_id": "load_26c7e",
+    "start": 158846,
+    "start_candidates": [
+      158846
+    ],
+    "start_evidence": {
+      "instructions": 1,
+      "label": {
+        "ida": 224383,
+        "index": 1,
+        "line": 79
+      },
+      "method": "unique_reverse_to_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 43
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_26c7e",
+  "name": "preRender_wheel",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_26c7e --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 578,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 300,
+    "line_start": 50,
+    "path": "src/restunts/asmorig/seg022.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

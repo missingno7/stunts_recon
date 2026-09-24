@@ -1,0 +1,138 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/load_2215a.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "57",
+      "instruction": "push di",
+      "load_offset": 139610
+    },
+    {
+      "bytes": "b800b0",
+      "instruction": "mov ax, 0xb000",
+      "load_offset": 139611
+    },
+    {
+      "bytes": "8ec0",
+      "instruction": "mov es, ax",
+      "load_offset": 139614
+    },
+    {
+      "bytes": "33ff",
+      "instruction": "xor di, di",
+      "load_offset": 139616
+    },
+    {
+      "bytes": "b9d007",
+      "instruction": "mov cx, 0x7d0",
+      "load_offset": 139618
+    },
+    {
+      "bytes": "33c0",
+      "instruction": "xor ax, ax",
+      "load_offset": 139621
+    },
+    {
+      "bytes": "fc",
+      "instruction": "cld ",
+      "load_offset": 139623
+    },
+    {
+      "bytes": "f3ab",
+      "instruction": "rep stosw word ptr es:[di], ax",
+      "load_offset": 139624
+    },
+    {
+      "bytes": "5f",
+      "instruction": "pop di",
+      "load_offset": 139626
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 139627
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "57b800b08ec033ffb9d00733c0fcf3ab5fcb",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 139628,
+    "end_evidence": {
+      "instructions": 16,
+      "label": {
+        "ida": 205139,
+        "index": 5973,
+        "line": 7825
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 7847,
+    "line_start": 7834,
+    "name": "nopsub_3215A",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 7847,
+      "line_start": 7834,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 14138,
+    "segment_paragraph": 7842,
+    "sha256": "ce41fcd247564ad98f6fc5473b0e84f4eb5be24aec683da69a597f660bff82b5",
+    "size": 18,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_2215a",
+    "start": 139610,
+    "start_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 205139,
+        "index": 5973,
+        "line": 7825
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_2215a",
+  "name": "nopsub_3215A",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_2215a --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 18,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 7847,
+    "line_start": 7834,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "MEDIUM",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

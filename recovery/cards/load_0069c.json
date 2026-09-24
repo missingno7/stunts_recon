@@ -116,6 +116,8 @@
       1912
     ],
     "segment": "seg000",
+    "segment_offset": 1692,
+    "segment_paragraph": 0,
     "sha256": "83ee9988857c28ad82cfc4563ae0167703c1f5a577cb67bb96e5aa075351b937",
     "size": 234,
     "source": "build/references/restunts/src/restunts/asmorig/seg000.asm",
@@ -125,13 +127,13 @@
       1692
     ],
     "start_evidence": {
-      "instructions": 20,
+      "instructions": 7,
       "label": {
-        "ida": 67294,
-        "index": 603,
-        "line": 766
+        "ida": 67219,
+        "index": 576,
+        "line": 732
       },
-      "method": "unique_reverse_to_dense_label"
+      "method": "forward_from_dense_label"
     },
     "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
     "verified_labels": 3
@@ -146,8 +148,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": 234,
   "source": {
@@ -159,7 +161,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

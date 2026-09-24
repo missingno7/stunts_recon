@@ -1,0 +1,491 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_11b7a.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "get_kevinrandom"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_replay"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "track_setup"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_player_cars"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "free_player_cars"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "do_mer_restext"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "set_frame_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "init_game_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "init_game_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_minmax_position"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sin_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "cos_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "restore_gamestate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "restore_gamestate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_do_checking"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_gamestate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "replay_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_gamestate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "init_rect_arrays"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_push_status"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "show_dialog"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_372F4"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_pop_status"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_crash_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_mcgawnd2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_wnd_to_1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "set_projection"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_car_shapes"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "loop_game"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_frame"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rect_union"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "shape2d_render_bmp_as_mask"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "shape2d_op_unk4"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_19F14"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_car_shapes"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_mcgawnd1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "init_game_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_get_char"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "get_kb_or_joy_flags"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_minmax_position"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "loop_game"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "loop_game"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_carstate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "loop_game"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_get_char"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "handle_ingame_kb_shortcuts"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_get_state"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "get_kb_or_joy_flags"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "get_0"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_mcgawnd2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_35C4E"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "setup_mcgawnd1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_2_to_1_2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_carstate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_remove_driver_timer"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "show_dialog"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "replay_unk2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "update_gamestate"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "format_frame_as_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "font_op2_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_345BC"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_do_checking"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_minmax_position"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "remove_frame_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "free_player_cars"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "check_input"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "show_waiting"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 74746,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 140276,
+        "index": 713,
+        "line": 882
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 76,
+    "line_end": 889,
+    "line_start": 74,
+    "name": "run_game",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 889,
+      "line_start": 74,
+      "path": "src/restunts/asmorig/seg005.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      72608,
+      72679,
+      72734,
+      72805,
+      72858,
+      72907,
+      72916,
+      72951,
+      72960,
+      73033,
+      73045,
+      73059,
+      73072,
+      73120,
+      73210,
+      73222,
+      73227,
+      73257,
+      73275,
+      73292,
+      73303,
+      73319,
+      73344,
+      73357,
+      73559,
+      73640,
+      73683,
+      73840,
+      73910,
+      73926,
+      73942,
+      73954,
+      73984,
+      74017,
+      74043,
+      74048,
+      74064,
+      74104,
+      74119,
+      74141,
+      74246,
+      74277,
+      74342,
+      74357,
+      74402,
+      74411,
+      74416,
+      74436,
+      74444,
+      74449,
+      74454,
+      74464,
+      74469,
+      74535,
+      74552,
+      74581,
+      74612,
+      74620,
+      74632,
+      74645,
+      74653,
+      74662,
+      74733,
+      74738
+    ],
+    "segment": "seg005",
+    "segment_offset": 10,
+    "segment_paragraph": 4535,
+    "sha256": "3873d1a6bf5d2f5236a1d3c73d73d7255eef1c58d39eb13cbefbfc919ae9c37a",
+    "size": 2176,
+    "source": "build/references/restunts/src/restunts/asmorig/seg005.asm",
+    "stable_id": "load_11b7a",
+    "start": 72570,
+    "start_candidates": [
+      72570
+    ],
+    "start_evidence": {
+      "instructions": 21,
+      "label": {
+        "ida": 138186,
+        "index": 22,
+        "line": 105
+      },
+      "method": "unique_reverse_to_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 76
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_11b7a",
+  "name": "run_game",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_11b7a --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 2176,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 889,
+    "line_start": 74,
+    "path": "src/restunts/asmorig/seg005.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

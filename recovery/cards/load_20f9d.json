@@ -1,0 +1,133 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "External/indirect jump needs supervisor linking/TU review",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "External/indirect jump needs supervisor linking/TU review"
+  ],
+  "card": "recovery/cards/load_20f9d.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 135069
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 135070
+    },
+    {
+      "bytes": "1e",
+      "instruction": "push ds",
+      "load_offset": 135072
+    },
+    {
+      "bytes": "56",
+      "instruction": "push si",
+      "load_offset": 135073
+    },
+    {
+      "bytes": "57",
+      "instruction": "push di",
+      "load_offset": 135074
+    },
+    {
+      "bytes": "ba0100",
+      "instruction": "mov dx, 1",
+      "load_offset": 135075
+    },
+    {
+      "bytes": "eb0a",
+      "instruction": "jmp 0x20fb2",
+      "load_offset": 135078
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 135080
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec1e5657ba0100eb0a90",
+    "c_sources": [
+      "src/restunts/c/memmgr.c",
+      "src/restunts/c/shape3d.c"
+    ],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 135081,
+    "end_evidence": {
+      "instructions": 25,
+      "label": {
+        "ida": 200574,
+        "index": 4106,
+        "line": 5362
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 5398,
+    "line_start": 5386,
+    "name": "locate_shape_fatal",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 5398,
+      "line_start": 5386,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 9597,
+    "segment_paragraph": 7842,
+    "sha256": "84326676de46d67a05d869aa68934cf58d50e80478cc5bd6b5eea4713caba4a1",
+    "size": 12,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_20f9d",
+    "start": 135069,
+    "start_evidence": {
+      "instructions": 17,
+      "label": {
+        "ida": 200574,
+        "index": 4106,
+        "line": 5362
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_20f9d",
+  "name": "locate_shape_fatal",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_20f9d --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 12,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 5398,
+    "line_start": 5386,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

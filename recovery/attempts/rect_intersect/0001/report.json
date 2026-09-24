@@ -1,0 +1,81 @@
+{
+  "budget_charge": false,
+  "effective_key": "98267f6e9f3a01161fa55b7deeda344c6c918b613c6ff711c475d0432180c86b",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Correct the first Restunts comparison to strict less-than as proven by the pristine JGE; predict complete 132-byte no-fixup body",
+  "hypothesis_key": "2e13bec576f2a4c9424baa299044b2107d4b07251858b7fa9859bab89d81dd10",
+  "input_fingerprint": "e8ab713f2d556871523ba55864ad6c42f43f62ba9d293808aac6681c3ae053ec",
+  "recipe": {
+    "end": 91760,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2887,
+      "line_start": 2819,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "rect_intersect",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_rect_intersect",
+    "source": "recovery/candidates/rect_intersect.c",
+    "stable_id": "load_165ec",
+    "start": 91628,
+    "target": {
+      "sha256": "8412f5a967e641d12d29d3b5810169ae46cec443e34d64d8c36966fa67064617",
+      "size": 132
+    }
+  },
+  "result": {
+    "bytes": 132,
+    "receipt": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "ac18bd7662ef72bb32b178d4f0e46845ac7b8bde872839f4b2499d63799fbc21",
+      "object": {
+        "sha256": "c08537ebd5aaef18291de8da1400607c9e7fa79984a2a5d6c2ddc6d3ebdd5374",
+        "size": 380
+      },
+      "profile": "msc510-medium",
+      "source": {
+        "sha256": "2e8a3fcfdf0d86e13f39f4e99821730af210491185666e2301d617fa663b459b",
+        "size": 547
+      },
+      "staged_source": {
+        "sha256": "5e4953854c6ff182932b95996a267041c2c51980db94258237d3660408e964ad",
+        "size": 563
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\p2ocm21or"
+    },
+    "status": "FAST_PASS_ONLY",
+    "task": "rect_intersect"
+  },
+  "same_effective_as": [],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "2e8a3fcfdf0d86e13f39f4e99821730af210491185666e2301d617fa663b459b",
+    "size": 547
+  },
+  "started_utc": "2026-09-23T19:59:09.170390+00:00",
+  "status": "FAST_PASS_ONLY",
+  "task": "rect_intersect"
+}

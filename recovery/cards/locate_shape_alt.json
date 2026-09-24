@@ -1,0 +1,215 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/locate_shape_alt.json",
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 101004
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 101005
+    },
+    {
+      "bytes": "ff760a",
+      "instruction": "push word ptr [bp + 0xa]",
+      "load_offset": 101007
+    },
+    {
+      "bytes": "ff7608",
+      "instruction": "push word ptr [bp + 8]",
+      "load_offset": 101010
+    },
+    {
+      "bytes": "ff7606",
+      "instruction": "push word ptr [bp + 6]",
+      "load_offset": 101013
+    },
+    {
+      "bytes": "9a7d25a21e",
+      "instruction": "lcall 0x1ea2, 0x257d",
+      "load_offset": 101016
+    },
+    {
+      "bytes": "83c406",
+      "instruction": "add sp, 6",
+      "load_offset": 101021
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 101024
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf",
+      "load_offset": 101025
+    }
+  ],
+  "evidence": {
+    "binding_review": "external-far-call-v1",
+    "boundary_anchors": [
+      {
+        "hex": "045dcb90558becff",
+        "site": 101000
+      },
+      {
+        "hex": "c4065dcb558bec83",
+        "site": 101022
+      }
+    ],
+    "boundary_proof": "Existing uniquely decoded source-label interval; original adjacent bytes and complete pristine CFG rechecked by function_evidence.py",
+    "bytes_hex": "558becff760aff7608ff76069a7d25a21e83c4065dcb",
+    "c_sources": [
+      "src/restunts/c/memmgr.c",
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_fatal"
+      }
+    ],
+    "confidence": "reviewed_pristine_entry_extent_cfg",
+    "disassembly": [
+      {
+        "bytes": "55",
+        "instruction": "push bp",
+        "load_offset": 101004
+      },
+      {
+        "bytes": "8bec",
+        "instruction": "mov bp, sp",
+        "load_offset": 101005
+      },
+      {
+        "bytes": "ff760a",
+        "instruction": "push word ptr [bp + 0xa]",
+        "load_offset": 101007
+      },
+      {
+        "bytes": "ff7608",
+        "instruction": "push word ptr [bp + 8]",
+        "load_offset": 101010
+      },
+      {
+        "bytes": "ff7606",
+        "instruction": "push word ptr [bp + 6]",
+        "load_offset": 101013
+      },
+      {
+        "bytes": "9a7d25a21e",
+        "instruction": "lcall 0x1ea2, 0x257d",
+        "load_offset": 101016
+      },
+      {
+        "bytes": "83c406",
+        "instruction": "add sp, 6",
+        "load_offset": 101021
+      },
+      {
+        "bytes": "5d",
+        "instruction": "pop bp",
+        "load_offset": 101024
+      },
+      {
+        "bytes": "cb",
+        "instruction": "retf",
+        "load_offset": 101025
+      }
+    ],
+    "distance": "far",
+    "end": 101026,
+    "end_evidence": {
+      "instructions": 23,
+      "label": {
+        "ida": 166510,
+        "index": 2015,
+        "line": 2533
+      },
+      "method": "forward_from_dense_label"
+    },
+    "evidence_class": "pristine mapped interval, straight-line CFG, relocated far CALL and reviewed address aliases",
+    "issues": [],
+    "line_end": 2573,
+    "line_start": 2557,
+    "name": "locate_shape_alt",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "padding_offsets": [],
+    "prior_mapping_issues": [],
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2573,
+      "line_start": 2557,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "reachable_instruction_offsets": [
+      101004,
+      101005,
+      101007,
+      101010,
+      101013,
+      101016,
+      101021,
+      101024,
+      101025
+    ],
+    "relocation_sites": [
+      101019
+    ],
+    "segment": "seg008",
+    "segment_offset": 5596,
+    "segment_paragraph": 5963,
+    "sha256": "1853d57d02f1334c8ec7b81d71d59a40c763e429000efac21c999d6487a941ed",
+    "size": 22,
+    "source": "build/references/restunts/src/restunts/asmorig/seg008.asm",
+    "stable_id": "load_18a8c",
+    "start": 101004,
+    "start_evidence": {
+      "instructions": 14,
+      "label": {
+        "ida": 166510,
+        "index": 2015,
+        "line": 2533
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "python tools/grind.py attempt locate_shape_alt --hypothesis \"Explain source change\"",
+  "id": "load_18a8c",
+  "name": "locate_shape_alt",
+  "oracle_extent": [
+    101004,
+    101026
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote locate_shape_alt --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/locate_shape_alt.json",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/4621d2b186f9f123d7779cdaf5896a22534acfbf7e2200c68c7f02fa0e59d8d9.json",
+    "sha256": "4621d2b186f9f123d7779cdaf5896a22534acfbf7e2200c68c7f02fa0e59d8d9"
+  },
+  "size": 22,
+  "source": "recovery/candidates/locate_shape_alt.c",
+  "tier": "CHEAP",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/8a9d6a8c5c7963c86bbce16b4682db1d8664e383e3cbeb9d458007cfca18ee18.json",
+    "sha256": "8a9d6a8c5c7963c86bbce16b4682db1d8664e383e3cbeb9d458007cfca18ee18"
+  }
+}

@@ -34,10 +34,7 @@
     "distance": "far",
     "end": 93002,
     "issues": [
-      "label_interval_mismatch:0x26a92",
-      "label_interval_mismatch:0x26ac0",
-      "label_interval_mismatch:0x26aea",
-      "label_interval_mismatch:0x26b2e"
+      "label_interval_mismatch:0x26a92"
     ],
     "label_count": 19,
     "line_end": 3585,
@@ -61,7 +58,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg006:line3440",
-    "verified_labels": 15
+    "verified_labels": 18
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg006:line3440",
@@ -73,8 +70,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f.json",
+    "sha256": "9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f"
   },
   "size": null,
   "source": {
@@ -86,7 +83,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768.json",
+    "sha256": "e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768"
   }
 }

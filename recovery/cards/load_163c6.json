@@ -1,0 +1,135 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_163c6.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/math.c",
+      "src/restunts/c/shape3d.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "_abs"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_abs"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_abs"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarRadius2D"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "__aFlmul"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarAngle"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 91392,
+    "end_evidence": {
+      "instructions": 12,
+      "label": {
+        "ida": 156907,
+        "index": 2214,
+        "line": 2688
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 10,
+    "line_end": 2701,
+    "line_start": 2552,
+    "name": "vector_op_unk2",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2701,
+      "line_start": 2552,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      91095,
+      91116,
+      91130,
+      91139,
+      91211,
+      91234,
+      91323
+    ],
+    "segment": "seg006",
+    "segment_offset": 5734,
+    "segment_paragraph": 5334,
+    "sha256": "3c2dcf0f36b69c94cd89eb1ac359ec36da1ac86f0ca332fe0e3542a5b715f051",
+    "size": 314,
+    "source": "build/references/restunts/src/restunts/asmorig/seg006.asm",
+    "stable_id": "load_163c6",
+    "start": 91078,
+    "start_candidates": [
+      91078
+    ],
+    "start_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 156608,
+        "index": 2095,
+        "line": 2545
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 10
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_163c6",
+  "name": "vector_op_unk2",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_163c6 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 314,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 2701,
+    "line_start": 2552,
+    "path": "src/restunts/asmorig/seg006.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

@@ -102,32 +102,10 @@
     "distance": "far",
     "end": 19820,
     "issues": [
-      "ambiguous_or_mismatching_prefix",
-      "label_interval_mismatch:0x14803",
       "label_interval_mismatch:0x1480c",
       "label_interval_mismatch:0x148ba",
       "label_interval_mismatch:0x148c7",
-      "label_interval_mismatch:0x148e3",
-      "label_interval_mismatch:0x148ec",
-      "label_interval_mismatch:0x1496c",
-      "label_interval_mismatch:0x149b4",
-      "label_interval_mismatch:0x149cb",
-      "label_interval_mismatch:0x149f5",
-      "label_interval_mismatch:0x149fe",
-      "label_interval_mismatch:0x14a24",
-      "label_interval_mismatch:0x14a3b",
-      "label_interval_mismatch:0x14a65",
-      "label_interval_mismatch:0x14a74",
-      "label_interval_mismatch:0x14b16",
-      "label_interval_mismatch:0x14b62",
-      "label_interval_mismatch:0x14b72",
-      "label_interval_mismatch:0x14ba8",
-      "label_interval_mismatch:0x14bb6",
-      "label_interval_mismatch:0x14bd7",
-      "label_interval_mismatch:0x14bfa",
-      "label_interval_mismatch:0x14c49",
-      "label_interval_mismatch:0x14ce1",
-      "label_interval_mismatch:0x14d11"
+      "label_interval_mismatch:0x14c49"
     ],
     "label_count": 71,
     "line_end": 811,
@@ -142,11 +120,16 @@
       "repository": "restunts"
     },
     "segment": "seg001",
+    "segment_offset": 2,
+    "segment_paragraph": 1137,
     "source": "build/references/restunts/src/restunts/asmorig/seg001.asm",
-    "start_candidates": [],
+    "start": 18194,
+    "start_candidates": [
+      18194
+    ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg001:line77",
-    "verified_labels": 46
+    "verified_labels": 67
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg001:line77",
@@ -158,8 +141,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f.json",
+    "sha256": "9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f"
   },
   "size": null,
   "source": {
@@ -171,7 +154,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768.json",
+    "sha256": "e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768"
   }
 }

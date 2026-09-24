@@ -1,0 +1,266 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_0c474.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/frame.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "vector_to_point"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "vector_to_point"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "draw_line_related"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rect_intersect"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rectlist_add_rects"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rect_intersect"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rectlist_add_rects"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rect_intersect"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "skybox_op_helper2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "polarAngle"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sin_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "cos_fast"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "multiply_and_scale"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "skybox_op_helper"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "skybox_op_helper"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mat_mul_vector"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "vector_to_point"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "skybox_op_helper2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rectlist_add_rects"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "skybox_op_helper2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 52096,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 117623,
+        "index": 4018,
+        "line": 4698
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 64,
+    "line_end": 4705,
+    "line_start": 3942,
+    "name": "skybox_op",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 4705,
+      "line_start": 3942,
+      "path": "src/restunts/asmorig/seg003.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      50329,
+      50383,
+      50411,
+      50451,
+      50471,
+      50487,
+      50642,
+      50875,
+      50920,
+      50958,
+      50970,
+      51005,
+      51050,
+      51088,
+      51100,
+      51161,
+      51299,
+      51336,
+      51349,
+      51394,
+      51407,
+      51495,
+      51535,
+      51580,
+      51598,
+      51659,
+      51924,
+      52016,
+      52028,
+      52065,
+      52077
+    ],
+    "segment": "seg003",
+    "segment_offset": 9572,
+    "segment_paragraph": 2545,
+    "sha256": "8893a8161f6a8d99b5a83551ec09f3d8d84c2be15de9ebb5cfaa754f44f89424",
+    "size": 1804,
+    "source": "build/references/restunts/src/restunts/asmorig/seg003.asm",
+    "stable_id": "load_0c474",
+    "start": 50292,
+    "start_candidates": [
+      50292
+    ],
+    "start_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 115821,
+        "index": 3368,
+        "line": 3933
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 64
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_0c474",
+  "name": "skybox_op",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_0c474 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 1804,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 4705,
+    "line_start": 3942,
+    "path": "src/restunts/asmorig/seg003.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

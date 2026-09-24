@@ -73,8 +73,23 @@ def packet(identifier, expansions=()):
             out['hypotheses']=[reference(r) for r in out['hypotheses']]
             if formal:out['latest_grinder_attempt']=reference(formal[-1])
     out['expansion']='--islands --asm --callers --globals --history --full; full raw artifacts stay at referenced paths'
-    if 'asm' in expansions:out['assembly']=card.get('disassembly',[])
-    else:out['omitted_assembly_rows']=len(card.get('disassembly',[]))
+    if 'asm' in expansions:
+        out['assembly']=card.get('disassembly',[])
+        if not out['assembly'] and current and e.get('stable_id'):
+            census_path=ROOT/'recovery/blocker-census.json'
+            if census_path.exists():
+                census=read_json(census_path)
+                if census.get('queue_fingerprint')==index['workflow_fingerprint']:
+                    matching=[t for t in census['tasks'] if t['id']==row['id']]
+                    if matching:
+                        out['assembly']=matching[0]['observations'].get('research_disassembly',[])
+                        if out['assembly']:
+                            out['assembly_authority']='PRISTINE_LINEAR_DECODE_RESEARCH_ONLY; not reviewed CFG or queue eligibility'
+                            out['assembly_source']='recovery/blocker-census.json'
+    else:
+        out['omitted_assembly_rows']=len(card.get('disassembly',[]))
+        if not card.get('disassembly') and e.get('stable_id'):
+            out['research_assembly_hint']='Run reclassify, then --asm for pristine linear decode; review CFG and ownership before eligibility.'
     if 'callers' in expansions:out['callers']=e.get('callers','No complete caller index; indirect references remain unbounded')
     if 'globals' in expansions:
         out['global_evidence']={'data':'layout/data-symbols.json','code':'layout/code-symbols.json',

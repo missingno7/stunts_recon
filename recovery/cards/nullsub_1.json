@@ -1,0 +1,97 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/nullsub_1.json",
+  "disassembly": [
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 171602
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 171603
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "cb90",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 171604,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 237130,
+        "index": 21,
+        "line": 111
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 125,
+    "line_start": 120,
+    "name": "nullsub_1",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 125,
+      "line_start": 120,
+      "path": "src/restunts/asmorig/seg031.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg031",
+    "segment_offset": 66,
+    "segment_paragraph": 10721,
+    "sha256": "c8a51d4867300f9df2241e4d32f72b027916ca03fcef86fac7fa83fae59c529c",
+    "size": 2,
+    "source": "build/references/restunts/src/restunts/asmorig/seg031.asm",
+    "stable_id": "load_29e52",
+    "start": 171602,
+    "start_evidence": {
+      "instructions": 4,
+      "label": {
+        "ida": 237130,
+        "index": 21,
+        "line": 111
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "python tools/grind.py attempt nullsub_1 --hypothesis \"Explain source change\"",
+  "id": "load_29e52",
+  "name": "nullsub_1",
+  "oracle_extent": [
+    171602,
+    171604
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote nullsub_1 --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/nullsub_1.json",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/987f66c06c8d040776e7e8cd6a39f2d6557e101684fb34cdb289bea86a053dc3.json",
+    "sha256": "987f66c06c8d040776e7e8cd6a39f2d6557e101684fb34cdb289bea86a053dc3"
+  },
+  "size": 2,
+  "source": "recovery/candidates/nullsub_1.c",
+  "tier": "CHEAP",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/4370cf3c4b384a00e9234b7115249a06b78705776829de170e8a8dc6d5d822c8.json",
+    "sha256": "4370cf3c4b384a00e9234b7115249a06b78705776829de170e8a8dc6d5d822c8"
+  }
+}

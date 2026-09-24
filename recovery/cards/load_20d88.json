@@ -1,0 +1,119 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_20d88.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/fileio.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_get_chunk_by_name"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_paras"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_alloc_pages"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_read"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 134630,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 200158,
+        "index": 3929,
+        "line": 5146
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 1,
+    "line_end": 5153,
+    "line_start": 5107,
+    "name": "file_load_binary_nofatal",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 5153,
+      "line_start": 5107,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      134567,
+      134585,
+      134601,
+      134617
+    ],
+    "segment": "seg012",
+    "segment_offset": 9064,
+    "segment_paragraph": 7842,
+    "sha256": "9669e1410727e5aba451c6f3ea17eacd3ce609ffd0ccfcdb3a7812829a8c3442",
+    "size": 94,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_20d88",
+    "start": 134536,
+    "start_candidates": [
+      134536
+    ],
+    "start_evidence": {
+      "instructions": 24,
+      "label": {
+        "ida": 200026,
+        "index": 3874,
+        "line": 5073
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 1
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_20d88",
+  "name": "file_load_binary_nofatal",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_20d88 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 94,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 5153,
+    "line_start": 5107,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

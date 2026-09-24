@@ -32,67 +32,9 @@
     ],
     "confidence": "unresolved_boundary",
     "distance": "far",
+    "end": 71626,
     "issues": [
-      "ambiguous_or_mismatching_prefix",
-      "label_interval_mismatch:0x20725",
-      "label_interval_mismatch:0x2074d",
-      "label_interval_mismatch:0x20797",
-      "label_interval_mismatch:0x207b6",
-      "label_interval_mismatch:0x207cf",
-      "label_interval_mismatch:0x20832",
-      "label_interval_mismatch:0x2087a",
-      "label_interval_mismatch:0x208c9",
-      "label_interval_mismatch:0x208f3",
-      "label_interval_mismatch:0x2094b",
-      "label_interval_mismatch:0x20956",
-      "label_interval_mismatch:0x20966",
-      "label_interval_mismatch:0x20ac2",
-      "label_interval_mismatch:0x20b50",
-      "label_interval_mismatch:0x20bc4",
-      "label_interval_mismatch:0x20bcc",
-      "label_interval_mismatch:0x20bd4",
-      "label_interval_mismatch:0x20bf2",
-      "label_interval_mismatch:0x20bfa",
-      "label_interval_mismatch:0x20c02",
-      "label_interval_mismatch:0x20c0a",
-      "label_interval_mismatch:0x20c78",
-      "label_interval_mismatch:0x20c7e",
-      "label_interval_mismatch:0x20cac",
-      "label_interval_mismatch:0x20d52",
-      "label_interval_mismatch:0x20d6a",
-      "label_interval_mismatch:0x20e79",
-      "label_interval_mismatch:0x20edc",
-      "label_interval_mismatch:0x20f18",
-      "label_interval_mismatch:0x20f20",
-      "label_interval_mismatch:0x20f30",
-      "label_interval_mismatch:0x20f56",
-      "label_interval_mismatch:0x20f6a",
-      "label_interval_mismatch:0x21047",
-      "label_interval_mismatch:0x21174",
-      "label_interval_mismatch:0x21182",
-      "label_interval_mismatch:0x21195",
-      "label_interval_mismatch:0x2119c",
-      "label_interval_mismatch:0x211de",
-      "label_interval_mismatch:0x2122c",
-      "label_interval_mismatch:0x2123f",
-      "label_interval_mismatch:0x2127e",
-      "label_interval_mismatch:0x212c2",
-      "label_interval_mismatch:0x212cf",
-      "label_interval_mismatch:0x21314",
-      "label_interval_mismatch:0x21320",
-      "label_interval_mismatch:0x21367",
-      "label_interval_mismatch:0x2144e",
-      "label_interval_mismatch:0x2146c",
-      "label_interval_mismatch:0x21474",
-      "label_interval_mismatch:0x214b1",
-      "label_interval_mismatch:0x2152a",
-      "label_interval_mismatch:0x215cc",
-      "label_interval_mismatch:0x21614",
-      "label_interval_mismatch:0x2162f",
-      "label_interval_mismatch:0x21660",
-      "label_interval_mismatch:0x21688",
-      "label_interval_mismatch:0x21697",
-      "label_interval_mismatch:0x217c2"
+      "label_interval_mismatch:0x21474"
     ],
     "label_count": 188,
     "line_end": 5842,
@@ -107,11 +49,16 @@
       "repository": "restunts"
     },
     "segment": "seg004",
+    "segment_offset": 9524,
+    "segment_paragraph": 3610,
     "source": "build/references/restunts/src/restunts/asmorig/seg004.asm",
-    "start_candidates": [],
+    "start": 67284,
+    "start_candidates": [
+      67284
+    ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg004:line4078",
-    "verified_labels": 129
+    "verified_labels": 187
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg004:line4078",
@@ -123,8 +70,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": null,
   "source": {
@@ -136,7 +83,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

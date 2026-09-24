@@ -29,6 +29,12 @@ class TriageTests(unittest.TestCase):
     def test_cs_storage_needs_supervisor(self):
         blocked,_=self.inspect('sprite_set_1_size')
         self.assertIn('CS-relative storage is unsupported',blocked)
+    def test_cs_string_copy_is_not_misreported_as_dgroup(self):
+        for name in ['sprite_copy_both_to_arg','sprite_copy_arg_to_both']:
+            blocked,_=self.inspect(name)
+            self.assertIn('CS-relative storage is unsupported',blocked)
+            self.assertIn('Unregistered absolute address expression 0x5f20',blocked)
+            self.assertNotIn('Unregistered DGROUP address 0x5f20',blocked)
     def test_unregistered_absolute_global_needs_review(self):
         blocked,_=self.inspect('nopsub_kb_set_readchar_callback')
         self.assertIn('Unregistered DGROUP address 0x468c',blocked)

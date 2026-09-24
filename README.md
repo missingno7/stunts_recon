@@ -8,16 +8,15 @@ Current recovery totals and fresh acceptance are generated in the linked status 
 
 Python 3.10+ is sufficient for construction/tests. Importing Restunts evidence additionally uses pinned Capstone 5.0.3 in `build/python`.
 
-On this machine, Python is bundled with Codex:
+With Python on PATH:
 
 ```powershell
-$py = 'C:\Users\Jiri\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
-& $py tools/validate.py
-& $py tools/reconstruction_factory.py next
-& $py tools/context.py FUNCTION_ID
+python tools/validate.py
+python tools/reconstruction_factory.py next
+python tools/context.py FUNCTION_ID
 ```
 
-With Python on PATH, use the same commands prefixed by `python`.
+Python 3.10+ is required. If it is not on PATH, use an installed Python executable with the same script arguments.
 
 Context automatically shows compact mismatch islands and exact anchors when an archived diagnosis exists. Use `python tools/context.py FUNCTION_ID --diagnosis` for a concise text view, then consult the referenced full artifact if needed. Preserve exact anchors while investigating local differences; diagnostic similarity never relaxes byte/fixup acceptance.
 

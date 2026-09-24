@@ -1,0 +1,248 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_2a9fc.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/shape2d.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "_strcpy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_find"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_strcpy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_get_chunk_by_name"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_get_chunk_by_name"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_strcpy"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_stricmp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_decomp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_get_unflip_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_alloc_pages"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_unflip_shape2d"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_release"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_stricmp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_decomp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_stricmp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_decomp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_alloc_pages"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_unflip_shape2d_pes"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_release"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_shape2d_expandedsize"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_nofatal"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_shape2d_palmap_init"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_alloc_pages"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_stricmp"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_binary"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_binary"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_shape2d_expand"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_release"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_op_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_shape2d_palmap_apply"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 175280,
+    "end_evidence": {
+      "instructions": 9,
+      "label": {
+        "ida": 240791,
+        "index": 265,
+        "line": 393
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 21,
+    "line_end": 403,
+    "line_start": 104,
+    "name": "file_load_shape2d",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 403,
+      "line_start": 104,
+      "path": "src/restunts/asmorig/seg034.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      174606,
+      174663,
+      174700,
+      174712,
+      174745,
+      174770,
+      174786,
+      174805,
+      174827,
+      174840,
+      174862,
+      174876,
+      174895,
+      174914,
+      174939,
+      174961,
+      174990,
+      175012,
+      175026,
+      175040,
+      175061,
+      175101,
+      175143,
+      175162,
+      175194,
+      175222,
+      175236,
+      175250,
+      175272
+    ],
+    "segment": "seg034",
+    "segment_offset": 44,
+    "segment_paragraph": 10909,
+    "sha256": "84dd03ef69a600bfa069a143c3d2128b338c6af5bc42c60803cdf73a1f8fadee",
+    "size": 692,
+    "source": "build/references/restunts/src/restunts/asmorig/seg034.asm",
+    "stable_id": "load_2a9fc",
+    "start": 174588,
+    "start_candidates": [
+      174588
+    ],
+    "start_evidence": {
+      "instructions": 2,
+      "label": {
+        "ida": 240122,
+        "index": 20,
+        "line": 100
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 21
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_2a9fc",
+  "name": "file_load_shape2d",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_2a9fc --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 692,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 403,
+    "line_start": 104,
+    "path": "src/restunts/asmorig/seg034.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

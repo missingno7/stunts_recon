@@ -1,0 +1,107 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_29cce.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "_strrchr"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "_strrchr"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 171540,
+    "end_evidence": {
+      "instructions": 2,
+      "label": {
+        "ida": 237074,
+        "index": 151,
+        "line": 232
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 21,
+    "line_end": 235,
+    "line_start": 56,
+    "name": "audio_make_filename",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 235,
+      "line_start": 56,
+      "path": "src/restunts/asmorig/seg030.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      171262,
+      171340
+    ],
+    "segment": "seg030",
+    "segment_offset": 14,
+    "segment_paragraph": 10700,
+    "sha256": "7ba63d2601199dc7986976108cb232d58b667e48c7040dca7c270802f7e0e80c",
+    "size": 326,
+    "source": "build/references/restunts/src/restunts/asmorig/seg030.asm",
+    "stable_id": "load_29cce",
+    "start": 171214,
+    "start_candidates": [
+      171214
+    ],
+    "start_evidence": {
+      "instructions": 1,
+      "label": {
+        "ida": 236751,
+        "index": 5,
+        "line": 64
+      },
+      "method": "unique_reverse_to_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 21
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_29cce",
+  "name": "audio_make_filename",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_29cce --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 326,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 235,
+    "line_start": 56,
+    "path": "src/restunts/asmorig/seg030.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

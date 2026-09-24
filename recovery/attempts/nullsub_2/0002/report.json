@@ -1,0 +1,93 @@
+{
+  "budget_charge": false,
+  "effective_key": "ae6b4112c3c3b860b278c72df0f7b895d274cf72eeb4f288ae75e732b1e41170",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Promote fresh exact complete two-byte contribution with independent hybrid parity",
+  "hypothesis_key": "6105b9c4242e69fd30688ad93fef8f0ce19cc66ec512ef770aa96f7d9692ef63",
+  "input_fingerprint": "618bf73046fb6663452ee0445fde8b6785e27fb281a45441548c71964df88107",
+  "recipe": {
+    "end": 171606,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 131,
+      "line_start": 126,
+      "path": "src/restunts/asmorig/seg031.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "nullsub_2",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_nullsub_2",
+    "source": "recovery/candidates/nullsub_2.c",
+    "stable_id": "load_29e54",
+    "start": 171604,
+    "target": {
+      "sha256": "c8a51d4867300f9df2241e4d32f72b027916ca03fcef86fac7fa83fae59c529c",
+      "size": 2
+    }
+  },
+  "result": {
+    "bytes": 2,
+    "candidate_compiled_fresh_at_least": 3,
+    "canonical_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "fast": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "a5d281a377e2b11bbebdb1bb1f0d1e5bfd89914d0fdd6c1fdc3d22ca4c7afa51",
+      "object": {
+        "sha256": "a260fc892716eaba187ab3a9d623e55e493c38a6fe6d72858baa0878385c874f",
+        "size": 240
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "db85e91859f4ca721fba472c26bcdd938e225c1f38b29dbbc4cf4ac31e5a8795",
+        "size": 25
+      },
+      "staged_source": {
+        "sha256": "db85e91859f4ca721fba472c26bcdd938e225c1f38b29dbbc4cf4ac31e5a8795",
+        "size": 25
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pseslfs01"
+    },
+    "staged_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "status": "PROMOTED",
+    "task": "nullsub_2"
+  },
+  "same_effective_as": [
+    1
+  ],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "db85e91859f4ca721fba472c26bcdd938e225c1f38b29dbbc4cf4ac31e5a8795",
+    "size": 25
+  },
+  "started_utc": "2026-09-23T21:53:27.112263+00:00",
+  "status": "PROMOTED",
+  "task": "nullsub_2"
+}

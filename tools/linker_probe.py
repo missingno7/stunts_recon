@@ -126,6 +126,88 @@ def far_experiment(profile='msc510-medium', library_first=False):
         'executable':identity(data),'module_sha256':row['module_sha256'],'historical_link_equal':True}
 
 
+def mixed_far_data_experiment(profile='msc510-medium', library_first=False, data_offset=0x123):
+    """Compare one complete MSC object with mixed far CALL and DGROUP FIXUPPs to LINK.
+
+    The library and synthetic data provider supply independent map addresses.
+    The compiler object is passed to historical LINK without editing any record.
+    """
+    import re
+    from common import read_json, sha
+    from omf import OmfReader
+    from binder import bind_mixed_far_data
+    source = (b'extern unsigned char flags[]; '
+              b'long product(long a,long b) { flags[1]=3; flags[2]=4; return a*b; }\n')
+    obj, receipt = compile_source(source, profile)
+    work = Path(receipt['work_directory'])
+    require(len(obj.linker_fixups) == 3 and
+            [f['loc'] for f in obj.linker_fixups] == ['pointer32', 'offset16', 'offset16'],
+            'Fixture compiler did not emit the reviewed mixed FIXUPP order')
+    row = read_json(ROOT / 'layout/library-candidates.json')['library_lmul']
+    archive = (ROOT / row['library']).read_bytes()
+    require(sha(archive) == row['library_sha256'], 'Pinned mixed fixture library changed')
+    members = [body for name, body in OmfReader().split_library(archive)
+               if name == row['module'] and sha(body) == row['module_sha256']]
+    require(len(members) == 1, 'Missing mixed fixture library member')
+    (work / 'MUL.OBJ').write_bytes(members[0])
+    provider_bytes = provider(data_offset)
+    (work / 'DATA.OBJ').write_bytes(provider_bytes)
+    config, runner = verify_toolchain(profile)
+    tc = (ROOT / config['directory']).resolve()
+    order = 'MUL.OBJ+UNIT.OBJ+DATA.OBJ' if library_first else 'UNIT.OBJ+MUL.OBJ+DATA.OBJ'
+    cmd = [runner['path'], '-e', '-v5.00', str(tc / 'LINK.EXE'),
+           f'/NOD /MAP {order},RESULT.EXE,RESULT.MAP;']
+    result = subprocess.run(cmd, cwd=work,
+        env={'PATH': str(tc), 'MSDOS_PATH': str(tc), 'TEMP': '.', 'TMP': '.', 'MSDOS_TEMP': '.'},
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=60,
+        creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    (work / 'link.log').write_bytes(result.stdout)
+    require(result.returncode == 0 and (work / 'RESULT.EXE').exists(),
+            'Mixed LINK fixture failed: ' + str(work))
+    data = (work / 'RESULT.EXE').read_bytes()
+    mz = MZ.parse(data)
+    image = mz.load_image(data)
+    mapping = (work / 'RESULT.MAP').read_text()
+    segment = re.search(r'^\s*([0-9A-F]+)H\s+[0-9A-F]+H\s+([0-9A-F]+)H\s+UNIT_TEXT\s+CODE', mapping, re.M)
+    far_public = re.search(r'^\s*([0-9A-F]+):([0-9A-F]+)\s+__aFlmul\s*$', mapping, re.M)
+    data_public = re.search(r'^\s*([0-9A-F]+):([0-9A-F]+)\s+_flags\s*$', mapping, re.M)
+    dgroup = re.search(r'^\s*([0-9A-F]+):0\s+DGROUP\s*$', mapping, re.M)
+    require(all((segment, far_public, data_public, dgroup)), 'Mixed LINK map incomplete')
+    start, size = int(segment[1], 16), int(segment[2], 16)
+    require(size == obj.segment_length('UNIT_TEXT'), 'Mixed LINK extent changed')
+    far_frame = int(far_public[1], 16) * 16
+    symbols = {
+        '__aFlmul': {'kind': 'far-code', 'frame_load_address': far_frame,
+                     'load_address': far_frame + int(far_public[2], 16)},
+        '_flags': {'group': 'DGROUP', 'frame_load_address': int(dgroup[1], 16) * 16,
+                   'load_address': int(data_public[1], 16) * 16 + int(data_public[2], 16)},
+    }
+    expected_relocations = [
+        {'segment': start // 16, 'offset': start % 16 + fix['offset'] + 2,
+         'load_offset': start + fix['offset'] + 2}
+        for fix in obj.linker_fixups if fix['loc'] == 'pointer32']
+    require(mz.relocations == expected_relocations, 'Mixed LINK relocation order/coordinates differ')
+    declarations = {'segments': obj.segment_defs, 'groups': obj.groups,
+                    'publics': obj.publics, 'externals': obj.externals}
+    bound, binding = bind_mixed_far_data(obj, 'UNIT_TEXT', '_product', size,
+        obj.linker_fixups, declarations, symbols, start, expected_relocations)
+    require(bound == image[start:start + size], 'Mixed binder differs from untouched historical LINK')
+    require(identity((work / 'UNIT.OBJ').read_bytes()) == receipt['object'] and
+            sha((work / 'MUL.OBJ').read_bytes()) == row['module_sha256'] and
+            identity((work / 'DATA.OBJ').read_bytes()) == identity(provider_bytes),
+            'Mixed LINK input object changed')
+    verify_toolchain(profile)
+    return obj, symbols, {
+        'profile': profile, 'library_first': library_first, 'data_offset': data_offset,
+        'source': source.decode('ascii'), 'compiler': receipt, 'link_command': cmd,
+        'link_returncode': result.returncode, 'link_log': result.stdout.decode('ascii', 'replace'),
+        'map': mapping, 'executable': identity(data), 'provider_object': identity(provider_bytes),
+        'library_member_sha256': row['module_sha256'], 'fixups': obj.linker_fixups,
+        'object_text': obj.segment_bytes('UNIT_TEXT').hex(),
+        'linked_text': image[start:start + size].hex(), 'relocations': mz.relocations,
+        'binding': binding, 'historical_link_equal': True}
+
+
 def near_transform_experiment(profile='msc510-medium'):
     """Research only: determine who emits PUSH CS + near CALL in a shared TU."""
     source=b'int callee(int x) { return x+1; } int caller(int x) { return callee(x); }\n'

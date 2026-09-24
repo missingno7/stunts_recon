@@ -1,0 +1,119 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "Hardware/interrupt semantics need supervisor review; Unregistered DGROUP address 0x4108; Unregistered DGROUP address 0x410a",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "Hardware/interrupt semantics need supervisor review",
+    "Unregistered DGROUP address 0x4108",
+    "Unregistered DGROUP address 0x410a"
+  ],
+  "card": "recovery/cards/load_22778.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "fa",
+      "instruction": "cli ",
+      "load_offset": 141176
+    },
+    {
+      "bytes": "a10841",
+      "instruction": "mov ax, word ptr [0x4108]",
+      "load_offset": 141177
+    },
+    {
+      "bytes": "8b160a41",
+      "instruction": "mov dx, word ptr [0x410a]",
+      "load_offset": 141180
+    },
+    {
+      "bytes": "fb",
+      "instruction": "sti ",
+      "load_offset": 141184
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 141185
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "faa108418b160a41fbcb",
+    "c_sources": [
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 141186,
+    "end_evidence": {
+      "instructions": 51,
+      "label": {
+        "ida": 206621,
+        "index": 6612,
+        "line": 8646
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 8742,
+    "line_start": 8735,
+    "name": "timer_get_counter",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 8742,
+      "line_start": 8735,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 15704,
+    "segment_paragraph": 7842,
+    "sha256": "824af8fc2a6a6f4b97ff26c56c6376da0a14bae57eb2e49ef92c653499205dca",
+    "size": 10,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_22778",
+    "start": 141176,
+    "start_evidence": {
+      "instructions": 46,
+      "label": {
+        "ida": 206621,
+        "index": 6612,
+        "line": 8646
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_22778",
+  "name": "timer_get_counter",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_22778 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 10,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 8742,
+    "line_start": 8735,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

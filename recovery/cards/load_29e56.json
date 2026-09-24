@@ -1,0 +1,297 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_29e56.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_init_interrupt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_shift_checking2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_call_readchar_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "kb_reg_callback"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mmgr_alloc_a000"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "video_set_mode_13h"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "video_set_mode4"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_setup_interrupt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_2_to_1_clear"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_init"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_load_driver"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_stop_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "libsub_quit_to_dos_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_toggle_flag2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "audio_toggle_flag6"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "set_criterr_handler"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "load_palandcursor"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_2_to_1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rect_adjust_from_point"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "rect_adjust_from_point"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "random_wait"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_material_list_pointers"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 172636,
+    "end_evidence": {
+      "instructions": 19,
+      "label": {
+        "ida": 238123,
+        "index": 388,
+        "line": 558
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 41,
+    "line_end": 578,
+    "line_start": 132,
+    "name": "init_main",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 578,
+      "line_start": 132,
+      "path": "src/restunts/asmorig/seg031.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      171617,
+      171622,
+      171627,
+      171633,
+      171644,
+      171653,
+      171664,
+      171673,
+      171684,
+      171693,
+      171704,
+      171713,
+      171724,
+      171733,
+      171744,
+      171753,
+      171764,
+      171773,
+      171784,
+      171793,
+      171804,
+      171836,
+      172157,
+      172168,
+      172173,
+      172178,
+      172191,
+      172207,
+      172219,
+      172228,
+      172242,
+      172247,
+      172253,
+      172260,
+      172272,
+      172291,
+      172299,
+      172309,
+      172323,
+      172345,
+      172391,
+      172409,
+      172423,
+      172450,
+      172473,
+      172625
+    ],
+    "segment": "seg031",
+    "segment_offset": 70,
+    "segment_paragraph": 10721,
+    "sha256": "501da7ceb125c3e55fc146c47194d5b6eff3f991c78123b5507b2714b6fc8420",
+    "size": 1030,
+    "source": "build/references/restunts/src/restunts/asmorig/seg031.asm",
+    "stable_id": "load_29e56",
+    "start": 171606,
+    "start_candidates": [
+      171606
+    ],
+    "start_evidence": {
+      "instructions": 8,
+      "label": {
+        "ida": 237130,
+        "index": 21,
+        "line": 111
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 41
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_29e56",
+  "name": "init_main",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_29e56 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 1030,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 578,
+    "line_start": 132,
+    "path": "src/restunts/asmorig/seg031.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

@@ -25,13 +25,14 @@ def verify_toolchain(profile):
                 f'Toolchain hash mismatch: {path}')
     return config, lock['runner']
 
-def compile_source(source, profile, flags=None):
+def compile_source(source, profile, flags=None, *, research_local_symbols=False):
     config, runner = verify_toolchain(profile)
     root = ROOT / 'build/probes'
     root.mkdir(parents=True, exist_ok=True)
     work = Path(tempfile.mkdtemp(prefix='p', dir=root))
     # Fixed DOS input basename and deterministic DOS line endings.
-    source_receipt={'profile':profile,'source':identity(source),'work_directory':str(work)}
+    source_receipt={'profile':profile,'source':identity(source),'work_directory':str(work),
+                    'research_local_symbols':research_local_symbols}
     try:
         text = source.decode('ascii').replace('\r\n', '\n').replace('\r', '\n')
     except UnicodeDecodeError as error:
@@ -56,18 +57,20 @@ def compile_source(source, profile, flags=None):
     data = obj_path.read_bytes() if obj_path.exists() else None
     receipt = {'profile': profile, 'command': argv, 'source': identity(source),
                'staged_source': identity(staged), 'object': identity(data) if data is not None else None,
-               'work_directory': str(work), 'compiler_stdout_sha256': sha(result.stdout)}
+               'work_directory': str(work), 'compiler_stdout_sha256': sha(result.stdout),
+               'research_local_symbols': research_local_symbols}
     write_json(work / 'receipt.json', receipt)
     verify_toolchain(profile)
     if result.returncode != 0 or data is None:
         raise CompileFailure(f'Compiler failed; see {work / "compiler.log"}', receipt, 'COMPILER_ERROR')
     try:
-        obj = read_object(data)
+        obj = read_object(data, research_local_symbols=research_local_symbols)
     except ValueError as error:
         raise CompileFailure(str(error), receipt, 'UNSUPPORTED_OBJECT') from error
     from common import json_bytes
     receipt['effective_code']=sha(json_bytes({'segments':{k:identity(v) for k,v in obj.segments.items()},
         'declarations':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,
-        'externals':obj.externals,'fixups':obj.linker_fixups,'profile':profile,'flags':argv[5:-1]}))
+        'externals':obj.externals,'fixups':obj.linker_fixups,
+        'local_symbol_records':obj.local_symbol_records,'profile':profile,'flags':argv[5:-1]}))
     write_json(work/'receipt.json',receipt)
     return obj, receipt

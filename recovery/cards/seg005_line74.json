@@ -348,27 +348,16 @@
     ],
     "confidence": "unresolved_boundary",
     "distance": "far",
+    "end": 74746,
     "issues": [
-      "label_interval_mismatch:0x21be4",
-      "label_interval_mismatch:0x21bec",
-      "label_interval_mismatch:0x21c0f",
       "label_interval_mismatch:0x21c24",
-      "label_interval_mismatch:0x21c5e",
       "label_interval_mismatch:0x21c78",
       "label_interval_mismatch:0x21cdc",
-      "label_interval_mismatch:0x21d08",
       "label_interval_mismatch:0x21d2c",
-      "label_interval_mismatch:0x21d7b",
       "label_interval_mismatch:0x21f38",
       "label_interval_mismatch:0x21f84",
-      "label_interval_mismatch:0x21fc2",
-      "label_interval_mismatch:0x22048",
       "label_interval_mismatch:0x22052",
-      "label_interval_mismatch:0x22064",
-      "label_interval_mismatch:0x221a6",
-      "label_interval_mismatch:0x22208",
-      "label_interval_mismatch:0x2227e",
-      "label_interval_mismatch:0x223f4"
+      "label_interval_mismatch:0x22064"
     ],
     "label_count": 76,
     "line_end": 889,
@@ -392,7 +381,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg005:line74",
-    "verified_labels": 56
+    "verified_labels": 68
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg005:line74",
@@ -404,8 +393,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb.json",
+    "sha256": "8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb"
   },
   "size": null,
   "source": {
@@ -417,7 +406,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7.json",
+    "sha256": "c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7"
   }
 }

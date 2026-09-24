@@ -1,7 +1,7 @@
 {
   "attempt_budget": 3,
   "attempts_remaining": 3,
-  "blocker": "Restunts C hypothesis emits 84 bytes instead of 76; register/local layout requires targeted source work",
+  "blocker": "Register-coordinate research emits a complete 76-byte no-fixup body with SI/DI and 31/33 byte-exact instructions; only two temp-store displacements remain BP-2 versus pristine BP-6. Moving the temp declaration before the register coordinates produced the identical output. Source/allocator or TU context for the BP-6 home remains unproven; do not patch operands or reopen without a discriminating explanation.",
   "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
   "capability_blockers": [],
   "card": "recovery/cards/load_1637a.json",
@@ -241,8 +241,8 @@
   "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
   "risks": [],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": 76,
   "source": {
@@ -254,7 +254,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

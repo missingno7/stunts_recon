@@ -1,0 +1,732 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/rect_intersect.json",
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 91628
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 91629
+    },
+    {
+      "bytes": "56",
+      "instruction": "push si",
+      "load_offset": 91631
+    },
+    {
+      "bytes": "8b5e06",
+      "instruction": "mov bx, word ptr [bp + 6]",
+      "load_offset": 91632
+    },
+    {
+      "bytes": "8bf3",
+      "instruction": "mov si, bx",
+      "load_offset": 91635
+    },
+    {
+      "bytes": "8b04",
+      "instruction": "mov ax, word ptr [si]",
+      "load_offset": 91637
+    },
+    {
+      "bytes": "394702",
+      "instruction": "cmp word ptr [bx + 2], ax",
+      "load_offset": 91639
+    },
+    {
+      "bytes": "7d06",
+      "instruction": "jge 0x16602",
+      "load_offset": 91642
+    },
+    {
+      "bytes": "b80100",
+      "instruction": "mov ax, 1",
+      "load_offset": 91644
+    },
+    {
+      "bytes": "5e",
+      "instruction": "pop si",
+      "load_offset": 91647
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 91648
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 91649
+    },
+    {
+      "bytes": "8b5e08",
+      "instruction": "mov bx, word ptr [bp + 8]",
+      "load_offset": 91650
+    },
+    {
+      "bytes": "8b7606",
+      "instruction": "mov si, word ptr [bp + 6]",
+      "load_offset": 91653
+    },
+    {
+      "bytes": "8b04",
+      "instruction": "mov ax, word ptr [si]",
+      "load_offset": 91656
+    },
+    {
+      "bytes": "394702",
+      "instruction": "cmp word ptr [bx + 2], ax",
+      "load_offset": 91658
+    },
+    {
+      "bytes": "7eed",
+      "instruction": "jle 0x165fc",
+      "load_offset": 91661
+    },
+    {
+      "bytes": "8bde",
+      "instruction": "mov bx, si",
+      "load_offset": 91663
+    },
+    {
+      "bytes": "8b7608",
+      "instruction": "mov si, word ptr [bp + 8]",
+      "load_offset": 91665
+    },
+    {
+      "bytes": "8b04",
+      "instruction": "mov ax, word ptr [si]",
+      "load_offset": 91668
+    },
+    {
+      "bytes": "394702",
+      "instruction": "cmp word ptr [bx + 2], ax",
+      "load_offset": 91670
+    },
+    {
+      "bytes": "7ee1",
+      "instruction": "jle 0x165fc",
+      "load_offset": 91673
+    },
+    {
+      "bytes": "8b4406",
+      "instruction": "mov ax, word ptr [si + 6]",
+      "load_offset": 91675
+    },
+    {
+      "bytes": "394704",
+      "instruction": "cmp word ptr [bx + 4], ax",
+      "load_offset": 91678
+    },
+    {
+      "bytes": "7dd9",
+      "instruction": "jge 0x165fc",
+      "load_offset": 91681
+    },
+    {
+      "bytes": "8b4404",
+      "instruction": "mov ax, word ptr [si + 4]",
+      "load_offset": 91683
+    },
+    {
+      "bytes": "394706",
+      "instruction": "cmp word ptr [bx + 6], ax",
+      "load_offset": 91686
+    },
+    {
+      "bytes": "7ed1",
+      "instruction": "jle 0x165fc",
+      "load_offset": 91689
+    },
+    {
+      "bytes": "8bde",
+      "instruction": "mov bx, si",
+      "load_offset": 91691
+    },
+    {
+      "bytes": "8b37",
+      "instruction": "mov si, word ptr [bx]",
+      "load_offset": 91693
+    },
+    {
+      "bytes": "8b5e06",
+      "instruction": "mov bx, word ptr [bp + 6]",
+      "load_offset": 91695
+    },
+    {
+      "bytes": "3937",
+      "instruction": "cmp word ptr [bx], si",
+      "load_offset": 91698
+    },
+    {
+      "bytes": "7d02",
+      "instruction": "jge 0x16638",
+      "load_offset": 91700
+    },
+    {
+      "bytes": "8937",
+      "instruction": "mov word ptr [bx], si",
+      "load_offset": 91702
+    },
+    {
+      "bytes": "8b5e06",
+      "instruction": "mov bx, word ptr [bp + 6]",
+      "load_offset": 91704
+    },
+    {
+      "bytes": "8b7608",
+      "instruction": "mov si, word ptr [bp + 8]",
+      "load_offset": 91707
+    },
+    {
+      "bytes": "8b4402",
+      "instruction": "mov ax, word ptr [si + 2]",
+      "load_offset": 91710
+    },
+    {
+      "bytes": "394702",
+      "instruction": "cmp word ptr [bx + 2], ax",
+      "load_offset": 91713
+    },
+    {
+      "bytes": "7e03",
+      "instruction": "jle 0x16649",
+      "load_offset": 91716
+    },
+    {
+      "bytes": "894702",
+      "instruction": "mov word ptr [bx + 2], ax",
+      "load_offset": 91718
+    },
+    {
+      "bytes": "8b5e06",
+      "instruction": "mov bx, word ptr [bp + 6]",
+      "load_offset": 91721
+    },
+    {
+      "bytes": "8b7608",
+      "instruction": "mov si, word ptr [bp + 8]",
+      "load_offset": 91724
+    },
+    {
+      "bytes": "8b4404",
+      "instruction": "mov ax, word ptr [si + 4]",
+      "load_offset": 91727
+    },
+    {
+      "bytes": "394704",
+      "instruction": "cmp word ptr [bx + 4], ax",
+      "load_offset": 91730
+    },
+    {
+      "bytes": "7d03",
+      "instruction": "jge 0x1665a",
+      "load_offset": 91733
+    },
+    {
+      "bytes": "894704",
+      "instruction": "mov word ptr [bx + 4], ax",
+      "load_offset": 91735
+    },
+    {
+      "bytes": "8b5e06",
+      "instruction": "mov bx, word ptr [bp + 6]",
+      "load_offset": 91738
+    },
+    {
+      "bytes": "8b7608",
+      "instruction": "mov si, word ptr [bp + 8]",
+      "load_offset": 91741
+    },
+    {
+      "bytes": "8b4406",
+      "instruction": "mov ax, word ptr [si + 6]",
+      "load_offset": 91744
+    },
+    {
+      "bytes": "394706",
+      "instruction": "cmp word ptr [bx + 6], ax",
+      "load_offset": 91747
+    },
+    {
+      "bytes": "7e03",
+      "instruction": "jle 0x1666b",
+      "load_offset": 91750
+    },
+    {
+      "bytes": "894706",
+      "instruction": "mov word ptr [bx + 6], ax",
+      "load_offset": 91752
+    },
+    {
+      "bytes": "2bc0",
+      "instruction": "sub ax, ax",
+      "load_offset": 91755
+    },
+    {
+      "bytes": "5e",
+      "instruction": "pop si",
+      "load_offset": 91757
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 91758
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 91759
+    }
+  ],
+  "evidence": {
+    "abi": {
+      "arguments": "two near RECTANGLE pointers, signed 16-bit fields at offsets 0,2,4,6",
+      "flow": "five early return-one tests, four conditional in-place clamps, return zero; no calls",
+      "return": "far int in AX; two near-pointer arguments caller-owned"
+    },
+    "boundary_anchors": [
+      {
+        "hex": "5e5dcb558bec568b5e06",
+        "site": 91625
+      },
+      {
+        "hex": "5e5dcb558bec83ec",
+        "site": 91757
+      }
+    ],
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/frame.c",
+      "src/restunts/c/math.c"
+    ],
+    "calls": [],
+    "confidence": "reviewed_pristine_entry_extent_cfg",
+    "disassembly": [
+      {
+        "bytes": "55",
+        "instruction": "push bp",
+        "load_offset": 91628
+      },
+      {
+        "bytes": "8bec",
+        "instruction": "mov bp, sp",
+        "load_offset": 91629
+      },
+      {
+        "bytes": "56",
+        "instruction": "push si",
+        "load_offset": 91631
+      },
+      {
+        "bytes": "8b5e06",
+        "instruction": "mov bx, word ptr [bp + 6]",
+        "load_offset": 91632
+      },
+      {
+        "bytes": "8bf3",
+        "instruction": "mov si, bx",
+        "load_offset": 91635
+      },
+      {
+        "bytes": "8b04",
+        "instruction": "mov ax, word ptr [si]",
+        "load_offset": 91637
+      },
+      {
+        "bytes": "394702",
+        "instruction": "cmp word ptr [bx + 2], ax",
+        "load_offset": 91639
+      },
+      {
+        "bytes": "7d06",
+        "instruction": "jge 0x16602",
+        "load_offset": 91642
+      },
+      {
+        "bytes": "b80100",
+        "instruction": "mov ax, 1",
+        "load_offset": 91644
+      },
+      {
+        "bytes": "5e",
+        "instruction": "pop si",
+        "load_offset": 91647
+      },
+      {
+        "bytes": "5d",
+        "instruction": "pop bp",
+        "load_offset": 91648
+      },
+      {
+        "bytes": "cb",
+        "instruction": "retf ",
+        "load_offset": 91649
+      },
+      {
+        "bytes": "8b5e08",
+        "instruction": "mov bx, word ptr [bp + 8]",
+        "load_offset": 91650
+      },
+      {
+        "bytes": "8b7606",
+        "instruction": "mov si, word ptr [bp + 6]",
+        "load_offset": 91653
+      },
+      {
+        "bytes": "8b04",
+        "instruction": "mov ax, word ptr [si]",
+        "load_offset": 91656
+      },
+      {
+        "bytes": "394702",
+        "instruction": "cmp word ptr [bx + 2], ax",
+        "load_offset": 91658
+      },
+      {
+        "bytes": "7eed",
+        "instruction": "jle 0x165fc",
+        "load_offset": 91661
+      },
+      {
+        "bytes": "8bde",
+        "instruction": "mov bx, si",
+        "load_offset": 91663
+      },
+      {
+        "bytes": "8b7608",
+        "instruction": "mov si, word ptr [bp + 8]",
+        "load_offset": 91665
+      },
+      {
+        "bytes": "8b04",
+        "instruction": "mov ax, word ptr [si]",
+        "load_offset": 91668
+      },
+      {
+        "bytes": "394702",
+        "instruction": "cmp word ptr [bx + 2], ax",
+        "load_offset": 91670
+      },
+      {
+        "bytes": "7ee1",
+        "instruction": "jle 0x165fc",
+        "load_offset": 91673
+      },
+      {
+        "bytes": "8b4406",
+        "instruction": "mov ax, word ptr [si + 6]",
+        "load_offset": 91675
+      },
+      {
+        "bytes": "394704",
+        "instruction": "cmp word ptr [bx + 4], ax",
+        "load_offset": 91678
+      },
+      {
+        "bytes": "7dd9",
+        "instruction": "jge 0x165fc",
+        "load_offset": 91681
+      },
+      {
+        "bytes": "8b4404",
+        "instruction": "mov ax, word ptr [si + 4]",
+        "load_offset": 91683
+      },
+      {
+        "bytes": "394706",
+        "instruction": "cmp word ptr [bx + 6], ax",
+        "load_offset": 91686
+      },
+      {
+        "bytes": "7ed1",
+        "instruction": "jle 0x165fc",
+        "load_offset": 91689
+      },
+      {
+        "bytes": "8bde",
+        "instruction": "mov bx, si",
+        "load_offset": 91691
+      },
+      {
+        "bytes": "8b37",
+        "instruction": "mov si, word ptr [bx]",
+        "load_offset": 91693
+      },
+      {
+        "bytes": "8b5e06",
+        "instruction": "mov bx, word ptr [bp + 6]",
+        "load_offset": 91695
+      },
+      {
+        "bytes": "3937",
+        "instruction": "cmp word ptr [bx], si",
+        "load_offset": 91698
+      },
+      {
+        "bytes": "7d02",
+        "instruction": "jge 0x16638",
+        "load_offset": 91700
+      },
+      {
+        "bytes": "8937",
+        "instruction": "mov word ptr [bx], si",
+        "load_offset": 91702
+      },
+      {
+        "bytes": "8b5e06",
+        "instruction": "mov bx, word ptr [bp + 6]",
+        "load_offset": 91704
+      },
+      {
+        "bytes": "8b7608",
+        "instruction": "mov si, word ptr [bp + 8]",
+        "load_offset": 91707
+      },
+      {
+        "bytes": "8b4402",
+        "instruction": "mov ax, word ptr [si + 2]",
+        "load_offset": 91710
+      },
+      {
+        "bytes": "394702",
+        "instruction": "cmp word ptr [bx + 2], ax",
+        "load_offset": 91713
+      },
+      {
+        "bytes": "7e03",
+        "instruction": "jle 0x16649",
+        "load_offset": 91716
+      },
+      {
+        "bytes": "894702",
+        "instruction": "mov word ptr [bx + 2], ax",
+        "load_offset": 91718
+      },
+      {
+        "bytes": "8b5e06",
+        "instruction": "mov bx, word ptr [bp + 6]",
+        "load_offset": 91721
+      },
+      {
+        "bytes": "8b7608",
+        "instruction": "mov si, word ptr [bp + 8]",
+        "load_offset": 91724
+      },
+      {
+        "bytes": "8b4404",
+        "instruction": "mov ax, word ptr [si + 4]",
+        "load_offset": 91727
+      },
+      {
+        "bytes": "394704",
+        "instruction": "cmp word ptr [bx + 4], ax",
+        "load_offset": 91730
+      },
+      {
+        "bytes": "7d03",
+        "instruction": "jge 0x1665a",
+        "load_offset": 91733
+      },
+      {
+        "bytes": "894704",
+        "instruction": "mov word ptr [bx + 4], ax",
+        "load_offset": 91735
+      },
+      {
+        "bytes": "8b5e06",
+        "instruction": "mov bx, word ptr [bp + 6]",
+        "load_offset": 91738
+      },
+      {
+        "bytes": "8b7608",
+        "instruction": "mov si, word ptr [bp + 8]",
+        "load_offset": 91741
+      },
+      {
+        "bytes": "8b4406",
+        "instruction": "mov ax, word ptr [si + 6]",
+        "load_offset": 91744
+      },
+      {
+        "bytes": "394706",
+        "instruction": "cmp word ptr [bx + 6], ax",
+        "load_offset": 91747
+      },
+      {
+        "bytes": "7e03",
+        "instruction": "jle 0x1666b",
+        "load_offset": 91750
+      },
+      {
+        "bytes": "894706",
+        "instruction": "mov word ptr [bx + 6], ax",
+        "load_offset": 91752
+      },
+      {
+        "bytes": "2bc0",
+        "instruction": "sub ax, ax",
+        "load_offset": 91755
+      },
+      {
+        "bytes": "5e",
+        "instruction": "pop si",
+        "load_offset": 91757
+      },
+      {
+        "bytes": "5d",
+        "instruction": "pop bp",
+        "load_offset": 91758
+      },
+      {
+        "bytes": "cb",
+        "instruction": "retf ",
+        "load_offset": 91759
+      }
+    ],
+    "distance": "far",
+    "end": 91760,
+    "end_evidence": {
+      "instructions": 4,
+      "label": {
+        "ida": 157291,
+        "index": 2370,
+        "line": 2882
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 6,
+    "line_end": 2887,
+    "line_start": 2819,
+    "name": "rect_intersect",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "padding_offsets": [],
+    "prior_mapping_issues": [],
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2887,
+      "line_start": 2819,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "reachable_instruction_offsets": [
+      91628,
+      91629,
+      91631,
+      91632,
+      91635,
+      91637,
+      91639,
+      91642,
+      91644,
+      91647,
+      91648,
+      91649,
+      91650,
+      91653,
+      91656,
+      91658,
+      91661,
+      91663,
+      91665,
+      91668,
+      91670,
+      91673,
+      91675,
+      91678,
+      91681,
+      91683,
+      91686,
+      91689,
+      91691,
+      91693,
+      91695,
+      91698,
+      91700,
+      91702,
+      91704,
+      91707,
+      91710,
+      91713,
+      91716,
+      91718,
+      91721,
+      91724,
+      91727,
+      91730,
+      91733,
+      91735,
+      91738,
+      91741,
+      91744,
+      91747,
+      91750,
+      91752,
+      91755,
+      91757,
+      91758,
+      91759
+    ],
+    "relocation_sites": [],
+    "segment": "seg006",
+    "segment_offset": 6284,
+    "segment_paragraph": 5334,
+    "sha256": "8412f5a967e641d12d29d3b5810169ae46cec443e34d64d8c36966fa67064617",
+    "size": 132,
+    "source": "build/references/restunts/src/restunts/asmorig/seg006.asm",
+    "stable_id": "load_165ec",
+    "start": 91628,
+    "start_candidates": [
+      91628
+    ],
+    "start_evidence": {
+      "instructions": 3,
+      "label": {
+        "ida": 157161,
+        "index": 2315,
+        "line": 2814
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 6
+  },
+  "fast": "python tools/grind.py attempt rect_intersect --hypothesis \"Explain source change\"",
+  "id": "load_165ec",
+  "name": "rect_intersect",
+  "oracle_extent": [
+    91628,
+    91760
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote rect_intersect --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/rect_intersect.json",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/e8ab713f2d556871523ba55864ad6c42f43f62ba9d293808aac6681c3ae053ec.json",
+    "sha256": "e8ab713f2d556871523ba55864ad6c42f43f62ba9d293808aac6681c3ae053ec"
+  },
+  "size": 132,
+  "source": "recovery/candidates/rect_intersect.c",
+  "tier": "CHEAP",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/707f772fd9824bfbc3e701713587ff0f4302acdcb45205fad55b8642da7ecf55.json",
+    "sha256": "707f772fd9824bfbc3e701713587ff0f4302acdcb45205fad55b8642da7ecf55"
+  }
+}

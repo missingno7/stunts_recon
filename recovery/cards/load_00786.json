@@ -1,0 +1,612 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_00786.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "file_load_resfile"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_many_resources"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_wnd_to_1_clear"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_text_res"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "locate_shape_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "copy_string"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "intro_draw_text"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "unload_resource"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_blit_to_video"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_2_to_1_2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_putimage_and_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_do_checking"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_wnd_to_1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_shape_to_1_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_2_to_1_2"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_putimage"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_do_checking"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_shape"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_copy_wnd_to_1"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_set_1_size"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_clear_1_color"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_shape_to_1_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_shape_to_1_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_blit_to_video"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_repeat_check"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 3900,
+    "end_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 69428,
+        "index": 1367,
+        "line": 1562
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 10,
+    "line_end": 1569,
+    "line_start": 828,
+    "name": "load_intro_resources",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 1569,
+      "line_start": 828,
+      "path": "src/restunts/asmorig/seg000.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      1941,
+      1971,
+      1985,
+      2034,
+      2048,
+      2075,
+      2093,
+      2107,
+      2135,
+      2153,
+      2167,
+      2195,
+      2213,
+      2227,
+      2255,
+      2273,
+      2287,
+      2315,
+      2333,
+      2347,
+      2375,
+      2393,
+      2407,
+      2435,
+      2453,
+      2467,
+      2495,
+      2513,
+      2527,
+      2555,
+      2573,
+      2587,
+      2615,
+      2633,
+      2647,
+      2675,
+      2693,
+      2707,
+      2735,
+      2753,
+      2767,
+      2795,
+      2813,
+      2827,
+      2855,
+      2873,
+      2887,
+      2915,
+      2933,
+      2947,
+      2975,
+      2993,
+      3007,
+      3035,
+      3053,
+      3067,
+      3095,
+      3113,
+      3127,
+      3155,
+      3173,
+      3187,
+      3215,
+      3233,
+      3247,
+      3275,
+      3293,
+      3307,
+      3335,
+      3353,
+      3367,
+      3395,
+      3409,
+      3429,
+      3437,
+      3442,
+      3450,
+      3491,
+      3506,
+      3533,
+      3541,
+      3549,
+      3567,
+      3586,
+      3597,
+      3619,
+      3627,
+      3646,
+      3654,
+      3670,
+      3678,
+      3689,
+      3698,
+      3746,
+      3754,
+      3770,
+      3778,
+      3797,
+      3808,
+      3822,
+      3836,
+      3855,
+      3874
+    ],
+    "segment": "seg000",
+    "segment_offset": 1926,
+    "segment_paragraph": 0,
+    "sha256": "f2033a87b1baad53421581a85bb7ff17b5bce17f510c6d827df4962f77889c6e",
+    "size": 1974,
+    "source": "build/references/restunts/src/restunts/asmorig/seg000.asm",
+    "stable_id": "load_00786",
+    "start": 1926,
+    "start_candidates": [
+      1926
+    ],
+    "start_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 67455,
+        "index": 656,
+        "line": 821
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 10
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_00786",
+  "name": "load_intro_resources",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_00786 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 1974,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 1569,
+    "line_start": 828,
+    "path": "src/restunts/asmorig/seg000.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "end": 103942,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 3973,
+    "line_start": 3898,
+    "path": "src/restunts/asmorig/seg008.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "shape3d_init_shape",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_shape3d_init_shape",
+  "source": "src/shape3d_init_shape.c",
+  "stable_id": "load_1955a",
+  "start": 103770,
+  "target": {
+    "sha256": "3116ece1a041269b59faf318c91af46fa305bd14f4c92ac290c3e051605331c0",
+    "size": 172
+  }
+}

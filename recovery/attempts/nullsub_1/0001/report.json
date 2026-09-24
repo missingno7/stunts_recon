@@ -1,0 +1,82 @@
+{
+  "budget_charge": false,
+  "effective_key": "ea7fb65e32d73e4645dbbe5b5d66185bc4287f9b58de18ca0e9755e66319177b",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Empty far C function emits the complete CB 90 contribution without fixups or neighbor bytes",
+  "hypothesis_key": "5c9826db167e0f8f9890bb7fcc29a8d76e07634bc8dd9c10416760f3bf20a62d",
+  "input_fingerprint": "987f66c06c8d040776e7e8cd6a39f2d6557e101684fb34cdb289bea86a053dc3",
+  "recipe": {
+    "end": 171604,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 125,
+      "line_start": 120,
+      "path": "src/restunts/asmorig/seg031.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "nullsub_1",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_nullsub_1",
+    "source": "recovery/candidates/nullsub_1.c",
+    "stable_id": "load_29e52",
+    "start": 171602,
+    "target": {
+      "sha256": "c8a51d4867300f9df2241e4d32f72b027916ca03fcef86fac7fa83fae59c529c",
+      "size": 2
+    }
+  },
+  "result": {
+    "bytes": 2,
+    "receipt": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "0b58a92870932e8f272b51c99f5b98dd92820761480a53ced120dde65ee8b110",
+      "object": {
+        "sha256": "3e0aade20e23ea6f3a23a23c059847b192704d0e82d85dfdc37cdad87928e0fe",
+        "size": 240
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "0ec72ca1c81cc182d96ba80296516ad039876ac7e6b5ac969eea3e5bf209b4dd",
+        "size": 25
+      },
+      "staged_source": {
+        "sha256": "0ec72ca1c81cc182d96ba80296516ad039876ac7e6b5ac969eea3e5bf209b4dd",
+        "size": 25
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\p3jolw921"
+    },
+    "status": "FAST_PASS_ONLY",
+    "task": "nullsub_1"
+  },
+  "same_effective_as": [],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "0ec72ca1c81cc182d96ba80296516ad039876ac7e6b5ac969eea3e5bf209b4dd",
+    "size": 25
+  },
+  "started_utc": "2026-09-23T21:52:31.689902+00:00",
+  "status": "FAST_PASS_ONLY",
+  "task": "nullsub_1"
+}

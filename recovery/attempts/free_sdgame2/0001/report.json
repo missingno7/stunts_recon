@@ -1,0 +1,275 @@
+{
+  "budget_charge": false,
+  "effective_key": "2305d59411cc2ed4cc86abc1314967a60a22bb7c31b9a405ee6ce4a2e3ddb110",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Frozen full object has two independently reviewed DGROUP offsets and one reviewed far CALL; historical LINK-proven mixed binding yields exact 18-byte pristine contribution",
+  "hypothesis_key": "c9bbdc57a62646bc5487ea1def9c72265402dac7b242ec358cd2825e5d627717",
+  "input_fingerprint": "e08aa586316d36d23e87450e04d7704ff026b49e894ce1c907beb0fa17ac8497",
+  "recipe": {
+    "binding": {
+      "declarations": {
+        "externals": [
+          "__acrtused",
+          "_mmgr_free",
+          "_sdgame2ptr",
+          "_free_sdgame2"
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "DGROUP",
+            "segment_indices": [
+              3,
+              4,
+              2
+            ],
+            "segments": [
+              "CONST",
+              "_BSS",
+              "_DATA"
+            ]
+          }
+        ],
+        "publics": [
+          {
+            "name": "_free_sdgame2",
+            "offset": 0,
+            "segment": "UNIT_TEXT"
+          }
+        ],
+        "segments": [
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "CODE",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 1,
+            "length": 18,
+            "name": "UNIT_TEXT",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "DATA",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 2,
+            "length": 0,
+            "name": "_DATA",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "CONST",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 3,
+            "length": 0,
+            "name": "CONST",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "BSS",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 4,
+            "length": 0,
+            "name": "_BSS",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          }
+        ]
+      },
+      "mode": "external-far-call-dgroup-offset16-v1"
+    },
+    "end": 55612,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 6267,
+      "line_start": 6258,
+      "path": "src/restunts/asmorig/seg003.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [
+      {
+        "displacement": 0,
+        "encoded_addend": "00000000",
+        "frame": "_mmgr_free",
+        "frame_index": 0,
+        "frame_kind": "target",
+        "frame_method": 5,
+        "loc": "pointer32",
+        "offset": 9,
+        "segment": "UNIT_TEXT",
+        "self_relative": false,
+        "target": "_mmgr_free",
+        "target_index": 2,
+        "target_kind": "external",
+        "target_method": 2,
+        "width": 4
+      },
+      {
+        "displacement": 0,
+        "encoded_addend": "0000",
+        "frame": "_sdgame2ptr",
+        "frame_index": 0,
+        "frame_kind": "target",
+        "frame_method": 5,
+        "loc": "offset16",
+        "offset": 6,
+        "segment": "UNIT_TEXT",
+        "self_relative": false,
+        "target": "_sdgame2ptr",
+        "target_index": 3,
+        "target_kind": "external",
+        "target_method": 2,
+        "width": 2
+      },
+      {
+        "displacement": 0,
+        "encoded_addend": "0200",
+        "frame": "_sdgame2ptr",
+        "frame_index": 0,
+        "frame_kind": "target",
+        "frame_method": 5,
+        "loc": "offset16",
+        "offset": 2,
+        "segment": "UNIT_TEXT",
+        "self_relative": false,
+        "target": "_sdgame2ptr",
+        "target_index": 3,
+        "target_kind": "external",
+        "target_method": 2,
+        "width": 2
+      }
+    ],
+    "expected_relocations": [
+      {
+        "load_offset": 55605,
+        "offset": 55605,
+        "segment": 0
+      }
+    ],
+    "id": "free_sdgame2",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_free_sdgame2",
+    "source": "recovery/candidates/free_sdgame2.c",
+    "stable_id": "load_0d92a",
+    "start": 55594,
+    "target": {
+      "sha256": "d4b60a9e9deee936afbead2edb434c9b7a25830ce839cc1e57b889f999d57e82",
+      "size": 18
+    }
+  },
+  "result": {
+    "bytes": 18,
+    "receipt": {
+      "binding": {
+        "fixups": [
+          {
+            "kind": "far-call",
+            "load_offset": 55605,
+            "offset": 10844,
+            "paragraph": 7842,
+            "target": "_mmgr_free"
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0000",
+            "frame_load_address": 178032,
+            "kind": "dgroup-offset16",
+            "linked_value": 44136,
+            "offset": 6,
+            "target": "_sdgame2ptr",
+            "target_load_address": 222168
+          },
+          {
+            "displacement": 0,
+            "encoded_addend": "0200",
+            "frame_load_address": 178032,
+            "kind": "dgroup-offset16",
+            "linked_value": 44138,
+            "offset": 2,
+            "target": "_sdgame2ptr",
+            "target_load_address": 222168
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 55605,
+            "offset": 55605,
+            "segment": 0
+          }
+        ],
+        "mode": "external-far-call-dgroup-offset16-v1"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "d35528c60b3048de1af269414286cca22ad012f45fe3a11fb13b52c9b529cf28",
+      "object": {
+        "sha256": "5d658f8af5d2015705ffb744f9ad752d1b095ef7a47b4a14076a500916ec0ca5",
+        "size": 303
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "adfa17fea11369e1798fbc162a6fda2b07e2a16935ce6366d345203770e6c4ca",
+        "size": 124
+      },
+      "staged_source": {
+        "sha256": "ae9a095a7466d52e8972ed69f0a633a2f14d4529659def2ec4dba1e282f8c986",
+        "size": 126
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pe7zfksh8"
+    },
+    "status": "FAST_PASS_ONLY",
+    "task": "free_sdgame2"
+  },
+  "same_effective_as": [],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "adfa17fea11369e1798fbc162a6fda2b07e2a16935ce6366d345203770e6c4ca",
+    "size": 124
+  },
+  "started_utc": "2026-09-24T00:14:34.185257+00:00",
+  "status": "FAST_PASS_ONLY",
+  "task": "free_sdgame2"
+}

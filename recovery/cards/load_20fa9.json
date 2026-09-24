@@ -1,0 +1,106 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_20fa9.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/memmgr.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "fatal_error"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 135290,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 200821,
+        "index": 4222,
+        "line": 5515
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 11,
+    "line_end": 5521,
+    "line_start": 5399,
+    "name": "locate_sound_fatal",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 5521,
+      "line_start": 5399,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      135098,
+      135184,
+      135195
+    ],
+    "segment": "seg012",
+    "segment_offset": 9609,
+    "segment_paragraph": 7842,
+    "sha256": "d6be8c5f43d953f1ffb892c3bcc6b78d8cb4fbab74b56cebf339948c554b2292",
+    "size": 209,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_20fa9",
+    "start": 135081,
+    "start_candidates": [
+      135081
+    ],
+    "start_evidence": {
+      "instructions": 25,
+      "label": {
+        "ida": 200574,
+        "index": 4106,
+        "line": 5362
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 11
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_20fa9",
+  "name": "locate_sound_fatal",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_20fa9 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 209,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 5521,
+    "line_start": 5399,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

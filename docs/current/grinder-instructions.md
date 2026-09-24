@@ -1,6 +1,6 @@
 # Routine grinder workflow
 
-Run `python tools/validate.py` when taking over the repository and before a handoff. It verifies the oracle and pinned tools, runs all tests, reconstructs the entire image, independently recompiles active C under DOSBox-X, checks previous promotions still own their bytes, refreshes the queue and audits current cards. MS-DOS Player at `C:/tools/msdos/msdos.exe` remains the normal compiler/LINK runner. Use the bundled Python path in README if Python is not on PATH.
+Run `python tools/validate.py` when taking over the repository and before a handoff. It verifies the oracle and pinned tools, runs all tests, reconstructs the entire image, independently recompiles active C under DOSBox-X, checks previous promotions still own their bytes, refreshes the queue and audits current cards. MS-DOS Player at `C:/tools/nmlgcdos/msdos.exe` is the current compiler/LINK runner; `layout/toolchain.json` pins its hash. Use the bundled Python path in README if Python is not on PATH.
 
 `docs/current/status.json` is generated ownership/queue status. `validation.json` records a completed validation and its fingerprints; it is not proof that later edits were tested. The default validation includes independent parity. `--no-independent` explicitly records that check as NOT_RUN.
 

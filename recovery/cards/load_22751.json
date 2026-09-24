@@ -1,0 +1,120 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "Unregistered DGROUP address 0x4c4c",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "Unregistered DGROUP address 0x4c4c"
+  ],
+  "card": "recovery/cards/load_22751.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 141137
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 141138
+    },
+    {
+      "bytes": "a14c4c",
+      "instruction": "mov ax, word ptr [0x4c4c]",
+      "load_offset": 141140
+    },
+    {
+      "bytes": "f76606",
+      "instruction": "mul word ptr [bp + 6]",
+      "load_offset": 141143
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 141146
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 141147
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558beca14c4cf766065dcb",
+    "c_sources": [],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 141148,
+    "end_evidence": {
+      "instructions": 32,
+      "label": {
+        "ida": 206621,
+        "index": 6612,
+        "line": 8646
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 8706,
+    "line_start": 8695,
+    "name": "nopsub_32751",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 8706,
+      "line_start": 8695,
+      "path": "src/restunts/asmorig/seg012.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg012",
+    "segment_offset": 15665,
+    "segment_paragraph": 7842,
+    "sha256": "5ab818cdb99c1fc91c0954b98acae45469122ef5bf571fc8db766837b2fb9669",
+    "size": 11,
+    "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+    "stable_id": "load_22751",
+    "start": 141137,
+    "start_evidence": {
+      "instructions": 26,
+      "label": {
+        "ida": 206621,
+        "index": 6612,
+        "line": 8646
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_22751",
+  "name": "nopsub_32751",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_22751 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "Odd extent: verify complete compiler alignment; never trim"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 11,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 8706,
+    "line_start": 8695,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

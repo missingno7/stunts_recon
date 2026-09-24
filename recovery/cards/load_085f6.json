@@ -1,0 +1,96 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_085f6.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [
+      "src/restunts/c/stateply.c"
+    ],
+    "calls": [],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 34738,
+    "end_evidence": {
+      "instructions": 8,
+      "label": {
+        "ida": 100261,
+        "index": 6084,
+        "line": 7046
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 18,
+    "line_end": 7056,
+    "line_start": 6863,
+    "name": "carState_rc_op",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 7056,
+      "line_start": 6863,
+      "path": "src/restunts/asmorig/seg001.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg001",
+    "segment_offset": 16102,
+    "segment_paragraph": 1137,
+    "sha256": "f58c6bb704d40848e045038a8145132a5efea47ca0954dd4805f5038fe860788",
+    "size": 444,
+    "source": "build/references/restunts/src/restunts/asmorig/seg001.asm",
+    "stable_id": "load_085f6",
+    "start": 34294,
+    "start_candidates": [
+      34294
+    ],
+    "start_evidence": {
+      "instructions": 6,
+      "label": {
+        "ida": 99822,
+        "index": 5923,
+        "line": 6854
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 18
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_085f6",
+  "name": "carState_rc_op",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_085f6 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 444,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 7056,
+    "line_start": 6863,
+    "path": "src/restunts/asmorig/seg001.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

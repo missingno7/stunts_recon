@@ -208,13 +208,13 @@
       102714
     ],
     "start_evidence": {
-      "instructions": 9,
+      "instructions": 13,
       "label": {
-        "ida": 168266,
-        "index": 2713,
-        "line": 3430
+        "ida": 168221,
+        "index": 2691,
+        "line": 3399
       },
-      "method": "unique_reverse_to_dense_label"
+      "method": "forward_from_dense_label"
     },
     "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
     "verified_labels": 3
@@ -227,8 +227,8 @@
   "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
   "risks": [],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": 52,
   "source": {
@@ -240,7 +240,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

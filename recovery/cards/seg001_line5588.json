@@ -55,22 +55,9 @@
     "distance": "far",
     "end": 32726,
     "issues": [
-      "label_interval_mismatch:0x17aa1",
       "label_interval_mismatch:0x17b39",
       "label_interval_mismatch:0x17b93",
-      "label_interval_mismatch:0x17bda",
-      "label_interval_mismatch:0x17bff",
-      "label_interval_mismatch:0x17c40",
-      "label_interval_mismatch:0x17c52",
-      "label_interval_mismatch:0x17c84",
-      "label_interval_mismatch:0x17ce1",
-      "label_interval_mismatch:0x17cf8",
-      "label_interval_mismatch:0x17d7c",
-      "label_interval_mismatch:0x17d82",
-      "label_interval_mismatch:0x17dde",
       "label_interval_mismatch:0x17e34",
-      "label_interval_mismatch:0x17ed9",
-      "label_interval_mismatch:0x17eef",
       "label_interval_mismatch:0x17f45"
     ],
     "label_count": 60,
@@ -95,7 +82,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg001:line5588",
-    "verified_labels": 43
+    "verified_labels": 56
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg001:line5588",
@@ -107,8 +94,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb.json",
+    "sha256": "8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb"
   },
   "size": null,
   "source": {
@@ -120,7 +107,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7.json",
+    "sha256": "c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7"
   }
 }

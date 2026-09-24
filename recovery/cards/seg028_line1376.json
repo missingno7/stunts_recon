@@ -38,16 +38,9 @@
     ],
     "confidence": "unresolved_boundary",
     "distance": "far",
+    "end": 169050,
     "issues": [
-      "ambiguous_or_mismatching_prefix",
-      "label_interval_mismatch:0x390f7",
-      "label_interval_mismatch:0x3918d",
-      "label_interval_mismatch:0x391d3",
-      "label_interval_mismatch:0x392cb",
-      "label_interval_mismatch:0x39363",
-      "label_interval_mismatch:0x3941b",
-      "label_interval_mismatch:0x39445",
-      "label_interval_mismatch:0x39452"
+      "label_interval_mismatch:0x392cb"
     ],
     "label_count": 48,
     "line_end": 1806,
@@ -62,11 +55,16 @@
       "repository": "restunts"
     },
     "segment": "seg028",
+    "segment_offset": 2648,
+    "segment_paragraph": 10339,
     "source": "build/references/restunts/src/restunts/asmorig/seg028.asm",
-    "start_candidates": [],
+    "start": 168072,
+    "start_candidates": [
+      168072
+    ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg028:line1376",
-    "verified_labels": 40
+    "verified_labels": 47
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg028:line1376",
@@ -78,8 +76,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
   },
   "size": null,
   "source": {
@@ -91,7 +89,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
   }
 }

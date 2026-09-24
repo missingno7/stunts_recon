@@ -1,0 +1,247 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": null,
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [],
+  "card": "recovery/cards/font_op2_alt.json",
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 103942
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 103943
+    },
+    {
+      "bytes": "ff7606",
+      "instruction": "push word ptr [bp + 6]",
+      "load_offset": 103945
+    },
+    {
+      "bytes": "9a233ea21e",
+      "instruction": "lcall 0x1ea2, 0x3e23",
+      "load_offset": 103948
+    },
+    {
+      "bytes": "83c402",
+      "instruction": "add sp, 2",
+      "load_offset": 103953
+    },
+    {
+      "bytes": "2d4001",
+      "instruction": "sub ax, 0x140",
+      "load_offset": 103956
+    },
+    {
+      "bytes": "f7d8",
+      "instruction": "neg ax",
+      "load_offset": 103959
+    },
+    {
+      "bytes": "99",
+      "instruction": "cdq",
+      "load_offset": 103961
+    },
+    {
+      "bytes": "2bc2",
+      "instruction": "sub ax, dx",
+      "load_offset": 103962
+    },
+    {
+      "bytes": "d1f8",
+      "instruction": "sar ax, 1",
+      "load_offset": 103964
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 103966
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf",
+      "load_offset": 103967
+    }
+  ],
+  "evidence": {
+    "binding_review": "external-far-call-v1",
+    "boundary_anchors": [
+      {
+        "hex": "0c5e5dcb558becff",
+        "site": 103938
+      },
+      {
+        "hex": "d1f85dcb558bec83",
+        "site": 103964
+      }
+    ],
+    "boundary_proof": "Existing uniquely decoded source-label interval; original adjacent bytes and complete pristine CFG rechecked by function_evidence.py",
+    "bytes_hex": "558becff76069a233ea21e83c4022d4001f7d8992bc2d1f85dcb",
+    "c_sources": [
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "font_op2"
+      }
+    ],
+    "confidence": "reviewed_pristine_entry_extent_cfg",
+    "disassembly": [
+      {
+        "bytes": "55",
+        "instruction": "push bp",
+        "load_offset": 103942
+      },
+      {
+        "bytes": "8bec",
+        "instruction": "mov bp, sp",
+        "load_offset": 103943
+      },
+      {
+        "bytes": "ff7606",
+        "instruction": "push word ptr [bp + 6]",
+        "load_offset": 103945
+      },
+      {
+        "bytes": "9a233ea21e",
+        "instruction": "lcall 0x1ea2, 0x3e23",
+        "load_offset": 103948
+      },
+      {
+        "bytes": "83c402",
+        "instruction": "add sp, 2",
+        "load_offset": 103953
+      },
+      {
+        "bytes": "2d4001",
+        "instruction": "sub ax, 0x140",
+        "load_offset": 103956
+      },
+      {
+        "bytes": "f7d8",
+        "instruction": "neg ax",
+        "load_offset": 103959
+      },
+      {
+        "bytes": "99",
+        "instruction": "cdq",
+        "load_offset": 103961
+      },
+      {
+        "bytes": "2bc2",
+        "instruction": "sub ax, dx",
+        "load_offset": 103962
+      },
+      {
+        "bytes": "d1f8",
+        "instruction": "sar ax, 1",
+        "load_offset": 103964
+      },
+      {
+        "bytes": "5d",
+        "instruction": "pop bp",
+        "load_offset": 103966
+      },
+      {
+        "bytes": "cb",
+        "instruction": "retf",
+        "load_offset": 103967
+      }
+    ],
+    "distance": "far",
+    "end": 103968,
+    "end_evidence": {
+      "instructions": 86,
+      "label": {
+        "ida": 169300,
+        "index": 3110,
+        "line": 3891
+      },
+      "method": "forward_from_dense_label"
+    },
+    "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
+    "issues": [],
+    "line_end": 3991,
+    "line_start": 3974,
+    "name": "font_op2_alt",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "padding_offsets": [],
+    "prior_mapping_issues": [],
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3991,
+      "line_start": 3974,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "reachable_instruction_offsets": [
+      103942,
+      103943,
+      103945,
+      103948,
+      103953,
+      103956,
+      103959,
+      103961,
+      103962,
+      103964,
+      103966,
+      103967
+    ],
+    "relocation_sites": [
+      103951
+    ],
+    "segment": "seg008",
+    "segment_offset": 8534,
+    "segment_paragraph": 5963,
+    "sha256": "7e5b546b05cc2d14461fe009e0e8df578b63009d68a7326aae7392730f602cd7",
+    "size": 26,
+    "source": "build/references/restunts/src/restunts/asmorig/seg008.asm",
+    "stable_id": "load_19606",
+    "start": 103942,
+    "start_evidence": {
+      "instructions": 74,
+      "label": {
+        "ida": 169300,
+        "index": 3110,
+        "line": 3891
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "python tools/grind.py attempt font_op2_alt --hypothesis \"Explain source change\"",
+  "id": "load_19606",
+  "name": "font_op2_alt",
+  "oracle_extent": [
+    103942,
+    103968
+  ],
+  "profile": "msc510-medium",
+  "promotion": "python tools/grind.py promote font_op2_alt --hypothesis \"Explain source hypothesis\"",
+  "recipe": "recipes/font_op2_alt.json",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "rules": [
+    "Complete emitted extent; no trimming, patching, byte arrays or inline assembly.",
+    "A local match is FAST only. Promotion recompiles the entire hybrid image.",
+    "Archive repeated compiler/ABI failures and escalate."
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/cc1a3db86d215fdfc53affe5b945f55d5f44c617122fb6f9dbff6de18a86bb25.json",
+    "sha256": "cc1a3db86d215fdfc53affe5b945f55d5f44c617122fb6f9dbff6de18a86bb25"
+  },
+  "size": 26,
+  "source": "recovery/candidates/font_op2_alt.c",
+  "tier": "CHEAP",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/8de26e444bd379ee303363e3fdf59d1b943ca0ba33798f560acc2b5e5e27cae3.json",
+    "sha256": "8de26e444bd379ee303363e3fdf59d1b943ca0ba33798f560acc2b5e5e27cae3"
+  }
+}

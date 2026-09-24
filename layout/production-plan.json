@@ -8,6 +8,11 @@
   "mode": "ordered-hybrid-image",
   "modules": [
     {
+      "owner": "load_0d92a",
+      "recipe": "recipes/free_sdgame2.json",
+      "source": "src/free_sdgame2.c"
+    },
+    {
       "owner": "load_15ee2",
       "recipe": "recipes/rect_compare_point.json",
       "source": "src/rect_compare_point.c"
@@ -16,6 +21,16 @@
       "owner": "load_16552",
       "recipe": "recipes/nopsub_26552.json",
       "source": "src/nopsub_26552.c"
+    },
+    {
+      "owner": "load_16572",
+      "recipe": "recipes/rect_union.json",
+      "source": "src/rect_union.c"
+    },
+    {
+      "owner": "load_165ec",
+      "recipe": "recipes/rect_intersect.json",
+      "source": "src/rect_intersect.c"
     },
     {
       "owner": "load_1695e",
@@ -28,9 +43,34 @@
       "source": "src/rect_is_inside.c"
     },
     {
+      "owner": "load_18a78",
+      "recipe": "recipes/unload_resource.json",
+      "source": "src/unload_resource.c"
+    },
+    {
+      "owner": "load_18a8c",
+      "recipe": "recipes/locate_shape_alt.json",
+      "source": "src/locate_shape_alt.c"
+    },
+    {
+      "owner": "load_18aa2",
+      "recipe": "recipes/locate_text_res.json",
+      "source": "src/locate_text_res.c"
+    },
+    {
       "owner": "load_18ad6",
       "recipe": "recipes/copy_string.json",
       "source": "src/copy_string.c"
+    },
+    {
+      "owner": "load_1955a",
+      "recipe": "recipes/shape3d_init_shape.json",
+      "source": "src/shape3d_init_shape.c"
+    },
+    {
+      "owner": "load_19606",
+      "recipe": "recipes/font_op2_alt.json",
+      "source": "src/font_op2_alt.c"
     },
     {
       "library": "toolchain/msc510/MLIBCR.LIB",
@@ -93,6 +133,11 @@
       "owner": "library_uldiv"
     },
     {
+      "owner": "load_267b2",
+      "recipe": "recipes/locate_many_resources.json",
+      "source": "src/locate_many_resources.c"
+    },
+    {
       "owner": "load_270ba",
       "recipe": "recipes/toupper.json",
       "source": "src/toupper.c"
@@ -116,6 +161,31 @@
       "owner": "load_284fa",
       "recipe": "recipes/audioresource_get_dword.json",
       "source": "src/audioresource_get_dword.c"
+    },
+    {
+      "owner": "load_28514",
+      "recipe": "recipes/audioresource_get_word.json",
+      "source": "src/audioresource_get_word.c"
+    },
+    {
+      "owner": "load_29e24",
+      "recipe": "recipes/file_combine_and_find.json",
+      "source": "src/file_combine_and_find.c"
+    },
+    {
+      "owner": "load_29e52",
+      "recipe": "recipes/nullsub_1.json",
+      "source": "src/nullsub_1.c"
+    },
+    {
+      "owner": "load_29e54",
+      "recipe": "recipes/nullsub_2.json",
+      "source": "src/nullsub_2.c"
+    },
+    {
+      "owner": "load_2a45c",
+      "recipe": "recipes/get_0.json",
+      "source": "src/get_0.c"
     },
     {
       "owner": "load_2b08c",

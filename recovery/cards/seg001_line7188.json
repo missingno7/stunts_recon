@@ -62,21 +62,10 @@
     "distance": "far",
     "end": 36056,
     "issues": [
-      "label_interval_mismatch:0x18931",
-      "label_interval_mismatch:0x18a31",
-      "label_interval_mismatch:0x18a4e",
       "label_interval_mismatch:0x18a52",
       "label_interval_mismatch:0x18a6e",
       "label_interval_mismatch:0x18a7f",
-      "label_interval_mismatch:0x18ae9",
-      "label_interval_mismatch:0x18b42",
-      "label_interval_mismatch:0x18b6e",
-      "label_interval_mismatch:0x18bbb",
-      "label_interval_mismatch:0x18bd2",
-      "label_interval_mismatch:0x18c08",
-      "label_interval_mismatch:0x18c44",
-      "label_interval_mismatch:0x18c7b",
-      "label_interval_mismatch:0x18ca4"
+      "label_interval_mismatch:0x18b42"
     ],
     "label_count": 52,
     "line_end": 7676,
@@ -100,7 +89,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg001:line7188",
-    "verified_labels": 37
+    "verified_labels": 48
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg001:line7188",
@@ -112,8 +101,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f.json",
+    "sha256": "9421e46da94897211b0c508c7e80203d2015b52b39b864b69dcbe9155bf6659f"
   },
   "size": null,
   "source": {
@@ -125,7 +114,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768.json",
+    "sha256": "e33c8c2c40860d958a299f7c290b149db8625b4d3e2f1c9c9f1bffbae4503768"
   }
 }

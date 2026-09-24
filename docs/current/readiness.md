@@ -1,8 +1,10 @@
 # What is ready for grinding
 
-The routine loop is established for **verified complete contributions with reviewed binding**, including the bounded external far-CALL mode described in `workflow-canary.md`. It checks candidate eligibility, source-only scope, immutable targets, complete object extents/declarations/fixups, budgets, fresh whole-image promotion, rollback, independent active-code recompilation and queue freshness. Generated status and validation receipts carry current fingerprints; evergreen instructions do not hard-code recovery totals.
+The routine loop is established for **verified complete contributions with reviewed binding**, including bounded external far-CALL and mixed far-CALL/DGROUP-offset modes with historical LINK differentials. See `workflow-canary.md` and the dated mixed-binding experiment. It checks candidate eligibility, source-only scope, immutable targets, complete object extents/declarations/fixups, budgets, fresh whole-image promotion, rollback, independent active-code recompilation and queue freshness. Generated status and validation receipts carry current fingerprints; evergreen instructions do not hard-code recovery totals.
 
 This is not yet a project-wide “just grind every function” state. The queue distinguishes work supported today from supervisor research. Consult generated `status.json` and each row's capability blockers rather than interpreting a short function as easy C.
+
+For a current, machine-readable supervisor census and evidence-qualified code-frame topology, run `python tools/reconstruction_factory.py reclassify`. It regenerates `recovery/blocker-census.json`, `recovery/build-topology.json`, `recovery/candidate-omf-census.json`, and `recovery/partial-mapping-census.json` after the queue refresh. These research reports do not change eligibility or reopen attempts. `tools/tu_context.py` compares frozen target source under bounded compilation contexts; its public-bounded target windows are diagnostic only. See the dated systemic experiment under `recovery/experiments` for the measured population and remaining proof gaps.
 
 ## Evidence that the process works
 
@@ -13,10 +15,10 @@ Regression tests cover budget exhaustion, unsupported-feature escalation, interv
 
 ## Remaining gates for broad grinding
 
-1. **General medium-model binding.** Zero-addend external pointer32 CALLs with target frames now have historical LINK and negative tests, alongside DGROUP offset16. General far pointers, self-relative production references, additional frames and displacements remain unsupported. MZ obligations are checked per source contribution; the hybrid header still does not prove a natural historical link.
+1. **General medium-model binding.** Zero-addend external pointer32 CALLs with target frames now have historical LINK and negative tests, including the bounded mixed mode with DGROUP offset16 data references. General far pointers, self-relative production references, additional frames and displacements remain unsupported. MZ obligations are checked per source contribution; the hybrid header still does not prove a natural historical link.
 2. **Original contribution and TU boundaries.** Establish compiler alignment, shared tails/external jumps and multi-function contribution layout. A source function's RETF is not automatically its full emitted object extent. Persistent opcode/frame differences need discriminating compiler/profile evidence rather than endless syntax variations.
 3. **Reviewed global/data dependencies.** Add original symbol/frame evidence for blocked globals; develop a reviewed proposal workflow for richer data/BSS ownership and includes. Addresses are currently explicit in `layout/data-symbols.json`; register-relative offsets are not blindly assumed to be globals.
-4. **Expand verified mapping.** Many imported procedures lack complete boundaries or code/data separation. Prove coordinates before preparing recipes. Restunts segment names and materialized BSS are not original layout authority.
+4. **Expand verified mapping.** The importer can verify exact literal `db 0` emissions and resume instruction decoding, but marks such intervals as emission-coordinate verified with CFG review pending. These intervals remain SUPERVISOR tasks and do not count as verified instruction bodies. Other imported procedures still lack complete boundaries or code/data separation. Prove coordinates and CFG status before preparing recipes. Restunts segment names and materialized BSS are not original layout authority.
 
 QuickC BAKPAT, the archived CRT checksum anomaly, matching-ASM origin and data-emission backends remain specialized research. They need not block safe leaf-function grinding, and their rejection must remain explicit.
 

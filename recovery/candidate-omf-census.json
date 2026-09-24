@@ -1,0 +1,5138 @@
+{
+  "archive_files": 82,
+  "archive_roots": [
+    "recovery/corpus/endurance-001",
+    "build/private/research-batches"
+  ],
+  "authority": "CANDIDATE_OBJECT_RESEARCH_ONLY",
+  "complete_nonfixup_shape_objects": 1,
+  "complete_nonfixup_shape_tasks": [
+    "load_1255a"
+  ],
+  "current_supervisor_tasks": 576,
+  "distinct_effective_outputs": 60,
+  "distinct_task_objects": 64,
+  "effective_output_groups_by_task": {
+    "load_09dc6": [
+      {
+        "effective_output_sha256": "2c9bb32bc577cbf18a21a145ac7e8815932616caa3029de094a42b2b4e87e531",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "5183913f5a47f44853b48c28f290238410ec71e0db08da88de7d486a73c667ed",
+          "c0124f751f574e384e9c71172b2c476739b593b88bee0280778277868d066b41"
+        ],
+        "object_variants": 2,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 34,
+        "unit_text_bytes": 48
+      },
+      {
+        "effective_output_sha256": "69b68714321f5d9080805273d6abf412d77e607e47b0bdf525f706e1cde91b43",
+        "fixup_modes": [],
+        "object_sha256": [
+          "88aa8c7042ba3c187cfed326edeb0deaf01da3c2f544485625c78f37cbcda09d"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 34,
+        "unit_text_bytes": 154
+      },
+      {
+        "effective_output_sha256": "fdbafa042919183da0bd832659f5fcb27096ba226575a7803893dc6d540513fe",
+        "fixup_modes": [
+          "offset16:self=True:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "9a23e23b46c2cf5aa7fb9de341588b195824886d6a2341461d9855701c3b27a2"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 34,
+        "unit_text_bytes": 170
+      }
+    ],
+    "load_0d8b4": [
+      {
+        "effective_output_sha256": "0169e2af7baa8343eda53a7c51848dc258bef0699b507a2fc79b727de82110bb",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "91ba3b2e86f28397dcbc276182da3415b3f4b498578961b050aa8fab0c10e0da"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "nonfixup_equal": false,
+          "nonfixup_equal_bytes": 4,
+          "nonfixup_total_bytes": 18,
+          "other_segments_zero": true,
+          "single_public_at_zero": true,
+          "state": "COMPARED",
+          "unresolved_fixup_bytes": 12
+        },
+        "target_extent_bytes": 30,
+        "unit_text_bytes": 30
+      }
+    ],
+    "load_1255a": [
+      {
+        "effective_output_sha256": "27a473388aa20666e0d223bc9c00fdd4bcc19ad39c0e3d8d061a6cca774da068",
+        "fixup_modes": [
+          "base16:self=False:frame=5/target:target=2/external",
+          "loader-offset16:self=False:frame=5/target:target=2/external",
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "9332a083e91d7d9a0610d32cc8ad3a4a11ccb5715802ec98282f23ee8a658c40"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 28,
+        "unit_text_bytes": 44
+      },
+      {
+        "effective_output_sha256": "af9695ec4348924a88f0d17a3ea0fcf73cda643b83b2ed74b480c955b1945dd8",
+        "fixup_modes": [
+          "base16:self=False:frame=5/target:target=2/external",
+          "loader-offset16:self=False:frame=5/target:target=2/external",
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "fd3f9f5921964435405c6e30e51b599f3d67bf6621f0b320caaf3cab5c8e0758"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "nonfixup_equal": true,
+          "nonfixup_equal_bytes": 16,
+          "nonfixup_total_bytes": 16,
+          "other_segments_zero": true,
+          "single_public_at_zero": true,
+          "state": "COMPARED",
+          "unresolved_fixup_bytes": 12
+        },
+        "target_extent_bytes": 28,
+        "unit_text_bytes": 28
+      }
+    ],
+    "load_15f2e": [
+      {
+        "effective_output_sha256": "489563a8936d10cfbc15d60015ecec767dbe226318aaf56a943a8fc1b36a6e18",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "00095da3660c2f4d912b2cbc8ed968befe966d87f5b502410ea4f185290c2506",
+          "7d2e04de0b629025ed26d80ef4c6590459178b7340c58f1d1db1daa6f19d7200"
+        ],
+        "object_variants": 2,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 200,
+        "unit_text_bytes": 194
+      },
+      {
+        "effective_output_sha256": "acfb392261e6579b2d489a890d835f476a6fbe4262ccd05e537d7b8554532906",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "01d86d5e4bc4eb6e37c6b4244fc3f4d6e30180a996c6065f6a21ef8fd47b2ef3"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 200,
+        "unit_text_bytes": 222
+      },
+      {
+        "effective_output_sha256": "cfdf7ea9d14b2893d2917f053ca806388f263b7a87493d526a56e07e0e4aa7c4",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "4e94bbf610a6dd73c743ee589c68eb5f51914616229f5d726f958dba20f1a180"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 200,
+        "unit_text_bytes": 194
+      }
+    ],
+    "load_1637a": [
+      {
+        "effective_output_sha256": "a0897dcaf171c484ce039952f9edab5498b49c556c079656d67fd5c5a1e31b03",
+        "fixup_modes": [],
+        "object_sha256": [
+          "6d9b3e1c30427b6e8dfc33c7bf55f31271f5dda6c0a83b3818e39ad23e56bfa7"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 76,
+        "unit_text_bytes": 86
+      },
+      {
+        "effective_output_sha256": "dc25cbe5c57a7f69d8365b462bb38d295e2acab16eca4c4334725ca214afc2e0",
+        "fixup_modes": [],
+        "object_sha256": [
+          "9d26b6041b80ff0c67fcbf4e204083303040529acdf89f3a809216b5bc06ab8c"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 76,
+        "unit_text_bytes": 84
+      }
+    ],
+    "load_16bae": [
+      {
+        "effective_output_sha256": "b6fb218636f941fefadf877e599561f3fd0d15201a70e1b2e2091fd0b9aacd7e",
+        "fixup_modes": [
+          "base16:self=False:frame=5/target:target=2/external",
+          "loader-offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "2e83705bedaf96520fd67a170598eb04462f635a716a0f2d53a6ca3ea4d3548b"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 39,
+        "unit_text_bytes": 52
+      }
+    ],
+    "load_16c06": [
+      {
+        "effective_output_sha256": "513c7a6df1dc781b667e072a489433e2a6f6739a8bc816e9562e06c1c03ceec0",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "b56924f9256497545687a6839496fe337dc7667bf370b3b4327089ea7cabe74f"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 54,
+        "unit_text_bytes": 64
+      },
+      {
+        "effective_output_sha256": "b3c5f29253878d7432b7706b4de850bf1d98ca51b00dacd7aa5dc1bd57d4f0e1",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "964ef87feac37950ca58f765ea5b5ecc64b58bc919a60104d4085dfc3c240fd7"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 54,
+        "unit_text_bytes": 64
+      }
+    ],
+    "load_17466": [
+      {
+        "effective_output_sha256": "90b7e84a8bd8c2df6deb17ee74bc2d7dd8d030dc28d3285f2b2a445e0b25cb6a",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "0e1fc8a62e4339108372a5955c46eb5fb28f34d08822b10fafd0488077e8b078"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 35,
+        "unit_text_bytes": 42
+      }
+    ],
+    "load_1ea08": [
+      {
+        "effective_output_sha256": "9075d998e34c1e52d1a63262c567685de9414d1d165f1f28b9c5747c877c52d8",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "292eb0553591750b4b4d93e2895f561d72ca3deaf3fda36c051bf6b6221724bb"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 33,
+        "unit_text_bytes": 42
+      },
+      {
+        "effective_output_sha256": "f4d616113eca394207aafd8e323c50385a2d670a674ef4b772834c0a1fec50fd",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "e17281707679b28f079227d9014fc04ba65fa572786c52caa003fd06fc9f285c"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 33,
+        "unit_text_bytes": 34
+      }
+    ],
+    "load_1eb07": [
+      {
+        "effective_output_sha256": "5209b19ab291b28cc299a29d47e4399b878775d034b1e9e14ba12306b8cbb955",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "1e517e00c5589817978efaa8aa182ae811b7f1c2cbcab4c467cecc7b6ea040e5"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 23,
+        "unit_text_bytes": 66
+      },
+      {
+        "effective_output_sha256": "530d72f03b13ed72a536ddc0d236daa70320528c5854ba3c08089cbf08e7d3ca",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "6e9c5fe91c06f69702bd88a385eb0533ac88dde0ac505ce43197d754b2b1315a"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 23,
+        "unit_text_bytes": 28
+      }
+    ],
+    "load_1f314": [
+      {
+        "effective_output_sha256": "788738ec835ebb9abae2f904536951cb62a9b7e3759157d4bc056fa898c2ffb5",
+        "fixup_modes": [],
+        "object_sha256": [
+          "61089b25e005f3f22f1b87732eda84f21f8bb8ddd483c21a0ed13adb2b5c15c4"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 32,
+        "unit_text_bytes": 26
+      },
+      {
+        "effective_output_sha256": "e0eb61383f8cb5391abe03295e6e14b719377598c686c242245579ce7e6ae7db",
+        "fixup_modes": [],
+        "object_sha256": [
+          "f8908857e3f1262419201d5c25af1aa9cfe08a975e749bb7eb22c5dbe92fa765"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 32,
+        "unit_text_bytes": 56
+      }
+    ],
+    "load_2045e": [
+      {
+        "effective_output_sha256": "29f87bce0b07d258c82f094f71818448d9366260f3efc89e471bf0f323bfa925",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "eeed382785fcbaa4b1753ccd973ca4180d640cd45afd8c888cb6ade65ae38f28"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 81,
+        "unit_text_bytes": 138
+      },
+      {
+        "effective_output_sha256": "31e28f49f7894fb950e188025528a18b05801ef8e791ea09ff13f6a851210c77",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "cade132d67f9e650563c5bf037dea18456f5c80a040109fc7334aef4e5d53434"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 81,
+        "unit_text_bytes": 154
+      },
+      {
+        "effective_output_sha256": "718b2cd91a5256444d622011304b3b1d5192b0026ad025234e6c99a460e27968",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "9c6c1ab40a33681523eef2118c466e4f2b121307b337739c12ad9e02cc30f703"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 81,
+        "unit_text_bytes": 162
+      },
+      {
+        "effective_output_sha256": "8749a9a307b50ae689bf7b3bda62a73b4c5ee2f6c36d77ef52590a46b5184dfe",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "17a090c90da4806595a607f26b5d36497fb32f1577d7a33e20b905373851e0ff"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 81,
+        "unit_text_bytes": 152
+      }
+    ],
+    "load_20519": [
+      {
+        "effective_output_sha256": "44e2c95c82c28d140c0438006492fe00418dcac2fe7c6b08ff2d578da5ddb5ea",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "6a2e623448fdbe70bc50d779a05992bc78a2e8417a6cd0acf4b8d13bda3215c8"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 31,
+        "unit_text_bytes": 60
+      },
+      {
+        "effective_output_sha256": "ae1f044e53edcb02448935bbf4ca1f82b9b5fd71d1dc243ced1ff22741211380",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "eee5d670f231d5d28aef9e48c058e9c85202041b4fc32869f9a4dbfa95ddbbc0"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 31,
+        "unit_text_bytes": 84
+      }
+    ],
+    "load_20a5d": [
+      {
+        "effective_output_sha256": "2922b848e377579f2bc61218c8c102a0fcd38c5f50fdcab7598958266cb5d04f",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "ac2cb9ab5d99551efb5ec63bd62ce49ca095abc44069dc0a504896b391e3949d"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 11,
+        "unit_text_bytes": 22
+      },
+      {
+        "effective_output_sha256": "7f44a7b4bb7500be611a927fcfa2bd73f7f3aa00439f64518fe448ce7b4df15f",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "cb3a94cb638b54f74c1ea854dd417aca965fc72b58756b98e15947b7d010acaa"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 11,
+        "unit_text_bytes": 10
+      }
+    ],
+    "load_210f1": [
+      {
+        "effective_output_sha256": "58ff93d7b19a3617092338f886080467450f0821c74e321a870699db0874deb1",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "5db80238bd1ad5cd506efa7940639755f8b4bd3ebeb0ebb54895ab3994e7dfb0"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 13,
+        "unit_text_bytes": 14
+      },
+      {
+        "effective_output_sha256": "8698e4ca1ff61fff54837536ceec93ac71593555633cc576ed37818793b1caf0",
+        "fixup_modes": [
+          "offset16:self=True:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "a96c87eb5e4ab3d1a13bf24675066c5d742106ee5d9b8581283251cc0a8c6894"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 13,
+        "unit_text_bytes": 12
+      }
+    ],
+    "load_210fe": [
+      {
+        "effective_output_sha256": "28550426e09c18c49aa13b2f9f0ee89a00cdf890696f9865d4daee78629b03b0",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "2449f92dcfe417947a6ee35f67c1e980641c2a0e7449fcbb989677f00d0a6671"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 31,
+        "unit_text_bytes": 44
+      },
+      {
+        "effective_output_sha256": "642f7fa527136401c82d900013de661ea811b7f04d9b0c68bc5c9305d0d76edf",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "9230fb4fc2882334b438b650aea8323a0c682cbab1059accf7c310abac9acaee"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 31,
+        "unit_text_bytes": 34
+      }
+    ],
+    "load_2118d": [
+      {
+        "effective_output_sha256": "9f4edf7bedf051f7bf371b9d0628252a35f2860323821eca0ef63c8000697455",
+        "fixup_modes": [],
+        "object_sha256": [
+          "63913cb8f5cce92e08ce83017762608852e8eaa8ebf44f31f9fffddd14581ae3"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 72,
+        "unit_text_bytes": 108
+      },
+      {
+        "effective_output_sha256": "ec1feea0d23577ebea46454c33c993a667394f62a594b35fad16241cf2772cd9",
+        "fixup_modes": [],
+        "object_sha256": [
+          "0c14b753039cb729ff71a55a132272a59de48540ec8d2f03202ba59d525d323b"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 72,
+        "unit_text_bytes": 114
+      }
+    ],
+    "load_211d5": [
+      {
+        "effective_output_sha256": "56281d8edd096dab54fde75148f1c1a7e824c865136e534c86e4779bc4664d2f",
+        "fixup_modes": [],
+        "object_sha256": [
+          "6e1aa1fcb546a6c87c498ee07f4803c031dc641f2dca652f7acbdce8fe359d18"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 83,
+        "unit_text_bytes": 120
+      },
+      {
+        "effective_output_sha256": "7e260cff4ad8b5dae81002cdfb00adf11467a86d62fe5f22b6f1c741d3ba7ad2",
+        "fixup_modes": [],
+        "object_sha256": [
+          "f46092bb5169dc4e37ef405ac3602f2aae6f72e170b1831c73eb473e7ec00a38"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 83,
+        "unit_text_bytes": 128
+      },
+      {
+        "effective_output_sha256": "94a1442800e3d17ec419e093daa93ae08727669d3eef4da9b6c50271fbe79e65",
+        "fixup_modes": [],
+        "object_sha256": [
+          "06512ff05b9c56fe3af19fcbc908dc3465d63efcae22df93fd2e4c4ea5aa038c"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 83,
+        "unit_text_bytes": 134
+      },
+      {
+        "effective_output_sha256": "ad2c01a9d9ad1476aab9ff5b0f1c9367e7aebb0b85deb5ce271e4fbe80b2dda5",
+        "fixup_modes": [],
+        "object_sha256": [
+          "25c02eac6423728d2ca58595f2b34ced5199f2b46adb1db345cb1bcc8c5b4c89"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 83,
+        "unit_text_bytes": 128
+      }
+    ],
+    "load_2167c": [
+      {
+        "effective_output_sha256": "4c22ec2d86db922288a2a43cf4438df6568008c1d2f638d3e051e8ed51b5888e",
+        "fixup_modes": [
+          "offset16:self=False:frame=1/group:target=0/segment",
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "3eee0235cba70e707101b1f784448eca5c0fcde39de6469ef2d76b79ae55a745"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 38,
+        "unit_text_bytes": 72
+      },
+      {
+        "effective_output_sha256": "8b805714092a230bc15bd4f136e371226eddb692f78db7645a1db25584f4e4a6",
+        "fixup_modes": [
+          "offset16:self=False:frame=1/group:target=0/segment",
+          "offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "93b66a5eeb0541ef068323a58c83d7a45409d31f36473a79861618bf7178d4e5"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 38,
+        "unit_text_bytes": 84
+      }
+    ],
+    "load_225ae": [
+      {
+        "effective_output_sha256": "ac647cd48515c53a425b41bed882119b4b41629d30f1211443a6531e50de0814",
+        "fixup_modes": [
+          "base16:self=False:frame=5/target:target=2/external",
+          "loader-offset16:self=False:frame=5/target:target=2/external",
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "7422062f918adf9afecd28caf4c8fbc1c2b3fc25f81e2c22e03c311fbe585fb9"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 40,
+        "unit_text_bytes": 18
+      }
+    ],
+    "load_2264a": [
+      {
+        "effective_output_sha256": "71d9d0f9899cedab2119dc0a7991f9f7a6fa071730cd277add4999861457258f",
+        "fixup_modes": [],
+        "object_sha256": [
+          "1f75d2b259e3c410ee8538bbee7892643f53f8406f793d7d898a8bcf1309b3a1",
+          "81f486be96ef49c373f43e2f96c16697a968aaf410ccb60a53df5e1e91a2991a"
+        ],
+        "object_variants": 2,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 17,
+        "unit_text_bytes": 12
+      }
+    ],
+    "load_2265b": [
+      {
+        "effective_output_sha256": "b8fba7f4f81d58c100395565de0f4519c39148622d0a2e17d1ea1ba30ae4ef57",
+        "fixup_modes": [],
+        "object_sha256": [
+          "6f6c2d00723f95210c33c862078a8a1f2775e810ca911b181205076c0737b48d"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 95,
+        "unit_text_bytes": 146
+      },
+      {
+        "effective_output_sha256": "f825d519da2c7c7baf93560021095fcc6f63af46d358951efdfd29e1124a41a2",
+        "fixup_modes": [],
+        "object_sha256": [
+          "84d3fcb3fed37689dd23921a22fed81e042a50cce497fe54108b69b47db2aacb"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 95,
+        "unit_text_bytes": 138
+      }
+    ],
+    "load_25de6": [
+      {
+        "effective_output_sha256": "bcc4885ae0ddbb0d6d1b52d986de723472da591de227298d862f84a0a8cb6fd5",
+        "fixup_modes": [
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "3173e7ace46898c011788aa75e66a2b8acb2a529fbe84af2e3a9f86282744616"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 34,
+        "unit_text_bytes": 54
+      },
+      {
+        "effective_output_sha256": "c6f99ff25b9c8c0769f73c3805829f88478ef7939019ba2a8c3d07039cf9d051",
+        "fixup_modes": [
+          "base16:self=False:frame=5/target:target=2/external",
+          "offset16:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "d75c6b19170c3d79fe0a924d08af735f9eff69d9348348a2e62959eb7630b99a"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 34,
+        "unit_text_bytes": 60
+      }
+    ],
+    "load_26af4": [
+      {
+        "effective_output_sha256": "1d0bf35e907d75606ab53bfacfce8ba158aaf275b0df0d793a1af9922b04f75c",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "217910d9973b8286cf6e5b93d1bc56d8c43f4fff6ae15cf19e4e38ad3b7e9930"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 17,
+        "unit_text_bytes": 38
+      },
+      {
+        "effective_output_sha256": "7aea870f6a251dd1d125acb9a27a88da07d3efbc0a61b2b26fb959d30da6a284",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "3a1eed24d848faffab328bbf9a561abf0e21d6192af34138a85f6f734df571f7"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 17,
+        "unit_text_bytes": 18
+      }
+    ],
+    "load_26b05": [
+      {
+        "effective_output_sha256": "4b275fc0e89ff1a54b6fd5480b78afe4789a66ac3b838117012d0c8d51119808",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "6a6f1ee1fd98d0b64ba5ce2f5d1e755fabcd0a0a1df85224dd2a4063d1551cd8"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 17,
+        "unit_text_bytes": 38
+      },
+      {
+        "effective_output_sha256": "8edfa3964bce3b3193074049273804681cbad198b136886d0c281703aec790f3",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "9e1a0bcc79974449a2fcb66ec9f013865ea7942dd9a6a975b3c73196a485fa8f"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 17,
+        "unit_text_bytes": 18
+      }
+    ],
+    "load_273b8": [
+      {
+        "effective_output_sha256": "c8a975c926d29212555e812bd9f11498cf7588aa1aaedb49db68fe38163187fe",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "8bdb774814af546eaff033fb01651f54d6ee7548a6cd3cdd16fec5ae9c6d6259"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 48,
+        "unit_text_bytes": 62
+      },
+      {
+        "effective_output_sha256": "cdaf29dc4320f1c57273364abbd58b9cca462cfe2778e9ac8e47e52489fba34e",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "26b1d54a4d34c804e8b5d24b64d0619900e2c4b3b54710822121acda5b2702c2"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 48,
+        "unit_text_bytes": 52
+      }
+    ],
+    "load_29c84": [
+      {
+        "effective_output_sha256": "0fa883f0dfbfb9b0dc7c647a705956957d5c0fb5c79069901b14b9d9df0e1b85",
+        "fixup_modes": [],
+        "object_sha256": [
+          "7985993c6244643300cd69ed596aef3c90e44f886033cfb01ae68d3a4ddef61d"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "nonfixup_equal": false,
+          "nonfixup_equal_bytes": 11,
+          "nonfixup_total_bytes": 70,
+          "other_segments_zero": true,
+          "single_public_at_zero": true,
+          "state": "COMPARED",
+          "unresolved_fixup_bytes": 0
+        },
+        "target_extent_bytes": 70,
+        "unit_text_bytes": 70
+      },
+      {
+        "effective_output_sha256": "97e569ff3d40c235999c48af8ca2af73ac7edf4b56332bde53e31609a49c1446",
+        "fixup_modes": [],
+        "object_sha256": [
+          "1b0d6cf29e1273d58572ff1574253d88d2092d718a2ddd39071c15514985f8c3",
+          "5909d0068eed97ff68018014757d0b69aacc76e1752214e7645ade1e378a1544"
+        ],
+        "object_variants": 2,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 70,
+        "unit_text_bytes": 46
+      },
+      {
+        "effective_output_sha256": "e3012cd545cee43361fa65f8ea2cc8a1b180828224f0a75de2fb1a17a4235af9",
+        "fixup_modes": [],
+        "object_sha256": [
+          "989739d26f331966b5a02eb055d6025861fdc6a1debc59dc29ef7612910ab8ed"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 70,
+        "unit_text_bytes": 44
+      }
+    ],
+    "load_2a9ea": [
+      {
+        "effective_output_sha256": "448048e0d92343267e43a3b97d9abfa6c39234ef5e8c68804be10f444f701e45",
+        "fixup_modes": [
+          "pointer32:self=False:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "c837357c1baa9eaa5763f3c3a12356198ecaf138569b176baeb2b1c8e08974f9"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 18,
+        "unit_text_bytes": 20
+      },
+      {
+        "effective_output_sha256": "58f06ee08e441995865b9ff132d204b60c526567f8f01bff9bb6659a9f544dc5",
+        "fixup_modes": [
+          "offset16:self=True:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "637cdd0119d83b2aaf5076275d3e38a90c5fe473cd6f1eb24db221b26e43fafb"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 18,
+        "unit_text_bytes": 24
+      },
+      {
+        "effective_output_sha256": "59d292d2034d7124236878312a8acf8d7fc9325a549b6b023a8f12467e4cf342",
+        "fixup_modes": [
+          "offset16:self=True:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "7f66e3d5c97545f22df1398cb560cdba800b48354ecddfa9a02ba27e6a38761b"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "state": "EXTENT_MISMATCH"
+        },
+        "target_extent_bytes": 18,
+        "unit_text_bytes": 24
+      },
+      {
+        "effective_output_sha256": "a2f13df6da5a7b6a72246ac08f361dd215a522a7cf63e2460090fdbed944ae6c",
+        "fixup_modes": [
+          "offset16:self=True:frame=5/target:target=2/external"
+        ],
+        "object_sha256": [
+          "95530ba8f8ee6109c76060dc399336735dd2864e0e66e0f8aadf35512fb5d930"
+        ],
+        "object_variants": 1,
+        "oracle_nonfixup_comparison": {
+          "nonfixup_equal": false,
+          "nonfixup_equal_bytes": 9,
+          "nonfixup_total_bytes": 16,
+          "other_segments_zero": true,
+          "single_public_at_zero": true,
+          "state": "COMPARED",
+          "unresolved_fixup_bytes": 2
+        },
+        "target_extent_bytes": 18,
+        "unit_text_bytes": 18
+      }
+    ]
+  },
+  "limitation": "Only locally archived candidate compiler objects are counted. MZ relocations do not disclose OMF modes; candidate mode frequency is not a population estimate.",
+  "mode_families": {
+    "base16:self=False:frame=5/target:target=2/external": {
+      "distinct_object_payloads": 5,
+      "records_in_distinct_task_objects": 6,
+      "task_ids": [
+        "load_1255a",
+        "load_16bae",
+        "load_225ae",
+        "load_25de6"
+      ]
+    },
+    "loader-offset16:self=False:frame=5/target:target=2/external": {
+      "distinct_object_payloads": 4,
+      "records_in_distinct_task_objects": 5,
+      "task_ids": [
+        "load_1255a",
+        "load_16bae",
+        "load_225ae"
+      ]
+    },
+    "offset16:self=False:frame=1/group:target=0/segment": {
+      "distinct_object_payloads": 2,
+      "records_in_distinct_task_objects": 2,
+      "task_ids": [
+        "load_2167c"
+      ]
+    },
+    "offset16:self=False:frame=5/target:target=2/external": {
+      "distinct_object_payloads": 17,
+      "records_in_distinct_task_objects": 50,
+      "task_ids": [
+        "load_0d8b4",
+        "load_1255a",
+        "load_16c06",
+        "load_1eb07",
+        "load_2045e",
+        "load_210fe",
+        "load_2167c",
+        "load_25de6"
+      ]
+    },
+    "offset16:self=True:frame=5/target:target=2/external": {
+      "distinct_object_payloads": 5,
+      "records_in_distinct_task_objects": 5,
+      "task_ids": [
+        "load_09dc6",
+        "load_210f1",
+        "load_2a9ea"
+      ]
+    },
+    "pointer32:self=False:frame=5/target:target=2/external": {
+      "distinct_object_payloads": 32,
+      "records_in_distinct_task_objects": 44,
+      "task_ids": [
+        "load_09dc6",
+        "load_0d8b4",
+        "load_1255a",
+        "load_15f2e",
+        "load_16bae",
+        "load_17466",
+        "load_1ea08",
+        "load_1eb07",
+        "load_20519",
+        "load_20a5d",
+        "load_210f1",
+        "load_210fe",
+        "load_2167c",
+        "load_225ae",
+        "load_26af4",
+        "load_26b05",
+        "load_273b8",
+        "load_2a9ea"
+      ]
+    }
+  },
+  "objects": [
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/update_rpm_from_speed/trials/001/object.obj"
+      ],
+      "effective_output_sha256": "2c9bb32bc577cbf18a21a145ac7e8815932616caa3029de094a42b2b4e87e531",
+      "externals": [
+        "__acrtused",
+        "__aFulmul",
+        "_update_rpm_from_speed"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 20,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFulmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "update_rpm_from_speed",
+      "object_sha256": "5183913f5a47f44853b48c28f290238410ec71e0db08da88de7d486a73c667ed",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_update_rpm_from_speed",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 48,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 34,
+      "task_id": "load_09dc6",
+      "unit_text_bytes": 48
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/update_rpm_from_speed/trials/003/object.obj"
+      ],
+      "effective_output_sha256": "69b68714321f5d9080805273d6abf412d77e607e47b0bdf525f706e1cde91b43",
+      "externals": [
+        "__acrtused",
+        "_update_rpm_from_speed"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "update_rpm_from_speed",
+      "object_sha256": "88aa8c7042ba3c187cfed326edeb0deaf01da3c2f544485625c78f37cbcda09d",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_update_rpm_from_speed",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 154,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 34,
+      "task_id": "load_09dc6",
+      "unit_text_bytes": 154
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/update_rpm_from_speed/trials/002/object.obj"
+      ],
+      "effective_output_sha256": "fdbafa042919183da0bd832659f5fcb27096ba226575a7803893dc6d540513fe",
+      "externals": [
+        "__acrtused",
+        "high_word_product",
+        "_update_rpm_from_speed"
+      ],
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 143,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "high_word_product",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [
+        {
+          "body_sha256": "5eb24d983709713c7ae5da370770fbe2c898a521b574f8c3f2e9fe0d2e7d12fb",
+          "kind": "LEXTDEF",
+          "record_offset": 187
+        },
+        {
+          "body_sha256": "c8c99490364c9a9b0f91fcf7106d3553b24b89e607be9753023c320516142300",
+          "kind": "LPUBDEF",
+          "record_offset": 238
+        }
+      ],
+      "name": "update_rpm_from_speed",
+      "object_sha256": "9a23e23b46c2cf5aa7fb9de341588b195824886d6a2341461d9855701c3b27a2",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "high_word_product",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_update_rpm_from_speed",
+          "offset": 126,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 170,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 34,
+      "task_id": "load_09dc6",
+      "unit_text_bytes": 170
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/update_rpm_from_speed/trials/004/object.obj"
+      ],
+      "effective_output_sha256": "2c9bb32bc577cbf18a21a145ac7e8815932616caa3029de094a42b2b4e87e531",
+      "externals": [
+        "__acrtused",
+        "__aFulmul",
+        "_update_rpm_from_speed"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 20,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFulmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "update_rpm_from_speed",
+      "object_sha256": "c0124f751f574e384e9c71172b2c476739b593b88bee0280778277868d066b41",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_update_rpm_from_speed",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 48,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 34,
+      "task_id": "load_09dc6",
+      "unit_text_bytes": 48
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/unload_skybox/914a7bf247b3/unload_early.obj",
+        "build/private/research-batches/unload_skybox/914a7bf247b3/unload_if.obj"
+      ],
+      "effective_output_sha256": "0169e2af7baa8343eda53a7c51848dc258bef0699b507a2fc79b727de82110bb",
+      "externals": [
+        "__acrtused",
+        "_mmgr_free",
+        "_byte_3B8F6",
+        "_skybox_res_seg",
+        "_skybox_res_ofs",
+        "_unload_skybox"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 26,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_byte_3B8F6",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 17,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_mmgr_free",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 12,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_skybox_res_ofs",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 9,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_skybox_res_seg",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 2,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_byte_3B8F6",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "unload_skybox",
+      "object_sha256": "91ba3b2e86f28397dcbc276182da3415b3f4b498578961b050aa8fab0c10e0da",
+      "oracle_nonfixup_comparison": {
+        "nonfixup_equal": false,
+        "nonfixup_equal_bytes": 4,
+        "nonfixup_total_bytes": 18,
+        "other_segments_zero": true,
+        "single_public_at_zero": true,
+        "state": "COMPARED",
+        "unresolved_fixup_bytes": 12
+      },
+      "publics": [
+        {
+          "name": "_unload_skybox",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 30,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 30,
+      "task_id": "load_0d8b4",
+      "unit_text_bytes": 30
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/set_frame_callback/a058284caef3/frame-local-pointer.obj"
+      ],
+      "effective_output_sha256": "27a473388aa20666e0d223bc9c00fdd4bcc19ad39c0e3d8d061a6cca774da068",
+      "externals": [
+        "__acrtused",
+        "_frame_callback",
+        "_timer_reg_callback",
+        "_word_46468",
+        "_byte_442E4",
+        "_set_frame_callback"
+      ],
+      "fixup_modes": [
+        "base16:self=False:frame=5/target:target=2/external",
+        "loader-offset16:self=False:frame=5/target:target=2/external",
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 37,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_byte_442E4",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 31,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_timer_reg_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "base16",
+          "offset": 26,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_frame_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "loader-offset16",
+          "offset": 23,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_frame_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "base16",
+          "offset": 20,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_frame_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "loader-offset16",
+          "offset": 15,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_frame_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 8,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_46468",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "set_frame_callback",
+      "object_sha256": "9332a083e91d7d9a0610d32cc8ad3a4a11ccb5715802ec98282f23ee8a658c40",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_set_frame_callback",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 44,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 28,
+      "task_id": "load_1255a",
+      "unit_text_bytes": 44
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/set_frame_callback/a058284caef3/frame-direct-pointer.obj"
+      ],
+      "effective_output_sha256": "af9695ec4348924a88f0d17a3ea0fcf73cda643b83b2ed74b480c955b1945dd8",
+      "externals": [
+        "__acrtused",
+        "_frame_callback",
+        "_timer_reg_callback",
+        "_word_46468",
+        "_byte_442E4",
+        "_set_frame_callback"
+      ],
+      "fixup_modes": [
+        "base16:self=False:frame=5/target:target=2/external",
+        "loader-offset16:self=False:frame=5/target:target=2/external",
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 24,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_byte_442E4",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 15,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_timer_reg_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "base16",
+          "offset": 10,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_frame_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "loader-offset16",
+          "offset": 7,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_frame_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 2,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_46468",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "set_frame_callback",
+      "object_sha256": "fd3f9f5921964435405c6e30e51b599f3d67bf6621f0b320caaf3cab5c8e0758",
+      "oracle_nonfixup_comparison": {
+        "nonfixup_equal": true,
+        "nonfixup_equal_bytes": 16,
+        "nonfixup_total_bytes": 16,
+        "other_segments_zero": true,
+        "single_public_at_zero": true,
+        "state": "COMPARED",
+        "unresolved_fixup_bytes": 12
+      },
+      "publics": [
+        {
+          "name": "_set_frame_callback",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 28,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 28,
+      "task_id": "load_1255a",
+      "unit_text_bytes": 28
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/is_facing_camera/trials/003/object.obj"
+      ],
+      "effective_output_sha256": "489563a8936d10cfbc15d60015ecec767dbe226318aaf56a943a8fc1b36a6e18",
+      "externals": [
+        "__acrtused",
+        "__aFlmul",
+        "_is_facing_camera"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 158,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 137,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "is_facing_camera",
+      "object_sha256": "00095da3660c2f4d912b2cbc8ed968befe966d87f5b502410ea4f185290c2506",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_is_facing_camera",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 194,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 200,
+      "task_id": "load_15f2e",
+      "unit_text_bytes": 194
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/is_facing_camera/trials/004/object.obj"
+      ],
+      "effective_output_sha256": "acfb392261e6579b2d489a890d835f476a6fbe4262ccd05e537d7b8554532906",
+      "externals": [
+        "__acrtused",
+        "__aFlmul",
+        "_is_facing_camera"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 179,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 158,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "is_facing_camera",
+      "object_sha256": "01d86d5e4bc4eb6e37c6b4244fc3f4d6e30180a996c6065f6a21ef8fd47b2ef3",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_is_facing_camera",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 222,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 200,
+      "task_id": "load_15f2e",
+      "unit_text_bytes": 222
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/is_facing_camera/44fe373bead1/original_order.obj"
+      ],
+      "effective_output_sha256": "cfdf7ea9d14b2893d2917f053ca806388f263b7a87493d526a56e07e0e4aa7c4",
+      "externals": [
+        "__acrtused",
+        "__aFlmul",
+        "_is_facing_camera"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 158,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 137,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "is_facing_camera",
+      "object_sha256": "4e94bbf610a6dd73c743ee589c68eb5f51914616229f5d726f958dba20f1a180",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_is_facing_camera",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 194,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 200,
+      "task_id": "load_15f2e",
+      "unit_text_bytes": 194
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/is_facing_camera/trials/001/UNIT.OBJ",
+        "recovery/corpus/endurance-001/is_facing_camera/trials/001/compiler-work/UNIT.OBJ",
+        "recovery/corpus/endurance-001/is_facing_camera/trials/002/UNIT.OBJ",
+        "recovery/corpus/endurance-001/is_facing_camera/trials/002/compiler-work/UNIT.OBJ",
+        "build/private/research-batches/is_facing_camera/44fe373bead1/paired_order.obj"
+      ],
+      "effective_output_sha256": "489563a8936d10cfbc15d60015ecec767dbe226318aaf56a943a8fc1b36a6e18",
+      "externals": [
+        "__acrtused",
+        "__aFlmul",
+        "_is_facing_camera"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 158,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 137,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "is_facing_camera",
+      "object_sha256": "7d2e04de0b629025ed26d80ef4c6590459178b7340c58f1d1db1daa6f19d7200",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_is_facing_camera",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 194,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 200,
+      "task_id": "load_15f2e",
+      "unit_text_bytes": 194
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/rect_adjust_from_point/trial-02/UNIT.OBJ",
+        "recovery/corpus/endurance-001/rect_adjust_from_point/trial-02/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "a0897dcaf171c484ce039952f9edab5498b49c556c079656d67fd5c5a1e31b03",
+      "externals": [
+        "__acrtused",
+        "_rect_adjust_from_point"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "rect_adjust_from_point",
+      "object_sha256": "6d9b3e1c30427b6e8dfc33c7bf55f31271f5dda6c0a83b3818e39ad23e56bfa7",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_rect_adjust_from_point",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 86,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 76,
+      "task_id": "load_1637a",
+      "unit_text_bytes": 86
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/rect_adjust_from_point/trial-01/UNIT.OBJ",
+        "recovery/corpus/endurance-001/rect_adjust_from_point/trial-01/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "dc25cbe5c57a7f69d8365b462bb38d295e2acab16eca4c4334725ca214afc2e0",
+      "externals": [
+        "__acrtused",
+        "_rect_adjust_from_point"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "rect_adjust_from_point",
+      "object_sha256": "9d26b6041b80ff0c67fcbf4e204083303040529acdf89f3a809216b5bc06ab8c",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_rect_adjust_from_point",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 84,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 76,
+      "task_id": "load_1637a",
+      "unit_text_bytes": 84
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_16bae/c0f5a65c9e66/do_while.obj",
+        "build/private/research-batches/load_16bae/c0f5a65c9e66/while_loop.obj"
+      ],
+      "effective_output_sha256": "b6fb218636f941fefadf877e599561f3fd0d15201a70e1b2e2091fd0b9aacd7e",
+      "externals": [
+        "__acrtused",
+        "_audio_driver_timer",
+        "_timer_reg_callback",
+        "_audio_add_driver_timer"
+      ],
+      "fixup_modes": [
+        "base16:self=False:frame=5/target:target=2/external",
+        "loader-offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 44,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_timer_reg_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "base16",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_audio_driver_timer",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "loader-offset16",
+          "offset": 36,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_audio_driver_timer",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "audio_add_driver_timer",
+      "object_sha256": "2e83705bedaf96520fd67a170598eb04462f635a716a0f2d53a6ca3ea4d3548b",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audio_add_driver_timer",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 52,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 39,
+      "task_id": "load_16bae",
+      "unit_text_bytes": 52
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/pad_id/0a327969f864/long.obj"
+      ],
+      "effective_output_sha256": "b3c5f29253878d7432b7706b4de850bf1d98ca51b00dacd7aa5dc1bd57d4f0e1",
+      "externals": [
+        "__acrtused",
+        "_word_42242",
+        "_pad_id"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 58,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 45,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 38,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0400",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 25,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 21,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 17,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "pad_id",
+      "object_sha256": "964ef87feac37950ca58f765ea5b5ecc64b58bc919a60104d4085dfc3c240fd7",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_pad_id",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 64,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 54,
+      "task_id": "load_16c06",
+      "unit_text_bytes": 64
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/pad_id/0a327969f864/words.obj"
+      ],
+      "effective_output_sha256": "513c7a6df1dc781b667e072a489433e2a6f6739a8bc816e9562e06c1c03ceec0",
+      "externals": [
+        "__acrtused",
+        "_word_42242",
+        "_word_42244",
+        "_byte_42246",
+        "_pad_id"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 57,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 44,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 37,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 24,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_byte_42246",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 20,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42244",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 13,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_42242",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "pad_id",
+      "object_sha256": "b56924f9256497545687a6839496fe337dc7667bf370b3b4327089ea7cabe74f",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_pad_id",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 64,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 54,
+      "task_id": "load_16c06",
+      "unit_text_bytes": 64
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_17466/0e5028aedc63/pointer_slot.obj",
+        "build/private/research-batches/load_17466/827113daf4aa/pointer_slot.obj"
+      ],
+      "effective_output_sha256": "90b7e84a8bd8c2df6deb17ee74bc2d7dd8d030dc28d3285f2b2a445e0b25cb6a",
+      "externals": [
+        "__acrtused",
+        "_audio_init_chunk2",
+        "_audio_op_unk7"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 27,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_audio_init_chunk2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "audio_op_unk7",
+      "object_sha256": "0e1fc8a62e4339108372a5955c46eb5fb28f34d08822b10fafd0488077e8b078",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audio_op_unk7",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 42,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 35,
+      "task_id": "load_17466",
+      "unit_text_bytes": 42
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_1ea08/81500588c52f/polarRadius3d_staged.obj"
+      ],
+      "effective_output_sha256": "9075d998e34c1e52d1a63262c567685de9414d1d165f1f28b9c5747c877c52d8",
+      "externals": [
+        "__acrtused",
+        "_polarRadius2D",
+        "_polarRadius3D"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 33,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_polarRadius2D",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 15,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_polarRadius2D",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "polarRadius3D",
+      "object_sha256": "292eb0553591750b4b4d93e2895f561d72ca3deaf3fda36c051bf6b6221724bb",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_polarRadius3D",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 42,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 33,
+      "task_id": "load_1ea08",
+      "unit_text_bytes": 42
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_1ea08/81500588c52f/polarRadius3d_nested.obj"
+      ],
+      "effective_output_sha256": "f4d616113eca394207aafd8e323c50385a2d670a674ef4b772834c0a1fec50fd",
+      "externals": [
+        "__acrtused",
+        "_polarRadius2D",
+        "_polarRadius3D"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 24,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_polarRadius2D",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 15,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_polarRadius2D",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "polarRadius3D",
+      "object_sha256": "e17281707679b28f079227d9014fc04ba65fa572786c52caa003fd06fc9f285c",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_polarRadius3D",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 34,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 33,
+      "task_id": "load_1ea08",
+      "unit_text_bytes": 34
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/sub_2EB07/17e3dca0eb95/sub-explicit-words.obj"
+      ],
+      "effective_output_sha256": "5209b19ab291b28cc299a29d47e4399b878775d034b1e9e14ba12306b8cbb955",
+      "externals": [
+        "__acrtused",
+        "_sub_2EAD4",
+        "_word_3F1C2",
+        "_word_3F1C4",
+        "_sub_2EB07"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 51,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3F1C2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 43,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3F1C4",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 29,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3F1C4",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 7,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_sub_2EAD4",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "sub_2EB07",
+      "object_sha256": "1e517e00c5589817978efaa8aa182ae811b7f1c2cbcab4c467cecc7b6ea040e5",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_sub_2EB07",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 66,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 23,
+      "task_id": "load_1eb07",
+      "unit_text_bytes": 66
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/sub_2EB07/17e3dca0eb95/sub-long-compare.obj"
+      ],
+      "effective_output_sha256": "530d72f03b13ed72a536ddc0d236daa70320528c5854ba3c08089cbf08e7d3ca",
+      "externals": [
+        "__acrtused",
+        "_sub_2EAD4",
+        "_word_3F1C2",
+        "_sub_2EB07"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 15,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3F1C2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 7,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3F1C2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 1,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_sub_2EAD4",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "sub_2EB07",
+      "object_sha256": "6e9c5fe91c06f69702bd88a385eb0533ac88dde0ac505ce43197d754b2b1315a",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_sub_2EB07",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 28,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 23,
+      "task_id": "load_1eb07",
+      "unit_text_bytes": 28
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/parse_shape2d_helper/trials/001/object.obj"
+      ],
+      "effective_output_sha256": "788738ec835ebb9abae2f904536951cb62a9b7e3759157d4bc056fa898c2ffb5",
+      "externals": [
+        "__acrtused",
+        "_parse_shape2d_helper"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "parse_shape2d_helper",
+      "object_sha256": "61089b25e005f3f22f1b87732eda84f21f8bb8ddd483c21a0ed13adb2b5c15c4",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_parse_shape2d_helper",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 26,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 32,
+      "task_id": "load_1f314",
+      "unit_text_bytes": 26
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/parse_shape2d_helper/trials/002/object.obj"
+      ],
+      "effective_output_sha256": "e0eb61383f8cb5391abe03295e6e14b719377598c686c242245579ce7e6ae7db",
+      "externals": [
+        "__acrtused",
+        "_parse_shape2d_helper"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "parse_shape2d_helper",
+      "object_sha256": "f8908857e3f1262419201d5c25af1aa9cfe08a975e749bb7eb22c5dbe92fa765",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_parse_shape2d_helper",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 56,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 32,
+      "task_id": "load_1f314",
+      "unit_text_bytes": 56
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_reg_callback/731ae4fd2994/register_pointer.obj"
+      ],
+      "effective_output_sha256": "8749a9a307b50ae689bf7b3bda62a73b4c5ee2f6c36d77ef52590a46b5184dfe",
+      "externals": [
+        "__acrtused",
+        "_callbacks",
+        "_callbackflags",
+        "_callbackflags2",
+        "_kb_reg_callback"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 144,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 107,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 21,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbacks",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_reg_callback",
+      "object_sha256": "17a090c90da4806595a607f26b5d36497fb32f1577d7a33e20b905373851e0ff",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_reg_callback",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 152,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 81,
+      "task_id": "load_2045e",
+      "unit_text_bytes": 152
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_reg_callback/4d82b54a9f97/long.obj"
+      ],
+      "effective_output_sha256": "718b2cd91a5256444d622011304b3b1d5192b0026ad025234e6c99a460e27968",
+      "externals": [
+        "__acrtused",
+        "_callbacks",
+        "_callbackflags",
+        "_callbackflags2",
+        "_kb_reg_callback"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 155,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 92,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 29,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbacks",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_reg_callback",
+      "object_sha256": "9c6c1ab40a33681523eef2118c466e4f2b121307b337739c12ad9e02cc30f703",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_reg_callback",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 162,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 81,
+      "task_id": "load_2045e",
+      "unit_text_bytes": 162
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_reg_callback/4d82b54a9f97/union.obj"
+      ],
+      "effective_output_sha256": "31e28f49f7894fb950e188025528a18b05801ef8e791ea09ff13f6a851210c77",
+      "externals": [
+        "__acrtused",
+        "_callbacks",
+        "_callbackflags",
+        "_callbackflags2",
+        "_kb_reg_callback"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 147,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 84,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 21,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbacks",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_reg_callback",
+      "object_sha256": "cade132d67f9e650563c5bf037dea18456f5c80a040109fc7334aef4e5d53434",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_reg_callback",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 154,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 81,
+      "task_id": "load_2045e",
+      "unit_text_bytes": 154
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_reg_callback/731ae4fd2994/typed_register.obj"
+      ],
+      "effective_output_sha256": "29f87bce0b07d258c82f094f71818448d9366260f3efc89e471bf0f323bfa925",
+      "externals": [
+        "__acrtused",
+        "_callbacks",
+        "_callbackflags",
+        "_callbackflags2",
+        "_kb_reg_callback"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 129,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 100,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbackflags",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 68,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbacks",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 62,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbacks",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 20,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_callbacks",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_reg_callback",
+      "object_sha256": "eeed382785fcbaa4b1753ccd973ca4180d640cd45afd8c888cb6ade65ae38f28",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_reg_callback",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 138,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 81,
+      "task_id": "load_2045e",
+      "unit_text_bytes": 138
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_get_char/373719fc667a/bios_keybrd.obj"
+      ],
+      "effective_output_sha256": "44e2c95c82c28d140c0438006492fe00418dcac2fe7c6b08ff2d578da5ddb5ea",
+      "externals": [
+        "__acrtused",
+        "__bios_keybrd",
+        "_kb_parse_key",
+        "_kb_get_char"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 48,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_parse_key",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 36,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__bios_keybrd",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 11,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "__bios_keybrd",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_get_char",
+      "object_sha256": "6a2e623448fdbe70bc50d779a05992bc78a2e8417a6cd0acf4b8d13bda3215c8",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_get_char",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 60,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 31,
+      "task_id": "load_20519",
+      "unit_text_bytes": 60
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_get_char/373719fc667a/int86_poll.obj"
+      ],
+      "effective_output_sha256": "ae1f044e53edcb02448935bbf4ca1f82b9b5fd71d1dc243ced1ff22741211380",
+      "externals": [
+        "__acrtused",
+        "_int86",
+        "_kb_parse_key",
+        "_kb_get_char"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 73,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_parse_key",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 62,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_int86",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 24,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_int86",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_get_char",
+      "object_sha256": "eee5d670f231d5d28aef9e48c058e9c85202041b4fc32869f9a4dbfa95ddbbc0",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_get_char",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 84,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 31,
+      "task_id": "load_20519",
+      "unit_text_bytes": 84
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/flush_stdin/3952dbfbdfcd/flush-do.obj"
+      ],
+      "effective_output_sha256": "2922b848e377579f2bc61218c8c102a0fcd38c5f50fdcab7598958266cb5d04f",
+      "externals": [
+        "__acrtused",
+        "_kb_call_readchar_callback",
+        "_flush_stdin"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 7,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_call_readchar_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "flush_stdin",
+      "object_sha256": "ac2cb9ab5d99551efb5ec63bd62ce49ca095abc44069dc0a504896b391e3949d",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_flush_stdin",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 22,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 11,
+      "task_id": "load_20a5d",
+      "unit_text_bytes": 22
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/flush_stdin/3952dbfbdfcd/flush-inline-condition.obj"
+      ],
+      "effective_output_sha256": "7f44a7b4bb7500be611a927fcfa2bd73f7f3aa00439f64518fe448ce7b4df15f",
+      "externals": [
+        "__acrtused",
+        "_kb_call_readchar_callback",
+        "_flush_stdin"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 1,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_call_readchar_callback",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "flush_stdin",
+      "object_sha256": "cb3a94cb638b54f74c1ea854dd417aca965fc72b58756b98e15947b7d010acaa",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_flush_stdin",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 10,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 11,
+      "task_id": "load_20a5d",
+      "unit_text_bytes": 10
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_210f1/0e7ccc716bea/default-medium.obj",
+        "build/private/research-batches/load_210f1/0e7ccc716bea/explicit-far.obj"
+      ],
+      "effective_output_sha256": "58ff93d7b19a3617092338f886080467450f0821c74e321a870699db0874deb1",
+      "externals": [
+        "__acrtused",
+        "_mmgr_alloc_resmem",
+        "_mmgr_alloc_a000"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 5,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_mmgr_alloc_resmem",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "mmgr_alloc_a000",
+      "object_sha256": "5db80238bd1ad5cd506efa7940639755f8b4bd3ebeb0ebb54895ab3994e7dfb0",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_mmgr_alloc_a000",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 14,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 13,
+      "task_id": "load_210f1",
+      "unit_text_bytes": 14
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_210f1/0e7ccc716bea/explicit-near.obj"
+      ],
+      "effective_output_sha256": "8698e4ca1ff61fff54837536ceec93ac71593555633cc576ed37818793b1caf0",
+      "externals": [
+        "__acrtused",
+        "_mmgr_alloc_resmem",
+        "_mmgr_alloc_a000"
+      ],
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 5,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "_mmgr_alloc_resmem",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "mmgr_alloc_a000",
+      "object_sha256": "a96c87eb5e4ab3d1a13bf24675066c5d742106ee5d9b8581283251cc0a8c6894",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_mmgr_alloc_a000",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 12,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 13,
+      "task_id": "load_210f1",
+      "unit_text_bytes": 12
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_210fe/779dda2afbe9/nopsub_volatile.obj"
+      ],
+      "effective_output_sha256": "28550426e09c18c49aa13b2f9f0ee89a00cdf890696f9865d4daee78629b03b0",
+      "externals": [
+        "__acrtused",
+        "_resendptr2",
+        "_word_3FF82",
+        "_mmgr_alloc_resmem",
+        "_nopsub_310FE"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 38,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3FF82",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 32,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3FF82",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 18,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_resendptr2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 9,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_mmgr_alloc_resmem",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "nopsub_310FE",
+      "object_sha256": "2449f92dcfe417947a6ee35f67c1e980641c2a0e7449fcbb989677f00d0a6671",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_nopsub_310FE",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 44,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 31,
+      "task_id": "load_210fe",
+      "unit_text_bytes": 44
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_210fe/779dda2afbe9/nopsub_direct.obj"
+      ],
+      "effective_output_sha256": "642f7fa527136401c82d900013de661ea811b7f04d9b0c68bc5c9305d0d76edf",
+      "externals": [
+        "__acrtused",
+        "_resendptr2",
+        "_word_3FF82",
+        "_mmgr_alloc_resmem",
+        "_nopsub_310FE"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 30,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_word_3FF82",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 17,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_resendptr2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 8,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_mmgr_alloc_resmem",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "nopsub_310FE",
+      "object_sha256": "9230fb4fc2882334b438b650aea8323a0c682cbab1059accf7c310abac9acaee",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_nopsub_310FE",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 34,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 31,
+      "task_id": "load_210fe",
+      "unit_text_bytes": 34
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/mmgr_copy_paras/trial-03/UNIT.OBJ",
+        "recovery/corpus/endurance-001/mmgr_copy_paras/trial-03/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "ec1feea0d23577ebea46454c33c993a667394f62a594b35fad16241cf2772cd9",
+      "externals": [
+        "__acrtused",
+        "_mmgr_copy_paras"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "mmgr_copy_paras",
+      "object_sha256": "0c14b753039cb729ff71a55a132272a59de48540ec8d2f03202ba59d525d323b",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_mmgr_copy_paras",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 114,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 72,
+      "task_id": "load_2118d",
+      "unit_text_bytes": 114
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/mmgr_copy_paras/trial-02/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "9f4edf7bedf051f7bf371b9d0628252a35f2860323821eca0ef63c8000697455",
+      "externals": [
+        "__acrtused",
+        "_mmgr_copy_paras"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "mmgr_copy_paras",
+      "object_sha256": "63913cb8f5cce92e08ce83017762608852e8eaa8ebf44f31f9fffddd14581ae3",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_mmgr_copy_paras",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 108,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 72,
+      "task_id": "load_2118d",
+      "unit_text_bytes": 108
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/copy_paras_reverse/8a9dda571379/unsigned_threshold.obj"
+      ],
+      "effective_output_sha256": "94a1442800e3d17ec419e093daa93ae08727669d3eef4da9b6c50271fbe79e65",
+      "externals": [
+        "__acrtused",
+        "_copy_paras_reverse"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "copy_paras_reverse",
+      "object_sha256": "06512ff05b9c56fe3af19fcbc908dc3465d63efcae22df93fd2e4c4ea5aa038c",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_copy_paras_reverse",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 134,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 83,
+      "task_id": "load_211d5",
+      "unit_text_bytes": 134
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/copy_paras_reverse/8a9dda571379/signed_reference.obj"
+      ],
+      "effective_output_sha256": "ad2c01a9d9ad1476aab9ff5b0f1c9367e7aebb0b85deb5ce271e4fbe80b2dda5",
+      "externals": [
+        "__acrtused",
+        "_copy_paras_reverse"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "copy_paras_reverse",
+      "object_sha256": "25c02eac6423728d2ca58595f2b34ced5199f2b46adb1db345cb1bcc8c5b4c89",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_copy_paras_reverse",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 128,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 83,
+      "task_id": "load_211d5",
+      "unit_text_bytes": 128
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/copy_paras_reverse/8a9dda571379/postdecrement_loop.obj"
+      ],
+      "effective_output_sha256": "56281d8edd096dab54fde75148f1c1a7e824c865136e534c86e4779bc4664d2f",
+      "externals": [
+        "__acrtused",
+        "_copy_paras_reverse"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "copy_paras_reverse",
+      "object_sha256": "6e1aa1fcb546a6c87c498ee07f4803c031dc641f2dca652f7acbdce8fe359d18",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_copy_paras_reverse",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 120,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 83,
+      "task_id": "load_211d5",
+      "unit_text_bytes": 120
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/copy_paras_reverse/8a9dda571379/predecrement_before_copy.obj"
+      ],
+      "effective_output_sha256": "7e260cff4ad8b5dae81002cdfb00adf11467a86d62fe5f22b6f1c741d3ba7ad2",
+      "externals": [
+        "__acrtused",
+        "_copy_paras_reverse"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "copy_paras_reverse",
+      "object_sha256": "f46092bb5169dc4e37ef405ac3602f2aae6f72e170b1831c73eb473e7ec00a38",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_copy_paras_reverse",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 128,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 83,
+      "task_id": "load_211d5",
+      "unit_text_bytes": 128
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/mmgr_get_chunk_size/trial-02/UNIT.OBJ",
+        "recovery/corpus/endurance-001/mmgr_get_chunk_size/trial-02/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "4c22ec2d86db922288a2a43cf4438df6568008c1d2f638d3e051e8ed51b5888e",
+      "externals": [
+        "__acrtused",
+        "_resptr1",
+        "_resptr2",
+        "_fatal_error",
+        "_mmgr_get_chunk_size"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=1/group:target=0/segment",
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 35,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_fatal_error",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 30,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 19,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_resptr1",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 13,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_resptr2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "mmgr_get_chunk_size",
+      "object_sha256": "3eee0235cba70e707101b1f784448eca5c0fcde39de6469ef2d76b79ae55a745",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_mmgr_get_chunk_size",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 72,
+        "_BSS": 0,
+        "_DATA": 33
+      },
+      "target_extent_bytes": 38,
+      "task_id": "load_2167c",
+      "unit_text_bytes": 72
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/mmgr_get_chunk_size/trial-01/UNIT.OBJ",
+        "recovery/corpus/endurance-001/mmgr_get_chunk_size/trial-01/compiler-work/UNIT.OBJ",
+        "recovery/corpus/endurance-001/mmgr_get_chunk_size/trial-03/UNIT.OBJ",
+        "recovery/corpus/endurance-001/mmgr_get_chunk_size/trial-03/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "8b805714092a230bc15bd4f136e371226eddb692f78db7645a1db25584f4e4a6",
+      "externals": [
+        "__acrtused",
+        "_resptr1",
+        "_resptr2",
+        "_fatal_error",
+        "_mmgr_get_chunk_size"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=1/group:target=0/segment",
+        "offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 46,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_fatal_error",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 41,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 30,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_resptr1",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 24,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_resptr2",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "mmgr_get_chunk_size",
+      "object_sha256": "93b66a5eeb0541ef068323a58c83d7a45409d31f36473a79861618bf7178d4e5",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_mmgr_get_chunk_size",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 84,
+        "_BSS": 0,
+        "_DATA": 33
+      },
+      "target_extent_bytes": 38,
+      "task_id": "load_2167c",
+      "unit_text_bytes": 84
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_225ae/aa2802d089fd/video_far_callback_typedef.obj",
+        "build/private/research-batches/load_225ae/aa2802d089fd/video_far_function_parameter.obj"
+      ],
+      "effective_output_sha256": "ac647cd48515c53a425b41bed882119b4b41629d30f1211443a6531e50de0814",
+      "externals": [
+        "__acrtused",
+        "_add_exit_handler",
+        "_video_on_exit",
+        "_video_add_exithandler"
+      ],
+      "fixup_modes": [
+        "base16:self=False:frame=5/target:target=2/external",
+        "loader-offset16:self=False:frame=5/target:target=2/external",
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 9,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_add_exit_handler",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "base16",
+          "offset": 4,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_video_on_exit",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "loader-offset16",
+          "offset": 1,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_video_on_exit",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "video_add_exithandler",
+      "object_sha256": "7422062f918adf9afecd28caf4c8fbc1c2b3fc25f81e2c22e03c311fbe585fb9",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_video_add_exithandler",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 18,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 40,
+      "task_id": "load_225ae",
+      "unit_text_bytes": 18
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/file_get_res_shape_count/trials/002/object.obj"
+      ],
+      "effective_output_sha256": "71d9d0f9899cedab2119dc0a7991f9f7a6fa071730cd277add4999861457258f",
+      "externals": [
+        "__acrtused",
+        "_file_get_res_shape_count"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "file_get_res_shape_count",
+      "object_sha256": "1f75d2b259e3c410ee8538bbee7892643f53f8406f793d7d898a8bcf1309b3a1",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_file_get_res_shape_count",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 12,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 17,
+      "task_id": "load_2264a",
+      "unit_text_bytes": 12
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/file_get_res_shape_count/trials/001/object.obj"
+      ],
+      "effective_output_sha256": "71d9d0f9899cedab2119dc0a7991f9f7a6fa071730cd277add4999861457258f",
+      "externals": [
+        "__acrtused",
+        "_file_get_res_shape_count"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "file_get_res_shape_count",
+      "object_sha256": "81f486be96ef49c373f43e2f96c16697a968aaf410ccb60a53df5e1e91a2991a",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_file_get_res_shape_count",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 12,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 17,
+      "task_id": "load_2264a",
+      "unit_text_bytes": 12
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/file_get_shape2d/c0cd384a2f46/union.obj"
+      ],
+      "effective_output_sha256": "b8fba7f4f81d58c100395565de0f4519c39148622d0a2e17d1ea1ba30ae4ef57",
+      "externals": [
+        "__acrtused",
+        "_file_get_shape2d"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "file_get_shape2d",
+      "object_sha256": "6f6c2d00723f95210c33c862078a8a1f2775e810ca911b181205076c0737b48d",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_file_get_shape2d",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 146,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 95,
+      "task_id": "load_2265b",
+      "unit_text_bytes": 146
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/file_get_shape2d/c0cd384a2f46/cast.obj"
+      ],
+      "effective_output_sha256": "f825d519da2c7c7baf93560021095fcc6f63af46d358951efdfd29e1124a41a2",
+      "externals": [
+        "__acrtused",
+        "_file_get_shape2d"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "file_get_shape2d",
+      "object_sha256": "84d3fcb3fed37689dd23921a22fed81e042a50cce497fe54108b69b47db2aacb",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_file_get_shape2d",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 138,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 95,
+      "task_id": "load_2265b",
+      "unit_text_bytes": 138
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/sub_35DE6/trials/001/object.obj"
+      ],
+      "effective_output_sha256": "bcc4885ae0ddbb0d6d1b52d986de723472da591de227298d862f84a0a8cb6fd5",
+      "externals": [
+        "__acrtused",
+        "_incnums",
+        "_sub_35DE6"
+      ],
+      "fixup_modes": [
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 11,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_incnums",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "sub_35DE6",
+      "object_sha256": "3173e7ace46898c011788aa75e66a2b8acb2a529fbe84af2e3a9f86282744616",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_sub_35DE6",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 54,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 34,
+      "task_id": "load_25de6",
+      "unit_text_bytes": 54
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/sub_35DE6/trials/002/object.obj"
+      ],
+      "effective_output_sha256": "c6f99ff25b9c8c0769f73c3805829f88478ef7939019ba2a8c3d07039cf9d051",
+      "externals": [
+        "__acrtused",
+        "_incnums",
+        "_sub_35DE6"
+      ],
+      "fixup_modes": [
+        "base16:self=False:frame=5/target:target=2/external",
+        "offset16:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "base16",
+          "offset": 19,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_incnums",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 11,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_incnums",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "sub_35DE6",
+      "object_sha256": "d75c6b19170c3d79fe0a924d08af735f9eff69d9348348a2e62959eb7630b99a",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_sub_35DE6",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 60,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 34,
+      "task_id": "load_25de6",
+      "unit_text_bytes": 60
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_shift_checking1/d04177227e69/named_or.obj"
+      ],
+      "effective_output_sha256": "1d0bf35e907d75606ab53bfacfce8ba158aaf275b0df0d793a1af9922b04f75c",
+      "externals": [
+        "__acrtused",
+        "_kb_checking",
+        "_kb_shift_checking1"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 29,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_checking",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_shift_checking1",
+      "object_sha256": "217910d9973b8286cf6e5b93d1bc56d8c43f4fff6ae15cf19e4e38ad3b7e9930",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_shift_checking1",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 38,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 17,
+      "task_id": "load_26af4",
+      "unit_text_bytes": 38
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_shift_checking1/d04177227e69/direct_or.obj"
+      ],
+      "effective_output_sha256": "7aea870f6a251dd1d125acb9a27a88da07d3efbc0a61b2b26fb959d30da6a284",
+      "externals": [
+        "__acrtused",
+        "_kb_checking",
+        "_kb_shift_checking1"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 13,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_checking",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_shift_checking1",
+      "object_sha256": "3a1eed24d848faffab328bbf9a561abf0e21d6192af34138a85f6f734df571f7",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_shift_checking1",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 18,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 17,
+      "task_id": "load_26af4",
+      "unit_text_bytes": 18
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_shift_checking2/f1757dab3edf/named_and.obj"
+      ],
+      "effective_output_sha256": "4b275fc0e89ff1a54b6fd5480b78afe4789a66ac3b838117012d0c8d51119808",
+      "externals": [
+        "__acrtused",
+        "_kb_checking",
+        "_kb_shift_checking2"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 29,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_checking",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_shift_checking2",
+      "object_sha256": "6a6f1ee1fd98d0b64ba5ce2f5d1e755fabcd0a0a1df85224dd2a4063d1551cd8",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_shift_checking2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 38,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 17,
+      "task_id": "load_26b05",
+      "unit_text_bytes": 38
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/kb_shift_checking2/f1757dab3edf/direct_and.obj"
+      ],
+      "effective_output_sha256": "8edfa3964bce3b3193074049273804681cbad198b136886d0c281703aec790f3",
+      "externals": [
+        "__acrtused",
+        "_kb_checking",
+        "_kb_shift_checking2"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 13,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_kb_checking",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "kb_shift_checking2",
+      "object_sha256": "9e1a0bcc79974449a2fcb66ec9f013865ea7942dd9a6a975b3c73196a485fa8f",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_kb_shift_checking2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 18,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 17,
+      "task_id": "load_26b05",
+      "unit_text_bytes": 18
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_273b8/14c83af713f4/repeated_read.obj"
+      ],
+      "effective_output_sha256": "cdaf29dc4320f1c57273364abbd58b9cca462cfe2778e9ac8e47e52489fba34e",
+      "externals": [
+        "__acrtused",
+        "_audio_driver_func1E",
+        "_sub_39700",
+        "_audio_disable_flag2"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_sub_39700",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 31,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_audio_driver_func1E",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "audio_disable_flag2",
+      "object_sha256": "26b1d54a4d34c804e8b5d24b64d0619900e2c4b3b54710822121acda5b2702c2",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audio_disable_flag2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 52,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 48,
+      "task_id": "load_273b8",
+      "unit_text_bytes": 52
+    },
+    {
+      "archive_paths": [
+        "build/private/research-batches/load_273b8/14c83af713f4/cached_read.obj"
+      ],
+      "effective_output_sha256": "c8a975c926d29212555e812bd9f11498cf7588aa1aaedb49db68fe38163187fe",
+      "externals": [
+        "__acrtused",
+        "_audio_driver_func1E",
+        "_sub_39700",
+        "_audio_disable_flag2"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 47,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_sub_39700",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 39,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_audio_driver_func1E",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "audio_disable_flag2",
+      "object_sha256": "8bdb774814af546eaff033fb01651f54d6ee7548a6cd3cdd16fec5ae9c6d6259",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audio_disable_flag2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 62,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 48,
+      "task_id": "load_273b8",
+      "unit_text_bytes": 62
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/audioresource_copy_n_bytes/trials/001/object.obj"
+      ],
+      "effective_output_sha256": "97e569ff3d40c235999c48af8ca2af73ac7edf4b56332bde53e31609a49c1446",
+      "externals": [
+        "__acrtused",
+        "_audioresource_copy_n_bytes"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "audioresource_copy_n_bytes",
+      "object_sha256": "1b0d6cf29e1273d58572ff1574253d88d2092d718a2ddd39071c15514985f8c3",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audioresource_copy_n_bytes",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 46,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 70,
+      "task_id": "load_29c84",
+      "unit_text_bytes": 46
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/audioresource_copy_n_bytes/trials/002/object.obj"
+      ],
+      "effective_output_sha256": "97e569ff3d40c235999c48af8ca2af73ac7edf4b56332bde53e31609a49c1446",
+      "externals": [
+        "__acrtused",
+        "_audioresource_copy_n_bytes"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "audioresource_copy_n_bytes",
+      "object_sha256": "5909d0068eed97ff68018014757d0b69aacc76e1752214e7645ade1e378a1544",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audioresource_copy_n_bytes",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 46,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 70,
+      "task_id": "load_29c84",
+      "unit_text_bytes": 46
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/audioresource_copy_n_bytes/trials/004/object.obj"
+      ],
+      "effective_output_sha256": "0fa883f0dfbfb9b0dc7c647a705956957d5c0fb5c79069901b14b9d9df0e1b85",
+      "externals": [
+        "__acrtused",
+        "_audioresource_copy_n_bytes"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "audioresource_copy_n_bytes",
+      "object_sha256": "7985993c6244643300cd69ed596aef3c90e44f886033cfb01ae68d3a4ddef61d",
+      "oracle_nonfixup_comparison": {
+        "nonfixup_equal": false,
+        "nonfixup_equal_bytes": 11,
+        "nonfixup_total_bytes": 70,
+        "other_segments_zero": true,
+        "single_public_at_zero": true,
+        "state": "COMPARED",
+        "unresolved_fixup_bytes": 0
+      },
+      "publics": [
+        {
+          "name": "_audioresource_copy_n_bytes",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 70,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 70,
+      "task_id": "load_29c84",
+      "unit_text_bytes": 70
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/audioresource_copy_n_bytes/trials/003/object.obj"
+      ],
+      "effective_output_sha256": "e3012cd545cee43361fa65f8ea2cc8a1b180828224f0a75de2fb1a17a4235af9",
+      "externals": [
+        "__acrtused",
+        "_audioresource_copy_n_bytes"
+      ],
+      "fixup_modes": [],
+      "fixups": [],
+      "local_symbol_records": [],
+      "name": "audioresource_copy_n_bytes",
+      "object_sha256": "989739d26f331966b5a02eb055d6025861fdc6a1debc59dc29ef7612910ab8ed",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_audioresource_copy_n_bytes",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 44,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 70,
+      "task_id": "load_29c84",
+      "unit_text_bytes": 44
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trials/001/object.obj"
+      ],
+      "effective_output_sha256": "58f06ee08e441995865b9ff132d204b60c526567f8f01bff9bb6659a9f544dc5",
+      "externals": [
+        "__acrtused",
+        "file_load_shape2d",
+        "_file_load_shape2d_nofatal"
+      ],
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 17,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "file_load_shape2d",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [
+        {
+          "body_sha256": "699e305a591ac79b44da8bf8d0754136bc4265195b56ddea8d533be08cfbe51f",
+          "kind": "LEXTDEF",
+          "record_offset": 187
+        },
+        {
+          "body_sha256": "49f406f912951d24d87a16bb1a86f17a28c73ead9096cb28596e59c52ca63af4",
+          "kind": "LPUBDEF",
+          "record_offset": 242
+        }
+      ],
+      "name": "file_load_shape2d_nofatal",
+      "object_sha256": "637cdd0119d83b2aaf5076275d3e38a90c5fe473cd6f1eb24db221b26e43fafb",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "file_load_shape2d",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_file_load_shape2d_nofatal",
+          "offset": 6,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 24,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 18,
+      "task_id": "load_2a9ea",
+      "unit_text_bytes": 24
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trials/002/object.obj"
+      ],
+      "effective_output_sha256": "59d292d2034d7124236878312a8acf8d7fc9325a549b6b023a8f12467e4cf342",
+      "externals": [
+        "__acrtused",
+        "file_load_shape2d",
+        "_file_load_shape2d_nofatal"
+      ],
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 11,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "file_load_shape2d",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [
+        {
+          "body_sha256": "699e305a591ac79b44da8bf8d0754136bc4265195b56ddea8d533be08cfbe51f",
+          "kind": "LEXTDEF",
+          "record_offset": 187
+        },
+        {
+          "body_sha256": "74d029531b60ee79ae83a5709ad6c999cde325279a6166360ddcb0c7a5c09da4",
+          "kind": "LPUBDEF",
+          "record_offset": 242
+        }
+      ],
+      "name": "file_load_shape2d_nofatal",
+      "object_sha256": "7f66e3d5c97545f22df1398cb560cdba800b48354ecddfa9a02ba27e6a38761b",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "file_load_shape2d",
+          "offset": 18,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_file_load_shape2d_nofatal",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 24,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 18,
+      "task_id": "load_2a9ea",
+      "unit_text_bytes": 24
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trial-02/UNIT.OBJ",
+        "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trial-02/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "a2f13df6da5a7b6a72246ac08f361dd215a522a7cf63e2460090fdbed944ae6c",
+      "externals": [
+        "__acrtused",
+        "_file_load_shape2d",
+        "_file_load_shape2d_nofatal"
+      ],
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "offset16",
+          "offset": 10,
+          "segment": "UNIT_TEXT",
+          "self_relative": true,
+          "target": "_file_load_shape2d",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "file_load_shape2d_nofatal",
+      "object_sha256": "95530ba8f8ee6109c76060dc399336735dd2864e0e66e0f8aadf35512fb5d930",
+      "oracle_nonfixup_comparison": {
+        "nonfixup_equal": false,
+        "nonfixup_equal_bytes": 9,
+        "nonfixup_total_bytes": 16,
+        "other_segments_zero": true,
+        "single_public_at_zero": true,
+        "state": "COMPARED",
+        "unresolved_fixup_bytes": 2
+      },
+      "publics": [
+        {
+          "name": "_file_load_shape2d_nofatal",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 18,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 18,
+      "task_id": "load_2a9ea",
+      "unit_text_bytes": 18
+    },
+    {
+      "archive_paths": [
+        "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trial-01/UNIT.OBJ",
+        "recovery/corpus/endurance-001/file_load_shape2d_nofatal/trial-01/compiler-work/UNIT.OBJ"
+      ],
+      "effective_output_sha256": "448048e0d92343267e43a3b97d9abfa6c39234ef5e8c68804be10f444f701e45",
+      "externals": [
+        "__acrtused",
+        "_file_load_shape2d",
+        "_file_load_shape2d_nofatal"
+      ],
+      "fixup_modes": [
+        "pointer32:self=False:frame=5/target:target=2/external"
+      ],
+      "fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 10,
+          "segment": "UNIT_TEXT",
+          "self_relative": false,
+          "target": "_file_load_shape2d",
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "local_symbol_records": [],
+      "name": "file_load_shape2d_nofatal",
+      "object_sha256": "c837357c1baa9eaa5763f3c3a12356198ecaf138569b176baeb2b1c8e08974f9",
+      "oracle_nonfixup_comparison": {
+        "state": "EXTENT_MISMATCH"
+      },
+      "publics": [
+        {
+          "name": "_file_load_shape2d_nofatal",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segment_lengths": {
+        "CONST": 0,
+        "UNIT_TEXT": 20,
+        "_BSS": 0,
+        "_DATA": 0
+      },
+      "target_extent_bytes": 18,
+      "task_id": "load_2a9ea",
+      "unit_text_bytes": 20
+    }
+  ],
+  "parser_errors": [],
+  "schema": 1,
+  "tasks_with_objects": 28
+}

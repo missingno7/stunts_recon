@@ -178,14 +178,7 @@
       "label_interval_mismatch:0x39f91",
       "label_interval_mismatch:0x39fc8",
       "label_interval_mismatch:0x39fd7",
-      "label_interval_mismatch:0x3a000",
-      "label_interval_mismatch:0x3a00f",
-      "label_interval_mismatch:0x3a072",
-      "label_interval_mismatch:0x3a191",
-      "label_interval_mismatch:0x3a1ab",
-      "label_interval_mismatch:0x3a1e8",
-      "label_interval_mismatch:0x3a1f6",
-      "label_interval_mismatch:0x3a204"
+      "label_interval_mismatch:0x3a000"
     ],
     "label_count": 41,
     "line_end": 578,
@@ -209,7 +202,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg031:line132",
-    "verified_labels": 29
+    "verified_labels": 36
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg031:line132",
@@ -221,8 +214,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb.json",
+    "sha256": "8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb"
   },
   "size": null,
   "source": {
@@ -234,7 +227,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7.json",
+    "sha256": "c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7"
   }
 }

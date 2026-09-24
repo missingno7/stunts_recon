@@ -1,0 +1,135 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_2776c.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_37868"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_copy_counter"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_wait_for_dx"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_copy_counter"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_wait_for_dx"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_3736A"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_copy_counter"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_wait_for_dx"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 161896,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 227426,
+        "index": 771,
+        "line": 1089
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 7,
+    "line_end": 1096,
+    "line_start": 988,
+    "name": "audio_driver_func3F",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 1096,
+      "line_start": 988,
+      "path": "src/restunts/asmorig/seg027.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      161715,
+      161723,
+      161804,
+      161812,
+      161844,
+      161852
+    ],
+    "segment": "seg027",
+    "segment_offset": 1692,
+    "segment_paragraph": 9997,
+    "sha256": "9805f71c23501a2d89ccbe4e17a9728c5c386d6aa6ac103f10e01de0e5d493d1",
+    "size": 252,
+    "source": "build/references/restunts/src/restunts/asmorig/seg027.asm",
+    "stable_id": "load_2776c",
+    "start": 161644,
+    "start_candidates": [
+      161644
+    ],
+    "start_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 227169,
+        "index": 680,
+        "line": 980
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 7
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_2776c",
+  "name": "audio_driver_func3F",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_2776c --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 252,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 1096,
+    "line_start": 988,
+    "path": "src/restunts/asmorig/seg027.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "budget_charge": false,
+  "effective_key": "2d7c0c71d403a49373b0dbd5a1ff07cabca8efcb3251dbefb290980d833ef09a",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Whole 40-byte contribution and both ordered far-call relocation obligations pass fresh whole-image acceptance",
+  "hypothesis_key": "e8745d80a38917b265eb1cb11c3e5ec66e6c40c7a4092ba82dac50139587ab1c",
+  "input_fingerprint": "94d3814c8c26c68492b904d3b449c306ece6867fe058be891c7aa16ae6281316",
+  "recipe": {
+    "binding": {
+      "declarations": {
+        "externals": [
+          "__acrtused",
+          "_file_build_path",
+          "_file_find",
+          "_file_combine_and_find"
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "DGROUP",
+            "segment_indices": [
+              3,
+              4,
+              2
+            ],
+            "segments": [
+              "CONST",
+              "_BSS",
+              "_DATA"
+            ]
+          }
+        ],
+        "publics": [
+          {
+            "name": "_file_combine_and_find",
+            "offset": 0,
+            "segment": "UNIT_TEXT"
+          }
+        ],
+        "segments": [
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "CODE",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 1,
+            "length": 40,
+            "name": "UNIT_TEXT",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "DATA",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 2,
+            "length": 0,
+            "name": "_DATA",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "CONST",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 3,
+            "length": 0,
+            "name": "CONST",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "BSS",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 4,
+            "length": 0,
+            "name": "_BSS",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          }
+        ]
+      },
+      "mode": "external-far-call-v1"
+    },
+    "end": 171596,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 114,
+      "line_start": 78,
+      "path": "src/restunts/asmorig/seg031.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [
+      {
+        "displacement": 0,
+        "encoded_addend": "00000000",
+        "frame": "_file_find",
+        "frame_index": 0,
+        "frame_kind": "target",
+        "frame_method": 5,
+        "loc": "pointer32",
+        "offset": 32,
+        "segment": "UNIT_TEXT",
+        "self_relative": false,
+        "target": "_file_find",
+        "target_index": 3,
+        "target_kind": "external",
+        "target_method": 2,
+        "width": 4
+      },
+      {
+        "displacement": 0,
+        "encoded_addend": "00000000",
+        "frame": "_file_build_path",
+        "frame_index": 0,
+        "frame_kind": "target",
+        "frame_method": 5,
+        "loc": "pointer32",
+        "offset": 20,
+        "segment": "UNIT_TEXT",
+        "self_relative": false,
+        "target": "_file_build_path",
+        "target_index": 2,
+        "target_kind": "external",
+        "target_method": 2,
+        "width": 4
+      }
+    ],
+    "expected_relocations": [
+      {
+        "load_offset": 171590,
+        "offset": 40518,
+        "segment": 8192
+      },
+      {
+        "load_offset": 171578,
+        "offset": 40506,
+        "segment": 8192
+      }
+    ],
+    "id": "file_combine_and_find",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_file_combine_and_find",
+    "source": "recovery/candidates/file_combine_and_find.c",
+    "stable_id": "load_29e24",
+    "start": 171556,
+    "target": {
+      "sha256": "86dcf15352f5c75991f1eb0581a5744bd3ac290825f7291188fdb5bd1db0b5d8",
+      "size": 40
+    }
+  },
+  "result": {
+    "bytes": 40,
+    "candidate_compiled_fresh_at_least": 3,
+    "canonical_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "fast": {
+      "binding": {
+        "fixups": [
+          {
+            "load_offset": 171590,
+            "offset": 5556,
+            "paragraph": 7842,
+            "target": "_file_find"
+          },
+          {
+            "load_offset": 171578,
+            "offset": 4370,
+            "paragraph": 5963,
+            "target": "_file_build_path"
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 171590,
+            "offset": 40518,
+            "segment": 8192
+          },
+          {
+            "load_offset": 171578,
+            "offset": 40506,
+            "segment": 8192
+          }
+        ],
+        "mode": "external-far-call-v1"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "0d60e94d958a1ddc69902161f3867927baa0d7f386c8a7a5ff2ec9d49afa0b85",
+      "object": {
+        "sha256": "92279527b1c1f8aa3dc065724b29dec1df7d91974ae51f5014263c4dcda6d95d",
+        "size": 344
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "d845b4c51cdf01255b8ac1532ad87a2fee423d4dda79999a4a5288cd979e9735",
+        "size": 282
+      },
+      "staged_source": {
+        "sha256": "84f13b72eb50f2e22430dce291e12983c25b570bf9e6f9bfb7bf01f0be4a82bc",
+        "size": 289
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pvbvri9fh"
+    },
+    "staged_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "status": "PROMOTED",
+    "task": "file_combine_and_find"
+  },
+  "same_effective_as": [
+    1
+  ],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "d845b4c51cdf01255b8ac1532ad87a2fee423d4dda79999a4a5288cd979e9735",
+    "size": 282
+  },
+  "started_utc": "2026-09-23T23:45:48.649899+00:00",
+  "status": "PROMOTED",
+  "task": "file_combine_and_find"
+}

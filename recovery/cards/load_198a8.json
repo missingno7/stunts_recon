@@ -1,0 +1,130 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "Calls need supervisor linking/TU review; Unregistered DGROUP address 0x9d56; Unregistered DGROUP address 0x9d58",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "Calls need supervisor linking/TU review",
+    "Unregistered DGROUP address 0x9d56",
+    "Unregistered DGROUP address 0x9d58"
+  ],
+  "card": "recovery/cards/load_198a8.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "ff36589d",
+      "instruction": "push word ptr [0x9d58]",
+      "load_offset": 104616
+    },
+    {
+      "bytes": "ff36569d",
+      "instruction": "push word ptr [0x9d56]",
+      "load_offset": 104620
+    },
+    {
+      "bytes": "0e",
+      "instruction": "push cs",
+      "load_offset": 104624
+    },
+    {
+      "bytes": "e8d6ff",
+      "instruction": "call 0x1988a",
+      "load_offset": 104625
+    },
+    {
+      "bytes": "83c404",
+      "instruction": "add sp, 4",
+      "load_offset": 104628
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 104631
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "ff36589dff36569d0ee8d6ff83c404cb",
+    "c_sources": [
+      "src/restunts/c/frame.c",
+      "src/restunts/c/restunts.c"
+    ],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "font_set_fontdef2"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 104632,
+    "end_evidence": {
+      "instructions": 74,
+      "label": {
+        "ida": 169972,
+        "index": 3401,
+        "line": 4264
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 4363,
+    "line_start": 4355,
+    "name": "font_set_fontdef",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 4363,
+      "line_start": 4355,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg008",
+    "segment_offset": 9208,
+    "segment_paragraph": 5963,
+    "sha256": "2709a09c526b5b0a68c4fa6f04af39406084cc004fc13120cf893ccc59884b72",
+    "size": 16,
+    "source": "build/references/restunts/src/restunts/asmorig/seg008.asm",
+    "stable_id": "load_198a8",
+    "start": 104616,
+    "start_evidence": {
+      "instructions": 68,
+      "label": {
+        "ida": 169972,
+        "index": 3401,
+        "line": 4264
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_198a8",
+  "name": "font_set_fontdef",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_198a8 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 16,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 4363,
+    "line_start": 4355,
+    "path": "src/restunts/asmorig/seg008.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

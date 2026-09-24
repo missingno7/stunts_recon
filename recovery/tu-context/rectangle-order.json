@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "authority": "RESEARCH_ONLY",
+  "question": "Does the unchanged exact rectangle function change when a known compatible neighbor precedes or follows it?",
+  "prediction": "The target public offset changes with predecessor order; target bytes and fixups remain unchanged under this MSC 5.1 context.",
+  "falsifier": "Any changed target bytes, extent or normalized target fixups among successfully compiled variants.",
+  "profile": "msc510-medium",
+  "target_source": "src/rect_is_overlapping.c",
+  "target_sha256": "56dcd67a2a3ee501346a5cc4447495c04287fc0f3326165ddd946c56e287c248",
+  "target_public": "_rect_is_overlapping",
+  "oracle": {
+    "start": 92510,
+    "end": 92572,
+    "sha256": "4aa067d829e42c5c54ea3ac1a39c20ce31ad7bffb6b8a53332217228250ed776"
+  },
+  "baseline": "isolated",
+  "snippets": {
+    "rectangle_neighbor": "src/rect_is_inside.c"
+  },
+  "variants": [
+    {"id": "isolated", "before": [], "after": []},
+    {"id": "predecessor", "before": ["rectangle_neighbor"], "after": []},
+    {"id": "successor", "before": [], "after": ["rectangle_neighbor"]}
+  ]
+}

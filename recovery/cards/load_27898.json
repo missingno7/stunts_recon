@@ -1,0 +1,151 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "Calls need supervisor linking/TU review; Unregistered DGROUP address 0xa1e0",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "Calls need supervisor linking/TU review",
+    "Unregistered DGROUP address 0xa1e0"
+  ],
+  "card": "recovery/cards/load_27898.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [
+    {
+      "bytes": "55",
+      "instruction": "push bp",
+      "load_offset": 161944
+    },
+    {
+      "bytes": "8bec",
+      "instruction": "mov bp, sp",
+      "load_offset": 161945
+    },
+    {
+      "bytes": "8a4606",
+      "instruction": "mov al, byte ptr [bp + 6]",
+      "load_offset": 161947
+    },
+    {
+      "bytes": "a2e0a1",
+      "instruction": "mov byte ptr [0xa1e0], al",
+      "load_offset": 161950
+    },
+    {
+      "bytes": "ff7606",
+      "instruction": "push word ptr [bp + 6]",
+      "load_offset": 161953
+    },
+    {
+      "bytes": "0e",
+      "instruction": "push cs",
+      "load_offset": 161956
+    },
+    {
+      "bytes": "e8c0ff",
+      "instruction": "call 0x27868",
+      "load_offset": 161957
+    },
+    {
+      "bytes": "83c402",
+      "instruction": "add sp, 2",
+      "load_offset": 161960
+    },
+    {
+      "bytes": "5d",
+      "instruction": "pop bp",
+      "load_offset": 161963
+    },
+    {
+      "bytes": "cb",
+      "instruction": "retf ",
+      "load_offset": 161964
+    },
+    {
+      "bytes": "90",
+      "instruction": "nop ",
+      "load_offset": 161965
+    }
+  ],
+  "evidence": {
+    "bytes_hex": "558bec8a4606a2e0a1ff76060ee8c0ff83c4025dcb90",
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "sub_37868"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 161966,
+    "end_evidence": {
+      "instructions": 22,
+      "label": {
+        "ida": 227459,
+        "index": 790,
+        "line": 1119
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "line_end": 1149,
+    "line_start": 1132,
+    "name": "nopsub_37898",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 1149,
+      "line_start": 1132,
+      "path": "src/restunts/asmorig/seg027.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [],
+    "segment": "seg027",
+    "segment_offset": 1992,
+    "segment_paragraph": 9997,
+    "sha256": "03be3232c7f7787ecaf5ac0ff13058c77a96b6615789a6dffb1fd2876a2bfca9",
+    "size": 22,
+    "source": "build/references/restunts/src/restunts/asmorig/seg027.asm",
+    "stable_id": "load_27898",
+    "start": 161944,
+    "start_evidence": {
+      "instructions": 11,
+      "label": {
+        "ida": 227459,
+        "index": 790,
+        "line": 1119
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_27898",
+  "name": "nopsub_37898",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_27898 --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 22,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 1149,
+    "line_start": 1132,
+    "path": "src/restunts/asmorig/seg027.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

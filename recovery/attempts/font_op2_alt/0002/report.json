@@ -1,0 +1,230 @@
+{
+  "budget_charge": false,
+  "effective_key": "dc206f42c779b9f1be972abc0c57cfcfe58026d473f834f6c161150139e45167",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Complete signed-arithmetic object binds exactly and passes fresh whole-image acceptance",
+  "hypothesis_key": "a1d184b5d772f0f06eb0cf8e209224aff03a67116483b49984b9638ec6e0ecdf",
+  "input_fingerprint": "cc1a3db86d215fdfc53affe5b945f55d5f44c617122fb6f9dbff6de18a86bb25",
+  "recipe": {
+    "binding": {
+      "declarations": {
+        "externals": [
+          "__acrtused",
+          "_font_op2",
+          "_font_op2_alt"
+        ],
+        "groups": [
+          {
+            "index": 1,
+            "name": "DGROUP",
+            "segment_indices": [
+              3,
+              4,
+              2
+            ],
+            "segments": [
+              "CONST",
+              "_BSS",
+              "_DATA"
+            ]
+          }
+        ],
+        "publics": [
+          {
+            "name": "_font_op2_alt",
+            "offset": 0,
+            "segment": "UNIT_TEXT"
+          }
+        ],
+        "segments": [
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "CODE",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 1,
+            "length": 26,
+            "name": "UNIT_TEXT",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "DATA",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 2,
+            "length": 0,
+            "name": "_DATA",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "CONST",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 3,
+            "length": 0,
+            "name": "CONST",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          },
+          {
+            "acbp": 72,
+            "alignment": "word",
+            "alignment_code": 2,
+            "big": false,
+            "class": "BSS",
+            "combine": "public",
+            "combine_code": 2,
+            "frame": null,
+            "index": 4,
+            "length": 0,
+            "name": "_BSS",
+            "offset": null,
+            "overlay_index": 1,
+            "use_32bit_offset": false
+          }
+        ]
+      },
+      "mode": "external-far-call-v1"
+    },
+    "end": 103968,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3991,
+      "line_start": 3974,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [
+      {
+        "displacement": 0,
+        "encoded_addend": "00000000",
+        "frame": "_font_op2",
+        "frame_index": 0,
+        "frame_kind": "target",
+        "frame_method": 5,
+        "loc": "pointer32",
+        "offset": 7,
+        "segment": "UNIT_TEXT",
+        "self_relative": false,
+        "target": "_font_op2",
+        "target_index": 2,
+        "target_kind": "external",
+        "target_method": 2,
+        "width": 4
+      }
+    ],
+    "expected_relocations": [
+      {
+        "load_offset": 103951,
+        "offset": 38415,
+        "segment": 4096
+      }
+    ],
+    "id": "font_op2_alt",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_font_op2_alt",
+    "source": "recovery/candidates/font_op2_alt.c",
+    "stable_id": "load_19606",
+    "start": 103942,
+    "target": {
+      "sha256": "7e5b546b05cc2d14461fe009e0e8df578b63009d68a7326aae7392730f602cd7",
+      "size": 26
+    }
+  },
+  "result": {
+    "bytes": 26,
+    "candidate_compiled_fresh_at_least": 3,
+    "canonical_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "fast": {
+      "binding": {
+        "fixups": [
+          {
+            "load_offset": 103951,
+            "offset": 15907,
+            "paragraph": 7842,
+            "target": "_font_op2"
+          }
+        ],
+        "generated_relocations": [
+          {
+            "load_offset": 103951,
+            "offset": 38415,
+            "segment": 4096
+          }
+        ],
+        "mode": "external-far-call-v1"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "396a6f6e1ed9ceba5bce2427264b6a1fde12678e80d7291bdac264fd5f9a0855",
+      "object": {
+        "sha256": "eb076c176c959326dfcf9e81b620acc92e572256e765b416e06e47a677c23f1d",
+        "size": 289
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "521d8c5ae557edcc1deefa3ee4b1f1ec99a17783ab9addec7088d735adcdbe96",
+        "size": 114
+      },
+      "staged_source": {
+        "sha256": "a8500c552e332b973207e12560f8b17477b1af489c9fc34e1a9f31f4cb4e48f8",
+        "size": 118
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pfqswzprl"
+    },
+    "staged_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "status": "PROMOTED",
+    "task": "font_op2_alt"
+  },
+  "same_effective_as": [
+    1
+  ],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "521d8c5ae557edcc1deefa3ee4b1f1ec99a17783ab9addec7088d735adcdbe96",
+    "size": 114
+  },
+  "started_utc": "2026-09-23T23:43:32.021063+00:00",
+  "status": "PROMOTED",
+  "task": "font_op2_alt"
+}

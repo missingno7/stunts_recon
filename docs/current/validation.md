@@ -1,8 +1,8 @@
 # Latest validation
 
-Tests: **139 passed**, no failures or skips. Full image: **HYBRID_EXACT**.
+Tests: **160 passed**, no failures or skips. Full image: **HYBRID_EXACT**.
 
-Independent compiler: **PASS**. Queue: **{'MEDIUM': 1, 'SUPERVISOR': 604}**.
+Independent compiler: **PASS**. Queue: **{'MEDIUM': 8, 'SUPERVISOR': 576}**.
 
 This receipt describes its recorded input and workflow fingerprints; rerun `python tools/validate.py` after changes.
 

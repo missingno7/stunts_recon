@@ -1,0 +1,159 @@
+{
+  "attempt_budget": 3,
+  "attempts_remaining": 3,
+  "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+  "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+  "capability_blockers": [
+    "MZ relocation binding is unsupported",
+    "No complete instruction evidence for triage"
+  ],
+  "card": "recovery/cards/load_18b0e.json",
+  "dependencies": [
+    "Reviewed candidate C source and recipe",
+    "Verify full compiler contribution and all OMF fixups"
+  ],
+  "disassembly": [],
+  "evidence": {
+    "bytes_hex": null,
+    "c_sources": [],
+    "calls": [
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_checking"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "timer_get_delta_alt"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "input_checking"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_opaque_check"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "sprite_1_unk"
+      },
+      {
+        "confidence": "source_semantic_only",
+        "target": "mouse_draw_transparent_check"
+      }
+    ],
+    "confidence": "verified_instruction_boundaries",
+    "distance": "far",
+    "end": 101790,
+    "end_evidence": {
+      "instructions": 5,
+      "label": {
+        "ida": 167311,
+        "index": 2333,
+        "line": 2939
+      },
+      "method": "forward_from_dense_label"
+    },
+    "issues": [],
+    "label_count": 26,
+    "line_end": 2945,
+    "line_start": 2640,
+    "name": "mouse_track_op",
+    "origin": "UNCLASSIFIED; assembly representation does not establish historical ASM authorship",
+    "provenance": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 2945,
+      "line_start": 2640,
+      "path": "src/restunts/asmorig/seg008.asm",
+      "repository": "restunts"
+    },
+    "relocation_sites": [
+      101258,
+      101312,
+      101536,
+      101593,
+      101723,
+      101778
+    ],
+    "segment": "seg008",
+    "segment_offset": 5726,
+    "segment_paragraph": 5963,
+    "sha256": "2c66782aa4f2d8f435484dbf32511fe5656dd5273036b72bf04dbdca054e968c",
+    "size": 656,
+    "source": "build/references/restunts/src/restunts/asmorig/seg008.asm",
+    "stable_id": "load_18b0e",
+    "start": 101134,
+    "start_candidates": [
+      101134
+    ],
+    "start_evidence": {
+      "instructions": 15,
+      "label": {
+        "ida": 166633,
+        "index": 2067,
+        "line": 2623
+      },
+      "method": "forward_from_dense_label"
+    },
+    "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+    "verified_labels": 26
+  },
+  "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
+  "id": "load_18b0e",
+  "name": "mouse_track_op",
+  "next_action": "For a fully mapped function: python tools/prepare_candidate.py load_18b0e --source recovery/candidates/NAME.c",
+  "profile_hypothesis": "msc510-medium",
+  "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
+  "risks": [
+    "No ordinary-C hint; review source/compiler expressibility"
+  ],
+  "scope_snapshot": {
+    "path": "recovery/snapshots/55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230.json",
+    "sha256": "55fb3f8ff5b50f267ecb5185707bfdf5d1f48b6611c03c89b417eb2b87176230"
+  },
+  "size": 656,
+  "source": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 2945,
+    "line_start": 2640,
+    "path": "src/restunts/asmorig/seg008.asm",
+    "repository": "restunts"
+  },
+  "tier": "SUPERVISOR",
+  "workflow_snapshot": {
+    "path": "recovery/snapshots/6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5.json",
+    "sha256": "6fadb1251161dfe6a11ea4281592e191fdea5ba0a3b39fcc98f56118ecd216e5"
+  }
+}

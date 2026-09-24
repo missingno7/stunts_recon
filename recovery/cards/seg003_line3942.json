@@ -158,22 +158,9 @@
     "distance": "far",
     "end": 52096,
     "issues": [
-      "label_interval_mismatch:0x1c56e",
-      "label_interval_mismatch:0x1c58a",
-      "label_interval_mismatch:0x1c5a6",
-      "label_interval_mismatch:0x1c630",
-      "label_interval_mismatch:0x1c696",
       "label_interval_mismatch:0x1c720",
-      "label_interval_mismatch:0x1c728",
       "label_interval_mismatch:0x1c7a2",
-      "label_interval_mismatch:0x1c7aa",
-      "label_interval_mismatch:0x1c7e5",
       "label_interval_mismatch:0x1c80a",
-      "label_interval_mismatch:0x1c852",
-      "label_interval_mismatch:0x1c904",
-      "label_interval_mismatch:0x1c9ed",
-      "label_interval_mismatch:0x1ca72",
-      "label_interval_mismatch:0x1cab1",
       "label_interval_mismatch:0x1caf6"
     ],
     "label_count": 64,
@@ -189,6 +176,8 @@
       "repository": "restunts"
     },
     "segment": "seg003",
+    "segment_offset": 9572,
+    "segment_paragraph": 2545,
     "source": "build/references/restunts/src/restunts/asmorig/seg003.asm",
     "start": 50292,
     "start_candidates": [
@@ -196,7 +185,7 @@
     ],
     "status": "PARTIAL_UNMAPPED",
     "unresolved_evidence_id": "seg003:line3942",
-    "verified_labels": 47
+    "verified_labels": 60
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg003:line3942",
@@ -208,8 +197,8 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a.json",
-    "sha256": "e4f1e80039d9db5cf742f814a149f94bf801257cd7ed794fbc22ae685fa2a57a"
+    "path": "recovery/snapshots/8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb.json",
+    "sha256": "8d0a9f0131acdc99c80ab79c36e9fb25e5cf9767fae6e324da8d9b0df0e897cb"
   },
   "size": null,
   "source": {
@@ -221,7 +210,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9.json",
-    "sha256": "8b1f8bc009f4c93952bc83a7d474275077fd6ac47a74f6e5e3e01cae3f0b80c9"
+    "path": "recovery/snapshots/c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7.json",
+    "sha256": "c88016fb6b4c513c589f3aa6af121ef5ab3208f473f941f2237e4589d2342ce7"
   }
 }
