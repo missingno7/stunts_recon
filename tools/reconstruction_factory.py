@@ -187,6 +187,8 @@ def main():
         census()
         topology()
         candidate_omf()
+        from shared_base_probe import run as shared_bases
+        shared_bases()
         partial_mapping()
     else:
         q=read_json(ROOT/'recovery/queue.json')

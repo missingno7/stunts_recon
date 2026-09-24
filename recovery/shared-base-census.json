@@ -1,0 +1,213 @@
+{
+  "authority": "RESEARCH_ONLY_PLACEMENT_DIAGNOSTIC",
+  "candidate_objects": 64,
+  "input_sha256": {
+    "layout/data-symbols.json": "dfb47d3bab2e73c19f6d425b42c69232361990a1fcd5b194fa24b30d3dc9fdb4",
+    "recovery/candidate-omf-census.json": "bcb4ba07fe9b769ae7f91be18dd7c6731067efdf7ce9e8d9dede79e14b493758",
+    "recovery/restunts-inventory.json": "b185982c090f31f851371110e17358531e343a679e4580ff068691f92ae9f8c7",
+    "recovery/shared-base-anchors.json": "fbd9bef9d892527d423e64b6e7bc6bb53edf816e8593a7acd229e2dc831f7261"
+  },
+  "limitation": "Placement equations do not establish original TU/data ownership, complete extent, ordered fixup binding, historical LINK behavior, or strict acceptance.",
+  "multi_public_objects": 3,
+  "oracle_load_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+  "private_data_placements": [
+    {
+      "acceptance": "NOT_EVALUATED",
+      "candidate_byte_at_first_mismatch": 0,
+      "candidate_segment": "_DATA",
+      "candidate_segment_bytes": 33,
+      "candidate_sha256": "12b64abdf186d6ae0c92346f78237ad3f64d0720aaf752a9add19d7981946201",
+      "candidate_span_if_placed": [
+        196339,
+        196372
+      ],
+      "content_state": "DIFFERS",
+      "equations": [
+        {
+          "candidate_offset": 0,
+          "frame_paragraph": 11127,
+          "inferred_base": 196339,
+          "oracle_address": 196339,
+          "reference_bytes": "b88347",
+          "reference_site": 136347,
+          "symbol": "aMemoryManagerB"
+        }
+      ],
+      "first_mismatch_offset": 32,
+      "matching_prefix_bytes": 32,
+      "object_sha256": "3eee0235cba70e707101b1f784448eca5c0fcde39de6469ef2d76b79ae55a745",
+      "oracle_byte_at_first_mismatch": 32,
+      "oracle_span_sha256": "c9a132a7a0ec37306f7d7b4bd863950190f833740104669c48e1195790b57509",
+      "placement": {
+        "state": "INSUFFICIENT_INDEPENDENT_ANCHORS",
+        "witness": []
+      },
+      "task_id": "load_2167c"
+    },
+    {
+      "acceptance": "NOT_EVALUATED",
+      "candidate_byte_at_first_mismatch": 0,
+      "candidate_segment": "_DATA",
+      "candidate_segment_bytes": 33,
+      "candidate_sha256": "12b64abdf186d6ae0c92346f78237ad3f64d0720aaf752a9add19d7981946201",
+      "candidate_span_if_placed": [
+        196339,
+        196372
+      ],
+      "content_state": "DIFFERS",
+      "equations": [
+        {
+          "candidate_offset": 0,
+          "frame_paragraph": 11127,
+          "inferred_base": 196339,
+          "oracle_address": 196339,
+          "reference_bytes": "b88347",
+          "reference_site": 136347,
+          "symbol": "aMemoryManagerB"
+        }
+      ],
+      "first_mismatch_offset": 32,
+      "matching_prefix_bytes": 32,
+      "object_sha256": "93b66a5eeb0541ef068323a58c83d7a45409d31f36473a79861618bf7178d4e5",
+      "oracle_byte_at_first_mismatch": 32,
+      "oracle_span_sha256": "c9a132a7a0ec37306f7d7b4bd863950190f833740104669c48e1195790b57509",
+      "placement": {
+        "state": "INSUFFICIENT_INDEPENDENT_ANCHORS",
+        "witness": []
+      },
+      "task_id": "load_2167c"
+    }
+  ],
+  "private_initialized_data_objects": 2,
+  "public_placements": [
+    {
+      "acceptance": "NOT_EVALUATED",
+      "candidate_segment": "UNIT_TEXT",
+      "candidate_segment_bytes": 170,
+      "candidate_span_if_placed": null,
+      "extent_equal_to_anchored_span": null,
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "matched_publics": [
+        {
+          "candidate_offset": 126,
+          "frame_paragraph": 2524,
+          "inferred_base": 40264,
+          "oracle_end": 40424,
+          "oracle_start": 40390,
+          "symbol": "_update_rpm_from_speed",
+          "symbol_match": "SINGLE_LEADING_UNDERSCORE_ALIAS"
+        }
+      ],
+      "object_sha256": "9a23e23b46c2cf5aa7fb9de341588b195824886d6a2341461d9855701c3b27a2",
+      "oracle_anchored_function_span": [
+        40390,
+        40424
+      ],
+      "placement": {
+        "state": "INSUFFICIENT_INDEPENDENT_ANCHORS",
+        "witness": []
+      },
+      "publics_total": 2,
+      "task_id": "load_09dc6",
+      "unresolved_publics": [
+        "high_word_product"
+      ]
+    },
+    {
+      "acceptance": "NOT_EVALUATED",
+      "candidate_segment": "UNIT_TEXT",
+      "candidate_segment_bytes": 24,
+      "candidate_span_if_placed": null,
+      "extent_equal_to_anchored_span": null,
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "matched_publics": [
+        {
+          "candidate_offset": 0,
+          "frame_paragraph": 10909,
+          "inferred_base": 174588,
+          "oracle_end": 175280,
+          "oracle_start": 174588,
+          "symbol": "file_load_shape2d",
+          "symbol_match": "EXACT"
+        },
+        {
+          "candidate_offset": 6,
+          "frame_paragraph": 10909,
+          "inferred_base": 174564,
+          "oracle_end": 174588,
+          "oracle_start": 174570,
+          "symbol": "_file_load_shape2d_nofatal",
+          "symbol_match": "SINGLE_LEADING_UNDERSCORE_ALIAS"
+        }
+      ],
+      "object_sha256": "637cdd0119d83b2aaf5076275d3e38a90c5fe473cd6f1eb24db221b26e43fafb",
+      "oracle_anchored_function_span": [
+        174570,
+        175280
+      ],
+      "placement": {
+        "base_difference": -24,
+        "state": "INCONSISTENT_BASE",
+        "witness": [
+          "file_load_shape2d",
+          "_file_load_shape2d_nofatal"
+        ]
+      },
+      "publics_total": 2,
+      "task_id": "load_2a9ea",
+      "unresolved_publics": []
+    },
+    {
+      "acceptance": "NOT_EVALUATED",
+      "candidate_segment": "UNIT_TEXT",
+      "candidate_segment_bytes": 24,
+      "candidate_span_if_placed": [
+        174570,
+        174594
+      ],
+      "extent_equal_to_anchored_span": false,
+      "fixup_modes": [
+        "offset16:self=True:frame=5/target:target=2/external"
+      ],
+      "matched_publics": [
+        {
+          "candidate_offset": 18,
+          "frame_paragraph": 10909,
+          "inferred_base": 174570,
+          "oracle_end": 175280,
+          "oracle_start": 174588,
+          "symbol": "file_load_shape2d",
+          "symbol_match": "EXACT"
+        },
+        {
+          "candidate_offset": 0,
+          "frame_paragraph": 10909,
+          "inferred_base": 174570,
+          "oracle_end": 174588,
+          "oracle_start": 174570,
+          "symbol": "_file_load_shape2d_nofatal",
+          "symbol_match": "SINGLE_LEADING_UNDERSCORE_ALIAS"
+        }
+      ],
+      "object_sha256": "7f66e3d5c97545f22df1398cb560cdba800b48354ecddfa9a02ba27e6a38761b",
+      "oracle_anchored_function_span": [
+        174570,
+        175280
+      ],
+      "placement": {
+        "base": 174570,
+        "frame_paragraph": 10909,
+        "state": "CONSISTENT_BASE",
+        "witness": []
+      },
+      "publics_total": 2,
+      "task_id": "load_2a9ea",
+      "unresolved_publics": []
+    }
+  ],
+  "schema": 1
+}

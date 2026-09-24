@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "authority": "RESEARCH_ASSOCIATION_ONLY",
+  "oracle_load_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+  "anchors": [
+    {
+      "task_id": "load_2167c",
+      "candidate_segment": "_DATA",
+      "candidate_offset": 0,
+      "oracle_function": "mmgr_free",
+      "oracle_instruction_site": 136347,
+      "expected_opcode_hex": "b8",
+      "source_symbol_hypothesis": "aMemoryManagerB",
+      "source_path": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+      "source_line": 6090,
+      "basis": "Original mapped MOV AX, imm16 at the named site; candidate literal association comes from source text and matching prefix, not from linker ownership."
+    }
+  ]
+}
