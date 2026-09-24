@@ -3,7 +3,7 @@
     "MEDIUM": 8,
     "SUPERVISOR": 576
   },
-  "input_fingerprint": "ffc1cece18145afd7056af6ecfcbf61c5c7f252326fb4b38a19a2f8a86613b59",
+  "input_fingerprint": "7a83f9351e48e2801d47e3674e08248bcb48625e6f24f86d318c3a16a41c8a54",
   "schema": 2,
   "tasks": [
     {
@@ -2752,6 +2752,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "CS-relative storage is unsupported",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [
+        "CS-relative storage is unsupported"
+      ],
+      "card": "recovery/cards/load_25dc8.json",
+      "id": "load_25dc8",
+      "name": "sub_35DC8",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 30,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 18400,
+        "line_start": 18376,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "Unverified function boundaries",
       "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "capability_blockers": [
@@ -3805,6 +3828,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg012_line1490.json",
+      "id": "seg012:line1490",
+      "name": "parse_shape2d_helper2",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 40,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 1518,
+        "line_start": 1490,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -3919,6 +3965,29 @@
         "line_end": 88,
         "line_start": 53,
         "path": "src/restunts/asmorig/seg020.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg002_line296.json",
+      "id": "seg002:line296",
+      "name": "init_div0",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 42,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 333,
+        "line_start": 296,
+        "path": "src/restunts/asmorig/seg002.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -4125,6 +4194,29 @@
         "line_end": 7701,
         "line_start": 7677,
         "path": "src/restunts/asmorig/seg001.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg010_line3866.json",
+      "id": "seg010:line3866",
+      "name": "_rand",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 46,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 3894,
+        "line_start": 3866,
+        "path": "src/restunts/asmorig/seg010.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -5191,6 +5283,30 @@
         "line_end": 981,
         "line_start": 946,
         "path": "src/restunts/asmorig/seg007.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
+      "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [
+        "MZ relocation binding is unsupported",
+        "No complete instruction evidence for triage"
+      ],
+      "card": "recovery/cards/load_1f377.json",
+      "id": "load_1f377",
+      "name": "set_criterr_handler",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 69,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 1578,
+        "line_start": 1544,
+        "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -6910,6 +7026,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "No complete instruction evidence for triage",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [
+        "No complete instruction evidence for triage"
+      ],
+      "card": "recovery/cards/load_24b0c.json",
+      "id": "load_24b0c",
+      "name": "font_set_unk",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 112,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 14061,
+        "line_start": 14000,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -7687,6 +7826,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg029_line59.json",
+      "id": "seg029:line59",
+      "name": "audioresource_compare_chunknames",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 134,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 145,
+        "line_start": 59,
+        "path": "src/restunts/asmorig/seg029.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -8438,6 +8600,29 @@
         "line_end": 311,
         "line_start": 224,
         "path": "src/restunts/asmorig/seg029.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg012_line10875.json",
+      "id": "seg012:line10875",
+      "name": "sprite_1_unk",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 168,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 10979,
+        "line_start": 10875,
+        "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -10333,6 +10518,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg012_line18050.json",
+      "id": "seg012:line18050",
+      "name": "sub_35C4E",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 378,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 18375,
+        "line_start": 18050,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -11328,6 +11536,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg012_line9251.json",
+      "id": "seg012:line9251",
+      "name": "file_unflip_shape2d",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 666,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 9740,
+        "line_start": 9251,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -11564,6 +11795,29 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg012_line13557.json",
+      "id": "seg012:line13557",
+      "name": "shape_op_explosion",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 816,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 13999,
+        "line_start": 13557,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "MZ relocation binding is unsupported; No complete instruction evidence for triage",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -11653,6 +11907,29 @@
         "line_end": 3183,
         "line_start": 2757,
         "path": "src/restunts/asmorig/seg004.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
+      "blocker": "Unverified function boundaries",
+      "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
+      "capability_blockers": [
+        "Unverified function boundaries"
+      ],
+      "card": "recovery/cards/seg028_line1376.json",
+      "id": "seg028:line1376",
+      "name": "sub_39088",
+      "risks": [
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 978,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 1806,
+        "line_start": 1376,
+        "path": "src/restunts/asmorig/seg028.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -12334,29 +12611,6 @@
       "capability_blockers": [
         "Unverified function boundaries"
       ],
-      "card": "recovery/cards/seg002_line296.json",
-      "id": "seg002:line296",
-      "name": "init_div0",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 333,
-        "line_start": 296,
-        "path": "src/restunts/asmorig/seg002.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
       "card": "recovery/cards/seg004_line4078.json",
       "id": "seg004:line4078",
       "name": "track_setup",
@@ -12518,29 +12772,6 @@
       "capability_blockers": [
         "Unverified function boundaries"
       ],
-      "card": "recovery/cards/seg010_line3866.json",
-      "id": "seg010:line3866",
-      "name": "_rand",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 3894,
-        "line_start": 3866,
-        "path": "src/restunts/asmorig/seg010.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
       "card": "recovery/cards/seg010_line960.json",
       "id": "seg010:line960",
       "name": "sub_2D1BC",
@@ -12564,75 +12795,6 @@
       "capability_blockers": [
         "Unverified function boundaries"
       ],
-      "card": "recovery/cards/seg012_line10875.json",
-      "id": "seg012:line10875",
-      "name": "sprite_1_unk",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 10979,
-        "line_start": 10875,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line13557.json",
-      "id": "seg012:line13557",
-      "name": "shape_op_explosion",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 13999,
-        "line_start": 13557,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line14000.json",
-      "id": "seg012:line14000",
-      "name": "font_set_unk",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 14061,
-        "line_start": 14000,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
       "card": "recovery/cards/seg012_line14155.json",
       "id": "seg012:line14155",
       "name": "sprite_make_wnd",
@@ -12644,75 +12806,6 @@
         "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
         "line_end": 17847,
         "line_start": 14155,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line1490.json",
-      "id": "seg012:line1490",
-      "name": "parse_shape2d_helper2",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1518,
-        "line_start": 1490,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line1519.json",
-      "id": "seg012:line1519",
-      "name": "criterr_interrupt_handler",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1543,
-        "line_start": 1519,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line1544.json",
-      "id": "seg012:line1544",
-      "name": "set_criterr_handler",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1578,
-        "line_start": 1544,
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
@@ -12759,52 +12852,6 @@
         "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
         "line_end": 17872,
         "line_start": 17848,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line18050.json",
-      "id": "seg012:line18050",
-      "name": "sub_35C4E",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 18375,
-        "line_start": 18050,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg012_line18376.json",
-      "id": "seg012:line18376",
-      "name": "sub_35DC8",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 18400,
-        "line_start": 18376,
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
@@ -12886,29 +12933,6 @@
       "capability_blockers": [
         "Unverified function boundaries"
       ],
-      "card": "recovery/cards/seg012_line9251.json",
-      "id": "seg012:line9251",
-      "name": "file_unflip_shape2d",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 9740,
-        "line_start": 9251,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
       "card": "recovery/cards/seg027_line2285.json",
       "id": "seg027:line2285",
       "name": "audio_map_song_tracks",
@@ -12932,29 +12956,6 @@
       "capability_blockers": [
         "Unverified function boundaries"
       ],
-      "card": "recovery/cards/seg028_line1376.json",
-      "id": "seg028:line1376",
-      "name": "sub_39088",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1806,
-        "line_start": 1376,
-        "path": "src/restunts/asmorig/seg028.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
       "card": "recovery/cards/seg028_line216.json",
       "id": "seg028:line216",
       "name": "sub_38702",
@@ -12967,29 +12968,6 @@
         "line_end": 671,
         "line_start": 216,
         "path": "src/restunts/asmorig/seg028.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "Unverified function boundaries",
-      "boundary_status": "PARTIAL_UNMAPPED",
-      "capability_blockers": [
-        "Unverified function boundaries"
-      ],
-      "card": "recovery/cards/seg029_line59.json",
-      "id": "seg029:line59",
-      "name": "audioresource_compare_chunknames",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": null,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 145,
-        "line_start": 59,
-        "path": "src/restunts/asmorig/seg029.asm",
         "repository": "restunts"
       },
       "tier": "SUPERVISOR"
@@ -13455,6 +13433,33 @@
     },
     {
       "attempts_remaining": 3,
+      "blocker": "CS-relative storage is unsupported; Calls need supervisor linking/TU review; Explicit SS register value needs supervisor source review; Hardware/interrupt semantics need supervisor review",
+      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "capability_blockers": [
+        "CS-relative storage is unsupported",
+        "Calls need supervisor linking/TU review",
+        "Explicit SS register value needs supervisor source review",
+        "Hardware/interrupt semantics need supervisor review"
+      ],
+      "card": "recovery/cards/load_1f35c.json",
+      "id": "load_1f35c",
+      "name": "criterr_interrupt_handler",
+      "risks": [
+        "Odd extent: verify complete compiler alignment; never trim",
+        "No ordinary-C hint; review source/compiler expressibility"
+      ],
+      "size": 27,
+      "source": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 1543,
+        "line_start": 1519,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "tier": "SUPERVISOR"
+    },
+    {
+      "attempts_remaining": 3,
       "blocker": "Unregistered DGROUP address 0x187; Unregistered DGROUP address 0x188; Unregistered DGROUP address 0x3468",
       "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "capability_blockers": [
@@ -13841,5 +13846,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "a7fef82d896eafa92af0933a7e5e12588aef06db553afec71b6e268cdbb31c71"
+  "workflow_fingerprint": "6b52700dc2cb3070515fdd222c2671b42abd8bec007375d7bea28a072e60ab10"
 }

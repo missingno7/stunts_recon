@@ -2,7 +2,7 @@
 
 Full image: **HYBRID_EXACT**. Matching C: **1090 bytes**; raw initialized: **198185 bytes**.
 
-Mapped 527 / 619 procedures; 38 source code segments and 36 proven segment frames.
+Mapped 531 / 619 procedures; 38 source code segments and 36 proven segment frames.
 
 Classification counts are conservative evidence counts, not a complete code/data partition. See status.json for unknown bytes.
 

@@ -1,5 +1,5 @@
 {
-  "anchored_frame_functions": 522,
+  "anchored_frame_functions": 526,
   "authority": "RESEARCH_ONLY",
   "candidate_runs": [
     {
@@ -810,16 +810,20 @@
       "frame_paragraph": 7842,
       "gaps": [
         0,
+        0,
+        0,
         0
       ],
       "id": "candidate-run-026",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
+        "load_1f35c",
+        "load_1f377",
         "load_1f3bc",
         "load_1f3da",
         "load_1f424"
       ],
-      "start": 127932,
+      "start": 127836,
       "state": "CANDIDATE_RANGE"
     },
     {
@@ -1368,6 +1372,22 @@
     },
     {
       "basis": "Address-contiguous verified intervals in one anchored code frame; intervening bytes only NOP",
+      "end": 155144,
+      "frame_paragraph": 7842,
+      "gaps": [
+        0
+      ],
+      "id": "candidate-run-048",
+      "limitation": "May cross original object boundaries or omit private code/data.",
+      "members": [
+        "load_25dc8",
+        "load_25de6"
+      ],
+      "start": 155080,
+      "state": "CANDIDATE_RANGE"
+    },
+    {
+      "basis": "Address-contiguous verified intervals in one anchored code frame; intervening bytes only NOP",
       "end": 157866,
       "frame_paragraph": 9851,
       "gaps": [
@@ -1375,7 +1395,7 @@
         0,
         0
       ],
-      "id": "candidate-run-048",
+      "id": "candidate-run-049",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_267b2",
@@ -1398,7 +1418,7 @@
         0,
         0
       ],
-      "id": "candidate-run-049",
+      "id": "candidate-run-050",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_268aa",
@@ -1419,7 +1439,7 @@
       "gaps": [
         0
       ],
-      "id": "candidate-run-050",
+      "id": "candidate-run-051",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_26af4",
@@ -1436,7 +1456,7 @@
         0,
         0
       ],
-      "id": "candidate-run-051",
+      "id": "candidate-run-052",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_26f2a",
@@ -1489,7 +1509,7 @@
         0,
         0
       ],
-      "id": "candidate-run-052",
+      "id": "candidate-run-053",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_270d2",
@@ -1542,7 +1562,7 @@
         0,
         0
       ],
-      "id": "candidate-run-053",
+      "id": "candidate-run-054",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_284fa",
@@ -1560,7 +1580,7 @@
         0,
         0
       ],
-      "id": "candidate-run-054",
+      "id": "candidate-run-055",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_2863c",
@@ -1580,7 +1600,7 @@
         0,
         0
       ],
-      "id": "candidate-run-055",
+      "id": "candidate-run-056",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_28ac4",
@@ -1601,7 +1621,7 @@
         0,
         0
       ],
-      "id": "candidate-run-056",
+      "id": "candidate-run-057",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_2963c",
@@ -1620,7 +1640,7 @@
         0,
         0
       ],
-      "id": "candidate-run-057",
+      "id": "candidate-run-058",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_29b5a",
@@ -1647,7 +1667,7 @@
         0,
         0
       ],
-      "id": "candidate-run-058",
+      "id": "candidate-run-059",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_29e14",
@@ -1674,7 +1694,7 @@
         0,
         0
       ],
-      "id": "candidate-run-059",
+      "id": "candidate-run-060",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_2a4b6",
@@ -1691,7 +1711,7 @@
       "gaps": [
         0
       ],
-      "id": "candidate-run-060",
+      "id": "candidate-run-061",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_2a958",
@@ -1709,7 +1729,7 @@
         0,
         0
       ],
-      "id": "candidate-run-061",
+      "id": "candidate-run-062",
       "limitation": "May cross original object boundaries or omit private code/data.",
       "members": [
         "load_2a9d6",
@@ -3446,6 +3466,18 @@
       "target_load_address": 94061
     },
     {
+      "caller_task": "load_1f377",
+      "kind": "DIRECT_FAR",
+      "mapped_target_ids": [
+        "load_1fe1c"
+      ],
+      "object_relation": "COMPATIBLE_ONLY",
+      "relocated_segment_word": true,
+      "site": 127872,
+      "target_frame_paragraph": 7842,
+      "target_load_address": 130588
+    },
+    {
       "caller_task": "load_12ce8",
       "kind": "DIRECT_FAR",
       "mapped_target_ids": [
@@ -4996,7 +5028,9 @@
     {
       "caller_task": "load_18f98",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 102343,
@@ -5018,7 +5052,9 @@
     {
       "caller_task": "load_18f98",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 102378,
@@ -6872,7 +6908,9 @@
     {
       "caller_task": "load_19008",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 102460,
@@ -6930,7 +6968,9 @@
     {
       "caller_task": "load_19008",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 102558,
@@ -9040,7 +9080,9 @@
     {
       "caller_task": "load_1863a",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 99982,
@@ -9060,7 +9102,9 @@
     {
       "caller_task": "load_1863a",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 100033,
@@ -12784,7 +12828,9 @@
     {
       "caller_task": "load_0168e",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 6201,
@@ -13272,7 +13318,9 @@
     {
       "caller_task": "load_192dc",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 103532,
@@ -16442,7 +16490,9 @@
     {
       "caller_task": "load_29e56",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_1f377"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 172257,
@@ -17802,7 +17852,9 @@
     {
       "caller_task": "load_010d0",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 4728,
@@ -19486,7 +19538,9 @@
     {
       "caller_task": "load_0293c",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 11403,
@@ -20216,7 +20270,9 @@
     {
       "caller_task": "load_17ed4",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 98141,
@@ -20236,7 +20292,9 @@
     {
       "caller_task": "load_17ed4",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 98334,
@@ -20280,7 +20338,9 @@
     {
       "caller_task": "load_17ed4",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 98406,
@@ -20380,7 +20440,9 @@
     {
       "caller_task": "load_17ed4",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 98978,
@@ -22560,7 +22622,9 @@
     {
       "caller_task": "load_17686",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 96336,
@@ -22570,7 +22634,9 @@
     {
       "caller_task": "load_17686",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 96357,
@@ -22672,7 +22738,9 @@
     {
       "caller_task": "load_17686",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 97456,
@@ -25004,7 +25072,9 @@
     {
       "caller_task": "load_01c42",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 8427,
@@ -27536,7 +27606,9 @@
     {
       "caller_task": "load_03178",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 15106,
@@ -30206,7 +30278,9 @@
     {
       "caller_task": "load_1a2bc",
       "kind": "DIRECT_FAR",
-      "mapped_target_ids": [],
+      "mapped_target_ids": [
+        "load_24b0c"
+      ],
       "object_relation": "COMPATIBLE_ONLY",
       "relocated_segment_word": true,
       "site": 109892,
@@ -34810,6 +34884,28 @@
       "start": 127764
     },
     {
+      "end": 127863,
+      "frame_evidence": "IMPORTED_FRAME_ANCHORED_BY_FAR_CALL",
+      "frame_paragraph": 7842,
+      "id": "load_1f35c",
+      "name": "criterr_interrupt_handler",
+      "object_membership": "UNKNOWN",
+      "size": 27,
+      "source_segment_label": "seg012",
+      "start": 127836
+    },
+    {
+      "end": 127932,
+      "frame_evidence": "IMPORTED_FRAME_ANCHORED_BY_FAR_CALL",
+      "frame_paragraph": 7842,
+      "id": "load_1f377",
+      "name": "set_criterr_handler",
+      "object_membership": "UNKNOWN",
+      "size": 69,
+      "source_segment_label": "seg012",
+      "start": 127863
+    },
+    {
       "end": 127962,
       "frame_evidence": "IMPORTED_FRAME_ANCHORED_BY_FAR_CALL",
       "frame_paragraph": 7842,
@@ -36548,6 +36644,28 @@
       "start": 149374
     },
     {
+      "end": 150396,
+      "frame_evidence": "IMPORTED_FRAME_ANCHORED_BY_FAR_CALL",
+      "frame_paragraph": 7842,
+      "id": "load_24b0c",
+      "name": "font_set_unk",
+      "object_membership": "UNKNOWN",
+      "size": 112,
+      "source_segment_label": "seg012",
+      "start": 150284
+    },
+    {
+      "end": 155110,
+      "frame_evidence": "IMPORTED_FRAME_ANCHORED_BY_FAR_CALL",
+      "frame_paragraph": 7842,
+      "id": "load_25dc8",
+      "name": "sub_35DC8",
+      "object_membership": "UNKNOWN",
+      "size": 30,
+      "source_segment_label": "seg012",
+      "start": 155080
+    },
+    {
       "end": 155144,
       "frame_evidence": "IMPORTED_FRAME_ANCHORED_BY_FAR_CALL",
       "frame_paragraph": 7842,
@@ -37795,7 +37913,7 @@
   "oracle_load_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
   "proven_object_boundaries": [],
   "proven_same_object_pairs": [],
-  "queue_fingerprint": "a7fef82d896eafa92af0933a7e5e12588aef06db553afec71b6e268cdbb31c71",
+  "queue_fingerprint": "7ae245e030be7850778c3ea8e893bcf82726f4c97075810267fffe127210e957",
   "schema": 1,
-  "verified_functions": 527
+  "verified_functions": 531
 }

@@ -11,6 +11,7 @@ import sys
 from common import ROOT, read_json, require, sha, write_json
 from mz import MZ
 from oracle import verify
+from audit_function_extents import inspect as inspect_single_entry
 from workflow import fingerprint, workflow_inputs
 
 sys.path.insert(0, str(ROOT/'build/python'))
@@ -21,6 +22,7 @@ FAMILY_RESEARCH = {
     'BOUNDARY_OR_EXTENT': ('partial-label mismatch localization', 'available for partial-label rows; no-anchor rows require an independent address', 'high', 'medium for exact opcode aliases; low for the remaining mixed residuals'),
     'MAPPING_OR_CODE_DATA_CLASSIFICATION': ('independent address anchor', 'not available for these no-anchor rows', 'high', 'low'),
     'EMISSION_BYTES_CFG_REVIEW': ('traverse exact source-emission coordinates and prove raw padding/data unreachable', 'exact byte coordinates available; CFG review remains separate', 'medium', 'high for mapping, unknown for source promotion'),
+    'SINGLE_ENTRY_CFG_UNREACHABLE_CANDIDATE': ('review external entry/publics and split or justify nonpadding unreachable code', 'pristine single-entry CFG audit available; alternate entries still unresolved', 'medium', 'high for observed unreachable bytes, unknown for ownership'),
     'SOURCE_OFFSET_TABLE_BYTES_VERIFIED': ('finish each partial function boundary and code/data review after exact table emission', 'complete table words and following label verified in the oracle', 'medium', 'high for table bytes; unknown for complete function'),
     'BOUNDARY_OR_EXTENT_CANDIDATE': ('review external jump target and full contribution', 'pristine decode available', 'medium', 'medium'),
     'INSTRUCTION_EVIDENCE_MISSING': ('review pristine linear decode and CFG/ownership', 'complete research decode available', 'low', 'high for diagnostic unlock; low for production alone'),
@@ -139,7 +141,8 @@ def classify(card, obs):
 def primary_category(categories):
     # Select only a gate that follows directly from current evidence. Keep
     # overlapping candidates visible; ambiguity is not resolved by precedence.
-    for direct_gate in ('EMISSION_BYTES_CFG_REVIEW', 'BOUNDARY_OR_EXTENT', 'BINDING_OR_FIXUP_MODE_UNKNOWN',
+    for direct_gate in ('EMISSION_BYTES_CFG_REVIEW', 'BOUNDARY_OR_EXTENT',
+                        'SINGLE_ENTRY_CFG_UNREACHABLE_CANDIDATE', 'BINDING_OR_FIXUP_MODE_UNKNOWN',
                         'INSTRUCTION_EVIDENCE_MISSING', 'MAPPING_OR_CODE_DATA_CLASSIFICATION'):
         if direct_gate in categories:
             return direct_gate, 'HIGH_FOR_GATE_ONLY'
@@ -170,6 +173,8 @@ def run():
         oracle_report['unpacked_mz']['relocations'])
     reviewed_targets = {value['load_address'] for value in reviewed_code_symbols.values()}
     decoder = Cs(CS_ARCH_X86, CS_MODE_16)
+    cfg_decoder = Cs(CS_ARCH_X86, CS_MODE_16)
+    cfg_decoder.detail = True
     rows = []
     for task in queue['tasks']:
         if task['tier'] != 'SUPERVISOR':
@@ -178,6 +183,14 @@ def run():
         require(card['id'] == task['id'] and card['name'] == task['name'], 'Card/queue identity mismatch')
         obs = decode_observations(card, image, decoder)
         categories = classify(card, obs)
+        cfg_finding = None
+        if obs['state'] == 'LINEAR_DECODE_COMPLETE_RESEARCH_ONLY':
+            evidence = card['evidence']
+            cfg_finding = inspect_single_entry({'name': task['name'],
+                'start': evidence['start'], 'end': evidence['end'],
+                'sha256': evidence['sha256']}, image, cfg_decoder)
+            if cfg_finding and cfg_finding['kind'] == 'unreachable_nonpadding_from_named_entry':
+                categories.append('SINGLE_ENTRY_CFG_UNREACHABLE_CANDIDATE')
         verified_tables = table_spans.get(task['id'], [])
         if verified_tables:
             categories.append('SOURCE_OFFSET_TABLE_BYTES_VERIFIED')
@@ -192,6 +205,7 @@ def run():
                      'historical_blocker': task['blocker'], 'current_capability_blockers': task['capability_blockers'],
                      'categories': categories, 'primary_category': primary,
                      'primary_confidence': primary_confidence, 'observations': obs,
+                     'single_entry_cfg_finding': cfg_finding,
                      'far_target_address_coverage': {'sites': len(far_targets),
                          'reviewed_sites': sum(f['load_target'] in reviewed_targets for f in far_targets),
                          'all_reviewed': bool(far_targets) and all(f['load_target'] in reviewed_targets for f in far_targets)},

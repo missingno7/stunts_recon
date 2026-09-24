@@ -12382,6 +12382,16 @@
       "sha256": "8f5f2a02495ab3d37352b37bf41fd27d9bfa13e2e6745d754dd2a87a438bc844"
     },
     {
+      "end": 40722,
+      "function": "init_div0",
+      "ida": 106246,
+      "instruction_count": 12,
+      "line": 320,
+      "load_offset": 40710,
+      "segment": "seg002",
+      "sha256": "b830ff5afb951c41f733282cd4e3edcfd75f7342231a729f5bfb6976b6a4da81"
+    },
+    {
       "end": 40757,
       "function": "sub_19F14",
       "ida": 106278,
@@ -42982,6 +42992,16 @@
       "sha256": "1130d9b198afaddaf9aa0f9b1a5ca3a60d78b040e75319c80130059a3417e994"
     },
     {
+      "end": 124540,
+      "function": "_rand",
+      "ida": 190054,
+      "instruction_count": 12,
+      "line": 3879,
+      "load_offset": 124518,
+      "segment": "seg010",
+      "sha256": "52c5dab1235419d2cf2608feb6533deb012cb251495996aac5c0513be0af0547"
+    },
+    {
       "end": 124571,
       "function": "_signal",
       "ida": 190100,
@@ -50322,6 +50342,16 @@
       "sha256": "a7636f3819e649b27ecc66b23ec6ca51be97b85928a01ec1d53036de42127534"
     },
     {
+      "end": 142716,
+      "function": "file_unflip_shape2d",
+      "ida": 207926,
+      "instruction_count": 307,
+      "line": 9432,
+      "load_offset": 142390,
+      "segment": "seg012",
+      "sha256": "e261260868d82df55a4bc725c44e9e925fef0b2af7ab1bf56fbc83384713e567"
+    },
+    {
       "end": 142857,
       "function": "file_decomp_vle",
       "ida": 208382,
@@ -51190,6 +51220,16 @@
       "load_offset": 144954,
       "segment": "seg012",
       "sha256": "df7e70e5021544f4834bbee64a9e3789febc4be81470df629cad6ddb03320a5c"
+    },
+    {
+      "end": 145018,
+      "function": "sprite_1_unk",
+      "ida": 210491,
+      "instruction_count": 40,
+      "line": 10936,
+      "load_offset": 144955,
+      "segment": "seg012",
+      "sha256": "6474e860914736edbb63e864e34bdef2ea40cd666de25d1ce48feb649f5a5b31"
     },
     {
       "end": 145090,
@@ -53002,6 +53042,16 @@
       "sha256": "8b236cade263caff0db3f8c23930c144f40cc5cafc9eee685e8cfa70a9a84627"
     },
     {
+      "end": 150284,
+      "function": "shape_op_explosion",
+      "ida": 215353,
+      "instruction_count": 266,
+      "line": 13732,
+      "load_offset": 149817,
+      "segment": "seg012",
+      "sha256": "0e9d04d448700878a7996de581796dc36c2705a7c682b25f40c591913c977b04"
+    },
+    {
       "end": 150445,
       "function": "draw_patterned_lines",
       "ida": 215963,
@@ -53230,6 +53280,16 @@
       "load_offset": 154691,
       "segment": "seg012",
       "sha256": "5abdb770f108f61ad7a465220b0a98aaa2b7a386ac2388fd9d402e256e08990b"
+    },
+    {
+      "end": 155080,
+      "function": "sub_35C4E",
+      "ida": 220319,
+      "instruction_count": 274,
+      "line": 18100,
+      "load_offset": 154783,
+      "segment": "seg012",
+      "sha256": "9b000830df91246206681cd4b9f271c8acfe7c6f1c222a25394124535990c33c"
     },
     {
       "end": 155137,
@@ -62072,6 +62132,16 @@
       "sha256": "01180335507e738bf0aa9e1f433741bd39a398e38043dfb0762a88c137dbfda8"
     },
     {
+      "end": 168727,
+      "function": "sub_39088",
+      "ida": 234187,
+      "instruction_count": 28,
+      "line": 1631,
+      "load_offset": 168651,
+      "segment": "seg028",
+      "sha256": "244a3dd650bf307af23330156a835aaa85d9a6a4ded6095309ffc5118e8d0d35"
+    },
+    {
       "end": 168772,
       "function": "sub_39088",
       "ida": 234263,
@@ -63240,6 +63310,16 @@
       "load_offset": 170735,
       "segment": "seg029",
       "sha256": "258be8b654be874e3fb6fa22c4ba2f65a6370901ff19fd882887e4c3f7aca7c0"
+    },
+    {
+      "end": 170774,
+      "function": "audioresource_compare_chunknames",
+      "ida": 236297,
+      "instruction_count": 9,
+      "line": 96,
+      "load_offset": 170761,
+      "segment": "seg029",
+      "sha256": "ef79d19798744a672192dddfd83918eb322b32c61415dfe42734be11a645267f"
     },
     {
       "end": 170778,
@@ -80666,15 +80746,24 @@
       "verified_labels": 7
     },
     {
+      "bytes_hex": "1eb435b000cd218c06be06891ebc06badc098edaba0901b425b000cd211fcb1ec516bc06b425b000cd21",
       "c_sources": [
         "src/restunts/c/restunts.c"
       ],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
-      "issues": [
-        "label_interval_mismatch:0x19f06"
-      ],
+      "end": 40722,
+      "end_evidence": {
+        "instructions": 12,
+        "label": {
+          "ida": 106246,
+          "index": 147,
+          "line": 320
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 10,
       "line_end": 333,
       "line_start": 296,
@@ -80687,17 +80776,31 @@
         "path": "src/restunts/asmorig/seg002.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [
+        40696
+      ],
       "segment": "seg002",
       "segment_offset": 296,
       "segment_paragraph": 2524,
+      "sha256": "d91499ce16e61bf7b0a7b4d8d112a68251c30437fb3240467a50eef2c039e6d0",
+      "size": 42,
       "source": "build/references/restunts/src/restunts/asmorig/seg002.asm",
       "start": 40680,
       "start_candidates": [
         40680
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 4,
+        "label": {
+          "ida": 106211,
+          "index": 130,
+          "line": 290
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg002:line296",
-      "verified_labels": 9
+      "verified_labels": 10
     },
     {
       "bytes_hex": null,
@@ -98926,6 +99029,7 @@
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
+      "bytes_hex": "b8fd43ba03005250ff363239ff3630399a881cc51c05c39e83d226a33039891632398bc280e47fcb0204080b0f16",
       "c_sources": [],
       "calls": [
         {
@@ -98933,11 +99037,19 @@
           "target": "__aFlmul"
         }
       ],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
-      "issues": [
-        "label_interval_mismatch:0x2e666"
-      ],
+      "end": 124540,
+      "end_evidence": {
+        "instructions": 12,
+        "label": {
+          "ida": 190054,
+          "index": 2884,
+          "line": 3879
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 4,
       "line_end": 3894,
       "line_start": 3866,
@@ -98950,17 +99062,31 @@
         "path": "src/restunts/asmorig/seg010.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [
+        124513
+      ],
       "segment": "seg010",
       "segment_offset": 6654,
       "segment_paragraph": 7365,
+      "sha256": "d39b290cfa5455e4a8bddf97ec1a6b898264265e73abafa6f7f5057a0ae2ce7d",
+      "size": 46,
       "source": "build/references/restunts/src/restunts/asmorig/seg010.asm",
       "start": 124494,
       "start_candidates": [
         124494
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 12,
+        "label": {
+          "ida": 190007,
+          "index": 2864,
+          "line": 3844
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg010:line3866",
-      "verified_labels": 3
+      "verified_labels": 4
     },
     {
       "bytes_hex": null,
@@ -99015,13 +99141,13 @@
         124540
       ],
       "start_evidence": {
-        "instructions": 9,
+        "instructions": 12,
         "label": {
-          "ida": 190100,
-          "index": 2905,
-          "line": 3913
+          "ida": 190054,
+          "index": 2884,
+          "line": 3879
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "verified_labels": 6
@@ -100201,10 +100327,22 @@
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
+      "bytes_hex": "558bec8b5e088b56068bc2d1ebd1dad1ebd1dad1ebd1dad1ebd1da250f005dcb0000000000000000",
       "c_sources": [],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
+      "end": 127836,
+      "end_evidence": {
+        "instructions": 38,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "line_end": 1518,
       "line_start": 1490,
       "name": "parse_shape2d_helper2",
@@ -100216,12 +100354,28 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
+      "segment_offset": 2324,
+      "segment_paragraph": 7842,
+      "sha256": "f481eaad2e8838916992d1d58c7936dd6501a8b5aea1ea1e0b6d966cbb658b68",
+      "size": 40,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
-      "status": "UNMAPPED_NO_ADDRESS_ANCHOR",
+      "start": 127796,
+      "start_evidence": {
+        "instructions": 18,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line1490"
     },
     {
+      "bytes_hex": "53525156571e06558cd08ed8bb38092eff1f5d071f5f5e595a5bcf",
       "c_sources": [],
       "calls": [
         {
@@ -100229,8 +100383,19 @@
           "target": "dword"
         }
       ],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_instruction_boundaries",
       "distance": "far",
+      "end": 127863,
+      "end_evidence": {
+        "instructions": 59,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "line_end": 1543,
       "line_start": 1519,
       "name": "criterr_interrupt_handler",
@@ -100242,12 +100407,28 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
+      "segment_offset": 2364,
+      "segment_paragraph": 7842,
+      "sha256": "c59fd8435b30a5a8246cc031879df16ea5576306413c711af2b611a56b6307c5",
+      "size": 27,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
-      "status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "unresolved_evidence_id": "seg012:line1519"
+      "stable_id": "load_1f35c",
+      "start": 127836,
+      "start_evidence": {
+        "instructions": 38,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
+      "bytes_hex": "558bec1e0eb89c09509afc13a21e83c4048b46062ea338098b46082ea33a0933c08ec0bb9000268b072ea33409268b47022ea33609ba3c098cc88ed8b024b425cd211f5dcb",
       "c_sources": [
         "src/restunts/c/restunts.c"
       ],
@@ -100257,8 +100438,19 @@
           "target": "add_exit_handler"
         }
       ],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_instruction_boundaries",
       "distance": "far",
+      "end": 127932,
+      "end_evidence": {
+        "instructions": 87,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "line_end": 1578,
       "line_start": 1544,
       "name": "set_criterr_handler",
@@ -100270,10 +100462,27 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [
+        127875
+      ],
       "segment": "seg012",
+      "segment_offset": 2391,
+      "segment_paragraph": 7842,
+      "sha256": "a64f5c0dc573f0c7d6ecc98fff4afcf9d2b92e091326335286c70939e9de2319",
+      "size": 69,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
-      "status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "unresolved_evidence_id": "seg012:line1544"
+      "stable_id": "load_1f377",
+      "start": 127863,
+      "start_evidence": {
+        "instructions": 59,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
       "bytes_hex": "1e2ea136092e2b06340974102e8b1634092e8e1e3609b024b425cd211fcb",
@@ -100317,13 +100526,13 @@
         127932
       ],
       "start_evidence": {
-        "instructions": 9,
+        "instructions": 87,
         "label": {
-          "ida": 193496,
-          "index": 968,
-          "line": 1590
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "verified_labels": 1
@@ -108061,6 +108270,7 @@
       "verified_labels": 0
     },
     {
+      "bytes_hex": null,
       "c_sources": [
         "src/restunts/c/shape2d.c"
       ],
@@ -108070,11 +108280,19 @@
           "target": "file_get_shape2d"
         }
       ],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
-      "issues": [
-        "label_interval_mismatch:0x32c36"
-      ],
+      "end": 142716,
+      "end_evidence": {
+        "instructions": 307,
+        "label": {
+          "ida": 207926,
+          "index": 7197,
+          "line": 9432
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 12,
       "line_end": 9740,
       "line_start": 9251,
@@ -108087,17 +108305,32 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [
+        142103,
+        142110
+      ],
       "segment": "seg012",
       "segment_offset": 16578,
       "segment_paragraph": 7842,
+      "sha256": "4c98eb92516d8fdbc8612f58e6cbe09ebee161225ecfdbd92c631b303a2d1e31",
+      "size": 666,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
       "start": 142050,
       "start_candidates": [
         142050
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 18,
+        "label": {
+          "ida": 207629,
+          "index": 7067,
+          "line": 9284
+        },
+        "method": "unique_reverse_to_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line9251",
-      "verified_labels": 11
+      "verified_labels": 12
     },
     {
       "bytes_hex": null,
@@ -108108,6 +108341,15 @@
       "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
       "end": 143342,
+      "end_evidence": {
+        "instructions": 6,
+        "label": {
+          "ida": 208865,
+          "index": 7769,
+          "line": 10064
+        },
+        "method": "forward_from_dense_label"
+      },
       "issues": [],
       "label_count": 33,
       "line_end": 10072,
@@ -108132,6 +108374,15 @@
       "start_candidates": [
         142716
       ],
+      "start_evidence": {
+        "instructions": 307,
+        "label": {
+          "ida": 207926,
+          "index": 7197,
+          "line": 9432
+        },
+        "method": "forward_from_dense_label"
+      },
       "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line9741",
       "verified_labels": 33
@@ -108823,13 +109074,22 @@
       "verified_labels": 4
     },
     {
+      "bytes_hex": null,
       "c_sources": [],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
-      "issues": [
-        "label_interval_mismatch:0x3363b"
-      ],
+      "end": 145018,
+      "end_evidence": {
+        "instructions": 40,
+        "label": {
+          "ida": 210491,
+          "index": 8449,
+          "line": 10936
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 7,
       "line_end": 10979,
       "line_start": 10875,
@@ -108842,17 +109102,29 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
       "segment_offset": 19378,
       "segment_paragraph": 7842,
+      "sha256": "0e85dd71df87265558c40920a4b2e1a7cf2cf8bbe2fb4a1a8b6d80a73497c0d4",
+      "size": 168,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
       "start": 144850,
       "start_candidates": [
         144850
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 2,
+        "label": {
+          "ida": 210383,
+          "index": 8401,
+          "line": 10870
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line10875",
-      "verified_labels": 6
+      "verified_labels": 7
     },
     {
       "bytes_hex": null,
@@ -108896,13 +109168,13 @@
         145018
       ],
       "start_evidence": {
-        "instructions": 12,
+        "instructions": 40,
         "label": {
-          "ida": 210583,
-          "index": 8501,
-          "line": 11010
+          "ida": 210491,
+          "index": 8449,
+          "line": 10936
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "verified_labels": 6
@@ -110962,15 +111234,24 @@
       "verified_labels": 2
     },
     {
+      "bytes_hex": null,
       "c_sources": [
         "src/restunts/c/frame.c"
       ],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
-      "issues": [
-        "label_interval_mismatch:0x34939"
-      ],
+      "end": 150284,
+      "end_evidence": {
+        "instructions": 266,
+        "label": {
+          "ida": 215353,
+          "index": 10581,
+          "line": 13732
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 9,
       "line_end": 13999,
       "line_start": 13557,
@@ -110983,23 +111264,47 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
       "segment_offset": 23996,
       "segment_paragraph": 7842,
+      "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
+      "size": 816,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
       "start": 149468,
       "start_candidates": [
         149468
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 14,
+        "label": {
+          "ida": 214976,
+          "index": 10420,
+          "line": 13541
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line13557",
-      "verified_labels": 8
+      "verified_labels": 9
     },
     {
+      "bytes_hex": null,
       "c_sources": [],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_instruction_boundaries",
       "distance": "far",
+      "end": 150396,
+      "end_evidence": {
+        "instructions": 321,
+        "label": {
+          "ida": 215353,
+          "index": 10581,
+          "line": 13732
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "line_end": 14061,
       "line_start": 14000,
       "name": "font_set_unk",
@@ -111011,10 +111316,25 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
+      "segment_offset": 24812,
+      "segment_paragraph": 7842,
+      "sha256": "37bbcf3ffd9ad307d41b1b8a826f257d2e664ccb4b68455858abaa3d70f840a6",
+      "size": 112,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
-      "status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "unresolved_evidence_id": "seg012:line14000"
+      "stable_id": "load_24b0c",
+      "start": 150284,
+      "start_evidence": {
+        "instructions": 266,
+        "label": {
+          "ida": 215353,
+          "index": 10581,
+          "line": 13732
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
       "bytes_hex": "558bec8b4608a3904e5dcb00558bec56578b4610a3ae4beb0690",
@@ -111024,13 +111344,13 @@
       "distance": "far",
       "end": 150422,
       "end_evidence": {
-        "instructions": 4,
+        "instructions": 336,
         "label": {
-          "ida": 215963,
-          "index": 10921,
-          "line": 14098
+          "ida": 215353,
+          "index": 10581,
+          "line": 13732
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "issues": [],
       "line_end": 14084,
@@ -111053,13 +111373,13 @@
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
       "start": 150396,
       "start_evidence": {
-        "instructions": 19,
+        "instructions": 321,
         "label": {
-          "ida": 215963,
-          "index": 10921,
-          "line": 14098
+          "ida": 215353,
+          "index": 10581,
+          "line": 13732
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line14062"
@@ -111107,13 +111427,13 @@
         150422
       ],
       "start_evidence": {
-        "instructions": 4,
+        "instructions": 336,
         "label": {
-          "ida": 215963,
-          "index": 10921,
-          "line": 14098
+          "ida": 215353,
+          "index": 10581,
+          "line": 13732
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line14085",
@@ -111352,15 +111672,24 @@
       "verified_labels": 14
     },
     {
+      "bytes_hex": null,
       "c_sources": [
         "src/restunts/c/restunts.c"
       ],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
-      "issues": [
-        "label_interval_mismatch:0x35c9f"
-      ],
+      "end": 155080,
+      "end_evidence": {
+        "instructions": 274,
+        "label": {
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 1,
       "line_end": 18375,
       "line_start": 18050,
@@ -111373,23 +111702,47 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
       "segment_offset": 29230,
       "segment_paragraph": 7842,
+      "sha256": "bd68c2379553309161c21b759582077a860c0438838e7cef6d4029e2f3f3fcd2",
+      "size": 378,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
       "start": 154702,
       "start_candidates": [
         154702
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 6,
+        "label": {
+          "ida": 220227,
+          "index": 14795,
+          "line": 18041
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg012:line18050",
-      "verified_labels": 0
+      "verified_labels": 1
     },
     {
+      "bytes_hex": "558bec1e5657b900018e5e088b76068cc88ec0bfa872fcf3a45f5e1f5dcb",
       "c_sources": [],
       "calls": [],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_instruction_boundaries",
       "distance": "far",
+      "end": 155110,
+      "end_evidence": {
+        "instructions": 292,
+        "label": {
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "line_end": 18400,
       "line_start": 18376,
       "name": "sub_35DC8",
@@ -111401,10 +111754,25 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [],
       "segment": "seg012",
+      "segment_offset": 29608,
+      "segment_paragraph": 7842,
+      "sha256": "dfb79d34b21d23b9d09901528e9d39455852f0de186c8271d1409089ebc01911",
+      "size": 30,
       "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
-      "status": "UNMAPPED_NO_ADDRESS_ANCHOR",
-      "unresolved_evidence_id": "seg012:line18376"
+      "stable_id": "load_25dc8",
+      "start": 155080,
+      "start_evidence": {
+        "instructions": 274,
+        "label": {
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
       "bytes_hex": "558bec1e56578b4e088e5e0c8b76068cc88ec08dbca8728b760afcf3a45f5e1f5dcb",
@@ -111448,13 +111816,13 @@
         155110
       ],
       "start_evidence": {
-        "instructions": 12,
+        "instructions": 292,
         "label": {
-          "ida": 220672,
-          "index": 15136,
-          "line": 18421
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "verified_labels": 2
@@ -116970,6 +117338,7 @@
       "verified_labels": 1
     },
     {
+      "bytes_hex": null,
       "c_sources": [],
       "calls": [
         {
@@ -116993,12 +117362,19 @@
           "target": "dword"
         }
       ],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
       "end": 169050,
-      "issues": [
-        "label_interval_mismatch:0x392cb"
-      ],
+      "end_evidence": {
+        "instructions": 7,
+        "label": {
+          "ida": 234578,
+          "index": 1394,
+          "line": 1797
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 48,
       "line_end": 1806,
       "line_start": 1376,
@@ -117011,17 +117387,32 @@
         "path": "src/restunts/asmorig/seg028.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [
+        168081,
+        168146
+      ],
       "segment": "seg028",
       "segment_offset": 2648,
       "segment_paragraph": 10339,
+      "sha256": "44ca1cb44ba4001f89ba5649b3e67575be739a1e86a8daa16684146e0440687d",
+      "size": 978,
       "source": "build/references/restunts/src/restunts/asmorig/seg028.asm",
       "start": 168072,
       "start_candidates": [
         168072
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 5,
+        "label": {
+          "ida": 233601,
+          "index": 1028,
+          "line": 1368
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg028:line1376",
-      "verified_labels": 47
+      "verified_labels": 48
     },
     {
       "bytes_hex": null,
@@ -117311,6 +117702,7 @@
       "verified_labels": 39
     },
     {
+      "bytes_hex": null,
       "c_sources": [],
       "calls": [
         {
@@ -117322,12 +117714,19 @@
           "target": "toupper"
         }
       ],
-      "confidence": "unresolved_boundary",
+      "confidence": "verified_emission_coordinates_cfg_unreviewed",
       "distance": "far",
       "end": 170842,
-      "issues": [
-        "label_interval_mismatch:0x39b09"
-      ],
+      "end_evidence": {
+        "instructions": 7,
+        "label": {
+          "ida": 236368,
+          "index": 55,
+          "line": 136
+        },
+        "method": "forward_from_dense_label"
+      },
+      "issues": [],
       "label_count": 17,
       "line_end": 145,
       "line_start": 59,
@@ -117340,17 +117739,32 @@
         "path": "src/restunts/asmorig/seg029.asm",
         "repository": "restunts"
       },
+      "relocation_sites": [
+        170790,
+        170810
+      ],
       "segment": "seg029",
       "segment_offset": 4,
       "segment_paragraph": 10669,
+      "sha256": "fbc6121dc0facdc87661b21fb1781b4ea0a8ee9acce67b2362cf4497d54b2603",
+      "size": 134,
       "source": "build/references/restunts/src/restunts/asmorig/seg029.asm",
       "start": 170708,
       "start_candidates": [
         170708
       ],
-      "status": "PARTIAL_UNMAPPED",
+      "start_evidence": {
+        "instructions": 1,
+        "label": {
+          "ida": 236245,
+          "index": 4,
+          "line": 69
+        },
+        "method": "unique_reverse_to_dense_label"
+      },
+      "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "unresolved_evidence_id": "seg029:line59",
-      "verified_labels": 16
+      "verified_labels": 17
     },
     {
       "bytes_hex": null,
@@ -134265,7 +134679,7 @@
         2524
       ],
       "name": "seg002",
-      "observed_max": 40680,
+      "observed_max": 40722,
       "observed_min": 40390,
       "segment_paragraph": 2524,
       "sha256": "6fe0d2b4586c6c096171cde6eea0792ffd478e4255ecd2f6acce736ecd1d515f",
@@ -141444,6 +141858,13 @@
         },
         {
           "caller": "run_tracks_menu",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 4728,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "run_tracks_menu",
           "offset": 19746,
           "segment_paragraph": 7842,
           "site": 4752,
@@ -141507,6 +141928,13 @@
         },
         {
           "caller": "highscore_text_unk",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 6201,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "highscore_text_unk",
           "offset": 19746,
           "segment_paragraph": 7842,
           "site": 6224,
@@ -141567,6 +141995,13 @@
           "segment_paragraph": 7842,
           "site": 8386,
           "target": "locate_shape_fatal"
+        },
+        {
+          "caller": "run_car_menu",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 8427,
+          "target": "font_set_unk"
         },
         {
           "caller": "run_car_menu",
@@ -141745,6 +142180,13 @@
         },
         {
           "caller": "run_opponent_menu",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 11403,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "run_opponent_menu",
           "offset": 19746,
           "segment_paragraph": 7842,
           "site": 11466,
@@ -141798,6 +142240,13 @@
           "segment_paragraph": 7842,
           "site": 15087,
           "target": "shape2d_op_unk5"
+        },
+        {
+          "caller": "end_hiscore",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 15106,
+          "target": "font_set_unk"
         },
         {
           "caller": "end_hiscore",
@@ -143908,6 +144357,20 @@
         },
         {
           "caller": "show_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 96336,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "show_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 96357,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "show_dialog",
           "offset": 15907,
           "segment_paragraph": 7842,
           "site": 96564,
@@ -143949,6 +144412,13 @@
           "target": "sub_2EB1E"
         },
         {
+          "caller": "show_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 97456,
+          "target": "font_set_unk"
+        },
+        {
           "caller": "do_fileselect_dialog",
           "offset": 5054,
           "segment_paragraph": 7842,
@@ -143957,10 +144427,52 @@
         },
         {
           "caller": "do_fileselect_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 98141,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "do_fileselect_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 98334,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "do_fileselect_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 98406,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "do_fileselect_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 98978,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "do_fileselect_dialog",
           "offset": 15907,
           "segment_paragraph": 7842,
           "site": 99085,
           "target": "font_op2"
+        },
+        {
+          "caller": "do_savefile_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 99982,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "do_savefile_dialog",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 100033,
+          "target": "font_set_unk"
         },
         {
           "caller": "input_checking",
@@ -144062,10 +144574,24 @@
         },
         {
           "caller": "intro_draw_text",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 102343,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "intro_draw_text",
           "offset": 19746,
           "segment_paragraph": 7842,
           "site": 102364,
           "target": "font_draw_text"
+        },
+        {
+          "caller": "intro_draw_text",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 102378,
+          "target": "font_set_unk"
         },
         {
           "caller": "intro_draw_text",
@@ -144080,6 +144606,13 @@
           "segment_paragraph": 7842,
           "site": 102439,
           "target": "font_op2"
+        },
+        {
+          "caller": "hiscore_draw_text",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 102460,
+          "target": "font_set_unk"
         },
         {
           "caller": "hiscore_draw_text",
@@ -144108,6 +144641,13 @@
           "segment_paragraph": 7842,
           "site": 102544,
           "target": "font_draw_text"
+        },
+        {
+          "caller": "hiscore_draw_text",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 102558,
+          "target": "font_set_unk"
         },
         {
           "caller": "hiscore_draw_text",
@@ -144283,6 +144823,13 @@
           "segment_paragraph": 7842,
           "site": 103507,
           "target": "preRender_line"
+        },
+        {
+          "caller": "draw_button",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 103532,
+          "target": "font_set_unk"
         },
         {
           "caller": "draw_button",
@@ -144486,6 +145033,13 @@
           "segment_paragraph": 7842,
           "site": 109221,
           "target": "sprite_shape_to_1"
+        },
+        {
+          "caller": "load_tracks_menu_shapes",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 109892,
+          "target": "font_set_unk"
         },
         {
           "caller": "load_tracks_menu_shapes",
@@ -144731,6 +145285,13 @@
           "segment_paragraph": 7842,
           "site": 125749,
           "target": "sub_2EAD4"
+        },
+        {
+          "caller": "set_criterr_handler",
+          "offset": 5116,
+          "segment_paragraph": 7842,
+          "site": 127872,
+          "target": "add_exit_handler"
         },
         {
           "caller": "video_set_mode7",
@@ -145728,6 +146289,13 @@
         },
         {
           "caller": "init_main",
+          "offset": 2391,
+          "segment_paragraph": 7842,
+          "site": 172257,
+          "target": "set_criterr_handler"
+        },
+        {
+          "caller": "init_main",
           "offset": 18527,
           "segment_paragraph": 7842,
           "site": 172288,
@@ -146320,6 +146888,20 @@
           "segment_paragraph": 7842,
           "site": 75752,
           "target": "get_kb_or_joy_flags"
+        },
+        {
+          "caller": "loop_game",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 80949,
+          "target": "font_set_unk"
+        },
+        {
+          "caller": "loop_game",
+          "offset": 24812,
+          "segment_paragraph": 7842,
+          "site": 81057,
+          "target": "font_set_unk"
         },
         {
           "caller": "loop_game",
@@ -158901,6 +159483,154 @@
       "verified_labels": 1
     },
     {
+      "bytes_hex": "53525156571e06558cd08ed8bb38092eff1f5d071f5f5e595a5bcf",
+      "disassembly": [
+        {
+          "bytes": "53",
+          "instruction": "push bx",
+          "load_offset": 127836
+        },
+        {
+          "bytes": "52",
+          "instruction": "push dx",
+          "load_offset": 127837
+        },
+        {
+          "bytes": "51",
+          "instruction": "push cx",
+          "load_offset": 127838
+        },
+        {
+          "bytes": "56",
+          "instruction": "push si",
+          "load_offset": 127839
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 127840
+        },
+        {
+          "bytes": "1e",
+          "instruction": "push ds",
+          "load_offset": 127841
+        },
+        {
+          "bytes": "06",
+          "instruction": "push es",
+          "load_offset": 127842
+        },
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 127843
+        },
+        {
+          "bytes": "8cd0",
+          "instruction": "mov ax, ss",
+          "load_offset": 127844
+        },
+        {
+          "bytes": "8ed8",
+          "instruction": "mov ds, ax",
+          "load_offset": 127846
+        },
+        {
+          "bytes": "bb3809",
+          "instruction": "mov bx, 0x938",
+          "load_offset": 127848
+        },
+        {
+          "bytes": "2eff1f",
+          "instruction": "lcall cs:[bx]",
+          "load_offset": 127851
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 127854
+        },
+        {
+          "bytes": "07",
+          "instruction": "pop es",
+          "load_offset": 127855
+        },
+        {
+          "bytes": "1f",
+          "instruction": "pop ds",
+          "load_offset": 127856
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 127857
+        },
+        {
+          "bytes": "5e",
+          "instruction": "pop si",
+          "load_offset": 127858
+        },
+        {
+          "bytes": "59",
+          "instruction": "pop cx",
+          "load_offset": 127859
+        },
+        {
+          "bytes": "5a",
+          "instruction": "pop dx",
+          "load_offset": 127860
+        },
+        {
+          "bytes": "5b",
+          "instruction": "pop bx",
+          "load_offset": 127861
+        },
+        {
+          "bytes": "cf",
+          "instruction": "iret ",
+          "load_offset": 127862
+        }
+      ],
+      "distance": "far",
+      "end": 127863,
+      "end_evidence": {
+        "instructions": 59,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "external_or_control_flow": [
+        "lcall cs:[bx]"
+      ],
+      "issues": [],
+      "line_end": 1543,
+      "line_start": 1519,
+      "name": "criterr_interrupt_handler",
+      "ordinary_c_hint": false,
+      "relocation_sites": [],
+      "segment": "seg012",
+      "segment_offset": 2364,
+      "segment_paragraph": 7842,
+      "sha256": "c59fd8435b30a5a8246cc031879df16ea5576306413c711af2b611a56b6307c5",
+      "size": 27,
+      "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+      "stable_id": "F_1EA2_093C",
+      "start": 127836,
+      "start_evidence": {
+        "instructions": 38,
+        "label": {
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+    },
+    {
       "bytes_hex": "57bf28008b85b63f0bc0740657ff9db43f5f83ef047c02ebeb5fcb",
       "disassembly": [
         {
@@ -159754,13 +160484,13 @@
         127932
       ],
       "start_evidence": {
-        "instructions": 9,
+        "instructions": 87,
         "label": {
-          "ida": 193496,
-          "index": 968,
-          "line": 1590
+          "ida": 193295,
+          "index": 872,
+          "line": 1463
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "verified_labels": 1
@@ -160510,6 +161240,137 @@
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
     },
     {
+      "bytes_hex": "558bec1e5657b900018e5e088b76068cc88ec0bfa872fcf3a45f5e1f5dcb",
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 155080
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 155081
+        },
+        {
+          "bytes": "1e",
+          "instruction": "push ds",
+          "load_offset": 155083
+        },
+        {
+          "bytes": "56",
+          "instruction": "push si",
+          "load_offset": 155084
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 155085
+        },
+        {
+          "bytes": "b90001",
+          "instruction": "mov cx, 0x100",
+          "load_offset": 155086
+        },
+        {
+          "bytes": "8e5e08",
+          "instruction": "mov ds, word ptr [bp + 8]",
+          "load_offset": 155089
+        },
+        {
+          "bytes": "8b7606",
+          "instruction": "mov si, word ptr [bp + 6]",
+          "load_offset": 155092
+        },
+        {
+          "bytes": "8cc8",
+          "instruction": "mov ax, cs",
+          "load_offset": 155095
+        },
+        {
+          "bytes": "8ec0",
+          "instruction": "mov es, ax",
+          "load_offset": 155097
+        },
+        {
+          "bytes": "bfa872",
+          "instruction": "mov di, 0x72a8",
+          "load_offset": 155099
+        },
+        {
+          "bytes": "fc",
+          "instruction": "cld ",
+          "load_offset": 155102
+        },
+        {
+          "bytes": "f3a4",
+          "instruction": "rep movsb byte ptr es:[di], byte ptr [si]",
+          "load_offset": 155103
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 155105
+        },
+        {
+          "bytes": "5e",
+          "instruction": "pop si",
+          "load_offset": 155106
+        },
+        {
+          "bytes": "1f",
+          "instruction": "pop ds",
+          "load_offset": 155107
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 155108
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf ",
+          "load_offset": 155109
+        }
+      ],
+      "distance": "far",
+      "end": 155110,
+      "end_evidence": {
+        "instructions": 292,
+        "label": {
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
+        },
+        "method": "forward_from_dense_label"
+      },
+      "external_or_control_flow": [],
+      "issues": [],
+      "line_end": 18400,
+      "line_start": 18376,
+      "name": "sub_35DC8",
+      "ordinary_c_hint": false,
+      "relocation_sites": [],
+      "segment": "seg012",
+      "segment_offset": 29608,
+      "segment_paragraph": 7842,
+      "sha256": "dfb79d34b21d23b9d09901528e9d39455852f0de186c8271d1409089ebc01911",
+      "size": 30,
+      "source": "build/references/restunts/src/restunts/asmorig/seg012.asm",
+      "stable_id": "F_1EA2_73A8",
+      "start": 155080,
+      "start_evidence": {
+        "instructions": 274,
+        "label": {
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
+        },
+        "method": "forward_from_dense_label"
+      },
+      "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+    },
+    {
       "bytes_hex": "c706768b0000c706e0600000c7065e570000c706865affffc706828c9001cb90",
       "disassembly": [
         {
@@ -161206,13 +162067,13 @@
         155110
       ],
       "start_evidence": {
-        "instructions": 12,
+        "instructions": 292,
         "label": {
-          "ida": 220672,
-          "index": 15136,
-          "line": 18421
+          "ida": 220319,
+          "index": 14832,
+          "line": 18100
         },
-        "method": "unique_reverse_to_dense_label"
+        "method": "forward_from_dense_label"
       },
       "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
       "verified_labels": 2
@@ -166648,9 +167509,9 @@
     }
   ],
   "summary": {
-    "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED": 62,
-    "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED": 527,
-    "PARTIAL_UNMAPPED": 23,
-    "UNMAPPED_NO_ADDRESS_ANCHOR": 7
+    "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED": 71,
+    "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED": 531,
+    "PARTIAL_UNMAPPED": 15,
+    "UNMAPPED_NO_ADDRESS_ANCHOR": 2
   }
 }

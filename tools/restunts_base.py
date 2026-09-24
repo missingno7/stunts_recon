@@ -4,6 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'build/python'))
 from capstone import Cs,CS_ARCH_X86,CS_MODE_16
 from x86_16_encoding import conversion_matches_source, reviewed_nop_literal, STRING_OPCODES, bare_string_opcode_matches_source
+from source_emission import numeric_literal_bytes
 md=Cs(CS_ARCH_X86,CS_MODE_16); md.detail=True
 from oracle import verify
 verify()
@@ -28,14 +29,20 @@ def source_ins(s,line):
     if not s or '=' in s or s.endswith(':'): return None
     tok=s.split()[0]
     # Restunts emits explicit single-byte NOP padding as `db 144` inside many
-    # PROC intervals. An exact `db 0` is a separate raw emission; other
-    # DB/data directives remain unsupported and block boundary inference.
+    # PROC intervals. Other single-value DB/DW literals are raw emissions;
+    # symbolic data and unsupported directives still block boundary inference.
     literal=reviewed_nop_literal(s)
     if literal is not None:
         return {'line':line,'source':s,'mnemonic':'nop','regs':[],
                 'literal_emission_hex':literal.hex()}
-    if s=='db 0':
-        return {'line':line,'source':s,'raw_emission_hex':'00'}
+    # Literal initialized bytes/words inside CODE are raw source emissions. An
+    # alternate entry can still decode them as code; CFG review stays separate.
+    # Only a single unsigned numeric operand is supported, and every byte must
+    # agree with the pristine image.
+    numeric=numeric_literal_bytes(s)
+    if numeric is not None:
+        return {'line':line,'source':s,'raw_emission_hex':numeric.hex(),
+                'raw_kind':'numeric_literal'}
     if tok in ('db','dw','dd','dq','dt','align','even','org') or re.match(r'^\w+\s+d[bwdqt]\b',s): return {'line':line,'source':s,'unsupported':True}
     if tok not in mnems: return None
     return {'line':line,'source':s,'mnemonic':norm(tok),'regs':re.findall(r'\b(?:ax|bx|cx|dx|si|di|bp|sp|al|ah|bl|bh|cl|ch|dl|dh)\b',s)}
@@ -198,6 +205,7 @@ for f in funcs:
         for index,item in enumerate(positions):
             item.pop('unsupported')
             item['raw_emission_hex']=raw[2*index:2*index+2].hex()
+            item['raw_kind']='offset_table'
         table_spans.append({'label':row['label'],'start':row['start'],'end':row['end'],
                             'sha256':hashlib.sha256(raw).hexdigest(),
                             'following_anchor':row['following_label']})
