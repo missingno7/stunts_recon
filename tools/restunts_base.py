@@ -14,11 +14,11 @@ relocs={r['load_offset'] for r in oracle['unpacked_mz']['relocations']}
 base=ROOT/'build/references/restunts/src/restunts/asmorig'
 alias={'retn':'ret','sal':'shl','jz':'je','jnz':'jne','jnb':'jae','jnae':'jb','jna':'jbe','jnbe':'ja','jng':'jle','jnle':'jg','jnge':'jl','jnl':'jge','loopnz':'loopne','loopz':'loope','repz':'repe','repnz':'repne'}
 regs=set('ax bx cx dx si di bp sp al ah bl bh cl ch dl dh cs ds es ss'.split())
-class ExactRawByte:
-    """Source-declared emission, never an inferred instruction or CFG edge."""
-    def __init__(self,address,value):
-        self.address=address;self.bytes=bytes((value,));self.size=1
-        self.mnemonic='db';self.op_str=str(value);self.operands=[]
+class ExactRawEmission:
+    """Source-declared bytes, never an inferred instruction or CFG edge."""
+    def __init__(self,address,payload):
+        self.address=address;self.bytes=bytes(payload);self.size=len(payload)
+        self.mnemonic='raw';self.op_str=self.bytes.hex();self.operands=[]
     def group(self,group):return False
 mnems=set('aaa aad aam aas adc add and arpl bound call cbw clc cld cli cmc cmp cmpsb cmpsw cwd daa das dec div enter hlt idiv imul in inc insb insw int into iret ja jae jb jbe jcxz je jg jge jl jle jmp jne jno jnp jns jo jp jpe jpo js lahf lds lea leave les lodsb lodsw loop loope loopne mov movsb movsw mul neg nop not or out outsb outsw pop popa popf push pusha pushf rcl rcr ret retf rol ror sahf sar sbb scasb scasw shl shr stc std sti stosb stosw sub test wait xchg xlat xlatb xor fadd fsub fmul fdiv fld fst fstp fnstsw fstsw'.split())|set(alias)|{'rep','repe','repne','lock'}
 def norm(m):
@@ -89,7 +89,7 @@ def decode_match(start,items,end=None):
             if 'raw_emission_hex' in src:
                 raw=bytes.fromhex(src['raw_emission_hex'])
                 if blob[cursor:cursor+len(raw)]!=raw:return None
-                code.append(ExactRawByte(cursor,raw[0]));cursor+=len(raw)
+                code.append(ExactRawEmission(cursor,raw));cursor+=len(raw)
                 continue
             instruction=next(md.disasm(blob[cursor:min(len(blob),cursor+15)],cursor,count=1),None)
             if instruction is None or not agree(src,instruction):return None
@@ -158,6 +158,88 @@ for meta in filemeta:
             if f['segment']==meta['name'] and 'start'in f:
                 f['segment_paragraph']=unique[0];f['segment_offset']=f['start']-unique[0]*16
                 f['stable_id']='F_%04X_%04X'%(unique[0],f['segment_offset'])
+# A second pass may verify complete source-declared offset-word tables only
+# after original far-call evidence fixes the containing code-segment frame.
+# Table bytes remain raw emissions; no CFG, code/data, or TU claim follows.
+from table_offset_probe import LABEL as TABLE_LABEL, TABLE_START, table_groups, evaluate as evaluate_table
+source_cache={}
+known_anchors={(a['segment'],a['function'],a['ida']) for a in anchors}
+for f in funcs:
+    if f['status']!='PARTIAL_UNMAPPED' or not f['labels']:
+        continue
+    meta=next((m for m in filemeta if m['name']==f['segment']),None)
+    if not meta or len(meta['frame_candidates'])!=1 or meta.get('segment_paragraph')!=meta['frame_candidates'][0]:
+        continue
+    if f['segment'] not in source_cache:
+        data=(ROOT/meta['source']).read_bytes()
+        if hashlib.sha256(data).hexdigest()!=meta['sha256']:
+            raise ValueError('Restunts source identity drift during table mapping')
+        lines=data.decode('latin1').splitlines();definitions=collections.defaultdict(list)
+        for number,line in enumerate(lines,1):
+            label=TABLE_LABEL.fullmatch(line.strip())
+            if label:definitions[label.group('label').lower()].append(number)
+            table=TABLE_START.fullmatch(line.strip())
+            if table:definitions[table.group('label').lower()].append(number)
+        source_cache[f['segment']]=(lines,definitions)
+    lines,definitions=source_cache[f['segment']]
+    bracketed={a['load_offset'] for a in anchors if a['segment']==f['segment'] and a['function']==f['name']}
+    table_spans=[]
+    for group in table_groups(lines,f['line_start'],f['line_end']):
+        row=evaluate_table(group,meta['segment_paragraph'],definitions,blob,relocs,
+                           bracketed,f.get('start'),f.get('end'))
+        if row['state']!='EXACT_BRACKETED_TABLE_BYTES':continue
+        positions=[]
+        for number in range(row['line_start'],row['line_end']+1):
+            found=[item for item in f['items'] if item['line']==number and item.get('unsupported')]
+            if len(found)!=1:positions=[];break
+            positions.append(found[0])
+        if len(positions)!=len(group['targets']):continue
+        raw=bytes.fromhex(row['predicted_hex'])
+        for index,item in enumerate(positions):
+            item.pop('unsupported')
+            item['raw_emission_hex']=raw[2*index:2*index+2].hex()
+        table_spans.append({'label':row['label'],'start':row['start'],'end':row['end'],
+                            'sha256':hashlib.sha256(raw).hexdigest(),
+                            'following_anchor':row['following_label']})
+    if not table_spans:continue
+    labels=f['labels'];first=labels[0];at=first['ida']-65536;pre=f['items'][:first['index']]
+    starts=([at] if not pre else [start for start in range(max(0,at-15*len(pre)),at)
+                               if decode_match(start,pre,at) is not None])
+    f['start_candidates']=starts
+    issues=[] if len(starts)==1 else ['ambiguous_or_mismatching_prefix']
+    if len(starts)==1:f['start']=starts[0]
+    verified=[]
+    for index,label in enumerate(labels):
+        following=labels[index+1] if index+1<len(labels) else None
+        items=f['items'][label['index']:following['index'] if following else len(f['items'])]
+        start=label['ida']-65536;end=following['ida']-65536 if following else None
+        decoded=decode_match(start,items,end)
+        if decoded is None:
+            issues.append('label_interval_mismatch:'+hex(label['ida']))
+            continue
+        finish=decoded[-1].address+decoded[-1].size if decoded else start
+        if not following:f['end']=finish
+        record={'ida':label['ida'],'load_offset':start,'end':finish,'line':label['line'],
+                'instruction_count':len(items),'sha256':hashlib.sha256(blob[start:finish]).hexdigest()}
+        verified.append(record)
+        key=(f['segment'],f['name'],label['ida'])
+        if key not in known_anchors:
+            anchors.append({'function':f['name'],'segment':f['segment'],**record})
+            known_anchors.add(key)
+    f['issues']=issues;f['verified_labels']=len(verified);f['source_table_spans']=table_spans
+    if 'start' in f and 'end' in f and f['start']<f['end'] and not issues:
+        f['status']='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED'
+        f['size']=f['end']-f['start']
+        f['sha256']=hashlib.sha256(blob[f['start']:f['end']]).hexdigest()
+        f['relocation_sites']=[r for r in sorted(relocs) if f['start']<=r<f['end']]
+        f['bytes_hex']=blob[f['start']:f['end']].hex() if f['size']<=80 else None
+        frame=meta['segment_paragraph']
+        f['segment_paragraph']=frame;f['segment_offset']=f['start']-frame*16
+        f['stable_id']='F_%04X_%04X'%(frame,f['segment_offset'])
+for meta in filemeta:
+    mapped=[f for f in funcs if f['segment']==meta['name'] and 'start'in f and 'end'in f]
+    if mapped:meta.update(observed_min=min(f['start'] for f in mapped),
+                          observed_max=max(f['end'] for f in mapped))
 small=[]
 for f in funcs:
     if f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and f['size']<=80 and not f['relocation_sites']:

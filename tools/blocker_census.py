@@ -21,6 +21,7 @@ FAMILY_RESEARCH = {
     'BOUNDARY_OR_EXTENT': ('partial-label mismatch localization', 'available for partial-label rows; no-anchor rows require an independent address', 'high', 'medium for exact opcode aliases; low for the remaining mixed residuals'),
     'MAPPING_OR_CODE_DATA_CLASSIFICATION': ('independent address anchor', 'not available for these no-anchor rows', 'high', 'low'),
     'EMISSION_BYTES_CFG_REVIEW': ('traverse exact source-emission coordinates and prove raw padding/data unreachable', 'exact byte coordinates available; CFG review remains separate', 'medium', 'high for mapping, unknown for source promotion'),
+    'SOURCE_OFFSET_TABLE_BYTES_VERIFIED': ('finish each partial function boundary and code/data review after exact table emission', 'complete table words and following label verified in the oracle', 'medium', 'high for table bytes; unknown for complete function'),
     'BOUNDARY_OR_EXTENT_CANDIDATE': ('review external jump target and full contribution', 'pristine decode available', 'medium', 'medium'),
     'INSTRUCTION_EVIDENCE_MISSING': ('review pristine linear decode and CFG/ownership', 'complete research decode available', 'low', 'high for diagnostic unlock; low for production alone'),
     'BINDING_OR_FIXUP_MODE_UNKNOWN': ('compile one complete candidate and compare historical LINK fixups', 'MZ context available; OMF mode requires candidate source', 'medium', 'unknown until OMF modes sampled'),
@@ -153,6 +154,16 @@ def run():
             'Queue stale; refresh before census')
     _, unpacked, oracle_report, _ = verify(write=False)
     image = MZ.parse(unpacked).load_image(unpacked)
+    table_report = read_json(ROOT/'recovery/table-offset-census.json')
+    require(table_report['authority'] == 'RESEARCH_ONLY' and
+            table_report['oracle_load_sha256'] == sha(image) and
+            table_report['source_inventory_sha256'] == sha((ROOT/'recovery/restunts-inventory.json').read_bytes()),
+            'Table-offset census stale; rerun reclassify')
+    table_spans = collections.defaultdict(list)
+    for span in table_report['tables']:
+        if span['state'] == 'EXACT_BRACKETED_TABLE_BYTES':
+            table_spans[span['function_id']].append({'label': span['label'],
+                'start': span['start'], 'end': span['end'], 'size': span['size']})
     from code_symbols import resolve_code_symbols
     reviewed_code_symbols = resolve_code_symbols(
         set(read_json(ROOT/'layout/code-symbols.json')['symbols']), image,
@@ -167,12 +178,17 @@ def run():
         require(card['id'] == task['id'] and card['name'] == task['name'], 'Card/queue identity mismatch')
         obs = decode_observations(card, image, decoder)
         categories = classify(card, obs)
+        verified_tables = table_spans.get(task['id'], [])
+        if verified_tables:
+            categories.append('SOURCE_OFFSET_TABLE_BYTES_VERIFIED')
         primary, primary_confidence = primary_category(categories)
         far_targets = obs.get('far_targets', [])
         rows.append({'id': task['id'], 'name': task['name'], 'card': task['card'],
                      'boundary_status': task['boundary_status'],
                      'exact_target_bytes': task['size'] if obs['state'] not in ('UNVERIFIED_INTERVAL', 'EMISSION_BYTES_VERIFIED_CFG_UNREVIEWED') else None,
                      'emission_extent_bytes': obs.get('emission_extent_bytes'),
+                     'source_table_span_bytes': sum(span['size'] for span in verified_tables),
+                     'source_table_spans': verified_tables,
                      'historical_blocker': task['blocker'], 'current_capability_blockers': task['capability_blockers'],
                      'categories': categories, 'primary_category': primary,
                      'primary_confidence': primary_confidence, 'observations': obs,
@@ -189,6 +205,7 @@ def run():
         family[category] = {'tasks': len(members),
                             'exact_target_bytes': sum(row['exact_target_bytes'] or 0 for row in members),
                             'emission_extent_bytes': sum(row['emission_extent_bytes'] or 0 for row in members),
+                            'source_table_span_bytes': sum(row['source_table_span_bytes'] for row in members),
                             'verified_tasks': sum(row['exact_target_bytes'] is not None for row in members),
                             'affected_tasks_upper_bound': len(members),
                             'smallest_discriminating_experiment': experiment,

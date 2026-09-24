@@ -2,8 +2,7 @@
   "authority": "RESEARCH_ONLY",
   "first_failure_kinds": {
     "DECODE_COUNT_DIFFERS": 1,
-    "FIRST_SOURCE_INSTRUCTION_DISAGREES": 29,
-    "PREFIX_OR_UNCLASSIFIED": 3
+    "FIRST_SOURCE_INSTRUCTION_DISAGREES": 22
   },
   "first_opcode_pairs": [
     {
@@ -22,11 +21,6 @@
       "tasks": 1
     },
     {
-      "pristine": "inc",
-      "source": "off_1314a",
-      "tasks": 1
-    },
-    {
       "pristine": "push",
       "source": "byte_19f07",
       "tasks": 1
@@ -42,13 +36,8 @@
       "tasks": 1
     },
     {
-      "pristine": "fsubr",
-      "source": "off_2481a",
-      "tasks": 1
-    },
-    {
-      "pristine": "xor",
-      "source": "off_29a4e",
+      "pristine": "shr",
+      "source": "off_24d20",
       "tasks": 1
     },
     {
@@ -62,33 +51,18 @@
       "tasks": 1
     },
     {
-      "pristine": "out",
-      "source": "off_2d896",
-      "tasks": 1
-    },
-    {
       "pristine": "in",
       "source": "off_2e59e",
       "tasks": 1
     },
     {
-      "pristine": "nop",
-      "source": "off_2ea9b",
-      "tasks": 1
-    },
-    {
-      "pristine": "mov",
-      "source": "off_2ecb9",
+      "pristine": "add",
+      "source": "word_2ecf8",
       "tasks": 1
     },
     {
       "pristine": "inc",
       "source": "compression_type",
-      "tasks": 1
-    },
-    {
-      "pristine": "xor",
-      "source": "off_31b84",
       "tasks": 1
     },
     {
@@ -117,18 +91,8 @@
       "tasks": 1
     },
     {
-      "pristine": "add",
-      "source": "off_38e7e",
-      "tasks": 1
-    },
-    {
       "pristine": "cmp",
       "source": "byte_3930e",
-      "tasks": 1
-    },
-    {
-      "pristine": "pushf",
-      "source": "off_395a8",
       "tasks": 1
     },
     {
@@ -139,7 +103,7 @@
   ],
   "limitation": "Importer agreement checks mnemonic, explicit GPR and literal immediate. A first mismatch may reflect earlier source/emission drift; this does not establish a repaired boundary or code/data class.",
   "oracle_load_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
-  "partial_tasks": 33,
+  "partial_tasks": 23,
   "schema": 1,
   "tasks": [
     {
@@ -185,50 +149,6 @@
         "repository": "restunts"
       },
       "verified_labels": 51
-    },
-    {
-      "all_failures": [
-        {
-          "instruction_index": 2,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 12612,
-          "pristine_bytes": "44",
-          "pristine_instruction": "inc sp",
-          "pristine_load_address": 12618,
-          "source_instruction": "off_1314a     dw offset loc_13144",
-          "source_line": 5104
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 1,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
-      },
-      "first_failure": {
-        "instruction_index": 2,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 12612,
-        "pristine_bytes": "44",
-        "pristine_instruction": "inc sp",
-        "pristine_load_address": 12618,
-        "source_instruction": "off_1314a     dw offset loc_13144",
-        "source_line": 5104
-      },
-      "id": "seg000:line4886",
-      "label_count": 21,
-      "name": "run_option_menu",
-      "prefix_candidates": [
-        12106
-      ],
-      "segment": "seg000",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 5125,
-        "line_start": 4886,
-        "path": "src/restunts/asmorig/seg000.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 20
     },
     {
       "all_failures": [
@@ -285,22 +205,12 @@
           "pristine_load_address": 63312,
           "source_instruction": "bto_branches     dw offset code_bto_sfline",
           "source_line": 2349
-        },
-        {
-          "instruction_index": 8,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 63590,
-          "pristine_bytes": "8a169216",
-          "pristine_instruction": "mov dl, byte ptr [0x1692]",
-          "pristine_load_address": 63614,
-          "source_instruction": "off_1f87e     dw offset loc_1f82a",
-          "source_line": 2490
         }
       ],
       "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 2,
+      "failed_labels": 1,
       "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 2
+        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
       },
       "first_failure": {
         "instruction_index": 3,
@@ -326,7 +236,7 @@
         "path": "src/restunts/asmorig/seg004.asm",
         "repository": "restunts"
       },
-      "verified_labels": 302
+      "verified_labels": 303
     },
     {
       "all_failures": [
@@ -429,16 +339,6 @@
     {
       "all_failures": [
         {
-          "instruction_index": 3,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 83986,
-          "pristine_bytes": "d82b",
-          "pristine_instruction": "fsubr dword ptr [bp + di]",
-          "pristine_load_address": 83994,
-          "source_instruction": "off_2481a     dw offset loc_24748",
-          "source_line": 4790
-        },
-        {
           "instruction_index": 2,
           "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
           "label_load_address": 85272,
@@ -450,19 +350,19 @@
         }
       ],
       "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 2,
+      "failed_labels": 1,
       "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 2
+        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
       },
       "first_failure": {
-        "instruction_index": 3,
+        "instruction_index": 2,
         "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 83986,
-        "pristine_bytes": "d82b",
-        "pristine_instruction": "fsubr dword ptr [bp + di]",
-        "pristine_load_address": 83994,
-        "source_instruction": "off_2481a     dw offset loc_24748",
-        "source_line": 4790
+        "label_load_address": 85272,
+        "pristine_bytes": "c02cb8",
+        "pristine_instruction": "shr byte ptr [si], 0xb8",
+        "pristine_load_address": 85280,
+        "source_instruction": "off_24d20     dw offset loc_24830",
+        "source_line": 5325
       },
       "id": "seg005:line3391",
       "label_count": 168,
@@ -478,7 +378,7 @@
         "path": "src/restunts/asmorig/seg005.asm",
         "repository": "restunts"
       },
-      "verified_labels": 166
+      "verified_labels": 167
     },
     {
       "all_failures": [
@@ -543,50 +443,6 @@
         "repository": "restunts"
       },
       "verified_labels": 24
-    },
-    {
-      "all_failures": [
-        {
-          "instruction_index": 3,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 105028,
-          "pristine_bytes": "3425",
-          "pristine_instruction": "xor al, 0x25",
-          "pristine_load_address": 105038,
-          "source_instruction": "off_29a4e     dw offset loc_299e4",
-          "source_line": 4573
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 1,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
-      },
-      "first_failure": {
-        "instruction_index": 3,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 105028,
-        "pristine_bytes": "3425",
-        "pristine_instruction": "xor al, 0x25",
-        "pristine_load_address": 105038,
-        "source_instruction": "off_29a4e     dw offset loc_299e4",
-        "source_line": 4573
-      },
-      "id": "seg008:line4503",
-      "label_count": 16,
-      "name": "file_load_resource",
-      "prefix_candidates": [
-        104906
-      ],
-      "segment": "seg008",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 4605,
-        "line_start": 4503,
-        "path": "src/restunts/asmorig/seg008.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 15
     },
     {
       "all_failures": [
@@ -691,50 +547,6 @@
         {
           "instruction_index": 3,
           "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 120976,
-          "pristine_bytes": "ee",
-          "pristine_instruction": "out dx, al",
-          "pristine_load_address": 120982,
-          "source_instruction": "off_2d896     dw offset loc_2d83e",
-          "source_line": 1824
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 1,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
-      },
-      "first_failure": {
-        "instruction_index": 3,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 120976,
-        "pristine_bytes": "ee",
-        "pristine_instruction": "out dx, al",
-        "pristine_load_address": 120982,
-        "source_instruction": "off_2d896     dw offset loc_2d83e",
-        "source_line": 1824
-      },
-      "id": "seg010:line1499",
-      "label_count": 52,
-      "name": "__output",
-      "prefix_candidates": [
-        120254
-      ],
-      "segment": "seg010",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1870,
-        "line_start": 1499,
-        "path": "src/restunts/asmorig/seg010.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 51
-    },
-    {
-      "all_failures": [
-        {
-          "instruction_index": 3,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
           "label_load_address": 124315,
           "pristine_bytes": "e519",
           "pristine_instruction": "in ax, 0x19",
@@ -821,60 +633,6 @@
     {
       "all_failures": [
         {
-          "instruction_index": 4,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 125583,
-          "pristine_bytes": "90",
-          "pristine_instruction": "nop",
-          "pristine_load_address": 125595,
-          "source_instruction": "off_2ea9b     dw offset loc_2eab0",
-          "source_line": 461
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 1,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
-      },
-      "first_failure": {
-        "instruction_index": 4,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 125583,
-        "pristine_bytes": "90",
-        "pristine_instruction": "nop",
-        "pristine_load_address": 125595,
-        "source_instruction": "off_2ea9b     dw offset loc_2eab0",
-        "source_line": 461
-      },
-      "id": "seg012:line409",
-      "label_count": 16,
-      "name": "polarAngle",
-      "prefix_candidates": [
-        125518
-      ],
-      "segment": "seg012",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 496,
-        "line_start": 409,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 15
-    },
-    {
-      "all_failures": [
-        {
-          "instruction_index": 4,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 126125,
-          "pristine_bytes": "b902ff",
-          "pristine_instruction": "mov cx, 0xff02",
-          "pristine_load_address": 126137,
-          "source_instruction": "off_2ecb9     dw offset loc_2ecd9",
-          "source_line": 768
-        },
-        {
           "instruction_index": 7,
           "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
           "label_load_address": 126177,
@@ -916,19 +674,19 @@
         }
       ],
       "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 5,
+      "failed_labels": 4,
       "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 5
+        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 4
       },
       "first_failure": {
-        "instruction_index": 4,
+        "instruction_index": 7,
         "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 126125,
-        "pristine_bytes": "b902ff",
-        "pristine_instruction": "mov cx, 0xff02",
-        "pristine_load_address": 126137,
-        "source_instruction": "off_2ecb9     dw offset loc_2ecd9",
-        "source_line": 768
+        "label_load_address": 126177,
+        "pristine_bytes": "0000",
+        "pristine_instruction": "add byte ptr [bx + si], al",
+        "pristine_load_address": 126200,
+        "source_instruction": "word_2ecf8     dw 0",
+        "source_line": 799
       },
       "id": "seg012:line588",
       "label_count": 108,
@@ -944,7 +702,7 @@
         "path": "src/restunts/asmorig/seg012.asm",
         "repository": "restunts"
       },
-      "verified_labels": 103
+      "verified_labels": 104
     },
     {
       "all_failures": [
@@ -989,100 +747,6 @@
         "repository": "restunts"
       },
       "verified_labels": 5
-    },
-    {
-      "all_failures": [],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 0,
-      "failure_kinds": {},
-      "first_failure": null,
-      "id": "seg012:line6840",
-      "label_count": 19,
-      "name": "preRender_helper2",
-      "prefix_candidates": [],
-      "segment": "seg012",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 6968,
-        "line_start": 6840,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 19
-    },
-    {
-      "all_failures": [
-        {
-          "instruction_index": 1,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 138111,
-          "pristine_bytes": "833083",
-          "pristine_instruction": "xor word ptr [bx + si], 0xff83",
-          "pristine_load_address": 138116,
-          "source_instruction": "off_31b84     dw offset locret_31aa3",
-          "source_line": 6989
-        },
-        {
-          "instruction_index": 7,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 138470,
-          "pristine_bytes": "833083",
-          "pristine_instruction": "xor word ptr [bx + si], 0xff83",
-          "pristine_load_address": 138487,
-          "source_instruction": "off_31cf7     dw offset locret_31aa3",
-          "source_line": 7169
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 2,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 2
-      },
-      "first_failure": {
-        "instruction_index": 1,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 138111,
-        "pristine_bytes": "833083",
-        "pristine_instruction": "xor word ptr [bx + si], 0xff83",
-        "pristine_load_address": 138116,
-        "source_instruction": "off_31b84     dw offset locret_31aa3",
-        "source_line": 6989
-      },
-      "id": "seg012:line6969",
-      "label_count": 83,
-      "name": "preRender_helper3",
-      "prefix_candidates": [
-        138078
-      ],
-      "segment": "seg012",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 7469,
-        "line_start": 6969,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 81
-    },
-    {
-      "all_failures": [],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 0,
-      "failure_kinds": {},
-      "first_failure": null,
-      "id": "seg012:line8606",
-      "label_count": 4,
-      "name": "sin_fast",
-      "prefix_candidates": [],
-      "segment": "seg012",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 8654,
-        "line_start": 8606,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 4
     },
     {
       "all_failures": [
@@ -1171,26 +835,6 @@
         "repository": "restunts"
       },
       "verified_labels": 11
-    },
-    {
-      "all_failures": [],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 0,
-      "failure_kinds": {},
-      "first_failure": null,
-      "id": "seg012:line10617",
-      "label_count": 16,
-      "name": "putpixel_line1_maybe",
-      "prefix_candidates": [],
-      "segment": "seg012",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 10825,
-        "line_start": 10617,
-        "path": "src/restunts/asmorig/seg012.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 16
     },
     {
       "all_failures": [
@@ -1451,50 +1095,6 @@
     {
       "all_failures": [
         {
-          "instruction_index": 4,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 167540,
-          "pristine_bytes": "0208",
-          "pristine_instruction": "add cl, byte ptr [bx + si]",
-          "pristine_load_address": 167550,
-          "source_instruction": "off_38e7e     dw offset loc_38e32",
-          "source_line": 1160
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 1,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
-      },
-      "first_failure": {
-        "instruction_index": 4,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 167540,
-        "pristine_bytes": "0208",
-        "pristine_instruction": "add cl, byte ptr [bx + si]",
-        "pristine_load_address": 167550,
-        "source_instruction": "off_38e7e     dw offset loc_38e32",
-        "source_line": 1160
-      },
-      "id": "seg028:line1073",
-      "label_count": 22,
-      "name": "sub_38DE6",
-      "prefix_candidates": [
-        167398
-      ],
-      "segment": "seg028",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 1345,
-        "line_start": 1073,
-        "path": "src/restunts/asmorig/seg028.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 21
-    },
-    {
-      "all_failures": [
-        {
           "instruction_index": 23,
           "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
           "label_load_address": 168651,
@@ -1535,50 +1135,6 @@
         "repository": "restunts"
       },
       "verified_labels": 47
-    },
-    {
-      "all_failures": [
-        {
-          "instruction_index": 10,
-          "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-          "label_load_address": 169354,
-          "pristine_bytes": "9c",
-          "pristine_instruction": "pushf",
-          "pristine_load_address": 169384,
-          "source_instruction": "off_395a8     dw offset loc_395cc",
-          "source_line": 1964
-        }
-      ],
-      "authority": "DIAGNOSTIC_ONLY",
-      "failed_labels": 1,
-      "failure_kinds": {
-        "FIRST_SOURCE_INSTRUCTION_DISAGREES": 1
-      },
-      "first_failure": {
-        "instruction_index": 10,
-        "kind": "FIRST_SOURCE_INSTRUCTION_DISAGREES",
-        "label_load_address": 169354,
-        "pristine_bytes": "9c",
-        "pristine_instruction": "pushf",
-        "pristine_load_address": 169384,
-        "source_instruction": "off_395a8     dw offset loc_395cc",
-        "source_line": 1964
-      },
-      "id": "seg028:line1807",
-      "label_count": 16,
-      "name": "sub_3945A",
-      "prefix_candidates": [
-        169050
-      ],
-      "segment": "seg028",
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 2034,
-        "line_start": 1807,
-        "path": "src/restunts/asmorig/seg028.asm",
-        "repository": "restunts"
-      },
-      "verified_labels": 15
     },
     {
       "all_failures": [

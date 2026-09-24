@@ -182,6 +182,8 @@ def main():
         from build_topology import run as topology
         from candidate_omf_census import run as candidate_omf
         from partial_mapping_census import run as partial_mapping
+        from table_offset_probe import run as table_offsets
+        table_offsets()
         census()
         topology()
         candidate_omf()

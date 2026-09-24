@@ -2,7 +2,7 @@
   "attempt_budget": 3,
   "attempts_remaining": 3,
   "blocker": "Unverified function boundaries",
-  "boundary_status": "PARTIAL_UNMAPPED",
+  "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
   "capability_blockers": [
     "Unverified function boundaries"
   ],
@@ -13,6 +13,7 @@
   ],
   "disassembly": [],
   "evidence": {
+    "bytes_hex": null,
     "c_sources": [
       "src/restunts/c/fileio.c",
       "src/restunts/c/restunts.c"
@@ -59,12 +60,10 @@
         "target": "do_dea_textres"
       }
     ],
-    "confidence": "unresolved_boundary",
+    "confidence": "verified_emission_coordinates_cfg_unreviewed",
     "distance": "far",
     "end": 105094,
-    "issues": [
-      "label_interval_mismatch:0x29a44"
-    ],
+    "issues": [],
     "label_count": 16,
     "line_end": 4605,
     "line_start": 4503,
@@ -77,17 +76,39 @@
       "path": "src/restunts/asmorig/seg008.asm",
       "repository": "restunts"
     },
+    "relocation_sites": [
+      104938,
+      104958,
+      104974,
+      104984,
+      104994,
+      105004,
+      105014,
+      105024,
+      105034
+    ],
     "segment": "seg008",
     "segment_offset": 9498,
     "segment_paragraph": 5963,
+    "sha256": "e0ff93fd27308fa5c8c6aa7b06263bf82fe6e9a6564545d22775ac1915767c4c",
+    "size": 188,
     "source": "build/references/restunts/src/restunts/asmorig/seg008.asm",
+    "source_table_spans": [
+      {
+        "end": 105056,
+        "following_anchor": "loc_29A60",
+        "label": "off_29A4E",
+        "sha256": "e1869787e3d7292dfaea2aac4b87022c9ac7284bc4614ab3a4bb3b6542bb54a6",
+        "start": 105038
+      }
+    ],
     "start": 104906,
     "start_candidates": [
       104906
     ],
-    "status": "PARTIAL_UNMAPPED",
+    "status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
     "unresolved_evidence_id": "seg008:line4503",
-    "verified_labels": 15
+    "verified_labels": 16
   },
   "fast": "Unavailable until a reviewed recipe exists; no raw/unchecked acceptance",
   "id": "seg008:line4503",
@@ -99,10 +120,10 @@
     "No ordinary-C hint; review source/compiler expressibility"
   ],
   "scope_snapshot": {
-    "path": "recovery/snapshots/c78ea6af9d0057782b6523562b4c690fddd117a3ea66fe833e866c2d11b566eb.json",
-    "sha256": "c78ea6af9d0057782b6523562b4c690fddd117a3ea66fe833e866c2d11b566eb"
+    "path": "recovery/snapshots/ac72db2ed4382dfb51f5b40c0c201abce002c22d66de835d7d6ca37543c1d44c.json",
+    "sha256": "ac72db2ed4382dfb51f5b40c0c201abce002c22d66de835d7d6ca37543c1d44c"
   },
-  "size": null,
+  "size": 188,
   "source": {
     "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
     "line_end": 4605,
@@ -112,7 +133,7 @@
   },
   "tier": "SUPERVISOR",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/7a09c9396c01f75e2363a57f1e9a272d9b6bb3249a775e0fedc64a6c4b3555e0.json",
-    "sha256": "7a09c9396c01f75e2363a57f1e9a272d9b6bb3249a775e0fedc64a6c4b3555e0"
+    "path": "recovery/snapshots/a7fef82d896eafa92af0933a7e5e12588aef06db553afec71b6e268cdbb31c71.json",
+    "sha256": "a7fef82d896eafa92af0933a7e5e12588aef06db553afec71b6e268cdbb31c71"
   }
 }
