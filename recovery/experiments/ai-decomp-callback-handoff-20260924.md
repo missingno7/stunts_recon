@@ -27,12 +27,13 @@ owner. No placement-only retry is warranted. After this promotion the fresh
 archived SUPERVISOR OMF census has **zero** complete nonfixup-shape candidates;
 another abstract binder expansion has no currently demonstrated strict target.
 
-**Next bounded test:** take the archived `audio_add_driver_timer`
-(`load_16bae`) 52-byte candidate against its 39-byte pristine interval.
-Freeze its target source body and vary only historically plausible same-TU
-callback declaration/definition and order. Measure the target window, full
-contribution, publics and complete fixups. If the unchanged target contracts
-or changes call/pointer lowering, route this family to TU-context recovery;
-if it remains 52 bytes, retain the source-shape/ABI blocker. Do not extend
-production pointer binding from this near match, and do not promote a context
-diagnostic without fresh native whole-image acceptance.
+**Next bounded test completed:** `audio_add_driver_timer` kept identical 52-byte
+code and semantic fixups under external, same-TU successor, and predecessor
+callback conditions; the 39-byte pristine interval remains unmatched. Raw OMF
+indexes changed, so the TU-context comparison now separates them from resolved
+fixup meaning. See `audio-timer-tu-context-20260924.md`. This rules out the
+tested callback visibility/order as the missing 13 bytes and routes this candidate
+to source-shape/ABI research. It establishes no speedup, original TU membership,
+strict gain, or queue unlock. Select the next source/mapping candidate against an
+oracle-facing discriminator; the current archived SUPERVISOR corpus still has
+zero complete nonfixup-shape objects ready for another binder promotion.

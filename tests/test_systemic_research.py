@@ -16,7 +16,7 @@ from common import ROOT, read_json
 from mz import MZ
 from oracle import verify
 from prepare_far_call_candidate import straight_line_overlay
-from tu_context import _variant_source, public_window, protected_window, protected_component
+from tu_context import _variant_source, public_window, protected_window, protected_component, semantic_fixups
 from x86_16_encoding import conversion_matches_source, reviewed_nop_literal, bare_string_opcode_matches_source
 
 
@@ -87,6 +87,18 @@ class SystemicResearchTests(unittest.TestCase):
         self.assertEqual(window['bytes'], bytes(range(3, 8)))
         self.assertEqual(window['fixups'],
                          [{'segment': 'UNIT_TEXT', 'offset': 2, 'width': 2, 'target': '_x'}])
+
+    def test_tu_context_ignores_only_omf_symbol_index_renumbering(self):
+        base = {'segment': 'UNIT_TEXT', 'offset': 3, 'target': '_helper',
+                'target_kind': 'external', 'target_index': 2, 'frame': '_helper', 'frame_index': 0}
+        renumbered = {**base, 'target_index': 4, 'frame_index': 1}
+        self.assertEqual(semantic_fixups([base]), semantic_fixups([renumbered]))
+        self.assertNotEqual(semantic_fixups([base]),
+                            semantic_fixups([{**renumbered, 'target': '_different'}]))
+        self.assertNotEqual(semantic_fixups([base]),
+                            semantic_fixups([{**renumbered, 'offset': 4}]))
+        self.assertNotEqual(semantic_fixups([{**base, 'frame': None}]),
+                            semantic_fixups([{**renumbered, 'frame': None}]))
 
     def test_protected_neighbor_requires_complete_literal_fixup_free_window(self):
         self.assertEqual(protected_window(FakeObject(), '_first', bytes(range(3)))['state'],

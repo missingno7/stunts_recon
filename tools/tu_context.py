@@ -38,6 +38,19 @@ def public_window(obj, symbol):
             'limitation': 'Bounded by the next public or SEGDEF end; private emitted code may be included'}
 
 
+def semantic_fixups(fixups):
+    """Ignore OMF indexes only where the parser resolved their named referents."""
+    normalized = []
+    for fix in fixups:
+        row = dict(fix)
+        if isinstance(row.get('frame'), str) and row['frame']:
+            row.pop('frame_index', None)
+        if isinstance(row.get('target'), str) and row['target']:
+            row.pop('target_index', None)
+        normalized.append(row)
+    return normalized
+
+
 def protected_window(obj, symbol, oracle_bytes):
     """Research guard for one independently locked exact neighbor window."""
     if not any(p['name'] == symbol for p in obj.publics):
@@ -153,7 +166,6 @@ def run(manifest_path):
         require(sha(component_oracle) == lock['sha256'],
                 'Protected component oracle identity differs')
     root = ROOT/'build/private/tu-context'/uuid.uuid4().hex[:12]
-    root = ROOT/'build/private/tu-context'/uuid.uuid4().hex[:12]
     root.mkdir(parents=True, exist_ok=False)
     frozen = {'authority': 'RESEARCH_ONLY', 'manifest': plan,
               'manifest_identity': identity(path.read_bytes()),
@@ -174,6 +186,7 @@ def run(manifest_path):
             row.update(status='COMPILED', receipt=receipt, target_segment=window['segment'],
                        target_offset=window['start'], target_extent=len(window['bytes']),
                        target_bytes=identity(window['bytes']), target_fixups=window['fixups'],
+                       semantic_target_fixups=semantic_fixups(window['fixups']),
                        target_window_limitation=window['limitation'],
                        oracle_literal_equal=window['bytes'] == oracle_bytes if oracle_bytes is not None else None,
                        all_publics=obj.publics, all_segment_defs=obj.segment_defs,
@@ -192,7 +205,6 @@ def run(manifest_path):
                                           if component_lock is not None and name in component_lock['variants']
                                           else None)
             (root/(name+'-target.bin')).write_bytes(window['bytes'])
-            (root/(name+'-target.bin')).write_bytes(window['bytes'])
             work = Path(receipt['work_directory'])/'UNIT.OBJ'
             shutil.copyfile(work, root/(name+'.obj'))
         except CompileFailure as error:
@@ -207,6 +219,7 @@ def run(manifest_path):
             row['vs_baseline'] = {
                 'bytes_equal': row['target_bytes'] == baseline['target_bytes'],
                 'fixups_equal': row['target_fixups'] == baseline['target_fixups'],
+                'semantic_fixups_equal': row['semantic_target_fixups'] == baseline['semantic_target_fixups'],
                 'extent_delta': row['target_extent'] - baseline['target_extent'],
                 'offset_delta': row['target_offset'] - baseline['target_offset'],
                 'other_publics_equal': [p for p in row['all_publics'] if p['name'] != plan['target_public']]
@@ -214,7 +227,7 @@ def run(manifest_path):
     groups = {}
     for row in rows:
         if row['status'] == 'COMPILED':
-            key = json.dumps([row['target_bytes'], row['target_fixups']], sort_keys=True)
+            key = json.dumps([row['target_bytes'], row['semantic_target_fixups']], sort_keys=True)
             groups.setdefault(sha(key.encode()), []).append(row['id'])
     report = {'authority': 'RESEARCH_ONLY', 'strict_acceptance': 'NOT_EVALUATED',
               'complete': True, 'question': plan['question'], 'prediction': plan['prediction'],
