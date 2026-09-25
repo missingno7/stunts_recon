@@ -1,0 +1,419 @@
+{
+  "literal_matches": [
+    {
+      "code_hex": "558bec8bd78bde8cd88ec08b7e0633c0b9fffff2ae8d75ff8b7e08b9fffff2aef7d12bf987fe8b4606f7c601007402a449d1e9f3a513c9f3a48bf38bfa5dcb",
+      "code_sha256": "f4882949918d061a68b7218161229699923793c4f797278654aa3aac212af96f",
+      "declared_size": 63,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        123622
+      ],
+      "module_index": 50,
+      "module_name": "strcat.asm",
+      "module_sha256": "f1e5ba207c5ca9ecb31388a5983259d83614bfddc75161502b06bba755d61ad6",
+      "module_size": 188,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_strcat",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 63,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec8bd78bde8b76088bfe8cd88ec033c0b9fffff2aef7d18b7e068bc7a8017402a449d1e9f3a513c9f3a48bf38bfa5dcb",
+      "code_sha256": "3ec8855142e9c8f5cc31c41e5acedd4d752b052713f8a3a1d5be14d997123380",
+      "declared_size": 50,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        123686
+      ],
+      "module_index": 51,
+      "module_name": "strcpy.asm",
+      "module_sha256": "a41d60e87ecb87e665aa98785b21680bd6d0830c5b8140f6aa52640265e55848",
+      "module_size": 175,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_strcpy",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 50,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec8bd78bde8cd88ec08b76068b7e0833c0b9fffff2aef7d12bf9f3a674051bc01dffff8bf38bfa5dcb",
+      "code_sha256": "f37700cec5d015f36fe8be45c87db9c636f2aaa7f27abcef2d46a5cc4aacbd9a",
+      "declared_size": 43,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        123736
+      ],
+      "module_index": 52,
+      "module_name": "strcmp.asm",
+      "module_sha256": "50e53f1656414f7abc1940c0ef20e9abb7bedbfb81b178214dd2ab1f82548cd6",
+      "module_size": 168,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_strcmp",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 43,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec8bd78cd88ec08b7e0633c0b9fffff2aef7d149918bfa5dcb",
+      "code_sha256": "2cd35295342e0bb81c0d9387d677ff9f3cd43c569196d1bd0a6727ddb5cbafec",
+      "declared_size": 27,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        123780
+      ],
+      "module_index": 53,
+      "module_name": "strlen.asm",
+      "module_sha256": "52618c19c9f92e6557711cf3fa987169b02ed513c7fd7d595b7d59a4ffd2e6c7",
+      "module_size": 152,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_strlen",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 27,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec8bd68b76088b5e06b0ff0ac0742cac8a27433ae074f42c413c1a1ac980e12002c1044186e02c413c1a1ac980e12002c104413ac474d41ac01cff988bf25dcb",
+      "code_sha256": "a6feb4d2b4d712510e2aa3a0adba0a222b0c5073bd1f5799c3fc567064db4fae",
+      "declared_size": 66,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        124134
+      ],
+      "module_index": 181,
+      "module_name": "stricmp.asm",
+      "module_sha256": "de2d77424acd72ec786123270920f233338b7039a6dbd82ea158cf56df0781b0",
+      "module_size": 206,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_stricmp",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "_strcmpi",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 66,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec571e078b7e0633c0b9fffff2ae41f7d94f8a4608fdf2ae473805740433c0eb028bc7fc5f8be55dcb",
+      "code_sha256": "e9e4a6a9fa002b991cdfecee5cb57177b7b9c172cb57e96d9a2cd8fb73af57a6",
+      "declared_size": 43,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        124944
+      ],
+      "module_index": 185,
+      "module_name": "strrchr.asm",
+      "module_sha256": "289e7916b3bb32f5d1fe45bff16d185740c45f567a3ed023b14f2f9e294c8d66",
+      "module_size": 171,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_strrchr",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 43,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "8b4e0c8b46068b56088b7e0a571e07fc930ac0741383f90a750e0bd2790ab02daaf7db83d200f7da8bf79233d20bc07402f7f193f7f19287d304303c3976020427aa8bc20bc375e288054fac86058844ff8d44013bc772f2585f5e8be55dcb",
+      "code_sha256": "ce0cc5977c41eb6d3df17c85bef29b90073e2a850d5392a95f557a41cd0884e0",
+      "declared_size": 95,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        124200
+      ],
+      "module_index": 202,
+      "module_name": "xtoa.asm",
+      "module_sha256": "e71dae15240eb51545dd0d0a12d00faac923830b551c1a41e5a31b9534ef5922",
+      "module_size": 230,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__cxtoa",
+          "offset": 12,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__cltoasub",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 95,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec837e06007c058b4606eb058b4606f7d85dcb90",
+      "code_sha256": "2f6231c5cc849103fc30af479986ca6b75dd0e5bded3ba1a6163a7d2f42e1d05",
+      "declared_size": 22,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        124296
+      ],
+      "module_index": 208,
+      "module_name": "abs.c",
+      "module_sha256": "03f9db42868f5e8dbc78f762febf477d647e215b82cf670d3b2b7421395b8175",
+      "module_size": 231,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "_abs",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 22,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "facb",
+      "code_sha256": "025da54adf438be0a0fdc74e8fdba96cf695b9610059b699b21ea8dca290eb32",
+      "declared_size": 2,
+      "evidence_class": "ambiguous_literal_match",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        123950,
+        125205
+      ],
+      "module_index": 288,
+      "module_name": "dos\\disable.asm",
+      "module_sha256": "29940025d1f4a666eee6e7439b4979a52cf05d543e83a1fc6ead04355e9da934",
+      "module_size": 135,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__disable",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 2,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "fbcb",
+      "code_sha256": "5db0433805424a7bc15476472791817a21dedbe7be0ca88d2847898b711aa15c",
+      "declared_size": 2,
+      "evidence_class": "ambiguous_literal_match",
+      "fixups": [],
+      "library": "MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "load_offsets": [
+        106330,
+        106420,
+        125660,
+        141184,
+        143354
+      ],
+      "module_index": 290,
+      "module_name": "dos\\enable.asm",
+      "module_sha256": "277f94bd627277b38f44a26f72e488d30290dcec8b5e2889978096f1f8f4c670",
+      "module_size": 132,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__enable",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 2,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec57565333ff8b46080bc07d11478b5606f7d8f7da1d00008946088956068b460c0bc07d11478b560af7d8f7da1d000089460c89560a0bc075158b4e0a8b460833d2f7f18bd88b4606f7f18bd3eb388bd88b4e0a8b56088b4606d1ebd1d9d1ead1d80bdb75f4f7f18bf0f7660c918b460af7e603d1720c3b5608770772063b460676014e33d2964f7507f7daf7d883da005b5e5f8be55dca0800",
+      "code_sha256": "c12e61988352afbd2e3a9b113f5bdbe2866a3800e72318d244da74a06af851b8",
+      "declared_size": 156,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "load_offsets": [
+        124988
+      ],
+      "module_index": 8,
+      "module_name": "ldiv.asm",
+      "module_sha256": "01b72a2dee4ccd4c95fd6ef9d7152cf850c285213f8cb4a1466c8bfbcc8a0228",
+      "module_size": 288,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__aFldiv",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 156,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec8b46088b5e0c0bd88b5e0a750b8b4606f7e38be55dca0800f7e38bc88b4606f7660c03c88b4606f7e303d18be55dca0800",
+      "code_sha256": "56cbf2a7e75a5d414ad8462c9bc8af6357aa371744833aa5ad910ffe2190cd48",
+      "declared_size": 52,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "load_offsets": [
+        125144
+      ],
+      "module_index": 9,
+      "module_name": "lmul.asm",
+      "module_sha256": "735327c000c5ba0bd24b8b79ee7ff4ab37b2f0cba73a69b09c55ad63ae446b98",
+      "module_size": 205,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__aFlmul",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__aFulmul",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 52,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "32ede306d1fad1d8e2facb",
+      "code_sha256": "daeef28afba687689c22fdf3bbd2c849af80bb963ad0d56c589f9e09c43baa59",
+      "declared_size": 11,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "load_offsets": [
+        125196
+      ],
+      "module_index": 12,
+      "module_name": "lshr.asm",
+      "module_sha256": "97772bd66f6056183ca725fe0a6215c06edce7e181c63b0b102f8cdc1d5dbe76",
+      "module_size": 135,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__aFlshr",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 11,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    },
+    {
+      "code_hex": "558bec53568b460c0bc075158b4e0a8b460833d2f7f18bd88b4606f7f18bd3eb388bc88b5e0a8b56088b4606d1e9d1dbd1ead1d80bc975f4f7f38bf0f7660c918b460af7e603d1720c3b5608770772063b460676014e33d2965e5b8be55dca0800",
+      "code_sha256": "f698e247dcf4f385d30f8ea41ae2a29aa7ab8aeeba5b6ac0b644b3b2a4886fb3",
+      "declared_size": 97,
+      "evidence_class": "unique_exact_complete_runtime_segment_without_fixups_or_relocations",
+      "fixups": [],
+      "library": "LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "load_offsets": [
+        125350
+      ],
+      "module_index": 21,
+      "module_name": "uldiv.asm",
+      "module_sha256": "3a1040fcbd5f49809765b69f7202f9c9786d2d98d33450309d72530fbd083dbd",
+      "module_size": 232,
+      "oracle_relocation_intersections": [],
+      "publics": [
+        {
+          "name": "__aFuldiv",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "size": 97,
+      "status": "full_segment_literal_match_no_object_fixups",
+      "unsupported_records": []
+    }
+  ],
+  "method": "Whole initialized CODE segment search; unsupported OMF records and any segment fixups prevent proven status. Relocation intersections assessed separately.",
+  "oracle_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
+  "scope": "Independent pinned archive/member identification facts. Active ownership and record policies are solely in layout/manifest.json."
+}

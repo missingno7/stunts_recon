@@ -1,8 +1,0 @@
-MATCH DIAGNOSIS: rect_accepted (bound payload)
-Target 76 bytes / 32 instructions; candidate 76 bytes / 32 instructions.
-Protected byte-exact: 32 instructions (100.0% of target), 1 anchors; 0 islands. Diagnostic metrics only.
-Preserve target: +0x0..+0x4C
-Exact suffix: +0x0..+0x4C / +0x0..+0x4C
-Fixup normalization: 0 fields, alignment only; No normalization: every bound byte is compared.
-Omitted: 0 anchors, 0 islands, 0 notes; use full diagnostic artifact.
-Acceptance: BOUND_BYTES_EXACT_RESEARCH; diagnostic alignment never relaxes byte, extent or fixup checks.

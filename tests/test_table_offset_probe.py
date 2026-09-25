@@ -1,14 +1,10 @@
 """Fail-closed controls for exact DW OFFSET table research."""
 import sys
-import hashlib
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from table_offset_probe import evaluate, table_groups
-from common import ROOT, read_json
-from mz import MZ
-from oracle import verify
 
 
 class TableOffsetProbeTests(unittest.TestCase):
@@ -56,35 +52,5 @@ class TableOffsetProbeTests(unittest.TestCase):
         self.assertEqual(self.probe(frame_paragraph=None)["state"],
                          "UNPROVEN_SEGMENT_FRAME")
 
-    def test_imported_table_spans_stay_exact_and_supervisor_only(self):
-        _, unpacked, oracle, _ = verify(write=False)
-        image = MZ.parse(unpacked).load_image(unpacked)
-        inventory = read_json(ROOT / "recovery/restunts-inventory.json")
-        census = read_json(ROOT / "recovery/table-offset-census.json")
-        queue = {task["id"]: task for task in read_json(ROOT / "recovery/queue.json")["tasks"]}
-        self.assertEqual(census["source_inventory_sha256"],
-                         hashlib.sha256((ROOT / "recovery/restunts-inventory.json").read_bytes()).hexdigest())
-        self.assertEqual(census["oracle_load_sha256"], hashlib.sha256(image).hexdigest())
-        relocations = {row["load_offset"] for row in oracle["unpacked_mz"]["relocations"]}
-        by_id = {function.get("unresolved_evidence_id"): function
-                 for function in inventory["functions"]}
-        verified = [row for row in census["tables"]
-                    if row["state"] == "EXACT_BRACKETED_TABLE_BYTES"]
-        self.assertTrue(verified)
-        for row in verified:
-            function = by_id[row["function_id"]]
-            span = next(span for span in function.get("source_table_spans", [])
-                        if span["label"] == row["label"])
-            self.assertEqual((span["start"], span["end"]), (row["start"], row["end"]))
-            self.assertEqual(image[row["start"]:row["end"]].hex(), row["predicted_hex"])
-            self.assertEqual(hashlib.sha256(image[row["start"]:row["end"]]).hexdigest(),
-                             span["sha256"])
-            self.assertTrue(all(site not in relocations for site in range(row["start"], row["end"])))
-            self.assertEqual(queue[row["function_id"]]["tier"], "SUPERVISOR")
-            if function["status"] == "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED":
-                self.assertLessEqual(function["start"], row["start"])
-                self.assertLessEqual(row["end"], function["end"])
 
-
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == '__main__': unittest.main()

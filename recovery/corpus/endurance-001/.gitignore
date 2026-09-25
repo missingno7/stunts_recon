@@ -1,6 +1,0 @@
-# Endurance research binaries and disposable compiler workspaces
-**/*.bin
-**/*.obj
-**/UNIT.OBJ
-**/compiler-work/
-**/__pycache__/

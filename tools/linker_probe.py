@@ -92,7 +92,7 @@ def far_experiment(profile='msc510-medium', library_first=False):
     from binder import bind_far_calls
     source=b'long product(long a, long b, long c, long d) { return a*b-c*d; }\n'
     obj,receipt=compile_source(source,profile);work=Path(receipt['work_directory'])
-    row=read_json(ROOT/'layout/library-candidates.json')['library_lmul']
+    row=next(o for o in read_json(ROOT/'layout/manifest.json')['owners'] if o['id']=='library_lmul')
     archive=(ROOT/row['library']).read_bytes()
     require(sha(archive)==row['library_sha256'],'Pinned fixture library changed')
     members=[b for n,b in OmfReader().split_library(archive) if n==row['module'] and sha(b)==row['module_sha256']]
@@ -143,7 +143,7 @@ def mixed_far_data_experiment(profile='msc510-medium', library_first=False, data
     require(len(obj.linker_fixups) == 3 and
             [f['loc'] for f in obj.linker_fixups] == ['pointer32', 'offset16', 'offset16'],
             'Fixture compiler did not emit the reviewed mixed FIXUPP order')
-    row = read_json(ROOT / 'layout/library-candidates.json')['library_lmul']
+    row = next(o for o in read_json(ROOT / 'layout/manifest.json')['owners'] if o['id']=='library_lmul')
     archive = (ROOT / row['library']).read_bytes()
     require(sha(archive) == row['library_sha256'], 'Pinned mixed fixture library changed')
     members = [body for name, body in OmfReader().split_library(archive)

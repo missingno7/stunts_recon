@@ -1,8 +1,0 @@
-MATCH DIAGNOSIS: parse_accepted (bound payload)
-Target 46 bytes / 18 instructions; candidate 46 bytes / 18 instructions.
-Protected byte-exact: 18 instructions (100.0% of target), 1 anchors; 0 islands. Diagnostic metrics only.
-Preserve target: +0x0..+0x2E
-Exact suffix: +0x0..+0x2E / +0x0..+0x2E
-Fixup normalization: 0 fields, alignment only; No normalization: every bound byte is compared.
-Omitted: 0 anchors, 0 islands, 0 notes; use full diagnostic artifact.
-Acceptance: PROMOTED; diagnostic alignment never relaxes byte, extent or fixup checks.

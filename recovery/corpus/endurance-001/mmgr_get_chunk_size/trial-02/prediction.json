@@ -1,9 +1,0 @@
-{
-  "analysis_level": "ABI/declaration and far-pointer parameter placement",
-  "discriminating_question": "Was the prologue/argument mismatch caused by omitted far function ABI?",
-  "falsifier": "Code remains near/RET, arg access remains BP+6, or far pointer segment extraction does not simplify. Any success on ABI still cannot bind 0x4ba0/0x4ba2 or produce the target shared-code jump.",
-  "iteration": 2,
-  "prediction": "Marking mmgr_get_chunk_size far should switch public return to RETF and shift the far pointer parameter from BP+6 to BP+8; it should retain the two named DGROUP external pointer fixups and the fatal_error CALL.",
-  "prior_output": "trial-01: 84-byte object, effective cc0141218b8351e4f9c7115cd33fcc3f122c5661968c6c8e733ffc0f38a59775; externals _resptr1/_resptr2/_fatal_error and four fixups",
-  "transition_reason": "Trial 01 exposed that the isolated definition was near: its public is near and parameter begins at BP+6, while verified target is a far public, reads the segment at BP+8, and RETF. Correcting declaration distance tests an ABI explanation before changing symbol/binding analysis."
-}

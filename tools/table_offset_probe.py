@@ -2,14 +2,10 @@
 
 A matching table is source-emission evidence only. The importer may use it
 with independent anchors to verify an emission interval; it does not prove
-CFG/code-data classification, binder support, or queue eligibility.
+CFG/code-data classification, binder support, or acceptance.
 """
-import collections
 import re
 
-from common import ROOT, read_json, require, sha, write_json
-from mz import MZ
-from oracle import verify
 
 
 SYMBOL = r"[A-Za-z_?@][A-Za-z0-9_?@$]*"
@@ -99,71 +95,3 @@ def evaluate(group, frame_paragraph, definitions, image, relocations, verified_a
     row["verified_following_anchor"] = row["following_label_at_end"] and end in verified_anchors
     row["state"] = "EXACT_BRACKETED_TABLE_BYTES" if row["verified_following_anchor"] else "EXACT_UNBRACKETED_TABLE_BYTES"
     return row
-
-
-def run():
-    inventory = read_json(ROOT / "recovery/restunts-inventory.json")
-    _, unpacked, oracle, _ = verify(write=False)
-    image = MZ.parse(unpacked).load_image(unpacked)
-    require(sha(image) == inventory["load_sha256"], "Oracle/inventory identity drift")
-    relocations = {r["load_offset"] for r in oracle["unpacked_mz"]["relocations"]}
-    segments = {s["name"]: s for s in inventory["segments"]}
-    anchors = collections.defaultdict(set)
-    for anchor in inventory["anchors"]:
-        anchors[(anchor["segment"], anchor["function"])].add(anchor["load_offset"])
-    by_segment = {}
-    rows = []
-    partial = [f for f in inventory["functions"] if f["status"] == "PARTIAL_UNMAPPED"]
-    emission = [f for f in inventory["functions"] if f["status"] == "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED"]
-    for function in partial + emission:
-        segment = segments[function["segment"]]
-        if segment["name"] not in by_segment:
-            path = ROOT / segment["source"]
-            data = path.read_bytes()
-            require(sha(data) == segment["sha256"], "Restunts source identity drift")
-            lines = data.decode("latin1").splitlines()
-            definitions = collections.defaultdict(list)
-            for number, line in enumerate(lines, 1):
-                match = LABEL.fullmatch(line.strip())
-                if match:
-                    definitions[match.group("label").lower()].append(number)
-                table = TABLE_START.fullmatch(line.strip())
-                if table:
-                    definitions[table.group("label").lower()].append(number)
-            by_segment[segment["name"]] = (lines, definitions)
-        lines, definitions = by_segment[segment["name"]]
-        frames = segment["frame_candidates"]
-        frame = frames[0] if len(frames) == 1 and segment.get("segment_paragraph") == frames[0] else None
-        for group in table_groups(lines, function["line_start"], function["line_end"]):
-            result = evaluate(group, frame, definitions, image, relocations,
-                              anchors[(segment["name"], function["name"])],
-                              function.get("start"), function.get("end"))
-            rows.append({"function": function["name"],
-                         "function_id": function["unresolved_evidence_id"],
-                         "segment": segment["name"],
-                         "frame_evidence_count": len(segment["far_call_evidence"]),
-                         "function_status": function["status"], **result})
-    counts = collections.Counter(row["state"] for row in rows)
-    report = {"schema": 1, "authority": "RESEARCH_ONLY",
-              "oracle_load_sha256": sha(image),
-              "source_inventory_sha256": sha((ROOT / "recovery/restunts-inventory.json").read_bytes()),
-              "partial_tasks": len(partial),
-              "emission_tasks_scanned": len(emission),
-              "tasks_with_table_directives": len({(r["segment"], r["function"]) for r in rows}),
-              "table_groups": len(rows),
-              "states": dict(sorted(counts.items())),
-              "exact_bracketed_tasks": sorted({r["function"] for r in rows
-                  if r["state"] == "EXACT_BRACKETED_TABLE_BYTES"}),
-              "exact_bracketed_task_ids": sorted({r["function_id"] for r in rows
-                  if r["state"] == "EXACT_BRACKETED_TABLE_BYTES"}),
-              "exact_bracketed_bytes": sum(r["size"] for r in rows
-                  if r["state"] == "EXACT_BRACKETED_TABLE_BYTES"),
-              "tables": rows,
-              "limitation": "Exact source-emission bytes do not prove the rest of a function, CFG reachability, original TU membership, or C eligibility."}
-    write_json(ROOT / "recovery/table-offset-census.json", report)
-    print({k: report[k] for k in ("partial_tasks", "tasks_with_table_directives", "table_groups", "states")})
-    return report
-
-
-if __name__ == "__main__":
-    run()

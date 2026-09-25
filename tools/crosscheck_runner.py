@@ -14,7 +14,7 @@ from build_exact import inputs
 
 
 def main():
-    report_path=ROOT/'recovery/promoted-runner-parity.json'
+    report_path=ROOT/'build/validation/independent.json'
     report_path.unlink(missing_ok=True)
     before=inputs()
     runner=Path('C:/DOSBox-X/dosbox-x.exe')
@@ -58,4 +58,8 @@ def main():
     write_json(report_path,{'runner':{'path':str(runner),**runner_identity},'inputs':before,'results':rows})
     print('PASS: independent DOSBox-X exact code and complete binding obligations for',len(rows),'functions')
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from transaction import exclusive, ensure_consistent
+    with exclusive():
+        ensure_consistent()
+        main()

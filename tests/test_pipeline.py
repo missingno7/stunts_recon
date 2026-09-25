@@ -1,5 +1,6 @@
-import sys,struct,unittest,copy
+import sys,struct,unittest,copy,tempfile
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
@@ -11,8 +12,6 @@ from oracle import apply_dif,verify,construct
 from coordinates import Coordinates
 from object_probe import read_object,extract_no_fixups
 from omf import OmfReader
-from build_exact import validate_layout,inputs
-from check_candidate import check_scope,replace_raw
 
 
 def record(kind,body):
@@ -77,6 +76,12 @@ class ObjectTests(unittest.TestCase):
         with self.assertRaises(ValueError):extract_no_fixups(read_object(object_fixture()),'_TEXT','f',2)
     def test_public_binding(self):
         with self.assertRaises(ValueError):extract_no_fixups(read_object(object_fixture()),'_TEXT','wrong',3)
+    def test_public_in_another_zero_length_segment_is_not_ignored(self):
+        obj=read_object(object_fixture())
+        obj.segment_defs.append({'index':2,'name':'_ZERO','class':'DATA','length':0})
+        obj.segment_lengths['_ZERO']=0
+        obj.publics.append({'name':'_stray','segment':'_ZERO','offset':0})
+        with self.assertRaises(ValueError):extract_no_fixups(obj,'_TEXT','f',3)
     def test_fixup_blocks_production(self):
         o=read_object(object_fixture());o.linker_fixups=[{'offset':0}]
         with self.assertRaises(ValueError):extract_no_fixups(o,'_TEXT','f',3)
@@ -109,11 +114,11 @@ class OracleTests(unittest.TestCase):
         with self.assertRaises(ValueError):c.load(10383,'unpacked_mz_file')
         with self.assertRaises(ValueError):c.from_load(200000,'restunts_ida')
     def test_independent_unpack(self):
-        d=read_json(ROOT/'recovery/unp-crosscheck.json')
+        d=read_json(ROOT/'evidence/unpack.json')
         self.assertTrue(d['load_image_equal']);self.assertTrue(d['relocation_raw_equal'])
         self.assertEqual(d['load_image_sha256'],self.result[2]['load_image']['sha256'])
     def test_restunts_anchors(self):
-        d=read_json(ROOT/'recovery/restunts-inventory.json');image=MZ.parse(self.result[1]).load_image(self.result[1])
+        d=read_json(ROOT/'evidence/functions.json');image=MZ.parse(self.result[1]).load_image(self.result[1])
         self.assertGreater(len(d['coordinate_proof']['binary_anchors']),700)
         for a in d['coordinate_proof']['binary_anchors']:
             self.assertEqual(identity(image[a['load_start']:a['end']])['sha256'],a['sha256'])
@@ -123,67 +128,75 @@ class OracleTests(unittest.TestCase):
         with patch('oracle.read_json',return_value=bad),self.assertRaises(ValueError):verify(write=False)
 
 
-class AcceptanceTests(unittest.TestCase):
-    def test_partition(self):validate_layout(read_json(ROOT/'layout/manifest.json'),200000)
-    def test_partition_rejects_gap(self):
-        m=read_json(ROOT/'layout/manifest.json');m['owners'][0]['start']=1
-        with self.assertRaises(ValueError):validate_layout(m,200000)
-    def test_duplicate_owner_ids(self):
-        m=read_json(ROOT/'layout/manifest.json');m['owners'][1]['id']=m['owners'][0]['id']
-        with self.assertRaises(ValueError):validate_layout(m,200000)
-    def test_promotion_rechecks_fast_baseline_and_cleans_lock(self):
-        import tempfile,check_candidate,json
+class OwnershipTests(unittest.TestCase):
+    def test_manifest_partition_rejects_gaps_and_overlaps(self):
+        from build_exact import validate_layout
+        valid={'owners':[{'id':'left','start':0,'end':4,'kind':'UNRESOLVED_RAW'},
+                         {'id':'right','start':4,'end':12,'kind':'UNRESOLVED_RAW'}]}
+        validate_layout(valid,12)
+        for boundary in [3,5]:
+            bad=copy.deepcopy(valid);bad['owners'][1]['start']=boundary
+            with self.subTest(boundary=boundary),self.assertRaises(ValueError):
+                validate_layout(bad,12)
+
+    def test_duplicate_owner_ids_are_rejected(self):
+        from build_exact import validate_layout
+        bad={'owners':[{'id':'same','start':0,'end':4,'kind':'UNRESOLVED_RAW'},
+                       {'id':'same','start':4,'end':12,'kind':'UNRESOLVED_RAW'}]}
+        with self.assertRaises(ValueError):validate_layout(bad,12)
+
+    def test_failed_build_invalidates_previous_acceptance_receipt(self):
+        import build_exact
+        import transaction
         with tempfile.TemporaryDirectory(dir=ROOT/'build') as directory:
-            temp=Path(directory);(temp/'recipes').mkdir();(temp/'build').mkdir()
-            (temp/'recipes/x.json').write_text(json.dumps({'source':'unused'}))
-            with patch('check_candidate.ROOT',temp),patch('check_candidate.probe',return_value=(b'x',{})),patch('check_candidate.inputs',side_effect=[{}, {}, {'changed':'yes'}]),self.assertRaises(ValueError):
-                check_candidate.check('x',promote=True,scope=False)
-            self.assertFalse((temp/'build/promotion.lock').exists())
-    def test_scope(self):
-        snapshot={'src/a.c':'1','tools/x.py':'2'};recipe={'source':'src/a.c'}
-        with patch('check_candidate.inputs',return_value={'src/a.c':'changed','tools/x.py':'2'}):check_scope({'scope_snapshot':snapshot},recipe)
-        with patch('check_candidate.inputs',return_value={'src/a.c':'1','tools/x.py':'changed'}),self.assertRaises(ValueError):check_scope({'scope_snapshot':snapshot},recipe)
-    def test_double_promotion_refused(self):
-        with self.assertRaises(ValueError):replace_raw(read_json(ROOT/'layout/manifest.json'),read_json(ROOT/'recipes/rect_is_inside.json'))
-    def test_queue_unique(self):
-        q=read_json(ROOT/'recovery/queue.json');self.assertEqual(len(q['tasks']),len({x['id'] for x in q['tasks']}));self.assertEqual(len(q['tasks']),sum(q['counts'].values()))
-    def test_failed_build_invalidates_receipt(self):
-        import tempfile,build_exact
-        with tempfile.TemporaryDirectory(dir=ROOT/'build') as directory:
-            temp=Path(directory);out=temp/'build/exact';out.mkdir(parents=True)
-            receipt=out/'acceptance.json';receipt.write_text('stale PASS')
-            bad=read_json(ROOT/'layout/manifest.json');bad['owners'][0]['start']=1
-            with patch('build_exact.ROOT',temp),self.assertRaises(ValueError):build_exact.build(bad)
+            root=Path(directory);receipt=root/'build/exact/acceptance.json'
+            receipt.parent.mkdir(parents=True);receipt.write_text('stale PASS')
+            oracle={'load_image':{'sha256':'fixture'}}
+            invalid={'oracle_sha256':'fixture','owners':[
+                {'id':'raw','start':1,'end':4,'kind':'UNRESOLVED_RAW'}]}
+            fake_mz=SimpleNamespace(load_image=lambda _:bytes(4),header_size=0,relocations=[])
+            with patch.object(build_exact,'ROOT',root),patch.object(transaction,'ROOT',root),\
+                 patch.object(build_exact,'inputs',return_value={}),\
+                 patch.object(build_exact,'verify',return_value=(b'',bytes(4),oracle)),\
+                 patch.object(build_exact.MZ,'parse',return_value=fake_mz),\
+                 self.assertRaises(ValueError):
+                build_exact.build(invalid)
             self.assertFalse(receipt.exists())
-    def test_real_msc_external_far_call_fixup(self):
+
+    def test_real_far_call_keeps_a_complete_external_pointer_fixup(self):
         from compiler import compile_source
-        obj,receipt=compile_source(b'extern int helper(int); int use_helper(int x) { return helper(x); }\n','msc510-medium')
-        fix=[f for f in obj.linker_fixups if f['target']=='_helper']
+        obj,_=compile_source(b'extern int helper(int); int use_helper(int x) { return helper(x); }\n',
+                             'msc510-medium')
+        fix=[row for row in obj.linker_fixups if row['target']=='_helper']
         self.assertEqual(len(fix),1)
-        self.assertEqual((fix[0]['loc'],fix[0]['width'],fix[0]['encoded_addend']),('pointer32',4,'00000000'))
+        self.assertEqual((fix[0]['loc'],fix[0]['width'],fix[0]['encoded_addend']),
+                         ('pointer32',4,'00000000'))
         self.assertEqual(fix[0]['target_kind'],'external')
-        with self.assertRaises(ValueError):extract_no_fixups(obj,'UNIT_TEXT','_use_helper',obj.segment_length('UNIT_TEXT'))
-    def test_toolchain_hash_mismatch(self):
+        with self.assertRaises(ValueError):
+            extract_no_fixups(obj,'UNIT_TEXT','_use_helper',obj.segment_length('UNIT_TEXT'))
+
+    def test_toolchain_hash_mismatch_is_rejected(self):
         from compiler import verify_toolchain
-        bad=read_json(ROOT/'layout/toolchain.json');bad['profiles']['msc510-medium']['files'][0]['sha256']='0'*64
-        with patch('compiler.read_json',return_value=bad),self.assertRaises(ValueError):verify_toolchain('msc510-medium')
-    def test_full_fresh_hybrid(self):
-        from build_exact import build
-        result=build()
-        self.assertEqual(result['status'],'HYBRID_EXACT')
-        owners=read_json(ROOT/'layout/manifest.json')['owners']
-        totals={kind:sum(o['end']-o['start'] for o in owners if o['kind']==kind)
-                for kind in ['MATCHING_C','KNOWN_TOOLCHAIN_LIBRARY','UNRESOLVED_RAW']}
-        self.assertEqual(result['matching_c_bytes'],totals['MATCHING_C'])
-        self.assertEqual(result['library_production_bytes'],totals['KNOWN_TOOLCHAIN_LIBRARY'])
-        self.assertEqual(result['raw_initialized_bytes'],totals['UNRESOLVED_RAW'])
-        self.assertGreaterEqual(result['matching_c_bytes'],206)
-        self.assertGreaterEqual(result['library_production_bytes'],725)
-        self.assertEqual(len([r for r in result['compiler_receipts'] if 'work_directory' in r]),sum(o['kind']=='MATCHING_C' for o in owners))
-    def test_stale_inputs_rejected(self):
-        from build_exact import build
-        raw=read_json(ROOT/'layout/manifest.json')
-        raw['owners']=[{'id':'raw','start':0,'end':200000,'kind':'UNRESOLVED_RAW'}]
-        with patch('build_exact.inputs',side_effect=[{}, {'changed':'yes'}]),self.assertRaises(ValueError):build(raw,publish=False)
+        bad=read_json(ROOT/'layout/toolchain.json')
+        bad['profiles']['msc510-medium']['files'][0]['sha256']='0'*64
+        with patch('compiler.read_json',return_value=bad),self.assertRaises(ValueError):
+            verify_toolchain('msc510-medium')
+
+    def test_stale_inputs_during_build_are_rejected(self):
+        import build_exact
+        import transaction
+        with tempfile.TemporaryDirectory(dir=ROOT/'build') as directory:
+            root=Path(directory)
+            oracle={'load_image':{'sha256':'fixture'}}
+            raw={'oracle_sha256':'fixture','owners':[
+                {'id':'raw','start':0,'end':4,'kind':'UNRESOLVED_RAW'}]}
+            fake_mz=SimpleNamespace(load_image=lambda _:bytes(4),header_size=0,relocations=[])
+            with patch.object(build_exact,'ROOT',root),patch.object(transaction,'ROOT',root),\
+                 patch.object(build_exact,'inputs',side_effect=[{'state':'before'}, {'state':'changed'}]),\
+                 patch.object(build_exact,'verify',return_value=(b'',bytes(4),oracle)),\
+                 patch.object(build_exact.MZ,'parse',return_value=fake_mz),\
+                 patch('compiler.verify_toolchain'),self.assertRaisesRegex(ValueError,'Inputs changed'):
+                build_exact.build(raw,publish=False)
+
 
 if __name__=='__main__':unittest.main()

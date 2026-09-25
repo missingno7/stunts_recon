@@ -1,0 +1,15 @@
+# Acceptance scope
+
+The byte oracle is reconstructed from the four supplied assets using DSI, DIF and EXEPACK decoding. `layout/oracle.lock.json` fixes asset identities, header metadata, complete unpacked image, and the ordered MZ relocation table. The independently unpacked comparison is preserved in `evidence/unpack.json`. Verification never updates expected bytes.
+
+The manifest partitions every initialized load-image byte into matching C, pinned runtime, or explicit raw ownership. Every C recipe must consume the complete named CODE contribution with no unowned data/BSS, correct public placement and declarations, and all supported fixups. Unknown OMF records, corrupt checksums, holes, overflow, unsupported communal/BIG/32-bit storage and production local-symbol records fail closed. Diagnostic object inspection cannot grant acceptance.
+
+The tested binders support no-fixup contributions, reviewed external DGROUP offsets, external far CALLs, the bounded mixed far-CALL/DGROUP mode, and the specific frame-callback object mode. They require independently grounded frame/address aliases, zero-addend and record-shape constraints where applicable, and exact ordered MZ relocation obligations. The symbol tables check original instruction bytes and relocation anchors. The function inventory supplies address and boundary provenance; source names are binding aliases, not claims about original PUBDEF names or original translation units.
+
+Runtime members are matched by pinned archive/member identities and complete extents. Default overlapping LEDATA remains rejected. Specific active runtime owners carry a reviewed `pinned-ordered-ledata-v1` policy with exact record offsets, payload hashes and overlap sites. Untouched historical LINK fixtures test those policies, including the long-arithmetic members, with both pinned compiler distributions. No global checksum or overlap exception exists.
+
+The compiler profile is a compatibility hypothesis: Microsoft C 5.10 medium model with `/O /Gs` is pinned, but matching code under 5.00 prevents a unique historical version claim. Original TU grouping, general linking, arbitrary segment/frame modes, QuickC BAKPAT, local-symbol production, and some CS-relative storage remain technical work. Search can inspect unsupported objects and context hypotheses without weakening production.
+
+Promotion preserves all existing owner intervals; a new function can replace only a wholly raw interval. Replacing an accepted function requires the same interval and fresh exact output. Canonical input identities are checked before and throughout serialized publication. A durable journal supports rollback after interruption and preserves conflicting user edits. Scratch histories are outside acceptance inputs.
+
+Full validation combines negative technical tests, fresh pinned C compilation, runtime binding, complete hybrid image and ordered relocation equality, and independent DOSBox-X recompilation. Reports are derived under `build/validation/` and `build/exact/`. Source hashes, object bytes, and every binding are checked anew; historical receipts cannot authorize acceptance.

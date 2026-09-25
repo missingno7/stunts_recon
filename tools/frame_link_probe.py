@@ -1,6 +1,6 @@
 """Research-only historical LINK differential for the complete frame callback object.
 
-The archived candidate object is never modified. Synthetic provider definitions
+The freshly compiled candidate object is never modified. Synthetic provider definitions
 test linker arithmetic; they make no claim about original Stunts data ownership.
 """
 import re
@@ -17,8 +17,13 @@ from mz import MZ
 from object_probe import read_object
 from omf import OmfReader
 
-OBJECT = ROOT / 'build/private/research-batches/set_frame_callback/a058284caef3/frame-direct-pointer.obj'
-OBJECT_SHA = 'fd3f9f5921964435405c6e30e51b599f3d67bf6621f0b320caaf3cab5c8e0758'
+def fresh_candidate():
+    recipe = read_json(ROOT/'recipes/set_frame_callback.json')
+    obj, receipt = compile_source((ROOT/recipe['source']).read_bytes(), recipe['profile'])
+    require_complete_shape(obj)
+    return obj, (Path(receipt['work_directory'])/'UNIT.OBJ').read_bytes()
+
+
 PROVIDER_SOURCE = (b'unsigned int word_46468=0; unsigned char byte_442E4=0; '
                    b'void far frame_callback(void) {} '
                    b'void far timer_reg_callback(void) {}\n')
@@ -47,9 +52,9 @@ def require_complete_shape(candidate):
                                    'segment': 'UNIT_TEXT', 'offset': 0}] and
             all(name == 'UNIT_TEXT' or size == 0
                 for name, size in candidate.segment_lengths.items()),
-            'Archived frame contribution is incomplete')
+            'Fresh frame contribution is incomplete')
     require([(f['offset'], f['loc'], f['target']) for f in candidate.linker_fixups]
-            == FIXUP_SHAPE, 'Archived ordered fixups changed')
+            == FIXUP_SHAPE, 'Fresh ordered fixups changed')
 
 
 def negative_controls(candidate):
@@ -68,7 +73,7 @@ def negative_controls(candidate):
 
 
 def padded_library_member():
-    row = read_json(ROOT / 'layout/library-candidates.json')['library_lmul']
+    row = next(o for o in read_json(ROOT / 'layout/manifest.json')['owners'] if o['id']=='library_lmul')
     archive = (ROOT / row['library']).read_bytes()
     require(sha(archive) == row['library_sha256'], 'Pinned padding library changed')
     matches = [body for name, body in OmfReader().split_library(archive)
@@ -78,9 +83,7 @@ def padded_library_member():
 
 
 def experiment(profile='msc510-medium', provider_first=False, padded=False):
-    require(sha(OBJECT.read_bytes()) == OBJECT_SHA, 'Archived frame object changed')
-    candidate_bytes = OBJECT.read_bytes()
-    candidate = read_object(candidate_bytes)
+    candidate, candidate_bytes = fresh_candidate()
     require_complete_shape(candidate)
     synthetic, receipt = compile_source(PROVIDER_SOURCE, profile)
     require(not synthetic.linker_fixups and synthetic.segment_lengths.get('UNIT_TEXT') == 4 and
@@ -167,7 +170,7 @@ def experiment(profile='msc510-medium', provider_first=False, padded=False):
     verify_toolchain(profile)
     return {'profile': profile, 'provider_first': provider_first, 'padded': padded,
             'authority': 'RESEARCH_ONLY_HISTORICAL_LINK_DIFFERENTIAL',
-            'archived_candidate_object': identity(candidate_bytes),
+            'fresh_candidate_object': identity(candidate_bytes),
             'synthetic_provider_source': PROVIDER_SOURCE.decode('ascii'),
             'synthetic_provider_compiler': receipt,
             'synthetic_aux_provider_object': identity(aux),
@@ -181,7 +184,7 @@ def experiment(profile='msc510-medium', provider_first=False, padded=False):
 
 
 def run():
-    candidate = read_object(OBJECT.read_bytes())
+    candidate, _ = fresh_candidate()
     require_complete_shape(candidate)
     report = {'schema': 1, 'authority': 'RESEARCH_ONLY_HISTORICAL_LINK_DIFFERENTIAL',
               'negative_controls': negative_controls(candidate),

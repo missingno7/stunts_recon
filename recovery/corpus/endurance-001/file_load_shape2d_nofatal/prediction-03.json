@@ -1,9 +1,0 @@
-{
-  "meaningful_hypothesis_number": 3,
-  "analysis_level": "same-translation-unit local far-callee lowering and relocation resolution",
-  "hypothesis": "Defining a local far callee in the same isolated translation unit gives the compiler a known same-code-segment target; it may lower the wrapper's call as PUSH CS plus a self-relative near CALL with no unresolved external pointer32 fixup, matching the target call mode and resolving the production cross-contribution uncertainty.",
-  "prediction": "Inspect the complete emitted object without trimming: determine whether the wrapper emits PUSH CS plus near CALL, whether the call target is local/self-relative or still external, and whether the function's far return convention is honored. The local callee body will add code beyond the 18-byte target extent, so this is a call-mode/binding experiment, not an exact-code test.",
-  "falsifier": "Compiler retains an external-style pointer32 CALL, emits a near call without PUSH CS despite a far callee, inlines away the call even under its pinned profile, or cannot encode the internal call. A local-only successful resolution would still not prove cross-contribution production binding.",
-  "prior_output_classes": ["H1 external far call: 20-byte code with pointer32 external fixup", "H2 external near declaration: 18-byte code with self-relative offset16 external fixup, exact extent but byte mismatch; target has PUSH CS + near CALL with +5 displacement"],
-  "discriminating_question": "Does same-TU local far-callee identity produce the target's PUSH CS plus near relative CALL, separating compiler call lowering from cross-contribution binding?"
-}

@@ -21,7 +21,7 @@ def _diagnostic(*args, **kwargs):
     except Exception as error:
         return {'diagnostic_error':str(error),'authority':'DIAGNOSTIC_UNAVAILABLE'}
 
-def probe(recipe, oracle_result=None):
+def probe(recipe, oracle_result=None, source_override=None):
     result = oracle_result or verify(write=False)
     image = MZ.parse(result[1]).load_image(result[1])
     start, end = recipe['start'], recipe['end']
@@ -29,7 +29,7 @@ def probe(recipe, oracle_result=None):
     require(identity(image[start:end]) == recipe['target'], 'Candidate target lock mismatch')
     relocs = [r for r in result[2]['unpacked_mz']['relocations'] if start - 1 <= r['load_offset'] < end]
     require(relocs==recipe['expected_relocations'], 'Complete ordered candidate relocation obligations differ')
-    source = project_path(recipe['source']).read_bytes()
+    source = project_path(recipe['source']).read_bytes() if source_override is None else source_override
     try:
         obj, receipt = compile_source(source, recipe['profile'])
     except CompileFailure as error:
@@ -57,51 +57,6 @@ def probe(recipe, oracle_result=None):
         raise ProbeFailure('Candidate bytes differ from full pristine extent',
                            {**details,'category':'BYTE_MISMATCH','difference_count':len(differences),
                             'first_differences':differences[:32], 'bound_payload':identity(payload)})
-    require(project_path(recipe['source']).read_bytes() == source, 'Source changed during compilation')
+    if source_override is None:
+        require(project_path(recipe['source']).read_bytes() == source, 'Source changed during compilation')
     return payload, receipt
-
-def archive_diagnostics(details, destination):
-    """Persist full evidence separately; archival errors never alter acceptance/budget."""
-    for name in ('comparison','object_comparison'):
-        comparison=details.get(name,{})
-        if not comparison.get('full_diagnostic'):continue
-        try:
-            source=project_path(comparison['full_diagnostic']);raw=source.read_bytes()
-            require(identity(raw)==comparison['full_diagnostic_identity'],'Diagnostic identity changed before archive')
-            path=destination/(name+'-full.json');path.write_bytes(raw)
-            comparison['original_full_diagnostic']=comparison['full_diagnostic']
-            comparison['full_diagnostic']=path.relative_to(ROOT).as_posix()
-        except Exception as error:comparison['archive_error']=str(error)
-
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('task')
-    parser.add_argument('--supervisor-diagnostic',action='store_true',help='Archive a diagnostic-only fresh probe; no attempt, promotion, or reopen')
-    args = parser.parse_args()
-    recipe = read_json(ROOT / 'recipes' / (args.task + '.json'))
-    source=project_path(recipe['source']).read_bytes()
-    try:
-        payload, receipt = probe(recipe)
-    except ProbeFailure as error:
-        from diagnostics import format_summary
-        print(format_summary(error.details.get('comparison',{}).get('match_summary'),args.task,'FAIL: '+error.details['category']))
-        if args.supervisor_diagnostic:
-            from datetime import datetime, timezone
-            from common import write_json
-            require(project_path(recipe['source']).read_bytes()==source,'Source changed during supervisor diagnostic')
-            observed=datetime.now(timezone.utc)
-            destination=ROOT/'recovery/diagnostics'/args.task/observed.strftime('%Y%m%dT%H%M%S%fZ')
-            destination.mkdir(parents=True,exist_ok=False)
-            archive_diagnostics(error.details,destination)
-            write_json(destination/'report.json',{'task':args.task,'status':'DIAGNOSTIC_ONLY_FAIL',
-                'source':identity(source),'recipe':recipe,'started_utc':observed.isoformat(),
-                'budget_charge':False,'error':str(error),'diagnostics':error.details})
-            from reconstruction_factory import refresh
-            refresh()
-        comparison=error.details.get('comparison',{})
-        print('Full diagnostic:',comparison.get('full_diagnostic',comparison.get('diagnostic_error')))
-        raise SystemExit(1)
-    print(f'PASS: {args.task}: {len(payload)} complete compiler contribution; {receipt["binding"]["mode"]}')
-
-if __name__ == '__main__':
-    main()

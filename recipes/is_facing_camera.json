@@ -99,7 +99,6 @@
     "mode": "external-far-call-v1"
   },
   "end": 90102,
-  "evidence": "layout/function-evidence.json; direct pristine extent and independent helper frame; no unique original TU claim",
   "expected_fixups": [
     {
       "displacement": 0,
@@ -152,7 +151,7 @@
   "object_segment": "UNIT_TEXT",
   "profile": "msc510-medium",
   "public": "_is_facing_camera",
-  "source": "recovery/candidates/is_facing_camera.c",
+  "source": "src/is_facing_camera.c",
   "stable_id": "load_15f2e",
   "start": 89902,
   "target": {

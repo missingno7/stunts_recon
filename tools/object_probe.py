@@ -81,11 +81,11 @@ def extract_no_fixups(obj, segment, public, length):
     """First production subset: entire emitted text contribution, no fixups.
 
     A fixup-bearing candidate is blocked, never masked or accepted as unchecked.
-    The full object reader still exposes fixups for supervisor research.
+    The full object reader exposes fixups for scratch diagnostics.
     """
     require(not obj.linker_fixups, 'Binding blocked: fixup-bearing production objects not yet supported')
     require(obj.externals in ([], ['__acrtused', public]), 'Unexpected external declarations; only unused MSC CRT/self marker allowed')
-    publics = obj.publics_in(segment)
+    publics = obj.publics
     require(publics == [{'name': public, 'segment': segment, 'offset': 0}], 'Public extent mismatch')
     require(obj.segment_length(segment) == length, 'SEGDEF length differs from complete candidate extent')
     payload = obj.segment_bytes(segment)

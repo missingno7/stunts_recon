@@ -1,119 +1,230 @@
-"""Small actionable task packet; expand evidence explicitly, never silently truncate."""
+"""Small read-only evidence packet for a function, recipe, and scratch runs."""
 import argparse
 import json
-from common import ROOT, read_json, require, sha, identity, json_bytes
+from pathlib import Path
+
+from common import ROOT, read_json, sha, identity, json_bytes
+
+EVIDENCE = Path('evidence/functions.json')
+MANIFEST = Path('layout/manifest.json')
+
+
+def _inventory():
+    return read_json(ROOT / EVIDENCE)
+
+
+def _manifest():
+    return read_json(ROOT / MANIFEST)
+
+
+def _recipes(manifest):
+    result = {}
+    for owner in manifest.get('owners', []):
+        if owner.get('kind') == 'MATCHING_C' and owner.get('recipe'):
+            result[owner.get('name')] = owner
+    return result
+
+
+def _resolve(identifier, inventory):
+    rows = inventory.get('functions', [])
+    matches = [row for row in rows if identifier in (row.get('name'), row.get('stable_id'))]
+    if not matches:
+        # Manifest IDs include unresolved/raw extents, which are useful context
+        # targets even when the source inventory has no function label for them.
+        owners = _manifest().get('owners', [])
+        matches = [row for row in owners if identifier in (row.get('id'), row.get('name'))]
+    if len(matches) != 1:
+        raise ValueError('Unknown or ambiguous function. Use an exact name or stable ID from evidence/functions.json or layout/manifest.json.')
+    return matches[0]
+
+
+def _search_history(name, limit=None):
+    root = ROOT / 'build/search'
+    found = []
+    if root.is_dir():
+        for path in root.glob('*/report.json'):
+            try:
+                report = read_json(path)
+            except (OSError, ValueError):
+                continue
+            if (report.get('function') or {}).get('name') == name:
+                found.append(report)
+    found.sort(key=lambda report: report.get('created_utc', ''), reverse=True)
+    count = len(found)
+    if limit is not None:
+        found = found[:limit]
+    rows = []
+    for report in found:
+        candidate = report.get('candidate') or {}
+        compiler = report.get('compiler') or {}
+        comparison = report.get('comparison') or {}
+        rows.append({
+            'run_id': report.get('run_id'),
+            'candidate_sha256': candidate.get('sha256'),
+            'source_name': candidate.get('name'),
+            'profile': compiler.get('profile'),
+            'compile_status': compiler.get('status'),
+            'output_identity': (report.get('observed_output') or {}).get('identity'),
+            'diagnostic': comparison.get('summary'),
+            'strict_recipe_result': report.get('recipe_check', {}).get('status'),
+            'report': str((root / report.get('run_id', '') / 'report.json').relative_to(ROOT))
+        })
+    return rows, count
+
+
+def _oracle_target(row):
+    from oracle import verify
+    from mz import MZ
+    result = verify(write=False)
+    image = MZ.parse(result[1]).load_image(result[1])
+    start, end = row.get('start'), row.get('end')
+    if not isinstance(start, int) or not isinstance(end, int) or not (0 <= start <= end <= len(image)):
+        raise ValueError('Evidence range is outside the pristine oracle image')
+    data = image[start:end]
+    expected = row.get('sha256')
+    if expected and sha(data) != expected:
+        raise ValueError('Evidence function bytes do not match the locked pristine oracle')
+    return data, result
 
 
 def packet(identifier, expansions=()):
-    index=read_json(ROOT/'recovery/context-index.json')
-    matches=[r for r in index['tasks'] if identifier in (r['id'],r['name'])]
-    require(len(matches)==1,'Unknown/ambiguous task; refresh queue and use stable ID or exact name')
-    row=matches[0];path=ROOT/row['card'];raw=path.read_bytes()
-    require(sha(raw)==row['card_sha256'],'Context index/card changed; refresh queue')
-    card=json.loads(raw);e=card['evidence']
-    rpath=card.get('recipe');recipe=read_json(ROOT/rpath) if rpath else None
-    profile=recipe['profile'] if recipe else card.get('profile_hypothesis','msc510-medium')
-    config=read_json(ROOT/'layout/toolchain.json')['profiles'][profile]
-    # A digest check is deliberately conservative; a stale packet cannot authorize work.
-    from workflow import workflow_inputs, fingerprint, state
-    current=fingerprint(workflow_inputs())==index['workflow_fingerprint']
-    status=state(row['name'],[e['start'],e['end']] if e.get('stable_id') else None)
-    out={'id':row['id'],'name':row['name'],'packet_current':current,
-         'oracle':index['oracle'],'extent':{k:e.get(k) for k in ['start','end','size','sha256','confidence']},
-         'status':card['tier'],'blockers':card['capability_blockers']+[status['reason']] if status['reason'] else card['capability_blockers'],
-         'risks':card['risks'],'abi':e.get('abi','Not established; consult assembly before proposing types'),
-         'compiler':{'profile':profile,'flags':config['flags'],'identity_lock':'layout/toolchain.json'},
-         'evidence':{'card':row['card'],'card_sha256':row['card_sha256'],'reference':e['provenance'],
-                     'source_locations':e.get('c_sources',[]),'function_overlay':'layout/function-evidence.json' if e.get('boundary_anchors') else None},
-         'remaining_budget':status['remaining'],'next':('Review new evidence and reopen original blocked task' if status['blocked'] else
-            card.get('fast',card.get('next_action'))),
-         'commands':{'context':'python tools/context.py '+row['id'],
-                     'refresh':'python tools/reconstruction_factory.py refresh',
-                     'validate':'python tools/validate.py'}}
-    if not current:out['next']='Packet is stale; review changes then refresh queue before attempting'
-    if recipe:
-        source=(ROOT/recipe['source']).read_text();lines=source.splitlines()
-        out['candidate']={'path':recipe['source'],'sha256':sha((ROOT/recipe['source']).read_bytes()),
-                          'excerpt':'\n'.join(lines[:35]),'omitted_lines':max(0,len(lines)-35),'full_source':recipe['source'],
-                          'bindings':recipe.get('binding',{}).get('mode','no-fixups'),
-                          'fixup_targets':sorted({f['target'] for f in recipe['expected_fixups']}),
-                          'relocations':recipe['expected_relocations']}
-    ledger_path=ROOT/'recovery/attempt-index.json'
-    require(sha(ledger_path.read_bytes())==index['attempt_index_sha256'],'Attempt index changed; refresh queue')
-    ledger=read_json(ledger_path)
-    history=ledger['tasks'].get(row['name'],[])
-    formal=[r for r in history if r['kind']=='attempts']
-    if formal:out['latest_grinder_attempt']=formal[-1]
-    out['hypotheses']=history if 'history' in expansions else history[-3:]
-    out['omitted_history']=max(0,len(history)-len(out['hypotheses']))
-    if history:out['next_discriminator']=history[-1].get('next_discriminator','Change the predicted instruction/ABI outcome, not just the prose hypothesis')
-    latest=next((r for r in reversed(history) if r.get('match_summary')),None)
-    if latest:
-        out['match_diagnosis']={k:latest.get(k) for k in ['path','match_summary','full_diagnostic','full_diagnostic_identity','anchor_regression']}
-        out['match_diagnosis']['strict_observation']={'status':latest.get('status'),'category':latest.get('category'),'error':latest.get('error')}
-        newer=history[history.index(latest)+1:]
-        out['match_diagnosis']['newer_observations_without_summary']=[{k:r.get(k) for k in ('path','status','category','error','diagnostic_error')} for r in newer[-3:]]
-        out['match_diagnosis']['omitted_newer_observations']=max(0,len(newer)-3)
-        out['match_diagnosis']['source_matches_current']=bool(recipe and (latest.get('source') or {}).get('sha256')==out['candidate']['sha256'])
-        out['match_diagnosis']['recipe_matches_current']=bool(recipe and latest.get('recipe_identity')==identity(json_bytes(recipe)))
-        import diagnostics
-        from pathlib import Path
-        out['match_diagnosis']['engine_matches_current']=latest['match_summary']['engine_sha256']==sha(Path(diagnostics.__file__).read_bytes())
-        out['match_diagnosis']['freshness']=latest.get('evidence_freshness') or 'Archived observation, not a fresh FAST result; check source, target, compiler and engine before drawing conclusions.'
-        out['next_discriminator']='Inspect the localized '+', '.join(latest['match_summary']['classifications'])+' evidence; preserve exact anchors. Resolve binding/TU blockers separately; no source-level cause is inferred.'
-        patterns=latest['match_summary'].get('patterns')
-        if patterns:
-            out['next_discriminator']='Check whether the supported operand mappings persist in a justified controlled hypothesis; inspect residuals independently. Byte anchors are preservation evidence, not fixed C-line boundaries. Existing budgets/blockers still apply.'
-            out['match_diagnosis']['drill_down']='python tools/context.py '+row['id']+' --diagnosis --islands'
-            if 'islands' not in expansions and 'full' not in expansions:
-                out['match_diagnosis']['match_summary']=diagnostics.routine_summary(latest['match_summary'])
-        # Keep a single summary in the default packet; --history explicitly expands older ones.
-        if 'history' not in expansions:
-            def reference(r):return {k:v for k,v in r.items() if k not in ('match_summary','anchor_regression')}
-            out['hypotheses']=[reference(r) for r in out['hypotheses']]
-            if formal:out['latest_grinder_attempt']=reference(formal[-1])
-    out['expansion']='--islands --asm --callers --globals --history --full; full raw artifacts stay at referenced paths'
-    if 'asm' in expansions:
-        out['assembly']=card.get('disassembly',[])
-        if not out['assembly'] and current and e.get('stable_id'):
-            census_path=ROOT/'recovery/blocker-census.json'
-            if census_path.exists():
-                census=read_json(census_path)
-                if census.get('queue_fingerprint')==index['workflow_fingerprint']:
-                    matching=[t for t in census['tasks'] if t['id']==row['id']]
-                    if matching:
-                        out['assembly']=matching[0]['observations'].get('research_disassembly',[])
-                        if out['assembly']:
-                            out['assembly_authority']='PRISTINE_LINEAR_DECODE_RESEARCH_ONLY; not reviewed CFG or queue eligibility'
-                            out['assembly_source']='recovery/blocker-census.json'
-    else:
-        out['omitted_assembly_rows']=len(card.get('disassembly',[]))
-        if not card.get('disassembly') and e.get('stable_id'):
-            out['research_assembly_hint']='Run reclassify, then --asm for pristine linear decode; review CFG and ownership before eligibility.'
-    if 'callers' in expansions:out['callers']=e.get('callers','No complete caller index; indirect references remain unbounded')
-    if 'globals' in expansions:
-        out['global_evidence']={'data':'layout/data-symbols.json','code':'layout/code-symbols.json',
-                               'constraint':'Only reviewed bindings are supported; indexed displacements may be fields'}
-    if 'full' in expansions:out['full_card']=card
+    """Return direct evidence and active-recipe context without workflow state."""
+    inventory = _inventory()
+    manifest = _manifest()
+    row = _resolve(identifier, inventory)
+    expansion = set(expansions)
+    owner = _recipes(manifest).get(row.get('name'))
+    recipe_path = owner.get('recipe') if owner else None
+    recipe = read_json(ROOT / recipe_path) if recipe_path else None
+    is_manifest_extent = row in manifest.get('owners', [])
+
+    out = {
+        'name': row.get('name', row.get('id')),
+        'stable_id': row.get('stable_id', row.get('id')),
+        'extent': {key: row.get(key) for key in ('start', 'end', 'size', 'sha256', 'segment', 'segment_offset') if key in row},
+        'evidence_status': row.get('status', row.get('classification', row.get('kind', 'unclassified'))),
+        'confidence': row.get('confidence'),
+        'issues': row.get('issues', []),
+        'origin': row.get('origin'),
+        'provenance': row.get('provenance'),
+        'source_locations': row.get('c_sources', []),
+        'manifest': ({key: owner.get(key) for key in ('id', 'kind', 'classification', 'start', 'end', 'recipe') if key in owner}
+                     if owner else ({key: row.get(key) for key in ('id', 'kind', 'classification', 'start', 'end') if key in row}
+                                    if is_manifest_extent else None)),
+        'recipe': ({'path': recipe_path, 'source': recipe.get('source'), 'profile': recipe.get('profile'),
+                    'object_segment': recipe.get('object_segment'), 'public': recipe.get('public'),
+                    'target': recipe.get('target'), 'expected_fixups': recipe.get('expected_fixups', []),
+                    'expected_relocations': recipe.get('expected_relocations', [])}
+                   if recipe else None),
+        'evidence_inventory': {'path': str(EVIDENCE).replace('\\', '/'), 'sha256': sha((ROOT / EVIDENCE).read_bytes())},
+        'expansion_options': ['--asm', '--callers', '--symbols', '--history', '--raw'],
+        'authority': 'Evidence-qualified research context. Semantic source leads do not prove original translation-unit membership or machine-level callers.'
+    }
+
+    if 'asm' in expansion:
+        raw, _ = _oracle_target(row)
+        from diagnostics import decode
+        out['assembly'] = decode(raw, row['start'])
+        out['assembly_scope'] = 'Pristine bytes linearly decoded with the pinned diagnostic decoder. This is not a reviewed CFG, reachability analysis, or proof of C/assembly authorship.'
+
+    if 'callers' in expansion:
+        callers = []
+        for candidate in inventory.get('functions', []):
+            for call in candidate.get('calls', []):
+                if call.get('target') == row.get('name'):
+                    callers.append({'name': candidate.get('name'), 'stable_id': candidate.get('stable_id'),
+                                    'confidence': call.get('confidence'), 'origin': candidate.get('origin')})
+        out['callers'] = callers
+        out['caller_scope'] = 'Reverse index of recorded semantic call leads; not independently verified machine-level call sites.'
+
+    if 'symbols' in expansion:
+        related = set()
+        if recipe:
+            related.update(recipe.get('binding', {}).get('declarations', {}).get('externals', []))
+            related.update(f.get('target') for f in recipe.get('expected_fixups', []) if f.get('target'))
+        code_symbols, data_symbols = {}, {}
+        code_path, data_path = ROOT / 'layout/code-symbols.json', ROOT / 'layout/data-symbols.json'
+        if code_path.is_file():
+            code_layout = read_json(code_path)
+            code_symbols = {name: code_layout.get('symbols', {}).get(name) for name in sorted(related)
+                            if name in code_layout.get('symbols', {})}
+        if data_path.is_file():
+            data_layout = read_json(data_path)
+            data_symbols = {name: data_layout.get('symbols', {}).get(name) for name in sorted(related)
+                            if name in data_layout.get('symbols', {})}
+        out['symbols'] = {
+            'global_evidence': [g for g in inventory.get('globals', []) if g.get('name') in related],
+            'code_bindings': code_symbols,
+            'data_bindings': data_symbols,
+            'recipe_symbols': sorted(related),
+            'function_calls': row.get('calls', []),
+            'scope': 'Only names present in evidence/functions.json or the selected recipe are shown; unresolved bindings remain unresolved.'
+        }
+
+    history, count = _search_history(out['name'], None if 'history' in expansion else 3)
+    if history or 'history' in expansion:
+        out['search_history'] = history
+        out['omitted_search_runs'] = max(0, count - len(history))
+
+    if 'raw' in expansion:
+        raw, oracle_result = _oracle_target(row)
+        out['raw_target'] = {'size': len(raw), 'sha256': sha(raw), 'bytes_hex': raw.hex(),
+                             'oracle_load_image': oracle_result[2]['load_image']}
+
     return out
 
 
+def listing(query=None):
+    """Compact inventory/manifest view for selecting a target by evidence."""
+    inventory = _inventory()
+    manifest = _manifest()
+    owners = manifest.get('owners', [])
+    rows = []
+    mapped_names = set()
+    for function in inventory.get('functions', []):
+        owner = next((item for item in owners if item.get('name') == function.get('name') or
+                      item.get('id') == function.get('stable_id')), None)
+        name = function.get('name')
+        mapped_names.add(name)
+        item = {'name': name, 'id': function.get('stable_id'), 'start': function.get('start'),
+                'end': function.get('end'), 'size': function.get('size'),
+                'evidence_status': function.get('status', function.get('confidence')),
+                'owner_kind': owner.get('kind') if owner else 'UNMAPPED_EVIDENCE',
+                'accepted': bool(owner and owner.get('kind') in ('MATCHING_C', 'KNOWN_TOOLCHAIN_LIBRARY')),
+                'raw': bool(owner and owner.get('kind') == 'UNRESOLVED_RAW')}
+        if not query or query.casefold() in str(item).casefold():
+            rows.append(item)
+    for owner in owners:
+        if owner.get('kind') != 'UNRESOLVED_RAW' or owner.get('name') in mapped_names:
+            continue
+        item = {'name': owner.get('name', owner.get('id')), 'id': owner.get('id'),
+                'start': owner.get('start'), 'end': owner.get('end'),
+                'size': owner.get('end', 0) - owner.get('start', 0),
+                'evidence_status': owner.get('classification', owner.get('kind')),
+                'owner_kind': owner.get('kind'), 'accepted': False, 'raw': True}
+        if not query or query.casefold() in str(item).casefold():
+            rows.append(item)
+    rows.sort(key=lambda row: (row.get('start') if isinstance(row.get('start'), int) else -1,
+                               str(row.get('name') or '')))
+    return {'functions': rows, 'count': len(rows),
+            'authority': 'Inventory view only; accepted/raw reflect current manifest ownership labels and do not rank research priority or establish new eligibility.'}
+
+
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('function')
-    for name in ['islands','asm','callers','globals','history','full']:p.add_argument('--'+name,action='store_true')
-    p.add_argument('--diagnosis',action='store_true',help='Print concise match diagnosis and full artifact path')
-    a=p.parse_args();result=packet(a.function,[n for n in ['islands','asm','callers','globals','history','full'] if getattr(a,n)])
-    if a.diagnosis:
-        from diagnostics import format_summary
-        diagnosis=result.get('match_diagnosis',{})
-        strict=diagnosis.get('strict_observation',{})
-        print(format_summary(diagnosis.get('match_summary'),result['name'],'ARCHIVED '+str(strict.get('status'))+' '+str(strict.get('category')),islands=a.islands))
-        print('Matches current source/recipe/engine:',diagnosis.get('source_matches_current'),diagnosis.get('recipe_matches_current'),diagnosis.get('engine_matches_current'))
-        print('Evidence freshness:',diagnosis.get('freshness','Unavailable'))
-        if diagnosis.get('newer_observations_without_summary'):
-            print('Newer observations have no summary:',json.dumps(diagnosis['newer_observations_without_summary']))
-        print('Full diagnostic:',diagnosis.get('full_diagnostic'))
-    else:print(json.dumps(result,indent=2))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('function', nargs='?', help='Exact name or stable ID; optional substring filter with --list')
+    parser.add_argument('--list', action='store_true', help='List inventory functions and manifest ownership')
+    for name in ('asm', 'callers', 'symbols', 'history', 'raw'):
+        parser.add_argument('--' + name, action='store_true')
+    args = parser.parse_args()
+    if args.list:
+        print(json.dumps(listing(args.function), indent=2))
+        return
+    if not args.function:
+        parser.error('provide a function name/ID or use --list [NAME_PART]')
+    result = packet(args.function, [name for name in ('asm', 'callers', 'symbols', 'history', 'raw') if getattr(args, name)])
+    print(json.dumps(result, indent=2))
 
 
-if __name__=='__main__':main()
+if __name__ == '__main__':
+    main()

@@ -1,7 +1,0 @@
-{
-  "event": "second attempt to run the same-TU candidate adapter",
-  "compiler_process_launched": false,
-  "compiler_api_invocation_entered": true,
-  "error": "The harness selected existing trial-02/compiler-work directory and raised FileExistsError before compiler.compile_source could create a unique work directory. No compiler command was launched and no compiler quota slot was consumed.",
-  "recovery": "Same-TU source was archived as unrun-hypothesis.c; no retry because the two actual compiler invocation quota was already spent."
-}

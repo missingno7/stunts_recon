@@ -107,7 +107,7 @@ class InspectObjectTests(unittest.TestCase):
                     if isinstance(node, ast.Import) for alias in node.names}
         imported.update(node.module for node in ast.walk(tree)
                         if isinstance(node, ast.ImportFrom) and node.module)
-        self.assertFalse(imported & {"build_exact", "check_candidate", "grind"})
+        self.assertFalse(imported & {"build_exact", "promote", "transaction"})
 
 
 if __name__ == "__main__":

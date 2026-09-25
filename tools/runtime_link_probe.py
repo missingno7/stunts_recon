@@ -101,7 +101,7 @@ def experiment(rows, profile='msc510-medium'):
 
 
 def selected_rows():
-    rows = [r for r in read_json(ROOT/'recovery/library-evidence.json')['literal_matches']
+    rows = [r for r in read_json(ROOT/'evidence/library.json')['literal_matches']
             if r['module_name'] in ['ldiv.asm', 'lmul.asm', 'uldiv.asm']]
     require(len(rows) == 3, 'Expected three previously identified complete library members')
     return rows
@@ -114,7 +114,7 @@ def main():
         for row in rows:
             reports.append(experiment([row], profile))
         reports.append(experiment(rows, profile))
-    write_json(ROOT/'recovery/runtime-link-proof.json', {'status':'HISTORICAL_LINK_MATCH', 'experiments': reports})
+    write_json(ROOT/'build/runtime-link-proof.json', {'status':'HISTORICAL_LINK_MATCH', 'experiments': reports})
     print('PASS:', len(reports), 'untouched library LINK experiments')
 
 

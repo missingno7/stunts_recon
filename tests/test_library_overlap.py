@@ -5,10 +5,8 @@ import unittest
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools'))
-from common import read_json
 from object_probe import read_object
 from runtime_link_probe import selected_rows, original_module, reviewed_policy, experiment
-from check_library import replace_raw_library
 from test_pipeline import object_fixture, record
 
 
@@ -65,13 +63,6 @@ class LibraryOverlapTests(unittest.TestCase):
             self.assertEqual(row['text']['size'], 305)
             self.assertEqual(len(row['publics']), 4)
             self.assertFalse(row['relocations'])
-
-    def test_library_promotion_rejects_overlap_and_duplicates(self):
-        manifest = read_json(ROOT/'layout/manifest.json')
-        owner = next(o for o in manifest['owners'] if o['kind'] == 'KNOWN_TOOLCHAIN_LIBRARY')
-        with self.assertRaises(ValueError): replace_raw_library(manifest, owner)
-        changed = {**owner, 'id':'new_id'}
-        with self.assertRaises(ValueError): replace_raw_library(manifest, changed)
 
 
 if __name__ == '__main__': unittest.main()

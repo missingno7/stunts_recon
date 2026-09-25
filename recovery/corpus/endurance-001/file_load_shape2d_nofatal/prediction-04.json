@@ -1,9 +1,0 @@
-{
-  "meaningful_hypothesis_number": 4,
-  "analysis_level": "same-translation-unit function ordering and local call relocation",
-  "hypothesis": "If the local far callee is emitted immediately after the wrapper, its same-segment address should make the compiler's PUSH CS plus near CALL displacement +5, matching the target wrapper call geometry; the local symbol pair should remain LEXTDEF/LPUBDEF and resolve at link without external cross-module binding.",
-  "prediction": "The complete UNIT_TEXT contribution should place wrapper at offset 0 and local callee after it. Expect a self-relative local external fixup to resolve against the LPUBDEF callee at offset 18, so the caller's next-IP at 13 yields +5. Preserve the full contribution, all symbols and relocations; the callee adds bytes after the target wrapper so the complete object extent cannot be a strict 18-byte match.",
-  "falsifier": "Compiler reorders the local function, retains pointer32/external cross-module binding, emits a different call prologue, or the local public target offset does not yield the target +5 relocation geometry. Any successful local binding remains distinct from production multi-contribution binding support.",
-  "prior_output_classes": ["H3 local far callee before wrapper: compiler emitted a local LEXTDEF/LPUBDEF pair and self-relative offset16 fixup; wrapper code contains PUSH CS + near CALL but callee offset precedes it, while complete object is 24B."],
-  "discriminating_question": "Does function ordering put the same-TU local callee at the target's +5 near-call displacement while keeping the full object and local binding visible?"
-}

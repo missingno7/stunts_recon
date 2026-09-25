@@ -1,7 +1,0 @@
-{
-  "prediction": "Original saves SI and has a four-byte frame versus BX/two bytes in plain source. An explicitly register-qualified pointer argument may force SI and reserve its home slot, explaining both differences without padding.",
-  "source": {
-    "sha256": "af957318e293c62c550f8913a2df1f2463fc7bc2bebb3094ebe274ef537cf90e",
-    "size": 363
-  }
-}

@@ -67,11 +67,36 @@
       "start": 89826
     },
     {
+      "classification": "GAME_C",
+      "end": 90102,
+      "id": "load_15f2e",
+      "kind": "MATCHING_C",
+      "name": "is_facing_camera",
+      "recipe": "recipes/is_facing_camera.json",
+      "start": 89902
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 91002,
+      "id": "raw_15ff6_1637a",
+      "kind": "UNRESOLVED_RAW",
+      "start": 90102
+    },
+    {
+      "classification": "GAME_C",
+      "end": 91078,
+      "id": "load_1637a",
+      "kind": "MATCHING_C",
+      "name": "rect_adjust_from_point",
+      "recipe": "recipes/rect_adjust_from_point.json",
+      "start": 91002
+    },
+    {
       "classification": "UNRESOLVED_MIXED",
       "end": 91474,
-      "id": "raw_15f2e_16552",
+      "id": "raw_163c6_16552",
       "kind": "UNRESOLVED_RAW",
-      "start": 89902
+      "start": 91078
     },
     {
       "classification": "GAME_C",

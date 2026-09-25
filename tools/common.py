@@ -41,3 +41,17 @@ def project_path(value):
     path = (ROOT / value).resolve()
     require(path.is_relative_to(ROOT), 'Path escapes project')
     return path
+
+
+def atomic_bytes(path, data):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, name = tempfile.mkstemp(prefix='.' + path.name + '.', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'wb') as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(name, path)
+    finally:
+        Path(name).unlink(missing_ok=True)

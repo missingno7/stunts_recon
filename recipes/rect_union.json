@@ -100,7 +100,11 @@
     "mode": "external-dgroup-offset16-v1"
   },
   "end": 91628,
-  "evidence": "layout/function-evidence.json; layout/data-symbols.json; docs/current/rect-union-binding.md; research-only compiler receipt build/private/research-batches/rect_union/e5c840e13d37/results.json",
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "historical_recipe": "303324cd6d3d310059cd129f41dd7ba399b457bc:recipes/rect_union.json",
+    "scope": "docs/acceptance.md"
+  },
   "expected_fixups": [
     {
       "displacement": 0,

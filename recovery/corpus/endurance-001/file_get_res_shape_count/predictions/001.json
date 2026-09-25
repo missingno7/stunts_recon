@@ -1,9 +1,0 @@
-{
-  "meaningful_hypothesis_number": 4,
-  "analysis_level": "ABI declaration and parameter register allocation",
-  "hypothesis": "A register-qualified far-pointer parameter may be allocated to the target's SI offset register while its selector is loaded separately into ES, producing the observed push SI / mov ES,stack / mov SI,stack sequence.",
-  "prediction": "The candidate should use SI as the element base (with preservation) rather than LES BX; if MSC ignores register for far arguments or still emits LES BX, the parameter allocation hypothesis is falsified.",
-  "falsifier": "The output is the known 12-byte LES BX class or any emitted form does not load ES and SI separately without the target's 17-byte frame.",
-  "prior_output_classes": ["attempts 1 and 3: same 12-byte LES BX output", "attempt 2: register far-pointer local spills and emits 30 bytes"],
-  "discriminating_question": "Does `register` on the parameter itself differ from the already-tested local pointer/register cast declaration?"
-}

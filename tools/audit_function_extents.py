@@ -76,7 +76,7 @@ def main():
     args = parser.parse_args()
     _, unpacked, _, _ = verify(write=False)
     image = MZ.parse(unpacked).load_image(unpacked)
-    inventory = read_json(ROOT / 'recovery/restunts-inventory.json')
+    inventory = read_json(ROOT / 'evidence/functions.json')
     functions = [function for function in inventory['functions']
                  if function['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'
                  and (args.function is None or args.function in (function['name'], function['stable_id']))]

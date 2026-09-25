@@ -1,6 +1,0 @@
-{
-  "source": "unrun-hypothesis.c",
-  "status": "NOT_COMPILED",
-  "reason": "Both actual compiler invocation slots were consumed by the external far-call and explicit-near-call experiments. A distinct same-TU callee definition remains a material next experiment; do not count it as an outcome.",
-  "prediction": "A far callee defined immediately after the wrapper in the same translation unit may permit PUSH CS + resolved near CALL with the expected +5 displacement."
-}

@@ -24,7 +24,7 @@ def resolve_code_symbols(names, image, relocations):
             # entry, complete raw or exact active-C ownership, and two
             # independent relocated call sites.
             target=symbol['mapped_target']
-            inventory=read_json(ROOT/'recovery/restunts-inventory.json')
+            inventory=read_json(ROOT/'evidence/functions.json')
             matches=[f for f in inventory['functions'] if f.get('stable_id')==target['stable_id']
                      and f.get('name')==target['name']
                      and f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED']
@@ -72,7 +72,7 @@ def resolve_callback_pointer(image, relocations):
     require(layout['oracle_sha256'] == sha(image), 'Callback alias belongs to another oracle')
     symbol = layout['symbols']['_frame_callback']
     target = symbol['mapped_target']
-    inventory = read_json(ROOT/'recovery/restunts-inventory.json')
+    inventory = read_json(ROOT/'evidence/functions.json')
     matches = [f for f in inventory['functions']
                if f.get('stable_id') == target['stable_id'] and f.get('name') == target['name']
                and f.get('start') == target['start'] and f.get('end') == target['end']

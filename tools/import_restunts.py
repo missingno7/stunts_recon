@@ -139,5 +139,6 @@ for seg in report['segments']:
             globals_inventory.append({'name':match[1],'directive':match[2],'segment':seg['name'],'path':seg['source'],'line':number,'confidence':'symbol_location_unresolved','commit':references['restunts']['commit']})
 report['globals']=globals_inventory
 report['reference_commit']=references['restunts']['commit']
-write_json(ROOT/'recovery/restunts-inventory.json',report)
+from common import atomic_bytes
+atomic_bytes(ROOT/'evidence/functions.json',(json.dumps(report,sort_keys=True,separators=(',',':'))+'\n').encode('utf-8'))
 print('Imported',len(report['functions']),'procedures;',report['summary'],';',len(binary_anchors),'binary anchors')

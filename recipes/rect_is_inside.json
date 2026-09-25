@@ -1,6 +1,10 @@
 {
   "end": 92624,
-  "evidence": "Restunts asmorig labels checked against pristine load image; source hypotheses from c/math.c or disassembled getter",
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "historical_recipe": "303324cd6d3d310059cd129f41dd7ba399b457bc:recipes/rect_is_inside.json",
+    "scope": "docs/acceptance.md"
+  },
   "expected_fixups": [],
   "expected_relocations": [],
   "id": "rect_is_inside",

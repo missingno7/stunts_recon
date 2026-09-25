@@ -101,11 +101,9 @@
   },
   "end": 101078,
   "evidence": {
-    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-    "line_end": 2607,
-    "line_start": 2574,
-    "path": "src/restunts/asmorig/seg008.asm",
-    "repository": "restunts"
+    "function_inventory": "evidence/functions.json",
+    "historical_recipe": "303324cd6d3d310059cd129f41dd7ba399b457bc:recipes/locate_text_res.json",
+    "scope": "docs/acceptance.md"
   },
   "expected_fixups": [
     {

@@ -1,8 +1,0 @@
-{
-  "analysis_level": "same source; harness recovery after an invocation-level output-directory error",
-  "discriminating_question": "Does removing the include gate expose a compileable far-pointer implementation under pinned MSC 5.1?",
-  "falsifier": "Compiler rejects pure-C closure or emits different effective output on unchanged source.",
-  "iteration": 2,
-  "prediction": "With the output directory created by the compiler adapter, the unchanged source should reproduce a full object deterministically. Target machine-level prediction remains the trial-01 statement.",
-  "prior_compile_calls": 1
-}

@@ -1,0 +1,23 @@
+{
+  "end": 91078,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 2551,
+    "line_start": 2507,
+    "path": "src/restunts/asmorig/seg006.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "rect_adjust_from_point",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_rect_adjust_from_point",
+  "source": "src/rect_adjust_from_point.c",
+  "stable_id": "load_1637a",
+  "start": 91002,
+  "target": {
+    "sha256": "7a66ad05b0867d74d0feb0da20b8c216595645babc1f7607739adc239af8e16a",
+    "size": 76
+  }
+}
