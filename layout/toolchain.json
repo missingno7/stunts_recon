@@ -1,5 +1,11 @@
 {
   "profiles": {
+    "masm510-game": {
+      "directory": "toolchain/msc510-msdos",
+      "executable": "MASM.EXE",
+      "files": [{"path": "toolchain/msc510-msdos/MASM.EXE", "sha256": "1c6286c69b616160b8475ad17453ee872702a2c98075c2159ec792a1c745275f", "size": 110703}],
+      "flags": ["/Mx", "/I."]
+    },
     "msc500-medium": {
       "directory": "toolchain/msc500",
       "executable": "CL.EXE",

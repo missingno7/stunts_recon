@@ -1,0 +1,102 @@
+extern char *itoa(int value, char *buffer, int radix);
+
+extern unsigned strlen(char *s);
+extern char *strcpy(char *destination, char *source);
+extern char *strcat(char *destination, char *source);
+extern void far* mmgr_free(char far* ptr);
+extern char far *locate_shape_fatal(char far *data, char *name);
+extern char textresprefix;
+extern int mouse_xpos;
+extern int word_361CE;
+extern char kbormouse;
+struct SHAPE2D { unsigned short words[6]; unsigned char bytes[4]; };
+struct SPRITE { struct SHAPE2D far *sprite_bitmapptr; unsigned short words[3]; unsigned int *lineofs; unsigned short words2[9]; };
+extern struct SPRITE far sprite2;
+extern struct SPRITE far *wndsprite;
+extern struct SPRITE far *mouseunkspriteptr;
+extern struct SPRITE far *mmouspriteptr;
+extern struct SPRITE far *smouspriteptr;
+void sprite_set_1_from_argptr(struct SPRITE far *argsprite);
+void sprite_clear_1_color(unsigned char color);
+void far sprite_copy_2_to_1(void);
+void far sprite_copy_both_to_arg(struct SPRITE *argsprite);
+void far sprite_copy_arg_to_both(struct SPRITE *argsprite);
+void far sprite_putimage(struct SHAPE2D far *shape);
+void far sprite_clear_shape_alt(struct SHAPE2D far *shape, int x, int y);
+void far sprite_putimage_and(struct SHAPE2D far *shape, unsigned short x, unsigned short y);
+void far sprite_putimage_or(struct SHAPE2D far *shape, unsigned short x, unsigned short y);
+void far sprite_1_unk3(struct SHAPE2D far *shape, int index);
+struct SHAPE3DHEADER { unsigned char numverts, numprimitives, numpaints, reserved; };
+struct SHAPE3D { unsigned short numverts; char far *verts; unsigned short numprimitives; unsigned char numpaints, reserved; char far *primitives; char far *cull1; char far *cull2; };
+extern int far font_op2(char *name);
+extern unsigned int word_A5AC, word_A596, word_9282;
+extern int word_9260;
+struct FONTDEF_PREFIX { unsigned char bytes[14]; unsigned short value; };
+extern unsigned int fontdef_value;
+extern void far *fontdefptr;
+extern void far set_fontdefseg(void far *data);
+extern signed char byte_3EBD8, byte_3B8F7;
+extern signed char byte_45D0C[], byte_45D14[];
+extern unsigned long timer_get_delta(void);
+extern unsigned long far timer_get_delta_alt(void);
+extern unsigned long far timer_get_counter(void);
+extern int far rand(void);
+extern int far get_kevinrandom(void);
+extern unsigned short gState_frame;
+extern int far input_checking(int delta);
+extern int far input_do_checking(int delta);
+extern int far input_repeat_check(int timeout);
+extern int input_framecount, input_framecount2, input_framecount3, input_framecounter;
+extern int joyflags, newjoyflags, joyinputcode, mousebutinputcode, kbjoyflags;
+extern int mouse_butstate, mouse_xpos, mouse_ypos, mouse_oldx, mouse_oldy, mouse_oldbut;
+extern int video_flag2_is1;
+extern char mouse_isdirty;
+extern char g_is_busy;
+extern unsigned short dialogarg2;
+extern void far *mainresptr;
+extern int far kb_get_char(void);
+extern int far get_joy_flags(void);
+extern int far get_kb_or_joy_flags(void);
+extern void far mouse_get_state(int *buttons, int *x, int *y);
+extern void far mouse_draw_opaque(void);
+extern void far mouse_draw_transparent(void);
+extern void far mouse_draw_opaque_check(void);
+extern void far mouse_draw_transparent_check(void);
+extern void far input_pop_status(void);
+extern void far check_input(void);
+extern void far mouse_draw_opaque_check(void);
+extern void far mouse_draw_transparent_check(void);
+extern void far input_pop_status(void);
+extern void far file_build_path(char *dir, char *name, char *ext, char *dst);
+extern void far *file_load_resource(int type, char *filename);
+extern void far *file_load_resfile(char *filename);
+extern void far file_load_audiores(char *songfile, char *voicefile, char *name);
+extern void far *file_load_3dres(char *filename);
+extern short far do_dea_textres(void);
+extern void far *file_load_binary_nofatal(char *filename);
+extern void far *file_load_shape2d_nofatal_thunk(char *filename);
+extern void far *file_load_shape2d_res_nofatal_thunk(char *filename);
+extern void far *load_song_file(char *filename);
+extern void far *load_voice_file(char *filename);
+extern void far *load_sfx_file(char *filename);
+extern void far *file_decomp_nofatal(char *filename);
+extern void far *file_load_shape2d_nofatal2(char *filename);
+extern void far *file_read_nofatal(unsigned int first, unsigned int second, unsigned int third);
+extern void far *init_audio_resources(void far *song, void far *voice, char *name);
+extern void far load_audio_finalize(void far *audiores);
+extern void far audio_driver_func3F(int command);
+extern void far *voicefileptr;
+extern void far *songfileptr;
+extern char is_audioloaded;
+
+
+/* target file_build_path @ 4370; candidate from build\workers\tuseg008\file_build_path_ch.c */
+/* merged owner s008-a member sub_274B0 */
+
+void far audio_unload(void)
+{
+    audio_driver_func3F(2);
+    mmgr_free(songfileptr);
+    mmgr_free(voicefileptr);
+    is_audioloaded = 0;
+}

@@ -44,7 +44,8 @@ def _read_authority():
 def build_tu_map():
     """Find direct near-call components from locked bytes and enrich intervals."""
     oracle, image = _read_authority()
-    functions_doc = read_json(ROOT / "evidence/functions.json")
+    from function_evidence import current_inventory
+    functions_doc = current_inventory(image)
     if functions_doc.get("load_sha256") != sha(image):
         raise RuntimeError("Function inventory is not anchored to the locked oracle load image")
     inventory = [row for row in functions_doc["functions"]
@@ -311,7 +312,9 @@ def _compile_in_worker(source_path: Path):
 
 
 def _function_maps():
-    rows = [row for row in read_json(ROOT / "evidence/functions.json")["functions"]
+    _, image = _read_authority()
+    from function_evidence import current_inventory
+    rows = [row for row in current_inventory(image)["functions"]
             if row.get("status") in VERIFIED_STATUSES and isinstance(row.get("start"), int)
             and isinstance(row.get("end"), int)]
     by_name = defaultdict(list)
@@ -441,6 +444,69 @@ def _first_mismatch(candidate: bytes, target: bytes):
     return None
 
 
+def _own_data_placements(obj, fixups, emitted_publics, all_functions, image, frame):
+    """Ground TU-owned initialized segments from original CODE operands.
+
+    Every usable CODE reference independently predicts the whole segment base.
+    Ambiguous member extents or disagreeing references leave the segment
+    unresolved; no placement is guessed from its first string or from dseg text.
+    """
+    by_name = {row['name']: row for row in all_functions}
+    placements = {}
+    for segment in ('_DATA', 'CONST'):
+        size = obj.segment_lengths.get(segment, 0)
+        if not size:
+            continue
+        observations = []
+        for fix in fixups:
+            if not (fix.get('target_kind') == 'segment' and fix.get('target') == segment
+                    and fix.get('loc') == 'offset16' and fix.get('width') == 2
+                    and not fix.get('self_relative') and fix.get('frame_kind') == 'group'
+                    and fix.get('frame') == 'DGROUP'):
+                continue
+            at = fix['offset']
+            public = max((p for p in emitted_publics if p['offset'] <= at),
+                         key=lambda p: p['offset'], default=None)
+            if public is None:
+                continue
+            target = by_name.get(public['name'].lstrip('_'))
+            if target is None:
+                continue
+            following = next((p['offset'] for p in emitted_publics if p['offset'] > public['offset']),
+                             obj.segment_lengths.get(public['segment'], 0))
+            if following - public['offset'] != target['end'] - target['start']:
+                continue
+            original_at = target['start'] + at - public['offset']
+            if not (target['start'] <= original_at <= target['end'] - 2):
+                continue
+            encoded = bytes.fromhex(fix.get('encoded_addend', ''))
+            if len(encoded) != 2:
+                continue
+            addend = int.from_bytes(encoded, 'little')
+            if not 0 <= addend < size:
+                continue
+            operand = int.from_bytes(image[original_at:original_at+2], 'little')
+            base = frame + operand - addend
+            observations.append({'member': target['name'], 'code_offset': at,
+                                 'original_operand': original_at, 'addend': addend,
+                                 'base': base})
+        bases = {row['base'] for row in observations}
+        base = next(iter(bases)) if len(bases) == 1 else None
+        payload = bytes(obj.segments.get(segment, b''))
+        if (base is not None and len(payload) == size and
+                frame <= base and base + size <= len(image) and
+                payload == image[base:base+size]):
+            placements[segment] = {'status': 'GROUNDED', 'base': base,
+                                   'dgroup_offset': base-frame, 'size': size,
+                                   'references': observations}
+        else:
+            placements[segment] = {'status': 'UNRESOLVED', 'size': size,
+                                   'references': observations,
+                                   'reason': ('disagreeing code references' if len(bases)>1
+                                              else 'no complete grounded placement/payload')}
+    return placements
+
+
 def _select_members(map_doc, tu_id, interval, members_arg):
     all_rows, _, _ = _function_maps()
     by_name = {row["name"]: row for row in all_rows}
@@ -497,6 +563,9 @@ def run_workbench(source_path, *, tu_id=None, interval=None, members_arg=None):
                              key=lambda row: row["offset"])
     public_map = _public_name_map(obj, code_segment) if code_segment else defaultdict(list)
     fixups = [fix for fix in obj.linker_fixups if fix.get("segment") == code_segment]
+    data_layout = read_json(ROOT / 'layout/data-symbols.json')
+    own_data = _own_data_placements(obj, fixups, emitted_publics, all_functions,
+                                    image, data_layout['frame_load_address'])
     original_edges = {}
     seen_original_edges = set()
     for closure in map_doc.get("closures", []):
@@ -609,6 +678,20 @@ def run_workbench(source_path, *, tu_id=None, interval=None, members_arg=None):
                         struct.pack_into("<H", patched, at, target_offset + addend)
                         row["predicted_value"] = target_offset + addend
                         row["resolved"] = True
+        if not row['resolved'] and fix.get('target_kind') == 'segment' and \
+                fix.get('target') in own_data:
+            placement = own_data[fix['target']]
+            row['alias'] = {'status': 'TU_OWNED_DATA_' + placement['status'],
+                            'segment': fix['target']}
+            encoded = bytes.fromhex(fix.get('encoded_addend', ''))
+            if (placement['status'] == 'GROUNDED' and fix.get('loc') == 'offset16'
+                    and width == 2 and not fix.get('self_relative') and len(encoded) == 2):
+                addend = int.from_bytes(encoded, 'little')
+                if 0 <= addend < placement['size']:
+                    predicted = placement['dgroup_offset'] + addend
+                    struct.pack_into('<H', patched, at, predicted)
+                    row['predicted_value'] = predicted
+                    row['resolved'] = True
         if not row["resolved"]:
             row.setdefault("alias", {"status": "UNRESOLVED_OR_UNSUPPORTED_FIXUP"})
             for pos in range(at, at + width):
@@ -673,6 +756,7 @@ def run_workbench(source_path, *, tu_id=None, interval=None, members_arg=None):
         "selection": {"id": selection_id, "interval": interval_info,
                       "member_count": len(selected), "members": [row["name"] for row in selected]},
         "members": members_report,
+        "own_data_placements": own_data,
         "summary": {"exact": sum(row["exact_bytes"] for row in members_report),
                     "differ": sum(row["status"] == "DIFFER" for row in members_report),
                     "declared_only_or_missing": sum(row["status"] == "DECLARED_ONLY_OR_MISSING_DEFINITION" for row in members_report),

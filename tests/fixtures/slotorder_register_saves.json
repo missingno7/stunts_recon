@@ -1,0 +1,267 @@
+[
+  {
+    "function": "copy_string",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "init_carstate_from_simd",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "init_main",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "random_wait",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "load_palandcursor",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "input_push_status",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "is_facing_camera",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "mat_mul_vector2",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "mouse_multi_hittest",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "parse_filepath_separators",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "rect_adjust_from_point",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "rect_compare_point",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "rect_union",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "rect_intersect",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "rectlist_add_rect",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "rect_is_overlapping",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "rect_is_inside",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  },
+  {
+    "function": "rect_is_adjacent",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": []
+  },
+  {
+    "function": "rectlist_add_rects",
+    "used": [
+      "si",
+      "di"
+    ],
+    "pushes": [
+      "di",
+      "si"
+    ],
+    "expected_epilogue": [
+      "si",
+      "di"
+    ]
+  },
+  {
+    "function": "shape3d_init_shape",
+    "used": [
+      "si"
+    ],
+    "pushes": [
+      "si"
+    ],
+    "expected_epilogue": [
+      "si"
+    ]
+  }
+]

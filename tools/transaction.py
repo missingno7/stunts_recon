@@ -52,7 +52,7 @@ def prepare(changes):
     rows = []
     for relative, data in changes.items():
         path = (ROOT/relative).resolve()
-        require(path.is_relative_to(ROOT.resolve()) and relative.split('/')[0] in ('src', 'recipes', 'layout'),
+        require(path.is_relative_to(ROOT.resolve()) and relative.split('/')[0] in ('src', 'asm', 'recipes', 'layout'),
                 'Publication path outside canonical state')
         old = file_bytes(path)
         encode = lambda raw: None if raw is None else base64.b64encode(raw).decode('ascii')
@@ -82,7 +82,7 @@ def rollback():
     # Validate ALL files before restoring any: never erase a concurrent user edit.
     for row in rows:
         path = (ROOT/row['path']).resolve()
-        require(path.is_relative_to(ROOT.resolve()) and row['path'].split('/')[0] in ('src', 'recipes', 'layout'),
+        require(path.is_relative_to(ROOT.resolve()) and row['path'].split('/')[0] in ('src', 'asm', 'recipes', 'layout'),
                 'Recovery path outside canonical state')
         before = None if row['before'] is None else base64.b64decode(row['before'])
         after = base64.b64decode(row['after'])

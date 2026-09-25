@@ -19,8 +19,9 @@ def checked_members(recipe, image):
         f=rows[0]
         verified = f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' or (
             f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' and
-            f.get('bytes_hex') and f.get('start_evidence') and f.get('end_evidence') and
-            bytes.fromhex(f['bytes_hex'])==image[f['start']:f['end']])
+            f.get('start_evidence') and f.get('end_evidence') and
+            sha(image[f['start']:f['end']])==f['sha256'] and
+            (not f.get('bytes_hex') or bytes.fromhex(f['bytes_hex'])==image[f['start']:f['end']]))
         require(verified,'Unverified member boundary/emission bytes')
         expected_public = f['name'] if f.get('local_symbol') else '_' + f['name']
         require(all(m.get(k)==f.get(k) for k in ('stable_id','start','end')) and
@@ -44,7 +45,10 @@ def bind_multi(obj, recipe, image, relocations):
     require(recipe['object_declarations']=={'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},'Full declarations differ')
     require(obj.linker_fixups==recipe['expected_fixups'],'Ordered FIXUPP differs')
     require(set(obj.externals) <= set(pubs) | {'__acrtused'} | {f['target'] for f in obj.linker_fixups}, 'Unexpected external declaration')
-    internal=[f for f in obj.linker_fixups if f['target'] in pubs]
+    internal=[f for f in obj.linker_fixups if f['target'] in pubs or
+              (recipe.get('kind')=='asm' and f['target_kind']=='segment' and
+               f['target']==seg and f['self_relative'] and
+               f['displacement'] in pubs.values())]
     own_data=[f for f in obj.linker_fixups if f['target_kind']=='segment' and
               f['target'] in secondary]
     external=[f for f in obj.linker_fixups if f['segment']==seg and
@@ -61,6 +65,9 @@ def bind_multi(obj, recipe, image, relocations):
         for f in external:
             row=dict(f); row['target_index']=view.externals.index(f['target'])+1; view.linker_fixups.append(row)
         sub={'start':recipe['start'],'end':recipe['end'],'object_segment':seg,'public':view.publics[0]['name'],'expected_fixups':view.linker_fixups,'expected_relocations':recipe['expected_relocations'],'binding':{'mode':recipe['external_binding']['mode'],'declarations':{'segments':view.segment_defs,'groups':view.groups,'publics':view.publics,'externals':view.externals}}}
+        if recipe.get('kind')=='asm':
+            sub['kind']='asm'
+            sub['original_frame_load_address']=recipe['original_frame_load_address']
         symbols=resolve_recipe_symbols(sub,image,relocations)
         payload,receipt=bind_contribution(view,sub,symbols)
     else:
@@ -72,11 +79,33 @@ def bind_multi(obj, recipe, image, relocations):
     linked=bytearray(linked)
     for f in internal:
         at=f['offset']
-        require(f['segment']==seg and f['loc']=='offset16' and f['width']==2 and f['target_kind']=='external' and f['target_method']==2 and (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==(5,'target',f['target'],0) and 1<=f['target_index']<=len(obj.externals) and obj.externals[f['target_index']-1]==f['target'] and f['displacement']==0 and f['encoded_addend']=='0000' and 1<=at<=length-2 and linked[at-1]==0xe8 and linked[at:at+2]==bytes(2),'Unsupported internal CALL fixup')
-        disp=pubs[f['target']]-(at+2)
+        require(f['segment']==seg and f['loc']=='offset16' and f['width']==2 and
+                f['self_relative'] and f['encoded_addend']=='0000' and
+                1<=at<=length-2 and linked[at-1]==0xe8 and linked[at:at+2]==bytes(2),
+                'Unsupported internal CALL fixup')
+        if f['target_kind']=='external':
+            require(f['target_method']==2 and
+                    (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
+                    (5,'target',f['target'],0) and
+                    1<=f['target_index']<=len(obj.externals) and
+                    obj.externals[f['target_index']-1]==f['target'] and f['displacement']==0,
+                    'Unsupported external internal CALL datum')
+            target_offset=pubs[f['target']]
+            target_name=f['target']
+        else:
+            definition,=[d for d in obj.segment_defs if d['name']==seg]
+            require(recipe.get('kind')=='asm' and f['target_kind']=='segment' and
+                    f['target_method']==0 and f['target_index']==definition['index'] and
+                    (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
+                    (0,'segment',seg,definition['index']) and
+                    f['displacement'] in pubs.values(),
+                    'Unsupported ASM same-module CALL datum')
+            target_offset=f['displacement']
+            target_name=next(name for name,offset in pubs.items() if offset==target_offset)
+        disp=target_offset-(at+2)
         require(-32768<=disp<=32767,'Internal displacement overflow')
         struct.pack_into('<h',linked,at,disp)
-        rows.append({'offset':at,'target':f['target'],'displacement':disp})
+        rows.append({'offset':at,'target':target_name,'displacement':disp})
     generated=receipt['generated_relocations']
     require(generated==recipe['expected_relocations'],'Relocation order differs')
     return bytes(linked),{'mode':'multi-function-complete-v2','internal_calls':rows,

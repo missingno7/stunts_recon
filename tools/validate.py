@@ -59,8 +59,10 @@ def validate(independent=True, baseline=None):
             report.update(status='PASS', full_image=acceptance['status'], executable=acceptance['executable'],
                           oracle=original[2]['load_image'], relocation_count=acceptance['relocation_count'],
                           accepted_functions=[o['name'] for o in owners if o['kind']=='MATCHING_C'],
+                          accepted_asm=[o['name'] for o in owners if o['kind']=='MATCHING_ASM'],
                           ownership={k:sum(o['end']-o['start'] for o in owners if o['kind']==k)
-                                     for k in ('MATCHING_C','KNOWN_TOOLCHAIN_LIBRARY','UNRESOLVED_RAW')},
+                                     for k in ('MATCHING_C','MATCHING_C_DATA','MATCHING_ASM',
+                                               'MATCHING_ASM_DATA','KNOWN_TOOLCHAIN_LIBRARY','UNRESOLVED_RAW')},
                           matching_asm_bytes=acceptance['matching_asm_bytes'], inputs=before)
             write_json(destination, report)
         return report

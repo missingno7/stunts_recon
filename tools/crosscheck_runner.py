@@ -14,6 +14,7 @@ from secondary_contribution import bind_single_secondary
 from oracle import verify
 from mz import MZ
 from build_exact import inputs
+from assembler import asm_source
 
 
 def bind_recipe_object(obj, recipe, image, relocations):
@@ -36,16 +37,28 @@ def main():
     runner_identity=identity(runner.read_bytes())
     oracle=verify(write=False);image=MZ.parse(oracle[1]).load_image(oracle[1]);rows=[]
     (ROOT/'build/crosschecks').mkdir(parents=True,exist_ok=True)
-    active=[ROOT/o['recipe'] for o in read_json(ROOT/'layout/manifest.json')['owners'] if o['kind']=='MATCHING_C']
+    active=[ROOT/o['recipe'] for o in read_json(ROOT/'layout/manifest.json')['owners']
+            if o['kind'] in ('MATCHING_C','MATCHING_ASM')]
     for path in active:
         r=read_json(path);config,_=verify_toolchain(r['profile'])
         work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
         source=(ROOT/r['source']).read_bytes()
-        expanded, closure = prepare(source, r['profile'])
-        check_recipe(r, closure)
-        (work/'UNIT.C').write_bytes(expanded.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
+        asm = r.get('kind') == 'asm'
+        if asm:
+            require(r['profile']=='masm510-game' and r.get('include_closure')==[],
+                    'Independent ASM profile/closure differs')
+            require(r.get('assembler_flags')==config['flags'],
+                    'Independent ASM recipe flags differ')
+            (work/'UNIT.ASM').write_bytes(asm_source(source))
+            closure=[]
+        else:
+            expanded, closure = prepare(source, r['profile'])
+            check_recipe(r, closure)
+            (work/'UNIT.C').write_bytes(expanded.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
         tc=(ROOT/config['directory']).resolve()
-        batch=['@echo off','D:\\CL.EXE /c '+' '.join(config['flags'])+' UNIT.C > COMP.LOG',
+        dos_command = ('D:\\MASM.EXE '+' '.join(config['flags'])+' UNIT,UNIT.OBJ,UNIT.LST; > COMP.LOG'
+                       if asm else 'D:\\CL.EXE /c '+' '.join(config['flags'])+' UNIT.C > COMP.LOG')
+        batch=['@echo off',dos_command,
                'if errorlevel 1 goto failed','echo 0 > RESULT.TXT','goto done',':failed','echo 1 > RESULT.TXT',':done','exit']
         (work/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode('ascii'))
         conf=work/'dosbox.conf'
@@ -59,8 +72,16 @@ def main():
                               timeout=45,creationflags=subprocess.CREATE_NO_WINDOW,startupinfo=startup)
         require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
         obj=read_object((work/'UNIT.OBJ').read_bytes())
-        require(prepare(source, r['profile'])[1] == closure,
-                'Independent preprocessor closure changed during compilation')
+        if asm:
+            require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),
+                    'Independent ASM source changed during assembly')
+            require(r['object_declarations']==
+                    {'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},
+                    'Independent ASM declarations differ')
+            require(obj.linker_fixups==r['expected_fixups'],'Independent ASM FIXUPPs differ')
+        else:
+            require(prepare(source, r['profile'])[1] == closure,
+                    'Independent preprocessor closure changed during compilation')
         payload,binding=bind_recipe_object(obj,r,image,oracle[2]['unpacked_mz']['relocations'])
         relocs=[site for site in oracle[2]['unpacked_mz']['relocations'] if r['start']-1<=site['load_offset']<r['end']]
         require(binding['generated_relocations']==r['expected_relocations']==relocs,'Independent source relocation mismatch')
@@ -75,7 +96,7 @@ def main():
                         identity(secondary)==spec['target'],
                         'Independent secondary data differs')
         rows.append({'task':r['id'],'source':identity(source),'object':identity((work/'UNIT.OBJ').read_bytes()),
-                     'preprocessor_closure':closure,
+                     'source_closure':closure, 'kind':r.get('kind','c'),
                      'payload':identity(payload),'binding':binding,'exact':True,'command':cmd,'dos_command':batch[1]})
     require(inputs()==before,'Inputs changed during independent compilation')
     require(verify(write=False)[2]==oracle[2],'Oracle changed during independent compilation')
@@ -83,7 +104,7 @@ def main():
         verify_toolchain(profile)
     require(identity(runner.read_bytes())==runner_identity,'Independent runner changed during compilation')
     write_json(report_path,{'runner':{'path':str(runner),**runner_identity},'inputs':before,'results':rows})
-    print('PASS: independent DOSBox-X exact code and complete binding obligations for',len(rows),'functions')
+    print('PASS: independent DOSBox-X exact code and complete binding obligations for',len(rows),'contributions')
 
 if __name__=='__main__':
     from transaction import exclusive, ensure_consistent

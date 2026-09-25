@@ -8,7 +8,7 @@ Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, an
 
 Install the diagnostic decoder with `python -m pip install --target build/python capstone==5.0.3`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; Restunts resides at `build/references/restunts`. Keep that checkout, its reference executable, and other ignored local inputs. They cannot be restored from this repository's Git history.
 
-Full validation independently recompiles active C under DOSBox-X at `C:/DOSBox-X/dosbox-x.exe`. Configure local runner paths explicitly when moving machines, preserving pinned compiler identities. No verification command updates the byte oracle.
+Full validation independently recompiles active C and reassembles active ASM under DOSBox-X at `C:/DOSBox-X/dosbox-x.exe`. Configure local runner paths explicitly when moving machines, preserving pinned tool identities. The pinned MASM 5.10 ASM profile is a reproduction choice, not an attribution of the original assembler. No verification command updates the byte oracle.
 
 ## Everyday work
 
@@ -24,9 +24,18 @@ python tools/promote.py FUNCTION build/workers/NAME/candidate.c
 python tools/validate.py
 ```
 
+For a reviewed assembly extent, use a self-contained MASM source and an explicit recipe with `"kind": "asm"`, `"profile": "masm510-game"`, `"assembler_flags": ["/Mx", "/I."]`, complete OMF declarations, FIXUPPs, and ordered relocations:
+
+```powershell
+python tools/search.py build/workers/NAME/candidate.ASM --function FUNCTION --recipe build/workers/NAME/candidate.recipe.json
+python tools/promote.py FUNCTION build/workers/NAME/candidate.ASM --recipe build/workers/NAME/candidate.recipe.json --verify-only
+```
+
 Predict local BP homes with `python tools/slotorder.py --source src/copy_string.c --function copy_string`, or suggest names with `python tools/slotorder.py --names first second third`.
+The same helper predicts explicit `register` SI/DI assignment in declaration order with `--registers si:index di:source`; BP homes still follow the independent identifier hash rule. Supply `--other-register-uses` when generated code also saves SI or DI.
 
 Map candidate translation units with `python tools/tubench.py --map`, then compare a whole C source per member with `python tools/tubench.py SOURCE --tu ID` or `--interval START END`.
+`tubench.py` includes reviewed function-boundary overlays and diagnoses TU-owned `_DATA`/`CONST` placements only when original code operands agree on one base and the complete initialized payload matches the image. A member with no outgoing near calls may be verified as a standalone source when its full object and bindings match; members using TU-owned data must include that data in the contribution.
 
 Context reads the function inventory directly. `--history` expands local search observations; `--raw` shows underlying evidence. Search accepts standalone source, a pinned profile, and an optional `--recipe` for strict binding diagnostics. Full source files also permit small family/TU context hypotheses; their original grouping remains unknown. Search has no eligibility gate, attempt counter, or global workflow fingerprint. Its frozen source/environment and detailed compiler reports live under ignored `build/search/`.
 
@@ -36,7 +45,7 @@ Run complete validation at acceptance or tooling-change boundaries. Ordinary sou
 
 ## State and proof
 
-`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete contributions from `src/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership.
+`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `src/` and ASM contributions from tracked `asm/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership.
 
 Promotion freezes the candidate, recompiles it, verifies its full contribution, then recompiles the entire staged hybrid image. It protects existing ownership, complete declarations, fixups, and exact ordered relocation obligations. The single publisher checks stable inputs, journals source/recipe/manifest writes, and freshly verifies the canonical image. `--verify-only` exercises the complete staged gate without changing canonical files. Validation also runs focused negative/isolation/transaction tests and the independent compiler backend.
 

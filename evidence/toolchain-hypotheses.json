@@ -138,7 +138,7 @@
       "hypothesis": "Hand-written modules were assembled by a specific assembler/version.",
       "status": "NON_DISCRIMINATING",
       "scope": "global",
-      "evidence": "Linked bytes (encodings, pads, jump sizes, frames) do not distinguish MASM 4.0/5.0/5.1, TASM or inline assembly; original OMF signatures are stripped by EXEPACK. MASM 5.x is the natural first hypothesis (MSC 5.10 era, supplied startup ASM sources); MASM 4.x and TASM remain live. No assembler pinned; the user must supply a specific legally held distribution with version/hash before any ASM contribution can be tested. Local pinned toolchain/msc510-msdos/MASM.EXE is Microsoft Macro Assembler 5.10 (1988), SHA-256 1c6286c69b616160b8475ad17453ee872702a2c98075c2159ec792a1c745275f, not yet in an active profile. Alternatives being provisioned under C:\tools. 2026-09-25: provisioned under C:\tools from pinned PCjs commit bd4cc85928f2291c8d08e610038a1dd70b94ac6c: MASM 4.00 (runner stack overflow under MS-DOS Player), 5.00, 5.10, 5.10A, 6.00 (DOS ML.EXE from disk 2). MASM 5.00/5.10/5.10A emit identical 78-byte smoke objects. TASM 1.0/2.0 not available on PCjs. Control experiment `asmdisc` (reassemble pinned library ASM sources vs Microsoft library objects) in progress. User supplied Borland TASM 1.0, 1.01, 2.0, 2.01 (winworldpc disk images) under C:\tools; being extracted/provenanced to C:\tools\tasm-*. gather also collected MASM 2.04/3.00/3.01/6.11 and MSC 2.03/3.00/4.00/6.00AX/7.00 (local copies). asmdisc: readable MASM sources for game routines video_get_status, timer_get_counter, kb_checking reproduce their complete oracle extents under all six assemblers (MASM 4.00, 5.00, 5.10, 5.10A, pinned 5.10, ML 6.00) \u2014 the ASM contribution path is feasible but these probes do not discriminate. TASM not yet tested (asmdisc2). Discriminating constructs known from library controls: AND reg,imm sign-extended imm8 encoding (MASM 4.00 vs 5.x), EXTDEF ordering, COMENT checksum, IF1/IF2 support (ML 6.00). asmdisc2 (14 sampled game ASM extents + alignment control, 10 assemblers): MASM 5.00/5.10/5.10A/pinned 5.10 and TASM 1.00/1.01 match 14/14; MASM 4.00 13/14 (encodes AND BX,0Fh as 81 E3 0F 00 vs game 83 E3 0F -> FALSIFIED for game modules); ML 6.00 8/14 (DISFAVORED); TASM 2.00/2.01 default 7/14, 14/14 only with /jNOSMART plus local SMART regions (DISFAVORED: contortion). Library controls: TASM 0/14 and 0/12. Remaining NON_DISCRIMINATING set for game ASM: {MASM 5.00, 5.10, 5.10A, TASM 1.00, 1.01}. Next discriminator: FIXUPP record order vs oracle MZ relocation order (asmdisc3).",
+      "evidence": "Linked bytes (encodings, pads, jump sizes, frames) do not distinguish MASM 4.0/5.0/5.1, TASM or inline assembly; original OMF signatures are stripped by EXEPACK. MASM 5.x is the natural first hypothesis (MSC 5.10 era, supplied startup ASM sources); MASM 4.x and TASM remain live. No assembler pinned; the user must supply a specific legally held distribution with version/hash before any ASM contribution can be tested. Local pinned toolchain/msc510-msdos/MASM.EXE is Microsoft Macro Assembler 5.10 (1988), SHA-256 1c6286c69b616160b8475ad17453ee872702a2c98075c2159ec792a1c745275f, not yet in an active profile. Alternatives being provisioned under C:\tools. 2026-09-25: provisioned under C:\tools from pinned PCjs commit bd4cc85928f2291c8d08e610038a1dd70b94ac6c: MASM 4.00 (runner stack overflow under MS-DOS Player), 5.00, 5.10, 5.10A, 6.00 (DOS ML.EXE from disk 2). MASM 5.00/5.10/5.10A emit identical 78-byte smoke objects. TASM 1.0/2.0 not available on PCjs. Control experiment `asmdisc` (reassemble pinned library ASM sources vs Microsoft library objects) in progress. User supplied Borland TASM 1.0, 1.01, 2.0, 2.01 (winworldpc disk images) under C:\tools; being extracted/provenanced to C:\tools\tasm-*. gather also collected MASM 2.04/3.00/3.01/6.11 and MSC 2.03/3.00/4.00/6.00AX/7.00 (local copies). asmdisc: readable MASM sources for game routines video_get_status, timer_get_counter, kb_checking reproduce their complete oracle extents under all six assemblers (MASM 4.00, 5.00, 5.10, 5.10A, pinned 5.10, ML 6.00) \u2014 the ASM contribution path is feasible but these probes do not discriminate. TASM not yet tested (asmdisc2). Discriminating constructs known from library controls: AND reg,imm sign-extended imm8 encoding (MASM 4.00 vs 5.x), EXTDEF ordering, COMENT checksum, IF1/IF2 support (ML 6.00). asmdisc2 (14 sampled game ASM extents + alignment control, 10 assemblers): MASM 5.00/5.10/5.10A/pinned 5.10 and TASM 1.00/1.01 match 14/14; MASM 4.00 13/14 (encodes AND BX,0Fh as 81 E3 0F 00 vs game 83 E3 0F -> FALSIFIED for game modules); ML 6.00 8/14 (DISFAVORED); TASM 2.00/2.01 default 7/14, 14/14 only with /jNOSMART plus local SMART regions (DISFAVORED: contortion). Library controls: TASM 0/14 and 0/12. Remaining NON_DISCRIMINATING set for game ASM: {MASM 5.00, 5.10, 5.10A, TASM 1.00, 1.01}. Next discriminator: FIXUPP record order vs oracle MZ relocation order (asmdisc3). SUPERVISOR RULING 2026-09-26: canonical ASM contribution profile = already-pinned toolchain/msc510-msdos/MASM.EXE (MASM 5.10) because every tested game ASM routine is byte-identical under MASM 5.00/5.10/5.10A and TASM 1.00/1.01; this is a reproduction profile, NOT a provenance claim; status stays NON_DISCRIMINATING and any routine/OMF evidence separating these candidates reopens it (and may switch the profile). 2026-09-26: ASM contribution path canonical (integ12); 14 game routines (685 B) accepted as matching ASM under the pinned MASM 5.10 reproduction profile, incl. symptom functions file_get_shape2d, file_get_res_shape_count, sprite copies, timer_compare_dx.",
       "controls": "Pinned runtime ASM members (known MASM-assembled library objects) serve as encoding controls.",
       "explains": "-",
       "fails_or_breaks": "-",
@@ -212,10 +212,10 @@
     },
     {
       "id": "FACT-local-slot-order-identifier",
-      "hypothesis": "Canonical MSC 5.10 /O allocates automatic-local BP homes by walking a 16-bucket symbol hash table: bucket = (sum of the first 31 identifier bytes) & 15; buckets in ascending order; within a bucket newest declaration first; each local at its even-rounded size (char/int/near ptr one word, long two). Parameters keep ABI homes, statics take none, explicit register locals still get a home. Nested scopes allocate independently and reuse a freed home from a LIFO free pool only if large enough (no split/coalesce); a containing scope releases its direct homes then descendants in lexical preorder.",
+      "hypothesis": "Canonical MSC 5.10 /O allocates automatic-local BP homes by walking a 16-bucket symbol hash table: bucket = (sum of the first 31 identifier bytes) & 15; buckets in ascending order; within a bucket newest declaration first; each local at its even-rounded size (char/int/near ptr one word, long two). Parameters keep ABI homes, statics take none, explicit register locals still get a home. Nested scopes allocate independently and reuse a freed home from a LIFO free pool only if large enough (no split/coalesce); a containing scope releases its direct homes then descendants in lexical preorder. Register assignment: explicit eligible `register` candidates receive SI then DI in DECLARATION order within active scopes (independent of the hash order used for BP homes); pushes follow the used registers.",
       "status": "SUPPORTED",
       "scope": "source-shape-specific",
-      "evidence": "hashrule: predictor build/workers/hashrule/slotorder.py matches 360/360 synthetic local-address mappings, 37/37 synthetic frame extents, and 19/19 addressable automatic-local homes across 14 accepted source files (frame size 13/14; init_carstate_from_simd has 4 bytes of compiler-generated index temporaries not modeled). Use/declaration-order and function-name changes do not move homes except within a bucket.",
+      "evidence": "hashrule: predictor build/workers/hashrule/slotorder.py matches 360/360 synthetic local-address mappings, 37/37 synthetic frame extents, and 19/19 addressable automatic-local homes across 14 accepted source files (frame size 13/14; init_carstate_from_simd has 4 bytes of compiler-generated index temporaries not modeled). Use/declaration-order and function-name changes do not move homes except within a bucket. regrule: 55/55 probe assignments, 58/58 probe push sequences, 20/20 accepted functions' save order (all 6 with explicit register declarations); 12 SI/DI accepted sources re-verified strictly. Extended predictor: build/workers/regrule/slotorder.py (diff slotorder-register.diff).",
       "controls": "pinned profile only; accepted rect_adjust_from_point (sibling-block sharing).",
       "explains": "Slot-order residuals are resolved by choosing readable names that hash to the needed buckets (suggest_names()), not by artificial structs.",
       "fails_or_breaks": "Compiler-generated temporaries and spills are outside the model.",
@@ -275,6 +275,17 @@
       "explains": "-",
       "fails_or_breaks": "Breaks is_facing_camera.",
       "reopen_if": "Several unrelated TUs need intrinsics and #pragma intrinsic cannot be justified per TU."
+    },
+    {
+      "id": "FACT-ledata-split",
+      "hypothesis": "MSC 5.10 /AM /O /Gs ends a CODE LEDATA record when its payload reaches ~949 bytes OR its pending FIXUPP count reaches 99, whichever comes first; data-segment emission, function boundaries and string-literal placement do not force a split; FIXUPP byte size does not either.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "intro-4/intro-5 probes: max CODE payload 949 B over 3,705 records; a control closed at 99 fixups (943 CODE + 495 FIXUPP bytes) and its low-index twin closed at the same cut; inline vs file-scope literals, local statics and function boundaries left cuts unchanged; EXTDEF index >127 grew direct-call FIXUPPs 4->5 bytes without moving cuts.",
+      "controls": "synthetic probes; intro candidates",
+      "explains": "Relocation-order windows: MSC FIXUPPs descend within a record, so ordered MZ relocations reveal record boundaries; a record ending before 949 bytes had 99 fixups, which constrains how many symbol references the original code chunk contained.",
+      "fails_or_breaks": "-",
+      "reopen_if": "A record ends below both limits without another cause."
     }
   ],
   "symptoms": [
@@ -341,7 +352,7 @@
         "global_profile": "FALSIFIED (MARKER-F3-string-op: no pinned compiler/flag emits F3)",
         "tu_specific_profile": "FALSIFIED for all pinned compilers (QCL 1.00/1.01 included)",
         "source_context": "FALSIFIED for aggregate assignment, memcpy/_fmemcpy/movedata and loop forms",
-        "hand_asm": "SUPPORTED (F3 + CS-resident sprite storage + seg012 ASM procs)",
+        "hand_asm": "SUPPORTED (F3 + CS-resident sprite storage + seg012 ASM procs); sprite_copy_arg_to_both and sprite_copy_both_to_arg (F3 A5, CS data) reproduced exactly from readable MASM and accepted (2026-09-26)",
         "boundary": "UNTESTED",
         "runtime_library": "DISFAVORED (no matching member; _fmemcpy/movedata are external calls)"
       }
@@ -357,7 +368,7 @@
         "global_profile": "DISFAVORED (no MSC 5.00/5.10/QuickC option in a 23-case matrix produces separate ES/SI loads + es:[si+4]; corpus scan finds this pattern ONLY in two byte-adjacent seg012 shape2d procedures)",
         "tu_specific_profile": "UNTESTED",
         "source_context": "PLAUSIBLE (paired declarations/TU context untested)",
-        "hand_asm": "PLAUSIBLE",
+        "hand_asm": "SUPPORTED (2026-09-26): file_get_res_shape_count (17 B, separate ES/SI loads) reproduced exactly from readable MASM and accepted as ASM ownership",
         "boundary": "UNTESTED",
         "runtime_library": "DISFAVORED"
       }
@@ -376,7 +387,7 @@
         "global_profile": "DISFAVORED (canonical and 5.00 emit a CL=4 loop for scalar forms; accepted control mmgr_get_res_ofs_diff_scaled `(unsigned long)f()<<4` matches the original CL=4 shl/rcl loop, so the original compiler also used the loop where it compiled this idiom)",
         "tu_specific_profile": "PLAUSIBLE (CC-later-MSC)",
         "source_context": "DISFAVORED (union, chained shifts, *16L, huge and linear-address forms tested)",
-        "hand_asm": "SUPPORTED-leaning (neighbouring shared tails, CS data, lodsb scans in the same region)",
+        "hand_asm": "SUPPORTED (2026-09-26): file_get_shape2d (95 B, unrolled shl/rcl) is reproduced exactly from readable MASM source and accepted as ASM ownership; other S5 members pending",
         "boundary": "UNTESTED",
         "runtime_library": "DISFAVORED"
       }
@@ -394,7 +405,7 @@
         "global_profile": "UNTESTED",
         "tu_specific_profile": "PLAUSIBLE",
         "source_context": "UNTESTED",
-        "hand_asm": "PLAUSIBLE, leaning: timer_reset and kb_get_key_state sit in the kb/timer region where 28 procedures show positive ASM markers (direct IN/OUT, CLI/STI, BIOS INTs, selective ISR saves); canonical emits sub for all tested getter/setter forms (5.00 identical)",
+        "hand_asm": "PLAUSIBLE, leaning: timer_reset and kb_get_key_state sit in the kb/timer region where 28 procedures show positive ASM markers (direct IN/OUT, CLI/STI, BIOS INTs, selective ISR saves); canonical emits sub for all tested getter/setter forms (5.00 identical); timer_compare_dx (xor zeroing) reproduced exactly from readable MASM and accepted (2026-09-26)",
         "boundary": "UNTESTED",
         "runtime_library": "UNTESTED"
       }

@@ -13,7 +13,7 @@ def _complete_target_owner(owner, function):
         return (owner['start'] <= function['start'] < owner['end'] and
                 any(p['segment'] == owner['segment'] and owner['start']+p['offset'] == function['start']
                     for p in owner['publics']))
-    if owner['kind'] != 'MATCHING_C':
+    if owner['kind'] not in ('MATCHING_C','MATCHING_ASM'):
         return False
     if (owner['start'], owner['end'], owner.get('name')) == (
             function['start'], function['end'], function['name']):
@@ -198,19 +198,26 @@ def resolve_recipe_symbols(recipe, image, relocations):
     names={f['target'] for f in recipe['expected_fixups']}
     if not names:return None
     mode=recipe.get('binding',{}).get('mode')
-    if mode=='external-far-call-v1':
+    if mode in ('external-far-call-v1','asm-external-far-call-v1'):
         return resolve_code_symbols(names,image,relocations)
+    if mode == 'asm-external-cs-offset16-v1':
+        from data_symbols import resolve_cs_symbols
+        return resolve_cs_symbols(names,image,relocations)
     if mode in ('external-far-call-dgroup-offset16-v1',
                 'external-far-call-code-pointer-dgroup-offset16-v1'):
+        absolute=names & {'__AHSHIFT'}
         code={f['target'] for f in recipe['expected_fixups'] if f['loc']=='pointer32' or
               (mode.endswith('code-pointer-dgroup-offset16-v1') and
-               f['loc'] in ('base16','loader-offset16'))}
-        data={f['target'] for f in recipe['expected_fixups'] if f['loc']=='offset16'}
-        require(code and data and not code.intersection(data) and code|data==names,
-                'Mixed binding needs distinct reviewed code and data targets')
+               f['loc'] in ('base16','loader-offset16'))} - absolute
+        data={f['target'] for f in recipe['expected_fixups'] if f['loc']=='offset16'} - absolute
+        require(code and data and not code.intersection(data) and code|data|absolute==names,
+                'Mixed binding needs distinct reviewed code/data/absolute targets')
         from data_symbols import resolve_symbols, check_folded_recipe
         result = {**resolve_code_symbols(code,image,relocations),
                   **resolve_symbols(data,image,relocations)}
+        if absolute:
+            from runtime_absolute import ahshift
+            result['__AHSHIFT']=ahshift(image,relocations)
         check_folded_recipe(recipe, result, image)
         return result
     if mode=='external-far-call-cs-pointer-v1':

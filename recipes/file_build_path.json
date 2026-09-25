@@ -1,0 +1,263 @@
+{
+  "binding": {
+    "mode": "external-far-call-v1"
+  },
+  "end": 99898,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "secondary_placement": "original CODE _DATA fixup at file_build_path+0x13"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_strcat",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 107,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_strcat",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_strcat",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 93,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_strcat",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_strcat",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 79,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_strcat",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 72,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_strlen",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 31,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_strlen",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_strcpy",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 20,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_strcpy",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 99887,
+      "offset": 34351,
+      "segment": 4096
+    },
+    {
+      "load_offset": 99873,
+      "offset": 34337,
+      "segment": 4096
+    },
+    {
+      "load_offset": 99859,
+      "offset": 34323,
+      "segment": 4096
+    },
+    {
+      "load_offset": 99811,
+      "offset": 34275,
+      "segment": 4096
+    },
+    {
+      "load_offset": 99800,
+      "offset": 34264,
+      "segment": 4096
+    }
+  ],
+  "id": "file_build_path",
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_strlen",
+      "_strcpy",
+      "_file_build_path",
+      "_strcat"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_file_build_path",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 120,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 2,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_file_build_path",
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 13369,
+      "end": 191403,
+      "expected_relocations": [],
+      "start": 191401,
+      "target": {
+        "sha256": "1472d0645f552820b5472b91341c2d9a118c8a96f4a72758d6aeeb14c10a1107",
+        "size": 2
+      }
+    }
+  },
+  "source": "src/file_build_path.c",
+  "stable_id": "load_185c2",
+  "start": 99778,
+  "target": {
+    "sha256": "c501797b4bcc95ccdb6e80dab06f8c1079fa1b354fa8dceb00671bb3acc29b76",
+    "size": 120
+  }
+}

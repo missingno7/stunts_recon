@@ -7,6 +7,32 @@ original procedure.  Widths remain separate reviewed hypotheses.
 from common import ROOT, read_json, require
 
 
+def _check_reference_alias(name, symbol):
+    """Tie newly reviewed data names to pinned declarations and code uses."""
+    if 'reference_declaration_line' not in symbol:
+        return
+    from common import identity
+    import re
+    references = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
+    root = ROOT/'build/references/restunts'
+    dseg = 'src/restunts/asmorig/dseg.asm'
+    code = 'src/restunts/asmorig/seg003.asm'
+    for path in (dseg, code):
+        require(identity((root/path).read_bytes()) == references[path],
+                'Reviewed data alias reference source differs')
+    declaration = (root/dseg).read_text(encoding='latin1').splitlines()
+    use = (root/code).read_text(encoding='latin1').splitlines()
+    label = symbol['reference_label']
+    first = symbol['reference_declaration_line']
+    source_line = symbol['reference_use_line']
+    require(name == '_'+label and 1 <= first <= len(declaration) and
+            1 <= source_line <= len(use) and
+            re.match(r'^'+re.escape(label)+r'\s+(?:db|dw|dd|dq)\b',
+                     declaration[first-1].strip(), re.I) and
+            re.search(r'\b'+re.escape(label)+r'\b', use[source_line-1], re.I),
+            'Reviewed data alias label/use differs')
+
+
 def _oracle_instruction_anchors(addresses, image, relocations, frame):
     """Find one original instruction per requested compact address, from scratch."""
     import hashlib
@@ -269,11 +295,13 @@ def resolve_symbols(names, image, relocations):
     generated = None
     compact = {layout['symbols'][name]['load_address'] for name in names
                if name in layout['symbols'] and not layout['symbols'][name].get('references')
-               and layout['symbols'][name].get('extent_proof', {}).get('kind') != 'guarded-folded-index-v1'}
+               and layout['symbols'][name].get('extent_proof', {}).get('kind') != 'guarded-folded-index-v1'
+               and layout['symbols'][name].get('generated_extent', {}).get('kind') != 'corroborated-ring-buffer-v1'}
     derived = _oracle_instruction_anchors(compact, image, relocations, frame) if compact else {}
     for name in names:
         require(name in layout['symbols'], 'Unknown data external: ' + name)
         symbol = layout['symbols'][name]
+        _check_reference_alias(name, symbol)
         address = symbol['load_address']
         require(0 <= address-frame < 65536, 'Data symbol outside DGROUP')
         if symbol['storage'] == 'bss':
@@ -287,8 +315,10 @@ def resolve_symbols(names, image, relocations):
                     and address < len(image),
                     'Symbol outside initialized DGROUP')
         is_folded = symbol.get('extent_proof', {}).get('kind') == 'guarded-folded-index-v1'
-        references = [] if is_folded else symbol.get('references') or [derived[address]]
-        require(references or is_folded, 'Data symbol needs original instruction evidence')
+        is_corroborated = symbol.get('generated_extent', {}).get('kind') == 'corroborated-ring-buffer-v1'
+        references = [] if is_folded or is_corroborated else symbol.get('references') or [derived[address]]
+        require(references or is_folded or is_corroborated,
+                'Data symbol needs original instruction evidence')
         for field in symbol.get('fields',[]):
             require(type(field['offset']) is int and field['offset']>=0 and field['width']==2,
                     'Unsupported reviewed field layout')
@@ -433,15 +463,16 @@ def resolve_cs_symbols(names, image, relocations):
             'CS sprite segment relocation/frame differs')
     result={}
     for name in names:
-        require(name in ('_sprite1','_sprite2') and name in layout['symbols'],
+        symbol_name = name if name.startswith('_') else '_'+name
+        require(symbol_name in ('_sprite1','_sprite2') and symbol_name in layout['symbols'],
                 'Unknown CS sprite symbol: '+name)
-        symbol=layout['symbols'][name];address=symbol['load_address']
+        symbol=layout['symbols'][symbol_name];address=symbol['load_address']
         require(symbol['storage']=='code_island' and symbol['island']=='sprite_pair' and
-                symbol['width']==30 and symbol['reference_label']==name[1:] and
-                address==149824+(30 if name=='_sprite2' else 0) and
+                symbol['width']==30 and symbol['reference_label']==symbol_name[1:] and
+                address==149824+(30 if symbol_name=='_sprite2' else 0) and
                 address+30<=149884, 'CS sprite symbol escapes its verified data island')
-        anchor=symbol['offset_anchor'];raw=checked_caller(anchor,6 if name=='_sprite2' else 4)
-        if name=='_sprite2':
+        anchor=symbol['offset_anchor'];raw=checked_caller(anchor,6 if symbol_name=='_sprite2' else 4)
+        if symbol_name=='_sprite2':
             require(raw[:1]==b'\xb8' and raw[3:4]==b'\xba' and
                     anchor['relocation_load_offset']==anchor['site']+4 and
                     any(r['load_offset']==anchor['site']+4 for r in relocations),

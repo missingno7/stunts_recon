@@ -10,7 +10,19 @@ MANIFEST = Path('layout/manifest.json')
 
 
 def _inventory():
-    return read_json(ROOT / EVIDENCE)
+    inventory = read_json(ROOT / EVIDENCE)
+    # Small synthetic inventories used by context consumers have no locked
+    # image identity; only the real inventory receives reviewed overlays.
+    if 'load_sha256' not in inventory:
+        return inventory
+    from function_evidence import apply_reviewed
+    from oracle import verify
+    from mz import MZ
+    oracle = verify(write=False)
+    image = MZ.parse(oracle[1]).load_image(oracle[1])
+    if inventory['load_sha256'] == sha(image):
+        apply_reviewed(inventory, image)
+    return inventory
 
 
 def _manifest():

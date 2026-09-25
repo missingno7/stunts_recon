@@ -14,6 +14,32 @@ from compiler import compile_source
 
 
 class PreprocessorTests(unittest.TestCase):
+    def test_intrinsic_and_function_pragmas_are_frozen_and_compiled(self):
+        source = (b'#include <conio.h>\n#pragma intrinsic(inp, outp)\n'
+                  b'int port_read(void) { return inp(0x3da); }\n')
+        expanded, closure = preprocessor.prepare(source, 'msc510-medium')
+        self.assertIn(b'#pragma intrinsic(inp, outp)', expanded)
+        self.assertEqual(closure[-1], {'pragma':'intrinsic','names':['inp','outp'],
+                                      'path':'<source>','line':2})
+        obj, receipt = compile_source(source, 'msc510-medium')
+        self.assertEqual(receipt['preprocessor_closure'], closure)
+        self.assertIn(b'\xec', obj.segment_bytes('UNIT_TEXT'))
+        forced = b'#include <conio.h>\n#pragma function(inp)\nint port_read(void) { return inp(0x3da); }\n'
+        obj, receipt = compile_source(forced, 'msc510-medium')
+        self.assertEqual(receipt['preprocessor_closure'][-1]['pragma'], 'function')
+        self.assertNotIn(b'\xec', obj.segment_bytes('UNIT_TEXT'))
+        math = b'#include <math.h>\n#pragma intrinsic(sqrt)\ndouble root(double x) { return sqrt(x); }\n'
+        obj, receipt = compile_source(math, 'msc510-medium')
+        self.assertGreater(obj.segment_length('UNIT_TEXT'), 0)
+        self.assertEqual(receipt['preprocessor_closure'][-1]['names'], ['sqrt'])
+        with self.assertRaisesRegex(ValueError, 'closure'):
+            preprocessor.check_recipe({'preprocessor_closure':[]}, closure)
+        for bad in (b'#pragma intrinsic(disable)\n',
+                    b'#pragma function(other)\n',
+                    b'#pragma intrinsic(inp); junk\n'):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, 'Unsupported historical pragma'):
+                preprocessor.prepare(bad, 'msc510-medium')
+
     def test_pack_directives_compile_and_enter_frozen_closure(self):
         source = (b'#pragma pack(1)\nstruct packed { char a; int b; };\n'
                   b'#pragma pack()\nint packed_size(void) { return sizeof(struct packed); }\n')

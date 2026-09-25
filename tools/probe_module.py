@@ -9,6 +9,7 @@ from binder import bind_contribution
 from code_symbols import resolve_recipe_symbols
 from multi_contribution import checked_members, bind_multi
 from secondary_contribution import bind_single_secondary
+from assembler import assemble_source, asm_source
 
 
 class ProbeFailure(ValueError):
@@ -35,16 +36,34 @@ def probe(recipe, oracle_result=None, source_override=None):
     relocs = [r for r in result[2]['unpacked_mz']['relocations'] if start - 1 <= r['load_offset'] < end]
     require(relocs==recipe['expected_relocations'], 'Complete ordered candidate relocation obligations differ')
     source = project_path(recipe['source']).read_bytes() if source_override is None else source_override
-    _, closure = prepare(source, recipe['profile'])
-    check_recipe(recipe, closure)
+    kind = recipe.get('kind', 'c')
+    require(kind in ('c', 'asm'), 'Unknown contribution kind')
+    if kind == 'asm':
+        from compiler import verify_toolchain
+        require(recipe['profile'] == 'masm510-game', 'ASM reproduction profile differs')
+        require(recipe.get('assembler_flags') == verify_toolchain(recipe['profile'])[0]['flags'],
+                'ASM recipe flags differ from pinned profile')
+        asm_source(source)
+        require(recipe.get('include_closure') == [], 'ASM include closure differs')
+    else:
+        _, closure = prepare(source, recipe['profile'])
+        check_recipe(recipe, closure)
     try:
-        obj, receipt = compile_source(source, recipe['profile'])
+        obj, receipt = (assemble_source(source, recipe['profile']) if kind == 'asm'
+                        else compile_source(source, recipe['profile']))
     except CompileFailure as error:
         raise ProbeFailure(str(error), {'category':error.category, 'receipt':error.receipt}) from error
     segment = recipe['object_segment']
     details = {'receipt':receipt, 'expected_size':end-start, 'emitted_sizes':obj.segment_lengths,
                'publics':obj.publics, 'externals':obj.externals, 'fixups':obj.linker_fixups,
                'object_segments':{n:identity(b) for n,b in obj.segments.items()}}
+    if kind == 'asm':
+        require(recipe.get('object_declarations') ==
+                {'segments':obj.segment_defs, 'groups':obj.groups,
+                 'publics':obj.publics, 'externals':obj.externals},
+                'ASM complete object declarations differ')
+        require(obj.linker_fixups == recipe['expected_fixups'],
+                'ASM ordered FIXUPP obligations differ')
     details['comparison'] = _diagnostic(image[start:end], obj.segments.get(segment,b''), receipt, obj.linker_fixups, segment=segment)
     if obj.segment_length(segment) != end-start or len(obj.segments.get(segment,b'')) != end-start:
         raise ProbeFailure('Complete emitted contribution length differs from target',
@@ -72,6 +91,10 @@ def probe(recipe, oracle_result=None, source_override=None):
                             'first_differences':differences[:32], 'bound_payload':identity(payload)})
     if source_override is None:
         require(project_path(recipe['source']).read_bytes() == source, 'Source changed during compilation')
-    require(prepare(source, recipe['profile'])[1] == closure,
-            'Preprocessor closure changed during compilation')
+    if kind == 'asm':
+        require(asm_source(source) and recipe['include_closure'] == [],
+                'ASM source closure changed during assembly')
+    else:
+        require(prepare(source, recipe['profile'])[1] == closure,
+                'Preprocessor closure changed during compilation')
     return payload, receipt

@@ -10,9 +10,11 @@ the next block reuses the newest free home with enough capacity, or extends
 the frame.  Siblings therefore reuse compatible homes even when local sizes
 differ.
 
-This module is a research model, not production tooling.  It predicts homes
-only.  It does not model optimizer-elided locals, hidden temporaries, register
-selection, spills, parameter ABI offsets, or target-specific object binding.
+This module is a research model, not production tooling. It predicts BP homes
+and the observed SI/DI assignment for explicit one-word ``register`` objects.
+It derives save/restore order from those assignments plus any caller-supplied
+compiler-generated SI/DI uses. It does not infer hidden temporaries, spills,
+parameter ABI offsets, or target-specific object binding.
 """
 from __future__ import annotations
 
@@ -88,15 +90,176 @@ def _path(local: dict) -> tuple[str, ...]:
     return tuple(str(item) for item in value)
 
 
-def predict(locals_: list[dict]) -> dict:
+REGISTER_SEQUENCE = ("si", "di")
+
+
+def _is_explicit_register(row: dict) -> bool:
+    return row.get("storage") == "register" or bool(row.get("register", False))
+
+
+def _register_type_eligible(row: dict) -> tuple[bool, str]:
+    """Classify the observed MSC 5.10 register-local candidate types.
+
+    The tested allocator places one-word integer and near-pointer objects in
+    SI/DI.  Byte scalars, longs, and far pointers keep their homes in memory.
+    An explicit ``register_candidate`` field can describe a future observed
+    scalar spelling without changing the conservative defaults.
+    """
+    if row.get("register_candidate") is False:
+        return False, "candidate_disabled"
+    spelling = str(row.get("type", "int")).strip().lower()
+    if re.search(r"\[\s*\d*\s*\]", spelling):
+        return False, "array"
+    if "*" in spelling:
+        try:
+            size = allocated_size(row)
+        except (TypeError, ValueError):
+            size = 4 if "far" in spelling else 2
+        return (size == 2, "near_pointer" if size == 2 else "far_pointer_or_wide_pointer")
+    if re.search(r"\b(char|long|float|double|struct|union|void)\b", spelling):
+        return False, "non_word_scalar_or_aggregate"
+    if not re.search(r"\b(short|int|enum)\b", spelling) and row.get("register_candidate") is not True:
+        return False, "unmodeled_type"
+    try:
+        size = allocated_size(row)
+    except (TypeError, ValueError):
+        size = int(row.get("size_bytes", row.get("size", 0)))
+    return (size == 2, "word_integer" if size == 2 else "wide_integer")
+
+
+def _register_assignment(locals_: list[dict], other_register_uses=None) -> dict:
+    """Predict SI/DI for explicit register objects using lexical lifetimes.
+
+    Register candidates are visited in source declaration order, independent
+    of the identifier-hash order used for BP homes. Function parameters marked
+    register enter before locals. A nested scope inherits the active registers;
+    its assignments are released at scope exit, allowing sibling reuse.
+    """
+    rows = []
+    for index, original in enumerate(locals_):
+        row = dict(original)
+        row.setdefault("key", f"{row.get('name', 'local')}@{index}")
+        row.setdefault("declaration_index", index)
+        row["_input_order"] = index
+        row["block_path"] = _path(row)
+        row["explicit_register"] = _is_explicit_register(row)
+        row["assigned_register"] = None
+        if not row["explicit_register"]:
+            row["register_reason"] = "not_explicit_register"
+            row["type_eligible"] = False
+            row["register_candidate"] = False
+        else:
+            eligible, reason = _register_type_eligible(row)
+            row["type_eligible"] = eligible
+            initialized = bool(row.get("initialized", row.get("initializer") is not None))
+            referenced = bool(row.get("referenced", row.get("used", True)))
+            row["register_candidate"] = eligible and (initialized or referenced)
+            row["register_reason"] = reason
+            if eligible and not initialized and not referenced:
+                row["register_reason"] = "unreferenced_uninitialized"
+        rows.append(row)
+
+    assignments = []
+
+    def try_assign(row, active):
+        if not row["register_candidate"]:
+            return active
+        available = next((reg for reg in REGISTER_SEQUENCE if reg not in active), None)
+        if available is None:
+            row["register_reason"] = "no_free_register"
+            return active
+        row["assigned_register"] = available
+        row["register_reason"] = "assigned"
+        return set(active) | {available}
+
+    # Explicit register parameters are present before any body declaration.
+    active = set()
+    params = sorted((r for r in rows if r.get("storage") == "parameter"),
+                    key=lambda r: (int(r["declaration_index"]), r["_input_order"]))
+    for row in params:
+        active = try_assign(row, active)
+
+    candidate_rows = [r for r in rows if r.get("storage") != "parameter"]
+    path_rows = {}
+    child_paths = {}
+    for row in candidate_rows:
+        path = row["block_path"]
+        path_rows.setdefault(path, []).append(row)
+        for depth in range(1, len(path) + 1):
+            parent, child = path[:depth - 1], path[:depth]
+            children = child_paths.setdefault(parent, [])
+            if child not in children:
+                children.append(child)
+
+    def subtree_first(path):
+        indexes = [int(r["declaration_index"]) for r in candidate_rows
+                   if r["block_path"][:len(path)] == path]
+        return min(indexes) if indexes else 10**12
+
+    def walk(path, inherited):
+        state = set(inherited)
+        events = []
+        for row in path_rows.get(path, []):
+            events.append((int(row["declaration_index"]), row["_input_order"], "local", row))
+        for child in child_paths.get(path, []):
+            events.append((subtree_first(child), -1, "child", child))
+        for _, _, kind, item in sorted(events, key=lambda e: (e[0], e[1])):
+            if kind == "local":
+                state = try_assign(item, state)
+            else:
+                # Child register assignments are scoped and freed on return.
+                walk(item, state)
+
+    walk((), active)
+    extra = set()
+    for register in (other_register_uses or []):
+        value = str(register).strip().lower()
+        if value not in REGISTER_SEQUENCE:
+            raise ValueError(f"unsupported non-local register use: {register!r}; use SI or DI")
+        extra.add(value)
+    assigned = {r["assigned_register"] for r in rows if r["assigned_register"]}
+    used_registers = assigned | extra
+    push_sequence = [reg for reg in reversed(REGISTER_SEQUENCE) if reg in used_registers]
+    pop_sequence = [reg for reg in REGISTER_SEQUENCE if reg in used_registers]
+    for row in rows:
+        if row["explicit_register"]:
+            assignments.append({"key": row["key"], "name": row.get("name"),
+                                "type": row.get("type"), "storage": row.get("storage"),
+                                "block": list(row["block_path"]),
+                                "declaration_index": int(row["declaration_index"]),
+                                "eligible": row["type_eligible"],
+                                "candidate": row["register_candidate"],
+                                "register": row["assigned_register"],
+                                "reason": row["register_reason"]})
+    return {
+        "register_rule": {
+            "candidate_order": "explicit register parameters first, then source declaration order among active lexical scopes",
+            "register_order": ["SI", "DI"],
+            "eligible_types": "one-word integer scalars and near pointers; not char, long, aggregate, array, or far pointer",
+            "dead_declaration": "an initialized candidate remains assigned even if its value is later dead; an uninitialized unreferenced declaration does not consume a register",
+            "scope": "active outer assignments remain reserved; child assignments are released at block exit and siblings can reuse them",
+            "home_interaction": "explicit register locals still receive normal BP homes from the independent local-name hash rule",
+        },
+        "register_assignments": assignments,
+        "assigned_registers": [reg for reg in REGISTER_SEQUENCE if reg in assigned],
+        "other_register_uses": [reg for reg in REGISTER_SEQUENCE if reg in extra],
+        "used_registers": [reg for reg in REGISTER_SEQUENCE if reg in used_registers],
+        "prologue_push_sequence": push_sequence,
+        "epilogue_pop_sequence": pop_sequence,
+        "push_sequence_scope": "complete only when other_register_uses includes compiler-generated SI/DI uses outside explicit register objects",
+    }
+
+
+def predict(locals_: list[dict], *, other_register_uses=None) -> dict:
     """Predict BP offsets for locals.
 
     Each item has ``name`` and may provide ``type`` or ``size_bytes``,
     ``block`` (a lexical path, default root), ``storage`` (``auto``,
     ``register``, ``static`` or ``parameter``), and ``declaration_index``.
     Input order supplies the declaration index when it is omitted.  The result
-    contains per-local rows, exact per-block allocation order, and maximum
-    stack bytes implied by this local set.
+    contains per-local rows, exact per-block allocation order, maximum stack
+    bytes, explicit register assignments, and the save/restore sequence implied
+    by those assignments plus ``other_register_uses``.
     """
     records = []
     for index, original in enumerate(locals_):
@@ -191,7 +354,7 @@ def predict(locals_: list[dict]) -> dict:
         return subtree_slots
 
     assign((), False)
-    return {
+    result = {
         "rule": {"bucket_count": 16,
                  "bucket": "sum(first 31 significant identifier ASCII bytes) & 0x0f",
                  "bucket_visit": "ascending 0..15", "chain_visit": "reverse declaration order",
@@ -205,6 +368,8 @@ def predict(locals_: list[dict]) -> dict:
         "blocks": orders,
         "frame_bytes": cursor,
     }
+    result.update(_register_assignment(locals_, other_register_uses))
+    return result
 
 
 def suggest_names(desired_home_order, candidates=None, *, allowed_by_local=None):
@@ -303,10 +468,112 @@ def suggest_names(desired_home_order, candidates=None, *, allowed_by_local=None)
             "note": "Declare locals in declaration_order; ordinary lexical blocks still determine nesting homes."}
 
 
+def suggest_registers(desired_assignments, candidates=None, *, allowed_by_local=None,
+                      occupied_registers=None):
+    """Suggest readable names and declaration order for desired SI/DI locals.
+
+    ``desired_assignments`` may be ``{"si": "index", "di": "source"}`` or
+    a list of records with ``register``, ``key``/``name`` and optional ``type``.
+    For candidates active in one lexical block, declaring the SI item before
+    the DI item realizes the requested mapping.  Names affect BP-home hash
+    order only; the returned ``bp_home_order`` makes that independent order
+    visible for later ``suggest_names``/``predict`` work.
+    """
+    if isinstance(desired_assignments, dict):
+        requested = []
+        for reg, item in desired_assignments.items():
+            if isinstance(item, dict):
+                row = dict(item)
+                row.setdefault("register", reg)
+            else:
+                row = {"register": reg, "name": str(item), "key": str(item)}
+            requested.append(row)
+    else:
+        requested = [dict(row) for row in desired_assignments]
+    order = {"si": 0, "di": 1}
+    for row in requested:
+        reg = str(row.get("register", "")).lower()
+        if reg not in order:
+            raise ValueError(f"desired register must be SI or DI: {reg!r}")
+        row["register"] = reg
+        row.setdefault("key", row.get("name", f"local{len(requested)}"))
+        row.setdefault("name", row["key"])
+        row.setdefault("type", "int")
+    requested.sort(key=lambda row: order[row["register"]])
+    if len({row["register"] for row in requested}) != len(requested):
+        raise ValueError("a single active scope can assign at most one desired local to each register")
+    occupied = {str(reg).lower() for reg in (occupied_registers or [])}
+    if occupied - set(order):
+        raise ValueError("occupied_registers accepts only SI and DI")
+    active = set(occupied)
+    for row in requested:
+        available = next((reg for reg in REGISTER_SEQUENCE if reg not in active), None)
+        if available != row["register"]:
+            context = f" with active {', '.join(sorted(occupied))}" if occupied else ""
+            raise ValueError(f"requested {row['register'].upper()} assignment is not reachable{context}; "
+                             "declarations take the first free register")
+        active.add(available)
+
+    pool = list(DEFAULT_NAMES if candidates is None else candidates)
+    unique = []
+    for name in pool:
+        if name not in unique and _IDENT.fullmatch(name):
+            bucket(name)
+            unique.append(name)
+    if len(unique) < len(requested):
+        raise ValueError("not enough candidate identifiers for requested register assignments")
+
+    options = []
+    name_index = {name: i for i, name in enumerate(unique)}
+    costs = {}
+    for index, row in enumerate(requested):
+        key, label = str(row["key"]), str(row["name"])
+        allowed = (allowed_by_local or {}).get(key, (allowed_by_local or {}).get(label, unique))
+        if isinstance(allowed, str):
+            allowed = [allowed]
+        values = [name for name in unique if name in set(allowed)]
+        if not values:
+            raise ValueError(f"no candidate identifier is allowed for {label!r}")
+        options.append(values)
+        for name in values:
+            similarity = difflib.SequenceMatcher(None, label.lower(), name.lower()).ratio()
+            costs[index, name] = (1.0 - similarity) * 20 + name_index[name] * 0.01
+
+    @lru_cache(None)
+    def choose(position, used_mask):
+        if position == len(requested):
+            return 0.0, ()
+        best = None
+        for name in options[position]:
+            bit = 1 << name_index[name]
+            if used_mask & bit:
+                continue
+            tail = choose(position + 1, used_mask | bit)
+            candidate = (costs[position, name] + tail[0], (name,) + tail[1])
+            if best is None or candidate < best:
+                best = candidate
+        return best
+
+    score, names = choose(0, 0) if requested else (0.0, ())
+    assignments = []
+    for row, name in zip(requested, names):
+        assignments.append({"key": str(row["key"]), "local": str(row["name"]),
+                            "identifier": name, "type": row["type"],
+                            "register": row["register"].upper(), "bucket": bucket(name)})
+    declaration_order = [row["key"] for row in assignments]
+    home_rows = sorted(assignments, key=lambda row: (row["bucket"],
+                                                     -declaration_order.index(row["key"])))
+    return {"assignments": assignments, "declaration_order": declaration_order,
+            "bp_home_order": [row["key"] for row in home_rows], "score": score,
+            "occupied_registers": [reg for reg in REGISTER_SEQUENCE if reg in occupied],
+            "note": "Declare SI-assigned locals before DI-assigned locals within one active scope; names choose BP-home buckets, not register identity."}
+
+
 def locals_from_source(source: str, function: str) -> list[dict]:
     """Read simple local declarations from one C function for quick CLI probes.
 
-    Aggregate sizes and complex declarators should use the JSON input form.
+    Simple register parameters and local declarators are included. Aggregate
+    sizes and complex declarators should use the JSON input form.
     """
     match = re.search(r'\b' + re.escape(function) + r'\s*\([^;{}]*\)\s*\{', source)
     if not match:
@@ -323,11 +590,30 @@ def locals_from_source(source: str, function: str) -> list[dict]:
     if depth:
         raise ValueError('unterminated function body')
     body = re.sub(r'/\*.*?\*/|//[^\n]*', '', source[start:end-1], flags=re.S)
+    rows = []
+    header = match.group(0)
+    params = header[header.find('(') + 1:header.rfind(')')]
+    if params.strip() and params.strip() != 'void':
+        parameter_pattern = re.compile(
+            r'^\s*(register\s+)?(.+?)\s+(\*+\s*)?([A-Za-z_]\w*)'
+            r'(\s*\[\s*\d+\s*\])?\s*$')
+        for parameter in params.split(','):
+            found_param = parameter_pattern.match(parameter)
+            if not found_param:
+                continue
+            param_name = found_param.group(4)
+            rows.append({'name': param_name,
+                         'type': found_param.group(2).strip() + ' '
+                                 + (found_param.group(3) or '').replace(' ', '')
+                                 + (found_param.group(5) or ''),
+                         'storage': 'parameter', 'register': bool(found_param.group(1)),
+                         'block': [], 'initialized': False,
+                         'referenced': len(re.findall(r'\b' + re.escape(param_name) + r'\b', body)) > 0})
     declaration = re.compile(
         r'^\s*(?:(register|static)\s+)?'
-        r'((?:(?:unsigned|signed|short|long|char|int|void|far|near|const)\s+)+)'
+        r'((?:(?:unsigned|signed|short|long|char|int|void|far|near|const)\s+)+'
+        r'|(?:struct|union|enum)\s+[A-Za-z_]\w*(?:\s+(?:far|near|const))*)\s*'
         r'(.+)$', re.S)
-    rows = []
     scope = []
     scope_number = 0
     statement = ''
@@ -336,15 +622,21 @@ def locals_from_source(source: str, function: str) -> list[dict]:
             found = declaration.match(statement)
             if found:
                 for declarator in found.group(3).split(','):
+                    initialized = '=' in declarator
                     declarator = declarator.split('=', 1)[0].strip()
+                    if not declarator:
+                        continue
                     name_match = re.fullmatch(r'(\*+\s*)?([A-Za-z_]\w*)(\s*\[\s*\d+\s*\])?', declarator)
                     if not name_match:
                         raise ValueError('Complex declarator requires JSON local specification: ' + declarator)
-                    rows.append({'name': name_match.group(2),
+                    name = name_match.group(2)
+                    rows.append({'name': name,
                                  'type': found.group(2).strip() + ' '
                                          + ('*' if name_match.group(1) else '')
                                          + (name_match.group(3) or ''),
-                                 'storage': found.group(1) or 'auto', 'block': list(scope)})
+                                 'storage': found.group(1) or 'auto', 'block': list(scope),
+                                 'initialized': initialized,
+                                 'referenced': len(re.findall(r'\b' + re.escape(name) + r'\b', body)) > 1})
             statement = ''
             if char == '{':
                 scope_number += 1
@@ -364,20 +656,47 @@ def main():
     parser.add_argument("--candidates", nargs="*", help="Identifier pool for --names")
     parser.add_argument("--source", type=Path, help="C source containing a simple function body")
     parser.add_argument("--function", help="Function name with --source")
+    parser.add_argument("--registers", nargs="+",
+                        help="Suggest SI/DI locals, e.g. si:index di:source (bare labels map to SI then DI)")
+    parser.add_argument("--occupied-registers", nargs="*", choices=REGISTER_SEQUENCE,
+                        help="Already active register locals from enclosing scopes")
+    parser.add_argument("--other-register-uses", nargs="*", choices=REGISTER_SEQUENCE,
+                        help="Known SI/DI uses from generated code outside explicit register locals")
     args = parser.parse_args()
-    if args.names is not None:
+    if args.registers is not None:
+        assignments = {}
+        bare_labels = []
+        for token in args.registers:
+            if ':' in token:
+                reg, label = token.split(':', 1)
+                assignments[reg] = label
+            else:
+                bare_labels.append(token)
+        occupied = {str(reg).lower() for reg in (args.occupied_registers or [])}
+        for label in bare_labels:
+            reg = next((item for item in REGISTER_SEQUENCE
+                        if item not in assignments and item not in occupied), None)
+            if reg is None:
+                parser.error("no free register for bare label; use explicit SI/DI assignment syntax")
+            assignments[reg] = label
+        print(json.dumps(suggest_registers(assignments, args.candidates,
+                                           occupied_registers=args.occupied_registers), indent=2))
+    elif args.names is not None:
         print(json.dumps(suggest_names(args.names, args.candidates), indent=2))
     else:
         if args.source:
             if not args.function:
                 parser.error("--source requires --function")
             locals_ = locals_from_source(args.source.read_text(encoding="latin1"), args.function)
+            other_register_uses = args.other_register_uses or []
         else:
             if args.input is None:
                 parser.error("provide a local-spec JSON file, --source/--function, or --names")
             value = json.loads(Path(args.input).read_text(encoding="utf-8"))
             locals_ = value.get("locals", value) if isinstance(value, dict) else value
-        print(json.dumps(predict(locals_), indent=2))
+            other_register_uses = args.other_register_uses or (
+                value.get("other_register_uses", []) if isinstance(value, dict) else [])
+        print(json.dumps(predict(locals_, other_register_uses=other_register_uses), indent=2))
 
 
 if __name__ == "__main__":

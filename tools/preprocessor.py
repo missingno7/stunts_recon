@@ -9,6 +9,10 @@ _DIRECTIVE = re.compile(r'^\s*#\s*([A-Za-z_]+)\b(.*)$')
 _INCLUDE = re.compile(r'^\s*([<"])([^>"]+)[>"]\s*(?:/\*.*\*/\s*)?$')
 _ALLOWED = {'define', 'undef', 'if', 'ifdef', 'ifndef', 'else', 'endif', 'include'}
 _PACK = re.compile(r'^pack\s*\(\s*(1|2|4)?\s*\)\s*(?:/\*.*\*/\s*)?$', re.I)
+_INTRINSIC_NAMES = frozenset({'inp', 'outp', 'inpw', 'outpw', '_enable', '_disable',
+    'acos', 'asin', 'atan', 'atan2', 'cos', 'cosh', 'exp', 'fabs', 'fmod',
+    'log', 'log10', 'pow', 'sin', 'sinh', 'sqrt', 'tan', 'tanh'})
+_FUNCTION_PRAGMA = re.compile(r'^(intrinsic|function)\s*\(\s*([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*\)\s*(?:/\*.*\*/\s*)?$', re.I)
 
 
 def prepare(source, profile):
@@ -45,9 +49,17 @@ def prepare(source, profile):
             directive, argument = match.group(1).lower(), match.group(2).strip()
             if directive == 'pragma':
                 pack = _PACK.fullmatch(argument)
-                require(pack is not None, 'Unsupported historical pragma')
-                pragmas.append({'pragma': 'pack', 'value': (int(pack.group(1)) if pack.group(1) else None),
-                                'path': stack[-1] if stack else '<source>', 'line': line_number})
+                function = _FUNCTION_PRAGMA.fullmatch(argument)
+                require(pack is not None or function is not None, 'Unsupported historical pragma')
+                if pack is not None:
+                    pragmas.append({'pragma': 'pack', 'value': (int(pack.group(1)) if pack.group(1) else None),
+                                    'path': stack[-1] if stack else '<source>', 'line': line_number})
+                else:
+                    names=[name.strip() for name in function.group(2).split(',')]
+                    require(all(name in _INTRINSIC_NAMES for name in names),
+                            'Unsupported historical pragma intrinsic/function name')
+                    pragmas.append({'pragma': function.group(1).lower(), 'names': names,
+                                    'path': stack[-1] if stack else '<source>', 'line': line_number})
                 output.append(line)
                 continue
             require(directive in _ALLOWED, f'Unsupported preprocessor directive: #{directive}')

@@ -235,6 +235,33 @@
       "frame_load_address": 117840,
       "owner": "library_lmul"
     },
+    "__aFuldiv": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a561dc51c",
+          "relocation": {
+            "load_offset": 8968,
+            "offset": 8968,
+            "segment": 0
+          },
+          "site": 8965
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a561dc51c",
+          "relocation": {
+            "load_offset": 26361,
+            "offset": 26361,
+            "segment": 0
+          },
+          "site": 26358
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "owner": "library_uldiv"
+    },
     "__fflush": {
       "anchors": [
         {
@@ -511,6 +538,38 @@
         "stable_id": "load_1df28",
         "start": 122664
       }
+    },
+    "_abs": {
+      "anchors": [
+        {
+          "caller_task": "load_087b2",
+          "hex": "9a3819c51c",
+          "relocation": {
+            "load_offset": 34957,
+            "offset": 34957,
+            "segment": 0
+          },
+          "site": 34954
+        },
+        {
+          "caller_task": "load_163c6",
+          "hex": "9a3819c51c",
+          "relocation": {
+            "load_offset": 91095,
+            "offset": 25559,
+            "segment": 4096
+          },
+          "site": 91092
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "evidence": "Original far CALL opcode/operand at each anchor plus MZ relocation at site+3; pinned runtime public and complete member are in layout/manifest.json.",
+      "frame_load_address": 117840,
+      "mapped_runtime_entry": {
+        "end": 124318,
+        "start": 124296
+      },
+      "owner": "library_abs"
     },
     "_add_exit_handler": {
       "anchors": [
@@ -1533,6 +1592,54 @@
         "start": 141100
       }
     },
+    "_do_dea_textres": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106918,
+        "name": "do_dea_textres",
+        "sha256": "be3567d789582d8923c1a7c24fa731f72d600fd236aa7a9e9de4a7928a39333b",
+        "stable_id": "load_1a118",
+        "start": 106776
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8682cba4b17",
+          "relocation": {
+            "load_offset": 172253,
+            "offset": 41181,
+            "segment": 8192
+          },
+          "site": 172249
+        }
+      ],
+      "reviewed_alias": "_do_dea_textres"
+    },
+    "_do_dos_restext": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106422,
+        "name": "do_dos_restext",
+        "sha256": "b5ed4ca3d37bc5ba91dbf1c68df14b00191a9dd99b59c282073e2f8958139428",
+        "stable_id": "load_19f5c",
+        "start": 106332
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8ac2aba4b17",
+          "relocation": {
+            "load_offset": 171753,
+            "offset": 40681,
+            "segment": 8192
+          },
+          "site": 171749
+        }
+      ],
+      "reviewed_alias": "_do_dos_restext"
+    },
     "_do_fileselect_dialog": {
       "anchors": [
         {
@@ -1565,6 +1672,54 @@
         "start": 98004
       }
     },
+    "_do_joy_restext": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105882,
+        "name": "do_joy_restext",
+        "sha256": "f1463c7241e625155fd4500fd2a9c391b24d8be0a2e045fc7da3c3ec8fe35ae7",
+        "stable_id": "load_19b32",
+        "start": 105266
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b88226ba4b17",
+          "relocation": {
+            "load_offset": 171653,
+            "offset": 40581,
+            "segment": 8192
+          },
+          "site": 171649
+        }
+      ],
+      "reviewed_alias": "_do_joy_restext"
+    },
+    "_do_key_restext": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105972,
+        "name": "do_key_restext",
+        "sha256": "8ea8594a2149266f3a93af268f80b5c0ea1d26316c89b33b53861ba04e3fe7e5",
+        "stable_id": "load_19d9a",
+        "start": 105882
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8ea28ba4b17",
+          "relocation": {
+            "load_offset": 171673,
+            "offset": 40601,
+            "segment": 8192
+          },
+          "site": 171669
+        }
+      ],
+      "reviewed_alias": "_do_key_restext"
+    },
     "_do_mer_restext": {
       "anchors": [
         {
@@ -1587,6 +1742,30 @@
         "stable_id": "load_1a200",
         "start": 107008
       }
+    },
+    "_do_mof_restext": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106234,
+        "name": "do_mof_restext",
+        "sha256": "17154fa58f8f57d6601eef63cdb773f17ab24910c4779d6a2fd42195321b74d8",
+        "stable_id": "load_19e98",
+        "start": 106136
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8e829ba4b17",
+          "relocation": {
+            "load_offset": 171693,
+            "offset": 40621,
+            "segment": 8192
+          },
+          "site": 171689
+        }
+      ],
+      "reviewed_alias": "_do_mof_restext"
     },
     "_do_mou_restext": {
       "anchors": [
@@ -1634,6 +1813,30 @@
         "start": 38368
       }
     },
+    "_do_pau_restext": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106136,
+        "name": "do_pau_restext",
+        "sha256": "5f56841a3419740c988518cdfe99fede83a4d7939282c96e2e0e188f7b46d064",
+        "stable_id": "load_19e4a",
+        "start": 106058
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b89a29ba4b17",
+          "relocation": {
+            "load_offset": 171713,
+            "offset": 40641,
+            "segment": 8192
+          },
+          "site": 171709
+        }
+      ],
+      "reviewed_alias": "_do_pau_restext"
+    },
     "_do_savefile_dialog": {
       "anchors": [
         {
@@ -1656,6 +1859,30 @@
         "stable_id": "load_1863a",
         "start": 99898
       }
+    },
+    "_do_sonsof_restext": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106332,
+        "name": "do_sonsof_restext",
+        "sha256": "fde598ab98df9a70439f10f4af433dafc396bf02138bc766b2a0e6bb2e68e4e5",
+        "stable_id": "load_19efa",
+        "start": 106234
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b84a2aba4b17",
+          "relocation": {
+            "load_offset": 171773,
+            "offset": 40701,
+            "segment": 8192
+          },
+          "site": 171769
+        }
+      ],
+      "reviewed_alias": "_do_sonsof_restext"
     },
     "_draw_button": {
       "anchors": [
@@ -2265,6 +2492,41 @@
         "stable_id": "load_189f2",
         "start": 100850
       }
+    },
+    "_file_load_resource": {
+      "anchors": [
+        {
+          "caller_task": "load_0059a",
+          "hex": "9a1a254b17",
+          "relocation": {
+            "load_offset": 1576,
+            "offset": 1576,
+            "segment": 0
+          },
+          "site": 1573
+        },
+        {
+          "caller_task": "load_0293c",
+          "hex": "9a1a254b17",
+          "relocation": {
+            "load_offset": 10605,
+            "offset": 10605,
+            "segment": 0
+          },
+          "site": 10602
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105094,
+        "name": "file_load_resource",
+        "sha256": "e0ff93fd27308fa5c8c6aa7b06263bf82fe6e9a6564545d22775ac1915767c4c",
+        "stable_id": "load_199ca",
+        "start": 104906
+      },
+      "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
+      "reviewed_alias": "_file_load_resource"
     },
     "_file_load_shape2d": {
       "anchors": [
@@ -3470,6 +3732,28 @@
         "stable_id": "load_18f98",
         "start": 102296
       }
+    },
+    "_itoa": {
+      "anchors": [
+        {
+          "caller_task": "load_196e0",
+          "hex": "9a5017c51c",
+          "relocation": {
+            "load_offset": 104181,
+            "offset": 38645,
+            "segment": 4096
+          },
+          "site": 104178
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "evidence": "Original far CALL opcode/operand at each anchor plus MZ relocation at site+3; pinned runtime public and complete member are in layout/manifest.json.",
+      "frame_load_address": 117840,
+      "mapped_runtime_entry": {
+        "end": 123835,
+        "start": 123808
+      },
+      "owner": "library_itoa_123808"
     },
     "_kb_call_readchar_callback": {
       "anchors": [
@@ -5121,6 +5405,41 @@
         "start": 38804
       }
     },
+    "_polarAngle": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9a2e00a21e",
+          "relocation": {
+            "load_offset": 56517,
+            "offset": 56517,
+            "segment": 0
+          },
+          "site": 56514
+        },
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a2e00a21e",
+          "relocation": {
+            "load_offset": 9262,
+            "offset": 9262,
+            "segment": 0
+          },
+          "site": 9259
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125652,
+        "name": "polarAngle",
+        "sha256": "b5110285a4457dea4a35ade573aa9dfa7b693a8c937dbe2286cf03df44755ea5",
+        "stable_id": "load_1ea4e",
+        "start": 125518
+      },
+      "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
+      "reviewed_alias": "_polarAngle"
+    },
     "_polarRadius2D": {
       "anchors": [
         {
@@ -5184,6 +5503,40 @@
         "stable_id": "load_1ea08",
         "start": 125448
       }
+    },
+    "_ported_sprite_clear_1_color_": {
+      "anchors": [
+        {
+          "caller_task": "load_18f4e",
+          "hex": "9aa048a21e",
+          "relocation": {
+            "load_offset": 102244,
+            "offset": 36708,
+            "segment": 4096
+          },
+          "site": 102241
+        },
+        {
+          "caller_task": "load_18f7c",
+          "hex": "9aa048a21e",
+          "relocation": {
+            "load_offset": 102290,
+            "offset": 36754,
+            "segment": 4096
+          },
+          "site": 102287
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144176,
+        "name": "sprite_clear_1_color",
+        "sha256": "8d918de4811448e2cd83fb21e6f08eae03a170fc06cc8078a1e5010464c3bcd7",
+        "stable_id": "load_232c0",
+        "start": 144064
+      },
+      "reviewed_alias": "_ported_sprite_clear_1_color_"
     },
     "_preRender_default": {
       "anchors": [
@@ -6385,6 +6738,30 @@
         "start": 95878
       }
     },
+    "_show_graphic_levels_menu": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106776,
+        "name": "show_graphic_levels_menu",
+        "sha256": "fee71a7c9b9f68b87005abdc7a2e6a7cfe27dc8c86205276809cbfa1d6e93ffc",
+        "stable_id": "load_19fb6",
+        "start": 106422
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8062bba4b17",
+          "relocation": {
+            "load_offset": 171633,
+            "offset": 40561,
+            "segment": 8192
+          },
+          "site": 171629
+        }
+      ],
+      "reviewed_alias": "_show_graphic_levels_menu"
+    },
     "_show_waiting": {
       "anchors": [
         {
@@ -6928,6 +7305,34 @@
         "start": 140458
       }
     },
+    "_sprite_make_wnd": {
+      "anchors": [
+        {
+          "caller_task": "load_2a2c0",
+          "hex": "9aec61a21e",
+          "relocation": {
+            "load_offset": 172931,
+            "offset": 41859,
+            "segment": 8192
+          },
+          "site": 172928
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "entry_proof": {
+        "entry_hex": "558bec83ec081e5657",
+        "kind": "pinned-entry-after-verified-predecessor-v1",
+        "predecessor": "draw_patterned_lines",
+        "source_line": 14155,
+        "source_path": "src/restunts/asmorig/seg012.asm"
+      },
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "name": "sprite_make_wnd",
+        "start": 150540
+      },
+      "reviewed_alias": "_sprite_make_wnd"
+    },
     "_sprite_putimage": {
       "anchors": [
         {
@@ -7135,6 +7540,135 @@
         "stable_id": "load_23d30",
         "start": 146736
       }
+    },
+    "_sprite_shape_to_1_alt": {
+      "anchors": [
+        {
+          "caller_task": "load_0069c",
+          "hex": "9a2e53a21e",
+          "relocation": {
+            "load_offset": 1874,
+            "offset": 1874,
+            "segment": 0
+          },
+          "site": 1871
+        },
+        {
+          "caller_task": "load_00786",
+          "hex": "9a2e53a21e",
+          "relocation": {
+            "load_offset": 3836,
+            "offset": 3836,
+            "segment": 0
+          },
+          "site": 3833
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146878,
+        "name": "sprite_shape_to_1_alt",
+        "sha256": "f3144df745a608ac762a656892052f75e11b5b4aa6f35ac7af13e7adf86c78dd",
+        "stable_id": "load_23d4e",
+        "start": 146766
+      }
+    },
+    "_strcat": {
+      "anchors": [
+        {
+          "caller_task": "load_185c2",
+          "hex": "9a9616c51c",
+          "relocation": {
+            "load_offset": 99859,
+            "offset": 34323,
+            "segment": 4096
+          },
+          "site": 99856
+        },
+        {
+          "caller_task": "load_189f2",
+          "hex": "9a9616c51c",
+          "relocation": {
+            "load_offset": 100882,
+            "offset": 35346,
+            "segment": 4096
+          },
+          "site": 100879
+        },
+        {
+          "caller_task": "load_1a236",
+          "hex": "9a9616c51c",
+          "relocation": {
+            "load_offset": 107094,
+            "offset": 41558,
+            "segment": 4096
+          },
+          "site": 107091
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "evidence": "Original far CALL opcode/operand at each anchor plus MZ relocation at site+3; pinned runtime public and complete member are in layout/manifest.json.",
+      "frame_load_address": 117840,
+      "mapped_runtime_entry": {
+        "end": 123685,
+        "start": 123622
+      },
+      "owner": "library_strcat"
+    },
+    "_strcmp": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a0817c51c",
+          "relocation": {
+            "load_offset": 7564,
+            "offset": 7564,
+            "segment": 0
+          },
+          "site": 7561
+        },
+        {
+          "caller_task": "load_044cf",
+          "hex": "9a0817c51c",
+          "relocation": {
+            "load_offset": 18080,
+            "offset": 18080,
+            "segment": 0
+          },
+          "site": 18077
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "owner": "library_strcmp"
+    },
+    "_strcpy": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9ad616c51c",
+          "relocation": {
+            "load_offset": 7664,
+            "offset": 7664,
+            "segment": 0
+          },
+          "site": 7661
+        },
+        {
+          "caller_task": "load_17ed4",
+          "hex": "9ad616c51c",
+          "relocation": {
+            "load_offset": 99746,
+            "offset": 34210,
+            "segment": 4096
+          },
+          "site": 99743
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "owner": "library_strcpy"
     },
     "_strlen": {
       "anchors": [
@@ -7467,6 +8001,41 @@
         "stable_id": "load_24526",
         "start": 148774
       }
+    },
+    "_sub_35C4E": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9a2e72a21e",
+          "relocation": {
+            "load_offset": 56933,
+            "offset": 56933,
+            "segment": 0
+          },
+          "site": 56930
+        },
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a2e72a21e",
+          "relocation": {
+            "load_offset": 74436,
+            "offset": 8900,
+            "segment": 4096
+          },
+          "site": 74433
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 155080,
+        "name": "sub_35C4E",
+        "sha256": "bd68c2379553309161c21b759582077a860c0438838e7cef6d4029e2f3f3fcd2",
+        "stable_id": "load_25c4e",
+        "start": 154702
+      },
+      "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
+      "reviewed_alias": "_sub_35C4E"
     },
     "_sub_3702E": {
       "anchors": [
@@ -8449,6 +9018,31 @@
         "start": 143356
       }
     },
+    "_video_set_mode4": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a3e16a21e",
+          "relocation": {
+            "load_offset": 172168,
+            "offset": 41096,
+            "segment": 8192
+          },
+          "site": 172165
+        }
+      ],
+      "change": "stable-ID qualification upgrade to existing alias",
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131254,
+        "name": "video_set_mode4",
+        "sha256": "b9057330ea19a409f3d0f9c3873dafae005b7ee2c71dc0da8da8b1890feae560",
+        "stable_id": "load_2005e",
+        "start": 131166
+      },
+      "reviewed_alias": "_video_set_mode4"
+    },
     "_video_set_mode_13h": {
       "anchors": [
         {
@@ -8494,282 +9088,163 @@
         "start": 149155
       }
     },
-    "_do_dea_textres": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_dea_textres",
-        "stable_id": "load_1a118",
-        "start": 106776,
-        "end": 106918,
-        "sha256": "be3567d789582d8923c1a7c24fa731f72d600fd236aa7a9e9de4a7928a39333b"
-      },
-      "reviewed_alias": "_do_dea_textres",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 172249,
-          "hex": "b8682cba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 41181,
-            "load_offset": 172253
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_do_dos_restext": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_dos_restext",
-        "stable_id": "load_19f5c",
-        "start": 106332,
-        "end": 106422,
-        "sha256": "b5ed4ca3d37bc5ba91dbf1c68df14b00191a9dd99b59c282073e2f8958139428"
-      },
-      "reviewed_alias": "_do_dos_restext",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171749,
-          "hex": "b8ac2aba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40681,
-            "load_offset": 171753
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_do_sonsof_restext": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_sonsof_restext",
-        "stable_id": "load_19efa",
-        "start": 106234,
-        "end": 106332,
-        "sha256": "fde598ab98df9a70439f10f4af433dafc396bf02138bc766b2a0e6bb2e68e4e5"
-      },
-      "reviewed_alias": "_do_sonsof_restext",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171769,
-          "hex": "b84a2aba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40701,
-            "load_offset": 171773
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_do_pau_restext": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_pau_restext",
-        "stable_id": "load_19e4a",
-        "start": 106058,
-        "end": 106136,
-        "sha256": "5f56841a3419740c988518cdfe99fede83a4d7939282c96e2e0e188f7b46d064"
-      },
-      "reviewed_alias": "_do_pau_restext",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171709,
-          "hex": "b89a29ba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40641,
-            "load_offset": 171713
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_do_mof_restext": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_mof_restext",
-        "stable_id": "load_19e98",
-        "start": 106136,
-        "end": 106234,
-        "sha256": "17154fa58f8f57d6601eef63cdb773f17ab24910c4779d6a2fd42195321b74d8"
-      },
-      "reviewed_alias": "_do_mof_restext",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171689,
-          "hex": "b8e829ba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40621,
-            "load_offset": 171693
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_do_key_restext": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_key_restext",
-        "stable_id": "load_19d9a",
-        "start": 105882,
-        "end": 105972,
-        "sha256": "8ea8594a2149266f3a93af268f80b5c0ea1d26316c89b33b53861ba04e3fe7e5"
-      },
-      "reviewed_alias": "_do_key_restext",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171669,
-          "hex": "b8ea28ba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40601,
-            "load_offset": 171673
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_do_joy_restext": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "do_joy_restext",
-        "stable_id": "load_19b32",
-        "start": 105266,
-        "end": 105882,
-        "sha256": "f1463c7241e625155fd4500fd2a9c391b24d8be0a2e045fc7da3c3ec8fe35ae7"
-      },
-      "reviewed_alias": "_do_joy_restext",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171649,
-          "hex": "b88226ba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40581,
-            "load_offset": 171653
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_show_graphic_levels_menu": {
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "name": "show_graphic_levels_menu",
-        "stable_id": "load_19fb6",
-        "start": 106422,
-        "end": 106776,
-        "sha256": "fee71a7c9b9f68b87005abdc7a2e6a7cfe27dc8c86205276809cbfa1d6e93ffc"
-      },
-      "reviewed_alias": "_show_graphic_levels_menu",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "site": 171629,
-          "hex": "b8062bba4b17",
-          "relocation": {
-            "segment": 8192,
-            "offset": 40561,
-            "load_offset": 171633
-          }
-        }
-      ],
-      "distinct_verified_callers": 1
-    },
-    "_ported_sprite_clear_1_color_": {
+    "add_exit_handler": {
       "anchors": [
         {
-          "caller_task": "load_18f4e",
-          "hex": "9aa048a21e",
+          "caller_task": "load_201a0",
+          "hex": "9afc13a21e",
           "relocation": {
-            "load_offset": 102244,
-            "offset": 36708,
-            "segment": 4096
+            "load_offset": 131681,
+            "offset": 609,
+            "segment": 8192
           },
-          "site": 102241
+          "site": 131678
         },
         {
-          "caller_task": "load_18f7c",
-          "hex": "9aa048a21e",
+          "caller_task": "load_20812",
+          "hex": "9afc13a21e",
           "relocation": {
-            "load_offset": 102290,
-            "offset": 36754,
-            "segment": 4096
+            "load_offset": 133244,
+            "offset": 2172,
+            "segment": 8192
           },
-          "site": 102287
+          "site": 133241
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130649,
+        "name": "add_exit_handler",
+        "sha256": "a82909711ad7cb9a4bd611b78e9ccc4ac2525a1a93d3b2706df1375b743ea6cc",
+        "stable_id": "load_1fe1c",
+        "start": 130588
+      },
+      "reviewed_alias": "add_exit_handler"
+    },
+    "kb_shift_state": {
+      "anchors": [
+        {
+          "caller_task": "load_26af4",
+          "hex": "9a1520a21e",
+          "relocation": {
+            "load_offset": 158466,
+            "offset": 27394,
+            "segment": 8192
+          },
+          "site": 158463
+        },
+        {
+          "caller_task": "load_26b05",
+          "hex": "9a1520a21e",
+          "relocation": {
+            "load_offset": 158483,
+            "offset": 27411,
+            "segment": 8192
+          },
+          "site": 158480
         }
       ],
       "distinct_verified_callers": 2,
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 144176,
-        "name": "sprite_clear_1_color",
-        "sha256": "8d918de4811448e2cd83fb21e6f08eae03a170fc06cc8078a1e5010464c3bcd7",
-        "stable_id": "load_232c0",
-        "start": 144064
+        "end": 133700,
+        "name": "kb_checking",
+        "sha256": "1e9aec00fbdebdc19b3f0574ef37a0f64419798d8efc7f9b3955693c24723e8c",
+        "stable_id": "load_20a35",
+        "start": 133685
       },
-      "reviewed_alias": "_ported_sprite_clear_1_color_"
+      "reviewed_alias": "kb_shift_state"
     },
-    "_video_set_mode4": {
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "name": "video_set_mode4",
-        "start": 131166,
-        "end": 131254,
-        "sha256": "b9057330ea19a409f3d0f9c3873dafae005b7ee2c71dc0da8da8b1890feae560"
-      },
-      "reviewed_alias": "_video_set_mode4",
+    "timer_get_counter": {
       "anchors": [
         {
-          "caller_task": "load_29e56",
-          "site": 172165,
-          "hex": "9a3e16a21e",
+          "caller_task": "load_1998e",
+          "hex": "9a583da21e",
           "relocation": {
-            "segment": 8192,
-            "offset": 41096,
-            "load_offset": 172168
-          }
+            "load_offset": 104872,
+            "offset": 39336,
+            "segment": 4096
+          },
+          "site": 104869
+        },
+        {
+          "caller_task": "load_20a77",
+          "hex": "9a583da21e",
+          "relocation": {
+            "load_offset": 133764,
+            "offset": 2692,
+            "segment": 8192
+          },
+          "site": 133761
         }
       ],
-      "distinct_verified_callers": 1
-    },
-    "_sprite_make_wnd": {
+      "distinct_verified_callers": 2,
       "frame_load_address": 125472,
       "mapped_target": {
-        "name": "sprite_make_wnd",
-        "start": 150540
+        "end": 141186,
+        "name": "timer_get_counter",
+        "sha256": "824af8fc2a6a6f4b97ff26c56c6376da0a14bae57eb2e49ef92c653499205dca",
+        "stable_id": "load_22778",
+        "start": 141176
       },
-      "reviewed_alias": "_sprite_make_wnd",
-      "entry_proof": {
-        "kind": "pinned-entry-after-verified-predecessor-v1",
-        "source_path": "src/restunts/asmorig/seg012.asm",
-        "source_line": 14155,
-        "predecessor": "draw_patterned_lines",
-        "entry_hex": "558bec83ec081e5657"
-      },
+      "reviewed_alias": "timer_get_counter"
+    },
+    "video_add_exithandler": {
       "anchors": [
         {
-          "caller_task": "load_2a2c0",
-          "site": 172928,
-          "hex": "9aec61a21e",
+          "caller_task": "load_23816",
+          "hex": "9a8e3ba21e",
           "relocation": {
-            "segment": 8192,
-            "offset": 41859,
-            "load_offset": 172931
-          }
+            "load_offset": 145433,
+            "offset": 14361,
+            "segment": 8192
+          },
+          "site": 145430
         }
       ],
-      "distinct_verified_callers": 1
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 140758,
+        "name": "video_add_exithandler",
+        "sha256": "2da28112debd092e3057902accaadb705206278d37d7b21609e6d5cf8deb0e67",
+        "stable_id": "load_225ae",
+        "start": 140718
+      },
+      "reviewed_alias": "video_add_exithandler"
+    },
+    "video_clear_color": {
+      "anchors": [
+        {
+          "caller_task": "load_203d8",
+          "hex": "9a8848a21e",
+          "relocation": {
+            "load_offset": 132062,
+            "offset": 990,
+            "segment": 8192
+          },
+          "site": 132059
+        },
+        {
+          "caller_task": "load_225d6",
+          "hex": "9a8848a21e",
+          "relocation": {
+            "load_offset": 140801,
+            "offset": 9729,
+            "segment": 8192
+          },
+          "site": 140798
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144064,
+        "name": "video_clear_color",
+        "sha256": "21cdb02328e72f6dce62013cdc1dc21b00125b5155a4a96592f2ed8b41e19be7",
+        "start": 144040
+      },
+      "reviewed_alias": "video_clear_color"
     }
   }
 }

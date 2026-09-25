@@ -79,6 +79,29 @@ class EvidenceTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     reviewed_functions(self.image)
 
+    def test_reviewed_dispatch_tables_reject_changed_bounds_and_targets(self):
+        reviewed = reviewed_functions(self.image)
+        self.assertEqual((reviewed['polarAngle']['start'], reviewed['polarAngle']['end']),
+                         (125518,125652))
+        self.assertEqual((reviewed['file_load_resource']['start'],
+                          reviewed['file_load_resource']['end']), (104906,105094))
+        self.assertEqual((reviewed['sub_35C4E']['start'],
+                          reviewed['sub_35C4E']['end']), (154702,155080))
+        import copy
+        original = read_json(ROOT/'layout/function-evidence.json')
+        for change in ('index', 'target', 'island'):
+            altered = copy.deepcopy(original)
+            row = next(f for f in altered['functions'] if f['name']=='polarAngle')
+            if change == 'index':
+                row['dispatch_tables'][0]['byte_index_values'][-1] = 16
+            elif change == 'target':
+                row['dispatch_tables'][0]['targets'][0] += 1
+            else:
+                row['data_islands'][0]['hex'] = '00' + row['data_islands'][0]['hex'][2:]
+            with self.subTest(change=change), patch('function_evidence.read_json', return_value=altered):
+                with self.assertRaises(ValueError):
+                    reviewed_functions(self.image)
+
     def test_numeric_source_emissions_match_the_original_image(self):
         evidence = read_json(ROOT / 'evidence/functions.json')
         functions = {row['name']: row for row in evidence['functions']}
@@ -178,6 +201,23 @@ class EvidenceTests(unittest.TestCase):
         with patch('data_symbols.read_json', return_value=corrupted):
             with self.assertRaises(ValueError):
                 resolve_symbols(names, self.image, self.relocations)
+
+    def test_intro_data_aliases_have_reference_names_and_object_bounds(self):
+        names = {'_bravshape', '_cliprect_unk', '_intro_cliprect',
+                 '_intro_colorvalue', '_logo2shape', '_logoshape',
+                 '_mat_temp', '_rect_unk2', '_rect_unk3', '_rect_unk6'}
+        resolved = resolve_symbols(names, self.image, self.relocations)
+        self.assertEqual(set(resolved), names)
+        self.assertEqual(len(resolved['_intro_cliprect']['allowed_addends']), 8)
+        self.assertEqual(len(resolve_symbols(['_rect_unk'], self.image,
+                         self.relocations)['_rect_unk']['allowed_addends']), 8)
+        changed = read_json(ROOT/'layout/data-symbols.json')
+        changed['symbols']['_logo2shape']['reference_declaration_line'] += 1
+        with patch('data_symbols.read_json', side_effect=lambda path:
+                   changed if path == ROOT/'layout/data-symbols.json' else read_json(path)):
+            with self.assertRaisesRegex(ValueError, 'label/use'):
+                resolve_symbols(['_logo2shape'], self.image, self.relocations)
+
 
     def test_bss_symbols_need_relocation_evidence(self):
         symbols = resolve_symbols(['_byte_44D06'], self.image, self.relocations)

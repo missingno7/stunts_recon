@@ -123,6 +123,16 @@ def bind_contribution(obj, recipe, symbols=None):
     if recipe.get('binding',{}).get('mode') == 'external-far-call-v1':
         return bind_far_calls(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
                               recipe['start'], recipe['expected_relocations'])
+    if recipe.get('binding',{}).get('mode') == 'asm-external-far-call-v1':
+        require(recipe.get('kind') == 'asm', 'ASM far binding requires ASM recipe')
+        return bind_far_calls(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
+                              recipe['start'], recipe['expected_relocations'],
+                              asm_frame=recipe['original_frame_load_address'])
+    if recipe.get('binding',{}).get('mode') == 'asm-external-cs-offset16-v1':
+        require(recipe.get('kind') == 'asm', 'ASM CS binding requires ASM recipe')
+        return bind_asm_cs_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'],
+                                symbols, recipe['original_frame_load_address'],
+                                recipe['expected_relocations'])
     if recipe.get('binding',{}).get('mode') == 'external-far-call-dgroup-offset16-v1':
         return bind_mixed_far_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
                                    recipe['start'], recipe['expected_relocations'])
@@ -142,7 +152,7 @@ def bind_contribution(obj, recipe, symbols=None):
 
 
 def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
-                   symbols, start, expected_relocations):
+                   symbols, start, expected_relocations, asm_frame=None):
     """Bounded unoptimized intersegment CALL; no far-to-near rewriting.
 
     Only zero-addend external pointer32 at a 9A operand, target frame, is proven.
@@ -162,8 +172,16 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
     for fix in expected_fixups:
         require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],fix['target_kind'],fix['target_method'])
                 ==(segment,'pointer32',4,False,'external',2), 'Unsupported far fixup kind/width/target')
-        require((fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
-                ==(5,'target',fix['target'],0), 'Unsupported far frame')
+        if asm_frame is None:
+            require((fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
+                    ==(5,'target',fix['target'],0), 'Unsupported far frame')
+        else:
+            definition, = [d for d in obj.segment_defs if d['name'] == segment]
+            require((fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
+                    ==(0,'segment',segment,definition['index']) and
+                    type(asm_frame) is int and asm_frame % 16 == 0 and
+                    asm_frame <= start < asm_frame + 65536,
+                    'ASM external far call lacks original same-segment frame')
         require(1<=fix['target_index']<=len(obj.externals) and obj.externals[fix['target_index']-1]==fix['target'],
                 'Invalid far external index')
         at=fix['offset']; require(type(at)is int and 1<=at<=length-4, 'Far operand outside contribution')
@@ -184,8 +202,50 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
         require(set(entry)=={'segment','offset','load_offset'} and 0<=entry['segment']<=65535 and
                 0<=entry['offset']<=65535 and entry['segment']*16+entry['offset']==entry['load_offset'],
                 'Invalid MZ relocation representation')
-    return bytes(payload), {'mode':'external-far-call-v1','fixups':obligations,
+    return bytes(payload), {'mode':'asm-external-far-call-v1' if asm_frame is not None else 'external-far-call-v1','fixups':obligations,
                            'generated_relocations':expected_relocations}
+
+
+def bind_asm_cs_data(obj, segment, public, length, expected_fixups, declarations,
+                     symbols, frame, expected_relocations):
+    """MASM LEA of one reviewed CS-resident sprite table."""
+    require(expected_fixups and obj.linker_fixups == expected_fixups and
+            declarations == {'segments':obj.segment_defs,'groups':obj.groups,
+                             'publics':obj.publics,'externals':obj.externals},
+            'ASM CS object declarations/FIXUPPs differ')
+    require(obj.publics == [{'name':public,'segment':segment,'offset':0}] and
+            obj.segment_length(segment)==length and len(obj.segment_bytes(segment))==length and
+            all(name==segment or size==0 for name,size in obj.segment_lengths.items()),
+            'ASM CS complete extent/public differs')
+    used={f['target'] for f in expected_fixups}
+    require(set(symbols)==used and set(obj.externals)==used and
+            expected_relocations==[], 'ASM CS external/relocation obligations differ')
+    definition,=[d for d in obj.segment_defs if d['name']==segment]
+    payload=bytearray(obj.segment_bytes(segment)); rows=[]; occupied=set()
+    for fix in expected_fixups:
+        at=fix['offset']; target=symbols[fix['target']]
+        require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],
+                 fix['target_kind'],fix['target_method'])==
+                (segment,'offset16',2,False,'external',2) and
+                (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                (0,'segment',segment,definition['index']) and
+                1<=fix['target_index']<=len(obj.externals) and
+                obj.externals[fix['target_index']-1]==fix['target'] and
+                fix['displacement']==0 and fix['encoded_addend']=='0000' and
+                2<=at<=length-2 and payload[at-2:at] in (b'\x8d\x36',b'\x8d\x3e') and
+                payload[at:at+2]==bytes(2) and
+                target['kind']=='cs-data' and target['frame_load_address']==frame and
+                target['island_start']<=target['load_address']<
+                target['load_address']+target['width']<=target['island_end'] and
+                not occupied.intersection((at,at+1)),
+                'Unsupported ASM CS table LEA/fixup')
+        occupied.update((at,at+1))
+        value=target['load_address']-frame
+        require(0<=value<=65535,'ASM CS offset exceeds segment')
+        struct.pack_into('<H',payload,at,value)
+        rows.append({'offset':at,'target':fix['target'],'linked_value':value})
+    return bytes(payload),{'mode':'asm-external-cs-offset16-v1','fixups':rows,
+                           'generated_relocations':[]}
 
 
 def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarations,
@@ -227,7 +287,19 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
         at = fix['offset']
         require(type(at) is int, 'Invalid mixed fixup offset')
         target = symbols[fix['target']]
-        if (fix['loc'], fix['width']) == ('pointer32', 4):
+        if fix['target'] == '__AHSHIFT':
+            require(target.get('kind') == 'absolute-runtime-word' and
+                    target.get('public') == '__AHSHIFT' and target.get('value') == 12 and
+                    (fix['loc'],fix['width']) == ('loader-offset16',2) and
+                    1 <= at <= length-2 and payload[at-1] == 0xb9 and
+                    fix['encoded_addend'] == '0000' and payload[at:at+2] == bytes(2) and
+                    not occupied.intersection(range(at,at+2)),
+                    'Unsupported __AHSHIFT absolute runtime fixup')
+            occupied.update(range(at,at+2))
+            struct.pack_into('<H',payload,at,12)
+            fixup_rows.append({'kind':'absolute-runtime-word','offset':at,
+                               'target':'__AHSHIFT','linked_value':12})
+        elif (fix['loc'], fix['width']) == ('pointer32', 4):
             require(1 <= at <= length - 4 and payload[at - 1] == 0x9a,
                     'Mixed far binding supports CALL operands only')
             require(fix['encoded_addend'] == '00000000' and payload[at:at + 4] == bytes(4),

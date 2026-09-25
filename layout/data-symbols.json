@@ -1,6 +1,25 @@
 {
   "bss_end": 222352,
   "bss_start": 199994,
+  "code_islands": {
+    "sprite_pair": {
+      "end": 149884,
+      "frame_anchor": {
+        "caller_task": "load_2a958",
+        "hex": "b83e5fbaa21e",
+        "relocation_load_offset": 174464,
+        "site": 174460
+      },
+      "frame_load_address": 125472,
+      "reference_lines": [
+        13738,
+        13798
+      ],
+      "reference_path": "src/restunts/asmorig/seg012.asm",
+      "sha256": "9cd4a83a13ec314b6d4a33ddd70df061804d17760cf93170c3cfb3df74b05146",
+      "start": 149824
+    }
+  },
   "frame_load_address": 178032,
   "frame_relocation": {
     "load_offset": 117869,
@@ -28,6 +47,48 @@
       "load_address": 178040,
       "storage": "initialized"
     },
+    "_aOpp_0": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 198602,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0d12e",
+          "fixup_site": 54262,
+          "load_address": 198602,
+          "member": "draw_ingame_text",
+          "reference": {
+            "hex": "ff365a50",
+            "operand_offset": 2,
+            "start": 54260
+          },
+          "text": "push word ptr [0x505a]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "aOpp_0",
+      "reference_span": {
+        "label_line": 3868,
+        "next_line": 3872,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:3868-3872"
+      },
+      "references": [
+        {
+          "function": "run_tracks_menu",
+          "hex": "ff365a50",
+          "operand_offset": 2,
+          "start": 4551
+        }
+      ],
+      "storage": "initialized",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:3868-3872"
+    },
     "_argc": {
       "load_address": 192008,
       "storage": "initialized"
@@ -37,146 +98,152 @@
       "storage": "initialized"
     },
     "_audiochunks_unk2": {
-      "load_address": 212524,
-      "storage": "bss",
-      "width": 608,
       "extent_proof": {
+        "index_bound": [
+          16,
+          23
+        ],
         "kind": "guarded-folded-index-v1",
         "reference_lines": [
           32492,
           33100
         ],
         "stride": 76,
-        "index_bound": [
-          16,
-          23
-        ],
         "witnesses": [
           {
-            "function": "audio_init_chunk2",
-            "start": 161354,
-            "end": 161430,
-            "sha256": "dae3c6786587ea708d8013c6005590a5750ea737b4ba157ef6d5c6b0b5862aca",
             "anchors": [
               {
-                "site": 161357,
-                "hex": "837e0610"
+                "hex": "837e0610",
+                "site": 161357
               },
               {
-                "site": 161361,
-                "hex": "7c41"
+                "hex": "7c41",
+                "site": 161361
               },
               {
-                "site": 161363,
-                "hex": "837e0617"
+                "hex": "837e0617",
+                "site": 161363
               },
               {
-                "site": 161367,
-                "hex": "7f3b"
+                "hex": "7f3b",
+                "site": 161367
               },
               {
-                "site": 161369,
-                "hex": "b84c00"
+                "hex": "b84c00",
+                "site": 161369
               },
               {
-                "site": 161372,
-                "hex": "f76e06"
+                "hex": "f76e06",
+                "site": 161372
               },
               {
-                "site": 161375,
-                "hex": "8bd8"
+                "hex": "8bd8",
+                "site": 161375
               },
               {
-                "site": 161379,
-                "hex": "8987fe81"
+                "hex": "8987fe81",
+                "site": 161379
               },
               {
-                "site": 161383,
-                "hex": "8987fc81"
+                "hex": "8987fc81",
+                "site": 161383
               }
-            ]
+            ],
+            "end": 161430,
+            "function": "audio_init_chunk2",
+            "sha256": "dae3c6786587ea708d8013c6005590a5750ea737b4ba157ef6d5c6b0b5862aca",
+            "start": 161354
           },
           {
-            "function": "sub_3771E",
-            "start": 161566,
-            "end": 161616,
-            "sha256": "aff5965217bd2966c8550bef114580fdf23261c86514d98e0092b79ae596a6b9",
             "anchors": [
               {
-                "site": 161582,
-                "hex": "837e0610"
+                "hex": "837e0610",
+                "site": 161582
               },
               {
-                "site": 161586,
-                "hex": "7cf4"
+                "hex": "7cf4",
+                "site": 161586
               },
               {
-                "site": 161588,
-                "hex": "837e0617"
+                "hex": "837e0617",
+                "site": 161588
               },
               {
-                "site": 161592,
-                "hex": "7fee"
+                "hex": "7fee",
+                "site": 161592
               },
               {
-                "site": 161594,
-                "hex": "b84c00"
+                "hex": "b84c00",
+                "site": 161594
               },
               {
-                "site": 161597,
-                "hex": "f76e06"
+                "hex": "f76e06",
+                "site": 161597
               },
               {
-                "site": 161600,
-                "hex": "8bd8"
+                "hex": "8bd8",
+                "site": 161600
               },
               {
-                "site": 161602,
-                "hex": "8b87fc81"
+                "hex": "8b87fc81",
+                "site": 161602
               },
               {
-                "site": 161606,
-                "hex": "0b87fe81"
+                "hex": "0b87fe81",
+                "site": 161606
               }
-            ]
+            ],
+            "end": 161616,
+            "function": "sub_3771E",
+            "sha256": "aff5965217bd2966c8550bef114580fdf23261c86514d98e0092b79ae596a6b9",
+            "start": 161566
           }
         ]
       },
       "generated_extent": {
-        "kind": "generated-indexed-v1",
-        "source_base": 33276,
-        "stride": 76,
-        "index_bound": [
-          16,
-          23
+        "anchors": [
+          {
+            "access": 161379,
+            "function": "audio_init_chunk2",
+            "start": 161354
+          },
+          {
+            "access": 161383,
+            "function": "audio_init_chunk2",
+            "start": 161354
+          },
+          {
+            "access": 161602,
+            "function": "sub_3771E",
+            "start": 161566
+          },
+          {
+            "access": 161606,
+            "function": "sub_3771E",
+            "start": 161566
+          }
         ],
         "field_offsets": [
           0,
           2
         ],
-        "anchors": [
-          {
-            "function": "audio_init_chunk2",
-            "start": 161354,
-            "access": 161379
-          },
-          {
-            "function": "audio_init_chunk2",
-            "start": 161354,
-            "access": 161383
-          },
-          {
-            "function": "sub_3771E",
-            "start": 161566,
-            "access": 161602
-          },
-          {
-            "function": "sub_3771E",
-            "start": 161566,
-            "access": 161606
-          }
-        ]
-      }
+        "index_bound": [
+          16,
+          23
+        ],
+        "kind": "generated-indexed-v1",
+        "source_base": 33276,
+        "stride": 76
+      },
+      "load_address": 212524,
+      "storage": "bss",
+      "width": 608
+    },
+    "_audiodriverstring": {
+      "load_address": 199442,
+      "storage": "initialized",
+      "width": 5,
+      "width_provenance": "reference-label-span: dseg.asm:21497-21502"
     },
     "_audioflag2": {
       "evidence": "docs/current/data-binding.md",
@@ -193,6 +260,20 @@
     "_audioflag6": {
       "load_address": 198195,
       "storage": "initialized"
+    },
+    "_bravshape": {
+      "load_address": 216304,
+      "reference_declaration_line": 36117,
+      "reference_label": "bravshape",
+      "reference_use_line": 6346,
+      "references": [
+        {
+          "hex": "b88095",
+          "operand_offset": 1,
+          "start": 55702
+        }
+      ],
+      "storage": "bss"
     },
     "_byte_2B82C": {
       "load_address": 178220,
@@ -1286,6 +1367,20 @@
       ],
       "storage": "bss"
     },
+    "_cliprect_unk": {
+      "load_address": 191236,
+      "reference_declaration_line": 14295,
+      "reference_label": "cliprect_unk",
+      "reference_use_line": 6866,
+      "references": [
+        {
+          "hex": "be9433",
+          "operand_offset": 1,
+          "start": 57011
+        }
+      ],
+      "storage": "initialized"
+    },
     "_crtenvseg": {
       "load_address": 192016,
       "storage": "initialized"
@@ -1300,7 +1395,31 @@
     },
     "_current_planptr": {
       "load_address": 216420,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_09926",
+          "fixup_site": 39225,
+          "load_address": 216420,
+          "member": "plane_origin_op",
+          "reference": {
+            "hex": "8b16f695",
+            "operand_offset": 2,
+            "start": 39223
+          },
+          "text": "mov dx, word ptr [0x95f6]"
+        }
+      ],
+      "reference_label": "current_planptr",
+      "reference_span": {
+        "label_line": 36211,
+        "next_line": 36212,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:36211-36212"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:36211-36212"
     },
     "_current_surf_type": {
       "load_address": 216391,
@@ -1313,6 +1432,92 @@
     "_curshapeptr": {
       "load_address": 215544,
       "storage": "bss"
+    },
+    "_curtransshape_ptr": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 222260,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 47178,
+          "load_address": 222260,
+          "member": "update_frame",
+          "reference": {
+            "hex": "8b1ec4ac",
+            "operand_offset": 2,
+            "start": 47176
+          },
+          "text": "mov bx, word ptr [0xacc4]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 48752,
+          "load_address": 222260,
+          "member": "update_frame",
+          "reference": {
+            "hex": "8b1ec4ac",
+            "operand_offset": 2,
+            "start": 48750
+          },
+          "text": "mov bx, word ptr [0xacc4]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0cb80",
+          "fixup_site": 52105,
+          "load_address": 222260,
+          "member": "transformed_shape_add_for_sort",
+          "reference": {
+            "hex": "a1c4ac",
+            "operand_offset": 1,
+            "start": 52104
+          },
+          "text": "mov ax, word ptr [0xacc4]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0cb80",
+          "fixup_site": 52178,
+          "load_address": 222260,
+          "member": "transformed_shape_add_for_sort",
+          "reference": {
+            "hex": "8306c4ac14",
+            "operand_offset": 2,
+            "start": 52176
+          },
+          "text": "add word ptr [0xacc4], 0x14"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        214502,
+        214508,
+        214534,
+        220596
+      ],
+      "reference_label": "curtransshape_ptr",
+      "reference_span": {
+        "label_line": 41741,
+        "next_line": 41742,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:41741-41742"
+      },
+      "references": [
+        {
+          "function": "update_frame",
+          "hex": "c706c4acca72",
+          "operand_offset": 2,
+          "start": 45345
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:41741-41742"
     },
     "_custom_camera_azimuth_angle": {
       "load_address": 178414,
@@ -1328,7 +1533,44 @@
     },
     "_cvxptr": {
       "load_address": 219680,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_06b02",
+          "fixup_site": 27452,
+          "load_address": 219680,
+          "member": "init_game_state",
+          "reference": {
+            "hex": "0316b2a2",
+            "operand_offset": 2,
+            "start": 27450
+          },
+          "text": "add dx, word ptr [0xa2b2]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_07008",
+          "fixup_site": 28775,
+          "load_address": 219680,
+          "member": "update_gamestate",
+          "reference": {
+            "hex": "0316b2a2",
+            "operand_offset": 2,
+            "start": 28773
+          },
+          "text": "add dx, word ptr [0xa2b2]"
+        }
+      ],
+      "reference_label": "cvxptr",
+      "reference_span": {
+        "label_line": 39340,
+        "next_line": 39341,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:39340-39341"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:39340-39341"
     },
     "_dasmshapeptr": {
       "load_address": 218272,
@@ -1558,13 +1800,79 @@
       "load_address": 222176,
       "storage": "bss"
     },
+    "_fontdef_unk_0E": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 219634,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11480,
+          "load_address": 219634,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a182a2",
+            "operand_offset": 1,
+            "start": 11479
+          },
+          "text": "mov ax, word ptr [0xa282]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "fontdef_unk_0E",
+      "reference_span": {
+        "label_line": 39301,
+        "next_line": 39302,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:39301-39302"
+      },
+      "references": [
+        {
+          "function": "run_car_menu",
+          "hex": "a182a2",
+          "operand_offset": 1,
+          "start": 9142
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:39301-39302"
+    },
     "_fontdef_value": {
       "load_address": 219634,
       "storage": "bss"
     },
     "_fontdefptr": {
       "load_address": 218310,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_198a8",
+          "fixup_site": 104618,
+          "load_address": 218310,
+          "member": "font_set_fontdef",
+          "reference": {
+            "hex": "ff36589d",
+            "operand_offset": 2,
+            "start": 104616
+          },
+          "text": "push word ptr [0x9d58]"
+        }
+      ],
+      "reference_label": "fontdefptr",
+      "reference_span": {
+        "label_line": 38063,
+        "next_line": 38064,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:38063-38064"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:38063-38064"
     },
     "_fontdefseg": {
       "load_address": 198144,
@@ -1572,11 +1880,89 @@
     },
     "_fontnptr": {
       "load_address": 216354,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11382,
+          "load_address": 216354,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff36b495",
+            "operand_offset": 2,
+            "start": 11380
+          },
+          "text": "push word ptr [0x95b4]"
+        }
+      ],
+      "reference_label": "fontnptr",
+      "reference_span": {
+        "label_line": 36165,
+        "next_line": 36166,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:36165-36166"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:36165-36166"
+    },
+    "_framespersec": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215504,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0d5b4",
+          "fixup_site": 54769,
+          "load_address": 215504,
+          "member": "init_crak",
+          "reference": {
+            "hex": "a16092",
+            "operand_offset": 1,
+            "start": 54768
+          },
+          "text": "mov ax, word ptr [0x9260]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "framespersec",
+      "reference_span": {
+        "label_line": 35385,
+        "next_line": 35388,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:35385-35388"
+      },
+      "references": [
+        {
+          "function": "print_highscore_entry",
+          "hex": "a16092",
+          "operand_offset": 1,
+          "start": 6596
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:35385-35388"
     },
     "_framespersec2": {
       "load_address": 216398,
       "storage": "bss"
+    },
+    "_g_ascii_props": {
+      "extent_proof": {
+        "first_line": 15377,
+        "kind": "ascii-table-256-v1",
+        "last_value_line": 15632,
+        "next_label_line": 15634,
+        "padding_line": 15633
+      },
+      "load_address": 192415,
+      "storage": "initialized",
+      "width": 256
     },
     "_g_is_busy": {
       "load_address": 178427,
@@ -1586,6 +1972,64 @@
       "load_address": 222162,
       "storage": "bss"
     },
+    "_game_replay_mode": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 220594,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_07008",
+          "fixup_site": 28852,
+          "load_address": 220594,
+          "member": "update_gamestate",
+          "reference": {
+            "hex": "803e42a600",
+            "operand_offset": 2,
+            "start": 28850
+          },
+          "text": "cmp byte ptr [0xa642], 0"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_07008",
+          "fixup_site": 28920,
+          "load_address": 220594,
+          "member": "update_gamestate",
+          "reference": {
+            "hex": "803e42a601",
+            "operand_offset": 2,
+            "start": 28918
+          },
+          "text": "cmp byte ptr [0xa642], 1"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        211260,
+        215177
+      ],
+      "reference_label": "game_replay_mode",
+      "reference_span": {
+        "label_line": 40193,
+        "next_line": 40195,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:40193-40195"
+      },
+      "references": [
+        {
+          "function": "update_player_state",
+          "hex": "803e42a601",
+          "operand_offset": 2,
+          "start": 25311
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:40193-40195"
+    },
     "_gameconfig": {
       "load_address": 215460,
       "storage": "bss",
@@ -1594,7 +2038,44 @@
     },
     "_gameresptr": {
       "load_address": 215456,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_0d5b4",
+          "fixup_site": 54722,
+          "load_address": 215456,
+          "member": "init_crak",
+          "reference": {
+            "hex": "ff363292",
+            "operand_offset": 2,
+            "start": 54720
+          },
+          "text": "push word ptr [0x9232]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0d5b4",
+          "fixup_site": 54748,
+          "load_address": 215456,
+          "member": "init_crak",
+          "reference": {
+            "hex": "ff363292",
+            "operand_offset": 2,
+            "start": 54746
+          },
+          "text": "push word ptr [0x9232]"
+        }
+      ],
+      "reference_label": "gameresptr",
+      "reference_span": {
+        "label_line": 35352,
+        "next_line": 35353,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:35352-35353"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:35352-35353"
     },
     "_height_above_replaybar": {
       "load_address": 219604,
@@ -1604,13 +2085,313 @@
       "load_address": 215451,
       "storage": "bss"
     },
+    "_hillHeightConsts": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 215451,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_06b02",
+          "fixup_site": 28337,
+          "load_address": 215451,
+          "member": "init_game_state",
+          "reference": {
+            "hex": "a02b92",
+            "operand_offset": 1,
+            "start": 28336
+          },
+          "text": "mov al, byte ptr [0x922b]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "hillHeightConsts",
+      "reference_span": {
+        "label_line": 1870,
+        "next_line": 1872,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:1870-1872"
+      },
+      "references": [
+        {
+          "function": "update_player_state",
+          "hex": "a02b92",
+          "operand_offset": 1,
+          "start": 26454
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:1870-1872"
+    },
     "_idle_counter": {
       "load_address": 215538,
       "storage": "bss"
     },
+    "_input_framecount": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191428,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100305,
+          "load_address": 191428,
+          "member": "input_checking",
+          "reference": {
+            "hex": "01065434",
+            "operand_offset": 2,
+            "start": 100303
+          },
+          "text": "add word ptr [0x3454], ax"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100309,
+          "load_address": 191428,
+          "member": "input_checking",
+          "reference": {
+            "hex": "813e5434204e",
+            "operand_offset": 2,
+            "start": 100307
+          },
+          "text": "cmp word ptr [0x3454], 0x4e20"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100317,
+          "load_address": 191428,
+          "member": "input_checking",
+          "reference": {
+            "hex": "812e54341027",
+            "operand_offset": 2,
+            "start": 100315
+          },
+          "text": "sub word ptr [0x3454], 0x2710"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        191426
+      ],
+      "reference_label": "input_framecount",
+      "reference_span": {
+        "label_line": 14467,
+        "next_line": 14468,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14467-14468"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "01065434",
+          "operand_offset": 2,
+          "start": 100303
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14467-14468"
+    },
+    "_input_framecount2": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191408,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100323,
+          "load_address": 191408,
+          "member": "input_checking",
+          "reference": {
+            "hex": "812e40341027",
+            "operand_offset": 2,
+            "start": 100321
+          },
+          "text": "sub word ptr [0x3440], 0x2710"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100740,
+          "load_address": 191408,
+          "member": "input_checking",
+          "reference": {
+            "hex": "a14034",
+            "operand_offset": 1,
+            "start": 100739
+          },
+          "text": "mov ax, word ptr [0x3440]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        213736
+      ],
+      "reference_label": "input_framecount2",
+      "reference_span": {
+        "label_line": 14457,
+        "next_line": 14458,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14457-14458"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "812e40341027",
+          "operand_offset": 2,
+          "start": 100321
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14457-14458"
+    },
+    "_input_framecount3": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191410,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100329,
+          "load_address": 191410,
+          "member": "input_checking",
+          "reference": {
+            "hex": "812e42341027",
+            "operand_offset": 2,
+            "start": 100327
+          },
+          "text": "sub word ptr [0x3442], 0x2710"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "input_framecount3",
+      "reference_span": {
+        "label_line": 14458,
+        "next_line": 14459,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14458-14459"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "812e42341027",
+          "operand_offset": 2,
+          "start": 100327
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14458-14459"
+    },
+    "_intro_cliprect": {
+      "load_address": 180662,
+      "reference_declaration_line": 3988,
+      "reference_label": "intro_cliprect",
+      "reference_use_line": 7056,
+      "references": [
+        {
+          "hex": "ff36460a",
+          "operand_offset": 2,
+          "start": 57499
+        }
+      ],
+      "storage": "initialized",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:3988-3996"
+    },
+    "_intro_colorvalue": {
+      "load_address": 180670,
+      "reference_declaration_line": 3996,
+      "reference_label": "intro_colorvalue",
+      "reference_use_line": 7137,
+      "references": [
+        {
+          "hex": "c7064e0a0100",
+          "operand_offset": 2,
+          "start": 57681
+        }
+      ],
+      "storage": "initialized"
+    },
     "_is_audioloaded": {
       "load_address": 178419,
       "storage": "initialized"
+    },
+    "_is_in_replay": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218296,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_088a4",
+          "fixup_site": 34990,
+          "load_address": 218296,
+          "member": "audio_carstate",
+          "reference": {
+            "hex": "803e489d00",
+            "operand_offset": 2,
+            "start": 34988
+          },
+          "text": "cmp byte ptr [0x9d48], 0"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_088a4",
+          "fixup_site": 35114,
+          "load_address": 218296,
+          "member": "audio_carstate",
+          "reference": {
+            "hex": "3806489d",
+            "operand_offset": 2,
+            "start": 35112
+          },
+          "text": "cmp byte ptr [0x9d48], al"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        214476,
+        219608
+      ],
+      "reference_label": "is_in_replay",
+      "reference_span": {
+        "label_line": 38057,
+        "next_line": 38059,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:38057-38059"
+      },
+      "references": [
+        {
+          "function": "update_player_state",
+          "hex": "803e489d00",
+          "operand_offset": 2,
+          "start": 25142
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:38057-38059"
     },
     "_is_in_replay_copy": {
       "load_address": 218676,
@@ -1628,24 +2409,186 @@
       "load_address": 195348,
       "storage": "initialized"
     },
+    "_joyflags": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191412,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100366,
+          "load_address": 191412,
+          "member": "input_checking",
+          "reference": {
+            "hex": "393e4434",
+            "operand_offset": 2,
+            "start": 100364
+          },
+          "text": "cmp word ptr [0x3444], di"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100374,
+          "load_address": 191412,
+          "member": "input_checking",
+          "reference": {
+            "hex": "a14434",
+            "operand_offset": 1,
+            "start": 100373
+          },
+          "text": "mov ax, word ptr [0x3444]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100385,
+          "load_address": 191412,
+          "member": "input_checking",
+          "reference": {
+            "hex": "893e4434",
+            "operand_offset": 2,
+            "start": 100383
+          },
+          "text": "mov word ptr [0x3444], di"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "joyflags",
+      "reference_span": {
+        "label_line": 14459,
+        "next_line": 14460,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14459-14460"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "393e4434",
+          "operand_offset": 2,
+          "start": 100364
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14459-14460"
+    },
     "_joyinput": {
       "load_address": 195351,
       "storage": "initialized"
     },
-    "_kb_readchar_callback": {
-      "load_address": 196092,
+    "_joyinputcode": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191424,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100396,
+          "load_address": 191424,
+          "member": "input_checking",
+          "reference": {
+            "hex": "c70650340d00",
+            "operand_offset": 2,
+            "start": 100394
+          },
+          "text": "mov word ptr [0x3450], 0xd"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100429,
+          "load_address": 191424,
+          "member": "input_checking",
+          "reference": {
+            "hex": "c70650340048",
+            "operand_offset": 2,
+            "start": 100427
+          },
+          "text": "mov word ptr [0x3450], 0x4800"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100445,
+          "load_address": 191424,
+          "member": "input_checking",
+          "reference": {
+            "hex": "c70650340050",
+            "operand_offset": 2,
+            "start": 100443
+          },
+          "text": "mov word ptr [0x3450], 0x5000"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100461,
+          "load_address": 191424,
+          "member": "input_checking",
+          "reference": {
+            "hex": "c7065034004b",
+            "operand_offset": 2,
+            "start": 100459
+          },
+          "text": "mov word ptr [0x3450], 0x4b00"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100477,
+          "load_address": 191424,
+          "member": "input_checking",
+          "reference": {
+            "hex": "c7065034004d",
+            "operand_offset": 2,
+            "start": 100475
+          },
+          "text": "mov word ptr [0x3450], 0x4d00"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "joyinputcode",
+      "reference_span": {
+        "label_line": 14465,
+        "next_line": 14466,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14465-14466"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "c70650340d00",
+          "operand_offset": 2,
+          "start": 100394
+        }
+      ],
       "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14465-14466"
+    },
+    "_kb_readchar_callback": {
       "fields": [
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 133720,
             "hex": "8b168e46",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 133720
+          },
+          "width": 2
         }
-      ]
+      ],
+      "load_address": 196092,
+      "storage": "initialized"
     },
     "_kbjoyflags": {
       "load_address": 218304,
@@ -1658,6 +2601,146 @@
     "_last_timer_callback_counter": {
       "load_address": 198138,
       "storage": "initialized"
+    },
+    "_logo2shape": {
+      "load_address": 213868,
+      "reference_declaration_line": 33807,
+      "reference_label": "logo2shape",
+      "reference_use_line": 6340,
+      "references": [
+        {
+          "hex": "b8fc8b",
+          "operand_offset": 1,
+          "start": 55684
+        }
+      ],
+      "storage": "bss"
+    },
+    "_logoshape": {
+      "load_address": 213808,
+      "reference_declaration_line": 33769,
+      "reference_label": "logoshape",
+      "reference_use_line": 6334,
+      "references": [
+        {
+          "hex": "b8c08b",
+          "operand_offset": 1,
+          "start": 55666
+        }
+      ],
+      "storage": "bss"
+    },
+    "_mainresptr": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 216300,
+      "original_instruction_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_1a118",
+          "fixup_site": 106812,
+          "load_address": 216300,
+          "member": "do_dea_textres",
+          "reference": {
+            "hex": "ff367e95",
+            "operand_offset": 2,
+            "start": 106810
+          },
+          "text": "push word ptr [0x957e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_1a118",
+          "fixup_site": 106816,
+          "load_address": 216300,
+          "member": "do_dea_textres",
+          "reference": {
+            "hex": "ff367c95",
+            "operand_offset": 2,
+            "start": 106814
+          },
+          "text": "push word ptr [0x957c]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "mainresptr",
+      "reference_span": {
+        "label_line": 36116,
+        "next_line": 36117,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:36116-36117"
+      },
+      "references": [
+        {
+          "function": "run_tracks_menu",
+          "hex": "ff367c95",
+          "operand_offset": 2,
+          "start": 4632
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:36116-36117"
+    },
+    "_mat_planetmp": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218308,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_09794",
+          "fixup_site": 39051,
+          "load_address": 218308,
+          "member": "plane_rotate_op",
+          "reference": {
+            "hex": "8b16549d",
+            "operand_offset": 2,
+            "start": 39049
+          },
+          "text": "mov dx, word ptr [0x9d54]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "mat_planetmp",
+      "reference_span": {
+        "label_line": 22055,
+        "next_line": 22073,
+        "width": 18,
+        "width_provenance": "reference-label-span: dseg.asm:22055-22073"
+      },
+      "references": [
+        {
+          "function": "update_player_state",
+          "hex": "8b16549d",
+          "operand_offset": 2,
+          "start": 22293
+        }
+      ],
+      "storage": "bss",
+      "width": 18,
+      "width_provenance": "reference-label-span: dseg.asm:22055-22073"
+    },
+    "_mat_temp": {
+      "load_address": 222284,
+      "reference_declaration_line": 41764,
+      "reference_label": "mat_temp",
+      "reference_use_line": 7093,
+      "references": [
+        {
+          "hex": "b8dcac",
+          "operand_offset": 1,
+          "start": 57565
+        }
+      ],
+      "storage": "bss"
     },
     "_material_clrlist2_ptr_cpy": {
       "load_address": 219606,
@@ -1679,6 +2762,252 @@
       "load_address": 216416,
       "storage": "bss"
     },
+    "_miscptr": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 218572,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 10588,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a35c9e",
+            "operand_offset": 1,
+            "start": 10587
+          },
+          "text": "mov word ptr [0x9e5c], ax"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 10592,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "89165e9e",
+            "operand_offset": 2,
+            "start": 10590
+          },
+          "text": "mov word ptr [0x9e5e], dx"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 10928,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 10926
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 10932,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 10930
+          },
+          "text": "push word ptr [0x9e5c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 10990,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 10988
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 10994,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 10992
+          },
+          "text": "push word ptr [0x9e5c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11052,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 11050
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11056,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 11054
+          },
+          "text": "push word ptr [0x9e5c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11114,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 11112
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11118,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 11116
+          },
+          "text": "push word ptr [0x9e5c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11176,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 11174
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11180,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 11178
+          },
+          "text": "push word ptr [0x9e5c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11360,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 11358
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11364,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 11362
+          },
+          "text": "push word ptr [0x9e5c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11997,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365e9e",
+            "operand_offset": 2,
+            "start": 11995
+          },
+          "text": "push word ptr [0x9e5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 12001,
+          "load_address": 218572,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff365c9e",
+            "operand_offset": 2,
+            "start": 11999
+          },
+          "text": "push word ptr [0x9e5c]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        218570
+      ],
+      "reference_label": "miscptr",
+      "reference_span": {
+        "label_line": 38301,
+        "next_line": 38302,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:38301-38302"
+      },
+      "references": [
+        {
+          "function": "run_car_menu",
+          "hex": "a35c9e",
+          "operand_offset": 1,
+          "start": 7835
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:38301-38302"
+    },
+    "_mmouspriteptr": {
+      "load_address": 213860,
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:33805-33806"
+    },
     "_mouse_butstate": {
       "load_address": 213736,
       "storage": "bss"
@@ -1687,13 +3016,335 @@
       "load_address": 178425,
       "storage": "initialized"
     },
+    "_mouse_oldbut": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 178424,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100662,
+          "load_address": 178424,
+          "member": "input_checking",
+          "reference": {
+            "hex": "803e880100",
+            "operand_offset": 2,
+            "start": 100660
+          },
+          "text": "cmp byte ptr [0x188], 0"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "mouse_oldbut",
+      "reference_span": {
+        "label_line": 14463,
+        "next_line": 14464,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14463-14464"
+      },
+      "references": [
+        {
+          "function": "run_game",
+          "hex": "c606880100",
+          "operand_offset": 2,
+          "start": 72740
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14463-14464"
+    },
+    "_mouse_oldy": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191416,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100572,
+          "load_address": 191416,
+          "member": "input_checking",
+          "reference": {
+            "hex": "a34834",
+            "operand_offset": 1,
+            "start": 100571
+          },
+          "text": "mov word ptr [0x3448], ax"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "mouse_oldy",
+      "reference_span": {
+        "label_line": 14462,
+        "next_line": 14463,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14462-14463"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "39064834",
+          "operand_offset": 2,
+          "start": 100544
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14462-14463"
+    },
     "_mouse_xpos": {
       "load_address": 221548,
       "storage": "bss"
     },
+    "_mouse_ypos": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 221646,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100551,
+          "load_address": 221646,
+          "member": "input_checking",
+          "reference": {
+            "hex": "a15eaa",
+            "operand_offset": 1,
+            "start": 100550
+          },
+          "text": "mov ax, word ptr [0xaa5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_18e04",
+          "fixup_site": 101933,
+          "load_address": 221646,
+          "member": "mouse_draw_transparent",
+          "reference": {
+            "hex": "ff365eaa",
+            "operand_offset": 2,
+            "start": 101931
+          },
+          "text": "push word ptr [0xaa5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_18e04",
+          "fixup_site": 101957,
+          "load_address": 221646,
+          "member": "mouse_draw_transparent",
+          "reference": {
+            "hex": "ff365eaa",
+            "operand_offset": 2,
+            "start": 101955
+          },
+          "text": "push word ptr [0xaa5e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_18e04",
+          "fixup_site": 101984,
+          "load_address": 221646,
+          "member": "mouse_draw_transparent",
+          "reference": {
+            "hex": "ff365eaa",
+            "operand_offset": 2,
+            "start": 101982
+          },
+          "text": "push word ptr [0xaa5e]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        221548
+      ],
+      "reference_label": "mouse_ypos",
+      "reference_span": {
+        "label_line": 41140,
+        "next_line": 41141,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:41140-41141"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "a15eaa",
+          "operand_offset": 1,
+          "start": 100550
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:41140-41141"
+    },
+    "_mousebutinputcode": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191426,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100707,
+          "load_address": 191426,
+          "member": "input_checking",
+          "reference": {
+            "hex": "c70652340d00",
+            "operand_offset": 2,
+            "start": 100705
+          },
+          "text": "mov word ptr [0x3452], 0xd"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "mousebutinputcode",
+      "reference_span": {
+        "label_line": 14466,
+        "next_line": 14467,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14466-14467"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "c70652342000",
+          "operand_offset": 2,
+          "start": 100689
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14466-14467"
+    },
     "_mousehorscale": {
       "load_address": 197402,
       "storage": "initialized"
+    },
+    "_mouseunkspriteptr": {
+      "load_address": 218568,
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:38300-38301"
+    },
+    "_newjoyflags": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 191414,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100381,
+          "load_address": 191414,
+          "member": "input_checking",
+          "reference": {
+            "hex": "a34634",
+            "operand_offset": 1,
+            "start": 100380
+          },
+          "text": "mov word ptr [0x3446], ax"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100389,
+          "load_address": 191414,
+          "member": "input_checking",
+          "reference": {
+            "hex": "f606463420",
+            "operand_offset": 2,
+            "start": 100387
+          },
+          "text": "test byte ptr [0x3446], 0x20"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100422,
+          "load_address": 191414,
+          "member": "input_checking",
+          "reference": {
+            "hex": "f606463401",
+            "operand_offset": 2,
+            "start": 100420
+          },
+          "text": "test byte ptr [0x3446], 1"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100438,
+          "load_address": 191414,
+          "member": "input_checking",
+          "reference": {
+            "hex": "f606463402",
+            "operand_offset": 2,
+            "start": 100436
+          },
+          "text": "test byte ptr [0x3446], 2"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100454,
+          "load_address": 191414,
+          "member": "input_checking",
+          "reference": {
+            "hex": "f606463408",
+            "operand_offset": 2,
+            "start": 100452
+          },
+          "text": "test byte ptr [0x3446], 8"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_187c4",
+          "fixup_site": 100470,
+          "load_address": 191414,
+          "member": "input_checking",
+          "reference": {
+            "hex": "f606463404",
+            "operand_offset": 2,
+            "start": 100468
+          },
+          "text": "test byte ptr [0x3446], 4"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "newjoyflags",
+      "reference_span": {
+        "label_line": 14460,
+        "next_line": 14461,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:14460-14461"
+      },
+      "references": [
+        {
+          "function": "input_checking",
+          "hex": "a34634",
+          "operand_offset": 1,
+          "start": 100380
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14460-14461"
     },
     "_nextPosAndNormalIP": {
       "load_address": 219646,
@@ -1737,11 +3388,249 @@
     },
     "_opp_res": {
       "load_address": 215552,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 10615,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "89169292",
+            "operand_offset": 2,
+            "start": 10613
+          },
+          "text": "mov word ptr [0x9292], dx"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 10846,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff369292",
+            "operand_offset": 2,
+            "start": 10844
+          },
+          "text": "push word ptr [0x9292]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 10866,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff369292",
+            "operand_offset": 2,
+            "start": 10864
+          },
+          "text": "push word ptr [0x9292]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11209,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff369292",
+            "operand_offset": 2,
+            "start": 11207
+          },
+          "text": "push word ptr [0x9292]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11255,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff369292",
+            "operand_offset": 2,
+            "start": 11253
+          },
+          "text": "push word ptr [0x9292]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11275,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff369292",
+            "operand_offset": 2,
+            "start": 11273
+          },
+          "text": "push word ptr [0x9292]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0293c",
+          "fixup_site": 11981,
+          "load_address": 215552,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "ff369292",
+            "operand_offset": 2,
+            "start": 11979
+          },
+          "text": "push word ptr [0x9292]"
+        }
+      ],
+      "reference_label": "opp_res",
+      "reference_span": {
+        "label_line": 35411,
+        "next_line": 35412,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:35411-35412"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:35411-35412"
+    },
+    "_oppcarshapevec": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215428,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 48120,
+          "load_address": 215428,
+          "member": "update_frame",
+          "reference": {
+            "hex": "833e149200",
+            "operand_offset": 2,
+            "start": 48118
+          },
+          "text": "cmp word ptr [0x9214], 0"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "oppcarshapevec",
+      "reference_span": {
+        "label_line": 28169,
+        "next_line": 28175,
+        "width": 6,
+        "width_provenance": "reference-label-span: dseg.asm:28169-28175"
+      },
+      "references": [
+        {
+          "function": "run_car_menu",
+          "hex": "a31492",
+          "operand_offset": 1,
+          "start": 7279
+        }
+      ],
+      "storage": "bss",
+      "width": 6,
+      "width_provenance": "reference-label-span: dseg.asm:28169-28175"
     },
     "_oppnentSped": {
       "load_address": 216400,
       "storage": "bss"
+    },
+    "_opponentmenu_buttons_y1": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 179144,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 10914,
+          "load_address": 179144,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a15804",
+            "operand_offset": 1,
+            "start": 10913
+          },
+          "text": "mov ax, word ptr [0x458]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 10976,
+          "load_address": 179144,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a15804",
+            "operand_offset": 1,
+            "start": 10975
+          },
+          "text": "mov ax, word ptr [0x458]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11038,
+          "load_address": 179144,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a15804",
+            "operand_offset": 1,
+            "start": 11037
+          },
+          "text": "mov ax, word ptr [0x458]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11100,
+          "load_address": 179144,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a15804",
+            "operand_offset": 1,
+            "start": 11099
+          },
+          "text": "mov ax, word ptr [0x458]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11162,
+          "load_address": 179144,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "a15804",
+            "operand_offset": 1,
+            "start": 11161
+          },
+          "text": "mov ax, word ptr [0x458]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "opponentmenu_buttons_y1",
+      "reference_span": {
+        "label_line": 2539,
+        "next_line": 2544,
+        "width": 10,
+        "width_provenance": "reference-label-span: dseg.asm:2539-2544"
+      },
+      "references": [
+        {
+          "function": "run_opponent_menu",
+          "hex": "a15804",
+          "operand_offset": 1,
+          "start": 10913
+        }
+      ],
+      "storage": "initialized",
+      "width": 10,
+      "width_provenance": "reference-label-span: dseg.asm:2539-2544"
     },
     "_pState_f36Mminf40sar2": {
       "load_address": 216904,
@@ -1749,7 +3638,31 @@
     },
     "_pState_lvec1_x": {
       "load_address": 215486,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_04da2",
+          "fixup_site": 19896,
+          "load_address": 215486,
+          "member": "update_player_state",
+          "reference": {
+            "hex": "89165092",
+            "operand_offset": 2,
+            "start": 19894
+          },
+          "text": "mov word ptr [0x9250], dx"
+        }
+      ],
+      "reference_label": "pState_lvec1_x",
+      "reference_span": {
+        "label_line": 35379,
+        "next_line": 35380,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:35379-35380"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:35379-35380"
     },
     "_pState_lvec1_y": {
       "load_address": 215494,
@@ -1801,11 +3714,77 @@
     },
     "_planptr": {
       "load_address": 218306,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_09926",
+          "fixup_site": 39242,
+          "load_address": 218306,
+          "member": "plane_origin_op",
+          "reference": {
+            "hex": "8b16549d",
+            "operand_offset": 2,
+            "start": 39240
+          },
+          "text": "mov dx, word ptr [0x9d54]"
+        }
+      ],
+      "reference_label": "planptr",
+      "reference_span": {
+        "label_line": 38062,
+        "next_line": 38063,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:38062-38063"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:38062-38063"
     },
     "_poly_linked_list_40ED6": {
       "load_address": 200406,
       "storage": "bss"
+    },
+    "_poly_linklist_40ED6_iter1": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 211278,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_15e24",
+          "fixup_site": 89663,
+          "load_address": 211278,
+          "member": "insert_newest_poly_in_poly_linked_list_40ED6",
+          "reference": {
+            "hex": "a1de81",
+            "operand_offset": 1,
+            "start": 89662
+          },
+          "text": "mov ax, word ptr [0x81de]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "poly_linklist_40ED6_iter1",
+      "reference_span": {
+        "label_line": 31248,
+        "next_line": 31249,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:31248-31249"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "a3de81",
+          "operand_offset": 1,
+          "start": 86182
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:31248-31249"
     },
     "_poly_linklist_40ED6_iter2": {
       "load_address": 214002,
@@ -1821,11 +3800,119 @@
     },
     "_polyinfoptr": {
       "load_address": 200402,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_14d64",
+          "fixup_site": 85371,
+          "load_address": 200402,
+          "member": "init_polyinfo",
+          "reference": {
+            "hex": "89166457",
+            "operand_offset": 2,
+            "start": 85369
+          },
+          "text": "mov word ptr [0x5764], dx"
+        }
+      ],
+      "reference_label": "polyinfoptr",
+      "reference_span": {
+        "label_line": 22283,
+        "next_line": 22284,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:22283-22284"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:22283-22284"
+    },
+    "_polyinfoptrnext": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 220568,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_15e24",
+          "fixup_site": 89771,
+          "load_address": 220568,
+          "member": "insert_newest_poly_in_poly_linked_list_40ED6",
+          "reference": {
+            "hex": "a328a6",
+            "operand_offset": 1,
+            "start": 89770
+          },
+          "text": "mov word ptr [0xa628], ax"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "polyinfoptrnext",
+      "reference_span": {
+        "label_line": 23109,
+        "next_line": 23110,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:23109-23110"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "a328a6",
+          "operand_offset": 1,
+          "start": 86185
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:23109-23110"
     },
     "_polyinfoptrs": {
       "load_address": 201208,
       "storage": "bss"
+    },
+    "_primidxcounttab": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215540,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_14e9e",
+          "fixup_site": 86336,
+          "load_address": 215540,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "a08492",
+            "operand_offset": 1,
+            "start": 86335
+          },
+          "text": "mov al, byte ptr [0x9284]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "primidxcounttab",
+      "reference_span": {
+        "label_line": 14230,
+        "next_line": 14246,
+        "width": 16,
+        "width_provenance": "reference-label-span: dseg.asm:14230-14246"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "c606849208",
+          "operand_offset": 2,
+          "start": 86207
+        }
+      ],
+      "storage": "bss",
+      "width": 16,
+      "width_provenance": "reference-label-span: dseg.asm:14230-14246"
     },
     "_pspofs": {
       "load_address": 196488,
@@ -1847,9 +3934,243 @@
       "load_address": 221542,
       "storage": "bss"
     },
+    "_rect_ingame_text": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "load_address": 221566,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0d534",
+          "fixup_site": 54642,
+          "load_address": 221566,
+          "member": "do_sinking",
+          "reference": {
+            "hex": "c7060eaa0000",
+            "operand_offset": 2,
+            "start": 54640
+          },
+          "text": "mov word ptr [0xaa0e], 0"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0d534",
+          "fixup_site": 54648,
+          "load_address": 221566,
+          "member": "do_sinking",
+          "reference": {
+            "hex": "c70610aa4001",
+            "operand_offset": 2,
+            "start": 54646
+          },
+          "text": "mov word ptr [0xaa10], 0x140"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        198602,
+        220618
+      ],
+      "reference_label": "rect_ingame_text",
+      "reference_span": {
+        "label_line": 41096,
+        "next_line": 41104,
+        "width": 8,
+        "width_provenance": "reference-label-span: dseg.asm:41096-41104"
+      },
+      "references": [
+        {
+          "function": "do_sinking",
+          "hex": "c7060eaa0000",
+          "operand_offset": 2,
+          "start": 54640
+        }
+      ],
+      "storage": "bss",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:41096-41104"
+    },
+    "_rect_ingame_text2": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 220616,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0d12e",
+          "fixup_site": 54016,
+          "load_address": 220616,
+          "member": "draw_ingame_text",
+          "reference": {
+            "hex": "ff3658a6",
+            "operand_offset": 2,
+            "start": 54014
+          },
+          "text": "push word ptr [0xa658]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "rect_ingame_text2",
+      "reference_span": {
+        "label_line": 3880,
+        "next_line": 3888,
+        "width": 8,
+        "width_provenance": "reference-label-span: dseg.asm:3880-3888"
+      },
+      "references": [
+        {
+          "function": "draw_ingame_text",
+          "hex": "ff3658a6",
+          "operand_offset": 2,
+          "start": 54014
+        }
+      ],
+      "storage": "bss",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:3880-3888"
+    },
+    "_rect_skybox": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "load_address": 215600,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0c474",
+          "fixup_site": 50803,
+          "load_address": 215600,
+          "member": "skybox_op",
+          "reference": {
+            "hex": "a3c092",
+            "operand_offset": 1,
+            "start": 50802
+          },
+          "text": "mov word ptr [0x92c0], ax"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "rect_skybox",
+      "reference_span": {
+        "label_line": 35452,
+        "next_line": 35460,
+        "width": 8,
+        "width_provenance": "reference-label-span: dseg.asm:35452-35460"
+      },
+      "references": [
+        {
+          "function": "skybox_op",
+          "hex": "a3c092",
+          "operand_offset": 1,
+          "start": 50771
+        }
+      ],
+      "storage": "bss",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:35452-35460"
+    },
     "_rect_unk": {
       "load_address": 215556,
+      "storage": "bss",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:35412-35420"
+    },
+    "_rect_unk2": {
+      "load_address": 215564,
+      "reference_declaration_line": 35420,
+      "reference_label": "rect_unk2",
+      "reference_use_line": 6441,
+      "references": [
+        {
+          "hex": "bf9c92",
+          "operand_offset": 1,
+          "start": 55998
+        }
+      ],
       "storage": "bss"
+    },
+    "_rect_unk3": {
+      "load_address": 219474,
+      "reference_declaration_line": 39146,
+      "reference_label": "rect_unk3",
+      "reference_use_line": 6449,
+      "references": [
+        {
+          "hex": "bfe2a1",
+          "operand_offset": 1,
+          "start": 56010
+        }
+      ],
+      "storage": "bss"
+    },
+    "_rect_unk6": {
+      "load_address": 215572,
+      "reference_declaration_line": 35428,
+      "reference_label": "rect_unk6",
+      "reference_use_line": 6723,
+      "references": [
+        {
+          "hex": "bfa492",
+          "operand_offset": 1,
+          "start": 56815
+        }
+      ],
+      "storage": "bss"
+    },
+    "_rect_unk9": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 178426,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 42375,
+          "load_address": 178426,
+          "member": "update_frame",
+          "reference": {
+            "hex": "803e8a0100",
+            "operand_offset": 2,
+            "start": 42373
+          },
+          "text": "cmp byte ptr [0x18a], 0"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "rect_unk9",
+      "reference_span": {
+        "label_line": 35468,
+        "next_line": 35532,
+        "width": 64,
+        "width_provenance": "reference-label-span: dseg.asm:35468-35532"
+      },
+      "references": [
+        {
+          "function": "sub_19F14",
+          "hex": "803e8a0104",
+          "operand_offset": 2,
+          "start": 40780
+        }
+      ],
+      "storage": "initialized",
+      "width": 64,
+      "width_provenance": "reference-label-span: dseg.asm:35468-35532"
     },
     "_rectptr_unk": {
       "load_address": 178186,
@@ -1950,9 +4271,179 @@
       "load_address": 197404,
       "storage": "initialized"
     },
+    "_simd_player": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        208,
+        210
+      ],
+      "load_address": 215504,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_01c42",
+          "fixup_site": 8884,
+          "load_address": 215504,
+          "member": "run_car_menu",
+          "reference": {
+            "hex": "c70660921400",
+            "operand_offset": 2,
+            "start": 8882
+          },
+          "text": "mov word ptr [0x9260], 0x14"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "simd_player",
+      "reference_span": {
+        "label_line": 40300,
+        "next_line": 41076,
+        "width": 776,
+        "width_provenance": "reference-label-span: dseg.asm:40300-41076"
+      },
+      "references": [
+        {
+          "function": "print_highscore_entry",
+          "hex": "a16092",
+          "operand_offset": 1,
+          "start": 6596
+        }
+      ],
+      "storage": "bss",
+      "width": 776,
+      "width_provenance": "reference-label-span: dseg.asm:40300-41076"
+    },
+    "_skybox_current": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 211250,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52320,
+          "load_address": 211250,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "2b06c281",
+            "operand_offset": 2,
+            "start": 52318
+          },
+          "text": "sub ax, word ptr [0x81c2]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "skybox_current",
+      "reference_span": {
+        "label_line": 31230,
+        "next_line": 31231,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:31230-31231"
+      },
+      "references": [
+        {
+          "function": "skybox_op_helper2",
+          "hex": "2b36c281",
+          "operand_offset": 2,
+          "start": 49946
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:31230-31231"
+    },
     "_skybox_grd_color": {
       "load_address": 215688,
       "storage": "bss"
+    },
+    "_skybox_ptr3": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218396,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52380,
+          "load_address": 218396,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "2b06ac9d",
+            "operand_offset": 2,
+            "start": 52378
+          },
+          "text": "sub ax, word ptr [0x9dac]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "skybox_ptr3",
+      "reference_span": {
+        "label_line": 38131,
+        "next_line": 38132,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:38131-38132"
+      },
+      "references": [
+        {
+          "function": "skybox_op_helper2",
+          "hex": "2b06ac9d",
+          "operand_offset": 2,
+          "start": 50142
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:38131-38132"
+    },
+    "_skybox_ptr4": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218398,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52407,
+          "load_address": 218398,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "2b06ae9d",
+            "operand_offset": 2,
+            "start": 52405
+          },
+          "text": "sub ax, word ptr [0x9dae]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "skybox_ptr4",
+      "reference_span": {
+        "label_line": 38132,
+        "next_line": 38133,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:38132-38133"
+      },
+      "references": [
+        {
+          "function": "skybox_op_helper2",
+          "hex": "2b06ae9d",
+          "operand_offset": 2,
+          "start": 50171
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:38132-38133"
     },
     "_skybox_res_ofs": {
       "load_address": 221544,
@@ -1961,6 +4452,233 @@
     "_skybox_res_seg": {
       "load_address": 221546,
       "storage": "bss"
+    },
+    "_skybox_sky_color": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218576,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52343,
+          "load_address": 218576,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "ff36609e",
+            "operand_offset": 2,
+            "start": 52341
+          },
+          "text": "push word ptr [0x9e60]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "skybox_sky_color",
+      "reference_span": {
+        "label_line": 38302,
+        "next_line": 38303,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:38302-38303"
+      },
+      "references": [
+        {
+          "function": "skybox_op_helper2",
+          "hex": "ff36609e",
+          "operand_offset": 2,
+          "start": 50003
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:38302-38303"
+    },
+    "_skyboxes": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14
+      ],
+      "load_address": 220544,
+      "original_instruction_anchors": [
+        {
+          "addend": 10,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52388,
+          "load_address": 220544,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "ff361aa6",
+            "operand_offset": 2,
+            "start": 52386
+          },
+          "text": "push word ptr [0xa61a]"
+        },
+        {
+          "addend": 8,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52392,
+          "load_address": 220544,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "ff3618a6",
+            "operand_offset": 2,
+            "start": 52390
+          },
+          "text": "push word ptr [0xa618]"
+        },
+        {
+          "addend": 14,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52416,
+          "load_address": 220544,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "ff361ea6",
+            "operand_offset": 2,
+            "start": 52414
+          },
+          "text": "push word ptr [0xa61e]"
+        },
+        {
+          "addend": 12,
+          "caller_task": "load_0cbdc",
+          "fixup_site": 52420,
+          "load_address": 220544,
+          "member": "draw_track_preview",
+          "reference": {
+            "hex": "ff361ca6",
+            "operand_offset": 2,
+            "start": 52418
+          },
+          "text": "push word ptr [0xa61c]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "skyboxes",
+      "reference_span": {
+        "label_line": 40159,
+        "next_line": 40163,
+        "width": 16,
+        "width_provenance": "reference-label-span: dseg.asm:40159-40163"
+      },
+      "references": [
+        {
+          "function": "skybox_op_helper2",
+          "hex": "ff3610a6",
+          "operand_offset": 2,
+          "start": 50098
+        }
+      ],
+      "storage": "bss",
+      "width": 16,
+      "width_provenance": "reference-label-span: dseg.asm:40159-40163"
+    },
+    "_slow_video_mgmt": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 216298,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_01c42",
+          "fixup_site": 7277,
+          "load_address": 216298,
+          "member": "run_car_menu",
+          "reference": {
+            "hex": "a17a95",
+            "operand_offset": 1,
+            "start": 7276
+          },
+          "text": "mov ax, word ptr [0x957a]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "slow_video_mgmt",
+      "reference_span": {
+        "label_line": 36115,
+        "next_line": 36116,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:36115-36116"
+      },
+      "references": [
+        {
+          "function": "run_car_menu",
+          "hex": "a17a95",
+          "operand_offset": 1,
+          "start": 7276
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:36115-36116"
+    },
+    "_slow_video_mgmt_copy": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215428,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_01c42",
+          "fixup_site": 7280,
+          "load_address": 215428,
+          "member": "run_car_menu",
+          "reference": {
+            "hex": "a31492",
+            "operand_offset": 1,
+            "start": 7279
+          },
+          "text": "mov word ptr [0x9214], ax"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 41264,
+          "load_address": 215428,
+          "member": "update_frame",
+          "reference": {
+            "hex": "833e149200",
+            "operand_offset": 2,
+            "start": 41262
+          },
+          "text": "cmp word ptr [0x9214], 0"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "slow_video_mgmt_copy",
+      "reference_span": {
+        "label_line": 35329,
+        "next_line": 35330,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:35329-35330"
+      },
+      "references": [
+        {
+          "function": "run_car_menu",
+          "hex": "a31492",
+          "operand_offset": 1,
+          "start": 7279
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:35329-35330"
     },
     "_smouspriteptr": {
       "load_address": 215490,
@@ -1976,32 +4694,114 @@
       "load_address": 219644,
       "storage": "bss"
     },
+    "_songfileptr": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 213856,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_197fc",
+          "fixup_site": 104486,
+          "load_address": 213856,
+          "member": "file_load_audiores",
+          "reference": {
+            "hex": "a3f08b",
+            "operand_offset": 1,
+            "start": 104485
+          },
+          "text": "mov word ptr [0x8bf0], ax"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_197fc",
+          "fixup_site": 104490,
+          "load_address": 213856,
+          "member": "file_load_audiores",
+          "reference": {
+            "hex": "8916f28b",
+            "operand_offset": 2,
+            "start": 104488
+          },
+          "text": "mov word ptr [0x8bf2], dx"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_19858",
+          "fixup_site": 104550,
+          "load_address": 213856,
+          "member": "audio_unload",
+          "reference": {
+            "hex": "ff36f28b",
+            "operand_offset": 2,
+            "start": 104548
+          },
+          "text": "push word ptr [0x8bf2]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_19858",
+          "fixup_site": 104554,
+          "load_address": 213856,
+          "member": "audio_unload",
+          "reference": {
+            "hex": "ff36f08b",
+            "operand_offset": 2,
+            "start": 104552
+          },
+          "text": "push word ptr [0x8bf0]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "songfileptr",
+      "reference_span": {
+        "label_line": 33804,
+        "next_line": 33805,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:33804-33805"
+      },
+      "references": [
+        {
+          "function": "file_load_audiores",
+          "hex": "a3f08b",
+          "operand_offset": 1,
+          "start": 104485
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:33804-33805"
+    },
     "_sprite1": {
-      "storage": "code_island",
       "island": "sprite_pair",
       "load_address": 149824,
-      "width": 30,
-      "reference_label": "sprite1",
       "offset_anchor": {
         "caller_task": "load_2260e",
-        "site": 140820,
-        "hex": "8d36205f",
+        "cs_setup_hex": "8cc88ed8",
         "cs_setup_site": 140831,
-        "cs_setup_hex": "8cc88ed8"
-      }
+        "hex": "8d36205f",
+        "site": 140820
+      },
+      "reference_label": "sprite1",
+      "storage": "code_island",
+      "width": 30
     },
     "_sprite2": {
-      "storage": "code_island",
       "island": "sprite_pair",
       "load_address": 149854,
-      "width": 30,
-      "reference_label": "sprite2",
       "offset_anchor": {
         "caller_task": "load_2a958",
-        "site": 174460,
         "hex": "b83e5fbaa21e",
-        "relocation_load_offset": 174464
-      }
+        "relocation_load_offset": 174464,
+        "site": 174460
+      },
+      "reference_label": "sprite2",
+      "storage": "code_island",
+      "width": 30
     },
     "_spritefunc": {
       "load_address": 197410,
@@ -2061,9 +4861,208 @@
       "load_address": 215508,
       "storage": "bss"
     },
+    "_td21_col_from_path": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 219610,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_08d60",
+          "fixup_site": 36617,
+          "load_address": 219610,
+          "member": "sub_18D60",
+          "reference": {
+            "hex": "c4366aa2",
+            "operand_offset": 2,
+            "start": 36615
+          },
+          "text": "les si, ptr [0xa26a]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "td21_col_from_path",
+      "reference_span": {
+        "label_line": 38359,
+        "next_line": 38360,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:38359-38360"
+      },
+      "references": [
+        {
+          "function": "detect_penalty",
+          "hex": "031e6aa2",
+          "operand_offset": 2,
+          "start": 31045
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:38359-38360"
+    },
+    "_td22_row_from_path": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218326,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_093e0",
+          "fixup_site": 37932,
+          "load_address": 218326,
+          "member": "init_plantrak",
+          "reference": {
+            "hex": "c41e669d",
+            "operand_offset": 2,
+            "start": 37930
+          },
+          "text": "les bx, ptr [0x9d66]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "td22_row_from_path",
+      "reference_span": {
+        "label_line": 39280,
+        "next_line": 39283,
+        "width": 6,
+        "width_provenance": "reference-label-span: dseg.asm:39280-39283"
+      },
+      "references": [
+        {
+          "function": "sub_18D60",
+          "hex": "c436669d",
+          "operand_offset": 2,
+          "start": 36213
+        }
+      ],
+      "storage": "bss",
+      "width": 6,
+      "width_provenance": "reference-label-span: dseg.asm:39280-39283"
+    },
     "_tempdataptr": {
       "load_address": 220690,
-      "storage": "bss"
+      "original_field_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_0059a",
+          "fixup_site": 1482,
+          "load_address": 220690,
+          "member": "run_intro_looped",
+          "reference": {
+            "hex": "8916a4a6",
+            "operand_offset": 2,
+            "start": 1480
+          },
+          "text": "mov word ptr [0xa6a4], dx"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0059a",
+          "fixup_site": 1535,
+          "load_address": 220690,
+          "member": "run_intro_looped",
+          "reference": {
+            "hex": "ff36a4a6",
+            "operand_offset": 2,
+            "start": 1533
+          },
+          "text": "push word ptr [0xa6a4]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0059a",
+          "fixup_site": 1586,
+          "load_address": 220690,
+          "member": "run_intro_looped",
+          "reference": {
+            "hex": "8916a4a6",
+            "operand_offset": 2,
+            "start": 1584
+          },
+          "text": "mov word ptr [0xa6a4], dx"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0059a",
+          "fixup_site": 1664,
+          "load_address": 220690,
+          "member": "run_intro_looped",
+          "reference": {
+            "hex": "ff36a4a6",
+            "operand_offset": 2,
+            "start": 1662
+          },
+          "text": "push word ptr [0xa6a4]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0069c",
+          "fixup_site": 1725,
+          "load_address": 220690,
+          "member": "run_intro",
+          "reference": {
+            "hex": "ff36a4a6",
+            "operand_offset": 2,
+            "start": 1723
+          },
+          "text": "push word ptr [0xa6a4]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0069c",
+          "fixup_site": 1770,
+          "load_address": 220690,
+          "member": "run_intro",
+          "reference": {
+            "hex": "ff36a4a6",
+            "operand_offset": 2,
+            "start": 1768
+          },
+          "text": "push word ptr [0xa6a4]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_0069c",
+          "fixup_site": 1855,
+          "load_address": 220690,
+          "member": "run_intro",
+          "reference": {
+            "hex": "ff36a4a6",
+            "operand_offset": 2,
+            "start": 1853
+          },
+          "text": "push word ptr [0xa6a4]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_00786",
+          "fixup_site": 1962,
+          "load_address": 220690,
+          "member": "load_intro_resources",
+          "reference": {
+            "hex": "ff36a4a6",
+            "operand_offset": 2,
+            "start": 1960
+          },
+          "text": "push word ptr [0xa6a4]"
+        }
+      ],
+      "reference_label": "tempdataptr",
+      "reference_span": {
+        "label_line": 40235,
+        "next_line": 40236,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:40235-40236"
+      },
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:40235-40236"
     },
     "_terrainHeight": {
       "load_address": 215532,
@@ -2097,6 +5096,147 @@
     "_timerintr": {
       "load_address": 194704,
       "storage": "initialized"
+    },
+    "_track_angle": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 218390,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_07008",
+          "fixup_site": 29021,
+          "load_address": 218390,
+          "member": "update_gamestate",
+          "reference": {
+            "hex": "ff36a69d",
+            "operand_offset": 2,
+            "start": 29019
+          },
+          "text": "push word ptr [0x9da6]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_07008",
+          "fixup_site": 29079,
+          "load_address": 218390,
+          "member": "update_gamestate",
+          "reference": {
+            "hex": "ff36a69d",
+            "operand_offset": 2,
+            "start": 29077
+          },
+          "text": "push word ptr [0x9da6]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        207408
+      ],
+      "reference_label": "track_angle",
+      "reference_span": {
+        "label_line": 38128,
+        "next_line": 38129,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:38128-38129"
+      },
+      "references": [
+        {
+          "function": "opponent_op",
+          "hex": "ff36a69d",
+          "operand_offset": 2,
+          "start": 19716
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:38128-38129"
+    },
+    "_trackcenterpos": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215454,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_06b02",
+          "fixup_site": 28309,
+          "load_address": 215454,
+          "member": "init_game_state",
+          "reference": {
+            "hex": "a02e92",
+            "operand_offset": 1,
+            "start": 28308
+          },
+          "text": "mov al, byte ptr [0x922e]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "trackcenterpos",
+      "reference_span": {
+        "label_line": 41104,
+        "next_line": 41134,
+        "width": 60,
+        "width_provenance": "reference-label-span: dseg.asm:41104-41134"
+      },
+      "references": [
+        {
+          "function": "opponent_op",
+          "hex": "a02e92",
+          "operand_offset": 1,
+          "start": 19681
+        }
+      ],
+      "storage": "bss",
+      "width": 60,
+      "width_provenance": "reference-label-span: dseg.asm:41104-41134"
+    },
+    "_trackcenterpos2": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215450,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_06b02",
+          "fixup_site": 28362,
+          "load_address": 215450,
+          "member": "init_game_state",
+          "reference": {
+            "hex": "a02a92",
+            "operand_offset": 1,
+            "start": 28361
+          },
+          "text": "mov al, byte ptr [0x922a]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "trackcenterpos2",
+      "reference_span": {
+        "label_line": 40204,
+        "next_line": 40234,
+        "width": 60,
+        "width_provenance": "reference-label-span: dseg.asm:40204-40234"
+      },
+      "references": [
+        {
+          "function": "opponent_op",
+          "hex": "a02a92",
+          "operand_offset": 1,
+          "start": 19739
+        }
+      ],
+      "storage": "bss",
+      "width": 60,
+      "width_provenance": "reference-label-span: dseg.asm:40204-40234"
     },
     "_trackdata12": {
       "load_address": 215534,
@@ -2138,6 +5278,105 @@
       "load_address": 218330,
       "storage": "bss"
     },
+    "_transshapeflags": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 202862,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85814,
+          "load_address": 202862,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "a2fe60",
+            "operand_offset": 1,
+            "start": 85813
+          },
+          "text": "mov byte ptr [0x60fe], al"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85818,
+          "load_address": 202862,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "f606fe6008",
+            "operand_offset": 2,
+            "start": 85816
+          },
+          "text": "test byte ptr [0x60fe], 8"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        202864
+      ],
+      "reference_label": "transshapeflags",
+      "reference_span": {
+        "label_line": 23124,
+        "next_line": 23126,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:23124-23126"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "a2fe60",
+          "operand_offset": 1,
+          "start": 85813
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:23124-23126"
+    },
+    "_transshapenumverts": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 202876,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85697,
+          "load_address": 202876,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "a30c61",
+            "operand_offset": 1,
+            "start": 85696
+          },
+          "text": "mov word ptr [0x610c], ax"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "transshapenumverts",
+      "reference_span": {
+        "label_line": 23131,
+        "next_line": 23132,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:23131-23132"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "a30c61",
+          "operand_offset": 1,
+          "start": 85696
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:23131-23132"
+    },
     "_transshapenumvertscopy": {
       "load_address": 215540,
       "storage": "bss"
@@ -2146,69 +5385,510 @@
       "load_address": 200394,
       "storage": "bss"
     },
+    "_transshapeprimindexptr": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 215538,
+      "original_instruction_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_14e9e",
+          "fixup_site": 87208,
+          "load_address": 215538,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "a08492",
+            "operand_offset": 1,
+            "start": 87207
+          },
+          "text": "mov al, byte ptr [0x9284]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "transshapeprimindexptr",
+      "reference_span": {
+        "label_line": 23127,
+        "next_line": 23128,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:23127-23128"
+      },
+      "references": [
+        {
+          "function": "run_menu",
+          "hex": "01068292",
+          "operand_offset": 2,
+          "start": 4172
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:23127-23128"
+    },
+    "_transshapeprimitives": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 202864,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85712,
+          "load_address": 202864,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "a30061",
+            "operand_offset": 1,
+            "start": 85711
+          },
+          "text": "mov word ptr [0x6100], ax"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85716,
+          "load_address": 202864,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "89160261",
+            "operand_offset": 2,
+            "start": 85714
+          },
+          "text": "mov word ptr [0x6102], dx"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [
+        200394
+      ],
+      "reference_label": "transshapeprimitives",
+      "reference_span": {
+        "label_line": 23126,
+        "next_line": 23127,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:23126-23127"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "a30061",
+          "operand_offset": 1,
+          "start": 85711
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:23126-23127"
+    },
+    "_transshapeverts": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 202878,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85731,
+          "load_address": 202878,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "a30e61",
+            "operand_offset": 1,
+            "start": 85730
+          },
+          "text": "mov word ptr [0x610e], ax"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_14e9e",
+          "fixup_site": 85735,
+          "load_address": 202878,
+          "member": "transformed_shape_op",
+          "reference": {
+            "hex": "89161061",
+            "operand_offset": 2,
+            "start": 85733
+          },
+          "text": "mov word ptr [0x6110], dx"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "transshapeverts",
+      "reference_span": {
+        "label_line": 23132,
+        "next_line": 23133,
+        "width": 4,
+        "width_provenance": "reference-label-span: dseg.asm:23132-23133"
+      },
+      "references": [
+        {
+          "function": "transformed_shape_op",
+          "hex": "a30e61",
+          "operand_offset": 1,
+          "start": 85730
+        }
+      ],
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:23132-23133"
+    },
+    "_unk_3C0AE": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 207422,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 45666,
+          "load_address": 207422,
+          "member": "update_frame",
+          "reference": {
+            "hex": "a3ce72",
+            "operand_offset": 1,
+            "start": 45665
+          },
+          "text": "mov word ptr [0x72ce], ax"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "unk_3C0AE",
+      "reference_span": {
+        "label_line": 3731,
+        "next_line": 3739,
+        "width": 8,
+        "width_provenance": "reference-label-span: dseg.asm:3731-3739"
+      },
+      "references": [
+        {
+          "function": "update_frame",
+          "hex": "813ece72c800",
+          "operand_offset": 2,
+          "start": 42548
+        }
+      ],
+      "storage": "bss",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:3731-3739"
+    },
     "_unk_3EE1C": {
       "load_address": 192028,
       "storage": "initialized"
     },
-    "_var_6114": {
-      "load_address": 202884,
+    "_unk_44F4C": {
+      "generated_extent": {
+        "all_index_reference_sites": [
+          35006,
+          35463,
+          36029,
+          36033,
+          36040,
+          75208,
+          79992
+        ],
+        "anchors": [
+          {
+            "hex": "b82200",
+            "site": 35458
+          },
+          {
+            "hex": "f72e7492",
+            "site": 35461
+          },
+          {
+            "hex": "05dc97",
+            "site": 35465
+          },
+          {
+            "hex": "8bd8",
+            "site": 35471
+          },
+          {
+            "hex": "894706",
+            "site": 35479
+          },
+          {
+            "hex": "ff067492",
+            "site": 36027
+          },
+          {
+            "hex": "833e749228",
+            "site": 36031
+          },
+          {
+            "hex": "7506",
+            "site": 36036
+          },
+          {
+            "hex": "c70674920000",
+            "site": 36038
+          },
+          {
+            "hex": "c70674920000",
+            "site": 79990
+          }
+        ],
+        "index_displacement": 37492,
+        "index_references": [
+          {
+            "hex": "a17492",
+            "site": 35005
+          },
+          {
+            "hex": "f72e7492",
+            "site": 35461
+          },
+          {
+            "hex": "ff067492",
+            "site": 36027
+          },
+          {
+            "hex": "833e749228",
+            "site": 36031
+          },
+          {
+            "hex": "c70674920000",
+            "site": 36038
+          },
+          {
+            "hex": "a17492",
+            "site": 75207
+          },
+          {
+            "hex": "c70674920000",
+            "site": 79990
+          }
+        ],
+        "kind": "corroborated-ring-buffer-v1",
+        "reference_lines": [
+          36687,
+          38047
+        ],
+        "reference_path": "src/restunts/asmorig/dseg.asm",
+        "stride": 34,
+        "wrap_count": 40,
+        "writes": [
+          {
+            "kind": "increment_then_wrap",
+            "site": 36027
+          },
+          {
+            "kind": "constant_zero",
+            "site": 36038
+          },
+          {
+            "kind": "constant_zero",
+            "site": 79990
+          }
+        ]
+      },
+      "load_address": 216908,
       "storage": "bss",
+      "width": 1360,
+      "width_provenance": "reference-label-span: dseg.asm:36687-38047"
+    },
+    "_var_6114": {
       "fields": [
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 91165,
             "hex": "39161661",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 91165
+          },
+          "width": 2
         }
-      ]
+      ],
+      "load_address": 202884,
+      "storage": "bss"
     },
     "_var_6118": {
-      "load_address": 202888,
-      "storage": "bss",
       "fields": [
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 91155,
             "hex": "8b161a61",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 91155
+          },
+          "width": 2
         }
-      ]
+      ],
+      "load_address": 202888,
+      "storage": "bss"
     },
     "_var_611c": {
-      "load_address": 202892,
-      "storage": "bss",
       "fields": [
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 91468,
             "hex": "89161e61",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 91468
+          },
+          "width": 2
         }
-      ]
+      ],
+      "load_address": 202892,
+      "storage": "bss"
     },
     "_var_6120": {
-      "load_address": 202896,
-      "storage": "bss",
       "fields": [
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 91448,
             "hex": "89162261",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 91448
+          },
+          "width": 2
         }
-      ]
+      ],
+      "load_address": 202896,
+      "storage": "bss"
+    },
+    "_vec_planerotopresult": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2,
+        4
+      ],
+      "load_address": 218306,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_09794",
+          "fixup_site": 39089,
+          "load_address": 218306,
+          "member": "plane_rotate_op",
+          "reference": {
+            "hex": "0306529d",
+            "operand_offset": 2,
+            "start": 39087
+          },
+          "text": "add ax, word ptr [0x9d52]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "vec_planerotopresult",
+      "reference_span": {
+        "label_line": 36676,
+        "next_line": 36682,
+        "width": 6,
+        "width_provenance": "reference-label-span: dseg.asm:36676-36682"
+      },
+      "references": [
+        {
+          "function": "update_player_state",
+          "hex": "0306529d",
+          "operand_offset": 2,
+          "start": 22289
+        }
+      ],
+      "storage": "bss",
+      "width": 6,
+      "width_provenance": "reference-label-span: dseg.asm:36676-36682"
+    },
+    "_vec_unk2": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2,
+        4
+      ],
+      "load_address": 216888,
+      "original_instruction_anchors": [
+        {
+          "addend": 2,
+          "caller_task": "load_04da2",
+          "fixup_site": 22974,
+          "load_address": 216888,
+          "member": "update_player_state",
+          "reference": {
+            "hex": "a3ca97",
+            "operand_offset": 1,
+            "start": 22973
+          },
+          "text": "mov word ptr [0x97ca], ax"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "vec_unk2",
+      "reference_span": {
+        "label_line": 36670,
+        "next_line": 36676,
+        "width": 6,
+        "width_provenance": "reference-label-span: dseg.asm:36670-36676"
+      },
+      "references": [
+        {
+          "function": "update_player_state",
+          "hex": "c706c8970000",
+          "operand_offset": 2,
+          "start": 20354
+        }
+      ],
+      "storage": "bss",
+      "width": 6,
+      "width_provenance": "reference-label-span: dseg.asm:36670-36676"
+    },
+    "_video_flag1_is1": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 215780,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_00786",
+          "fixup_site": 2009,
+          "load_address": 215780,
+          "member": "load_intro_resources",
+          "reference": {
+            "hex": "f72e7493",
+            "operand_offset": 2,
+            "start": 2007
+          },
+          "text": "imul word ptr [0x9374]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "video_flag1_is1",
+      "reference_span": {
+        "label_line": 35601,
+        "next_line": 36114,
+        "width": 514,
+        "width_provenance": "reference-label-span: dseg.asm:35601-36114"
+      },
+      "references": [
+        {
+          "function": "load_intro_resources",
+          "hex": "f72e7493",
+          "operand_offset": 2,
+          "start": 2007
+        }
+      ],
+      "storage": "bss",
+      "width": 514,
+      "width_provenance": "reference-label-span: dseg.asm:35601-36114"
     },
     "_video_flag2_is1": {
       "evidence": "docs/current/rect-union-binding.md",
@@ -2233,6 +5913,263 @@
         }
       ],
       "storage": "bss"
+    },
+    "_video_flag5_is0": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 222262,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 10811,
+          "load_address": 222262,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "803ec6ac00",
+            "operand_offset": 2,
+            "start": 10809
+          },
+          "text": "cmp byte ptr [0xacc6], 0"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0293c",
+          "fixup_site": 11301,
+          "load_address": 222262,
+          "member": "run_opponent_menu",
+          "reference": {
+            "hex": "803ec6ac00",
+            "operand_offset": 2,
+            "start": 11299
+          },
+          "text": "cmp byte ptr [0xacc6], 0"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0a0f4",
+          "fixup_site": 41225,
+          "load_address": 222262,
+          "member": "update_frame",
+          "reference": {
+            "hex": "803ec6ac00",
+            "operand_offset": 2,
+            "start": 41223
+          },
+          "text": "cmp byte ptr [0xacc6], 0"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "video_flag5_is0",
+      "reference_span": {
+        "label_line": 41742,
+        "next_line": 41744,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:41742-41744"
+      },
+      "references": [
+        {
+          "function": "run_car_menu",
+          "hex": "803ec6ac00",
+          "operand_offset": 2,
+          "start": 7857
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:41742-41744"
+    },
+    "_voicefileptr": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0,
+        2
+      ],
+      "load_address": 215676,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_197fc",
+          "fixup_site": 104465,
+          "load_address": 215676,
+          "member": "file_load_audiores",
+          "reference": {
+            "hex": "a30c93",
+            "operand_offset": 1,
+            "start": 104464
+          },
+          "text": "mov word ptr [0x930c], ax"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_197fc",
+          "fixup_site": 104469,
+          "load_address": 215676,
+          "member": "file_load_audiores",
+          "reference": {
+            "hex": "89160e93",
+            "operand_offset": 2,
+            "start": 104467
+          },
+          "text": "mov word ptr [0x930e], dx"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_197fc",
+          "fixup_site": 104497,
+          "load_address": 215676,
+          "member": "file_load_audiores",
+          "reference": {
+            "hex": "ff360e93",
+            "operand_offset": 2,
+            "start": 104495
+          },
+          "text": "push word ptr [0x930e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_197fc",
+          "fixup_site": 104501,
+          "load_address": 215676,
+          "member": "file_load_audiores",
+          "reference": {
+            "hex": "ff360c93",
+            "operand_offset": 2,
+            "start": 104499
+          },
+          "text": "push word ptr [0x930c]"
+        },
+        {
+          "addend": 2,
+          "caller_task": "load_19858",
+          "fixup_site": 104566,
+          "load_address": 215676,
+          "member": "audio_unload",
+          "reference": {
+            "hex": "ff360e93",
+            "operand_offset": 2,
+            "start": 104564
+          },
+          "text": "push word ptr [0x930e]"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_19858",
+          "fixup_site": 104570,
+          "load_address": 215676,
+          "member": "audio_unload",
+          "reference": {
+            "hex": "ff360c93",
+            "operand_offset": 2,
+            "start": 104568
+          },
+          "text": "push word ptr [0x930c]"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "voicefileptr",
+      "reference_span": {
+        "label_line": 35532,
+        "next_line": 35541,
+        "width": 12,
+        "width_provenance": "reference-label-span: dseg.asm:35532-35541"
+      },
+      "references": [
+        {
+          "function": "file_load_audiores",
+          "hex": "a30c93",
+          "operand_offset": 1,
+          "start": 104464
+        }
+      ],
+      "storage": "bss",
+      "width": 12,
+      "width_provenance": "reference-label-span: dseg.asm:35532-35541"
+    },
+    "_waitflag": {
+      "all_candidate_addends_bounded_by_reference_span": true,
+      "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
+      "candidate_addends": [
+        0
+      ],
+      "load_address": 213890,
+      "original_instruction_anchors": [
+        {
+          "addend": 0,
+          "caller_task": "load_0069c",
+          "fixup_site": 1752,
+          "load_address": 213890,
+          "member": "run_intro",
+          "reference": {
+            "hex": "c706128ca000",
+            "operand_offset": 2,
+            "start": 1750
+          },
+          "text": "mov word ptr [0x8c12], 0xa0"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0069c",
+          "fixup_site": 1760,
+          "load_address": 213890,
+          "member": "run_intro",
+          "reference": {
+            "hex": "c706128cb400",
+            "operand_offset": 2,
+            "start": 1758
+          },
+          "text": "mov word ptr [0x8c12], 0xb4"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_0069c",
+          "fixup_site": 1845,
+          "load_address": 213890,
+          "member": "run_intro",
+          "reference": {
+            "hex": "c706128cb400",
+            "operand_offset": 2,
+            "start": 1843
+          },
+          "text": "mov word ptr [0x8c12], 0xb4"
+        },
+        {
+          "addend": 0,
+          "caller_task": "load_00786",
+          "fixup_site": 1978,
+          "load_address": 213890,
+          "member": "load_intro_resources",
+          "reference": {
+            "hex": "c706128c9600",
+            "operand_offset": 2,
+            "start": 1976
+          },
+          "text": "mov word ptr [0x8c12], 0x96"
+        }
+      ],
+      "other_candidate_mapped_direct_addresses": [],
+      "reference_label": "waitflag",
+      "reference_span": {
+        "label_line": 33829,
+        "next_line": 33830,
+        "width": 2,
+        "width_provenance": "reference-label-span: dseg.asm:33829-33830"
+      },
+      "references": [
+        {
+          "function": "run_intro",
+          "hex": "c706128ca000",
+          "operand_offset": 2,
+          "start": 1750
+        }
+      ],
+      "storage": "bss",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:33829-33830"
     },
     "_wallOrientation": {
       "load_address": 220566,
@@ -4421,19 +8358,19 @@
       "storage": "initialized"
     },
     "_word_3EE0E": {
-      "load_address": 192014,
-      "storage": "initialized",
       "fields": [
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 118552,
             "hex": "8c06a036",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 118552
+          },
+          "width": 2
         }
-      ]
+      ],
+      "load_address": 192014,
+      "storage": "initialized"
     },
     "_word_3EE1E": {
       "load_address": 192030,
@@ -5120,55 +9057,6 @@
     "_word_A5AC": {
       "load_address": 220444,
       "storage": "bss"
-    },
-    "_g_ascii_props": {
-      "load_address": 192415,
-      "storage": "initialized",
-      "width": 256,
-      "extent_proof": {
-        "kind": "ascii-table-256-v1",
-        "first_line": 15377,
-        "last_value_line": 15632,
-        "padding_line": 15633,
-        "next_label_line": 15634
-      }
-    },
-    "_audiodriverstring": {
-      "load_address": 199442,
-      "storage": "initialized",
-      "width": 5,
-      "width_provenance": "reference-label-span: dseg.asm:21497-21502"
-    },
-    "_mmouspriteptr": {
-      "load_address": 213860,
-      "storage": "bss",
-      "width": 4,
-      "width_provenance": "reference-label-span: dseg.asm:33805-33806"
-    },
-    "_mouseunkspriteptr": {
-      "load_address": 218568,
-      "storage": "bss",
-      "width": 4,
-      "width_provenance": "reference-label-span: dseg.asm:38300-38301"
-    }
-  },
-  "code_islands": {
-    "sprite_pair": {
-      "start": 149824,
-      "end": 149884,
-      "sha256": "9cd4a83a13ec314b6d4a33ddd70df061804d17760cf93170c3cfb3df74b05146",
-      "frame_load_address": 125472,
-      "reference_path": "src/restunts/asmorig/seg012.asm",
-      "reference_lines": [
-        13738,
-        13798
-      ],
-      "frame_anchor": {
-        "caller_task": "load_2a958",
-        "site": 174460,
-        "hex": "b83e5fbaa21e",
-        "relocation_load_offset": 174464
-      }
     }
   }
 }

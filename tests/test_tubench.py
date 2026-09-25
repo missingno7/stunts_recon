@@ -4,10 +4,11 @@ import sys
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from tubench import WORKSPACE, build_tu_map, run_workbench
+from tubench import WORKSPACE, _own_data_placements, build_tu_map, run_workbench
 
 
 class TUBench(unittest.TestCase):
@@ -21,8 +22,10 @@ class TUBench(unittest.TestCase):
 
     def test_map_from_canonical_inputs(self):
         document = build_tu_map()
-        self.assertEqual(document["closure_count"], 43)
-        self.assertEqual(document["near_call_edges"], 431)
+        self.assertEqual(document["closure_count"], 42)
+        self.assertEqual(document["near_call_edges"], 435)
+        self.assertTrue(any(row['name']=='mat_rot_zxy' for closure in document['closures']
+                            for row in closure['members']))
         self.assertTrue(document["near_call_decode_anomalies"])
         self.assertFalse([row for row in document["near_call_decode_anomalies"]
                           if 95408 <= row["start"] < 107196])
@@ -30,7 +33,7 @@ class TUBench(unittest.TestCase):
                        if row["segment"] == "seg008" and row["interval"]["start"] == 95408)
         self.assertEqual(segment["interval"], {"start": 95408, "end": 107196, "bytes": 11788})
         self.assertEqual(segment["member_count"], 62)
-        self.assertIn("file_load_resource", segment["members_with_emission_level_boundaries"])
+        self.assertIn("file_load_resource", [row['name'] for row in segment['members']])
 
     def test_exact_groups_and_mutated_member(self):
         names = "audio_enable_flag2,audio_disable_flag2,audio_toggle_flag2"
@@ -79,6 +82,24 @@ unsigned char far * far audioresource_find(unsigned char far *resource, unsigned
         self.assertTrue(near["resolved"] and near["self_relative"])
         self.assertEqual(near["target_operand_bytes"], "36ff")
         self.assertTrue(near["operand_bytes_match_target"])
+
+    def test_tu_owned_data_uses_grounded_dgroup_base(self):
+        obj=SimpleNamespace(segment_lengths={'UNIT_TEXT':10,'_DATA':4},
+                            segments={'_DATA':b'abcd'})
+        fix={'target_kind':'segment','target':'_DATA','loc':'offset16',
+             'width':2,'self_relative':False,'frame_kind':'group',
+             'frame':'DGROUP','offset':2,'encoded_addend':'0200'}
+        publics=[{'name':'_member','offset':0,'segment':'UNIT_TEXT'}]
+        functions=[{'name':'member','start':20,'end':30}]
+        image=bytearray(120)
+        image[22:24]=(22).to_bytes(2,'little')
+        image[100:104]=b'abcd'
+        placement=_own_data_placements(obj,[fix],publics,functions,image,80)['_DATA']
+        self.assertEqual((placement['status'],placement['base'],placement['dgroup_offset']),
+                         ('GROUNDED',100,20))
+        image[100]=0
+        self.assertEqual(_own_data_placements(obj,[fix],publics,functions,image,80)
+                         ['_DATA']['status'],'UNRESOLVED')
 
 
 if __name__ == "__main__":

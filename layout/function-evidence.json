@@ -14851,6 +14851,4833 @@
         "site": 144173,
         "target": 144141
       }
+    },
+    {
+      "abi": "far procedure; verified entry and complete emission extent",
+      "alignment_padding": [
+        {
+          "attribution": "preceding-procedure",
+          "hex": "00",
+          "kind": "word_alignment",
+          "load_offset": 146877,
+          "provenance": {
+            "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+            "line": 12063,
+            "path": "src/restunts/asmorig/seg012.asm",
+            "repository": "restunts",
+            "source_text": "; align 2; db 0"
+          }
+        }
+      ],
+      "boundary_anchors": [
+        {
+          "hex": "558bec83ec0a1e56",
+          "site": 146766
+        },
+        {
+          "hex": "fceb1c90",
+          "site": 146762
+        },
+        {
+          "hex": "9a2e53a21e",
+          "site": 1871
+        },
+        {
+          "hex": "9a2e53a21e",
+          "site": 3833
+        },
+        {
+          "hex": "558bec83",
+          "site": 146878
+        }
+      ],
+      "boundary_proof": "Every in-range instruction is reached from the entry; target CALLs in distinct instruction-verified callers resolve to this entry; the preceding and following reviewed function extents meet exactly at the proposed limits.",
+      "bytes_hex": "558bec83ec0a1e56578e5e088b76068b44088946fe8b440a8946fc8b5efcd1e32e031e2a5f2e8b3f037efe2e8e06225ffc8b54022e8b1e345f8b042bd883c610d1e88946fa7314741e8b4efaf3a5a403fb4a7ff55f5e1f8be55dcb8b4efaf3a503fb4a7ff6ebeda403fb4a7ffaebe500",
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 146766
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 146767
+        },
+        {
+          "bytes": "83ec0a",
+          "instruction": "sub sp, 0xa",
+          "load_offset": 146769
+        },
+        {
+          "bytes": "1e",
+          "instruction": "push ds",
+          "load_offset": 146772
+        },
+        {
+          "bytes": "56",
+          "instruction": "push si",
+          "load_offset": 146773
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 146774
+        },
+        {
+          "bytes": "8e5e08",
+          "instruction": "mov ds, word ptr [bp + 8]",
+          "load_offset": 146775
+        },
+        {
+          "bytes": "8b7606",
+          "instruction": "mov si, word ptr [bp + 6]",
+          "load_offset": 146778
+        },
+        {
+          "bytes": "8b4408",
+          "instruction": "mov ax, word ptr [si + 8]",
+          "load_offset": 146781
+        },
+        {
+          "bytes": "8946fe",
+          "instruction": "mov word ptr [bp - 2], ax",
+          "load_offset": 146784
+        },
+        {
+          "bytes": "8b440a",
+          "instruction": "mov ax, word ptr [si + 0xa]",
+          "load_offset": 146787
+        },
+        {
+          "bytes": "8946fc",
+          "instruction": "mov word ptr [bp - 4], ax",
+          "load_offset": 146790
+        },
+        {
+          "bytes": "8b5efc",
+          "instruction": "mov bx, word ptr [bp - 4]",
+          "load_offset": 146793
+        },
+        {
+          "bytes": "d1e3",
+          "instruction": "shl bx, 1",
+          "load_offset": 146796
+        },
+        {
+          "bytes": "2e031e2a5f",
+          "instruction": "add bx, word ptr cs:[0x5f2a]",
+          "load_offset": 146798
+        },
+        {
+          "bytes": "2e8b3f",
+          "instruction": "mov di, word ptr cs:[bx]",
+          "load_offset": 146803
+        },
+        {
+          "bytes": "037efe",
+          "instruction": "add di, word ptr [bp - 2]",
+          "load_offset": 146806
+        },
+        {
+          "bytes": "2e8e06225f",
+          "instruction": "mov es, word ptr cs:[0x5f22]",
+          "load_offset": 146809
+        },
+        {
+          "bytes": "fc",
+          "instruction": "cld",
+          "load_offset": 146814
+        },
+        {
+          "bytes": "8b5402",
+          "instruction": "mov dx, word ptr [si + 2]",
+          "load_offset": 146815
+        },
+        {
+          "bytes": "2e8b1e345f",
+          "instruction": "mov bx, word ptr cs:[0x5f34]",
+          "load_offset": 146818
+        },
+        {
+          "bytes": "8b04",
+          "instruction": "mov ax, word ptr [si]",
+          "load_offset": 146823
+        },
+        {
+          "bytes": "2bd8",
+          "instruction": "sub bx, ax",
+          "load_offset": 146825
+        },
+        {
+          "bytes": "83c610",
+          "instruction": "add si, 0x10",
+          "load_offset": 146827
+        },
+        {
+          "bytes": "d1e8",
+          "instruction": "shr ax, 1",
+          "load_offset": 146830
+        },
+        {
+          "bytes": "8946fa",
+          "instruction": "mov word ptr [bp - 6], ax",
+          "load_offset": 146832
+        },
+        {
+          "bytes": "7314",
+          "instruction": "jae 0x23da9",
+          "load_offset": 146835
+        },
+        {
+          "bytes": "741e",
+          "instruction": "je 0x23db5",
+          "load_offset": 146837
+        },
+        {
+          "bytes": "8b4efa",
+          "instruction": "mov cx, word ptr [bp - 6]",
+          "load_offset": 146839
+        },
+        {
+          "bytes": "f3a5",
+          "instruction": "rep movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 146842
+        },
+        {
+          "bytes": "a4",
+          "instruction": "movsb byte ptr es:[di], byte ptr [si]",
+          "load_offset": 146844
+        },
+        {
+          "bytes": "03fb",
+          "instruction": "add di, bx",
+          "load_offset": 146845
+        },
+        {
+          "bytes": "4a",
+          "instruction": "dec dx",
+          "load_offset": 146847
+        },
+        {
+          "bytes": "7ff5",
+          "instruction": "jg 0x23d97",
+          "load_offset": 146848
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 146850
+        },
+        {
+          "bytes": "5e",
+          "instruction": "pop si",
+          "load_offset": 146851
+        },
+        {
+          "bytes": "1f",
+          "instruction": "pop ds",
+          "load_offset": 146852
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 146853
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 146855
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 146856
+        },
+        {
+          "bytes": "8b4efa",
+          "instruction": "mov cx, word ptr [bp - 6]",
+          "load_offset": 146857
+        },
+        {
+          "bytes": "f3a5",
+          "instruction": "rep movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 146860
+        },
+        {
+          "bytes": "03fb",
+          "instruction": "add di, bx",
+          "load_offset": 146862
+        },
+        {
+          "bytes": "4a",
+          "instruction": "dec dx",
+          "load_offset": 146864
+        },
+        {
+          "bytes": "7ff6",
+          "instruction": "jg 0x23da9",
+          "load_offset": 146865
+        },
+        {
+          "bytes": "ebed",
+          "instruction": "jmp 0x23da2",
+          "load_offset": 146867
+        },
+        {
+          "bytes": "a4",
+          "instruction": "movsb byte ptr es:[di], byte ptr [si]",
+          "load_offset": 146869
+        },
+        {
+          "bytes": "03fb",
+          "instruction": "add di, bx",
+          "load_offset": 146870
+        },
+        {
+          "bytes": "4a",
+          "instruction": "dec dx",
+          "load_offset": 146872
+        },
+        {
+          "bytes": "7ffa",
+          "instruction": "jg 0x23db5",
+          "load_offset": 146873
+        },
+        {
+          "bytes": "ebe5",
+          "instruction": "jmp 0x23da2",
+          "load_offset": 146875
+        }
+      ],
+      "end": 146878,
+      "evidence_class": "locked pristine bytes, exact relocated far-CALL entry anchors, complete in-range control flow, adjacent mapped boundaries",
+      "frame_load_address": 125472,
+      "name": "sprite_shape_to_1_alt",
+      "padding_offsets": [],
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 12064,
+        "line_start": 11997,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        146766,
+        146767,
+        146769,
+        146772,
+        146773,
+        146774,
+        146775,
+        146778,
+        146781,
+        146784,
+        146787,
+        146790,
+        146793,
+        146796,
+        146798,
+        146803,
+        146806,
+        146809,
+        146814,
+        146815,
+        146818,
+        146823,
+        146825,
+        146827,
+        146830,
+        146832,
+        146835,
+        146837,
+        146839,
+        146842,
+        146844,
+        146845,
+        146847,
+        146848,
+        146850,
+        146851,
+        146852,
+        146853,
+        146855,
+        146856,
+        146857,
+        146860,
+        146862,
+        146864,
+        146865,
+        146867,
+        146869,
+        146870,
+        146872,
+        146873,
+        146875
+      ],
+      "relocation_sites": [],
+      "segment": "seg012",
+      "segment_offset": 21294,
+      "segment_paragraph": 7842,
+      "sha256": "f3144df745a608ac762a656892052f75e11b5b4aa6f35ac7af13e7adf86c78dd",
+      "size": 112,
+      "stable_id": "load_23d4e",
+      "start": 146766,
+      "terminal_shared_jump": {
+        "hex": "ebe5",
+        "reason": "terminal unconditional branch into this function\u2019s pop/RETF epilogue",
+        "site": 146875,
+        "target": 146850
+      }
+    },
+    {
+      "abi": "far procedure; verified entry and complete emission extent",
+      "alignment_padding": [
+        {
+          "attribution": "preceding-procedure",
+          "hex": "00",
+          "kind": "word_alignment",
+          "load_offset": 131253,
+          "provenance": {
+            "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+            "line": 3382,
+            "path": "src/restunts/asmorig/seg012.asm",
+            "repository": "restunts",
+            "source_text": "; align 2; db 0"
+          }
+        }
+      ],
+      "boundary_anchors": [
+        {
+          "hex": "57c606ea4001b840",
+          "site": 131166
+        },
+        {
+          "hex": "8bc25dcb",
+          "site": 131162
+        },
+        {
+          "hex": "9a3e16a21e",
+          "site": 172165
+        },
+        {
+          "hex": "558becff",
+          "site": 131254
+        }
+      ],
+      "boundary_proof": "Every in-range instruction is reached from the entry; target CALLs in distinct instruction-verified callers resolve to this entry; the preceding and following reviewed function extents meet exactly at the proposed limits.",
+      "bytes_hex": "57c606ea4001b840008ec026a1100025cfff0d200026a31000b400b004cd10b003babf03eeb002bab803eeb90c00bab40333db8ac3ee428a87ec40ee4a43e2f3fcb800b88ec033ffb9004033c0f3abb08abab803ee5fcb00",
+      "disassembly": [
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 131166
+        },
+        {
+          "bytes": "c606ea4001",
+          "instruction": "mov byte ptr [0x40ea], 1",
+          "load_offset": 131167
+        },
+        {
+          "bytes": "b84000",
+          "instruction": "mov ax, 0x40",
+          "load_offset": 131172
+        },
+        {
+          "bytes": "8ec0",
+          "instruction": "mov es, ax",
+          "load_offset": 131175
+        },
+        {
+          "bytes": "26a11000",
+          "instruction": "mov ax, word ptr es:[0x10]",
+          "load_offset": 131177
+        },
+        {
+          "bytes": "25cfff",
+          "instruction": "and ax, 0xffcf",
+          "load_offset": 131181
+        },
+        {
+          "bytes": "0d2000",
+          "instruction": "or ax, 0x20",
+          "load_offset": 131184
+        },
+        {
+          "bytes": "26a31000",
+          "instruction": "mov word ptr es:[0x10], ax",
+          "load_offset": 131187
+        },
+        {
+          "bytes": "b400",
+          "instruction": "mov ah, 0",
+          "load_offset": 131191
+        },
+        {
+          "bytes": "b004",
+          "instruction": "mov al, 4",
+          "load_offset": 131193
+        },
+        {
+          "bytes": "cd10",
+          "instruction": "int 0x10",
+          "load_offset": 131195
+        },
+        {
+          "bytes": "b003",
+          "instruction": "mov al, 3",
+          "load_offset": 131197
+        },
+        {
+          "bytes": "babf03",
+          "instruction": "mov dx, 0x3bf",
+          "load_offset": 131199
+        },
+        {
+          "bytes": "ee",
+          "instruction": "out dx, al",
+          "load_offset": 131202
+        },
+        {
+          "bytes": "b002",
+          "instruction": "mov al, 2",
+          "load_offset": 131203
+        },
+        {
+          "bytes": "bab803",
+          "instruction": "mov dx, 0x3b8",
+          "load_offset": 131205
+        },
+        {
+          "bytes": "ee",
+          "instruction": "out dx, al",
+          "load_offset": 131208
+        },
+        {
+          "bytes": "b90c00",
+          "instruction": "mov cx, 0xc",
+          "load_offset": 131209
+        },
+        {
+          "bytes": "bab403",
+          "instruction": "mov dx, 0x3b4",
+          "load_offset": 131212
+        },
+        {
+          "bytes": "33db",
+          "instruction": "xor bx, bx",
+          "load_offset": 131215
+        },
+        {
+          "bytes": "8ac3",
+          "instruction": "mov al, bl",
+          "load_offset": 131217
+        },
+        {
+          "bytes": "ee",
+          "instruction": "out dx, al",
+          "load_offset": 131219
+        },
+        {
+          "bytes": "42",
+          "instruction": "inc dx",
+          "load_offset": 131220
+        },
+        {
+          "bytes": "8a87ec40",
+          "instruction": "mov al, byte ptr [bx + 0x40ec]",
+          "load_offset": 131221
+        },
+        {
+          "bytes": "ee",
+          "instruction": "out dx, al",
+          "load_offset": 131225
+        },
+        {
+          "bytes": "4a",
+          "instruction": "dec dx",
+          "load_offset": 131226
+        },
+        {
+          "bytes": "43",
+          "instruction": "inc bx",
+          "load_offset": 131227
+        },
+        {
+          "bytes": "e2f3",
+          "instruction": "loop 0x20091",
+          "load_offset": 131228
+        },
+        {
+          "bytes": "fc",
+          "instruction": "cld",
+          "load_offset": 131230
+        },
+        {
+          "bytes": "b800b8",
+          "instruction": "mov ax, 0xb800",
+          "load_offset": 131231
+        },
+        {
+          "bytes": "8ec0",
+          "instruction": "mov es, ax",
+          "load_offset": 131234
+        },
+        {
+          "bytes": "33ff",
+          "instruction": "xor di, di",
+          "load_offset": 131236
+        },
+        {
+          "bytes": "b90040",
+          "instruction": "mov cx, 0x4000",
+          "load_offset": 131238
+        },
+        {
+          "bytes": "33c0",
+          "instruction": "xor ax, ax",
+          "load_offset": 131241
+        },
+        {
+          "bytes": "f3ab",
+          "instruction": "rep stosw word ptr es:[di], ax",
+          "load_offset": 131243
+        },
+        {
+          "bytes": "b08a",
+          "instruction": "mov al, 0x8a",
+          "load_offset": 131245
+        },
+        {
+          "bytes": "bab803",
+          "instruction": "mov dx, 0x3b8",
+          "load_offset": 131247
+        },
+        {
+          "bytes": "ee",
+          "instruction": "out dx, al",
+          "load_offset": 131250
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 131251
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 131252
+        }
+      ],
+      "end": 131254,
+      "evidence_class": "locked pristine bytes, exact relocated far-CALL entry anchors, complete in-range control flow, adjacent mapped boundaries",
+      "frame_load_address": 125472,
+      "name": "video_set_mode4",
+      "padding_offsets": [],
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 3383,
+        "line_start": 3335,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        131166,
+        131167,
+        131172,
+        131175,
+        131177,
+        131181,
+        131184,
+        131187,
+        131191,
+        131193,
+        131195,
+        131197,
+        131199,
+        131202,
+        131203,
+        131205,
+        131208,
+        131209,
+        131212,
+        131215,
+        131217,
+        131219,
+        131220,
+        131221,
+        131225,
+        131226,
+        131227,
+        131228,
+        131230,
+        131231,
+        131234,
+        131236,
+        131238,
+        131241,
+        131243,
+        131245,
+        131247,
+        131250,
+        131251,
+        131252
+      ],
+      "relocation_sites": [],
+      "segment": "seg012",
+      "segment_offset": 5694,
+      "segment_paragraph": 7842,
+      "sha256": "b9057330ea19a409f3d0f9c3873dafae005b7ee2c71dc0da8da8b1890feae560",
+      "size": 88,
+      "stable_id": "load_2005e",
+      "start": 131166
+    },
+    {
+      "boundary_anchors": [
+        {
+          "hex": "558bec5733ff8b56",
+          "site": 125518
+        },
+        {
+          "hex": "17c51c00",
+          "site": 125514
+        },
+        {
+          "hex": "9a2e00a21e",
+          "site": 56514
+        },
+        {
+          "hex": "9a2e00a21e",
+          "site": 9259
+        },
+        {
+          "hex": "faa10c41",
+          "site": 125652
+        }
+      ],
+      "boundary_proof": "Complete target extent [0x1ea4e,0x1ead4) is adjacent to fatal_error and sub_2EAD4; 25 pristine relocated far calls resolve exactly to the entry. Table-aware CFG reaches 51 code instructions; embedded data is byte-hashed separately.",
+      "bytes_hex": "558bec5733ff8b56068b4e080bd27d0583cf08f7da0bc97d0583cf04f7d93bd17c07741d87d183cf0233c0f7f18adc32ff048083d3008a87503932e42effa57b000bd2741db880002effa57b0090008b00980093009f00a300af00a800f7d880c4015f5dcb80c401ebf8f7d880c402ebf1f7d8ebed80ec01ebe880c401f7d8ebe180ec02ebdc",
+      "data_islands": [
+        {
+          "hex": "90008b00980093009f00a300af00a800",
+          "kind": "jump_table16",
+          "length": 16,
+          "load_offset": 125595,
+          "sha256": "715da43fa1c780b9e7864c73b0471ab8c19033b04212057fc8956e8c78c5b773"
+        }
+      ],
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 125518
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 125519
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 125521
+        },
+        {
+          "bytes": "33ff",
+          "instruction": "xor di, di",
+          "load_offset": 125522
+        },
+        {
+          "bytes": "8b5606",
+          "instruction": "mov dx, word ptr [bp + 6]",
+          "load_offset": 125524
+        },
+        {
+          "bytes": "8b4e08",
+          "instruction": "mov cx, word ptr [bp + 8]",
+          "load_offset": 125527
+        },
+        {
+          "bytes": "0bd2",
+          "instruction": "or dx, dx",
+          "load_offset": 125530
+        },
+        {
+          "bytes": "7d05",
+          "instruction": "jge 0x1ea63",
+          "load_offset": 125532
+        },
+        {
+          "bytes": "83cf08",
+          "instruction": "or di, 8",
+          "load_offset": 125534
+        },
+        {
+          "bytes": "f7da",
+          "instruction": "neg dx",
+          "load_offset": 125537
+        },
+        {
+          "bytes": "0bc9",
+          "instruction": "or cx, cx",
+          "load_offset": 125539
+        },
+        {
+          "bytes": "7d05",
+          "instruction": "jge 0x1ea6c",
+          "load_offset": 125541
+        },
+        {
+          "bytes": "83cf04",
+          "instruction": "or di, 4",
+          "load_offset": 125543
+        },
+        {
+          "bytes": "f7d9",
+          "instruction": "neg cx",
+          "load_offset": 125546
+        },
+        {
+          "bytes": "3bd1",
+          "instruction": "cmp dx, cx",
+          "load_offset": 125548
+        },
+        {
+          "bytes": "7c07",
+          "instruction": "jl 0x1ea77",
+          "load_offset": 125550
+        },
+        {
+          "bytes": "741d",
+          "instruction": "je 0x1ea8f",
+          "load_offset": 125552
+        },
+        {
+          "bytes": "87d1",
+          "instruction": "xchg cx, dx",
+          "load_offset": 125554
+        },
+        {
+          "bytes": "83cf02",
+          "instruction": "or di, 2",
+          "load_offset": 125556
+        },
+        {
+          "bytes": "33c0",
+          "instruction": "xor ax, ax",
+          "load_offset": 125559
+        },
+        {
+          "bytes": "f7f1",
+          "instruction": "div cx",
+          "load_offset": 125561
+        },
+        {
+          "bytes": "8adc",
+          "instruction": "mov bl, ah",
+          "load_offset": 125563
+        },
+        {
+          "bytes": "32ff",
+          "instruction": "xor bh, bh",
+          "load_offset": 125565
+        },
+        {
+          "bytes": "0480",
+          "instruction": "add al, 0x80",
+          "load_offset": 125567
+        },
+        {
+          "bytes": "83d300",
+          "instruction": "adc bx, 0",
+          "load_offset": 125569
+        },
+        {
+          "bytes": "8a875039",
+          "instruction": "mov al, byte ptr [bx + 0x3950]",
+          "load_offset": 125572
+        },
+        {
+          "bytes": "32e4",
+          "instruction": "xor ah, ah",
+          "load_offset": 125576
+        },
+        {
+          "bytes": "2effa57b00",
+          "instruction": "jmp word ptr cs:[di + 0x7b]",
+          "load_offset": 125578
+        },
+        {
+          "bytes": "0bd2",
+          "instruction": "or dx, dx",
+          "load_offset": 125583
+        },
+        {
+          "bytes": "741d",
+          "instruction": "je 0x1eab0",
+          "load_offset": 125585
+        },
+        {
+          "bytes": "b88000",
+          "instruction": "mov ax, 0x80",
+          "load_offset": 125587
+        },
+        {
+          "bytes": "2effa57b00",
+          "instruction": "jmp word ptr cs:[di + 0x7b]",
+          "load_offset": 125590
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 125611
+        },
+        {
+          "bytes": "80c401",
+          "instruction": "add ah, 1",
+          "load_offset": 125613
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 125616
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 125617
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 125618
+        },
+        {
+          "bytes": "80c401",
+          "instruction": "add ah, 1",
+          "load_offset": 125619
+        },
+        {
+          "bytes": "ebf8",
+          "instruction": "jmp 0x1eab0",
+          "load_offset": 125622
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 125624
+        },
+        {
+          "bytes": "80c402",
+          "instruction": "add ah, 2",
+          "load_offset": 125626
+        },
+        {
+          "bytes": "ebf1",
+          "instruction": "jmp 0x1eab0",
+          "load_offset": 125629
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 125631
+        },
+        {
+          "bytes": "ebed",
+          "instruction": "jmp 0x1eab0",
+          "load_offset": 125633
+        },
+        {
+          "bytes": "80ec01",
+          "instruction": "sub ah, 1",
+          "load_offset": 125635
+        },
+        {
+          "bytes": "ebe8",
+          "instruction": "jmp 0x1eab0",
+          "load_offset": 125638
+        },
+        {
+          "bytes": "80c401",
+          "instruction": "add ah, 1",
+          "load_offset": 125640
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 125643
+        },
+        {
+          "bytes": "ebe1",
+          "instruction": "jmp 0x1eab0",
+          "load_offset": 125645
+        },
+        {
+          "bytes": "80ec02",
+          "instruction": "sub ah, 2",
+          "load_offset": 125647
+        },
+        {
+          "bytes": "ebdc",
+          "instruction": "jmp 0x1eab0",
+          "load_offset": 125650
+        }
+      ],
+      "dispatch_tables": [
+        {
+          "base_displacement": 123,
+          "byte_index_values": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14
+          ],
+          "entry_width": 2,
+          "frame_load_address": 125472,
+          "index_proof": [
+            {
+              "hex": "33ff",
+              "role": "DI initialized to zero",
+              "site": 125522
+            },
+            {
+              "hex": "83cf08",
+              "role": "OR 8 flag",
+              "site": 125534
+            },
+            {
+              "hex": "83cf04",
+              "role": "OR 4 flag",
+              "site": 125543
+            },
+            {
+              "hex": "83cf02",
+              "role": "OR 2 flag",
+              "site": 125556
+            }
+          ],
+          "instruction_hex": "2effa57b00",
+          "island_load_offset": 125595,
+          "site": 125578,
+          "targets": [
+            125616,
+            125611,
+            125624,
+            125619,
+            125631,
+            125635,
+            125647,
+            125640
+          ]
+        },
+        {
+          "base_displacement": 123,
+          "byte_index_values": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14
+          ],
+          "entry_width": 2,
+          "frame_load_address": 125472,
+          "index_proof": [
+            {
+              "hex": "33ff",
+              "role": "DI initialized to zero",
+              "site": 125522
+            },
+            {
+              "hex": "83cf08",
+              "role": "OR 8 flag",
+              "site": 125534
+            },
+            {
+              "hex": "83cf04",
+              "role": "OR 4 flag",
+              "site": 125543
+            },
+            {
+              "hex": "83cf02",
+              "role": "OR 2 flag",
+              "site": 125556
+            }
+          ],
+          "instruction_hex": "2effa57b00",
+          "island_load_offset": 125595,
+          "site": 125590,
+          "targets": [
+            125616,
+            125611,
+            125624,
+            125619,
+            125631,
+            125635,
+            125647,
+            125640
+          ]
+        }
+      ],
+      "end": 125652,
+      "evidence_class": "locked pristine bytes, relocated far-CALL anchors, adjacent mapped extents, table-aware direct control-flow proof",
+      "frame_load_address": 125472,
+      "name": "polarAngle",
+      "padding_offsets": [],
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 496,
+        "line_start": 409,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        125518,
+        125519,
+        125521,
+        125522,
+        125524,
+        125527,
+        125530,
+        125532,
+        125534,
+        125537,
+        125539,
+        125541,
+        125543,
+        125546,
+        125548,
+        125550,
+        125552,
+        125554,
+        125556,
+        125559,
+        125561,
+        125563,
+        125565,
+        125567,
+        125569,
+        125572,
+        125576,
+        125578,
+        125583,
+        125585,
+        125587,
+        125590,
+        125611,
+        125613,
+        125616,
+        125617,
+        125618,
+        125619,
+        125622,
+        125624,
+        125626,
+        125629,
+        125631,
+        125633,
+        125635,
+        125638,
+        125640,
+        125643,
+        125645,
+        125647,
+        125650
+      ],
+      "relocation_sites": [],
+      "segment": "seg012",
+      "segment_offset": 46,
+      "segment_paragraph": 7842,
+      "sha256": "b5110285a4457dea4a35ade573aa9dfa7b693a8c937dbe2286cf03df44755ea5",
+      "size": 134,
+      "stable_id": "load_1ea4e",
+      "start": 125518,
+      "verification_kind": "embedded_data_dispatch_v1"
+    },
+    {
+      "boundary_anchors": [
+        {
+          "hex": "558bec83ec048b46",
+          "site": 104906
+        },
+        {
+          "hex": "8be55dcb",
+          "site": 104902
+        },
+        {
+          "hex": "9a1a254b17",
+          "site": 1573
+        },
+        {
+          "hex": "9a1a254b17",
+          "site": 10602
+        },
+        {
+          "hex": "558bec83",
+          "site": 105094
+        }
+      ],
+      "boundary_proof": "Complete target extent [0x199ca,0x19a86) is adjacent to get_super_random and sub_29A86; 17 pristine relocated far calls resolve exactly to the entry. Table-aware CFG reaches 61 code instructions; embedded data is byte-hashed separately.",
+      "bytes_hex": "558bec83ec048b46063d08007603e9850003c0932effa79e2590ff76089a6823a21e83c4028946fc8956feeb6990ff76089a6823a21e83c4028be55dcb90ff76089ad723a21eebeeff76089a414ea21eebd0ff76089a2d4ea21eebc6ff76089aea0b0d27ebbcff76089a340c0d27ebb2ff76089a740b0d27eba8ff76089a0400e129eb9e3425482562256c25762580258a25582594258b46fc0b46fe740a8b46fc8b56fe8be55dcb0ee8a2063d02007403e952ff2bc0998be55dcb90",
+      "data_islands": [
+        {
+          "hex": "3425482562256c25762580258a2558259425",
+          "kind": "jump_table16",
+          "length": 18,
+          "load_offset": 105038,
+          "sha256": "e1869787e3d7292dfaea2aac4b87022c9ac7284bc4614ab3a4bb3b6542bb54a6"
+        }
+      ],
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 104906
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 104907
+        },
+        {
+          "bytes": "83ec04",
+          "instruction": "sub sp, 4",
+          "load_offset": 104909
+        },
+        {
+          "bytes": "8b4606",
+          "instruction": "mov ax, word ptr [bp + 6]",
+          "load_offset": 104912
+        },
+        {
+          "bytes": "3d0800",
+          "instruction": "cmp ax, 8",
+          "load_offset": 104915
+        },
+        {
+          "bytes": "7603",
+          "instruction": "jbe 0x199db",
+          "load_offset": 104918
+        },
+        {
+          "bytes": "e98500",
+          "instruction": "jmp 0x19a60",
+          "load_offset": 104920
+        },
+        {
+          "bytes": "03c0",
+          "instruction": "add ax, ax",
+          "load_offset": 104923
+        },
+        {
+          "bytes": "93",
+          "instruction": "xchg bx, ax",
+          "load_offset": 104925
+        },
+        {
+          "bytes": "2effa79e25",
+          "instruction": "jmp word ptr cs:[bx + 0x259e]",
+          "load_offset": 104926
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop",
+          "load_offset": 104931
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 104932
+        },
+        {
+          "bytes": "9a6823a21e",
+          "instruction": "lcall 0x1ea2, 0x2368",
+          "load_offset": 104935
+        },
+        {
+          "bytes": "83c402",
+          "instruction": "add sp, 2",
+          "load_offset": 104940
+        },
+        {
+          "bytes": "8946fc",
+          "instruction": "mov word ptr [bp - 4], ax",
+          "load_offset": 104943
+        },
+        {
+          "bytes": "8956fe",
+          "instruction": "mov word ptr [bp - 2], dx",
+          "load_offset": 104946
+        },
+        {
+          "bytes": "eb69",
+          "instruction": "jmp 0x19a60",
+          "load_offset": 104949
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop",
+          "load_offset": 104951
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 104952
+        },
+        {
+          "bytes": "9a6823a21e",
+          "instruction": "lcall 0x1ea2, 0x2368",
+          "load_offset": 104955
+        },
+        {
+          "bytes": "83c402",
+          "instruction": "add sp, 2",
+          "load_offset": 104960
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 104963
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 104965
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 104966
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop",
+          "load_offset": 104967
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 104968
+        },
+        {
+          "bytes": "9ad723a21e",
+          "instruction": "lcall 0x1ea2, 0x23d7",
+          "load_offset": 104971
+        },
+        {
+          "bytes": "ebee",
+          "instruction": "jmp 0x19a00",
+          "load_offset": 104976
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 104978
+        },
+        {
+          "bytes": "9a414ea21e",
+          "instruction": "lcall 0x1ea2, 0x4e41",
+          "load_offset": 104981
+        },
+        {
+          "bytes": "ebd0",
+          "instruction": "jmp 0x199ec",
+          "load_offset": 104986
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 104988
+        },
+        {
+          "bytes": "9a2d4ea21e",
+          "instruction": "lcall 0x1ea2, 0x4e2d",
+          "load_offset": 104991
+        },
+        {
+          "bytes": "ebc6",
+          "instruction": "jmp 0x199ec",
+          "load_offset": 104996
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 104998
+        },
+        {
+          "bytes": "9aea0b0d27",
+          "instruction": "lcall 0x270d, 0xbea",
+          "load_offset": 105001
+        },
+        {
+          "bytes": "ebbc",
+          "instruction": "jmp 0x199ec",
+          "load_offset": 105006
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 105008
+        },
+        {
+          "bytes": "9a340c0d27",
+          "instruction": "lcall 0x270d, 0xc34",
+          "load_offset": 105011
+        },
+        {
+          "bytes": "ebb2",
+          "instruction": "jmp 0x199ec",
+          "load_offset": 105016
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 105018
+        },
+        {
+          "bytes": "9a740b0d27",
+          "instruction": "lcall 0x270d, 0xb74",
+          "load_offset": 105021
+        },
+        {
+          "bytes": "eba8",
+          "instruction": "jmp 0x199ec",
+          "load_offset": 105026
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 105028
+        },
+        {
+          "bytes": "9a0400e129",
+          "instruction": "lcall 0x29e1, 4",
+          "load_offset": 105031
+        },
+        {
+          "bytes": "eb9e",
+          "instruction": "jmp 0x199ec",
+          "load_offset": 105036
+        },
+        {
+          "bytes": "8b46fc",
+          "instruction": "mov ax, word ptr [bp - 4]",
+          "load_offset": 105056
+        },
+        {
+          "bytes": "0b46fe",
+          "instruction": "or ax, word ptr [bp - 2]",
+          "load_offset": 105059
+        },
+        {
+          "bytes": "740a",
+          "instruction": "je 0x19a72",
+          "load_offset": 105062
+        },
+        {
+          "bytes": "8b46fc",
+          "instruction": "mov ax, word ptr [bp - 4]",
+          "load_offset": 105064
+        },
+        {
+          "bytes": "8b56fe",
+          "instruction": "mov dx, word ptr [bp - 2]",
+          "load_offset": 105067
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 105070
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 105072
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 105073
+        },
+        {
+          "bytes": "0e",
+          "instruction": "push cs",
+          "load_offset": 105074
+        },
+        {
+          "bytes": "e8a206",
+          "instruction": "call 0x1a118",
+          "load_offset": 105075
+        },
+        {
+          "bytes": "3d0200",
+          "instruction": "cmp ax, 2",
+          "load_offset": 105078
+        },
+        {
+          "bytes": "7403",
+          "instruction": "je 0x19a7e",
+          "load_offset": 105081
+        },
+        {
+          "bytes": "e952ff",
+          "instruction": "jmp 0x199d0",
+          "load_offset": 105083
+        },
+        {
+          "bytes": "2bc0",
+          "instruction": "sub ax, ax",
+          "load_offset": 105086
+        },
+        {
+          "bytes": "99",
+          "instruction": "cdq",
+          "load_offset": 105088
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 105089
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 105091
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 105092
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop",
+          "load_offset": 105093
+        }
+      ],
+      "dispatch_tables": [
+        {
+          "base_displacement": 9630,
+          "byte_index_values": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          "entry_width": 2,
+          "frame_load_address": 95408,
+          "index_proof": [
+            {
+              "hex": "3d0800",
+              "role": "unsigned AX upper bound 8",
+              "site": 104915
+            },
+            {
+              "hex": "7603",
+              "role": "jbe dispatch or jump to cleanup",
+              "site": 104918
+            },
+            {
+              "hex": "03c0",
+              "role": "scale index by two",
+              "site": 104923
+            },
+            {
+              "hex": "93",
+              "role": "move scaled index to BX",
+              "site": 104925
+            }
+          ],
+          "instruction_hex": "2effa79e25",
+          "island_load_offset": 105038,
+          "site": 104926,
+          "targets": [
+            104932,
+            104952,
+            104978,
+            104988,
+            104998,
+            105008,
+            105018,
+            104968,
+            105028
+          ]
+        }
+      ],
+      "end": 105094,
+      "evidence_class": "locked pristine bytes, relocated far-CALL anchors, adjacent mapped extents, table-aware direct control-flow proof",
+      "frame_load_address": 95408,
+      "name": "file_load_resource",
+      "padding_offsets": [
+        104931,
+        104951,
+        104967,
+        105093
+      ],
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 4605,
+        "line_start": 4503,
+        "path": "src/restunts/asmorig/seg008.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        104906,
+        104907,
+        104909,
+        104912,
+        104915,
+        104918,
+        104920,
+        104923,
+        104925,
+        104926,
+        104932,
+        104935,
+        104940,
+        104943,
+        104946,
+        104949,
+        104952,
+        104955,
+        104960,
+        104963,
+        104965,
+        104966,
+        104968,
+        104971,
+        104976,
+        104978,
+        104981,
+        104986,
+        104988,
+        104991,
+        104996,
+        104998,
+        105001,
+        105006,
+        105008,
+        105011,
+        105016,
+        105018,
+        105021,
+        105026,
+        105028,
+        105031,
+        105036,
+        105056,
+        105059,
+        105062,
+        105064,
+        105067,
+        105070,
+        105072,
+        105073,
+        105074,
+        105075,
+        105078,
+        105081,
+        105083,
+        105086,
+        105088,
+        105089,
+        105091,
+        105092
+      ],
+      "relocation_sites": [],
+      "segment": "seg008",
+      "segment_offset": 9498,
+      "segment_paragraph": 5963,
+      "sha256": "e0ff93fd27308fa5c8c6aa7b06263bf82fe6e9a6564545d22775ac1915767c4c",
+      "size": 188,
+      "stable_id": "load_199ca",
+      "start": 104906,
+      "verification_kind": "embedded_data_dispatch_v1"
+    },
+    {
+      "boundary_anchors": [
+        {
+          "hex": "558bec83ec065657",
+          "site": 154702
+        },
+        {
+          "hex": "f8ebd800",
+          "site": 154698
+        },
+        {
+          "hex": "9a2e72a21e",
+          "site": 56930
+        },
+        {
+          "hex": "9a2e72a21e",
+          "site": 74433
+        },
+        {
+          "hex": "558bec1e",
+          "site": 155080
+        }
+      ],
+      "boundary_proof": "Complete target extent [0x25c4e,0x25dc8) is adjacent to sub_35B76 and sub_35DC8; 2 pristine relocated far calls resolve exactly to the entry. Table-aware CFG reaches 49 code instructions; embedded data is byte-hashed separately.",
+      "bytes_hex": "558bec83ec0656571efc2ea1225f8ec02ea1405f8ed88b46068946fe8b460a8b4608d1e08bc82e0306485f8946fc2e030e2a5f8b460e8bd8034606992ef73e385f2b5606d1e003c80156fe894efa8b560c8b4e0a8b5efc2e8b370376068b5efa2e8b3f037efef3a48346fc028346fa024a7fde1f5f5e8be55dcb000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+      "data_islands": [
+        {
+          "hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "kind": "lookup_table8",
+          "length": 256,
+          "load_offset": 154824,
+          "sha256": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880"
+        }
+      ],
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 154702
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 154703
+        },
+        {
+          "bytes": "83ec06",
+          "instruction": "sub sp, 6",
+          "load_offset": 154705
+        },
+        {
+          "bytes": "56",
+          "instruction": "push si",
+          "load_offset": 154708
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 154709
+        },
+        {
+          "bytes": "1e",
+          "instruction": "push ds",
+          "load_offset": 154710
+        },
+        {
+          "bytes": "fc",
+          "instruction": "cld",
+          "load_offset": 154711
+        },
+        {
+          "bytes": "2ea1225f",
+          "instruction": "mov ax, word ptr cs:[0x5f22]",
+          "load_offset": 154712
+        },
+        {
+          "bytes": "8ec0",
+          "instruction": "mov es, ax",
+          "load_offset": 154716
+        },
+        {
+          "bytes": "2ea1405f",
+          "instruction": "mov ax, word ptr cs:[0x5f40]",
+          "load_offset": 154718
+        },
+        {
+          "bytes": "8ed8",
+          "instruction": "mov ds, ax",
+          "load_offset": 154722
+        },
+        {
+          "bytes": "8b4606",
+          "instruction": "mov ax, word ptr [bp + 6]",
+          "load_offset": 154724
+        },
+        {
+          "bytes": "8946fe",
+          "instruction": "mov word ptr [bp - 2], ax",
+          "load_offset": 154727
+        },
+        {
+          "bytes": "8b460a",
+          "instruction": "mov ax, word ptr [bp + 0xa]",
+          "load_offset": 154730
+        },
+        {
+          "bytes": "8b4608",
+          "instruction": "mov ax, word ptr [bp + 8]",
+          "load_offset": 154733
+        },
+        {
+          "bytes": "d1e0",
+          "instruction": "shl ax, 1",
+          "load_offset": 154736
+        },
+        {
+          "bytes": "8bc8",
+          "instruction": "mov cx, ax",
+          "load_offset": 154738
+        },
+        {
+          "bytes": "2e0306485f",
+          "instruction": "add ax, word ptr cs:[0x5f48]",
+          "load_offset": 154740
+        },
+        {
+          "bytes": "8946fc",
+          "instruction": "mov word ptr [bp - 4], ax",
+          "load_offset": 154745
+        },
+        {
+          "bytes": "2e030e2a5f",
+          "instruction": "add cx, word ptr cs:[0x5f2a]",
+          "load_offset": 154748
+        },
+        {
+          "bytes": "8b460e",
+          "instruction": "mov ax, word ptr [bp + 0xe]",
+          "load_offset": 154753
+        },
+        {
+          "bytes": "8bd8",
+          "instruction": "mov bx, ax",
+          "load_offset": 154756
+        },
+        {
+          "bytes": "034606",
+          "instruction": "add ax, word ptr [bp + 6]",
+          "load_offset": 154758
+        },
+        {
+          "bytes": "99",
+          "instruction": "cdq",
+          "load_offset": 154761
+        },
+        {
+          "bytes": "2ef73e385f",
+          "instruction": "idiv word ptr cs:[0x5f38]",
+          "load_offset": 154762
+        },
+        {
+          "bytes": "2b5606",
+          "instruction": "sub dx, word ptr [bp + 6]",
+          "load_offset": 154767
+        },
+        {
+          "bytes": "d1e0",
+          "instruction": "shl ax, 1",
+          "load_offset": 154770
+        },
+        {
+          "bytes": "03c8",
+          "instruction": "add cx, ax",
+          "load_offset": 154772
+        },
+        {
+          "bytes": "0156fe",
+          "instruction": "add word ptr [bp - 2], dx",
+          "load_offset": 154774
+        },
+        {
+          "bytes": "894efa",
+          "instruction": "mov word ptr [bp - 6], cx",
+          "load_offset": 154777
+        },
+        {
+          "bytes": "8b560c",
+          "instruction": "mov dx, word ptr [bp + 0xc]",
+          "load_offset": 154780
+        },
+        {
+          "bytes": "8b4e0a",
+          "instruction": "mov cx, word ptr [bp + 0xa]",
+          "load_offset": 154783
+        },
+        {
+          "bytes": "8b5efc",
+          "instruction": "mov bx, word ptr [bp - 4]",
+          "load_offset": 154786
+        },
+        {
+          "bytes": "2e8b37",
+          "instruction": "mov si, word ptr cs:[bx]",
+          "load_offset": 154789
+        },
+        {
+          "bytes": "037606",
+          "instruction": "add si, word ptr [bp + 6]",
+          "load_offset": 154792
+        },
+        {
+          "bytes": "8b5efa",
+          "instruction": "mov bx, word ptr [bp - 6]",
+          "load_offset": 154795
+        },
+        {
+          "bytes": "2e8b3f",
+          "instruction": "mov di, word ptr cs:[bx]",
+          "load_offset": 154798
+        },
+        {
+          "bytes": "037efe",
+          "instruction": "add di, word ptr [bp - 2]",
+          "load_offset": 154801
+        },
+        {
+          "bytes": "f3a4",
+          "instruction": "rep movsb byte ptr es:[di], byte ptr [si]",
+          "load_offset": 154804
+        },
+        {
+          "bytes": "8346fc02",
+          "instruction": "add word ptr [bp - 4], 2",
+          "load_offset": 154806
+        },
+        {
+          "bytes": "8346fa02",
+          "instruction": "add word ptr [bp - 6], 2",
+          "load_offset": 154810
+        },
+        {
+          "bytes": "4a",
+          "instruction": "dec dx",
+          "load_offset": 154814
+        },
+        {
+          "bytes": "7fde",
+          "instruction": "jg 0x25c9f",
+          "load_offset": 154815
+        },
+        {
+          "bytes": "1f",
+          "instruction": "pop ds",
+          "load_offset": 154817
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 154818
+        },
+        {
+          "bytes": "5e",
+          "instruction": "pop si",
+          "load_offset": 154819
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 154820
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 154822
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf",
+          "load_offset": 154823
+        }
+      ],
+      "dispatch_tables": [],
+      "end": 155080,
+      "evidence_class": "locked pristine bytes, relocated far-CALL anchors, adjacent mapped extents, table-aware direct control-flow proof",
+      "frame_load_address": 125472,
+      "name": "sub_35C4E",
+      "padding_offsets": [],
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "line_end": 18375,
+        "line_start": 18050,
+        "path": "src/restunts/asmorig/seg012.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        154702,
+        154703,
+        154705,
+        154708,
+        154709,
+        154710,
+        154711,
+        154712,
+        154716,
+        154718,
+        154722,
+        154724,
+        154727,
+        154730,
+        154733,
+        154736,
+        154738,
+        154740,
+        154745,
+        154748,
+        154753,
+        154756,
+        154758,
+        154761,
+        154762,
+        154767,
+        154770,
+        154772,
+        154774,
+        154777,
+        154780,
+        154783,
+        154786,
+        154789,
+        154792,
+        154795,
+        154798,
+        154801,
+        154804,
+        154806,
+        154810,
+        154814,
+        154815,
+        154817,
+        154818,
+        154819,
+        154820,
+        154822,
+        154823
+      ],
+      "relocation_sites": [],
+      "segment": "seg012",
+      "segment_offset": 29230,
+      "segment_paragraph": 7842,
+      "sha256": "bd68c2379553309161c21b759582077a860c0438838e7cef6d4029e2f3f3fcd2",
+      "size": 378,
+      "stable_id": "load_25c4e",
+      "start": 154702,
+      "verification_kind": "embedded_data_dispatch_v1"
+    },
+    {
+      "abi": "far function; four 16-bit arguments at BP+6,+8,+0xA,+0xC; preserves DI/SI; returns a 16-bit matrix pointer in AX",
+      "adjacent_next": [
+        {
+          "end": 91078,
+          "name": "rect_adjust_from_point",
+          "sha256": "7a66ad05b0867d74d0feb0da20b8c216595645babc1f7607739adc239af8e16a",
+          "stable_id": "load_1637a",
+          "start": 91002
+        }
+      ],
+      "adjacent_previous": [
+        {
+          "end": 90618,
+          "name": "get_a_poly_info",
+          "sha256": "b665d2705b2d5211f2abfef2f981f8656df9c2899a43fe79e0fb3c6c03dcdef6",
+          "stable_id": "load_15ff6",
+          "start": 90102
+        }
+      ],
+      "boundary_anchors": [
+        {
+          "hex": "558bec83ec045756",
+          "role": "entry",
+          "site": 90618
+        },
+        {
+          "hex": "cb",
+          "role": "terminal RETF",
+          "site": 91001
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 18402,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 20075,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 19618,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 20202,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 21633,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 25204,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 29650,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 30484,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 37704,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 37522,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 37346,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 37165,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 39906,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 41664,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 41574,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 42290,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 42088,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 43521,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 43945,
+          "target": 90618
+        },
+        {
+          "hex": "9a9a14d614",
+          "role": "relocated far CALL entry",
+          "site": 52254,
+          "target": 90618
+        },
+        {
+          "hex": "0ee8db13",
+          "role": "PUSH CS; near CALL entry",
+          "site": 85531,
+          "target": 90618
+        },
+        {
+          "hex": "0ee89b13",
+          "role": "PUSH CS; near CALL entry",
+          "site": 85595,
+          "target": 90618
+        },
+        {
+          "hex": "0ee88812",
+          "role": "PUSH CS; near CALL entry",
+          "site": 85870,
+          "target": 90618
+        },
+        {
+          "hex": "0ee83112",
+          "role": "PUSH CS; near CALL entry",
+          "site": 85957,
+          "target": 90618
+        },
+        {
+          "hex": "cb558bec",
+          "role": "previous verified procedure end / proposed entry",
+          "site": 90617
+        },
+        {
+          "hex": "558bec83",
+          "role": "next verified procedure entry",
+          "site": 91002
+        }
+      ],
+      "boundary_proof": "Entry 0x161fa is reached by 4 decoded PUSH CS; CALL near sites in two instruction-verified callers. Dispatch at 0x16292 indexes an eight-word CS-relative table guarded to indices 0..7; all eight targets are in-range instruction starts. The reachable CFG terminates at RETF 0x16379; following verified function rect_adjust_from_point starts at 0x1637a; no terminal pad is included.",
+      "bytes_hex": "558bec83ec0457562bf6f74606ff037411be0400ff7606b8e281509ab800f22603e6f74608ff03741381ce0200ff7608b802ad509a0a00f22683c404f7460aff03744881ce01008b460a80e4033b0692337505bfba95eb338b460a80e4033d000174253d000274363d00037437ff760ab8ba95509a6000f22683c4048b460a80e403a39233ebcc90bf2e578bc63d07007603e9e30003c0932effa7021690bf1c57ebe890bf4857ebe290bfce60e9c800f6460c01740cb8c8ac50b802ad5057eb0a90b8c8ac5057b802ad509ad23fa21e83c406bfc8ace99f0090f6460c01740ab8c8ac50b8e281ebd490b8c8ac5057b8e281ebd6f6460c01740ab8c8ac50b8e28150ebc3b8c8ac50b802ad50ebe1f6460c01742ab8c8ac50b802ad50579ad23fa21e83c406b802ad50b8e28150b8c8ac509ad23fa21e83c406bf02adeb3ab8c8ac50b802ad50b8e281509ad23fa21e83c406b8e2815057b8c8ac509ad23fa21e83c406bfe281eb1044151216d3154a15fd1574158e15a8158bc75e5f8be55dcb",
+      "cfg_audit": {
+        "all_instructions_reachable_or_nop_padding": true,
+        "all_reachable_paths_reach_retf": true,
+        "decoded_instruction_count": 151,
+        "edges": [
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90633,
+            "target": 90652
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90657,
+            "target": 90678
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90683,
+            "target": 90757
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90699,
+            "target": 90706
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90704,
+            "target": 90757
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90762,
+            "target": 90767
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90764,
+            "target": 90994
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90788
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90994
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90931
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90794
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90973
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90836
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90862
+          },
+          {
+            "kind": "reviewed_switch_table_entry",
+            "site": 90770,
+            "target": 90888
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90892,
+            "target": 90936
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90934,
+            "target": 90994
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90976,
+            "target": 90994
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90866,
+            "target": 90878
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90876,
+            "target": 90817
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90832,
+            "target": 90994
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90886,
+            "target": 90857
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90860,
+            "target": 90820
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90840,
+            "target": 90852
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90849,
+            "target": 90807
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90809,
+            "target": 90821
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90798,
+            "target": 90812
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90791,
+            "target": 90994
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90715,
+            "target": 90754
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90720,
+            "target": 90776
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90725,
+            "target": 90782
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90751,
+            "target": 90701
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90785,
+            "target": 90757
+          },
+          {
+            "kind": "direct_conditional_or_unconditional",
+            "site": 90779,
+            "target": 90757
+          }
+        ],
+        "issues": [],
+        "padding_offsets": [
+          90753,
+          90775,
+          90781,
+          90787,
+          90811,
+          90835,
+          90851
+        ],
+        "reachable_instruction_count": 144,
+        "reachable_instruction_offsets": [
+          90618,
+          90619,
+          90621,
+          90624,
+          90625,
+          90626,
+          90628,
+          90633,
+          90635,
+          90638,
+          90641,
+          90644,
+          90645,
+          90650,
+          90652,
+          90657,
+          90659,
+          90663,
+          90666,
+          90669,
+          90670,
+          90675,
+          90678,
+          90683,
+          90685,
+          90689,
+          90692,
+          90695,
+          90699,
+          90701,
+          90704,
+          90706,
+          90709,
+          90712,
+          90715,
+          90717,
+          90720,
+          90722,
+          90725,
+          90727,
+          90730,
+          90733,
+          90734,
+          90739,
+          90742,
+          90745,
+          90748,
+          90751,
+          90754,
+          90757,
+          90759,
+          90762,
+          90764,
+          90767,
+          90769,
+          90770,
+          90776,
+          90779,
+          90782,
+          90785,
+          90788,
+          90791,
+          90794,
+          90798,
+          90800,
+          90803,
+          90804,
+          90807,
+          90808,
+          90809,
+          90812,
+          90815,
+          90816,
+          90817,
+          90820,
+          90821,
+          90826,
+          90829,
+          90832,
+          90836,
+          90840,
+          90842,
+          90845,
+          90846,
+          90849,
+          90852,
+          90855,
+          90856,
+          90857,
+          90860,
+          90862,
+          90866,
+          90868,
+          90871,
+          90872,
+          90875,
+          90876,
+          90878,
+          90881,
+          90882,
+          90885,
+          90886,
+          90888,
+          90892,
+          90894,
+          90897,
+          90898,
+          90901,
+          90902,
+          90903,
+          90908,
+          90911,
+          90914,
+          90915,
+          90918,
+          90919,
+          90922,
+          90923,
+          90928,
+          90931,
+          90934,
+          90936,
+          90939,
+          90940,
+          90943,
+          90944,
+          90947,
+          90948,
+          90953,
+          90956,
+          90959,
+          90960,
+          90961,
+          90964,
+          90965,
+          90970,
+          90973,
+          90976,
+          90994,
+          90996,
+          90997,
+          90998,
+          91000,
+          91001
+        ],
+        "reachable_without_return": [],
+        "return_offsets": [
+          91001
+        ],
+        "roots": [
+          90618
+        ],
+        "unreachable_instructions": [
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90753
+          },
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90775
+          },
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90781
+          },
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90787
+          },
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90811
+          },
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90835
+          },
+          {
+            "hex": "90",
+            "instruction": "nop ",
+            "is_padding": true,
+            "site": 90851
+          }
+        ]
+      },
+      "data_islands": [
+        {
+          "hex": "44151216d3154a15fd1574158e15a815",
+          "indirect_jump_site": 90770,
+          "kind": "jump_table16",
+          "load_offset": 90978
+        }
+      ],
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 90618
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 90619
+        },
+        {
+          "bytes": "83ec04",
+          "instruction": "sub sp, 4",
+          "load_offset": 90621
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 90624
+        },
+        {
+          "bytes": "56",
+          "instruction": "push si",
+          "load_offset": 90625
+        },
+        {
+          "bytes": "2bf6",
+          "instruction": "sub si, si",
+          "load_offset": 90626
+        },
+        {
+          "bytes": "f74606ff03",
+          "instruction": "test word ptr [bp + 6], 0x3ff",
+          "load_offset": 90628
+        },
+        {
+          "bytes": "7411",
+          "instruction": "je 0x1621c",
+          "load_offset": 90633
+        },
+        {
+          "bytes": "be0400",
+          "instruction": "mov si, 4",
+          "load_offset": 90635
+        },
+        {
+          "bytes": "ff7606",
+          "instruction": "push word ptr [bp + 6]",
+          "load_offset": 90638
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90641
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90644
+        },
+        {
+          "bytes": "9ab800f226",
+          "instruction": "lcall 0x26f2, 0xb8",
+          "load_offset": 90645
+        },
+        {
+          "bytes": "03e6",
+          "instruction": "add sp, si",
+          "load_offset": 90650
+        },
+        {
+          "bytes": "f74608ff03",
+          "instruction": "test word ptr [bp + 8], 0x3ff",
+          "load_offset": 90652
+        },
+        {
+          "bytes": "7413",
+          "instruction": "je 0x16236",
+          "load_offset": 90657
+        },
+        {
+          "bytes": "81ce0200",
+          "instruction": "or si, 2",
+          "load_offset": 90659
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 90663
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90666
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90669
+        },
+        {
+          "bytes": "9a0a00f226",
+          "instruction": "lcall 0x26f2, 0xa",
+          "load_offset": 90670
+        },
+        {
+          "bytes": "83c404",
+          "instruction": "add sp, 4",
+          "load_offset": 90675
+        },
+        {
+          "bytes": "f7460aff03",
+          "instruction": "test word ptr [bp + 0xa], 0x3ff",
+          "load_offset": 90678
+        },
+        {
+          "bytes": "7448",
+          "instruction": "je 0x16285",
+          "load_offset": 90683
+        },
+        {
+          "bytes": "81ce0100",
+          "instruction": "or si, 1",
+          "load_offset": 90685
+        },
+        {
+          "bytes": "8b460a",
+          "instruction": "mov ax, word ptr [bp + 0xa]",
+          "load_offset": 90689
+        },
+        {
+          "bytes": "80e403",
+          "instruction": "and ah, 3",
+          "load_offset": 90692
+        },
+        {
+          "bytes": "3b069233",
+          "instruction": "cmp ax, word ptr [0x3392]",
+          "load_offset": 90695
+        },
+        {
+          "bytes": "7505",
+          "instruction": "jne 0x16252",
+          "load_offset": 90699
+        },
+        {
+          "bytes": "bfba95",
+          "instruction": "mov di, 0x95ba",
+          "load_offset": 90701
+        },
+        {
+          "bytes": "eb33",
+          "instruction": "jmp 0x16285",
+          "load_offset": 90704
+        },
+        {
+          "bytes": "8b460a",
+          "instruction": "mov ax, word ptr [bp + 0xa]",
+          "load_offset": 90706
+        },
+        {
+          "bytes": "80e403",
+          "instruction": "and ah, 3",
+          "load_offset": 90709
+        },
+        {
+          "bytes": "3d0001",
+          "instruction": "cmp ax, 0x100",
+          "load_offset": 90712
+        },
+        {
+          "bytes": "7425",
+          "instruction": "je 0x16282",
+          "load_offset": 90715
+        },
+        {
+          "bytes": "3d0002",
+          "instruction": "cmp ax, 0x200",
+          "load_offset": 90717
+        },
+        {
+          "bytes": "7436",
+          "instruction": "je 0x16298",
+          "load_offset": 90720
+        },
+        {
+          "bytes": "3d0003",
+          "instruction": "cmp ax, 0x300",
+          "load_offset": 90722
+        },
+        {
+          "bytes": "7437",
+          "instruction": "je 0x1629e",
+          "load_offset": 90725
+        },
+        {
+          "bytes": "ff760a",
+          "instruction": "push word ptr [bp + 0xa]",
+          "load_offset": 90727
+        },
+        {
+          "bytes": "b8ba95",
+          "instruction": "mov ax, 0x95ba",
+          "load_offset": 90730
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90733
+        },
+        {
+          "bytes": "9a6000f226",
+          "instruction": "lcall 0x26f2, 0x60",
+          "load_offset": 90734
+        },
+        {
+          "bytes": "83c404",
+          "instruction": "add sp, 4",
+          "load_offset": 90739
+        },
+        {
+          "bytes": "8b460a",
+          "instruction": "mov ax, word ptr [bp + 0xa]",
+          "load_offset": 90742
+        },
+        {
+          "bytes": "80e403",
+          "instruction": "and ah, 3",
+          "load_offset": 90745
+        },
+        {
+          "bytes": "a39233",
+          "instruction": "mov word ptr [0x3392], ax",
+          "load_offset": 90748
+        },
+        {
+          "bytes": "ebcc",
+          "instruction": "jmp 0x1624d",
+          "load_offset": 90751
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90753
+        },
+        {
+          "bytes": "bf2e57",
+          "instruction": "mov di, 0x572e",
+          "load_offset": 90754
+        },
+        {
+          "bytes": "8bc6",
+          "instruction": "mov ax, si",
+          "load_offset": 90757
+        },
+        {
+          "bytes": "3d0700",
+          "instruction": "cmp ax, 7",
+          "load_offset": 90759
+        },
+        {
+          "bytes": "7603",
+          "instruction": "jbe 0x1628f",
+          "load_offset": 90762
+        },
+        {
+          "bytes": "e9e300",
+          "instruction": "jmp 0x16372",
+          "load_offset": 90764
+        },
+        {
+          "bytes": "03c0",
+          "instruction": "add ax, ax",
+          "load_offset": 90767
+        },
+        {
+          "bytes": "93",
+          "instruction": "xchg bx, ax",
+          "load_offset": 90769
+        },
+        {
+          "bytes": "2effa70216",
+          "instruction": "jmp word ptr cs:[bx + 0x1602]",
+          "load_offset": 90770
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90775
+        },
+        {
+          "bytes": "bf1c57",
+          "instruction": "mov di, 0x571c",
+          "load_offset": 90776
+        },
+        {
+          "bytes": "ebe8",
+          "instruction": "jmp 0x16285",
+          "load_offset": 90779
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90781
+        },
+        {
+          "bytes": "bf4857",
+          "instruction": "mov di, 0x5748",
+          "load_offset": 90782
+        },
+        {
+          "bytes": "ebe2",
+          "instruction": "jmp 0x16285",
+          "load_offset": 90785
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90787
+        },
+        {
+          "bytes": "bfce60",
+          "instruction": "mov di, 0x60ce",
+          "load_offset": 90788
+        },
+        {
+          "bytes": "e9c800",
+          "instruction": "jmp 0x16372",
+          "load_offset": 90791
+        },
+        {
+          "bytes": "f6460c01",
+          "instruction": "test byte ptr [bp + 0xc], 1",
+          "load_offset": 90794
+        },
+        {
+          "bytes": "740c",
+          "instruction": "je 0x162bc",
+          "load_offset": 90798
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90800
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90803
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90804
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90807
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 90808
+        },
+        {
+          "bytes": "eb0a",
+          "instruction": "jmp 0x162c5",
+          "load_offset": 90809
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90811
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90812
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90815
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 90816
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90817
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90820
+        },
+        {
+          "bytes": "9ad23fa21e",
+          "instruction": "lcall 0x1ea2, 0x3fd2",
+          "load_offset": 90821
+        },
+        {
+          "bytes": "83c406",
+          "instruction": "add sp, 6",
+          "load_offset": 90826
+        },
+        {
+          "bytes": "bfc8ac",
+          "instruction": "mov di, 0xacc8",
+          "load_offset": 90829
+        },
+        {
+          "bytes": "e99f00",
+          "instruction": "jmp 0x16372",
+          "load_offset": 90832
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90835
+        },
+        {
+          "bytes": "f6460c01",
+          "instruction": "test byte ptr [bp + 0xc], 1",
+          "load_offset": 90836
+        },
+        {
+          "bytes": "740a",
+          "instruction": "je 0x162e4",
+          "load_offset": 90840
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90842
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90845
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90846
+        },
+        {
+          "bytes": "ebd4",
+          "instruction": "jmp 0x162b7",
+          "load_offset": 90849
+        },
+        {
+          "bytes": "90",
+          "instruction": "nop ",
+          "load_offset": 90851
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90852
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90855
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 90856
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90857
+        },
+        {
+          "bytes": "ebd6",
+          "instruction": "jmp 0x162c4",
+          "load_offset": 90860
+        },
+        {
+          "bytes": "f6460c01",
+          "instruction": "test byte ptr [bp + 0xc], 1",
+          "load_offset": 90862
+        },
+        {
+          "bytes": "740a",
+          "instruction": "je 0x162fe",
+          "load_offset": 90866
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90868
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90871
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90872
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90875
+        },
+        {
+          "bytes": "ebc3",
+          "instruction": "jmp 0x162c1",
+          "load_offset": 90876
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90878
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90881
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90882
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90885
+        },
+        {
+          "bytes": "ebe1",
+          "instruction": "jmp 0x162e9",
+          "load_offset": 90886
+        },
+        {
+          "bytes": "f6460c01",
+          "instruction": "test byte ptr [bp + 0xc], 1",
+          "load_offset": 90888
+        },
+        {
+          "bytes": "742a",
+          "instruction": "je 0x16338",
+          "load_offset": 90892
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90894
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90897
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90898
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90901
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 90902
+        },
+        {
+          "bytes": "9ad23fa21e",
+          "instruction": "lcall 0x1ea2, 0x3fd2",
+          "load_offset": 90903
+        },
+        {
+          "bytes": "83c406",
+          "instruction": "add sp, 6",
+          "load_offset": 90908
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90911
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90914
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90915
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90918
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90919
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90922
+        },
+        {
+          "bytes": "9ad23fa21e",
+          "instruction": "lcall 0x1ea2, 0x3fd2",
+          "load_offset": 90923
+        },
+        {
+          "bytes": "83c406",
+          "instruction": "add sp, 6",
+          "load_offset": 90928
+        },
+        {
+          "bytes": "bf02ad",
+          "instruction": "mov di, 0xad02",
+          "load_offset": 90931
+        },
+        {
+          "bytes": "eb3a",
+          "instruction": "jmp 0x16372",
+          "load_offset": 90934
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90936
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90939
+        },
+        {
+          "bytes": "b802ad",
+          "instruction": "mov ax, 0xad02",
+          "load_offset": 90940
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90943
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90944
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90947
+        },
+        {
+          "bytes": "9ad23fa21e",
+          "instruction": "lcall 0x1ea2, 0x3fd2",
+          "load_offset": 90948
+        },
+        {
+          "bytes": "83c406",
+          "instruction": "add sp, 6",
+          "load_offset": 90953
+        },
+        {
+          "bytes": "b8e281",
+          "instruction": "mov ax, 0x81e2",
+          "load_offset": 90956
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90959
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 90960
+        },
+        {
+          "bytes": "b8c8ac",
+          "instruction": "mov ax, 0xacc8",
+          "load_offset": 90961
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 90964
+        },
+        {
+          "bytes": "9ad23fa21e",
+          "instruction": "lcall 0x1ea2, 0x3fd2",
+          "load_offset": 90965
+        },
+        {
+          "bytes": "83c406",
+          "instruction": "add sp, 6",
+          "load_offset": 90970
+        },
+        {
+          "bytes": "bfe281",
+          "instruction": "mov di, 0x81e2",
+          "load_offset": 90973
+        },
+        {
+          "bytes": "eb10",
+          "instruction": "jmp 0x16372",
+          "load_offset": 90976
+        },
+        {
+          "bytes": "8bc7",
+          "instruction": "mov ax, di",
+          "load_offset": 90994
+        },
+        {
+          "bytes": "5e",
+          "instruction": "pop si",
+          "load_offset": 90996
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 90997
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 90998
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 91000
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf ",
+          "load_offset": 91001
+        }
+      ],
+      "end": 91002,
+      "end_evidence": {
+        "adjacent_next": [
+          {
+            "end": 91078,
+            "name": "rect_adjust_from_point",
+            "sha256": "7a66ad05b0867d74d0feb0da20b8c216595645babc1f7607739adc239af8e16a",
+            "stable_id": "load_1637a",
+            "start": 91002
+          }
+        ],
+        "end": 91002,
+        "method": "decoded_reachable_control_flow_to_retf_and_adjacent_entry",
+        "retf": [
+          91001
+        ]
+      },
+      "entry_far_calls": [
+        {
+          "caller": {
+            "end": 19820,
+            "name": "opponent_op",
+            "stable_id": "load_04712",
+            "start": 18194,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 18405,
+            "offset": 18405,
+            "segment": 0
+          },
+          "site": 18402
+        },
+        {
+          "caller": {
+            "end": 26776,
+            "name": "update_player_state",
+            "stable_id": "load_04da2",
+            "start": 19874,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 20078,
+            "offset": 20078,
+            "segment": 0
+          },
+          "site": 20075
+        },
+        {
+          "caller": {
+            "end": 19820,
+            "name": "opponent_op",
+            "stable_id": "load_04712",
+            "start": 18194,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 19621,
+            "offset": 19621,
+            "segment": 0
+          },
+          "site": 19618
+        },
+        {
+          "caller": {
+            "end": 26776,
+            "name": "update_player_state",
+            "stable_id": "load_04da2",
+            "start": 19874,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 20205,
+            "offset": 20205,
+            "segment": 0
+          },
+          "site": 20202
+        },
+        {
+          "caller": {
+            "end": 26776,
+            "name": "update_player_state",
+            "stable_id": "load_04da2",
+            "start": 19874,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 21636,
+            "offset": 21636,
+            "segment": 0
+          },
+          "site": 21633
+        },
+        {
+          "caller": {
+            "end": 26776,
+            "name": "update_player_state",
+            "stable_id": "load_04da2",
+            "start": 19874,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 25207,
+            "offset": 25207,
+            "segment": 0
+          },
+          "site": 25204
+        },
+        {
+          "caller": {
+            "end": 30742,
+            "name": "player_op",
+            "stable_id": "load_071e8",
+            "start": 29160,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 29653,
+            "offset": 29653,
+            "segment": 0
+          },
+          "site": 29650
+        },
+        {
+          "caller": {
+            "end": 30742,
+            "name": "player_op",
+            "stable_id": "load_071e8",
+            "start": 29160,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 30487,
+            "offset": 30487,
+            "segment": 0
+          },
+          "site": 30484
+        },
+        {
+          "caller": {
+            "end": 37856,
+            "name": "car_car_coll_detect_maybe",
+            "stable_id": "load_09074",
+            "start": 36980,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 37707,
+            "offset": 37707,
+            "segment": 0
+          },
+          "site": 37704
+        },
+        {
+          "caller": {
+            "end": 37856,
+            "name": "car_car_coll_detect_maybe",
+            "stable_id": "load_09074",
+            "start": 36980,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 37525,
+            "offset": 37525,
+            "segment": 0
+          },
+          "site": 37522
+        },
+        {
+          "caller": {
+            "end": 37856,
+            "name": "car_car_coll_detect_maybe",
+            "stable_id": "load_09074",
+            "start": 36980,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 37349,
+            "offset": 37349,
+            "segment": 0
+          },
+          "site": 37346
+        },
+        {
+          "caller": {
+            "end": 37856,
+            "name": "car_car_coll_detect_maybe",
+            "stable_id": "load_09074",
+            "start": 36980,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 37168,
+            "offset": 37168,
+            "segment": 0
+          },
+          "site": 37165
+        },
+        {
+          "caller": {
+            "end": 40098,
+            "name": "sub_19BA0",
+            "stable_id": "load_09ba0",
+            "start": 39840,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 39909,
+            "offset": 39909,
+            "segment": 0
+          },
+          "site": 39906
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 41667,
+            "offset": 41667,
+            "segment": 0
+          },
+          "site": 41664
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 41577,
+            "offset": 41577,
+            "segment": 0
+          },
+          "site": 41574
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 42293,
+            "offset": 42293,
+            "segment": 0
+          },
+          "site": 42290
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 42091,
+            "offset": 42091,
+            "segment": 0
+          },
+          "site": 42088
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 43524,
+            "offset": 43524,
+            "segment": 0
+          },
+          "site": 43521
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 43948,
+            "offset": 43948,
+            "segment": 0
+          },
+          "site": 43945
+        },
+        {
+          "caller": {
+            "end": 53550,
+            "name": "draw_track_preview",
+            "stable_id": "load_0cbdc",
+            "start": 52188,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 52257,
+            "offset": 52257,
+            "segment": 0
+          },
+          "site": 52254
+        }
+      ],
+      "entry_near_calls": [
+        {
+          "call_site": 85532,
+          "caller": {
+            "end": 85662,
+            "name": "select_cliprect_rotate",
+            "stable_id": "load_14e06",
+            "start": 85510,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee8db13",
+          "site": 85531,
+          "target": 90618
+        },
+        {
+          "call_site": 85596,
+          "caller": {
+            "end": 85662,
+            "name": "select_cliprect_rotate",
+            "stable_id": "load_14e06",
+            "start": 85510,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee89b13",
+          "site": 85595,
+          "target": 90618
+        },
+        {
+          "call_site": 85871,
+          "caller": {
+            "end": 89636,
+            "name": "transformed_shape_op",
+            "stable_id": "load_14e9e",
+            "start": 85662,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee88812",
+          "site": 85870,
+          "target": 90618
+        },
+        {
+          "call_site": 85958,
+          "caller": {
+            "end": 89636,
+            "name": "transformed_shape_op",
+            "stable_id": "load_14e9e",
+            "start": 85662,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee83112",
+          "site": 85957,
+          "target": 90618
+        }
+      ],
+      "evidence_class": "pristine locked-image bytes, relocated/near-call entry anchors, decoded in-range control flow to RETF, and adjacent verified extents",
+      "frame_load_address": 85344,
+      "incoming_near_calls": [
+        {
+          "call_site": 85532,
+          "caller": {
+            "end": 85662,
+            "name": "select_cliprect_rotate",
+            "stable_id": "load_14e06",
+            "start": 85510,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee8db13",
+          "site": 85531,
+          "target": 90618
+        },
+        {
+          "call_site": 85596,
+          "caller": {
+            "end": 85662,
+            "name": "select_cliprect_rotate",
+            "stable_id": "load_14e06",
+            "start": 85510,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee89b13",
+          "site": 85595,
+          "target": 90618
+        },
+        {
+          "call_site": 85871,
+          "caller": {
+            "end": 89636,
+            "name": "transformed_shape_op",
+            "stable_id": "load_14e9e",
+            "start": 85662,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee88812",
+          "site": 85870,
+          "target": 90618
+        },
+        {
+          "call_site": 85958,
+          "caller": {
+            "end": 89636,
+            "name": "transformed_shape_op",
+            "stable_id": "load_14e9e",
+            "start": 85662,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee83112",
+          "site": 85957,
+          "target": 90618
+        }
+      ],
+      "name": "mat_rot_zxy",
+      "overlay_status_proposal": "replace PARTIAL_UNMAPPED with BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
+      "padding_offsets": [
+        90753,
+        90775,
+        90781,
+        90787,
+        90811,
+        90835,
+        90851
+      ],
+      "proposal_limit": "General embedded switch-table evidence; canonical overlay verifier currently only accepts the reviewed sin_fast table case. This row needs a focused validator extension before canonical incorporation.",
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "lines": [
+          2293,
+          2506
+        ],
+        "path": "src/restunts/asmorig/seg006.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        90618,
+        90619,
+        90621,
+        90624,
+        90625,
+        90626,
+        90628,
+        90633,
+        90635,
+        90638,
+        90641,
+        90644,
+        90645,
+        90650,
+        90652,
+        90657,
+        90659,
+        90663,
+        90666,
+        90669,
+        90670,
+        90675,
+        90678,
+        90683,
+        90685,
+        90689,
+        90692,
+        90695,
+        90699,
+        90701,
+        90704,
+        90706,
+        90709,
+        90712,
+        90715,
+        90717,
+        90720,
+        90722,
+        90725,
+        90727,
+        90730,
+        90733,
+        90734,
+        90739,
+        90742,
+        90745,
+        90748,
+        90751,
+        90754,
+        90757,
+        90759,
+        90762,
+        90764,
+        90767,
+        90769,
+        90770,
+        90776,
+        90779,
+        90782,
+        90785,
+        90788,
+        90791,
+        90794,
+        90798,
+        90800,
+        90803,
+        90804,
+        90807,
+        90808,
+        90809,
+        90812,
+        90815,
+        90816,
+        90817,
+        90820,
+        90821,
+        90826,
+        90829,
+        90832,
+        90836,
+        90840,
+        90842,
+        90845,
+        90846,
+        90849,
+        90852,
+        90855,
+        90856,
+        90857,
+        90860,
+        90862,
+        90866,
+        90868,
+        90871,
+        90872,
+        90875,
+        90876,
+        90878,
+        90881,
+        90882,
+        90885,
+        90886,
+        90888,
+        90892,
+        90894,
+        90897,
+        90898,
+        90901,
+        90902,
+        90903,
+        90908,
+        90911,
+        90914,
+        90915,
+        90918,
+        90919,
+        90922,
+        90923,
+        90928,
+        90931,
+        90934,
+        90936,
+        90939,
+        90940,
+        90943,
+        90944,
+        90947,
+        90948,
+        90953,
+        90956,
+        90959,
+        90960,
+        90961,
+        90964,
+        90965,
+        90970,
+        90973,
+        90976,
+        90994,
+        90996,
+        90997,
+        90998,
+        91000,
+        91001
+      ],
+      "reference_listing_lead": {
+        "authority": "lead only; extent, entry, CFG, table, RETF, and adjacency are independently supported by locked-image bytes",
+        "lines": [
+          2293,
+          2506
+        ],
+        "path": "src/restunts/asmorig/seg006.asm"
+      },
+      "relocation_sites": [
+        18405,
+        20078,
+        19621,
+        20205,
+        21636,
+        25207,
+        29653,
+        30487,
+        37707,
+        37525,
+        37349,
+        37168,
+        39909,
+        41667,
+        41577,
+        42293,
+        42091,
+        43524,
+        43948,
+        52257
+      ],
+      "segment": "seg006",
+      "segment_offset": 5274,
+      "segment_paragraph": 5334,
+      "sha256": "e6ed6139a9e6338fd9b2cc261b00911351aaf75d90968f4e2665f8148854e702",
+      "size": 384,
+      "stable_id": "load_161fa",
+      "start": 90618,
+      "start_evidence": {
+        "entry": 90618,
+        "far_call_count": 20,
+        "method": "relocated_far_call_entries_and_near_call_entries",
+        "near_call_count": 4
+      },
+      "table_proofs": [
+        {
+          "entry_offsets": [
+            5444,
+            5650,
+            5587,
+            5450,
+            5629,
+            5492,
+            5518,
+            5544
+          ],
+          "flag_and_guard_instructions": [
+            {
+              "bytes": "2bf6",
+              "instruction": "sub si, si",
+              "load_offset": 90626
+            },
+            {
+              "bytes": "f74606ff03",
+              "instruction": "test word ptr [bp + 6], 0x3ff",
+              "load_offset": 90628
+            },
+            {
+              "bytes": "be0400",
+              "instruction": "mov si, 4",
+              "load_offset": 90635
+            },
+            {
+              "bytes": "f74608ff03",
+              "instruction": "test word ptr [bp + 8], 0x3ff",
+              "load_offset": 90652
+            },
+            {
+              "bytes": "81ce0200",
+              "instruction": "or si, 2",
+              "load_offset": 90659
+            },
+            {
+              "bytes": "f7460aff03",
+              "instruction": "test word ptr [bp + 0xa], 0x3ff",
+              "load_offset": 90678
+            },
+            {
+              "bytes": "81ce0100",
+              "instruction": "or si, 1",
+              "load_offset": 90685
+            },
+            {
+              "bytes": "8bc6",
+              "instruction": "mov ax, si",
+              "load_offset": 90757
+            },
+            {
+              "bytes": "3d0700",
+              "instruction": "cmp ax, 7",
+              "load_offset": 90759
+            },
+            {
+              "bytes": "7603",
+              "instruction": "jbe 0x1628f",
+              "load_offset": 90762
+            },
+            {
+              "bytes": "2effa70216",
+              "instruction": "jmp word ptr cs:[bx + 0x1602]",
+              "load_offset": 90770
+            }
+          ],
+          "frame_load_address": 85344,
+          "index_domain_reason": "SI starts at zero; the z/x/y tests only assign or OR bits 4/2/1; the following cmp ax,7; jbe allows only table indices 0..7, and larger values jump to the common return epilogue.",
+          "index_guard": {
+            "bytes": "8bc63d07007603e9e300",
+            "init_and_bits": "SI initialized 0; ORs 4,2,1 only for nonzero z/x/y angles",
+            "range_check_site": 90757,
+            "valid": "SI <= 7; indirect index is 2*SI"
+          },
+          "island_hex": "44151216d3154a15fd1574158e15a815",
+          "island_load_offset": 90978,
+          "island_segment_offset": 5634,
+          "jump_bytes": "2effa70216",
+          "jump_site": 90770,
+          "targets": [
+            90788,
+            90994,
+            90931,
+            90794,
+            90973,
+            90836,
+            90862,
+            90888
+          ],
+          "valid_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      ],
+      "verification_kind": "embedded_jump_table16_mat_rot_zxy_v1"
+    },
+    {
+      "abi": "far function; five 16-bit arguments at BP+6,+8,+0xA,+0xC,+0xE; returns a 16-bit result in AX",
+      "adjacent_next": [
+        {
+          "end": 89636,
+          "name": "transformed_shape_op",
+          "sha256": "ed5f8af7e40c28ef1317f49b9d5401dc995bf1f715ca8c00cbc508db89933ec6",
+          "stable_id": "load_14e9e",
+          "start": 85662
+        }
+      ],
+      "adjacent_previous": [
+        {
+          "end": 85510,
+          "name": "polyinfo_reset",
+          "sha256": "5dffb6fd718b4105ed03a56bbf63b0c21b3355bb4aa2bd4692899ed29eeab043",
+          "stable_id": "load_14de6",
+          "start": 85478
+        }
+      ],
+      "boundary_anchors": [
+        {
+          "hex": "558bec83ec0e5756",
+          "role": "entry",
+          "site": 85510
+        },
+        {
+          "hex": "cb",
+          "role": "terminal RETF",
+          "site": 85661
+        },
+        {
+          "hex": "9aa600d614",
+          "role": "relocated far CALL entry",
+          "site": 9317,
+          "target": 85510
+        },
+        {
+          "hex": "9aa600d614",
+          "role": "relocated far CALL entry",
+          "site": 42244,
+          "target": 85510
+        },
+        {
+          "hex": "9aa600d614",
+          "role": "relocated far CALL entry",
+          "site": 52501,
+          "target": 85510
+        },
+        {
+          "hex": "9aa600d614",
+          "role": "relocated far CALL entry",
+          "site": 57038,
+          "target": 85510
+        },
+        {
+          "hex": "90558bec",
+          "role": "previous verified procedure end / proposed entry",
+          "site": 85509
+        },
+        {
+          "hex": "558bec81",
+          "role": "next verified procedure entry",
+          "site": 85662
+        }
+      ],
+      "boundary_proof": "Entry 0x14e06 follows polyinfo_reset ending at 0x14e06; relocated/near-call anchors land on this entry; decoded reachable flow terminates at RETF 0x14e9d; next verified function transformed_shape_op starts at 0x14e9e; no terminal pad is included.",
+      "bytes_hex": "558bec83ec0e5756b8010050ff760aff7608ff76060ee8db1383c408bfdcac8bf01e07b90900f2a50ee8b4ff8b460cbf40578bf01e07a5a5a5a58b460ea360572bc0508b460af7d8508b4608f7d8508b4606f7d8500ee89b1383c4088946f8c746f61027c746f40000c746f200008d46fa50ff76f88d46f2509ace3ea21e83c406ff76feff76fa9a2e00a21e83c40480e4035e5f8be55dcb",
+      "cfg_audit": {
+        "all_instructions_reachable_or_nop_padding": true,
+        "all_reachable_paths_reach_retf": true,
+        "decoded_instruction_count": 67,
+        "edges": [],
+        "issues": [],
+        "padding_offsets": [],
+        "reachable_instruction_count": 67,
+        "reachable_instruction_offsets": [
+          85510,
+          85511,
+          85513,
+          85516,
+          85517,
+          85518,
+          85521,
+          85522,
+          85525,
+          85528,
+          85531,
+          85532,
+          85535,
+          85538,
+          85541,
+          85543,
+          85544,
+          85545,
+          85548,
+          85550,
+          85551,
+          85554,
+          85557,
+          85560,
+          85562,
+          85563,
+          85564,
+          85565,
+          85566,
+          85567,
+          85568,
+          85571,
+          85574,
+          85576,
+          85577,
+          85580,
+          85582,
+          85583,
+          85586,
+          85588,
+          85589,
+          85592,
+          85594,
+          85595,
+          85596,
+          85599,
+          85602,
+          85605,
+          85610,
+          85615,
+          85620,
+          85623,
+          85624,
+          85627,
+          85630,
+          85631,
+          85636,
+          85639,
+          85642,
+          85645,
+          85650,
+          85653,
+          85656,
+          85657,
+          85658,
+          85660,
+          85661
+        ],
+        "reachable_without_return": [],
+        "return_offsets": [
+          85661
+        ],
+        "roots": [
+          85510
+        ],
+        "unreachable_instructions": []
+      },
+      "disassembly": [
+        {
+          "bytes": "55",
+          "instruction": "push bp",
+          "load_offset": 85510
+        },
+        {
+          "bytes": "8bec",
+          "instruction": "mov bp, sp",
+          "load_offset": 85511
+        },
+        {
+          "bytes": "83ec0e",
+          "instruction": "sub sp, 0xe",
+          "load_offset": 85513
+        },
+        {
+          "bytes": "57",
+          "instruction": "push di",
+          "load_offset": 85516
+        },
+        {
+          "bytes": "56",
+          "instruction": "push si",
+          "load_offset": 85517
+        },
+        {
+          "bytes": "b80100",
+          "instruction": "mov ax, 1",
+          "load_offset": 85518
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85521
+        },
+        {
+          "bytes": "ff760a",
+          "instruction": "push word ptr [bp + 0xa]",
+          "load_offset": 85522
+        },
+        {
+          "bytes": "ff7608",
+          "instruction": "push word ptr [bp + 8]",
+          "load_offset": 85525
+        },
+        {
+          "bytes": "ff7606",
+          "instruction": "push word ptr [bp + 6]",
+          "load_offset": 85528
+        },
+        {
+          "bytes": "0e",
+          "instruction": "push cs",
+          "load_offset": 85531
+        },
+        {
+          "bytes": "e8db13",
+          "instruction": "call 0x161fa",
+          "load_offset": 85532
+        },
+        {
+          "bytes": "83c408",
+          "instruction": "add sp, 8",
+          "load_offset": 85535
+        },
+        {
+          "bytes": "bfdcac",
+          "instruction": "mov di, 0xacdc",
+          "load_offset": 85538
+        },
+        {
+          "bytes": "8bf0",
+          "instruction": "mov si, ax",
+          "load_offset": 85541
+        },
+        {
+          "bytes": "1e",
+          "instruction": "push ds",
+          "load_offset": 85543
+        },
+        {
+          "bytes": "07",
+          "instruction": "pop es",
+          "load_offset": 85544
+        },
+        {
+          "bytes": "b90900",
+          "instruction": "mov cx, 9",
+          "load_offset": 85545
+        },
+        {
+          "bytes": "f2a5",
+          "instruction": "repne movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 85548
+        },
+        {
+          "bytes": "0e",
+          "instruction": "push cs",
+          "load_offset": 85550
+        },
+        {
+          "bytes": "e8b4ff",
+          "instruction": "call 0x14de6",
+          "load_offset": 85551
+        },
+        {
+          "bytes": "8b460c",
+          "instruction": "mov ax, word ptr [bp + 0xc]",
+          "load_offset": 85554
+        },
+        {
+          "bytes": "bf4057",
+          "instruction": "mov di, 0x5740",
+          "load_offset": 85557
+        },
+        {
+          "bytes": "8bf0",
+          "instruction": "mov si, ax",
+          "load_offset": 85560
+        },
+        {
+          "bytes": "1e",
+          "instruction": "push ds",
+          "load_offset": 85562
+        },
+        {
+          "bytes": "07",
+          "instruction": "pop es",
+          "load_offset": 85563
+        },
+        {
+          "bytes": "a5",
+          "instruction": "movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 85564
+        },
+        {
+          "bytes": "a5",
+          "instruction": "movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 85565
+        },
+        {
+          "bytes": "a5",
+          "instruction": "movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 85566
+        },
+        {
+          "bytes": "a5",
+          "instruction": "movsw word ptr es:[di], word ptr [si]",
+          "load_offset": 85567
+        },
+        {
+          "bytes": "8b460e",
+          "instruction": "mov ax, word ptr [bp + 0xe]",
+          "load_offset": 85568
+        },
+        {
+          "bytes": "a36057",
+          "instruction": "mov word ptr [0x5760], ax",
+          "load_offset": 85571
+        },
+        {
+          "bytes": "2bc0",
+          "instruction": "sub ax, ax",
+          "load_offset": 85574
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85576
+        },
+        {
+          "bytes": "8b460a",
+          "instruction": "mov ax, word ptr [bp + 0xa]",
+          "load_offset": 85577
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 85580
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85582
+        },
+        {
+          "bytes": "8b4608",
+          "instruction": "mov ax, word ptr [bp + 8]",
+          "load_offset": 85583
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 85586
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85588
+        },
+        {
+          "bytes": "8b4606",
+          "instruction": "mov ax, word ptr [bp + 6]",
+          "load_offset": 85589
+        },
+        {
+          "bytes": "f7d8",
+          "instruction": "neg ax",
+          "load_offset": 85592
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85594
+        },
+        {
+          "bytes": "0e",
+          "instruction": "push cs",
+          "load_offset": 85595
+        },
+        {
+          "bytes": "e89b13",
+          "instruction": "call 0x161fa",
+          "load_offset": 85596
+        },
+        {
+          "bytes": "83c408",
+          "instruction": "add sp, 8",
+          "load_offset": 85599
+        },
+        {
+          "bytes": "8946f8",
+          "instruction": "mov word ptr [bp - 8], ax",
+          "load_offset": 85602
+        },
+        {
+          "bytes": "c746f61027",
+          "instruction": "mov word ptr [bp - 0xa], 0x2710",
+          "load_offset": 85605
+        },
+        {
+          "bytes": "c746f40000",
+          "instruction": "mov word ptr [bp - 0xc], 0",
+          "load_offset": 85610
+        },
+        {
+          "bytes": "c746f20000",
+          "instruction": "mov word ptr [bp - 0xe], 0",
+          "load_offset": 85615
+        },
+        {
+          "bytes": "8d46fa",
+          "instruction": "lea ax, [bp - 6]",
+          "load_offset": 85620
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85623
+        },
+        {
+          "bytes": "ff76f8",
+          "instruction": "push word ptr [bp - 8]",
+          "load_offset": 85624
+        },
+        {
+          "bytes": "8d46f2",
+          "instruction": "lea ax, [bp - 0xe]",
+          "load_offset": 85627
+        },
+        {
+          "bytes": "50",
+          "instruction": "push ax",
+          "load_offset": 85630
+        },
+        {
+          "bytes": "9ace3ea21e",
+          "instruction": "lcall 0x1ea2, 0x3ece",
+          "load_offset": 85631
+        },
+        {
+          "bytes": "83c406",
+          "instruction": "add sp, 6",
+          "load_offset": 85636
+        },
+        {
+          "bytes": "ff76fe",
+          "instruction": "push word ptr [bp - 2]",
+          "load_offset": 85639
+        },
+        {
+          "bytes": "ff76fa",
+          "instruction": "push word ptr [bp - 6]",
+          "load_offset": 85642
+        },
+        {
+          "bytes": "9a2e00a21e",
+          "instruction": "lcall 0x1ea2, 0x2e",
+          "load_offset": 85645
+        },
+        {
+          "bytes": "83c404",
+          "instruction": "add sp, 4",
+          "load_offset": 85650
+        },
+        {
+          "bytes": "80e403",
+          "instruction": "and ah, 3",
+          "load_offset": 85653
+        },
+        {
+          "bytes": "5e",
+          "instruction": "pop si",
+          "load_offset": 85656
+        },
+        {
+          "bytes": "5f",
+          "instruction": "pop di",
+          "load_offset": 85657
+        },
+        {
+          "bytes": "8be5",
+          "instruction": "mov sp, bp",
+          "load_offset": 85658
+        },
+        {
+          "bytes": "5d",
+          "instruction": "pop bp",
+          "load_offset": 85660
+        },
+        {
+          "bytes": "cb",
+          "instruction": "retf ",
+          "load_offset": 85661
+        }
+      ],
+      "end": 85662,
+      "end_evidence": {
+        "adjacent_next": [
+          {
+            "end": 89636,
+            "name": "transformed_shape_op",
+            "sha256": "ed5f8af7e40c28ef1317f49b9d5401dc995bf1f715ca8c00cbc508db89933ec6",
+            "stable_id": "load_14e9e",
+            "start": 85662
+          }
+        ],
+        "end": 85662,
+        "method": "decoded_reachable_control_flow_to_retf_and_adjacent_entry",
+        "retf": [
+          85661
+        ]
+      },
+      "entry_far_calls": [
+        {
+          "caller": {
+            "end": 10556,
+            "name": "run_car_menu",
+            "stable_id": "load_01c42",
+            "start": 7234,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9aa600d614",
+          "relocation": {
+            "load_offset": 9320,
+            "offset": 9320,
+            "segment": 0
+          },
+          "site": 9317
+        },
+        {
+          "caller": {
+            "end": 49922,
+            "name": "update_frame",
+            "stable_id": "load_0a0f4",
+            "start": 41204,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9aa600d614",
+          "relocation": {
+            "load_offset": 42247,
+            "offset": 42247,
+            "segment": 0
+          },
+          "site": 42244
+        },
+        {
+          "caller": {
+            "end": 53550,
+            "name": "draw_track_preview",
+            "stable_id": "load_0cbdc",
+            "start": 52188,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9aa600d614",
+          "relocation": {
+            "load_offset": 52504,
+            "offset": 52504,
+            "segment": 0
+          },
+          "site": 52501
+        },
+        {
+          "caller": {
+            "end": 57760,
+            "name": "intro_op",
+            "stable_id": "load_0dea6",
+            "start": 56998,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "9aa600d614",
+          "relocation": {
+            "load_offset": 57041,
+            "offset": 57041,
+            "segment": 0
+          },
+          "site": 57038
+        }
+      ],
+      "entry_near_calls": [],
+      "evidence_class": "pristine locked-image bytes, relocated/near-call entry anchors, decoded in-range control flow to RETF, and adjacent verified extents",
+      "frame_load_address": 85344,
+      "name": "select_cliprect_rotate",
+      "outgoing_near_calls_to_mat_rot_zxy": [
+        {
+          "call_site": 85532,
+          "caller": {
+            "end": 85662,
+            "name": "select_cliprect_rotate",
+            "stable_id": "load_14e06",
+            "start": 85510,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee8db13",
+          "site": 85531,
+          "target": 90618
+        },
+        {
+          "call_site": 85596,
+          "caller": {
+            "end": 85662,
+            "name": "select_cliprect_rotate",
+            "stable_id": "load_14e06",
+            "start": 85510,
+            "status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED"
+          },
+          "hex": "0ee89b13",
+          "site": 85595,
+          "target": 90618
+        }
+      ],
+      "overlay_status_proposal": "retain verified extent; add independent reviewed CFG/call-entry evidence",
+      "padding_offsets": [],
+      "provenance": {
+        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+        "lines": [
+          164,
+          245
+        ],
+        "path": "src/restunts/asmorig/seg006.asm",
+        "repository": "restunts"
+      },
+      "reachable_instruction_offsets": [
+        85510,
+        85511,
+        85513,
+        85516,
+        85517,
+        85518,
+        85521,
+        85522,
+        85525,
+        85528,
+        85531,
+        85532,
+        85535,
+        85538,
+        85541,
+        85543,
+        85544,
+        85545,
+        85548,
+        85550,
+        85551,
+        85554,
+        85557,
+        85560,
+        85562,
+        85563,
+        85564,
+        85565,
+        85566,
+        85567,
+        85568,
+        85571,
+        85574,
+        85576,
+        85577,
+        85580,
+        85582,
+        85583,
+        85586,
+        85588,
+        85589,
+        85592,
+        85594,
+        85595,
+        85596,
+        85599,
+        85602,
+        85605,
+        85610,
+        85615,
+        85620,
+        85623,
+        85624,
+        85627,
+        85630,
+        85631,
+        85636,
+        85639,
+        85642,
+        85645,
+        85650,
+        85653,
+        85656,
+        85657,
+        85658,
+        85660,
+        85661
+      ],
+      "reference_listing_lead": {
+        "authority": "lead only; extent, entries, CFG, RETF, and adjacency are independently supported by locked-image bytes",
+        "lines": [
+          164,
+          245
+        ],
+        "path": "src/restunts/asmorig/seg006.asm"
+      },
+      "relocation_sites": [
+        9320,
+        42247,
+        52504,
+        57041
+      ],
+      "segment": "seg006",
+      "segment_offset": 166,
+      "segment_paragraph": 5334,
+      "sha256": "2096f8c9f395b4c4b698ae55fd811021f0bc20c37c3827dec8d8ea502161b8ba",
+      "size": 152,
+      "stable_id": "load_14e06",
+      "start": 85510,
+      "start_evidence": {
+        "entry": 85510,
+        "far_call_count": 4,
+        "method": "relocated_far_call_entries_and_near_call_entries",
+        "near_call_count": 0
+      },
+      "table_proofs": [],
+      "verification_kind": "bounded_control_flow"
     }
   ],
   "oracle_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e"

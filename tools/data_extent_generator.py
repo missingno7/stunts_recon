@@ -11,6 +11,85 @@ import sys
 from common import ROOT, read_json, require
 
 
+def _audio_buffer_extent(image, layout, inventory):
+    """Corroborate the ring buffer from its complete index write set and source span."""
+    from common import identity, sha
+    import re
+    name = '_unk_44F4C'
+    symbol = layout['symbols'].get(name)
+    if symbol is None:
+        return None
+    frame = layout['frame_load_address']; base = frame + 0x97dc
+    require(symbol['load_address'] == base and symbol['storage'] == 'bss',
+            'Audio buffer base differs')
+    functions = {f['name']: f for f in inventory['functions']}
+    for function, start, end in [('audio_carstate', 0x88a4, 0x8cd8),
+                                  ('setup_player_cars', 0x13702, 0x139b4),
+                                  ('frame_callback', 0x12596, 0x12698)]:
+        f = functions[function]
+        require((f['start'], f['end']) == (start, end) and
+                sha(image[f['start']:f['end']]) == f['sha256'] and
+                f['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED',
+                'Audio index caller identity differs')
+    anchors = [(0x8a82,'b82200'), (0x8a85,'f72e7492'),
+               (0x8a89,'05dc97'), (0x8a8f,'8bd8'), (0x8a97,'894706'),
+               (0x8cbb,'ff067492'), (0x8cbf,'833e749228'),
+               (0x8cc4,'7506'), (0x8cc6,'c70674920000'),
+               (0x13876,'c70674920000')]
+    require(all(image[at:at+len(bytes.fromhex(raw))] == bytes.fromhex(raw)
+                for at, raw in anchors) and
+            0x8cc4 + 2 + int.from_bytes(image[0x8cc5:0x8cc6], 'little', signed=True) == 0x8ccc,
+            'Audio ring stride/access/wrap changed')
+    # The complete original image contains seven direct references to this
+    # index. All are in verified functions. Its only writes are zero, increment,
+    # and the guarded zero immediately after the increment reaches 40.
+    sites = [at for at in range(len(image)-1) if image[at:at+2] == b'\x74\x92']
+    expected = [0x88be,0x8a87,0x8cbd,0x8cc1,0x8cc8,0x125c8,0x13878]
+    require(sites == expected, 'Audio ring index has an unreviewed reference/write')
+    references = [(0x88bd,'a17492'), (0x8a85,'f72e7492'),
+                  (0x8cbb,'ff067492'), (0x8cbf,'833e749228'),
+                  (0x8cc6,'c70674920000'), (0x125c7,'a17492'),
+                  (0x13876,'c70674920000')]
+    require(all(image[at:at+len(bytes.fromhex(raw))] == bytes.fromhex(raw)
+                for at,raw in references),
+            'Audio ring index has an unguarded write or altered read')
+    writes = [{'site':0x8cbb,'kind':'increment_then_wrap'},
+              {'site':0x8cc6,'kind':'constant_zero'},
+              {'site':0x13876,'kind':'constant_zero'}]
+    require({w['site'] for w in writes} == {0x8cbb,0x8cc6,0x13876} and
+            image[0x8cbf:0x8cc4] == bytes.fromhex('833e749228'),
+            'Audio ring index has an unguarded write')
+    path = 'src/restunts/asmorig/dseg.asm'
+    source = ROOT/'build/references/restunts'/path
+    pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
+    require(identity(source.read_bytes()) == pinned, 'Audio buffer reference source differs')
+    lines = source.read_text(encoding='latin1').splitlines()
+    require(re.fullmatch(r'unk_44F4C\s+db\s+0', lines[36686].strip(), re.I) and
+            re.fullmatch(r'dastbmp_y2\s+dw\s+0', lines[38046].strip(), re.I) and
+            all(re.fullmatch(r'db\s+0', row.strip(), re.I) for row in lines[36687:38046]),
+            'Audio buffer reference label span differs')
+    span = 38047-36687
+    require(0x22*0x28 == span == 1360 and
+            symbol.get('width') in (None, span) and base+span <= layout['bss_end'],
+            'Audio buffer code and reference extents disagree')
+    for other_name, other in layout['symbols'].items():
+        if other_name == name or other['storage'] == 'code_island':
+            continue
+        other_base = other['load_address']; other_end = other_base + other.get('width', 1)
+        require(not (base < other_end and other_base < base+span),
+                'Audio buffer overlaps independently anchored object')
+    return {'load_address': base, 'storage': 'bss', 'width': span,
+            'extent_proof': {'kind': 'corroborated-ring-buffer-v1',
+                             'stride': 34, 'wrap_count': 40,
+                             'index_displacement': 0x9274,
+                             'reference_path': path,
+                             'reference_lines': [36687,38047],
+                             'anchors': [{'site':at,'hex':raw} for at,raw in anchors],
+                             'index_references': [{'site':at,'hex':raw} for at,raw in references],
+                             'all_index_reference_sites': sites,
+                             'writes': writes}}
+
+
 def _decoder():
     location = str(ROOT / 'build/python')
     if location not in sys.path:
@@ -297,6 +376,8 @@ def derive(image, relocations, layout=None, inventory=None):
                                           'field_offsets': sorted({w['field_offset'] for w in rows}),
                                           'anchors': [{'function': w['function'], 'start': w['start'],
                                                        'access': w['access']} for w in rows]}}
+    if '_unk_44F4C' in layout['symbols']:
+        derived['_unk_44F4C'] = _audio_buffer_extent(image, layout, inventory)
     return derived, rejected, witnesses
 
 

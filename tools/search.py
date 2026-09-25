@@ -43,10 +43,11 @@ def _put_immutable(path, data):
 
 def _candidate_snapshot(source_path):
     path = Path(source_path).expanduser().resolve()
-    require(path.is_file(), f'Candidate C source does not exist: {source_path}')
+    require(path.is_file(), f'Candidate source does not exist: {source_path}')
     raw = path.read_bytes()
     digest = sha(raw)
-    frozen = _put_immutable(ROOT / 'build/search/candidates' / f'{digest}.c', raw)
+    suffix = '.ASM' if path.suffix.lower() == '.asm' else '.c'
+    frozen = _put_immutable(ROOT / 'build/search/candidates' / f'{digest}{suffix}', raw)
     return raw, {'sha256': digest, 'size': len(raw), 'name': path.name,
                  'input_path': str(path), 'frozen_path': _relative(frozen)}
 
@@ -98,6 +99,8 @@ def _environment(profile, recipe, recipe_path, function, closure=None):
     files = list(config.get('files', [])) + [runner]
     tools = ['tools/search.py', 'tools/compiler.py', 'tools/preprocessor.py', 'tools/common.py',
              'tools/object_probe.py', 'tools/omf.py']
+    if profile == 'masm510-game':
+        tools.append('tools/assembler.py')
     if function:
         tools += ['tools/oracle.py', 'tools/mz.py', 'tools/dsi.py', 'tools/exepack.py', 'tools/diagnostics.py']
     binding_paths = []
@@ -164,11 +167,11 @@ def _freeze_compiler_work(receipt, run_dir):
     if destination.exists():
         shutil.rmtree(destination)
     shutil.copytree(source, destination)
-    log_path = source / 'compiler.log'
+    log_path = source / ('assembler.log' if (source/'assembler.log').is_file() else 'compiler.log')
     log = log_path.read_bytes() if log_path.is_file() else b''
     object_path = source / 'UNIT.OBJ'
     object_raw = object_path.read_bytes() if object_path.is_file() else None
-    return {'path': _relative(destination), 'log_path': _relative(destination / 'compiler.log') if log else None,
+    return {'path': _relative(destination), 'log_path': _relative(destination / log_path.name) if log else None,
             'log_sha256': sha(log) if log else None,
             'object_path': _relative(destination / 'UNIT.OBJ') if object_raw is not None else None,
             'object': identity(object_raw) if object_raw is not None else None}, log
@@ -281,7 +284,7 @@ def _target_bytes(function, oracle_result):
 
 
 def run(source_path, profile=None, recipe_path=None, function=None):
-    """Compile one frozen C source and archive standalone observations."""
+    """Compile one frozen C or ASM source and archive standalone observations."""
     from compiler import CompileFailure, compile_source
 
     source, candidate = _candidate_snapshot(source_path)
@@ -297,9 +300,15 @@ def run(source_path, profile=None, recipe_path=None, function=None):
         require(recipe.get('start') == function_row.get('start') and recipe.get('end') == function_row.get('end'),
                 'Recipe range differs from the selected evidence function')
 
-    selected_profile = profile or (recipe or {}).get('profile') or 'msc510-medium'
-    from preprocessor import prepare
-    _, closure = prepare(source, selected_profile)
+    asm = Path(source_path).suffix.lower() == '.asm' or (recipe or {}).get('kind') == 'asm'
+    selected_profile = profile or (recipe or {}).get('profile') or ('masm510-game' if asm else 'msc510-medium')
+    if asm:
+        from assembler import asm_source
+        asm_source(source)
+        closure=[]
+    else:
+        from preprocessor import prepare
+        _, closure = prepare(source, selected_profile)
     oracle_result = None
     binding_before = None
     if recipe:
@@ -325,7 +334,7 @@ def run(source_path, profile=None, recipe_path=None, function=None):
                      if function_row else None),
         'context_hypothesis': ('Candidate is a standalone scratch translation unit. No original translation-unit membership, source authorship, or production ownership is inferred.'
                                if not function_row else
-                               'Candidate is a standalone C context hypothesis for the selected evidence function. This does not assert the original translation-unit boundary.'),
+                               'Candidate is a standalone source context hypothesis for the selected evidence function. This does not assert the original module boundary.'),
         'compiler': {'profile': selected_profile, 'status': 'NOT_STARTED'},
         'binding': {'status': 'NOT_REQUESTED' if not recipe else 'PENDING',
                     'authority': 'Production binding is separate from unbound code-generation diagnostics.'},
@@ -341,10 +350,15 @@ def run(source_path, profile=None, recipe_path=None, function=None):
     compiler_log = b''
     compiler_error = None
     try:
-        obj, receipt = compile_source(source, selected_profile)
-        require(receipt.get('preprocessor_closure', closure) == closure,
-                'Preprocessor closure changed after search snapshot')
-        report['compiler'] = {'profile': selected_profile, 'status': 'COMPILED', 'receipt': receipt}
+        if asm:
+            from assembler import assemble_source
+            obj, receipt = assemble_source(source, selected_profile)
+            require(receipt.get('include_closure') == [], 'ASM include closure changed')
+        else:
+            obj, receipt = compile_source(source, selected_profile)
+            require(receipt.get('preprocessor_closure', closure) == closure,
+                    'Preprocessor closure changed after search snapshot')
+        report['compiler'] = {'profile': selected_profile, 'status': 'ASSEMBLED' if asm else 'COMPILED', 'receipt': receipt}
     except CompileFailure as error:
         compiler_error = error
         receipt = error.receipt
@@ -485,7 +499,7 @@ def history(function=None, limit=20):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('candidates', nargs='*', help='One or more standalone candidate C source files')
+    parser.add_argument('candidates', nargs='*', help='One or more standalone C or ASM source files')
     parser.add_argument('--profile', help='Pinned toolchain profile (defaults to recipe profile or msc510-medium)')
     parser.add_argument('--recipe', help='Optional JSON recipe for a fresh scratch binding probe')
     parser.add_argument('--function', help='Optional exact evidence function name or stable ID for diagnostics')

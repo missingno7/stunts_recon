@@ -1,0 +1,119 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "kb_shift_state"
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_kb_shift_checking2",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 17,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-external-far-call-v1"
+  },
+  "end": 158486,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 81,
+    "line_start": 68,
+    "path": "src/restunts/asmorig/seg018.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 12,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "kb_shift_state",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 158483,
+      "offset": 27411,
+      "segment": 8192
+    }
+  ],
+  "id": "kb_shift_checking2",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "kb_shift_state"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_kb_shift_checking2",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 17,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 158448,
+  "profile": "masm510-game",
+  "public": "_kb_shift_checking2",
+  "source": "asm/kb_shift_checking2.ASM",
+  "stable_id": "load_26b05",
+  "start": 158469,
+  "target": {
+    "sha256": "913ba8b5bbf37403e0818476f564ed7ba80bbe6ebb63c08c689721a57f65cfa7",
+    "size": 17
+  }
+}

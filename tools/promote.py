@@ -11,6 +11,40 @@ from mz import MZ
 from transaction import exclusive, ensure_consistent, prepare, apply, finish, rollback, recover, invalidate_receipts
 from multi_contribution import checked_members
 from preprocessor import prepare as prepare_source
+from assembler import asm_source
+
+
+def contribution_kind(recipe):
+    return 'MATCHING_ASM' if recipe.get('kind', 'c') == 'asm' else 'MATCHING_C'
+
+
+def checked_asm_function(name, recipe, image):
+    """ASM boundaries may be proved by complete emission bytes and both anchors."""
+    from function_evidence import current_inventory, reviewed_functions
+    inventory = current_inventory(image)
+    require(inventory['load_sha256'] == sha(image), 'ASM inventory/oracle identity differs')
+    rows = [f for f in inventory['functions'] if f.get('name') == name]
+    require(len(rows) == 1, 'ASM name missing/ambiguous in original evidence')
+    f = rows[0]
+    strong = f['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'
+    emission = (f['status'] == 'BOUNDARIES_AND_EMISSION_BYTES_VERIFIED'
+                and f.get('start_evidence') and f.get('end_evidence')
+                and sha(image[f['start']:f['end']]) == f['sha256']
+                and (not f.get('bytes_hex') or
+                     bytes.fromhex(f['bytes_hex']) == image[f['start']:f['end']]))
+    require(strong or emission, 'ASM extent lacks reviewed anchors or complete emission bytes')
+    stable = f.get('stable_id', f"asm_load_{f['start']:05x}")
+    require(recipe.get('stable_id') == stable and recipe['id'] == name
+            and (recipe['start'], recipe['end']) == (f['start'], f['end'])
+            and recipe['target'] == {'size': f['size'], 'sha256': f['sha256']}
+            and recipe['public'] == '_' + name,
+            'ASM recipe differs from independent function evidence')
+    if 'original_frame_load_address' in recipe:
+        require(recipe['original_frame_load_address'] == f['segment_paragraph']*16,
+                'ASM original frame differs from independent segment map')
+    require(identity(image[f['start']:f['end']]) == recipe['target'], 'ASM original extent changed')
+    reviewed_functions(image)
+    return f
 
 
 def replace_raw(manifest, recipe):
@@ -23,8 +57,10 @@ def replace_raw(manifest, recipe):
     split = []
     if old['start'] < start:
         split.append({**old, 'end':start, 'id':f"raw_{old['start']:05x}_{start:05x}"})
+    kind = contribution_kind(recipe)
     split.append({'id':recipe['stable_id'], 'name':recipe['id'], 'start':start, 'end':end,
-                  'kind':'MATCHING_C', 'classification':'GAME_C', 'recipe':'recipes/'+recipe['id']+'.json'})
+                  'kind':kind, 'classification':'GAME_ASM' if kind == 'MATCHING_ASM' else 'GAME_C',
+                  'recipe':'recipes/'+recipe['id']+'.json'})
     if end < old['end']:
         split.append({**old, 'start':end, 'id':f"raw_{end:05x}_{old['end']:05x}"})
     at = result['owners'].index(old)
@@ -39,7 +75,7 @@ def replace_group(manifest, recipe, oracle):
     overlaps = [o for o in result['owners'] if o['start'] < end and start < o['end']]
     require(overlaps and overlaps[0]['start'] <= start and end <= overlaps[-1]['end'],
             'Group interval is not covered by existing owners')
-    accepted = [o for o in overlaps if o['kind'] == 'MATCHING_C']
+    accepted = [o for o in overlaps if o['kind'] in ('MATCHING_C', 'MATCHING_ASM')]
     require(sorted(recipe.get('subsumed_owners', [])) == sorted(o['id'] for o in accepted) and
             len(recipe.get('subsumed_owners', [])) == len(accepted),
             'Group must record exactly its subsumed C owners')
@@ -47,7 +83,7 @@ def replace_group(manifest, recipe, oracle):
     for owner in overlaps:
         if owner['kind'] == 'UNRESOLVED_RAW':
             continue
-        require(owner['kind'] == 'MATCHING_C' and start <= owner['start'] and owner['end'] <= end
+        require(owner['kind'] == contribution_kind(recipe) and start <= owner['start'] and owner['end'] <= end
                 and (owner['start'], owner['end'], owner['name']) in member_extents,
                 'Group crosses an accepted owner without exact member extent')
         prior = read_json(ROOT/owner['recipe'])
@@ -64,8 +100,9 @@ def replace_group(manifest, recipe, oracle):
         require(overlaps[0]['kind'] == 'UNRESOLVED_RAW', 'Group cuts accepted owner at start')
         replacement.append({**overlaps[0], 'end':start,
                             'id':f"raw_{left:05x}_{start:05x}"})
+    kind = contribution_kind(recipe)
     replacement.append({'id':recipe['id'], 'name':recipe['id'], 'start':start, 'end':end,
-                        'kind':'MATCHING_C', 'classification':'GAME_C',
+                        'kind':kind, 'classification':'GAME_ASM' if kind == 'MATCHING_ASM' else 'GAME_C',
                         'recipe':'recipes/'+recipe['id']+'.json'})
     if end < right:
         require(overlaps[-1]['kind'] == 'UNRESOLVED_RAW', 'Group cuts accepted owner at end')
@@ -82,7 +119,7 @@ def attach_secondary(manifest, recipe, image):
     specs = recipe.get('secondary_dgroup_segments', {})
     if not specs:
         return result
-    parents = [o for o in result['owners'] if o['kind']=='MATCHING_C' and
+    parents = [o for o in result['owners'] if o['kind']==contribution_kind(recipe) and
                o.get('name')==recipe['id'] and
                (o['start'],o['end'])==(recipe['start'],recipe['end'])]
     require(len(parents)==1, 'Secondary contribution lacks unique CODE owner')
@@ -111,7 +148,8 @@ def attach_secondary(manifest, recipe, image):
                     'Secondary initialized owner differs from oracle')
             partition=result['owners']
         overlaps=[o for o in partition if o['start']<end and start<o['end']]
-        if len(overlaps)==1 and overlaps[0]['kind']=='MATCHING_C_DATA':
+        prior_kind = 'MATCHING_ASM_DATA' if recipe.get('kind') == 'asm' else 'MATCHING_C_DATA'
+        if len(overlaps)==1 and overlaps[0]['kind']==prior_kind:
             prior=overlaps[0]
             require((prior['start'],prior['end'],prior['segment'])==(start,end,segment)
                     and prior['id'] in recipe.get('subsumed_data_owners',[]) and
@@ -128,8 +166,10 @@ def attach_secondary(manifest, recipe, image):
             if old['start']<start:
                 replacement.append({**old,'end':start,
                                     'id':f"raw_{old['start']:05x}_{start:05x}"})
-            replacement.append({'id':f"{recipe['id']}:{segment}", 'kind':'MATCHING_C_DATA',
-                                'classification':'GAME_C','parent':parent['id'],
+            kind = 'MATCHING_ASM_DATA' if recipe.get('kind') == 'asm' else 'MATCHING_C_DATA'
+            replacement.append({'id':f"{recipe['id']}:{segment}", 'kind':kind,
+                                'classification':'GAME_ASM' if kind == 'MATCHING_ASM_DATA' else 'GAME_C',
+                                'parent':parent['id'],
                                 'segment':segment,'start':start,'end':end,
                                 'target':spec['target']})
             if end<old['end']:
@@ -191,19 +231,29 @@ def promote(name, candidate, recipe_path=None, verify_only=False):
         image = MZ.parse(oracle[1]).load_image(oracle[1])
         import json
         recipe = json.loads(recipe_data) if recipe_data is not None else default_recipe(name, image, oracle[2]['unpacked_mz']['relocations'])
+        kind = recipe.get('kind', 'c')
+        require(kind in ('c', 'asm'), 'Unknown contribution kind')
         multi = 'members' in recipe
         if multi:
             require(recipe['id'] == name, 'Multi recipe group ID differs')
             checked_members(recipe, image)
         else:
-            checked_function(name, recipe, image)
-        destination = 'src/'+name+'.c'
+            (checked_asm_function if kind == 'asm' else checked_function)(name, recipe, image)
+        destination = ('asm/'+name+'.ASM' if kind == 'asm' else 'src/'+name+'.c')
         recipe = {**recipe, 'source':destination}
-        closure = prepare_source(source, recipe['profile'])[1]
-        if 'preprocessor_closure' not in recipe:
-            recipe['preprocessor_closure'] = closure
+        if kind == 'asm':
+            asm_source(source)
+            require(recipe['profile'] == 'masm510-game', 'ASM profile differs')
+            from compiler import verify_toolchain
+            require(recipe.get('assembler_flags') == verify_toolchain(recipe['profile'])[0]['flags'],
+                    'ASM recipe flags differ from pinned profile')
+            recipe.setdefault('include_closure', [])
+        else:
+            closure = prepare_source(source, recipe['profile'])[1]
+            if 'preprocessor_closure' not in recipe:
+                recipe['preprocessor_closure'] = closure
         payload, fast = probe(recipe, oracle, source_override=source)
-        active = [o for o in manifest['owners'] if o['kind'] == 'MATCHING_C' and o.get('name') == name]
+        active = [o for o in manifest['owners'] if o['kind'] == contribution_kind(recipe) and o.get('name') == name]
         if active:
             require(len(active) == 1 and active[0]['recipe'] == 'recipes/'+name+'.json'
                     and (active[0]['start'],active[0]['end']) == (recipe['start'],recipe['end']),
