@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "authority": "USER_AUTHORIZED_ISOLATED_RESEARCH",
+  "host_cohort": "2026-09-24 fast desktop; keep compiler timing separate from notebook measurements",
+  "objective": "Test whether broader verified ordinary-C task selection plus adaptive batches yields native strict recovery.",
+  "baseline": {
+    "strict_game_c_functions": 26,
+    "strict_game_c_bytes": 1118,
+    "queue": {
+      "CHEAP": 0,
+      "MEDIUM": 7,
+      "SUPERVISOR": 576
+    },
+    "validation": "python tools/validate.py passed: 179 tests, 26 independent C recompiles, HYBRID_EXACT"
+  },
+  "selection": {
+    "accepted_for_research": [
+      {
+        "task": "rect_is_adjacent",
+        "stable_id": "load_169d0",
+        "target_bytes": 130,
+        "initial_hypothesis_compiler_ceiling": 64,
+        "initial_meaningful_rounds": 8,
+        "note": "Verified mapped instruction interval; single-entry review has no finding; no calls, relocations or globals; near RECTANGLE pointers; modern Restunts C definition is only a semantic hypothesis."
+      },
+      {
+        "task": "mat_multiply",
+        "stable_id": "load_229f2",
+        "target_bytes": 128,
+        "initial_hypothesis_compiler_ceiling": 64,
+        "initial_meaningful_rounds": 8,
+        "note": "Verified mapped instruction interval; single-entry review has no finding; no calls, relocations or globals; three near matrix pointers and signed IMUL/shift behavior; modern Restunts C definition is only a semantic hypothesis."
+      },
+      {
+        "task": "heapsort_by_order",
+        "stable_id": "load_26be8",
+        "target_bytes": 150,
+        "initial_hypothesis_compiler_ceiling": 64,
+        "initial_meaningful_rounds": 8,
+        "note": "Replacement for init_rect_arrays: verified mapped instruction interval; no calls, relocations or globals; ordinary 16-bit signed array algorithm. Modern Restunts heapsort.c expressly says adapted in 2014, so source is semantic context, not historical text."
+      },
+      {
+        "task": "file_get_shape2d",
+        "stable_id": "load_2265b",
+        "target_bytes": 95,
+        "initial_hypothesis_compiler_ceiling": 64,
+        "initial_meaningful_rounds": 8,
+        "note": "Replacement for file_decomp_rle_seq: independently reviewed pristine entry/extent/CFG and far-pointer ABI; no target calls, globals or relocations. Prior 114/138/146-byte source outputs and __AHSHIFT residue are starting evidence, not exhaustion. Existing interval block forbids production attempts without supervisor reopen."
+      }
+    ],
+    "rejected_initial": [
+      {
+        "task": "init_rect_arrays",
+        "target_bytes": 94,
+        "reason": "The listed Restunts C hit is a caller. Pristine code copies from and to several absolute or indexed data blocks whose original extent/ownership is not reviewed. Keep for data-owner preparation; do not treat missing packet as sole blocker."
+      },
+      {
+        "task": "file_decomp_rle_seq",
+        "target_bytes": 170,
+        "reason": "Mapped interval starts with a BP-local comparison while an enclosing frame is already live and contains near RETs; not an independent ordinary-C function contribution. Resolve entry/ownership before source grinding."
+      },
+      {
+        "task": "copy_paras_reverse",
+        "target_bytes": 83,
+        "reason": "Considered replacement but pristine STD/CLD, explicit segment manipulation and REP MOVSW are stronger assembly/intrinsic-origin evidence than ordinary C."
+      }
+    ],
+    "follow_on": [
+      {
+        "task": "mat_mul_vector",
+        "stable_id": "load_228ee",
+        "target_bytes": 260,
+        "allocated_hypothesis_compiler_processes": 16,
+        "source": "reallocated unused mat_multiply share before compilation",
+        "note": "Fresh current packet: 122 completely decoded instructions, 122 reachable, no calls, relocations, target globals, CFG risks or mapped entries inside; original seg012 named far proc and extent audit has no finding. Restunts math.c:137 is a semantic hypothesis with nine long products. Test whether the same width/helper signature appears here; no original TU claim."
+      }
+    ]
+  },
+  "shared_hypothesis_compiler_ceiling": 256,
+  "initial_allocation_rule": "Four allocations of up to 64 are planning shares of the shared 256-process ceiling, not historical retry limits. Root foreman may reallocate unused processes/rounds; record the change in ledger before next compilation. No worker may exceed its currently recorded share.",
+  "verification_recompiles": "Count separately from source-hypothesis compiler processes and include in total effort; mandatory strict verification does not consume the 256 search ceiling.",
+  "research_method": "For each meaningful reasoning round, freeze approximately 4-8 independent evidence-backed source/context hypotheses with machine-level predictions and falsifiers; use fewer when sequential evidence is needed. Run tools/research_batch.py, group effective outputs with fixups/context intact, compare to oracle, parent and siblings, then adapt. Do not spend a quota on cosmetic variants.",
+  "stop_states": [
+    "EXACT_PROMOTED",
+    "CONVERGED_SOURCE_DIMENSIONS",
+    "BUDGET_CENSORED",
+    "TOOLING_BLOCKED",
+    "EVIDENCE_BLOCKED"
+  ],
+  "promotion": "Research-only outputs cannot authorize acceptance. Exact candidates require reviewed complete contribution, fixups/relocations, native grinder attempt and serialized promotion, independent whole-image validation. No object trimming, byte patches, invented padding or relaxed binding.",
+  "workers": "GPT-6 Luna/high for isolated task research; root owns budget ledger, cross-task synthesis and single-writer promotion."
+}

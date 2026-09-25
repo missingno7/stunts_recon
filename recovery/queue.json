@@ -1,9 +1,9 @@
 {
   "counts": {
     "MEDIUM": 7,
-    "SUPERVISOR": 576
+    "SUPERVISOR": 575
   },
-  "input_fingerprint": "b40d1861a02a36f27bcbad5f8263d5b8a9006c0d77263b2c9bd091d63a8b1816",
+  "input_fingerprint": "0bcd9226c748ba216565352f5aaecd1ea1dda7ce2646c08bd865ae1045a08d9c",
   "schema": 2,
   "tasks": [
     {
@@ -7667,29 +7667,6 @@
       "capability_blockers": [
         "No complete instruction evidence for triage"
       ],
-      "card": "recovery/cards/load_169d0.json",
-      "id": "load_169d0",
-      "name": "rect_is_adjacent",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": 130,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 3439,
-        "line_start": 3366,
-        "path": "src/restunts/asmorig/seg006.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
-      "blocker": "No complete instruction evidence for triage",
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [
-        "No complete instruction evidence for triage"
-      ],
       "card": "recovery/cards/load_29b5a.json",
       "id": "load_29b5a",
       "name": "audioresource_get_chunk_index",
@@ -13822,5 +13799,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "ed499f8a2e1c6e33d1c0606d8422ed7e43ec80b1ada522d91030279f45199c1b"
+  "workflow_fingerprint": "9db7a4bf77c104513d9ba2d8bbfbc0d2571a2aa795a67bc398de097b59be1959"
 }

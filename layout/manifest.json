@@ -110,11 +110,20 @@
       "start": 92572
     },
     {
+      "classification": "GAME_C",
+      "end": 92754,
+      "id": "load_169d0",
+      "kind": "MATCHING_C",
+      "name": "rect_is_adjacent",
+      "recipe": "recipes/rect_is_adjacent.json",
+      "start": 92624
+    },
+    {
       "classification": "UNRESOLVED_MIXED",
       "end": 100984,
-      "id": "raw_169d0_18a78",
+      "id": "raw_16a52_18a78",
       "kind": "UNRESOLVED_RAW",
-      "start": 92624
+      "start": 92754
     },
     {
       "classification": "GAME_C",

@@ -48,6 +48,11 @@
       "source": "src/rect_is_inside.c"
     },
     {
+      "owner": "load_169d0",
+      "recipe": "recipes/rect_is_adjacent.json",
+      "source": "src/rect_is_adjacent.c"
+    },
+    {
       "owner": "load_18a78",
       "recipe": "recipes/unload_resource.json",
       "source": "src/unload_resource.c"

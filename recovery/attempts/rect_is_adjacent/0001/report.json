@@ -1,0 +1,42 @@
+{
+  "budget_charge": false,
+  "epoch": 0,
+  "error": "Candidate needs supervisor capability review",
+  "error_type": "ValueError",
+  "escalate": false,
+  "hypothesis": "Research batch nested layout restored original left/right/top/bottom RECTANGLE order and matched complete 130-byte single-public no-fixup contribution",
+  "hypothesis_key": "7d311bb1351fb974b2316fb32f942b61ed8708cafcd4369e43b239d3e1456e82",
+  "input_fingerprint": "0e1c6db4a449437223b5ba02af5c4591a261dc968fe406b30a657151f0a59b4e",
+  "recipe": {
+    "end": 92754,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3439,
+      "line_start": 3366,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "rect_is_adjacent",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_rect_is_adjacent",
+    "source": "recovery/candidates/rect_is_adjacent.c",
+    "stable_id": "load_169d0",
+    "start": 92624,
+    "target": {
+      "sha256": "1c7274565eabca53730618197159f6ed89f4a2efa5eef0ad81a5d102278b3b35",
+      "size": 130
+    }
+  },
+  "schema": 1,
+  "sequence": 1,
+  "source": {
+    "sha256": "9de652f2a7900ccf799a6df6349ae02f83f9774218c9f1ff44797a8041bcc985",
+    "size": 624
+  },
+  "started_utc": "2026-09-25T07:09:07.794327+00:00",
+  "status": "ERROR",
+  "task": "rect_is_adjacent"
+}

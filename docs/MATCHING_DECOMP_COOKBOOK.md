@@ -69,6 +69,8 @@ An experiment is informative when it changes a decision or constrains an explana
 
 Prioritize structure and actual references over scalar similarity scores. A branch displacement can stay byte-identical while reaching a different instruction after another block changes. Preserve exact regions as evidence, not untouchable source-line boundaries. [T1, I1]
 
+In the [broader Stunts ordinary-C cohort](../recovery/corpus/ordinary-c-cohort-20260924/results.md), a 130-byte rectangle candidate already had the complete extent and 46/57 exact instructions; six isolated field-displacement islands were resolved by the independently checked `left/right/top/bottom` declaration order, with the body shape held fixed. That scoped observation supports testing member layout before rewriting the matching control flow. The same cohort's two matrix routines repeatedly showed MSC5.10 lowering exact long C products to `__aFlmul` while the pristine targets used inline signed IMUL; narrowing the C expression emitted IMUL only after discarding the required high half. This is a family-level source/compiler diagnostic, not permission to accept a semantically changed expression or infer historical ASM authorship.
+
 ## Recipe 4 — Escalate information, not transcripts
 
 Suggested routine handoff: **roughly 150–250 words**, not a correctness limit. Attach exceptional details when they change the decision.

@@ -13716,6 +13716,64 @@
         "status": "PROMOTED"
       }
     ],
+    "rect_is_adjacent": [
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": "Candidate needs supervisor capability review",
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Research batch nested layout restored original left/right/top/bottom RECTANGLE order and matched complete 130-byte single-public no-fixup contribution",
+        "identity": {
+          "sha256": "9daeda4596d4ed85a48e1a19717cd4033a143f6ec5f74db7ee553aaeaf1fbf3d",
+          "size": 1429
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/rect_is_adjacent/0001/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "ERROR"
+      },
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": null,
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Nested early returns with reviewed left/right/top/bottom field order match the complete original 130-byte single-public no-fixup contribution",
+        "identity": {
+          "sha256": "9286696ff6b758013fa79289e0af7524398c5a0d13baf00f2200f736b194acd1",
+          "size": 2676
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/rect_is_adjacent/0002/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "FAST_PASS_ONLY"
+      },
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": null,
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Promote complete 130-byte far function after reviewed pristine CFG overlay and native FAST match",
+        "identity": {
+          "sha256": "a6434d5eb392a29f4df082e1bbb774f61c9ef56421d4d17c3d963f9ca3874371",
+          "size": 2950
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/rect_is_adjacent/0003/report.json",
+        "same_effective_as": [
+          2
+        ],
+        "sizes": null,
+        "status": "PROMOTED"
+      }
+    ],
     "rect_union": [
       {
         "category": null,

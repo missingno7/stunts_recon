@@ -1,0 +1,23 @@
+{
+  "end": 92754,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 3439,
+    "line_start": 3366,
+    "path": "src/restunts/asmorig/seg006.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "rect_is_adjacent",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_rect_is_adjacent",
+  "source": "src/rect_is_adjacent.c",
+  "stable_id": "load_169d0",
+  "start": 92624,
+  "target": {
+    "sha256": "1c7274565eabca53730618197159f6ed89f4a2efa5eef0ad81a5d102278b3b35",
+    "size": 130
+  }
+}

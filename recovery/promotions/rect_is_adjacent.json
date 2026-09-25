@@ -1,0 +1,48 @@
+{
+  "bytes": 130,
+  "candidate_compiled_fresh_at_least": 3,
+  "canonical_full_build": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "fast": {
+    "binding": {
+      "generated_relocations": [],
+      "mode": "no-fixups"
+    },
+    "command": [
+      "C:/tools/nmlgcdos/msdos.exe",
+      "-e",
+      "-v5.00",
+      "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+      "/c",
+      "/AM",
+      "/O",
+      "/Gs",
+      "UNIT.C"
+    ],
+    "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+    "effective_code": "b2baa77963df9a1d20335a3d9558cb34e8d019cb793234e722f9996b73048dcf",
+    "object": {
+      "sha256": "9f9dad1cbedbe6a876b484d73a5cece313847b3a5be4a635244d0214fc6b28a9",
+      "size": 382
+    },
+    "profile": "msc510-medium",
+    "research_local_symbols": false,
+    "source": {
+      "sha256": "9de652f2a7900ccf799a6df6349ae02f83f9774218c9f1ff44797a8041bcc985",
+      "size": 624
+    },
+    "staged_source": {
+      "sha256": "d4a599dc2c599f6f910594438a08d7b178b970e33916e77b8ffb37f7ba901ce8",
+      "size": 633
+    },
+    "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\p8l0sz2kq"
+  },
+  "staged_full_build": {
+    "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "size": 210384
+  },
+  "status": "PROMOTED",
+  "task": "rect_is_adjacent"
+}

@@ -1,0 +1,82 @@
+{
+  "budget_charge": false,
+  "effective_key": "db9899e0e5441d1a2be82b7abfdfd24f593127b03a4177acfb6e9a4e5607a063",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Nested early returns with reviewed left/right/top/bottom field order match the complete original 130-byte single-public no-fixup contribution",
+  "hypothesis_key": "6b24125bafb0d60f24cdeb2da51233b8d1048785307deec60a06ba6cdaae4dc5",
+  "input_fingerprint": "2688fe97405a8da4dfa82514bb96ad64ad87c82e603d81d33eec0ea3ba554210",
+  "recipe": {
+    "end": 92754,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3439,
+      "line_start": 3366,
+      "path": "src/restunts/asmorig/seg006.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "rect_is_adjacent",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_rect_is_adjacent",
+    "source": "recovery/candidates/rect_is_adjacent.c",
+    "stable_id": "load_169d0",
+    "start": 92624,
+    "target": {
+      "sha256": "1c7274565eabca53730618197159f6ed89f4a2efa5eef0ad81a5d102278b3b35",
+      "size": 130
+    }
+  },
+  "result": {
+    "bytes": 130,
+    "receipt": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "b2baa77963df9a1d20335a3d9558cb34e8d019cb793234e722f9996b73048dcf",
+      "object": {
+        "sha256": "9f9dad1cbedbe6a876b484d73a5cece313847b3a5be4a635244d0214fc6b28a9",
+        "size": 382
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "9de652f2a7900ccf799a6df6349ae02f83f9774218c9f1ff44797a8041bcc985",
+        "size": 624
+      },
+      "staged_source": {
+        "sha256": "d4a599dc2c599f6f910594438a08d7b178b970e33916e77b8ffb37f7ba901ce8",
+        "size": 633
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pjbkeu8kb"
+    },
+    "status": "FAST_PASS_ONLY",
+    "task": "rect_is_adjacent"
+  },
+  "same_effective_as": [],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "9de652f2a7900ccf799a6df6349ae02f83f9774218c9f1ff44797a8041bcc985",
+    "size": 624
+  },
+  "started_utc": "2026-09-25T07:13:25.414940+00:00",
+  "status": "FAST_PASS_ONLY",
+  "task": "rect_is_adjacent"
+}

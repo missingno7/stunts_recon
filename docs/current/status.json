@@ -17,7 +17,7 @@
   "library_production_bytes": 725,
   "mapped_functions": 531,
   "matching_asm_bytes": 0,
-  "matching_c_bytes": 1118,
+  "matching_c_bytes": 1248,
   "oracle": {
     "load_image": {
       "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
@@ -53,6 +53,7 @@
     "parse_shape2d_helper3",
     "rect_compare_point",
     "rect_intersect",
+    "rect_is_adjacent",
     "rect_is_inside",
     "rect_is_overlapping",
     "rect_union",
@@ -64,11 +65,11 @@
   "queue_counts": {
     "CHEAP": 0,
     "MEDIUM": 7,
-    "SUPERVISOR": 576
+    "SUPERVISOR": 575
   },
-  "raw_executable_bytes_confirmed_minimum": 131689,
+  "raw_executable_bytes_confirmed_minimum": 131559,
   "raw_executable_bytes_exact": "unknown until all code/data boundaries are established",
-  "raw_initialized_bytes": 198157,
+  "raw_initialized_bytes": 198027,
   "segment_frames_proven": 36,
   "source_code_segments": 38,
   "source_data_segments": 3
