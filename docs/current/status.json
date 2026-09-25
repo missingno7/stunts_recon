@@ -17,7 +17,7 @@
   "library_production_bytes": 725,
   "mapped_functions": 531,
   "matching_asm_bytes": 0,
-  "matching_c_bytes": 1248,
+  "matching_c_bytes": 1866,
   "oracle": {
     "load_image": {
       "sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
@@ -42,6 +42,7 @@
     "font_op2_alt",
     "free_sdgame2",
     "get_0",
+    "init_carstate_from_simd",
     "locate_many_resources",
     "locate_shape_alt",
     "locate_text_res",
@@ -65,11 +66,11 @@
   "queue_counts": {
     "CHEAP": 0,
     "MEDIUM": 7,
-    "SUPERVISOR": 575
+    "SUPERVISOR": 574
   },
-  "raw_executable_bytes_confirmed_minimum": 131559,
+  "raw_executable_bytes_confirmed_minimum": 130941,
   "raw_executable_bytes_exact": "unknown until all code/data boundaries are established",
-  "raw_initialized_bytes": 198027,
+  "raw_initialized_bytes": 197409,
   "segment_frames_proven": 36,
   "source_code_segments": 38,
   "source_data_segments": 3

@@ -1,5 +1,5 @@
 {
-  "acceptance_input_fingerprint": "0bcd9226c748ba216565352f5aaecd1ea1dda7ce2646c08bd865ae1045a08d9c",
+  "acceptance_input_fingerprint": "62bbf46ee422fb40caf3437cd6ff9efc23c4f3c31698078cd840a7b248de62b0",
   "executable": {
     "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
     "size": 210384
@@ -7,7 +7,7 @@
   "full_image": "HYBRID_EXACT",
   "grinding_scope": "Verified complete contributions with reviewed binding; selected non-leaf far CALL mode supported; source/TU supervisor work remains",
   "independent_compiler": {
-    "active_functions": 27,
+    "active_functions": 28,
     "status": "PASS"
   },
   "oracle": {
@@ -16,7 +16,7 @@
   },
   "queue_counts": {
     "MEDIUM": 7,
-    "SUPERVISOR": 575
+    "SUPERVISOR": 574
   },
   "status": "PASS",
   "tests": {
@@ -29,5 +29,5 @@
     "msc500-medium",
     "msc510-medium"
   ],
-  "workflow_fingerprint": "9db7a4bf77c104513d9ba2d8bbfbc0d2571a2aa795a67bc398de097b59be1959"
+  "workflow_fingerprint": "a8ee349e969a759b22705b97b4f5cfeb0aa3132b3fd9ae7987be5dda27a9af56"
 }

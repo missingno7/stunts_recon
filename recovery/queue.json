@@ -1,9 +1,9 @@
 {
   "counts": {
     "MEDIUM": 7,
-    "SUPERVISOR": 575
+    "SUPERVISOR": 574
   },
-  "input_fingerprint": "0bcd9226c748ba216565352f5aaecd1ea1dda7ce2646c08bd865ae1045a08d9c",
+  "input_fingerprint": "62bbf46ee422fb40caf3437cd6ff9efc23c4f3c31698078cd840a7b248de62b0",
   "schema": 2,
   "tasks": [
     {
@@ -11348,29 +11348,6 @@
     },
     {
       "attempts_remaining": 3,
-      "blocker": "No complete instruction evidence for triage",
-      "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
-      "capability_blockers": [
-        "No complete instruction evidence for triage"
-      ],
-      "card": "recovery/cards/load_06898.json",
-      "id": "load_06898",
-      "name": "init_carstate_from_simd",
-      "risks": [
-        "No ordinary-C hint; review source/compiler expressibility"
-      ],
-      "size": 618,
-      "source": {
-        "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-        "line_end": 3822,
-        "line_start": 3572,
-        "path": "src/restunts/asmorig/seg001.asm",
-        "repository": "restunts"
-      },
-      "tier": "SUPERVISOR"
-    },
-    {
-      "attempts_remaining": 3,
       "blocker": "Unverified function boundaries",
       "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
       "capability_blockers": [
@@ -13799,5 +13776,5 @@
       "tier": "SUPERVISOR"
     }
   ],
-  "workflow_fingerprint": "9db7a4bf77c104513d9ba2d8bbfbc0d2571a2aa795a67bc398de097b59be1959"
+  "workflow_fingerprint": "a8ee349e969a759b22705b97b4f5cfeb0aa3132b3fd9ae7987be5dda27a9af56"
 }

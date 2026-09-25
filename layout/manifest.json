@@ -4,10 +4,26 @@
   "owners": [
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 55594,
-      "id": "raw_00000_0d92a",
+      "end": 26776,
+      "id": "raw_00000_06898",
       "kind": "UNRESOLVED_RAW",
       "start": 0
+    },
+    {
+      "classification": "GAME_C",
+      "end": 27394,
+      "id": "load_06898",
+      "kind": "MATCHING_C",
+      "name": "init_carstate_from_simd",
+      "recipe": "recipes/init_carstate_from_simd.json",
+      "start": 26776
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 55594,
+      "id": "raw_06b02_0d92a",
+      "kind": "UNRESOLVED_RAW",
+      "start": 27394
     },
     {
       "classification": "GAME_C",

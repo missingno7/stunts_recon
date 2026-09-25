@@ -8,6 +8,11 @@
   "mode": "ordered-hybrid-image",
   "modules": [
     {
+      "owner": "load_06898",
+      "recipe": "recipes/init_carstate_from_simd.json",
+      "source": "src/init_carstate_from_simd.c"
+    },
+    {
       "owner": "load_0d92a",
       "recipe": "recipes/free_sdgame2.json",
       "source": "src/free_sdgame2.c"

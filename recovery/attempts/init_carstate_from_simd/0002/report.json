@@ -1,0 +1,93 @@
+{
+  "budget_charge": false,
+  "effective_key": "546ff1f3c8bd8ae62c11da5aeeb9885d159b51fb9f37ecd8c67a9376520b557c",
+  "epoch": 0,
+  "escalate": false,
+  "hypothesis": "Promote complete 618-byte single-public no-fixup contribution after reviewed original CFG and native FAST match",
+  "hypothesis_key": "f3146b1e522930c400dc5d7793bc2bb96bf2060fa3248c69643b58a2d771ebfe",
+  "input_fingerprint": "0f108b8a0bd86f9b754c1d6ca90c213ce7d836d8cd40d91fb2824eb420bea26a",
+  "recipe": {
+    "end": 27394,
+    "evidence": {
+      "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+      "line_end": 3822,
+      "line_start": 3572,
+      "path": "src/restunts/asmorig/seg001.asm",
+      "repository": "restunts"
+    },
+    "expected_fixups": [],
+    "expected_relocations": [],
+    "id": "init_carstate_from_simd",
+    "object_segment": "UNIT_TEXT",
+    "profile": "msc510-medium",
+    "public": "_init_carstate_from_simd",
+    "source": "recovery/candidates/init_carstate_from_simd.c",
+    "stable_id": "load_06898",
+    "start": 26776,
+    "target": {
+      "sha256": "a7663871aff74c70d8cf4533249fe133ab93ffdbbdd90d99b71814ccb922a909",
+      "size": 618
+    }
+  },
+  "result": {
+    "bytes": 618,
+    "candidate_compiled_fresh_at_least": 3,
+    "canonical_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "fast": {
+      "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:/tools/nmlgcdos/msdos.exe",
+        "-e",
+        "-v5.00",
+        "D:\\Prog\\stunts_recon\\toolchain\\msc510\\CL.EXE",
+        "/c",
+        "/AM",
+        "/O",
+        "/Gs",
+        "UNIT.C"
+      ],
+      "compiler_stdout_sha256": "c635fd6e40b0c630f323e3b66ff2e0a140e9ef591aab39e03d62910dc158a9e6",
+      "effective_code": "dd3a4a4c4e6a36ef17716acafcee578d0d09226aef60954cd88bd25f3a14fab0",
+      "object": {
+        "sha256": "f221e0d49b65ea0e97b5d7e2cb784d3c190347950e9d5919dc4bdc920f8af68c",
+        "size": 884
+      },
+      "profile": "msc510-medium",
+      "research_local_symbols": false,
+      "source": {
+        "sha256": "10591b41ce0161332efc41d8f615a45070aef95e9f0c2c6e8497ed29f02d90cf",
+        "size": 4181
+      },
+      "staged_source": {
+        "sha256": "b11148b29c27be199358dc158a3348fc3d5a5f8267399984caf9a2f7c853dd27",
+        "size": 4275
+      },
+      "work_directory": "D:\\Prog\\stunts_recon\\build\\probes\\pb1tfhlse"
+    },
+    "staged_full_build": {
+      "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+      "size": 210384
+    },
+    "status": "PROMOTED",
+    "task": "init_carstate_from_simd"
+  },
+  "same_effective_as": [
+    1
+  ],
+  "same_object_as": [],
+  "schema": 1,
+  "sequence": 2,
+  "source": {
+    "sha256": "10591b41ce0161332efc41d8f615a45070aef95e9f0c2c6e8497ed29f02d90cf",
+    "size": 4181
+  },
+  "started_utc": "2026-09-25T08:31:36.633923+00:00",
+  "status": "PROMOTED",
+  "task": "init_carstate_from_simd"
+}

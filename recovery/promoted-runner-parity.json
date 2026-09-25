@@ -5,11 +5,11 @@
     "layout/classification.json": "0eda06585979b04798a38fb3de55bb6e81f97741ab2006a9843faa362323d4a7",
     "layout/code-symbols.json": "704343f9a873ece96af264402d8c7c2a54075178513c5c5ed25ca2367aba478b",
     "layout/data-symbols.json": "cde9d637154e9aa181da8de3c38e702275ce72eb99a850b5e677c1bca404e233",
-    "layout/function-evidence.json": "263c4d089d0c7ff3c21a041b1807d899d01c2c00d96a7e0305444517fc90ffbe",
+    "layout/function-evidence.json": "9401365d21236bf4c20655c3c9e4d852e6d1b0b098e2fd01e1aff3dced5f4ef3",
     "layout/library-candidates.json": "3ef9ed030a409f57c038c5a8bb9d5a480ccf858407b303c0c28c0ec68e66bff7",
-    "layout/manifest.json": "8ab5b8c6a7ecd5dcbf7b73e8467f4d861f62a754688d0ffe921053c05c05311d",
+    "layout/manifest.json": "3b114bbc559740a594886eacf048a9b9ea615ca72d37fc839b8f73ed3d118978",
     "layout/oracle.lock.json": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
-    "layout/production-plan.json": "c5757e8c65b13200bc62d8bfd31c4541155c5edf01c3cc8f0ede117f569d4432",
+    "layout/production-plan.json": "a6e658e32c47427463f98ef821af4daa6fd5f7a78ab22345f350fd493fadafa3",
     "layout/references.json": "99761030df3845368ee95e4f5aad28a720170dd3e6d8086e88b636079218dc7d",
     "layout/toolchain.json": "1e7e63e81b138bdcfcfb13ce2be0c0b890749df700a63f919b7710e368e15ec5",
     "recipes/audio_enable_flag2.json": "6160875c12b51080b31f0f0992303e32fc1f9d8079125c12260fc00a6a78c1ac",
@@ -24,6 +24,7 @@
     "recipes/font_op2_alt.json": "58f06abc9a9b4857118209d01a0c104f43311cbfb9a06a7cd09b7048c69a8eea",
     "recipes/free_sdgame2.json": "a8f28c8e51895815d55d4fd69cf4f47e3b0040b53954b65da87ebccb225cc9ba",
     "recipes/get_0.json": "35358c767c0d52cbccd225feacfb76763824480d7e841956d2b7a4eff8c5b2fb",
+    "recipes/init_carstate_from_simd.json": "b7b29bdb5f0ab6d66a6d9bc91a4edde10547235aaab19b8246b50bbf2176ccdb",
     "recipes/is_facing_camera.json": "2b1af4f19ae57c81b765e1fe2a5cf465b418164acb0ff18a59321c0ad37340e5",
     "recipes/locate_many_resources.json": "05ad26fae8f049f4a6f74ed60cbaa60be45923cfcd9d8e32845c7b5bf1956e85",
     "recipes/locate_shape_alt.json": "90a9e8e2a380fd809f22376e2fd57c79c4b39eceff767727c30d0c68fae207f8",
@@ -61,6 +62,7 @@
     "recovery/candidates/font_op2_alt.c": "521d8c5ae557edcc1deefa3ee4b1f1ec99a17783ab9addec7088d735adcdbe96",
     "recovery/candidates/free_sdgame2.c": "adfa17fea11369e1798fbc162a6fda2b07e2a16935ce6366d345203770e6c4ca",
     "recovery/candidates/get_0.c": "cede0a9da302414f3464ca3fcd50c9f546dff57ecffc5cbb675d6c40863e8e5a",
+    "recovery/candidates/init_carstate_from_simd.c": "10591b41ce0161332efc41d8f615a45070aef95e9f0c2c6e8497ed29f02d90cf",
     "recovery/candidates/is_facing_camera.c": "41e61f3fdaf21ab4049855a86abcb5ffb5a50dc3d07590577fc44fea4d65f8bd",
     "recovery/candidates/locate_many_resources.c": "d725abaebf67e00f5c93a7a1730de80eaca53835ec4a138c03f0c8c9614fea82",
     "recovery/candidates/locate_shape_alt.c": "4581895aafdd5c2ec5393f404aa147e4c82d923a8a953bfbfd346754aed20fe4",
@@ -94,6 +96,7 @@
     "src/font_op2_alt.c": "521d8c5ae557edcc1deefa3ee4b1f1ec99a17783ab9addec7088d735adcdbe96",
     "src/free_sdgame2.c": "adfa17fea11369e1798fbc162a6fda2b07e2a16935ce6366d345203770e6c4ca",
     "src/get_0.c": "cede0a9da302414f3464ca3fcd50c9f546dff57ecffc5cbb675d6c40863e8e5a",
+    "src/init_carstate_from_simd.c": "10591b41ce0161332efc41d8f615a45070aef95e9f0c2c6e8497ed29f02d90cf",
     "src/locate_many_resources.c": "d725abaebf67e00f5c93a7a1730de80eaca53835ec4a138c03f0c8c9614fea82",
     "src/locate_shape_alt.c": "4581895aafdd5c2ec5393f404aa147e4c82d923a8a953bfbfd346754aed20fe4",
     "src/locate_text_res.c": "5c96bff382c556f5988ea1c4dbb640ec947ccfe4a7deb8aea93ecb35bebad706",
@@ -170,6 +173,34 @@
   "results": [
     {
       "binding": {
+        "generated_relocations": [],
+        "mode": "no-fixups"
+      },
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rg48mvtj3\\dosbox.conf",
+        "-fastlaunch",
+        "-exit"
+      ],
+      "dos_command": "D:\\CL.EXE /c /AM /O /Gs UNIT.C > COMP.LOG",
+      "exact": true,
+      "object": {
+        "sha256": "f221e0d49b65ea0e97b5d7e2cb784d3c190347950e9d5919dc4bdc920f8af68c",
+        "size": 884
+      },
+      "payload": {
+        "sha256": "a7663871aff74c70d8cf4533249fe133ab93ffdbbdd90d99b71814ccb922a909",
+        "size": 618
+      },
+      "source": {
+        "sha256": "10591b41ce0161332efc41d8f615a45070aef95e9f0c2c6e8497ed29f02d90cf",
+        "size": 4181
+      },
+      "task": "init_carstate_from_simd"
+    },
+    {
+      "binding": {
         "fixups": [
           {
             "kind": "far-call",
@@ -211,7 +242,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rg5010ib0\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r_k7rajzs\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -285,7 +316,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rvku99hu_\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rnbxg_7rr\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -351,7 +382,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r5uep3dzi\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rlxpiswo7\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -379,7 +410,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r8kx3z73o\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rc71m3c_z\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -436,7 +467,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rdyso95j5\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rjw5pml5s\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -464,7 +495,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r34gr2ew9\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rw1gy1sz7\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -492,7 +523,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rz_to4atj\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r9cllavjm\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -520,7 +551,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rhztm55cj\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rcpeyvre6\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -548,7 +579,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rpmgmz4wx\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rplbpelyp\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -590,7 +621,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rjd7m9xf0\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r93sk0j5y\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -632,7 +663,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rdnqvnv42\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rqprf_3j7\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -685,7 +716,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rizc0_tz9\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rasypelmi\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -713,7 +744,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r96jn7hqq\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rhoi54eki\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -741,7 +772,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r1af6dah7\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rc03sngsv\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -783,7 +814,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rseyt1fp6\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r50pxyxbp\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -825,7 +856,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rs8gii5zy\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rq_7x5jwl\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -853,7 +884,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\ra5g4zgoi\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rxpbwehd3\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -892,7 +923,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r0joh6jk1\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rdltfgwkp\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -931,7 +962,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rktpi7f50\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rafzate93\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -970,7 +1001,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r31w4as2g\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rudapwlzg\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -998,7 +1029,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r82vs4yoh\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\ruq3yfoq0\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -1026,7 +1057,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r9xby8069\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rjs_ptneg\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -1079,7 +1110,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rd0pm1sio\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rj68_tig8\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -1107,7 +1138,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rqsnjo2q2\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rn_ler98p\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -1135,7 +1166,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rq5pdtfm5\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rxcdims_b\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -1163,7 +1194,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rs59m1xyn\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r5pe91kso\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],
@@ -1191,7 +1222,7 @@
       "command": [
         "C:\\DOSBox-X\\dosbox-x.exe",
         "-conf",
-        "D:\\Prog\\stunts_recon\\build\\crosschecks\\r2x_4fzen\\dosbox.conf",
+        "D:\\Prog\\stunts_recon\\build\\crosschecks\\rsqmrav2d\\dosbox.conf",
         "-fastlaunch",
         "-exit"
       ],

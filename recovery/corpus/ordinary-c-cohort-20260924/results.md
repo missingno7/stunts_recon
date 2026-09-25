@@ -4,13 +4,14 @@ Authority: local research receipts plus the repository's native promotion and
 validation records. Initial baseline was 26 strict game-C functions / 1,118 B;
 queue 0 CHEAP / 7 MEDIUM / 576 SUPERVISOR. The shared research ceiling was
 256 actual hypothesis compiler processes, initially 64 per task. It was a
-ceiling, not a target. The fifth task was allocated 16 from unused
-`mat_multiply` capacity before its first compiler process; see `ledger.json`.
+ceiling, not a target. The fifth and sixth tasks were allocated 16 and 24
+processes from unused `mat_multiply` and `rect_is_adjacent` capacity before
+their first compiler processes; see `ledger.json`.
 
 ## Selection and reusable preparation
 
 `screening.md` records the original four suggestions, two replacements, and
-the follow-on. `init_rect_arrays` was not ready: the new focused packet exposed
+two follow-ons. `init_rect_arrays` was not ready: the new focused packet exposed
 an unregistered DGROUP address previously hidden by triage's early return.
 `file_decomp_rle_seq` begins inside an enclosing near-procedure frame, so an
 independent far-function source search would be misleading. The packet utility
@@ -18,15 +19,18 @@ verifies current card/workflow and immutable oracle identities, decodes the
 complete interval, and reports flow, calls, relocations, memory operands and
 fresh triage obligations. It is research-only; it does not authorize promotion.
 It passed six initial current-card checks and unknown/stale negative checks.
-The subsequent 41-card screen found four additional >220-byte intervals with
-no newly exposed triage blocker, of which the 260-byte `mat_mul_vector` had
-the smallest independently evidenced semantic lead. This remains bounded
-screening, not an origin or TU proof.
+The subsequent screen of all 58 remaining old missing-packet-only cards found
+six packet-clean and four without a hard packet blocker but with risks; 48
+exposed hard obligations. Of the clean group, `file_decomp_rle_seq` still had
+an enclosing frame, while `carState_rc_op` lacked an independent semantic
+definition. The 260-byte `mat_mul_vector` and 618-byte
+`init_carstate_from_simd` had usable semantic leads. This is bounded screening,
+not an origin or TU proof.
 
 Preparation cost included the initial full validation; nine context/extent
 reviews for the original/replacement shortlist; complete source/ASM/ABI
-review for the selected tasks; focused packet checks for six initial and 41
-further cards; and one more full context/extent review for `mat_mul_vector`.
+review for the selected tasks; focused packet checks for six initial and 58
+further cards; and full context/extent reviews for both follow-ons.
 The per-task source-search allocations begin after that work. Earlier
 `file_get_shape2d` history comprises at least three source compiler processes
 and four version-profile contrasts, separate from this pilot.
@@ -40,14 +44,15 @@ and four version-profile contrasts, separate from this pilot.
 | `heapsort_by_order` 150 B | 10 | 36 | 36 | 26 / 10 | CONVERGED_SOURCE_DIMENSIONS in tested dimensions, 0 |
 | `file_get_shape2d` 95 B | 7 | 28 | 26 | 25 / 1 | EVIDENCE_BLOCKED, 0 |
 | `mat_mul_vector` 260 B (follow-on) | 2 | 7 | 7 | 6 / 0 | CONVERGED_SOURCE_DIMENSIONS in tested arithmetic forms, 0 |
+| `init_carstate_from_simd` 618 B (follow-on) | 6 | 24 | 24 | 16 / 7 | EXACT_PROMOTED, +1 function / +618 B |
 
-Across all five tasks: 27 meaningful rounds, 101 frozen hypotheses, 98 actual
-hypothesis compiler processes, 81 parsed effective output classes and 13
-parsed duplicate outputs; 1 strict function / 130 B promoted. Three candidate
+Across all six tasks: 33 meaningful rounds, 125 frozen hypotheses, 122 actual
+hypothesis compiler processes, 97 parsed effective output classes and 20
+parsed duplicate outputs; 2 strict functions / 748 B promoted. Three candidate
 forms were rejected before the compiler, three more compiled but hit the OMF
-B4 reader, and one MSC compilation failed. The remaining 158 shared search
-slots were not spent because the selected supported experiments had stopped
-yielding actionable recovery decisions; no stop is BUDGET_CENSORED.
+B4 reader, and two MSC compilations failed. The remaining 134 shared search
+slots were not spent because no further screened task had sufficient independent
+ordinary-C semantics and complete low-risk evidence; no stop is BUDGET_CENSORED.
 
 `mat_multiply` also had one precompiler source rejection and three compiler
 processes whose objects hit unsupported OMF B4 parsing. These are not codegen
@@ -119,16 +124,32 @@ candidate 3 had no strict solve and later 8/16/32 thresholds were not reached.
 One modern anonymous-union form was rejected by MSC after launch. Detailed
 receipts are in `build/private/cohort-mat-mul-vector/summary.md`.
 
+`init_carstate_from_simd` follow-on: six four-candidate rounds yielded 16
+distinct parsed outputs, seven repeats, and one MSC compilation failure. The
+initial Restunts-style `/64` long divisions emitted three `__aFldiv` fixups,
+absent from the original. Shift forms removed them, but division and arithmetic
+shift may differ for negative coordinates; byte identity does not establish
+their semantic equivalence. Register declaration order produced the full
+618-byte extent and 98.23% byte anchoring at hypothesis 13, leaving one
+12-byte island across adjacent brake/acceleration byte stores. Reversing the
+outer order of a chained assignment in hypothesis 22 produced the original
+`sub al,al` and two AL stores in order. The complete object has one public at
+offset zero, no fixups or private data, and its 618 code bytes equal the
+pristine interval. The reviewed overlay covers 226 original instructions,
+225 reachable and one unreachable NOP. Native FAST, serialized promotion and
+independent whole-image validation passed. No strict result at hypotheses 3,
+8 or 16; exact at 22; 32 was not reached. Original source text and TU remain
+unidentified.
+
 ## Proof and cost boundary
 
 Research batches did not spend production attempts. The rectangle had one
 production attempt rejected before compilation for missing reviewed packet,
 then one native FAST attempt and one serialized promotion. The latter freshly
 compiled its candidate plus the staged and canonical whole-image builds.
-The local ledger records **at least 216 active-C verification compiler
-processes** across initial validation, rectangle FAST/promotion, the immediate
-post-promotion validation and final handoff validation, separate from cohort
-hypothesis compiles. This lower bound excludes
+The local ledger records **at least 331 active-C verification compiler
+processes** through initializer overlay, native FAST/promotion and immediate
+post-promotion validation, separate from cohort hypothesis compiles. This lower bound excludes
 any compiler processes inside tests; full builds recompile every active C
 owner, so counting only the rectangle candidate would understate total cost.
 
@@ -137,9 +158,11 @@ built the focused packet, and the root handled screening, accounting, overlay,
 promotion and validation. Per-worker token/billing metadata is unavailable;
 therefore strict bytes per total model-weighted cost cannot be computed and
 no causal speedup over the earlier workflow is claimed. The pilot establishes
-that broader selection and adaptive batches can produce a strict >80-byte
-recovery (130 B in eight hypothesis compiler processes), while three other
-well-bounded lines exposed concrete source, compiler or evidence limits.
+that broader selection and adaptive batches produced two strict >80-byte
+recoveries (130 B in eight and 618 B in 24 hypothesis compiler processes),
+while four other bounded lines exposed concrete source, compiler or evidence
+limits. Current strict game-C ownership is 28 functions / 1,866 B, with queue
+0 CHEAP / 7 MEDIUM / 574 SUPERVISOR.
 Meaningful late heapsort behavior at process 33 shows why a fixed three-try
 rule would have hidden diagnostic progress, but its near match is not accepted.
 

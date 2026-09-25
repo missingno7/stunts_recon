@@ -46,3 +46,18 @@ no calls/relocations/globals/inside entries, and a finding-free single-entry
 extent audit support isolated research. Its Restunts C is not historical source.
 The foreman recorded a 16-process follow-on allocation from unused
 `mat_multiply` capacity before any `mat_mul_vector` batch.
+
+A later complete pass over the **58 remaining** SUPERVISOR cards with exactly
+that old missing-packet label found six with no packet-level blockers or risks:
+`mat_multiply`, `heapsort_by_order`, `file_decomp_rle_seq`, `mat_mul_vector`,
+`carState_rc_op`, and `init_carstate_from_simd`. Four more had no hard blocker
+but indexed-data or odd-extent risks. The other 48 exposed hard obligations.
+The clean packet result for `file_decomp_rle_seq` is a useful negative control:
+its enclosing BP frame/near-entry issue required original ASM review beyond
+local CFG. `carState_rc_op` (444 B) has only a Restunts caller here, leaving
+semantic source uncertain. `init_carstate_from_simd` (618 B) has a named far
+procedure, a finding-free extent audit, 225 reachable instructions plus one
+NOP, no calls/relocations/globals, and a Restunts `restunts.c:371` semantic
+definition dominated by field initialization. A 24-process research share was
+recorded from unused rectangle capacity before any batch for it. The source
+is a lead, not historical authority or proof of its original TU.

@@ -73,6 +73,14 @@
         "allocated_hypothesis_compiler_processes": 16,
         "source": "reallocated unused mat_multiply share before compilation",
         "note": "Fresh current packet: 122 completely decoded instructions, 122 reachable, no calls, relocations, target globals, CFG risks or mapped entries inside; original seg012 named far proc and extent audit has no finding. Restunts math.c:137 is a semantic hypothesis with nine long products. Test whether the same width/helper signature appears here; no original TU claim."
+      },
+      {
+        "task": "init_carstate_from_simd",
+        "stable_id": "load_06898",
+        "target_bytes": 618,
+        "allocated_hypothesis_compiler_processes": 24,
+        "source": "reallocated unused rect_is_adjacent share before compilation",
+        "note": "Full current 58-card clean-screen: 226 decoded pristine instructions, 225 reachable plus one NOP; no calls, relocations, target globals, CFG risk or mapped inside entry; original named far proc/verified extent and Restunts restunts.c:371 semantic definition dominated by field initialization. Restunts C is not historical source. Test in isolated research batches only."
       }
     ]
   },

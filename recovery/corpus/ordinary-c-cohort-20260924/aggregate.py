@@ -11,12 +11,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 COHORT = "ordinary-c-cohort-20260924"
-TASKS = ("rect_is_adjacent", "mat_multiply", "heapsort_by_order", "file_get_shape2d", "mat_mul_vector")
+TASKS = ("rect_is_adjacent", "mat_multiply", "heapsort_by_order", "file_get_shape2d", "mat_mul_vector", "init_carstate_from_simd")
 TASK_PATHS = {"rect_is_adjacent": ("rect_is_adjacent", "load_169d0"),
               "mat_multiply": ("mat_multiply", "load_229f2"),
               "heapsort_by_order": ("heapsort_by_order", "load_26be8"),
               "file_get_shape2d": ("file_get_shape2d", "load_2265b"),
-              "mat_mul_vector": ("mat_mul_vector", "load_228ee")}
+              "mat_mul_vector": ("mat_mul_vector", "load_228ee"),
+              "init_carstate_from_simd": ("init_carstate_from_simd", "load_06898")}
 sys.path.insert(0, str(ROOT / "tools"))
 from object_probe import read_object  # noqa: E402
 

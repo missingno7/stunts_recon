@@ -170,8 +170,8 @@
   "promotion": "After FAST: python tools/check_candidate.py TASK --promote",
   "risks": [],
   "scope_snapshot": {
-    "path": "recovery/snapshots/c0fb1a65ccdd2a87298993571d586f591cc603394953ae349ac19a78f0e2b527.json",
-    "sha256": "c0fb1a65ccdd2a87298993571d586f591cc603394953ae349ac19a78f0e2b527"
+    "path": "recovery/snapshots/d90c37018be1c4eb6d018de7e18dd50c3496c450a82bd44ee04c168e76ddf41e.json",
+    "sha256": "d90c37018be1c4eb6d018de7e18dd50c3496c450a82bd44ee04c168e76ddf41e"
   },
   "size": 32,
   "source": {
@@ -183,7 +183,7 @@
   },
   "tier": "MEDIUM",
   "workflow_snapshot": {
-    "path": "recovery/snapshots/9db7a4bf77c104513d9ba2d8bbfbc0d2571a2aa795a67bc398de097b59be1959.json",
-    "sha256": "9db7a4bf77c104513d9ba2d8bbfbc0d2571a2aa795a67bc398de097b59be1959"
+    "path": "recovery/snapshots/a8ee349e969a759b22705b97b4f5cfeb0aa3132b3fd9ae7987be5dda27a9af56.json",
+    "sha256": "a8ee349e969a759b22705b97b4f5cfeb0aa3132b3fd9ae7987be5dda27a9af56"
   }
 }

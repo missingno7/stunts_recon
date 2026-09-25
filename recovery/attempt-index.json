@@ -4970,6 +4970,46 @@
         "status": "PROMOTED"
       }
     ],
+    "init_carstate_from_simd": [
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": null,
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Signed shifts, register zero/index ordering and reversed chained byte assignment reproduce complete 618-byte original contribution",
+        "identity": {
+          "sha256": "29b838789f2541ec5b948099340c1dcee5896ceac2bd233e9da155221bb4bdd1",
+          "size": 2703
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/init_carstate_from_simd/0001/report.json",
+        "same_effective_as": [],
+        "sizes": null,
+        "status": "FAST_PASS_ONLY"
+      },
+      {
+        "category": null,
+        "diagnostic_error": null,
+        "epoch": 0,
+        "error": null,
+        "evidence_freshness": null,
+        "first_difference": null,
+        "hypothesis": "Promote complete 618-byte single-public no-fixup contribution after reviewed original CFG and native FAST match",
+        "identity": {
+          "sha256": "88b08b1b74118816c73773c933102cec2b4890f8350e95058f2d62274c4a89d3",
+          "size": 3003
+        },
+        "kind": "attempts",
+        "path": "recovery/attempts/init_carstate_from_simd/0002/report.json",
+        "same_effective_as": [
+          1
+        ],
+        "sizes": null,
+        "status": "PROMOTED"
+      }
+    ],
     "is_facing_camera": [
       {
         "category": null,
