@@ -9,6 +9,8 @@ from probe_module import probe
 from oracle import verify
 from mz import MZ
 from transaction import exclusive, ensure_consistent, prepare, apply, finish, rollback, recover, invalidate_receipts
+from multi_contribution import checked_members
+from preprocessor import prepare as prepare_source
 
 
 def replace_raw(manifest, recipe):
@@ -30,8 +32,119 @@ def replace_raw(manifest, recipe):
     return result
 
 
+def replace_group(manifest, recipe, oracle):
+    """Replace one contiguous interval, preserving any accepted members by proof."""
+    result = copy.deepcopy(manifest)
+    start, end = recipe['start'], recipe['end']
+    overlaps = [o for o in result['owners'] if o['start'] < end and start < o['end']]
+    require(overlaps and overlaps[0]['start'] <= start and end <= overlaps[-1]['end'],
+            'Group interval is not covered by existing owners')
+    accepted = [o for o in overlaps if o['kind'] == 'MATCHING_C']
+    require(sorted(recipe.get('subsumed_owners', [])) == sorted(o['id'] for o in accepted) and
+            len(recipe.get('subsumed_owners', [])) == len(accepted),
+            'Group must record exactly its subsumed C owners')
+    member_extents = {(m['start'], m['end'], m['name']) for m in recipe['members']}
+    for owner in overlaps:
+        if owner['kind'] == 'UNRESOLVED_RAW':
+            continue
+        require(owner['kind'] == 'MATCHING_C' and start <= owner['start'] and owner['end'] <= end
+                and (owner['start'], owner['end'], owner['name']) in member_extents,
+                'Group crosses an accepted owner without exact member extent')
+        prior = read_json(ROOT/owner['recipe'])
+        require(prior['start'] == owner['start'] and prior['end'] == owner['end'] and
+                prior['id'] == owner['name'], 'Subsumed owner recipe differs')
+        payload, _ = probe(prior, oracle)
+        image = MZ.parse(oracle[1]).load_image(oracle[1])
+        require(payload == image[owner['start']:owner['end']],
+                'Subsumed owner no longer reproduces its exact bytes')
+    left = overlaps[0]['start']
+    right = overlaps[-1]['end']
+    replacement = []
+    if left < start:
+        require(overlaps[0]['kind'] == 'UNRESOLVED_RAW', 'Group cuts accepted owner at start')
+        replacement.append({**overlaps[0], 'end':start,
+                            'id':f"raw_{left:05x}_{start:05x}"})
+    replacement.append({'id':recipe['id'], 'name':recipe['id'], 'start':start, 'end':end,
+                        'kind':'MATCHING_C', 'classification':'GAME_C',
+                        'recipe':'recipes/'+recipe['id']+'.json'})
+    if end < right:
+        require(overlaps[-1]['kind'] == 'UNRESOLVED_RAW', 'Group cuts accepted owner at end')
+        replacement.append({**overlaps[-1], 'start':end,
+                            'id':f"raw_{end:05x}_{right:05x}"})
+    first = result['owners'].index(overlaps[0])
+    result['owners'][first:first+len(overlaps)] = replacement
+    return result
+
+
+def attach_secondary(manifest, recipe, image):
+    """Assign complete emitted DGROUP intervals to the owning C recipe."""
+    result = copy.deepcopy(manifest)
+    specs = recipe.get('secondary_dgroup_segments', {})
+    if not specs:
+        return result
+    parents = [o for o in result['owners'] if o['kind']=='MATCHING_C' and
+               o.get('name')==recipe['id'] and
+               (o['start'],o['end'])==(recipe['start'],recipe['end'])]
+    require(len(parents)==1, 'Secondary contribution lacks unique CODE owner')
+    parent = parents[0]
+    intervals = []
+    subsumed=[]
+    # The frame/range is reviewed independently of the candidate recipe.
+    layout = read_json(ROOT/'layout/data-symbols.json')
+    for segment, spec in sorted(specs.items(), key=lambda pair:pair[1]['start']):
+        start,end=spec['start'],spec['end']
+        require(segment in ('_DATA','CONST','_BSS') and
+                type(start)is int and type(end)is int and start<end and
+                start==layout['frame_load_address']+spec['dgroup_offset'],
+                'Invalid secondary owner interval')
+        row={'segment':segment,'start':start,'end':end,'target':spec['target']}
+        intervals.append(row)
+        if segment=='_BSS':
+            require(layout['bss_start']<=start<end<=layout['bss_end'],
+                    'BSS ownership outside verified clear range')
+            if 'bss_owners' not in result:
+                result['bss_owners']=[{'id':'raw_bss','kind':'UNRESOLVED_RAW',
+                                       'start':layout['bss_start'],'end':layout['bss_end']}]
+            partition=result['bss_owners']
+        else:
+            require(end<=len(image) and identity(image[start:end])==spec['target'],
+                    'Secondary initialized owner differs from oracle')
+            partition=result['owners']
+        overlaps=[o for o in partition if o['start']<end and start<o['end']]
+        if len(overlaps)==1 and overlaps[0]['kind']=='MATCHING_C_DATA':
+            prior=overlaps[0]
+            require((prior['start'],prior['end'],prior['segment'])==(start,end,segment)
+                    and prior['id'] in recipe.get('subsumed_data_owners',[]) and
+                    prior['target']==spec['target'],
+                    'Secondary accepted owner is not exactly subsumed')
+            subsumed.append(prior['id'])
+            prior['parent']=parent['id']
+        else:
+            require(len(overlaps)==1 and overlaps[0]['kind']=='UNRESOLVED_RAW' and
+                    overlaps[0]['start']<=start<end<=overlaps[0]['end'],
+                    'Secondary interval is not wholly raw-owned')
+            old=overlaps[0]
+            replacement=[]
+            if old['start']<start:
+                replacement.append({**old,'end':start,
+                                    'id':f"raw_{old['start']:05x}_{start:05x}"})
+            replacement.append({'id':f"{recipe['id']}:{segment}", 'kind':'MATCHING_C_DATA',
+                                'classification':'GAME_C','parent':parent['id'],
+                                'segment':segment,'start':start,'end':end,
+                                'target':spec['target']})
+            if end<old['end']:
+                replacement.append({**old,'start':end,
+                                    'id':f"raw_{end:05x}_{old['end']:05x}"})
+            at=partition.index(old); partition[at:at+1]=replacement
+    parent['data_intervals']=intervals
+    require(sorted(recipe.get('subsumed_data_owners',[]))==sorted(subsumed),
+        'Secondary subsumed owner list differs')
+    return result
+
+
 def checked_function(name, recipe, image):
-    inventory = read_json(ROOT/'evidence/functions.json')
+    from function_evidence import current_inventory
+    inventory = current_inventory(image)
     require(inventory['load_sha256'] == sha(image), 'Function inventory belongs to another oracle')
     found = [f for f in inventory['functions'] if f.get('name') == name]
     require(len(found) == 1, 'Function name missing/ambiguous in original evidence')
@@ -78,9 +191,17 @@ def promote(name, candidate, recipe_path=None, verify_only=False):
         image = MZ.parse(oracle[1]).load_image(oracle[1])
         import json
         recipe = json.loads(recipe_data) if recipe_data is not None else default_recipe(name, image, oracle[2]['unpacked_mz']['relocations'])
-        checked_function(name, recipe, image)
+        multi = 'members' in recipe
+        if multi:
+            require(recipe['id'] == name, 'Multi recipe group ID differs')
+            checked_members(recipe, image)
+        else:
+            checked_function(name, recipe, image)
         destination = 'src/'+name+'.c'
         recipe = {**recipe, 'source':destination}
+        closure = prepare_source(source, recipe['profile'])[1]
+        if 'preprocessor_closure' not in recipe:
+            recipe['preprocessor_closure'] = closure
         payload, fast = probe(recipe, oracle, source_override=source)
         active = [o for o in manifest['owners'] if o['kind'] == 'MATCHING_C' and o.get('name') == name]
         if active:
@@ -91,7 +212,8 @@ def promote(name, candidate, recipe_path=None, verify_only=False):
         else:
             require(not (ROOT/destination).exists() and not (ROOT/'recipes'/(name+'.json')).exists(),
                     'New publication would overwrite existing unowned files')
-            staged_manifest = replace_raw(manifest, recipe)
+            staged_manifest = replace_group(manifest, recipe, oracle) if multi else replace_raw(manifest, recipe)
+            staged_manifest = attach_secondary(staged_manifest, recipe, image)
         # Recompile every existing contribution, including runtime binding, with
         # only the target source supplied from frozen bytes. No canonical writes.
         staged = build(staged_manifest, {'recipes/'+name+'.json':recipe}, publish=False,

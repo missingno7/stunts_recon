@@ -20,6 +20,164 @@
     }
   ],
   "symbols": {
+    "_HKeyFlag": {
+      "load_address": 178420,
+      "storage": "initialized"
+    },
+    "_aMsRunTimeLibraryCop": {
+      "load_address": 178040,
+      "storage": "initialized"
+    },
+    "_argc": {
+      "load_address": 192008,
+      "storage": "initialized"
+    },
+    "_argv": {
+      "load_address": 192010,
+      "storage": "initialized"
+    },
+    "_audiochunks_unk2": {
+      "load_address": 212524,
+      "storage": "bss",
+      "width": 608,
+      "extent_proof": {
+        "kind": "guarded-folded-index-v1",
+        "reference_lines": [
+          32492,
+          33100
+        ],
+        "stride": 76,
+        "index_bound": [
+          16,
+          23
+        ],
+        "witnesses": [
+          {
+            "function": "audio_init_chunk2",
+            "start": 161354,
+            "end": 161430,
+            "sha256": "dae3c6786587ea708d8013c6005590a5750ea737b4ba157ef6d5c6b0b5862aca",
+            "anchors": [
+              {
+                "site": 161357,
+                "hex": "837e0610"
+              },
+              {
+                "site": 161361,
+                "hex": "7c41"
+              },
+              {
+                "site": 161363,
+                "hex": "837e0617"
+              },
+              {
+                "site": 161367,
+                "hex": "7f3b"
+              },
+              {
+                "site": 161369,
+                "hex": "b84c00"
+              },
+              {
+                "site": 161372,
+                "hex": "f76e06"
+              },
+              {
+                "site": 161375,
+                "hex": "8bd8"
+              },
+              {
+                "site": 161379,
+                "hex": "8987fe81"
+              },
+              {
+                "site": 161383,
+                "hex": "8987fc81"
+              }
+            ]
+          },
+          {
+            "function": "sub_3771E",
+            "start": 161566,
+            "end": 161616,
+            "sha256": "aff5965217bd2966c8550bef114580fdf23261c86514d98e0092b79ae596a6b9",
+            "anchors": [
+              {
+                "site": 161582,
+                "hex": "837e0610"
+              },
+              {
+                "site": 161586,
+                "hex": "7cf4"
+              },
+              {
+                "site": 161588,
+                "hex": "837e0617"
+              },
+              {
+                "site": 161592,
+                "hex": "7fee"
+              },
+              {
+                "site": 161594,
+                "hex": "b84c00"
+              },
+              {
+                "site": 161597,
+                "hex": "f76e06"
+              },
+              {
+                "site": 161600,
+                "hex": "8bd8"
+              },
+              {
+                "site": 161602,
+                "hex": "8b87fc81"
+              },
+              {
+                "site": 161606,
+                "hex": "0b87fe81"
+              }
+            ]
+          }
+        ]
+      },
+      "generated_extent": {
+        "kind": "generated-indexed-v1",
+        "source_base": 33276,
+        "stride": 76,
+        "index_bound": [
+          16,
+          23
+        ],
+        "field_offsets": [
+          0,
+          2
+        ],
+        "anchors": [
+          {
+            "function": "audio_init_chunk2",
+            "start": 161354,
+            "access": 161379
+          },
+          {
+            "function": "audio_init_chunk2",
+            "start": 161354,
+            "access": 161383
+          },
+          {
+            "function": "sub_3771E",
+            "start": 161566,
+            "access": 161602
+          },
+          {
+            "function": "sub_3771E",
+            "start": 161566,
+            "access": 161606
+          }
+        ]
+      }
+    },
     "_audioflag2": {
       "evidence": "docs/current/data-binding.md",
       "load_address": 198193,
@@ -31,6 +189,898 @@
         }
       ],
       "storage": "initialized"
+    },
+    "_audioflag6": {
+      "load_address": 198195,
+      "storage": "initialized"
+    },
+    "_byte_2B82C": {
+      "load_address": 178220,
+      "storage": "initialized"
+    },
+    "_byte_2B82D": {
+      "load_address": 178221,
+      "storage": "initialized"
+    },
+    "_byte_2B82E": {
+      "load_address": 178222,
+      "storage": "initialized"
+    },
+    "_byte_2B82F": {
+      "load_address": 178223,
+      "storage": "initialized"
+    },
+    "_byte_2B830": {
+      "load_address": 178224,
+      "storage": "initialized"
+    },
+    "_byte_2B831": {
+      "load_address": 178225,
+      "storage": "initialized"
+    },
+    "_byte_2B832": {
+      "load_address": 178226,
+      "storage": "initialized"
+    },
+    "_byte_2B833": {
+      "load_address": 178227,
+      "storage": "initialized"
+    },
+    "_byte_2B834": {
+      "load_address": 178228,
+      "storage": "initialized"
+    },
+    "_byte_2B835": {
+      "load_address": 178229,
+      "storage": "initialized"
+    },
+    "_byte_2B836": {
+      "load_address": 178230,
+      "storage": "initialized"
+    },
+    "_byte_2B837": {
+      "load_address": 178231,
+      "storage": "initialized"
+    },
+    "_byte_2B839": {
+      "load_address": 178233,
+      "storage": "initialized"
+    },
+    "_byte_2B83B": {
+      "load_address": 178235,
+      "storage": "initialized"
+    },
+    "_byte_2B83C": {
+      "load_address": 178236,
+      "storage": "initialized"
+    },
+    "_byte_2B83F": {
+      "load_address": 178239,
+      "storage": "initialized"
+    },
+    "_byte_2B907": {
+      "load_address": 178439,
+      "storage": "initialized"
+    },
+    "_byte_2B90D": {
+      "load_address": 178445,
+      "storage": "initialized"
+    },
+    "_byte_2B90E": {
+      "load_address": 178446,
+      "storage": "initialized"
+    },
+    "_byte_2B90F": {
+      "load_address": 178447,
+      "storage": "initialized"
+    },
+    "_byte_2B910": {
+      "load_address": 178448,
+      "storage": "initialized"
+    },
+    "_byte_2B9F0": {
+      "load_address": 178672,
+      "storage": "initialized"
+    },
+    "_byte_2B9F6": {
+      "load_address": 178678,
+      "storage": "initialized"
+    },
+    "_byte_2BD17": {
+      "load_address": 179479,
+      "storage": "initialized"
+    },
+    "_byte_2BD1F": {
+      "load_address": 179487,
+      "storage": "initialized"
+    },
+    "_byte_2BD29": {
+      "load_address": 179497,
+      "storage": "initialized"
+    },
+    "_byte_2BD4C": {
+      "load_address": 179532,
+      "storage": "initialized"
+    },
+    "_byte_2BD50": {
+      "load_address": 179536,
+      "storage": "initialized"
+    },
+    "_byte_2C09C": {
+      "load_address": 180380,
+      "storage": "initialized"
+    },
+    "_byte_2C0E6": {
+      "load_address": 180454,
+      "storage": "initialized"
+    },
+    "_byte_2D813": {
+      "load_address": 186387,
+      "storage": "initialized"
+    },
+    "_byte_2D814": {
+      "load_address": 186388,
+      "storage": "initialized"
+    },
+    "_byte_2E70C": {
+      "load_address": 190220,
+      "storage": "initialized"
+    },
+    "_byte_2E70D": {
+      "load_address": 190221,
+      "storage": "initialized"
+    },
+    "_byte_2E70E": {
+      "load_address": 190222,
+      "storage": "initialized"
+    },
+    "_byte_2E70F": {
+      "load_address": 190223,
+      "storage": "initialized"
+    },
+    "_byte_2E916": {
+      "load_address": 190742,
+      "storage": "initialized"
+    },
+    "_byte_2E917": {
+      "load_address": 190743,
+      "storage": "initialized"
+    },
+    "_byte_2E918": {
+      "load_address": 190744,
+      "storage": "initialized"
+    },
+    "_byte_2E919": {
+      "load_address": 190745,
+      "storage": "initialized"
+    },
+    "_byte_2E920": {
+      "load_address": 190752,
+      "storage": "initialized"
+    },
+    "_byte_2E921": {
+      "load_address": 190753,
+      "storage": "initialized"
+    },
+    "_byte_2E922": {
+      "load_address": 190754,
+      "storage": "initialized"
+    },
+    "_byte_2E923": {
+      "load_address": 190755,
+      "storage": "initialized"
+    },
+    "_byte_2EA62": {
+      "load_address": 191074,
+      "storage": "initialized"
+    },
+    "_byte_2EA72": {
+      "load_address": 191090,
+      "storage": "initialized"
+    },
+    "_byte_2ECBB": {
+      "load_address": 191675,
+      "storage": "initialized"
+    },
+    "_byte_2EDED": {
+      "load_address": 191981,
+      "storage": "initialized"
+    },
+    "_byte_2EEE0": {
+      "load_address": 192224,
+      "storage": "initialized"
+    },
+    "_byte_2EF9F": {
+      "load_address": 192415,
+      "storage": "initialized"
+    },
+    "_byte_2F8DA": {
+      "load_address": 194778,
+      "storage": "initialized"
+    },
+    "_byte_2F95A": {
+      "load_address": 194906,
+      "storage": "initialized"
+    },
+    "_byte_2F9E0": {
+      "load_address": 195040,
+      "storage": "initialized"
+    },
+    "_byte_2FB08": {
+      "load_address": 195336,
+      "storage": "initialized"
+    },
+    "_byte_2FB09": {
+      "load_address": 195337,
+      "storage": "initialized"
+    },
+    "_byte_2FB0A": {
+      "load_address": 195338,
+      "storage": "initialized"
+    },
+    "_byte_2FB0B": {
+      "load_address": 195339,
+      "storage": "initialized"
+    },
+    "_byte_2FB0C": {
+      "load_address": 195340,
+      "storage": "initialized"
+    },
+    "_byte_2FB0D": {
+      "load_address": 195341,
+      "storage": "initialized"
+    },
+    "_byte_2FB0E": {
+      "load_address": 195342,
+      "storage": "initialized"
+    },
+    "_byte_2FB0F": {
+      "load_address": 195343,
+      "storage": "initialized"
+    },
+    "_byte_2FB10": {
+      "load_address": 195344,
+      "storage": "initialized"
+    },
+    "_byte_2FB11": {
+      "load_address": 195345,
+      "storage": "initialized"
+    },
+    "_byte_2FBDA": {
+      "load_address": 195546,
+      "storage": "initialized"
+    },
+    "_byte_2FBF7": {
+      "load_address": 195575,
+      "storage": "initialized"
+    },
+    "_byte_2FC04": {
+      "load_address": 195588,
+      "storage": "initialized"
+    },
+    "_byte_2FC10": {
+      "load_address": 195600,
+      "storage": "initialized"
+    },
+    "_byte_2FC12": {
+      "load_address": 195602,
+      "storage": "initialized"
+    },
+    "_byte_2FC14": {
+      "load_address": 195604,
+      "storage": "initialized"
+    },
+    "_byte_2FC34": {
+      "load_address": 195636,
+      "storage": "initialized"
+    },
+    "_byte_2FC8F": {
+      "load_address": 195727,
+      "storage": "initialized"
+    },
+    "_byte_2FCEA": {
+      "load_address": 195818,
+      "storage": "initialized"
+    },
+    "_byte_2FD45": {
+      "load_address": 195909,
+      "storage": "initialized"
+    },
+    "_byte_2FDA0": {
+      "load_address": 196000,
+      "storage": "initialized"
+    },
+    "_byte_30B12": {
+      "load_address": 199442,
+      "storage": "initialized"
+    },
+    "_byte_30B13": {
+      "load_address": 199443,
+      "storage": "initialized"
+    },
+    "_byte_30B86": {
+      "load_address": 199558,
+      "storage": "initialized"
+    },
+    "_byte_3186E": {
+      "load_address": 202862,
+      "storage": "bss"
+    },
+    "_byte_3187A": {
+      "load_address": 202874,
+      "storage": "bss"
+    },
+    "_byte_31882": {
+      "load_address": 202882,
+      "storage": "bss"
+    },
+    "_byte_32A38": {
+      "load_address": 207416,
+      "storage": "bss"
+    },
+    "_byte_32A4C": {
+      "load_address": 207436,
+      "storage": "bss"
+    },
+    "_byte_32A4D": {
+      "load_address": 207437,
+      "storage": "bss"
+    },
+    "_byte_32A60": {
+      "load_address": 207456,
+      "storage": "bss"
+    },
+    "_byte_32A61": {
+      "load_address": 207457,
+      "storage": "bss"
+    },
+    "_byte_32D2E": {
+      "load_address": 208174,
+      "storage": "bss"
+    },
+    "_byte_32DAE": {
+      "load_address": 208302,
+      "storage": "bss"
+    },
+    "_byte_32DAF": {
+      "load_address": 208303,
+      "storage": "bss"
+    },
+    "_byte_32DB0": {
+      "load_address": 208304,
+      "storage": "bss"
+    },
+    "_byte_3386C": {
+      "load_address": 211052,
+      "storage": "bss"
+    },
+    "_byte_33950": {
+      "load_address": 211280,
+      "storage": "bss"
+    },
+    "_byte_33981": {
+      "load_address": 211329,
+      "storage": "bss"
+    },
+    "_byte_33990": {
+      "load_address": 211344,
+      "storage": "bss"
+    },
+    "_byte_33991": {
+      "load_address": 211345,
+      "storage": "bss"
+    },
+    "_byte_339B3": {
+      "load_address": 211379,
+      "storage": "bss"
+    },
+    "_byte_346A2": {
+      "load_address": 214690,
+      "storage": "bss"
+    },
+    "_byte_346A8": {
+      "load_address": 214696,
+      "storage": "bss"
+    },
+    "_byte_346A9": {
+      "load_address": 214697,
+      "storage": "bss"
+    },
+    "_byte_346AA": {
+      "load_address": 214698,
+      "storage": "bss"
+    },
+    "_byte_346AB": {
+      "load_address": 214699,
+      "storage": "bss"
+    },
+    "_byte_346AF": {
+      "load_address": 214703,
+      "storage": "bss"
+    },
+    "_byte_346B0": {
+      "load_address": 214704,
+      "storage": "bss"
+    },
+    "_byte_346B1": {
+      "load_address": 214705,
+      "storage": "bss"
+    },
+    "_byte_346B2": {
+      "load_address": 214706,
+      "storage": "bss"
+    },
+    "_byte_346B3": {
+      "load_address": 214707,
+      "storage": "bss"
+    },
+    "_byte_346B4": {
+      "load_address": 214708,
+      "storage": "bss"
+    },
+    "_byte_346B5": {
+      "load_address": 214709,
+      "storage": "bss"
+    },
+    "_byte_34772": {
+      "load_address": 214898,
+      "storage": "bss"
+    },
+    "_byte_34775": {
+      "load_address": 214901,
+      "storage": "bss"
+    },
+    "_byte_34776": {
+      "load_address": 214902,
+      "storage": "bss"
+    },
+    "_byte_34778": {
+      "load_address": 214904,
+      "storage": "bss"
+    },
+    "_byte_34779": {
+      "load_address": 214905,
+      "storage": "bss"
+    },
+    "_byte_3477A": {
+      "load_address": 214906,
+      "storage": "bss"
+    },
+    "_byte_3477B": {
+      "load_address": 214907,
+      "storage": "bss"
+    },
+    "_byte_3477D": {
+      "load_address": 214909,
+      "storage": "bss"
+    },
+    "_byte_3477F": {
+      "load_address": 214911,
+      "storage": "bss"
+    },
+    "_byte_34783": {
+      "load_address": 214915,
+      "storage": "bss"
+    },
+    "_byte_34784": {
+      "load_address": 214916,
+      "storage": "bss"
+    },
+    "_byte_34785": {
+      "load_address": 214917,
+      "storage": "bss"
+    },
+    "_byte_34888": {
+      "load_address": 215176,
+      "storage": "bss"
+    },
+    "_byte_34889": {
+      "load_address": 215177,
+      "storage": "bss"
+    },
+    "_byte_3488A": {
+      "load_address": 215178,
+      "storage": "bss"
+    },
+    "_byte_3488B": {
+      "load_address": 215179,
+      "storage": "bss"
+    },
+    "_byte_3488C": {
+      "load_address": 215180,
+      "storage": "bss"
+    },
+    "_byte_3488D": {
+      "load_address": 215181,
+      "storage": "bss"
+    },
+    "_byte_3488E": {
+      "load_address": 215182,
+      "storage": "bss"
+    },
+    "_byte_348BE": {
+      "load_address": 215230,
+      "storage": "bss"
+    },
+    "_byte_348BF": {
+      "load_address": 215231,
+      "storage": "bss"
+    },
+    "_byte_348D7": {
+      "load_address": 215255,
+      "storage": "bss"
+    },
+    "_byte_348EF": {
+      "load_address": 215279,
+      "storage": "bss"
+    },
+    "_byte_348F0": {
+      "load_address": 215280,
+      "storage": "bss"
+    },
+    "_byte_348F1": {
+      "load_address": 215281,
+      "storage": "bss"
+    },
+    "_byte_348F2": {
+      "load_address": 215282,
+      "storage": "bss"
+    },
+    "_byte_349A5": {
+      "load_address": 215461,
+      "storage": "bss"
+    },
+    "_byte_349A6": {
+      "load_address": 215462,
+      "storage": "bss"
+    },
+    "_byte_349A7": {
+      "load_address": 215463,
+      "storage": "bss"
+    },
+    "_byte_349A8": {
+      "load_address": 215464,
+      "storage": "bss"
+    },
+    "_byte_349A9": {
+      "load_address": 215465,
+      "storage": "bss"
+    },
+    "_byte_349AA": {
+      "load_address": 215466,
+      "storage": "bss"
+    },
+    "_byte_349AB": {
+      "load_address": 215467,
+      "storage": "bss"
+    },
+    "_byte_349AC": {
+      "load_address": 215468,
+      "storage": "bss"
+    },
+    "_byte_349AD": {
+      "load_address": 215469,
+      "storage": "bss"
+    },
+    "_byte_349AE": {
+      "load_address": 215470,
+      "storage": "bss"
+    },
+    "_byte_349AF": {
+      "load_address": 215471,
+      "storage": "bss"
+    },
+    "_byte_349B0": {
+      "load_address": 215472,
+      "storage": "bss"
+    },
+    "_byte_349B1": {
+      "load_address": 215473,
+      "storage": "bss"
+    },
+    "_byte_349BA": {
+      "load_address": 215482,
+      "storage": "bss"
+    },
+    "_byte_34AE2": {
+      "load_address": 215778,
+      "storage": "bss"
+    },
+    "_byte_354B8": {
+      "load_address": 218296,
+      "storage": "bss"
+    },
+    "_byte_35514": {
+      "load_address": 218388,
+      "storage": "bss"
+    },
+    "_byte_35520": {
+      "load_address": 218400,
+      "storage": "bss"
+    },
+    "_byte_35525": {
+      "load_address": 218405,
+      "storage": "bss"
+    },
+    "_byte_355D2": {
+      "load_address": 218578,
+      "storage": "bss"
+    },
+    "_byte_3594A": {
+      "load_address": 219466,
+      "storage": "bss"
+    },
+    "_byte_3594B": {
+      "load_address": 219467,
+      "storage": "bss"
+    },
+    "_byte_3594C": {
+      "load_address": 219468,
+      "storage": "bss"
+    },
+    "_byte_3594D": {
+      "load_address": 219469,
+      "storage": "bss"
+    },
+    "_byte_3594E": {
+      "load_address": 219470,
+      "storage": "bss"
+    },
+    "_byte_3594F": {
+      "load_address": 219471,
+      "storage": "bss"
+    },
+    "_byte_359F1": {
+      "load_address": 219633,
+      "storage": "bss"
+    },
+    "_byte_35DB2": {
+      "load_address": 220594,
+      "storage": "bss"
+    },
+    "_byte_35E1A": {
+      "load_address": 220698,
+      "storage": "bss"
+    },
+    "_byte_35F44": {
+      "load_address": 220996,
+      "storage": "bss"
+    },
+    "_byte_35F88": {
+      "load_address": 221064,
+      "storage": "bss"
+    },
+    "_byte_35F89": {
+      "load_address": 221065,
+      "storage": "bss"
+    },
+    "_byte_35F8A": {
+      "load_address": 221066,
+      "storage": "bss"
+    },
+    "_byte_35F8B": {
+      "load_address": 221067,
+      "storage": "bss"
+    },
+    "_byte_35F8C": {
+      "load_address": 221068,
+      "storage": "bss"
+    },
+    "_byte_35F8D": {
+      "load_address": 221069,
+      "storage": "bss"
+    },
+    "_byte_3605E": {
+      "load_address": 221278,
+      "storage": "bss"
+    },
+    "_byte_3605F": {
+      "load_address": 221279,
+      "storage": "bss"
+    },
+    "_byte_361C8": {
+      "load_address": 221640,
+      "storage": "bss"
+    },
+    "_byte_363E4": {
+      "load_address": 222180,
+      "storage": "bss"
+    },
+    "_byte_363E5": {
+      "load_address": 222181,
+      "storage": "bss"
+    },
+    "_byte_363E6": {
+      "load_address": 222182,
+      "storage": "bss"
+    },
+    "_byte_363E7": {
+      "load_address": 222183,
+      "storage": "bss"
+    },
+    "_byte_36436": {
+      "load_address": 222262,
+      "storage": "bss"
+    },
+    "_byte_3644A": {
+      "load_address": 222282,
+      "storage": "bss"
+    },
+    "_byte_36484": {
+      "load_address": 222340,
+      "storage": "bss"
+    },
+    "_byte_3B8F2": {
+      "load_address": 178418,
+      "storage": "initialized"
+    },
+    "_byte_3B8F6": {
+      "load_address": 178422,
+      "storage": "initialized"
+    },
+    "_byte_3B8F7": {
+      "load_address": 178423,
+      "storage": "initialized"
+    },
+    "_byte_3B8FC": {
+      "load_address": 178428,
+      "storage": "initialized"
+    },
+    "_byte_3BD34": {
+      "load_address": 179508,
+      "storage": "initialized"
+    },
+    "_byte_3BE02": {
+      "load_address": 179714,
+      "storage": "initialized"
+    },
+    "_byte_3C0C6": {
+      "load_address": 180422,
+      "storage": "initialized"
+    },
+    "_byte_3EBD8": {
+      "load_address": 191448,
+      "storage": "initialized"
+    },
+    "_byte_3ECFE": {
+      "load_address": 191742,
+      "storage": "initialized"
+    },
+    "_byte_3ED00": {
+      "load_address": 191744,
+      "storage": "initialized"
+    },
+    "_byte_3EE16": {
+      "load_address": 192022,
+      "storage": "initialized"
+    },
+    "_byte_3EE17": {
+      "load_address": 192023,
+      "storage": "initialized"
+    },
+    "_byte_3F85A": {
+      "load_address": 194650,
+      "storage": "initialized"
+    },
+    "_byte_3F868": {
+      "load_address": 194664,
+      "storage": "initialized"
+    },
+    "_byte_3F880": {
+      "load_address": 194688,
+      "storage": "initialized"
+    },
+    "_byte_3F881": {
+      "load_address": 194689,
+      "storage": "initialized"
+    },
+    "_byte_3F88C": {
+      "load_address": 194700,
+      "storage": "initialized"
+    },
+    "_byte_3FB06": {
+      "load_address": 195334,
+      "storage": "initialized"
+    },
+    "_byte_3FB38": {
+      "load_address": 195384,
+      "storage": "initialized"
+    },
+    "_byte_3FE00": {
+      "load_address": 196096,
+      "storage": "initialized"
+    },
+    "_byte_4032A": {
+      "load_address": 197418,
+      "storage": "initialized"
+    },
+    "_byte_4032B": {
+      "load_address": 197419,
+      "storage": "initialized"
+    },
+    "_byte_4032C": {
+      "load_address": 197420,
+      "storage": "initialized"
+    },
+    "_byte_403F3": {
+      "load_address": 197619,
+      "storage": "initialized"
+    },
+    "_byte_40630": {
+      "load_address": 198192,
+      "storage": "initialized"
+    },
+    "_byte_40632": {
+      "load_address": 198194,
+      "storage": "initialized"
+    },
+    "_byte_40634": {
+      "load_address": 198196,
+      "storage": "initialized"
+    },
+    "_byte_40635": {
+      "load_address": 198197,
+      "storage": "initialized"
+    },
+    "_byte_40639": {
+      "load_address": 198201,
+      "storage": "initialized"
+    },
+    "_byte_40DF0": {
+      "load_address": 200176,
+      "storage": "bss"
+    },
+    "_byte_40DFA": {
+      "load_address": 200186,
+      "storage": "bss"
+    },
+    "_byte_42246": {
+      "load_address": 205382,
+      "storage": "bss"
+    },
+    "_byte_428BE": {
+      "load_address": 207038,
+      "storage": "bss"
+    },
+    "_byte_428D6": {
+      "load_address": 207062,
+      "storage": "bss"
+    },
+    "_byte_42A0E": {
+      "load_address": 207374,
+      "storage": "bss"
+    },
+    "_byte_42D26": {
+      "load_address": 208166,
+      "storage": "bss"
+    },
+    "_byte_42D2A": {
+      "load_address": 208170,
+      "storage": "bss"
+    },
+    "_byte_4392C": {
+      "load_address": 211244,
+      "storage": "bss"
+    },
+    "_byte_4393C": {
+      "load_address": 211260,
+      "storage": "bss"
+    },
+    "_byte_4393D": {
+      "load_address": 211261,
+      "storage": "bss"
+    },
+    "_byte_43966": {
+      "load_address": 211302,
+      "storage": "bss"
+    },
+    "_byte_44290": {
+      "load_address": 213648,
+      "storage": "bss"
+    },
+    "_byte_44292": {
+      "load_address": 213650,
+      "storage": "bss"
     },
     "_byte_442E4": {
       "evidence": "Verified frame_callback comparison and increment outside set_frame_callback use DS:8B74. Startup-pinned DGROUP places this byte in cleared BSS; Restunts name is a binding alias, original PUBDEF/TU owner unproved.",
@@ -49,6 +1099,42 @@
       ],
       "storage": "bss",
       "width": 1
+    },
+    "_byte_442EA": {
+      "load_address": 213738,
+      "storage": "bss"
+    },
+    "_byte_4432A": {
+      "load_address": 213802,
+      "storage": "bss"
+    },
+    "_byte_44346": {
+      "load_address": 213830,
+      "storage": "bss"
+    },
+    "_byte_449CE": {
+      "load_address": 215502,
+      "storage": "bss"
+    },
+    "_byte_449D8": {
+      "load_address": 215512,
+      "storage": "bss"
+    },
+    "_byte_449DA": {
+      "load_address": 215514,
+      "storage": "bss"
+    },
+    "_byte_449E2": {
+      "load_address": 215522,
+      "storage": "bss"
+    },
+    "_byte_449E6": {
+      "load_address": 215526,
+      "storage": "bss"
+    },
+    "_byte_44A8A": {
+      "load_address": 215690,
+      "storage": "bss"
     },
     "_byte_44ACA": {
       "evidence": "docs/current/data-binding.md",
@@ -72,6 +1158,82 @@
           "start": 161966
         }
       ],
+      "storage": "bss"
+    },
+    "_byte_454A4": {
+      "load_address": 218276,
+      "storage": "bss"
+    },
+    "_byte_4552F": {
+      "load_address": 218415,
+      "storage": "bss"
+    },
+    "_byte_45948": {
+      "load_address": 219464,
+      "storage": "bss"
+    },
+    "_byte_45950": {
+      "load_address": 219472,
+      "storage": "bss"
+    },
+    "_byte_459D2": {
+      "load_address": 219602,
+      "storage": "bss"
+    },
+    "_byte_459D8": {
+      "load_address": 219608,
+      "storage": "bss"
+    },
+    "_byte_45D0C": {
+      "load_address": 220428,
+      "storage": "bss"
+    },
+    "_byte_45D14": {
+      "load_address": 220436,
+      "storage": "bss"
+    },
+    "_byte_45D90": {
+      "load_address": 220560,
+      "storage": "bss"
+    },
+    "_byte_45D9A": {
+      "load_address": 220570,
+      "storage": "bss"
+    },
+    "_byte_45E16": {
+      "load_address": 220694,
+      "storage": "bss"
+    },
+    "_byte_46167": {
+      "load_address": 221543,
+      "storage": "bss"
+    },
+    "_byte_4616E": {
+      "load_address": 221550,
+      "storage": "bss"
+    },
+    "_byte_46467": {
+      "load_address": 222311,
+      "storage": "bss"
+    },
+    "_byte_4690": {
+      "load_address": 196096,
+      "storage": "initialized"
+    },
+    "_byte_8b20": {
+      "load_address": 213648,
+      "storage": "bss"
+    },
+    "_cameramode": {
+      "load_address": 178421,
+      "storage": "initialized"
+    },
+    "_carshapevecs": {
+      "load_address": 214010,
+      "storage": "bss"
+    },
+    "_chhtres": {
+      "load_address": 211240,
       "storage": "bss"
     },
     "_clip": {
@@ -124,6 +1286,495 @@
       ],
       "storage": "bss"
     },
+    "_crtenvseg": {
+      "load_address": 192016,
+      "storage": "initialized"
+    },
+    "_crtfilehandles": {
+      "load_address": 191988,
+      "storage": "initialized"
+    },
+    "_crtsp1": {
+      "load_address": 191866,
+      "storage": "initialized"
+    },
+    "_current_planptr": {
+      "load_address": 216420,
+      "storage": "bss"
+    },
+    "_current_surf_type": {
+      "load_address": 216391,
+      "storage": "bss"
+    },
+    "_currentvideomode": {
+      "load_address": 197618,
+      "storage": "initialized"
+    },
+    "_curshapeptr": {
+      "load_address": 215544,
+      "storage": "bss"
+    },
+    "_custom_camera_azimuth_angle": {
+      "load_address": 178414,
+      "storage": "initialized"
+    },
+    "_custom_camera_distance": {
+      "load_address": 178412,
+      "storage": "initialized"
+    },
+    "_custom_camera_elevation_angle": {
+      "load_address": 178416,
+      "storage": "initialized"
+    },
+    "_cvxptr": {
+      "load_address": 219680,
+      "storage": "bss"
+    },
+    "_dasmshapeptr": {
+      "load_address": 218272,
+      "storage": "bss"
+    },
+    "_dastbmp_y2": {
+      "load_address": 218268,
+      "storage": "bss"
+    },
+    "_dastseg": {
+      "load_address": 218270,
+      "storage": "bss"
+    },
+    "_data_2B77A": {
+      "load_address": 178042,
+      "storage": "initialized"
+    },
+    "_data_2B77C": {
+      "load_address": 178044,
+      "storage": "initialized"
+    },
+    "_data_2B784": {
+      "load_address": 178052,
+      "storage": "initialized"
+    },
+    "_data_2B79C": {
+      "load_address": 178076,
+      "storage": "initialized"
+    },
+    "_data_2B7FC": {
+      "load_address": 178172,
+      "storage": "initialized"
+    },
+    "_data_2B812": {
+      "load_address": 178194,
+      "storage": "initialized"
+    },
+    "_data_2B838": {
+      "load_address": 178232,
+      "storage": "initialized"
+    },
+    "_data_2B83A": {
+      "load_address": 178234,
+      "storage": "initialized"
+    },
+    "_data_2B842": {
+      "load_address": 178242,
+      "storage": "initialized"
+    },
+    "_data_2B8A8": {
+      "load_address": 178344,
+      "storage": "initialized"
+    },
+    "_data_2B8B0": {
+      "load_address": 178352,
+      "storage": "initialized"
+    },
+    "_data_2B970": {
+      "load_address": 178544,
+      "storage": "initialized"
+    },
+    "_data_2BA74": {
+      "load_address": 178804,
+      "storage": "initialized"
+    },
+    "_data_2BAB0": {
+      "load_address": 178864,
+      "storage": "initialized"
+    },
+    "_data_2BB70": {
+      "load_address": 179056,
+      "storage": "initialized"
+    },
+    "_data_2EBB6": {
+      "load_address": 191414,
+      "storage": "initialized"
+    },
+    "_data_2EDD9": {
+      "load_address": 191961,
+      "storage": "initialized"
+    },
+    "_data_2F724": {
+      "load_address": 194340,
+      "storage": "initialized"
+    },
+    "_data_2F9E2": {
+      "load_address": 195042,
+      "storage": "initialized"
+    },
+    "_data_303C2": {
+      "load_address": 197570,
+      "storage": "initialized"
+    },
+    "_data_31690": {
+      "load_address": 202384,
+      "storage": "bss"
+    },
+    "_data_31852": {
+      "load_address": 202834,
+      "storage": "bss"
+    },
+    "_data_3187C": {
+      "load_address": 202876,
+      "storage": "bss"
+    },
+    "_data_32830": {
+      "load_address": 206896,
+      "storage": "bss"
+    },
+    "_data_32834": {
+      "load_address": 206900,
+      "storage": "bss"
+    },
+    "_data_32838": {
+      "load_address": 206904,
+      "storage": "bss"
+    },
+    "_data_34442": {
+      "load_address": 214082,
+      "storage": "bss"
+    },
+    "_data_34466": {
+      "load_address": 214118,
+      "storage": "bss"
+    },
+    "_data_345C0": {
+      "load_address": 214464,
+      "storage": "bss"
+    },
+    "_data_345E8": {
+      "load_address": 214504,
+      "storage": "bss"
+    },
+    "_data_345F0": {
+      "load_address": 214512,
+      "storage": "bss"
+    },
+    "_data_3493C": {
+      "load_address": 215356,
+      "storage": "bss"
+    },
+    "_data_34960": {
+      "load_address": 215392,
+      "storage": "bss"
+    },
+    "_data_349D0": {
+      "load_address": 215504,
+      "storage": "bss"
+    },
+    "_data_3554C": {
+      "load_address": 218444,
+      "storage": "bss"
+    },
+    "_data_35630": {
+      "load_address": 218672,
+      "storage": "bss"
+    },
+    "_data_35712": {
+      "load_address": 218898,
+      "storage": "bss"
+    },
+    "_data_3595A": {
+      "load_address": 219482,
+      "storage": "bss"
+    },
+    "_data_35F2C": {
+      "load_address": 220972,
+      "storage": "bss"
+    },
+    "_detail_level": {
+      "load_address": 178426,
+      "storage": "initialized"
+    },
+    "_dialog_fnt_colour": {
+      "load_address": 198602,
+      "storage": "initialized"
+    },
+    "_dialogarg2": {
+      "load_address": 198658,
+      "storage": "initialized"
+    },
+    "_dword_3EE18": {
+      "load_address": 192024,
+      "storage": "initialized"
+    },
+    "_dword_3EE20": {
+      "load_address": 192032,
+      "storage": "initialized"
+    },
+    "_dword_3EE26": {
+      "load_address": 192038,
+      "storage": "initialized"
+    },
+    "_dword_3F874": {
+      "load_address": 194676,
+      "storage": "initialized"
+    },
+    "_dword_40C1E": {
+      "load_address": 199710,
+      "storage": "initialized"
+    },
+    "_elapsed_time1": {
+      "load_address": 219684,
+      "storage": "bss"
+    },
+    "_elem_xCenter": {
+      "load_address": 215520,
+      "storage": "bss"
+    },
+    "_elem_zCenter": {
+      "load_address": 215542,
+      "storage": "bss"
+    },
+    "_end_hiscore_random": {
+      "load_address": 200002,
+      "storage": "bss"
+    },
+    "_engptr": {
+      "load_address": 220686,
+      "storage": "bss"
+    },
+    "_f36f40_whlData": {
+      "load_address": 179732,
+      "storage": "initialized"
+    },
+    "_followOpponentFlag": {
+      "load_address": 222176,
+      "storage": "bss"
+    },
+    "_fontdef_value": {
+      "load_address": 219634,
+      "storage": "bss"
+    },
+    "_fontdefptr": {
+      "load_address": 218310,
+      "storage": "bss"
+    },
+    "_fontdefseg": {
+      "load_address": 198144,
+      "storage": "initialized"
+    },
+    "_fontnptr": {
+      "load_address": 216354,
+      "storage": "bss"
+    },
+    "_framespersec2": {
+      "load_address": 216398,
+      "storage": "bss"
+    },
+    "_g_is_busy": {
+      "load_address": 178427,
+      "storage": "initialized"
+    },
+    "_game2ptr": {
+      "load_address": 222162,
+      "storage": "bss"
+    },
+    "_gameconfig": {
+      "load_address": 215460,
+      "storage": "bss",
+      "width": 26,
+      "width_provenance": "reference-label-span: dseg.asm:35353-35379"
+    },
+    "_gameresptr": {
+      "load_address": 215456,
+      "storage": "bss"
+    },
+    "_height_above_replaybar": {
+      "load_address": 219604,
+      "storage": "bss"
+    },
+    "_hillFlag": {
+      "load_address": 215451,
+      "storage": "bss"
+    },
+    "_idle_counter": {
+      "load_address": 215538,
+      "storage": "bss"
+    },
+    "_is_audioloaded": {
+      "load_address": 178419,
+      "storage": "initialized"
+    },
+    "_is_in_replay_copy": {
+      "load_address": 218676,
+      "storage": "bss"
+    },
+    "_joybutton": {
+      "load_address": 195350,
+      "storage": "initialized"
+    },
+    "_joyflag1": {
+      "load_address": 195346,
+      "storage": "initialized"
+    },
+    "_joyflag2": {
+      "load_address": 195348,
+      "storage": "initialized"
+    },
+    "_joyinput": {
+      "load_address": 195351,
+      "storage": "initialized"
+    },
+    "_kb_readchar_callback": {
+      "load_address": 196092,
+      "storage": "initialized",
+      "fields": [
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 133720,
+            "hex": "8b168e46",
+            "operand_offset": 2
+          }
+        }
+      ]
+    },
+    "_kbjoyflags": {
+      "load_address": 218304,
+      "storage": "bss"
+    },
+    "_kbormouse": {
+      "load_address": 178424,
+      "storage": "initialized"
+    },
+    "_last_timer_callback_counter": {
+      "load_address": 198138,
+      "storage": "initialized"
+    },
+    "_material_clrlist2_ptr_cpy": {
+      "load_address": 219606,
+      "storage": "bss"
+    },
+    "_material_clrlist_ptr_cpy": {
+      "load_address": 218674,
+      "storage": "bss"
+    },
+    "_material_patlist2_ptr_cpy": {
+      "load_address": 220562,
+      "storage": "bss"
+    },
+    "_material_patlist_ptr_cpy": {
+      "load_address": 220446,
+      "storage": "bss"
+    },
+    "_meter_needle_color": {
+      "load_address": 216416,
+      "storage": "bss"
+    },
+    "_mouse_butstate": {
+      "load_address": 213736,
+      "storage": "bss"
+    },
+    "_mouse_isdirty": {
+      "load_address": 178425,
+      "storage": "initialized"
+    },
+    "_mouse_xpos": {
+      "load_address": 221548,
+      "storage": "bss"
+    },
+    "_mousehorscale": {
+      "load_address": 197402,
+      "storage": "initialized"
+    },
+    "_nextPosAndNormalIP": {
+      "load_address": 219646,
+      "storage": "bss"
+    },
+    "_off_3BE44": {
+      "load_address": 179780,
+      "storage": "initialized"
+    },
+    "_off_3EF84": {
+      "load_address": 192388,
+      "storage": "initialized"
+    },
+    "_off_3EF88": {
+      "load_address": 192392,
+      "storage": "initialized"
+    },
+    "_off_3EF90": {
+      "load_address": 192400,
+      "storage": "initialized"
+    },
+    "_off_3EF94": {
+      "load_address": 192404,
+      "storage": "initialized"
+    },
+    "_off_3F3C8": {
+      "load_address": 193480,
+      "storage": "initialized"
+    },
+    "_off_4289A": {
+      "load_address": 207002,
+      "storage": "bss"
+    },
+    "_off_428B6": {
+      "load_address": 207030,
+      "storage": "bss"
+    },
+    "_off_42A1E": {
+      "load_address": 207390,
+      "storage": "bss"
+    },
+    "_opp_res": {
+      "load_address": 215552,
+      "storage": "bss"
+    },
+    "_oppnentSped": {
+      "load_address": 216400,
+      "storage": "bss"
+    },
+    "_pState_f36Mminf40sar2": {
+      "load_address": 216904,
+      "storage": "bss"
+    },
+    "_pState_lvec1_x": {
+      "load_address": 215486,
+      "storage": "bss"
+    },
+    "_pState_lvec1_y": {
+      "load_address": 215494,
+      "storage": "bss"
+    },
+    "_pState_lvec1_z": {
+      "load_address": 215498,
+      "storage": "bss"
+    },
+    "_pState_minusRotate_x_2": {
+      "load_address": 216900,
+      "storage": "bss"
+    },
+    "_pState_minusRotate_y_2": {
+      "load_address": 216902,
+      "storage": "bss"
+    },
+    "_pState_minusRotate_z_1": {
+      "load_address": 215448,
+      "storage": "bss"
+    },
+    "_pState_minusRotate_z_2": {
+      "load_address": 216898,
+      "storage": "bss"
+    },
     "_palmap": {
       "evidence": "Pristine target at 0x2ACB5 contains the unrelocated DS:[BX+5472h] store inside the verified file_load_shape2d_palmap_init extent; Restunts seg034.asm:425 identifies that operand as palmap[bx], and dseg.asm:1043/21699 exports palmap with initialized bytes 0..15. DGROUP frame is independently anchored by startup relocation.",
       "load_address": 199650,
@@ -135,6 +1786,120 @@
         }
       ],
       "storage": "initialized"
+    },
+    "_performGraphColor": {
+      "load_address": 198656,
+      "storage": "initialized"
+    },
+    "_planindex": {
+      "load_address": 216518,
+      "storage": "bss"
+    },
+    "_planindex_copy": {
+      "load_address": 216906,
+      "storage": "bss"
+    },
+    "_planptr": {
+      "load_address": 218306,
+      "storage": "bss"
+    },
+    "_poly_linked_list_40ED6": {
+      "load_address": 200406,
+      "storage": "bss"
+    },
+    "_poly_linklist_40ED6_iter2": {
+      "load_address": 214002,
+      "storage": "bss"
+    },
+    "_poly_linklist_40ED6_iter4": {
+      "load_address": 220568,
+      "storage": "bss"
+    },
+    "_polyinfonumpolys": {
+      "load_address": 213734,
+      "storage": "bss"
+    },
+    "_polyinfoptr": {
+      "load_address": 200402,
+      "storage": "bss"
+    },
+    "_polyinfoptrs": {
+      "load_address": 201208,
+      "storage": "bss"
+    },
+    "_pspofs": {
+      "load_address": 196488,
+      "storage": "initialized"
+    },
+    "_pspseg": {
+      "load_address": 196490,
+      "storage": "initialized"
+    },
+    "_readchar_callback_ofs": {
+      "load_address": 196092,
+      "storage": "initialized"
+    },
+    "_readchar_callback_seg": {
+      "load_address": 196094,
+      "storage": "initialized"
+    },
+    "_rect_array_unk3_length": {
+      "load_address": 221542,
+      "storage": "bss"
+    },
+    "_rect_unk": {
+      "load_address": 215556,
+      "storage": "bss"
+    },
+    "_rectptr_unk": {
+      "load_address": 178186,
+      "storage": "initialized"
+    },
+    "_rectptr_unk2": {
+      "load_address": 178184,
+      "storage": "initialized"
+    },
+    "_regs_x86": {
+      "load_address": 215434,
+      "storage": "bss",
+      "width": 14,
+      "width_provenance": "reference-label-span: dseg.asm:35332-35346"
+    },
+    "_replaybar_toggle": {
+      "load_address": 221551,
+      "storage": "bss"
+    },
+    "_resendptr1": {
+      "load_address": 197396,
+      "storage": "initialized"
+    },
+    "_resendptr2": {
+      "load_address": 197398,
+      "storage": "initialized"
+    },
+    "_resmaxsize": {
+      "load_address": 196486,
+      "storage": "initialized"
+    },
+    "_resptr1": {
+      "load_address": 197392,
+      "storage": "initialized"
+    },
+    "_resptr2": {
+      "load_address": 197394,
+      "storage": "initialized"
+    },
+    "_rideres": {
+      "load_address": 218314,
+      "storage": "bss"
+    },
+    "_run_game_random": {
+      "load_address": 208168,
+      "storage": "bss"
+    },
+    "_sdgame2_widths": {
+      "load_address": 218678,
+      "storage": "bss"
     },
     "_sdgame2ptr": {
       "evidence": "Verified independent load_sdgame2_shapes stores AX/DX to adjacent DGROUP BSS words then reads the low word; free_sdgame2 independently reads both. Restunts dseg name is corroborative, not original object/TU proof.",
@@ -169,6 +1934,141 @@
       ],
       "storage": "bss"
     },
+    "_sdgameresptr": {
+      "load_address": 220424,
+      "storage": "bss"
+    },
+    "_select_rect_param": {
+      "load_address": 200400,
+      "storage": "bss"
+    },
+    "_show_penalty_counter": {
+      "load_address": 215455,
+      "storage": "bss"
+    },
+    "_showmouse": {
+      "load_address": 197404,
+      "storage": "initialized"
+    },
+    "_skybox_grd_color": {
+      "load_address": 215688,
+      "storage": "bss"
+    },
+    "_skybox_res_ofs": {
+      "load_address": 221544,
+      "storage": "bss"
+    },
+    "_skybox_res_seg": {
+      "load_address": 221546,
+      "storage": "bss"
+    },
+    "_smouspriteptr": {
+      "load_address": 215490,
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:35380-35381"
+    },
+    "_snarres": {
+      "load_address": 211262,
+      "storage": "bss"
+    },
+    "_someZeroVideoConst": {
+      "load_address": 219644,
+      "storage": "bss"
+    },
+    "_sprite1": {
+      "storage": "code_island",
+      "island": "sprite_pair",
+      "load_address": 149824,
+      "width": 30,
+      "reference_label": "sprite1",
+      "offset_anchor": {
+        "caller_task": "load_2260e",
+        "site": 140820,
+        "hex": "8d36205f",
+        "cs_setup_site": 140831,
+        "cs_setup_hex": "8cc88ed8"
+      }
+    },
+    "_sprite2": {
+      "storage": "code_island",
+      "island": "sprite_pair",
+      "load_address": 149854,
+      "width": 30,
+      "reference_label": "sprite2",
+      "offset_anchor": {
+        "caller_task": "load_2a958",
+        "site": 174460,
+        "hex": "b83e5fbaa21e",
+        "relocation_load_offset": 174464
+      }
+    },
+    "_spritefunc": {
+      "load_address": 197410,
+      "storage": "initialized"
+    },
+    "_startcol2": {
+      "load_address": 215450,
+      "storage": "bss"
+    },
+    "_startrow2": {
+      "load_address": 215454,
+      "storage": "bss"
+    },
+    "_state": {
+      "extent_proof": {
+        "first_line": 34065,
+        "kind": "reference-label-span-v1",
+        "next_line": 35185
+      },
+      "load_address": 214164,
+      "storage": "bss",
+      "width": 1120
+    },
+    "_steerWhlRespTable_ptr": {
+      "load_address": 215528,
+      "storage": "bss"
+    },
+    "_td01_track_file_cpy": {
+      "load_address": 208162,
+      "storage": "bss"
+    },
+    "_td04_aerotable_pl": {
+      "load_address": 216382,
+      "storage": "bss"
+    },
+    "_td05_aerotable_op": {
+      "load_address": 216394,
+      "storage": "bss"
+    },
+    "_td13_rpl_header": {
+      "load_address": 221538,
+      "storage": "bss"
+    },
+    "_td14_elem_map_main": {
+      "load_address": 216386,
+      "storage": "bss"
+    },
+    "_td15_terr_map_main": {
+      "load_address": 218300,
+      "storage": "bss"
+    },
+    "_td16_rpl_buffer": {
+      "load_address": 218670,
+      "storage": "bss"
+    },
+    "_td17_trk_elem_ordered": {
+      "load_address": 215508,
+      "storage": "bss"
+    },
+    "_tempdataptr": {
+      "load_address": 220690,
+      "storage": "bss"
+    },
+    "_terrainHeight": {
+      "load_address": 215532,
+      "storage": "bss"
+    },
     "_textresprefix": {
       "evidence": "Verified init_main writes ASCII e to this DGROUP BSS byte; separate locate_text_res reads it. Restunts dseg name is corroborative, not original object/TU proof.",
       "load_address": 222302,
@@ -185,6 +2085,130 @@
         }
       ],
       "storage": "bss"
+    },
+    "_timer_callback_counter": {
+      "load_address": 194680,
+      "storage": "initialized"
+    },
+    "_timer_copy_unk": {
+      "load_address": 198134,
+      "storage": "initialized"
+    },
+    "_timerintr": {
+      "load_address": 194704,
+      "storage": "initialized"
+    },
+    "_trackdata12": {
+      "load_address": 215534,
+      "storage": "bss"
+    },
+    "_trackdata18": {
+      "load_address": 218326,
+      "storage": "bss"
+    },
+    "_trackdata23": {
+      "load_address": 222172,
+      "storage": "bss"
+    },
+    "_trackdata3": {
+      "load_address": 211266,
+      "storage": "bss"
+    },
+    "_trackdata9": {
+      "load_address": 215516,
+      "storage": "bss"
+    },
+    "_trackrows": {
+      "load_address": 220480,
+      "storage": "bss"
+    },
+    "_tracksmenushape2dunk": {
+      "load_address": 205400,
+      "storage": "bss"
+    },
+    "_transformedshape_arg2array": {
+      "load_address": 219650,
+      "storage": "bss"
+    },
+    "_transformedshape_counter": {
+      "load_address": 220542,
+      "storage": "bss"
+    },
+    "_transformedshape_zarray": {
+      "load_address": 218330,
+      "storage": "bss"
+    },
+    "_transshapenumvertscopy": {
+      "load_address": 215540,
+      "storage": "bss"
+    },
+    "_transshapepolyinfo": {
+      "load_address": 200394,
+      "storage": "bss"
+    },
+    "_unk_3EE1C": {
+      "load_address": 192028,
+      "storage": "initialized"
+    },
+    "_var_6114": {
+      "load_address": 202884,
+      "storage": "bss",
+      "fields": [
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 91165,
+            "hex": "39161661",
+            "operand_offset": 2
+          }
+        }
+      ]
+    },
+    "_var_6118": {
+      "load_address": 202888,
+      "storage": "bss",
+      "fields": [
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 91155,
+            "hex": "8b161a61",
+            "operand_offset": 2
+          }
+        }
+      ]
+    },
+    "_var_611c": {
+      "load_address": 202892,
+      "storage": "bss",
+      "fields": [
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 91468,
+            "hex": "89161e61",
+            "operand_offset": 2
+          }
+        }
+      ]
+    },
+    "_var_6120": {
+      "load_address": 202896,
+      "storage": "bss",
+      "fields": [
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 91448,
+            "hex": "89162261",
+            "operand_offset": 2
+          }
+        }
+      ]
     },
     "_video_flag2_is1": {
       "evidence": "docs/current/rect-union-binding.md",
@@ -210,6 +2234,2847 @@
       ],
       "storage": "bss"
     },
+    "_wallOrientation": {
+      "load_address": 220566,
+      "storage": "bss"
+    },
+    "_wallStartX": {
+      "load_address": 208160,
+      "storage": "bss"
+    },
+    "_wallindex": {
+      "load_address": 213646,
+      "storage": "bss"
+    },
+    "_wallptr": {
+      "load_address": 222304,
+      "storage": "bss"
+    },
+    "_whlsprite2": {
+      "load_address": 200172,
+      "storage": "bss"
+    },
+    "_whlsprite3": {
+      "load_address": 200188,
+      "storage": "bss"
+    },
+    "_wndsprite": {
+      "load_address": 216358,
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:36166-36167"
+    },
+    "_word_2B77E": {
+      "load_address": 178046,
+      "storage": "initialized"
+    },
+    "_word_2B780": {
+      "load_address": 178048,
+      "storage": "initialized"
+    },
+    "_word_2B782": {
+      "load_address": 178050,
+      "storage": "initialized"
+    },
+    "_word_2B7F0": {
+      "load_address": 178160,
+      "storage": "initialized"
+    },
+    "_word_2B7F2": {
+      "load_address": 178162,
+      "storage": "initialized"
+    },
+    "_word_2B7F4": {
+      "load_address": 178164,
+      "storage": "initialized"
+    },
+    "_word_2B7F6": {
+      "load_address": 178166,
+      "storage": "initialized"
+    },
+    "_word_2B814": {
+      "load_address": 178196,
+      "storage": "initialized"
+    },
+    "_word_2B824": {
+      "load_address": 178212,
+      "storage": "initialized"
+    },
+    "_word_2B826": {
+      "load_address": 178214,
+      "storage": "initialized"
+    },
+    "_word_2B8E8": {
+      "load_address": 178408,
+      "storage": "initialized"
+    },
+    "_word_2B8EA": {
+      "load_address": 178410,
+      "storage": "initialized"
+    },
+    "_word_2BB28": {
+      "load_address": 178984,
+      "storage": "initialized"
+    },
+    "_word_2BB32": {
+      "load_address": 178994,
+      "storage": "initialized"
+    },
+    "_word_2BB3C": {
+      "load_address": 179004,
+      "storage": "initialized"
+    },
+    "_word_2BB3E": {
+      "load_address": 179006,
+      "storage": "initialized"
+    },
+    "_word_2BB40": {
+      "load_address": 179008,
+      "storage": "initialized"
+    },
+    "_word_2BB42": {
+      "load_address": 179010,
+      "storage": "initialized"
+    },
+    "_word_2BB44": {
+      "load_address": 179012,
+      "storage": "initialized"
+    },
+    "_word_2BB4E": {
+      "load_address": 179022,
+      "storage": "initialized"
+    },
+    "_word_2BB58": {
+      "load_address": 179032,
+      "storage": "initialized"
+    },
+    "_word_2BB5C": {
+      "load_address": 179036,
+      "storage": "initialized"
+    },
+    "_word_2BB60": {
+      "load_address": 179040,
+      "storage": "initialized"
+    },
+    "_word_2BB62": {
+      "load_address": 179042,
+      "storage": "initialized"
+    },
+    "_word_2BBC8": {
+      "load_address": 179144,
+      "storage": "initialized"
+    },
+    "_word_2BD00": {
+      "load_address": 179456,
+      "storage": "initialized"
+    },
+    "_word_2BD0A": {
+      "load_address": 179466,
+      "storage": "initialized"
+    },
+    "_word_2BDF8": {
+      "load_address": 179704,
+      "storage": "initialized"
+    },
+    "_word_2C084": {
+      "load_address": 180356,
+      "storage": "initialized"
+    },
+    "_word_2C0FC": {
+      "load_address": 180476,
+      "storage": "initialized"
+    },
+    "_word_2C1B6": {
+      "load_address": 180662,
+      "storage": "initialized"
+    },
+    "_word_2C1B8": {
+      "load_address": 180664,
+      "storage": "initialized"
+    },
+    "_word_2C1BA": {
+      "load_address": 180666,
+      "storage": "initialized"
+    },
+    "_word_2C1BC": {
+      "load_address": 180668,
+      "storage": "initialized"
+    },
+    "_word_2C1BE": {
+      "load_address": 180670,
+      "storage": "initialized"
+    },
+    "_word_2D80A": {
+      "load_address": 186378,
+      "storage": "initialized"
+    },
+    "_word_2EA82": {
+      "load_address": 191106,
+      "storage": "initialized"
+    },
+    "_word_2EA84": {
+      "load_address": 191108,
+      "storage": "initialized"
+    },
+    "_word_2EB7E": {
+      "load_address": 191358,
+      "storage": "initialized"
+    },
+    "_word_2EB86": {
+      "load_address": 191366,
+      "storage": "initialized"
+    },
+    "_word_2EBB0": {
+      "load_address": 191408,
+      "storage": "initialized"
+    },
+    "_word_2EBB2": {
+      "load_address": 191410,
+      "storage": "initialized"
+    },
+    "_word_2EBB4": {
+      "load_address": 191412,
+      "storage": "initialized"
+    },
+    "_word_2EBB8": {
+      "load_address": 191416,
+      "storage": "initialized"
+    },
+    "_word_2EBBA": {
+      "load_address": 191418,
+      "storage": "initialized"
+    },
+    "_word_2EBBC": {
+      "load_address": 191420,
+      "storage": "initialized"
+    },
+    "_word_2EBBE": {
+      "load_address": 191422,
+      "storage": "initialized"
+    },
+    "_word_2EBC0": {
+      "load_address": 191424,
+      "storage": "initialized"
+    },
+    "_word_2EBC2": {
+      "load_address": 191426,
+      "storage": "initialized"
+    },
+    "_word_2EBC4": {
+      "load_address": 191428,
+      "storage": "initialized"
+    },
+    "_word_2EDEB": {
+      "load_address": 191979,
+      "storage": "initialized"
+    },
+    "_word_2EE28": {
+      "load_address": 192040,
+      "storage": "initialized"
+    },
+    "_word_2F3C6": {
+      "load_address": 193478,
+      "storage": "initialized"
+    },
+    "_word_2F726": {
+      "load_address": 194342,
+      "storage": "initialized"
+    },
+    "_word_2F7D8": {
+      "load_address": 194520,
+      "storage": "initialized"
+    },
+    "_word_2F876": {
+      "load_address": 194678,
+      "storage": "initialized"
+    },
+    "_word_2F87A": {
+      "load_address": 194682,
+      "storage": "initialized"
+    },
+    "_word_2F892": {
+      "load_address": 194706,
+      "storage": "initialized"
+    },
+    "_word_2FAE2": {
+      "load_address": 195298,
+      "storage": "initialized"
+    },
+    "_word_2FB48": {
+      "load_address": 195400,
+      "storage": "initialized"
+    },
+    "_word_2FB4A": {
+      "load_address": 195402,
+      "storage": "initialized"
+    },
+    "_word_2FB4C": {
+      "load_address": 195404,
+      "storage": "initialized"
+    },
+    "_word_2FB4E": {
+      "load_address": 195406,
+      "storage": "initialized"
+    },
+    "_word_2FB50": {
+      "load_address": 195408,
+      "storage": "initialized"
+    },
+    "_word_2FBD0": {
+      "load_address": 195536,
+      "storage": "initialized"
+    },
+    "_word_2FBD2": {
+      "load_address": 195538,
+      "storage": "initialized"
+    },
+    "_word_2FBD4": {
+      "load_address": 195540,
+      "storage": "initialized"
+    },
+    "_word_2FBD6": {
+      "load_address": 195542,
+      "storage": "initialized"
+    },
+    "_word_2FBD8": {
+      "load_address": 195544,
+      "storage": "initialized"
+    },
+    "_word_30326": {
+      "load_address": 197414,
+      "storage": "initialized"
+    },
+    "_word_303AE": {
+      "load_address": 197550,
+      "storage": "initialized"
+    },
+    "_word_303B0": {
+      "load_address": 197552,
+      "storage": "initialized"
+    },
+    "_word_303B2": {
+      "load_address": 197554,
+      "storage": "initialized"
+    },
+    "_word_303B4": {
+      "load_address": 197556,
+      "storage": "initialized"
+    },
+    "_word_303B6": {
+      "load_address": 197558,
+      "storage": "initialized"
+    },
+    "_word_303B8": {
+      "load_address": 197560,
+      "storage": "initialized"
+    },
+    "_word_303BA": {
+      "load_address": 197562,
+      "storage": "initialized"
+    },
+    "_word_303BC": {
+      "load_address": 197564,
+      "storage": "initialized"
+    },
+    "_word_303BE": {
+      "load_address": 197566,
+      "storage": "initialized"
+    },
+    "_word_303C0": {
+      "load_address": 197568,
+      "storage": "initialized"
+    },
+    "_word_305F8": {
+      "load_address": 198136,
+      "storage": "initialized"
+    },
+    "_word_305FC": {
+      "load_address": 198140,
+      "storage": "initialized"
+    },
+    "_word_30602": {
+      "load_address": 198146,
+      "storage": "initialized"
+    },
+    "_word_3060A": {
+      "load_address": 198154,
+      "storage": "initialized"
+    },
+    "_word_3060C": {
+      "load_address": 198156,
+      "storage": "initialized"
+    },
+    "_word_30B0A": {
+      "load_address": 199434,
+      "storage": "initialized"
+    },
+    "_word_30B0C": {
+      "load_address": 199436,
+      "storage": "initialized"
+    },
+    "_word_30B0E": {
+      "load_address": 199438,
+      "storage": "initialized"
+    },
+    "_word_30B10": {
+      "load_address": 199440,
+      "storage": "initialized"
+    },
+    "_word_30BD6": {
+      "load_address": 199638,
+      "storage": "initialized"
+    },
+    "_word_30C20": {
+      "load_address": 199712,
+      "storage": "initialized"
+    },
+    "_word_30D7C": {
+      "load_address": 200060,
+      "storage": "bss"
+    },
+    "_word_30D7E": {
+      "load_address": 200062,
+      "storage": "bss"
+    },
+    "_word_30D80": {
+      "load_address": 200064,
+      "storage": "bss"
+    },
+    "_word_30D82": {
+      "load_address": 200066,
+      "storage": "bss"
+    },
+    "_word_30D84": {
+      "load_address": 200068,
+      "storage": "bss"
+    },
+    "_word_30D86": {
+      "load_address": 200070,
+      "storage": "bss"
+    },
+    "_word_30D88": {
+      "load_address": 200072,
+      "storage": "bss"
+    },
+    "_word_30D8A": {
+      "load_address": 200074,
+      "storage": "bss"
+    },
+    "_word_30DB0": {
+      "load_address": 200112,
+      "storage": "bss"
+    },
+    "_word_30DB2": {
+      "load_address": 200114,
+      "storage": "bss"
+    },
+    "_word_30DB4": {
+      "load_address": 200116,
+      "storage": "bss"
+    },
+    "_word_30DB6": {
+      "load_address": 200118,
+      "storage": "bss"
+    },
+    "_word_30DB8": {
+      "load_address": 200120,
+      "storage": "bss"
+    },
+    "_word_30DBA": {
+      "load_address": 200122,
+      "storage": "bss"
+    },
+    "_word_30DBC": {
+      "load_address": 200124,
+      "storage": "bss"
+    },
+    "_word_30DBE": {
+      "load_address": 200126,
+      "storage": "bss"
+    },
+    "_word_30DC0": {
+      "load_address": 200128,
+      "storage": "bss"
+    },
+    "_word_30DC2": {
+      "load_address": 200130,
+      "storage": "bss"
+    },
+    "_word_30DC4": {
+      "load_address": 200132,
+      "storage": "bss"
+    },
+    "_word_30DC6": {
+      "load_address": 200134,
+      "storage": "bss"
+    },
+    "_word_30DC8": {
+      "load_address": 200136,
+      "storage": "bss"
+    },
+    "_word_30DCA": {
+      "load_address": 200138,
+      "storage": "bss"
+    },
+    "_word_30DCC": {
+      "load_address": 200140,
+      "storage": "bss"
+    },
+    "_word_30DCE": {
+      "load_address": 200142,
+      "storage": "bss"
+    },
+    "_word_30DD0": {
+      "load_address": 200144,
+      "storage": "bss"
+    },
+    "_word_30DD2": {
+      "load_address": 200146,
+      "storage": "bss"
+    },
+    "_word_30DD4": {
+      "load_address": 200148,
+      "storage": "bss"
+    },
+    "_word_30DD6": {
+      "load_address": 200150,
+      "storage": "bss"
+    },
+    "_word_30DD8": {
+      "load_address": 200152,
+      "storage": "bss"
+    },
+    "_word_30DDA": {
+      "load_address": 200154,
+      "storage": "bss"
+    },
+    "_word_30DDC": {
+      "load_address": 200156,
+      "storage": "bss"
+    },
+    "_word_30DDE": {
+      "load_address": 200158,
+      "storage": "bss"
+    },
+    "_word_30DE0": {
+      "load_address": 200160,
+      "storage": "bss"
+    },
+    "_word_30DE2": {
+      "load_address": 200162,
+      "storage": "bss"
+    },
+    "_word_30DE4": {
+      "load_address": 200164,
+      "storage": "bss"
+    },
+    "_word_30DE6": {
+      "load_address": 200166,
+      "storage": "bss"
+    },
+    "_word_30DEE": {
+      "load_address": 200174,
+      "storage": "bss"
+    },
+    "_word_30DFE": {
+      "load_address": 200190,
+      "storage": "bss"
+    },
+    "_word_30ECC": {
+      "load_address": 200396,
+      "storage": "bss"
+    },
+    "_word_30ED4": {
+      "load_address": 200404,
+      "storage": "bss"
+    },
+    "_word_311FA": {
+      "load_address": 201210,
+      "storage": "bss"
+    },
+    "_word_31850": {
+      "load_address": 202832,
+      "storage": "bss"
+    },
+    "_word_31854": {
+      "load_address": 202836,
+      "storage": "bss"
+    },
+    "_word_31856": {
+      "load_address": 202838,
+      "storage": "bss"
+    },
+    "_word_31858": {
+      "load_address": 202840,
+      "storage": "bss"
+    },
+    "_word_3185A": {
+      "load_address": 202842,
+      "storage": "bss"
+    },
+    "_word_3185C": {
+      "load_address": 202844,
+      "storage": "bss"
+    },
+    "_word_3185E": {
+      "load_address": 202846,
+      "storage": "bss"
+    },
+    "_word_3186A": {
+      "load_address": 202858,
+      "storage": "bss"
+    },
+    "_word_3186C": {
+      "load_address": 202860,
+      "storage": "bss"
+    },
+    "_word_31870": {
+      "load_address": 202864,
+      "storage": "bss"
+    },
+    "_word_31872": {
+      "load_address": 202866,
+      "storage": "bss"
+    },
+    "_word_31874": {
+      "load_address": 202868,
+      "storage": "bss"
+    },
+    "_word_31876": {
+      "load_address": 202870,
+      "storage": "bss"
+    },
+    "_word_31878": {
+      "load_address": 202872,
+      "storage": "bss"
+    },
+    "_word_3187E": {
+      "load_address": 202878,
+      "storage": "bss"
+    },
+    "_word_31880": {
+      "load_address": 202880,
+      "storage": "bss"
+    },
+    "_word_31884": {
+      "load_address": 202884,
+      "storage": "bss"
+    },
+    "_word_31886": {
+      "load_address": 202886,
+      "storage": "bss"
+    },
+    "_word_31888": {
+      "load_address": 202888,
+      "storage": "bss"
+    },
+    "_word_3188A": {
+      "load_address": 202890,
+      "storage": "bss"
+    },
+    "_word_3188C": {
+      "load_address": 202892,
+      "storage": "bss"
+    },
+    "_word_3188E": {
+      "load_address": 202894,
+      "storage": "bss"
+    },
+    "_word_31890": {
+      "load_address": 202896,
+      "storage": "bss"
+    },
+    "_word_31892": {
+      "load_address": 202898,
+      "storage": "bss"
+    },
+    "_word_31AEA": {
+      "load_address": 203498,
+      "storage": "bss"
+    },
+    "_word_3225A": {
+      "load_address": 205402,
+      "storage": "bss"
+    },
+    "_word_32540": {
+      "load_address": 206144,
+      "storage": "bss"
+    },
+    "_word_32542": {
+      "load_address": 206146,
+      "storage": "bss"
+    },
+    "_word_32544": {
+      "load_address": 206148,
+      "storage": "bss"
+    },
+    "_word_32546": {
+      "load_address": 206150,
+      "storage": "bss"
+    },
+    "_word_3282C": {
+      "load_address": 206892,
+      "storage": "bss"
+    },
+    "_word_3282E": {
+      "load_address": 206894,
+      "storage": "bss"
+    },
+    "_word_3283C": {
+      "load_address": 206908,
+      "storage": "bss"
+    },
+    "_word_3283E": {
+      "load_address": 206910,
+      "storage": "bss"
+    },
+    "_word_32888": {
+      "load_address": 206984,
+      "storage": "bss"
+    },
+    "_word_3288A": {
+      "load_address": 206986,
+      "storage": "bss"
+    },
+    "_word_32A30": {
+      "load_address": 207408,
+      "storage": "bss"
+    },
+    "_word_32A32": {
+      "load_address": 207410,
+      "storage": "bss"
+    },
+    "_word_32A34": {
+      "load_address": 207412,
+      "storage": "bss"
+    },
+    "_word_32A36": {
+      "load_address": 207414,
+      "storage": "bss"
+    },
+    "_word_32A3A": {
+      "load_address": 207418,
+      "storage": "bss"
+    },
+    "_word_32A3C": {
+      "load_address": 207420,
+      "storage": "bss"
+    },
+    "_word_32A3E": {
+      "load_address": 207422,
+      "storage": "bss"
+    },
+    "_word_32A40": {
+      "load_address": 207424,
+      "storage": "bss"
+    },
+    "_word_32A42": {
+      "load_address": 207426,
+      "storage": "bss"
+    },
+    "_word_32A44": {
+      "load_address": 207428,
+      "storage": "bss"
+    },
+    "_word_32A46": {
+      "load_address": 207430,
+      "storage": "bss"
+    },
+    "_word_32A48": {
+      "load_address": 207432,
+      "storage": "bss"
+    },
+    "_word_32A4A": {
+      "load_address": 207434,
+      "storage": "bss"
+    },
+    "_word_32A54": {
+      "load_address": 207444,
+      "storage": "bss"
+    },
+    "_word_32A56": {
+      "load_address": 207446,
+      "storage": "bss"
+    },
+    "_word_32A58": {
+      "load_address": 207448,
+      "storage": "bss"
+    },
+    "_word_32A5A": {
+      "load_address": 207450,
+      "storage": "bss"
+    },
+    "_word_32A5C": {
+      "load_address": 207452,
+      "storage": "bss"
+    },
+    "_word_32A5E": {
+      "load_address": 207454,
+      "storage": "bss"
+    },
+    "_word_32CBA": {
+      "load_address": 208058,
+      "storage": "bss"
+    },
+    "_word_32CBE": {
+      "load_address": 208062,
+      "storage": "bss"
+    },
+    "_word_32CC0": {
+      "load_address": 208064,
+      "storage": "bss"
+    },
+    "_word_32CC4": {
+      "load_address": 208068,
+      "storage": "bss"
+    },
+    "_word_32CC6": {
+      "load_address": 208070,
+      "storage": "bss"
+    },
+    "_word_32CC8": {
+      "load_address": 208072,
+      "storage": "bss"
+    },
+    "_word_32D02": {
+      "load_address": 208130,
+      "storage": "bss"
+    },
+    "_word_32D04": {
+      "load_address": 208132,
+      "storage": "bss"
+    },
+    "_word_32D08": {
+      "load_address": 208136,
+      "storage": "bss"
+    },
+    "_word_32D0A": {
+      "load_address": 208138,
+      "storage": "bss"
+    },
+    "_word_32D0E": {
+      "load_address": 208142,
+      "storage": "bss"
+    },
+    "_word_32D10": {
+      "load_address": 208144,
+      "storage": "bss"
+    },
+    "_word_32D12": {
+      "load_address": 208146,
+      "storage": "bss"
+    },
+    "_word_32D24": {
+      "load_address": 208164,
+      "storage": "bss"
+    },
+    "_word_32D2C": {
+      "load_address": 208172,
+      "storage": "bss"
+    },
+    "_word_33748": {
+      "load_address": 210760,
+      "storage": "bss"
+    },
+    "_word_3374A": {
+      "load_address": 210762,
+      "storage": "bss"
+    },
+    "_word_33892": {
+      "load_address": 211090,
+      "storage": "bss"
+    },
+    "_word_33894": {
+      "load_address": 211092,
+      "storage": "bss"
+    },
+    "_word_338A8": {
+      "load_address": 211112,
+      "storage": "bss"
+    },
+    "_word_338AA": {
+      "load_address": 211114,
+      "storage": "bss"
+    },
+    "_word_338E8": {
+      "load_address": 211176,
+      "storage": "bss"
+    },
+    "_word_338EA": {
+      "load_address": 211178,
+      "storage": "bss"
+    },
+    "_word_338EC": {
+      "load_address": 211180,
+      "storage": "bss"
+    },
+    "_word_338EE": {
+      "load_address": 211182,
+      "storage": "bss"
+    },
+    "_word_33924": {
+      "load_address": 211236,
+      "storage": "bss"
+    },
+    "_word_3392A": {
+      "load_address": 211242,
+      "storage": "bss"
+    },
+    "_word_3392E": {
+      "load_address": 211246,
+      "storage": "bss"
+    },
+    "_word_33930": {
+      "load_address": 211248,
+      "storage": "bss"
+    },
+    "_word_33932": {
+      "load_address": 211250,
+      "storage": "bss"
+    },
+    "_word_33934": {
+      "load_address": 211252,
+      "storage": "bss"
+    },
+    "_word_33936": {
+      "load_address": 211254,
+      "storage": "bss"
+    },
+    "_word_33938": {
+      "load_address": 211256,
+      "storage": "bss"
+    },
+    "_word_3393A": {
+      "load_address": 211258,
+      "storage": "bss"
+    },
+    "_word_33940": {
+      "load_address": 211264,
+      "storage": "bss"
+    },
+    "_word_33944": {
+      "load_address": 211268,
+      "storage": "bss"
+    },
+    "_word_3394A": {
+      "load_address": 211274,
+      "storage": "bss"
+    },
+    "_word_3394C": {
+      "load_address": 211276,
+      "storage": "bss"
+    },
+    "_word_3394E": {
+      "load_address": 211278,
+      "storage": "bss"
+    },
+    "_word_3396C": {
+      "load_address": 211308,
+      "storage": "bss"
+    },
+    "_word_3396E": {
+      "load_address": 211310,
+      "storage": "bss"
+    },
+    "_word_3398A": {
+      "load_address": 211338,
+      "storage": "bss"
+    },
+    "_word_3398C": {
+      "load_address": 211340,
+      "storage": "bss"
+    },
+    "_word_339B4": {
+      "load_address": 211380,
+      "storage": "bss"
+    },
+    "_word_339B6": {
+      "load_address": 211382,
+      "storage": "bss"
+    },
+    "_word_3432C": {
+      "load_address": 213804,
+      "storage": "bss"
+    },
+    "_word_3432E": {
+      "load_address": 213806,
+      "storage": "bss"
+    },
+    "_word_34348": {
+      "load_address": 213832,
+      "storage": "bss"
+    },
+    "_word_3434A": {
+      "load_address": 213834,
+      "storage": "bss"
+    },
+    "_word_3434C": {
+      "load_address": 213836,
+      "storage": "bss"
+    },
+    "_word_3434E": {
+      "load_address": 213838,
+      "storage": "bss"
+    },
+    "_word_34350": {
+      "load_address": 213840,
+      "storage": "bss"
+    },
+    "_word_34352": {
+      "load_address": 213842,
+      "storage": "bss"
+    },
+    "_word_34354": {
+      "load_address": 213844,
+      "storage": "bss"
+    },
+    "_word_34356": {
+      "load_address": 213846,
+      "storage": "bss"
+    },
+    "_word_34358": {
+      "load_address": 213848,
+      "storage": "bss"
+    },
+    "_word_3435A": {
+      "load_address": 213850,
+      "storage": "bss"
+    },
+    "_word_3435C": {
+      "load_address": 213852,
+      "storage": "bss"
+    },
+    "_word_3435E": {
+      "load_address": 213854,
+      "storage": "bss"
+    },
+    "_word_34360": {
+      "load_address": 213856,
+      "storage": "bss"
+    },
+    "_word_34362": {
+      "load_address": 213858,
+      "storage": "bss"
+    },
+    "_word_34364": {
+      "load_address": 213860,
+      "storage": "bss"
+    },
+    "_word_34366": {
+      "load_address": 213862,
+      "storage": "bss"
+    },
+    "_word_34368": {
+      "load_address": 213864,
+      "storage": "bss"
+    },
+    "_word_3436A": {
+      "load_address": 213866,
+      "storage": "bss"
+    },
+    "_word_34382": {
+      "load_address": 213890,
+      "storage": "bss"
+    },
+    "_word_343AC": {
+      "load_address": 213932,
+      "storage": "bss"
+    },
+    "_word_343AE": {
+      "load_address": 213934,
+      "storage": "bss"
+    },
+    "_word_343FC": {
+      "load_address": 214012,
+      "storage": "bss"
+    },
+    "_word_343FE": {
+      "load_address": 214014,
+      "storage": "bss"
+    },
+    "_word_3441E": {
+      "load_address": 214046,
+      "storage": "bss"
+    },
+    "_word_34420": {
+      "load_address": 214048,
+      "storage": "bss"
+    },
+    "_word_34422": {
+      "load_address": 214050,
+      "storage": "bss"
+    },
+    "_word_34494": {
+      "load_address": 214164,
+      "storage": "bss"
+    },
+    "_word_34496": {
+      "load_address": 214166,
+      "storage": "bss"
+    },
+    "_word_344F4": {
+      "load_address": 214260,
+      "storage": "bss"
+    },
+    "_word_344F6": {
+      "load_address": 214262,
+      "storage": "bss"
+    },
+    "_word_34554": {
+      "load_address": 214356,
+      "storage": "bss"
+    },
+    "_word_34556": {
+      "load_address": 214358,
+      "storage": "bss"
+    },
+    "_word_345B4": {
+      "load_address": 214452,
+      "storage": "bss"
+    },
+    "_word_345B6": {
+      "load_address": 214454,
+      "storage": "bss"
+    },
+    "_word_345B8": {
+      "load_address": 214456,
+      "storage": "bss"
+    },
+    "_word_345CC": {
+      "load_address": 214476,
+      "storage": "bss"
+    },
+    "_word_345CE": {
+      "load_address": 214478,
+      "storage": "bss"
+    },
+    "_word_345D0": {
+      "load_address": 214480,
+      "storage": "bss"
+    },
+    "_word_345D2": {
+      "load_address": 214482,
+      "storage": "bss"
+    },
+    "_word_345D4": {
+      "load_address": 214484,
+      "storage": "bss"
+    },
+    "_word_345D6": {
+      "load_address": 214486,
+      "storage": "bss"
+    },
+    "_word_345D8": {
+      "load_address": 214488,
+      "storage": "bss"
+    },
+    "_word_345DA": {
+      "load_address": 214490,
+      "storage": "bss"
+    },
+    "_word_345DC": {
+      "load_address": 214492,
+      "storage": "bss"
+    },
+    "_word_345DE": {
+      "load_address": 214494,
+      "storage": "bss"
+    },
+    "_word_345E0": {
+      "load_address": 214496,
+      "storage": "bss"
+    },
+    "_word_345E2": {
+      "load_address": 214498,
+      "storage": "bss"
+    },
+    "_word_345E4": {
+      "load_address": 214500,
+      "storage": "bss"
+    },
+    "_word_345E6": {
+      "load_address": 214502,
+      "storage": "bss"
+    },
+    "_word_345EA": {
+      "load_address": 214506,
+      "storage": "bss"
+    },
+    "_word_345EC": {
+      "load_address": 214508,
+      "storage": "bss"
+    },
+    "_word_345EE": {
+      "load_address": 214510,
+      "storage": "bss"
+    },
+    "_word_345F2": {
+      "load_address": 214514,
+      "storage": "bss"
+    },
+    "_word_345F4": {
+      "load_address": 214516,
+      "storage": "bss"
+    },
+    "_word_345F6": {
+      "load_address": 214518,
+      "storage": "bss"
+    },
+    "_word_345F8": {
+      "load_address": 214520,
+      "storage": "bss"
+    },
+    "_word_345FA": {
+      "load_address": 214522,
+      "storage": "bss"
+    },
+    "_word_345FC": {
+      "load_address": 214524,
+      "storage": "bss"
+    },
+    "_word_345FE": {
+      "load_address": 214526,
+      "storage": "bss"
+    },
+    "_word_34600": {
+      "load_address": 214528,
+      "storage": "bss"
+    },
+    "_word_34602": {
+      "load_address": 214530,
+      "storage": "bss"
+    },
+    "_word_34606": {
+      "load_address": 214534,
+      "storage": "bss"
+    },
+    "_word_34608": {
+      "load_address": 214536,
+      "storage": "bss"
+    },
+    "_word_34610": {
+      "load_address": 214544,
+      "storage": "bss"
+    },
+    "_word_34612": {
+      "load_address": 214546,
+      "storage": "bss"
+    },
+    "_word_3461A": {
+      "load_address": 214554,
+      "storage": "bss"
+    },
+    "_word_3461E": {
+      "load_address": 214558,
+      "storage": "bss"
+    },
+    "_word_3462E": {
+      "load_address": 214574,
+      "storage": "bss"
+    },
+    "_word_34630": {
+      "load_address": 214576,
+      "storage": "bss"
+    },
+    "_word_34632": {
+      "load_address": 214578,
+      "storage": "bss"
+    },
+    "_word_34634": {
+      "load_address": 214580,
+      "storage": "bss"
+    },
+    "_word_34636": {
+      "load_address": 214582,
+      "storage": "bss"
+    },
+    "_word_34638": {
+      "load_address": 214584,
+      "storage": "bss"
+    },
+    "_word_3468A": {
+      "load_address": 214666,
+      "storage": "bss"
+    },
+    "_word_3468C": {
+      "load_address": 214668,
+      "storage": "bss"
+    },
+    "_word_3468E": {
+      "load_address": 214670,
+      "storage": "bss"
+    },
+    "_word_3469C": {
+      "load_address": 214684,
+      "storage": "bss"
+    },
+    "_word_346B6": {
+      "load_address": 214710,
+      "storage": "bss"
+    },
+    "_word_346B8": {
+      "load_address": 214712,
+      "storage": "bss"
+    },
+    "_word_346BA": {
+      "load_address": 214714,
+      "storage": "bss"
+    },
+    "_word_346BC": {
+      "load_address": 214716,
+      "storage": "bss"
+    },
+    "_word_346BE": {
+      "load_address": 214718,
+      "storage": "bss"
+    },
+    "_word_346C0": {
+      "load_address": 214720,
+      "storage": "bss"
+    },
+    "_word_346C2": {
+      "load_address": 214722,
+      "storage": "bss"
+    },
+    "_word_346C4": {
+      "load_address": 214724,
+      "storage": "bss"
+    },
+    "_word_346C6": {
+      "load_address": 214726,
+      "storage": "bss"
+    },
+    "_word_346C8": {
+      "load_address": 214728,
+      "storage": "bss"
+    },
+    "_word_346CA": {
+      "load_address": 214730,
+      "storage": "bss"
+    },
+    "_word_346CC": {
+      "load_address": 214732,
+      "storage": "bss"
+    },
+    "_word_346CE": {
+      "load_address": 214734,
+      "storage": "bss"
+    },
+    "_word_346D0": {
+      "load_address": 214736,
+      "storage": "bss"
+    },
+    "_word_346D2": {
+      "load_address": 214738,
+      "storage": "bss"
+    },
+    "_word_346D6": {
+      "load_address": 214742,
+      "storage": "bss"
+    },
+    "_word_346D8": {
+      "load_address": 214744,
+      "storage": "bss"
+    },
+    "_word_346E0": {
+      "load_address": 214752,
+      "storage": "bss"
+    },
+    "_word_346E2": {
+      "load_address": 214754,
+      "storage": "bss"
+    },
+    "_word_346EC": {
+      "load_address": 214764,
+      "storage": "bss"
+    },
+    "_word_346FA": {
+      "load_address": 214778,
+      "storage": "bss"
+    },
+    "_word_346FC": {
+      "load_address": 214780,
+      "storage": "bss"
+    },
+    "_word_346FE": {
+      "load_address": 214782,
+      "storage": "bss"
+    },
+    "_word_34700": {
+      "load_address": 214784,
+      "storage": "bss"
+    },
+    "_word_3475A": {
+      "load_address": 214874,
+      "storage": "bss"
+    },
+    "_word_3475C": {
+      "load_address": 214876,
+      "storage": "bss"
+    },
+    "_word_3475E": {
+      "load_address": 214878,
+      "storage": "bss"
+    },
+    "_word_34760": {
+      "load_address": 214880,
+      "storage": "bss"
+    },
+    "_word_34762": {
+      "load_address": 214882,
+      "storage": "bss"
+    },
+    "_word_34764": {
+      "load_address": 214884,
+      "storage": "bss"
+    },
+    "_word_34766": {
+      "load_address": 214886,
+      "storage": "bss"
+    },
+    "_word_34768": {
+      "load_address": 214888,
+      "storage": "bss"
+    },
+    "_word_3476A": {
+      "load_address": 214890,
+      "storage": "bss"
+    },
+    "_word_34786": {
+      "load_address": 214918,
+      "storage": "bss"
+    },
+    "_word_34788": {
+      "load_address": 214920,
+      "storage": "bss"
+    },
+    "_word_3478A": {
+      "load_address": 214922,
+      "storage": "bss"
+    },
+    "_word_3478C": {
+      "load_address": 214924,
+      "storage": "bss"
+    },
+    "_word_3478E": {
+      "load_address": 214926,
+      "storage": "bss"
+    },
+    "_word_34790": {
+      "load_address": 214928,
+      "storage": "bss"
+    },
+    "_word_34792": {
+      "load_address": 214930,
+      "storage": "bss"
+    },
+    "_word_347C2": {
+      "load_address": 214978,
+      "storage": "bss"
+    },
+    "_word_347F2": {
+      "load_address": 215026,
+      "storage": "bss"
+    },
+    "_word_34822": {
+      "load_address": 215074,
+      "storage": "bss"
+    },
+    "_word_34852": {
+      "load_address": 215122,
+      "storage": "bss"
+    },
+    "_word_348F4": {
+      "load_address": 215284,
+      "storage": "bss"
+    },
+    "_word_348F6": {
+      "load_address": 215286,
+      "storage": "bss"
+    },
+    "_word_348F8": {
+      "load_address": 215288,
+      "storage": "bss"
+    },
+    "_word_34918": {
+      "load_address": 215320,
+      "storage": "bss"
+    },
+    "_word_3491A": {
+      "load_address": 215322,
+      "storage": "bss"
+    },
+    "_word_3491C": {
+      "load_address": 215324,
+      "storage": "bss"
+    },
+    "_word_34984": {
+      "load_address": 215428,
+      "storage": "bss"
+    },
+    "_word_34986": {
+      "load_address": 215430,
+      "storage": "bss"
+    },
+    "_word_34988": {
+      "load_address": 215432,
+      "storage": "bss"
+    },
+    "_word_3498A": {
+      "load_address": 215434,
+      "storage": "bss"
+    },
+    "_word_3498C": {
+      "load_address": 215436,
+      "storage": "bss"
+    },
+    "_word_3498E": {
+      "load_address": 215438,
+      "storage": "bss"
+    },
+    "_word_34990": {
+      "load_address": 215440,
+      "storage": "bss"
+    },
+    "_word_349A2": {
+      "load_address": 215458,
+      "storage": "bss"
+    },
+    "_word_349BC": {
+      "load_address": 215484,
+      "storage": "bss"
+    },
+    "_word_349C0": {
+      "load_address": 215488,
+      "storage": "bss"
+    },
+    "_word_349C4": {
+      "load_address": 215492,
+      "storage": "bss"
+    },
+    "_word_349C8": {
+      "load_address": 215496,
+      "storage": "bss"
+    },
+    "_word_349CC": {
+      "load_address": 215500,
+      "storage": "bss"
+    },
+    "_word_349D6": {
+      "load_address": 215510,
+      "storage": "bss"
+    },
+    "_word_349DE": {
+      "load_address": 215518,
+      "storage": "bss"
+    },
+    "_word_349F0": {
+      "load_address": 215536,
+      "storage": "bss"
+    },
+    "_word_349FA": {
+      "load_address": 215546,
+      "storage": "bss"
+    },
+    "_word_34A02": {
+      "load_address": 215554,
+      "storage": "bss"
+    },
+    "_word_34A06": {
+      "load_address": 215558,
+      "storage": "bss"
+    },
+    "_word_34A08": {
+      "load_address": 215560,
+      "storage": "bss"
+    },
+    "_word_34A0A": {
+      "load_address": 215562,
+      "storage": "bss"
+    },
+    "_word_34A2C": {
+      "load_address": 215596,
+      "storage": "bss"
+    },
+    "_word_34A2E": {
+      "load_address": 215598,
+      "storage": "bss"
+    },
+    "_word_34A30": {
+      "load_address": 215600,
+      "storage": "bss"
+    },
+    "_word_34A32": {
+      "load_address": 215602,
+      "storage": "bss"
+    },
+    "_word_34A7C": {
+      "load_address": 215676,
+      "storage": "bss"
+    },
+    "_word_34A7E": {
+      "load_address": 215678,
+      "storage": "bss"
+    },
+    "_word_34A8C": {
+      "load_address": 215692,
+      "storage": "bss"
+    },
+    "_word_34AE4": {
+      "load_address": 215780,
+      "storage": "bss"
+    },
+    "_word_34CE6": {
+      "load_address": 216294,
+      "storage": "bss"
+    },
+    "_word_34CE8": {
+      "load_address": 216296,
+      "storage": "bss"
+    },
+    "_word_34CEA": {
+      "load_address": 216298,
+      "storage": "bss"
+    },
+    "_word_34CEC": {
+      "load_address": 216300,
+      "storage": "bss"
+    },
+    "_word_34CEE": {
+      "load_address": 216302,
+      "storage": "bss"
+    },
+    "_word_34D24": {
+      "load_address": 216356,
+      "storage": "bss"
+    },
+    "_word_34D28": {
+      "load_address": 216360,
+      "storage": "bss"
+    },
+    "_word_34D40": {
+      "load_address": 216384,
+      "storage": "bss"
+    },
+    "_word_34D44": {
+      "load_address": 216388,
+      "storage": "bss"
+    },
+    "_word_34D4C": {
+      "load_address": 216396,
+      "storage": "bss"
+    },
+    "_word_34D66": {
+      "load_address": 216422,
+      "storage": "bss"
+    },
+    "_word_34F36": {
+      "load_address": 216886,
+      "storage": "bss"
+    },
+    "_word_34F38": {
+      "load_address": 216888,
+      "storage": "bss"
+    },
+    "_word_34F3A": {
+      "load_address": 216890,
+      "storage": "bss"
+    },
+    "_word_34F3C": {
+      "load_address": 216892,
+      "storage": "bss"
+    },
+    "_word_34F3E": {
+      "load_address": 216894,
+      "storage": "bss"
+    },
+    "_word_34F40": {
+      "load_address": 216896,
+      "storage": "bss"
+    },
+    "_word_354A2": {
+      "load_address": 218274,
+      "storage": "bss"
+    },
+    "_word_354A6": {
+      "load_address": 218278,
+      "storage": "bss"
+    },
+    "_word_354A8": {
+      "load_address": 218280,
+      "storage": "bss"
+    },
+    "_word_354AA": {
+      "load_address": 218282,
+      "storage": "bss"
+    },
+    "_word_354AC": {
+      "load_address": 218284,
+      "storage": "bss"
+    },
+    "_word_354AE": {
+      "load_address": 218286,
+      "storage": "bss"
+    },
+    "_word_354B0": {
+      "load_address": 218288,
+      "storage": "bss"
+    },
+    "_word_354B2": {
+      "load_address": 218290,
+      "storage": "bss"
+    },
+    "_word_354BE": {
+      "load_address": 218302,
+      "storage": "bss"
+    },
+    "_word_354C4": {
+      "load_address": 218308,
+      "storage": "bss"
+    },
+    "_word_354C8": {
+      "load_address": 218312,
+      "storage": "bss"
+    },
+    "_word_354CC": {
+      "load_address": 218316,
+      "storage": "bss"
+    },
+    "_word_35516": {
+      "load_address": 218390,
+      "storage": "bss"
+    },
+    "_word_35518": {
+      "load_address": 218392,
+      "storage": "bss"
+    },
+    "_word_3551A": {
+      "load_address": 218394,
+      "storage": "bss"
+    },
+    "_word_3551C": {
+      "load_address": 218396,
+      "storage": "bss"
+    },
+    "_word_3551E": {
+      "load_address": 218398,
+      "storage": "bss"
+    },
+    "_word_3554A": {
+      "load_address": 218442,
+      "storage": "bss"
+    },
+    "_word_35574": {
+      "load_address": 218484,
+      "storage": "bss"
+    },
+    "_word_35576": {
+      "load_address": 218486,
+      "storage": "bss"
+    },
+    "_word_35578": {
+      "load_address": 218488,
+      "storage": "bss"
+    },
+    "_word_3557A": {
+      "load_address": 218490,
+      "storage": "bss"
+    },
+    "_word_355C8": {
+      "load_address": 218568,
+      "storage": "bss"
+    },
+    "_word_355CA": {
+      "load_address": 218570,
+      "storage": "bss"
+    },
+    "_word_355CC": {
+      "load_address": 218572,
+      "storage": "bss"
+    },
+    "_word_355CE": {
+      "load_address": 218574,
+      "storage": "bss"
+    },
+    "_word_355D0": {
+      "load_address": 218576,
+      "storage": "bss"
+    },
+    "_word_355D4": {
+      "load_address": 218580,
+      "storage": "bss"
+    },
+    "_word_3563C": {
+      "load_address": 218684,
+      "storage": "bss"
+    },
+    "_word_3563E": {
+      "load_address": 218686,
+      "storage": "bss"
+    },
+    "_word_35678": {
+      "load_address": 218744,
+      "storage": "bss"
+    },
+    "_word_35944": {
+      "load_address": 219460,
+      "storage": "bss"
+    },
+    "_word_35946": {
+      "load_address": 219462,
+      "storage": "bss"
+    },
+    "_word_35982": {
+      "load_address": 219522,
+      "storage": "bss"
+    },
+    "_word_35984": {
+      "load_address": 219524,
+      "storage": "bss"
+    },
+    "_word_35986": {
+      "load_address": 219526,
+      "storage": "bss"
+    },
+    "_word_35988": {
+      "load_address": 219528,
+      "storage": "bss"
+    },
+    "_word_359DA": {
+      "load_address": 219610,
+      "storage": "bss"
+    },
+    "_word_359DC": {
+      "load_address": 219612,
+      "storage": "bss"
+    },
+    "_word_359F2": {
+      "load_address": 219634,
+      "storage": "bss"
+    },
+    "_word_359F4": {
+      "load_address": 219636,
+      "storage": "bss"
+    },
+    "_word_359F6": {
+      "load_address": 219638,
+      "storage": "bss"
+    },
+    "_word_35A22": {
+      "load_address": 219682,
+      "storage": "bss"
+    },
+    "_word_35D0A": {
+      "load_address": 220426,
+      "storage": "bss"
+    },
+    "_word_35D22": {
+      "load_address": 220450,
+      "storage": "bss"
+    },
+    "_word_35D24": {
+      "load_address": 220452,
+      "storage": "bss"
+    },
+    "_word_35D42": {
+      "load_address": 220482,
+      "storage": "bss"
+    },
+    "_word_35D80": {
+      "load_address": 220544,
+      "storage": "bss"
+    },
+    "_word_35D82": {
+      "load_address": 220546,
+      "storage": "bss"
+    },
+    "_word_35D84": {
+      "load_address": 220548,
+      "storage": "bss"
+    },
+    "_word_35D86": {
+      "load_address": 220550,
+      "storage": "bss"
+    },
+    "_word_35D88": {
+      "load_address": 220552,
+      "storage": "bss"
+    },
+    "_word_35D8A": {
+      "load_address": 220554,
+      "storage": "bss"
+    },
+    "_word_35D8C": {
+      "load_address": 220556,
+      "storage": "bss"
+    },
+    "_word_35D8E": {
+      "load_address": 220558,
+      "storage": "bss"
+    },
+    "_word_35DB4": {
+      "load_address": 220596,
+      "storage": "bss"
+    },
+    "_word_35DB6": {
+      "load_address": 220598,
+      "storage": "bss"
+    },
+    "_word_35DB8": {
+      "load_address": 220600,
+      "storage": "bss"
+    },
+    "_word_35DBA": {
+      "load_address": 220602,
+      "storage": "bss"
+    },
+    "_word_35DBC": {
+      "load_address": 220604,
+      "storage": "bss"
+    },
+    "_word_35DBE": {
+      "load_address": 220606,
+      "storage": "bss"
+    },
+    "_word_35DC8": {
+      "load_address": 220616,
+      "storage": "bss"
+    },
+    "_word_35DCA": {
+      "load_address": 220618,
+      "storage": "bss"
+    },
+    "_word_35DCC": {
+      "load_address": 220620,
+      "storage": "bss"
+    },
+    "_word_35DCE": {
+      "load_address": 220622,
+      "storage": "bss"
+    },
+    "_word_35DD0": {
+      "load_address": 220624,
+      "storage": "bss"
+    },
+    "_word_35DD2": {
+      "load_address": 220626,
+      "storage": "bss"
+    },
+    "_word_35E10": {
+      "load_address": 220688,
+      "storage": "bss"
+    },
+    "_word_35E14": {
+      "load_address": 220692,
+      "storage": "bss"
+    },
+    "_word_35E1C": {
+      "load_address": 220700,
+      "storage": "bss"
+    },
+    "_word_35E56": {
+      "load_address": 220758,
+      "storage": "bss"
+    },
+    "_word_35E58": {
+      "load_address": 220760,
+      "storage": "bss"
+    },
+    "_word_35E92": {
+      "load_address": 220818,
+      "storage": "bss"
+    },
+    "_word_35F2A": {
+      "load_address": 220970,
+      "storage": "bss"
+    },
+    "_word_35F82": {
+      "load_address": 221058,
+      "storage": "bss"
+    },
+    "_word_35F84": {
+      "load_address": 221060,
+      "storage": "bss"
+    },
+    "_word_35F86": {
+      "load_address": 221062,
+      "storage": "bss"
+    },
+    "_word_36058": {
+      "load_address": 221272,
+      "storage": "bss"
+    },
+    "_word_3605A": {
+      "load_address": 221274,
+      "storage": "bss"
+    },
+    "_word_3605C": {
+      "load_address": 221276,
+      "storage": "bss"
+    },
+    "_word_3615E": {
+      "load_address": 221534,
+      "storage": "bss"
+    },
+    "_word_36160": {
+      "load_address": 221536,
+      "storage": "bss"
+    },
+    "_word_36164": {
+      "load_address": 221540,
+      "storage": "bss"
+    },
+    "_word_3617E": {
+      "load_address": 221566,
+      "storage": "bss"
+    },
+    "_word_36180": {
+      "load_address": 221568,
+      "storage": "bss"
+    },
+    "_word_36182": {
+      "load_address": 221570,
+      "storage": "bss"
+    },
+    "_word_36184": {
+      "load_address": 221572,
+      "storage": "bss"
+    },
+    "_word_36186": {
+      "load_address": 221574,
+      "storage": "bss"
+    },
+    "_word_361C2": {
+      "load_address": 221634,
+      "storage": "bss"
+    },
+    "_word_361C4": {
+      "load_address": 221636,
+      "storage": "bss"
+    },
+    "_word_361C6": {
+      "load_address": 221638,
+      "storage": "bss"
+    },
+    "_word_361CA": {
+      "load_address": 221642,
+      "storage": "bss"
+    },
+    "_word_361CC": {
+      "load_address": 221644,
+      "storage": "bss"
+    },
+    "_word_361CE": {
+      "load_address": 221646,
+      "storage": "bss"
+    },
+    "_word_361D0": {
+      "load_address": 221648,
+      "storage": "bss"
+    },
+    "_word_363D4": {
+      "load_address": 222164,
+      "storage": "bss"
+    },
+    "_word_363DA": {
+      "load_address": 222170,
+      "storage": "bss"
+    },
+    "_word_363DE": {
+      "load_address": 222174,
+      "storage": "bss"
+    },
+    "_word_363E2": {
+      "load_address": 222178,
+      "storage": "bss"
+    },
+    "_word_36434": {
+      "load_address": 222260,
+      "storage": "bss"
+    },
+    "_word_36462": {
+      "load_address": 222306,
+      "storage": "bss"
+    },
+    "_word_3B770": {
+      "load_address": 178032,
+      "storage": "initialized"
+    },
+    "_word_3B772": {
+      "load_address": 178034,
+      "storage": "initialized"
+    },
+    "_word_3B774": {
+      "load_address": 178036,
+      "storage": "initialized"
+    },
+    "_word_3BCDE": {
+      "load_address": 179422,
+      "storage": "initialized"
+    },
+    "_word_3BCE4": {
+      "load_address": 179428,
+      "storage": "initialized"
+    },
+    "_word_3BCEC": {
+      "load_address": 179436,
+      "storage": "initialized"
+    },
+    "_word_3BCEE": {
+      "load_address": 179438,
+      "storage": "initialized"
+    },
+    "_word_3BCF0": {
+      "load_address": 179440,
+      "storage": "initialized"
+    },
+    "_word_3BCF2": {
+      "load_address": 179442,
+      "storage": "initialized"
+    },
+    "_word_3BCF6": {
+      "load_address": 179446,
+      "storage": "initialized"
+    },
+    "_word_3BD72": {
+      "load_address": 179570,
+      "storage": "initialized"
+    },
+    "_word_3BE04": {
+      "load_address": 179716,
+      "storage": "initialized"
+    },
+    "_word_3BE0C": {
+      "load_address": 179724,
+      "storage": "initialized"
+    },
+    "_word_3BE16": {
+      "load_address": 179734,
+      "storage": "initialized"
+    },
+    "_word_3BE30": {
+      "load_address": 179760,
+      "storage": "initialized"
+    },
+    "_word_3BE32": {
+      "load_address": 179762,
+      "storage": "initialized"
+    },
+    "_word_3BE34": {
+      "load_address": 179764,
+      "storage": "initialized"
+    },
+    "_word_3C0D6": {
+      "load_address": 180438,
+      "storage": "initialized"
+    },
+    "_word_3C108": {
+      "load_address": 180488,
+      "storage": "initialized"
+    },
+    "_word_3C10A": {
+      "load_address": 180490,
+      "storage": "initialized"
+    },
+    "_word_3C10C": {
+      "load_address": 180492,
+      "storage": "initialized"
+    },
+    "_word_3C10E": {
+      "load_address": 180494,
+      "storage": "initialized"
+    },
+    "_word_3C110": {
+      "load_address": 180496,
+      "storage": "initialized"
+    },
+    "_word_3C112": {
+      "load_address": 180498,
+      "storage": "initialized"
+    },
+    "_word_3EB2A": {
+      "load_address": 191274,
+      "storage": "initialized"
+    },
+    "_word_3EB90": {
+      "load_address": 191376,
+      "storage": "initialized"
+    },
+    "_word_3ECBE": {
+      "load_address": 191678,
+      "storage": "initialized"
+    },
+    "_word_3ED74": {
+      "load_address": 191860,
+      "storage": "initialized"
+    },
+    "_word_3EDCA": {
+      "load_address": 191946,
+      "storage": "initialized"
+    },
+    "_word_3EDF2": {
+      "load_address": 191986,
+      "storage": "initialized"
+    },
+    "_word_3EE0C": {
+      "load_address": 192012,
+      "storage": "initialized"
+    },
+    "_word_3EE0E": {
+      "load_address": 192014,
+      "storage": "initialized",
+      "fields": [
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 118552,
+            "hex": "8c06a036",
+            "operand_offset": 2
+          }
+        }
+      ]
+    },
+    "_word_3EE1E": {
+      "load_address": 192030,
+      "storage": "initialized"
+    },
+    "_word_3EE24": {
+      "load_address": 192036,
+      "storage": "initialized"
+    },
+    "_word_3EE3E": {
+      "load_address": 192062,
+      "storage": "initialized"
+    },
+    "_word_3EF58": {
+      "load_address": 192344,
+      "storage": "initialized"
+    },
+    "_word_3EF6E": {
+      "load_address": 192366,
+      "storage": "initialized"
+    },
+    "_word_3EF70": {
+      "load_address": 192368,
+      "storage": "initialized"
+    },
+    "_word_3EF74": {
+      "load_address": 192372,
+      "storage": "initialized"
+    },
+    "_word_3EF98": {
+      "load_address": 192408,
+      "storage": "initialized"
+    },
+    "_word_3EF9A": {
+      "load_address": 192410,
+      "storage": "initialized"
+    },
+    "_word_3F0A0": {
+      "load_address": 192672,
+      "storage": "initialized"
+    },
+    "_word_3F0A2": {
+      "load_address": 192674,
+      "storage": "initialized"
+    },
+    "_word_3F1C2": {
+      "load_address": 192962,
+      "storage": "initialized"
+    },
+    "_word_3F1C4": {
+      "load_address": 192964,
+      "storage": "initialized"
+    },
+    "_word_3F87C": {
+      "load_address": 194684,
+      "storage": "initialized"
+    },
+    "_word_3F87E": {
+      "load_address": 194686,
+      "storage": "initialized"
+    },
+    "_word_3F882": {
+      "load_address": 194690,
+      "storage": "initialized"
+    },
+    "_word_3F884": {
+      "load_address": 194692,
+      "storage": "initialized"
+    },
+    "_word_3F886": {
+      "load_address": 194694,
+      "storage": "initialized"
+    },
+    "_word_3F888": {
+      "load_address": 194696,
+      "storage": "initialized"
+    },
+    "_word_3F88A": {
+      "load_address": 194698,
+      "storage": "initialized"
+    },
+    "_word_3F88E": {
+      "load_address": 194702,
+      "storage": "initialized"
+    },
+    "_word_3FB02": {
+      "load_address": 195330,
+      "storage": "initialized"
+    },
+    "_word_3FB04": {
+      "load_address": 195332,
+      "storage": "initialized"
+    },
+    "_word_3FB18": {
+      "load_address": 195352,
+      "storage": "initialized"
+    },
+    "_word_3FB1A": {
+      "load_address": 195354,
+      "storage": "initialized"
+    },
+    "_word_3FB1C": {
+      "load_address": 195356,
+      "storage": "initialized"
+    },
+    "_word_3FB1E": {
+      "load_address": 195358,
+      "storage": "initialized"
+    },
+    "_word_3FB20": {
+      "load_address": 195360,
+      "storage": "initialized"
+    },
+    "_word_3FB22": {
+      "load_address": 195362,
+      "storage": "initialized"
+    },
+    "_word_3FB24": {
+      "load_address": 195364,
+      "storage": "initialized"
+    },
+    "_word_3FB26": {
+      "load_address": 195366,
+      "storage": "initialized"
+    },
+    "_word_3FB28": {
+      "load_address": 195368,
+      "storage": "initialized"
+    },
+    "_word_3FB2A": {
+      "load_address": 195370,
+      "storage": "initialized"
+    },
+    "_word_3FB2C": {
+      "load_address": 195372,
+      "storage": "initialized"
+    },
+    "_word_3FB2E": {
+      "load_address": 195374,
+      "storage": "initialized"
+    },
+    "_word_3FB30": {
+      "load_address": 195376,
+      "storage": "initialized"
+    },
+    "_word_3FB32": {
+      "load_address": 195378,
+      "storage": "initialized"
+    },
+    "_word_3FB34": {
+      "load_address": 195380,
+      "storage": "initialized"
+    },
+    "_word_3FB36": {
+      "load_address": 195382,
+      "storage": "initialized"
+    },
+    "_word_3FF82": {
+      "load_address": 196482,
+      "storage": "initialized"
+    },
+    "_word_3FF84": {
+      "load_address": 196484,
+      "storage": "initialized"
+    },
+    "_word_40318": {
+      "load_address": 197400,
+      "storage": "initialized"
+    },
+    "_word_4031E": {
+      "load_address": 197406,
+      "storage": "initialized"
+    },
+    "_word_40320": {
+      "load_address": 197408,
+      "storage": "initialized"
+    },
+    "_word_4032E": {
+      "load_address": 197422,
+      "storage": "initialized"
+    },
+    "_word_40330": {
+      "load_address": 197424,
+      "storage": "initialized"
+    },
+    "_word_40332": {
+      "load_address": 197426,
+      "storage": "initialized"
+    },
+    "_word_40334": {
+      "load_address": 197428,
+      "storage": "initialized"
+    },
+    "_word_405FE": {
+      "load_address": 198142,
+      "storage": "initialized"
+    },
+    "_word_4063A": {
+      "load_address": 198202,
+      "storage": "initialized"
+    },
+    "_word_4063C": {
+      "load_address": 198204,
+      "storage": "initialized"
+    },
+    "_word_407AA": {
+      "load_address": 198570,
+      "storage": "initialized"
+    },
+    "_word_407CC": {
+      "load_address": 198604,
+      "storage": "initialized"
+    },
+    "_word_407CE": {
+      "load_address": 198606,
+      "storage": "initialized"
+    },
+    "_word_407D0": {
+      "load_address": 198608,
+      "storage": "initialized"
+    },
+    "_word_407D2": {
+      "load_address": 198610,
+      "storage": "initialized"
+    },
+    "_word_407D4": {
+      "load_address": 198612,
+      "storage": "initialized"
+    },
+    "_word_407D6": {
+      "load_address": 198614,
+      "storage": "initialized"
+    },
+    "_word_407D8": {
+      "load_address": 198616,
+      "storage": "initialized"
+    },
+    "_word_407DA": {
+      "load_address": 198618,
+      "storage": "initialized"
+    },
+    "_word_407DC": {
+      "load_address": 198620,
+      "storage": "initialized"
+    },
+    "_word_407DE": {
+      "load_address": 198622,
+      "storage": "initialized"
+    },
+    "_word_407E0": {
+      "load_address": 198624,
+      "storage": "initialized"
+    },
+    "_word_407E2": {
+      "load_address": 198626,
+      "storage": "initialized"
+    },
+    "_word_407E4": {
+      "load_address": 198628,
+      "storage": "initialized"
+    },
+    "_word_407E6": {
+      "load_address": 198630,
+      "storage": "initialized"
+    },
+    "_word_407E8": {
+      "load_address": 198632,
+      "storage": "initialized"
+    },
+    "_word_407EA": {
+      "load_address": 198634,
+      "storage": "initialized"
+    },
+    "_word_407EC": {
+      "load_address": 198636,
+      "storage": "initialized"
+    },
+    "_word_407EE": {
+      "load_address": 198638,
+      "storage": "initialized"
+    },
+    "_word_407F0": {
+      "load_address": 198640,
+      "storage": "initialized"
+    },
+    "_word_407F2": {
+      "load_address": 198642,
+      "storage": "initialized"
+    },
+    "_word_407F4": {
+      "load_address": 198644,
+      "storage": "initialized"
+    },
+    "_word_407F6": {
+      "load_address": 198646,
+      "storage": "initialized"
+    },
+    "_word_407F8": {
+      "load_address": 198648,
+      "storage": "initialized"
+    },
+    "_word_40D3A": {
+      "load_address": 199994,
+      "storage": "bss"
+    },
+    "_word_40D3C": {
+      "load_address": 199996,
+      "storage": "bss"
+    },
+    "_word_40D3E": {
+      "load_address": 199998,
+      "storage": "bss"
+    },
+    "_word_40D40": {
+      "load_address": 200000,
+      "storage": "bss"
+    },
+    "_word_40D44": {
+      "load_address": 200004,
+      "storage": "bss"
+    },
+    "_word_40D6C": {
+      "load_address": 200044,
+      "storage": "bss"
+    },
+    "_word_40D70": {
+      "load_address": 200048,
+      "storage": "bss"
+    },
+    "_word_40D74": {
+      "load_address": 200052,
+      "storage": "bss"
+    },
+    "_word_40D78": {
+      "load_address": 200056,
+      "storage": "bss"
+    },
+    "_word_40DF2": {
+      "load_address": 200178,
+      "storage": "bss"
+    },
+    "_word_40DF6": {
+      "load_address": 200182,
+      "storage": "bss"
+    },
+    "_word_40E00": {
+      "load_address": 200192,
+      "storage": "bss"
+    },
+    "_word_40ECE": {
+      "load_address": 200398,
+      "storage": "bss"
+    },
+    "_word_411F6": {
+      "load_address": 201206,
+      "storage": "bss"
+    },
+    "_word_42240": {
+      "load_address": 205376,
+      "storage": "bss"
+    },
+    "_word_42242": {
+      "load_address": 205378,
+      "storage": "bss"
+    },
+    "_word_42244": {
+      "load_address": 205380,
+      "storage": "bss"
+    },
+    "_word_42248": {
+      "load_address": 205384,
+      "storage": "bss"
+    },
+    "_word_4224A": {
+      "load_address": 205386,
+      "storage": "bss"
+    },
+    "_word_4224C": {
+      "load_address": 205388,
+      "storage": "bss"
+    },
+    "_word_4224E": {
+      "load_address": 205390,
+      "storage": "bss"
+    },
+    "_word_42250": {
+      "load_address": 205392,
+      "storage": "bss"
+    },
+    "_word_42252": {
+      "load_address": 205394,
+      "storage": "bss"
+    },
+    "_word_42254": {
+      "load_address": 205396,
+      "storage": "bss"
+    },
+    "_word_42256": {
+      "load_address": 205398,
+      "storage": "bss"
+    },
+    "_word_42898": {
+      "load_address": 207000,
+      "storage": "bss"
+    },
+    "_word_4289C": {
+      "load_address": 207004,
+      "storage": "bss"
+    },
+    "_word_4289E": {
+      "load_address": 207006,
+      "storage": "bss"
+    },
+    "_word_428A0": {
+      "load_address": 207008,
+      "storage": "bss"
+    },
+    "_word_428A2": {
+      "load_address": 207010,
+      "storage": "bss"
+    },
+    "_word_428A4": {
+      "load_address": 207012,
+      "storage": "bss"
+    },
+    "_word_428A6": {
+      "load_address": 207014,
+      "storage": "bss"
+    },
+    "_word_428A8": {
+      "load_address": 207016,
+      "storage": "bss"
+    },
+    "_word_428AA": {
+      "load_address": 207018,
+      "storage": "bss"
+    },
+    "_word_428AC": {
+      "load_address": 207020,
+      "storage": "bss"
+    },
+    "_word_428AE": {
+      "load_address": 207022,
+      "storage": "bss"
+    },
+    "_word_428B0": {
+      "load_address": 207024,
+      "storage": "bss"
+    },
+    "_word_428B2": {
+      "load_address": 207026,
+      "storage": "bss"
+    },
+    "_word_428B4": {
+      "load_address": 207028,
+      "storage": "bss"
+    },
+    "_word_428B8": {
+      "load_address": 207032,
+      "storage": "bss"
+    },
+    "_word_428BA": {
+      "load_address": 207034,
+      "storage": "bss"
+    },
+    "_word_428BC": {
+      "load_address": 207036,
+      "storage": "bss"
+    },
+    "_word_42A0A": {
+      "load_address": 207370,
+      "storage": "bss"
+    },
+    "_word_42A0C": {
+      "load_address": 207372,
+      "storage": "bss"
+    },
+    "_word_42A10": {
+      "load_address": 207376,
+      "storage": "bss"
+    },
+    "_word_42A12": {
+      "load_address": 207378,
+      "storage": "bss"
+    },
+    "_word_42A16": {
+      "load_address": 207382,
+      "storage": "bss"
+    },
+    "_word_42A18": {
+      "load_address": 207384,
+      "storage": "bss"
+    },
+    "_word_42A1A": {
+      "load_address": 207386,
+      "storage": "bss"
+    },
+    "_word_42A1C": {
+      "load_address": 207388,
+      "storage": "bss"
+    },
+    "_word_42A20": {
+      "load_address": 207392,
+      "storage": "bss"
+    },
+    "_word_42A22": {
+      "load_address": 207394,
+      "storage": "bss"
+    },
+    "_word_43964": {
+      "load_address": 211300,
+      "storage": "bss"
+    },
+    "_word_43A8": {
+      "load_address": 195352,
+      "storage": "initialized"
+    },
+    "_word_43AC": {
+      "load_address": 195356,
+      "storage": "initialized"
+    },
+    "_word_43B6": {
+      "load_address": 195366,
+      "storage": "initialized"
+    },
+    "_word_43BA": {
+      "load_address": 195370,
+      "storage": "initialized"
+    },
+    "_word_4408C": {
+      "load_address": 213132,
+      "storage": "bss"
+    },
+    "_word_443E8": {
+      "load_address": 213992,
+      "storage": "bss"
+    },
+    "_word_443F4": {
+      "load_address": 214004,
+      "storage": "bss"
+    },
+    "_word_4448A": {
+      "load_address": 214154,
+      "storage": "bss"
+    },
+    "_word_4499C": {
+      "load_address": 215452,
+      "storage": "bss"
+    },
+    "_word_449E4": {
+      "load_address": 215524,
+      "storage": "bss"
+    },
+    "_word_449EA": {
+      "load_address": 215530,
+      "storage": "bss"
+    },
+    "_word_449F2": {
+      "load_address": 215538,
+      "storage": "bss"
+    },
+    "_word_449FC": {
+      "load_address": 215548,
+      "storage": "bss"
+    },
+    "_word_449FE": {
+      "load_address": 215550,
+      "storage": "bss"
+    },
+    "_word_44D1E": {
+      "load_address": 216350,
+      "storage": "bss"
+    },
+    "_word_44D20": {
+      "load_address": 216352,
+      "storage": "bss"
+    },
+    "_word_44D3C": {
+      "load_address": 216380,
+      "storage": "bss"
+    },
+    "_word_44D48": {
+      "load_address": 216392,
+      "storage": "bss"
+    },
+    "_word_44D62": {
+      "load_address": 216418,
+      "storage": "bss"
+    },
+    "_word_44DCA": {
+      "load_address": 216522,
+      "storage": "bss"
+    },
+    "_word_44DCC": {
+      "load_address": 216524,
+      "storage": "bss"
+    },
+    "_word_454BA": {
+      "load_address": 218298,
+      "storage": "bss"
+    },
+    "_word_454CE": {
+      "load_address": 218318,
+      "storage": "bss"
+    },
+    "_word_45A00": {
+      "load_address": 219648,
+      "storage": "bss"
+    },
+    "_word_45D06": {
+      "load_address": 220422,
+      "storage": "bss"
+    },
+    "_word_45D1C": {
+      "load_address": 220444,
+      "storage": "bss"
+    },
+    "_word_45D3E": {
+      "load_address": 220478,
+      "storage": "bss"
+    },
+    "_word_45D7C": {
+      "load_address": 220540,
+      "storage": "bss"
+    },
+    "_word_45D94": {
+      "load_address": 220564,
+      "storage": "bss"
+    },
+    "_word_46170": {
+      "load_address": 221552,
+      "storage": "bss"
+    },
+    "_word_46172": {
+      "load_address": 221554,
+      "storage": "bss"
+    },
+    "_word_463D6": {
+      "load_address": 222166,
+      "storage": "bss"
+    },
     "_word_46468": {
       "evidence": "Verified frame_callback increment and separate update_frame load use DS:ACF8. Startup-pinned DGROUP places the full word in cleared BSS; Restunts name is a binding alias, original PUBDEF/TU owner unproved.",
       "load_address": 222312,
@@ -227,6 +5092,83 @@
       ],
       "storage": "bss",
       "width": 2
+    },
+    "_word_4646A": {
+      "load_address": 222314,
+      "storage": "bss"
+    },
+    "_word_46486": {
+      "load_address": 222342,
+      "storage": "bss"
+    },
+    "_word_4ECC": {
+      "load_address": 198204,
+      "storage": "initialized"
+    },
+    "_word_4eca": {
+      "load_address": 198202,
+      "storage": "initialized"
+    },
+    "_word_9282": {
+      "load_address": 215538,
+      "storage": "bss"
+    },
+    "_word_A596": {
+      "load_address": 220422,
+      "storage": "bss"
+    },
+    "_word_A5AC": {
+      "load_address": 220444,
+      "storage": "bss"
+    },
+    "_g_ascii_props": {
+      "load_address": 192415,
+      "storage": "initialized",
+      "width": 256,
+      "extent_proof": {
+        "kind": "ascii-table-256-v1",
+        "first_line": 15377,
+        "last_value_line": 15632,
+        "padding_line": 15633,
+        "next_label_line": 15634
+      }
+    },
+    "_audiodriverstring": {
+      "load_address": 199442,
+      "storage": "initialized",
+      "width": 5,
+      "width_provenance": "reference-label-span: dseg.asm:21497-21502"
+    },
+    "_mmouspriteptr": {
+      "load_address": 213860,
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:33805-33806"
+    },
+    "_mouseunkspriteptr": {
+      "load_address": 218568,
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:38300-38301"
+    }
+  },
+  "code_islands": {
+    "sprite_pair": {
+      "start": 149824,
+      "end": 149884,
+      "sha256": "9cd4a83a13ec314b6d4a33ddd70df061804d17760cf93170c3cfb3df74b05146",
+      "frame_load_address": 125472,
+      "reference_path": "src/restunts/asmorig/seg012.asm",
+      "reference_lines": [
+        13738,
+        13798
+      ],
+      "frame_anchor": {
+        "caller_task": "load_2a958",
+        "site": 174460,
+        "hex": "b83e5fbaa21e",
+        "relocation_load_offset": 174464
+      }
     }
   }
 }

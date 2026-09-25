@@ -37,9 +37,45 @@ def validate_layout(manifest, size):
     at = 0
     for owner in manifest['owners']:
         require(owner['start'] == at and at < owner['end'] <= size, 'Ownership gap/overlap/invalid extent')
-        require(owner['kind'] in ['UNRESOLVED_RAW', 'MATCHING_C', 'KNOWN_TOOLCHAIN_LIBRARY'], 'Unsupported production ownership')
+        require(owner['kind'] in ['UNRESOLVED_RAW', 'MATCHING_C',
+                                  'MATCHING_C_DATA', 'KNOWN_TOOLCHAIN_LIBRARY'],
+                'Unsupported production ownership')
         at = owner['end']
     require(at == size, 'Ownership does not cover full initialized image')
+    parents={o['id']:o for o in manifest['owners'] if o['kind']=='MATCHING_C'}
+    data=[o for o in manifest['owners'] if o['kind']=='MATCHING_C_DATA']
+    bss_data=[o for o in manifest.get('bss_owners',[]) if o['kind']=='MATCHING_C_DATA']
+    for row in data:
+        require(row['parent'] in parents and row['segment'] in ('_DATA','CONST') and
+                {'segment':row['segment'],'start':row['start'],'end':row['end'],
+                 'target':row['target']} in parents[row['parent']].get('data_intervals',[]),
+                'Orphaned or unlisted initialized C data owner')
+    for parent in parents.values():
+        keys=[(i['segment'],i['start'],i['end'],i['target']['sha256'])
+              for i in parent.get('data_intervals',[])]
+        require(len(keys)==len(set(keys)), 'Duplicate C data interval claim')
+        for interval in parent.get('data_intervals',[]):
+            partition=bss_data if interval['segment']=='_BSS' else data
+            require(sum(o['parent']==parent['id'] and
+                        (o['segment'],o['start'],o['end'],o['target'])==
+                        (interval['segment'],interval['start'],interval['end'],interval['target'])
+                        for o in partition)==1,
+                    'C data/BSS interval lacks exactly one owner')
+    if 'bss_owners' in manifest:
+        layout=read_json(ROOT/'layout/data-symbols.json')
+        position=layout['bss_start']
+        for owner in manifest['bss_owners']:
+            require(owner['start']==position and position<owner['end']<=layout['bss_end'],
+                    'BSS ownership gap/overlap')
+            position=owner['end']
+            if owner['kind']=='MATCHING_C_DATA':
+                require(owner['segment']=='_BSS' and owner['parent'] in parents and
+                        {'segment':'_BSS','start':owner['start'],'end':owner['end'],
+                         'target':owner['target']} in parents[owner['parent']].get('data_intervals',[]),
+                        'Orphaned BSS owner')
+            else:
+                require(owner['kind']=='UNRESOLVED_RAW','Unsupported BSS owner')
+        require(position==layout['bss_end'],'BSS ownership does not cover clear range')
 
 def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=None, *, allow_pending=False, artifact=None):
     output = ROOT / 'build/exact'
@@ -59,25 +95,51 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
     validate_layout(manifest, len(original))
     production_before = production_inputs(manifest, recipe_overrides, before, source_overrides)
     chunks, receipts, matching, libraries = [], [], 0, 0
+    emitted={}
+    compiled={}
+    for owner in manifest['owners']:
+        if owner['kind']!='MATCHING_C': continue
+        recipe=(recipe_overrides or {}).get(owner['recipe']) or read_json(ROOT/owner['recipe'])
+        require((recipe['start'],recipe['end'])==(owner['start'],owner['end']),
+                'Recipe ownership mismatch')
+        require(recipe['source'].startswith('src/'), 'Production must consume recovered src/')
+        compiled[owner['id']]=probe(recipe,oracle,(source_overrides or {}).get(recipe['source']))
+        emitted[owner['id']]={name:bytes.fromhex(raw) for name,raw in
+            compiled[owner['id']][1]['binding'].get('secondary_payloads',{}).items()}
     for owner in manifest['owners']:
         start, end = owner['start'], owner['end']
         if owner['kind'] == 'UNRESOLVED_RAW':
             chunks.append(original[start:end])
         elif owner['kind']=='KNOWN_TOOLCHAIN_LIBRARY':
-            payload,receipt=bind_library(owner,original,mz.relocations)
+            payload,receipt=bind_library(owner,original,mz.relocations,manifest=manifest)
             chunks.append(payload)
             receipts.append(receipt)
             libraries+=len(payload)
+        elif owner['kind']=='MATCHING_C_DATA':
+            require(owner['parent'] in emitted and owner['segment'] in emitted[owner['parent']],
+                    'Secondary C payload is missing from its compiled CODE owner')
+            payload=emitted[owner['parent']][owner['segment']]
+            require(len(payload)==end-start and identity(payload)==owner['target'] and
+                    payload==original[start:end], 'Secondary C payload differs from oracle')
+            chunks.append(payload)
+            matching+=len(payload)
         else:
-            recipe = (recipe_overrides or {}).get(owner['recipe']) or read_json(ROOT / owner['recipe'])
-            require((recipe['start'], recipe['end']) == (start, end), 'Recipe ownership mismatch')
-            require(recipe['source'].startswith('src/'), 'Production must consume recovered src/')
-            payload, receipt = probe(recipe, oracle, (source_overrides or {}).get(recipe['source']))
+            payload, receipt = compiled[owner['id']]
             chunks.append(payload)
             receipts.append(receipt)
             matching += len(payload)
     image = b''.join(chunks)
     require(image == original, 'Full image mismatch')
+    matching_bss=0
+    for owner in manifest.get('bss_owners',[]):
+        if owner['kind']!='MATCHING_C_DATA': continue
+        require(owner['parent'] in emitted and owner['segment']=='_BSS' and
+                emitted[owner['parent']].get('_BSS')==bytes(owner['end']-owner['start']) and
+                identity(emitted[owner['parent']]['_BSS'])==owner['target'] and
+                original[owner['start']:min(owner['end'],len(original))] ==
+                    bytes(max(0,min(owner['end'],len(original))-owner['start'])),
+                'Emitted BSS contribution is not the verified zero extent')
+        matching_bss+=owner['end']-owner['start']
     # Header is an explicit synthetic oracle-metadata owner; no final binary patches.
     executable = oracle[1][:mz.header_size] + image
     require(executable == oracle[1], 'Full MZ mismatch')
@@ -91,6 +153,7 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
     report = {'status': 'HYBRID_EXACT', 'fully_recovered': matching + libraries == len(image),
               'executable': identity(executable), 'load_image': identity(image),
               'matching_c_bytes': matching, 'matching_asm_bytes': 0,
+              'matching_c_bss_bytes':matching_bss,
               'raw_initialized_bytes': len(image) - matching - libraries, 'library_production_bytes':libraries,
               'relocation_count': len(mz.relocations), 'inputs': before,
               'production_inputs':production_before, 'compiler_receipts': receipts}

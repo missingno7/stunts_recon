@@ -1,0 +1,21 @@
+{
+  "end": 165232,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "historical_recipe": "context evidence: audioresource_copy_4_bytes load_28528",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "audioresource_copy_4_bytes",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_audioresource_copy_4_bytes",
+  "source": "src/audioresource_copy_4_bytes.c",
+  "stable_id": "load_28528",
+  "start": 165160,
+  "target": {
+    "sha256": "91304e37db6efd29108fdc0b766490e5a47a003f183fd537f8a3e5b8698582f9",
+    "size": 72
+  }
+}

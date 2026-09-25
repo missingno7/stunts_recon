@@ -1,0 +1,145 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_strlen",
+        "_parse_filepath_separators"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_parse_filepath_separators",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 98,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-v1"
+  },
+  "end": 100292,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md",
+    "worker_report": "build/workers/top40/REPORT.md"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_strlen",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 11,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_strlen",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 100207,
+      "offset": 34671,
+      "segment": 4096
+    }
+  ],
+  "id": "parse_filepath_separators",
+  "includes_alignment_padding": false,
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_parse_filepath_separators",
+  "source": "src/parse_filepath_separators.c",
+  "stable_id": "load_18762",
+  "start": 100194,
+  "target": {
+    "sha256": "9a8919168b04b0a5b6fbedc8b129b932a9bf25e53ee553cb8f7b034615fbee0c",
+    "size": 98
+  }
+}

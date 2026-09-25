@@ -54,7 +54,11 @@ def _candidate_snapshot(source_path):
 def _load_function(name):
     if not name:
         return None
-    inventory = read_json(ROOT / 'evidence/functions.json')
+    from function_evidence import current_inventory
+    from oracle import verify
+    from mz import MZ
+    result = verify(write=False)
+    inventory = current_inventory(MZ.parse(result[1]).load_image(result[1]))
     matches = [row for row in inventory.get('functions', [])
                if name in (row.get('name'), row.get('stable_id'))]
     require(len(matches) == 1, 'Unknown or ambiguous evidence function; use exact name or stable ID from evidence/functions.json')
@@ -86,13 +90,13 @@ def _tool_identity(paths):
     return result
 
 
-def _environment(profile, recipe, recipe_path, function):
+def _environment(profile, recipe, recipe_path, function, closure=None):
     import compiler
 
     config, runner = compiler.verify_toolchain(profile)
     toolchain_path = ROOT / 'layout/toolchain.json'
     files = list(config.get('files', [])) + [runner]
-    tools = ['tools/search.py', 'tools/compiler.py', 'tools/common.py',
+    tools = ['tools/search.py', 'tools/compiler.py', 'tools/preprocessor.py', 'tools/common.py',
              'tools/object_probe.py', 'tools/omf.py']
     if function:
         tools += ['tools/oracle.py', 'tools/mz.py', 'tools/dsi.py', 'tools/exepack.py', 'tools/diagnostics.py']
@@ -129,6 +133,7 @@ def _environment(profile, recipe, recipe_path, function):
     snapshot = {
         'schema': 1,
         'profile': profile,
+        'preprocessor_closure': [] if closure is None else closure,
         'toolchain_lock': identity(toolchain_path.read_bytes()),
         'toolchain_profile': config,
         'runner': runner,
@@ -293,6 +298,8 @@ def run(source_path, profile=None, recipe_path=None, function=None):
                 'Recipe range differs from the selected evidence function')
 
     selected_profile = profile or (recipe or {}).get('profile') or 'msc510-medium'
+    from preprocessor import prepare
+    _, closure = prepare(source, selected_profile)
     oracle_result = None
     binding_before = None
     if recipe:
@@ -302,7 +309,7 @@ def run(source_path, profile=None, recipe_path=None, function=None):
             binding_before = _recipe_binding_context(recipe, oracle_result)
         except Exception as error:
             binding_before = {'status': 'SNAPSHOT_ERROR', 'error': str(error)}
-    environment, environment_ref = _environment(selected_profile, recipe, recipe_file, function_row)
+    environment, environment_ref = _environment(selected_profile, recipe, recipe_file, function_row, closure)
     run_id = str(uuid.uuid4())
     run_dir = ROOT / 'build/search' / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -335,6 +342,8 @@ def run(source_path, profile=None, recipe_path=None, function=None):
     compiler_error = None
     try:
         obj, receipt = compile_source(source, selected_profile)
+        require(receipt.get('preprocessor_closure', closure) == closure,
+                'Preprocessor closure changed after search snapshot')
         report['compiler'] = {'profile': selected_profile, 'status': 'COMPILED', 'receipt': receipt}
     except CompileFailure as error:
         compiler_error = error

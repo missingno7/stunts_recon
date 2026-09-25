@@ -1,0 +1,161 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_fontdef_value",
+        "_set_fontdefseg",
+        "_font_set_fontdef2"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_font_set_fontdef2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 30,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "end": 104616,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_fontdef_value",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 25,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_fontdef_value",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_set_fontdefseg",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 10,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_set_fontdefseg",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 104598,
+      "offset": 39062,
+      "segment": 4096
+    }
+  ],
+  "id": "font_set_fontdef2",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_font_set_fontdef2",
+  "source": "src/font_set_fontdef2.c",
+  "stable_id": "load_1988a",
+  "start": 104586,
+  "target": {
+    "sha256": "8bbf80735a816a8f16777e4bbcda61bb14b3d0a7f045411d0f4796948be435a2",
+    "size": 30
+  }
+}

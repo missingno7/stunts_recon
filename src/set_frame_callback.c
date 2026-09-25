@@ -5,6 +5,6 @@ extern unsigned word_46468;
 extern unsigned char byte_442E4;
 void far set_frame_callback(void) {
     word_46468 = 0;
-    timer_reg_callback((callback_t)frame_callback);
+    timer_reg_callback(frame_callback);
     byte_442E4 = 0;
 }

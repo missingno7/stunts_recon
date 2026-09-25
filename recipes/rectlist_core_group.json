@@ -1,0 +1,511 @@
+{
+  "end": 93002,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rect_is_adjacent",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 868,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rect_is_adjacent",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rectlist_add_rect",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 771,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rectlist_add_rect",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rectlist_add_rect",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 745,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rectlist_add_rect",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rectlist_add_rect",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 728,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rectlist_add_rect",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rect_is_inside",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 410,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rect_is_inside",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rect_is_inside",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 390,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rect_is_inside",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rect_is_overlapping",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 373,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rect_is_overlapping",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_video_flag3_isFFFF",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 284,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_video_flag3_isFFFF",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_video_flag2_is1",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 279,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_video_flag2_is1",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_video_flag2_is1",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 264,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_video_flag2_is1",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_video_flag3_isFFFF",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 114,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_video_flag3_isFFFF",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_video_flag2_is1",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 109,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_video_flag2_is1",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_video_flag2_is1",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 94,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_video_flag2_is1",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rect_union",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 1478,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rect_union",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rectlist_add_rect",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 1350,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rectlist_add_rect",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_rect_intersect",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 1329,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_rect_intersect",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "external-dgroup-offset16-v1"
+  },
+  "id": "rectlist_core_group",
+  "members": [
+    {
+      "end": 91628,
+      "name": "rect_union",
+      "public": "_rect_union",
+      "stable_id": "load_16572",
+      "start": 91506,
+      "target": {
+        "sha256": "1a3c53b717bb6c23be598af0963dbe58fd02c55a5b25d15b885b335fb3077e34",
+        "size": 122
+      }
+    },
+    {
+      "end": 91760,
+      "name": "rect_intersect",
+      "public": "_rect_intersect",
+      "stable_id": "load_165ec",
+      "start": 91628,
+      "target": {
+        "sha256": "8412f5a967e641d12d29d3b5810169ae46cec443e34d64d8c36966fa67064617",
+        "size": 132
+      }
+    },
+    {
+      "end": 92510,
+      "name": "rectlist_add_rect",
+      "public": "_rectlist_add_rect",
+      "stable_id": "load_16670",
+      "start": 91760,
+      "target": {
+        "sha256": "edc756d96e2ff81d9f42e68b3909f09b31283bec9cea909d80ebcf24da0dadd3",
+        "size": 750
+      }
+    },
+    {
+      "end": 92572,
+      "name": "rect_is_overlapping",
+      "public": "_rect_is_overlapping",
+      "stable_id": "load_1695e",
+      "start": 92510,
+      "target": {
+        "sha256": "4aa067d829e42c5c54ea3ac1a39c20ce31ad7bffb6b8a53332217228250ed776",
+        "size": 62
+      }
+    },
+    {
+      "end": 92624,
+      "name": "rect_is_inside",
+      "public": "_rect_is_inside",
+      "stable_id": "load_1699c",
+      "start": 92572,
+      "target": {
+        "sha256": "20532c3c1432e839438f3871609dffd3d1082049e57205229e3a6d7b76a8eef8",
+        "size": 52
+      }
+    },
+    {
+      "end": 92754,
+      "name": "rect_is_adjacent",
+      "public": "_rect_is_adjacent",
+      "stable_id": "load_169d0",
+      "start": 92624,
+      "target": {
+        "sha256": "1c7274565eabca53730618197159f6ed89f4a2efa5eef0ad81a5d102278b3b35",
+        "size": 130
+      }
+    },
+    {
+      "end": 93002,
+      "name": "rectlist_add_rects",
+      "public": "_rectlist_add_rects",
+      "stable_id": "load_16a52",
+      "start": 92754,
+      "target": {
+        "sha256": "9ffa3b6b75d0d2a76f2bb7e58ba21e39f59bf11557b60ca17a8abfee9636e465",
+        "size": 248
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_video_flag2_is1",
+      "_video_flag3_isFFFF",
+      "_rect_union",
+      "_rect_intersect",
+      "_rect_is_overlapping",
+      "_rect_is_inside",
+      "_rect_is_adjacent",
+      "_rectlist_add_rect",
+      "_rectlist_add_rects"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_rect_union",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_rect_intersect",
+        "offset": 122,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_rect_is_overlapping",
+        "offset": 1004,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_rect_is_inside",
+        "offset": 1066,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_rect_is_adjacent",
+        "offset": 1118,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_rectlist_add_rect",
+        "offset": 254,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_rectlist_add_rects",
+        "offset": 1248,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 1496,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "source": "src/rectlist_core_group.c",
+  "stable_id": "multi_rectlist_core_group",
+  "start": 91506,
+  "subsumed_owners": [
+    "load_16572",
+    "load_165ec",
+    "load_1695e",
+    "load_1699c",
+    "load_169d0"
+  ],
+  "target": {
+    "sha256": "bd80d507e05bc9b1f2416181dc6b015b4cc189518677c2fb6712b3f26846ec9e",
+    "size": 1496
+  }
+}

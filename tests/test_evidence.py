@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / 'tools'))
 
 from code_symbols import resolve_callback_pointer, resolve_code_symbols
 from common import read_json
+from function_evidence import reviewed_functions
 from data_symbols import resolve_symbols
 from mz import MZ
 from oracle import verify
@@ -57,13 +58,34 @@ class EvidenceTests(unittest.TestCase):
                 if function['bytes_hex'] is not None:
                     self.assertEqual(payload, bytes.fromhex(function['bytes_hex']))
 
+    def test_sprite_shared_return_padding_has_a_bounded_flow_proof(self):
+        reviewed = reviewed_functions(self.image)
+        self.assertEqual((reviewed['sprite_set_1_from_argptr']['start'],
+                          reviewed['sprite_set_1_from_argptr']['end']), (154358, 154388))
+        self.assertEqual((reviewed['sprite_clear_1_color']['start'],
+                          reviewed['sprite_clear_1_color']['end']), (144064, 144176))
+        import copy
+        original = read_json(ROOT / 'layout/function-evidence.json')
+        for mutation in ('target', 'hex', 'pad'):
+            changed = copy.deepcopy(original)
+            clear = next(row for row in changed['functions'] if row['name']=='sprite_clear_1_color')
+            if mutation == 'target':
+                clear['terminal_shared_jump']['target'] += 1
+            elif mutation == 'hex':
+                clear['terminal_shared_jump']['hex'] = 'ebdd'
+            else:
+                clear['alignment_padding'][0]['provenance']['source_text'] = 'db 0'
+            with self.subTest(mutation=mutation), patch('function_evidence.read_json', return_value=changed):
+                with self.assertRaises(ValueError):
+                    reviewed_functions(self.image)
+
     def test_numeric_source_emissions_match_the_original_image(self):
         evidence = read_json(ROOT / 'evidence/functions.json')
         functions = {row['name']: row for row in evidence['functions']}
-        examples = [('init_div0', 'byte_19F07'),
-                    ('parse_shape2d_helper2', 'word_2F354'),
-                    ('sub_39088', 'byte_3930E')]
-        for function_name, label in examples:
+        examples = [('init_div0', 'byte_19F07', True),
+                    ('parse_shape2d_helper2', 'word_2F354', True),
+                    ('sub_39088', 'byte_3930E', False)]
+        for function_name, label, inside in examples:
             with self.subTest(label=label):
                 function = functions[function_name]
                 emitted = emitted_run(ROOT / function['source'], label)
@@ -71,7 +93,10 @@ class EvidenceTests(unittest.TestCase):
                 self.assertEqual(emitted, self.image[address:address + len(emitted)])
                 self.assertGreater(len(emitted), 0)
                 self.assertLessEqual(function['start'], address)
-                self.assertLessEqual(address + len(emitted), function['end'])
+                if inside:
+                    self.assertLessEqual(address + len(emitted), function['end'])
+                else:
+                    self.assertGreaterEqual(address, function['end'])
 
     def test_code_aliases_require_independent_relocated_anchors(self):
         symbol = resolve_code_symbols({'_kb_call_readchar_callback'},
@@ -85,7 +110,8 @@ class EvidenceTests(unittest.TestCase):
 
     def test_reviewed_code_aliases_resolve_from_current_evidence(self):
         layout = read_json(ROOT / 'layout/code-symbols.json')
-        far_names = {name for name, symbol in layout['symbols'].items() if 'anchors' in symbol}
+        far_names = {name for name, symbol in layout['symbols'].items()
+                     if symbol.get('anchors') or symbol.get('pointer_anchors')}
         resolved = resolve_code_symbols(far_names, self.image, self.relocations)
         resolved['_frame_callback'] = resolve_callback_pointer(self.image, self.relocations)
         self.assertEqual(set(resolved), set(layout['symbols']))

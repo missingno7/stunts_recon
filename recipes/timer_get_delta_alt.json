@@ -3,8 +3,8 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_audioflag2",
-        "_audio_enable_flag2"
+        "_timer_get_delta",
+        "_timer_get_delta_alt"
       ],
       "groups": [
         {
@@ -24,7 +24,7 @@
       ],
       "publics": [
         {
-          "name": "_audio_enable_flag2",
+          "name": "_timer_get_delta_alt",
           "offset": 0,
           "segment": "UNIT_TEXT"
         }
@@ -96,43 +96,49 @@
         }
       ]
     },
-    "mode": "external-dgroup-offset16-v1"
+    "mode": "external-far-call-v1"
   },
-  "end": 160696,
+  "end": 107062,
   "evidence": {
     "function_inventory": "evidence/functions.json",
-    "historical_recipe": "303324cd6d3d310059cd129f41dd7ba399b457bc:recipes/audio_enable_flag2.json",
-    "scope": "docs/acceptance.md"
+    "oracle_lock": "layout/oracle.lock.json",
+    "scope": "Observed candidate OMF call; target symbol still requires independent code binding."
   },
   "expected_fixups": [
     {
       "displacement": 0,
-      "encoded_addend": "0000",
-      "frame": "_audioflag2",
+      "encoded_addend": "00000000",
+      "frame": "_timer_get_delta",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
-      "loc": "offset16",
-      "offset": 2,
+      "loc": "pointer32",
+      "offset": 1,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audioflag2",
+      "target": "_timer_get_delta",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
-      "width": 2
+      "width": 4
     }
   ],
-  "expected_relocations": [],
-  "id": "audio_enable_flag2",
+  "expected_relocations": [
+    {
+      "load_offset": 107059,
+      "offset": 41523,
+      "segment": 4096
+    }
+  ],
+  "id": "timer_get_delta_alt",
   "object_segment": "UNIT_TEXT",
   "profile": "msc510-medium",
-  "public": "_audio_enable_flag2",
-  "source": "src/audio_enable_flag2.c",
-  "stable_id": "load_273b2",
-  "start": 160690,
+  "public": "_timer_get_delta_alt",
+  "source": "src/timer_get_delta_alt.c",
+  "stable_id": "load_1a230",
+  "start": 107056,
   "target": {
-    "sha256": "dbe660ac8e5d0f55a01a97cb014a5c77c55413e2bad4e3f6b73d9754689d8b96",
+    "sha256": "65e2a64a043b45648ec6c73db96932c9c413fb5071748c2f9ee72e5881d7ad3b",
     "size": 6
   }
 }

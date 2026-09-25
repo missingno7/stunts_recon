@@ -50,13 +50,13 @@ def research_fixture(include_b4=True, include_b6=True, include_fixup=True,
 
 
 class InspectObjectTests(unittest.TestCase):
-    def test_b4_b6_are_strictly_rejected_but_research_evidence_is_preserved(self):
+    def test_unresolved_b4_is_rejected_but_research_evidence_is_preserved(self):
         raw, target = research_fixture()
-        with self.assertRaisesRegex(ValueError, "unsupported OMF record b4"):
+        with self.assertRaisesRegex(ValueError, "Unresolved local OMF external"):
             read_object(raw)
         b6_only, _ = research_fixture(include_b4=False, include_fixup=False)
-        with self.assertRaisesRegex(ValueError, "unsupported OMF record b6"):
-            read_object(b6_only)
+        self.assertEqual(read_object(b6_only).local_publics,
+                         [{'name':'_local','segment':'UNIT_TEXT','offset':0}])
         rows = inspect_object.inventory_records(raw)
         self.assertEqual([r["name"] for r in rows if r["name"] in ("LEXTDEF", "LPUBDEF")],
                          ["LEXTDEF", "LPUBDEF"])

@@ -66,9 +66,9 @@ class FrameBindingTests(unittest.TestCase):
             '_timer_reg_callback': {'kind': 'far-code', 'frame_load_address': 0x1ea20,
                                     'load_address': 0x202aa},
             '_word_46468': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
-                            'load_address': 0x36468},
+                            'load_address': 0x36468, 'allowed_addends': [0, 1]},
             '_byte_442E4': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
-                            'load_address': 0x342e4},
+                            'load_address': 0x342e4, 'allowed_addends': [0]},
         }
         self.relocations = [
             {'segment': 4096, 'offset': 9579, 'load_offset': 75115},

@@ -1,0 +1,144 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_mat_mul_vector",
+        "_mat_mul_vector2"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_mat_mul_vector2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 54,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-v1"
+  },
+  "end": 19874,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "Scratch reconstruction using mapped mat_mul_vector symbol and fixed source context."
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mat_mul_vector",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 41,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mat_mul_vector",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 19863,
+      "offset": 19863,
+      "segment": 0
+    }
+  ],
+  "id": "mat_mul_vector2",
+  "includes_alignment_padding": false,
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_mat_mul_vector2",
+  "source": "src/mat_mul_vector2.c",
+  "stable_id": "load_04d6c",
+  "start": 19820,
+  "target": {
+    "sha256": "05329e45af570445a8288e3758763deb150484feef8dff2a595fd42eb93a8833",
+    "size": 54
+  }
+}

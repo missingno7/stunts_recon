@@ -1,0 +1,22 @@
+{
+  "end": 72570,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "historical_recipe": "scratch hypothesis from verified context",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "subst_hillroad_track",
+  "includes_alignment_padding": false,
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_subst_hillroad_track",
+  "source": "src/subst_hillroad_track.c",
+  "stable_id": "load_11a5a",
+  "start": 72282,
+  "target": {
+    "sha256": "08f04f9ee7dd1aedcffd7fbd8d4b3ffcb777c4b0b3e6457bc8e458df500e630a",
+    "size": 288
+  }
+}

@@ -6,6 +6,7 @@ import tempfile
 from pathlib import Path
 from common import ROOT, identity, read_json, require, sha, write_json
 from object_probe import read_object
+from preprocessor import prepare
 
 
 class CompileFailure(ValueError):
@@ -34,14 +35,15 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False)
     source_receipt={'profile':profile,'source':identity(source),'work_directory':str(work),
                     'research_local_symbols':research_local_symbols}
     try:
-        text = source.decode('ascii').replace('\r\n', '\n').replace('\r', '\n')
-    except UnicodeDecodeError as error:
-        raise CompileFailure('Historical source must be ASCII',source_receipt,'UNSUPPORTED_SOURCE') from error
-    for pattern,message in [(r'^\s*#','Preprocessor closure not implemented: directives blocked'),
-                            (r'\b(?:_asm|__asm|asm|__emit)\b','Inline assembly/raw emission forbidden for matching C')]:
-        if re.search(pattern,text,re.M):
-            write_json(work/'receipt.json',source_receipt)
-            raise CompileFailure(message,source_receipt,'UNSUPPORTED_SOURCE')
+        expanded, closure = prepare(source, profile)
+        text = expanded.decode('ascii').replace('\r\n', '\n').replace('\r', '\n')
+        source_receipt['preprocessor_closure'] = closure
+    except ValueError as error:
+        write_json(work/'receipt.json',source_receipt)
+        raise CompileFailure(str(error),source_receipt,'UNSUPPORTED_SOURCE') from error
+    if re.search(r'\b(?:_asm|__asm|asm|__emit)\b',text,re.M):
+        write_json(work/'receipt.json',source_receipt)
+        raise CompileFailure('Inline assembly/raw emission forbidden for matching C',source_receipt,'UNSUPPORTED_SOURCE')
     staged = text.replace('\n', '\r\n').encode('ascii')
     (work / 'UNIT.C').write_bytes(staged)
     tc = (ROOT / config['directory']).resolve()
@@ -57,6 +59,7 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False)
     data = obj_path.read_bytes() if obj_path.exists() else None
     receipt = {'profile': profile, 'command': argv, 'source': identity(source),
                'staged_source': identity(staged), 'object': identity(data) if data is not None else None,
+               'preprocessor_closure': closure,
                'work_directory': str(work), 'compiler_stdout_sha256': sha(result.stdout),
                'research_local_symbols': research_local_symbols}
     write_json(work / 'receipt.json', receipt)

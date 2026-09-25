@@ -1,0 +1,410 @@
+{
+  "schema": "toolchain-hypotheses-v1",
+  "updated": "2026-09-25",
+  "purpose": "Accumulated positive AND negative knowledge about the original toolchain. Read before any compiler-sensitive reasoning. Do not retest a FALSIFIED/NON_DISCRIMINATING entry under its stated conditions unless new evidence invalidates them; cite the id instead. Routine function recovery keeps the CANONICAL profile fixed; only supervisor-launched, control-preserving experiments may challenge it.",
+  "statuses": [
+    "CANONICAL",
+    "SUPPORTED",
+    "PLAUSIBLE",
+    "DISFAVORED",
+    "FALSIFIED",
+    "NON_DISCRIMINATING",
+    "TOOLING_LIMITED",
+    "UNTESTED"
+  ],
+  "scopes": [
+    "global",
+    "TU-specific",
+    "source-shape-specific",
+    "symptom-specific"
+  ],
+  "controls": {
+    "accepted_c": "All src/*.c with recipes (31 functions as of 2026-09-25): is_facing_camera, rect_adjust_from_point, mat_mul_vector2, init_carstate_from_simd, rect_* family, audio*/audioresource_*, locate_*, file_combine_and_find, set_frame_callback, shape3d_init_shape, copy_string, toupper, get_0, nullsub/nopsub stubs, unload_resource, free_sdgame2, font_op2_alt, parse_shape2d_helper3.",
+    "runtime": "12 pinned runtime members bound by manifest runtime owners (strcat, strcpy, strcmp, strlen, stricmp, strrchr, xtoa, abs, ldiv, lmul, lshr, uldiv)."
+  },
+  "hypotheses": [
+    {
+      "id": "CC-MSC510-AM-O-Gs",
+      "hypothesis": "Game C was compiled by Microsoft C 5.10, medium model, /O /Gs.",
+      "status": "CANONICAL",
+      "scope": "global",
+      "evidence": "Every accepted C function is exact under this profile and independently re-verified under DOSBox-X; codegen families covered: long arithmetic helper calls, far/near pointers, register SI/DI locals, struct copies, boolean/char returns, nested guards, block-scoped slot reuse. Reinforced 2026-09-25 by profdisc: /O is the only tested MSC 5.10 optimization profile preserving all 31 frozen controls (alternatives 22-28/31).",
+      "controls": "accepted_c",
+      "explains": "All accepted C.",
+      "fails_or_breaks": "Does not (yet) explain symptoms S1-S6; they are not attributed to the profile until an explanation is proven.",
+      "reopen_if": "An alternative profile preserves (nearly) all accepted_c controls with explained exceptions AND fixes recurring residuals across unrelated functions with new strict matches."
+    },
+    {
+      "id": "CC-MSC500-same-flags",
+      "hypothesis": "Microsoft C 5.00 compiler with the same flags instead of 5.10.",
+      "status": "NON_DISCRIMINATING",
+      "scope": "global",
+      "evidence": "Identical output to 5.10 for all accepted functions tested and for the pad_id, file_get_shape2d, parse_shape2d_helper, mmgr and RPM probes.",
+      "controls": "accepted_c (full set per prior validation); probe sets above",
+      "explains": "Same as 5.10.",
+      "fails_or_breaks": "Nothing observed; also fixes none of S1-S6.",
+      "reopen_if": "A source/idiom is found where 5.00 and 5.10 codegen differ; then test it against the image."
+    },
+    {
+      "id": "LIB-MSC510-runtime",
+      "hypothesis": "Statically linked runtime is the MSC 5.10 medium-model library set (MLIBCR/LIBH).",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "12 complete runtime members bind exactly to pinned 5.10 archives; abs.c, ldiv.asm, uldiv.asm exist only in the 5.10 form (5.00 LDIV/ULDIV are 165/103 bytes with an __aFulmul fixup vs 156/97 in the image). runtime2 (fixup-aware scan, 2026-09-25): 45 diagnostic member extents covering 6,851 image bytes; 38 have identical 5.00/5.10 payload+FIXUPP, 7 match ONLY 5.10 members. Scratch binder reproduced _itoa, _ultoa, alshr.asm exactly.",
+      "controls": "runtime",
+      "explains": "The 725 pinned runtime bytes.",
+      "fails_or_breaks": "Fixup-bearing members not yet canonical owners (integration pending); DGROUP data for many members unresolved.",
+      "reopen_if": "A runtime region is found that matches neither library version."
+    },
+    {
+      "id": "LIB-MSC500-runtime",
+      "hypothesis": "Runtime library is the MSC 5.00 set.",
+      "status": "FALSIFIED",
+      "scope": "global",
+      "evidence": "5.00 abs, ldiv, uldiv differ from the image bytes (sizes/fixups above). Nine other members are byte-identical between versions and do not discriminate.",
+      "controls": "runtime",
+      "explains": "-",
+      "fails_or_breaks": "abs, ldiv, uldiv.",
+      "reopen_if": "Evidence of a mixed library set (e.g. a patched 5.00 archive)."
+    },
+    {
+      "id": "MODEL-medium",
+      "hypothesis": "Medium memory model (far code, near data, DGROUP).",
+      "status": "CANONICAL",
+      "scope": "global",
+      "evidence": "RETF epilogues, 9A far calls with segment relocations, DGROUP-relative data offsets in all accepted C; runtime from medium-model archives.",
+      "controls": "accepted_c, runtime",
+      "explains": "All accepted code.",
+      "fails_or_breaks": "-",
+      "reopen_if": "Never for game C absent a contradiction in accepted controls."
+    },
+    {
+      "id": "FLAG-Gs",
+      "hypothesis": "Stack checking disabled (/Gs).",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "No __chkstk calls in accepted C; omitting /Gs on the pad_id probe adds a stack-check call (62 vs 58 bytes).",
+      "controls": "accepted_c",
+      "explains": "Prologues without __chkstk.",
+      "fails_or_breaks": "-",
+      "reopen_if": "A C-framed game function with a __chkstk call is found (would indicate a TU-specific flag)."
+    },
+    {
+      "id": "FLAG-O-variants-register-source",
+      "hypothesis": "A different optimization switch (/Ox, /Ol, /Oi, /Os, /Od, /Gs omitted) fixes pad_id when the loop counter is declared `register`.",
+      "status": "FALSIFIED",
+      "scope": "source-shape-specific",
+      "evidence": "pad_id register-int source emits the same 58-byte output (sub sp,2 + NOP) under /AM /O, /AM /Gs, /Ox, /Ol, /Oi, /Os; omitting /Gs adds __chkstk.",
+      "controls": "pad_id probe only (not a control set)",
+      "explains": "-",
+      "fails_or_breaks": "pad_id stays 58 vs 54 bytes.",
+      "reopen_if": "Does NOT cover plain (non-register) int counters; see FLAG-Ol-plain-counter."
+    },
+    {
+      "id": "FLAG-Ol-plain-counter",
+      "hypothesis": "Global profile includes loop optimization (/Ol, e.g. /Ox or /Olt) which enregisters plain int loop counters without a BP home (explains S1).",
+      "status": "FALSIFIED",
+      "scope": "global",
+      "evidence": "profdisc controlled matrix (486 runs, 31 frozen accepted controls with full extents, recipe fixups, bindings, ordered relocations): /Ol and /Olt emit the same objects as /O for plain-int counters in pad_id, audio_enable_flag6, audio_disable_flag6 (counter stays in memory); /Ox and /Oalt put the counter in SI but RETAIN the BP home (60/54, 58/52, 70/62 bytes). No alternative gives any exact match.",
+      "controls": "accepted_c frozen 31: /O 31/31; /Ol 28; /Olt 28; /Ot /Ol 28; /O /Ot /Ol 28; /Oa 25; /Oal 23; /Oalt 23; /Ox 22. /Ol family breaks init_carstate_from_simd (614/618), locate_many_resources (bytes 0x1a-0x22), parse_shape2d_helper3 (0x19: c4 vs 8b).",
+      "explains": "-",
+      "fails_or_breaks": "Breaks >=3 controls and fixes nothing.",
+      "reopen_if": "Only if a new symptom class appears that /Ol uniquely explains while its 3 control breaks are shown to be TU-specific."
+    },
+    {
+      "id": "CC-QuickC",
+      "hypothesis": "Some or all game C compiled with QuickC (QCL in the pinned MSC 5.00 distribution).",
+      "status": "DISFAVORED",
+      "scope": "global",
+      "evidence": "Only a broad supporting sweep (compfp) is running; no control-preserving experiment yet. A priori disfavored for the global profile because accepted_c matches MSC 5.10 /O. repfp: QCL 1.00/1.01 behave like CL for REP prefixes (F2); QCL 1.00 /Od objects contain OMF record B2; QCL rejects /Oi. compfp control test: QuickC reproduces accepted toupper but NOT accepted rect_intersect; QuickC objects carry BAKPAT (QuickC 1.0 OMF extension) records; no QuickC profile fixes pad_id or file_get_res_shape_count.",
+      "controls": "toupper (matches), rect_intersect (breaks)",
+      "explains": "-",
+      "fails_or_breaks": "Breaks accepted rect_intersect.",
+      "reopen_if": "Recurring symptoms cluster in specific TUs and QuickC reproduces them while failing the MSC-matched controls outside those TUs."
+    },
+    {
+      "id": "CC-later-MSC",
+      "hypothesis": "Some TUs compiled with a later Microsoft C (e.g. 6.0) whose codegen emits inline widening multiply, unrolled long shifts, xor-zeroing.",
+      "status": "DISFAVORED",
+      "scope": "TU-specific",
+      "evidence": "S2, S5, S6 resemble later-compiler idioms; no such compiler is pinned, so untestable locally. MSC 6.00A provisioned at C:\tools\\msc-6.00a (compiler passes fail under MS-DOS Player; DOSBox-X attempt `msc6disc` in progress). Plain MSC 6.00 not available on PCjs. msc6disc (2026-09-25): MSC 6.00A runs under DOSBox-X (DOS pass chain CL disk5, C1/C1L/C2 disk1, C3 disk7). Controls (44 recipe-backed accepted sources): /O 16/44 full-extent matches after fixup rebinding, /Ox 13/44, /Os 8/44, strict OMF 0/44 -> FALSIFIED as global profile. Symptom matrix 147 attempts: 0/12 full matches; C6 reproduces S2 inline MUL and S5 unrolled shl/rcl MOTIFS but emits SUB zeroing where targets use XOR (S6 not reproduced).",
+      "controls": "44 accepted contributions",
+      "explains": "Possibly S2, S5, S6.",
+      "fails_or_breaks": "Breaks 28/44 controls as a global profile; fixes none of the 12 symptom functions completely.",
+      "reopen_if": "A symptom function matches completely under C6 AND the matches cluster in a TU whose other members also fail MSC 5.10."
+    },
+    {
+      "id": "ASM-assembler",
+      "hypothesis": "Hand-written modules were assembled by a specific assembler/version.",
+      "status": "NON_DISCRIMINATING",
+      "scope": "global",
+      "evidence": "Linked bytes (encodings, pads, jump sizes, frames) do not distinguish MASM 4.0/5.0/5.1, TASM or inline assembly; original OMF signatures are stripped by EXEPACK. MASM 5.x is the natural first hypothesis (MSC 5.10 era, supplied startup ASM sources); MASM 4.x and TASM remain live. No assembler pinned; the user must supply a specific legally held distribution with version/hash before any ASM contribution can be tested. Local pinned toolchain/msc510-msdos/MASM.EXE is Microsoft Macro Assembler 5.10 (1988), SHA-256 1c6286c69b616160b8475ad17453ee872702a2c98075c2159ec792a1c745275f, not yet in an active profile. Alternatives being provisioned under C:\tools. 2026-09-25: provisioned under C:\tools from pinned PCjs commit bd4cc85928f2291c8d08e610038a1dd70b94ac6c: MASM 4.00 (runner stack overflow under MS-DOS Player), 5.00, 5.10, 5.10A, 6.00 (DOS ML.EXE from disk 2). MASM 5.00/5.10/5.10A emit identical 78-byte smoke objects. TASM 1.0/2.0 not available on PCjs. Control experiment `asmdisc` (reassemble pinned library ASM sources vs Microsoft library objects) in progress. User supplied Borland TASM 1.0, 1.01, 2.0, 2.01 (winworldpc disk images) under C:\tools; being extracted/provenanced to C:\tools\tasm-*. gather also collected MASM 2.04/3.00/3.01/6.11 and MSC 2.03/3.00/4.00/6.00AX/7.00 (local copies). asmdisc: readable MASM sources for game routines video_get_status, timer_get_counter, kb_checking reproduce their complete oracle extents under all six assemblers (MASM 4.00, 5.00, 5.10, 5.10A, pinned 5.10, ML 6.00) \u2014 the ASM contribution path is feasible but these probes do not discriminate. TASM not yet tested (asmdisc2). Discriminating constructs known from library controls: AND reg,imm sign-extended imm8 encoding (MASM 4.00 vs 5.x), EXTDEF ordering, COMENT checksum, IF1/IF2 support (ML 6.00). asmdisc2 (14 sampled game ASM extents + alignment control, 10 assemblers): MASM 5.00/5.10/5.10A/pinned 5.10 and TASM 1.00/1.01 match 14/14; MASM 4.00 13/14 (encodes AND BX,0Fh as 81 E3 0F 00 vs game 83 E3 0F -> FALSIFIED for game modules); ML 6.00 8/14 (DISFAVORED); TASM 2.00/2.01 default 7/14, 14/14 only with /jNOSMART plus local SMART regions (DISFAVORED: contortion). Library controls: TASM 0/14 and 0/12. Remaining NON_DISCRIMINATING set for game ASM: {MASM 5.00, 5.10, 5.10A, TASM 1.00, 1.01}. Next discriminator: FIXUPP record order vs oracle MZ relocation order (asmdisc3).",
+      "controls": "Pinned runtime ASM members (known MASM-assembled library objects) serve as encoding controls.",
+      "explains": "-",
+      "fails_or_breaks": "-",
+      "reopen_if": "FIXUPP/relocation-order test (asmdisc3) or another construct separates MASM 5.x from TASM 1.x."
+    },
+    {
+      "id": "LINK-MSC-LINK",
+      "hypothesis": "The executable was produced by one normal run of pinned MSC 5.10 LINK (3.65) followed by pinned EXEPACK (4.06).",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "Diagnostic single-LINK fixture: two untouched accepted C objects (mat_mul_vector2, set_frame_callback) among synthetic raw OMF placeholders placed exactly; LINK load image equals the oracle prefix; EXEPACK output equals all 200,000 oracle bytes (oracle SHA) with the 3 live relocations in oracle order. LINK relocation order = input-object order, then FIXUPP subrecord order within an object (not address-sorted); EXEPACK regroups into 64 KiB banks (runs 1205/903/476/4). Zero-length early far-data segment declarations were needed in the synthetic fixture (not yet historically explained). relorder: EXEPACK 4.06 stably partitions LINK relocations by 64 KiB bank (crossed-bank control [140016,60003,140020,70009] -> [60003,70009,140016,140020]); within-bank order preserved, cross-bank interleaving lost, so object boundaries are only partially recoverable. MSC 5.10 FIXUPPs descend within each CODE LEDATA (across function boundaries) and LEDATAs advance in address. Grouped unload_resource/locate_shape_alt/locate_text_res probe reproduces oracle relocation indices 1759-1761 in exact order (TU-membership evidence for those three).",
+      "controls": "2 accepted C objects; 3 of 2,588 relocations live.",
+      "explains": "Image layout and relocation coordinate form (EXEPACK rewrites LINK pairs).",
+      "fails_or_breaks": "2,585 relocations not yet produced from real fixups; entry CS:IP and stack not reproduced in the fixture.",
+      "reopen_if": "A full fixture with real fixups produces an order LINK cannot generate from any object order."
+    },
+    {
+      "id": "FACT-odd-length-padding",
+      "hypothesis": "MSC 5.10 /O word-aligns EVERY function in an object: an odd-length function is followed by one 90 NOP whether it is the last function or not.",
+      "status": "SUPPORTED",
+      "scope": "source-shape-specific",
+      "evidence": "relorder canonical-profile multi-function probes emit CB 90 CB 90 (second public at offset 2); isolated odd-length probes also end with 90.",
+      "controls": "Synthetic probes; accepted odd/even controls.",
+      "explains": "An odd-length TARGET with NO following 90 pad was not followed by MSC per-function alignment: its successor is not MSC C in the same object (ASM/data/other object with byte alignment) or the target itself is not MSC C. An intervening 90 alone is NOT a TU boundary.",
+      "fails_or_breaks": "Earlier claim (functions inside one object are not individually padded) is FALSIFIED; extra-NOP residuals (mmgr_alloc_a000, mmgr_get_chunk_size_bytes, polarRadius3D) therefore do not indicate same-TU successors.",
+      "reopen_if": "An accepted multi-function MSC object shows unpadded odd-length interior functions."
+    },
+    {
+      "id": "MARKER-F3-string-op",
+      "hypothesis": "An F3-prefixed string instruction (rep movs/stos, repe cmps) in game code is not output of the pinned C compilers; it marks hand-written (or library) assembly.",
+      "status": "SUPPORTED",
+      "scope": "symptom-specific",
+      "evidence": "20-run probe matrix (CL 5.00, CL 5.10, QCL 1.00, QCL 1.01 x /O,/Od,/Ox,/Oi,/O /Oi): every emitted REP string op uses F2, including 29-60 byte aggregate copies, near/far, far globals, /Ox loop-to-REP conversion and inlined memcpy; _fmemcpy/movedata stay external calls. Image: every game F3 A4/A5/AA/AB site lies in a procedure listed as an ASM proc in the reference seg012 listing; F3 also occurs in pinned MASM-built runtime members (_strcat, _strcpy F3 A4/A5; _strcmp F3 A6) and in start/__setargv.",
+      "controls": "mat_mul_vector2 (accepted C) uses F2 A5 for its struct copy; pinned runtime ASM members use F3.",
+      "explains": "S3 and every F3 string-op site as class-7 positive evidence (with other markers), not a profile difference.",
+      "fails_or_breaks": "Does not by itself prove the whole containing procedure is ASM (inline asm would also produce F3, but no evidence of inline asm).",
+      "reopen_if": "A pinned C compiler/profile is shown to emit F3 for some source form."
+    },
+    {
+      "id": "RT-CRT0-startup",
+      "hypothesis": "Startup is the pinned MSC 5.10 dos\\crt0.asm member.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "197 startup code bytes match at load 0x1CC62 outside 24 fixup spans; its 11 relocation sites occupy consecutive oracle indices 2023-2033. runtime2: MZ entrypoint and both startup anchors identify 5.10 MLIBCR.LIB dos\\crt0.asm at [117858,118055) with 24 fixups, followed by a 5,369-byte run of 22 complete library code segments [118056,123425).",
+      "controls": "runtime",
+      "explains": "Startup code block.",
+      "fails_or_breaks": "Full 88-byte DATA, 2,048-byte STACK contribution, CS:IP, 8,000-byte final stack and an unusual COMENT checksum not yet proven.",
+      "reopen_if": "Its DATA/STACK contribution cannot be reconciled with the image."
+    },
+    {
+      "id": "FLAG-G1-G2",
+      "hypothesis": "80186/80286 code generation (/G1 or /G2) explains pad_id's smaller frame.",
+      "status": "FALSIFIED",
+      "scope": "source-shape-specific",
+      "evidence": "/G1 and /G2 make pad_id 54 bytes only by using ENTER/LEAVE; the target uses push bp/mov bp,sp and mov sp,bp. No ENTER/LEAVE observed in accepted controls.",
+      "controls": "pad_id; accepted_c use 8086 frames",
+      "explains": "-",
+      "fails_or_breaks": "Wrong instructions.",
+      "reopen_if": "ENTER/LEAVE found in game code."
+    },
+    {
+      "id": "FACT-00-pad-object-boundary",
+      "hypothesis": "A single 00 byte between an odd-length procedure and the next even-aligned one is LINK segment-alignment fill between OBJECTS (MSC's own intra-object pad is 90), i.e. evidence of an object/module boundary after a non-MSC-padded (typically ASM or runtime) contribution.",
+      "status": "PLAUSIBLE",
+      "scope": "symptom-specific",
+      "evidence": "extents audit: exact pinned member lengths/hashes place the trailing 00 after _strcat, _strcmp, _strlen, _strrchr, __aFlshr OUTSIDE their CODE members; asmmap: 4/11 adjacent pinned-module edges have a one-byte 00 pad; set_fontdefseg's reference listing has explicit `align 2; db 0`. MSC 5.10 /O pads odd-length functions with 90 inside the object (relorder).",
+      "controls": "pinned runtime members (exact extents)",
+      "explains": "Where object boundaries fall after odd-length non-C contributions; helps segment the image into modules for the TU/link plan.",
+      "fails_or_breaks": "An explicit ASM `db 0`/align directive inside a module can also produce 00; a 00 pad does not by itself identify the assembler.",
+      "reopen_if": "A 00 pad is found inside a single proven object."
+    },
+    {
+      "id": "FACT-local-slot-order-identifier",
+      "hypothesis": "Canonical MSC 5.10 /O allocates automatic-local BP homes by walking a 16-bucket symbol hash table: bucket = (sum of the first 31 identifier bytes) & 15; buckets in ascending order; within a bucket newest declaration first; each local at its even-rounded size (char/int/near ptr one word, long two). Parameters keep ABI homes, statics take none, explicit register locals still get a home. Nested scopes allocate independently and reuse a freed home from a LIFO free pool only if large enough (no split/coalesce); a containing scope releases its direct homes then descendants in lexical preorder.",
+      "status": "SUPPORTED",
+      "scope": "source-shape-specific",
+      "evidence": "hashrule: predictor build/workers/hashrule/slotorder.py matches 360/360 synthetic local-address mappings, 37/37 synthetic frame extents, and 19/19 addressable automatic-local homes across 14 accepted source files (frame size 13/14; init_carstate_from_simd has 4 bytes of compiler-generated index temporaries not modeled). Use/declaration-order and function-name changes do not move homes except within a bucket.",
+      "controls": "pinned profile only; accepted rect_adjust_from_point (sibling-block sharing).",
+      "explains": "Slot-order residuals are resolved by choosing readable names that hash to the needed buckets (suggest_names()), not by artificial structs.",
+      "fails_or_breaks": "Compiler-generated temporaries and spills are outside the model.",
+      "reopen_if": "Two same-named-local sources with different slot orders under identical scope structure."
+    },
+    {
+      "id": "MODULE-seg012-hand-asm",
+      "hypothesis": "The restunts-numbered seg012 region (218 small procedures, 21.8 KB: file/sprite/font/shape/mmgr/kb/timer/video utility library) is predominantly hand-written assembly, with at most thin C-compatible wrappers.",
+      "status": "PLAUSIBLE",
+      "scope": "TU-specific",
+      "evidence": "Every game F3 string-op procedure (MARKER-F3-string-op) is in seg012; 11/12 unexplained S2/S5/S6 symptom functions are in seg012; S6 XOR zeroing is emitted by no pinned Microsoft compiler (MSC 5.00/5.10/6.00A, QuickC); shared-tail entries, CS-resident sprite data, cld;lodsb scans, direct I/O, EA thunks and 00 alignment pads cluster there; only 3/218 procedures are accepted C (thin wrappers whose bytes an assembler would also produce).",
+      "controls": "Accepted C elsewhere; pinned MASM-built runtime members share the markers.",
+      "explains": "Why C search stalls across seg012; routes seg012 to the ASM contribution path (asmdisc/asmdisc2).",
+      "fails_or_breaks": "Some seg012 members may still be C (e.g. wrappers); the reference listing's ASM form is not proof.",
+      "reopen_if": "Several non-trivial seg012 procedures match canonical C exactly."
+    },
+    {
+      "id": "LIBASM-MASM500",
+      "hypothesis": "Microsoft assembled the MSC 5.10 runtime/startup library objects with MASM 5.00.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "asmdisc: reassembling 14 MSC 5.10 library ASM sources (STARTUP, STARTUP/DOS, SOURCE; /Dmem_m, /Mx) \u2014 MASM 5.00 core-OMF exact 14/14 (THEADR and LIB member A3 comment excluded); MASM 5.10, 5.10A and pinned 5.10 13/14, differing only in dos\\crt0 COMENT A2 checksum (target and MASM 5.00 emit invalid D1, 5.10 emits valid D2). MASM 4.00: payload-exact on 12 assembled 5.10 controls but no core-OMF match; on MSC 5.00 controls it differs in AND SP,FFFEh encoding (81 E4 FE FF vs 5.x 83 E4 FE) and EXTDEF order. ML 6.00 rejects IF1/IF2 CMACROS.",
+      "controls": "14 MSC 5.10 + 12 MSC 5.00 library members",
+      "explains": "CRT0's unusual COMENT checksum (closure roadmap); runtime rebuild-from-source path.",
+      "fails_or_breaks": "Says nothing directly about the assembler used for the GAME's hand-written modules.",
+      "reopen_if": "A 5.10 library member is found that only MASM 5.10 reproduces."
+    },
+    {
+      "id": "FACT-folded-constant-index",
+      "hypothesis": "MSC 5.10 folds constant index offsets into the address displacement: arr[i-16] with 76-byte elements is emitted as [i*76 + (arr-1216)], so an instruction's DGROUP displacement can lie before the object it accesses.",
+      "status": "SUPPORTED",
+      "scope": "source-shape-specific",
+      "evidence": "dataext: sub_3771E-area code indexes base 0x81FC with stride 76 and an index bound 16..23, so all accesses fall exactly in [0x86BC,0x895C) starting at the reference label 0x86BC (8 x 76). Not yet confirmed by a compiled exact match. foldidx compiled probes (canonical profile): 76-byte arr[i-16] -> FIXUPP to _arr with encoded addend 40 FB (-1216); field +2 -> 42 FB (-1214); arr[i+3] -> E4 00 (+228); 2-D row indexing -1216; SoA word indexing -32; 608-byte outer row -9728. Image scan: 2 procedures use the folded 0x81FC displacement with guards 16..23 and stride 76 (sub_3771E, audio_init_chunk2).",
+      "controls": "compiled probes; image scan",
+      "explains": "Displacements that appear to reach before/after an object; justifies a stride+bound-proven addend rule instead of coalescing labels.",
+      "fails_or_breaks": "-",
+      "reopen_if": "The compiled natural form emits a different displacement/fixup."
+    },
+    {
+      "id": "FACT-pragma-intrinsic",
+      "hypothesis": "Pinned MSC 5.10 supports source-scoped `#pragma intrinsic(inp, outp, inpw, outpw, _enable, _disable)`, emitting direct IN/OUT/CLI/STI instead of far calls.",
+      "status": "SUPPORTED",
+      "scope": "source-shape-specific",
+      "evidence": "intrin probes under canonical /AM /O /Gs.",
+      "controls": "in-source pragma leaves accepted sources unaffected",
+      "explains": "Direct port I/O and CLI/STI are NOT by themselves positive hand-ASM markers; they can come from C with this pragma.",
+      "fails_or_breaks": "Did not explain audio_add_driver_timer/audio_remove_driver_timer (their descending relocation order resets between functions; grouped C emits one descending LEDATA run).",
+      "reopen_if": "-"
+    },
+    {
+      "id": "FLAG-Oi-global",
+      "hypothesis": "Global /Oi (intrinsics for all TUs) is part of the game profile.",
+      "status": "DISFAVORED",
+      "scope": "global",
+      "evidence": "intrin: /Oi reproduces direct intrinsic expansion without pragmas but preserves only 30/31 frozen accepted contributions (is_facing_camera fails ordered FIXUPP validation). An in-source #pragma intrinsic explains the same codegen without breaking controls.",
+      "controls": "31 frozen accepted contributions",
+      "explains": "-",
+      "fails_or_breaks": "Breaks is_facing_camera.",
+      "reopen_if": "Several unrelated TUs need intrinsics and #pragma intrinsic cannot be justified per TU."
+    }
+  ],
+  "symptoms": [
+    {
+      "id": "S1",
+      "symptom": "Loop counter in SI/DI with no BP home; target frame 2 bytes smaller (pad_id also keeps mov sp,bp with no sub sp).",
+      "functions": [
+        "pad_id",
+        "audio_enable_flag6",
+        "audio_disable_flag6",
+        "sub_3702E (candidate sub sp,6 vs target 4)"
+      ],
+      "explanations": {
+        "global_profile": "FALSIFIED (FLAG-Ol-plain-counter; FLAG-O-variants-register-source; FLAG-G1-G2)",
+        "tu_specific_profile": "UNTESTED",
+        "source_context": "SUPPORTED-leaning: flag6 worker (canonical profile) reached the exact 4-byte frame for audio_disable_flag6 via block scoping (sibling blocks share homes); remaining residual is only the home position BP-4 vs BP-2, consistent with FACT-local-slot-order-identifier (names decide flat-scope order). audio_enable_flag6 still reserves one extra home (sub sp,4 vs 2). pad_id unexplained.",
+        "hand_asm": "PLAUSIBLE for pad_id (Restunts has it only as ASM; not positive evidence)",
+        "boundary": "UNTESTED",
+        "runtime_library": "DISFAVORED"
+      }
+    },
+    {
+      "id": "S2",
+      "symptom": "Inline 16x16->32 MUL/IMUL using DX:AX where the canonical (unsigned) long product calls __aFulmul/__aFlmul.",
+      "functions": [
+        "update_rpm_from_speed",
+        "multiply_and_scale",
+        "projectiondata9_times_ratio",
+        "nopsub_3276A"
+      ],
+      "explanations": {
+        "global_profile": "UNTESTED",
+        "tu_specific_profile": "PLAUSIBLE (CC-later-MSC, TOOLING_LIMITED)",
+        "source_context": "PLAUSIBLE (int*int with implicit truncation forms not exhausted)",
+        "hand_asm": "PLAUSIBLE (multiply_and_scale IMUL/SHL/RCL/ADC fixed-point helper, 15 callers)",
+        "boundary": "UNTESTED",
+        "runtime_library": "DISFAVORED"
+      }
+    },
+    {
+      "id": "S3",
+      "symptom": "F3 A5 (rep movsw) block moves with non-canonical segment setup where canonical struct assignment emits F2 A5.",
+      "functions": [
+        "sprite_copy_both_to_arg",
+        "sprite_copy_arg_to_both",
+        "file_decomp_rle",
+        "mmgr_copy_paras",
+        "copy_paras_reverse",
+        "nopsub_3216C",
+        "file_unflip_shape2d",
+        "sprite_putimage",
+        "sprite_shape_to_1_alt",
+        "font_set_unk",
+        "file_load_shape2d_expand",
+        "file_find",
+        "file_decomp_rle_seq",
+        "file_decomp_vle",
+        "sprite_clear_shape",
+        "sub_35C4E",
+        "sub_35DC8",
+        "sub_35DE6"
+      ],
+      "explanations": {
+        "global_profile": "FALSIFIED (MARKER-F3-string-op: no pinned compiler/flag emits F3)",
+        "tu_specific_profile": "FALSIFIED for all pinned compilers (QCL 1.00/1.01 included)",
+        "source_context": "FALSIFIED for aggregate assignment, memcpy/_fmemcpy/movedata and loop forms",
+        "hand_asm": "SUPPORTED (F3 + CS-resident sprite storage + seg012 ASM procs)",
+        "boundary": "UNTESTED",
+        "runtime_library": "DISFAVORED (no matching member; _fmemcpy/movedata are external calls)"
+      }
+    },
+    {
+      "id": "S4",
+      "symptom": "Separate ES and SI loads / ES:SI with BX index where canonical far-pointer access uses LES BX.",
+      "functions": [
+        "file_get_res_shape_count",
+        "its byte-adjacent seg012 shape2d accessor pair member"
+      ],
+      "explanations": {
+        "global_profile": "DISFAVORED (no MSC 5.00/5.10/QuickC option in a 23-case matrix produces separate ES/SI loads + es:[si+4]; corpus scan finds this pattern ONLY in two byte-adjacent seg012 shape2d procedures)",
+        "tu_specific_profile": "UNTESTED",
+        "source_context": "PLAUSIBLE (paired declarations/TU context untested)",
+        "hand_asm": "PLAUSIBLE",
+        "boundary": "UNTESTED",
+        "runtime_library": "DISFAVORED"
+      }
+    },
+    {
+      "id": "S5",
+      "symptom": "Unrolled shl/rcl (shr/rcr) x4 for x16 scaling where canonical long<<4 is a CL=4 loop.",
+      "functions": [
+        "parse_shape2d_helper",
+        "parse_shape2d_helper2",
+        "file_get_shape2d",
+        "locate_sound_fatal",
+        "mat_mul_vector"
+      ],
+      "explanations": {
+        "global_profile": "DISFAVORED (canonical and 5.00 emit a CL=4 loop for scalar forms; accepted control mmgr_get_res_ofs_diff_scaled `(unsigned long)f()<<4` matches the original CL=4 shl/rcl loop, so the original compiler also used the loop where it compiled this idiom)",
+        "tu_specific_profile": "PLAUSIBLE (CC-later-MSC)",
+        "source_context": "DISFAVORED (union, chained shifts, *16L, huge and linear-address forms tested)",
+        "hand_asm": "SUPPORTED-leaning (neighbouring shared tails, CS data, lodsb scans in the same region)",
+        "boundary": "UNTESTED",
+        "runtime_library": "DISFAVORED"
+      }
+    },
+    {
+      "id": "S6",
+      "symptom": "xor ax/ah zeroing where the canonical compiler emits sub ax,ax / sub ah,ah.",
+      "functions": [
+        "sub_307D2",
+        "timer_reset",
+        "kb_get_key_state",
+        "timer_compare_dx"
+      ],
+      "explanations": {
+        "global_profile": "UNTESTED",
+        "tu_specific_profile": "PLAUSIBLE",
+        "source_context": "UNTESTED",
+        "hand_asm": "PLAUSIBLE, leaning: timer_reset and kb_get_key_state sit in the kb/timer region where 28 procedures show positive ASM markers (direct IN/OUT, CLI/STI, BIOS INTs, selective ISR saves); canonical emits sub for all tested getter/setter forms (5.00 identical)",
+        "boundary": "UNTESTED",
+        "runtime_library": "UNTESTED"
+      }
+    }
+  ],
+  "authorship_map": {
+    "source": "asmmap worker 2026-09-25 (build/workers/asmmap/map.json, local)",
+    "likely_c_bytes": 114428,
+    "likely_asm_bytes": 19652,
+    "ambiguous_bytes": 42496,
+    "caveat": "Instruction-only scoring is weak (only 11/30 accepted C scored likely-C); only strong positive markers (F3 string ops, cld;lodsb scans, direct IN/OUT, CLI/STI, BIOS INT, selective ISR saves, nonstandard frames, unrolled shift pairs, CS-resident data, EA thunks, shared-tail entries) should redirect effort. 15 procedures (894 B) previously attempted as C carry strong ASM markers: pad_id, audio_op_unk7, file_find_next, set_fontdefseg, four F3 A5 copy routines, mmgr_path_to_name, file_get_shape2d, mat_mul_vector, EA thunks. UPDATE (intrin): direct IN/OUT and CLI/STI can come from C via #pragma intrinsic, so they are no longer positive ASM markers on their own."
+  }
+}

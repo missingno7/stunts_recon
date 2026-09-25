@@ -1,0 +1,144 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_file_find_next",
+        "_file_find_next_alt"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_file_find_next_alt",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 6,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-v1"
+  },
+  "end": 171602,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "historical_recipe": "scratch_binding_probe; target identity independently checked with context.py and oracle relocation table",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_find_next",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 1,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_file_find_next",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 171599,
+      "offset": 40527,
+      "segment": 8192
+    }
+  ],
+  "id": "file_find_next_alt",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_file_find_next_alt",
+  "source": "src/file_find_next_alt.c",
+  "stable_id": "load_29e4c",
+  "start": 171596,
+  "target": {
+    "sha256": "cac200d710f5f422fc39d31acde77f3be28454f6c17e665e4d1ce8d2fc84a6a8",
+    "size": 6
+  }
+}

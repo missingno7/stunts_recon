@@ -36,10 +36,29 @@ _FRAME_CALLBACK_SYMBOLS = {
     '_timer_reg_callback': {'kind': 'far-code', 'frame_load_address': 0x1ea20,
                             'load_address': 0x202aa},
     '_word_46468': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
-                    'load_address': 0x36468},
+                    'load_address': 0x36468, 'allowed_addends': [0, 1]},
     '_byte_442E4': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
-                    'load_address': 0x342e4},
+                    'load_address': 0x342e4, 'allowed_addends': [0]},
 }
+
+
+def _checked_data_addend(target, encoded):
+    addend = int.from_bytes(encoded, 'little')
+    signed = int.from_bytes(encoded, 'little', signed=True)
+    folded = target.get('folded_addends', {})
+    if signed < 0 and signed in folded:
+        proof = folded[signed]
+        stride, field = proof['stride'], proof['field_offset']
+        lower, upper = proof['index_bound']
+        width = target['width']
+        require(stride > 0 and 0 <= field < stride and
+                signed == -lower*stride + field and
+                0 <= field and (upper-lower)*stride+field+2 <= width,
+                'Folded DGROUP addend escapes reviewed indexed object')
+        return signed
+    require(addend in target.get('allowed_addends', [0]),
+            'DGROUP addend leaves independently grounded object/field')
+    return addend
 
 
 def bind_data_offsets(obj, segment, public, length, expected_fixups, declarations, symbols):
@@ -83,7 +102,7 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
         require(len(encoded) == 2 and payload[at:at+2] == encoded, 'Encoded fixup addend differs')
         displacement = fix['displacement']
         require(type(displacement) is int and displacement == 0, 'Nonzero target displacement is not yet proven')
-        value = address - base + displacement + int.from_bytes(encoded, 'little')
+        value = address - base + displacement + _checked_data_addend(target, encoded)
         # Wrapping/sign-extension cases are intentionally outside this proven subset.
         require(0 <= value <= 65535, 'Offset fixup overflow is not supported')
         struct.pack_into('<H', payload, at, value)
@@ -95,6 +114,8 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
 
 
 def bind_contribution(obj, recipe, symbols=None):
+    require(not getattr(obj,'local_publics',[]) and not getattr(obj,'local_externals',[]),
+            'Local OMF symbols require a complete reviewed group recipe')
     args = (obj, recipe['object_segment'], recipe['public'], recipe['end'] - recipe['start'])
     if recipe.get('binding',{}).get('mode') == 'external-frame-callback-v1':
         return bind_frame_callback(*args, recipe['expected_fixups'], recipe['binding']['declarations'],
@@ -105,6 +126,12 @@ def bind_contribution(obj, recipe, symbols=None):
     if recipe.get('binding',{}).get('mode') == 'external-far-call-dgroup-offset16-v1':
         return bind_mixed_far_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
                                    recipe['start'], recipe['expected_relocations'])
+    if recipe.get('binding',{}).get('mode') == 'external-far-call-code-pointer-dgroup-offset16-v1':
+        return bind_mixed_far_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
+                                   recipe['start'], recipe['expected_relocations'], code_pointers=True)
+    if recipe.get('binding',{}).get('mode') == 'external-far-call-cs-pointer-v1':
+        return bind_cs_pointers(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
+                                recipe['start'], recipe['expected_relocations'])
     require(recipe['expected_relocations'] == [], 'Relocating contributions not supported in this mode')
     if not recipe['expected_fixups']:
         require('binding' not in recipe, 'Unexpected binding for fixup-free recipe')
@@ -162,8 +189,8 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
 
 
 def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarations,
-                        symbols, start, expected_relocations):
-    """One external far CALL and external DGROUP offsets in one complete OMF contribution.
+                        symbols, start, expected_relocations, code_pointers=False):
+    """External far CALLs and DGROUP offsets in one complete OMF contribution.
 
     FIXUPP order is retained. Only the far segment word creates an MZ relocation.
     No unsupported frame, addend, multiple public, or private data is inferred.
@@ -217,9 +244,27 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
             far_rows.append(row)
             fixup_rows.append({'kind': 'far-call', **row})
             relocation_sites.append(start + at + 2)
+        elif code_pointers and (fix['loc'], fix['width']) in (
+                ('base16', 2), ('loader-offset16', 2)):
+            require(1 <= at <= length-2 and target.get('kind') == 'far-code' and
+                    fix['encoded_addend'] == '0000' and payload[at:at+2] == bytes(2),
+                    'Unsupported far code pointer field')
+            frame, address = target['frame_load_address'], target['load_address']
+            require(type(frame) is int and type(address) is int and
+                    0 <= frame <= 0xffff0 and frame % 16 == 0 and
+                    0 <= address-frame <= 65535, 'Invalid far code pointer target')
+            require(payload[at-1] == (0xba if fix['loc']=='base16' else 0xb8),
+                    'Far code pointer lacks MOV immediate anchor')
+            require(not occupied.intersection(range(at,at+2)), 'Overlapping code pointer')
+            occupied.update(range(at,at+2))
+            value = frame//16 if fix['loc']=='base16' else address-frame
+            struct.pack_into('<H', payload, at, value)
+            fixup_rows.append({'kind':'far-code-'+fix['loc'], 'offset':at,
+                               'target':fix['target'], 'linked_value':value})
+            if fix['loc']=='base16': relocation_sites.append(start+at)
         elif (fix['loc'], fix['width']) == ('offset16', 2):
             require(0 <= at <= length - 2, 'Mixed data fixup outside contribution')
-            require(target['group'] == 'DGROUP', 'Mixed data target is not proven DGROUP')
+            require(target.get('group') == 'DGROUP', 'Mixed data target is not proven DGROUP')
             base, address = target['frame_load_address'], target['load_address']
             require(type(base) is int and type(address) is int and base >= 0 and base % 16 == 0 and
                     0 <= address - base <= 65535, 'Invalid mixed DGROUP frame/address')
@@ -228,7 +273,7 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
                     'Mixed data encoded addend differs')
             require(not occupied.intersection(range(at, at + 2)), 'Overlapping mixed fixups')
             occupied.update(range(at, at + 2))
-            value = address - base + int.from_bytes(encoded, 'little')
+            value = address - base + _checked_data_addend(target, encoded)
             require(0 <= value <= 65535, 'Mixed data offset overflow unsupported')
             struct.pack_into('<H', payload, at, value)
             row = {'offset': at, 'target': fix['target'], 'frame_load_address': base,
@@ -238,7 +283,18 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
             fixup_rows.append({'kind': 'dgroup-offset16', **row})
         else:
             require(False, 'Unsupported mixed fixup kind/width')
-    require(len(far_rows) == 1 and data_rows, 'Mixed mode requires one far CALL and DGROUP offsets')
+    require(far_rows and data_rows, 'Mixed mode requires far CALLs and DGROUP offsets')
+    if code_pointers:
+        pairs = {}
+        for row in fixup_rows:
+            if row['kind'] in ('far-code-base16','far-code-loader-offset16'):
+                pairs.setdefault(row['target'], {'base16':[], 'loader-offset16':[]})[
+                    row['kind'][9:]].append(row['offset'])
+        require(pairs and all(len(v['base16'])==len(v['loader-offset16']) for v in pairs.values()),
+                'Unpaired far code pointer fields')
+        for fields in pairs.values():
+            require(sorted(x-3 for x in fields['base16']) == sorted(fields['loader-offset16']),
+                    'Far code pointer words are not adjacent MOV immediates')
     require([r['load_offset'] for r in expected_relocations] == relocation_sites,
             'Ordered mixed source relocation obligations differ')
     for entry in expected_relocations:
@@ -246,9 +302,78 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
                 0 <= entry['segment'] <= 65535 and 0 <= entry['offset'] <= 65535 and
                 entry['segment'] * 16 + entry['offset'] == entry['load_offset'],
                 'Invalid mixed MZ relocation representation')
-    return bytes(payload), {'mode': 'external-far-call-dgroup-offset16-v1',
+    return bytes(payload), {'mode': ('external-far-call-code-pointer-dgroup-offset16-v1'
+                                      if code_pointers else 'external-far-call-dgroup-offset16-v1'),
                             'fixups': fixup_rows,
                             'generated_relocations': expected_relocations}
+
+
+def bind_cs_pointers(obj, segment, public, length, expected_fixups, declarations,
+                     symbols, start, expected_relocations):
+    """Complete far CALLs plus paired MOV offset/base words for reviewed CS data."""
+    require(expected_fixups and obj.linker_fixups==expected_fixups,
+            'Complete ordered CS FIXUPP differs')
+    require(declarations=={'segments':obj.segment_defs,'groups':obj.groups,
+                           'publics':obj.publics,'externals':obj.externals} and
+            obj.publics==[{'name':public,'segment':segment,'offset':0}],
+            'CS pointer declarations/public differ')
+    require(obj.segment_length(segment)==length and len(obj.segment_bytes(segment))==length and
+            all(n==segment or z==0 for n,z in obj.segment_lengths.items()),
+            'Incomplete CS pointer contribution or unowned data')
+    used={f['target'] for f in expected_fixups}
+    require(set(symbols)==used and set(obj.externals)<=used|{'__acrtused',public},
+            'CS pointer external set differs')
+    payload=bytearray(obj.segment_bytes(segment)); occupied=set();pairs={};sites=[];rows=[]
+    for fix in expected_fixups:
+        require(fix['segment']==segment and not fix['self_relative'] and
+                fix['target_kind']=='external' and fix['target_method']==2 and
+                (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                (5,'target',fix['target'],0) and fix['displacement']==0 and
+                1<=fix['target_index']<=len(obj.externals) and
+                obj.externals[fix['target_index']-1]==fix['target'],
+                'Unsupported CS pointer FIXUPP target/frame')
+        at=fix['offset'];width=fix['width'];loc=fix['loc'];target=symbols[fix['target']]
+        require(type(at)is int and 0<=at<=length-width and
+                not occupied.intersection(range(at,at+width)) and
+                fix['encoded_addend']=='00'*width and payload[at:at+width]==bytes(width),
+                'CS pointer fixup addend, extent or overlap differs')
+        occupied.update(range(at,at+width))
+        frame=target['frame_load_address'];address=target['load_address']
+        require(type(frame)is int and type(address)is int and 0<=frame<=0xffff0 and
+                frame%16==0 and 0<=address-frame<=65535,
+                'CS pointer frame/address invalid')
+        if loc=='pointer32' and width==4:
+            require(at>=1 and payload[at-1]==0x9a and target['kind']=='far-code',
+                    'CS mode only binds external far CALLs')
+            struct.pack_into('<HH',payload,at,address-frame,frame//16)
+            sites.append(start+at+2)
+        elif loc in ('offset16','base16') and width==2:
+            require(at>=1 and target['kind']=='cs-data' and
+                    target['island_start']<=address and
+                    address+target['width']<=target['island_end'] and
+                    (payload[at-1]==(0xb8 if loc=='offset16' else 0xba)),
+                    'CS data pointer is outside verified island or MOV pair')
+            struct.pack_into('<H',payload,at,address-frame if loc=='offset16' else frame//16)
+            pairs.setdefault(fix['target'],{}).setdefault(loc,[]).append(at)
+            if loc=='base16':sites.append(start+at)
+        else:
+            require(False,'Unsupported CS pointer fixup kind/width')
+        rows.append({'offset':at,'loc':loc,'target':fix['target']})
+    require(pairs and any(f['loc']=='pointer32' for f in expected_fixups),
+            'CS mode requires data pairs and far CALLs')
+    for name,pair in pairs.items():
+        require(set(pair)=={'offset16','base16'} and len(pair['offset16'])==len(pair['base16']) and
+                sorted(x+3 for x in pair['offset16'])==sorted(pair['base16']),
+                'CS offset/base fixups are not complete adjacent MOV pairs')
+    require([r['load_offset'] for r in expected_relocations]==sites,
+            'Ordered CS pointer relocation sites differ')
+    for entry in expected_relocations:
+        require(set(entry)=={'segment','offset','load_offset'} and
+                0<=entry['segment']<=65535 and 0<=entry['offset']<=65535 and
+                entry['segment']*16+entry['offset']==entry['load_offset'],
+                'Invalid CS pointer relocation representation')
+    return bytes(payload),{'mode':'external-far-call-cs-pointer-v1','fixups':rows,
+                           'generated_relocations':expected_relocations}
 
 
 def bind_frame_callback(obj, segment, public, length, expected_fixups, declarations,

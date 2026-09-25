@@ -4,10 +4,42 @@
   "owners": [
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 26776,
-      "id": "raw_00000_06898",
+      "end": 18148,
+      "id": "raw_00000_046e4",
       "kind": "UNRESOLVED_RAW",
       "start": 0
+    },
+    {
+      "classification": "GAME_C",
+      "end": 18194,
+      "id": "load_046e4",
+      "kind": "MATCHING_C",
+      "name": "set_default_car",
+      "recipe": "recipes/set_default_car.json",
+      "start": 18148
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 19820,
+      "id": "raw_04712_04d6c",
+      "kind": "UNRESOLVED_RAW",
+      "start": 18194
+    },
+    {
+      "classification": "GAME_C",
+      "end": 19874,
+      "id": "load_04d6c",
+      "kind": "MATCHING_C",
+      "name": "mat_mul_vector2",
+      "recipe": "recipes/mat_mul_vector2.json",
+      "start": 19820
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 26776,
+      "id": "raw_04da2_06898",
+      "kind": "UNRESOLVED_RAW",
+      "start": 19874
     },
     {
       "classification": "GAME_C",
@@ -36,10 +68,26 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 75098,
-      "id": "raw_0d93c_1255a",
+      "end": 72282,
+      "id": "raw_0d93c_11a5a",
       "kind": "UNRESOLVED_RAW",
       "start": 55612
+    },
+    {
+      "classification": "GAME_C",
+      "end": 72570,
+      "id": "load_11a5a",
+      "kind": "MATCHING_C",
+      "name": "subst_hillroad_track",
+      "recipe": "recipes/subst_hillroad_track.json",
+      "start": 72282
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 75098,
+      "id": "raw_11b7a_1255a",
+      "kind": "UNRESOLVED_RAW",
+      "start": 72570
     },
     {
       "classification": "GAME_C",
@@ -52,10 +100,42 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 89826,
-      "id": "raw_12576_15ee2",
+      "end": 80464,
+      "id": "raw_12576_13a50",
       "kind": "UNRESOLVED_RAW",
       "start": 75126
+    },
+    {
+      "classification": "GAME_C",
+      "end": 80536,
+      "id": "load_13a50",
+      "kind": "MATCHING_C",
+      "name": "mouse_minmax_position",
+      "recipe": "recipes/mouse_minmax_position.json",
+      "start": 80464
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 85478,
+      "id": "raw_13a98_14de6",
+      "kind": "UNRESOLVED_RAW",
+      "start": 80536
+    },
+    {
+      "classification": "GAME_C",
+      "end": 85510,
+      "id": "load_14de6",
+      "kind": "MATCHING_C",
+      "name": "polyinfo_reset",
+      "recipe": "recipes/polyinfo_reset.json",
+      "start": 85478
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 89826,
+      "id": "raw_14e06_15ee2",
+      "kind": "UNRESOLVED_RAW",
+      "start": 85510
     },
     {
       "classification": "GAME_C",
@@ -93,10 +173,19 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 91474,
-      "id": "raw_163c6_16552",
+      "end": 91392,
+      "id": "raw_163c6_16500",
       "kind": "UNRESOLVED_RAW",
       "start": 91078
+    },
+    {
+      "classification": "GAME_C",
+      "end": 91474,
+      "id": "load_16500",
+      "kind": "MATCHING_C",
+      "name": "calc_sincos80",
+      "recipe": "recipes/calc_sincos80.json",
+      "start": 91392
     },
     {
       "classification": "GAME_C",
@@ -109,62 +198,35 @@
     },
     {
       "classification": "GAME_C",
-      "end": 91628,
-      "id": "load_16572",
+      "end": 93002,
+      "id": "rectlist_core_group",
       "kind": "MATCHING_C",
-      "name": "rect_union",
-      "recipe": "recipes/rect_union.json",
+      "name": "rectlist_core_group",
+      "recipe": "recipes/rectlist_core_group.json",
       "start": 91506
     },
     {
-      "classification": "GAME_C",
-      "end": 91760,
-      "id": "load_165ec",
-      "kind": "MATCHING_C",
-      "name": "rect_intersect",
-      "recipe": "recipes/rect_intersect.json",
-      "start": 91628
-    },
-    {
       "classification": "UNRESOLVED_MIXED",
-      "end": 92510,
-      "id": "raw_16670_1695e",
+      "end": 100194,
+      "id": "raw_16b4a_18762",
       "kind": "UNRESOLVED_RAW",
-      "start": 91760
+      "start": 93002
     },
     {
       "classification": "GAME_C",
-      "end": 92572,
-      "id": "load_1695e",
+      "end": 100292,
+      "id": "load_18762",
       "kind": "MATCHING_C",
-      "name": "rect_is_overlapping",
-      "recipe": "recipes/rect_is_overlapping.json",
-      "start": 92510
-    },
-    {
-      "classification": "GAME_C",
-      "end": 92624,
-      "id": "load_1699c",
-      "kind": "MATCHING_C",
-      "name": "rect_is_inside",
-      "recipe": "recipes/rect_is_inside.json",
-      "start": 92572
-    },
-    {
-      "classification": "GAME_C",
-      "end": 92754,
-      "id": "load_169d0",
-      "kind": "MATCHING_C",
-      "name": "rect_is_adjacent",
-      "recipe": "recipes/rect_is_adjacent.json",
-      "start": 92624
+      "name": "parse_filepath_separators",
+      "recipe": "recipes/parse_filepath_separators.json",
+      "start": 100194
     },
     {
       "classification": "UNRESOLVED_MIXED",
       "end": 100984,
-      "id": "raw_16a52_18a78",
+      "id": "raw_187c4_18a78",
       "kind": "UNRESOLVED_RAW",
-      "start": 92754
+      "start": 100292
     },
     {
       "classification": "GAME_C",
@@ -204,10 +266,69 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 103770,
-      "id": "raw_18b0e_1955a",
+      "end": 102032,
+      "id": "raw_18b0e_18e90",
       "kind": "UNRESOLVED_RAW",
       "start": 101134
+    },
+    {
+      "classification": "GAME_C",
+      "end": 102116,
+      "id": "load_18e90",
+      "kind": "MATCHING_C",
+      "name": "mouse_multi_hittest",
+      "recipe": "recipes/mouse_multi_hittest.json",
+      "start": 102032
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 102204,
+      "id": "raw_18ee4_18f3c",
+      "kind": "UNRESOLVED_RAW",
+      "start": 102116
+    },
+    {
+      "classification": "GAME_C",
+      "end": 102222,
+      "id": "load_18f3c",
+      "kind": "MATCHING_C",
+      "name": "sprite_copy_2_to_1_2",
+      "recipe": "recipes/sprite_copy_2_to_1_2.json",
+      "start": 102204
+    },
+    {
+      "classification": "GAME_C",
+      "end": 102250,
+      "id": "load_18f4e",
+      "kind": "MATCHING_C",
+      "name": "sprite_copy_2_to_1_clear",
+      "recipe": "recipes/sprite_copy_2_to_1_clear.json",
+      "start": 102222
+    },
+    {
+      "classification": "GAME_C",
+      "end": 102268,
+      "id": "load_18f6a",
+      "kind": "MATCHING_C",
+      "name": "sprite_copy_wnd_to_1",
+      "recipe": "recipes/sprite_copy_wnd_to_1.json",
+      "start": 102250
+    },
+    {
+      "classification": "GAME_C",
+      "end": 102296,
+      "id": "load_18f7c",
+      "kind": "MATCHING_C",
+      "name": "sprite_copy_wnd_to_1_clear",
+      "recipe": "recipes/sprite_copy_wnd_to_1_clear.json",
+      "start": 102268
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 103770,
+      "id": "raw_18f98_1955a",
+      "kind": "UNRESOLVED_RAW",
+      "start": 102296
     },
     {
       "classification": "GAME_C",
@@ -229,10 +350,1492 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 123622,
-      "id": "raw_19620_1e2e6",
+      "end": 104306,
+      "id": "raw_19620_19772",
       "kind": "UNRESOLVED_RAW",
       "start": 103968
+    },
+    {
+      "classification": "GAME_C",
+      "end": 104326,
+      "id": "load_19772",
+      "kind": "MATCHING_C",
+      "name": "sub_29772",
+      "recipe": "recipes/sub_29772.json",
+      "start": 104306
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 104586,
+      "id": "raw_19786_1988a",
+      "kind": "UNRESOLVED_RAW",
+      "start": 104326
+    },
+    {
+      "classification": "GAME_C",
+      "end": 104616,
+      "id": "load_1988a",
+      "kind": "MATCHING_C",
+      "name": "font_set_fontdef2",
+      "recipe": "recipes/font_set_fontdef2.json",
+      "start": 104586
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 105196,
+      "id": "raw_198a8_19aec",
+      "kind": "UNRESOLVED_RAW",
+      "start": 104616
+    },
+    {
+      "classification": "GAME_C",
+      "end": 105224,
+      "id": "load_19aec",
+      "kind": "MATCHING_C",
+      "name": "input_push_status",
+      "recipe": "recipes/input_push_status.json",
+      "start": 105196
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 107056,
+      "id": "raw_19b08_1a230",
+      "kind": "UNRESOLVED_RAW",
+      "start": 105224
+    },
+    {
+      "classification": "GAME_C",
+      "end": 107062,
+      "id": "load_1a230",
+      "kind": "MATCHING_C",
+      "name": "timer_get_delta_alt",
+      "recipe": "recipes/timer_get_delta_alt.json",
+      "start": 107056
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 118526,
+      "id": "raw_1a236_1cefe",
+      "kind": "UNRESOLVED_RAW",
+      "start": 107062
+    },
+    {
+      "binding": {
+        "data_bindings": {
+          "___argc": "_argc",
+          "___argv": "_argv",
+          "__osmajor": "_byte_2EDED",
+          "__pgmptr": "_word_3EE0E",
+          "__psp": "_word_2EDEB"
+        },
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external",
+            "external",
+            "external",
+            "external"
+          ],
+          "externals": [
+            "___argc",
+            "___argv",
+            "__pgmptr",
+            "__osmajor",
+            "__psp"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__setargv",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 402,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 4,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {
+          "_DATA": {
+            "anchor": {
+              "kind": "data-alias",
+              "offset": 0,
+              "symbol": "_dword_3EE26"
+            },
+            "end": 192042,
+            "ownership": "proven-raw",
+            "start": 192038
+          }
+        }
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 118928,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 2,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 2,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 6,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 13,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__osmajor",
+          "target_index": 4,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 19,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__psp",
+          "target_index": 5,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 2,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 28,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__pgmptr",
+          "target_index": 3,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 47,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__pgmptr",
+          "target_index": 3,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 66,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__psp",
+          "target_index": 5,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 196,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "___argc",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 213,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "___argv",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 228,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__pgmptr",
+          "target_index": 3,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 242,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__psp",
+          "target_index": 5,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 392,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 263,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 400,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "___argc",
+        "___argv",
+        "__pgmptr",
+        "__osmajor",
+        "__psp"
+      ],
+      "id": "library_dos_stdargv_118526",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "dos\\stdargv.asm",
+      "module_sha256": "cde422af93b794610687d1ddfe9b91ece757540be4dbb55b6d924e3322d76481",
+      "name": "dos\\stdargv.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__setargv",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 118526
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 122962,
+      "id": "raw_1d090_1e052",
+      "kind": "UNRESOLVED_RAW",
+      "start": 118928
+    },
+    {
+      "binding": {
+        "data_bindings": {
+          "STKHQQ": "_word_3EE24"
+        },
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "STKHQQ"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_stackavail",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 20,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 122982,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 3,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "STKHQQ",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "STKHQQ"
+      ],
+      "id": "library_stackava_122962",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "stackava.asm",
+      "module_sha256": "1718bf66a572825efbaaf7b86e13a852637b5753dedd0361408a82d3179b5129",
+      "name": "stackava.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_stackavail",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 122962
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__amallocbrk",
+            "__amalloc"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_malloc",
+              "offset": 18,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__nfree",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__asegds",
+              "offset": 0,
+              "segment": "_DATA"
+            },
+            {
+              "name": "__nmalloc",
+              "offset": 18,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "_free",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 88,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 10,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {
+          "_DATA": {
+            "anchor": {
+              "kind": "data-alias",
+              "offset": 0,
+              "symbol": "_word_3EF6E"
+            },
+            "end": 192376,
+            "ownership": "proven-raw",
+            "start": 192366
+          }
+        }
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 123070,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 24,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 37,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "__amallocbrk",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 50,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 2,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 53,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 6,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 70,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 80,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "__amalloc",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "__amallocbrk",
+        "__amalloc"
+      ],
+      "id": "library_nmalloc_122982",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "nmalloc.asm",
+      "module_sha256": "f1647c4bbfa0df150d70d1b036db32718f5bf0a6dbbb6cd8889658d03d124259",
+      "name": "nmalloc.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_malloc",
+          "offset": 18,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__nfree",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__asegds",
+          "offset": 0,
+          "segment": "_DATA"
+        },
+        {
+          "name": "__nmalloc",
+          "offset": 18,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "_free",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 122982
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "_brkctl"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__amallocbrk",
+              "offset": 322,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__aseg1",
+              "offset": 0,
+              "segment": "_DATA"
+            },
+            {
+              "name": "__asegh",
+              "offset": 8,
+              "segment": "_DATA"
+            },
+            {
+              "name": "__asegn",
+              "offset": 2,
+              "segment": "_DATA"
+            },
+            {
+              "name": "__asegr",
+              "offset": 4,
+              "segment": "_DATA"
+            },
+            {
+              "name": "__amlink",
+              "offset": 288,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__QChdata",
+              "offset": 8,
+              "segment": "_DATA"
+            },
+            {
+              "name": "__amalloc",
+              "offset": 3,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__amexpand",
+              "offset": 230,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__amblksiz",
+              "offset": 6,
+              "segment": "_DATA"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 355,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 11,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {
+          "_DATA": {
+            "anchor": {
+              "kind": "unique-literal"
+            },
+            "end": 192387,
+            "ownership": "proven-raw",
+            "start": 192376
+          }
+        }
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 123425,
+      "expected_fixups": [
+        {
+          "displacement": 209,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 1,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 4,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 85,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 10,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 94,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 10,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 153,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 168,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 288,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 180,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 288,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 192,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 230,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 200,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 4,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 219,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 6,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 249,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 288,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 274,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 322,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 291,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_brkctl",
+          "frame_index": 1,
+          "frame_kind": "external",
+          "frame_method": 2,
+          "loc": "pointer32",
+          "offset": 337,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_brkctl",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 123409,
+          "offset": 57873,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "_brkctl"
+      ],
+      "id": "library_amalloc_123070",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "amalloc.asm",
+      "module_sha256": "f1755fd864699594e5954d5288f960984882d01833d77614d04845b88d7db028",
+      "name": "amalloc.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__amallocbrk",
+          "offset": 322,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__aseg1",
+          "offset": 0,
+          "segment": "_DATA"
+        },
+        {
+          "name": "__asegh",
+          "offset": 8,
+          "segment": "_DATA"
+        },
+        {
+          "name": "__asegn",
+          "offset": 2,
+          "segment": "_DATA"
+        },
+        {
+          "name": "__asegr",
+          "offset": 4,
+          "segment": "_DATA"
+        },
+        {
+          "name": "__amlink",
+          "offset": 288,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__QChdata",
+          "offset": 8,
+          "segment": "_DATA"
+        },
+        {
+          "name": "__amalloc",
+          "offset": 3,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__amexpand",
+          "offset": 230,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__amblksiz",
+          "offset": 6,
+          "segment": "_DATA"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 123070
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 123426,
+      "id": "raw_1e221_1e222",
+      "kind": "UNRESOLVED_RAW",
+      "start": 123425
+    },
+    {
+      "binding": {
+        "data_bindings": {
+          "__abrkp": "_word_3EDCA",
+          "__abrktb": "_crtsp1",
+          "__abrktbe": "_word_3EDCA",
+          "__asizds": "_word_3ED74",
+          "__psp": "_word_2EDEB"
+        },
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external",
+            "external",
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__abrkp",
+            "__abrktb",
+            "__asizds",
+            "__abrktbe",
+            "__psp"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_brkctl",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 196,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 123622,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 13,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__abrktb",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 110,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 25,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 33,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__abrkp",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 110,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 50,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "_TEXT",
+          "target_index": 1,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 60,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__abrktbe",
+          "target_index": 4,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 99,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__abrkp",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 125,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__abrktbe",
+          "target_index": 4,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 148,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__asizds",
+          "target_index": 3,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 170,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__psp",
+          "target_index": 5,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 188,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__asizds",
+          "target_index": 3,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "__abrkp",
+        "__abrktb",
+        "__asizds",
+        "__abrktbe",
+        "__psp"
+      ],
+      "id": "library_dos_brkctl_123426",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "dos\\brkctl.asm",
+      "module_sha256": "5e1e6d7ad0bb2d1a7d4947bfca159d5305d9bcc2a4c94504d930ea3088e4ac1c",
+      "name": "dos\\brkctl.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_brkctl",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 123426
     },
     {
       "classification": "RUNTIME_LIBRARY",
@@ -338,10 +1941,384 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 124134,
-      "id": "raw_1e39f_1e4e6",
+      "end": 123808,
+      "id": "raw_1e39f_1e3a0",
       "kind": "UNRESOLVED_RAW",
       "start": 123807
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "__cxtoa"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_itoa",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 27,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 123835,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 25,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "__cxtoa",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "__cxtoa"
+      ],
+      "id": "library_itoa_123808",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "itoa.asm",
+      "module_sha256": "b7b79523cfb071974bac2844ce92a6f41ab08551078d6a6e6518de6e9c72ceff",
+      "name": "itoa.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_itoa",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 123808
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 123836,
+      "id": "raw_1e3bb_1e3bc",
+      "kind": "UNRESOLVED_RAW",
+      "start": 123835
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "__cltoasub"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_ultoa",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 10,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 123846,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "offset16",
+          "offset": 8,
+          "segment": "_TEXT",
+          "self_relative": true,
+          "target": "__cltoasub",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "__cltoasub"
+      ],
+      "id": "library_ultoa_123836",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "ultoa.asm",
+      "module_sha256": "72bc7a00dcf01a58db4cff8d0c0c2e813ab34d0f16239400e2b4da3af762df62",
+      "name": "ultoa.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_ultoa",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 123836
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 123880,
+      "id": "raw_1e3c6_1e3e8",
+      "kind": "UNRESOLVED_RAW",
+      "start": 123846
+    },
+    {
+      "binding": {
+        "data_bindings": {
+          "__nfile": "_word_3EDF2",
+          "__osfile": "_crtfilehandles"
+        },
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__nfile",
+            "__osfile"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_isatty",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 35,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 123915,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 8,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__nfile",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 19,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__osfile",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [],
+      "externals": [
+        "__nfile",
+        "__osfile"
+      ],
+      "id": "library_isatty_123880",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "isatty.asm",
+      "module_sha256": "b5b8ff424050bc5bf9175fff96cbf717649b0d6bdbcec049a9a83406e60f0a2a",
+      "name": "isatty.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_isatty",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 123880
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 124134,
+      "id": "raw_1e40b_1e4e6",
+      "kind": "UNRESOLVED_RAW",
+      "start": 123915
     },
     {
       "classification": "RUNTIME_LIBRARY",
@@ -431,10 +2408,925 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 124944,
-      "id": "raw_1e59e_1e810",
+      "end": 124476,
+      "id": "raw_1e59e_1e63c",
       "kind": "UNRESOLVED_RAW",
       "start": 124318
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external",
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__acrtused",
+            "__aFlmul",
+            "_srand",
+            "_rand"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                3,
+                4,
+                2
+              ],
+              "segments": [
+                "CONST",
+                "_BSS",
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "_srand",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "_rand",
+              "offset": 18,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 58,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 4,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CONST",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 3,
+              "length": 0,
+              "name": "CONST",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "BSS",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 4,
+              "length": 0,
+              "name": "_BSS",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {
+          "_DATA": {
+            "anchor": {
+              "kind": "data-alias",
+              "offset": 0,
+              "symbol": "_word_3F0A0"
+            },
+            "end": 192676,
+            "ownership": "proven-raw",
+            "start": 192672
+          }
+        }
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 124534,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 50,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 46,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "__aFlmul",
+          "frame_index": 0,
+          "frame_kind": "target",
+          "frame_method": 5,
+          "loc": "pointer32",
+          "offset": 35,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 32,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 28,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0200",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 11,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "0000",
+          "frame": "DGROUP",
+          "frame_index": 1,
+          "frame_kind": "group",
+          "frame_method": 1,
+          "loc": "offset16",
+          "offset": 7,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "_DATA",
+          "target_index": 2,
+          "target_kind": "segment",
+          "target_method": 0,
+          "width": 2
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 124513,
+          "offset": 58977,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__acrtused",
+        "__aFlmul",
+        "_srand",
+        "_rand"
+      ],
+      "id": "library_rand_124476",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "rand.c",
+      "module_sha256": "5aecf0e96dcd9a632df7ee1be0b4d55f7b8fb8af5205b75da76d4c250d609429",
+      "name": "rand.c",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "_srand",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "_rand",
+          "offset": 18,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 124476
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 124904,
+      "id": "raw_1e676_1e7e8",
+      "kind": "UNRESOLVED_RAW",
+      "start": 124534
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__aFldiv",
+            "__aFNaldiv"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__ldiv",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__aldiv",
+              "offset": 5,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 10,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 124914,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 1,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFldiv",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 6,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFNaldiv",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 124907,
+          "offset": 59371,
+          "segment": 4096
+        },
+        {
+          "load_offset": 124912,
+          "offset": 59376,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFldiv",
+        "__aFNaldiv"
+      ],
+      "id": "library_oldnorm_124904",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "oldnorm.asm",
+      "module_sha256": "6e25c0e27dfc14983b32c3fe8f2f3e2cb44af1813adb60a72fbfc94a741934b5",
+      "name": "oldnorm.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__ldiv",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__aldiv",
+          "offset": 5,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 124904
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__aFlmul",
+            "__aFNalmul"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__lmul",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__almul",
+              "offset": 5,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__ulmul",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__aulmul",
+              "offset": 5,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 10,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 124924,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 1,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 6,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFNalmul",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 124917,
+          "offset": 59381,
+          "segment": 4096
+        },
+        {
+          "load_offset": 124922,
+          "offset": 59386,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFlmul",
+        "__aFNalmul"
+      ],
+      "id": "library_oldnorm_124914",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "oldnorm.asm",
+      "module_sha256": "ebd8f44092d596f39130ca37027e715b0c33d8b9faf3b436b1d66ce5a2ea6071",
+      "name": "oldnorm.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__lmul",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__almul",
+          "offset": 5,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__ulmul",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__aulmul",
+          "offset": 5,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 124914
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__aFlshr",
+            "__aFNalshr"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__lshr",
+              "offset": 5,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__alshr",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 10,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 124934,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 1,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFNalshr",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 6,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFlshr",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 124927,
+          "offset": 59391,
+          "segment": 4096
+        },
+        {
+          "load_offset": 124932,
+          "offset": 59396,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFlshr",
+        "__aFNalshr"
+      ],
+      "id": "library_oldshift_124924",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "oldshift.asm",
+      "module_sha256": "3d27600da728cfdc8f15c3e4047f201edda7d42d0a119ef9292737457ebd86fa",
+      "name": "oldshift.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__lshr",
+          "offset": 5,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__alshr",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 124924
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external",
+            "external"
+          ],
+          "externals": [
+            "__aFuldiv",
+            "__aFNauldiv"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__uldiv",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__auldiv",
+              "offset": 5,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 10,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 124944,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 1,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFuldiv",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        },
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 6,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFNauldiv",
+          "target_index": 2,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 124937,
+          "offset": 59401,
+          "segment": 4096
+        },
+        {
+          "load_offset": 124942,
+          "offset": 59406,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFuldiv",
+        "__aFNauldiv"
+      ],
+      "id": "library_oldnorm_124934",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "library": "toolchain/msc510/MLIBCR.LIB",
+      "library_sha256": "a8c6bf65551559a795f3bdcef3f70178086bf944296413716e48cba95814b9cb",
+      "module": "oldnorm.asm",
+      "module_sha256": "1177f3175b44020049f04ad01397b41b51b4c3238b669d98d7143ac2b2e25eb8",
+      "name": "oldnorm.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__uldiv",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__auldiv",
+          "offset": 5,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 124934
     },
     {
       "classification": "RUNTIME_LIBRARY",
@@ -596,10 +3488,587 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 125350,
-      "id": "raw_1e917_1e9a6",
+      "end": 125208,
+      "id": "raw_1e917_1e918",
       "kind": "UNRESOLVED_RAW",
       "start": 125207
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "__aFldiv"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__aFNaldiv",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 36,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 125244,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFldiv",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 125228,
+          "offset": 59692,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFldiv"
+      ],
+      "id": "library_aldiv_125208",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "ledata_policy": {
+        "mode": "pinned-ordered-ledata-v1",
+        "module_sha256": "8a265394ba37bbf052aa4a40705c82a2bc30d52e551f9f33fb03106ff4358f5b",
+        "records": [
+          {
+            "offset": 0,
+            "overlap_offsets": [],
+            "record_offset": 131,
+            "segment_index": 1,
+            "sha256": "f296299bf25fbfc2eca3dc3e4bc1c04caa8ea2d578ba9d55a4d7722e787ef587",
+            "size": 34
+          },
+          {
+            "offset": 33,
+            "overlap_offsets": [
+              33
+            ],
+            "record_offset": 181,
+            "segment_index": 1,
+            "sha256": "95ced23589ef030a08297d8ddfc7fc784a2c19f2337ba45696e47221b6c8fa91",
+            "size": 3
+          }
+        ]
+      },
+      "library": "toolchain/msc510/LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "module": "aldiv.asm",
+      "module_sha256": "8a265394ba37bbf052aa4a40705c82a2bc30d52e551f9f33fb03106ff4358f5b",
+      "name": "aldiv.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__aFNaldiv",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 125208
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "__aFlmul"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__aFNalmul",
+              "offset": 0,
+              "segment": "_TEXT"
+            },
+            {
+              "name": "__aFNaulmul",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 36,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 125280,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFlmul",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 125264,
+          "offset": 59728,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFlmul"
+      ],
+      "id": "library_almul_125244",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "ledata_policy": {
+        "mode": "pinned-ordered-ledata-v1",
+        "module_sha256": "d681596a3f0d2d006c75d6794e09815045d9b304aafcd396a33f51d7ff7345e0",
+        "records": [
+          {
+            "offset": 0,
+            "overlap_offsets": [],
+            "record_offset": 146,
+            "segment_index": 1,
+            "sha256": "4db4dc1d25a26c8b28f092c73543d1380a0dc571a25a02b612334d7fa28c916f",
+            "size": 34
+          },
+          {
+            "offset": 33,
+            "overlap_offsets": [
+              33
+            ],
+            "record_offset": 196,
+            "segment_index": 1,
+            "sha256": "95ced23589ef030a08297d8ddfc7fc784a2c19f2337ba45696e47221b6c8fa91",
+            "size": 3
+          }
+        ]
+      },
+      "library": "toolchain/msc510/LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "module": "almul.asm",
+      "module_sha256": "d681596a3f0d2d006c75d6794e09815045d9b304aafcd396a33f51d7ff7345e0",
+      "name": "almul.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__aFNalmul",
+          "offset": 0,
+          "segment": "_TEXT"
+        },
+        {
+          "name": "__aFNaulmul",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 125244
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "__aFlshr"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__aFNalshr",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 33,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 125313,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 15,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFlshr",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 125297,
+          "offset": 59761,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFlshr"
+      ],
+      "id": "library_alshr_125280",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "ledata_policy": {
+        "mode": "pinned-ordered-ledata-v1",
+        "module_sha256": "be1059cffb5bb0a82fb840ea0c045e3891462e5fc8665e0c4e262c2868748ff3",
+        "records": [
+          {
+            "offset": 0,
+            "overlap_offsets": [],
+            "record_offset": 131,
+            "segment_index": 1,
+            "sha256": "22e549f89c7042a8b2e722edd4d4c504bf234a450879efd7a4996e4143515bf5",
+            "size": 31
+          },
+          {
+            "offset": 30,
+            "overlap_offsets": [
+              30
+            ],
+            "record_offset": 178,
+            "segment_index": 1,
+            "sha256": "9ec65bbceaa1819723844e5c4c4214b46decf7f978ee4ff0e198bafd9f912332",
+            "size": 3
+          }
+        ]
+      },
+      "library": "toolchain/msc510/LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "module": "alshr.asm",
+      "module_sha256": "be1059cffb5bb0a82fb840ea0c045e3891462e5fc8665e0c4e262c2868748ff3",
+      "name": "alshr.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__aFNalshr",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 125280
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 125314,
+      "id": "raw_1e981_1e982",
+      "kind": "UNRESOLVED_RAW",
+      "start": 125313
+    },
+    {
+      "binding": {
+        "data_bindings": {},
+        "declarations": {
+          "external_scopes": [
+            "external"
+          ],
+          "externals": [
+            "__aFuldiv"
+          ],
+          "groups": [
+            {
+              "index": 1,
+              "name": "DGROUP",
+              "segment_indices": [
+                2
+              ],
+              "segments": [
+                "_DATA"
+              ]
+            }
+          ],
+          "publics": [
+            {
+              "name": "__aFNauldiv",
+              "offset": 0,
+              "segment": "_TEXT"
+            }
+          ],
+          "segments": [
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "CODE",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 1,
+              "length": 36,
+              "name": "_TEXT",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            },
+            {
+              "acbp": 72,
+              "alignment": "word",
+              "alignment_code": 2,
+              "big": false,
+              "class": "DATA",
+              "combine": "public",
+              "combine_code": 2,
+              "frame": null,
+              "index": 2,
+              "length": 0,
+              "name": "_DATA",
+              "offset": null,
+              "overlay_index": 1,
+              "use_32bit_offset": false
+            }
+          ]
+        },
+        "mode": "runtime-member-v1",
+        "storage": {}
+      },
+      "classification": "RUNTIME_LIBRARY",
+      "end": 125350,
+      "expected_fixups": [
+        {
+          "displacement": 0,
+          "encoded_addend": "00000000",
+          "frame": "_TEXT",
+          "frame_index": 1,
+          "frame_kind": "segment",
+          "frame_method": 0,
+          "loc": "pointer32",
+          "offset": 18,
+          "segment": "_TEXT",
+          "self_relative": false,
+          "target": "__aFuldiv",
+          "target_index": 1,
+          "target_kind": "external",
+          "target_method": 2,
+          "width": 4
+        }
+      ],
+      "expected_relocations": [
+        {
+          "load_offset": 125334,
+          "offset": 59798,
+          "segment": 4096
+        }
+      ],
+      "externals": [
+        "__aFuldiv"
+      ],
+      "id": "library_auldiv_125314",
+      "kind": "KNOWN_TOOLCHAIN_LIBRARY",
+      "ledata_policy": {
+        "mode": "pinned-ordered-ledata-v1",
+        "module_sha256": "a4e5bfb21e04b3d70e5ca0c092e601a6b271a38c6b0ff6c9ae8ff514d9f391a9",
+        "records": [
+          {
+            "offset": 0,
+            "overlap_offsets": [],
+            "record_offset": 134,
+            "segment_index": 1,
+            "sha256": "f296299bf25fbfc2eca3dc3e4bc1c04caa8ea2d578ba9d55a4d7722e787ef587",
+            "size": 34
+          },
+          {
+            "offset": 33,
+            "overlap_offsets": [
+              33
+            ],
+            "record_offset": 184,
+            "segment_index": 1,
+            "sha256": "95ced23589ef030a08297d8ddfc7fc784a2c19f2337ba45696e47221b6c8fa91",
+            "size": 3
+          }
+        ]
+      },
+      "library": "toolchain/msc510/LIBH.LIB",
+      "library_sha256": "6729e396014d37921b0b331cd0f9a3a821abb725fd2ee0e795d71b0e4b627e9c",
+      "module": "auldiv.asm",
+      "module_sha256": "a4e5bfb21e04b3d70e5ca0c092e601a6b271a38c6b0ff6c9ae8ff514d9f391a9",
+      "name": "auldiv.asm",
+      "profile": "msc510-medium",
+      "publics": [
+        {
+          "name": "__aFNauldiv",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segment": "_TEXT",
+      "start": 125314
     },
     {
       "classification": "RUNTIME_LIBRARY",
@@ -649,10 +4118,58 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 157618,
-      "id": "raw_1ea07_267b2",
+      "end": 133044,
+      "id": "raw_1ea07_207b4",
       "kind": "UNRESOLVED_RAW",
       "start": 125447
+    },
+    {
+      "classification": "GAME_C",
+      "end": 133074,
+      "id": "load_207b4",
+      "kind": "MATCHING_C",
+      "name": "sub_307B4",
+      "recipe": "recipes/sub_307B4.json",
+      "start": 133044
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 133717,
+      "id": "raw_207d2_20a55",
+      "kind": "UNRESOLVED_RAW",
+      "start": 133074
+    },
+    {
+      "classification": "GAME_C",
+      "end": 133725,
+      "id": "load_20a55",
+      "kind": "MATCHING_C",
+      "name": "nopsub_kb_get_readchar_callback",
+      "recipe": "recipes/nopsub_kb_get_readchar_callback.json",
+      "start": 133717
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 135547,
+      "id": "raw_20a5d_2117b",
+      "kind": "UNRESOLVED_RAW",
+      "start": 133725
+    },
+    {
+      "classification": "GAME_C",
+      "end": 135565,
+      "id": "load_2117b",
+      "kind": "MATCHING_C",
+      "name": "mmgr_get_ofs_diff",
+      "recipe": "recipes/mmgr_get_ofs_diff.json",
+      "start": 135547
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 157618,
+      "id": "raw_2118d_267b2",
+      "kind": "UNRESOLVED_RAW",
+      "start": 135565
     },
     {
       "classification": "GAME_C",
@@ -665,10 +4182,60 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 159930,
-      "id": "raw_267e4_270ba",
+      "end": 157866,
+      "id": "raw_267e4_268aa",
       "kind": "UNRESOLVED_RAW",
       "start": 157668
+    },
+    {
+      "classification": "GAME_C",
+      "end": 158252,
+      "id": "mouse_set_pixratio",
+      "kind": "MATCHING_C",
+      "name": "mouse_set_pixratio",
+      "recipe": "recipes/mouse_set_pixratio.json",
+      "start": 157866
+    },
+    {
+      "classification": "GAME_C",
+      "end": 158304,
+      "id": "load_26a2c",
+      "kind": "MATCHING_C",
+      "name": "mouse_set_position",
+      "recipe": "recipes/mouse_set_position.json",
+      "start": 158252
+    },
+    {
+      "classification": "GAME_C",
+      "end": 158362,
+      "id": "load_26a60",
+      "kind": "MATCHING_C",
+      "name": "mouse_get_state",
+      "recipe": "recipes/mouse_get_state.json",
+      "start": 158304
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 158654,
+      "id": "raw_26a9a_26bbe",
+      "kind": "UNRESOLVED_RAW",
+      "start": 158362
+    },
+    {
+      "classification": "GAME_C",
+      "end": 158696,
+      "id": "load_26bbe",
+      "kind": "MATCHING_C",
+      "name": "preRender_sphere_helper",
+      "recipe": "recipes/preRender_sphere_helper.json",
+      "start": 158654
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 159930,
+      "id": "raw_26be8_270ba",
+      "kind": "UNRESOLVED_RAW",
+      "start": 158696
     },
     {
       "classification": "GAME_C",
@@ -688,19 +4255,19 @@
     },
     {
       "classification": "GAME_C",
-      "end": 160696,
-      "id": "load_273b2",
+      "end": 160766,
+      "id": "audio_flag2_group",
       "kind": "MATCHING_C",
-      "name": "audio_enable_flag2",
-      "recipe": "recipes/audio_enable_flag2.json",
+      "name": "audio_flag2_group",
+      "recipe": "recipes/audio_flag2_group.json",
       "start": 160690
     },
     {
       "classification": "UNRESOLVED_MIXED",
       "end": 161966,
-      "id": "raw_273b8_278ae",
+      "id": "raw_273fe_278ae",
       "kind": "UNRESOLVED_RAW",
-      "start": 160696
+      "start": 160766
     },
     {
       "classification": "GAME_C",
@@ -722,10 +4289,26 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 165114,
-      "id": "raw_278ca_284fa",
+      "end": 162872,
+      "id": "raw_278ca_27c38",
       "kind": "UNRESOLVED_RAW",
       "start": 161994
+    },
+    {
+      "classification": "GAME_C",
+      "end": 162884,
+      "id": "load_27c38",
+      "kind": "MATCHING_C",
+      "name": "sub_37C38",
+      "recipe": "recipes/sub_37C38.json",
+      "start": 162872
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 165114,
+      "id": "raw_27c44_284fa",
+      "kind": "UNRESOLVED_RAW",
+      "start": 162884
     },
     {
       "classification": "GAME_C",
@@ -746,11 +4329,29 @@
       "start": 165140
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 171556,
-      "id": "raw_28528_29e24",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "end": 165232,
+      "id": "load_28528",
+      "kind": "MATCHING_C",
+      "name": "audioresource_copy_4_bytes",
+      "recipe": "recipes/audioresource_copy_4_bytes.json",
       "start": 165160
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 171540,
+      "id": "raw_28570_29e14",
+      "kind": "UNRESOLVED_RAW",
+      "start": 165232
+    },
+    {
+      "classification": "GAME_C",
+      "end": 171556,
+      "id": "load_29e14",
+      "kind": "MATCHING_C",
+      "name": "file_load_shape2d_nofatal2",
+      "recipe": "recipes/file_load_shape2d_nofatal2.json",
+      "start": 171540
     },
     {
       "classification": "GAME_C",
@@ -762,10 +4363,12 @@
       "start": 171556
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_C",
       "end": 171602,
-      "id": "raw_29e4c_29e52",
-      "kind": "UNRESOLVED_RAW",
+      "id": "load_29e4c",
+      "kind": "MATCHING_C",
+      "name": "file_find_next_alt",
+      "recipe": "recipes/file_find_next_alt.json",
       "start": 171596
     },
     {
@@ -787,10 +4390,23 @@
       "start": 171604
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 199481,
+          "segment": "_DATA",
+          "start": 199447,
+          "target": {
+            "sha256": "f6896d538de8739bdbb03861d6b4d66280d5aee946b26a094974eaa9b66133e0",
+            "size": 34
+          }
+        }
+      ],
       "end": 173148,
-      "id": "raw_29e56_2a45c",
-      "kind": "UNRESOLVED_RAW",
+      "id": "init_main",
+      "kind": "MATCHING_C",
+      "name": "init_main",
+      "recipe": "recipes/init_main.json",
       "start": 171606
     },
     {
@@ -803,11 +4419,29 @@
       "start": 173148
     },
     {
+      "classification": "GAME_C",
+      "end": 173188,
+      "id": "load_2a460",
+      "kind": "MATCHING_C",
+      "name": "mmgr_alloc_resbytes",
+      "recipe": "recipes/mmgr_alloc_resbytes.json",
+      "start": 173152
+    },
+    {
+      "classification": "GAME_C",
+      "end": 173206,
+      "id": "load_2a484",
+      "kind": "MATCHING_C",
+      "name": "mmgr_get_res_ofs_diff_scaled",
+      "recipe": "recipes/mmgr_get_res_ofs_diff_scaled.json",
+      "start": 173188
+    },
+    {
       "classification": "UNRESOLVED_MIXED",
       "end": 176268,
-      "id": "raw_2a460_2b08c",
+      "id": "raw_2a496_2b08c",
       "kind": "UNRESOLVED_RAW",
-      "start": 173152
+      "start": 173206
     },
     {
       "classification": "GAME_C",
@@ -820,10 +4454,30 @@
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 200000,
-      "id": "raw_2b0ba_30d40",
+      "end": 199447,
+      "id": "raw_2b0ba_30b17",
       "kind": "UNRESOLVED_RAW",
       "start": 176314
+    },
+    {
+      "classification": "GAME_C",
+      "end": 199481,
+      "id": "init_main:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "init_main",
+      "segment": "_DATA",
+      "start": 199447,
+      "target": {
+        "sha256": "f6896d538de8739bdbb03861d6b4d66280d5aee946b26a094974eaa9b66133e0",
+        "size": 34
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 200000,
+      "id": "raw_30b39_30d40",
+      "kind": "UNRESOLVED_RAW",
+      "start": 199481
     }
   ],
   "schema": 1

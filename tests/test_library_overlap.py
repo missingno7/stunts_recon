@@ -50,11 +50,11 @@ class LibraryOverlapTests(unittest.TestCase):
         data = object_fixture()
         with self.assertRaises(ValueError): read_object(data, ledata_policy=reviewed_policy(data))
 
-    def test_overlap_with_fixups_is_rejected(self):
+    def test_overlap_with_conflicting_fixup_addends_is_rejected(self):
         data = self.objects[0]; at = 0
         while data[at] != 0x8a: at += 3 + struct.unpack_from('<H', data, at+1)[0]
         data = data[:at] + record(0x9c, b'\xc4\x00\x54\x01') + data[at:]
-        with self.assertRaisesRegex(ValueError, 'with fixups'): read_object(data, ledata_policy=reviewed_policy(data))
+        with self.assertRaisesRegex(ValueError, 'disagree at fixup field'): read_object(data, ledata_policy=reviewed_policy(data))
 
     def test_historical_link_complete_combined_members_and_aliases(self):
         for profile in ['msc510-medium', 'msc500-medium']:

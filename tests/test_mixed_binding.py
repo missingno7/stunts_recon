@@ -24,7 +24,7 @@ class MixedBindingTests(unittest.TestCase):
             '__aFlmul': {'kind': 'far-code', 'frame_load_address': 0x1cc50,
                          'load_address': 0x1e8d8},
             '_flags': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
-                       'load_address': 0x34d06},
+                       'load_address': 0x34d06, 'allowed_addends': [1, 2]},
         }
         cls.relocations = [
             {'segment': 0x1000, 'offset': 0x5000 + f['offset'] + 2,

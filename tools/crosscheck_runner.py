@@ -5,12 +5,26 @@ import tempfile
 from pathlib import Path
 from common import ROOT, read_json, write_json, require, identity
 from compiler import verify_toolchain
+from preprocessor import prepare, check_recipe
 from object_probe import read_object
 from binder import bind_contribution
 from code_symbols import resolve_recipe_symbols
+from multi_contribution import bind_multi, checked_members
+from secondary_contribution import bind_single_secondary
 from oracle import verify
 from mz import MZ
 from build_exact import inputs
+
+
+def bind_recipe_object(obj, recipe, image, relocations):
+    """Use the same complete recipe path as the acceptance probe."""
+    if 'members' in recipe:
+        checked_members(recipe, image)
+        return bind_multi(obj, recipe, image, relocations)
+    if recipe.get('secondary_dgroup_segments'):
+        return bind_single_secondary(obj, recipe, image, relocations)
+    symbols=resolve_recipe_symbols(recipe,image,relocations)
+    return bind_contribution(obj,recipe,symbols)
 
 
 def main():
@@ -27,7 +41,9 @@ def main():
         r=read_json(path);config,_=verify_toolchain(r['profile'])
         work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
         source=(ROOT/r['source']).read_bytes()
-        (work/'UNIT.C').write_bytes(source.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
+        expanded, closure = prepare(source, r['profile'])
+        check_recipe(r, closure)
+        (work/'UNIT.C').write_bytes(expanded.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
         tc=(ROOT/config['directory']).resolve()
         batch=['@echo off','D:\\CL.EXE /c '+' '.join(config['flags'])+' UNIT.C > COMP.LOG',
                'if errorlevel 1 goto failed','echo 0 > RESULT.TXT','goto done',':failed','echo 1 > RESULT.TXT',':done','exit']
@@ -43,12 +59,23 @@ def main():
                               timeout=45,creationflags=subprocess.CREATE_NO_WINDOW,startupinfo=startup)
         require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
         obj=read_object((work/'UNIT.OBJ').read_bytes())
-        symbols=resolve_recipe_symbols(r,image,oracle[2]['unpacked_mz']['relocations'])
-        payload,binding=bind_contribution(obj,r,symbols)
+        require(prepare(source, r['profile'])[1] == closure,
+                'Independent preprocessor closure changed during compilation')
+        payload,binding=bind_recipe_object(obj,r,image,oracle[2]['unpacked_mz']['relocations'])
         relocs=[site for site in oracle[2]['unpacked_mz']['relocations'] if r['start']-1<=site['load_offset']<r['end']]
         require(binding['generated_relocations']==r['expected_relocations']==relocs,'Independent source relocation mismatch')
         require(payload==image[r['start']:r['end']],'Independent compiler bytes mismatch')
+        for name,spec in r.get('secondary_dgroup_segments',{}).items():
+            secondary=bytes.fromhex(binding['secondary_payloads'][name])
+            if name=='_BSS':
+                require(secondary==bytes(spec['end']-spec['start']),
+                        'Independent BSS differs')
+            else:
+                require(secondary==image[spec['start']:spec['end']] and
+                        identity(secondary)==spec['target'],
+                        'Independent secondary data differs')
         rows.append({'task':r['id'],'source':identity(source),'object':identity((work/'UNIT.OBJ').read_bytes()),
+                     'preprocessor_closure':closure,
                      'payload':identity(payload),'binding':binding,'exact':True,'command':cmd,'dos_command':batch[1]})
     require(inputs()==before,'Inputs changed during independent compilation')
     require(verify(write=False)[2]==oracle[2],'Oracle changed during independent compilation')

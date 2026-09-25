@@ -66,7 +66,8 @@ def experiment(offset, addend, profile='msc510-medium', paragraph=False):
     address = int(public[1], 16)*16 + int(public[2], 16)
     frame = int(group[1], 16)*16
     from binder import bind_data_offsets
-    symbols = {'_flags': {'group': 'DGROUP', 'frame_load_address': frame, 'load_address': address}}
+    symbols = {'_flags': {'group': 'DGROUP', 'frame_load_address': frame,
+                         'load_address': address, 'allowed_addends': list(range(16))}}
     bound, binding = bind_data_offsets(obj, 'UNIT_TEXT', '_lookup', size, obj.linker_fixups,
         {'segments': obj.segment_defs, 'groups': obj.groups, 'publics': obj.publics, 'externals': obj.externals}, symbols)
     require(bound == image[start:start+size], 'Binder differs from historical LINK')
@@ -180,7 +181,8 @@ def mixed_far_data_experiment(profile='msc510-medium', library_first=False, data
         '__aFlmul': {'kind': 'far-code', 'frame_load_address': far_frame,
                      'load_address': far_frame + int(far_public[2], 16)},
         '_flags': {'group': 'DGROUP', 'frame_load_address': int(dgroup[1], 16) * 16,
-                   'load_address': int(data_public[1], 16) * 16 + int(data_public[2], 16)},
+                   'load_address': int(data_public[1], 16) * 16 + int(data_public[2], 16),
+                   'allowed_addends': list(range(16))},
     }
     expected_relocations = [
         {'segment': start // 16, 'offset': start % 16 + fix['offset'] + 2,

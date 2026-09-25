@@ -1,6 +1,225 @@
 {
   "oracle_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
   "symbols": {
+    "___FF_MSGBANNER": {
+      "anchors": [
+        {
+          "caller_task": "load_1ced8",
+          "hex": "9a3a02c51c",
+          "relocation": {
+            "load_offset": 118510,
+            "offset": 52974,
+            "segment": 4096
+          },
+          "site": 118507
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 118446,
+        "name": "__FF_MSGBANNER",
+        "sha256": "0d3769649d86ca2dc27c14530f3e06cf935f2d07a83c96159633abaff6dfb214",
+        "stable_id": "load_1ce8a",
+        "start": 118410
+      }
+    },
+    "___NMSG_TEXT": {
+      "anchors": [
+        {
+          "caller_task": "load_1d129",
+          "hex": "9aae04c51c",
+          "relocation": {
+            "load_offset": 119091,
+            "offset": 53555,
+            "segment": 4096
+          },
+          "site": 119088
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 119081,
+        "name": "__NMSG_TEXT",
+        "sha256": "1b5e030bc1231a8c083423d1def1893a91674a403aaee1f2bb08d880b8065412",
+        "stable_id": "load_1d0fe",
+        "start": 119038
+      }
+    },
+    "___NMSG_WRITE": {
+      "anchors": [
+        {
+          "caller_task": "load_1ce8a",
+          "hex": "9ad904c51c",
+          "relocation": {
+            "load_offset": 118420,
+            "offset": 52884,
+            "segment": 4096
+          },
+          "site": 118417
+        },
+        {
+          "caller_task": "load_1ced8",
+          "hex": "9ad904c51c",
+          "relocation": {
+            "load_offset": 118519,
+            "offset": 52983,
+            "segment": 4096
+          },
+          "site": 118516
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 119124,
+        "name": "__NMSG_WRITE",
+        "sha256": "6ff20821cc33948d389c77babed046b410c9866f476704949a8eff2d43a5a5f0",
+        "stable_id": "load_1d129",
+        "start": 119081
+      }
+    },
+    "___flsbuf": {
+      "anchors": [
+        {
+          "caller_task": "load_1dc0e",
+          "hex": "9a1006c51c",
+          "relocation": {
+            "load_offset": 121905,
+            "offset": 56369,
+            "segment": 4096
+          },
+          "site": 121902
+        },
+        {
+          "caller_task": "load_1dbce",
+          "hex": "9a1006c51c",
+          "relocation": {
+            "load_offset": 121847,
+            "offset": 56311,
+            "segment": 4096
+          },
+          "site": 121844
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 119742,
+        "name": "__flsbuf",
+        "sha256": "18f4785de5b4fa347654509656a63a30b1512ac57872c5d6d068aef5cc7e62a7",
+        "stable_id": "load_1d260",
+        "start": 119392
+      }
+    },
+    "___ftbuf": {
+      "anchors": [
+        {
+          "caller_task": "load_1d21e",
+          "hex": "9a6008c51c",
+          "relocation": {
+            "load_offset": 119378,
+            "offset": 53842,
+            "segment": 4096
+          },
+          "site": 119375
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 120142,
+        "name": "__ftbuf",
+        "sha256": "3e104d8c5ac452b64f13638d92f423e194471c111b560b425ef625de15719e17",
+        "stable_id": "load_1d4b0",
+        "start": 119984
+      }
+    },
+    "___maperror": {
+      "anchors": [
+        {
+          "caller_task": "load_1e40c",
+          "hex": "9a6605c51c",
+          "relocation": {
+            "load_offset": 124025,
+            "offset": 58489,
+            "segment": 4096
+          },
+          "site": 124022
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 119228,
+        "name": "__maperror",
+        "sha256": "b31457e31d76df44c60bc1b19fd796634dc843aad974d6281efb0ffb186a658e",
+        "stable_id": "load_1d1b6",
+        "start": 119222
+      }
+    },
+    "___nullcheck": {
+      "anchors": [
+        {
+          "caller_task": "load_1ce03",
+          "hex": "9a8802c51c",
+          "relocation": {
+            "load_offset": 118299,
+            "offset": 52763,
+            "segment": 4096
+          },
+          "site": 118296
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 118526,
+        "name": "__nullcheck",
+        "sha256": "3cb4c56ab88b9fecaa44f3097b31fff079979a57605932c10307a6439b4cdd68",
+        "stable_id": "load_1ced8",
+        "start": 118488
+      }
+    },
+    "___stbuf": {
+      "anchors": [
+        {
+          "caller_task": "load_1d21e",
+          "hex": "9adc07c51c",
+          "relocation": {
+            "load_offset": 119347,
+            "offset": 53811,
+            "segment": 4096
+          },
+          "site": 119344
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 119984,
+        "name": "__stbuf",
+        "sha256": "178a8924462eafc3578d664ebadca532ccbefaae636228438edd25f570cb09e2",
+        "stable_id": "load_1d42c",
+        "start": 119852
+      }
+    },
+    "__aFldiv": {
+      "anchors": [
+        {
+          "hex": "9aec1bc51c",
+          "relocation": {
+            "load_offset": 173170,
+            "offset": 42098,
+            "segment": 8192
+          },
+          "site": 173167
+        }
+      ],
+      "frame_load_address": 117840,
+      "owner": "library_ldiv"
+    },
     "__aFlmul": {
       "anchors": [
         {
@@ -15,6 +234,283 @@
       ],
       "frame_load_address": 117840,
       "owner": "library_lmul"
+    },
+    "__fflush": {
+      "anchors": [
+        {
+          "caller_task": "load_1d1ea",
+          "hex": "9afe08c51c",
+          "relocation": {
+            "load_offset": 119300,
+            "offset": 53764,
+            "segment": 4096
+          },
+          "site": 119297
+        },
+        {
+          "caller_task": "load_1d4b0",
+          "hex": "9afe08c51c",
+          "relocation": {
+            "load_offset": 120132,
+            "offset": 54596,
+            "segment": 4096
+          },
+          "site": 120129
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 120254,
+        "name": "_fflush",
+        "sha256": "ec0e1198ffdafecca382b49893792af1962b244f4379fe15d58d781db24a516f",
+        "stable_id": "load_1d54e",
+        "start": 120142
+      }
+    },
+    "__int86": {
+      "anchors": [
+        {
+          "caller_task": "load_26aca",
+          "hex": "9abc17c51c",
+          "relocation": {
+            "load_offset": 158443,
+            "offset": 27371,
+            "segment": 8192
+          },
+          "site": 158440
+        },
+        {
+          "caller_task": "load_26a9a",
+          "hex": "9abc17c51c",
+          "relocation": {
+            "load_offset": 158403,
+            "offset": 27331,
+            "segment": 8192
+          },
+          "site": 158400
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124044,
+        "name": "_int86",
+        "sha256": "71fc3477e50f501f472d859434cf314e0314ffc2464437e798739d7c4c1ab79b",
+        "stable_id": "load_1e40c",
+        "start": 123916
+      }
+    },
+    "__isatty": {
+      "anchors": [
+        {
+          "caller_task": "load_1d260",
+          "hex": "9a9817c51c",
+          "relocation": {
+            "load_offset": 119529,
+            "offset": 53993,
+            "segment": 4096
+          },
+          "site": 119526
+        },
+        {
+          "caller_task": "load_1d4b0",
+          "hex": "9a9817c51c",
+          "relocation": {
+            "load_offset": 120117,
+            "offset": 54581,
+            "segment": 4096
+          },
+          "site": 120114
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 123916,
+        "name": "_isatty",
+        "sha256": "a60a2c9606a7895e25bbaf3a81c9ffb15b092ab00b90b3530d792a5de35849cf",
+        "start": 123880
+      }
+    },
+    "__itoa": {
+      "anchors": [
+        {
+          "caller_task": "load_196e0",
+          "hex": "9a5017c51c",
+          "relocation": {
+            "load_offset": 104181,
+            "offset": 38645,
+            "segment": 4096
+          },
+          "site": 104178
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 123836,
+        "name": "_itoa",
+        "sha256": "83320d92672f04776874d5a1d02c26921b9e0bb2bf5e09de76e4f4c590b1ecca",
+        "start": 123808
+      }
+    },
+    "__lseek": {
+      "anchors": [
+        {
+          "caller_task": "load_1d260",
+          "hex": "9a5e12c51c",
+          "relocation": {
+            "load_offset": 119682,
+            "offset": 54146,
+            "segment": 4096
+          },
+          "site": 119679
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 122664,
+        "name": "_lseek",
+        "sha256": "058f99d85fea79a9b26a3a442da5062a2f3f1849780c465eacaada94c15cb5b0",
+        "stable_id": "load_1deae",
+        "start": 122542
+      }
+    },
+    "__rand": {
+      "anchors": [
+        {
+          "caller_task": "load_1998e",
+          "hex": "9afe19c51c",
+          "relocation": {
+            "load_offset": 104857,
+            "offset": 39321,
+            "segment": 4096
+          },
+          "site": 104854
+        },
+        {
+          "caller_task": "load_2a25c",
+          "hex": "9afe19c51c",
+          "relocation": {
+            "load_offset": 172720,
+            "offset": 41648,
+            "segment": 8192
+          },
+          "site": 172717
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124540,
+        "name": "_rand",
+        "sha256": "d39b290cfa5455e4a8bddf97ec1a6b898264265e73abafa6f7f5057a0ae2ce7d",
+        "start": 124494
+      }
+    },
+    "__sprintf": {
+      "anchors": [
+        {
+          "caller_task": "load_2219d",
+          "hex": "9a3c18c51c",
+          "relocation": {
+            "load_offset": 139692,
+            "offset": 8620,
+            "segment": 8192
+          },
+          "site": 139689
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124134,
+        "name": "_sprintf",
+        "sha256": "4660ca0945019cd971d7ed0914f2b234d88dfd36d68868cff6b999fa52ee6ffa",
+        "stable_id": "load_1e48c",
+        "start": 124044
+      }
+    },
+    "__stackavail": {
+      "anchors": [
+        {
+          "caller_task": "load_1df28",
+          "hex": "9a0214c51c",
+          "relocation": {
+            "load_offset": 122748,
+            "offset": 57212,
+            "segment": 4096
+          },
+          "site": 122745
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 122982,
+        "name": "_stackavail",
+        "sha256": "813e31dc34eca5f44c924c72987a055e7e73a1f61f5a4899719b312976f7847b",
+        "stable_id": "load_1e052",
+        "start": 122962
+      }
+    },
+    "__ultoa": {
+      "anchors": [
+        {
+          "caller_task": "load_1d8ea",
+          "hex": "9a6c17c51c",
+          "relocation": {
+            "load_offset": 121263,
+            "offset": 55727,
+            "segment": 4096
+          },
+          "site": 121260
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 123846,
+        "name": "_ultoa",
+        "sha256": "04f562f304d9f6e20d7b19e83346db7ab0a80a1993053f0090831e6979f439b3",
+        "stable_id": "load_1e3bc",
+        "start": 123836
+      }
+    },
+    "__write": {
+      "anchors": [
+        {
+          "caller_task": "load_1d260",
+          "hex": "9ad812c51c",
+          "relocation": {
+            "load_offset": 119714,
+            "offset": 54178,
+            "segment": 4096
+          },
+          "site": 119711
+        },
+        {
+          "caller_task": "load_1d54e",
+          "hex": "9ad812c51c",
+          "relocation": {
+            "load_offset": 120219,
+            "offset": 54683,
+            "segment": 4096
+          },
+          "site": 120216
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 122962,
+        "name": "_write",
+        "sha256": "b787c169747b5f61f37711f813a2b7d8c4518215bc4bd94a05efa80ae52d1d60",
+        "stable_id": "load_1df28",
+        "start": 122664
+      }
     },
     "_add_exit_handler": {
       "anchors": [
@@ -46,6 +542,29 @@
         "sha256": "a82909711ad7cb9a4bd611b78e9ccc4ac2525a1a93d3b2706df1375b743ea6cc",
         "stable_id": "load_1fe1c",
         "start": 130588
+      }
+    },
+    "_audio_add_driver_timer": {
+      "anchors": [
+        {
+          "caller_task": "load_13702",
+          "hex": "9a0e00ba16",
+          "relocation": {
+            "load_offset": 79888,
+            "offset": 14352,
+            "segment": 4096
+          },
+          "site": 79885
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 93141,
+        "name": "audio_add_driver_timer",
+        "sha256": "f3cd98f56d9d2582e338b5d2d47f8c8ab4d192282677e8b6a18390791dc7cb2d",
+        "stable_id": "load_16bae",
+        "start": 93102
       }
     },
     "_audio_carstate": {
@@ -137,11 +656,80 @@
       ],
       "frame_load_address": 165424,
       "mapped_target": {
-        "end": 170705,
+        "end": 170706,
         "name": "audio_driver_func1E",
-        "sha256": "c9c3c2921d41835dc080cb5ba81b6ae0d3ee5b598043baaeb0f5d422e3a30e65",
+        "sha256": "80b49363e48a2253b9621a813c6f9c1bbbe258d0c1b3782d8342fbb4b0e6f07f",
         "stable_id": "load_29966",
         "start": 170342
+      }
+    },
+    "_audio_driver_func3F": {
+      "anchors": [
+        {
+          "caller_task": "load_19858",
+          "hex": "9a9c060d27",
+          "relocation": {
+            "load_offset": 104543,
+            "offset": 39007,
+            "segment": 4096
+          },
+          "site": 104540
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 161896,
+        "name": "audio_driver_func3F",
+        "sha256": "9805f71c23501a2d89ccbe4e17a9728c5c386d6aa6ac103f10e01de0e5d493d1",
+        "stable_id": "load_2776c",
+        "start": 161644
+      }
+    },
+    "_audio_function2": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9acd03ba16",
+          "relocation": {
+            "load_offset": 35843,
+            "offset": 35843,
+            "segment": 0
+          },
+          "site": 35840
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 94115,
+        "name": "audio_function2",
+        "sha256": "338cfea9c30e48b0fd9378f566af3344f44415c3abaab694e5bce329a5bdac26",
+        "stable_id": "load_16f6d",
+        "start": 94061
+      }
+    },
+    "_audio_function2_wrap": {
+      "anchors": [
+        {
+          "caller_task": "load_095e6",
+          "hex": "9a5407ba16",
+          "relocation": {
+            "load_offset": 38655,
+            "offset": 38655,
+            "segment": 0
+          },
+          "site": 38652
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 95032,
+        "name": "audio_function2_wrap",
+        "sha256": "700ae774d91732ea0e16aa4dd22ed7c71bb46cccaadf634342cbbf595aeaa9cb",
+        "stable_id": "load_172f4",
+        "start": 94964
       }
     },
     "_audio_init_chunk2": {
@@ -176,6 +764,52 @@
         "start": 161354
       }
     },
+    "_audio_init_engine": {
+      "anchors": [
+        {
+          "caller_task": "load_13702",
+          "hex": "9a9c00ba16",
+          "relocation": {
+            "load_offset": 79976,
+            "offset": 14440,
+            "segment": 4096
+          },
+          "site": 79973
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 93940,
+        "name": "audio_init_engine",
+        "sha256": "6caa9f9517b0d94910444346affd4a2a4052e280b8cb91b48e1a3b3738db3e2e",
+        "stable_id": "load_16c3c",
+        "start": 93244
+      }
+    },
+    "_audio_load_driver": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9afa070d27",
+          "relocation": {
+            "load_offset": 172207,
+            "offset": 41135,
+            "segment": 8192
+          },
+          "site": 172204
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 162404,
+        "name": "audio_load_driver",
+        "sha256": "02e90add4ca1b4849a294309e1d4359fd8df81b0d4dd77c8d3c168d5a1184464",
+        "stable_id": "load_278ca",
+        "start": 161994
+      }
+    },
     "_audio_make_filename": {
       "anchors": [
         {
@@ -208,6 +842,167 @@
         "start": 171214
       }
     },
+    "_audio_op_unk": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9a5403ba16",
+          "relocation": {
+            "load_offset": 35823,
+            "offset": 35823,
+            "segment": 0
+          },
+          "site": 35820
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 94061,
+        "name": "audio_op_unk",
+        "sha256": "87d24845fee5a94d379ffe7b25281a257ffc995e82504faad0f9122156bf66de",
+        "stable_id": "load_16ef4",
+        "start": 93940
+      }
+    },
+    "_audio_op_unk2": {
+      "anchors": [
+        {
+          "caller_task": "load_08d06",
+          "hex": "9a8e05ba16",
+          "relocation": {
+            "load_offset": 36185,
+            "offset": 36185,
+            "segment": 0
+          },
+          "site": 36182
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 94752,
+        "name": "audio_op_unk2",
+        "sha256": "6b730f1c93e15b263df7cb1eb7cf1119d53b5ea4ca8ea6615ae6a83652a72286",
+        "stable_id": "load_1712e",
+        "start": 94510
+      }
+    },
+    "_audio_op_unk3": {
+      "anchors": [
+        {
+          "caller_task": "load_08cd8",
+          "hex": "9a9807ba16",
+          "relocation": {
+            "load_offset": 36095,
+            "offset": 36095,
+            "segment": 0
+          },
+          "site": 36092
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 95092,
+        "name": "audio_op_unk3",
+        "sha256": "26e819078dc69fdd389775df7f79c60d0d7d663188ba7001e8d4aff99383b405",
+        "stable_id": "load_17338",
+        "start": 95032
+      }
+    },
+    "_audio_op_unk4": {
+      "anchors": [
+        {
+          "caller_task": "load_08cd8",
+          "hex": "9ad407ba16",
+          "relocation": {
+            "load_offset": 36078,
+            "offset": 36078,
+            "segment": 0
+          },
+          "site": 36075
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 95152,
+        "name": "audio_op_unk4",
+        "sha256": "bd96d7c93f42e476e00f345e18a4a17f89e98090b335d6b635ee8d0ee92f6fde",
+        "stable_id": "load_17374",
+        "start": 95092
+      }
+    },
+    "_audio_op_unk5": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9a1008ba16",
+          "relocation": {
+            "load_offset": 35896,
+            "offset": 35896,
+            "segment": 0
+          },
+          "site": 35893
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 95243,
+        "name": "audio_op_unk5",
+        "sha256": "fe44bb3b195183e5f4456aab409b54a3664cd01139830dc735d780b659423a97",
+        "stable_id": "load_173b0",
+        "start": 95152
+      }
+    },
+    "_audio_op_unk6": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9a6b08ba16",
+          "relocation": {
+            "load_offset": 35914,
+            "offset": 35914,
+            "segment": 0
+          },
+          "site": 35911
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 95334,
+        "name": "audio_op_unk6",
+        "sha256": "dd6f55e4fca39f8e4b9609e4796b60baef185313bf38bc943981fbc6375e03e7",
+        "stable_id": "load_1740b",
+        "start": 95243
+      }
+    },
+    "_audio_op_unk7": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9ac608ba16",
+          "relocation": {
+            "load_offset": 35070,
+            "offset": 35070,
+            "segment": 0
+          },
+          "site": 35067
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 95369,
+        "name": "audio_op_unk7",
+        "sha256": "c1e14f444d8ae930f2be8471f33de5c21f794a534ebb005121e32593e90501cf",
+        "stable_id": "load_17466",
+        "start": 95334
+      }
+    },
     "_audio_remove_driver_timer": {
       "anchors": [
         {
@@ -238,6 +1033,29 @@
         "sha256": "e9f84d007a77cbc976acd540d8309ebdc58e5d95d5328dd132eabb4e32f84096",
         "stable_id": "load_16bd5",
         "start": 93141
+      }
+    },
+    "_audio_stop_unk": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a4818a21e",
+          "relocation": {
+            "load_offset": 172219,
+            "offset": 41147,
+            "segment": 8192
+          },
+          "site": 172216
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131754,
+        "name": "audio_stop_unk",
+        "sha256": "b7bc0fd7821a6cdf354652bd9b8b218fcda1993bd18fbf4df329f97db64fc86a",
+        "stable_id": "load_20268",
+        "start": 131688
       }
     },
     "_audio_toggle_flag2": {
@@ -432,6 +1250,74 @@
         "start": 170972
       }
     },
+    "_audioresource_get_dword": {
+      "anchors": [
+        {
+          "caller_task": "load_29bdc",
+          "hex": "9a2a140d27",
+          "relocation": {
+            "load_offset": 171092,
+            "offset": 40020,
+            "segment": 8192
+          },
+          "site": 171089
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 165140,
+        "name": "audioresource_get_dword",
+        "sha256": "222353c6afa5b0f41d46128123130bd5267c2518f384985364258165de64d15b",
+        "stable_id": "load_284fa",
+        "start": 165114
+      }
+    },
+    "_bto_auxiliary1": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a44191a0e",
+          "relocation": {
+            "load_offset": 26072,
+            "offset": 26072,
+            "segment": 0
+          },
+          "site": 26069
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 65172,
+        "name": "bto_auxiliary1",
+        "sha256": "3177f645e285e9c4fc4a985506ae6d9dae7d27c591da1a0cf531560381bd6f5c",
+        "stable_id": "load_0fae4",
+        "start": 64228
+      }
+    },
+    "_call_exitlist2": {
+      "anchors": [
+        {
+          "caller_task": "load_19f5c",
+          "hex": "9a5414a21e",
+          "relocation": {
+            "load_offset": 106404,
+            "offset": 40868,
+            "segment": 4096
+          },
+          "site": 106401
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130690,
+        "name": "call_exitlist2",
+        "sha256": "b8ffa52146ea8abf6d595231029fb157c28e43849c8ea32faad543d807e8c463",
+        "start": 130676
+      }
+    },
     "_call_read_line": {
       "anchors": [
         {
@@ -528,6 +1414,29 @@
         "start": 131869
       }
     },
+    "_copy_material_list_pointers": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a6200d614",
+          "relocation": {
+            "load_offset": 172625,
+            "offset": 41553,
+            "segment": 8192
+          },
+          "site": 172622
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 85478,
+        "name": "copy_material_list_pointers",
+        "sha256": "5346e9fccd4ea54510744c7348a7cee71c2de78bea588d8e4bf428365dd37f42",
+        "stable_id": "load_14dc2",
+        "start": 85442
+      }
+    },
     "_copy_paras_reverse": {
       "anchors": [
         {
@@ -592,6 +1501,38 @@
         "start": 101078
       }
     },
+    "_cos_fast": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a0c3da21e",
+          "relocation": {
+            "load_offset": 19723,
+            "offset": 19723,
+            "segment": 0
+          },
+          "site": 19720
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a0c3da21e",
+          "relocation": {
+            "load_offset": 26613,
+            "offset": 26613,
+            "segment": 0
+          },
+          "site": 26610
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141112,
+        "name": "cos_fast",
+        "sha256": "f856a560644eff8e9287dee4ca001aa8e3043540f28dddd484a2f449222982ff",
+        "start": 141100
+      }
+    },
     "_do_fileselect_dialog": {
       "anchors": [
         {
@@ -622,6 +1563,98 @@
         "sha256": "9274eeffa1fde4adbee034dfc7a9a18fdcdc99d396d029c6d4eb357fe9978f5f",
         "stable_id": "load_17ed4",
         "start": 98004
+      }
+    },
+    "_do_mer_restext": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a502d4b17",
+          "relocation": {
+            "load_offset": 72734,
+            "offset": 7198,
+            "segment": 4096
+          },
+          "site": 72731
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 107056,
+        "name": "do_mer_restext",
+        "sha256": "f2da5888cdaf57459960ebcd05e23449e55b7d142bb7095a41f1876d9555d45d",
+        "stable_id": "load_1a200",
+        "start": 107008
+      }
+    },
+    "_do_mou_restext": {
+      "anchors": [
+        {
+          "caller_task": "load_123fa",
+          "hex": "9a44294b17",
+          "relocation": {
+            "load_offset": 74849,
+            "offset": 9313,
+            "segment": 4096
+          },
+          "site": 74846
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106058,
+        "name": "do_mou_restext",
+        "sha256": "60bbbf97f8509299621b5c79f8ff2ac3246f2de5abf79bb71fff4312fc41cbe0",
+        "stable_id": "load_19df4",
+        "start": 105972
+      }
+    },
+    "_do_opponent_op": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9ad04e7104",
+          "relocation": {
+            "load_offset": 56056,
+            "offset": 56056,
+            "segment": 0
+          },
+          "site": 56053
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 38374,
+        "name": "do_opponent_op",
+        "sha256": "cfa21bdf0404e30016e11b365e0bbe4430ee68ee8eb62ab5e963ead21391550e",
+        "stable_id": "load_095e0",
+        "start": 38368
+      }
+    },
+    "_do_savefile_dialog": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a8a114b17",
+          "relocation": {
+            "load_offset": 112541,
+            "offset": 47005,
+            "segment": 4096
+          },
+          "site": 112538
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 100194,
+        "name": "do_savefile_dialog",
+        "sha256": "08b2e087cca181adadbd8d2b10bb0e3d93d0e744b685fc861285f84fe3214b6c",
+        "stable_id": "load_1863a",
+        "start": 99898
       }
     },
     "_draw_button": {
@@ -656,6 +1689,29 @@
         "start": 103132
       }
     },
+    "_draw_line_related_alt": {
+      "anchors": [
+        {
+          "caller_task": "load_217ee",
+          "hex": "9a2801a21e",
+          "relocation": {
+            "load_offset": 137521,
+            "offset": 6449,
+            "segment": 8192
+          },
+          "site": 137518
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125782,
+        "name": "draw_line_related_alt",
+        "sha256": "56a5e819b9f23363f49f94ca7528b0313daeeb8228cfdd19211d3992d7f96488",
+        "stable_id": "load_1eb48",
+        "start": 125768
+      }
+    },
     "_draw_lines_unk": {
       "anchors": [
         {
@@ -688,6 +1744,29 @@
         "start": 102766
       }
     },
+    "_draw_track_preview": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9acc2cf109",
+          "relocation": {
+            "load_offset": 4483,
+            "offset": 4483,
+            "segment": 0
+          },
+          "site": 4480
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 53550,
+        "name": "draw_track_preview",
+        "sha256": "30bf42edbb2c033d25c21b786401af2177281b167daaca06f7264a7b35365791",
+        "stable_id": "load_0cbdc",
+        "start": 52188
+      }
+    },
     "_ensure_file_exists": {
       "anchors": [
         {
@@ -718,6 +1797,39 @@
         "sha256": "6ecbda537939f16bba9fddade82d2ea4da00caed5e6f50930c035d0731462d66",
         "stable_id": "load_1a1a6",
         "start": 106918
+      }
+    },
+    "_fatal_error": {
+      "anchors": [
+        {
+          "caller_task": "load_16c3c",
+          "hex": "9a0a00a21e",
+          "relocation": {
+            "load_offset": 93931,
+            "offset": 28395,
+            "segment": 4096
+          },
+          "site": 93928
+        },
+        {
+          "caller_task": "load_1fe1c",
+          "hex": "9a0a00a21e",
+          "relocation": {
+            "load_offset": 130630,
+            "offset": 65094,
+            "segment": 4096
+          },
+          "site": 130627
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125518,
+        "name": "fatal_error",
+        "sha256": "33b1d20db5f6f1855d4e92838acf85266bab6721980a5a3ef9d7132d2a7e9b3b",
+        "stable_id": "load_1ea2a",
+        "start": 125482
       }
     },
     "_file_build_path": {
@@ -784,6 +1896,52 @@
         "start": 171556
       }
     },
+    "_file_decomp": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9ac623a21e",
+          "relocation": {
+            "load_offset": 174961,
+            "offset": 43889,
+            "segment": 8192
+          },
+          "site": 174958
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134647,
+        "name": "file_decomp",
+        "sha256": "d2fcbc3be61fccaa84d602d115e222d38a706bf96df9738faf6060a47a1b50dc",
+        "stable_id": "load_20de6",
+        "start": 134630
+      }
+    },
+    "_file_decomp_nofatal": {
+      "anchors": [
+        {
+          "caller_task": "load_27b14",
+          "hex": "9ad723a21e",
+          "relocation": {
+            "load_offset": 162751,
+            "offset": 31679,
+            "segment": 8192
+          },
+          "site": 162748
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134663,
+        "name": "file_decomp_nofatal",
+        "sha256": "74fd8e535c88f50013fa3efaadb3f64b4a0a87ea828c02d8d1eac8f7cd8887bc",
+        "stable_id": "load_20df7",
+        "start": 134647
+      }
+    },
     "_file_find": {
       "anchors": [
         {
@@ -814,6 +1972,28 @@
         "sha256": "6310d8ced7c48e941d3530cc35832d3a1240b271edc4cfb8bff1637a8632cea7",
         "stable_id": "load_1ffd4",
         "start": 131028
+      }
+    },
+    "_file_find_next": {
+      "anchors": [
+        {
+          "caller_task": "load_29e4c",
+          "hex": "9a0e16a21e",
+          "relocation": {
+            "load_offset": 171599,
+            "offset": 40527,
+            "segment": 8192
+          },
+          "site": 171596
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131140,
+        "name": "file_find_next",
+        "sha256": "13a425d8e9d98476c2f013f8e08feffa7c4cc20952abc0c0f11a6917ffc33b11",
+        "start": 131118
       }
     },
     "_file_find_next_alt": {
@@ -912,6 +2092,29 @@
         "start": 140891
       }
     },
+    "_file_get_unflip_size": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a0a000b2b",
+          "relocation": {
+            "load_offset": 174827,
+            "offset": 43755,
+            "segment": 8192
+          },
+          "site": 174824
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 176304,
+      "mapped_target": {
+        "end": 176426,
+        "name": "file_get_unflip_size",
+        "sha256": "4ebcc7a4cbc15c957b5a84734b5511efa3cc04fac59f717eef36af4c585334c0",
+        "stable_id": "load_2b0ba",
+        "start": 176314
+      }
+    },
     "_file_load_3dres": {
       "anchors": [
         {
@@ -974,6 +2177,29 @@
         "sha256": "5ad013a4d105141df1fa70ab0883aedd07c7a8789bd394c2b21bcb276b7fcbc4",
         "stable_id": "load_197fc",
         "start": 104444
+      }
+    },
+    "_file_load_binary": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a5923a21e",
+          "relocation": {
+            "load_offset": 175194,
+            "offset": 44122,
+            "segment": 8192
+          },
+          "site": 175191
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134536,
+        "name": "file_load_binary",
+        "sha256": "47992b451070eb9dafb00f1c83b8011b1c3a029bba0baff881ff6cc80e82fb03",
+        "stable_id": "load_20d79",
+        "start": 134521
       }
     },
     "_file_load_binary_nofatal": {
@@ -1040,6 +2266,29 @@
         "start": 100850
       }
     },
+    "_file_load_shape2d": {
+      "anchors": [
+        {
+          "caller_task": "load_2acfe",
+          "hex": "9a2c009d2a",
+          "relocation": {
+            "load_offset": 175411,
+            "offset": 44339,
+            "segment": 8192
+          },
+          "site": 175408
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 174544,
+      "mapped_target": {
+        "end": 175280,
+        "name": "file_load_shape2d",
+        "sha256": "84dd03ef69a600bfa069a143c3d2128b338c6af5bc42c60803cdf73a1f8fadee",
+        "stable_id": "load_2a9fc",
+        "start": 174588
+      }
+    },
     "_file_load_shape2d_fatal_thunk": {
       "anchors": [
         {
@@ -1070,6 +2319,154 @@
         "sha256": "613882cc7ed6e2158c8b6726a4db5821fb6490f31a44cd756a1a3db4930353bd",
         "stable_id": "load_2385c",
         "start": 145500
+      }
+    },
+    "_file_load_shape2d_nofatal_thunk": {
+      "anchors": [
+        {
+          "caller_task": "load_29e14",
+          "hex": "9a414ea21e",
+          "relocation": {
+            "load_offset": 171549,
+            "offset": 40477,
+            "segment": 8192
+          },
+          "site": 171546
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145510,
+        "name": "file_load_shape2d_nofatal_thunk",
+        "sha256": "e2336bc3b8040f674834299e0b2259a3c31146af6998b4ab8ff3e46cdc264fb9",
+        "stable_id": "load_23861",
+        "start": 145505
+      }
+    },
+    "_file_paras": {
+      "anchors": [
+        {
+          "caller_task": "load_20d88",
+          "hex": "9a6214a21e",
+          "relocation": {
+            "load_offset": 134585,
+            "offset": 3513,
+            "segment": 8192
+          },
+          "site": 134582
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130708,
+        "name": "file_paras",
+        "sha256": "95d90181ef2ec154288e618376e600bd2ecbf2f7b5c53a631e5a24607b6b9880",
+        "stable_id": "load_1fe82",
+        "start": 130690
+      }
+    },
+    "_file_read": {
+      "anchors": [
+        {
+          "caller_task": "load_20d88",
+          "hex": "9ab020a21e",
+          "relocation": {
+            "load_offset": 134617,
+            "offset": 3545,
+            "segment": 8192
+          },
+          "site": 134614
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133856,
+        "name": "file_read",
+        "sha256": "13adc2c3214d2ce6821896ec3410fb41f80850fdfc29a374666b0a7fe2647e49",
+        "stable_id": "load_20ad0",
+        "start": 133840
+      }
+    },
+    "_file_read_fatal": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9acf20a21e",
+          "relocation": {
+            "load_offset": 5434,
+            "offset": 5434,
+            "segment": 0
+          },
+          "site": 5431
+        },
+        {
+          "caller_task": "load_12c92",
+          "hex": "9acf20a21e",
+          "relocation": {
+            "load_offset": 76993,
+            "offset": 11457,
+            "segment": 4096
+          },
+          "site": 76990
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133986,
+        "name": "file_read_fatal",
+        "sha256": "dcfe59c492f5baa9966645a7b7256bdf9ca33578145216fd0d390d99884ac21a",
+        "stable_id": "load_20aef",
+        "start": 133871
+      }
+    },
+    "_file_read_nofatal": {
+      "anchors": [
+        {
+          "caller_task": "load_19a86",
+          "hex": "9ac020a21e",
+          "relocation": {
+            "load_offset": 105170,
+            "offset": 39634,
+            "segment": 4096
+          },
+          "site": 105167
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133871,
+        "name": "file_read_nofatal",
+        "sha256": "1d47c660e2c0c1dce054b270f3ff71edb840ace6579bbbcfaa99df983805fd37",
+        "stable_id": "load_20ae0",
+        "start": 133856
+      }
+    },
+    "_file_unflip_shape2d_pes": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9ad676a21e",
+          "relocation": {
+            "load_offset": 175012,
+            "offset": 43940,
+            "segment": 8192
+          },
+          "site": 175009
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 156092,
+        "name": "file_unflip_shape2d_pes",
+        "sha256": "fb6f20754fb848ed98396de77deba32aa460eafd0dadb9adaf5f961a5f3ec25d",
+        "stable_id": "load_260f6",
+        "start": 155894
       }
     },
     "_file_write_fatal": {
@@ -1104,6 +2501,29 @@
         "start": 140555
       }
     },
+    "_flush_stdin": {
+      "anchors": [
+        {
+          "caller_task": "load_1ea2a",
+          "hex": "9a3d20a21e",
+          "relocation": {
+            "load_offset": 125497,
+            "offset": 59961,
+            "segment": 4096
+          },
+          "site": 125494
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133736,
+        "name": "flush_stdin",
+        "sha256": "eeb02e55b93ec6ed8c86142b45145bbbdb79c47aa4808cfb87e79585b27e2c00",
+        "stable_id": "load_20a5d",
+        "start": 133725
+      }
+    },
     "_font_draw_text": {
       "anchors": [
         {
@@ -1134,6 +2554,29 @@
         "sha256": "02733ebe8b4abe611a4bfe526fa0068ee8eedca4b884f8f4ee134f8d92877c2f",
         "stable_id": "load_23742",
         "start": 145218
+      }
+    },
+    "_font_op": {
+      "anchors": [
+        {
+          "caller_task": "load_2a7f6",
+          "hex": "9a123ea21e",
+          "relocation": {
+            "load_offset": 174172,
+            "offset": 43100,
+            "segment": 8192
+          },
+          "site": 174169
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141379,
+        "name": "font_op",
+        "sha256": "62162b7464eaae15d9377f9b1e91f470afa1c87a101c8cdcdd3bb6b081890c66",
+        "stable_id": "load_22832",
+        "start": 141362
       }
     },
     "_font_op2": {
@@ -1264,6 +2707,39 @@
         "start": 104586
       }
     },
+    "_font_set_unk": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9aec60a21e",
+          "relocation": {
+            "load_offset": 4731,
+            "offset": 4731,
+            "segment": 0
+          },
+          "site": 4728
+        },
+        {
+          "caller_task": "load_0168e",
+          "hex": "9aec60a21e",
+          "relocation": {
+            "load_offset": 6204,
+            "offset": 6204,
+            "segment": 0
+          },
+          "site": 6201
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150396,
+        "name": "font_set_unk",
+        "sha256": "37bbcf3ffd9ad307d41b1b8a826f257d2e664ccb4b68455858abaa3d70f840a6",
+        "stable_id": "load_24b0c",
+        "start": 150284
+      }
+    },
     "_format_frame_as_string": {
       "anchors": [
         {
@@ -1315,6 +2791,29 @@
           "segment": 4096
         },
         "site": 75140
+      }
+    },
+    "_free_sdgame2": {
+      "anchors": [
+        {
+          "caller_task": "load_139b4",
+          "hex": "9a1a3af109",
+          "relocation": {
+            "load_offset": 80353,
+            "offset": 14817,
+            "segment": 4096
+          },
+          "site": 80350
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 55612,
+        "name": "free_sdgame2",
+        "sha256": "d4b60a9e9deee936afbead2edb434c9b7a25830ce839cc1e57b889f999d57e82",
+        "stable_id": "load_0d92a",
+        "start": 55594
       }
     },
     "_get_0": {
@@ -1477,6 +2976,52 @@
         "start": 40571
       }
     },
+    "_get_kevinrandom_seed": {
+      "anchors": [
+        {
+          "caller_task": "load_07008",
+          "hex": "9a8e00dc09",
+          "relocation": {
+            "load_offset": 28740,
+            "offset": 28740,
+            "segment": 0
+          },
+          "site": 28737
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40571,
+        "name": "get_kevinrandom_seed",
+        "sha256": "371fcc55d8a0fc334f804ea001ad8a131e18a8094bc4ce8699964df1f955eb02",
+        "stable_id": "load_09e4e",
+        "start": 40526
+      }
+    },
+    "_get_super_random": {
+      "anchors": [
+        {
+          "caller_task": "load_03178",
+          "hex": "9ade244b17",
+          "relocation": {
+            "load_offset": 14381,
+            "offset": 14381,
+            "segment": 0
+          },
+          "site": 14378
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104906,
+        "name": "get_super_random",
+        "sha256": "be43b317ba606c22a2ee30026fdb702c9c7e849b21df45c3400193d2e09e36cb",
+        "stable_id": "load_1998e",
+        "start": 104846
+      }
+    },
     "_heapsort_by_order": {
       "anchors": [
         {
@@ -1507,6 +3052,29 @@
         "sha256": "79d242fe30f1ffea7a5ef31431efffcb0e6326abab3a4cddbb09d2dcc8593ca6",
         "stable_id": "load_26be8",
         "start": 158696
+      }
+    },
+    "_highscore_write_a": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a88150000",
+          "relocation": {
+            "load_offset": 112704,
+            "offset": 47168,
+            "segment": 4096
+          },
+          "site": 112701
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 0,
+      "mapped_target": {
+        "end": 5774,
+        "name": "highscore_write_a",
+        "sha256": "98020ea4c2070b4b5c5b3ec92d0b41d48fffdc323df705f1d12095df788a041e",
+        "stable_id": "load_01588",
+        "start": 5512
       }
     },
     "_hiscore_draw_text": {
@@ -1605,6 +3173,52 @@
         "start": 27394
       }
     },
+    "_init_kevinrandom": {
+      "anchors": [
+        {
+          "caller_task": "load_06f3a",
+          "hex": "9a6100dc09",
+          "relocation": {
+            "load_offset": 28650,
+            "offset": 28650,
+            "segment": 0
+          },
+          "site": 28647
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40526,
+        "name": "init_kevinrandom",
+        "sha256": "426d6442b1f75fc8000d3a819620dafea3667fa7fa44bb8518a36b3f3be487c2",
+        "stable_id": "load_09e21",
+        "start": 40481
+      }
+    },
+    "_init_plantrak": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9ad04c7104",
+          "relocation": {
+            "load_offset": 55949,
+            "offset": 55949,
+            "segment": 0
+          },
+          "site": 55946
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 38368,
+        "name": "init_plantrak",
+        "sha256": "cf8e1b603ea224b650599f24b831cd1aee17150f39c4f5fab49da1c30e721d42",
+        "stable_id": "load_093e0",
+        "start": 37856
+      }
+    },
     "_init_rect_arrays": {
       "anchors": [
         {
@@ -1635,6 +3249,29 @@
         "sha256": "d38bd27bde55af1ac01e6bd1d1ec50609badb0ae1e957271b8396ea4d646c24c",
         "stable_id": "load_0a096",
         "start": 41110
+      }
+    },
+    "_init_unknown": {
+      "anchors": [
+        {
+          "caller_task": "load_06b02",
+          "hex": "9ac209b711",
+          "relocation": {
+            "load_offset": 27525,
+            "offset": 27525,
+            "segment": 0
+          },
+          "site": 27522
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 75098,
+        "name": "init_unknown",
+        "sha256": "1cdf56b7dea9b26d9b0d655e05f0292f7b85b05da5e8afaafb6c61540a6e802f",
+        "stable_id": "load_12532",
+        "start": 75058
       }
     },
     "_input_checking": {
@@ -1701,6 +3338,52 @@
         "start": 100834
       }
     },
+    "_input_pop_status": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a58264b17",
+          "relocation": {
+            "load_offset": 73303,
+            "offset": 7767,
+            "segment": 4096
+          },
+          "site": 73300
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105266,
+        "name": "input_pop_status",
+        "sha256": "eb5ac06c90605dfde5a5092c5cdc554de70dbf5aee46205aedd3a2aab59a2e11",
+        "stable_id": "load_19b08",
+        "start": 105224
+      }
+    },
+    "_input_push_status": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a3c264b17",
+          "relocation": {
+            "load_offset": 73222,
+            "offset": 7686,
+            "segment": 4096
+          },
+          "site": 73219
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105224,
+        "name": "input_push_status",
+        "sha256": "1bd3ec95b5b1b5121f250afce6af4ddc52d3aa7da9aaa0c9714cfa2266fe14a1",
+        "stable_id": "load_19aec",
+        "start": 105196
+      }
+    },
     "_input_repeat_check": {
       "anchors": [
         {
@@ -1732,6 +3415,29 @@
         "stable_id": "load_1913a",
         "start": 102714
       }
+    },
+    "_int86": {
+      "anchors": [
+        {
+          "caller_task": "load_268aa",
+          "hex": "9abc17c51c",
+          "relocation": {
+            "load_offset": 157899,
+            "offset": 26827,
+            "segment": 8192
+          },
+          "site": 157896
+        }
+      ],
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124044,
+        "name": "_int86",
+        "sha256": "71fc3477e50f501f472d859434cf314e0314ffc2464437e798739d7c4c1ab79b",
+        "stable_id": "load_1e40c",
+        "start": 123916
+      },
+      "reviewed_alias": "_int86"
     },
     "_intro_draw_text": {
       "anchors": [
@@ -1795,6 +3501,29 @@
         "sha256": "525407e37815a5dfd3a1a62c465a957ef3fca41a6eb3fc37b8679097f94d0552",
         "stable_id": "load_20a1c",
         "start": 133660
+      }
+    },
+    "_kb_check": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a4820a21e",
+          "relocation": {
+            "load_offset": 105854,
+            "offset": 40318,
+            "segment": 4096
+          },
+          "site": 105851
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133751,
+        "name": "kb_check",
+        "sha256": "312ec5462c61f39cd93c0b21ca0ef4b19c61baad71890679d199ec23bb2deb31",
+        "stable_id": "load_20a68",
+        "start": 133736
       }
     },
     "_kb_checking": {
@@ -1861,6 +3590,29 @@
         "start": 132377
       }
     },
+    "_kb_init_interrupt": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9af21da21e",
+          "relocation": {
+            "load_offset": 171617,
+            "offset": 40545,
+            "segment": 8192
+          },
+          "site": 171614
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133251,
+        "name": "kb_init_interrupt",
+        "sha256": "04b958936ba63e585be97fec6622cce4c236c069509cb8dd48bd98a45ab94b76",
+        "stable_id": "load_20812",
+        "start": 133138
+      }
+    },
     "_kb_parse_key": {
       "anchors": [
         {
@@ -1893,6 +3645,190 @@
         "start": 132100
       }
     },
+    "_kb_read_char": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a0120a21e",
+          "relocation": {
+            "load_offset": 105625,
+            "offset": 40089,
+            "segment": 4096
+          },
+          "site": 105622
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133685,
+        "name": "kb_read_char",
+        "sha256": "4470c32dd18492ab50a6244e6b8db965a723614ea0ca828f39c384221195ce5a",
+        "stable_id": "load_20a21",
+        "start": 133665
+      }
+    },
+    "_kb_reg_callback": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a3e1aa21e",
+          "relocation": {
+            "load_offset": 171804,
+            "offset": 40732,
+            "segment": 8192
+          },
+          "site": 171801
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 132271,
+        "name": "kb_reg_callback",
+        "sha256": "bb1ba299a6840d456d46798daeff7333e1b4cf84463929b6572dbbe9b4ee916a",
+        "stable_id": "load_2045e",
+        "start": 132190
+      }
+    },
+    "_kb_shift_checking2": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a1500af26",
+          "relocation": {
+            "load_offset": 171622,
+            "offset": 40550,
+            "segment": 8192
+          },
+          "site": 171619
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158448,
+      "mapped_target": {
+        "end": 158486,
+        "name": "kb_shift_checking2",
+        "sha256": "913ba8b5bbf37403e0818476f564ed7ba80bbe6ebb63c08c689721a57f65cfa7",
+        "stable_id": "load_26b05",
+        "start": 158469
+      }
+    },
+    "_libsub_quit_to_dos": {
+      "anchors": [
+        {
+          "caller_task": "load_1e3c6",
+          "hex": "9ab301c51c",
+          "relocation": {
+            "load_offset": 123874,
+            "offset": 58338,
+            "segment": 4096
+          },
+          "site": 123871
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 118346,
+        "name": "libsub_quit_to_dos",
+        "sha256": "3e0ea1b2744a37153b884e983d74fef71afce4d2e9486e50a2c0095bc081992d",
+        "stable_id": "load_1ce03",
+        "start": 118275
+      }
+    },
+    "_libsub_quit_to_dos_alt": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a9c01c51c",
+          "relocation": {
+            "load_offset": 172228,
+            "offset": 41156,
+            "segment": 8192
+          },
+          "site": 172225
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 118275,
+        "name": "libsub_quit_to_dos_alt",
+        "sha256": "7764c221965c8b728b1ddfd8c107e22652e7df8d45a96382bf8bea2bcc09c483",
+        "stable_id": "load_1cdec",
+        "start": 118252
+      }
+    },
+    "_load_audio_finalize": {
+      "anchors": [
+        {
+          "caller_task": "load_197fc",
+          "hex": "9aac000d27",
+          "relocation": {
+            "load_offset": 104524,
+            "offset": 38988,
+            "segment": 4096
+          },
+          "site": 104521
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 160278,
+        "name": "load_audio_finalize",
+        "sha256": "fcca0361b81115b9d3fca3eaeceae7581b9b5300a9ff626651841c8c43cae83f",
+        "stable_id": "load_2717c",
+        "start": 160124
+      }
+    },
+    "_load_opponent_data": {
+      "anchors": [
+        {
+          "caller_task": "load_13702",
+          "hex": "9a2a361a0e",
+          "relocation": {
+            "load_offset": 79825,
+            "offset": 14289,
+            "segment": 4096
+          },
+          "site": 79822
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 72282,
+        "name": "load_opponent_data",
+        "sha256": "ebc3d4659fef8f4e1caf2c6aeade181bdfc4efad3849e8d60a0896832241e873",
+        "stable_id": "load_117ca",
+        "start": 71626
+      }
+    },
+    "_load_sdgame2_shapes": {
+      "anchors": [
+        {
+          "caller_task": "load_13702",
+          "hex": "9ac239f109",
+          "relocation": {
+            "load_offset": 80167,
+            "offset": 14631,
+            "segment": 4096
+          },
+          "site": 80164
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 55594,
+        "name": "load_sdgame2_shapes",
+        "sha256": "cf4d60ee47c26b22986b965ad36df61c6e216606e285b3513aa980b1fbdd67dc",
+        "stable_id": "load_0d8d2",
+        "start": 55506
+      }
+    },
     "_load_skybox": {
       "anchors": [
         {
@@ -1923,6 +3859,29 @@
         "sha256": "3d03e9e31fd5c0e10dd5b682bdf3f0ee573a4197736d206070a65cdc55678838",
         "stable_id": "load_0d7a2",
         "start": 55202
+      }
+    },
+    "_load_tracks_menu_shapes": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9a0c002b1a",
+          "relocation": {
+            "load_offset": 5506,
+            "offset": 5506,
+            "segment": 0
+          },
+          "site": 5503
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 107184,
+      "mapped_target": {
+        "end": 114358,
+        "name": "load_tracks_menu_shapes",
+        "sha256": "517805af33a8d1f3a5b648728a32828ba3fefa7f5090eab1bacf59ac4088bcab",
+        "stable_id": "load_1a2bc",
+        "start": 107196
       }
     },
     "_locate_many_resources": {
@@ -2053,6 +4012,29 @@
         "start": 135058
       }
     },
+    "_locate_sound_fatal": {
+      "anchors": [
+        {
+          "caller_task": "load_26826",
+          "hex": "9a8925a21e",
+          "relocation": {
+            "load_offset": 157760,
+            "offset": 26688,
+            "segment": 8192
+          },
+          "site": 157757
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135290,
+        "name": "locate_sound_fatal",
+        "sha256": "d6be8c5f43d953f1ffb892c3bcc6b78d8cb4fbab74b56cebf339948c554b2292",
+        "stable_id": "load_20fa9",
+        "start": 135081
+      }
+    },
     "_locate_text_res": {
       "anchors": [
         {
@@ -2117,6 +4099,52 @@
         "start": 141550
       }
     },
+    "_mat_multiply": {
+      "anchors": [
+        {
+          "caller_task": "load_14e9e",
+          "hex": "9ad23fa21e",
+          "relocation": {
+            "load_offset": 86003,
+            "offset": 20467,
+            "segment": 4096
+          },
+          "site": 86000
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141938,
+        "name": "mat_multiply",
+        "sha256": "44f239d09fd6a06f274778c4e7da817731f60a2b95c4c33ef22f957ddd16fd2e",
+        "stable_id": "load_229f2",
+        "start": 141810
+      }
+    },
+    "_mat_rot_x": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a0a00f226",
+          "relocation": {
+            "load_offset": 24927,
+            "offset": 24927,
+            "segment": 0
+          },
+          "site": 24924
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159520,
+      "mapped_target": {
+        "end": 159616,
+        "name": "mat_rot_x",
+        "sha256": "49566295d3831c43095c9e6953447ff4eea6a04bb11a681dec58b0497f1101bb",
+        "stable_id": "load_26f2a",
+        "start": 159530
+      }
+    },
     "_mat_rot_y": {
       "anchors": [
         {
@@ -2147,6 +4175,29 @@
         "sha256": "69ea427cbd2f220d0242104f28e14b0c7538c40f26134f64ab4c30314e24d30d",
         "stable_id": "load_26f80",
         "start": 159616
+      }
+    },
+    "_mmgr_alloc_a000": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9ad126a21e",
+          "relocation": {
+            "load_offset": 171836,
+            "offset": 40764,
+            "segment": 8192
+          },
+          "site": 171833
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135422,
+        "name": "mmgr_alloc_a000",
+        "sha256": "001dd065a9a0975f506d4f9a187b2f3c6d511c4ad553c7c789bde1d8dc0a5fe6",
+        "stable_id": "load_210f1",
+        "start": 135409
       }
     },
     "_mmgr_alloc_pages": {
@@ -2277,6 +4328,29 @@
         "start": 135565
       }
     },
+    "_mmgr_find_free": {
+      "anchors": [
+        {
+          "caller_task": "load_2136a",
+          "hex": "9add28a21e",
+          "relocation": {
+            "load_offset": 136226,
+            "offset": 5154,
+            "segment": 8192
+          },
+          "site": 136223
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 136042,
+        "name": "mmgr_find_free",
+        "sha256": "27d316a6b4dd0067e31f7f717107723db82f5c146a32a3008be46d0db783ab23",
+        "stable_id": "load_212fd",
+        "start": 135933
+      }
+    },
     "_mmgr_free": {
       "anchors": [
         {
@@ -2371,6 +4445,52 @@
         "sha256": "4981ce0e781e5b9d402147f8588255f57c61b1f6c8cade357ce919378d166f89",
         "stable_id": "load_2167c",
         "start": 136828
+      }
+    },
+    "_mmgr_get_chunk_size_bytes": {
+      "anchors": [
+        {
+          "caller_task": "load_0ff92",
+          "hex": "9a8606e129",
+          "relocation": {
+            "load_offset": 65999,
+            "offset": 463,
+            "segment": 4096
+          },
+          "site": 65996
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 173238,
+        "name": "mmgr_get_chunk_size_bytes",
+        "sha256": "c62f0dceaf0f9cf9573a992f925ea3cbd8775d4586ef60bed0cf7f0b50bcb600",
+        "stable_id": "load_2a496",
+        "start": 173206
+      }
+    },
+    "_mmgr_get_ofs_diff": {
+      "anchors": [
+        {
+          "caller_task": "load_2a484",
+          "hex": "9a5b27a21e",
+          "relocation": {
+            "load_offset": 173191,
+            "offset": 42119,
+            "segment": 8192
+          },
+          "site": 173188
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135565,
+        "name": "mmgr_get_ofs_diff",
+        "sha256": "f9edcee386b05d153cf11d417865fe844ace139668a4fabb74b336f53d7cf929",
+        "stable_id": "load_2117b",
+        "start": 135547
       }
     },
     "_mmgr_get_res_ofs_diff_scaled": {
@@ -2469,6 +4589,29 @@
         "start": 136769
       }
     },
+    "_mmgr_resize_memory": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9a822ca21e",
+          "relocation": {
+            "load_offset": 176256,
+            "offset": 45184,
+            "segment": 8192
+          },
+          "site": 176253
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137010,
+        "name": "mmgr_resize_memory",
+        "sha256": "b072d0a61ee363343745e21c2c0a42a6a0f235e82b298632ce05dd6d746bd85f",
+        "stable_id": "load_216a2",
+        "start": 136866
+      }
+    },
     "_mouse_draw_opaque_check": {
       "anchors": [
         {
@@ -2565,6 +4708,29 @@
         "start": 158304
       }
     },
+    "_mouse_init": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a32008a26",
+          "relocation": {
+            "load_offset": 172191,
+            "offset": 41119,
+            "segment": 8192
+          },
+          "site": 172188
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158044,
+        "name": "mouse_init",
+        "sha256": "696b5b20cb6263d604290492cc3160575d3cd826996eed2a059ada665117f239",
+        "stable_id": "load_268d2",
+        "start": 157906
+      }
+    },
     "_mouse_multi_hittest": {
       "anchors": [
         {
@@ -2595,6 +4761,52 @@
         "sha256": "43fe93f0500d2dfdf74f4df8f58f40ff74a1b405ebcac19a00b498867f2615e1",
         "stable_id": "load_18e90",
         "start": 102032
+      }
+    },
+    "_mouse_set_minmax": {
+      "anchors": [
+        {
+          "caller_task": "load_13a50",
+          "hex": "9abc008a26",
+          "relocation": {
+            "load_offset": 80529,
+            "offset": 14993,
+            "segment": 4096
+          },
+          "site": 80526
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158128,
+        "name": "mouse_set_minmax",
+        "sha256": "a5fcbe42c6403890134091f66be33f762d64ced0b35e0f3220474947fedc497d",
+        "stable_id": "load_2695c",
+        "start": 158044
+      }
+    },
+    "_mouse_set_position": {
+      "anchors": [
+        {
+          "caller_task": "load_13a50",
+          "hex": "9a8c018a26",
+          "relocation": {
+            "load_offset": 80507,
+            "offset": 14971,
+            "segment": 4096
+          },
+          "site": 80504
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158304,
+        "name": "mouse_set_position",
+        "sha256": "358a476240a644b1c2cc9160e095fc2c5cec59439e01d8dd324ce888377dae21",
+        "stable_id": "load_26a2c",
+        "start": 158252
       }
     },
     "_mouse_timer_sprite_unk": {
@@ -2629,6 +4841,108 @@
         "start": 104326
       }
     },
+    "_mouse_track_op": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a5e164b17",
+          "relocation": {
+            "load_offset": 108926,
+            "offset": 43390,
+            "segment": 4096
+          },
+          "site": 108923
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 101790,
+        "name": "mouse_track_op",
+        "sha256": "2c66782aa4f2d8f435484dbf32511fe5656dd5273036b72bf04dbdca054e968c",
+        "stable_id": "load_18b0e",
+        "start": 101134
+      }
+    },
+    "_multiply_and_scale": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a2416a21e",
+          "relocation": {
+            "load_offset": 19790,
+            "offset": 19790,
+            "segment": 0
+          },
+          "site": 19787
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a2416a21e",
+          "relocation": {
+            "load_offset": 26622,
+            "offset": 26622,
+            "segment": 0
+          },
+          "site": 26619
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131166,
+        "name": "multiply_and_scale",
+        "sha256": "90cf1ee851e9b7ac712999a3158bc4badc615ef1f485ed40d00081df8f9c4a79",
+        "stable_id": "load_20044",
+        "start": 131140
+      }
+    },
+    "_nopsub_3215A": {
+      "anchors": [
+        {
+          "caller_task": "load_2219d",
+          "hex": "9a3a37a21e",
+          "relocation": {
+            "load_offset": 139861,
+            "offset": 8789,
+            "segment": 8192
+          },
+          "site": 139858
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 139628,
+        "name": "nopsub_3215A",
+        "sha256": "ce41fcd247564ad98f6fc5473b0e84f4eb5be24aec683da69a597f660bff82b5",
+        "stable_id": "load_2215a",
+        "start": 139610
+      }
+    },
+    "_nopsub_3216C": {
+      "anchors": [
+        {
+          "caller_task": "load_2219d",
+          "hex": "9a4c37a21e",
+          "relocation": {
+            "load_offset": 139754,
+            "offset": 8682,
+            "segment": 8192
+          },
+          "site": 139751
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 139677,
+        "name": "nopsub_3216C",
+        "sha256": "d73bc8e50aa0d428d5f9c817ec0aac837a4d3603a18d1e44ae45776f224d401a",
+        "stable_id": "load_2216c",
+        "start": 139628
+      }
+    },
     "_nopsub_3219D": {
       "anchors": [
         {
@@ -2640,18 +4954,9 @@
             "segment": 4096
           },
           "site": 94808
-        },
-        {
-          "caller_task": "load_28528",
-          "hex": "9a7d37a21e",
-          "relocation": {
-            "load_offset": 165265,
-            "offset": 34193,
-            "segment": 8192
-          },
-          "site": 165262
         }
       ],
+      "distinct_verified_callers": 1,
       "frame_load_address": 125472,
       "mapped_target": {
         "end": 139956,
@@ -2725,6 +5030,97 @@
         "start": 171604
       }
     },
+    "_parse_shape2d_helper": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9af408a21e",
+          "relocation": {
+            "load_offset": 176187,
+            "offset": 45115,
+            "segment": 8192
+          },
+          "site": 176184
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 127796,
+        "name": "parse_shape2d_helper",
+        "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+        "stable_id": "load_1f314",
+        "start": 127764
+      }
+    },
+    "_parse_shape2d_helper2": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9a1409a21e",
+          "relocation": {
+            "load_offset": 176022,
+            "offset": 44950,
+            "segment": 8192
+          },
+          "site": 176019
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 127836,
+        "name": "parse_shape2d_helper2",
+        "sha256": "f481eaad2e8838916992d1d58c7936dd6501a8b5aea1ea1e0b6d966cbb658b68",
+        "start": 127796
+      }
+    },
+    "_plane_origin_op": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a16527104",
+          "relocation": {
+            "load_offset": 41790,
+            "offset": 41790,
+            "segment": 0
+          },
+          "site": 41787
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 39346,
+        "name": "plane_origin_op",
+        "sha256": "1c4b1476491bc8ba791e1d284edc610a7b4b9d4e7f755c36be3007a9fe5b6783",
+        "stable_id": "load_09926",
+        "start": 39206
+      }
+    },
+    "_plane_rotate_op": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a84507104",
+          "relocation": {
+            "load_offset": 41855,
+            "offset": 41855,
+            "segment": 0
+          },
+          "site": 41852
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 39206,
+        "name": "plane_rotate_op",
+        "sha256": "d7a50bdd721a86657544d69d58fe1e9a0968d53df8c268e0d853a8be978f5239",
+        "stable_id": "load_09794",
+        "start": 38804
+      }
+    },
     "_polarRadius2D": {
       "anchors": [
         {
@@ -2782,11 +5178,34 @@
       ],
       "frame_load_address": 125440,
       "mapped_target": {
-        "end": 125481,
+        "end": 125482,
         "name": "polarRadius3D",
-        "sha256": "85162269595948fe3d95be2b0b650d95678b7f3202f2e81b0f4931ae20e2c150",
+        "sha256": "87108864c6af8fe92ef2ef2375dee5cad90782f4f5a4974ccc6e8a6eb05a966b",
         "stable_id": "load_1ea08",
         "start": 125448
+      }
+    },
+    "_preRender_default": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9a922da21e",
+          "relocation": {
+            "load_offset": 90237,
+            "offset": 24701,
+            "segment": 4096
+          },
+          "site": 90234
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137153,
+        "name": "preRender_default",
+        "sha256": "d5f99bcc3dce9fdd4ddd2d1a697057b2c20ad4c78efe041d2b3009caf2e4d32e",
+        "stable_id": "load_217b2",
+        "start": 137138
       }
     },
     "_preRender_default_alt": {
@@ -2853,6 +5272,359 @@
         "start": 130526
       }
     },
+    "_preRender_patterned": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9a663ea21e",
+          "relocation": {
+            "load_offset": 90278,
+            "offset": 24742,
+            "segment": 4096
+          },
+          "site": 90275
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141513,
+        "name": "preRender_patterned",
+        "sha256": "202c00c0d4b3d851192c77e8f7a9d3d6d74a5be408f6853299d106756b834385",
+        "stable_id": "load_22886",
+        "start": 141446
+      }
+    },
+    "_preRender_sphere": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9a5246a21e",
+          "relocation": {
+            "load_offset": 90581,
+            "offset": 25045,
+            "segment": 4096
+          },
+          "site": 90578
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 143886,
+        "name": "preRender_sphere",
+        "sha256": "267f99c29437685db5ec314384057e505c6ce2ea3839e1cd4c9fbbf6000c638b",
+        "stable_id": "load_23072",
+        "start": 143474
+      }
+    },
+    "_preRender_sphere_helper": {
+      "anchors": [
+        {
+          "caller_task": "load_23072",
+          "hex": "9a0e00bb26",
+          "relocation": {
+            "load_offset": 143673,
+            "offset": 12601,
+            "segment": 8192
+          },
+          "site": 143670
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158640,
+      "mapped_target": {
+        "end": 158696,
+        "name": "preRender_sphere_helper",
+        "sha256": "fceeec357e298da3418a0d54a7317700b45ebf020f9bb50bda10ce24d0b58b17",
+        "stable_id": "load_26bbe",
+        "start": 158654
+      }
+    },
+    "_preRender_sphere_helper2": {
+      "anchors": [
+        {
+          "caller_task": "load_26bbe",
+          "hex": "9a02004126",
+          "relocation": {
+            "load_offset": 158671,
+            "offset": 27599,
+            "segment": 8192
+          },
+          "site": 158668
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 156688,
+      "mapped_target": {
+        "end": 157618,
+        "name": "preRender_sphere_helper2",
+        "sha256": "6fdfe6fa031ac9c260732dce91cc10d4098287dab9b28d4a2be7f4f3020fce13",
+        "stable_id": "load_26412",
+        "start": 156690
+      }
+    },
+    "_preRender_unk": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9aba09a21e",
+          "relocation": {
+            "load_offset": 90431,
+            "offset": 24895,
+            "segment": 4096
+          },
+          "site": 90428
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 128036,
+        "name": "preRender_unk",
+        "sha256": "c560f4a76cd59e6374260a8f6532e76a59dcadfbf576fa05671830fc7052f013",
+        "stable_id": "load_1f3da",
+        "start": 127962
+      }
+    },
+    "_preRender_wheel": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9a0e00c726",
+          "relocation": {
+            "load_offset": 90555,
+            "offset": 25019,
+            "segment": 4096
+          },
+          "site": 90552
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158832,
+      "mapped_target": {
+        "end": 159424,
+        "name": "preRender_wheel",
+        "sha256": "7a9945bcbc9ccf081161d33d031c8998957f1e3d871eaab31a98b0c8ece621c9",
+        "stable_id": "load_26c7e",
+        "start": 158846
+      }
+    },
+    "_preRender_wheel_helper": {
+      "anchors": [
+        {
+          "caller_task": "load_26c7e",
+          "hex": "9a0000ec26",
+          "relocation": {
+            "load_offset": 158868,
+            "offset": 27796,
+            "segment": 8192
+          },
+          "site": 158865
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159424,
+      "mapped_target": {
+        "end": 159530,
+        "name": "preRender_wheel_helper",
+        "sha256": "b0d96a0f55f8b509bfee3e9d95f66895278be20e09dc7c2451f0795d9ba18ba0",
+        "stable_id": "load_26ec0",
+        "start": 159424
+      }
+    },
+    "_preRender_wheel_helper2": {
+      "anchors": [
+        {
+          "caller_task": "load_26ec0",
+          "hex": "9a0600b126",
+          "relocation": {
+            "load_offset": 159443,
+            "offset": 28371,
+            "segment": 8192
+          },
+          "site": 159440
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158480,
+      "mapped_target": {
+        "end": 158654,
+        "name": "preRender_wheel_helper2",
+        "sha256": "9af48a4fc0aad2bb0abe12895d0c10b828bc547971e72c799823807609c87d26",
+        "stable_id": "load_26b16",
+        "start": 158486
+      }
+    },
+    "_preRender_wheel_helper3": {
+      "anchors": [
+        {
+          "caller_task": "load_26b16",
+          "hex": "9a06002426",
+          "relocation": {
+            "load_offset": 158643,
+            "offset": 27571,
+            "segment": 8192
+          },
+          "site": 158640
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 156224,
+      "mapped_target": {
+        "end": 156690,
+        "name": "preRender_wheel_helper3",
+        "sha256": "59d0ff312c4f4bf29b97956546111249f3fda11dcdec0949cf41464fb61c25e0",
+        "stable_id": "load_26246",
+        "start": 156230
+      }
+    },
+    "_preRender_wheel_helper4": {
+      "anchors": [
+        {
+          "caller_task": "load_26c7e",
+          "hex": "9ace2da21e",
+          "relocation": {
+            "load_offset": 158988,
+            "offset": 27916,
+            "segment": 8192
+          },
+          "site": 158985
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137677,
+        "name": "preRender_wheel_helper4",
+        "sha256": "f0daea01598258fefe720a11fd70d22dd6fc6692a0189919cb580505730f3346",
+        "stable_id": "load_217ee",
+        "start": 137198
+      }
+    },
+    "_print_int_as_string_maybe": {
+      "anchors": [
+        {
+          "caller_task": "load_03178",
+          "hex": "9a30224b17",
+          "relocation": {
+            "load_offset": 13691,
+            "offset": 13691,
+            "segment": 0
+          },
+          "site": 13688
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104306,
+        "name": "print_int_as_string_maybe",
+        "sha256": "ef841e22ff0882814090c507070b2536db7e9fa0d6988229c82049abafa4f178",
+        "stable_id": "load_196e0",
+        "start": 104160
+      }
+    },
+    "_projectiondata9_times_ratio": {
+      "anchors": [
+        {
+          "caller_task": "load_14e9e",
+          "hex": "9a3c3da21e",
+          "relocation": {
+            "load_offset": 89207,
+            "offset": 23671,
+            "segment": 4096
+          },
+          "site": 89204
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141162,
+        "name": "projectiondata9_times_ratio",
+        "sha256": "e384115bef950946a3e7abf7209785464ccca6d4cacb322ffe42104fef3a6398",
+        "stable_id": "load_2275c",
+        "start": 141148
+      }
+    },
+    "_putpixel_single_maybe": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a0671a21e",
+          "relocation": {
+            "load_offset": 9013,
+            "offset": 9013,
+            "segment": 0
+          },
+          "site": 9010
+        },
+        {
+          "caller_task": "load_0dea6",
+          "hex": "9a0671a21e",
+          "relocation": {
+            "load_offset": 57350,
+            "offset": 57350,
+            "segment": 0
+          },
+          "site": 57347
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 154486,
+        "name": "putpixel_single_maybe",
+        "sha256": "50a45ed7967f80a7f677d391cf2f8ef49cb9ebb4f3cf128f6ea1be355e1905d8",
+        "start": 154406
+      }
+    },
+    "_rand": {
+      "anchors": [
+        {
+          "caller_task": "load_1998e",
+          "hex": "9afe19c51c",
+          "relocation": {
+            "load_offset": 104857,
+            "offset": 39321,
+            "segment": 4096
+          },
+          "site": 104854
+        }
+      ],
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124540,
+        "name": "_rand",
+        "sha256": "d39b290cfa5455e4a8bddf97ec1a6b898264265e73abafa6f7f5057a0ae2ce7d",
+        "start": 124494
+      },
+      "reviewed_alias": "_rand"
+    },
+    "_read_line": {
+      "anchors": [
+        {
+          "caller_task": "load_190bc",
+          "hex": "9a06004b2a",
+          "relocation": {
+            "load_offset": 102650,
+            "offset": 37114,
+            "segment": 4096
+          },
+          "site": 102647
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 173232,
+      "mapped_target": {
+        "end": 174070,
+        "name": "read_line",
+        "sha256": "4ae6b08aa7f26c6923aaea8a5cf74b33e413181895d349658ada8935fe6aaeaa",
+        "stable_id": "load_2a4b6",
+        "start": 173238
+      }
+    },
     "_rect_adjust_from_point": {
       "anchors": [
         {
@@ -2883,6 +5655,29 @@
         "sha256": "7a66ad05b0867d74d0feb0da20b8c216595645babc1f7607739adc239af8e16a",
         "stable_id": "load_1637a",
         "start": 91002
+      }
+    },
+    "_rect_array_sort_by_top": {
+      "anchors": [
+        {
+          "caller_task": "load_09f14",
+          "hex": "9aea1dd614",
+          "relocation": {
+            "load_offset": 40906,
+            "offset": 40906,
+            "segment": 0
+          },
+          "site": 40903
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 93102,
+        "name": "rect_array_sort_by_top",
+        "sha256": "ed2e720e674e31c9e33da7e7b0ad200bc57cc10843cedff5623ce0f6469fc449",
+        "stable_id": "load_16b4a",
+        "start": 93002
       }
     },
     "_rect_intersect": {
@@ -2981,6 +5776,29 @@
         "start": 92754
       }
     },
+    "_restore_gamestate": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a2a287104",
+          "relocation": {
+            "load_offset": 73045,
+            "offset": 7509,
+            "segment": 4096
+          },
+          "site": 73042
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 28680,
+        "name": "restore_gamestate",
+        "sha256": "3cd5dbfd407d32a76e84a24aea3932d12bfe29e945e7f7f2a7c6cb242deb3603",
+        "stable_id": "load_06f3a",
+        "start": 28474
+      }
+    },
     "_select_cliprect_rotate": {
       "anchors": [
         {
@@ -3011,6 +5829,97 @@
         "sha256": "2096f8c9f395b4c4b698ae55fd811021f0bc20c37c3827dec8d8ea502161b8ba",
         "stable_id": "load_14e06",
         "start": 85510
+      }
+    },
+    "_set_add_value": {
+      "anchors": [
+        {
+          "caller_task": "load_2a4b6",
+          "hex": "9abe00a21e",
+          "relocation": {
+            "load_offset": 173480,
+            "offset": 42408,
+            "segment": 8192
+          },
+          "site": 173477
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125703,
+        "name": "set_add_value",
+        "sha256": "2bf012b2c5e4c519f03b843fbd20e7befcfb9b6e5bd870aafff730943cffc5d7",
+        "stable_id": "load_1eade",
+        "start": 125662
+      }
+    },
+    "_set_bios_mode3": {
+      "anchors": [
+        {
+          "caller_task": "load_20120",
+          "hex": "9ab819a21e",
+          "relocation": {
+            "load_offset": 131371,
+            "offset": 299,
+            "segment": 8192
+          },
+          "site": 131368
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 132100,
+        "name": "set_bios_mode3",
+        "sha256": "5ad43c1c222d509c50eb931c10d6aedfc503768fb0093bfe0c7f96ed69c15fb4",
+        "stable_id": "load_203d8",
+        "start": 132056
+      }
+    },
+    "_set_criterr_handler": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a5709a21e",
+          "relocation": {
+            "load_offset": 172260,
+            "offset": 41188,
+            "segment": 8192
+          },
+          "site": 172257
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 127932,
+        "name": "set_criterr_handler",
+        "sha256": "a64f5c0dc573f0c7d6ecc98fff4afcf9d2b92e091326335286c70939e9de2319",
+        "stable_id": "load_1f377",
+        "start": 127863
+      }
+    },
+    "_set_fontdefseg": {
+      "anchors": [
+        {
+          "caller_task": "load_1988a",
+          "hex": "9a5c61a21e",
+          "relocation": {
+            "load_offset": 104598,
+            "offset": 39062,
+            "segment": 4096
+          },
+          "site": 104595
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150408,
+        "name": "set_fontdefseg",
+        "sha256": "1468b9883dd04af10b7d1122e9f78329a508ec9f1b21c186fabdb4f2e106c085",
+        "start": 150396
       }
     },
     "_set_projection": {
@@ -3070,11 +5979,34 @@
       ],
       "frame_load_address": 18192,
       "mapped_target": {
-        "end": 40389,
+        "end": 40390,
         "name": "setup_aero_trackdata",
-        "sha256": "38c165834dbd2626d6730b4ebc1d2bd0fd2442b035331f6614ad9e7e891c9fe6",
+        "sha256": "2fad7b8a4377dab9c8432fc7c61d9b2bbf1506b69c9ae6033a57f620fc0a21cf",
         "stable_id": "load_09ca2",
         "start": 40098
+      }
+    },
+    "_setup_intro": {
+      "anchors": [
+        {
+          "caller_task": "load_0059a",
+          "hex": "9a2c3af109",
+          "relocation": {
+            "load_offset": 1556,
+            "offset": 1556,
+            "segment": 0
+          },
+          "site": 1553
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 56998,
+        "name": "setup_intro",
+        "sha256": "febed87bf0086621170972c5a19c5a891004d5daab359e7fa4f9482ac1cc0637",
+        "stable_id": "load_0d93c",
+        "start": 55612
       }
     },
     "_setup_mcgawnd1": {
@@ -3134,11 +6066,34 @@
       ],
       "frame_load_address": 174416,
       "mapped_target": {
-        "end": 174549,
+        "end": 174550,
         "name": "setup_mcgawnd2",
-        "sha256": "acfc2d1ddc403b5bf9decaca3162876a518833eb070c4e831d2ae4d0d246bc76",
+        "sha256": "2acbbaf83b6f6cae062890374f9ab9cc87746b8e2d51c7fbfacb639dbbc5adec",
         "stable_id": "load_2a9a0",
         "start": 174496
+      }
+    },
+    "_shape2d_op_unk2": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9a9454a21e",
+          "relocation": {
+            "load_offset": 77509,
+            "offset": 11973,
+            "segment": 4096
+          },
+          "site": 77506
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147154,
+        "name": "shape2d_op_unk2",
+        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
+        "stable_id": "load_23eb4",
+        "start": 147124
       }
     },
     "_shape2d_op_unk4": {
@@ -3171,6 +6126,39 @@
         "sha256": "c3797ccf9e61c57a0b845e916b93c6ca9edc80a0e0419f936b1f4de99959ff09",
         "stable_id": "load_242f6",
         "start": 148214
+      }
+    },
+    "_shape2d_op_unk5": {
+      "anchors": [
+        {
+          "caller_task": "load_03178",
+          "hex": "9ac253a21e",
+          "relocation": {
+            "load_offset": 15090,
+            "offset": 15090,
+            "segment": 0
+          },
+          "site": 15087
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ac253a21e",
+          "relocation": {
+            "load_offset": 78696,
+            "offset": 13160,
+            "segment": 4096
+          },
+          "site": 78693
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146944,
+        "name": "shape2d_op_unk5",
+        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
+        "stable_id": "load_23de2",
+        "start": 146914
       }
     },
     "_shape2d_render_bmp_as_mask": {
@@ -3429,6 +6417,52 @@
         "start": 104106
       }
     },
+    "_sin_fast": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9abe3ca21e",
+          "relocation": {
+            "load_offset": 19781,
+            "offset": 19781,
+            "segment": 0
+          },
+          "site": 19778
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141100,
+        "name": "sin_fast",
+        "sha256": "af93b215c6978cf22f34e6e96798938909f5d5e4436115b445c8289e44226e1a",
+        "stable_id": "load_226de",
+        "start": 141022
+      },
+      "reviewed_alias": "_sin_fast"
+    },
+    "_skybox_op_helper": {
+      "anchors": [
+        {
+          "caller_task": "load_0c474",
+          "hex": "9abf2da21e",
+          "relocation": {
+            "load_offset": 51535,
+            "offset": 51535,
+            "segment": 0
+          },
+          "site": 51532
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137198,
+        "name": "skybox_op_helper",
+        "sha256": "d5f99bcc3dce9fdd4ddd2d1a697057b2c20ad4c78efe041d2b3009caf2e4d32e",
+        "stable_id": "load_217df",
+        "start": 137183
+      }
+    },
     "_sprite_1_unk2": {
       "anchors": [
         {
@@ -3461,6 +6495,29 @@
         "start": 144760
       }
     },
+    "_sprite_1_unk3": {
+      "anchors": [
+        {
+          "caller_task": "load_19620",
+          "hex": "9a5a4ca21e",
+          "relocation": {
+            "load_offset": 104042,
+            "offset": 38506,
+            "segment": 4096
+          },
+          "site": 104039
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145218,
+        "name": "sprite_1_unk3",
+        "sha256": "409b7dc916723b7bd5291d6f062834f5745f4cfd8f51ad6dfb3533e865b64b00",
+        "stable_id": "load_2367a",
+        "start": 145018
+      }
+    },
     "_sprite_1_unk4": {
       "anchors": [
         {
@@ -3486,9 +6543,9 @@
       ],
       "frame_load_address": 156080,
       "mapped_target": {
-        "end": 156229,
+        "end": 156230,
         "name": "sprite_1_unk4",
-        "sha256": "4264404c3fde33f533d2e6673b540e9e127dbaf5168ac232cf0803a39a638f4a",
+        "sha256": "e7aa24386fb11f192e8945c027bef3c3e94dc2cfe4e0c3d8969dd2000edba638",
         "stable_id": "load_261bc",
         "start": 156092
       }
@@ -3523,6 +6580,128 @@
         "sha256": "5fab577ba6737afeafd6255f0c0396c7e696d40e6892b45ed1ec7fc1333943de",
         "stable_id": "load_19620",
         "start": 103968
+      }
+    },
+    "_sprite_clear_1_color": {
+      "anchors": [
+        {
+          "caller_task": "load_18f4e",
+          "hex": "9aa048a21e",
+          "relocation": {
+            "load_offset": 102244,
+            "offset": 36708,
+            "segment": 4096
+          },
+          "site": 102241
+        },
+        {
+          "caller_task": "load_18f7c",
+          "hex": "9aa048a21e",
+          "relocation": {
+            "load_offset": 102290,
+            "offset": 36754,
+            "segment": 4096
+          },
+          "site": 102287
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144176,
+        "name": "sprite_clear_1_color",
+        "sha256": "8d918de4811448e2cd83fb21e6f08eae03a170fc06cc8078a1e5010464c3bcd7",
+        "stable_id": "load_232c0",
+        "start": 144064
+      },
+      "reviewed_alias": "_sprite_clear_1_color"
+    },
+    "_sprite_clear_shape": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9a5e5da21e",
+          "relocation": {
+            "load_offset": 3770,
+            "offset": 3770,
+            "segment": 0
+          },
+          "site": 3767
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 149468,
+        "name": "sprite_clear_shape",
+        "sha256": "7325940ea5caab69e6774d2d6dff8b7249b5b48edf860a1f2f42ffec450854e5",
+        "stable_id": "load_2477e",
+        "start": 149374
+      }
+    },
+    "_sprite_clear_shape_alt": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a3a5da21e",
+          "relocation": {
+            "load_offset": 8002,
+            "offset": 8002,
+            "segment": 0
+          },
+          "site": 7999
+        },
+        {
+          "caller_task": "load_0293c",
+          "hex": "9a3a5da21e",
+          "relocation": {
+            "load_offset": 11324,
+            "offset": 11324,
+            "segment": 0
+          },
+          "site": 11321
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 149374,
+        "name": "sprite_clear_shape_alt",
+        "sha256": "01943e5aec79e1712fed383e6b65e7e9272a7dde044a3f1eccbc6fd63986c2d1",
+        "stable_id": "load_2475a",
+        "start": 149338
+      }
+    },
+    "_sprite_copy_2_to_1": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9af470a21e",
+          "relocation": {
+            "load_offset": 77517,
+            "offset": 11981,
+            "segment": 4096
+          },
+          "site": 77514
+        },
+        {
+          "caller_task": "load_17686",
+          "hex": "9af470a21e",
+          "relocation": {
+            "load_offset": 96249,
+            "offset": 30713,
+            "segment": 4096
+          },
+          "site": 96246
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 154406,
+        "name": "sprite_copy_2_to_1",
+        "sha256": "9b204ea4763387d52609fd128b45dfcb10c03420a72821809634fd45a157e1b6",
+        "start": 154388
       }
     },
     "_sprite_copy_2_to_1_2": {
@@ -3813,6 +6992,86 @@
         "start": 146364
       }
     },
+    "_sprite_putimage_and_alt2": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9a4c4ea21e",
+          "relocation": {
+            "load_offset": 78136,
+            "offset": 12600,
+            "segment": 4096
+          },
+          "site": 78133
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145552,
+        "name": "sprite_putimage_and_alt2",
+        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
+        "stable_id": "load_2386c",
+        "start": 145516
+      }
+    },
+    "_sprite_putimage_or_alt": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9a4056a21e",
+          "relocation": {
+            "load_offset": 78154,
+            "offset": 12618,
+            "segment": 4096
+          },
+          "site": 78151
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147588,
+        "name": "sprite_putimage_or_alt",
+        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
+        "stable_id": "load_24060",
+        "start": 147552
+      }
+    },
+    "_sprite_set_1_from_argptr": {
+      "anchors": [
+        {
+          "caller_task": "load_18f3c",
+          "hex": "9ad670a21e",
+          "relocation": {
+            "load_offset": 102215,
+            "offset": 36679,
+            "segment": 4096
+          },
+          "site": 102212
+        },
+        {
+          "caller_task": "load_18f4e",
+          "hex": "9ad670a21e",
+          "relocation": {
+            "load_offset": 102233,
+            "offset": 36697,
+            "segment": 4096
+          },
+          "site": 102230
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 154388,
+        "name": "sprite_set_1_from_argptr",
+        "sha256": "3ecb182b3b3aed8b93581894555164218965a0e2459b3577b505b546cee79861",
+        "stable_id": "load_25af6",
+        "start": 154358
+      },
+      "reviewed_alias": "_sprite_set_1_from_argptr"
+    },
     "_sprite_set_1_size": {
       "anchors": [
         {
@@ -3877,6 +7136,136 @@
         "start": 146736
       }
     },
+    "_strlen": {
+      "anchors": [
+        {
+          "hex": "9a3417c51c",
+          "relocation": {
+            "load_offset": 100207,
+            "offset": 34671,
+            "segment": 4096
+          },
+          "site": 100204
+        }
+      ],
+      "frame_load_address": 117840,
+      "owner": "library_strlen"
+    },
+    "_sub_18D06": {
+      "anchors": [
+        {
+          "caller_task": "load_12596",
+          "hex": "9af6457104",
+          "relocation": {
+            "load_offset": 75234,
+            "offset": 9698,
+            "segment": 4096
+          },
+          "site": 75231
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 36192,
+        "name": "sub_18D06",
+        "sha256": "a247d7ec4647e63df9a348713c7e19daa384880cb9bccc68da5fac37618737c9",
+        "stable_id": "load_08d06",
+        "start": 36102
+      }
+    },
+    "_sub_19F14": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a0400f109",
+          "relocation": {
+            "load_offset": 73954,
+            "offset": 8418,
+            "segment": 4096
+          },
+          "site": 73951
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 41110,
+        "name": "sub_19F14",
+        "sha256": "543a1bd0c93bb293cdbf259c4a8f379be2fdfcb653fff4df00c157cfee75facd",
+        "stable_id": "load_09f14",
+        "start": 40724
+      }
+    },
+    "_sub_204AE": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a0e231a0e",
+          "relocation": {
+            "load_offset": 48113,
+            "offset": 48113,
+            "segment": 0
+          },
+          "site": 48110
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 67284,
+        "name": "sub_204AE",
+        "sha256": "5f65459dbfbf93e4e1babebdc485c4722ffd40b101320bf7398e417752ef80c8",
+        "stable_id": "load_104ae",
+        "start": 66734
+      }
+    },
+    "_sub_2298C": {
+      "anchors": [
+        {
+          "caller_task": "load_07008",
+          "hex": "9a1c0eb711",
+          "relocation": {
+            "load_offset": 28895,
+            "offset": 28895,
+            "segment": 0
+          },
+          "site": 28892
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 76946,
+        "name": "sub_2298C",
+        "sha256": "9589c27276c1c83d00b4802e3c740a07161fd6b4350cb9a3846766c6ced79b9e",
+        "stable_id": "load_1298c",
+        "start": 76172
+      }
+    },
+    "_sub_275C6": {
+      "anchors": [
+        {
+          "caller_task": "load_044cf",
+          "hex": "9a16014b17",
+          "relocation": {
+            "load_offset": 18120,
+            "offset": 18120,
+            "segment": 0
+          },
+          "site": 18117
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 95878,
+        "name": "sub_275C6",
+        "sha256": "7e05c6eda0fe59d417180a8ea8ef615f8d646534237d82fd0d1e517cf998a5ec",
+        "stable_id": "load_175c6",
+        "start": 95686
+      }
+    },
     "_sub_29772": {
       "anchors": [
         {
@@ -3907,6 +7296,29 @@
         "sha256": "ce168967aa34370b0be43380a4bafb005d76a7454773ca357dde3f461e117b1b",
         "stable_id": "load_19772",
         "start": 104306
+      }
+    },
+    "_sub_29A86": {
+      "anchors": [
+        {
+          "caller_task": "load_01588",
+          "hex": "9ad6254b17",
+          "relocation": {
+            "load_offset": 5605,
+            "offset": 5605,
+            "segment": 0
+          },
+          "site": 5602
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105196,
+        "name": "sub_29A86",
+        "sha256": "18b35984a2c2aae49b788dd23b1c06e751545c97a7d9556f1fdbe9814f38f68f",
+        "stable_id": "load_19a86",
+        "start": 105094
       }
     },
     "_sub_2EAD4": {
@@ -3941,6 +7353,144 @@
         "start": 125652
       }
     },
+    "_sub_2EB07": {
+      "anchors": [
+        {
+          "caller_task": "load_2a4b6",
+          "hex": "9ae700a21e",
+          "relocation": {
+            "load_offset": 173454,
+            "offset": 42382,
+            "segment": 8192
+          },
+          "site": 173451
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125726,
+        "name": "sub_2EB07",
+        "sha256": "6c8baaff4a832a084c2b30accdd6f9ab964113672749f9f1356c0f7be7d156e1",
+        "stable_id": "load_1eb07",
+        "start": 125703
+      }
+    },
+    "_sub_2EB1E": {
+      "anchors": [
+        {
+          "caller_task": "load_17686",
+          "hex": "9afe00a21e",
+          "relocation": {
+            "load_offset": 97155,
+            "offset": 31619,
+            "segment": 4096
+          },
+          "site": 97152
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125768,
+        "name": "sub_2EB1E",
+        "sha256": "2630eba0695c5ba1ef551e26f742107f68f918a61f7a4b526dd69e66b429fa63",
+        "stable_id": "load_1eb1e",
+        "start": 125726
+      }
+    },
+    "_sub_307B4": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a941da21e",
+          "relocation": {
+            "load_offset": 105620,
+            "offset": 40084,
+            "segment": 4096
+          },
+          "site": 105617
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133074,
+        "name": "sub_307B4",
+        "sha256": "2785435adbceff654e86bc7a7560a08d2f8e75dfd7e4a32ea43397c894fc8105",
+        "stable_id": "load_207b4",
+        "start": 133044
+      }
+    },
+    "_sub_307D2": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9ab21da21e",
+          "relocation": {
+            "load_offset": 105657,
+            "offset": 40121,
+            "segment": 4096
+          },
+          "site": 105654
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133091,
+        "name": "sub_307D2",
+        "sha256": "372806e7d3af2c17ff4d92078bf35c28af4c00f09d0c2b19ea667163b9095e38",
+        "stable_id": "load_207d2",
+        "start": 133074
+      }
+    },
+    "_sub_34526": {
+      "anchors": [
+        {
+          "caller_task": "load_0293c",
+          "hex": "9a065ba21e",
+          "relocation": {
+            "load_offset": 11244,
+            "offset": 11244,
+            "segment": 0
+          },
+          "site": 11241
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 148924,
+        "name": "sub_34526",
+        "sha256": "8b9842fb5682f83951facba4b6b38bf131dcfac8b7fd094a927f6c349672fab5",
+        "stable_id": "load_24526",
+        "start": 148774
+      }
+    },
+    "_sub_3702E": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a0e000227",
+          "relocation": {
+            "load_offset": 110330,
+            "offset": 44794,
+            "segment": 4096
+          },
+          "site": 110327
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159776,
+      "mapped_target": {
+        "end": 159930,
+        "name": "sub_3702E",
+        "sha256": "b660a055a6dd091d942261ec22f8f549811a76f699d1216903e757488f4e2c34",
+        "stable_id": "load_2702e",
+        "start": 159790
+      }
+    },
     "_sub_372F4": {
       "anchors": [
         {
@@ -3971,6 +7521,167 @@
         "sha256": "c5c777bd91ddf602190cf2e0330cb8b3ba7153ae06c6dcd3c5b78485d569a99a",
         "stable_id": "load_272f4",
         "start": 160500
+      }
+    },
+    "_sub_37470": {
+      "anchors": [
+        {
+          "caller_task": "load_16c3c",
+          "hex": "9aa0030d27",
+          "relocation": {
+            "load_offset": 93807,
+            "offset": 28271,
+            "segment": 4096
+          },
+          "site": 93804
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 160990,
+        "name": "sub_37470",
+        "sha256": "55bf2855f2d986367f505a5dedfb350c944752cd96b05d1a006df4877b116224",
+        "stable_id": "load_27470",
+        "start": 160880
+      }
+    },
+    "_sub_374DE": {
+      "anchors": [
+        {
+          "caller_task": "load_16bd5",
+          "hex": "9a0e040d27",
+          "relocation": {
+            "load_offset": 93158,
+            "offset": 27622,
+            "segment": 4096
+          },
+          "site": 93155
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 161018,
+        "name": "sub_374DE",
+        "sha256": "604778f43636c2906a15790c802cb5b7e8261d3a61a3a2ff8c584d42dd7944f0",
+        "stable_id": "load_274de",
+        "start": 160990
+      }
+    },
+    "_sub_3771E": {
+      "anchors": [
+        {
+          "caller_task": "load_16fa3",
+          "hex": "9a4e060d27",
+          "relocation": {
+            "load_offset": 94452,
+            "offset": 28916,
+            "segment": 4096
+          },
+          "site": 94449
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 161616,
+        "name": "sub_3771E",
+        "sha256": "aff5965217bd2966c8550bef114580fdf23261c86514d98e0092b79ae596a6b9",
+        "stable_id": "load_2771e",
+        "start": 161566
+      }
+    },
+    "_sub_38156": {
+      "anchors": [
+        {
+          "caller_task": "load_16f6d",
+          "hex": "9a86100d27",
+          "relocation": {
+            "load_offset": 94094,
+            "offset": 28558,
+            "segment": 4096
+          },
+          "site": 94091
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 164216,
+        "name": "sub_38156",
+        "sha256": "9aec0787aa20a3a3004f70468e4dbe9e1bacc64981ea0848d87316874a53bceb",
+        "stable_id": "load_28156",
+        "start": 164182
+      }
+    },
+    "_sub_38178": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9aa8100d27",
+          "relocation": {
+            "load_offset": 35124,
+            "offset": 35124,
+            "segment": 0
+          },
+          "site": 35121
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 164436,
+        "name": "sub_38178",
+        "sha256": "420952ca5dbafeca5ba89e4c036fbed0938ec08af10337fe78103d6c764adf2f",
+        "stable_id": "load_28178",
+        "start": 164216
+      }
+    },
+    "_sub_38CF8": {
+      "anchors": [
+        {
+          "caller_task": "load_16ef4",
+          "hex": "9ac8066328",
+          "relocation": {
+            "load_offset": 93985,
+            "offset": 28449,
+            "segment": 4096
+          },
+          "site": 93982
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 165424,
+      "mapped_target": {
+        "end": 167398,
+        "name": "sub_38CF8",
+        "sha256": "75493458c4b20c1b5a73ad8138165498d4a48f5c51b293b638ce7a6fbb3b2ae7",
+        "stable_id": "load_28cf8",
+        "start": 167160
+      }
+    },
+    "_sub_39050": {
+      "anchors": [
+        {
+          "caller_task": "load_16ef4",
+          "hex": "9a200a6328",
+          "relocation": {
+            "load_offset": 94027,
+            "offset": 28491,
+            "segment": 4096
+          },
+          "site": 94024
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 165424,
+      "mapped_target": {
+        "end": 168072,
+        "name": "sub_39050",
+        "sha256": "184260c08b703e4f87c221ee33a9ffecb8c20706a9b7f97700c59e503daf94ed",
+        "stable_id": "load_29050",
+        "start": 168016
       }
     },
     "_sub_39700": {
@@ -4030,11 +7741,34 @@
       ],
       "frame_load_address": 57760,
       "mapped_target": {
-        "end": 72569,
+        "end": 72570,
         "name": "subst_hillroad_track",
-        "sha256": "91ee4053272070ca8b0786ea158427200df1a151ed48912181776ed0401784e4",
+        "sha256": "08f04f9ee7dd1aedcffd7fbd8d4b3ffcb777c4b0b3e6457bc8e458df500e630a",
         "stable_id": "load_11a5a",
         "start": 72282
+      }
+    },
+    "_timer_compare_dx": {
+      "anchors": [
+        {
+          "caller_task": "load_2a4b6",
+          "hex": "9acb3da21e",
+          "relocation": {
+            "load_offset": 173533,
+            "offset": 42461,
+            "segment": 8192
+          },
+          "site": 173530
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141317,
+        "name": "timer_compare_dx",
+        "sha256": "8c67da900e0c0b8f58756a9097bf24761abc472c366ad6232425e30c2a6a7f02",
+        "stable_id": "load_227eb",
+        "start": 141291
       }
     },
     "_timer_copy_counter": {
@@ -4067,6 +7801,104 @@
         "sha256": "31c1d715e81293911969817950265968096bd61bf7ac7cb2d126b5e9e25b14ea",
         "stable_id": "load_227c0",
         "start": 141248
+      }
+    },
+    "_timer_get_counter": {
+      "anchors": [
+        {
+          "caller_task": "load_1998e",
+          "hex": "9a583da21e",
+          "relocation": {
+            "load_offset": 104872,
+            "offset": 39336,
+            "segment": 4096
+          },
+          "site": 104869
+        },
+        {
+          "caller_task": "load_20a77",
+          "hex": "9a583da21e",
+          "relocation": {
+            "load_offset": 133764,
+            "offset": 2692,
+            "segment": 8192
+          },
+          "site": 133761
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141186,
+        "name": "timer_get_counter",
+        "sha256": "824af8fc2a6a6f4b97ff26c56c6376da0a14bae57eb2e49ef92c653499205dca",
+        "stable_id": "load_22778",
+        "start": 141176
+      }
+    },
+    "_timer_get_counter_unk": {
+      "anchors": [
+        {
+          "caller_task": "load_12576",
+          "hex": "9ae53da21e",
+          "relocation": {
+            "load_offset": 75135,
+            "offset": 9599,
+            "segment": 4096
+          },
+          "site": 75132
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9ae53da21e",
+          "relocation": {
+            "load_offset": 110580,
+            "offset": 45044,
+            "segment": 4096
+          },
+          "site": 110577
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141362,
+        "name": "timer_get_counter_unk",
+        "sha256": "8637b71632a7ba9062c7e2ec1f0ef3dc38c27f1e7e402cee574a9b71cc35aded",
+        "start": 141317
+      }
+    },
+    "_timer_get_delta": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9a7a3da21e",
+          "relocation": {
+            "load_offset": 56033,
+            "offset": 56033,
+            "segment": 0
+          },
+          "site": 56030
+        },
+        {
+          "caller_task": "load_1a230",
+          "hex": "9a7a3da21e",
+          "relocation": {
+            "load_offset": 107059,
+            "offset": 41523,
+            "segment": 4096
+          },
+          "site": 107056
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141239,
+        "name": "timer_get_delta",
+        "sha256": "76938b545fe2da07e03c21596a79373d802a601539e3bad54382b783e7ca043a",
+        "stable_id": "load_2279a",
+        "start": 141210
       }
     },
     "_timer_get_delta_alt": {
@@ -4165,6 +7997,52 @@
         "start": 131806
       }
     },
+    "_timer_setup_interrupt": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a8017a21e",
+          "relocation": {
+            "load_offset": 172173,
+            "offset": 41101,
+            "segment": 8192
+          },
+          "site": 172170
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131688,
+        "name": "timer_setup_interrupt",
+        "sha256": "f8223ee82537fd720cc12e95229764ec3fa0e094ba2c6e6ce579ee067000866f",
+        "stable_id": "load_201a0",
+        "start": 131488
+      }
+    },
+    "_timer_wait_for_dx": {
+      "anchors": [
+        {
+          "caller_task": "load_2776c",
+          "hex": "9ab73da21e",
+          "relocation": {
+            "load_offset": 161812,
+            "offset": 30740,
+            "segment": 8192
+          },
+          "site": 161809
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141291,
+        "name": "timer_wait_for_dx",
+        "sha256": "922c8b717a6bab5eacbbe2cd8af37c2827e6f459f13dba005b014aa5f1bd5247",
+        "stable_id": "load_227d7",
+        "start": 141271
+      }
+    },
     "_transformed_shape_op": {
       "anchors": [
         {
@@ -4195,6 +8073,51 @@
         "sha256": "ed5f8af7e40c28ef1317f49b9d5401dc995bf1f715ca8c00cbc508db89933ec6",
         "stable_id": "load_14e9e",
         "start": 85662
+      }
+    },
+    "_unknown_libname_2": {
+      "anchors": [
+        {
+          "caller_task": "load_1d3be",
+          "hex": "9a2814c51c",
+          "relocation": {
+            "load_offset": 119780,
+            "offset": 54244,
+            "segment": 4096
+          },
+          "site": 119777
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 123073,
+        "name": "unknown_libname_2",
+        "sha256": "3b679f21a03b90de387d461ae76fd133f917d0ca731f548561e0637d9814a1c2",
+        "stable_id": "load_1e078",
+        "start": 123000
+      }
+    },
+    "_unknown_libname_4": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9a101dc51c",
+          "relocation": {
+            "load_offset": 176242,
+            "offset": 45170,
+            "segment": 8192
+          },
+          "site": 176239
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 125314,
+        "name": "unknown_libname_4",
+        "sha256": "60f5d96e30fc3d8096d5093579abc16b7c3d3ea2783314947e5ad18abf84d44c",
+        "start": 125280
       }
     },
     "_unload_resource": {
@@ -4261,6 +8184,29 @@
         "start": 55476
       }
     },
+    "_update_car_speed": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a68337104",
+          "relocation": {
+            "load_offset": 8928,
+            "offset": 8928,
+            "segment": 0
+          },
+          "site": 8925
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 32726,
+        "name": "update_car_speed",
+        "sha256": "b39c76baf469e2c41fd77fc8542a3843c81a60c5f14f3c280b06bfdee50447c2",
+        "stable_id": "load_07a78",
+        "start": 31352
+      }
+    },
     "_update_crash_state": {
       "anchors": [
         {
@@ -4293,6 +8239,75 @@
         "start": 38374
       }
     },
+    "_update_frame": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9ae401f109",
+          "relocation": {
+            "load_offset": 73840,
+            "offset": 8304,
+            "segment": 4096
+          },
+          "site": 73837
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 49922,
+        "name": "update_frame",
+        "sha256": "7f45cf388b62466849d4c93388bfbd449e74dd41681aef6b4a743f4e2c23181f",
+        "stable_id": "load_0a0f4",
+        "start": 41204
+      }
+    },
+    "_update_gamestate": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9af8287104",
+          "relocation": {
+            "load_offset": 73120,
+            "offset": 7584,
+            "segment": 4096
+          },
+          "site": 73117
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 29160,
+        "name": "update_gamestate",
+        "sha256": "095a4b925803ba00d2cc3942704799f6e46b922aa27db6a8aeca948462a2b942",
+        "stable_id": "load_07008",
+        "start": 28680
+      }
+    },
+    "_update_rpm_from_speed": {
+      "anchors": [
+        {
+          "caller_task": "load_07a78",
+          "hex": "9a0600dc09",
+          "relocation": {
+            "load_offset": 32608,
+            "offset": 32608,
+            "segment": 0
+          },
+          "site": 32605
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40424,
+        "name": "update_rpm_from_speed",
+        "sha256": "4afb8b21289f00001ec1020411ad72fa713728e1a9dd0404419e0f9ef70d7f72",
+        "stable_id": "load_09dc6",
+        "start": 40390
+      }
+    },
     "_vector_op_unk": {
       "anchors": [
         {
@@ -4318,9 +8333,9 @@
       ],
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 143474,
+        "end": 143465,
         "name": "vector_op_unk",
-        "sha256": "267534afa8fc66a4b10b3697a13dbf74eb9d09595ce494f89ec13258df347052",
+        "sha256": "eef9f7abc2af22c7ac87db18c094c402bd02474e0df58b1fe46a34469db0dc6e",
         "stable_id": "load_23014",
         "start": 143380
       }
@@ -4356,6 +8371,405 @@
         "stable_id": "load_223d9",
         "start": 140249
       }
+    },
+    "_video_add_exithandler": {
+      "anchors": [
+        {
+          "caller_task": "load_23816",
+          "hex": "9a8e3ba21e",
+          "relocation": {
+            "load_offset": 145433,
+            "offset": 14361,
+            "segment": 8192
+          },
+          "site": 145430
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 140758,
+        "name": "video_add_exithandler",
+        "sha256": "2da28112debd092e3057902accaadb705206278d37d7b21609e6d5cf8deb0e67",
+        "stable_id": "load_225ae",
+        "start": 140718
+      }
+    },
+    "_video_clear_color": {
+      "anchors": [
+        {
+          "caller_task": "load_203d8",
+          "hex": "9a8848a21e",
+          "relocation": {
+            "load_offset": 132062,
+            "offset": 990,
+            "segment": 8192
+          },
+          "site": 132059
+        },
+        {
+          "caller_task": "load_225d6",
+          "hex": "9a8848a21e",
+          "relocation": {
+            "load_offset": 140801,
+            "offset": 9729,
+            "segment": 8192
+          },
+          "site": 140798
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144064,
+        "name": "video_clear_color",
+        "sha256": "21cdb02328e72f6dce62013cdc1dc21b00125b5155a4a96592f2ed8b41e19be7",
+        "start": 144040
+      }
+    },
+    "_video_get_status": {
+      "anchors": [
+        {
+          "caller_task": "load_2a25c",
+          "hex": "9adc45a21e",
+          "relocation": {
+            "load_offset": 172666,
+            "offset": 41594,
+            "segment": 8192
+          },
+          "site": 172663
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 143366,
+        "name": "video_get_status",
+        "sha256": "8be65c7799627d361a474be847ca07c524ba636916960930560dcf14554a6b5b",
+        "start": 143356
+      }
+    },
+    "_video_set_mode_13h": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9af64da21e",
+          "relocation": {
+            "load_offset": 172157,
+            "offset": 41085,
+            "segment": 8192
+          },
+          "site": 172154
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145480,
+        "name": "video_set_mode_13h",
+        "sha256": "e8f62bc39b509ba297d7fe8d34d2b7f55c5a9f917fad1c9bd23ff5e7f01f15f3",
+        "stable_id": "load_23816",
+        "start": 145430
+      }
+    },
+    "_video_set_palette": {
+      "anchors": [
+        {
+          "caller_task": "load_2a2c0",
+          "hex": "9a835ca21e",
+          "relocation": {
+            "load_offset": 172844,
+            "offset": 41772,
+            "segment": 8192
+          },
+          "site": 172841
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 149180,
+        "name": "video_set_palette",
+        "sha256": "0b27904c9117ae189242484dae1e2de35c1f20355e807cc535d7474f567cbf53",
+        "start": 149155
+      }
+    },
+    "_do_dea_textres": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_dea_textres",
+        "stable_id": "load_1a118",
+        "start": 106776,
+        "end": 106918,
+        "sha256": "be3567d789582d8923c1a7c24fa731f72d600fd236aa7a9e9de4a7928a39333b"
+      },
+      "reviewed_alias": "_do_dea_textres",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 172249,
+          "hex": "b8682cba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 41181,
+            "load_offset": 172253
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_do_dos_restext": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_dos_restext",
+        "stable_id": "load_19f5c",
+        "start": 106332,
+        "end": 106422,
+        "sha256": "b5ed4ca3d37bc5ba91dbf1c68df14b00191a9dd99b59c282073e2f8958139428"
+      },
+      "reviewed_alias": "_do_dos_restext",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171749,
+          "hex": "b8ac2aba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40681,
+            "load_offset": 171753
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_do_sonsof_restext": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_sonsof_restext",
+        "stable_id": "load_19efa",
+        "start": 106234,
+        "end": 106332,
+        "sha256": "fde598ab98df9a70439f10f4af433dafc396bf02138bc766b2a0e6bb2e68e4e5"
+      },
+      "reviewed_alias": "_do_sonsof_restext",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171769,
+          "hex": "b84a2aba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40701,
+            "load_offset": 171773
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_do_pau_restext": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_pau_restext",
+        "stable_id": "load_19e4a",
+        "start": 106058,
+        "end": 106136,
+        "sha256": "5f56841a3419740c988518cdfe99fede83a4d7939282c96e2e0e188f7b46d064"
+      },
+      "reviewed_alias": "_do_pau_restext",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171709,
+          "hex": "b89a29ba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40641,
+            "load_offset": 171713
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_do_mof_restext": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_mof_restext",
+        "stable_id": "load_19e98",
+        "start": 106136,
+        "end": 106234,
+        "sha256": "17154fa58f8f57d6601eef63cdb773f17ab24910c4779d6a2fd42195321b74d8"
+      },
+      "reviewed_alias": "_do_mof_restext",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171689,
+          "hex": "b8e829ba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40621,
+            "load_offset": 171693
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_do_key_restext": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_key_restext",
+        "stable_id": "load_19d9a",
+        "start": 105882,
+        "end": 105972,
+        "sha256": "8ea8594a2149266f3a93af268f80b5c0ea1d26316c89b33b53861ba04e3fe7e5"
+      },
+      "reviewed_alias": "_do_key_restext",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171669,
+          "hex": "b8ea28ba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40601,
+            "load_offset": 171673
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_do_joy_restext": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "do_joy_restext",
+        "stable_id": "load_19b32",
+        "start": 105266,
+        "end": 105882,
+        "sha256": "f1463c7241e625155fd4500fd2a9c391b24d8be0a2e045fc7da3c3ec8fe35ae7"
+      },
+      "reviewed_alias": "_do_joy_restext",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171649,
+          "hex": "b88226ba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40581,
+            "load_offset": 171653
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_show_graphic_levels_menu": {
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "name": "show_graphic_levels_menu",
+        "stable_id": "load_19fb6",
+        "start": 106422,
+        "end": 106776,
+        "sha256": "fee71a7c9b9f68b87005abdc7a2e6a7cfe27dc8c86205276809cbfa1d6e93ffc"
+      },
+      "reviewed_alias": "_show_graphic_levels_menu",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 171629,
+          "hex": "b8062bba4b17",
+          "relocation": {
+            "segment": 8192,
+            "offset": 40561,
+            "load_offset": 171633
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_ported_sprite_clear_1_color_": {
+      "anchors": [
+        {
+          "caller_task": "load_18f4e",
+          "hex": "9aa048a21e",
+          "relocation": {
+            "load_offset": 102244,
+            "offset": 36708,
+            "segment": 4096
+          },
+          "site": 102241
+        },
+        {
+          "caller_task": "load_18f7c",
+          "hex": "9aa048a21e",
+          "relocation": {
+            "load_offset": 102290,
+            "offset": 36754,
+            "segment": 4096
+          },
+          "site": 102287
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144176,
+        "name": "sprite_clear_1_color",
+        "sha256": "8d918de4811448e2cd83fb21e6f08eae03a170fc06cc8078a1e5010464c3bcd7",
+        "stable_id": "load_232c0",
+        "start": 144064
+      },
+      "reviewed_alias": "_ported_sprite_clear_1_color_"
+    },
+    "_video_set_mode4": {
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "name": "video_set_mode4",
+        "start": 131166,
+        "end": 131254,
+        "sha256": "b9057330ea19a409f3d0f9c3873dafae005b7ee2c71dc0da8da8b1890feae560"
+      },
+      "reviewed_alias": "_video_set_mode4",
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "site": 172165,
+          "hex": "9a3e16a21e",
+          "relocation": {
+            "segment": 8192,
+            "offset": 41096,
+            "load_offset": 172168
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
+    },
+    "_sprite_make_wnd": {
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "name": "sprite_make_wnd",
+        "start": 150540
+      },
+      "reviewed_alias": "_sprite_make_wnd",
+      "entry_proof": {
+        "kind": "pinned-entry-after-verified-predecessor-v1",
+        "source_path": "src/restunts/asmorig/seg012.asm",
+        "source_line": 14155,
+        "predecessor": "draw_patterned_lines",
+        "entry_hex": "558bec83ec081e5657"
+      },
+      "anchors": [
+        {
+          "caller_task": "load_2a2c0",
+          "site": 172928,
+          "hex": "9aec61a21e",
+          "relocation": {
+            "segment": 8192,
+            "offset": 41859,
+            "load_offset": 172931
+          }
+        }
+      ],
+      "distinct_verified_callers": 1
     }
   }
 }

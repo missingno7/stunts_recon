@@ -1,0 +1,339 @@
+[
+  {
+    "function": "mat_mul_vector2",
+    "locals": [
+      {
+        "key": "tmpmat@1:246",
+        "name": "tmpmat",
+        "size_bytes": 18,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {
+      "tmpmat@1:246": -18
+    }
+  },
+  {
+    "function": "init_carstate_from_simd",
+    "locals": [
+      {
+        "key": "zero@32:18",
+        "name": "zero",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "i@33:18",
+        "name": "i",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 1
+      },
+      {
+        "key": "whlPos@34:19",
+        "name": "whlPos",
+        "size_bytes": 6,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 2
+      }
+    ],
+    "measured": {
+      "whlPos@34:19": -10
+    }
+  },
+  {
+    "function": "rect_compare_point",
+    "locals": [
+      {
+        "key": "p@5:29",
+        "name": "p",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "flag@6:10",
+        "name": "flag",
+        "size_bytes": 1,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 1
+      }
+    ],
+    "measured": {
+      "flag@6:10": -4
+    }
+  },
+  {
+    "function": "is_facing_camera",
+    "locals": [
+      {
+        "key": "dx0@5:10",
+        "name": "dx0",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "dx1@5:15",
+        "name": "dx1",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 1
+      },
+      {
+        "key": "dy0@5:20",
+        "name": "dy0",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 2
+      },
+      {
+        "key": "dy1@5:25",
+        "name": "dy1",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 3
+      }
+    ],
+    "measured": {
+      "dx0@5:10": -4,
+      "dx1@5:15": -12,
+      "dy0@5:20": -8,
+      "dy1@5:25": -16
+    }
+  },
+  {
+    "function": "rect_adjust_from_point",
+    "locals": [
+      {
+        "key": "x@4:18",
+        "name": "x",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "y@4:21",
+        "name": "y",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 1
+      },
+      {
+        "key": "temp@7:11",
+        "name": "temp",
+        "size_bytes": 2,
+        "storage": "auto",
+        "block": [
+          "b1"
+        ],
+        "declaration_index": 2
+      },
+      {
+        "key": "temp@9:11",
+        "name": "temp",
+        "size_bytes": 2,
+        "storage": "auto",
+        "block": [
+          "b2"
+        ],
+        "declaration_index": 3
+      }
+    ],
+    "measured": {
+      "temp@7:11": -6,
+      "temp@9:11": -6
+    }
+  },
+  {
+    "function": "parse_filepath_separators",
+    "locals": [
+      {
+        "key": "ch@4:10",
+        "name": "ch",
+        "size_bytes": 1,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "len@5:9",
+        "name": "len",
+        "size_bytes": 2,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 1
+      },
+      {
+        "key": "out@14:13",
+        "name": "out",
+        "size_bytes": 2,
+        "storage": "auto",
+        "block": [
+          "b2"
+        ],
+        "declaration_index": 2
+      }
+    ],
+    "measured": {
+      "ch@4:10": -2,
+      "len@5:9": -4,
+      "out@14:13": -6
+    }
+  },
+  {
+    "function": "locate_text_res",
+    "locals": [
+      {
+        "key": "textname@5:10",
+        "name": "textname",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {
+      "textname@5:10": -4
+    }
+  },
+  {
+    "function": "copy_string",
+    "locals": [
+      {
+        "key": "current@3:14",
+        "name": "current",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {
+      "current@3:14": -4
+    }
+  },
+  {
+    "function": "mouse_multi_hittest",
+    "locals": [
+      {
+        "key": "index@7:18",
+        "name": "index",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {}
+  },
+  {
+    "function": "audioresource_get_dword",
+    "locals": [
+      {
+        "key": "value@1:75",
+        "name": "value",
+        "size_bytes": 4,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {
+      "value@1:75": -4
+    }
+  },
+  {
+    "function": "audioresource_get_word",
+    "locals": [
+      {
+        "key": "value@1:77",
+        "name": "value",
+        "size_bytes": 2,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {
+      "value@1:77": -2
+    }
+  },
+  {
+    "function": "file_combine_and_find",
+    "locals": [
+      {
+        "key": "path@5:10",
+        "name": "path",
+        "size_bytes": 80,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      }
+    ],
+    "measured": {
+      "path@5:10": -80
+    }
+  },
+  {
+    "function": "random_wait",
+    "locals": [
+      {
+        "key": "status1@6:18",
+        "name": "status1",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "i@6:27",
+        "name": "i",
+        "size_bytes": 2,
+        "storage": "register",
+        "block": [],
+        "declaration_index": 1
+      }
+    ],
+    "measured": {}
+  },
+  {
+    "function": "parse_shape2d_helper3",
+    "locals": [
+      {
+        "key": "value@3:10",
+        "name": "value",
+        "size_bytes": 1,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 0
+      },
+      {
+        "key": "count@4:9",
+        "name": "count",
+        "size_bytes": 2,
+        "storage": "auto",
+        "block": [],
+        "declaration_index": 1
+      }
+    ],
+    "measured": {
+      "value@3:10": -4,
+      "count@4:9": -2
+    }
+  }
+]

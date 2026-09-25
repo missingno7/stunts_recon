@@ -1,0 +1,174 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_word_A5AC",
+        "_word_A596",
+        "_word_9282",
+        "_sub_29772"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_sub_29772",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 20,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-dgroup-offset16-v1"
+  },
+  "end": 104326,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md",
+    "scratch_alias_table": "build/workers/dataalias/data-symbols.json"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_9282",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 14,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_9282",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_A596",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 8,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_A596",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_A5AC",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 2,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_A5AC",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "id": "sub_29772",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_sub_29772",
+  "source": "src/sub_29772.c",
+  "stable_id": "load_19772",
+  "start": 104306,
+  "target": {
+    "sha256": "ce168967aa34370b0be43380a4bafb005d76a7454773ca357dde3f461e117b1b",
+    "size": 20
+  }
+}

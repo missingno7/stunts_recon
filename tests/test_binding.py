@@ -21,7 +21,8 @@ class BindingTests(unittest.TestCase):
         cls.obj, _ = compile_source(b'extern unsigned char flags[]; unsigned int lookup(int i) { return flags[i+3]; }\n', 'msc510-medium')
         cls.declarations = {'segments': cls.obj.segment_defs, 'groups': cls.obj.groups,
                             'publics': cls.obj.publics, 'externals': cls.obj.externals}
-        cls.symbols = {'_flags': {'group': 'DGROUP', 'frame_load_address': 0x2b770, 'load_address': 0x34d06}}
+        cls.symbols = {'_flags': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
+                                  'load_address': 0x34d06, 'allowed_addends': [3]}}
 
     def bind(self, obj=None, expected=None, declarations=None, symbols=None, length=14):
         return bind_data_offsets(obj or self.obj, 'UNIT_TEXT', '_lookup', length,

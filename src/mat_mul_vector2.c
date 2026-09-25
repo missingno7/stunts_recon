@@ -1,0 +1,1 @@
+struct VECTOR { int x,y,z; }; struct MATRIX { int vals[9]; }; extern void mat_mul_vector(struct VECTOR *,struct MATRIX *,struct VECTOR *); void mat_mul_vector2(struct VECTOR *invec, struct MATRIX far *mat, struct VECTOR *outvec) { struct MATRIX tmpmat; tmpmat=*mat; mat_mul_vector(invec,&tmpmat,outvec); }

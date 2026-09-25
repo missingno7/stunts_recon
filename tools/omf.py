@@ -35,6 +35,9 @@ class ObjectModule:
         self.segment_defs = list(segment_defs or [])
         self.groups = list(groups or [])
         self.comments = list(comments or [])
+        self.local_externals = []
+        self.local_publics = []
+        self.external_scopes = []
 
     def segment_bytes(self, segment: str) -> bytes:
         if segment not in self.segments:
@@ -171,6 +174,9 @@ class OmfReader(ObjectReader):
         groups: list = []             # linker-facing GRPDEF records
         externals: list = []
         publics: list = []
+        local_externals: list = []
+        local_publics: list = []
+        external_scopes: list = []
         segment_data: dict = {}       # SEGDEF index -> bytearray
         fixups: list = []
         comments: list = []
@@ -264,7 +270,10 @@ class OmfReader(ObjectReader):
                 at = 0
                 while at < len(body):
                     length = body[at]
-                    externals.append(body[at + 1:at + 1 + length].decode("latin1"))
+                    name = body[at + 1:at + 1 + length].decode("latin1")
+                    externals.append(name)
+                    external_scopes.append('local' if kind == self.LEXTDEF else 'external')
+                    if kind == self.LEXTDEF: local_externals.append(name)
                     at += 1 + length
                     _, at = self._index(body, at)   # type index
             elif kind in (self.PUBDEF16, self.LPUBDEF):
@@ -282,6 +291,12 @@ class OmfReader(ObjectReader):
                     _, at = self._index(body, at)  # type index
                     publics.append({"name": name, "segment_index": segment_index,
                                     "offset": offset})
+                    if kind == self.LPUBDEF:
+                        local_publics.append({"name": name, "segment_index": segment_index,
+                                              "offset": offset})
+            elif kind == self.COMDEF:
+                raise MatchError('COMDEF communal allocation is deferred; ownership and'
+                                 ' linker allocation order are not yet independently proven')
             elif kind == self.LEDATA16:
                 segment_index, at = self._index(body, 0)
                 offset = struct.unpack_from("<H", body, at)[0]
@@ -435,6 +450,10 @@ class OmfReader(ObjectReader):
                             module_name, segment_lengths=out_segment_lengths,
                             segment_defs=segment_defs, groups=groups,
                             comments=comments)
+        result.local_externals = local_externals
+        result.local_publics = [{"name": p['name'], "segment": segment_name(p['segment_index']),
+                                 "offset": p['offset']} for p in local_publics]
+        result.external_scopes = external_scopes
         for raw, normalized in zip(fixups, out_fixups):
             method, index = raw['frame_method'], raw['frame_index']
             if method in (0, 1, 2, 3):
@@ -479,4 +498,3 @@ class OmfReader(ObjectReader):
             modules.append((name, data[start:at]))
             at = ((at + page - 1) // page) * page
         return modules
-

@@ -156,9 +156,9 @@ def inspect_bytes(data: bytes, target: bytes, evidence: dict, output_dir: Path,
         raise ValueError("Strict object_probe accepted this object; this tool only inspects rejected objects")
     if not any(int(row["type"], 16) in STATIC_SYMBOLS for row in rows):
         raise ValueError("Strict-reader rejection is not accompanied by B4/B6 static-symbol records")
-    if "unsupported OMF record" not in strict_error or not any(
-            f"{int(row['type'], 16):02x}" in strict_error.lower()
-            for row in rows if int(row["type"], 16) in STATIC_SYMBOLS):
+    if not (strict_error.startswith(('Unresolved local OMF external',
+                                      'Local OMF symbol shadows',
+                                      'Duplicate local OMF symbol'))):
         raise ValueError(f"Strict-reader rejection is outside the B4/B6 inspection scope: {strict_error}")
 
     obj = OmfReader().read(data, label="research-only")

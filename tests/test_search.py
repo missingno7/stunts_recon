@@ -28,7 +28,7 @@ def make_environment(root):
     runner = {'path': 'tools/runner.exe'}
     write_json(root / 'layout/toolchain.json', {'profiles': {'msc510-medium': config}, 'runner': runner})
     (root / 'tools/runner.exe').write_bytes(b'runner')
-    for name in ('search.py', 'compiler.py', 'common.py', 'object_probe.py', 'omf.py',
+    for name in ('search.py', 'compiler.py', 'preprocessor.py', 'common.py', 'object_probe.py', 'omf.py',
                  'oracle.py', 'mz.py', 'dsi.py', 'exepack.py', 'diagnostics.py',
                  'probe_module.py', 'binder.py', 'code_symbols.py'):
         (root / 'tools' / name).write_text(name)

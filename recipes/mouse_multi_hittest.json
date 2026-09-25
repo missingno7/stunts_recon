@@ -1,0 +1,174 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_kbormouse",
+        "_mouse_xpos",
+        "_word_361CE",
+        "_mouse_multi_hittest"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_mouse_multi_hittest",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 84,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-dgroup-offset16-v1"
+  },
+  "end": 102116,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "oracle_lock": "layout/oracle.lock.json",
+    "scope": "Observed candidate OMF fixups; aliases and addends remain independently reviewed by production binding."
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_361CE",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 51,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_361CE",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_mouse_xpos",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 34,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mouse_xpos",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_kbormouse",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 10,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_kbormouse",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "id": "mouse_multi_hittest",
+  "object_segment": "UNIT_TEXT",
+  "profile": "msc510-medium",
+  "public": "_mouse_multi_hittest",
+  "source": "src/mouse_multi_hittest.c",
+  "stable_id": "load_18e90",
+  "start": 102032,
+  "target": {
+    "sha256": "43fe93f0500d2dfdf74f4df8f58f40ff74a1b405ebcac19a00b498867f2615e1",
+    "size": 84
+  }
+}
