@@ -1,0 +1,165 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 146700,
+  "expected_fixups": [
+    {
+      "displacement": 124,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 321,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 124,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 347,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 124,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 360,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 124,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 370,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "id": "seg012_putimage_shared_group",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 146364,
+      "name": "nopsub_33B98",
+      "public": "_nopsub_33B98",
+      "stable_id": "load_23b98",
+      "start": 146328,
+      "target": {
+        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
+        "size": 36
+      }
+    },
+    {
+      "end": 146394,
+      "name": "sprite_putimage_and_alt",
+      "public": "_sprite_putimage_and_alt",
+      "stable_id": "load_23bbc",
+      "start": 146364,
+      "target": {
+        "sha256": "84ac879a14ba82fed71a8ebdf1b87cc465a682913437c4e7a762c896ae3be389",
+        "size": 30
+      }
+    },
+    {
+      "end": 146700,
+      "name": "sprite_putimage",
+      "public": "_sprite_putimage",
+      "stable_id": "load_23bda",
+      "start": 146394,
+      "target": {
+        "sha256": "005ca12d8c30b12fe3809ca976e5dc09edcc2d9382607eeac8a79aaa1ae265be",
+        "size": 306
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_nopsub_33B98",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_sprite_putimage_and_alt",
+        "offset": 36,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_sprite_putimage",
+        "offset": 66,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 372,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "source": "asm/seg012_putimage_shared_group.ASM",
+  "stable_id": "multi_seg012_putimage_shared_group",
+  "start": 146328,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "83c35db45188383168d3ac03019a77614675dd2be9c98477ed7e0e383c28bf78",
+    "size": 372
+  }
+}

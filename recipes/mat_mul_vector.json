@@ -1,0 +1,58 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 141810,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 9120,
+    "line_start": 8982,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "mat_mul_vector",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_mat_mul_vector",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 260,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_mat_mul_vector",
+  "source": "asm/mat_mul_vector.ASM",
+  "stable_id": "load_228ee",
+  "start": 141550,
+  "target": {
+    "sha256": "e1134fea81df60eaa7d1cdc9bff42b9f79c9fd800dd06fcb0f6728efa0a0b9b5",
+    "size": 260
+  }
+}

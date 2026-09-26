@@ -1,0 +1,58 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 127796,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 1489,
+    "line_start": 1467,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "parse_shape2d_helper",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_parse_shape2d_helper",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 32,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_parse_shape2d_helper",
+  "source": "asm/parse_shape2d_helper.ASM",
+  "stable_id": "load_1f314",
+  "start": 127764,
+  "target": {
+    "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+    "size": 32
+  }
+}

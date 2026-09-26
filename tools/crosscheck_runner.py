@@ -15,10 +15,17 @@ from oracle import verify
 from mz import MZ
 from build_exact import inputs
 from assembler import asm_source
+from object_flags import recipe_flags, object_control_flags, same_object
+
+# Hash-identical copy of the former C:/DOSBox-X install (SHA-256 b028a4d3...).
+DOSBOX_X='C:/tools/dosbox-x/dosbox-x.exe'
 
 
 def bind_recipe_object(obj, recipe, image, relocations):
     """Use the same complete recipe path as the acceptance probe."""
+    if recipe.get('data_only'):
+        from data_only import bind_data_only
+        return bind_data_only(obj,recipe,image,relocations)
     if 'members' in recipe:
         checked_members(recipe, image)
         return bind_multi(obj, recipe, image, relocations)
@@ -28,17 +35,37 @@ def bind_recipe_object(obj, recipe, image, relocations):
     return bind_contribution(obj,recipe,symbols)
 
 
+def _run_dos(runner, work, tc, flags, asm):
+    dos_command = ('D:\\MASM.EXE '+' '.join(flags)+' UNIT,UNIT.OBJ,UNIT.LST; > COMP.LOG'
+                   if asm else 'D:\\CL.EXE /c '+' '.join(flags)+' UNIT.C > COMP.LOG')
+    batch=['@echo off',dos_command,
+           'if errorlevel 1 goto failed','echo 0 > RESULT.TXT','goto done',':failed','echo 1 > RESULT.TXT',':done','exit']
+    (work/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode('ascii'))
+    conf=work/'dosbox.conf'
+    lines=['[sdl]','output=surface','[cpu]','cycles=max','[mixer]','nosound=true','[autoexec]',
+           f'mount c "{work}"',f'mount d "{tc}"','c:','set PATH=D:\\','set TEMP=C:\\','RUN.BAT']
+    conf.write_text('\n'.join(lines)+'\n')
+    env=os.environ.copy();env.update(SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy')
+    startup=subprocess.STARTUPINFO();startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW;startup.wShowWindow=0
+    cmd=[str(runner),'-conf',str(conf),'-fastlaunch','-exit']
+    result=subprocess.run(cmd,cwd=work,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,
+                          timeout=45,creationflags=subprocess.CREATE_NO_WINDOW,startupinfo=startup)
+    require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
+    return cmd,batch
+
+
 def main():
     report_path=ROOT/'build/validation/independent.json'
     report_path.unlink(missing_ok=True)
     before=inputs()
-    runner=Path('C:/DOSBox-X/dosbox-x.exe')
+    runner=Path(DOSBOX_X)
     require(runner.is_file(),'Independent DOSBox-X backend unavailable')
     runner_identity=identity(runner.read_bytes())
     oracle=verify(write=False);image=MZ.parse(oracle[1]).load_image(oracle[1]);rows=[]
     (ROOT/'build/crosschecks').mkdir(parents=True,exist_ok=True)
     active=[ROOT/o['recipe'] for o in read_json(ROOT/'layout/manifest.json')['owners']
-            if o['kind'] in ('MATCHING_C','MATCHING_ASM')]
+            if o['kind'] in ('MATCHING_C','MATCHING_ASM','MATCHING_C_DATA','MATCHING_ASM_DATA')
+            and 'recipe' in o]
     for path in active:
         r=read_json(path);config,_=verify_toolchain(r['profile'])
         work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
@@ -56,21 +83,18 @@ def main():
             check_recipe(r, closure)
             (work/'UNIT.C').write_bytes(expanded.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
         tc=(ROOT/config['directory']).resolve()
-        dos_command = ('D:\\MASM.EXE '+' '.join(config['flags'])+' UNIT,UNIT.OBJ,UNIT.LST; > COMP.LOG'
-                       if asm else 'D:\\CL.EXE /c '+' '.join(config['flags'])+' UNIT.C > COMP.LOG')
-        batch=['@echo off',dos_command,
-               'if errorlevel 1 goto failed','echo 0 > RESULT.TXT','goto done',':failed','echo 1 > RESULT.TXT',':done','exit']
-        (work/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode('ascii'))
-        conf=work/'dosbox.conf'
-        lines=['[sdl]','output=surface','[cpu]','cycles=max','[mixer]','nosound=true','[autoexec]',
-               f'mount c "{work}"',f'mount d "{tc}"','c:','set PATH=D:\\','set TEMP=C:\\','RUN.BAT']
-        conf.write_text('\n'.join(lines)+'\n')
-        env=os.environ.copy();env.update(SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy')
-        startup=subprocess.STARTUPINFO();startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW;startup.wShowWindow=0
-        cmd=[str(runner),'-conf',str(conf),'-fastlaunch','-exit']
-        result=subprocess.run(cmd,cwd=work,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,
-                              timeout=45,creationflags=subprocess.CREATE_NO_WINDOW,startupinfo=startup)
-        require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
+        flags=config['flags'] if asm else (recipe_flags(r) or config['flags'])
+        control=None if asm else object_control_flags(r)
+        cmd,batch=_run_dos(runner,work,tc,flags,asm)
+        if control is not None:
+            # Same per-object flag rule as the acceptance probe: a canonical-flag
+            # C contribution in a flagged object must emit the identical object.
+            cwork=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
+            (cwork/'UNIT.C').write_bytes((work/'UNIT.C').read_bytes())
+            _run_dos(runner,cwork,tc,control,False)
+            require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes()),
+                                read_object((work/'UNIT.OBJ').read_bytes())),
+                    'Independent object differs under its registered object flag set')
         obj=read_object((work/'UNIT.OBJ').read_bytes())
         if asm:
             require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),

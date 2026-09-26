@@ -1,0 +1,58 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 141210,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 8761,
+    "line_start": 8743,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "timer_custom_delta",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_timer_custom_delta",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 24,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_timer_custom_delta",
+  "source": "asm/timer_custom_delta.ASM",
+  "stable_id": "load_22782",
+  "start": 141186,
+  "target": {
+    "sha256": "66881e3ec87d8d6964afb02f5e39fae601e628cae1914d6dfefed1762bf07d03",
+    "size": 24
+  }
+}

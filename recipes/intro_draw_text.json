@@ -1,0 +1,337 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_word_6ad8",
+        "_word_6ada",
+        "_word_6adc",
+        "_word_6ade",
+        "_word_a282",
+        "_font_op2",
+        "_intro_draw_text",
+        "_font_set_unk",
+        "_font_draw_text"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_intro_draw_text",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 112,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "end": 102408,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ad8",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 108,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ad8",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 100,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 10,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_set_unk",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 83,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_set_unk",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 69,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 10,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_set_unk",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 48,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_set_unk",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ada",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 39,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ada",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_op2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 27,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_op2",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ad8",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 21,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ad8",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ade",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 15,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ade",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_a282",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 11,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_a282",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6adc",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 7,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6adc",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 102398,
+      "offset": 36862,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102381,
+      "offset": 36845,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102367,
+      "offset": 36831,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102346,
+      "offset": 36810,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102325,
+      "offset": 36789,
+      "segment": 4096
+    }
+  ],
+  "id": "intro_draw_text",
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_intro_draw_text",
+  "source": "src/intro_draw_text.c",
+  "stable_id": "load_18f98",
+  "start": 102296,
+  "target": {
+    "sha256": "9f4829e2d4b979c25f5fb0c7eb71f520336b2e38a89d028e0766608a420603ed",
+    "size": 112
+  }
+}

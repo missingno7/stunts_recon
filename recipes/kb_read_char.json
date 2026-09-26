@@ -1,0 +1,58 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 133685,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 4610,
+    "line_start": 4595,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "kb_read_char",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_kb_read_char",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 20,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_kb_read_char",
+  "source": "asm/kb_read_char.ASM",
+  "stable_id": "load_20a21",
+  "start": 133665,
+  "target": {
+    "sha256": "4470c32dd18492ab50a6244e6b8db965a723614ea0ca828f39c384221195ce5a",
+    "size": 20
+  }
+}

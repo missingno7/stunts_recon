@@ -1,6 +1,7 @@
 """One OS-locked publisher; durable rollback of interrupted multi-file writes."""
 import base64
 import os
+import time
 from contextlib import contextmanager
 from common import ROOT, atomic_bytes, json_bytes, read_json, require
 
@@ -36,6 +37,102 @@ def exclusive():
 
 def journal_path():
     return ROOT/'build/publication.json'
+
+
+class SnapshotChanged(ValueError):
+    """A lock-free verification observed a publication; retrying is safe."""
+
+
+def generation_path():
+    return ROOT/'build/publication.generation'
+
+
+def read_generation():
+    """Publication sequence number: odd while a publisher may be writing."""
+    for attempt in range(100):
+        try:
+            text = generation_path().read_text(encoding='ascii').strip()
+            break
+        except FileNotFoundError:
+            return 0
+        except PermissionError:
+            # Windows reports a sharing violation while the file is replaced.
+            if attempt == 99:
+                raise
+            time.sleep(0.02)
+    require(text.isdigit(), 'Corrupt publication generation file')
+    return int(text)
+
+
+def _write_generation(value):
+    atomic_bytes(generation_path(), str(value).encode('ascii'))
+
+
+@contextmanager
+def publishing():
+    """Seqlock writer section; the caller holds exclusive() and no journal exists.
+
+    The generation becomes odd before the journal or any canonical file is
+    written and even again only once no journal remains.  An odd value on entry
+    can only be stale (left by a dead writer), because the caller holds the lock."""
+    ensure_consistent()
+    value = read_generation()
+    value += value % 2
+    _write_generation(value + 1)
+    try:
+        yield
+    finally:
+        # A journal left by a failed rollback keeps readers out until --recover.
+        if not journal_path().exists():
+            _write_generation(value + 2)
+
+
+def _heal_generation():
+    # Caller holds exclusive() and no journal exists.
+    value = read_generation()
+    if value % 2:
+        _write_generation(value + 1)
+
+
+RETRY = ('Canonical acceptance inputs changed or a publication ran during lock-free '
+         '--verify-only; nothing was accepted. Retry --verify-only.')
+
+
+def lock_free_snapshot(action, capture):
+    """Run a read-only acceptance check without the exclusive writer lock.
+
+    `capture()` returns the identities of all canonical inputs.  The result is
+    reported only when no publication was in progress at the start, the
+    publication generation is unchanged at the end, no journal exists, and the
+    captured canonical identities are unchanged; otherwise SnapshotChanged is
+    raised and retrying is safe.  Ordinary rejections are reported only for a
+    stable snapshot, so they are never artefacts of a concurrent publication."""
+    start = read_generation()
+    if start % 2 or journal_path().exists():
+        raise SnapshotChanged('A publication is in progress (or was interrupted: if no publisher is '
+                              'running, use python tools/promote.py --recover). Retry --verify-only.')
+    try:
+        before = capture()
+    except OSError as error:
+        raise SnapshotChanged(RETRY) from error
+
+    def stable():
+        try:
+            return (not journal_path().exists() and read_generation() == start
+                    and capture() == before)
+        except OSError:
+            return False
+    try:
+        result = action(before)
+    except SnapshotChanged:
+        raise
+    except Exception as error:
+        if not stable():
+            raise SnapshotChanged(RETRY) from error
+        raise
+    if not stable():
+        raise SnapshotChanged(RETRY)
+    return result
 
 
 def ensure_consistent():
@@ -103,6 +200,7 @@ def rollback():
 def recover():
     with exclusive():
         rollback()
+        _heal_generation()
 
 
 def finish():

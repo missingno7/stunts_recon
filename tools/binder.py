@@ -61,7 +61,8 @@ def _checked_data_addend(target, encoded):
     return addend
 
 
-def bind_data_offsets(obj, segment, public, length, expected_fixups, declarations, symbols):
+def bind_data_offsets(obj, segment, public, length, expected_fixups, declarations, symbols,
+                      asm=False):
     require(obj.linker_fixups == expected_fixups and expected_fixups,
             'Complete ordered FIXUPP obligations differ or are empty')
     require(declarations == {'segments': obj.segment_defs, 'groups': obj.groups,
@@ -75,9 +76,11 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
     require(all(name == segment or size == 0 for name, size in obj.segment_lengths.items()),
             'Unowned initialized/BSS contribution')
     used = {fix['target'] for fix in expected_fixups}
+    if asm:
+        used |= {fix['frame'] for fix in expected_fixups if fix['frame_method'] == 2}
     require(set(symbols) == used, 'Missing or unused external data binding')
     require(set(obj.externals) <= used | {'__acrtused', public}, 'Unexpected external declaration')
-    require(len([g for g in obj.groups if g['name'] == 'DGROUP']) == 1, 'Missing/ambiguous DGROUP')
+    dgroup, = [g for g in obj.groups if g['name'] == 'DGROUP']
     occupied = set()
     rows = []
     for fix in expected_fixups:
@@ -85,15 +88,49 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
                 and not fix['self_relative'] and fix['target_kind'] == 'external'
                 and fix['target_method'] == 2,
                 'Unsupported binding mode: only external segment-relative offset16')
-        require((fix['frame_method'], fix['frame_kind'], fix['frame']) == (5, 'target', fix['target']),
-                'Unsupported frame: only target-frame external DGROUP data is proven')
-        require(fix['frame_index'] == 0 and 1 <= fix['target_index'] <= len(obj.externals)
+        frame = (fix['frame_method'], fix['frame_kind'], fix['frame'], fix['frame_index'])
+        if asm and fix['frame_method'] == 1:
+            require(frame == (1, 'group', 'DGROUP', dgroup['index']),
+                    'ASM group frame is not the reviewed DGROUP')
+        elif asm and fix['frame_method'] == 0:
+            definitions = [d for d in obj.segment_defs if d['name'] == fix['frame']]
+            target_symbol=symbols[fix['target']]
+            require(len(definitions) == 1 and fix['frame'] == 'DSEG' and
+                    frame == (0, 'segment', 'DSEG', definitions[0]['index']) and
+                    definitions[0]['index'] in dgroup['segment_indices'] and
+                    ((definitions[0]['length'] == 0 and
+                      target_symbol.get('dseg_frame_proof') == 'pinned-dgroup-base' and
+                      target_symbol.get('dseg_frame_load_address') ==
+                      target_symbol['frame_load_address']) or
+                     (definitions[0]['length'] > 0 and
+                      target_symbol.get('dseg_frame_proof') == 'secondary-own-data' and
+                      type(target_symbol.get('dseg_frame_load_address')) is int)),
+                    'ASM DSEG frame lacks grounded DGROUP placement')
+        elif asm and fix['frame_method'] == 2:
+            require(fix['frame_kind'] == 'external' and
+                    1 <= fix['frame_index'] <= len(obj.externals) and
+                    obj.externals[fix['frame_index']-1] == fix['frame'] and
+                    symbols[fix['frame']].get('group') == 'DGROUP',
+                    'ASM external frame does not resolve inside DGROUP')
+        else:
+            require(frame == (5, 'target', fix['target'], 0),
+                    'Unsupported external DGROUP frame')
+        require(1 <= fix['target_index'] <= len(obj.externals)
                 and obj.externals[fix['target_index']-1] == fix['target'], 'Invalid original FIXUPP datum')
         target = symbols[fix['target']]
         require(target['group'] == 'DGROUP', 'External target is not proven DGROUP data')
-        base, address = target['frame_load_address'], target['load_address']
-        require(type(base) is int and type(address) is int and base >= 0 and base % 16 == 0
-                and 0 <= address - base <= 65535, 'Invalid DGROUP frame or external address')
+        base, address = (target['dseg_frame_load_address'] if asm and fix['frame_method']==0
+                         else target['frame_load_address']), target['load_address']
+        if asm and fix['frame_method'] == 2:
+            require(symbols[fix['frame']]['frame_load_address'] == base,
+                    'ASM external frame differs from target DGROUP paragraph')
+        group_base=target['frame_load_address']
+        require(type(base) is int and type(address) is int and
+                type(group_base) is int and group_base>=0 and group_base%16==0 and
+                group_base <= base < group_base+65536 and
+                (asm and fix['frame_method']==0 or base%16==0) and
+                0 <= address - base <= 65535,
+                'Invalid DGROUP/DSEG frame or external address')
         at = fix['offset']
         require(type(at) is int and 0 <= at <= length - 2, 'Fixup outside contribution')
         require(not occupied.intersection([at, at+1]), 'Overlapping binding obligations')
@@ -101,7 +138,11 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
         encoded = bytes.fromhex(fix['encoded_addend'])
         require(len(encoded) == 2 and payload[at:at+2] == encoded, 'Encoded fixup addend differs')
         displacement = fix['displacement']
-        require(type(displacement) is int and displacement == 0, 'Nonzero target displacement is not yet proven')
+        require(type(displacement) is int and
+                (displacement == 0 or
+                 (asm and type(target.get('width')) is int and
+                  0 <= displacement < target['width'])),
+                'Target displacement escapes independently grounded object')
         value = address - base + displacement + _checked_data_addend(target, encoded)
         # Wrapping/sign-extension cases are intentionally outside this proven subset.
         require(0 <= value <= 65535, 'Offset fixup overflow is not supported')
@@ -109,13 +150,16 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
         rows.append({'offset': at, 'target': fix['target'], 'frame_load_address': base,
                      'target_load_address': address, 'displacement': displacement,
                      'encoded_addend': fix['encoded_addend'], 'linked_value': value})
-    return bytes(payload), {'mode': 'external-dgroup-offset16-v1', 'fixups': rows,
+    return bytes(payload), {'mode': 'asm-external-dgroup-offset16-v1' if asm else
+                            'external-dgroup-offset16-v1', 'fixups': rows,
                             'generated_relocations': []}
 
 
 def bind_contribution(obj, recipe, symbols=None):
     require(not getattr(obj,'local_publics',[]) and not getattr(obj,'local_externals',[]),
             'Local OMF symbols require a complete reviewed group recipe')
+    require('relocation_order_basis' not in recipe,
+            'Recipe cannot supply a relocation order basis')
     args = (obj, recipe['object_segment'], recipe['public'], recipe['end'] - recipe['start'])
     if recipe.get('binding',{}).get('mode') == 'external-frame-callback-v1':
         return bind_frame_callback(*args, recipe['expected_fixups'], recipe['binding']['declarations'],
@@ -125,6 +169,8 @@ def bind_contribution(obj, recipe, symbols=None):
                               recipe['start'], recipe['expected_relocations'])
     if recipe.get('binding',{}).get('mode') == 'asm-external-far-call-v1':
         require(recipe.get('kind') == 'asm', 'ASM far binding requires ASM recipe')
+        if any(f['target_kind']=='segment' for f in recipe['expected_fixups']):
+            return bind_composed(obj,recipe,symbols)
         return bind_far_calls(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
                               recipe['start'], recipe['expected_relocations'],
                               asm_frame=recipe['original_frame_load_address'])
@@ -133,12 +179,37 @@ def bind_contribution(obj, recipe, symbols=None):
         return bind_asm_cs_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'],
                                 symbols, recipe['original_frame_load_address'],
                                 recipe['expected_relocations'])
+    if recipe.get('binding',{}).get('mode') == 'asm-local-code-offset16-v1':
+        require(recipe.get('kind') == 'asm' and 'members' not in recipe,
+                'Local code offsets require one complete ASM contribution')
+        return bind_asm_local_code_offsets(*args, recipe['expected_fixups'],
+                                           recipe['binding']['declarations'],
+                                           recipe['original_frame_load_address'],
+                                           recipe['start'], recipe['expected_relocations'])
+    if recipe.get('binding',{}).get('mode') == 'asm-external-near-transfer-v1':
+        require(recipe.get('kind') == 'asm', 'Near transfer binding requires ASM recipe')
+        return bind_asm_external_near(*args, recipe['expected_fixups'],
+                                      recipe['binding']['declarations'], symbols,
+                                      recipe['start'], recipe['original_frame_load_address'],
+                                      recipe['expected_relocations'])
+    if recipe.get('binding',{}).get('mode') == 'asm-external-far-call-self-base16-v1':
+        require(recipe.get('kind') == 'asm', 'Self segment base requires ASM recipe')
+        return bind_composed(obj,recipe,symbols)
+    if recipe.get('binding',{}).get('mode') == 'asm-external-dgroup-offset16-v1' and (any(
+            f['target_kind']=='segment' or f['self_relative']
+            for f in recipe['expected_fixups']) or
+            any(s.get('kind')=='cs-data' for s in (symbols or {}).values())):
+        require(recipe.get('kind')=='asm','Composed ASM recipe required')
+        return bind_composed(obj,recipe,symbols)
     if recipe.get('binding',{}).get('mode') == 'external-far-call-dgroup-offset16-v1':
-        return bind_mixed_far_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
-                                   recipe['start'], recipe['expected_relocations'])
+        return bind_composed(obj,recipe,symbols)
     if recipe.get('binding',{}).get('mode') == 'external-far-call-code-pointer-dgroup-offset16-v1':
+        return bind_composed(obj,recipe,symbols)
+    if recipe.get('binding',{}).get('mode') == 'external-far-call-code-pointer-v1':
+        require(recipe['id']=='remove_frame_callback', 'Unreviewed code-pointer-only contribution')
         return bind_mixed_far_data(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
-                                   recipe['start'], recipe['expected_relocations'], code_pointers=True)
+                                   recipe['start'], recipe['expected_relocations'],
+                                   code_pointers=True, pointer_only=True)
     if recipe.get('binding',{}).get('mode') == 'external-far-call-cs-pointer-v1':
         return bind_cs_pointers(*args, recipe['expected_fixups'], recipe['binding']['declarations'], symbols,
                                 recipe['start'], recipe['expected_relocations'])
@@ -147,6 +218,12 @@ def bind_contribution(obj, recipe, symbols=None):
         require('binding' not in recipe, 'Unexpected binding for fixup-free recipe')
         return extract_no_fixups(*args), {'mode': 'no-fixups', 'generated_relocations': []}
     binding = recipe['binding']
+    if binding['mode'] == 'asm-external-dgroup-offset16-v1':
+        require(recipe.get('kind') == 'asm', 'ASM DGROUP binding requires ASM recipe')
+        if any(f['target_kind']=='segment' for f in recipe['expected_fixups']):
+            return bind_composed(obj,recipe,symbols)
+        return bind_data_offsets(*args, recipe['expected_fixups'], binding['declarations'],
+                                 symbols, asm=True)
     require(binding['mode'] == 'external-dgroup-offset16-v1', 'Unsupported recipe binding mode')
     return bind_data_offsets(*args, recipe['expected_fixups'], binding['declarations'], symbols)
 
@@ -178,7 +255,8 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
         else:
             definition, = [d for d in obj.segment_defs if d['name'] == segment]
             require((fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
-                    ==(0,'segment',segment,definition['index']) and
+                    in ((0,'segment',segment,definition['index']),
+                        (2,'external',fix['target'],fix['target_index'])) and
                     type(asm_frame) is int and asm_frame % 16 == 0 and
                     asm_frame <= start < asm_frame + 65536,
                     'ASM external far call lacks original same-segment frame')
@@ -187,7 +265,8 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
         at=fix['offset']; require(type(at)is int and 1<=at<=length-4, 'Far operand outside contribution')
         require(not occupied.intersection(range(at,at+4)), 'Overlapping far fixups')
         occupied.update(range(at,at+4))
-        require(payload[at-1]==0x9a, 'Far binding supports CALL operands only')
+        # External far CALL (9A) or far JMP thunk (EA) to a grounded code alias.
+        require(payload[at-1] in (0x9a,0xea), 'Far binding supports CALL/JMP operands only')
         require(fix['displacement']==0 and fix['encoded_addend']=='00000000' and payload[at:at+4]==bytes(4),
                 'Nonzero far addend/displacement unsupported')
         target=symbols[fix['target']]; frame=target['frame_load_address']; address=target['load_address']
@@ -196,8 +275,10 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
         struct.pack_into('<HH',payload,at,address-frame,frame//16)
         obligations.append({'load_offset':start+at+2,'target':fix['target'],
                             'offset':address-frame,'paragraph':frame//16})
-    require([r['load_offset'] for r in expected_relocations]==[r['load_offset'] for r in obligations],
-            'Ordered source relocation obligations differ')
+    expected_sites=[r['load_offset'] for r in expected_relocations]
+    actual_sites=[r['load_offset'] for r in obligations]
+    require(expected_sites==actual_sites,
+            'Source relocation obligations differ')
     for entry in expected_relocations:
         require(set(entry)=={'segment','offset','load_offset'} and 0<=entry['segment']<=65535 and
                 0<=entry['offset']<=65535 and entry['segment']*16+entry['offset']==entry['load_offset'],
@@ -206,9 +287,190 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
                            'generated_relocations':expected_relocations}
 
 
+def bind_asm_local_code_offsets(obj, segment, public, length, expected_fixups,
+                                declarations, frame, start, expected_relocations):
+    """Bind local _TEXT table offsets from one complete ASM module."""
+    require(expected_fixups and obj.linker_fixups == expected_fixups and
+            declarations == {'segments':obj.segment_defs, 'groups':obj.groups,
+                             'publics':obj.publics, 'externals':obj.externals},
+            'Local code declarations/FIXUPPs differ')
+    require(obj.publics == [{'name':public,'segment':segment,'offset':0}] and
+            obj.externals == [] and obj.segment_length(segment) == length and
+            len(obj.segment_bytes(segment)) == length and
+            all(name == segment or size == 0 for name,size in obj.segment_lengths.items()) and
+            expected_relocations == [], 'Local code module is incomplete')
+    definition, = [d for d in obj.segment_defs if d['name'] == segment]
+    require(type(frame) is int and frame % 16 == 0 and frame <= start and
+            start + length <= frame + 65536, 'Local code frame/placement differs')
+    payload=bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]
+    for fix in expected_fixups:
+        at=fix['offset']; displacement=fix['displacement']
+        require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],
+                 fix['target_kind'],fix['target'],fix['target_method'],fix['target_index'],
+                 fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index']) ==
+                (segment,'offset16',2,fix['self_relative'],'segment',segment,0,definition['index'],
+                 0,'segment',segment,definition['index']) and
+                type(displacement) is int and 0 <= displacement < length and
+                type(at) is int and 0 <= at <= length-2 and
+                fix['encoded_addend'] == '0000' and payload[at:at+2] == bytes(2) and
+                not occupied.intersection((at,at+1)),
+                'Unsupported or escaping local code-table offset')
+        occupied.update((at,at+1))
+        if fix['self_relative']:
+            require(at>=1 and payload[at-1] in (0xe8,0xe9),
+                    'Local relative fixup lacks near CALL/JMP')
+            value=displacement-(at+2)
+            require(-32768<=value<=32767,'Local relative displacement overflow')
+            struct.pack_into('<h',payload,at,value)
+        else:
+            value=start-frame+displacement
+            require(0 <= value <= 65535, 'Local code offset overflow')
+            struct.pack_into('<H',payload,at,value)
+        rows.append({'offset':at,'local_offset':displacement,'linked_value':value})
+    return bytes(payload), {'mode':'asm-local-code-offset16-v1','fixups':rows,
+                            'generated_relocations':[]}
+
+
+def bind_asm_external_near(obj, segment, public, length, expected_fixups,
+                           declarations, symbols, start, frame, expected_relocations):
+    """Bind same-physical-segment external near CALL/JMP, with no MZ relocation."""
+    require(expected_fixups and obj.linker_fixups == expected_fixups and
+            declarations == {'segments':obj.segment_defs,'groups':obj.groups,
+                             'publics':obj.publics,'externals':obj.externals},
+            'Near transfer declarations/FIXUPPs differ')
+    require(obj.publics == [{'name':public,'segment':segment,'offset':0}] and
+            obj.segment_length(segment) == length and len(obj.segment_bytes(segment)) == length and
+            all(name == segment or size == 0 for name,size in obj.segment_lengths.items()) and
+            expected_relocations == [] and
+            type(frame) is int and frame%16 == 0 and frame <= start < start+length <= frame+65536,
+            'Near transfer complete extent, frame, or relocation differs')
+    used = {f['target'] for f in expected_fixups}
+    require(set(symbols) == used and set(obj.externals) == used,
+            'Near transfer external declarations differ')
+    definition, = [d for d in obj.segment_defs if d['name'] == segment]
+    payload = bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]
+    for fix in expected_fixups:
+        at=fix['offset']; target=fix['target']
+        require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],
+                 fix['target_kind'],fix['target_method']) ==
+                (segment,'offset16',2,True,'external',2) and
+                1 <= fix['target_index'] <= len(obj.externals) and
+                obj.externals[fix['target_index']-1] == target and
+                (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index']) in
+                ((2,'external',target,fix['target_index']),
+                 (5,'target',target,0),
+                 (0,'segment',segment,definition['index'])) and
+                fix['displacement'] == 0 and fix['encoded_addend'] == '0000' and
+                type(at) is int and 1 <= at <= length-2 and
+                payload[at-1] in (0xe8,0xe9) and payload[at:at+2] == bytes(2) and
+                not occupied.intersection((at,at+1)),
+                'Unsupported external near CALL/JMP datum')
+        occupied.update((at,at+1))
+        symbol=symbols[target]
+        require(symbol['kind']=='near-code' and symbol['frame_load_address']==frame and
+                frame <= symbol['load_address'] < frame+65536,
+                'Near target is outside caller physical segment')
+        displacement=symbol['load_address']-(start+at+2)
+        require(-32768 <= displacement <= 32767, 'Near transfer displacement overflow')
+        struct.pack_into('<h',payload,at,displacement)
+        rows.append({'offset':at,'target':target,'displacement':displacement})
+    return bytes(payload), {'mode':'asm-external-near-transfer-v1','fixups':rows,
+                            'generated_relocations':[]}
+
+
+def bind_asm_far_self_base(obj, segment, public, length, expected_fixups,
+                           declarations, symbols, start, frame, expected_relocations):
+    """Bind external far CALLs and the module's own segment base in FIXUPP order."""
+    require(expected_fixups and obj.linker_fixups == expected_fixups and
+            declarations == {'segments':obj.segment_defs,'groups':obj.groups,
+                             'publics':obj.publics,'externals':obj.externals},
+            'ASM self-base declarations/FIXUPPs differ')
+    require(obj.publics == [{'name':public,'segment':segment,'offset':0}] and
+            obj.segment_length(segment) == length and len(obj.segment_bytes(segment)) == length and
+            all(name == segment or size == 0 for name,size in obj.segment_lengths.items()),
+            'ASM self-base contribution incomplete')
+    definition, = [d for d in obj.segment_defs if d['name'] == segment]
+    require(type(frame) is int and frame % 16 == 0 and 0 <= frame <= 0xffff0 and
+            frame <= start and start + length <= frame + 65536,
+            'ASM self-base frame/placement differs')
+    used={f['target'] for f in expected_fixups if f['target_kind']=='external'}
+    require(set(symbols)==used and set(obj.externals)==used,
+            'ASM self-base external set differs')
+    payload=bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]; sites=[]
+    for fix in expected_fixups:
+        at=fix['offset']; width=fix['width']
+        require(fix['segment']==segment and not fix['self_relative'] and
+                (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index']) ==
+                (0,'segment',segment,definition['index']) and
+                fix['displacement']==0 and type(at) is int and 1<=at<=length-width and
+                not occupied.intersection(range(at,at+width)),
+                'ASM self-base FIXUPP frame/extent differs')
+        occupied.update(range(at,at+width))
+        if fix['target_kind']=='segment':
+            require((fix['loc'],width,fix['target'],fix['target_method'],fix['target_index']) ==
+                    ('base16',2,segment,0,definition['index']) and
+                    payload[at-1]==0xba and fix['encoded_addend']=='0000' and
+                    payload[at:at+2]==bytes(2),
+                    'Unsupported own-segment MOV DX base FIXUPP')
+            value=frame//16
+            struct.pack_into('<H',payload,at,value)
+            site=start+at
+        else:
+            require(fix['target_kind']=='external' and fix['target_method']==2 and
+                    1<=fix['target_index']<=len(obj.externals) and
+                    obj.externals[fix['target_index']-1]==fix['target'] and
+                    (fix['loc'],width)==('pointer32',4) and payload[at-1]==0x9a and
+                    fix['encoded_addend']=='00000000' and payload[at:at+4]==bytes(4),
+                    'Unsupported ASM external far CALL FIXUPP')
+            target=symbols[fix['target']]
+            base,address=target['frame_load_address'],target['load_address']
+            require(target['kind']=='far-code' and type(base) is int and base%16==0 and
+                    type(address) is int and 0<=address-base<=65535,
+                    'Invalid ASM external far target')
+            value=[address-base,base//16]
+            struct.pack_into('<HH',payload,at,*value)
+            site=start+at+2
+        sites.append(site)
+        rows.append({'offset':at,'target':fix['target'],'linked_value':value,
+                     'relocation_site':site})
+    require(any(f['target_kind']=='segment' for f in expected_fixups) and
+            any(f['target_kind']=='external' for f in expected_fixups),
+            'Self-base mode requires base and far call')
+    # This mixed MASM form links in reverse FIXUPP order, as independently
+    # witnessed by both audio driver timer modules.
+    expected_sites=list(reversed(sites))
+    require([r['load_offset'] for r in expected_relocations]==expected_sites and
+            all(set(r)=={'segment','offset','load_offset'} and
+                r['segment']*16+r['offset']==r['load_offset'] and
+                0<=r['segment']<=65535 and 0<=r['offset']<=65535
+                for r in expected_relocations),
+            'ASM self-base ordered MZ relocations differ')
+    return bytes(payload), {'mode':'asm-external-far-call-self-base16-v1',
+                            'fixups':rows,'generated_relocations':expected_relocations}
+
+
+def _cs_operand(payload, at):
+    """A CS-override memory operand whose complete disp16 starts at `at`, or LEA.
+
+    Reviewed forms: MOV/CMP/ADD/SUB and group-1 immediates, MOV Sreg,mem (8E
+    with a segment-register field), ADD r16,mem (03) and IDIV mem (F7 /7)."""
+    lea=at>=2 and payload[at-2:at] in (bytes.fromhex('8d36'),bytes.fromhex('8d3e'))
+    modrm=payload[at-1] if at>=1 else 0
+    memory=(modrm>>6)==2 or (modrm>>6)==0 and (modrm&7)==6
+    opcode=payload[at-2] if at>=2 else None
+    direct=(at>=3 and payload[at-3]==0x2e and memory and
+            (opcode in (0x8a,0x8b,0x88,0x89,0x38,0x39,0x3a,0x3b,
+                        0x2a,0x2b,0x80,0x81,0x83,0x03) or
+             opcode==0x8e and ((modrm>>3)&7) in (0,1,2,3) or
+             opcode==0xf7 and ((modrm>>3)&7)==7))
+    direct=direct or (at>=2 and payload[at-2:at] in
+                      tuple(bytes.fromhex(x) for x in ('2ea0','2ea1','2ea2','2ea3')))
+    return lea or direct
+
+
 def bind_asm_cs_data(obj, segment, public, length, expected_fixups, declarations,
                      symbols, frame, expected_relocations):
-    """MASM LEA of one reviewed CS-resident sprite table."""
+    """Bind reviewed CS data in a complete module, including direct memory operands."""
     require(expected_fixups and obj.linker_fixups == expected_fixups and
             declarations == {'segments':obj.segment_defs,'groups':obj.groups,
                              'publics':obj.publics,'externals':obj.externals},
@@ -224,6 +486,9 @@ def bind_asm_cs_data(obj, segment, public, length, expected_fixups, declarations
     payload=bytearray(obj.segment_bytes(segment)); rows=[]; occupied=set()
     for fix in expected_fixups:
         at=fix['offset']; target=symbols[fix['target']]
+        # Shared reviewed CS operand forms (see _cs_operand).
+        lea=False
+        direct=_cs_operand(payload,at)
         require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],
                  fix['target_kind'],fix['target_method'])==
                 (segment,'offset16',2,False,'external',2) and
@@ -231,16 +496,18 @@ def bind_asm_cs_data(obj, segment, public, length, expected_fixups, declarations
                 (0,'segment',segment,definition['index']) and
                 1<=fix['target_index']<=len(obj.externals) and
                 obj.externals[fix['target_index']-1]==fix['target'] and
-                fix['displacement']==0 and fix['encoded_addend']=='0000' and
-                2<=at<=length-2 and payload[at-2:at] in (b'\x8d\x36',b'\x8d\x3e') and
+                type(fix['displacement']) is int and
+                0<=fix['displacement']<target['width'] and
+                fix['encoded_addend']=='0000' and
+                2<=at<=length-2 and (lea or direct) and
                 payload[at:at+2]==bytes(2) and
                 target['kind']=='cs-data' and target['frame_load_address']==frame and
                 target['island_start']<=target['load_address']<
                 target['load_address']+target['width']<=target['island_end'] and
                 not occupied.intersection((at,at+1)),
-                'Unsupported ASM CS table LEA/fixup')
+                'Unsupported ASM CS data operand/fixup')
         occupied.update((at,at+1))
-        value=target['load_address']-frame
+        value=target['load_address']-frame+fix['displacement']
         require(0<=value<=65535,'ASM CS offset exceeds segment')
         struct.pack_into('<H',payload,at,value)
         rows.append({'offset':at,'target':fix['target'],'linked_value':value})
@@ -249,7 +516,8 @@ def bind_asm_cs_data(obj, segment, public, length, expected_fixups, declarations
 
 
 def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarations,
-                        symbols, start, expected_relocations, code_pointers=False):
+                        symbols, start, expected_relocations, code_pointers=False,
+                        pointer_only=False):
     """External far CALLs and DGROUP offsets in one complete OMF contribution.
 
     FIXUPP order is retained. Only the far segment word creates an MZ relocation.
@@ -316,6 +584,27 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
             far_rows.append(row)
             fixup_rows.append({'kind': 'far-call', **row})
             relocation_sites.append(start + at + 2)
+        elif target.get('kind') == 'cs-data' and (fix['loc'], fix['width']) in (
+                ('offset16', 2), ('base16', 2)):
+            # Reviewed CS island datum named by an adjacent MOV AX offset /
+            # MOV DX segment pair (same rule as the CS pointer mode).
+            frame, address = target['frame_load_address'], target['load_address']
+            require(1 <= at <= length-2 and fix['encoded_addend'] == '0000' and
+                    payload[at:at+2] == bytes(2) and
+                    payload[at-1] == (0xb8 if fix['loc'] == 'offset16' else 0xba) and
+                    type(frame) is int and frame % 16 == 0 and
+                    target['island_start'] <= address and
+                    address + target['width'] <= target['island_end'] and
+                    0 <= address - frame <= 65535 and
+                    not occupied.intersection(range(at, at+2)),
+                    'CS data pointer is outside verified island or MOV pair')
+            occupied.update(range(at, at+2))
+            value = address - frame if fix['loc'] == 'offset16' else frame // 16
+            struct.pack_into('<H', payload, at, value)
+            fixup_rows.append({'kind': 'cs-data-' + fix['loc'], 'offset': at,
+                               'target': fix['target'], 'linked_value': value})
+            if fix['loc'] == 'base16':
+                relocation_sites.append(start + at)
         elif code_pointers and (fix['loc'], fix['width']) in (
                 ('base16', 2), ('loader-offset16', 2)):
             require(1 <= at <= length-2 and target.get('kind') == 'far-code' and
@@ -355,7 +644,18 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
             fixup_rows.append({'kind': 'dgroup-offset16', **row})
         else:
             require(False, 'Unsupported mixed fixup kind/width')
-    require(far_rows and data_rows, 'Mixed mode requires far CALLs and DGROUP offsets')
+    cs_rows = [row for row in fixup_rows if row['kind'].startswith('cs-data-')]
+    require(far_rows and (not pointer_only and (data_rows or cs_rows) or
+                          pointer_only and code_pointers and not data_rows and not cs_rows),
+            'Mixed mode far CALL/data or pointer-only obligations differ')
+    cs_pairs = {}
+    for row in fixup_rows:
+        if row['kind'] in ('cs-data-offset16', 'cs-data-base16'):
+            cs_pairs.setdefault(row['target'], {'offset16': [], 'base16': []})[
+                row['kind'][8:]].append(row['offset'])
+    require(all(sorted(x+3 for x in v['offset16']) == sorted(v['base16'])
+                for v in cs_pairs.values()),
+            'CS offset/base fixups are not complete adjacent MOV pairs')
     if code_pointers:
         pairs = {}
         for row in fixup_rows:
@@ -367,17 +667,262 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
         for fields in pairs.values():
             require(sorted(x-3 for x in fields['base16']) == sorted(fields['loader-offset16']),
                     'Far code pointer words are not adjacent MOV immediates')
-    require([r['load_offset'] for r in expected_relocations] == relocation_sites,
-            'Ordered mixed source relocation obligations differ')
+    # Ordered relocation sites must follow this object's FIXUPP traversal.
+    expected_sites=[r['load_offset'] for r in expected_relocations]
+    require(expected_sites==relocation_sites,
+            'Mixed source relocation obligations differ')
     for entry in expected_relocations:
         require(set(entry) == {'segment', 'offset', 'load_offset'} and
                 0 <= entry['segment'] <= 65535 and 0 <= entry['offset'] <= 65535 and
                 entry['segment'] * 16 + entry['offset'] == entry['load_offset'],
                 'Invalid mixed MZ relocation representation')
-    return bytes(payload), {'mode': ('external-far-call-code-pointer-dgroup-offset16-v1'
+    return bytes(payload), {'mode': ('external-far-call-code-pointer-v1' if pointer_only else
+                                     'external-far-call-code-pointer-dgroup-offset16-v1'
                                       if code_pointers else 'external-far-call-dgroup-offset16-v1'),
                             'fixups': fixup_rows,
                             'generated_relocations': expected_relocations}
+
+
+def bind_composed(obj, recipe, symbols):
+    """Bind each reviewed OMF fixup by its own target and frame rule."""
+    mode=recipe['binding']['mode']; fixes=recipe['expected_fixups']
+    segment=recipe['object_segment']; start=recipe['start']; length=recipe['end']-start
+    asm=recipe.get('kind')=='asm'
+    if all(f['target_kind']=='external' and not f['self_relative'] and
+           (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
+           (5,'target',f['target'],0) for f in fixes):
+        return bind_mixed_far_data(obj,segment,recipe['public'],length,fixes,
+                                   recipe['binding']['declarations'],symbols,start,
+                                   recipe['expected_relocations'],
+                                   code_pointers='code-pointer' in mode)
+    # A complete single MSC C module may carry same-segment offset16 code-table
+    # entries (switch tables): MSC stores the in-segment offset in the LEDATA
+    # word with a zero FIXUPP displacement.  They bind only to the module's own
+    # segment at its original frame and must stay inside the module.
+    c_local = (not asm and 'members' not in recipe and
+               any(f['target_kind']=='segment' for f in fixes) and
+               all(f['target_kind']=='external' or
+                   (f['target_kind']=='segment' and f['target']==segment and
+                    f['loc']=='offset16' and not f['self_relative'] and
+                    f['displacement']==0)
+                   for f in fixes))
+    require((asm or c_local) and fixes and obj.linker_fixups==fixes and
+            recipe['binding']['declarations']==
+            {'segments':obj.segment_defs,'groups':obj.groups,
+             'publics':obj.publics,'externals':obj.externals},
+            'Composed OMF declarations/FIXUPPs differ')
+    require(obj.publics==[{'name':recipe['public'],'segment':segment,'offset':0}] and
+            obj.segment_length(segment)==length and len(obj.segment_bytes(segment))==length and
+            all(name==segment or size==0 for name,size in obj.segment_lengths.items()),
+            'Composed module extent/public differs')
+    definition,=[d for d in obj.segment_defs if d['name']==segment]
+    frame=recipe['original_frame_load_address']
+    require(type(frame) is int and frame%16==0 and 0<=frame<=0xffff0 and
+            frame<=start and start+length<=frame+65536,
+            'Composed module placement differs')
+    external={f['target'] for f in fixes if f['target_kind']=='external'}
+    local={f['target'] for f in fixes if f['target_kind']=='segment'}
+    frame_dseg={'DSEG'} if any(f['frame_method']==0 and f['frame']=='DSEG'
+                                for f in fixes) else set()
+    require(set(symbols)==external|local|frame_dseg and
+            set(obj.externals)<=external|{'__acrtused',recipe['public']},
+            'Composed symbol set differs')
+    groups=[g for g in obj.groups if g['name']=='DGROUP']
+    payload=bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]; sites=[]
+    for fix in fixes:
+        at=fix['offset']; width=fix['width']; target_name=fix['target']
+        require(fix['segment']==segment and
+                (not fix['self_relative'] or
+                 fix['loc']=='offset16' and
+                 (fix['target_kind']=='external' or
+                  fix['target_kind']=='segment' and fix['target']==segment)) and
+                type(at) is int and 0<=at<=length-width and
+                not occupied.intersection(range(at,at+width)),
+                'Composed fixup escapes or overlaps module')
+        occupied.update(range(at,at+width))
+        encoded=bytes.fromhex(fix['encoded_addend'])
+        require(len(encoded)==width and payload[at:at+width]==encoded,
+                'Composed encoded addend differs')
+        if fix['target_kind']=='segment':
+            if fix['loc']=='pointer32':
+                require(target_name==segment and width==4 and
+                        fix['target_method']==0 and
+                        fix['target_index']==definition['index'] and
+                        (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                        (0,'segment',segment,definition['index']) and
+                        type(fix['displacement']) is int and
+                        0<=fix['displacement']<length and encoded==bytes(4) and
+                        at>=1 and payload[at-1] in (0x9a,0xea) and
+                        symbols[segment]['kind']=='local-text',
+                        'Composed in-module far transfer differs')
+                value=[start-frame+fix['displacement'],frame//16]
+                require(0<=value[0]<=65535,'Composed internal far offset overflows')
+                struct.pack_into('<HH',payload,at,*value)
+                sites.append(start+at+2)
+                rows.append({'offset':at,'target':target_name,'linked_value':value})
+                continue
+            if fix['loc']=='offset16':
+                local_offset=(fix['displacement'] if asm else
+                              int.from_bytes(encoded,'little') if len(encoded)==2 else -1)
+                require(target_name==segment and width==2 and
+                        fix['target_method']==0 and
+                        fix['target_index']==definition['index'] and
+                        ((fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                         (0,'segment',segment,definition['index']) or
+                         not asm and (fix['frame_method'],fix['frame_kind'],fix['frame'],
+                                      fix['frame_index'])==(5,'target',segment,0)) and
+                        type(fix['displacement']) is int and
+                        0<=fix['displacement']<length and 0<=local_offset<length and
+                        (encoded==b'\0\0' if asm else
+                         fix['displacement']==0 and not fix['self_relative']) and
+                        symbols[segment]['kind']=='local-text',
+                        'Composed local code target differs')
+                if fix['self_relative']:
+                    require(at>=1 and payload[at-1] in (0xe8,0xe9),
+                            'Composed local relative transfer differs')
+                    value=fix['displacement']-(at+2)
+                    require(-32768<=value<=32767,'Composed local relative overflow')
+                    struct.pack_into('<h',payload,at,value)
+                else:
+                    value=start-frame+local_offset
+                    require(0<=value<=65535,'Composed local offset overflow')
+                    struct.pack_into('<H',payload,at,value)
+                rows.append({'offset':at,'target':target_name,'linked_value':value})
+                continue
+            require(fix['loc']=='base16' and width==2 and encoded==b'\0\0' and
+                    fix['target_method']==0 and fix['target_index']>0 and
+                    fix['frame_method']==0 and fix['frame_kind']=='segment' and
+                    fix['frame']==target_name and fix['frame_index']==fix['target_index'] and
+                    fix['displacement']==0 and at>=1 and 0xb8<=payload[at-1]<=0xbf,
+                    'Unsupported composed self-segment base')
+            definition_target=[d for d in obj.segment_defs if d['index']==fix['target_index']
+                               and d['name']==target_name]
+            require(len(definition_target)==1 and target_name in (segment,'DSEG'),
+                    'Composed base lacks own segment declaration')
+            if target_name=='DSEG':
+                require(definition_target[0]['length']==0 and
+                        definition_target[0]['class'] in ('STUNTSD','DATA') and
+                        symbols['DSEG']['kind']=='local-dseg-base',
+                        'Composed DSEG base lacks independent frame proof')
+                base=symbols['DSEG']['frame_load_address']
+            else:
+                base=frame
+            require(base%16==0 and 0<=base<=0xffff0,
+                    'Invalid composed segment paragraph')
+            value=base//16; struct.pack_into('<H',payload,at,value)
+            sites.append(start+at)
+        else:
+            require(fix['target_kind']=='external' and fix['target_method']==2 and
+                    1<=fix['target_index']<=len(obj.externals) and
+                    obj.externals[fix['target_index']-1]==target_name,
+                    'Composed external datum differs')
+            target=symbols[target_name]
+            frame_tuple=(fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
+            if fix['self_relative']:
+                require(fix['loc']=='offset16' and width==2 and
+                        fix['displacement']==0 and encoded==bytes(2) and
+                        at>=1 and payload[at-1] in (0xe8,0xe9) and
+                        frame_tuple in ((5,'target',target_name,0),
+                                        (2,'external',target_name,fix['target_index']),
+                                        (0,'segment',segment,definition['index'])) and
+                        target['kind']=='near-code' and
+                        target['frame_load_address']==frame and
+                        frame<=target['load_address']<frame+65536,
+                        'Composed external near transfer differs')
+                value=target['load_address']-(start+at+2)
+                require(-32768<=value<=32767,'Composed near displacement overflow')
+                struct.pack_into('<h',payload,at,value)
+            elif fix['loc']=='pointer32':
+                require(width==4 and at>=1 and payload[at-1] in (0x9a,0xea) and
+                        encoded==bytes(4) and fix['displacement']==0 and
+                        target['kind']=='far-code' and
+                        frame_tuple in ((5,'target',target_name,0),
+                                        (2,'external',target_name,fix['target_index']),
+                                        (0,'segment',segment,definition['index'])),
+                        'Unsupported composed far CALL')
+                base=target['frame_load_address']; address=target['load_address']
+                require(type(base) is int and base%16==0 and 0<=base<=0xffff0 and
+                        type(address) is int and 0<=address-base<=65535,
+                        'Composed far target frame/offset differs')
+                value=[address-base,base//16]
+                struct.pack_into('<HH',payload,at,*value); sites.append(start+at+2)
+            elif fix['loc']=='offset16' and target.get('kind')=='cs-data':
+                # Same rule as the complete ASM CS-data mode: an own-segment
+                # frame, a CS override memory operand with a complete disp16
+                # (or LEA), an in-object displacement inside the reviewed island.
+                require(width==2 and encoded==bytes(2) and asm and
+                        _cs_operand(payload, at) and
+                        frame_tuple==(0,'segment',segment,definition['index']) and
+                        type(fix['displacement']) is int and
+                        0<=fix['displacement']<target['width'] and
+                        target['frame_load_address']==frame and
+                        target['island_start']<=target['load_address']<
+                        target['load_address']+target['width']<=target['island_end'],
+                        'Composed CS data operand differs')
+                value=target['load_address']-frame+fix['displacement']
+                require(0<=value<=65535,'Composed CS data offset exceeds segment')
+                struct.pack_into('<H',payload,at,value)
+            elif fix['loc']=='offset16' and target.get('kind')=='near-code':
+                require(width==2 and fix['displacement']==0 and encoded==bytes(2) and
+                        frame_tuple in ((2,'external',target_name,fix['target_index']),
+                                        (0,'segment',segment,definition['index'])) and
+                        target['frame_load_address']==frame and
+                        frame<=target['load_address']<frame+65536,
+                        'Composed external CODE offset differs')
+                value=target['load_address']-frame
+                struct.pack_into('<H',payload,at,value)
+            elif fix['loc']=='offset16':
+                require(width==2 and target.get('group')=='DGROUP' and len(groups)==1,
+                        'Composed data offset lacks DGROUP target')
+                if fix['frame_method']==0:
+                    dseg=[d for d in obj.segment_defs if d['name']=='DSEG']
+                    require(len(dseg)==1 and dseg[0]['class']=='STUNTSD' and
+                            frame_tuple==(0,'segment','DSEG',dseg[0]['index']) and
+                            dseg[0]['length']==0 and
+                            target.get('dseg_frame_proof')=='pinned-dgroup-base',
+                            'Composed F0 DSEG frame differs')
+                    base=target['dseg_frame_load_address']
+                elif fix['frame_method']==1:
+                    require(frame_tuple==(1,'group','DGROUP',groups[0]['index']),
+                            'Composed F1 DGROUP frame differs')
+                    base=target['frame_load_address']
+                elif fix['frame_method']==2:
+                    require(fix['frame_kind']=='external' and
+                            1<=fix['frame_index']<=len(obj.externals) and
+                            obj.externals[fix['frame_index']-1]==fix['frame'] and
+                            symbols[fix['frame']].get('group')=='DGROUP',
+                            'Composed F2 DGROUP frame differs')
+                    base=symbols[fix['frame']]['frame_load_address']
+                else:
+                    require(frame_tuple==(5,'target',target_name,0),
+                            'Composed target frame differs')
+                    base=target['frame_load_address']
+                address=target['load_address']; displacement=fix['displacement']
+                require(type(base) is int and type(address) is int and
+                        type(displacement) is int and
+                        (displacement==0 or type(target.get('width')) is int and
+                         0<=displacement<target['width']) and
+                        0<=address-base<=65535,
+                        'Composed data target or object addend escapes')
+                value=address-base+displacement+_checked_data_addend(target,encoded)
+                require(0<=value<=65535,'Composed data offset overflows')
+                struct.pack_into('<H',payload,at,value)
+            else:
+                require(False,'Unsupported composed fixup form')
+        rows.append({'offset':at,'target':target_name,'linked_value':value})
+    expected_sites=[r['load_offset'] for r in recipe['expected_relocations']]
+    # MASM FIXUPP order does not determine the executable relocation order.
+    # Probe checks the recipe's exact order against the immutable MZ table;
+    # here every relocation site must still come from precisely one fixup.
+    require(sorted(expected_sites)==sorted(sites) and
+            all(set(r)=={'segment','offset','load_offset'} and
+                type(r['segment']) is int and type(r['offset']) is int and
+                0<=r['segment']<=65535 and 0<=r['offset']<=65535 and
+                16*r['segment']+r['offset']==r['load_offset']
+                for r in recipe['expected_relocations']),
+            'Composed ordered MZ relocation obligations differ')
+    return bytes(payload),{'mode':mode,'fixups':rows,
+                           'generated_relocations':recipe['expected_relocations']}
 
 
 def bind_cs_pointers(obj, segment, public, length, expected_fixups, declarations,

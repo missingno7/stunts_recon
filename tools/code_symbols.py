@@ -1,5 +1,5 @@
 """Resolve reviewed far code targets using owned publics or pristine call anchors."""
-from common import ROOT, read_json, require, sha
+from common import ROOT, identity, read_json, require, sha
 
 
 def _complete_target_owner(owner, function):
@@ -18,9 +18,20 @@ def _complete_target_owner(owner, function):
     if (owner['start'], owner['end'], owner.get('name')) == (
             function['start'], function['end'], function['name']):
         return True
-    if not (owner['start'] <= function['start'] and function['end'] <= owner['end']):
+    if not owner['start'] <= function['start'] < owner['end']:
         return False
     recipe = read_json(ROOT/owner['recipe'])
+    if 'module_proof' in recipe and recipe.get('id') == owner['name']:
+        # A whole grounded module owns each verified entry it declares; an
+        # entry row may run one clipped linker-fill byte past the module end.
+        clip = owner['end'] + (1 if recipe['module_proof']['end_boundary'].get('kind') ==
+                               'zero-fill-after-return' else 0)
+        return (owner['start'] <= function['start'] < owner['end'] and
+                function['end'] <= clip and
+                any((m.get('name'), m.get('start')) == (function['name'], function['start'])
+                    for m in recipe['members']))
+    if not (owner['start'] <= function['start'] and function['end'] <= owner['end']):
+        return False
     return recipe.get('id') == owner['name'] and any(
         (member.get('name'), member.get('start'), member.get('end'),
          member.get('target', {}).get('sha256')) ==
@@ -70,7 +81,22 @@ def resolve_code_symbols(names, image, relocations):
         symbol=layout['symbols'][name]
         require(symbol.get('anchors') or symbol.get('pointer_anchors'),
                 'Code symbol lacks reviewed call/pointer evidence: '+name)
-        if 'owner' in symbol:
+        if name == '_main':
+            # CRT0's pinned _main EXTDEF is checked when its complete member
+            # binds. The original relocated CALL independently identifies the
+            # reviewed game entry even while CRT0 remains raw-owned.
+            from function_evidence import reviewed_functions
+            target=symbol['mapped_target']
+            entry=reviewed_functions(image)['ported_stuntsmain_']
+            require(target=={'name':'ported_stuntsmain_', 'stable_id':'load_00000',
+                             'start':0, 'end':1434, 'sha256':entry['sha256']} and
+                    entry['bytes_hex']==image[:1434].hex() and
+                    symbol['anchors']==[{'caller_module':'dos\\crt0.asm',
+                        'site':118009, 'hex':'9a00000000',
+                        'relocation':{'segment':4096,'offset':52476,'load_offset':118012}}],
+                    'CRT0 main entry proof differs')
+            address=0
+        elif 'owner' in symbol:
             found=[o for o in owners if o['id']==symbol['owner'] and o['kind']=='KNOWN_TOOLCHAIN_LIBRARY']
             require(len(found)==1, 'Code symbol lacks pinned active library owner')
             owner=found[0]; bind_library(owner,image,relocations)
@@ -83,8 +109,13 @@ def resolve_code_symbols(names, image, relocations):
             # entry, complete raw or exact active-C ownership, and an
             # original relocated call to that independently mapped entry.
             target=symbol['mapped_target']
-            require(name == '_' + target['name'] or symbol.get('reviewed_alias') == name,
-                    'Far code alias name lacks inventory or explicit review')
+            # MASM 5.10 keeps 31 significant characters: a reviewed truncated
+            # public names the same longer inventory entry.
+            truncated = (len('_' + target['name']) > 31 and
+                         name == ('_' + target['name'])[:31] and
+                         symbol.get('masm_truncated_public') is True)
+            require(name == '_' + target['name'] or symbol.get('reviewed_alias') == name or
+                    truncated, 'Far code alias name lacks inventory or explicit review')
             if inventory is None:
                 from function_evidence import current_inventory
                 inventory=current_inventory(image)
@@ -94,14 +125,22 @@ def resolve_code_symbols(names, image, relocations):
                 function=None
             else:
                 function=None
+            def neighbour_bounded(f):
+                # Emission-verified extent whose start and end coincide with
+                # instruction-verified neighbours (reviewed per alias).
+                return (symbol.get('boundary_proof')=='verified-neighbours-v1' and
+                        any(g['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                            g.get('end')==f['start'] for g in inventory['functions']) and
+                        any(g['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                            g.get('start')==f['end'] for g in inventory['functions']))
             matches=[f for f in inventory['functions'] if
                      (target.get('stable_id') is None or
                       f.get('stable_id')==target.get('stable_id'))
                      and f.get('name')==target['name']
                      and (f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' or
                           (f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED'
-                           and f.get('start_evidence')
-                           and f.get('end_evidence')))]
+                           and ((f.get('start_evidence') and f.get('end_evidence')) or
+                                neighbour_bounded(f))))]
             if function is None and 'entry_proof' not in symbol:
                 require(len(matches)==1, 'Far code alias lacks unique verified mapped target')
                 function=matches[0]
@@ -132,7 +171,8 @@ def resolve_code_symbols(names, image, relocations):
                 'Code frame needs independent evidence')
         for anchor in symbol.get('anchors',[]):
             at=anchor['site']; raw=bytes.fromhex(anchor['hex'])
-            require(len(raw)==5 and raw[0]==0x9a and image[at:at+5]==raw, 'Code frame anchor changed')
+            # A relocated far CALL (9A) or far JMP (EA) names the same entry.
+            require(len(raw)==5 and raw[0] in (0x9a,0xea) and image[at:at+5]==raw, 'Code frame anchor changed')
             require(anchor['relocation'] in relocations and anchor['relocation']['load_offset']==at+3,
                     'Code anchor lacks segment relocation')
             require(int.from_bytes(raw[3:],'little')*16==frame and
@@ -172,7 +212,9 @@ def resolve_callback_pointer(image, relocations):
     owners = read_json(ROOT/'layout/manifest.json')['owners']
     require(any(_complete_target_owner(o, matches[0]) for o in owners),
             'Callback target lacks complete raw or exact C owner')
-    anchor = symbol['pointer_anchor']
+    require(symbol.get('anchors', []) == [] and len(symbol.get('pointer_anchors', [])) == 1,
+            'Callback alias needs exactly one reviewed independent pointer witness')
+    anchor = symbol['pointer_anchors'][0]
     callers = [f for f in inventory['functions'] if f.get('stable_id') == anchor['caller_task']
                and f['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED'
                and f.get('start', 10**9) <= anchor['site']
@@ -198,8 +240,137 @@ def resolve_recipe_symbols(recipe, image, relocations):
     names={f['target'] for f in recipe['expected_fixups']}
     if not names:return None
     mode=recipe.get('binding',{}).get('mode')
+    island_names={n for n,s in read_json(ROOT/'layout/data-symbols.json')['symbols'].items()
+                  if s.get('storage')=='code_island'}
+    cs_named=recipe.get('kind')=='asm' and any(
+        (n if n.startswith('_') else '_'+n) in island_names for n in names)
+    if (cs_named and mode=='asm-external-dgroup-offset16-v1') or (
+            mode in ('external-far-call-dgroup-offset16-v1',
+                'external-far-call-code-pointer-dgroup-offset16-v1')) or (
+            mode=='asm-external-far-call-self-base16-v1') or (
+            recipe.get('kind')=='asm' and mode not in
+            ('asm-local-code-offset16-v1','asm-external-far-call-self-base16-v1') and
+            any((f['target_kind']=='segment' and
+                 f['target'] in (recipe['object_segment'],'DSEG')) or
+                (f['target_kind']=='external' and f['self_relative'])
+                for f in recipe['expected_fixups'])):
+        from data_symbols import (resolve_symbols, check_folded_recipe,
+                                  checked_dseg_base, checked_dgroup_layout)
+        fixes=recipe['expected_fixups']; seg=recipe['object_segment']
+        local={f['target'] for f in fixes if f['target_kind']=='segment'}
+        require(local <= {seg,'DSEG'}, 'Unreviewed composed segment target')
+        code={f['target'] for f in fixes if f['target_kind']=='external' and
+              f['loc'] in ('pointer32','base16','loader-offset16')}
+        near={f['target'] for f in fixes if f['target_kind']=='external' and
+              f['self_relative'] and f['loc']=='offset16'}
+        code_offsets=set(recipe.get('reviewed_code_offsets',[]))
+        require(all(f['target_kind']=='external' and f['loc']=='offset16' and
+                    not f['self_relative']
+                    for f in fixes if f['target'] in code_offsets) and
+                code_offsets <= {f['target'] for f in fixes},
+                'Unreviewed external CODE offset declaration')
+        data={f['target'] for f in fixes if f['target_kind']=='external' and
+              f['loc']=='offset16' and not f['self_relative'] and
+              f['target'] not in code_offsets}
+        absolute=(code|data)&{'__AHSHIFT'}
+        code-=absolute; data-=absolute
+        # Per-fixup composition: reviewed CS-resident data (code islands) binds
+        # under the CS data rule, never as DGROUP data.
+        islands=read_json(ROOT/'layout/data-symbols.json')['symbols']
+        cs_data={n for n in data|code if islands.get(n if n.startswith('_') else '_'+n,{})
+                 .get('storage')=='code_island'}
+        # A CS island datum may be named by a MOV AX offset / MOV DX base pair.
+        require(all(f['loc'] in ('offset16','base16') for f in fixes if f['target'] in cs_data),
+                'CS data fixup form differs')
+        data-=cs_data; code-=cs_data
+        require(not code.intersection(data|near|code_offsets) and
+                not data.intersection(near|code_offsets) and
+                code|data|cs_data|near|code_offsets|absolute|local==names,
+                'Composed fixups need distinct grounded code/data targets')
+        from data_symbols import resolve_cs_symbols
+        result={**(resolve_code_symbols(code,image,relocations) if code else {}),
+                **(resolve_symbols(data,image,relocations) if data else {}),
+                **(resolve_cs_symbols(cs_data,image,relocations) if cs_data else {}),
+                **(resolve_near_code_symbols(near|code_offsets,recipe,image)
+                   if near or code_offsets else {})}
+        if seg in local:
+            result[seg]={'kind':'local-text','frame_load_address':
+                         recipe['original_frame_load_address']}
+        if absolute:
+            from runtime_absolute import ahshift
+            result['__AHSHIFT']=ahshift(image,relocations)
+        if any(f['target'] in data and f['displacement'] for f in fixes):
+            layout=checked_dgroup_layout(image,relocations)
+            for f in fixes:
+                if f['target'] in data and f['displacement']:
+                    width=layout['symbols'][f['target']].get('width')
+                    require(type(width) is int and width>0,
+                            'Composed data displacement lacks object extent')
+                    result[f['target']]['width']=width
+        if 'DSEG' in local or any(f['frame_method']==0 and f['frame']=='DSEG'
+                                   for f in fixes):
+            result['DSEG']={'kind':'local-dseg-base',
+                            'frame_load_address':checked_dseg_base(image,relocations)}
+            layout=checked_dgroup_layout(image,relocations)
+            for f in fixes:
+                if f['target'] in data and f['frame_method']==0 and f['frame']=='DSEG':
+                    symbol=result[f['target']]
+                    symbol['dseg_frame_load_address']=result['DSEG']['frame_load_address']
+                    symbol['dseg_frame_proof']='pinned-dgroup-base'
+                    if f['displacement']:
+                        width=layout['symbols'][f['target']].get('width')
+                        require(type(width) is int and width>0,
+                                'Composed DSEG addend lacks object extent')
+                        symbol['width']=width
+        check_folded_recipe(recipe,result,image)
+        return result
+    if mode == 'asm-local-code-offset16-v1':
+        require(names == {recipe['object_segment']}, 'Local code FIXUPP target differs')
+        return None
+    if mode == 'asm-external-near-transfer-v1':
+        return resolve_near_code_symbols(names, recipe, image)
+    if mode == 'asm-external-far-call-self-base16-v1':
+        require({f['target'] for f in recipe['expected_fixups']
+                 if f['target_kind']=='segment'} == {recipe['object_segment']},
+                'ASM self-base target differs')
+        return resolve_code_symbols(names-{recipe['object_segment']},image,relocations)
+    if mode == 'asm-external-dgroup-offset16-v1':
+        from data_symbols import resolve_symbols, check_folded_recipe, checked_dseg_base, checked_dgroup_layout
+        names |= {f['frame'] for f in recipe['expected_fixups'] if f['frame_method']==2}
+        result=resolve_symbols(names,image,relocations)
+        if any(f['frame_method']==0 for f in recipe['expected_fixups']):
+            layout=checked_dgroup_layout(image,relocations)
+            owned=recipe.get('secondary_dgroup_segments',{}).get('DSEG')
+            if owned is None:
+                base=checked_dseg_base(image,relocations)
+                proof='pinned-dgroup-base'
+            else:
+                base=owned['start']
+                require(type(base) is int and
+                        base == layout['frame_load_address']+owned['dgroup_offset'] and
+                        type(owned['end']) is int and
+                        layout['frame_load_address'] <= base < owned['end'] <= layout['bss_start'],
+                        'Owned DSEG lacks bounded DGROUP placement proposal')
+                proof='secondary-own-data'
+            for fix in recipe['expected_fixups']:
+                if fix['frame_method']==0:
+                    result[fix['target']]['dseg_frame_load_address']=base
+                    result[fix['target']]['dseg_frame_proof']=proof
+                    if fix['displacement']:
+                        width=layout['symbols'][fix['target']].get('width')
+                        require(type(width) is int and width > 0,
+                                'DSEG displacement lacks reviewed object extent')
+                        result[fix['target']]['width']=width
+        check_folded_recipe(recipe,result,image)
+        return result
     if mode in ('external-far-call-v1','asm-external-far-call-v1'):
         return resolve_code_symbols(names,image,relocations)
+    if mode == 'external-far-call-code-pointer-v1':
+        require(recipe['id']=='remove_frame_callback' and
+                names=={'_timer_get_counter_unk','_timer_remove_callback','_frame_callback'},
+                'Unreviewed code-pointer-only candidate')
+        return {**resolve_code_symbols(names-{'_frame_callback'},image,relocations),
+                '_frame_callback':resolve_callback_pointer(image,relocations)}
     if mode == 'asm-external-cs-offset16-v1':
         from data_symbols import resolve_cs_symbols
         return resolve_cs_symbols(names,image,relocations)
@@ -238,4 +409,72 @@ def resolve_recipe_symbols(recipe, image, relocations):
     from data_symbols import resolve_symbols, check_folded_recipe
     result = resolve_symbols(names,image,relocations)
     check_folded_recipe(recipe, result, image)
+    return result
+
+
+def resolve_near_code_symbols(names, recipe, image):
+    """Resolve verified entries or pinned labels in the caller's physical segment."""
+    from function_evidence import current_inventory
+    import re
+    inventory = current_inventory(image)
+    frame = recipe['original_frame_load_address']
+    require(type(frame) is int and frame % 16 == 0 and
+            frame <= recipe['start'] < recipe['end'] <= frame+65536,
+            'Near caller lacks a grounded physical segment')
+    callers = [f for f in inventory['functions'] if
+               f.get('name') == recipe['id'] and f.get('start') == recipe['start'] and
+               f.get('segment_paragraph', -1)*16 == frame]
+    require(len(callers) == 1, 'Near caller lacks verified segment membership')
+    owners = read_json(ROOT/'layout/manifest.json')['owners']
+    reviewed=recipe.get('reviewed_near_targets',{})
+    require(set(reviewed)<=names, 'Unused reviewed near target')
+    result = {}
+    for name in names:
+        matches = [f for f in inventory['functions'] if name == '_'+f['name'] and
+                   f['status'] in ('BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED',
+                                   'BOUNDARIES_AND_EMISSION_BYTES_VERIFIED') and
+                   f.get('start_evidence') and f.get('end_evidence') and
+                   f.get('segment_paragraph', -1)*16 == frame and
+                   sha(image[f['start']:f['end']]) == f['sha256'] and
+                   any(_complete_target_owner(owner, f) for owner in owners)]
+        if len(matches)==1:
+            require(name not in reviewed, 'Inventory entry must not be reclassified as label')
+            address=matches[0]['start']
+        else:
+            require(not matches and name in reviewed,
+                    'Near target lacks unique verified same-segment entry or reviewed label: '+name)
+            proof=reviewed[name]
+            label=re.fullmatch(r'_loc_([0-9A-Fa-f]+)',name)
+            require(label is not None and set(proof)=={'source_line'},
+                    'Near label proof shape differs')
+            address=int(label.group(1),16)-0x10000
+            path='src/restunts/asmorig/seg012.asm'
+            reference=ROOT/'build/references/restunts'/path
+            pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
+            require(identity(reference.read_bytes())==pinned,
+                    'Near label reference source differs')
+            lines=reference.read_text(encoding='latin1').splitlines()
+            line=proof['source_line']
+            require(type(line) is int and 1<=line<=len(lines) and
+                    lines[line-1].strip().lower()==(name[1:]+':').lower(),
+                    'Near label lacks pinned source declaration')
+            containing=[f for f in inventory['functions'] if
+                        f.get('start',10**9)<=address<f.get('end',-1) and
+                        f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                        f.get('segment_paragraph',-1)*16==frame and
+                        sha(image[f['start']:f['end']])==f['sha256'] and
+                        any(_complete_target_owner(owner,f) for owner in owners)]
+            require(len(containing)==1, 'Near label lacks unique verified containing extent')
+            import sys
+            decoder_path=str(ROOT/'build/python')
+            if decoder_path not in sys.path:sys.path.insert(0,decoder_path)
+            import capstone
+            decoder=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_16)
+            function=containing[0]
+            require(address in {ins.address for ins in decoder.disasm(
+                    image[function['start']:function['end']],function['start'])},
+                    'Near label is not an original instruction boundary')
+        require(frame<=address<frame+65536,'Near target crosses physical segment')
+        result[name] = {'kind':'near-code','frame_load_address':frame,
+                        'load_address':address}
     return result

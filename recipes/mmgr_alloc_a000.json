@@ -1,0 +1,119 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "_mmgr_alloc_resmem"
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_mmgr_alloc_a000",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 13,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-external-far-call-v1"
+  },
+  "end": 135422,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 5585,
+    "line_start": 5578,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 5,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_alloc_resmem",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 135416,
+      "offset": 4344,
+      "segment": 8192
+    }
+  ],
+  "id": "mmgr_alloc_a000",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_mmgr_alloc_resmem"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_mmgr_alloc_a000",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 13,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_mmgr_alloc_a000",
+  "source": "asm/mmgr_alloc_a000.ASM",
+  "stable_id": "load_210f1",
+  "start": 135409,
+  "target": {
+    "sha256": "001dd065a9a0975f506d4f9a187b2f3c6d511c4ad553c7c789bde1d8dc0a5fe6",
+    "size": 13
+  }
+}

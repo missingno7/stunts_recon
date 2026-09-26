@@ -1,0 +1,58 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 131166,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 3334,
+    "line_start": 3315,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "multiply_and_scale",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_multiply_and_scale",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 26,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_multiply_and_scale",
+  "source": "asm/multiply_and_scale.ASM",
+  "stable_id": "load_20044",
+  "start": 131140,
+  "target": {
+    "sha256": "90cf1ee851e9b7ac712999a3158bc4badc615ef1f485ed40d00081df8f9c4a79",
+    "size": 26
+  }
+}

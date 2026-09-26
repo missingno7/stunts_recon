@@ -1,6 +1,6 @@
 {
   "schema": "toolchain-hypotheses-v1",
-  "updated": "2026-09-25",
+  "updated": "2026-09-26",
   "purpose": "Accumulated positive AND negative knowledge about the original toolchain. Read before any compiler-sensitive reasoning. Do not retest a FALSIFIED/NON_DISCRIMINATING entry under its stated conditions unless new evidence invalidates them; cite the id instead. Routine function recovery keeps the CANONICAL profile fixed; only supervisor-launched, control-preserving experiments may challenge it.",
   "statuses": [
     "CANONICAL",
@@ -28,7 +28,7 @@
       "hypothesis": "Game C was compiled by Microsoft C 5.10, medium model, /O /Gs.",
       "status": "CANONICAL",
       "scope": "global",
-      "evidence": "Every accepted C function is exact under this profile and independently re-verified under DOSBox-X; codegen families covered: long arithmetic helper calls, far/near pointers, register SI/DI locals, struct copies, boolean/char returns, nested guards, block-scoped slot reuse. Reinforced 2026-09-25 by profdisc: /O is the only tested MSC 5.10 optimization profile preserving all 31 frozen controls (alternatives 22-28/31).",
+      "evidence": "Every accepted C function is exact under this profile and independently re-verified under DOSBox-X; codegen families covered: long arithmetic helper calls, far/near pointers, register SI/DI locals, struct copies, boolean/char returns, nested guards, block-scoped slot reuse. Reinforced 2026-09-25 by profdisc: /O is the only tested MSC 5.10 optimization profile preserving all 31 frozen controls (alternatives 22-28/31). 2026-09-26: remains canonical default; per-object flag exceptions registered as TUFLAG-* (SUPPORTED, TU-specific).",
       "controls": "accepted_c",
       "explains": "All accepted C.",
       "fails_or_breaks": "Does not (yet) explain symptoms S1-S6; they are not attributed to the profile until an explanation is proven.",
@@ -105,7 +105,7 @@
       "hypothesis": "Global profile includes loop optimization (/Ol, e.g. /Ox or /Olt) which enregisters plain int loop counters without a BP home (explains S1).",
       "status": "FALSIFIED",
       "scope": "global",
-      "evidence": "profdisc controlled matrix (486 runs, 31 frozen accepted controls with full extents, recipe fixups, bindings, ordered relocations): /Ol and /Olt emit the same objects as /O for plain-int counters in pad_id, audio_enable_flag6, audio_disable_flag6 (counter stays in memory); /Ox and /Oalt put the counter in SI but RETAIN the BP home (60/54, 58/52, 70/62 bytes). No alternative gives any exact match.",
+      "evidence": "profdisc controlled matrix (486 runs, 31 frozen accepted controls with full extents, recipe fixups, bindings, ordered relocations): /Ol and /Olt emit the same objects as /O for plain-int counters in pad_id, audio_enable_flag6, audio_disable_flag6 (counter stays in memory); /Ox and /Oalt put the counter in SI but RETAIN the BP home (60/54, 58/52, 70/62 bytes). No alternative gives any exact match. tuflags: globally still FALSIFIED; TU-specific /Oa+/Ol (within /Ox) SUPPORTED for seg027 (TUFLAG-Ox-seg027).",
       "controls": "accepted_c frozen 31: /O 31/31; /Ol 28; /Olt 28; /Ot /Ol 28; /O /Ot /Ol 28; /Oa 25; /Oal 23; /Oalt 23; /Ox 22. /Ol family breaks init_carstate_from_simd (614/618), locate_many_resources (bytes 0x1a-0x22), parse_shape2d_helper3 (0x19: c4 vs 8b).",
       "explains": "-",
       "fails_or_breaks": "Breaks >=3 controls and fixes nothing.",
@@ -138,7 +138,7 @@
       "hypothesis": "Hand-written modules were assembled by a specific assembler/version.",
       "status": "NON_DISCRIMINATING",
       "scope": "global",
-      "evidence": "Linked bytes (encodings, pads, jump sizes, frames) do not distinguish MASM 4.0/5.0/5.1, TASM or inline assembly; original OMF signatures are stripped by EXEPACK. MASM 5.x is the natural first hypothesis (MSC 5.10 era, supplied startup ASM sources); MASM 4.x and TASM remain live. No assembler pinned; the user must supply a specific legally held distribution with version/hash before any ASM contribution can be tested. Local pinned toolchain/msc510-msdos/MASM.EXE is Microsoft Macro Assembler 5.10 (1988), SHA-256 1c6286c69b616160b8475ad17453ee872702a2c98075c2159ec792a1c745275f, not yet in an active profile. Alternatives being provisioned under C:\tools. 2026-09-25: provisioned under C:\tools from pinned PCjs commit bd4cc85928f2291c8d08e610038a1dd70b94ac6c: MASM 4.00 (runner stack overflow under MS-DOS Player), 5.00, 5.10, 5.10A, 6.00 (DOS ML.EXE from disk 2). MASM 5.00/5.10/5.10A emit identical 78-byte smoke objects. TASM 1.0/2.0 not available on PCjs. Control experiment `asmdisc` (reassemble pinned library ASM sources vs Microsoft library objects) in progress. User supplied Borland TASM 1.0, 1.01, 2.0, 2.01 (winworldpc disk images) under C:\tools; being extracted/provenanced to C:\tools\tasm-*. gather also collected MASM 2.04/3.00/3.01/6.11 and MSC 2.03/3.00/4.00/6.00AX/7.00 (local copies). asmdisc: readable MASM sources for game routines video_get_status, timer_get_counter, kb_checking reproduce their complete oracle extents under all six assemblers (MASM 4.00, 5.00, 5.10, 5.10A, pinned 5.10, ML 6.00) \u2014 the ASM contribution path is feasible but these probes do not discriminate. TASM not yet tested (asmdisc2). Discriminating constructs known from library controls: AND reg,imm sign-extended imm8 encoding (MASM 4.00 vs 5.x), EXTDEF ordering, COMENT checksum, IF1/IF2 support (ML 6.00). asmdisc2 (14 sampled game ASM extents + alignment control, 10 assemblers): MASM 5.00/5.10/5.10A/pinned 5.10 and TASM 1.00/1.01 match 14/14; MASM 4.00 13/14 (encodes AND BX,0Fh as 81 E3 0F 00 vs game 83 E3 0F -> FALSIFIED for game modules); ML 6.00 8/14 (DISFAVORED); TASM 2.00/2.01 default 7/14, 14/14 only with /jNOSMART plus local SMART regions (DISFAVORED: contortion). Library controls: TASM 0/14 and 0/12. Remaining NON_DISCRIMINATING set for game ASM: {MASM 5.00, 5.10, 5.10A, TASM 1.00, 1.01}. Next discriminator: FIXUPP record order vs oracle MZ relocation order (asmdisc3). SUPERVISOR RULING 2026-09-26: canonical ASM contribution profile = already-pinned toolchain/msc510-msdos/MASM.EXE (MASM 5.10) because every tested game ASM routine is byte-identical under MASM 5.00/5.10/5.10A and TASM 1.00/1.01; this is a reproduction profile, NOT a provenance claim; status stays NON_DISCRIMINATING and any routine/OMF evidence separating these candidates reopens it (and may switch the profile). 2026-09-26: ASM contribution path canonical (integ12); 14 game routines (685 B) accepted as matching ASM under the pinned MASM 5.10 reproduction profile, incl. symptom functions file_get_shape2d, file_get_res_shape_count, sprite copies, timer_compare_dx.",
+      "evidence": "Linked bytes (encodings, pads, jump sizes, frames) do not distinguish MASM 4.0/5.0/5.1, TASM or inline assembly; original OMF signatures are stripped by EXEPACK. MASM 5.x is the natural first hypothesis (MSC 5.10 era, supplied startup ASM sources); MASM 4.x and TASM remain live. No assembler pinned; the user must supply a specific legally held distribution with version/hash before any ASM contribution can be tested. Local pinned toolchain/msc510-msdos/MASM.EXE is Microsoft Macro Assembler 5.10 (1988), SHA-256 1c6286c69b616160b8475ad17453ee872702a2c98075c2159ec792a1c745275f, not yet in an active profile. Alternatives being provisioned under C:\tools. 2026-09-25: provisioned under C:\tools from pinned PCjs commit bd4cc85928f2291c8d08e610038a1dd70b94ac6c: MASM 4.00 (runner stack overflow under MS-DOS Player), 5.00, 5.10, 5.10A, 6.00 (DOS ML.EXE from disk 2). MASM 5.00/5.10/5.10A emit identical 78-byte smoke objects. TASM 1.0/2.0 not available on PCjs. Control experiment `asmdisc` (reassemble pinned library ASM sources vs Microsoft library objects) in progress. User supplied Borland TASM 1.0, 1.01, 2.0, 2.01 (winworldpc disk images) under C:\tools; being extracted/provenanced to C:\tools\tasm-*. gather also collected MASM 2.04/3.00/3.01/6.11 and MSC 2.03/3.00/4.00/6.00AX/7.00 (local copies). asmdisc: readable MASM sources for game routines video_get_status, timer_get_counter, kb_checking reproduce their complete oracle extents under all six assemblers (MASM 4.00, 5.00, 5.10, 5.10A, pinned 5.10, ML 6.00) — the ASM contribution path is feasible but these probes do not discriminate. TASM not yet tested (asmdisc2). Discriminating constructs known from library controls: AND reg,imm sign-extended imm8 encoding (MASM 4.00 vs 5.x), EXTDEF ordering, COMENT checksum, IF1/IF2 support (ML 6.00). asmdisc2 (14 sampled game ASM extents + alignment control, 10 assemblers): MASM 5.00/5.10/5.10A/pinned 5.10 and TASM 1.00/1.01 match 14/14; MASM 4.00 13/14 (encodes AND BX,0Fh as 81 E3 0F 00 vs game 83 E3 0F -> FALSIFIED for game modules); ML 6.00 8/14 (DISFAVORED); TASM 2.00/2.01 default 7/14, 14/14 only with /jNOSMART plus local SMART regions (DISFAVORED: contortion). Library controls: TASM 0/14 and 0/12. Remaining NON_DISCRIMINATING set for game ASM: {MASM 5.00, 5.10, 5.10A, TASM 1.00, 1.01}. Next discriminator: FIXUPP record order vs oracle MZ relocation order (asmdisc3). SUPERVISOR RULING 2026-09-26: canonical ASM contribution profile = already-pinned toolchain/msc510-msdos/MASM.EXE (MASM 5.10) because every tested game ASM routine is byte-identical under MASM 5.00/5.10/5.10A and TASM 1.00/1.01; this is a reproduction profile, NOT a provenance claim; status stays NON_DISCRIMINATING and any routine/OMF evidence separating these candidates reopens it (and may switch the profile). 2026-09-26: ASM contribution path canonical (integ12); 14 game routines (685 B) accepted as matching ASM under the pinned MASM 5.10 reproduction profile, incl. symptom functions file_get_shape2d, file_get_res_shape_count, sprite copies, timer_compare_dx.",
       "controls": "Pinned runtime ASM members (known MASM-assembled library objects) serve as encoding controls.",
       "explains": "-",
       "fails_or_breaks": "-",
@@ -149,7 +149,7 @@
       "hypothesis": "The executable was produced by one normal run of pinned MSC 5.10 LINK (3.65) followed by pinned EXEPACK (4.06).",
       "status": "SUPPORTED",
       "scope": "global",
-      "evidence": "Diagnostic single-LINK fixture: two untouched accepted C objects (mat_mul_vector2, set_frame_callback) among synthetic raw OMF placeholders placed exactly; LINK load image equals the oracle prefix; EXEPACK output equals all 200,000 oracle bytes (oracle SHA) with the 3 live relocations in oracle order. LINK relocation order = input-object order, then FIXUPP subrecord order within an object (not address-sorted); EXEPACK regroups into 64 KiB banks (runs 1205/903/476/4). Zero-length early far-data segment declarations were needed in the synthetic fixture (not yet historically explained). relorder: EXEPACK 4.06 stably partitions LINK relocations by 64 KiB bank (crossed-bank control [140016,60003,140020,70009] -> [60003,70009,140016,140020]); within-bank order preserved, cross-bank interleaving lost, so object boundaries are only partially recoverable. MSC 5.10 FIXUPPs descend within each CODE LEDATA (across function boundaries) and LEDATAs advance in address. Grouped unload_resource/locate_shape_alt/locate_text_res probe reproduces oracle relocation indices 1759-1761 in exact order (TU-membership evidence for those three).",
+      "evidence": "Diagnostic single-LINK fixture: two untouched accepted C objects (mat_mul_vector2, set_frame_callback) among synthetic raw OMF placeholders placed exactly; LINK load image equals the oracle prefix; EXEPACK output equals all 200,000 oracle bytes (oracle SHA) with the 3 live relocations in oracle order. LINK relocation order = input-object order, then FIXUPP subrecord order within an object (not address-sorted); EXEPACK regroups into 64 KiB banks (runs 1205/903/476/4). Zero-length early far-data segment declarations were needed in the synthetic fixture (not yet historically explained). relorder: EXEPACK 4.06 stably partitions LINK relocations by 64 KiB bank (crossed-bank control [140016,60003,140020,70009] -> [60003,70009,140016,140020]); within-bank order preserved, cross-bank interleaving lost, so object boundaries are only partially recoverable. MSC 5.10 FIXUPPs descend within each CODE LEDATA (across function boundaries) and LEDATAs advance in address. Grouped unload_resource/locate_shape_alt/locate_text_res probe reproduces oracle relocation indices 1759-1761 in exact order (TU-membership evidence for those three). objmap: /DOSSEG places 16 null bytes at _TEXT start [117842,117858) (entry IP 0x12); relocation order recovers link processing order (seg000..009, crt0..signal, seg011, seg012 modules interleaved with seg013..037).",
       "controls": "2 accepted C objects; 3 of 2,588 relocations live.",
       "explains": "Image layout and relocation coordinate form (EXEPACK rewrites LINK pairs).",
       "fails_or_breaks": "2,585 relocations not yet produced from real fixups; entry CS:IP and stack not reproduced in the fixture.",
@@ -202,9 +202,9 @@
     {
       "id": "FACT-00-pad-object-boundary",
       "hypothesis": "A single 00 byte between an odd-length procedure and the next even-aligned one is LINK segment-alignment fill between OBJECTS (MSC's own intra-object pad is 90), i.e. evidence of an object/module boundary after a non-MSC-padded (typically ASM or runtime) contribution.",
-      "status": "PLAUSIBLE",
+      "status": "SUPPORTED",
       "scope": "symptom-specific",
-      "evidence": "extents audit: exact pinned member lengths/hashes place the trailing 00 after _strcat, _strcmp, _strlen, _strrchr, __aFlshr OUTSIDE their CODE members; asmmap: 4/11 adjacent pinned-module edges have a one-byte 00 pad; set_fontdefseg's reference listing has explicit `align 2; db 0`. MSC 5.10 /O pads odd-length functions with 90 inside the object (relorder).",
+      "evidence": "extents audit: exact pinned member lengths/hashes place the trailing 00 after _strcat, _strcmp, _strlen, _strrchr, __aFlshr OUTSIDE their CODE members; asmmap: 4/11 adjacent pinned-module edges have a one-byte 00 pad; set_fontdefseg's reference listing has explicit `align 2; db 0`. MSC 5.10 /O pads odd-length functions with 90 inside the object (relorder). objmap: 00 fill after ret before even start consistent with all 9 resolved seg012/C interleave boundaries; none contradicted.",
       "controls": "pinned runtime members (exact extents)",
       "explains": "Where object boundaries fall after odd-length non-C contributions; helps segment the image into modules for the TU/link plan.",
       "fails_or_breaks": "An explicit ASM `db 0`/align directive inside a module can also produce 00; a 00 pad does not by itself identify the assembler.",
@@ -226,7 +226,7 @@
       "hypothesis": "The restunts-numbered seg012 region (218 small procedures, 21.8 KB: file/sprite/font/shape/mmgr/kb/timer/video utility library) is predominantly hand-written assembly, with at most thin C-compatible wrappers.",
       "status": "PLAUSIBLE",
       "scope": "TU-specific",
-      "evidence": "Every game F3 string-op procedure (MARKER-F3-string-op) is in seg012; 11/12 unexplained S2/S5/S6 symptom functions are in seg012; S6 XOR zeroing is emitted by no pinned Microsoft compiler (MSC 5.00/5.10/6.00A, QuickC); shared-tail entries, CS-resident sprite data, cld;lodsb scans, direct I/O, EA thunks and 00 alignment pads cluster there; only 3/218 procedures are accepted C (thin wrappers whose bytes an assembler would also produce).",
+      "evidence": "Every game F3 string-op procedure (MARKER-F3-string-op) is in seg012; 11/12 unexplained S2/S5/S6 symptom functions are in seg012; S6 XOR zeroing is emitted by no pinned Microsoft compiler (MSC 5.00/5.10/6.00A, QuickC); shared-tail entries, CS-resident sprite data, cld;lodsb scans, direct I/O, EA thunks and 00 alignment pads cluster there; only 3/218 procedures are accepted C (thin wrappers whose bytes an assembler would also produce). Function-specific positive evidence (dlr-2): draw_line_related_alt writes the live [bp-4] byte of draw_line_related's frame and jumps into its shared body (not expressible in MSC C); in-code switch tables alone are NOT an ASM marker (MSC C switch emits jmp cs:[bx+table]).",
       "controls": "Accepted C elsewhere; pinned MASM-built runtime members share the markers.",
       "explains": "Why C search stalls across seg012; routes seg012 to the ASM contribution path (asmdisc/asmdisc2).",
       "fails_or_breaks": "Some seg012 members may still be C (e.g. wrappers); the reference listing's ASM form is not proof.",
@@ -237,7 +237,7 @@
       "hypothesis": "Microsoft assembled the MSC 5.10 runtime/startup library objects with MASM 5.00.",
       "status": "SUPPORTED",
       "scope": "global",
-      "evidence": "asmdisc: reassembling 14 MSC 5.10 library ASM sources (STARTUP, STARTUP/DOS, SOURCE; /Dmem_m, /Mx) \u2014 MASM 5.00 core-OMF exact 14/14 (THEADR and LIB member A3 comment excluded); MASM 5.10, 5.10A and pinned 5.10 13/14, differing only in dos\\crt0 COMENT A2 checksum (target and MASM 5.00 emit invalid D1, 5.10 emits valid D2). MASM 4.00: payload-exact on 12 assembled 5.10 controls but no core-OMF match; on MSC 5.00 controls it differs in AND SP,FFFEh encoding (81 E4 FE FF vs 5.x 83 E4 FE) and EXTDEF order. ML 6.00 rejects IF1/IF2 CMACROS.",
+      "evidence": "asmdisc: reassembling 14 MSC 5.10 library ASM sources (STARTUP, STARTUP/DOS, SOURCE; /Dmem_m, /Mx) — MASM 5.00 core-OMF exact 14/14 (THEADR and LIB member A3 comment excluded); MASM 5.10, 5.10A and pinned 5.10 13/14, differing only in dos\\crt0 COMENT A2 checksum (target and MASM 5.00 emit invalid D1, 5.10 emits valid D2). MASM 4.00: payload-exact on 12 assembled 5.10 controls but no core-OMF match; on MSC 5.00 controls it differs in AND SP,FFFEh encoding (81 E4 FE FF vs 5.x 83 E4 FE) and EXTDEF order. ML 6.00 rejects IF1/IF2 CMACROS.",
       "controls": "14 MSC 5.10 + 12 MSC 5.00 library members",
       "explains": "CRT0's unusual COMENT checksum (closure roadmap); runtime rebuild-from-source path.",
       "fails_or_breaks": "Says nothing directly about the assembler used for the GAME's hand-written modules.",
@@ -270,7 +270,7 @@
       "hypothesis": "Global /Oi (intrinsics for all TUs) is part of the game profile.",
       "status": "DISFAVORED",
       "scope": "global",
-      "evidence": "intrin: /Oi reproduces direct intrinsic expansion without pragmas but preserves only 30/31 frozen accepted contributions (is_facing_camera fails ordered FIXUPP validation). An in-source #pragma intrinsic explains the same codegen without breaking controls.",
+      "evidence": "intrin: /Oi reproduces direct intrinsic expansion without pragmas but preserves only 30/31 frozen accepted contributions (is_facing_camera fails ordered FIXUPP validation). An in-source #pragma intrinsic explains the same codegen without breaking controls. tuflags: per-TU /Oi (via /Ox) supported for seg027 only.",
       "controls": "31 frozen accepted contributions",
       "explains": "-",
       "fails_or_breaks": "Breaks is_facing_camera.",
@@ -278,14 +278,146 @@
     },
     {
       "id": "FACT-ledata-split",
-      "hypothesis": "MSC 5.10 /AM /O /Gs ends a CODE LEDATA record when its payload reaches ~949 bytes OR its pending FIXUPP count reaches 99, whichever comes first; data-segment emission, function boundaries and string-literal placement do not force a split; FIXUPP byte size does not either.",
+      "hypothesis": "MSC 5.10 CODE LEDATA record closes after the instruction/unit that brings it to >=944 bytes (hard cap 949 incl. 2-byte offset), or right after the unit carrying the 99th FIXUPP; a jcc+3 followed by a near jmp is one unit; each switch-table word is one unit.",
       "status": "SUPPORTED",
       "scope": "global",
-      "evidence": "intro-4/intro-5 probes: max CODE payload 949 B over 3,705 records; a control closed at 99 fixups (943 CODE + 495 FIXUPP bytes) and its low-index twin closed at the same cut; inline vs file-scope literals, local statics and function boundaries left cuts unchanged; EXTDEF index >127 grew direct-call FIXUPPs 4->5 bytes without moving cuts.",
+      "evidence": "intro-4/intro-5 probes: max CODE payload 949 B over 3,705 records; a control closed at 99 fixups (943 CODE + 495 FIXUPP bytes) and its low-index twin closed at the same cut; inline vs file-scope literals, local statics and function boundaries left cuts unchanged; EXTDEF index >127 grew direct-call FIXUPPs 4->5 bytes without moving cuts. intro-7: MSC 5.10 buffers the whole object — all EXTDEF/PUBDEF records precede CODE; implicit declarations, block-scope or between-function extern declarations do not flush CODE records (120-call control: cuts [0,495)/99 fixups then [495,604)). Cuts therefore depend only on the 949-byte/99-fixup rule applied from the OBJECT START. intro-8: record-cut simulator build/workers/intro/cut_simulator.py reproduces CODE record ranges and ordered relocations of init_main, rectlist_core_group and the mouse group, and the 120-fixup control [0,789)/[789,960). objmap (2026-09-26): corrected rule validated on 4,487 records in 725 compiled objects; probe_cut99.c, probe_size0-2.c; old 'last boundary <=947' FALSIFIED (187 records of 948 B, 3 of 949). Prototype build/workers/objmap/cut_simulator_threshold.py 294/300 exact objects vs 114/300.",
       "controls": "synthetic probes; intro candidates",
-      "explains": "Relocation-order windows: MSC FIXUPPs descend within a record, so ordered MZ relocations reveal record boundaries; a record ending before 949 bytes had 99 fixups, which constrains how many symbol references the original code chunk contained.",
+      "explains": "Relocation-order windows: MSC FIXUPPs descend within a record, so ordered MZ relocations reveal record boundaries; a record ending before 949 bytes had 99 fixups, which constrains how many symbol references the original code chunk contained. TU-boundary inference: for the intro setup group no object start fits with currently known fixups; the only consistent starts need >=40 more FIXUPPs before setup_intro than known, e.g. an object beginning 11 procedures earlier (at skybox_op_helper2) whose unrecovered DGROUP fixups are undercounted.",
       "fails_or_breaks": "-",
       "reopen_if": "A record ends below both limits without another cause."
+    },
+    {
+      "id": "HYP-extdef-first-use-flush",
+      "hypothesis": "A new external first used mid-function forces an early CODE LEDATA flush.",
+      "status": "FALSIFIED",
+      "scope": "global",
+      "evidence": "intro-7 probes: prototype/implicit/block-extern/between-function declarations give identical CODE and cuts; all declaration records precede CODE.",
+      "controls": "4-call and 120-call probes",
+      "explains": "-",
+      "fails_or_breaks": "-",
+      "reopen_if": "-"
+    },
+    {
+      "id": "FACT-relocation-order-reveals-object-context",
+      "hypothesis": "When a byte-exact candidate emits exactly the oracle's MZ relocation site set but in a different order, the original CODE record cuts fell inside the member(s) because the original object started earlier (or contained more code) than the candidate; the member cannot be accepted standalone or as its near-call closure alone and needs its enclosing original object. Near-call closures therefore underestimate original TU extents.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "relorder2 (2026-09-26): five independent cases — intro setup group (60 sites), skybox_op_helper2 (10), sub_204AE (10), shape3d_load_all (6), audio loader group (17) — all have identical site sets, oracle runs descending within records inside one 64 KiB bank, and tools/cut_simulator.py reproduces each oracle order given a preceding CODE window; no ASM signature (contrast: audio driver-timer pair, explained by a MASM self-segment base16 fixup).",
+      "controls": "accepted groups whose order matches (init_main, rectlist_core_group, mouse group)",
+      "explains": "All relocation-order-only verify failures to date; provides quantitative windows for original object starts (milestone 2).",
+      "fails_or_breaks": "Windows are lower bounds until the preceding members are recovered.",
+      "reopen_if": "A same-site-set order mismatch cannot be reproduced by any object start."
+    },
+    {
+      "id": "FACT-masm-fixup-forms",
+      "hypothesis": "The game's MASM modules reference DGROUP data with FIXUPP frame methods F1 (GRPDEF DGROUP) or F2 (EXTDEF), use in-module code-table offset fixups, and load their own segment with self-segment base16 fixups; the latter produces relocation orders unlike C (explains audio_add/remove_driver_timer).",
+      "status": "SUPPORTED",
+      "scope": "TU-specific",
+      "evidence": "integ16: audio_add_driver_timer, audio_remove_driver_timer, preRender_helper2 (11 local dispatch-table fixups), projectiondata9_times_ratio (F1 and F2 variants both verify) accepted with fresh HYBRID_EXACT and ordered relocations. integ17: F0 (SEGDEF DSEG) data refs with grounded DSEG placement and same-segment external near transfers (file_decomp_rle group, 5 DSEG routines). integ18: per-fixup composition, local relative/_TEXT fixups (mmgr_free_entries 550 B, sincos, locate_entries); 38 more modules accepted.",
+      "controls": "negative tests: frame identity, object bounds, local targets, relocation order",
+      "explains": "S1 driver-timer anomaly; ASM binding coverage",
+      "fails_or_breaks": "MASM FIXUPP order need not equal MZ relocation order (strict probe checks oracle order). Open: direct CS memory operands, local far JMP (integ19).",
+      "reopen_if": "-"
+    },
+    {
+      "id": "DATA-module-form",
+      "hypothesis": "Unreferenced initialized-data blocks (shapes 5,124 B; track constants 9,560 B) are data-only object modules; the image cannot distinguish MSC C initializers from MASM db/dw (both bind byte-exactly with the same offset16 pointer fixups).",
+      "status": "NON_DISCRIMINATING",
+      "scope": "TU-specific",
+      "evidence": "datamod: shapes_pointer_tu.c (120 near-pointer FIXUPPs) and shapes_symbolic.ASM both link to the 5,124 oracle bytes; trackdata: track_constants_module.c 9,560 B, 767 fixups, pinned LINK 3.65 fixture exact. integ20: shapes subspan is strictly contained in the track module (no code operand anchors a shapes public) -> one module; track_constants_module accepted as MATCHING_C_DATA (9,560 B).",
+      "controls": "pinned LINK fixture; reversing two data-only objects reverses _DATA placement",
+      "explains": "data-only raw intervals",
+      "fails_or_breaks": "-",
+      "reopen_if": "a data block shows an MSC-impossible layout (odd alignment inside a C aggregate, MASM-only directive artefact) or reference style distinguishes. Ruling: canonical default C (MATCHING_C_DATA)."
+    },
+    {
+      "id": "FACT-msc-switch-dispatch-first",
+      "hypothesis": "MSC 5.10 /O emits a compare-chain switch dispatch (mov ax,expr; cmp/jne/jmp per case) BEFORE the case bodies, and the bodies follow in source order; break inside a loop-final switch chains to the loop head.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "run_car_menu target: key switch dispatch +0x98E, inner switch(sel) +0xAF0 followed by case 0..4 bodies in order; tu000g-3 reproduced the arrow-case tail by making them the last switch(key) cases.",
+      "controls": "tu000g candidates under canonical profile",
+      "explains": "'tail-placed handler' layouts",
+      "fails_or_breaks": "-",
+      "reopen_if": "a canonical compile places the dispatch after the bodies"
+    },
+    {
+      "id": "FACT-label-word-alignment",
+      "hypothesis": "Some jump-target labels (switch case labels, possibly goto labels) are word-aligned with 90 fillers inside functions.",
+      "status": "PLAUSIBLE",
+      "scope": "global",
+      "evidence": "run_car_menu target nops at +0x9BB, +0xBF3, +0xC21 before even-address case/goto targets; loop head +0x363 is odd (unaligned).",
+      "controls": "UNTESTED in candidate output",
+      "explains": "interior 90 bytes",
+      "fails_or_breaks": "-",
+      "reopen_if": "test in canonical compile (tu000g follow-up)"
+    },
+    {
+      "id": "FACT-odd-entry-non-msc",
+      "hypothesis": "A procedure entry at an odd address with no preceding 90 pad cannot be an MSC 5.10 function start (MSC word-aligns every function); it is positive evidence of assembler or non-MSC origin.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "asm-e: seg007 audio_op_unk (121 B, no following pad) and audio_function2/audio_driver_timer (odd entries 16F6D/16FA3); audio_function2 accepted as MATCHING_ASM.",
+      "controls": "FACT-odd-length-padding; all accepted MSC C functions word-aligned",
+      "explains": "seg007 ASM cluster",
+      "fails_or_breaks": "-",
+      "reopen_if": "an MSC-compiled function shown at an odd entry"
+    },
+    {
+      "id": "FACT-c-segment-one-object",
+      "hypothesis": "Every game C code segment (one relocation code frame, NAME_TEXT) is exactly one original C object; object extent = first code byte >= frame*16 up to the next segment start minus 00 fill.",
+      "status": "SUPPORTED",
+      "scope": "global",
+      "evidence": "objmap: all 33 C segments; no game C segment far-calls into its own frame; 12 segments fully linked by push cs;call near or shared relocation runs; record-cut search leaves seg003 start 40724 as only feasible; seg006/seg029 STRONG (allowed splits remain).",
+      "controls": "accepted group recipes; relorder2 exact candidate objects",
+      "explains": "relocation-order-only failures of partial groups (intro, skybox_op_helper2, sub_204AE, shape3d_load_all, audio loader)",
+      "fails_or_breaks": "seg000 security_check odd entry 17615 called via push cs;call near (post-compile patch?)",
+      "reopen_if": "a C segment shown to contain two objects (far call into own frame, relocation run break at an allowed split)"
+    },
+    {
+      "id": "TUFLAG-Oa-seg023-025",
+      "hypothesis": "Objects seg014, seg015, seg019, seg021, seg022, seg023, seg024, seg025 were compiled with /AM /Oa /Gs (no-alias) instead of the canonical /O.",
+      "status": "SUPPORTED",
+      "scope": "TU-specific (seg014, seg015, seg019, seg021, seg022, seg023, seg024, seg025)",
+      "evidence": "tuflags 2026-09-26: seg023 106 B strict-exact under /Oa (112 B under /O; /Oal,/Ox emit LOOP -> not /Ol); seg024 whole 260 B object exact under /Oa,/Oal,/Ox (336 B under /O); seg025 140 B exact under /Oa,/Oal,/Ox (142 B under /O; y1+1 kept in SI across far calls). build/workers/tuflags/. tuflags2: strict-exact only under /Oa: seg014 preRender_wheel_helper3 460 (534 under /O; /Oal ruled out), seg015 preRender_sphere_helper2 928 (1040), seg019 preRender_wheel_helper2 168 (170), seg021 heapsort_by_order 150 (192; /Oal,/Os ruled out), seg022 preRender_wheel 578 (606; /Oas,/Oal ruled out). Accepted neighbours seg016/017/020/026 keep controls under /Oa -> contiguous /Oa range seg013-026 PLAUSIBLE, unproven. Recipes build/workers/tuflags2/exact/.",
+      "controls": "76 accepted C recipes: /O keeps 76/76; /Oa globally keeps only 65 -> not global. No accepted members in seg023-025 to break.",
+      "explains": "S8 (pointer kept in register across stores), sub_3702E S1 residual, mat_rot near-misses",
+      "fails_or_breaks": "-",
+      "reopen_if": "a /O source matches any of these members. RULING: reproduction flag set /Oa for all three (minimal consistent set; /Oal,/Ox equivalent for seg024/025 = NON_DISCRIMINATING among them)."
+    },
+    {
+      "id": "TUFLAG-Ox-seg027",
+      "hypothesis": "Object seg027 (audio) was compiled with /AM /Ox (= /Oailt /Gs) instead of /O.",
+      "status": "SUPPORTED",
+      "scope": "TU-specific (seg027)",
+      "evidence": "tuflags: flag6 group (enable/disable/toggle) 136 B strict-exact under /Oal,/Ox,/Oalt (148 B under /O; /Ol or /Oa alone fail); nopsub_373FE exact /Oal,/Ox; sub_374DE /Oa+; audio_load_driver inline strlen (repne scasb) needs /Oi and backward loop scan needs /Ol; whole-TU 26/41 exact under /Ox vs 22 under /O, none lost; seg027 has no far calls to intrinsic-capable runtime functions while other segments do.",
+      "controls": "all 7 accepted seg027 members strict under /Oa,/Oal,/Ox,/Oi,/Ol; /Os,/Or break audio_flag2_group; /Ox globally keeps only 46/76.",
+      "explains": "S1 flag6 pair; seg027 residuals",
+      "fails_or_breaks": "/Oal + #pragma intrinsic(strlen) is NON_DISCRIMINATING vs /Ox",
+      "reopen_if": "an accepted seg027 member fails under /Ox or seg027 far-calls an intrinsic-capable function. RULING: reproduction flag set /Ox."
+    },
+    {
+      "id": "TUFLAG-Ox-seg030",
+      "hypothesis": "Object seg030 (audio_make_filename) was compiled with an intrinsic-enabling set (/Ox by analogy with seg027).",
+      "status": "SUPPORTED",
+      "scope": "TU-specific (seg030)",
+      "evidence": "tuflags2: 326/326 extent-exact under any /Oi set vs 198 B under /O; original has 11 inline repne scasb and no far intrinsic calls. Strict binding pending data symbols (_unk_407AC...).",
+      "controls": "no accepted members in seg030; /Oi global DISFAVORED",
+      "explains": "inline string ops in seg030",
+      "fails_or_breaks": "/Oi-family variants NON_DISCRIMINATING among themselves",
+      "reopen_if": "strict binding fails for a flag-related reason. RULING: reproduction set /Ox."
+    },
+    {
+      "id": "TUFLAG-sweep-2026-09-26",
+      "hypothesis": "Per-object flag sweep over all C objects (tuflags2).",
+      "status": "NON_DISCRIMINATING",
+      "scope": "per object",
+      "evidence": "FALSIFIED alternatives (lose /O-exact members or break controls): seg000,001,003,004,006,008,031. DISFAVORED /Oa,/Ol,/Oal for seg005. PLAUSIBLE not exact: seg029 /Oal (loop instr), seg028 /Ol family, seg032 /Oa, seg034 /Ol. NON_DISCRIMINATING: seg009,011,013,016,017,020,026,033,037. /Ot == /O everywhere.",
+      "controls": "76 accepted C recipes (controls-all.json)",
+      "explains": "which objects stay canonical",
+      "fails_or_breaks": "-",
+      "reopen_if": "new candidates for PLAUSIBLE objects"
     }
   ],
   "symptoms": [
@@ -300,9 +432,9 @@
       ],
       "explanations": {
         "global_profile": "FALSIFIED (FLAG-Ol-plain-counter; FLAG-O-variants-register-source; FLAG-G1-G2)",
-        "tu_specific_profile": "UNTESTED",
+        "tu_specific_profile": "SUPPORTED for audio_enable/disable_flag6 (TUFLAG-Ox-seg027) and sub_3702E (TUFLAG-Oa-seg023-025); NON_DISCRIMINATING for pad_id (no flag set removes the home).",
         "source_context": "SUPPORTED-leaning: flag6 worker (canonical profile) reached the exact 4-byte frame for audio_disable_flag6 via block scoping (sibling blocks share homes); remaining residual is only the home position BP-4 vs BP-2, consistent with FACT-local-slot-order-identifier (names decide flat-scope order). audio_enable_flag6 still reserves one extra home (sub sp,4 vs 2). pad_id unexplained.",
-        "hand_asm": "PLAUSIBLE for pad_id (Restunts has it only as ASM; not positive evidence)",
+        "hand_asm": "SUPPORTED for pad_id at OBJECT level: obj_seg007 is one module (objmap) containing MSC-impossible odd entries without pad (audio_op_unk/audio_function2/audio_driver_timer); a single object cannot be part C; the whole 2,305-B seg007 module reproduces exactly as MASM (obj-s007). The push cs; call near calls to pad_id are hand-written. (Supersedes the earlier 'UNSUPPORTED' note, which considered pad_id alone.)",
         "boundary": "UNTESTED",
         "runtime_library": "DISFAVORED"
       }
@@ -318,9 +450,9 @@
       ],
       "explanations": {
         "global_profile": "UNTESTED",
-        "tu_specific_profile": "PLAUSIBLE (CC-later-MSC, TOOLING_LIMITED)",
+        "tu_specific_profile": "DISFAVORED (MSC 6.00A reproduces motifs only; members now explained as ASM)",
         "source_context": "PLAUSIBLE (int*int with implicit truncation forms not exhausted)",
-        "hand_asm": "PLAUSIBLE (multiply_and_scale IMUL/SHL/RCL/ADC fixed-point helper, 15 callers)",
+        "hand_asm": "SUPPORTED (2026-09-26): multiply_and_scale (IMUL/SHL/RCL/ADC) and projectiondata9_times_ratio (full DX:AX DIV) reproduced exactly from readable MASM and accepted",
         "boundary": "UNTESTED",
         "runtime_library": "DISFAVORED"
       }
@@ -387,7 +519,7 @@
         "global_profile": "DISFAVORED (canonical and 5.00 emit a CL=4 loop for scalar forms; accepted control mmgr_get_res_ofs_diff_scaled `(unsigned long)f()<<4` matches the original CL=4 shl/rcl loop, so the original compiler also used the loop where it compiled this idiom)",
         "tu_specific_profile": "PLAUSIBLE (CC-later-MSC)",
         "source_context": "DISFAVORED (union, chained shifts, *16L, huge and linear-address forms tested)",
-        "hand_asm": "SUPPORTED (2026-09-26): file_get_shape2d (95 B, unrolled shl/rcl) is reproduced exactly from readable MASM source and accepted as ASM ownership; other S5 members pending",
+        "hand_asm": "SUPPORTED (2026-09-26): file_get_shape2d, parse_shape2d_helper, parse_shape2d_helper2 reproduced exactly from readable MASM and accepted",
         "boundary": "UNTESTED",
         "runtime_library": "DISFAVORED"
       }
@@ -409,6 +541,37 @@
         "boundary": "UNTESTED",
         "runtime_library": "UNTESTED"
       }
+    },
+    {
+      "id": "S7",
+      "symptom": "Compiler-sensitive residuals under canonical profile in seg008 (source forms tried did not change the specific instruction choice).",
+      "functions": [
+        "mouse_timer_sprite_unk",
+        "get_super_random",
+        "sprite_blit_to_video"
+      ],
+      "explanations": {
+        "global_profile": "UNTESTED",
+        "tu_specific_profile": "FALSIFIED for seg008 (no flag set moves the three S7 functions; /Oa breaks copy_string, parse_filepath_separators, run_02).",
+        "source_context": "OPEN (s008merge3-2 characterizing)",
+        "hand_asm": "NO positive evidence"
+      },
+      "status": "OPEN"
+    },
+    {
+      "id": "S8",
+      "symptom": "Loop/base pointers kept in registers across stores through pointers (canonical /O reloads them).",
+      "functions": [
+        "preRender_wheel_helper (seg023)",
+        "mat_rot_x/y/z (seg024)",
+        "sub_3702E (seg025)"
+      ],
+      "explanations": {
+        "tu_specific_profile": "SUPPORTED (/Oa: TUFLAG-Oa-seg023-025)",
+        "global_profile": "FALSIFIED (/Oa breaks 11/76 controls)",
+        "hand_asm": "NO evidence"
+      },
+      "status": "EXPLAINED"
     }
   ],
   "authorship_map": {

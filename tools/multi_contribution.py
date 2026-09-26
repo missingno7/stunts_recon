@@ -3,10 +3,61 @@ import copy, struct
 from common import ROOT, identity, read_json, require, sha
 from binder import bind_contribution
 from code_symbols import resolve_recipe_symbols
-from function_evidence import reviewed_functions
+from function_evidence import current_inventory, reviewed_functions
 from secondary_contribution import bind_secondary
+def _checked_asm_near_labels(recipe, image):
+    labels=recipe.get('reviewed_near_labels',{})
+    if not labels:return {}
+    require(recipe.get('kind')=='asm', 'Near labels require ASM contribution')
+    path='src/restunts/asmorig/seg012.asm'
+    reference=ROOT/'build/references/restunts'/path
+    pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
+    require(identity(reference.read_bytes())==pinned,
+            'Reviewed near-label source differs')
+    lines=reference.read_text(encoding='latin1').splitlines()
+    import re, sys
+    decoder_path=str(ROOT/'build/python')
+    if decoder_path not in sys.path:sys.path.insert(0,decoder_path)
+    import capstone
+    decoder=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_16)
+    starts=set()
+    reviewed=reviewed_functions(image)
+    ordered=recipe['members']
+    for index,member in enumerate(ordered):
+        # Whole-module entries carry no member end: the next entry bounds it.
+        member_end=member.get('end')
+        if member_end is None:
+            member_end=(ordered[index+1]['start'] if index+1<len(ordered) else recipe['end'])
+        selected=reviewed.get(member.get('name'))
+        if selected and (selected['start'],selected['end'])==(
+                member['start'],member_end):
+            starts.update(row['load_offset'] for row in selected['disassembly'])
+        else:
+            starts.update(ins.address for ins in decoder.disasm(
+                image[member['start']:member_end],member['start']))
+    result={}
+    for offset,proof in labels.items():
+        require(type(offset) is str and offset.isdecimal() and
+                set(proof)=={'label','source_line'}, 'Invalid near-label proof')
+        at=recipe['start']+int(offset);label=proof['label'];line=proof['source_line']
+        match=re.fullmatch(r'loc_([0-9A-Fa-f]+)',label)
+        require(match is not None and type(line) is int and 1<=line<=len(lines) and
+                lines[line-1].strip().lower()==(label+':').lower() and
+                int(match.group(1),16)-0x10000==at and at in starts,
+                'Near label lacks pinned source and original instruction boundary')
+        result[int(offset)]=label
+    return result
 def checked_members(recipe, image):
-    inv=read_json(ROOT/'evidence/functions.json')
+    if 'module_proof' in recipe:
+        # One complete grounded ASM module: entries, not member extents.
+        from asm_module import checked_module
+        checked_module(recipe, image)
+        require(identity(image[recipe['start']:recipe['end']])==recipe['target'],
+                'Whole target identity differs')
+        reviewed_functions(image)
+        return
+    base_inv=read_json(ROOT/'evidence/functions.json')
+    inv=current_inventory(image)
     require(inv['load_sha256']==sha(image),'Inventory/oracle identity differs')
     members=recipe['members']
     require(type(members) is list and len(members)>=2, 'Multi recipe needs members')
@@ -14,7 +65,10 @@ def checked_members(recipe, image):
     require(identity(image[recipe['start']:recipe['end']])==recipe['target'],'Whole target identity differs')
     for i,m in enumerate(members):
         require(i==0 or members[i-1]['end']==m['start'],'Member gap/overlap')
-        rows=[f for f in inv['functions'] if f.get('name')==m['name']]
+        rows=[f for f in base_inv['functions'] if f.get('name')==m['name']]
+        if not rows:
+            # A reviewed new inventory entry exists only in the current overlay.
+            rows=[f for f in inv['functions'] if f.get('name')==m['name']]
         require(len(rows)==1,'Missing/ambiguous member')
         f=rows[0]
         verified = f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' or (
@@ -22,10 +76,20 @@ def checked_members(recipe, image):
             f.get('start_evidence') and f.get('end_evidence') and
             sha(image[f['start']:f['end']])==f['sha256'] and
             (not f.get('bytes_hex') or bytes.fromhex(f['bytes_hex'])==image[f['start']:f['end']]))
+        if not verified:
+            rows=[row for row in inv['functions'] if row.get('name')==m['name']]
+            require(len(rows)==1,'Missing/ambiguous reviewed member')
+            f=rows[0]
+            verified=(f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' or
+                      f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' and
+                      f.get('start_evidence') and f.get('end_evidence') and
+                      sha(image[f['start']:f['end']])==f['sha256'])
         require(verified,'Unverified member boundary/emission bytes')
-        expected_public = f['name'] if f.get('local_symbol') else '_' + f['name']
+        from asm_module import expected_publics
+        expected_public = ({f['name']} if f.get('local_symbol') else
+                           expected_publics(f['name'], recipe.get('kind', 'c')))
         require(all(m.get(k)==f.get(k) for k in ('stable_id','start','end')) and
-                m['public']==expected_public and
+                m['public'] in expected_public and
                 bool(m.get('local_symbol'))==bool(f.get('local_symbol')) and
                 m['target']=={'size':f['size'],'sha256':f['sha256']},
                 'Member evidence differs')
@@ -38,22 +102,45 @@ def bind_multi(obj, recipe, image, relocations):
     require(all(n==seg or n in secondary or z==0 for n,z in obj.segment_lengths.items()),
             'Unowned data/BSS')
     pubs={m['public']:m['start']-recipe['start'] for m in recipe['members']}
-    require(len(pubs)==len(recipe['members']) and len(obj.publics)==len(pubs) and {p['name']:p['offset'] for p in obj.publics if p['segment']==seg}==pubs,'Public offsets differ')
+    embedded={p['public']:p['offset'] for p in
+              recipe.get('module_proof',{}).get('embedded_publics',[])}
+    require(not set(embedded)&set(pubs),'Embedded public duplicates a member')
+    near_labels=_checked_asm_near_labels(recipe,image)
+    require(len(pubs)==len(recipe['members']) and len(obj.publics)==len(pubs)+len(embedded) and
+            {p['name']:p['offset'] for p in obj.publics if p['segment']==seg}=={**pubs,**embedded},
+            'Public offsets differ')
     require({p['name'] for p in obj.local_publics} ==
             {m['public'] for m in recipe['members'] if m.get('local_symbol')},
             'Local helper publics must be complete reviewed members')
     require(recipe['object_declarations']=={'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},'Full declarations differ')
     require(obj.linker_fixups==recipe['expected_fixups'],'Ordered FIXUPP differs')
     require(set(obj.externals) <= set(pubs) | {'__acrtused'} | {f['target'] for f in obj.linker_fixups}, 'Unexpected external declaration')
-    internal=[f for f in obj.linker_fixups if f['target'] in pubs or
-              (recipe.get('kind')=='asm' and f['target_kind']=='segment' and
-               f['target']==seg and f['self_relative'] and
-               f['displacement'] in pubs.values())]
+    local=[f for f in obj.linker_fixups if recipe.get('kind')=='asm' and
+           f['target_kind']=='segment' and f['target']==seg and
+           f['loc']=='offset16']
+    local_far=[f for f in obj.linker_fixups if recipe.get('kind')=='asm' and
+               f['target_kind']=='segment' and f['target']==seg and
+               f['loc']=='pointer32']
+    internal=[f for f in obj.linker_fixups if f['target'] in pubs and
+              f not in local and f not in local_far]
     own_data=[f for f in obj.linker_fixups if f['target_kind']=='segment' and
               f['target'] in secondary]
     external=[f for f in obj.linker_fixups if f['segment']==seg and
-              f not in internal and f not in own_data]
-    require(all(f['self_relative'] for f in internal) and all(not f['self_relative'] for f in external),'Unsupported relative target')
+              f not in internal and f not in local and f not in local_far and f not in own_data]
+    near_external=(recipe.get('kind')=='asm' and
+                   any(f['self_relative'] and f['target_kind']=='external'
+                       for f in external))
+    require(all(f['self_relative'] for f in internal) and
+            all(not f['self_relative'] or
+                (near_external and f['target_kind']=='external' and f['loc']=='offset16')
+                for f in external), 'Unsupported relative target')
+    local_far_sites={recipe['start']+f['offset']+2 for f in local_far}
+    external_relocations=[r for r in recipe['expected_relocations']
+                          if r['load_offset'] not in local_far_sites]
+    require(len(local_far_sites)==len(local_far) and
+            sorted(r['load_offset'] for r in recipe['expected_relocations']
+                   if r['load_offset'] in local_far_sites)==sorted(local_far_sites),
+            'Local far transfer relocation sites differ')
     if external:
         require('external_binding' in recipe,'External binding absent')
         view=copy.copy(obj); view.publics=[{'name':recipe['members'][0]['public'],'segment':seg,'offset':0}]
@@ -63,26 +150,62 @@ def bind_multi(obj, recipe, image, relocations):
                               **{name:0 for name in secondary}}
         view.linker_fixups=[]
         for f in external:
-            row=dict(f); row['target_index']=view.externals.index(f['target'])+1; view.linker_fixups.append(row)
-        sub={'start':recipe['start'],'end':recipe['end'],'object_segment':seg,'public':view.publics[0]['name'],'expected_fixups':view.linker_fixups,'expected_relocations':recipe['expected_relocations'],'binding':{'mode':recipe['external_binding']['mode'],'declarations':{'segments':view.segment_defs,'groups':view.groups,'publics':view.publics,'externals':view.externals}}}
+            row=dict(f)
+            if f['target_kind']=='external':
+                require(1<=f['target_index']<=len(obj.externals) and
+                        obj.externals[f['target_index']-1]==f['target'],
+                        'Original external target index differs')
+                row['target_index']=view.externals.index(f['target'])+1
+            if f['frame_method']==2 and f['frame_kind']=='external':
+                require(1<=f['frame_index']<=len(obj.externals) and
+                        obj.externals[f['frame_index']-1]==f['frame'],
+                        'Original external frame index differs')
+                row['frame_index']=view.externals.index(f['frame'])+1
+            view.linker_fixups.append(row)
+        sub={'id':recipe['members'][0].get('name',recipe.get('id','')),'start':recipe['start'],'end':recipe['end'],'object_segment':seg,'public':view.publics[0]['name'],'expected_fixups':view.linker_fixups,'expected_relocations':external_relocations,'binding':{'mode':recipe['external_binding']['mode'],'declarations':{'segments':view.segment_defs,'groups':view.groups,'publics':view.publics,'externals':view.externals}}}
+        if 'reviewed_near_targets' in recipe:
+            sub['reviewed_near_targets']=recipe['reviewed_near_targets']
+        if 'reviewed_code_offsets' in recipe:
+            sub['reviewed_code_offsets']=recipe['reviewed_code_offsets']
         if recipe.get('kind')=='asm':
             sub['kind']='asm'
             sub['original_frame_load_address']=recipe['original_frame_load_address']
         symbols=resolve_recipe_symbols(sub,image,relocations)
         payload,receipt=bind_contribution(view,sub,symbols)
     else:
-        require(recipe['expected_relocations']==[] and 'external_binding' not in recipe,'Unexpected external obligations')
+        require(external_relocations==[] and
+                (not recipe.get('external_binding') or
+                 recipe['external_binding'].get('mode')=='asm-local-code-offset16-v1' and local),
+                'Unexpected external obligations')
         payload,receipt=obj.segment_bytes(seg),{'mode':'no-external-fixups','generated_relocations':[]}
     linked=bytearray(payload); rows=[]
     linked, data_payloads, secondary_rows, data_relocations=bind_secondary(
         obj,recipe,image,relocations,linked,own_data)
     linked=bytearray(linked)
-    for f in internal:
+    for f in local_far:
+        at=f['offset']; definition,=[d for d in obj.segment_defs if d['name']==seg]
+        frame=recipe['original_frame_load_address']
+        require(f['segment']==seg and f['width']==4 and not f['self_relative'] and
+                f['target_method']==0 and f['target_index']==definition['index'] and
+                (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
+                (0,'segment',seg,definition['index']) and
+                f['encoded_addend']=='00000000' and
+                type(f['displacement']) is int and 0<=f['displacement']<length and
+                1<=at<=length-4 and linked[at-1] in (0x9a,0xea) and
+                linked[at:at+4]==bytes(4) and frame%16==0 and
+                frame<=recipe['start'] and recipe['end']<=frame+65536,
+                'Unsupported same-module far CALL/JMP')
+        value=(recipe['start']-frame+f['displacement'],frame//16)
+        require(0<=value[0]<=65535,'Local far target offset overflow')
+        struct.pack_into('<HH',linked,at,*value)
+        rows.append({'offset':at,'target':seg,'linked_value':value})
+    for f in internal+local:
         at=f['offset']
         require(f['segment']==seg and f['loc']=='offset16' and f['width']==2 and
-                f['self_relative'] and f['encoded_addend']=='0000' and
-                1<=at<=length-2 and linked[at-1]==0xe8 and linked[at:at+2]==bytes(2),
-                'Unsupported internal CALL fixup')
+                f['encoded_addend']=='0000' and
+                0<=at<=length-2 and
+                linked[at:at+2]==bytes(2),
+                'Unsupported internal code offset fixup')
         if f['target_kind']=='external':
             require(f['target_method']==2 and
                     (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
@@ -98,16 +221,29 @@ def bind_multi(obj, recipe, image, relocations):
                     f['target_method']==0 and f['target_index']==definition['index'] and
                     (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
                     (0,'segment',seg,definition['index']) and
-                    f['displacement'] in pubs.values(),
-                    'Unsupported ASM same-module CALL datum')
+                    type(f['displacement']) is int and 0<=f['displacement']<length,
+                    'Unsupported ASM same-module code datum')
             target_offset=f['displacement']
-            target_name=next(name for name,offset in pubs.items() if offset==target_offset)
-        disp=target_offset-(at+2)
-        require(-32768<=disp<=32767,'Internal displacement overflow')
-        struct.pack_into('<h',linked,at,disp)
-        rows.append({'offset':at,'target':target_name,'displacement':disp})
-    generated=receipt['generated_relocations']
-    require(generated==recipe['expected_relocations'],'Relocation order differs')
+            target_name=next((name for name,offset in pubs.items() if offset==target_offset),
+                             near_labels.get(target_offset))
+        if f['self_relative']:
+            require(1<=at and linked[at-1] in (0xe8,0xe9),
+                    'Local relative fixup lacks near CALL/JMP')
+            value=target_offset-(at+2)
+            require(-32768<=value<=32767,'Internal displacement overflow')
+            struct.pack_into('<h',linked,at,value)
+        else:
+            require(f in local and recipe['original_frame_load_address']<=recipe['start'] and
+                    recipe['end']<=recipe['original_frame_load_address']+65536,
+                    'Local absolute offset requires complete ASM module placement')
+            value=recipe['start']-recipe['original_frame_load_address']+target_offset
+            require(0<=value<=65535,'Local code offset overflow')
+            struct.pack_into('<H',linked,at,value)
+        rows.append({'offset':at,'target':target_name,'linked_value':value,
+                     **({'displacement':value} if f['self_relative'] else {})})
+    require(receipt['generated_relocations']==external_relocations,
+            'External relocation order differs')
+    generated=recipe['expected_relocations']
     return bytes(linked),{'mode':'multi-function-complete-v2','internal_calls':rows,
         'secondary_dgroup_fixups':secondary_rows,
         'secondary_payloads':{name:raw.hex() for name,raw in data_payloads.items()},

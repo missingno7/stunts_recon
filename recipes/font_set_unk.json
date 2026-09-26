@@ -1,0 +1,289 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "_fontdefseg"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            2,
+            1
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_font_set_unk",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 112,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "end": 150396,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 14061,
+    "line_start": 14000,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 5,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_fontdefseg",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 32,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_fontdefseg",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 67,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_fontdefseg",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 96,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_fontdefseg",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "id": "font_set_unk",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_fontdefseg"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          2,
+          1
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_font_set_unk",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 112,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_font_set_unk",
+  "source": "asm/font_set_unk.ASM",
+  "stable_id": "load_24b0c",
+  "start": 150284,
+  "target": {
+    "sha256": "37bbcf3ffd9ad307d41b1b8a826f257d2e664ccb4b68455858abaa3d70f840a6",
+    "size": 112
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 143465,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "seg012_vector_entry_group",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 143380,
+      "name": "nopsub_33006",
+      "public": "_nopsub_33006",
+      "stable_id": "load_23006",
+      "start": 143366,
+      "target": {
+        "sha256": "505f22d8320b7ced88678cc91a3054ae046f4fda85ac1e54acb916c6c5473838",
+        "size": 14
+      }
+    },
+    {
+      "end": 143465,
+      "name": "vector_op_unk",
+      "public": "_vector_op_unk",
+      "stable_id": "load_23014",
+      "start": 143380,
+      "target": {
+        "sha256": "eef9f7abc2af22c7ac87db18c094c402bd02474e0df58b1fe46a34469db0dc6e",
+        "size": 85
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_nopsub_33006",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_vector_op_unk",
+        "offset": 14,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 99,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "source": "asm/seg012_vector_entry_group.ASM",
+  "stable_id": "multi_seg012_vector_entries",
+  "start": 143366,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "9f377852c3a347f3f82049b656bb28437c8f4b132a2f40edc1fa898be5d35e85",
+    "size": 99
+  }
+}

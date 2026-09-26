@@ -1,0 +1,96 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 147088,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "seg012_nopsub33dbe_group",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 146914,
+      "name": "nopsub_33DBE",
+      "public": "_nopsub_33DBE",
+      "stable_id": "load_23dbe",
+      "start": 146878,
+      "target": {
+        "sha256": "8ac5e098f2ad73032420191a2d976c788c7fa25ce139742635aeea8384172ca0",
+        "size": 36
+      }
+    },
+    {
+      "end": 146944,
+      "name": "shape2d_op_unk5",
+      "public": "_shape2d_op_unk5",
+      "stable_id": "load_23de2",
+      "start": 146914,
+      "target": {
+        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
+        "size": 30
+      }
+    },
+    {
+      "end": 147088,
+      "name": "shape2d_op_unk",
+      "public": "_shape2d_op_unk",
+      "stable_id": null,
+      "start": 146944,
+      "target": {
+        "sha256": "59aced1134042f07f0ead320f4bdaf31c723e6f92c41ba4218f26deb3574d275",
+        "size": 144
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_nopsub_33DBE",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_shape2d_op_unk",
+        "offset": 66,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_shape2d_op_unk5",
+        "offset": 36,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 210,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "source": "asm/seg012_nopsub33dbe_group.ASM",
+  "stable_id": "multi_seg012_nopsub33dbe_group",
+  "start": 146878,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "df3ce01b1db5e92cd8dc9d47cf47f4c8698eaef3a0cbf3ebbb8c96be2d777a40",
+    "size": 210
+  }
+}

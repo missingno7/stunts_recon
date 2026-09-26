@@ -1,0 +1,96 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 149468,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "seg012_sprite_clear_shared_group",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 149338,
+      "name": "nopsub_34736",
+      "public": "_nopsub_34736",
+      "stable_id": "load_24736",
+      "start": 149302,
+      "target": {
+        "sha256": "39319b72a321a3c9828c1bd1898ee00adaec315046e777bf03b0464a7d792fb8",
+        "size": 36
+      }
+    },
+    {
+      "end": 149374,
+      "name": "sprite_clear_shape_alt",
+      "public": "_sprite_clear_shape_alt",
+      "stable_id": "load_2475a",
+      "start": 149338,
+      "target": {
+        "sha256": "01943e5aec79e1712fed383e6b65e7e9272a7dde044a3f1eccbc6fd63986c2d1",
+        "size": 36
+      }
+    },
+    {
+      "end": 149468,
+      "name": "sprite_clear_shape",
+      "public": "_sprite_clear_shape",
+      "stable_id": "load_2477e",
+      "start": 149374,
+      "target": {
+        "sha256": "7325940ea5caab69e6774d2d6dff8b7249b5b48edf860a1f2f42ffec450854e5",
+        "size": 94
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_sprite_clear_shape_alt",
+        "offset": 36,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_nopsub_34736",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_sprite_clear_shape",
+        "offset": 72,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 166,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "source": "asm/seg012_sprite_clear_shared_group.ASM",
+  "stable_id": "multi_seg012_sprite_clear_shared_group",
+  "start": 149302,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "0ee82542a129e685a82ae0950956c22fd6007d6b87c7c96c18726192a6d3535b",
+    "size": 166
+  }
+}

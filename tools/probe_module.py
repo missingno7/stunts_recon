@@ -10,6 +10,7 @@ from code_symbols import resolve_recipe_symbols
 from multi_contribution import checked_members, bind_multi
 from secondary_contribution import bind_single_secondary
 from assembler import assemble_source, asm_source
+from object_flags import recipe_flags, object_control_flags, same_object
 
 
 class ProbeFailure(ValueError):
@@ -26,6 +27,8 @@ def _diagnostic(*args, **kwargs):
         return {'diagnostic_error':str(error),'authority':'DIAGNOSTIC_UNAVAILABLE'}
 
 def probe(recipe, oracle_result=None, source_override=None):
+    require('relocation_order_basis' not in recipe,
+            'Recipe cannot supply a relocation order basis')
     result = oracle_result or verify(write=False)
     image = MZ.parse(result[1]).load_image(result[1])
     start, end = recipe['start'], recipe['end']
@@ -48,11 +51,22 @@ def probe(recipe, oracle_result=None, source_override=None):
     else:
         _, closure = prepare(source, recipe['profile'])
         check_recipe(recipe, closure)
+    control = None
     try:
         obj, receipt = (assemble_source(source, recipe['profile']) if kind == 'asm'
-                        else compile_source(source, recipe['profile']))
+                        else compile_source(source, recipe['profile'], recipe_flags(recipe)))
+        # A canonical-flag C contribution inside an object with a registered
+        # per-object flag set must reproduce the same object under that set.
+        control = object_control_flags(recipe) if kind == 'c' else None
+        if control is not None:
+            control_obj, control_receipt = compile_source(source, recipe['profile'], control)
+            receipt['object_flag_control'] = {'flags': control,
+                                              'object': control_receipt['object']}
     except CompileFailure as error:
         raise ProbeFailure(str(error), {'category':error.category, 'receipt':error.receipt}) from error
+    if control is not None:
+        require(same_object(control_obj, obj),
+                'C contribution differs under its object registered flag set')
     segment = recipe['object_segment']
     details = {'receipt':receipt, 'expected_size':end-start, 'emitted_sizes':obj.segment_lengths,
                'publics':obj.publics, 'externals':obj.externals, 'fixups':obj.linker_fixups,
@@ -69,7 +83,10 @@ def probe(recipe, oracle_result=None, source_override=None):
         raise ProbeFailure('Complete emitted contribution length differs from target',
                            {**details, 'category':'EXTENT_MISMATCH'})
     try:
-        if 'members' in recipe:
+        if recipe.get('data_only'):
+            from data_only import bind_data_only
+            payload, binding = bind_data_only(obj, recipe, image, result[2]['unpacked_mz']['relocations'])
+        elif 'members' in recipe:
             payload, binding = bind_multi(obj, recipe, image, result[2]['unpacked_mz']['relocations'])
         elif recipe.get('secondary_dgroup_segments'):
             payload, binding = bind_single_secondary(

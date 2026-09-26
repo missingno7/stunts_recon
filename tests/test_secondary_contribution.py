@@ -267,7 +267,7 @@ class AliasGroundingTests(unittest.TestCase):
         cls.image=MZ.parse(oracle[1]).load_image(oracle[1])
         cls.relocations=oracle[2]['unpacked_mz']['relocations']
 
-    def test_callback_call_and_partial_entry_aliases_are_grounded(self):
+    def test_callback_call_and_reviewed_entry_aliases_are_grounded(self):
         names={'_do_joy_restext','_video_set_mode4','_sprite_make_wnd',
                '_ported_sprite_clear_1_color_'}
         resolved=resolve_code_symbols(names,self.image,self.relocations)
@@ -279,7 +279,7 @@ class AliasGroundingTests(unittest.TestCase):
         for name,key,change in [
             ('_do_joy_restext','pointer_anchors',lambda row:row[0].update(hex='b80000ba0000')),
             ('_video_set_mode4','anchors',lambda row:row[0].update(hex='9a00000000')),
-            ('_sprite_make_wnd','entry_proof',lambda row:row.update(source_line=14156)),
+            ('_sprite_make_wnd','mapped_target',lambda row:row.update(sha256='0'*64)),
         ]:
             altered=copy.deepcopy(original)
             change(altered['symbols'][name][key])

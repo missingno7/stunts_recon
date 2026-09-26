@@ -14,12 +14,39 @@ class CompileFailure(ValueError):
         super().__init__(message)
         self.receipt, self.category = receipt, category
 
+def profile_file(config, logical, root=None):
+    """Physical location of a pinned profile file named by its logical path.
+
+    Pinned file identities keep their logical `toolchain/...` paths (manifest
+    library owners and preprocessor closures name them); a profile whose hash
+    identical copy lives elsewhere records that `directory` together with its
+    `logical_directory`."""
+    root = ROOT if root is None else root
+    path = Path(logical)
+    if path.is_absolute():
+        return path
+    base = Path(config.get('logical_directory', config['directory'])).as_posix()
+    text = path.as_posix()
+    if text.startswith(base + '/'):
+        return root / config['directory'] / text[len(base)+1:]
+    return root / path
+
+
+def toolchain_path(logical):
+    """Physical path of a pinned toolchain file across all profiles."""
+    lock = read_json(ROOT / 'layout/toolchain.json')
+    for config in lock['profiles'].values():
+        if any(item['path'] == logical for item in config['files']):
+            return profile_file(config, logical)
+    return ROOT / logical
+
+
 def verify_toolchain(profile):
     lock = read_json(ROOT / 'layout/toolchain.json')
     require(profile in lock['profiles'], 'Unknown compiler profile')
     config = lock['profiles'][profile]
     for item in config['files'] + [lock['runner']]:
-        path = Path(item['path'])
+        path = profile_file(config, item['path']) if item is not lock['runner'] else Path(item['path'])
         if not path.is_absolute():
             path = ROOT / path
         require(path.is_file() and identity(path.read_bytes()) == {'size': item['size'], 'sha256': item['sha256']},

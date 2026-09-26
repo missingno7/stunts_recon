@@ -1,0 +1,342 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 133660,
+  "expected_fixups": [
+    {
+      "displacement": 180,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 20,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 180,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 42,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 403,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 72,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 113,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 100,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 104,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "add_exit_handler",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 187,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "DSEG",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 384,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 214,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 216,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 344,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 216,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 401,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 406,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "DSEG",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 133244,
+      "offset": 2172,
+      "segment": 8192
+    },
+    {
+      "load_offset": 133325,
+      "offset": 2253,
+      "segment": 8192
+    },
+    {
+      "load_offset": 133544,
+      "offset": 2472,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "asm-external-far-call-v1"
+  },
+  "id": "asm012_133138",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 133251,
+      "name": "kb_init_interrupt",
+      "public": "_kb_init_interrupt",
+      "stable_id": "load_20812",
+      "start": 133138,
+      "target": {
+        "sha256": "04b958936ba63e585be97fec6622cce4c236c069509cb8dd48bd98a45ab94b76",
+        "size": 113
+      }
+    },
+    {
+      "end": 133318,
+      "name": "kb_exit_handler",
+      "public": "_kb_exit_handler",
+      "stable_id": "load_20883",
+      "start": 133251,
+      "target": {
+        "sha256": "2fcc8b964fb5876117a312399ee4945965c0df78f6c109cf4a905e9bb0a7b704",
+        "size": 67
+      }
+    },
+    {
+      "end": 133541,
+      "name": "kb_int9_handler",
+      "public": "_kb_int9_handler",
+      "stable_id": "load_208c6",
+      "start": 133318,
+      "target": {
+        "sha256": "499a5c8effe03f1143ffb0ce98d1b9affeed2f29137d191a35117f113d9a072d",
+        "size": 223
+      }
+    },
+    {
+      "end": 133645,
+      "name": "kb_int16_handler",
+      "public": "_kb_int16_handler",
+      "stable_id": "load_209a5",
+      "start": 133541,
+      "target": {
+        "sha256": "4743167b7e7c863cd9c86f9fbdca4b8674859c0b879fc428941c279989ff0ce2",
+        "size": 104
+      }
+    },
+    {
+      "end": 133660,
+      "name": "kb_get_key_state",
+      "public": "_kb_get_key_state",
+      "stable_id": null,
+      "start": 133645,
+      "target": {
+        "sha256": "71603d95dcd7ab5d0a9a30de0dc3d499ed1ebe4db6bf247ba1994d02f0b84297",
+        "size": 15
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "add_exit_handler"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_kb_get_key_state",
+        "offset": 507,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_kb_init_interrupt",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_kb_int9_handler",
+        "offset": 180,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_kb_exit_handler",
+        "offset": 113,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_kb_int16_handler",
+        "offset": 403,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 522,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "source": "asm/asm012_133138.ASM",
+  "stable_id": "multi_asm012_133138",
+  "start": 133138,
+  "subsumed_owners": [
+    "load_20812",
+    "load_20883",
+    "load_208c6",
+    "load_209a5"
+  ],
+  "target": {
+    "sha256": "8b7b1484cb4b46c741178eab5ed46b2cf1ae540eade1acec84d58ce307ae7755",
+    "size": 522
+  }
+}

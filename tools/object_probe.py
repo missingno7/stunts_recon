@@ -30,12 +30,14 @@ def _iterated_data(body, at, depth=0):
     return data*repeat,at
 
 
-def read_object(data, *, ledata_policy=None, research_local_symbols=False):
+def read_object(data, *, ledata_policy=None, record_policy=None,
+                sparse_zero=None, research_local_symbols=False):
     if ledata_policy is not None:
         require(set(ledata_policy) == {'mode', 'module_sha256', 'records'}
                 and ledata_policy['mode'] == 'pinned-ordered-ledata-v1'
                 and ledata_policy['module_sha256'] == sha(data), 'Invalid pinned LEDATA policy or module identity')
     at, ended, first = 0, False, True
+    exceptional_checksum_seen = False
     initialized = {}
     writes, had_overlap = [], False
     write_payloads = []
@@ -55,7 +57,19 @@ def read_object(data, *, ledata_policy=None, research_local_symbols=False):
         require(not ended and length >= 1 and end <= len(data) and kind in allowed,
                 f'Invalid/unsupported OMF record {kind:02x}')
         require(not first or kind == 0x80, 'Object must start with THEADR')
-        require(data[end - 1] == 0 or sum(data[at:end]) & 255 == 0, 'OMF checksum mismatch')
+        checksum_ok = data[end - 1] == 0 or sum(data[at:end]) & 255 == 0
+        if not checksum_ok:
+            require(record_policy == {
+                'mode':'crt0-comment-checksum-v1',
+                'module_sha256':'d5b8b4a264adea82a75056189745d9d786e81192af65e9d4713e4ab0a687a973',
+                'record_offset':466, 'kind':0x88, 'size':4,
+                'body_sha256':'c6ef173229e1869cd33073657375349eaf71a2329203c009ecd0c9c7c8410aad',
+                'checksum':0xd1,
+            } and sha(data) == record_policy['module_sha256'] and
+                    at == record_policy['record_offset'] and kind == record_policy['kind'] and
+                    length == record_policy['size'] and sha(data[at+3:end-1]) == record_policy['body_sha256'] and
+                    data[end-1] == record_policy['checksum'], 'OMF checksum mismatch')
+            exceptional_checksum_seen = True
         require(kind != 0x9C or last_data_kind != 0xA2,
                 'FIXUPP over iterated LIDATA requires expanded relocation proof')
         if kind in (0xB4, 0xB6):
@@ -98,6 +112,8 @@ def read_object(data, *, ledata_policy=None, research_local_symbols=False):
             iterated_payloads.append((segment,offset,bytes(expanded)))
         first, ended, at = False, kind == 0x8A, end
     require(ended, 'Missing OMF MODEND')
+    require(record_policy is None or exceptional_checksum_seen,
+            'Unused exceptional OMF checksum policy')
     if ledata_policy is not None:
         require(had_overlap and writes == ledata_policy['records'], 'Ordered LEDATA trace differs from reviewed policy')
     obj = OmfReader().read(data)
@@ -145,7 +161,37 @@ def read_object(data, *, ledata_policy=None, research_local_symbols=False):
         require(not seg['use_32bit_offset'],'32-bit SEGDEF unsupported')
         require(not seg['big'],'64KiB BIG SEGDEF unsupported; zero length is not zero storage')
         if seg['index'] in initialized:
-            require(initialized[seg['index']]==set(range(seg['length'])),'Holes or overflow in initialized segment')
+            occupied = initialized[seg['index']]
+            policy=(sparse_zero or {}).get(seg['name'])
+            exact_ranges=(policy is not None and 'initialized_ranges' in policy and
+                          set(policy)=={'initialized_ranges','declared_length'} and
+                          policy['declared_length']==seg['length'] and
+                          all(type(row) is list and len(row)==2 and
+                              0<=row[0]<row[1]<=seg['length']
+                              for row in policy['initialized_ranges']) and
+                          occupied==set().union(*(set(range(*row))
+                                                    for row in policy['initialized_ranges'])))
+            require(occupied == set(range(seg['length'])) or
+                    (sparse_zero is not None and seg['name'] in sparse_zero and
+                     sparse_zero[seg['name']] == {'initialized_prefix':len(occupied),
+                                                 'declared_length':seg['length']} and
+                     occupied == set(range(len(occupied))) and
+                     len(occupied) < seg['length']) or exact_ranges,
+                    'Holes or overflow in initialized segment')
+    require(set(sparse_zero or {}) <= {s['name'] for s in obj.segment_defs},
+            'Unknown sparse zero segment')
+    for name, policy in (sparse_zero or {}).items():
+        require(name in obj.segments and obj.segment_length(name)==policy['declared_length'],
+                'Sparse zero policy differs')
+        if 'initialized_prefix' in policy:
+            require(len(obj.segment_bytes(name))==policy['initialized_prefix'],
+                    'Sparse zero prefix differs')
+            obj.segments[name] += bytes(policy['declared_length']-policy['initialized_prefix'])
+        else:
+            require('initialized_ranges' in policy and len(obj.segment_bytes(name))==policy['declared_length']
+                    and all(obj.segment_bytes(name)[at]==0 for at in range(policy['declared_length'])
+                            if not any(lo<=at<hi for lo,hi in policy['initialized_ranges'])),
+                    'Sparse zero interior differs')
     for public in obj.publics:
         if public['segment'] == '?0':
             # MSC CRT linkage marker: an absolute PUBDEF at 9876h has no

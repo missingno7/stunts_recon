@@ -22,7 +22,7 @@ def production_inputs(manifest=None, recipe_overrides=None, snapshot=None, sourc
     from common import json_bytes
     result['@active-manifest'] = sha(json_bytes(manifest))
     for owner in manifest['owners']:
-        if owner['kind'] not in ('MATCHING_C', 'MATCHING_ASM'): continue
+        if owner['kind'] not in ('MATCHING_C', 'MATCHING_ASM', 'MATCHING_C_DATA', 'MATCHING_ASM_DATA') or 'recipe' not in owner: continue
         name = owner['recipe']
         recipe = (recipe_overrides or {}).get(name) or read_json(ROOT/name)
         result[name] = sha(json_bytes(recipe))
@@ -46,6 +46,12 @@ def validate_layout(manifest, size):
     data=[o for o in manifest['owners'] if o['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA')]
     bss_data=[o for o in manifest.get('bss_owners',[]) if o['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA')]
     for row in data:
+        if row.get('module_form') == 'data-only':
+            require('recipe' in row and 'parent' not in row and
+                    (row['segment']=='_DATA' or row.get('far_data') is True) and
+                    row['target']['size']==row['end']-row['start'],
+                    'Invalid independent data-only owner')
+            continue
         parent=parents.get(row.get('parent'))
         require(parent is not None and
                 row['kind']==('MATCHING_ASM_DATA' if parent['kind']=='MATCHING_ASM' else 'MATCHING_C_DATA') and
@@ -103,16 +109,19 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
     emitted={}
     compiled={}
     for owner in manifest['owners']:
-        if owner['kind'] not in ('MATCHING_C','MATCHING_ASM'): continue
+        if owner['kind'] not in ('MATCHING_C','MATCHING_ASM','MATCHING_C_DATA','MATCHING_ASM_DATA') or 'recipe' not in owner: continue
         recipe=(recipe_overrides or {}).get(owner['recipe']) or read_json(ROOT/owner['recipe'])
         require((recipe['start'],recipe['end'])==(owner['start'],owner['end']),
                 'Recipe ownership mismatch')
-        if owner['kind']=='MATCHING_ASM':
+        if owner['kind'] in ('MATCHING_ASM','MATCHING_ASM_DATA'):
             require(recipe.get('kind')=='asm' and recipe['source'].startswith('asm/') and
                     recipe['source'].endswith('.ASM'), 'Production must consume tracked ASM source')
         else:
             require(recipe.get('kind','c')=='c' and recipe['source'].startswith('src/'),
                     'Production must consume recovered C source')
+        require(bool(recipe.get('data_only')) == (owner.get('module_form')=='data-only') and
+                bool(recipe.get('far_data')) == bool(owner.get('far_data')),
+                'Data-only owner and recipe form differ')
         compiled[owner['id']]=probe(recipe,oracle,(source_overrides or {}).get(recipe['source']))
         emitted[owner['id']]={name:bytes.fromhex(raw) for name,raw in
             compiled[owner['id']][1]['binding'].get('secondary_payloads',{}).items()}
@@ -126,9 +135,13 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
             receipts.append(receipt)
             libraries+=len(payload)
         elif owner['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA'):
-            require(owner['parent'] in emitted and owner['segment'] in emitted[owner['parent']],
-                    'Secondary C payload is missing from its compiled CODE owner')
-            payload=emitted[owner['parent']][owner['segment']]
+            if owner.get('module_form')=='data-only':
+                payload,receipt=compiled[owner['id']]
+                receipts.append(receipt)
+            else:
+                require(owner['parent'] in emitted and owner['segment'] in emitted[owner['parent']],
+                        'Secondary C payload is missing from its compiled CODE owner')
+                payload=emitted[owner['parent']][owner['segment']]
             require(len(payload)==end-start and identity(payload)==owner['target'] and
                     payload==original[start:end], 'Secondary C payload differs from oracle')
             chunks.append(payload)

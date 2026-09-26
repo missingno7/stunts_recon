@@ -85,7 +85,9 @@ class IntegrationRules(unittest.TestCase):
                                   self.image, self.relocations)
         self.assertEqual(symbols['_audioflag2']['allowed_addends'], [0])
         self.assertEqual(symbols['_clip']['allowed_addends'], [0,2,4,6])
-        self.assertEqual(symbols['_sdgame2ptr']['allowed_addends'], [0,2])
+        # integ24: the pinned single `dd` span, accessed as a far pointer,
+        # grounds the complete 4-byte object (segment half included).
+        self.assertEqual(symbols['_sdgame2ptr']['allowed_addends'], [0,1,2,3])
         obj, _ = compile_source(b'extern unsigned char audioflag2[]; '
                                 b'int lookup(void) { return audioflag2[0x3c5f]; }',
                                 'msc510-medium')

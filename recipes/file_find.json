@@ -1,0 +1,253 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 131140,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 7,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_dtatransbuffer",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 25,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_foundfile",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 29,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_foundfileptr",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 57,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_foundfileptr",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 66,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_foundfilepath",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 70,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_foundfileptr",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 79,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_foundfile",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 97,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_dtatransbuffer",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "file_find",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 131118,
+      "name": "file_find",
+      "public": "_file_find",
+      "stable_id": "load_1ffd4",
+      "start": 131028,
+      "target": {
+        "sha256": "6310d8ced7c48e941d3530cc35832d3a1240b271edc4cfb8bff1637a8632cea7",
+        "size": 90
+      }
+    },
+    {
+      "end": 131140,
+      "name": "file_find_next",
+      "public": "_file_find_next",
+      "stable_id": null,
+      "start": 131118,
+      "target": {
+        "sha256": "13a425d8e9d98476c2f013f8e08feffa7c4cc20952abc0c0f11a6917ffc33b11",
+        "size": 22
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_foundfileptr",
+      "_foundfilepath",
+      "_dtatransbuffer",
+      "_foundfile"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          1
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_file_find_next",
+        "offset": 90,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_file_find",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
+        "big": false,
+        "class": "STUNTSD",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 112,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_file_find",
+  "secondary_dgroup_segments": {},
+  "source": "asm/file_find.ASM",
+  "start": 131028,
+  "target": {
+    "sha256": "52ec1d5e37950488e842e04817806d54c51f591d0ce9f7d44e19c32745e5e775",
+    "size": 112
+  }
+}

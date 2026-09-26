@@ -1,0 +1,240 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "_byte_3F880",
+        "_byte_3F881",
+        "_word_3F882",
+        "_dword_3F874"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            1
+          ],
+          "segments": [
+            "DSEG"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_sub_303BA",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
+          "big": false,
+          "class": "STUNTSD",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 0,
+          "name": "DSEG",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 30,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "end": 132056,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 3802,
+    "line_start": 3788,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 2,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_byte_3F880",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 9,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_word_3F882",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 15,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_byte_3F880",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 20,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_byte_3F881",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 26,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_dword_3F874",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "id": "sub_303BA",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_byte_3F880",
+      "_byte_3F881",
+      "_word_3F882",
+      "_dword_3F874"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          1
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_sub_303BA",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
+        "big": false,
+        "class": "STUNTSD",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 30,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_sub_303BA",
+  "source": "asm/sub_303BA.ASM",
+  "stable_id": "asm_load_203ba",
+  "start": 132026,
+  "target": {
+    "sha256": "117c41cc85ee6d88759584ab7bd87d05f6805d54395a7d7cdccf982415491ce7",
+    "size": 30
+  }
+}

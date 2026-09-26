@@ -1,0 +1,272 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_preRender_helper2",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 247,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-local-code-offset16-v1"
+  },
+  "end": 138078,
+  "expected_fixups": [
+    {
+      "displacement": 27,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 25,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 60,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 27,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 60,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 29,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 47,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 31,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 61,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 33,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 76,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 35,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 91,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 37,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 122,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 39,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 153,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 41,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 197,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 43,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 60,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 45,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "id": "preRender_helper2",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_preRender_helper2",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 247,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_preRender_helper2",
+  "source": "asm/preRender_helper2.ASM",
+  "stable_id": "asm_load_21a67",
+  "start": 137831,
+  "target": {
+    "sha256": "93a70258d9cb1defed9f88cc354280fe36426080dd39bd6963a23298df5ea8ca",
+    "size": 247
+  }
+}

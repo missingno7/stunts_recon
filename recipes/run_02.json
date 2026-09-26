@@ -1,0 +1,172 @@
+{
+  "end": 103968,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_op2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 179,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_op2",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 103951,
+      "offset": 38415,
+      "segment": 4096
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-v1"
+  },
+  "id": "run_02",
+  "members": [
+    {
+      "end": 103942,
+      "name": "shape3d_init_shape",
+      "public": "_shape3d_init_shape",
+      "stable_id": "load_1955a",
+      "start": 103770,
+      "target": {
+        "sha256": "3116ece1a041269b59faf318c91af46fa305bd14f4c92ac290c3e051605331c0",
+        "size": 172
+      }
+    },
+    {
+      "end": 103968,
+      "name": "font_op2_alt",
+      "public": "_font_op2_alt",
+      "stable_id": "load_19606",
+      "start": 103942,
+      "target": {
+        "sha256": "7e5b546b05cc2d14461fe009e0e8df578b63009d68a7326aae7392730f602cd7",
+        "size": 26
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_shape3d_init_shape",
+      "_font_op2_alt",
+      "_font_op2"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_shape3d_init_shape",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_font_op2_alt",
+        "offset": 172,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 198,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "source": "src/run_02.c",
+  "start": 103770,
+  "subsumed_owners": [
+    "load_1955a",
+    "load_19606"
+  ],
+  "target": {
+    "sha256": "4d40b132dd76990a1dbc5e9cf042c43eacb2b7d923bc2a51403c937b16da7c53",
+    "size": 198
+  }
+}

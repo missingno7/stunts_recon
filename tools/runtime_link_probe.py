@@ -43,7 +43,8 @@ def original_module(row):
     relative = 'toolchain/msc510/' + row['library']
     require(any(p['path'] == relative and p['sha256'] == row['library_sha256'] for p in config['files']),
             'Archive not pinned to expected compiler profile')
-    archive = (ROOT/relative).read_bytes()
+    from compiler import toolchain_path
+    archive = toolchain_path(relative).read_bytes()
     require(sha(archive) == row['library_sha256'], 'Archive identity changed')
     matches = [data for name, data in OmfReader().split_library(archive)
                if name == row['module_name'] and sha(data) == row['module_sha256']]

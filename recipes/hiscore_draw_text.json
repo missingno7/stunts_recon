@@ -1,0 +1,407 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_word_6ae0",
+        "_word_6ae2",
+        "_word_6ae4",
+        "_word_6ae6",
+        "_word_a282",
+        "_font_op2",
+        "_font_set_unk",
+        "_font_draw_text",
+        "_hiscore_draw_text"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_hiscore_draw_text",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 180,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "end": 102588,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "reviewed_overlay": "layout/function-evidence.json"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ae0",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 176,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ae0",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 168,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_set_unk",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 151,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_set_unk",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 137,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 116,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 95,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_draw_text",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 74,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_draw_text",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_set_unk",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 53,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_set_unk",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ae2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 44,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ae2",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_font_op2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 32,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_font_op2",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ae0",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 26,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ae0",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ae6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 19,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ae6",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_a282",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 15,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_a282",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_6ae4",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 8,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_6ae4",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 102578,
+      "offset": 37042,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102561,
+      "offset": 37025,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102547,
+      "offset": 37011,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102526,
+      "offset": 36990,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102505,
+      "offset": 36969,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102484,
+      "offset": 36948,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102463,
+      "offset": 36927,
+      "segment": 4096
+    },
+    {
+      "load_offset": 102442,
+      "offset": 36906,
+      "segment": 4096
+    }
+  ],
+  "id": "hiscore_draw_text",
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_hiscore_draw_text",
+  "source": "src/hiscore_draw_text.c",
+  "stable_id": "load_19008",
+  "start": 102408,
+  "target": {
+    "sha256": "64cf78aed5ee9fc0fda6e2444845ce965bab87fcff27a9e10f1c4b5a98ec6717",
+    "size": 180
+  }
+}

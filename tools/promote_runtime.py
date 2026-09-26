@@ -12,7 +12,8 @@ from build_exact import build, inputs, validate_layout
 from library import bind_library
 from oracle import verify
 from mz import MZ
-from transaction import exclusive, ensure_consistent, prepare, apply, finish, rollback, invalidate_receipts
+from transaction import (exclusive, ensure_consistent, prepare, apply, finish, rollback, invalidate_receipts,
+                         lock_free_snapshot, publishing)
 
 
 def replace_raw_library(manifest, candidate):
@@ -36,48 +37,59 @@ def replace_raw_library(manifest, candidate):
     return result
 
 
+def _stage_runtime(candidates, candidate_path, frozen, before, verify_only):
+    """Staged runtime acceptance; reads canonical state, writes nothing canonical."""
+    manifest = read_json(ROOT/'layout/manifest.json')
+    oracle = verify(write=False); mz = MZ.parse(oracle[1]); image = mz.load_image(oracle[1])
+    staged = manifest
+    for candidate in candidates:
+        staged = replace_raw_library(staged,candidate)
+    validate_layout(staged,len(image))
+    fast = [bind_library(c,image,mz.relocations,manifest=staged)[1] for c in candidates]
+    accepted_before = [o for o in manifest['owners'] if o['kind'] != 'UNRESOLVED_RAW']
+    require(all(o in staged['owners'] for o in accepted_before), 'Runtime publication changed accepted ownership')
+    fresh = build(staged,publish=False)
+    require(inputs() == before and fresh['inputs'] == before, 'Inputs changed during staged runtime acceptance')
+    require(candidate_path.read_bytes() == frozen, 'Runtime candidate changed during acceptance')
+    report = {'status':'VERIFIED_ONLY' if verify_only else 'PROMOTED',
+              'owners':[c['id'] for c in candidates], 'bytes':sum(c['end']-c['start'] for c in candidates),
+              'fast':fast, 'whole_image':fresh['executable'], 'relocation_count':fresh['relocation_count']}
+    return report, staged
+
+
 def promote_runtime(candidate_path, verify_only=False):
     candidate_path = Path(candidate_path).resolve()
     frozen = candidate_path.read_bytes()
     candidates = json.loads(frozen)
     if isinstance(candidates, dict): candidates = [candidates]
     require(isinstance(candidates,list) and candidates, 'Expected runtime owner or list of owners')
+    if verify_only:
+        # Read-only: consistent canonical snapshot instead of the writer lock.
+        return lock_free_snapshot(
+            lambda before: _stage_runtime(candidates, candidate_path, frozen, before, True)[0], inputs)
     with exclusive():
         ensure_consistent()
-        before = inputs(); manifest = read_json(ROOT/'layout/manifest.json')
-        oracle = verify(write=False); mz = MZ.parse(oracle[1]); image = mz.load_image(oracle[1])
-        staged = manifest
-        for candidate in candidates:
-            staged = replace_raw_library(staged,candidate)
-        validate_layout(staged,len(image))
-        fast = [bind_library(c,image,mz.relocations,manifest=staged)[1] for c in candidates]
-        accepted_before = [o for o in manifest['owners'] if o['kind'] != 'UNRESOLVED_RAW']
-        require(all(o in staged['owners'] for o in accepted_before), 'Runtime publication changed accepted ownership')
-        fresh = build(staged,publish=False)
-        require(inputs() == before and fresh['inputs'] == before, 'Inputs changed during staged runtime acceptance')
-        require(candidate_path.read_bytes() == frozen, 'Runtime candidate changed during acceptance')
-        report = {'status':'VERIFIED_ONLY' if verify_only else 'PROMOTED',
-                  'owners':[c['id'] for c in candidates], 'bytes':sum(c['end']-c['start'] for c in candidates),
-                  'fast':fast, 'whole_image':fresh['executable'], 'relocation_count':fresh['relocation_count']}
-        if verify_only: return report
+        before = inputs()
+        report, staged = _stage_runtime(candidates, candidate_path, frozen, before, False)
         changes = {'layout/manifest.json':json_bytes(staged)}
         expected = {**before, **{p:sha(raw) for p,raw in changes.items()}}
-        rows = prepare(changes)
-        try:
-            require(inputs() == before, 'Inputs changed before runtime publication')
-            invalidate_receipts(); apply(rows)
-            require(inputs() == expected, 'Unexpected edits during runtime publication')
-            artifact = {}
-            accepted = build(publish=False,allow_pending=True,artifact=artifact)
-            require(inputs() == expected and accepted['inputs'] == expected,
-                    'Unexpected edits during canonical runtime verification')
-            require(candidate_path.read_bytes() == frozen, 'Runtime candidate changed before publication completed')
-            finish()
-            atomic_bytes(ROOT/'build/exact/mcga.exe',artifact['executable'])
-            write_json(ROOT/'build/exact/acceptance.json',accepted)
-            require(inputs() == expected, 'Inputs changed while publishing runtime receipt')
-        except BaseException:
-            invalidate_receipts(); rollback(); raise
+        with publishing():
+            rows = prepare(changes)
+            try:
+                require(inputs() == before, 'Inputs changed before runtime publication')
+                invalidate_receipts(); apply(rows)
+                require(inputs() == expected, 'Unexpected edits during runtime publication')
+                artifact = {}
+                accepted = build(publish=False,allow_pending=True,artifact=artifact)
+                require(inputs() == expected and accepted['inputs'] == expected,
+                        'Unexpected edits during canonical runtime verification')
+                require(candidate_path.read_bytes() == frozen, 'Runtime candidate changed before publication completed')
+                finish()
+                atomic_bytes(ROOT/'build/exact/mcga.exe',artifact['executable'])
+                write_json(ROOT/'build/exact/acceptance.json',accepted)
+                require(inputs() == expected, 'Inputs changed while publishing runtime receipt')
+            except BaseException:
+                invalidate_receipts(); rollback(); raise
         report['inputs'] = expected
         write_json(ROOT/'build/acceptance/runtime/report.json',report)
         return report

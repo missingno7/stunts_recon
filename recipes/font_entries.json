@@ -1,0 +1,170 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 141446,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_fontdefseg",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 26,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_fontdefseg",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "font_entries",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 141379,
+      "name": "font_op",
+      "public": "_font_op",
+      "stable_id": "load_22832",
+      "start": 141362,
+      "target": {
+        "sha256": "62162b7464eaae15d9377f9b1e91f470afa1c87a101c8cdcdd3bb6b081890c66",
+        "size": 17
+      }
+    },
+    {
+      "end": 141446,
+      "name": "font_op2",
+      "public": "_font_op2",
+      "stable_id": "load_22843",
+      "start": 141379,
+      "target": {
+        "sha256": "240a0db9b89b1b7c445b248a18dc972b2bc1845b7530b1396c9811361566b08f",
+        "size": 67
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_fontdefseg"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2,
+          3,
+          4
+        ],
+        "segments": [
+          "_DATA",
+          "CONST",
+          "_BSS"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_font_op",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_font_op2",
+        "offset": 17,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 84,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_font_op",
+  "secondary_dgroup_segments": {},
+  "source": "asm/font_entries.ASM",
+  "start": 141362,
+  "subsumed_owners": [
+    "load_22843"
+  ],
+  "target": {
+    "sha256": "099a29d41fa51f1c5b6d89b0329568719c7a93c3a515c0546930bd82a923e01e",
+    "size": 84
+  }
+}

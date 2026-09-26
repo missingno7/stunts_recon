@@ -1,0 +1,348 @@
+{
+  "binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "end": 77032,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_g_is_busy",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 77,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_g_is_busy",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_gameconfig",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 60,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_gameconfig",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0200",
+      "frame": "_td13_rpl_header",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 57,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_td13_rpl_header",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_td13_rpl_header",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 53,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_td13_rpl_header",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_read_fatal",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 45,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_file_read_fatal",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_g_path_buf",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 41,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_g_path_buf",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_td13_rpl_header",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 38,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_td13_rpl_header",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0200",
+      "frame": "_td13_rpl_header",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 34,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_td13_rpl_header",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_g_is_busy",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 29,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_g_is_busy",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_build_path",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 20,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_file_build_path",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 10,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_g_path_buf",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 6,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_g_path_buf",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 76993,
+      "offset": 11457,
+      "segment": 4096
+    },
+    {
+      "load_offset": 76968,
+      "offset": 11432,
+      "segment": 4096
+    }
+  ],
+  "id": "file_load_replay",
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_file_load_replay",
+      "_td13_rpl_header",
+      "_file_build_path",
+      "_file_read_fatal",
+      "_g_is_busy",
+      "_g_path_buf",
+      "_gameconfig"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_file_load_replay",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 86,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 5,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_file_load_replay",
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 12558,
+      "end": 190595,
+      "start": 190590,
+      "target": {
+        "sha256": "40d513641f46da2d55faff2ba512b607038dd60d8d8431611676c1cd051f0e5a",
+        "size": 5
+      }
+    }
+  },
+  "source": "src/file_load_replay.c",
+  "stable_id": "load_12c92",
+  "start": 76946,
+  "target": {
+    "sha256": "f842aba41633583cd29ebfd0f8989a62ade87ab79d6de6ae92c02ea9d6d19ae0",
+    "size": 86
+  }
+}

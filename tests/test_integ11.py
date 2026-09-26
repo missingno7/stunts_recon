@@ -29,8 +29,19 @@ class Integration11(unittest.TestCase):
         names={'_trackcenterpos','_voicefileptr','_planptr'}
         self.assertEqual(set(resolve_symbols(names,self.image,self.relocations)),names)
         symbols=read_json(ROOT/'layout/data-symbols.json')['symbols']
-        self.assertNotIn('_trkObjectList',symbols)
-        self.assertNotIn('_td02_penalty_related',symbols)
+        # integ11's proposals placed these inside _state/the audio ring and were
+        # refused.  integ22 grounds them at their pinned reference placements;
+        # their extents must stay clear of the independently proved objects.
+        resolved=resolve_symbols({'_trkObjectList','_td02_penalty_related','_state'},
+                                 self.image,self.relocations)
+        state=(resolved['_state']['load_address'],resolved['_state']['load_address']+1120)
+        for name,proposed in (('_trkObjectList',214478),('_td02_penalty_related',214506)):
+            row=resolved[name]; end=row['load_address']+len(row['allowed_addends'])
+            self.assertNotEqual(row['load_address'],proposed)
+            self.assertFalse(row['load_address']<state[1] and state[0]<end)
+            self.assertFalse(row['load_address']<218268 and 216908<end)
+        self.assertEqual(resolved['_trkObjectList']['load_address']-178032,0x2098)
+        self.assertEqual(resolved['_td02_penalty_related']['load_address']-178032,0x8178)
 
     def test_rotation_switch_and_select_boundaries_are_reviewed(self):
         inventory=current_inventory(self.image)

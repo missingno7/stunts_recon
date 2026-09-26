@@ -1,0 +1,226 @@
+{
+  "end": 104326,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_9282",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 160,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_9282",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_A596",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 154,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_A596",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_A5AC",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 148,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_word_A5AC",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_itoa",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 19,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_itoa",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 104181,
+      "offset": 38645,
+      "segment": 4096
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "run_03",
+  "members": [
+    {
+      "end": 104306,
+      "name": "print_int_as_string_maybe",
+      "public": "_print_int_as_string_maybe",
+      "stable_id": "load_196e0",
+      "start": 104160,
+      "target": {
+        "sha256": "ef841e22ff0882814090c507070b2536db7e9fa0d6988229c82049abafa4f178",
+        "size": 146
+      }
+    },
+    {
+      "end": 104326,
+      "name": "sub_29772",
+      "public": "_sub_29772",
+      "stable_id": "load_19772",
+      "start": 104306,
+      "target": {
+        "sha256": "ce168967aa34370b0be43380a4bafb005d76a7454773ca357dde3f461e117b1b",
+        "size": 20
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_itoa",
+      "_print_int_as_string_maybe",
+      "_sub_29772",
+      "_word_A5AC",
+      "_word_A596",
+      "_word_9282"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_print_int_as_string_maybe",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_sub_29772",
+        "offset": 146,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 166,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "source": "src/run_03.c",
+  "start": 104160,
+  "subsumed_owners": [
+    "load_196e0",
+    "load_19772"
+  ],
+  "target": {
+    "sha256": "da4fff0ddabcefe771f85d30ff1330e09b38ba8a2f8c4e71679364a6c736a35c",
+    "size": 166
+  }
+}

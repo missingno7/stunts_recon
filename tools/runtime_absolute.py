@@ -8,7 +8,8 @@ def ahshift(image, relocations):
     config, _ = verify_toolchain('msc510-medium')
     library = 'toolchain/msc510/MLIBCR.LIB'
     pinned, = [f for f in config['files'] if f['path'] == library]
-    data = (ROOT/library).read_bytes()
+    from compiler import toolchain_path
+    data = toolchain_path(library).read_bytes()
     require(sha(data) == pinned['sha256'], 'Pinned runtime library changed')
     modules = [(n, raw) for n, raw in OmfReader().split_library(data)
                if n == 'dos\\diffhlp.asm']

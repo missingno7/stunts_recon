@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,9 +30,24 @@ def write_json(path, value):
     fd,name=tempfile.mkstemp(prefix='.'+path.name+'.',dir=path.parent)
     try:
         with os.fdopen(fd,'wb') as stream:stream.write(data)
-        os.replace(name,path)
+        replace_file(name,path)
     finally:
         Path(name).unlink(missing_ok=True)
+
+def replace_file(source, target, attempts=150):
+    """os.replace that tolerates transient Windows sharing violations.
+
+    Lock-free readers (verify-only snapshots) may briefly hold a canonical file
+    open; Windows then refuses the rename for a moment instead of replacing."""
+    for attempt in range(attempts):
+        try:
+            os.replace(source, target)
+            return
+        except PermissionError:
+            if os.name != 'nt' or attempt == attempts - 1:
+                raise
+            time.sleep(0.02)
+
 
 def require(condition, message):
     if not condition:
@@ -52,6 +68,6 @@ def atomic_bytes(path, data):
             stream.write(data)
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(name, path)
+        replace_file(name, path)
     finally:
         Path(name).unlink(missing_ok=True)

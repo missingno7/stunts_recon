@@ -118,7 +118,7 @@ def bind_secondary(obj, recipe, image, relocations, code_payload, code_fixups):
     extents = []
     relocation_sites = {row['load_offset'] for row in relocations}
     for name, spec in specs.items():
-        require(name in ('_DATA', 'CONST', '_BSS') and name in groups[0]['segments']
+        require(name in ('_DATA', 'CONST', '_BSS', 'DSEG') and name in groups[0]['segments']
                 and name in definitions, 'Unsupported secondary segment')
         start, end = spec['start'], spec['end']
         size = obj.segment_length(name)

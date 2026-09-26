@@ -1,0 +1,96 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 146328,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "seg012_nopsub33ac0_group",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 146148,
+      "name": "nopsub_33AC0",
+      "public": "_nopsub_33AC0",
+      "stable_id": "load_23ac0",
+      "start": 146112,
+      "target": {
+        "sha256": "8ac5e098f2ad73032420191a2d976c788c7fa25ce139742635aeea8384172ca0",
+        "size": 36
+      }
+    },
+    {
+      "end": 146178,
+      "name": "nopsub_33AE4",
+      "public": "_nopsub_33AE4",
+      "stable_id": "load_23ae4",
+      "start": 146148,
+      "target": {
+        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
+        "size": 30
+      }
+    },
+    {
+      "end": 146328,
+      "name": "shape2d_render_bmp_as_mask",
+      "public": "_shape2d_render_bmp_as_mask",
+      "stable_id": "load_23b02",
+      "start": 146178,
+      "target": {
+        "sha256": "e15f4017389165a30ac97dde5ca5a8d8a2ce8b3e18e6dfea6c7509402b990349",
+        "size": 150
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_nopsub_33AC0",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_nopsub_33AE4",
+        "offset": 36,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_shape2d_render_bmp_as_mask",
+        "offset": 66,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 216,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "source": "asm/seg012_nopsub33ac0_group.ASM",
+  "stable_id": "multi_seg012_nopsub33ac0_group",
+  "start": 146112,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "567278f87f08962cb33087d1bd383941b2264ba8fbbeceb5ec5b54f72f24ca92",
+    "size": 216
+  }
+}

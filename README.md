@@ -8,7 +8,7 @@ Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, an
 
 Install the diagnostic decoder with `python -m pip install --target build/python capstone==5.0.3`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; Restunts resides at `build/references/restunts`. Keep that checkout, its reference executable, and other ignored local inputs. They cannot be restored from this repository's Git history.
 
-Full validation independently recompiles active C and reassembles active ASM under DOSBox-X at `C:/DOSBox-X/dosbox-x.exe`. Configure local runner paths explicitly when moving machines, preserving pinned tool identities. The pinned MASM 5.10 ASM profile is a reproduction choice, not an attribution of the original assembler. No verification command updates the byte oracle.
+Full validation independently recompiles active C and reassembles active ASM under DOSBox-X at `C:/tools/dosbox-x/dosbox-x.exe` (hash-identical copy of `C:/DOSBox-X`); all compiles run under MS-DOS Player at `C:/tools/nmlgcdos/msdos.exe`. Configure local runner paths explicitly when moving machines, preserving pinned tool identities. The pinned MASM 5.10 ASM profile is a reproduction choice, not an attribution of the original assembler. No verification command updates the byte oracle.
 
 ## Everyday work
 
@@ -33,6 +33,8 @@ python tools/promote.py FUNCTION build/workers/NAME/candidate.ASM --recipe build
 
 Predict local BP homes with `python tools/slotorder.py --source src/copy_string.c --function copy_string`, or suggest names with `python tools/slotorder.py --names first second third`.
 The same helper predicts explicit `register` SI/DI assignment in declaration order with `--registers si:index di:source`; BP homes still follow the independent identifier hash rule. Supply `--other-register-uses` when generated code also saves SI or DI.
+
+For CODE record-cut and ordered relocation diagnostics, run `python tools/cut_simulator.py INPUT.json OUTPUT.json` with ordered members, instruction boundaries, fixups, and relocation sites.
 
 Map candidate translation units with `python tools/tubench.py --map`, then compare a whole C source per member with `python tools/tubench.py SOURCE --tu ID` or `--interval START END`.
 `tubench.py` includes reviewed function-boundary overlays and diagnoses TU-owned `_DATA`/`CONST` placements only when original code operands agree on one base and the complete initialized payload matches the image. A member with no outgoing near calls may be verified as a standalone source when its full object and bindings match; members using TU-owned data must include that data in the contribution.

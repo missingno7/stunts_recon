@@ -1,0 +1,225 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 134521,
+  "expected_fixups": [
+    {
+      "displacement": 365,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 70,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_copy_paras_reverse",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 120,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_copy_paras_reverse",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 150,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 133,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 221,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 349,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 230,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 363,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 395,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 533,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 134108,
+      "offset": 3036,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "asm-external-far-call-v1"
+  },
+  "id": "file_decomp_rle",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 134136,
+      "name": "file_decomp_rle",
+      "public": "_file_decomp_rle",
+      "stable_id": "load_20b62",
+      "start": 133986,
+      "target": {
+        "sha256": "4beb46c06301d78aa7e07600576e29dcaf6d9efb61967efe6068e5ed0383b934",
+        "size": 150
+      }
+    },
+    {
+      "end": 134351,
+      "name": "file_decomp_rle_single",
+      "public": "_file_decomp_rle_single",
+      "stable_id": "load_20bf8",
+      "start": 134136,
+      "target": {
+        "sha256": "0b9a6e912278fb6c5b43d06d633a70ffbbe19d88a5417b7bdea50e4515ae8338",
+        "size": 215
+      }
+    },
+    {
+      "end": 134521,
+      "name": "file_decomp_rle_seq",
+      "public": "_file_decomp_rle_seq",
+      "stable_id": "load_20ccf",
+      "start": 134351,
+      "target": {
+        "sha256": "6172cb287f94c6ac261996291efed263d0f2e5b45817ec237eed35865832e8c1",
+        "size": 170
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_copy_paras_reverse"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_file_decomp_rle_seq",
+        "offset": 365,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_file_decomp_rle",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_file_decomp_rle_single",
+        "offset": 150,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 535,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_file_decomp_rle",
+  "reviewed_near_labels": {
+    "221": {
+      "label": "loc_30C3F",
+      "source_line": 4925
+    },
+    "230": {
+      "label": "loc_30C48",
+      "source_line": 4931
+    },
+    "395": {
+      "label": "loc_30CED",
+      "source_line": 5014
+    }
+  },
+  "secondary_dgroup_segments": {},
+  "source": "asm/file_decomp_rle.ASM",
+  "start": 133986,
+  "target": {
+    "sha256": "3bb0e1920707517e132cd5a692e9342d9df20769e4e06a899c73d3d05c8ad19e",
+    "size": 535
+  }
+}

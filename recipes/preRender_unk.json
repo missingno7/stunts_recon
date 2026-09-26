@@ -1,0 +1,247 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 128054,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 39,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_word_4031E",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 45,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_word_40320",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_draw_unknown_lines",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 60,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_draw_unknown_lines",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 63,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_spritefunc",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_preRender_line",
+      "frame_index": 3,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 66,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_preRender_line",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 69,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_imagefunc",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_loc_3180A",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 72,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_loc_3180A",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "preRender_unk",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 128036,
+      "name": "preRender_unk",
+      "public": "_preRender_unk",
+      "stable_id": "load_1f3da",
+      "start": 127962,
+      "target": {
+        "sha256": "c560f4a76cd59e6374260a8f6532e76a59dcadfbf576fa05671830fc7052f013",
+        "size": 74
+      }
+    },
+    {
+      "end": 128054,
+      "name": "nopsub_2F424",
+      "public": "_nopsub_2F424",
+      "stable_id": "load_1f424",
+      "start": 128036,
+      "target": {
+        "sha256": "c412c07a7c4a6f42ee231901758a280e30c7819756195bc6a4b8eec4fa74b587",
+        "size": 18
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_draw_unknown_lines",
+      "_loc_3180A",
+      "_preRender_line",
+      "_imagefunc",
+      "_word_40320",
+      "_word_4031E",
+      "_spritefunc"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          1
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_nopsub_2F424",
+        "offset": 74,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_preRender_unk",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
+        "big": false,
+        "class": "STUNTSD",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 92,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_preRender_unk",
+  "reviewed_code_offsets": [
+    "_draw_unknown_lines",
+    "_preRender_line"
+  ],
+  "reviewed_near_targets": {
+    "_loc_3180A": {
+      "source_line": 6552
+    }
+  },
+  "source": "asm/preRender_unk.ASM",
+  "start": 127962,
+  "target": {
+    "sha256": "4f269bc59b9d104264c448669f7ac480aa1dddeca6e85fde3dc643badb50d30e",
+    "size": 92
+  }
+}

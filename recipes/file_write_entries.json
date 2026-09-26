@@ -1,0 +1,191 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 140718,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "aSFileError_0",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 153,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "aSFileError_0",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_fatal_error",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 160,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_fatal_error",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 140700,
+      "offset": 9628,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "file_write_entries",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 140555,
+      "name": "file_write_nofatal",
+      "public": "_file_write_nofatal",
+      "stable_id": "load_224fa",
+      "start": 140538,
+      "target": {
+        "sha256": "cbf228f768570c168a8053d2e6455114d00e79ef01baf783294ee92db39b0096",
+        "size": 17
+      }
+    },
+    {
+      "end": 140718,
+      "name": "file_write_fatal",
+      "public": "_file_write_fatal",
+      "stable_id": "load_2250b",
+      "start": 140555,
+      "target": {
+        "sha256": "690bd5854302f90ba877dfa7b23af5839ae9a1acc4640e6fb6497ba77a585524",
+        "size": 163
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_fatal_error",
+      "aSFileError_0"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2,
+          3,
+          4
+        ],
+        "segments": [
+          "_DATA",
+          "CONST",
+          "_BSS"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_file_write_nofatal",
+        "offset": 0,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_file_write_fatal",
+        "offset": 17,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 180,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_file_write_nofatal",
+  "secondary_dgroup_segments": {},
+  "source": "asm/file_write_entries.ASM",
+  "start": 140538,
+  "target": {
+    "sha256": "a025c218b39689e7eadef62e46b592a163d5d12e8c5a04e00d88931aa51d9fc9",
+    "size": 180
+  }
+}

@@ -31,6 +31,19 @@ VERIFIED_STATUSES = {
     "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
 }
 
+AUTHORITY_INPUTS = (
+    'layout/code-symbols.json', 'layout/data-symbols.json',
+    'layout/function-evidence.json', 'layout/manifest.json',
+    'layout/references.json', 'evidence/functions.json',
+    'tools/code_symbols.py', 'tools/data_symbols.py',
+    'tools/function_evidence.py', 'tools/tubench.py',
+)
+
+
+def _authority_fingerprint(root=ROOT):
+    """Identify the alias/owner rules used for a diagnostic workbench."""
+    return {name: sha((root/name).read_bytes()) for name in AUTHORITY_INPUTS}
+
 
 def _read_authority():
     from oracle import verify
@@ -533,6 +546,7 @@ def _select_members(map_doc, tu_id, interval, members_arg):
 
 
 def run_workbench(source_path, *, tu_id=None, interval=None, members_arg=None):
+    authority_inputs = _authority_fingerprint()
     map_doc = build_tu_map()
     selected, interval_info, selection_id = _select_members(map_doc, tu_id, interval, members_arg)
     source, run_dir, obj, obj_bytes = _compile_in_worker(Path(source_path))
@@ -743,10 +757,13 @@ def run_workbench(source_path, *, tu_id=None, interval=None, members_arg=None):
             "unresolved_fixup_count": len(unresolved_fixups),
         })
 
+    if _authority_fingerprint() != authority_inputs:
+        raise RuntimeError('TU authority inputs changed during diagnostic comparison')
     report = {
         "schema": "tubench-workbench-v1", "profile": "msc510-medium",
         "flags": ["/AM", "/O", "/Gs"],
         "source": str(Path(source_path).resolve()), "source_sha256": sha(source),
+        "authority_inputs": authority_inputs,
         "compile": {"status": "COMPILED", "work_directory": str(run_dir),
                     "object": {"path": str(run_dir / "UNIT.OBJ"), "size": len(obj_bytes), "sha256": sha(obj_bytes)},
                     "code_segment": code_segment, "code_segment_size": len(segment_bytes),

@@ -1,6 +1,7 @@
 """Focused TU map and member comparison checks against the locked image."""
 import io
 import sys
+import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
@@ -8,10 +9,26 @@ from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from tubench import WORKSPACE, _own_data_placements, build_tu_map, run_workbench
+from tubench import (WORKSPACE, AUTHORITY_INPUTS, _authority_fingerprint,
+                     _own_data_placements, build_tu_map, run_workbench)
 
 
 class TUBench(unittest.TestCase):
+    def test_authority_fingerprint_distinguishes_alias_map_versions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            for name in AUTHORITY_INPUTS:
+                path=root/name
+                path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_bytes(b'unchanged')
+            first=_authority_fingerprint(root)
+            self.assertEqual(first,_authority_fingerprint(root))
+            (root/'layout/code-symbols.json').write_bytes(b'new alias')
+            second=_authority_fingerprint(root)
+            self.assertNotEqual(first,second)
+            self.assertEqual(first['layout/data-symbols.json'],
+                             second['layout/data-symbols.json'])
+
     @classmethod
     def setUpClass(cls):
         WORKSPACE.mkdir(parents=True, exist_ok=True)
@@ -22,8 +39,9 @@ class TUBench(unittest.TestCase):
 
     def test_map_from_canonical_inputs(self):
         document = build_tu_map()
-        self.assertEqual(document["closure_count"], 42)
-        self.assertEqual(document["near_call_edges"], 435)
+        # Newly reviewed boundaries expose additional original near-call edges.
+        self.assertEqual(document["closure_count"], 41)
+        self.assertEqual(document["near_call_edges"], 461)
         self.assertTrue(any(row['name']=='mat_rot_zxy' for closure in document['closures']
                             for row in closure['members']))
         self.assertTrue(document["near_call_decode_anomalies"])

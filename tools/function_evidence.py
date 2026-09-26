@@ -3,6 +3,88 @@ import copy
 from common import ROOT, read_json, require, sha
 
 
+# Each pair is a reviewed indirect branch and its complete in-code table.
+# Keeping this allowlist separate from the overlay prevents a proposed row from
+# authorizing arbitrary dispatch sites merely by describing them.
+GENERIC_DISPATCH_SITES = {
+    'build_track_object': ((58802, 63312, 75), (63525, 63614, 12)),
+    'track_setup': ((70671, 70780, 12),),
+    'loop_game': ((82752, 85280, 7), (82961, 83994, 7)),
+    'draw_line_related': ((126132, 126137, 16), (126195, 126200, 9),
+                          (126392, 126397, 9), (126589, 126594, 9),
+                          (127014, 127019, 9)),
+    'sub_38DE6': ((167469, 167550, 16),),
+    'sub_3945A': ((169173, 169384, 18),),
+}
+
+
+def _generic_dispatch_targets(f, by, island_by, image):
+    """Recompute complete words and reachable subset for reviewed dispatches."""
+    expected = GENERIC_DISPATCH_SITES[f['name']]
+    tables = f.get('dispatch_tables', [])
+    proofs = f.get('table_proofs', [])
+    require(len(tables) == len(proofs) == len(expected) == len(island_by),
+            'Generic dispatch count differs from reviewed sites')
+    if f['name']=='draw_line_related':
+        flow=f.get('secondary_selector_dataflow',{})
+        domains={hex(site):(list(range(1,16)) if site==126132 else list(range(2,9)))
+                 for site,_,_ in expected}
+        require(flow.get('oracle_sha256')==sha(image) and
+                flow.get('dispatch_index_sets')==domains and
+                flow.get('unmodelled_or_range_warnings')==[] and
+                all(by.get(row['site'])==bytes.fromhex(row['bytes'])
+                    for row in flow.get('secondary_selector_writes',[])),
+                'Draw-line selector flow certificate differs from reviewed image')
+    result = {}
+    for (site, island_site, count), table, proof in zip(expected, tables, proofs):
+        raw, island = island_by[island_site]
+        require(table['site'] == proof['jump_site'] == site and
+                table['island_load_offset'] == proof['island_load_offset'] == island_site and
+                island.get('indirect_jump_site') == site and
+                island['kind'] == 'jump_table16' and len(raw) == count * 2 and
+                table['entry_width'] == 2 and
+                table['byte_index_values'] == list(range(0, len(raw), 2)) and
+                table['frame_load_address'] == proof['frame_load_address'] == f['frame_load_address'] and
+                table['base_displacement'] == island_site - f['frame_load_address'] and
+                proof['island_hex'] == raw.hex() and
+                by.get(site) == bytes.fromhex(table['instruction_hex']) == bytes.fromhex(proof['jump_bytes']) and
+                by[site] == b'\x2e\xff\xa7' + table['base_displacement'].to_bytes(2, 'little'),
+                'Generic dispatch source/table declaration differs')
+        offsets = [int.from_bytes(raw[i:i+2], 'little') for i in range(0, len(raw), 2)]
+        targets = [f['frame_load_address'] + offset for offset in offsets]
+        require(proof['entry_offsets'] == offsets and proof['targets'] == table['targets'] == targets,
+                'Generic dispatch does not preserve every raw word')
+        valid = table['valid_indices']
+        require(valid == proof['valid_indices'] == table['used_indices'] and
+                valid == list(range(valid[0], valid[-1] + 1)) and
+                0 <= valid[0] <= valid[-1] < count,
+                'Generic dispatch index domain is not bounded')
+        require(all(targets[index] in by for index in valid),
+                'Generic dispatch reachable target leaves reviewed instructions')
+        # The proof sites must be actual source instructions, not prose alone.
+        require(table['index_proof'] == proof['guard_instructions'] and
+                all(by.get(row['load_offset']) == bytes.fromhex(row['bytes'])
+                    for row in proof['guard_instructions']),
+                'Generic dispatch index proof instruction differs')
+        if f['name'] == 'draw_line_related':
+            require(valid == (list(range(1, 16)) if site == 126132 else list(range(2, 9))) and
+                    proof.get('out_of_domain_entries', []) == [
+                        {'index': index, 'word': offsets[index], 'target': targets[index],
+                         **({'reason': 'zero mask branches directly to the RETF epilogue before this dispatch'}
+                            if site == 126132 else {})}
+                        for index in range(valid[0])],
+                    'Draw-line dispatch excluded-prefix proof differs')
+            if site != 126132:
+                require(proof.get('used_index_targets')==[
+                    {'index':index,'target':targets[index]} for index in valid],
+                    'Draw-line reachable selector targets differ')
+        else:
+            require(valid == list(range(count)),
+                    'Generic full-table guard does not cover complete index domain')
+        result[site] = [targets[index] for index in valid]
+    return result
+
+
 def current_inventory(image):
     """Apply reviewed overlays in memory; the checked base inventory stays immutable."""
     inventory=copy.deepcopy(read_json(ROOT/'evidence/functions.json'))
@@ -153,14 +235,19 @@ def reviewed_functions(image):
                 'file_load_resource': [(104915,'3d0800'),(104918,'7603'),
                                        (104923,'03c0'),(104925,'93')],
                 'sub_35C4E': []}
-            require(f['name'] in expected and
-                    len(f.get('dispatch_tables',[])) ==
-                    {'polarAngle':2,'file_load_resource':1,'sub_35C4E':0}[f['name']] and
-                    (f['name']!='sub_35C4E' or
-                     (len(islands)==1 and islands[0]['kind']=='lookup_table8' and
-                      island_by[islands[0]['load_offset']][0]==bytes(range(256)))),
+            require((f['name'] in GENERIC_DISPATCH_SITES or
+                    (f['name'] in expected and
+                     len(f.get('dispatch_tables',[])) ==
+                     {'polarAngle':2,'file_load_resource':1,'sub_35C4E':0}[f['name']] and
+                     (f['name']!='sub_35C4E' or
+                      (len(islands)==1 and islands[0]['kind']=='lookup_table8' and
+                       island_by[islands[0]['load_offset']][0]==bytes(range(256)))))),
                     'Unreviewed embedded dispatch/lookup structure')
+        if f['name'] in GENERIC_DISPATCH_SITES:
+            table_targets_by_site = _generic_dispatch_targets(f, by, island_by, image)
         for table in f.get('dispatch_tables',[]):
+            if f['name'] in GENERIC_DISPATCH_SITES:
+                continue
             site=table['site']; island=island_by.get(table['island_load_offset'])
             require(island is not None and island[1]['kind']=='jump_table16' and
                     site in by and by[site]==bytes.fromhex(table['instruction_hex']) and
@@ -217,7 +304,24 @@ def reviewed_functions(image):
                     'Unreviewed indirect jump in selected function')
             pending.append(nxt)
         padding=set(f['padding_offsets'])
-        require(set(by)-seen==padding and all(by[p]==b'\x90' for p in padding),'Unowned/unexpected unreachable bytes')
+        # MSC switch emission can leave the jump immediately after the table
+        # unreachable from the function entry; its exact code-site and target
+        # remain part of the reviewed object rather than being discarded.
+        structural=set()
+        for name, site, island_site, encoded in (
+                ('track_setup',70804,70780,'e952f5'),
+                ('loop_game',85294,85280,'e9b6f5')):
+            if f['name'] != name: continue
+            raw=by.get(site)
+            require(raw==bytes.fromhex(encoded) and island_site in island_by and
+                    site==island_site+len(island_by[island_site][0]) and
+                    site+3+int.from_bytes(raw[1:],'little',signed=True) in by,
+                    'Switch post-table jump differs in '+name)
+            structural={site}
+        require(set(by)-seen==padding|structural and all(by[p]==b'\x90' for p in padding),
+                'Unowned/unexpected unreachable bytes in '+f['name']+': '+
+                repr(sorted(set(by)-seen-padding)[:20])+', padding visited '+
+                repr(sorted(padding & seen)[:20]))
         require(sorted(seen)==f['reachable_instruction_offsets'],'Reachability evidence changed')
         require(f['name'] not in result,'Duplicate reviewed function name')
         result[f['name']]=f
@@ -235,12 +339,31 @@ def apply_reviewed(inventory, image):
             inventory['functions'][index]={**f,**overlay,'bytes_hex':overlay.get('bytes_hex'),
                 'status':status,
                 'confidence':'reviewed_pristine_entry_extent_cfg','prior_mapping_issues':f.get('issues',[]),'issues':[]}
+    base = {f['name']: f for f in inventory['functions']}
     for name, overlay in reviewed.items():
         if name in existing: continue
-        require(overlay.get('local_symbol') is True and overlay.get('stable_id') ==
-                'load_%05x' % overlay['start'] and overlay.get('provenance') and
-                overlay.get('segment'),
-                'New reviewed entry requires a bounded local-symbol proof')
+        gap = overlay.get('gap_entry_proof')
+        if gap is not None:
+            # An unmapped function between two instruction-verified neighbours
+            # of the same code segment; its own bytes and CFG are reviewed above.
+            before, after = base.get(gap.get('predecessor')), base.get(gap.get('successor'))
+            require(set(gap) == {'kind', 'predecessor', 'successor'} and
+                    gap['kind'] == 'verified-neighbours-v1' and before and after and
+                    before['status'] == after['status'] ==
+                    'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                    before['end'] == overlay['start'] and after['start'] == overlay['end'] and
+                    sha(image[before['start']:before['end']]) == before['sha256'] and
+                    sha(image[after['start']:after['end']]) == after['sha256'] and
+                    overlay.get('segment') == before.get('segment') and
+                    overlay.get('segment_paragraph') == before.get('segment_paragraph') and
+                    overlay.get('stable_id') == 'load_%05x' % overlay['start'] and
+                    not overlay.get('local_symbol'),
+                    'New reviewed gap entry lacks verified neighbouring boundaries')
+        else:
+            require(overlay.get('local_symbol') is True and overlay.get('stable_id') ==
+                    'load_%05x' % overlay['start'] and overlay.get('provenance') and
+                    overlay.get('segment'),
+                    'New reviewed entry requires a bounded local-symbol proof')
         inventory['functions'].append({**overlay,'bytes_hex':overlay.get('bytes_hex'),
             'status':'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED',
             'confidence':'reviewed_pristine_local_entry_extent_cfg',

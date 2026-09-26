@@ -75,7 +75,8 @@ def prepare(source, profile):
                 require('/' not in name and '\\' not in name, 'Pinned include must be a header basename')
                 entry = pinned.get(name.upper())
                 require(entry is not None, f'Header is not hash-pinned by profile: {name}')
-                path = (ROOT / entry['path']).resolve()
+                from compiler import profile_file
+                path = profile_file(config, entry['path'], ROOT).resolve()
                 require(path.parent == include_root, 'Pinned header escaped INCLUDE directory')
             else:
                 path = (project_root / name).resolve()
@@ -87,7 +88,9 @@ def prepare(source, profile):
                 require(tracked.returncode == 0, f'Project header is not tracked: {relative}')
                 entry = None
             data = path.read_bytes()
-            value = {'path': path.relative_to(ROOT).as_posix(), **identity(data)}
+            # Pinned headers keep their logical profile path in the closure.
+            value = {'path': (entry['path'] if entry is not None else
+                              path.relative_to(ROOT).as_posix()), **identity(data)}
             if entry is not None:
                 require(identity(data) == {'size': entry['size'], 'sha256': entry['sha256']},
                         f'Pinned header hash mismatch: {path}')

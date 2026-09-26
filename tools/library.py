@@ -7,14 +7,17 @@ from object_probe import read_object
 
 def bind_library(owner, image, relocations, *, manifest=None, trail=()):
     config,_=verify_toolchain(owner['profile'])
-    path=ROOT/owner['library']
+    from compiler import toolchain_path
+    path=toolchain_path(owner['library'])
     require(any(p['path']==owner['library'] and p['sha256']==owner['library_sha256'] for p in config['files']), 'Library is not pinned by compiler profile')
     data=path.read_bytes()
     require(sha(data)==owner['library_sha256'],'Library identity mismatch')
     modules=OmfReader().split_library(data)
     matches=[blob for name,blob in modules if name==owner['module'] and sha(blob)==owner['module_sha256']]
     require(len(matches)==1,'Pinned library module missing/ambiguous')
-    obj=read_object(matches[0], ledata_policy=owner.get('ledata_policy'))
+    obj=read_object(matches[0], ledata_policy=owner.get('ledata_policy'),
+                    record_policy=owner.get('record_policy'),
+                    sparse_zero=owner.get('binding',{}).get('sparse_zero'))
     require(obj.publics==owner['publics'],'Library public layout changed')
     require(obj.externals==owner['externals'],'Library external declarations changed')
     if owner.get('binding'):

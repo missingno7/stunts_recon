@@ -1,0 +1,326 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_mat_mul_vector",
+        "_transformedshape_zarray",
+        "_transformedshape_indices",
+        "_transformedshape_arg2array",
+        "_transformedshape_counter",
+        "_transformed_shape_add_for_sort",
+        "_mat_temp",
+        "_curtransshape_ptr"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_transformed_shape_add_for_sort",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 92,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "end": 52188,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 4759,
+    "line_start": 4706,
+    "path": "src/restunts/asmorig/seg003.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_curtransshape_ptr",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 82,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_curtransshape_ptr",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_transformedshape_counter",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 78,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_transformedshape_counter",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_transformedshape_indices",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 74,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_transformedshape_indices",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_transformedshape_arg2array",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 70,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_transformedshape_arg2array",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_transformedshape_zarray",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 63,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_transformedshape_zarray",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_transformedshape_counter",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 46,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_transformedshape_counter",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mat_mul_vector",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 38,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mat_mul_vector",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_mat_temp",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 30,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mat_temp",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_curtransshape_ptr",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 9,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_curtransshape_ptr",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 52136,
+      "offset": 52136,
+      "segment": 0
+    }
+  ],
+  "id": "transformed_shape_add_for_sort",
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [
+    {
+      "line": 2,
+      "path": "<source>",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 35,
+      "path": "<source>",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 71,
+      "path": "<source>",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 261,
+      "path": "<source>",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 550,
+      "path": "<source>",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 579,
+      "path": "<source>",
+      "pragma": "pack",
+      "value": null
+    }
+  ],
+  "profile": "msc510-medium",
+  "public": "_transformed_shape_add_for_sort",
+  "source": "src/transformed_shape_add_for_sort.c",
+  "stable_id": "load_0cb80",
+  "start": 52096,
+  "target": {
+    "sha256": "7056be5236f07e9988638c93ae53e2ee5f77c574d1632ee73eb7a13933972a57",
+    "size": 92
+  }
+}
