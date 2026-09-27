@@ -140,7 +140,12 @@ def _environment(profile, recipe, recipe_path, function, closure=None):
         'toolchain_lock': identity(toolchain_path.read_bytes()),
         'toolchain_profile': config,
         'runner': runner,
-        'tool_files': _tool_identity([item['path'] for item in files]),
+        # Profile files keep their logical `toolchain/...` identities and are
+        # read from the profile's physical directory (integ28: msc600a has no
+        # copy under the project tree).
+        'tool_files': {**{item['path']: identity(compiler.profile_file(config, item['path']).read_bytes())
+                          for item in config.get('files', [])},
+                       **_tool_identity([runner['path']])},
         'oracle': oracle,
         'function': function_data,
         'recipe': recipe_data,

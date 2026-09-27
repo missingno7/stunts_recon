@@ -29,14 +29,14 @@
         {
           "name": "_nopsub_31157",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
         {
-          "acbp": 72,
-          "alignment": "word",
-          "alignment_code": 2,
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
           "big": false,
           "class": "CODE",
           "combine": "public",
@@ -44,7 +44,7 @@
           "frame": null,
           "index": 1,
           "length": 18,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -119,7 +119,7 @@
       "frame_method": 2,
       "loc": "offset16",
       "offset": 2,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_resendptr1",
       "target_index": 2,
@@ -136,7 +136,7 @@
       "frame_method": 2,
       "loc": "offset16",
       "offset": 9,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_resptr2",
       "target_index": 1,
@@ -174,14 +174,14 @@
       {
         "name": "_nopsub_31157",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
       {
-        "acbp": 72,
-        "alignment": "word",
-        "alignment_code": 2,
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
         "big": false,
         "class": "CODE",
         "combine": "public",
@@ -189,7 +189,7 @@
         "frame": null,
         "index": 1,
         "length": 18,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
@@ -244,7 +244,7 @@
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_nopsub_31157",
   "source": "asm/nopsub_31157.ASM",

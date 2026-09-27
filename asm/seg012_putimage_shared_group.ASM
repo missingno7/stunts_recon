@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_33B98
 public _sprite_putimage_and_alt
 public _sprite_putimage
@@ -88,10 +89,10 @@ loc_33BF5:
     mov     cx, [si+2]
     lea     dx, [si+10h]
     mov     ax, bx
-    cmp     ax, word ptr cs:[5F30h]
+    cmp     ax, word ptr cs:[_sprite1+16]
     jl      short loc_33C1B
     add     ax, cx
-    sub     ax, word ptr cs:[5F32h]
+    sub     ax, word ptr cs:[_sprite1+18]
     jle     short loc_33C42
     sub     cx, ax
     jg      short loc_33C42
@@ -103,7 +104,7 @@ loc_33C14:
     pop     bp
     retf
 loc_33C1B:
-    mov     bx, word ptr cs:[5F30h]
+    mov     bx, word ptr cs:[_sprite1+16]
     add     ax, cx
     sub     ax, bx
     jle     short loc_33C14
@@ -115,7 +116,7 @@ loc_33C1B:
     add     dx, ax
     mov     ax, bx
     add     ax, cx
-    sub     ax, word ptr cs:[5F32h]
+    sub     ax, word ptr cs:[_sprite1+18]
     jle     short loc_33C42
     sub     cx, ax
     jle     short loc_33C14
@@ -127,10 +128,10 @@ loc_33C42:
     xor     dx, dx
     mov     bx, [bp+shapex]
     mov     ax, bx
-    cmp     ax, word ptr cs:[5F2Ch]
+    cmp     ax, word ptr cs:[_sprite1+12]
     jl      short loc_33C6D
     add     ax, cx
-    sub     ax, word ptr cs:[5F2Eh]
+    sub     ax, word ptr cs:[_sprite1+14]
     jl      short loc_33C94
     sub     cx, ax
     jle     short loc_33C14
@@ -138,14 +139,14 @@ loc_33C42:
     jmp     short loc_33C94
     db 144
 loc_33C6D:
-    mov     bx, word ptr cs:[5F2Ch]
+    mov     bx, word ptr cs:[_sprite1+12]
     add     ax, cx
     sub     ax, bx
     jle     short loc_33C14
     mov     si, cx
     sub     si, ax
     add     [bp+var_bitmap], si
-    mov     si, word ptr cs:[5F2Eh]
+    mov     si, word ptr cs:[_sprite1+14]
     sub     si, bx
     jle     short loc_33C14
     cmp     ax, si
@@ -162,15 +163,15 @@ loc_33C94:
     mov     [bp+var_8], dx
     mov     [bp+shapex], bx
     cld
-    mov     es, word ptr word ptr cs:[5F22h]
+    mov     es, word ptr word ptr cs:[_sprite1+2]
     mov     bx, [bp+shapey]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     di, cs:[bx]
     add     di, [bp+shapex]
     mov     si, [bp+var_bitmap]
     mov     dx, [bp+var_A]
-    mov     bx, word ptr cs:[5F34h]
+    mov     bx, word ptr cs:[_sprite1+20]
     sub     bx, [bp+var_6]
     cmp     [bp+var_8], 0
     jz      short loc_33CDB
@@ -212,5 +213,5 @@ loc_33D02:
     jg      short loc_33D02
     jmp     loc_33C14
 _sprite_putimage endp
-_TEXT ends
+S012_TEXT ends
 end

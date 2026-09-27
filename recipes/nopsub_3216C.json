@@ -28,7 +28,7 @@
         {
           "name": "_nopsub_3216C",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
@@ -43,7 +43,7 @@
           "frame": null,
           "index": 1,
           "length": 49,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -118,7 +118,7 @@
       "frame_method": 2,
       "loc": "offset16",
       "offset": 4,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_byte_4032A",
       "target_index": 1,
@@ -135,7 +135,7 @@
       "frame_method": 2,
       "loc": "offset16",
       "offset": 23,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_byte_4032A",
       "target_index": 1,
@@ -172,7 +172,7 @@
       {
         "name": "_nopsub_3216C",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -187,7 +187,7 @@
         "frame": null,
         "index": 1,
         "length": 49,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
@@ -242,7 +242,7 @@
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_nopsub_3216C",
   "source": "asm/nopsub_3216C.ASM",

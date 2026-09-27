@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _sprite_clear_1_color
 _sprite_clear_1_color proc far
      s = byte ptr 0
@@ -11,20 +12,20 @@ _sprite_clear_1_color proc far
     mov     bp, sp
     push    si
     push    di
-    mov     ax, word ptr cs:[5F22h]
+    mov     ax, word ptr cs:[_sprite1+2]
     mov     es, ax
-    mov     dx, cs:[5F32h]
-    mov     bx, cs:[5F30h]
+    mov     dx, cs:[_sprite1+18]
+    mov     bx, cs:[_sprite1+16]
     sub     dx, bx
     jle     short loc_3330D
     shl     bx, 1
-    add     bx, cs:[5F2Ah]
+    add     bx, cs:[_sprite1+10]
     mov     di, cs:[bx]
-    add     di, cs:[5F2Ch]
-    mov     bx, cs:[5F2Eh]
-    sub     bx, cs:[5F2Ch]
+    add     di, cs:[_sprite1+12]
+    mov     bx, cs:[_sprite1+14]
+    sub     bx, cs:[_sprite1+12]
     jle     short loc_3330D
-    mov     si, cs:[5F34h]
+    mov     si, cs:[_sprite1+20]
     sub     si, bx
     mov     al, [bp+arg_0]
     mov     ah, al
@@ -64,5 +65,5 @@ loc_33325:
     ; align 2
     db 0
 _sprite_clear_1_color endp
-_TEXT ends
+S012_TEXT ends
 end

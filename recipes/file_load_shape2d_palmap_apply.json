@@ -13,7 +13,7 @@
         {
           "name": "_file_load_shape2d_palmap_apply",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
@@ -28,7 +28,7 @@
           "frame": null,
           "index": 1,
           "length": 90,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -49,13 +49,13 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 51,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_file_get_shape2d",
       "target_index": 1,
@@ -83,7 +83,7 @@
       {
         "name": "_file_load_shape2d_palmap_apply",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -98,14 +98,14 @@
         "frame": null,
         "index": 1,
         "length": 90,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_file_load_shape2d_palmap_apply",

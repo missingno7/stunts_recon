@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 extrn _cos_fast:far
 extrn _polarAngle:far
 extrn _sin_fast:far
@@ -61,5 +61,5 @@ loc_20112:
     pop bp
     retf
 _polarRadius2D endp
-_TEXT ends
+S012_TEXT ends
 end

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment byte public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -8,11 +8,11 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 extrn _timer_copy_unk:word
 extrn _word_305F8:word
 extrn _timer_get_counter:far
-_TEXT segment word public 'CODE'
+S012_TEXT segment byte public 'CODE'
 public _timer_wait_for_dx
 _timer_wait_for_dx proc far
     call    _timer_get_counter
@@ -24,5 +24,5 @@ _timer_wait_for_dx proc far
 locret_327EA:
     retf
 _timer_wait_for_dx endp
-_TEXT ends
+S012_TEXT ends
 end

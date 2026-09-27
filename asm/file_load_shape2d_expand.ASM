@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 extrn _file_get_shape2d:far
 public _file_load_shape2d_expand
 _file_load_shape2d_expand proc far
@@ -179,5 +179,5 @@ loc_360EF:
     ; align 2
     db 0
 _file_load_shape2d_expand endp
-_TEXT ends
+S012_TEXT ends
 end

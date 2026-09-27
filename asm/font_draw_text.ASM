@@ -6,8 +6,8 @@ _BSS ends
 CONST segment word public 'CONST'
 CONST ends
 DGROUP group CONST,_BSS,_DATA
-_TEXT segment word public 'CODE'
-assume cs:_TEXT,ds:DGROUP
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT,ds:DGROUP
 extrn _fontdefseg:word
 extrn _word_3B770:word
 extrn _word_3B772:word
@@ -18,6 +18,7 @@ extrn _data_2B77C:byte
 extrn _word_2B77E:word
 extrn _word_2B780:word
 extrn _word_2B782:word
+extrn _sprite1:byte
 extrn _data_2B784:byte
 public _font_draw_text
 SPRITE1 struc
@@ -37,7 +38,6 @@ sprite_field18 dw ?
 sprite_field1A dw ?
 sprite_field1C dw ?
 SPRITE1 ends
-sprite1_base equ 5F20h
 _font_draw_text proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -66,7 +66,7 @@ _font_draw_text proc far
     mov ds, ds:[_fontdefseg]
 loc_3376B:
     cld
-    mov es, word ptr cs:[sprite1_base+SPRITE1.sprite_bitmapptr+2]
+    mov es, word ptr cs:[_sprite1+SPRITE1.sprite_bitmapptr+2]
 loc_33771:
     mov si, [bp+arg_0]
     mov bl, ss:[si]
@@ -118,7 +118,7 @@ loc_337CE:
     mov [bp+var_4], cx
     mov bx, ds:[_data_2B77A]
     shl bx, 1
-    add bx, cs:[sprite1_base+SPRITE1.sprite_lineofs]
+    add bx, cs:[_sprite1+SPRITE1.sprite_lineofs]
 loc_337E7:
     mov di, cs:[bx]
     add di, [bp+var_2]
@@ -144,5 +144,5 @@ loc_337FD:
     add ds:[_aMsRunTimeLibraryCop], ax
     jmp loc_33771
 _font_draw_text endp
-_TEXT ends
+S012_TEXT ends
 end

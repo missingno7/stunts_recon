@@ -154,8 +154,12 @@ class EvidenceTests(unittest.TestCase):
 
         promoted_name = '_unload_resource'
         manifest = read_json(ROOT / 'layout/manifest.json')
+        # Remove whichever owner (the function or a whole object subsuming it)
+        # covers the alias's mapped entry.
+        entry = layout['symbols'][promoted_name]['mapped_target']['start']
         missing_owner = {**manifest, 'owners': [owner for owner in manifest['owners']
-                                                 if owner.get('name') != 'unload_resource']}
+                                                 if not owner['start'] <= entry < owner['end']]}
+        self.assertEqual(len(missing_owner['owners']), len(manifest['owners']) - 1)
 
         def read_without_promoted_owner(path):
             return missing_owner if path == ROOT / 'layout/manifest.json' else original_read(path)
@@ -209,8 +213,9 @@ class EvidenceTests(unittest.TestCase):
         resolved = resolve_symbols(names, self.image, self.relocations)
         self.assertEqual(set(resolved), names)
         self.assertEqual(len(resolved['_intro_cliprect']['allowed_addends']), 8)
+        # integ26: the 15 x 8 rectangle table has a counted-stride extent.
         self.assertEqual(len(resolve_symbols(['_rect_unk'], self.image,
-                         self.relocations)['_rect_unk']['allowed_addends']), 8)
+                         self.relocations)['_rect_unk']['allowed_addends']), 120)
         changed = read_json(ROOT/'layout/data-symbols.json')
         changed['symbols']['_logo2shape']['reference_declaration_line'] += 1
         with patch('data_symbols.read_json', side_effect=lambda path:

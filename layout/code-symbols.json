@@ -205,6 +205,30 @@
         "start": 119852
       }
     },
+    "__aFNalshr": {
+      "anchors": [
+        {
+          "hex": "9a101dc51c",
+          "relocation": {
+            "load_offset": 176242,
+            "offset": 45170,
+            "segment": 8192
+          },
+          "site": 176239
+        },
+        {
+          "hex": "9a101dc51c",
+          "relocation": {
+            "load_offset": 176555,
+            "offset": 45483,
+            "segment": 8192
+          },
+          "site": 176552
+        }
+      ],
+      "frame_load_address": 117840,
+      "owner": "library_alshr_125280"
+    },
     "__aFldiv": {
       "anchors": [
         {
@@ -769,6 +793,39 @@
         "start": 161644
       }
     },
+    "_audio_driver_timer": {
+      "distinct_verified_callers": 2,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 94510,
+        "name": "audio_driver_timer",
+        "sha256": "9574d08ab15ed104065999fff07ad4e4a209f80867c84dd64e7532ff2e3a6354",
+        "stable_id": "load_16fa3",
+        "start": 94115
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_16bae",
+          "hex": "b80304baba16",
+          "relocation": {
+            "load_offset": 93129,
+            "offset": 27593,
+            "segment": 4096
+          },
+          "site": 93125
+        },
+        {
+          "caller_task": "load_16bd5",
+          "hex": "b80304baba16",
+          "relocation": {
+            "load_offset": 93177,
+            "offset": 27641,
+            "segment": 4096
+          },
+          "site": 93173
+        }
+      ]
+    },
     "_audio_function2": {
       "anchors": [
         {
@@ -1324,6 +1381,98 @@
         }
       ]
     },
+    "_audiodrv_atexit": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a94090d27",
+          "relocation": {
+            "load_offset": 1410,
+            "offset": 1410,
+            "segment": 0
+          },
+          "site": 1407
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 162580,
+        "name": "audiodrv_atexit",
+        "sha256": "42232edc07884a40eebebc30af0c4d5384ce77f2dbf171d273c72e76f2271b42",
+        "stable_id": "load_27a64",
+        "start": 162404
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_278ca",
+          "hex": "b89409ba0d27",
+          "relocation": {
+            "load_offset": 162034,
+            "offset": 30962,
+            "segment": 8192
+          },
+          "site": 162030
+        }
+      ]
+    },
+    "_audioresource_compare_chunkname": {
+      "anchors": [
+        {
+          "caller_task": "load_28254",
+          "hex": "9a0400ad29",
+          "relocation": {
+            "load_offset": 164911,
+            "offset": 33839,
+            "segment": 8192
+          },
+          "site": 164908
+        }
+      ],
+      "c_truncated_public": true,
+      "distinct_verified_callers": 1,
+      "frame_load_address": 170704,
+      "mapped_target": {
+        "end": 170842,
+        "name": "audioresource_compare_chunknames",
+        "sha256": "fbc6121dc0facdc87661b21fb1781b4ea0a8ee9acce67b2362cf4497d54b2603",
+        "stable_id": "load_29ad4",
+        "start": 170708
+      }
+    },
+    "_audioresource_copy_n_bytes": {
+      "anchors": [
+        {
+          "caller_task": "load_28254",
+          "hex": "9ab401ad29",
+          "relocation": {
+            "load_offset": 164590,
+            "offset": 33518,
+            "segment": 8192
+          },
+          "site": 164587
+        },
+        {
+          "caller_task": "load_28254",
+          "hex": "9ab401ad29",
+          "relocation": {
+            "load_offset": 164996,
+            "offset": 33924,
+            "segment": 8192
+          },
+          "site": 164993
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 170704,
+      "mapped_target": {
+        "end": 171210,
+        "name": "audioresource_copy_n_bytes",
+        "sha256": "648598ba16bc405e088c1c913a569241d38f828e769424e25e64b283a86d1c86",
+        "stable_id": "load_29c84",
+        "start": 171140
+      }
+    },
     "_audioresource_find": {
       "anchors": [
         {
@@ -1356,6 +1505,39 @@
         "start": 170972
       }
     },
+    "_audioresource_get_chunk_index": {
+      "anchors": [
+        {
+          "caller_task": "load_28254",
+          "hex": "9a8a00ad29",
+          "relocation": {
+            "load_offset": 164614,
+            "offset": 33542,
+            "segment": 8192
+          },
+          "site": 164611
+        },
+        {
+          "caller_task": "load_28254",
+          "hex": "9a8a00ad29",
+          "relocation": {
+            "load_offset": 165020,
+            "offset": 33948,
+            "segment": 8192
+          },
+          "site": 165017
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 170704,
+      "mapped_target": {
+        "end": 170972,
+        "name": "audioresource_get_chunk_index",
+        "sha256": "7146ebe9c2ff2db9ac59fb42dffe02df4f5c5249b6e4c2c29949d4e19db0776d",
+        "stable_id": "load_29b5a",
+        "start": 170842
+      }
+    },
     "_audioresource_get_dword": {
       "anchors": [
         {
@@ -1379,6 +1561,29 @@
         "start": 165114
       }
     },
+    "_audioresource_get_word": {
+      "anchors": [
+        {
+          "caller_task": "load_2945a",
+          "hex": "9a44140d27",
+          "relocation": {
+            "load_offset": 169361,
+            "offset": 38289,
+            "segment": 8192
+          },
+          "site": 169358
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 165160,
+        "name": "audioresource_get_word",
+        "sha256": "7abf98da6a822503fc7022e32a72f564fb633ff1e264501072cefca9890edfc4",
+        "stable_id": "load_28514",
+        "start": 165140
+      }
+    },
     "_bto_auxiliary1": {
       "anchors": [
         {
@@ -1400,6 +1605,114 @@
         "sha256": "3177f645e285e9c4fc4a985506ae6d9dae7d27c591da1a0cf531560381bd6f5c",
         "stable_id": "load_0fae4",
         "start": 64228
+      }
+    },
+    "_build_obj": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 20950,
+            "offset": 20950,
+            "segment": 0
+          },
+          "site": 20947
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 25274,
+            "offset": 25274,
+            "segment": 0
+          },
+          "site": 25271
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 25590,
+            "offset": 25590,
+            "segment": 0
+          },
+          "site": 25587
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 41751,
+            "offset": 41751,
+            "segment": 0
+          },
+          "site": 41748
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 64228,
+        "name": "build_track_object",
+        "sha256": "dcd71ee3eb85c907ebb01313ce056e7d11017f01ff1e714933f2d0f309457995",
+        "stable_id": "load_0e1a0",
+        "start": 57760
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_build_obj"
+    },
+    "_build_track_object": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 20950,
+            "offset": 20950,
+            "segment": 0
+          },
+          "site": 20947
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 25274,
+            "offset": 25274,
+            "segment": 0
+          },
+          "site": 25271
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 25590,
+            "offset": 25590,
+            "segment": 0
+          },
+          "site": 25587
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 41751,
+            "offset": 41751,
+            "segment": 0
+          },
+          "site": 41748
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 64228,
+        "name": "build_track_object",
+        "sha256": "dcd71ee3eb85c907ebb01313ce056e7d11017f01ff1e714933f2d0f309457995",
+        "stable_id": "load_0e1a0",
+        "start": 57760
       }
     },
     "_call_exitlist2": {
@@ -1487,6 +1800,1031 @@
         "stable_id": "load_18ee4",
         "start": 102116
       }
+    },
+    "_code_load_09ee8": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a2801dc09",
+          "relocation": {
+            "load_offset": 25,
+            "offset": 25,
+            "segment": 0
+          },
+          "site": 22
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40722,
+        "name": "init_div0",
+        "sha256": "d91499ce16e61bf7b0a7b4d8d112a68251c30437fb3240467a50eef2c039e6d0",
+        "start": 40680
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_09ee8"
+    },
+    "_code_load_0e1a0": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 20950,
+            "offset": 20950,
+            "segment": 0
+          },
+          "site": 20947
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 25274,
+            "offset": 25274,
+            "segment": 0
+          },
+          "site": 25271
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 25590,
+            "offset": 25590,
+            "segment": 0
+          },
+          "site": 25587
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a00001a0e",
+          "relocation": {
+            "load_offset": 41751,
+            "offset": 41751,
+            "segment": 0
+          },
+          "site": 41748
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 64228,
+        "name": "build_track_object",
+        "sha256": "dcd71ee3eb85c907ebb01313ce056e7d11017f01ff1e714933f2d0f309457995",
+        "stable_id": "load_0e1a0",
+        "start": 57760
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_0e1a0"
+    },
+    "_code_load_106d4": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 880,
+            "offset": 880,
+            "segment": 0
+          },
+          "site": 877
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 5501,
+            "offset": 5501,
+            "segment": 0
+          },
+          "site": 5498
+        },
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 72679,
+            "offset": 7143,
+            "segment": 4096
+          },
+          "site": 72676
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 83347,
+            "offset": 17811,
+            "segment": 4096
+          },
+          "site": 83344
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 111597,
+            "offset": 46061,
+            "segment": 4096
+          },
+          "site": 111594
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 112444,
+            "offset": 46908,
+            "segment": 4096
+          },
+          "site": 112441
+        }
+      ],
+      "distinct_verified_callers": 5,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 71626,
+        "name": "track_setup",
+        "sha256": "7c26a47660c42d7b08ec0029b720d8975089220cc827a3df8267828b697620a7",
+        "stable_id": "load_106d4",
+        "start": 67284
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_106d4"
+    },
+    "_code_load_11b7a": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0a00b711",
+          "relocation": {
+            "load_offset": 1204,
+            "offset": 1204,
+            "segment": 0
+          },
+          "site": 1201
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 74746,
+        "name": "run_game",
+        "sha256": "3873d1a6bf5d2f5236a1d3c73d73d7255eef1c58d39eb13cbefbfc919ae9c37a",
+        "stable_id": "load_11b7a",
+        "start": 72570
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_11b7a"
+    },
+    "_code_load_14d64": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0400d614",
+          "relocation": {
+            "load_offset": 244,
+            "offset": 244,
+            "segment": 0
+          },
+          "site": 241
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 85442,
+        "name": "init_polyinfo",
+        "sha256": "e378ab6e78a64e8ffc54999c186280290f97efb9ff1f9a2faa4f641a0a3fb318",
+        "stable_id": "load_14d64",
+        "start": 85348
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_14d64"
+    },
+    "_code_load_16fa3": {
+      "distinct_verified_callers": 2,
+      "frame_load_address": 93088,
+      "mapped_target": {
+        "end": 94510,
+        "name": "audio_driver_timer",
+        "sha256": "9574d08ab15ed104065999fff07ad4e4a209f80867c84dd64e7532ff2e3a6354",
+        "stable_id": "load_16fa3",
+        "start": 94115
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_16bae",
+          "hex": "b80304baba16",
+          "relocation": {
+            "load_offset": 93129,
+            "offset": 27593,
+            "segment": 4096
+          },
+          "site": 93125
+        },
+        {
+          "caller_task": "load_16bd5",
+          "hex": "b80304baba16",
+          "relocation": {
+            "load_offset": 93177,
+            "offset": 27641,
+            "segment": 4096
+          },
+          "site": 93173
+        }
+      ],
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_16fa3"
+    },
+    "_code_load_1d5be": {
+      "anchors": [
+        {
+          "caller_task": "load_1d21e",
+          "hex": "9a6e09c51c",
+          "relocation": {
+            "load_offset": 119365,
+            "offset": 53829,
+            "segment": 4096
+          },
+          "site": 119362
+        },
+        {
+          "caller_task": "load_1e48c",
+          "hex": "9a6e09c51c",
+          "relocation": {
+            "load_offset": 124091,
+            "offset": 58555,
+            "segment": 4096
+          },
+          "site": 124088
+        }
+      ],
+      "boundary_proof": "verified-neighbours-v1",
+      "distinct_verified_callers": 2,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 121066,
+        "name": "__output",
+        "sha256": "18d2ddb225f5d670133a48a9f655a471fdbe61323ae8afc47004728b9c2075ea",
+        "start": 120254
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_1d5be"
+    },
+    "_code_load_1e4e6": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 174786,
+            "offset": 43714,
+            "segment": 8192
+          },
+          "site": 174783
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 174895,
+            "offset": 43823,
+            "segment": 8192
+          },
+          "site": 174892
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 174939,
+            "offset": 43867,
+            "segment": 8192
+          },
+          "site": 174936
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 175143,
+            "offset": 44071,
+            "segment": 8192
+          },
+          "site": 175140
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124200,
+        "name": "_stricmp",
+        "sha256": "a6feb4d2b4d712510e2aa3a0adba0a222b0c5073bd1f5799c3fc567064db4fae",
+        "start": 124134
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_1e4e6"
+    },
+    "_code_load_1e5aa": {
+      "anchors": [
+        {
+          "caller_task": "load_1e3c6",
+          "hex": "9a5a19c51c",
+          "relocation": {
+            "load_offset": 123865,
+            "offset": 58329,
+            "segment": 4096
+          },
+          "site": 123862
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124476,
+        "name": "_raise",
+        "sha256": "068b39574012cf37e7f42988825e5e19dc37345185d5e1b4790cb54c40c84626",
+        "start": 124330
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_1e5aa"
+    },
+    "_code_load_20120": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0017a21e",
+          "relocation": {
+            "load_offset": 1425,
+            "offset": 1425,
+            "segment": 0
+          },
+          "site": 1422
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131456,
+        "name": "video_set_mode7",
+        "sha256": "b938d9ffc18d4b2ee4b90cdb5097835f0c1c9b5f6b6ea5296fd218394e52ca61",
+        "stable_id": "load_20120",
+        "start": 131360
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_20120"
+    },
+    "_code_load_20883": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a631ea21e",
+          "relocation": {
+            "load_offset": 1415,
+            "offset": 1415,
+            "segment": 0
+          },
+          "site": 1412
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133318,
+        "name": "kb_exit_handler",
+        "sha256": "2fcc8b964fb5876117a312399ee4945965c0df78f6c109cf4a905e9bb0a7b704",
+        "stable_id": "load_20883",
+        "start": 133251
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_20883"
+    },
+    "_code_load_22ae2": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9ac240a21e",
+          "relocation": {
+            "load_offset": 174862,
+            "offset": 43790,
+            "segment": 8192
+          },
+          "site": 174859
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 142716,
+        "name": "file_unflip_shape2d",
+        "sha256": "4c98eb92516d8fdbc8612f58e6cbe09ebee161225ecfdbd92c631b303a2d1e31",
+        "start": 142050
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_22ae2"
+    },
+    "_code_load_23a1e": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 109261,
+            "offset": 43725,
+            "segment": 4096
+          },
+          "site": 109258
+        },
+        {
+          "caller_task": "load_1beb6",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 114550,
+            "offset": 49014,
+            "segment": 4096
+          },
+          "site": 114547
+        },
+        {
+          "caller_task": "load_1c0a8",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 115780,
+            "offset": 50244,
+            "segment": 4096
+          },
+          "site": 115777
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146112,
+        "name": "putpixel_iconMask",
+        "sha256": "a079b91e5a4f0282b5d9e3bbda1f2411f599a646b1c90c71343461bd8a017454",
+        "start": 145950
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_23a1e"
+    },
+    "_code_load_23e00": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 77740,
+            "offset": 12204,
+            "segment": 4096
+          },
+          "site": 77737
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 80887,
+            "offset": 15351,
+            "segment": 4096
+          },
+          "site": 80884
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81170,
+            "offset": 15634,
+            "segment": 4096
+          },
+          "site": 81167
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81590,
+            "offset": 16054,
+            "segment": 4096
+          },
+          "site": 81587
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81664,
+            "offset": 16128,
+            "segment": 4096
+          },
+          "site": 81661
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81748,
+            "offset": 16212,
+            "segment": 4096
+          },
+          "site": 81745
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147088,
+        "name": "shape2d_op_unk",
+        "sha256": "59aced1134042f07f0ead320f4bdaf31c723e6f92c41ba4218f26deb3574d275",
+        "start": 146944
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_23e00"
+    },
+    "_code_load_23ed2": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 77770,
+            "offset": 12234,
+            "segment": 4096
+          },
+          "site": 77767
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 77786,
+            "offset": 12250,
+            "segment": 4096
+          },
+          "site": 77783
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 78425,
+            "offset": 12889,
+            "segment": 4096
+          },
+          "site": 78422
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147552,
+        "name": "shape2d_op_unk3",
+        "sha256": "2cbadcd705c00360c66536b8ce365d030df5b9bc800136bba2c8edaad1292f62",
+        "start": 147154
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_23ed2"
+    },
+    "_code_load_24212": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 109291,
+            "offset": 43755,
+            "segment": 4096
+          },
+          "site": 109288
+        },
+        {
+          "caller_task": "load_1beb6",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 114599,
+            "offset": 49063,
+            "segment": 4096
+          },
+          "site": 114596
+        },
+        {
+          "caller_task": "load_1c0a8",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 115827,
+            "offset": 50291,
+            "segment": 4096
+          },
+          "site": 115824
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 148214,
+        "name": "putpixel_iconFillings",
+        "sha256": "c36982b91e262412116409e913829eaf0469f62fa93266a7754a0942ddea37a3",
+        "start": 147986
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_24212"
+    },
+    "_code_load_247dc": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9abc5da21e",
+          "relocation": {
+            "load_offset": 49340,
+            "offset": 49340,
+            "segment": 0
+          },
+          "site": 49337
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150284,
+        "name": "shape_op_explosion",
+        "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
+        "start": 149468
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_247dc"
+    },
+    "_code_load_25f48": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a2875a21e",
+          "relocation": {
+            "load_offset": 175272,
+            "offset": 44200,
+            "segment": 8192
+          },
+          "site": 175269
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 155554,
+        "name": "file_load_shape2d_palmap_apply",
+        "sha256": "5d2af9401d58a65d93b7632c829e51be5352c80e343a2048797e5bf98c34d009",
+        "start": 155464
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_25f48"
+    },
+    "_code_load_25fa2": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a8275a21e",
+          "relocation": {
+            "load_offset": 175222,
+            "offset": 44150,
+            "segment": 8192
+          },
+          "site": 175219
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 155894,
+        "name": "file_load_shape2d_expand",
+        "sha256": "5107192c48e33e6035e7cebc0af5671dfb4fb84828fbc99263369f69cc3fcfee",
+        "start": 155554
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_25fa2"
+    },
+    "_code_load_26af2": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158448,
+      "mapped_target": {
+        "end": 158452,
+        "name": "nopsub_36AF2",
+        "sha256": "c8a51d4867300f9df2241e4d32f72b027916ca03fcef86fac7fa83fae59c529c",
+        "stable_id": "load_26af2",
+        "start": 158450
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_190bc",
+          "hex": "b80200baaf26",
+          "relocation": {
+            "load_offset": 102609,
+            "offset": 37073,
+            "segment": 4096
+          },
+          "site": 102605
+        }
+      ],
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_26af2"
+    },
+    "_code_load_26af4": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0400af26",
+          "relocation": {
+            "load_offset": 1420,
+            "offset": 1420,
+            "segment": 0
+          },
+          "site": 1417
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158448,
+      "mapped_target": {
+        "end": 158469,
+        "name": "kb_shift_checking1",
+        "sha256": "6e5e4b20bc2f42032d0c0ec0df231c091ed697b0bd45ab1048c6cfacc293cee3",
+        "stable_id": "load_26af4",
+        "start": 158452
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_26af4"
+    },
+    "_code_load_270ba": {
+      "anchors": [
+        {
+          "caller_task": "load_29ad4",
+          "hex": "9a0a000b27",
+          "relocation": {
+            "load_offset": 170790,
+            "offset": 39718,
+            "segment": 8192
+          },
+          "site": 170787
+        },
+        {
+          "caller_task": "load_29ad4",
+          "hex": "9a0a000b27",
+          "relocation": {
+            "load_offset": 170810,
+            "offset": 39738,
+            "segment": 8192
+          },
+          "site": 170807
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159920,
+      "mapped_target": {
+        "end": 159954,
+        "name": "toupper",
+        "sha256": "ab9c02292544bcf36522a5dff2e1ac2f4592e0659055198774480202b8a61763",
+        "stable_id": "load_270ba",
+        "start": 159930
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_270ba"
+    },
+    "_code_load_27a64": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a94090d27",
+          "relocation": {
+            "load_offset": 1410,
+            "offset": 1410,
+            "segment": 0
+          },
+          "site": 1407
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 162580,
+        "name": "audiodrv_atexit",
+        "sha256": "42232edc07884a40eebebc30af0c4d5384ce77f2dbf171d273c72e76f2271b42",
+        "stable_id": "load_27a64",
+        "start": 162404
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_278ca",
+          "hex": "b89409ba0d27",
+          "relocation": {
+            "load_offset": 162034,
+            "offset": 30962,
+            "segment": 8192
+          },
+          "site": 162030
+        }
+      ],
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_27a64"
+    },
+    "_code_load_27c44": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a740b0d27",
+          "relocation": {
+            "load_offset": 105024,
+            "offset": 39488,
+            "segment": 4096
+          },
+          "site": 105021
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163002,
+        "name": "load_sfx_file",
+        "sha256": "c76f0e28d34da40ac4b60443b4ff0a7fdcc62d574db38aa04c8c85decb1d50e6",
+        "stable_id": "load_27c44",
+        "start": 162884
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_27c44"
+    },
+    "_code_load_27cba": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9aea0b0d27",
+          "relocation": {
+            "load_offset": 105004,
+            "offset": 39468,
+            "segment": 4096
+          },
+          "site": 105001
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163076,
+        "name": "load_song_file",
+        "sha256": "af4a7c973426f618c25a008de206787c580aa343db4759e7311a28e48554234a",
+        "stable_id": "load_27cba",
+        "start": 163002
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_27cba"
+    },
+    "_code_load_27d04": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a340c0d27",
+          "relocation": {
+            "load_offset": 105014,
+            "offset": 39478,
+            "segment": 4096
+          },
+          "site": 105011
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163194,
+        "name": "load_voice_file",
+        "sha256": "a41c601ea5108bad3e9507a857d759c3128c47b66917899d1ffea9e3d986ac47",
+        "stable_id": "load_27d04",
+        "start": 163076
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_27d04"
+    },
+    "_code_load_28514": {
+      "anchors": [
+        {
+          "caller_task": "load_2945a",
+          "hex": "9a44140d27",
+          "relocation": {
+            "load_offset": 169361,
+            "offset": 38289,
+            "segment": 8192
+          },
+          "site": 169358
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 165160,
+        "name": "audioresource_get_word",
+        "sha256": "7abf98da6a822503fc7022e32a72f564fb633ff1e264501072cefca9890edfc4",
+        "stable_id": "load_28514",
+        "start": 165140
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_28514"
+    },
+    "_code_load_29e14": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a0400e129",
+          "relocation": {
+            "load_offset": 105034,
+            "offset": 39498,
+            "segment": 4096
+          },
+          "site": 105031
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 171556,
+        "name": "file_load_shape2d_nofatal2",
+        "sha256": "6393727cb65869acc333ea8441f2e0a36b5c0a1312e7d3f7e13ff2f4c3ecebe9",
+        "stable_id": "load_29e14",
+        "start": 171540
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_29e14"
+    },
+    "_code_load_29e56": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a4600e129",
+          "relocation": {
+            "load_offset": 17,
+            "offset": 17,
+            "segment": 0
+          },
+          "site": 14
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 172636,
+        "name": "init_main",
+        "sha256": "501da7ceb125c3e55fc146c47194d5b6eff3f991c78123b5507b2714b6fc8420",
+        "stable_id": "load_29e56",
+        "start": 171606
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_29e56"
+    },
+    "_code_load_2a25c": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a4c04e129",
+          "relocation": {
+            "load_offset": 895,
+            "offset": 895,
+            "segment": 0
+          },
+          "site": 892
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 172736,
+        "name": "random_wait",
+        "sha256": "5300f9ec5c699080424f95f9af4d2878d851b9ed62865bfaaea2bce7617d0285",
+        "stable_id": "load_2a25c",
+        "start": 172636
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_2a25c"
+    },
+    "_code_load_2b12a": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a0a00122b",
+          "relocation": {
+            "load_offset": 175040,
+            "offset": 43968,
+            "segment": 8192
+          },
+          "site": 175037
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 176416,
+      "mapped_target": {
+        "end": 176564,
+        "name": "file_load_shape2d_expandedsize",
+        "sha256": "0b61d12bbc7e607a97870e23c4976bf986581ee4101877624585b1ddf1b0554c",
+        "start": 176426
+      },
+      "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
+      "reviewed_alias": "_code_load_2b12a"
     },
     "_compare_ds_ss": {
       "anchors": [
@@ -1638,6 +2976,40 @@
         "sha256": "f856a560644eff8e9287dee4ca001aa8e3043540f28dddd484a2f449222982ff",
         "start": 141100
       }
+    },
+    "_cosfast": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a0c3da21e",
+          "relocation": {
+            "load_offset": 19723,
+            "offset": 19723,
+            "segment": 0
+          },
+          "site": 19720
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a0c3da21e",
+          "relocation": {
+            "load_offset": 26613,
+            "offset": 26613,
+            "segment": 0
+          },
+          "site": 26610
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141112,
+        "name": "cos_fast",
+        "sha256": "f856a560644eff8e9287dee4ca001aa8e3043540f28dddd484a2f449222982ff",
+        "start": 141100
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_cosfast"
     },
     "_do_dea_textres": {
       "distinct_verified_callers": 1,
@@ -2627,6 +3999,29 @@
         "start": 134536
       }
     },
+    "_file_load_replay": {
+      "anchors": [
+        {
+          "caller_task": "load_02f4a",
+          "hex": "9a2211b711",
+          "relocation": {
+            "load_offset": 12585,
+            "offset": 12585,
+            "segment": 0
+          },
+          "site": 12582
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 77032,
+        "name": "file_load_replay",
+        "sha256": "f842aba41633583cd29ebfd0f8989a62ade87ab79d6de6ae92c02ea9d6d19ae0",
+        "stable_id": "load_12c92",
+        "start": 76946
+      }
+    },
     "_file_load_resfile": {
       "anchors": [
         {
@@ -2694,6 +4089,40 @@
       "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
       "reviewed_alias": "_file_load_resource"
     },
+    "_file_load_resource_file": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9a42154b17",
+          "relocation": {
+            "load_offset": 1941,
+            "offset": 1941,
+            "segment": 0
+          },
+          "site": 1938
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9a42154b17",
+          "relocation": {
+            "load_offset": 4844,
+            "offset": 4844,
+            "segment": 0
+          },
+          "site": 4841
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 100984,
+        "name": "file_load_resfile",
+        "sha256": "4172568ccc0d1bc7574bb2538f5bce0ebe6a9a3515a2ae907768554d45926851",
+        "stable_id": "load_189f2",
+        "start": 100850
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_file_load_resource_file"
+    },
     "_file_load_shape2d": {
       "anchors": [
         {
@@ -2715,6 +4144,50 @@
         "sha256": "84dd03ef69a600bfa069a143c3d2128b338c6af5bc42c60803cdf73a1f8fadee",
         "stable_id": "load_2a9fc",
         "start": 174588
+      }
+    },
+    "_file_load_shape2d_expand": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a8275a21e",
+          "relocation": {
+            "load_offset": 175222,
+            "offset": 44150,
+            "segment": 8192
+          },
+          "site": 175219
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 155894,
+        "name": "file_load_shape2d_expand",
+        "sha256": "5107192c48e33e6035e7cebc0af5671dfb4fb84828fbc99263369f69cc3fcfee",
+        "start": 155554
+      }
+    },
+    "_file_load_shape2d_expandedsize": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a0a00122b",
+          "relocation": {
+            "load_offset": 175040,
+            "offset": 43968,
+            "segment": 8192
+          },
+          "site": 175037
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 176416,
+      "mapped_target": {
+        "end": 176564,
+        "name": "file_load_shape2d_expandedsize",
+        "sha256": "0b61d12bbc7e607a97870e23c4976bf986581ee4101877624585b1ddf1b0554c",
+        "start": 176426
       }
     },
     "_file_load_shape2d_fatal": {
@@ -2795,6 +4268,29 @@
         "start": 174570
       }
     },
+    "_file_load_shape2d_nofatal2": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a0400e129",
+          "relocation": {
+            "load_offset": 105034,
+            "offset": 39498,
+            "segment": 4096
+          },
+          "site": 105031
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 171556,
+        "name": "file_load_shape2d_nofatal2",
+        "sha256": "6393727cb65869acc333ea8441f2e0a36b5c0a1312e7d3f7e13ff2f4c3ecebe9",
+        "stable_id": "load_29e14",
+        "start": 171540
+      }
+    },
     "_file_load_shape2d_nofatal_thunk": {
       "anchors": [
         {
@@ -2816,6 +4312,28 @@
         "sha256": "e2336bc3b8040f674834299e0b2259a3c31146af6998b4ab8ff3e46cdc264fb9",
         "stable_id": "load_23861",
         "start": 145505
+      }
+    },
+    "_file_load_shape2d_palmap_apply": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a2875a21e",
+          "relocation": {
+            "load_offset": 175272,
+            "offset": 44200,
+            "segment": 8192
+          },
+          "site": 175269
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 155554,
+        "name": "file_load_shape2d_palmap_apply",
+        "sha256": "5d2af9401d58a65d93b7632c829e51be5352c80e343a2048797e5bf98c34d009",
+        "start": 155464
       }
     },
     "_file_load_shape2d_res": {
@@ -3013,6 +4531,28 @@
         "start": 133856
       }
     },
+    "_file_unflip_shape2d": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9ac240a21e",
+          "relocation": {
+            "load_offset": 174862,
+            "offset": 43790,
+            "segment": 8192
+          },
+          "site": 174859
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 142716,
+        "name": "file_unflip_shape2d",
+        "sha256": "4c98eb92516d8fdbc8612f58e6cbe09ebee161225ecfdbd92c631b303a2d1e31",
+        "start": 142050
+      }
+    },
     "_file_unflip_shape2d_pes": {
       "anchors": [
         {
@@ -3090,6 +4630,40 @@
         "stable_id": "load_20a5d",
         "start": 133725
       }
+    },
+    "_fmtframestr": {
+      "anchors": [
+        {
+          "caller_task": "load_018d4",
+          "hex": "9a08244b17",
+          "relocation": {
+            "load_offset": 6638,
+            "offset": 6638,
+            "segment": 0
+          },
+          "site": 6635
+        },
+        {
+          "caller_task": "load_03178",
+          "hex": "9a08244b17",
+          "relocation": {
+            "load_offset": 12948,
+            "offset": 12948,
+            "segment": 0
+          },
+          "site": 12945
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104846,
+        "name": "format_frame_as_string",
+        "sha256": "e5f039967240c8a6bf14ab3dff9562d5e9a3c43ea93805ef4b73072851dc0de7",
+        "stable_id": "load_198b8",
+        "start": 104632
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_fmtframestr"
     },
     "_font_draw_text": {
       "anchors": [
@@ -3306,6 +4880,74 @@
         "stable_id": "load_24b0c",
         "start": 150284
       }
+    },
+    "_fontsetfontdef": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9af8234b17",
+          "relocation": {
+            "load_offset": 4835,
+            "offset": 4835,
+            "segment": 0
+          },
+          "site": 4832
+        },
+        {
+          "caller_task": "load_0168e",
+          "hex": "9af8234b17",
+          "relocation": {
+            "load_offset": 6349,
+            "offset": 6349,
+            "segment": 0
+          },
+          "site": 6346
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104632,
+        "name": "font_set_fontdef",
+        "sha256": "2709a09c526b5b0a68c4fa6f04af39406084cc004fc13120cf893ccc59884b72",
+        "stable_id": "load_198a8",
+        "start": 104616
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_fontsetfontdef"
+    },
+    "_fontsetfontdef2": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9ada234b17",
+          "relocation": {
+            "load_offset": 4705,
+            "offset": 4705,
+            "segment": 0
+          },
+          "site": 4702
+        },
+        {
+          "caller_task": "load_0168e",
+          "hex": "9ada234b17",
+          "relocation": {
+            "load_offset": 6158,
+            "offset": 6158,
+            "segment": 0
+          },
+          "site": 6155
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104616,
+        "name": "font_set_fontdef2",
+        "sha256": "8bbf80735a816a8f16777e4bbcda61bb14b3d0a7f045411d0f4796948be435a2",
+        "stable_id": "load_1988a",
+        "start": 104586
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_fontsetfontdef2"
     },
     "_format_frame_as_string": {
       "anchors": [
@@ -3623,6 +5265,40 @@
         "start": 158696
       }
     },
+    "_heapsortorder": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a0800be26",
+          "relocation": {
+            "load_offset": 48843,
+            "offset": 48843,
+            "segment": 0
+          },
+          "site": 48840
+        },
+        {
+          "caller_task": "load_16b4a",
+          "hex": "9a0800be26",
+          "relocation": {
+            "load_offset": 93076,
+            "offset": 27540,
+            "segment": 4096
+          },
+          "site": 93073
+        }
+      ],
+      "frame_load_address": 158688,
+      "mapped_target": {
+        "end": 158846,
+        "name": "heapsort_by_order",
+        "sha256": "79d242fe30f1ffea7a5ef31431efffcb0e6326abab3a4cddbb09d2dcc8593ca6",
+        "stable_id": "load_26be8",
+        "start": 158696
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_heapsortorder"
+    },
     "_highscore_write_a": {
       "anchors": [
         {
@@ -3710,6 +5386,28 @@
         "start": 159954
       }
     },
+    "_init_div0": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a2801dc09",
+          "relocation": {
+            "load_offset": 25,
+            "offset": 25,
+            "segment": 0
+          },
+          "site": 22
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40722,
+        "name": "init_div0",
+        "sha256": "d91499ce16e61bf7b0a7b4d8d112a68251c30437fb3240467a50eef2c039e6d0",
+        "start": 40680
+      }
+    },
     "_init_game_state": {
       "anchors": [
         {
@@ -3765,6 +5463,29 @@
         "start": 40481
       }
     },
+    "_init_main": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a4600e129",
+          "relocation": {
+            "load_offset": 17,
+            "offset": 17,
+            "segment": 0
+          },
+          "site": 14
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 172636,
+        "name": "init_main",
+        "sha256": "501da7ceb125c3e55fc146c47194d5b6eff3f991c78123b5507b2714b6fc8420",
+        "stable_id": "load_29e56",
+        "start": 171606
+      }
+    },
     "_init_plantrak": {
       "anchors": [
         {
@@ -3786,6 +5507,29 @@
         "sha256": "cf8e1b603ea224b650599f24b831cd1aee17150f39c4f5fab49da1c30e721d42",
         "stable_id": "load_093e0",
         "start": 37856
+      }
+    },
+    "_init_polyinfo": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0400d614",
+          "relocation": {
+            "load_offset": 244,
+            "offset": 244,
+            "segment": 0
+          },
+          "site": 241
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 85442,
+        "name": "init_polyinfo",
+        "sha256": "e378ab6e78a64e8ffc54999c186280290f97efb9ff1f9a2faa4f641a0a3fb318",
+        "stable_id": "load_14d64",
+        "start": 85348
       }
     },
     "_init_rect_arrays": {
@@ -4040,6 +5784,40 @@
         "start": 102296
       }
     },
+    "_introtext": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9ae81a4b17",
+          "relocation": {
+            "load_offset": 2075,
+            "offset": 2075,
+            "segment": 0
+          },
+          "site": 2072
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9ae81a4b17",
+          "relocation": {
+            "load_offset": 4579,
+            "offset": 4579,
+            "segment": 0
+          },
+          "site": 4576
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 102408,
+        "name": "intro_draw_text",
+        "sha256": "9f4829e2d4b979c25f5fb0c7eb71f520336b2e38a89d028e0766608a420603ed",
+        "stable_id": "load_18f98",
+        "start": 102296
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_introtext"
+    },
     "_itoa": {
       "anchors": [
         {
@@ -4147,6 +5925,29 @@
         "sha256": "1e9aec00fbdebdc19b3f0574ef37a0f64419798d8efc7f9b3955693c24723e8c",
         "stable_id": "load_20a35",
         "start": 133685
+      }
+    },
+    "_kb_exit_handler": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a631ea21e",
+          "relocation": {
+            "load_offset": 1415,
+            "offset": 1415,
+            "segment": 0
+          },
+          "site": 1412
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133318,
+        "name": "kb_exit_handler",
+        "sha256": "2fcc8b964fb5876117a312399ee4945965c0df78f6c109cf4a905e9bb0a7b704",
+        "stable_id": "load_20883",
+        "start": 133251
       }
     },
     "_kb_get_char": {
@@ -4304,6 +6105,29 @@
         "start": 132190
       }
     },
+    "_kb_shift_checking1": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0400af26",
+          "relocation": {
+            "load_offset": 1420,
+            "offset": 1420,
+            "segment": 0
+          },
+          "site": 1417
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158448,
+      "mapped_target": {
+        "end": 158469,
+        "name": "kb_shift_checking1",
+        "sha256": "6e5e4b20bc2f42032d0c0ec0df231c091ed697b0bd45ab1048c6cfacc293cee3",
+        "stable_id": "load_26af4",
+        "start": 158452
+      }
+    },
     "_kb_shift_checking2": {
       "anchors": [
         {
@@ -4442,6 +6266,29 @@
         "start": 55506
       }
     },
+    "_load_sfx_file": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a740b0d27",
+          "relocation": {
+            "load_offset": 105024,
+            "offset": 39488,
+            "segment": 4096
+          },
+          "site": 105021
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163002,
+        "name": "load_sfx_file",
+        "sha256": "c76f0e28d34da40ac4b60443b4ff0a7fdcc62d574db38aa04c8c85decb1d50e6",
+        "stable_id": "load_27c44",
+        "start": 162884
+      }
+    },
     "_load_skybox": {
       "anchors": [
         {
@@ -4474,6 +6321,29 @@
         "start": 55202
       }
     },
+    "_load_song_file": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9aea0b0d27",
+          "relocation": {
+            "load_offset": 105004,
+            "offset": 39468,
+            "segment": 4096
+          },
+          "site": 105001
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163076,
+        "name": "load_song_file",
+        "sha256": "af4a7c973426f618c25a008de206787c580aa343db4759e7311a28e48554234a",
+        "stable_id": "load_27cba",
+        "start": 163002
+      }
+    },
     "_load_tracks_menu_shapes": {
       "anchors": [
         {
@@ -4495,6 +6365,29 @@
         "sha256": "517805af33a8d1f3a5b648728a32828ba3fefa7f5090eab1bacf59ac4088bcab",
         "stable_id": "load_1a2bc",
         "start": 107196
+      }
+    },
+    "_load_voice_file": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a340c0d27",
+          "relocation": {
+            "load_offset": 105014,
+            "offset": 39478,
+            "segment": 4096
+          },
+          "site": 105011
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163194,
+        "name": "load_voice_file",
+        "sha256": "a41c601ea5108bad3e9507a857d759c3128c47b66917899d1ffea9e3d986ac47",
+        "stable_id": "load_27d04",
+        "start": 163076
       }
     },
     "_locate_many_resources": {
@@ -4680,6 +6573,40 @@
         "start": 101026
       }
     },
+    "_locate_text_resource": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9af2154b17",
+          "relocation": {
+            "load_offset": 2034,
+            "offset": 2034,
+            "segment": 0
+          },
+          "site": 2031
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9af2154b17",
+          "relocation": {
+            "load_offset": 4639,
+            "offset": 4639,
+            "segment": 0
+          },
+          "site": 4636
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 101078,
+        "name": "locate_text_res",
+        "sha256": "1239918b7bc23ec9a538b0faef9d6084a39c221902d029d30746ec2ab3c8d119",
+        "stable_id": "load_18aa2",
+        "start": 101026
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_locate_text_resource"
+    },
     "_main": {
       "anchors": [
         {
@@ -4700,6 +6627,49 @@
         "sha256": "c5b871cb32cbe50c6e2cf6475b4698edc09c518f62404f9a788460409123cdd1",
         "stable_id": "load_00000",
         "start": 0
+      }
+    },
+    "_mat_invert": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a5240a21e",
+          "relocation": {
+            "load_offset": 22549,
+            "offset": 22549,
+            "segment": 0
+          },
+          "site": 22546
+        },
+        {
+          "caller_task": "load_09794",
+          "hex": "9a5240a21e",
+          "relocation": {
+            "load_offset": 38937,
+            "offset": 38937,
+            "segment": 0
+          },
+          "site": 38934
+        },
+        {
+          "caller_task": "load_14e9e",
+          "hex": "9a5240a21e",
+          "relocation": {
+            "load_offset": 86021,
+            "offset": 20485,
+            "segment": 4096
+          },
+          "site": 86018
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "name": "mat_invert",
+        "start": 141938
+      },
+      "module_entry": {
+        "owner": "asm012_141362"
       }
     },
     "_mat_mul_vector": {
@@ -4856,6 +6826,98 @@
         "sha256": "e6ed6139a9e6338fd9b2cc261b00911351aaf75d90968f4e2665f8148854e702",
         "start": 90618
       }
+    },
+    "_mat_vec": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9ace3ea21e",
+          "relocation": {
+            "load_offset": 18709,
+            "offset": 18709,
+            "segment": 0
+          },
+          "site": 18706
+        },
+        {
+          "caller_task": "load_04d6c",
+          "hex": "9ace3ea21e",
+          "relocation": {
+            "load_offset": 19863,
+            "offset": 19863,
+            "segment": 0
+          },
+          "site": 19860
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141810,
+        "name": "mat_mul_vector",
+        "sha256": "e1134fea81df60eaa7d1cdc9bff42b9f79c9fd800dd06fcb0f6728efa0a0b9b5",
+        "stable_id": "load_228ee",
+        "start": 141550
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_mat_vec"
+    },
+    "_matroty": {
+      "anchors": [
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a6000f226",
+          "relocation": {
+            "load_offset": 21240,
+            "offset": 21240,
+            "segment": 0
+          },
+          "site": 21237
+        },
+        {
+          "caller_task": "load_09794",
+          "hex": "9a6000f226",
+          "relocation": {
+            "load_offset": 39005,
+            "offset": 39005,
+            "segment": 0
+          },
+          "site": 39002
+        }
+      ],
+      "frame_load_address": 159520,
+      "mapped_target": {
+        "end": 159704,
+        "name": "mat_rot_y",
+        "sha256": "69ea427cbd2f220d0242104f28e14b0c7538c40f26134f64ab4c30314e24d30d",
+        "stable_id": "load_26f80",
+        "start": 159616
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_matroty"
+    },
+    "_matrotzxy": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a9a14d614",
+          "relocation": {
+            "load_offset": 18405,
+            "offset": 18405,
+            "segment": 0
+          },
+          "site": 18402
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 91002,
+        "name": "mat_rot_zxy",
+        "sha256": "e6ed6139a9e6338fd9b2cc261b00911351aaf75d90968f4e2665f8148854e702",
+        "start": 90618
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_matrotzxy"
     },
     "_mmgr_alloc_a000": {
       "anchors": [
@@ -5568,6 +7630,109 @@
         "start": 101134
       }
     },
+    "_msdrawopaquechk": {
+      "anchors": [
+        {
+          "caller_task": "load_0069c",
+          "hex": "9a06194b17",
+          "relocation": {
+            "load_offset": 1702,
+            "offset": 1702,
+            "segment": 0
+          },
+          "site": 1699
+        },
+        {
+          "caller_task": "load_00786",
+          "hex": "9a06194b17",
+          "relocation": {
+            "load_offset": 3491,
+            "offset": 3491,
+            "segment": 0
+          },
+          "site": 3488
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 101832,
+        "name": "mouse_draw_opaque_check",
+        "sha256": "8698716048ddebe28d338d387a49457fcae95ef877543b422aed1dbcf55aeea6",
+        "stable_id": "load_18db6",
+        "start": 101814
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_msdrawopaquechk"
+    },
+    "_msdrawtransparentchk": {
+      "anchors": [
+        {
+          "caller_task": "load_0069c",
+          "hex": "9aee184b17",
+          "relocation": {
+            "load_offset": 1712,
+            "offset": 1712,
+            "segment": 0
+          },
+          "site": 1709
+        },
+        {
+          "caller_task": "load_00786",
+          "hex": "9aee184b17",
+          "relocation": {
+            "load_offset": 3541,
+            "offset": 3541,
+            "segment": 0
+          },
+          "site": 3538
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 101814,
+        "name": "mouse_draw_transparent_check",
+        "sha256": "29283b25a8657ff159e3d9a0266ddbd175987aee3d9a7b4dcf1bdcbbaa6f56ce",
+        "stable_id": "load_18d9e",
+        "start": 101790
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_msdrawtransparentchk"
+    },
+    "_mulscl": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a2416a21e",
+          "relocation": {
+            "load_offset": 19790,
+            "offset": 19790,
+            "segment": 0
+          },
+          "site": 19787
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a2416a21e",
+          "relocation": {
+            "load_offset": 26622,
+            "offset": 26622,
+            "segment": 0
+          },
+          "site": 26619
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131166,
+        "name": "multiply_and_scale",
+        "sha256": "90cf1ee851e9b7ac712999a3158bc4badc615ef1f485ed40d00081df8f9c4a79",
+        "stable_id": "load_20044",
+        "start": 131140
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_mulscl"
+    },
     "_multiply_and_scale": {
       "anchors": [
         {
@@ -5669,6 +7834,29 @@
         "stable_id": "load_2219d",
         "start": 139677
       }
+    },
+    "_nopsub_36AF2": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158448,
+      "mapped_target": {
+        "end": 158452,
+        "name": "nopsub_36AF2",
+        "sha256": "c8a51d4867300f9df2241e4d32f72b027916ca03fcef86fac7fa83fae59c529c",
+        "stable_id": "load_26af2",
+        "start": 158450
+      },
+      "pointer_anchors": [
+        {
+          "caller_task": "load_190bc",
+          "hex": "b80200baaf26",
+          "relocation": {
+            "load_offset": 102609,
+            "offset": 37073,
+            "segment": 4096
+          },
+          "site": 102605
+        }
+      ]
     },
     "_nullsub_1": {
       "anchors": [
@@ -5848,6 +8036,91 @@
         "start": 38804
       }
     },
+    "_plnoriginop": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a16527104",
+          "relocation": {
+            "load_offset": 41790,
+            "offset": 41790,
+            "segment": 0
+          },
+          "site": 41787
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 39346,
+        "name": "plane_origin_op",
+        "sha256": "1c4b1476491bc8ba791e1d284edc610a7b4b9d4e7f755c36be3007a9fe5b6783",
+        "stable_id": "load_09926",
+        "start": 39206
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_plnoriginop"
+    },
+    "_plnrotop": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a84507104",
+          "relocation": {
+            "load_offset": 41855,
+            "offset": 41855,
+            "segment": 0
+          },
+          "site": 41852
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 39206,
+        "name": "plane_rotate_op",
+        "sha256": "d7a50bdd721a86657544d69d58fe1e9a0968d53df8c268e0d853a8be978f5239",
+        "stable_id": "load_09794",
+        "start": 38804
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_plnrotop"
+    },
+    "_polang": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9a2e00a21e",
+          "relocation": {
+            "load_offset": 56517,
+            "offset": 56517,
+            "segment": 0
+          },
+          "site": 56514
+        },
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a2e00a21e",
+          "relocation": {
+            "load_offset": 9262,
+            "offset": 9262,
+            "segment": 0
+          },
+          "site": 9259
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125652,
+        "name": "polarAngle",
+        "sha256": "b5110285a4457dea4a35ade573aa9dfa7b693a8c937dbe2286cf03df44755ea5",
+        "stable_id": "load_1ea4e",
+        "start": 125518
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_polang"
+    },
     "_polarAngle": {
       "anchors": [
         {
@@ -5946,6 +8219,74 @@
         "stable_id": "load_1ea08",
         "start": 125448
       }
+    },
+    "_polradius2d": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a9616a21e",
+          "relocation": {
+            "load_offset": 18521,
+            "offset": 18521,
+            "segment": 0
+          },
+          "site": 18518
+        },
+        {
+          "caller_task": "load_08466",
+          "hex": "9a9616a21e",
+          "relocation": {
+            "load_offset": 34091,
+            "offset": 34091,
+            "segment": 0
+          },
+          "site": 34088
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131360,
+        "name": "polarRadius2D",
+        "sha256": "0cf80328658e09786b8fe0e64cd61f0708ff3ae473d020b11002c206a1795f3a",
+        "stable_id": "load_200b6",
+        "start": 131254
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_polradius2d"
+    },
+    "_polyinfo": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a9612d614",
+          "relocation": {
+            "load_offset": 9791,
+            "offset": 9791,
+            "segment": 0
+          },
+          "site": 9788
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a9612d614",
+          "relocation": {
+            "load_offset": 45180,
+            "offset": 45180,
+            "segment": 0
+          },
+          "site": 45177
+        }
+      ],
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 90618,
+        "name": "get_a_poly_info",
+        "sha256": "b665d2705b2d5211f2abfef2f981f8656df9c2899a43fe79e0fb3c6c03dcdef6",
+        "stable_id": "load_15ff6",
+        "start": 90102
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_polyinfo"
     },
     "_ported_sprite_clear_1_color_": {
       "anchors": [
@@ -6378,6 +8719,90 @@
         "start": 141148
       }
     },
+    "_putpixel_iconFillings": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 109291,
+            "offset": 43755,
+            "segment": 4096
+          },
+          "site": 109288
+        },
+        {
+          "caller_task": "load_1beb6",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 114599,
+            "offset": 49063,
+            "segment": 4096
+          },
+          "site": 114596
+        },
+        {
+          "caller_task": "load_1c0a8",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 115827,
+            "offset": 50291,
+            "segment": 4096
+          },
+          "site": 115824
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 148214,
+        "name": "putpixel_iconFillings",
+        "sha256": "c36982b91e262412116409e913829eaf0469f62fa93266a7754a0942ddea37a3",
+        "start": 147986
+      }
+    },
+    "_putpixel_iconMask": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 109261,
+            "offset": 43725,
+            "segment": 4096
+          },
+          "site": 109258
+        },
+        {
+          "caller_task": "load_1beb6",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 114550,
+            "offset": 49014,
+            "segment": 4096
+          },
+          "site": 114547
+        },
+        {
+          "caller_task": "load_1c0a8",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 115780,
+            "offset": 50244,
+            "segment": 4096
+          },
+          "site": 115777
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146112,
+        "name": "putpixel_iconMask",
+        "sha256": "a079b91e5a4f0282b5d9e3bbda1f2411f599a646b1c90c71343461bd8a017454",
+        "start": 145950
+      }
+    },
     "_putpixel_line1_maybe": {
       "anchors": [
         {
@@ -6454,6 +8879,97 @@
         "start": 124494
       },
       "reviewed_alias": "_rand"
+    },
+    "_random_wait": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a4c04e129",
+          "relocation": {
+            "load_offset": 895,
+            "offset": 895,
+            "segment": 0
+          },
+          "site": 892
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 172736,
+        "name": "random_wait",
+        "sha256": "5300f9ec5c699080424f95f9af4d2878d851b9ed62865bfaaea2bce7617d0285",
+        "stable_id": "load_2a25c",
+        "start": 172636
+      }
+    },
+    "_rcintersect": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a8c18d614",
+          "relocation": {
+            "load_offset": 9399,
+            "offset": 9399,
+            "segment": 0
+          },
+          "site": 9396
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a8c18d614",
+          "relocation": {
+            "load_offset": 49170,
+            "offset": 49170,
+            "segment": 0
+          },
+          "site": 49167
+        }
+      ],
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 91760,
+        "name": "rect_intersect",
+        "sha256": "8412f5a967e641d12d29d3b5810169ae46cec443e34d64d8c36966fa67064617",
+        "stable_id": "load_165ec",
+        "start": 91628
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_rcintersect"
+    },
+    "_rcunion": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a1218d614",
+          "relocation": {
+            "load_offset": 9420,
+            "offset": 9420,
+            "segment": 0
+          },
+          "site": 9417
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a1218d614",
+          "relocation": {
+            "load_offset": 49501,
+            "offset": 49501,
+            "segment": 0
+          },
+          "site": 49498
+        }
+      ],
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 91628,
+        "name": "rect_union",
+        "sha256": "1a3c53b717bb6c23be598af0963dbe58fd02c55a5b25d15b885b335fb3077e34",
+        "stable_id": "load_16572",
+        "start": 91506
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_rcunion"
     },
     "_read_line": {
       "anchors": [
@@ -6597,6 +9113,40 @@
         "start": 91506
       }
     },
+    "_rectlist_add": {
+      "anchors": [
+        {
+          "caller_task": "load_09f14",
+          "hex": "9af21cd614",
+          "relocation": {
+            "load_offset": 40878,
+            "offset": 40878,
+            "segment": 0
+          },
+          "site": 40875
+        },
+        {
+          "caller_task": "load_0c474",
+          "hex": "9af21cd614",
+          "relocation": {
+            "load_offset": 50920,
+            "offset": 50920,
+            "segment": 0
+          },
+          "site": 50917
+        }
+      ],
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 93002,
+        "name": "rectlist_add_rects",
+        "sha256": "9ffa3b6b75d0d2a76f2bb7e58ba21e39f59bf11557b60ca17a8abfee9636e465",
+        "stable_id": "load_16a52",
+        "start": 92754
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_rectlist_add"
+    },
     "_rectlist_add_rects": {
       "anchors": [
         {
@@ -6629,6 +9179,31 @@
         "start": 92754
       }
     },
+    "_rectsorttop": {
+      "anchors": [
+        {
+          "caller_task": "load_09f14",
+          "hex": "9aea1dd614",
+          "relocation": {
+            "load_offset": 40906,
+            "offset": 40906,
+            "segment": 0
+          },
+          "site": 40903
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 93102,
+        "name": "rect_array_sort_by_top",
+        "sha256": "ed2e720e674e31c9e33da7e7b0ad200bc57cc10843cedff5623ce0f6469fc449",
+        "stable_id": "load_16b4a",
+        "start": 93002
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_rectsorttop"
+    },
     "_restore_gamestate": {
       "anchors": [
         {
@@ -6650,6 +9225,29 @@
         "sha256": "3cd5dbfd407d32a76e84a24aea3932d12bfe29e945e7f7f2a7c6cb242deb3603",
         "stable_id": "load_06f3a",
         "start": 28474
+      }
+    },
+    "_run_game": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0a00b711",
+          "relocation": {
+            "load_offset": 1204,
+            "offset": 1204,
+            "segment": 0
+          },
+          "site": 1201
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 74746,
+        "name": "run_game",
+        "sha256": "3873d1a6bf5d2f5236a1d3c73d73d7255eef1c58d39eb13cbefbfc919ae9c37a",
+        "stable_id": "load_11b7a",
+        "start": 72570
       }
     },
     "_select_cliprect_rotate": {
@@ -6683,6 +9281,40 @@
         "stable_id": "load_14e06",
         "start": 85510
       }
+    },
+    "_select_rot": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9aa600d614",
+          "relocation": {
+            "load_offset": 9320,
+            "offset": 9320,
+            "segment": 0
+          },
+          "site": 9317
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9aa600d614",
+          "relocation": {
+            "load_offset": 42247,
+            "offset": 42247,
+            "segment": 0
+          },
+          "site": 42244
+        }
+      ],
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 85662,
+        "name": "select_cliprect_rotate",
+        "sha256": "2096f8c9f395b4c4b698ae55fd811021f0bc20c37c3827dec8d8ea502161b8ba",
+        "stable_id": "load_14e06",
+        "start": 85510
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_select_rot"
     },
     "_set_add_value": {
       "anchors": [
@@ -6926,6 +9558,78 @@
         "start": 174496
       }
     },
+    "_shape2d_op_unk": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 77740,
+            "offset": 12204,
+            "segment": 4096
+          },
+          "site": 77737
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 80887,
+            "offset": 15351,
+            "segment": 4096
+          },
+          "site": 80884
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81170,
+            "offset": 15634,
+            "segment": 4096
+          },
+          "site": 81167
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81590,
+            "offset": 16054,
+            "segment": 4096
+          },
+          "site": 81587
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81664,
+            "offset": 16128,
+            "segment": 4096
+          },
+          "site": 81661
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81748,
+            "offset": 16212,
+            "segment": 4096
+          },
+          "site": 81745
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147088,
+        "name": "shape2d_op_unk",
+        "sha256": "59aced1134042f07f0ead320f4bdaf31c723e6f92c41ba4218f26deb3574d275",
+        "start": 146944
+      }
+    },
     "_shape2d_op_unk2": {
       "anchors": [
         {
@@ -6947,6 +9651,48 @@
         "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
         "stable_id": "load_23eb4",
         "start": 147124
+      }
+    },
+    "_shape2d_op_unk3": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 77770,
+            "offset": 12234,
+            "segment": 4096
+          },
+          "site": 77767
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 77786,
+            "offset": 12250,
+            "segment": 4096
+          },
+          "site": 77783
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 78425,
+            "offset": 12889,
+            "segment": 4096
+          },
+          "site": 78422
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147552,
+        "name": "shape2d_op_unk3",
+        "sha256": "2cbadcd705c00360c66536b8ce365d030df5b9bc800136bba2c8edaad1292f62",
+        "start": 147154
       }
     },
     "_shape2d_op_unk4": {
@@ -7206,6 +9952,52 @@
         "start": 65426
       }
     },
+    "_shape_op_explosion": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9abc5da21e",
+          "relocation": {
+            "load_offset": 49340,
+            "offset": 49340,
+            "segment": 0
+          },
+          "site": 49337
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150284,
+        "name": "shape_op_explosion",
+        "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
+        "start": 149468
+      }
+    },
+    "_shapeexpl": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9abc5da21e",
+          "relocation": {
+            "load_offset": 49340,
+            "offset": 49340,
+            "segment": 0
+          },
+          "site": 49337
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150284,
+        "name": "shape_op_explosion",
+        "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
+        "start": 149468
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_shapeexpl"
+    },
     "_show_dialog": {
       "anchors": [
         {
@@ -7317,6 +10109,30 @@
       },
       "reviewed_alias": "_sin_fast"
     },
+    "_sinfast": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9abe3ca21e",
+          "relocation": {
+            "load_offset": 19781,
+            "offset": 19781,
+            "segment": 0
+          },
+          "site": 19778
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141100,
+        "name": "sin_fast",
+        "sha256": "af93b215c6978cf22f34e6e96798938909f5d5e4436115b445c8289e44226e1a",
+        "stable_id": "load_226de",
+        "start": 141022
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sinfast"
+    },
     "_skybox_op_helper": {
       "anchors": [
         {
@@ -7339,6 +10155,40 @@
         "stable_id": "load_217df",
         "start": 137183
       }
+    },
+    "_sprcopy2to12": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9a8c1a4b17",
+          "relocation": {
+            "load_offset": 3437,
+            "offset": 3437,
+            "segment": 0
+          },
+          "site": 3434
+        },
+        {
+          "caller_task": "load_00f3c",
+          "hex": "9a8c1a4b17",
+          "relocation": {
+            "load_offset": 4072,
+            "offset": 4072,
+            "segment": 0
+          },
+          "site": 4069
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 102222,
+        "name": "sprite_copy_2_to_1_2",
+        "sha256": "3e9955c44f4772518d64790ca4a86c5dd88ced895b4ba51dd712cbf65eec3851",
+        "stable_id": "load_18f3c",
+        "start": 102204
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprcopy2to12"
     },
     "_sprite_1_unk": {
       "anchors": [
@@ -7847,6 +10697,40 @@
         "start": 102268
       }
     },
+    "_sprite_free_window": {
+      "anchors": [
+        {
+          "caller_task": "load_0059a",
+          "hex": "9a8a3aa21e",
+          "relocation": {
+            "load_offset": 1528,
+            "offset": 1528,
+            "segment": 0
+          },
+          "site": 1525
+        },
+        {
+          "caller_task": "load_00f3c",
+          "hex": "9a8a3aa21e",
+          "relocation": {
+            "load_offset": 4293,
+            "offset": 4293,
+            "segment": 0
+          },
+          "site": 4290
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 140538,
+        "name": "sprite_free_wnd",
+        "sha256": "7b8ce49096d29317660ad545ba033e6053d301104b970c3bff39b4e822762ed2",
+        "stable_id": "load_224aa",
+        "start": 140458
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprite_free_window"
+    },
     "_sprite_free_wnd": {
       "anchors": [
         {
@@ -7878,6 +10762,31 @@
         "stable_id": "load_224aa",
         "start": 140458
       }
+    },
+    "_sprite_make_window": {
+      "anchors": [
+        {
+          "caller_task": "load_2a2c0",
+          "hex": "9aec61a21e",
+          "relocation": {
+            "load_offset": 172931,
+            "offset": 41859,
+            "segment": 8192
+          },
+          "site": 172928
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150756,
+        "name": "sprite_make_wnd",
+        "sha256": "2717972d593fa451e34dec8c27d84dba37868efe345b189c2043e2cb430bf28d",
+        "stable_id": "load_24c0c",
+        "start": 150540
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprite_make_window"
     },
     "_sprite_make_wnd": {
       "anchors": [
@@ -8210,6 +11119,74 @@
         "start": 146766
       }
     },
+    "_sprputimage": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9aba51a21e",
+          "relocation": {
+            "load_offset": 3670,
+            "offset": 3670,
+            "segment": 0
+          },
+          "site": 3667
+        },
+        {
+          "caller_task": "load_01c42",
+          "hex": "9aba51a21e",
+          "relocation": {
+            "load_offset": 9509,
+            "offset": 9509,
+            "segment": 0
+          },
+          "site": 9506
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146700,
+        "name": "sprite_putimage",
+        "sha256": "005ca12d8c30b12fe3809ca976e5dc09edcc2d9382607eeac8a79aaa1ae265be",
+        "stable_id": "load_23bda",
+        "start": 146394
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprputimage"
+    },
+    "_sprset1size": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9a5f48a21e",
+          "relocation": {
+            "load_offset": 3586,
+            "offset": 3586,
+            "segment": 0
+          },
+          "site": 3583
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9a5f48a21e",
+          "relocation": {
+            "load_offset": 4475,
+            "offset": 4475,
+            "segment": 0
+          },
+          "site": 4472
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144040,
+        "name": "sprite_set_1_size",
+        "sha256": "348821bc5ebfa572c0e4bb99249fc317f7a37d59ee7fef812b7674b75c6399f8",
+        "stable_id": "load_2327f",
+        "start": 143999
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprset1size"
+    },
     "_strcat": {
       "anchors": [
         {
@@ -8305,6 +11282,52 @@
       "distinct_verified_callers": 2,
       "frame_load_address": 117840,
       "owner": "library_strcpy"
+    },
+    "_stricmp": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 174786,
+            "offset": 43714,
+            "segment": 8192
+          },
+          "site": 174783
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 174895,
+            "offset": 43823,
+            "segment": 8192
+          },
+          "site": 174892
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 174939,
+            "offset": 43867,
+            "segment": 8192
+          },
+          "site": 174936
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a9618c51c",
+          "relocation": {
+            "load_offset": 175143,
+            "offset": 44071,
+            "segment": 8192
+          },
+          "site": 175140
+        }
+      ],
+      "frame_load_address": 117840,
+      "owner": "library_stricmp"
     },
     "_strlen": {
       "anchors": [
@@ -9093,6 +12116,40 @@
         "start": 169728
       }
     },
+    "_subst_hillroad": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9aba381a0e",
+          "relocation": {
+            "load_offset": 42890,
+            "offset": 42890,
+            "segment": 0
+          },
+          "site": 42887
+        },
+        {
+          "caller_task": "load_0cbdc",
+          "hex": "9aba381a0e",
+          "relocation": {
+            "load_offset": 53492,
+            "offset": 53492,
+            "segment": 0
+          },
+          "site": 53489
+        }
+      ],
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 72570,
+        "name": "subst_hillroad_track",
+        "sha256": "08f04f9ee7dd1aedcffd7fbd8d4b3ffcb777c4b0b3e6457bc8e458df500e630a",
+        "stable_id": "load_11a5a",
+        "start": 72282
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_subst_hillroad"
+    },
     "_subst_hillroad_track": {
       "anchors": [
         {
@@ -9419,6 +12476,146 @@
         "stable_id": "load_227d7",
         "start": 141271
       }
+    },
+    "_toupper": {
+      "anchors": [
+        {
+          "caller_task": "load_29ad4",
+          "hex": "9a0a000b27",
+          "relocation": {
+            "load_offset": 170790,
+            "offset": 39718,
+            "segment": 8192
+          },
+          "site": 170787
+        },
+        {
+          "caller_task": "load_29ad4",
+          "hex": "9a0a000b27",
+          "relocation": {
+            "load_offset": 170810,
+            "offset": 39738,
+            "segment": 8192
+          },
+          "site": 170807
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159920,
+      "mapped_target": {
+        "end": 159954,
+        "name": "toupper",
+        "sha256": "ab9c02292544bcf36522a5dff2e1ac2f4592e0659055198774480202b8a61763",
+        "stable_id": "load_270ba",
+        "start": 159930
+      }
+    },
+    "_track_setup": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 880,
+            "offset": 880,
+            "segment": 0
+          },
+          "site": 877
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 5501,
+            "offset": 5501,
+            "segment": 0
+          },
+          "site": 5498
+        },
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 72679,
+            "offset": 7143,
+            "segment": 4096
+          },
+          "site": 72676
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 83347,
+            "offset": 17811,
+            "segment": 4096
+          },
+          "site": 83344
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 111597,
+            "offset": 46061,
+            "segment": 4096
+          },
+          "site": 111594
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a34251a0e",
+          "relocation": {
+            "load_offset": 112444,
+            "offset": 46908,
+            "segment": 4096
+          },
+          "site": 112441
+        }
+      ],
+      "distinct_verified_callers": 5,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 71626,
+        "name": "track_setup",
+        "sha256": "7c26a47660c42d7b08ec0029b720d8975089220cc827a3df8267828b697620a7",
+        "stable_id": "load_106d4",
+        "start": 67284
+      }
+    },
+    "_trans_op": {
+      "anchors": [
+        {
+          "caller_task": "load_01c42",
+          "hex": "9a3e01d614",
+          "relocation": {
+            "load_offset": 9359,
+            "offset": 9359,
+            "segment": 0
+          },
+          "site": 9356
+        },
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a3e01d614",
+          "relocation": {
+            "load_offset": 42583,
+            "offset": 42583,
+            "segment": 0
+          },
+          "site": 42580
+        }
+      ],
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 89636,
+        "name": "transformed_shape_op",
+        "sha256": "ed5f8af7e40c28ef1317f49b9d5401dc995bf1f715ca8c00cbc508db89933ec6",
+        "stable_id": "load_14e9e",
+        "start": 85662
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_trans_op"
     },
     "_transformed_shape_op": {
       "anchors": [
@@ -9850,6 +13047,29 @@
         "start": 131166
       },
       "reviewed_alias": "_video_set_mode4"
+    },
+    "_video_set_mode7": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0017a21e",
+          "relocation": {
+            "load_offset": 1425,
+            "offset": 1425,
+            "segment": 0
+          },
+          "site": 1422
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131456,
+        "name": "video_set_mode7",
+        "sha256": "b938d9ffc18d4b2ee4b90cdb5097835f0c1c9b5f6b6ea5296fd218394e52ca61",
+        "stable_id": "load_20120",
+        "start": 131360
+      }
     },
     "_video_set_mode_13h": {
       "anchors": [

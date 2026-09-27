@@ -5,8 +5,8 @@ assume ds:DSEG
 extrn _aSFileError:byte
 DSEG ends
 extrn _fatal_error:far
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _file_read, _file_read_nofatal, _file_read_fatal
 _file_read proc far
     var_fatal = word ptr -8
@@ -104,5 +104,5 @@ fatal:
     call    far ptr _fatal_error
 
 _file_read_fatal endp
-_TEXT ends
+S012_TEXT ends
 end

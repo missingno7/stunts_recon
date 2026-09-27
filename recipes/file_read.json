@@ -14,7 +14,7 @@
       "frame_method": 0,
       "loc": "offset16",
       "offset": 131,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_aSFileError",
       "target_index": 1,
@@ -31,7 +31,7 @@
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 142,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_fatal_error",
       "target_index": 2,
@@ -109,17 +109,17 @@
       {
         "name": "_file_read_nofatal",
         "offset": 16,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_file_read",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_file_read_fatal",
         "offset": 31,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -150,14 +150,14 @@
         "frame": null,
         "index": 2,
         "length": 146,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_file_read",

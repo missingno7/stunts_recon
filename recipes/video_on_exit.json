@@ -6,17 +6,82 @@
   "binding": {
     "declarations": {
       "externals": [
-        "video_clear_color"
+        "_video_clear_color",
+        "_byte_403F3",
+        "_currentvideomode"
       ],
-      "groups": [],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            2,
+            1
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
       "publics": [
         {
           "name": "_video_on_exit",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
         {
           "acbp": 72,
           "alignment": "word",
@@ -26,16 +91,16 @@
           "combine": "public",
           "combine_code": 2,
           "frame": null,
-          "index": 1,
+          "index": 4,
           "length": 56,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
         }
       ]
     },
-    "mode": "asm-external-far-call-v1"
+    "mode": "external-far-call-dgroup-offset16-v1"
   },
   "end": 140814,
   "evidence": {
@@ -48,16 +113,67 @@
   "expected_fixups": [
     {
       "displacement": 0,
-      "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
       "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 6,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_byte_403F3",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 15,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_currentvideomode",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 25,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_byte_403F3",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "S012_TEXT",
+      "frame_index": 4,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 41,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "video_clear_color",
+      "target": "_video_clear_color",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -76,17 +192,82 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "video_clear_color"
+      "_video_clear_color",
+      "_byte_403F3",
+      "_currentvideomode"
     ],
-    "groups": [],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          2,
+          1
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
     "publics": [
       {
         "name": "_video_on_exit",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
       {
         "acbp": 72,
         "alignment": "word",
@@ -96,16 +277,16 @@
         "combine": "public",
         "combine_code": 2,
         "frame": null,
-        "index": 1,
+        "index": 4,
         "length": 56,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_video_on_exit",

@@ -38,8 +38,12 @@ def validate_layout(manifest, size):
     for owner in manifest['owners']:
         require(owner['start'] == at and at < owner['end'] <= size, 'Ownership gap/overlap/invalid extent')
         require(owner['kind'] in ['UNRESOLVED_RAW', 'MATCHING_C', 'MATCHING_ASM',
-                                  'MATCHING_C_DATA', 'MATCHING_ASM_DATA', 'KNOWN_TOOLCHAIN_LIBRARY'],
+                                  'MATCHING_C_DATA', 'MATCHING_ASM_DATA', 'KNOWN_TOOLCHAIN_LIBRARY',
+                                  'LINK_FILL'],
                 'Unsupported production ownership')
+        require(owner.get('contribution_form') in (None, 'prefix_of_object') and
+                (owner.get('contribution_form') is None or owner['kind'] == 'MATCHING_C'),
+                'Unsupported contribution form')
         at = owner['end']
     require(at == size, 'Ownership does not cover full initialized image')
     parents={o['id']:o for o in manifest['owners'] if o['kind'] in ('MATCHING_C','MATCHING_ASM')}
@@ -89,6 +93,15 @@ def validate_layout(manifest, size):
         require(position==layout['bss_end'],'BSS ownership does not cover clear range')
 
 def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=None, *, allow_pending=False, artifact=None):
+    # Pure evidence checks are reused within this one fresh construction only
+    # (tools/memo.py); every contribution is still compiled afresh.
+    import memo
+    with memo.session():
+        return _build(manifest, recipe_overrides, publish, source_overrides,
+                      allow_pending=allow_pending, artifact=artifact)
+
+
+def _build(manifest=None, recipe_overrides=None, publish=True, source_overrides=None, *, allow_pending=False, artifact=None):
     output = ROOT / 'build/exact'
     output.mkdir(parents=True, exist_ok=True)
     # A failed invocation must never leave a current PASS receipt.
@@ -108,27 +121,21 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
     chunks, receipts, matching, matching_asm, libraries = [], [], 0, 0, 0
     emitted={}
     compiled={}
-    for owner in manifest['owners']:
-        if owner['kind'] not in ('MATCHING_C','MATCHING_ASM','MATCHING_C_DATA','MATCHING_ASM_DATA') or 'recipe' not in owner: continue
-        recipe=(recipe_overrides or {}).get(owner['recipe']) or read_json(ROOT/owner['recipe'])
-        require((recipe['start'],recipe['end'])==(owner['start'],owner['end']),
-                'Recipe ownership mismatch')
-        if owner['kind'] in ('MATCHING_ASM','MATCHING_ASM_DATA'):
-            require(recipe.get('kind')=='asm' and recipe['source'].startswith('asm/') and
-                    recipe['source'].endswith('.ASM'), 'Production must consume tracked ASM source')
-        else:
-            require(recipe.get('kind','c')=='c' and recipe['source'].startswith('src/'),
-                    'Production must consume recovered C source')
-        require(bool(recipe.get('data_only')) == (owner.get('module_form')=='data-only') and
-                bool(recipe.get('far_data')) == bool(owner.get('far_data')),
-                'Data-only owner and recipe form differ')
-        compiled[owner['id']]=probe(recipe,oracle,(source_overrides or {}).get(recipe['source']))
-        emitted[owner['id']]={name:bytes.fromhex(raw) for name,raw in
-            compiled[owner['id']][1]['binding'].get('secondary_payloads',{}).items()}
+    compiled = _compile_owners(manifest, recipe_overrides, source_overrides, oracle)
+    fill=0
+    for owner_id, result in compiled.items():
+        emitted[owner_id]={name:bytes.fromhex(raw) for name,raw in
+            result[1]['binding'].get('secondary_payloads',{}).items()}
     for owner in manifest['owners']:
         start, end = owner['start'], owner['end']
         if owner['kind'] == 'UNRESOLVED_RAW':
             chunks.append(original[start:end])
+        elif owner['kind']=='LINK_FILL':
+            # LINK paragraph alignment fill, re-derived every build (link_fill).
+            from link_fill import checked_fill
+            receipts.append({'link_fill': checked_fill(owner, manifest, original)})
+            chunks.append(original[start:end])
+            fill+=end-start
         elif owner['kind']=='KNOWN_TOOLCHAIN_LIBRARY':
             payload,receipt=bind_library(owner,original,mz.relocations,manifest=manifest)
             chunks.append(payload)
@@ -153,6 +160,76 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
             receipts.append(receipt)
             if owner['kind']=='MATCHING_ASM': matching_asm+=len(payload)
             else: matching+=len(payload)
+    return _finish(manifest, recipe_overrides, source_overrides, before, production_before, oracle, mz,
+                   original, chunks, receipts, matching, matching_asm, libraries, emitted,
+                   publish, artifact, output, fill)
+
+
+def workers():
+    """Concurrent fresh compiles per build (each in its own work directory)."""
+    import os
+    value = os.environ.get('STUNTS_BUILD_WORKERS')
+    if value:
+        require(value.isdigit() and 1 <= int(value) <= 32, 'Invalid STUNTS_BUILD_WORKERS')
+        return int(value)
+    return max(1, min(8, (os.cpu_count() or 2) // 2))
+
+
+def _compile_owners(manifest, recipe_overrides, source_overrides, oracle):
+    """Freshly probe every active contribution; failures are reported in
+    manifest order independently of completion order."""
+    jobs=[]
+    for owner in manifest['owners']:
+        if owner['kind'] not in ('MATCHING_C','MATCHING_ASM','MATCHING_C_DATA','MATCHING_ASM_DATA') or 'recipe' not in owner: continue
+        recipe=(recipe_overrides or {}).get(owner['recipe']) or read_json(ROOT/owner['recipe'])
+        require((recipe['start'],recipe['end'])==(owner['start'],owner['end']),
+                'Recipe ownership mismatch')
+        if owner['kind'] in ('MATCHING_ASM','MATCHING_ASM_DATA'):
+            require(recipe.get('kind')=='asm' and recipe['source'].startswith('asm/') and
+                    recipe['source'].endswith('.ASM'), 'Production must consume tracked ASM source')
+        else:
+            require(recipe.get('kind','c')=='c' and recipe['source'].startswith('src/'),
+                    'Production must consume recovered C source')
+        prefix_owner = owner.get('contribution_form') == 'prefix_of_object'
+        require(('prefix_of_object' in recipe) == prefix_owner,
+                'Prefix owner and recipe form differ')
+        if prefix_owner:
+            meta = recipe['prefix_of_object']
+            require(owner['kind'] == 'MATCHING_C' and 'members' not in recipe and
+                    owner['object_start'] == meta['object_start'] == owner['start'] and
+                    owner['prefix_records'] == meta['records'],
+                    'Prefix owner metadata differs from its recipe')
+        require(bool(recipe.get('data_only')) == (owner.get('module_form')=='data-only') and
+                bool(recipe.get('far_data')) == bool(owner.get('far_data')),
+                'Data-only owner and recipe form differ')
+        jobs.append((owner['id'], owner['recipe'], recipe))
+
+    def run(job):
+        owner_id, recipe_path, recipe = job
+        try:
+            return owner_id, probe(recipe, oracle, (source_overrides or {}).get(recipe['source'])), None
+        except Exception as error:  # reported below in manifest order
+            # Attribution for batch publication failure isolation.
+            error.owner_id, error.owner_recipe = owner_id, recipe_path
+            return owner_id, None, error
+    count = min(workers(), max(1, len(jobs)))
+    if count == 1:
+        results = [run(job) for job in jobs]
+    else:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=count) as pool:
+            results = list(pool.map(run, jobs))
+    compiled = {}
+    for owner_id, result, error in results:
+        if error is not None:
+            raise error
+        compiled[owner_id] = result
+    return compiled
+
+
+def _finish(manifest, recipe_overrides, source_overrides, before, production_before, oracle, mz,
+            original, chunks, receipts, matching, matching_asm, libraries, emitted,
+            publish, artifact, output, fill=0):
     image = b''.join(chunks)
     require(image == original, 'Full image mismatch')
     matching_bss=0; matching_asm_bss=0
@@ -176,12 +253,13 @@ def build(manifest=None, recipe_overrides=None, publish=True, source_overrides=N
         verify_toolchain(profile)
     require(inputs() == before, 'Inputs changed during fresh construction')
     require(production_inputs(manifest, recipe_overrides, before, source_overrides) == production_before, 'Production dependencies changed')
-    report = {'status': 'HYBRID_EXACT', 'fully_recovered': matching + matching_asm + libraries == len(image),
+    report = {'status': 'HYBRID_EXACT', 'fully_recovered': matching + matching_asm + libraries + fill == len(image),
               'executable': identity(executable), 'load_image': identity(image),
               'matching_c_bytes': matching, 'matching_asm_bytes': matching_asm,
               'matching_c_bss_bytes':matching_bss,
               'matching_asm_bss_bytes':matching_asm_bss,
-              'raw_initialized_bytes': len(image) - matching - matching_asm - libraries, 'library_production_bytes':libraries,
+              'raw_initialized_bytes': len(image) - matching - matching_asm - libraries - fill, 'library_production_bytes':libraries,
+              'link_fill_bytes': fill,
               'relocation_count': len(mz.relocations), 'inputs': before,
               'production_inputs':production_before, 'compiler_receipts': receipts}
     if artifact is not None:

@@ -28,14 +28,14 @@
         {
           "name": "_nopsub_32751",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
         {
-          "acbp": 72,
-          "alignment": "word",
-          "alignment_code": 2,
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
           "big": false,
           "class": "CODE",
           "combine": "public",
@@ -43,7 +43,7 @@
           "frame": null,
           "index": 1,
           "length": 11,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -118,7 +118,7 @@
       "frame_method": 2,
       "loc": "offset16",
       "offset": 4,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_word_303BC",
       "target_index": 1,
@@ -155,14 +155,14 @@
       {
         "name": "_nopsub_32751",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
       {
-        "acbp": 72,
-        "alignment": "word",
-        "alignment_code": 2,
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
         "big": false,
         "class": "CODE",
         "combine": "public",
@@ -170,7 +170,7 @@
         "frame": null,
         "index": 1,
         "length": 11,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
@@ -225,7 +225,7 @@
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_nopsub_32751",
   "source": "asm/nopsub_32751.ASM",

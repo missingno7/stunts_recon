@@ -320,7 +320,11 @@ def _compile_in_worker(source_path: Path):
     if result.returncode or not obj_path.is_file():
         raise RuntimeError(f"Compiler failed ({result.returncode}); see {run_dir / 'compiler.log'}")
     obj_bytes = obj_path.read_bytes()
-    obj = read_object(obj_bytes, research_local_symbols=True)
+    # MSC word-alignment holes in TU _DATA/CONST are read with the same policy
+    # shape a reviewed recipe carries (object_probe.msc_alignment_sparse_zero).
+    from object_probe import msc_alignment_sparse_zero
+    obj = read_object(obj_bytes, research_local_symbols=True,
+                      sparse_zero=msc_alignment_sparse_zero(obj_bytes))
     return source, run_dir, obj, obj_bytes
 
 

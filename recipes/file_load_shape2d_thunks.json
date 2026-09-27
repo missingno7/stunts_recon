@@ -1,0 +1,328 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 145516,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d_res_fatal",
+      "frame_index": 5,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 1,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d_res_fatal",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d_res_nofatal",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 6,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d_res_nofatal",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d_res",
+      "frame_index": 4,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 11,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d_res",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 16,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d_fatal",
+      "frame_index": 7,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 21,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d_fatal",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d_nofatal",
+      "frame_index": 3,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 26,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d_nofatal",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d",
+      "frame_index": 6,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 31,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 145483,
+      "offset": 14411,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145488,
+      "offset": 14416,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145493,
+      "offset": 14421,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145498,
+      "offset": 14426,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145503,
+      "offset": 14431,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145508,
+      "offset": 14436,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145513,
+      "offset": 14441,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "asm-external-far-call-v1"
+  },
+  "id": "file_load_shape2d_thunks",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 145485,
+      "name": "file_load_shape2d_res_fatal_thunk",
+      "public": "_file_load_shape2d_res_fatal_th",
+      "stable_id": "load_23848",
+      "start": 145480,
+      "target": {
+        "sha256": "49ad505725f5dcca8c9e3c98d0069343573eaabd1e37cd89e992595959df46e8",
+        "size": 5
+      }
+    },
+    {
+      "end": 145490,
+      "name": "file_load_shape2d_res_nofatal_thunk",
+      "public": "_file_load_shape2d_res_nofatal_",
+      "stable_id": "load_2384d",
+      "start": 145485,
+      "target": {
+        "sha256": "163af1755b5be4b282ef6d7475ca7429b3221cae2d850e2e7c782f113a63e7af",
+        "size": 5
+      }
+    },
+    {
+      "end": 145495,
+      "name": "file_load_shape2d_res_thunk",
+      "public": "_file_load_shape2d_res_thunk",
+      "stable_id": "load_23852",
+      "start": 145490,
+      "target": {
+        "sha256": "0ceed1f2bd608349414fab29f41a61f1b4f38200c2497e8957a647159755008e",
+        "size": 5
+      }
+    },
+    {
+      "end": 145500,
+      "name": "parse_shape2d_thunk",
+      "public": "_parse_shape2d_thunk",
+      "stable_id": "load_23857",
+      "start": 145495,
+      "target": {
+        "sha256": "a540305369ac6e03d80338bcb5395e48cfc8b8afc505c342c6559bbd27c69f55",
+        "size": 5
+      }
+    },
+    {
+      "end": 145505,
+      "name": "file_load_shape2d_fatal_thunk",
+      "public": "_file_load_shape2d_fatal_thunk",
+      "stable_id": "load_2385c",
+      "start": 145500,
+      "target": {
+        "sha256": "613882cc7ed6e2158c8b6726a4db5821fb6490f31a44cd756a1a3db4930353bd",
+        "size": 5
+      }
+    },
+    {
+      "end": 145510,
+      "name": "file_load_shape2d_nofatal_thunk",
+      "public": "_file_load_shape2d_nofatal_thun",
+      "stable_id": "load_23861",
+      "start": 145505,
+      "target": {
+        "sha256": "e2336bc3b8040f674834299e0b2259a3c31146af6998b4ab8ff3e46cdc264fb9",
+        "size": 5
+      }
+    },
+    {
+      "end": 145516,
+      "name": "file_load_shape2d_thunk",
+      "public": "_file_load_shape2d_thunk",
+      "stable_id": null,
+      "start": 145510,
+      "target": {
+        "sha256": "027208b66846eb7b04f5ea33ecb414270281c6acf13770032c8f7bf336d49f8d",
+        "size": 6
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_file_load_shape2d_res_nofatal",
+      "_parse_shape2d",
+      "_file_load_shape2d_nofatal",
+      "_file_load_shape2d_res",
+      "_file_load_shape2d_res_fatal",
+      "_file_load_shape2d",
+      "_file_load_shape2d_fatal"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_file_load_shape2d_thunk",
+        "offset": 30,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_fatal_thunk",
+        "offset": 20,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_nofatal_thun",
+        "offset": 25,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_res_fatal_th",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_res_nofatal_",
+        "offset": 5,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_parse_shape2d_thunk",
+        "offset": 15,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_res_thunk",
+        "offset": 10,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 36,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "source": "asm/file_load_shape2d_thunks.ASM",
+  "stable_id": "multi_file_load_shape2d_thunks",
+  "start": 145480,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "de0256bb1b098b5256b8e495fddbd64ee053f8af2cfe74d12698b1b0fdda6631",
+    "size": 36
+  }
+}

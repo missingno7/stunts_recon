@@ -1,0 +1,351 @@
+.8086
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
+SPRITE struc
+sprite_bitmapptr dw ?
+sprite_bitmapseg dw ?
+sprite_reserved4 dw ?
+sprite_reserved6 dw ?
+sprite_reserved8 dw ?
+sprite_lineofs dw ?
+sprite_left dw ?
+sprite_right dw ?
+sprite_top dw ?
+sprite_height dw ?
+sprite_pitch dw ?
+sprite_reserved16 dw ?
+sprite_width2 dw ?
+sprite_left2 dw ?
+sprite_widthsum dw ?
+SPRITE ends
+extrn sprite1:word
+extrn sprite2:word
+public _sub_35C4E
+_sub_35C4E proc far
+    var_14 = word ptr -20
+    var_12 = word ptr -18
+    var_10 = word ptr -16
+    var_E = word ptr -14
+    var_C = word ptr -12
+    var_A = word ptr -10
+    var_8 = word ptr -8
+    var_6 = word ptr -6
+    var_4 = word ptr -4
+    var_2 = word ptr -2
+     s = byte ptr 0
+     r = byte ptr 2
+    arg_0 = word ptr 6
+    arg_2 = word ptr 8
+    arg_4 = word ptr 10
+    arg_6 = word ptr 12
+    arg_8 = word ptr 14
+
+    push    bp
+    mov     bp, sp
+    sub     sp, 6
+    push    si
+    push    di
+    push    ds
+    cld
+    mov     ax, word ptr cs:sprite1.sprite_bitmapptr+2
+    mov     es, ax
+    mov     ax, word ptr cs:sprite2.sprite_bitmapptr+2
+    mov     ds, ax
+    mov     ax, [bp+arg_0]
+    mov     [bp+var_2], ax
+    mov     ax, [bp+arg_4]
+    mov     ax, [bp+arg_2]
+    shl     ax, 1
+    mov     cx, ax
+    add     ax, cs:sprite2.sprite_lineofs
+    mov     [bp+var_4], ax
+    add     cx, cs:sprite1.sprite_lineofs
+    mov     ax, [bp+arg_8]
+    mov     bx, ax
+    add     ax, [bp+arg_0]
+    cwd
+    idiv    cs:sprite1.sprite_width2
+    sub     dx, [bp+arg_0]
+    shl     ax, 1
+    add     cx, ax
+    add     [bp+var_2], dx
+    mov     [bp+var_6], cx
+    mov     dx, [bp+arg_6]
+loc_35C9F:
+    mov     cx, [bp+arg_4]
+    mov     bx, [bp+var_4]
+    mov     si, cs:[bx]
+    add     si, [bp+arg_0]
+    mov     bx, [bp+var_6]
+    mov     di, cs:[bx]
+    add     di, [bp+var_2]
+    rep movsb
+    add     [bp+var_4], 2
+    add     [bp+var_6], 2
+    dec     dx
+    jg      short loc_35C9F
+    pop     ds
+    pop     di
+    pop     si
+    mov     sp, bp
+    pop     bp
+    retf
+incnums     db 0
+    db 1
+    db 2
+    db 3
+    db 4
+    db 5
+    db 6
+    db 7
+    db 8
+    db 9
+    db 10
+    db 11
+    db 12
+    db 13
+    db 14
+    db 15
+    db 16
+    db 17
+    db 18
+    db 19
+    db 20
+    db 21
+    db 22
+    db 23
+    db 24
+    db 25
+    db 26
+    db 27
+    db 28
+    db 29
+    db 30
+    db 31
+    db 32
+    db 33
+    db 34
+    db 35
+    db 36
+    db 37
+    db 38
+    db 39
+    db 40
+    db 41
+    db 42
+    db 43
+    db 44
+    db 45
+    db 46
+    db 47
+    db 48
+    db 49
+    db 50
+    db 51
+    db 52
+    db 53
+    db 54
+    db 55
+    db 56
+    db 57
+    db 58
+    db 59
+    db 60
+    db 61
+    db 62
+    db 63
+    db 64
+    db 65
+    db 66
+    db 67
+    db 68
+    db 69
+    db 70
+    db 71
+    db 72
+    db 73
+    db 74
+    db 75
+    db 76
+    db 77
+    db 78
+    db 79
+    db 80
+    db 81
+    db 82
+    db 83
+    db 84
+    db 85
+    db 86
+    db 87
+    db 88
+    db 89
+    db 90
+    db 91
+    db 92
+    db 93
+    db 94
+    db 95
+    db 96
+    db 97
+    db 98
+    db 99
+    db 100
+    db 101
+    db 102
+    db 103
+    db 104
+    db 105
+    db 106
+    db 107
+    db 108
+    db 109
+    db 110
+    db 111
+    db 112
+    db 113
+    db 114
+    db 115
+    db 116
+    db 117
+    db 118
+    db 119
+    db 120
+    db 121
+    db 122
+    db 123
+    db 124
+    db 125
+    db 126
+    db 127
+    db 128
+    db 129
+    db 130
+    db 131
+    db 132
+    db 133
+    db 134
+    db 135
+    db 136
+    db 137
+    db 138
+    db 139
+    db 140
+    db 141
+    db 142
+    db 143
+    db 144
+    db 145
+    db 146
+    db 147
+    db 148
+    db 149
+    db 150
+    db 151
+    db 152
+    db 153
+    db 154
+    db 155
+    db 156
+    db 157
+    db 158
+    db 159
+    db 160
+    db 161
+    db 162
+    db 163
+    db 164
+    db 165
+    db 166
+    db 167
+    db 168
+    db 169
+    db 170
+    db 171
+    db 172
+    db 173
+    db 174
+    db 175
+    db 176
+    db 177
+    db 178
+    db 179
+    db 180
+    db 181
+    db 182
+    db 183
+    db 184
+    db 185
+    db 186
+    db 187
+    db 188
+    db 189
+    db 190
+    db 191
+    db 192
+    db 193
+    db 194
+    db 195
+    db 196
+    db 197
+    db 198
+    db 199
+    db 200
+    db 201
+    db 202
+    db 203
+    db 204
+    db 205
+    db 206
+    db 207
+    db 208
+    db 209
+    db 210
+    db 211
+    db 212
+    db 213
+    db 214
+    db 215
+    db 216
+    db 217
+    db 218
+    db 219
+    db 220
+    db 221
+    db 222
+    db 223
+    db 224
+    db 225
+    db 226
+    db 227
+    db 228
+    db 229
+    db 230
+    db 231
+    db 232
+    db 233
+    db 234
+    db 235
+    db 236
+    db 237
+    db 238
+    db 239
+    db 240
+    db 241
+    db 242
+    db 243
+    db 244
+    db 245
+    db 246
+    db 247
+    db 248
+    db 249
+    db 250
+    db 251
+    db 252
+    db 253
+    db 254
+    db 255
+_sub_35C4E endp
+S012_TEXT ends
+end

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment byte public 'CODE'
+assume cs:S012_TEXT
 public _mmgr_copy_paras
 _mmgr_copy_paras proc far
     push bp
@@ -43,5 +43,5 @@ copy_done:
     pop bp
     retf
 _mmgr_copy_paras endp
-_TEXT ends
+S012_TEXT ends
 end

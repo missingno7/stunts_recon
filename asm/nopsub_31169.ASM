@@ -5,8 +5,8 @@ MEMCHUNK struc
     resofs dw ?
     resunk dw ?
 MEMCHUNK ends
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment byte public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -14,10 +14,10 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 extrn _resptr1:word
 extrn _resptr2:word
-_TEXT segment word public 'CODE'
+S012_TEXT segment byte public 'CODE'
 public _nopsub_31169
 _nopsub_31169 proc far
     mov     bx, _resptr2
@@ -27,5 +27,5 @@ _nopsub_31169 proc far
     sub     ax, [bx+MEMCHUNK.resofs]
     retf
 _nopsub_31169 endp
-_TEXT ends
+S012_TEXT ends
 end

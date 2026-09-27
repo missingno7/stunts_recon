@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment word public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -12,9 +12,9 @@ extrn aLocateshape4_4sShapeNotF:byte
 extrn aLocatesound4_4sSoundNotF:byte
 dseg ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:dseg
+assume cs:S012_TEXT, ds:dseg
 extrn _fatal_error:far
-_TEXT segment word public 'CODE'
+S012_TEXT segment word public 'CODE'
 public _locate_shape_nofatal
 public _locate_shape_fatal
 public _locate_sound_fatal
@@ -167,5 +167,5 @@ loc_31075:
     pop     bp
     retf
 _locate_sound_fatal endp
-_TEXT ends
+S012_TEXT ends
 end

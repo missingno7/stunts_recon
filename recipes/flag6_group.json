@@ -1,0 +1,393 @@
+{
+  "compiler_flags": [
+    "/AM",
+    "/Ox",
+    "/Gs"
+  ],
+  "compiler_flags_register": "TUFLAG-Ox-seg027",
+  "end": 161566,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audio_enable_flag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 130,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_audio_enable_flag6",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audio_disable_flag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 123,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_audio_disable_flag6",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audioflag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 116,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audioflag6",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audioflag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 105,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audioflag6",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_audio_unk2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 84,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audio_unk2",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_byte_428D6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 77,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_byte_428D6",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "2800",
+      "frame": "_audiochunks_unk2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 71,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audiochunks_unk2",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audioflag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 62,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audioflag6",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audioflag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 44,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audioflag6",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_audio_unk2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 26,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audio_unk2",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_byte_428D6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 19,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_byte_428D6",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_audioflag6",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 9,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_audioflag6",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 161516,
+      "offset": 30444,
+      "segment": 8192
+    },
+    {
+      "load_offset": 161458,
+      "offset": 30386,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "flag6_group",
+  "include_closure": [],
+  "members": [
+    {
+      "end": 161482,
+      "name": "audio_enable_flag6",
+      "public": "_audio_enable_flag6",
+      "stable_id": "load_27696",
+      "start": 161430,
+      "target": {
+        "sha256": "14ee8d40c8a6f7e8698bdf578d5110e0da10032fc28483fa769bae54da7c43c6",
+        "size": 52
+      }
+    },
+    {
+      "end": 161544,
+      "name": "audio_disable_flag6",
+      "public": "_audio_disable_flag6",
+      "stable_id": "load_276ca",
+      "start": 161482,
+      "target": {
+        "sha256": "9a3400844a57ad57ec2088c33a4cfc2d21586c0547db9b349e071e8079e8734f",
+        "size": 62
+      }
+    },
+    {
+      "end": 161566,
+      "name": "audio_toggle_flag6",
+      "public": "_audio_toggle_flag6",
+      "stable_id": "load_27708",
+      "start": 161544,
+      "target": {
+        "sha256": "2f54bd8cdc3a1f5c1112aed1d485236075cc0374549b8b298aaf51153dd781f6",
+        "size": 22
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_audioflag6",
+      "_byte_428D6",
+      "_audiochunks_unk2",
+      "_audio_unk2",
+      "_audio_enable_flag6",
+      "_audio_disable_flag6",
+      "_audio_toggle_flag6"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_audio_enable_flag6",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_disable_flag6",
+        "offset": 52,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_toggle_flag6",
+        "offset": 114,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 136,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "source": "src/flag6_group.c",
+  "stable_id": "multi_flag6_group",
+  "start": 161430,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "5ccc155a78c600410a90f627776db489692ea3106b0216461c491a7c32855a26",
+    "size": 136
+  }
+}

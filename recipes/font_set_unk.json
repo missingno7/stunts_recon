@@ -28,7 +28,7 @@
         {
           "name": "_font_set_unk",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
@@ -91,7 +91,7 @@
           "frame": null,
           "index": 4,
           "length": 112,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -118,7 +118,7 @@
       "frame_method": 1,
       "loc": "offset16",
       "offset": 5,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_fontdefseg",
       "target_index": 1,
@@ -135,7 +135,7 @@
       "frame_method": 1,
       "loc": "offset16",
       "offset": 32,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_fontdefseg",
       "target_index": 1,
@@ -152,7 +152,7 @@
       "frame_method": 1,
       "loc": "offset16",
       "offset": 67,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_fontdefseg",
       "target_index": 1,
@@ -169,7 +169,7 @@
       "frame_method": 1,
       "loc": "offset16",
       "offset": 96,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_fontdefseg",
       "target_index": 1,
@@ -206,7 +206,7 @@
       {
         "name": "_font_set_unk",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -269,14 +269,14 @@
         "frame": null,
         "index": 4,
         "length": 112,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_font_set_unk",
   "source": "asm/font_set_unk.ASM",

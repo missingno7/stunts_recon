@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_34736
 public _sprite_clear_shape_alt
 public _sprite_clear_shape
@@ -90,9 +91,9 @@ loc_34799:
     mov     [bp+var_A], ax
     mov     bx, [bp+var_4]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     [bp+var_6], bx
-    mov     ds, word ptr word ptr cs:[5F22h]
+    mov     ds, word ptr word ptr cs:[_sprite1+2]
     mov     es, [bp+arg_2]
     add     di, 10h
     cld
@@ -113,5 +114,5 @@ loc_347C0:
     pop     bp
     retf
 _sprite_clear_shape endp
-_TEXT ends
+S012_TEXT ends
 end

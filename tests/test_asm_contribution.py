@@ -22,7 +22,7 @@ from common import read_json
 from compiler import compile_source
 
 
-VIDEO = b'''_TEXT segment word public 'CODE'\nassume cs:_TEXT\npublic _video_get_status\n_video_get_status proc far\n mov dx,03DAh\n in al,dx\n and al,08h\n xor ah,ah\n ret\n db 0\n_video_get_status endp\n_TEXT ends\nend\n'''
+VIDEO = b'''S012_TEXT segment word public 'CODE'\nassume cs:S012_TEXT\npublic _video_get_status\n_video_get_status proc far\n mov dx,03DAh\n in al,dx\n and al,08h\n xor ah,ah\n ret\n db 0\n_video_get_status endp\nS012_TEXT ends\nend\n'''
 
 
 class AsmContributionTests(unittest.TestCase):
@@ -35,7 +35,7 @@ class AsmContributionTests(unittest.TestCase):
         cls.recipe = {'id':'video_get_status','kind':'asm','start':start,'end':end,
                       'source':'asm/video_get_status.ASM','profile':'masm510-game',
                       'include_closure':[], 'assembler_flags':['/Mx','/I.'],
-                      'object_segment':'_TEXT',
+                      'object_segment':'S012_TEXT',
                       'public':'_video_get_status','target':identity(cls.image[start:end]),
                       'object_declarations':{'segments':cls.obj.segment_defs,
                                              'groups':cls.obj.groups,'publics':cls.obj.publics,

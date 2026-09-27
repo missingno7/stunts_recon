@@ -6,8 +6,8 @@ _BSS ends
 CONST segment word public 'CONST'
 CONST ends
 DGROUP group CONST,_BSS,_DATA
-_TEXT segment word public 'CODE'
-assume cs:_TEXT,ds:DGROUP
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT,ds:DGROUP
 extrn _fontdefseg:word
 public _set_fontdefseg
 _set_fontdefseg proc far
@@ -24,5 +24,5 @@ _set_fontdefseg proc far
     ; align 2
     db 0
 _set_fontdefseg endp
-_TEXT ends
+S012_TEXT ends
 end

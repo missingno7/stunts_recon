@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment byte public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -8,11 +8,11 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 extrn _resendptr1:word
 extrn _resendptr2:word
 extrn _mmgr_path_to_name:far
-_TEXT segment word public 'CODE'
+S012_TEXT segment byte public 'CODE'
 public _nopsub_31429
 _nopsub_31429 proc far
      s = byte ptr 0
@@ -67,5 +67,5 @@ loc_31475:
     pop     bp
     retf
 _nopsub_31429 endp
-_TEXT ends
+S012_TEXT ends
 end

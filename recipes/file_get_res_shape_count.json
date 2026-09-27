@@ -23,7 +23,7 @@
       {
         "name": "_file_get_res_shape_count",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -38,14 +38,14 @@
         "frame": null,
         "index": 1,
         "length": 17,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_file_get_res_shape_count",
   "source": "asm/file_get_res_shape_count.ASM",

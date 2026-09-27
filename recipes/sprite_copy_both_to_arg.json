@@ -13,7 +13,7 @@
         {
           "name": "_sprite_copy_both_to_arg",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
@@ -28,7 +28,7 @@
           "frame": null,
           "index": 1,
           "length": 32,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -49,13 +49,13 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "offset16",
       "offset": 8,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "sprite1",
       "target_index": 1,
@@ -77,7 +77,7 @@
       {
         "name": "_sprite_copy_both_to_arg",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -92,14 +92,14 @@
         "frame": null,
         "index": 1,
         "length": 32,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_sprite_copy_both_to_arg",

@@ -4,8 +4,46 @@
     "/I."
   ],
   "end": 146328,
-  "expected_fixups": [],
+  "expected_fixups": [
+    {
+      "displacement": 10,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 113,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 126,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
   "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
   "id": "seg012_nopsub33ac0_group",
   "include_closure": [],
   "kind": "asm",
@@ -45,23 +83,25 @@
     }
   ],
   "object_declarations": {
-    "externals": [],
+    "externals": [
+      "_sprite1"
+    ],
     "groups": [],
     "publics": [
       {
         "name": "_nopsub_33AC0",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_nopsub_33AE4",
         "offset": 36,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_shape2d_render_bmp_as_mask",
         "offset": 66,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -76,14 +116,15 @@
         "frame": null,
         "index": 1,
         "length": 216,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "source": "asm/seg012_nopsub33ac0_group.ASM",
   "stable_id": "multi_seg012_nopsub33ac0_group",

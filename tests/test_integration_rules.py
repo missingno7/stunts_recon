@@ -117,19 +117,29 @@ class IntegrationRules(unittest.TestCase):
         # current manifest (which already contains the group) as its own input.
         manifest = copy.deepcopy(read_json(ROOT/'layout/manifest.json'))
         owners = manifest['owners']
-        group_index, = [i for i, owner in enumerate(owners)
-                        if owner['id'] == 'audio_flag2_group']
-        group_owner, following_raw = owners[group_index:group_index+2]
-        self.assertEqual((group_owner['start'], group_owner['end']), (160690, 160766))
-        self.assertEqual((following_raw['kind'], following_raw['start'],
-                          following_raw['end']), ('UNRESOLVED_RAW', 160766, 161966))
-        owners[group_index:group_index+2] = [
+        # The group (or a later whole object subsuming it) covers the window;
+        # split the covering owner into explicit raw around the old single owner.
+        cover_index, = [i for i, owner in enumerate(owners)
+                        if owner['start'] <= 160690 and 160766 <= owner['end']]
+        cover = owners[cover_index]
+        self.assertIn(cover['id'], ('audio_flag2_group', 'obj_seg027'))
+        pieces = []
+        if cover['start'] < 160690:
+            pieces.append({'classification':'UNRESOLVED_MIXED', 'end':160690,
+                           'id':'raw_before_273b2', 'kind':'UNRESOLVED_RAW', 'start':cover['start']})
+        pieces += [
             {'classification':'GAME_C', 'end':160696, 'id':'load_273b2',
              'kind':'MATCHING_C', 'name':'audio_enable_flag2',
              'recipe':'tests/fixtures/audio_enable_flag2.json', 'start':160690},
-            {'classification':'UNRESOLVED_MIXED', 'end':161966,
-             'id':'raw_273b8_278ae', 'kind':'UNRESOLVED_RAW', 'start':160696},
+            {'classification':'UNRESOLVED_MIXED', 'end':cover['end'],
+             'id':'raw_273b8_following', 'kind':'UNRESOLVED_RAW', 'start':160696},
         ]
+        owners[cover_index:cover_index+1] = pieces
+        # Data owners of the removed covering object become explicit raw.
+        manifest['owners'] = [o if o.get('parent') != cover['id'] else
+                              {'classification':'UNRESOLVED_MIXED', 'end':o['end'],
+                               'id':'raw_'+o['id'], 'kind':'UNRESOLVED_RAW', 'start':o['start']}
+                              for o in owners]
         staged = replace_group(manifest, recipe, self.oracle)
         self.assertTrue(any(o['id']=='audio_flag2_group' and o['start']==recipe['start']
                             and o['end']==recipe['end'] for o in staged['owners']))

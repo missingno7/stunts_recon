@@ -23,7 +23,7 @@
       {
         "name": "_nopsub_3215A",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -38,14 +38,14 @@
         "frame": null,
         "index": 1,
         "length": 18,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_nopsub_3215A",
   "source": "asm/nopsub_3215A.ASM",

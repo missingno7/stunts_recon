@@ -1,0 +1,763 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 143366,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_fontdefseg",
+      "frame_index": 8,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 26,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_fontdefseg",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_word_4031E",
+      "frame_index": 6,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 122,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_word_4031E",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_draw_patterned_lines",
+      "frame_index": 4,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 137,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_draw_patterned_lines",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_spritefunc",
+      "frame_index": 9,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 140,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_spritefunc",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_preRender_line",
+      "frame_index": 3,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 143,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_preRender_line",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_imagefunc",
+      "frame_index": 5,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 146,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_imagefunc",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 149,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "_loc_3180A",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 838,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 682,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 865,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 684,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 940,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 686,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 5,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 741,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "DSEG",
+      "target_index": 5,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_get_shape2d",
+      "frame_index": 7,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 746,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_get_shape2d",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 682,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 836,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 995,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 863,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 796,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1026,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 796,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1032,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 114,
+      "encoded_addend": "0000",
+      "frame": "_callbackflags2",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 1413,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_callbackflags2",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 1034,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1426,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1034,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1433,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1066,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1449,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1034,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1493,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1781,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1576,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1764,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1632,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1066,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1711,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1034,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 1718,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 142103,
+      "offset": 11031,
+      "segment": 8192
+    },
+    {
+      "load_offset": 142110,
+      "offset": 11038,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "asm012_141362",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "name": "font_op",
+      "public": "_font_op",
+      "stable_id": "load_22832",
+      "start": 141362
+    },
+    {
+      "name": "font_op2",
+      "public": "_font_op2",
+      "stable_id": "load_22843",
+      "start": 141379
+    },
+    {
+      "name": "preRender_patterned",
+      "public": "_preRender_patterned",
+      "stable_id": "load_22886",
+      "start": 141446
+    },
+    {
+      "name": "nopsub_328C9",
+      "public": "_nopsub_328C9",
+      "stable_id": "load_228c9",
+      "start": 141513
+    },
+    {
+      "name": "nopsub_328DB",
+      "public": "_nopsub_328DB",
+      "stable_id": null,
+      "start": 141531
+    },
+    {
+      "name": "mat_mul_vector",
+      "public": "_mat_mul_vector",
+      "stable_id": "load_228ee",
+      "start": 141550
+    },
+    {
+      "name": "mat_multiply",
+      "public": "_mat_multiply",
+      "stable_id": "load_229f2",
+      "start": 141810
+    },
+    {
+      "entry_anchors": [
+        {
+          "hex": "9a5240a21e",
+          "relocation": {
+            "load_offset": 22549,
+            "offset": 22549,
+            "segment": 0
+          },
+          "site": 22546
+        },
+        {
+          "hex": "9a5240a21e",
+          "relocation": {
+            "load_offset": 38937,
+            "offset": 38937,
+            "segment": 0
+          },
+          "site": 38934
+        },
+        {
+          "hex": "9a5240a21e",
+          "relocation": {
+            "load_offset": 86021,
+            "offset": 20485,
+            "segment": 4096
+          },
+          "site": 86018
+        }
+      ],
+      "name": "mat_invert",
+      "public": "_mat_invert",
+      "stable_id": null,
+      "start": 141938
+    },
+    {
+      "name": "file_unflip_shape2d",
+      "public": "_file_unflip_shape2d",
+      "stable_id": null,
+      "start": 142050
+    },
+    {
+      "name": "file_decomp_vle",
+      "public": "_file_decomp_vle",
+      "stable_id": null,
+      "start": 142716
+    },
+    {
+      "name": "nopsub_32FEE",
+      "public": "_nopsub_32FEE",
+      "stable_id": "load_22fee",
+      "start": 143342
+    },
+    {
+      "name": "video_get_status",
+      "public": "_video_get_status",
+      "stable_id": null,
+      "start": 143356
+    }
+  ],
+  "module_proof": {
+    "end_boundary": {
+      "kind": "zero-fill-included"
+    },
+    "kind": "asm-module-extent-v1",
+    "start_boundary": {
+      "kind": "zero-fill-after-return"
+    }
+  },
+  "object_declarations": {
+    "externals": [
+      "_callbackflags2",
+      "_loc_3180A",
+      "_preRender_line",
+      "_draw_patterned_lines",
+      "_imagefunc",
+      "_word_4031E",
+      "_file_get_shape2d",
+      "_fontdefseg",
+      "_spritefunc"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2,
+          3,
+          4
+        ],
+        "segments": [
+          "_DATA",
+          "CONST",
+          "_BSS"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_video_get_status",
+        "offset": 1994,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_nopsub_328C9",
+        "offset": 151,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_nopsub_328DB",
+        "offset": 169,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_nopsub_32FEE",
+        "offset": 1980,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mat_multiply",
+        "offset": 448,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_unflip_shape2d",
+        "offset": 688,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_preRender_patterned",
+        "offset": 84,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_font_op",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_font_op2",
+        "offset": 17,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mat_mul_vector",
+        "offset": 188,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_decomp_vle",
+        "offset": 1354,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mat_invert",
+        "offset": 576,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 2004,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
+        "big": false,
+        "class": "STUNTSD",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 5,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "reviewed_code_offsets": [
+    "_draw_patterned_lines",
+    "_preRender_line"
+  ],
+  "reviewed_near_targets": {
+    "_loc_3180A": {
+      "source_line": 6552
+    }
+  },
+  "source": "asm/asm012_141362.ASM",
+  "stable_id": "multi_asm012_141362",
+  "start": 141362,
+  "subsumed_owners": [
+    "font_entries",
+    "load_228ee",
+    "load_229f2",
+    "load_22fee",
+    "asm_load_22ffc"
+  ],
+  "target": {
+    "sha256": "2d22376c4ffefa0a6d4fb4130cc8bfa29bca7f17c5f394d88d7cdb435af85c54",
+    "size": 2004
+  }
+}

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _file_get_res_shape_count
 _file_get_res_shape_count proc far
  push bp
@@ -13,5 +13,5 @@ _file_get_res_shape_count proc far
  pop bp
  ret
 _file_get_res_shape_count endp
-_TEXT ends
+S012_TEXT ends
 end

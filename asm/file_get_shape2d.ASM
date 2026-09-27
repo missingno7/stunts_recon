@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment byte public 'CODE'
+assume cs:S012_TEXT
 public _file_get_shape2d
 _file_get_shape2d proc far
  push bp
@@ -48,5 +48,5 @@ _file_get_shape2d proc far
  pop bp
  ret
 _file_get_shape2d endp
-_TEXT ends
+S012_TEXT ends
 end

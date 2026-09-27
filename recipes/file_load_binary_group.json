@@ -8,13 +8,13 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 44,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_mmgr_get_chunk_by_name",
       "target_index": 1,
@@ -25,13 +25,13 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 62,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_file_paras",
       "target_index": 3,
@@ -42,13 +42,13 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 78,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_mmgr_alloc_pages",
       "target_index": 4,
@@ -59,13 +59,13 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 94,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_file_read",
       "target_index": 2,
@@ -138,19 +138,19 @@
       {
         "name": "_file_load_binary_nofatal",
         "offset": 15,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_file_load_binary",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
       {
-        "acbp": 72,
-        "alignment": "word",
-        "alignment_code": 2,
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
         "big": false,
         "class": "CODE",
         "combine": "public",
@@ -158,14 +158,14 @@
         "frame": null,
         "index": 1,
         "length": 109,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "source": "asm/file_load_binary_group.ASM",

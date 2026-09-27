@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _mmgr_path_to_name
 _mmgr_path_to_name proc far
     push bp
@@ -26,5 +26,5 @@ path_done:
     pop bp
     retf
 _mmgr_path_to_name endp
-_TEXT ends
+S012_TEXT ends
 end

@@ -5,8 +5,8 @@ assume ds:dseg
 extrn _timerintr:dword
 extrn _aNoRoomLeftOnTimerInterru:byte
 dseg ends
-_TEXT segment word public 'CODE'
-assume cs:_TEXT, ds:dseg
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT, ds:dseg
 extrn _fatal_error:far
 public _timer_reg_callback
 _timer_reg_callback proc far
@@ -37,5 +37,5 @@ loc_302C7:
     pop     bp
     retf
 _timer_reg_callback endp
-_TEXT ends
+S012_TEXT ends
 end

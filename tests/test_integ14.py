@@ -28,8 +28,13 @@ class Integ14Tests(unittest.TestCase):
         for row in proposal['function_evidence_overlay_additions']:
             self.assertEqual((rows[row['name']]['start'], rows[row['name']]['end']),
                              (row['start'],row['end']))
+        # integ26 reviewed audio_map_song_tracks with its structural post-table
+        # jump; the other conditional rows stay outside the overlay.
         for row in proposal['conditional_row_proposals']:
+            if row['name']=='audio_map_song_tracks':
+                continue
             self.assertNotIn(row['name'],rows)
+        self.assertIn('audio_map_song_tracks',rows)
 
     def test_generic_table_word_and_domain_mutations_rejected(self):
         original=read_json(ROOT/'layout/function-evidence.json')

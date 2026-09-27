@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_326BA
 _nopsub_326BA proc far
     push bp
@@ -20,5 +20,5 @@ _nopsub_326BA proc far
     pop bp
     retf
 _nopsub_326BA endp
-_TEXT ends
+S012_TEXT ends
 end

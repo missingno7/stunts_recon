@@ -6,8 +6,8 @@ from pathlib import Path
 from common import ROOT, read_json, write_json, require, identity
 from compiler import verify_toolchain
 from preprocessor import prepare, check_recipe
-from object_probe import read_object
-from binder import bind_contribution
+from object_probe import read_object, recipe_sparse_zero
+from binder import bind_contribution, require_relocations_from_fixups
 from code_symbols import resolve_recipe_symbols
 from multi_contribution import bind_multi, checked_members
 from secondary_contribution import bind_single_secondary
@@ -23,6 +23,10 @@ DOSBOX_X='C:/tools/dosbox-x/dosbox-x.exe'
 
 def bind_recipe_object(obj, recipe, image, relocations):
     """Use the same complete recipe path as the acceptance probe."""
+    if 'prefix_of_object' in recipe:
+        # The record-closed prefix is re-derived from this independent object.
+        from prefix_proof import bind_prefix
+        return bind_prefix(obj, recipe, image, relocations)
     if recipe.get('data_only'):
         from data_only import bind_data_only
         return bind_data_only(obj,recipe,image,relocations)
@@ -35,23 +39,103 @@ def bind_recipe_object(obj, recipe, image, relocations):
     return bind_contribution(obj,recipe,symbols)
 
 
-def _run_dos(runner, work, tc, flags, asm):
-    dos_command = ('D:\\MASM.EXE '+' '.join(flags)+' UNIT,UNIT.OBJ,UNIT.LST; > COMP.LOG'
-                   if asm else 'D:\\CL.EXE /c '+' '.join(flags)+' UNIT.C > COMP.LOG')
+def _run_dos(runner, work, tc, flags, asm, profile=None):
+    """One independent DOS compile/assembly in `work` (UNIT.C or UNIT.ASM).
+
+    C compiles reproduce the pinned pass environment: the profile is mounted
+    read-only from a hash-verified mirror at its pinned DOS pass directory,
+    TEMP is the pinned `.`, and the pinned DOSBox-X memory configuration gives
+    the passes the pinned runner's free memory (tools/pass_environment.py)."""
+    import pass_environment as PE
+    independent = PE.independent_runner()
+    require(Path(runner).resolve() == Path(independent['path']).resolve(),
+            'Independent runner differs from the pinned DOSBox-X')
+    if asm:
+        mounts = [f'mount d "{tc}" -ro', f'mount e "{work}"']
+        commands = ['e:', 'set PATH=D:\\', 'set TEMP=.']
+        dos_command = 'D:\\MASM.EXE '+' '.join(flags)+' UNIT,UNIT.OBJ,UNIT.LST; > COMP.LOG'
+    else:
+        from compiler import verify_toolchain
+        config, _ = verify_toolchain(profile)
+        mounts, commands, exe = PE.dosbox_compile_commands(profile, config, flags)
+        mounts.append(f'mount e "{work}"')
+        dos_command = exe+' /c '+' '.join(flags)+' UNIT.C > COMP.LOG'
     batch=['@echo off',dos_command,
            'if errorlevel 1 goto failed','echo 0 > RESULT.TXT','goto done',':failed','echo 1 > RESULT.TXT',':done','exit']
     (work/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode('ascii'))
-    conf=work/'dosbox.conf'
-    lines=['[sdl]','output=surface','[cpu]','cycles=max','[mixer]','nosound=true','[autoexec]',
-           f'mount c "{work}"',f'mount d "{tc}"','c:','set PATH=D:\\','set TEMP=C:\\','RUN.BAT']
-    conf.write_text('\n'.join(lines)+'\n')
-    env=os.environ.copy();env.update(SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy')
-    startup=subprocess.STARTUPINFO();startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW;startup.wShowWindow=0
-    cmd=[str(runner),'-conf',str(conf),'-fastlaunch','-exit']
-    result=subprocess.run(cmd,cwd=work,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,
-                          timeout=45,creationflags=subprocess.CREATE_NO_WINDOW,startupinfo=startup)
+    conf = PE.dosbox_conf(work, mounts, commands+['RUN.BAT'], independent)
+    cmd, result = PE.run_dosbox(work, conf)
     require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
     return cmd,batch
+
+
+def independent_row(r, source, oracle, image, runner=None):
+    """Independent DOSBox-X compile/assembly and complete binding of one recipe.
+
+    `source` is the exact candidate or canonical source bytes; the same
+    binders and relocation obligations as the acceptance probe apply."""
+    runner=Path(DOSBOX_X) if runner is None else runner
+    require(runner.is_file(),'Independent DOSBox-X backend unavailable')
+    (ROOT/'build/crosschecks').mkdir(parents=True,exist_ok=True)
+    config,_=verify_toolchain(r['profile'])
+    work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
+    asm = r.get('kind') == 'asm'
+    if asm:
+        require(r['profile']=='masm510-game' and r.get('include_closure')==[],
+                'Independent ASM profile/closure differs')
+        require(r.get('assembler_flags')==config['flags'],
+                'Independent ASM recipe flags differ')
+        (work/'UNIT.ASM').write_bytes(asm_source(source))
+        closure=[]
+    else:
+        expanded, closure = prepare(source, r['profile'])
+        check_recipe(r, closure)
+        (work/'UNIT.C').write_bytes(expanded.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
+    tc=(ROOT/config['directory']).resolve()
+    flags=config['flags'] if asm else (recipe_flags(r) or config['flags'])
+    control=None if asm else object_control_flags(r)
+    cmd,batch=_run_dos(runner,work,tc,flags,asm,r['profile'])
+    if control is not None:
+        # Same per-object flag rule as the acceptance probe: a canonical-flag
+        # C contribution in a flagged object must emit the identical object.
+        cwork=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
+        (cwork/'UNIT.C').write_bytes((work/'UNIT.C').read_bytes())
+        _run_dos(runner,cwork,tc,control,False,r['profile'])
+        require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r)),
+                            read_object((work/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r))),
+                'Independent object differs under its registered object flag set')
+    obj=read_object((work/'UNIT.OBJ').read_bytes(),
+                    sparse_zero=None if asm else recipe_sparse_zero(r))
+    if asm:
+        require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),
+                'Independent ASM source changed during assembly')
+        require(r['object_declarations']==
+                {'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},
+                'Independent ASM declarations differ')
+        require(obj.linker_fixups==r['expected_fixups'],'Independent ASM FIXUPPs differ')
+        if not r.get('data_only'):
+            from link_frames import check_asm_object
+            check_asm_object(obj, r)
+    else:
+        require(prepare(source, r['profile'])[1] == closure,
+                'Independent preprocessor closure changed during compilation')
+    require_relocations_from_fixups(obj,r,oracle[2]['unpacked_mz']['relocations'])
+    payload,binding=bind_recipe_object(obj,r,image,oracle[2]['unpacked_mz']['relocations'])
+    relocs=[site for site in oracle[2]['unpacked_mz']['relocations'] if r['start']-1<=site['load_offset']<r['end']]
+    require(binding['generated_relocations']==r['expected_relocations']==relocs,'Independent source relocation mismatch')
+    require(payload==image[r['start']:r['end']],'Independent compiler bytes mismatch')
+    for name,spec in r.get('secondary_dgroup_segments',{}).items():
+        secondary=bytes.fromhex(binding['secondary_payloads'][name])
+        if name=='_BSS':
+            require(secondary==bytes(spec['end']-spec['start']),
+                    'Independent BSS differs')
+        else:
+            require(secondary==image[spec['start']:spec['end']] and
+                    identity(secondary)==spec['target'],
+                    'Independent secondary data differs')
+    return {'task':r['id'],'source':identity(source),'object':identity((work/'UNIT.OBJ').read_bytes()),
+                 'source_closure':closure, 'kind':r.get('kind','c'),
+                 'payload':identity(payload),'binding':binding,'exact':True,'command':cmd,'dos_command':batch[1]}
 
 
 def main():
@@ -62,66 +146,12 @@ def main():
     require(runner.is_file(),'Independent DOSBox-X backend unavailable')
     runner_identity=identity(runner.read_bytes())
     oracle=verify(write=False);image=MZ.parse(oracle[1]).load_image(oracle[1]);rows=[]
-    (ROOT/'build/crosschecks').mkdir(parents=True,exist_ok=True)
     active=[ROOT/o['recipe'] for o in read_json(ROOT/'layout/manifest.json')['owners']
             if o['kind'] in ('MATCHING_C','MATCHING_ASM','MATCHING_C_DATA','MATCHING_ASM_DATA')
             and 'recipe' in o]
     for path in active:
-        r=read_json(path);config,_=verify_toolchain(r['profile'])
-        work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
-        source=(ROOT/r['source']).read_bytes()
-        asm = r.get('kind') == 'asm'
-        if asm:
-            require(r['profile']=='masm510-game' and r.get('include_closure')==[],
-                    'Independent ASM profile/closure differs')
-            require(r.get('assembler_flags')==config['flags'],
-                    'Independent ASM recipe flags differ')
-            (work/'UNIT.ASM').write_bytes(asm_source(source))
-            closure=[]
-        else:
-            expanded, closure = prepare(source, r['profile'])
-            check_recipe(r, closure)
-            (work/'UNIT.C').write_bytes(expanded.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
-        tc=(ROOT/config['directory']).resolve()
-        flags=config['flags'] if asm else (recipe_flags(r) or config['flags'])
-        control=None if asm else object_control_flags(r)
-        cmd,batch=_run_dos(runner,work,tc,flags,asm)
-        if control is not None:
-            # Same per-object flag rule as the acceptance probe: a canonical-flag
-            # C contribution in a flagged object must emit the identical object.
-            cwork=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
-            (cwork/'UNIT.C').write_bytes((work/'UNIT.C').read_bytes())
-            _run_dos(runner,cwork,tc,control,False)
-            require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes()),
-                                read_object((work/'UNIT.OBJ').read_bytes())),
-                    'Independent object differs under its registered object flag set')
-        obj=read_object((work/'UNIT.OBJ').read_bytes())
-        if asm:
-            require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),
-                    'Independent ASM source changed during assembly')
-            require(r['object_declarations']==
-                    {'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},
-                    'Independent ASM declarations differ')
-            require(obj.linker_fixups==r['expected_fixups'],'Independent ASM FIXUPPs differ')
-        else:
-            require(prepare(source, r['profile'])[1] == closure,
-                    'Independent preprocessor closure changed during compilation')
-        payload,binding=bind_recipe_object(obj,r,image,oracle[2]['unpacked_mz']['relocations'])
-        relocs=[site for site in oracle[2]['unpacked_mz']['relocations'] if r['start']-1<=site['load_offset']<r['end']]
-        require(binding['generated_relocations']==r['expected_relocations']==relocs,'Independent source relocation mismatch')
-        require(payload==image[r['start']:r['end']],'Independent compiler bytes mismatch')
-        for name,spec in r.get('secondary_dgroup_segments',{}).items():
-            secondary=bytes.fromhex(binding['secondary_payloads'][name])
-            if name=='_BSS':
-                require(secondary==bytes(spec['end']-spec['start']),
-                        'Independent BSS differs')
-            else:
-                require(secondary==image[spec['start']:spec['end']] and
-                        identity(secondary)==spec['target'],
-                        'Independent secondary data differs')
-        rows.append({'task':r['id'],'source':identity(source),'object':identity((work/'UNIT.OBJ').read_bytes()),
-                     'source_closure':closure, 'kind':r.get('kind','c'),
-                     'payload':identity(payload),'binding':binding,'exact':True,'command':cmd,'dos_command':batch[1]})
+        r=read_json(path)
+        rows.append(independent_row(r,(ROOT/r['source']).read_bytes(),oracle,image,runner))
     require(inputs()==before,'Inputs changed during independent compilation')
     require(verify(write=False)[2]==oracle[2],'Oracle changed during independent compilation')
     for profile in {read_json(path)['profile'] for path in active}:
@@ -134,4 +164,6 @@ if __name__=='__main__':
     from transaction import exclusive, ensure_consistent
     with exclusive():
         ensure_consistent()
-        main()
+        import memo
+        with memo.session():
+            main()

@@ -15,6 +15,8 @@ GENERIC_DISPATCH_SITES = {
                           (127014, 127019, 9)),
     'sub_38DE6': ((167469, 167550, 16),),
     'sub_3945A': ((169173, 169384, 18),),
+    'run_option_menu': ((12361, 12618, 8),),
+    'audio_map_song_tracks': ((164565, 164768, 18),),
 }
 
 
@@ -87,12 +89,20 @@ def _generic_dispatch_targets(f, by, island_by, image):
 
 def current_inventory(image):
     """Apply reviewed overlays in memory; the checked base inventory stays immutable."""
-    inventory=copy.deepcopy(read_json(ROOT/'evidence/functions.json'))
-    apply_reviewed(inventory, image)
-    return inventory
+    import memo
+    def compute():
+        inventory=copy.deepcopy(read_json(ROOT/'evidence/functions.json'))
+        apply_reviewed(inventory, image)
+        return inventory
+    return memo.cached('current_inventory', sha(image), compute)
 
 
 def reviewed_functions(image):
+    import memo
+    return memo.cached('reviewed_functions', sha(image), lambda: _reviewed_functions(image))
+
+
+def _reviewed_functions(image):
     path=ROOT/'layout/function-evidence.json'
     if not path.exists(): return {}
     document=read_json(path)
@@ -310,12 +320,13 @@ def reviewed_functions(image):
         structural=set()
         for name, site, island_site, encoded in (
                 ('track_setup',70804,70780,'e952f5'),
-                ('loop_game',85294,85280,'e9b6f5')):
+                ('loop_game',85294,85280,'e9b6f5'),
+                ('audio_map_song_tracks',164804,164768,'eb88')):
             if f['name'] != name: continue
             raw=by.get(site)
             require(raw==bytes.fromhex(encoded) and island_site in island_by and
                     site==island_site+len(island_by[island_site][0]) and
-                    site+3+int.from_bytes(raw[1:],'little',signed=True) in by,
+                    site+len(raw)+int.from_bytes(raw[1:],'little',signed=True) in by,
                     'Switch post-table jump differs in '+name)
             structural={site}
         require(set(by)-seen==padding|structural and all(by[p]==b'\x90' for p in padding),
@@ -328,7 +339,66 @@ def reviewed_functions(image):
     return result
 
 
+# Segment frames qualified by one original relocated far CALL from an
+# instruction-verified caller onto a mapped entry of that segment (the
+# importer's own rule, which only considered instruction-verified targets).
+# Each anchor is rechecked against the oracle before the paragraph is applied.
+SEGMENT_FRAME_ANCHORS = {
+    'seg037': {'caller': 'file_load_shape2d', 'site': 175037, 'hex': '9a0a00122b',
+               'relocation_load_offset': 175040, 'target': 'file_load_shape2d_expandedsize'},
+}
+
+
+def _apply_segment_frames(inventory, image):
+    from oracle import verify
+    relocations = None
+    for segment, anchor in SEGMENT_FRAME_ANCHORS.items():
+        rows = [f for f in inventory['functions'] if f.get('segment') == segment]
+        if all(f.get('segment_paragraph') is not None for f in rows):
+            continue
+        if relocations is None:
+            relocations = {r['load_offset'] for r in verify(write=False)[2]['unpacked_mz']['relocations']}
+        site, raw = anchor['site'], bytes.fromhex(anchor['hex'])
+        callers = [f for f in inventory['functions'] if f.get('name') == anchor['caller'] and
+                   f['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                   f['start'] <= site and site + 5 <= f['end'] and
+                   sha(image[f['start']:f['end']]) == f['sha256']]
+        targets = [f for f in rows if f.get('name') == anchor['target']]
+        require(len(callers) == 1 and len(targets) == 1 and len(raw) == 5 and raw[0] == 0x9a and
+                image[site:site+5] == raw and anchor['relocation_load_offset'] == site + 3 and
+                site + 3 in relocations and
+                int.from_bytes(raw[3:5], 'little')*16 + int.from_bytes(raw[1:3], 'little') ==
+                targets[0]['start'] and
+                all(f.get('segment_paragraph') in (None, int.from_bytes(raw[3:5], 'little'))
+                    for f in rows),
+                'Segment frame anchor differs: ' + segment)
+        paragraph = int.from_bytes(raw[3:5], 'little')
+        for f in rows:
+            if type(f.get('start')) is int:
+                require(0 <= f['start'] - paragraph*16 < 65536, 'Segment frame does not contain its rows')
+                f['segment_paragraph'] = paragraph
+                f['segment_offset'] = f['start'] - paragraph*16
+
+
+def _checked_gap_frame_anchor(anchor, overlay, base, image):
+    from oracle import verify
+    require(isinstance(anchor, dict) and set(anchor) == {'caller', 'site', 'hex', 'relocation_load_offset'},
+            'Gap entry frame anchor shape differs')
+    raw, site = bytes.fromhex(anchor['hex']), anchor['site']
+    caller = base.get(anchor['caller'])
+    relocations = {r['load_offset'] for r in verify(write=False)[2]['unpacked_mz']['relocations']}
+    require(len(raw) == 6 and raw[0] == 0xb8 and raw[3] == 0xba and image[site:site+6] == raw and
+            anchor['relocation_load_offset'] == site + 4 and site + 4 in relocations and
+            caller is not None and caller['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+            caller['start'] <= site and site + 6 <= caller['end'] and
+            sha(image[caller['start']:caller['end']]) == caller['sha256'] and
+            int.from_bytes(raw[4:6], 'little') == overlay.get('segment_paragraph') and
+            overlay['segment_paragraph']*16 + int.from_bytes(raw[1:3], 'little') == overlay['start'],
+            'Gap entry frame anchor differs from the oracle')
+
+
 def apply_reviewed(inventory, image):
+    _apply_segment_frames(inventory, image)
     reviewed=reviewed_functions(image)
     existing={f['name'] for f in inventory['functions']}
     for index,f in enumerate(inventory['functions']):
@@ -347,18 +417,28 @@ def apply_reviewed(inventory, image):
             # An unmapped function between two instruction-verified neighbours
             # of the same code segment; its own bytes and CFG are reviewed above.
             before, after = base.get(gap.get('predecessor')), base.get(gap.get('successor'))
-            require(set(gap) == {'kind', 'predecessor', 'successor'} and
+            require(set(gap) <= {'kind', 'predecessor', 'successor', 'frame_anchor'} and
                     gap['kind'] == 'verified-neighbours-v1' and before and after and
                     before['status'] == after['status'] ==
                     'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
                     before['end'] == overlay['start'] and after['start'] == overlay['end'] and
                     sha(image[before['start']:before['end']]) == before['sha256'] and
                     sha(image[after['start']:after['end']]) == after['sha256'] and
-                    overlay.get('segment') == before.get('segment') and
-                    overlay.get('segment_paragraph') == before.get('segment_paragraph') and
                     overlay.get('stable_id') == 'load_%05x' % overlay['start'] and
                     not overlay.get('local_symbol'),
                     'New reviewed gap entry lacks verified neighbouring boundaries')
+            if 'frame_anchor' in gap:
+                # integ29: the entry's own code frame is read from an original
+                # relocated far pointer (MOV AX,offset / MOV DX,segment) in an
+                # instruction-verified caller; it may be the successor's frame.
+                _checked_gap_frame_anchor(gap['frame_anchor'], overlay, base, image)
+                require(overlay.get('segment') == after.get('segment') and
+                        overlay.get('segment_paragraph') == after.get('segment_paragraph'),
+                        'Gap entry frame anchor does not name the successor segment')
+            else:
+                require(overlay.get('segment') == before.get('segment') and
+                        overlay.get('segment_paragraph') == before.get('segment_paragraph'),
+                        'New reviewed gap entry lacks verified neighbouring boundaries')
         else:
             require(overlay.get('local_symbol') is True and overlay.get('stable_id') ==
                     'load_%05x' % overlay['start'] and overlay.get('provenance') and

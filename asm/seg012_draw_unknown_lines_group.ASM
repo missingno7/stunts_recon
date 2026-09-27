@@ -6,13 +6,13 @@ _BSS ends
 CONST segment word public 'CONST'
 CONST ends
 DGROUP group CONST,_BSS,_DATA
-_TEXT segment word public 'CODE'
-assume cs:_TEXT,ds:DGROUP
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT,ds:DGROUP
 extrn _word_4031E:word
 extrn _word_40320:word
 public _nopsub_33330
 public _draw_unknown_lines
-sprite1 equ 5F20h
+extrn _sprite1:byte
 sprite_lineofs equ 0Ah
 sprite_bitmapptr equ 0
 _nopsub_33330 proc far
@@ -56,8 +56,8 @@ loc_33349:
 loc_3335B:
     mov     si, [bp+arg_4]
     shl     si, 1
-    add     si, cs:[sprite1+sprite_lineofs]
-    mov     ax, word ptr cs:[sprite1+sprite_bitmapptr+2]
+    add     si, cs:[_sprite1+sprite_lineofs]
+    mov     ax, word ptr cs:[_sprite1+sprite_bitmapptr+2]
     mov     es, ax
     mov     al, [bp+arg_8]
 loc_3336E:
@@ -100,6 +100,6 @@ loc_333B8:
     loop    loc_33393
     jmp     short loc_3339A
 _draw_unknown_lines endp
-_TEXT ends
+S012_TEXT ends
 end
 

@@ -70,7 +70,15 @@ class Integ19Tests(unittest.TestCase):
 
     def test_extended_group_retains_every_accepted_member(self):
         prior=read_json(ROOT/'recipes/seg012_shape2d_extended_group.json')
-        manifest=read_json(ROOT/'layout/manifest.json')
+        manifest=copy.deepcopy(read_json(ROOT/'layout/manifest.json'))
+        # The bytes after the prior group are modelled as raw, as they were when
+        # this rule was introduced (a later module may own them now).
+        owners=manifest['owners']
+        after,=[i for i,o in enumerate(owners) if o['start']==prior['end']]
+        if owners[after]['kind']!='UNRESOLVED_RAW':
+            owners[after]={'id':'raw_following_probe','kind':'UNRESOLVED_RAW',
+                           'classification':'UNRESOLVED_MIXED',
+                           'start':owners[after]['start'],'end':owners[after]['end']}
         recipe=copy.deepcopy(prior)
         recipe['id']='nested_group_probe'
         recipe['end']=prior['end']+1

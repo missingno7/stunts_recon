@@ -5,12 +5,13 @@ from oracle import verify
 from mz import MZ
 from compiler import compile_source, CompileFailure
 from preprocessor import prepare, check_recipe
-from binder import bind_contribution
+from binder import bind_contribution, require_relocations_from_fixups
 from code_symbols import resolve_recipe_symbols
 from multi_contribution import checked_members, bind_multi
 from secondary_contribution import bind_single_secondary
 from assembler import assemble_source, asm_source
 from object_flags import recipe_flags, object_control_flags, same_object
+from object_probe import recipe_sparse_zero
 
 
 class ProbeFailure(ValueError):
@@ -27,8 +28,20 @@ def _diagnostic(*args, **kwargs):
         return {'diagnostic_error':str(error),'authority':'DIAGNOSTIC_UNAVAILABLE'}
 
 def probe(recipe, oracle_result=None, source_override=None):
+    import memo
+    with memo.session():
+        return _probe(recipe, oracle_result, source_override)
+
+
+def _probe(recipe, oracle_result=None, source_override=None):
     require('relocation_order_basis' not in recipe,
             'Recipe cannot supply a relocation order basis')
+    prefix = 'prefix_of_object' in recipe
+    if prefix:
+        # Record-closed prefix of a whole candidate object: its fixed form is
+        # checked here and its proof is re-derived from this fresh compile.
+        from prefix_proof import check_recipe_form
+        check_recipe_form(recipe)
     result = oracle_result or verify(write=False)
     image = MZ.parse(result[1]).load_image(result[1])
     start, end = recipe['start'], recipe['end']
@@ -53,13 +66,16 @@ def probe(recipe, oracle_result=None, source_override=None):
         check_recipe(recipe, closure)
     control = None
     try:
+        sparse = recipe_sparse_zero(recipe)
         obj, receipt = (assemble_source(source, recipe['profile']) if kind == 'asm'
-                        else compile_source(source, recipe['profile'], recipe_flags(recipe)))
+                        else compile_source(source, recipe['profile'], recipe_flags(recipe),
+                                            sparse_zero=sparse))
         # A canonical-flag C contribution inside an object with a registered
         # per-object flag set must reproduce the same object under that set.
         control = object_control_flags(recipe) if kind == 'c' else None
         if control is not None:
-            control_obj, control_receipt = compile_source(source, recipe['profile'], control)
+            control_obj, control_receipt = compile_source(source, recipe['profile'], control,
+                                                          sparse_zero=sparse)
             receipt['object_flag_control'] = {'flags': control,
                                               'object': control_receipt['object']}
     except CompileFailure as error:
@@ -78,12 +94,26 @@ def probe(recipe, oracle_result=None, source_override=None):
                 'ASM complete object declarations differ')
         require(obj.linker_fixups == recipe['expected_fixups'],
                 'ASM ordered FIXUPP obligations differ')
-    details['comparison'] = _diagnostic(image[start:end], obj.segments.get(segment,b''), receipt, obj.linker_fixups, segment=segment)
-    if obj.segment_length(segment) != end-start or len(obj.segments.get(segment,b'')) != end-start:
+    # The diagnostic comparison is computed only for a failure report; it
+    # never decides acceptance (integ28 throughput).
+    def compared():
+        details['comparison'] = _diagnostic(image[start:end], obj.segments.get(segment,b''), receipt,
+                                            obj.linker_fixups, segment=segment)
+        return details
+    if not prefix and (obj.segment_length(segment) != end-start or
+                       len(obj.segments.get(segment,b'')) != end-start):
         raise ProbeFailure('Complete emitted contribution length differs from target',
-                           {**details, 'category':'EXTENT_MISMATCH'})
+                           {**compared(), 'category':'EXTENT_MISMATCH'})
     try:
-        if recipe.get('data_only'):
+        require_relocations_from_fixups(obj, recipe, result[2]['unpacked_mz']['relocations'])
+        if kind == 'asm' and not recipe.get('data_only'):
+            # A real LINK must place the same object identically (integ29).
+            from link_frames import check_asm_object
+            check_asm_object(obj, recipe)
+        if prefix:
+            from prefix_proof import bind_prefix
+            payload, binding = bind_prefix(obj, recipe, image, result[2]['unpacked_mz']['relocations'])
+        elif recipe.get('data_only'):
             from data_only import bind_data_only
             payload, binding = bind_data_only(obj, recipe, image, result[2]['unpacked_mz']['relocations'])
         elif 'members' in recipe:
@@ -96,10 +126,10 @@ def probe(recipe, oracle_result=None, source_override=None):
             payload, binding = bind_contribution(obj, recipe, symbols)
         require(binding['generated_relocations']==relocs, 'Generated source relocation obligations differ')
     except ValueError as error:
-        raise ProbeFailure(str(error), {**details, 'category':'BINDING_REVIEW_REQUIRED'}) from error
+        raise ProbeFailure(str(error), {**compared(), 'category':'BINDING_REVIEW_REQUIRED'}) from error
     receipt['binding'] = binding
     if payload != image[start:end]:
-        details['object_comparison'] = details['comparison']
+        details['object_comparison'] = compared()['comparison']
         details['comparison'] = _diagnostic(image[start:end], payload, receipt, obj.linker_fixups, bound=True, segment=segment)
         differences=[{'offset':i,'load_offset':start+i,'expected':want,'actual':got}
                      for i,(want,got) in enumerate(zip(image[start:end],payload)) if want != got]

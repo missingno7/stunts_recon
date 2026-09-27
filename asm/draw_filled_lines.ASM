@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _draw_filled_lines
 _draw_filled_lines proc far
      s = byte ptr 0
@@ -21,8 +22,8 @@ _draw_filled_lines proc far
     cld
     mov     si, [bp+arg_y]
     shl     si, 1
-    add     si, word ptr cs:[5F2Ah]
-    mov     ax, word ptr word ptr cs:[5F22h]
+    add     si, word ptr cs:[_sprite1+10]
+    mov     ax, word ptr word ptr cs:[_sprite1+2]
     mov     es, ax
     mov     ax, [bp+arg_color]
     mov     ah, al
@@ -77,5 +78,5 @@ loc_34730:
     ; align 2
     db 0
 _draw_filled_lines endp
-_TEXT ends
+S012_TEXT ends
 end

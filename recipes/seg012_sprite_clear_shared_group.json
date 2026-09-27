@@ -4,8 +4,46 @@
     "/I."
   ],
   "end": 149468,
-  "expected_fixups": [],
+  "expected_fixups": [
+    {
+      "displacement": 10,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 118,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 126,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
   "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
   "id": "seg012_sprite_clear_shared_group",
   "include_closure": [],
   "kind": "asm",
@@ -45,23 +83,25 @@
     }
   ],
   "object_declarations": {
-    "externals": [],
+    "externals": [
+      "_sprite1"
+    ],
     "groups": [],
     "publics": [
       {
         "name": "_sprite_clear_shape_alt",
         "offset": 36,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_nopsub_34736",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       },
       {
         "name": "_sprite_clear_shape",
         "offset": 72,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -76,14 +116,15 @@
         "frame": null,
         "index": 1,
         "length": 166,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "source": "asm/seg012_sprite_clear_shared_group.ASM",
   "stable_id": "multi_seg012_sprite_clear_shared_group",

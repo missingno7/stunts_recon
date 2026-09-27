@@ -97,6 +97,25 @@ def _data_fixups(obj, recipe, name, raw, specs, image, relocations):
     return bytes(output), rows, generated
 
 
+def check_data_publics(obj, specs, code):
+    """Global data defined by the TU lies inside its complete placed segment
+    (integ26). A public spelled like a reviewed DGROUP alias must be placed at
+    that alias's address: one binding name never names two addresses."""
+    layout = read_json(ROOT/'layout/data-symbols.json')
+    for public in obj.publics:
+        if public['segment'] == code or public['segment'] == '?0':
+            continue
+        require(public['segment'] in specs, 'Data public in an unowned segment')
+        spec = specs[public['segment']]
+        require(type(public['offset']) is int and
+                0 <= public['offset'] < spec['end'] - spec['start'],
+                'Data public outside its complete placed segment')
+        alias = layout['symbols'].get(public['name'])
+        require(alias is None or
+                alias['load_address'] == spec['start'] + public['offset'],
+                'Data public conflicts with the reviewed alias address: ' + public['name'])
+
+
 def bind_secondary(obj, recipe, image, relocations, code_payload, code_fixups):
     specs = recipe.get('secondary_dgroup_segments', {})
     code = recipe['object_segment']
@@ -178,6 +197,7 @@ def bind_secondary(obj, recipe, image, relocations, code_payload, code_fixups):
             struct.pack_into('<H',code_bytes,at,value)
             proof.append({'segment':name,'code_offset':at,'addend':addend,'value':value})
         contribution[name] = bound
+    check_data_publics(obj, specs, code)
     require(all(f['segment'] in specs or f['segment']==code for f in obj.linker_fixups),
             'Fixup in unowned segment')
     used={f['target'] for f in obj.linker_fixups if f['segment'] in specs and

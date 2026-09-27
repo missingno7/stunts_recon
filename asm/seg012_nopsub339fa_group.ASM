@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_339FA
 public _putpixel_iconMask
 _nopsub_339FA proc far
@@ -72,13 +73,13 @@ _putpixel_iconMask proc far
 loc_33A57:
     mov     bx, [bp+var_4]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     di, cs:[bx]
     add     di, [bp+var_2]
-    mov     es, word ptr word ptr cs:[5F22h]
+    mov     es, word ptr word ptr cs:[_sprite1+2]
     cld
     mov     dx, [si+2]
-    mov     bx, word ptr cs:[5F34h]
+    mov     bx, word ptr cs:[_sprite1+20]
     mov     ax, [si]
     sub     bx, ax
     add     si, 10h
@@ -131,5 +132,5 @@ loc_33AB4:
     ; align 2
     db 0
 _putpixel_iconMask endp
-_TEXT ends
+S012_TEXT ends
 end

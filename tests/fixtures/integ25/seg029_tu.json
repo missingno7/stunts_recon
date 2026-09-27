@@ -1,0 +1,324 @@
+{
+ "compiler_flags": [
+  "/AM",
+  "/Ox",
+  "/Gs"
+ ],
+ "compiler_flags_register": "TUFLAG-Ox-seg029",
+ "end": 171213,
+ "evidence": {
+  "function_inventory": "evidence/functions.json",
+  "scope": "docs/acceptance.md"
+ },
+ "expected_fixups": [
+  {
+   "displacement": 0,
+   "encoded_addend": "00000000",
+   "frame": "_audioresource_get_dword",
+   "frame_index": 0,
+   "frame_kind": "target",
+   "frame_method": 5,
+   "loc": "pointer32",
+   "offset": 382,
+   "segment": "UNIT_TEXT",
+   "self_relative": false,
+   "target": "_audioresource_get_dword",
+   "target_index": 3,
+   "target_kind": "external",
+   "target_method": 2,
+   "width": 4
+  },
+  {
+   "displacement": 0,
+   "encoded_addend": "0000",
+   "frame": "_audioresource_get_chunk_index",
+   "frame_index": 0,
+   "frame_kind": "target",
+   "frame_method": 5,
+   "loc": "offset16",
+   "offset": 334,
+   "segment": "UNIT_TEXT",
+   "self_relative": true,
+   "target": "_audioresource_get_chunk_index",
+   "target_index": 5,
+   "target_kind": "external",
+   "target_method": 2,
+   "width": 2
+  },
+  {
+   "displacement": 0,
+   "encoded_addend": "0000",
+   "frame": "__AHSHIFT",
+   "frame_index": 0,
+   "frame_kind": "target",
+   "frame_method": 5,
+   "loc": "loader-offset16",
+   "offset": 289,
+   "segment": "UNIT_TEXT",
+   "self_relative": false,
+   "target": "__AHSHIFT",
+   "target_index": 6,
+   "target_kind": "external",
+   "target_method": 2,
+   "width": 2
+  },
+  {
+   "displacement": 0,
+   "encoded_addend": "0000",
+   "frame": "_audioresource_compare_chunkname",
+   "frame_index": 0,
+   "frame_kind": "target",
+   "frame_method": 5,
+   "loc": "offset16",
+   "offset": 220,
+   "segment": "UNIT_TEXT",
+   "self_relative": true,
+   "target": "_audioresource_compare_chunkname",
+   "target_index": 4,
+   "target_kind": "external",
+   "target_method": 2,
+   "width": 2
+  },
+  {
+   "displacement": 0,
+   "encoded_addend": "00000000",
+   "frame": "_toupper",
+   "frame_index": 0,
+   "frame_kind": "target",
+   "frame_method": 5,
+   "loc": "pointer32",
+   "offset": 100,
+   "segment": "UNIT_TEXT",
+   "self_relative": false,
+   "target": "_toupper",
+   "target_index": 2,
+   "target_kind": "external",
+   "target_method": 2,
+   "width": 4
+  },
+  {
+   "displacement": 0,
+   "encoded_addend": "00000000",
+   "frame": "_toupper",
+   "frame_index": 0,
+   "frame_kind": "target",
+   "frame_method": 5,
+   "loc": "pointer32",
+   "offset": 80,
+   "segment": "UNIT_TEXT",
+   "self_relative": false,
+   "target": "_toupper",
+   "target_index": 2,
+   "target_kind": "external",
+   "target_method": 2,
+   "width": 4
+  }
+ ],
+ "expected_relocations": [
+  {
+   "load_offset": 171092,
+   "offset": 40020,
+   "segment": 8192
+  },
+  {
+   "load_offset": 170810,
+   "offset": 39738,
+   "segment": 8192
+  },
+  {
+   "load_offset": 170790,
+   "offset": 39718,
+   "segment": 8192
+  }
+ ],
+ "external_binding": {
+  "mode": "external-far-call-dgroup-offset16-v1"
+ },
+ "id": "obj_seg029",
+ "include_closure": [],
+ "members": [
+  {
+   "end": 170842,
+   "name": "audioresource_compare_chunknames",
+   "public": "_audioresource_compare_chunkname",
+   "stable_id": null,
+   "start": 170708,
+   "target": {
+    "sha256": "fbc6121dc0facdc87661b21fb1781b4ea0a8ee9acce67b2362cf4497d54b2603",
+    "size": 134
+   }
+  },
+  {
+   "end": 170972,
+   "name": "audioresource_get_chunk_index",
+   "public": "_audioresource_get_chunk_index",
+   "stable_id": "load_29b5a",
+   "start": 170842,
+   "target": {
+    "sha256": "7146ebe9c2ff2db9ac59fb42dffe02df4f5c5249b6e4c2c29949d4e19db0776d",
+    "size": 130
+   }
+  },
+  {
+   "end": 171140,
+   "name": "audioresource_find",
+   "public": "_audioresource_find",
+   "stable_id": "load_29bdc",
+   "start": 170972,
+   "target": {
+    "sha256": "da0c453e1e1f53e35d039b91e227eb9fe930f5bac0819de6c976372f8f2d71d3",
+    "size": 168
+   }
+  },
+  {
+   "end": 171210,
+   "name": "audioresource_copy_n_bytes",
+   "public": "_audioresource_copy_n_bytes",
+   "stable_id": "load_29c84",
+   "start": 171140,
+   "target": {
+    "sha256": "648598ba16bc405e088c1c913a569241d38f828e769424e25e64b283a86d1c86",
+    "size": 70
+   }
+  }
+ ],
+ "object_declarations": {
+  "externals": [
+   "__acrtused",
+   "_toupper",
+   "_audioresource_get_dword",
+   "_audioresource_compare_chunkname",
+   "_audioresource_get_chunk_index",
+   "__AHSHIFT",
+   "_audioresource_find",
+   "_audioresource_copy_n_bytes"
+  ],
+  "groups": [
+   {
+    "index": 1,
+    "name": "DGROUP",
+    "segment_indices": [
+     3,
+     4,
+     2
+    ],
+    "segments": [
+     "CONST",
+     "_BSS",
+     "_DATA"
+    ]
+   }
+  ],
+  "publics": [
+   {
+    "name": "_audioresource_compare_chunkname",
+    "offset": 0,
+    "segment": "UNIT_TEXT"
+   },
+   {
+    "name": "_audioresource_get_chunk_index",
+    "offset": 134,
+    "segment": "UNIT_TEXT"
+   },
+   {
+    "name": "_audioresource_find",
+    "offset": 264,
+    "segment": "UNIT_TEXT"
+   },
+   {
+    "name": "_audioresource_copy_n_bytes",
+    "offset": 432,
+    "segment": "UNIT_TEXT"
+   }
+  ],
+  "segments": [
+   {
+    "acbp": 72,
+    "alignment": "word",
+    "alignment_code": 2,
+    "big": false,
+    "class": "CODE",
+    "combine": "public",
+    "combine_code": 2,
+    "frame": null,
+    "index": 1,
+    "length": 505,
+    "name": "UNIT_TEXT",
+    "offset": null,
+    "overlay_index": 1,
+    "use_32bit_offset": false
+   },
+   {
+    "acbp": 72,
+    "alignment": "word",
+    "alignment_code": 2,
+    "big": false,
+    "class": "DATA",
+    "combine": "public",
+    "combine_code": 2,
+    "frame": null,
+    "index": 2,
+    "length": 0,
+    "name": "_DATA",
+    "offset": null,
+    "overlay_index": 1,
+    "use_32bit_offset": false
+   },
+   {
+    "acbp": 72,
+    "alignment": "word",
+    "alignment_code": 2,
+    "big": false,
+    "class": "CONST",
+    "combine": "public",
+    "combine_code": 2,
+    "frame": null,
+    "index": 3,
+    "length": 0,
+    "name": "CONST",
+    "offset": null,
+    "overlay_index": 1,
+    "use_32bit_offset": false
+   },
+   {
+    "acbp": 72,
+    "alignment": "word",
+    "alignment_code": 2,
+    "big": false,
+    "class": "BSS",
+    "combine": "public",
+    "combine_code": 2,
+    "frame": null,
+    "index": 4,
+    "length": 0,
+    "name": "_BSS",
+    "offset": null,
+    "overlay_index": 1,
+    "use_32bit_offset": false
+   }
+  ]
+ },
+ "object_segment": "UNIT_TEXT",
+ "object_tail": {
+  "declared_uninitialized": 1,
+  "end": 171213,
+  "fill_nops": 2,
+  "kind": "msc-code-object-tail-v1",
+  "start": 171210
+ },
+ "profile": "msc510-medium",
+ "source": "tests/fixtures/integ25/seg029_tu.c",
+ "sparse_zero": {
+  "UNIT_TEXT": {
+   "declared_length": 505,
+   "initialized_prefix": 504
+  }
+ },
+ "stable_id": "multi_seg029",
+ "start": 170708,
+ "subsumed_owners": [],
+ "target": {
+  "sha256": "4873951679f5bf37e4ca9de7156c86c5c325bff0254f4cccdc7db4895d6e21c2",
+  "size": 505
+ }
+}

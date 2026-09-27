@@ -212,6 +212,13 @@ def replace_group(manifest, recipe, oracle):
             require(owner['start'] in entries and
                     (owner['end'] in entries or owner['end'] == end or owner['end'] in ends),
                     'Subsumed owner does not start/end at module entries')
+        elif 'prefix_of_object' in prior:
+            # Monotonic subsumption: a complete object from the same object
+            # start replaces its record-closed prefix. The new contribution is
+            # verified on its own; the prefix proof is never consulted for it.
+            require(owner['start'] == start and
+                    prior['prefix_of_object']['object_start'] == start,
+                    'Group does not start at the subsumed prefix object start')
         elif 'members' in prior:
             # A previously accepted group can be enlarged only by retaining
             # its entire ordered member interval and every member identity.
@@ -250,6 +257,55 @@ def replace_group(manifest, recipe, oracle):
         require(overlaps[-1]['kind'] == 'UNRESOLVED_RAW', 'Group cuts accepted owner at end')
         replacement.append({**overlaps[-1], 'start':end,
                             'id':f"raw_{end:05x}_{right:05x}"})
+    first = result['owners'].index(overlaps[0])
+    result['owners'][first:first+len(overlaps)] = replacement
+    return result
+
+
+def replace_prefix(manifest, recipe, oracle):
+    """Own one record-closed prefix of a candidate object (see prefix_proof)."""
+    result = copy.deepcopy(manifest)
+    start, end = recipe['start'], recipe['end']
+    overlaps = [o for o in result['owners'] if o['start'] < end and start < o['end']]
+    require(overlaps and overlaps[0]['start'] <= start and end <= overlaps[-1]['end'],
+            'Prefix interval is not covered by existing owners')
+    accepted = [o for o in overlaps if o['kind'] != 'UNRESOLVED_RAW']
+    require(sorted(recipe.get('subsumed_owners', [])) == sorted(o['id'] for o in accepted) and
+            len(recipe.get('subsumed_owners', [])) == len(accepted),
+            'Prefix must record exactly its subsumed owners')
+    image = MZ.parse(oracle[1]).load_image(oracle[1])
+    complete = {(m['start'], m['end'], m['name']) for m in recipe['prefix_members'] if m['complete']}
+    for owner in accepted:
+        require(owner['kind'] == 'MATCHING_C' and start <= owner['start'] and owner['end'] <= end,
+                'Prefix crosses an accepted owner')
+        prior = read_json(ROOT/owner['recipe'])
+        require(prior['start'] == owner['start'] and prior['end'] == owner['end'] and
+                prior['id'] == owner['name'], 'Subsumed owner recipe differs')
+        if 'prefix_of_object' in prior:
+            require(owner['start'] == start and prior['prefix_of_object']['object_start'] == start,
+                    'Only a longer prefix of the same object subsumes a prefix owner')
+        elif 'members' in prior:
+            require(all((m['start'], m['end'], m['name']) in complete for m in prior['members']),
+                    'Prefix changes a subsumed accepted group member')
+        else:
+            require((owner['start'], owner['end'], owner['name']) in complete,
+                    'Prefix crosses an accepted owner without exact member extent')
+        payload, _ = probe(prior, oracle)
+        require(payload == image[owner['start']:owner['end']],
+                'Subsumed owner no longer reproduces its exact bytes')
+    left, right = overlaps[0]['start'], overlaps[-1]['end']
+    replacement = []
+    if left < start:
+        require(overlaps[0]['kind'] == 'UNRESOLVED_RAW', 'Prefix cuts accepted owner at start')
+        replacement.append({**overlaps[0], 'end':start, 'id':f"raw_{left:05x}_{start:05x}"})
+    replacement.append({'id':recipe['id'], 'name':recipe['id'], 'start':start, 'end':end,
+                        'kind':'MATCHING_C', 'classification':'GAME_C',
+                        'recipe':'recipes/'+recipe['id']+'.json',
+                        'contribution_form':'prefix_of_object', 'object_start':start,
+                        'prefix_records':recipe['prefix_of_object']['records']})
+    if end < right:
+        require(overlaps[-1]['kind'] == 'UNRESOLVED_RAW', 'Prefix cuts accepted owner at end')
+        replacement.append({**overlaps[-1], 'start':end, 'id':f"raw_{end:05x}_{right:05x}"})
     first = result['owners'].index(overlaps[0])
     result['owners'][first:first+len(overlaps)] = replacement
     return result
@@ -389,18 +445,25 @@ def default_recipe(name, image, relocations):
             'evidence':f['provenance']}
 
 
-def _stage(name, candidate, source, recipe_path, recipe_data, before, verify_only):
-    """Complete staged acceptance; reads canonical state, writes nothing canonical."""
-    manifest = read_json(ROOT/'layout/manifest.json')
-    oracle = verify(write=False)
-    image = MZ.parse(oracle[1]).load_image(oracle[1])
+def check_candidate(name, source, recipe_data, manifest, oracle, image):
+    """Fresh individual verification of one candidate against `manifest`.
+
+    Compiles/assembles the candidate in its own fresh probe, checks its complete
+    contribution, and derives the ownership change (including fresh probes of
+    every subsumed owner).  Writes nothing canonical."""
     import json
     recipe = json.loads(recipe_data) if recipe_data is not None else default_recipe(name, image, oracle[2]['unpacked_mz']['relocations'])
     kind = recipe.get('kind', 'c')
     require(kind in ('c', 'asm'), 'Unknown contribution kind')
     data_only = recipe.get('data_only') is True
     multi = 'members' in recipe
-    if data_only:
+    prefix = 'prefix_of_object' in recipe
+    if prefix:
+        # Proof inputs only; probe() re-derives the record-closed prefix.
+        from prefix_proof import check_recipe_form
+        check_recipe_form(recipe)
+        require(recipe['id'] == name and kind == 'c', 'Prefix recipe id/kind differs')
+    elif data_only:
         require(not multi and recipe['id'] == name and
                 recipe['target'] == identity(image[recipe['start']:recipe['end']]) and
                 (recipe['object_segment'] == '_DATA' or recipe.get('far_data') is True),
@@ -427,20 +490,176 @@ def _stage(name, candidate, source, recipe_path, recipe_data, before, verify_onl
         if 'preprocessor_closure' not in recipe:
             recipe['preprocessor_closure'] = closure
     payload, fast = probe(recipe, oracle, source_override=source)
+    staged_manifest = apply_ownership(manifest, name, recipe, oracle, image)
+    return recipe, destination, payload, fast, staged_manifest
+
+
+CORRECTION_BASES = ('link-data-alignment', 'link-frame-reassignment',
+                    'odd-start-asm-continuation', 'owner-identity-repair')
+
+
+def _merged_raw(rows):
+    """Adjacent UNRESOLVED_RAW rows of one partition collapse into one row."""
+    out = []
+    for row in rows:
+        if (out and row['kind'] == 'UNRESOLVED_RAW' and out[-1]['kind'] == 'UNRESOLVED_RAW' and
+                out[-1]['end'] == row['start']):
+            last = out[-1]
+            out[-1] = {**last, 'end': row['end'], 'id': f"raw_{last['start']:05x}_{row['end']:05x}",
+                       'classification': 'UNRESOLVED_MIXED'}
+        else:
+            out.append(row)
+    return out
+
+
+def correct_ownership(manifest, name, recipe, image):
+    """Ownership-correction transaction (integ29): an accepted owner whose extent
+    or kind contradicts a link fact is returned to explicit raw ownership, and
+    the corrected contribution is then published by the ordinary strict path.
+
+    The correction names the owner and its exact current extent/kind/data
+    intervals, a recorded reason and one reviewed basis.  Nothing else changes;
+    the corrected recipe is verified freshly like any new publication."""
+    spec = recipe.get('ownership_correction')
+    require(isinstance(spec, dict) and
+            set(spec) == {'schema', 'owner', 'previous', 'reason', 'basis'} and
+            spec['schema'] == 'ownership-correction-v1' and spec['basis'] in CORRECTION_BASES and
+            isinstance(spec['reason'], str) and len(spec['reason']) >= 20,
+            'Ownership correction shape differs')
+    result = copy.deepcopy(manifest)
+    rows = [o for o in result['owners'] if o.get('recipe') == 'recipes/'+name+'.json' and
+            o.get('name') == name and o['kind'] in ('MATCHING_C', 'MATCHING_ASM')]
+    require(len(rows) == 1 and rows[0]['id'] == spec['owner'] and
+            (spec['owner'] is not None or spec['basis'] == 'owner-identity-repair'),
+            'Corrected owner is not the accepted owner of this recipe name')
+    owner = rows[0]
+    previous = {'kind': owner['kind'], 'start': owner['start'], 'end': owner['end'],
+                'data_intervals': owner.get('data_intervals', [])}
+    require(spec['previous'] == previous, 'Correction does not name the current owner extent')
+    require(owner.get('contribution_form') is None and not owner.get('reclassified_owners'),
+            'Correction of prefix or reclassifying owners is not supported')
+    require(not any(o.get('kind') == 'LINK_FILL' and o.get('object') == owner['id']
+                    for o in result['owners']),
+            'Correction of an owner with LINK fill is not supported')
+    new_kind = contribution_kind(recipe)
+    if spec['basis'] == 'odd-start-asm-continuation':
+        # MSC word-aligns every function start: an accepted C owner that starts
+        # at an odd address without a pad byte continues the preceding
+        # assembled code; it is reclassified as ASM over the same extent.
+        before = [o for o in result['owners'] if o['end'] == owner['start']]
+        require(owner['kind'] == 'MATCHING_C' and new_kind == 'MATCHING_ASM' and
+                (recipe['start'], recipe['end']) == (owner['start'], owner['end']) and
+                owner['start'] % 2 == 1 and image[owner['start']-1] not in (0x00, 0x90) and
+                len(before) == 1 and before[0]['kind'] == 'MATCHING_ASM' and
+                not owner.get('data_intervals'),
+                'Odd-start ASM continuation proof differs')
+    elif spec['basis'] == 'owner-identity-repair':
+        # An accepted owner row without an owner id: the same contribution is
+        # republished over the same extent with its inventory stable id.
+        require(owner['id'] is None and new_kind == owner['kind'] and
+                (recipe['start'], recipe['end']) == (owner['start'], owner['end']) and
+                isinstance(recipe.get('stable_id'), str) and recipe['stable_id'],
+                'Owner identity repair differs')
+    else:
+        require(new_kind == owner['kind'], 'Correction basis cannot change the contribution kind')
+    children = {o['id'] for part in ('owners', 'bss_owners') for o in result.get(part, [])
+                if owner['id'] is not None and o.get('parent') == owner['id']}
+    for partition in ('owners', 'bss_owners'):
+        if partition not in result:
+            continue
+        rows = []
+        for o in result[partition]:
+            if o is owner or o['id'] in children:
+                o = {'id': f"raw_{o['start']:05x}_{o['end']:05x}", 'kind': 'UNRESOLVED_RAW',
+                     'classification': 'UNRESOLVED_MIXED', 'start': o['start'], 'end': o['end']}
+            rows.append(o)
+        result[partition] = _merged_raw(rows)
+    record = {'reason': spec['reason'], 'basis': spec['basis'], 'previous': previous,
+              'previous_owner': owner['id']}
+    if spec['basis'] == 'odd-start-asm-continuation':
+        record['reclassified_from'] = {'kind': owner['kind'], 'recipe': owner['recipe']}
+    return result, record
+
+
+def apply_ownership(manifest, name, recipe, oracle, image):
+    """The manifest after publishing `recipe` (same rules for single and batch)."""
+    destination = recipe['source']
+    spec = recipe.get('ownership_correction')
+    done = spec is not None and any(
+        o.get('name') == name and o['kind'] == contribution_kind(recipe) and
+        (o['start'], o['end']) == (recipe['start'], recipe['end']) and
+        any(r.get('previous') == spec.get('previous') and r.get('reason') == spec.get('reason')
+            for r in o.get('ownership_corrections', []))
+        for o in manifest['owners'])
+    if spec is not None and not done:
+        corrected, record = correct_ownership(manifest, name, recipe, image)
+        # The recipe file is the corrected owner's own; a new source file may
+        # not overwrite an unowned one (a same-kind correction replaces its own).
+        prior = read_json(ROOT/'recipes'/(name+'.json'))
+        require(prior['source'] == destination or not (ROOT/destination).exists(),
+                'Correction would overwrite an unowned source')
+        staged = _publish_ownership(corrected, name, recipe, oracle, image)
+        rows = [o for o in staged['owners'] if o.get('recipe') == 'recipes/'+name+'.json' and
+                o['kind'] == contribution_kind(recipe)]
+        require(len(rows) == 1, 'Corrected owner row missing')
+        rows[0]['ownership_corrections'] = [record]
+        return staged
     active = [o for o in manifest['owners'] if o['kind'] == contribution_kind(recipe) and o.get('name') == name]
     if active:
         require(len(active) == 1 and active[0]['recipe'] == 'recipes/'+name+'.json'
                 and (active[0]['start'],active[0]['end']) == (recipe['start'],recipe['end']),
                 'Existing ownership cannot change')
-        staged_manifest = manifest
-    else:
-        require(not (ROOT/destination).exists() and not (ROOT/'recipes'/(name+'.json')).exists(),
-                'New publication would overwrite existing unowned files')
-        staged_manifest = (replace_data_raw(manifest, recipe, oracle) if data_only else
-                           replace_group(manifest, recipe, oracle) if multi else
-                           replace_raw(manifest, recipe))
-        if not data_only:
-            staged_manifest = attach_secondary(staged_manifest, recipe, image)
+        return manifest
+    require(not (ROOT/destination).exists() and not (ROOT/'recipes'/(name+'.json')).exists(),
+            'New publication would overwrite existing unowned files')
+    return _publish_ownership(manifest, name, recipe, oracle, image)
+
+
+def _publish_ownership(manifest, name, recipe, oracle, image):
+    data_only = recipe.get('data_only') is True
+    staged_manifest = (replace_data_raw(manifest, recipe, oracle) if data_only else
+                       replace_prefix(manifest, recipe, oracle) if 'prefix_of_object' in recipe else
+                       replace_group(manifest, recipe, oracle) if 'members' in recipe else
+                       replace_raw(manifest, recipe))
+    if not data_only:
+        staged_manifest = attach_secondary(staged_manifest, recipe, image)
+    if 'link_fill' in recipe:
+        staged_manifest = attach_link_fill(staged_manifest, recipe, image)
+    return staged_manifest
+
+
+def attach_link_fill(manifest, recipe, image):
+    """Own the LINK paragraph fill after a complete object (link_fill ruling)."""
+    from link_fill import BASIS, fill_row, checked_fill
+    result = copy.deepcopy(manifest)
+    spec = recipe['link_fill']
+    require(set(spec) == {'end', 'basis'} and spec['basis'] == BASIS and type(spec['end']) is int,
+            'Unsupported recipe LINK fill form')
+    rows = [o for o in result['owners'] if o.get('recipe') == 'recipes/'+recipe['id']+'.json' and
+            o['end'] == recipe['end'] and o['kind'] in ('MATCHING_C', 'MATCHING_ASM')]
+    require(len(rows) == 1, 'LINK fill lacks its object owner')
+    after = [o for o in result['owners'] if o['start'] == recipe['end']]
+    require(len(after) == 1 and after[0]['kind'] == 'UNRESOLVED_RAW' and after[0]['end'] >= spec['end'],
+            'LINK fill is not raw-owned')
+    old = after[0]
+    replacement = [fill_row(rows[0]['id'], recipe['end'], spec['end'])]
+    if spec['end'] < old['end']:
+        replacement.append({**old, 'start': spec['end'], 'id': f"raw_{spec['end']:05x}_{old['end']:05x}"})
+    at = result['owners'].index(old)
+    result['owners'][at:at+1] = replacement
+    checked_fill(replacement[0], result, image)
+    return result
+
+
+def _stage(name, candidate, source, recipe_path, recipe_data, before, verify_only):
+    """Complete staged acceptance; reads canonical state, writes nothing canonical."""
+    import memo
+    with memo.session():
+        manifest = read_json(ROOT/'layout/manifest.json')
+        oracle = verify(write=False)
+        image = MZ.parse(oracle[1]).load_image(oracle[1])
+        recipe, destination, payload, fast, staged_manifest = check_candidate(
+            name, source, recipe_data, manifest, oracle, image)
     # Recompile every existing contribution, including runtime binding, with
     # only the target source supplied from frozen bytes. No canonical writes.
     staged = build(staged_manifest, {'recipes/'+name+'.json':recipe}, publish=False,
@@ -508,13 +727,33 @@ def main():
     p.add_argument('function', nargs='?'); p.add_argument('candidate', nargs='?', type=Path)
     p.add_argument('--recipe', type=Path, help='Explicit reviewed binding recipe; optional for no-fixup contributions')
     p.add_argument('--verify-only', action='store_true'); p.add_argument('--recover', action='store_true')
+    p.add_argument('--batch', type=Path, help='Batch file (NAME CANDIDATE [RECIPE] per line): one journaled '
+                   'publication; each candidate verified individually, one fresh union whole-image build')
+    p.add_argument('--no-independent', action='store_true',
+                   help='Batch research runs only: omit the per-candidate DOSBox-X check (never for publication)')
     a = p.parse_args()
     if a.recover:
-        if a.function or a.candidate or a.recipe: p.error('--recover takes no candidate')
+        if a.function or a.candidate or a.recipe or a.batch: p.error('--recover takes no candidate')
         recover(); print('Recovery complete; run python tools/validate.py'); return
+    if a.batch:
+        if a.function or a.candidate or a.recipe: p.error('--batch takes no single candidate')
+        if a.no_independent and not a.verify_only: p.error('Batch publication requires the DOSBox-X check')
+        from batch_publish import read_batch, publish_batch
+        summary = publish_batch(read_batch(a.batch), verify_only=a.verify_only,
+                                independent=not a.no_independent)
+        print(summary['status'], len(summary['published']), 'candidates',
+              sum(x['bytes'] for x in summary['published']), 'bytes;', len(summary['dropped']), 'dropped;',
+              summary['seconds'], 's')
+        return
     if not a.function or not a.candidate: p.error('Supply FUNCTION CANDIDATE.c')
     report = promote(a.function, a.candidate, a.recipe, a.verify_only)
     print(report['status'], report['function'], report['bytes'], 'bytes; fresh HYBRID_EXACT and ordered relocations')
+    prefix = report['fast'].get('binding', {}).get('prefix')
+    if prefix:
+        print('RECORD_CLOSED_EXACT prefix: owned', prefix['owned_records'], 'records /',
+              prefix['owned_end_offset'], 'bytes; re-derived', prefix['derived_records'], 'records /',
+              prefix['derived_end_offset'], 'bytes of', prefix['candidate_record_count'],
+              'candidate records; record states', prefix['record_states'])
 
 
 if __name__ == '__main__': main()

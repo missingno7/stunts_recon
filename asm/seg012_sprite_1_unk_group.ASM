@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _sprite_1_unk2
 public _sprite_1_unk
 public _sprite_1_unk3
@@ -16,7 +17,7 @@ _sprite_1_unk2 proc far
     mov     bp, sp
     push    si
     push    di
-    mov     dx, word ptr cs:[5F2Ch]
+    mov     dx, word ptr cs:[_sprite1+12]
     mov     ax, dx
     sub     ax, [bp+arg_2]
     jle     short loc_33591
@@ -26,22 +27,22 @@ _sprite_1_unk2 proc far
 loc_33591:
     mov     ax, [bp+arg_2]
     add     ax, [bp+arg_6]
-    sub     ax, word ptr cs:[5F2Eh]
+    sub     ax, word ptr cs:[_sprite1+14]
     jle     short loc_335A3
     sub     [bp+arg_6], ax
     jle     short loc_335CF
 loc_335A3:
-    mov     ax, word ptr cs:[5F30h]
+    mov     ax, word ptr cs:[_sprite1+16]
     sub     ax, [bp+arg_4]
     jle     short loc_335B8
     sub     [bp+arg_8], ax
     jle     short loc_335CF
-    mov     ax, word ptr cs:[5F30h]
+    mov     ax, word ptr cs:[_sprite1+16]
     mov     [bp+arg_4], ax
 loc_335B8:
     mov     ax, [bp+arg_4]
     add     ax, [bp+arg_8]
-    mov     bx, word ptr cs:[5F32h]
+    mov     bx, word ptr cs:[_sprite1+18]
     sub     ax, bx
     jle     short loc_335D7
     sub     [bp+arg_8], ax
@@ -72,17 +73,17 @@ loc_335D7:
     jle     short loc_335CF
     cmp     [bp+arg_6], 0
     jle     short loc_335CF
-    mov     es, word ptr word ptr cs:[5F22h]
+    mov     es, word ptr word ptr cs:[_sprite1+2]
     mov     al, [bp+arg_8]
     mov     ah, al
     mov     dx, [bp+arg_0]
     mov     si, [bp+arg_6]
     mov     bx, [bp+arg_2]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     di, cs:[bx]
     add     di, [bp+arg_0]
-    mov     dx, word ptr cs:[5F34h]
+    mov     dx, word ptr cs:[_sprite1+20]
     sub     dx, [bp+arg_4]
     mov     cx, [bp+arg_4]
     sar     cx, 1
@@ -150,7 +151,7 @@ byte_33656     db 3
     push    di
     mov     ds, word ptr [bp+8]
     mov     si, [bp+6]
-    mov     es, word ptr word ptr cs:[5F22h]
+    mov     es, word ptr word ptr cs:[_sprite1+2]
     mov     ax, [bp+0Ch]
     mov     [bp-2], ax
     mov     ax, [bp+0Eh]
@@ -184,13 +185,13 @@ _sprite_1_unk3 proc far
     push    di
     mov     ds, [bp+arg_2]
     mov     si, [bp+arg_0]
-    mov     es, word ptr word ptr cs:[5F22h]
+    mov     es, word ptr word ptr cs:[_sprite1+2]
     mov     ax, [si+8]
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
 loc_33697:
     shl     ax, 1
-    add     ax, word ptr cs:[5F2Ah]
+    add     ax, word ptr cs:[_sprite1+10]
     mov     [bp+var_4], ax
     add     ax, [si+2]
     add     ax, [si+2]
@@ -259,5 +260,5 @@ loc_33733:
     pop     bp
     retf
 _sprite_1_unk3 endp
-_TEXT ends
+S012_TEXT ends
 end

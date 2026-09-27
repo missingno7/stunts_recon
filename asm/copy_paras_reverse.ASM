@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment byte public 'CODE'
+assume cs:S012_TEXT
 public _copy_paras_reverse
 _copy_paras_reverse proc far
     push bp
@@ -51,5 +51,5 @@ copy_reverse_done:
     pop bp
     retf
 _copy_paras_reverse endp
-_TEXT ends
+S012_TEXT ends
 end

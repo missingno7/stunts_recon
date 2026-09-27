@@ -30,8 +30,35 @@ def _iterated_data(body, at, depth=0):
     return data*repeat,at
 
 
+DEBUG_SEGMENT_POLICY = 'msc6-codeview-debsym-debtyp-v1'
+_DEBUG_SEGMENTS = {'$$SYMBOLS': 'DEBSYM', '$$TYPES': 'DEBTYP'}
+
+
+def _debug_segment_indexes(data, policy):
+    """SEGDEF indexes of MSC 6 /Zi CodeView segments under the reviewed policy.
+
+    Only `$$SYMBOLS` (class DEBSYM) and `$$TYPES` (class DEBTYP), private,
+    byte-aligned and outside every group.  LINK without /CO discards them, so
+    they never reach the load image; their records stay in the candidate's
+    OMF but are excluded from contribution bytes, fixups and relocations."""
+    if policy is None:
+        return set()
+    require(policy == DEBUG_SEGMENT_POLICY, 'Unknown debug segment policy')
+    raw = OmfReader().read(data)
+    grouped = {i for g in raw.groups for i in g['segment_indices']}
+    indexes = set()
+    for seg in raw.segment_defs:
+        if seg['name'] in _DEBUG_SEGMENTS or seg['class'] in _DEBUG_SEGMENTS.values():
+            require(_DEBUG_SEGMENTS.get(seg['name']) == seg['class'] and seg['combine'] == 'private'
+                    and seg['alignment'] == 'byte' and seg['index'] not in grouped,
+                    'Unexpected debug segment declaration')
+            indexes.add(seg['index'])
+    return indexes
+
+
 def read_object(data, *, ledata_policy=None, record_policy=None,
-                sparse_zero=None, research_local_symbols=False):
+                sparse_zero=None, research_local_symbols=False, debug_segments=None):
+    debug_indexes = _debug_segment_indexes(data, debug_segments)
     if ledata_policy is not None:
         require(set(ledata_policy) == {'mode', 'module_sha256', 'records'}
                 and ledata_policy['mode'] == 'pinned-ordered-ledata-v1'
@@ -41,6 +68,7 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
     initialized = {}
     writes, had_overlap = [], False
     write_payloads = []
+    debug_writes = []
     last_data_kind = None
     iterated_payloads = []
     allowed = {0x80, 0x88, 0x8A, 0x8C, 0x90, 0x94, 0x96, 0x98, 0x9A, 0x9C, 0xA0, 0xA2}
@@ -84,6 +112,12 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
             offset=struct.unpack_from('<H',body,pos)[0]
             length_data=len(body)-pos-2
             span=set(range(offset,offset+length_data))
+            if segment in debug_indexes:
+                # CodeView symbol records are rewritten in place; never image bytes.
+                debug_writes.append({'segment_index':segment,'offset':offset,'size':length_data,
+                                     'sha256':sha(body[pos+2:])})
+                first, ended, at = False, kind == 0x8A, end
+                continue
             previous=initialized.setdefault(segment,set())
             overlap=sorted(span & previous)
             writes.append({'record_offset':at, 'segment_index':segment, 'offset':offset,
@@ -99,6 +133,7 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
             segment,pos = OmfReader._index(body,0)
             require(pos+2 <= len(body), 'Truncated LIDATA offset')
             offset = struct.unpack_from('<H',body,pos)[0]; pos += 2
+            require(segment not in debug_indexes, 'LIDATA in a debug segment unsupported')
             expanded = bytearray()
             while pos < len(body):
                 part,pos = _iterated_data(body,pos)
@@ -117,12 +152,35 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
     if ledata_policy is not None:
         require(had_overlap and writes == ledata_policy['records'], 'Ordered LEDATA trace differs from reviewed policy')
     obj = OmfReader().read(data)
+    obj.debug_segments = []
+    if debug_indexes:
+        debug_names = {s['name'] for s in obj.segment_defs if s['index'] in debug_indexes}
+        require(not any(p['segment'] in debug_names for p in obj.publics + obj.local_publics),
+                'Public inside a debug segment')
+        require(not any(f.get('target') in debug_names or f.get('frame') in debug_names
+                        for f in obj.linker_fixups if f['segment'] not in debug_names),
+                'Image fixup refers to a debug segment')
+        for seg in obj.segment_defs:
+            if seg['index'] in debug_indexes:
+                obj.debug_segments.append({
+                    'index': seg['index'], 'name': seg['name'], 'class': seg['class'], 'length': seg['length'],
+                    'records': [w for w in debug_writes if w['segment_index'] == seg['index']],
+                    'fixups': sum(1 for f in obj.linker_fixups if f['segment'] == seg['name'])})
+        obj.segment_defs = [s for s in obj.segment_defs if s['index'] not in debug_indexes]
+        obj.linker_fixups = [f for f in obj.linker_fixups if f['segment'] not in debug_names]
+        obj.fixups = [f for f in obj.fixups if f.get('segment') not in debug_names]
+        for name in debug_names:
+            obj.segments.pop(name, None)
+            obj.segment_lengths.pop(name, None)
     for index,offset,expanded in iterated_payloads:
         segments = [s for s in obj.segment_defs if s['index'] == index]
         require(len(segments) == 1 and
                 obj.segment_bytes(segments[0]['name'])[offset:offset+len(expanded)] == expanded,
                 'Complete LIDATA expansion differs')
     obj.local_symbol_records = local_symbol_records
+    # The exact emitted OMF stays attached: record-level proofs traverse the
+    # candidate's own LEDATA/FIXUPP structure, never a reconstruction of it.
+    obj.omf_bytes = bytes(data)
     locals_public = {p['name'] for p in obj.local_publics}
     global_public = {p['name'] for p in obj.publics if p not in obj.local_publics}
     global_external = {name for name, scope in zip(obj.externals, obj.external_scopes)
@@ -215,6 +273,109 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
         require(fix['target_kind'] != 'absolute', 'Absolute/undefined target thread unsupported')
         require(not str(fix['target']).startswith('?'), 'Undefined OMF target')
     return obj
+
+def _data_record_spans(data):
+    """(segment index, offset, length) of every LEDATA and bounded-expanded LIDATA record."""
+    spans, at = [], 0
+    while at + 3 <= len(data):
+        kind, length = data[at], struct.unpack_from('<H', data, at + 1)[0]
+        body = data[at+3:at+3+length-1]
+        if kind in (0xA0, 0xA2):
+            segment, pos = OmfReader._index(body, 0)
+            require(pos + 2 <= len(body), 'Truncated data record offset')
+            offset = struct.unpack_from('<H', body, pos)[0]; pos += 2
+            if kind == 0xA0:
+                size = len(body) - pos
+            else:
+                size = 0
+                while pos < len(body):
+                    part, pos = _iterated_data(body, pos)
+                    size += len(part)
+            spans.append((segment, offset, size))
+        at += 3 + length
+    return spans
+
+
+def msc_alignment_sparse_zero(data):
+    """Research helper: the `initialized_ranges` policy of an MSC object whose
+    `_DATA`/`CONST` segments have only word-alignment holes, or None.
+
+    Used by diagnostic compiles (prefix_proof research, tubench) to read such
+    objects consistently with the reviewed recipe policy; production reads the
+    policy from the recipe (recipe_sparse_zero) and never derives it.
+
+    MSC 5.10 emits the zero tail of a partially initialized aggregate
+    (`char a[82] = {0};`) as a LIDATA record; its bounded expansion counts as
+    initialized coverage (integ26). A FIXUPP over LIDATA stays refused by
+    read_object."""
+    raw = OmfReader().read(data)
+    names = {d['index']: d['name'] for d in raw.segment_defs}
+    lengths = {d['name']: d['length'] for d in raw.segment_defs}
+    covered = {}
+    for index, offset, size in _data_record_spans(data):
+        covered.setdefault(names.get(index), set()).update(range(offset, offset + size))
+    policy = {}
+    for name, occupied in covered.items():
+        if occupied == set(range(lengths[name])):
+            continue
+        if name not in ('_DATA', 'CONST'):
+            return None
+        ranges, at = [], 0
+        for offset in sorted(occupied):
+            if ranges and offset == ranges[-1][1]:
+                ranges[-1][1] += 1
+            else:
+                ranges.append([offset, offset + 1])
+        if not (ranges and ranges[0][0] == 0 and ranges[-1][1] == lengths[name] and
+                all(b[0] == a[1] + 1 and b[0] % 2 == 0 for a, b in zip(ranges, ranges[1:]))):
+            return None
+        policy[name] = {'initialized_ranges': ranges, 'declared_length': lengths[name]}
+    return policy or None
+
+
+def recipe_sparse_zero(recipe):
+    """Reviewed declared-but-uninitialised bytes of a C object (integ25).
+
+    Two MSC 5.10 forms only, both zero in the linked image and compared with
+    the oracle like every other byte:
+    * the CODE object tail: `initialized_prefix` of the complete CODE SEGDEF,
+      tied to a reviewed `object_tail` (e.g. the /Ol `90 90` tail plus one
+      declared uninitialised byte);
+    * secondary `_DATA`/`CONST` word-alignment holes: `initialized_ranges`
+      whose gaps are single bytes before an even (word-aligned) offset.
+    Anything else is refused; the returned policy is passed to read_object."""
+    policy = recipe.get('sparse_zero')
+    if policy is None:
+        return None
+    require(recipe.get('kind', 'c') == 'c' and type(policy) is dict and policy,
+            'Sparse zero policy applies only to reviewed C objects')
+    secondary = recipe.get('secondary_dgroup_segments', {})
+    for name, row in policy.items():
+        if name == recipe['object_segment']:
+            tail = recipe.get('object_tail')
+            require(tail is not None and set(row) == {'initialized_prefix', 'declared_length'} and
+                    row['declared_length'] == recipe['end'] - recipe['start'] and
+                    row['declared_length'] - row['initialized_prefix'] ==
+                    tail.get('declared_uninitialized'),
+                    'CODE sparse zero must be the reviewed object tail')
+        else:
+            spec = secondary.get(name)
+            ranges = row.get('initialized_ranges')
+            # A record-closed prefix need not own its TU data; the policy then
+            # only lets the whole candidate object be read (length: SEGDEF).
+            unowned_prefix = spec is None and 'prefix_of_object' in recipe
+            require(name in ('_DATA', 'CONST') and (spec is not None or unowned_prefix) and
+                    set(row) == {'initialized_ranges', 'declared_length'} and
+                    type(row.get('declared_length')) is int and
+                    (unowned_prefix or row['declared_length'] == spec['end'] - spec['start']) and
+                    type(ranges) is list and ranges and
+                    all(type(r) is list and len(r) == 2 and all(type(x) is int for x in r) and
+                        r[0] < r[1] for r in ranges) and
+                    ranges[0][0] == 0 and ranges[-1][1] == row['declared_length'] and
+                    all(b[0] == a[1] + 1 and b[0] % 2 == 0 for a, b in zip(ranges, ranges[1:])),
+                    'Secondary sparse zero allows only MSC word-alignment holes')
+    return policy
+
 
 def extract_no_fixups(obj, segment, public, length):
     """First production subset: entire emitted text contribution, no fixups.

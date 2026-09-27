@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment byte public 'CODE'
+assume cs:S012_TEXT
 public _compare_ds_ss
 _compare_ds_ss proc far
 
@@ -13,5 +13,5 @@ _compare_ds_ss proc far
 locret_30328:
     retf
 _compare_ds_ss endp
-_TEXT ends
+S012_TEXT ends
 end

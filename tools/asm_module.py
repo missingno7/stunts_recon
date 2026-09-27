@@ -25,10 +25,20 @@ def masm_public(name):
     return ('_' + name)[:31]
 
 
+def c_public(name):
+    """MSC 5.10 PUBDEF/EXTDEF spelling: 31 significant identifier characters
+    plus the underscore (32 in total), verified with the pinned compiler; the
+    pinned MSC 5.00 keeps the full name."""
+    return ('_' + name)[:32]
+
+
 def expected_publics(name, kind):
-    """Accepted spellings: the C underscore convention, or its MASM truncation."""
+    """Accepted spellings: the C underscore convention, or its MASM 5.10
+    (31 characters) or MSC 5.10 (32 characters) truncation."""
     full = '_' + name
-    return {full, masm_public(name)} if kind == 'asm' and len(full) > 31 else {full}
+    if kind == 'asm':
+        return {full, masm_public(name)} if len(full) > 31 else {full}
+    return {full, c_public(name)} if len(full) > 32 else {full}
 
 
 def _ends_with_return(image, at):
@@ -80,6 +90,109 @@ def _checked_boundary(proof, at, side, frame, rows, image):
         require(False, 'Unknown module boundary proof')
 
 
+def _instruction_starts(image, lo, hi):
+    import sys
+    from common import ROOT
+    location = str(ROOT/'build/python')
+    if location not in sys.path: sys.path.insert(0, location)
+    import capstone
+    require(capstone.__version__ == '5.0.3', 'Pinned instruction decoder differs')
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
+    rows, at = {}, lo
+    for ins in decoder.disasm(image[lo:hi], lo):
+        if ins.address != at: break
+        rows[at] = bytes(ins.bytes); at += ins.size
+    return rows, at
+
+
+def _checked_private_prefix(proof, start, end, frame, rows, image):
+    """Private code before the module's first public entry (integ26).
+
+    The module start is grounded by its start boundary; the prefix bytes
+    [start, start+length) must decode completely, every path from the module
+    start must end in a return or a direct transfer (or fall-through) onto an
+    instruction of a verified procedure of this module and frame, no indirect
+    jump may occur, and bytes no path reaches are 90 pads.  At least one path
+    enters a verified module procedure, tying the prefix to this module."""
+    require(isinstance(proof, dict) and set(proof) == {'kind', 'length'} and
+            proof['kind'] == 'private-entry-prefix-v1' and type(proof['length']) is int and
+            0 < proof['length'] and start + proof['length'] < end,
+            'Private module prefix proof shape differs')
+    first = start + proof['length']
+    by, at = _instruction_starts(image, start, first)
+    require(at == first, 'Private module prefix does not decode completely')
+    module_rows = [f for f in rows if start <= f['start'] < end and
+                   f.get('segment_paragraph') is not None and f['segment_paragraph']*16 == frame and
+                   sha(image[f['start']:f['end']]) == f['sha256']]
+    decoded = {}
+    def enters_module(target):
+        for f in module_rows:
+            if f['start'] <= target < f['end']:
+                if f['start'] not in decoded:
+                    decoded[f['start']] = _instruction_starts(image, f['start'], f['end'])[0]
+                return target in decoded[f['start']]
+        return False
+    pending, seen, entered = [start], set(), False
+    while pending:
+        at = pending.pop()
+        if at in seen: continue
+        if not start <= at < first:
+            require(enters_module(at), 'Private prefix leaves the module outside a verified procedure')
+            entered = True; continue
+        require(at in by, 'Private prefix branch is not an instruction boundary')
+        seen.add(at); raw = by[at]; nxt = at + len(raw)
+        op = raw[0]
+        if op in _RETURNS1 | _RETURNS3: continue
+        require(op not in (0xea, 0x9a) and not (op == 0xff and ((raw[1] >> 3) & 7) in (2, 3, 4, 5)),
+                'Private prefix has an indirect or far transfer')
+        if op == 0xeb or 0x70 <= op <= 0x7f or 0xe0 <= op <= 0xe3:
+            pending.append(nxt + int.from_bytes(raw[1:2], 'little', signed=True))
+            if op == 0xeb: continue
+        elif op in (0xe9, 0xe8):
+            pending.append(nxt + int.from_bytes(raw[1:3], 'little', signed=True))
+            if op == 0xe9: continue
+        pending.append(nxt)
+    require(entered and all(by[at] == b'\x90' for at in set(by) - seen),
+            'Private prefix lacks a module transfer or has non-pad unreachable bytes')
+    return first
+
+
+def _checked_data_public(p, start, end, frame, rows, starts, image):
+    """A labelled data declaration outside every verified procedure (integ26).
+
+    The public is the underscore spelling of a label declared by a `db`/`dw`/`dd`
+    line of a pinned reference segment listing; it lies inside the module and
+    outside every verified procedure.  It binds nothing; a spelling equal to a
+    reviewed code/data alias must name that alias's own address."""
+    import re
+    from common import ROOT, identity, read_json
+    require(isinstance(p, dict) and set(p) == {'public', 'offset', 'reference_path', 'reference_line'} and
+            type(p['offset']) is int and type(p['reference_line']) is int,
+            'Module data-public proof shape differs')
+    at = start + p['offset']
+    require(start < at < end and at not in starts and
+            not any(f['start'] <= at < f['end'] for f in rows),
+            'Module data public lies inside a procedure or outside the module')
+    path = p['reference_path']
+    pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
+    require(re.fullmatch(r'src/restunts/asmorig/seg\d{3}\.asm', path) is not None and path in pinned,
+            'Module data public listing is not pinned')
+    source = ROOT/'build/references/restunts'/path
+    require(identity(source.read_bytes()) == pinned[path], 'Module data public listing differs')
+    # Pinned listings contain latin1 bytes that str.splitlines would treat
+    # as separators; line numbers count LF only.
+    lines = [line.rstrip(chr(13)) for line in source.read_text(encoding='latin1').split(chr(10))]
+    require(1 <= p['reference_line'] <= len(lines), 'Module data public line missing')
+    match = re.match(r'^([A-Za-z_$?@][\w$?@]*)\s+(?:db|dw|dd)\b', lines[p['reference_line']-1].strip(), re.I)
+    require(match is not None and p['public'] in ('_' + match.group(1), masm_public(match.group(1))),
+            'Module data public differs from its pinned label declaration')
+    data = read_json(ROOT/'layout/data-symbols.json')['symbols'].get(p['public'])
+    code = read_json(ROOT/'layout/code-symbols.json')['symbols'].get(p['public'])
+    require((data is None or data.get('load_address') == at) and code is None,
+            'Module data public conflicts with a reviewed alias')
+    return at
+
+
 def checked_module(recipe, image):
     """Validate a whole-module ASM recipe against the oracle and inventory."""
     from function_evidence import current_inventory
@@ -88,7 +201,7 @@ def checked_module(recipe, image):
     start, end = recipe['start'], recipe['end']
     frame = recipe.get('original_frame_load_address')
     require(set(proof) <= {'kind', 'start_boundary', 'end_boundary', 'cross_kind_links',
-                           'embedded_publics'} and
+                           'embedded_publics', 'private_prefix', 'data_publics'} and
             proof.get('kind') == 'asm-module-extent-v1' and
             type(frame) is int and frame % 16 == 0 and frame <= start < end <= frame + 65536,
             'Whole-module proof shape or frame differs')
@@ -98,9 +211,12 @@ def checked_module(recipe, image):
     _checked_boundary(proof['start_boundary'], start, 'start', frame, rows, image)
     _checked_boundary(proof['end_boundary'], end, 'end', frame, rows, image)
     members = recipe['members']
-    require(type(members) is list and members and members[0]['start'] == start and
+    first = start
+    if 'private_prefix' in proof:
+        first = _checked_private_prefix(proof['private_prefix'], start, end, frame, rows, image)
+    require(type(members) is list and members and members[0]['start'] == first and
             all(members[i]['start'] < members[i+1]['start'] for i in range(len(members)-1)),
-            'Module entries must be ordered and begin at the module start')
+            'Module entries must be ordered and begin at the module start or its private prefix end')
     clip = end + (1 if proof['end_boundary'].get('kind') == 'zero-fill-after-return' else 0)
     relocations = None
     for m in members:
@@ -151,6 +267,11 @@ def checked_module(recipe, image):
                     f.get('segment_paragraph') is not None and f['segment_paragraph']*16 == frame
                     for f in rows),
                 'Embedded module public lies outside a verified module procedure')
+    names = {m['public'] for m in members} | {p['public'] for p in proof.get('embedded_publics', [])}
+    for p in proof.get('data_publics', []):
+        at = _checked_data_public(p, start, end, frame, rows, starts, image)
+        require(p['public'] not in names, 'Module data public duplicates another public')
+        names.add(p['public'])
     # Every verified function starting inside the module must end inside it
     # (or at the clipped fill byte): a module never cuts a verified procedure.
     for f in rows:

@@ -30,6 +30,12 @@ def _complete_target_owner(owner, function):
                 function['end'] <= clip and
                 any((m.get('name'), m.get('start')) == (function['name'], function['start'])
                     for m in recipe['members']))
+    if recipe.get('prefix_of_object') and recipe.get('id') == owner['name']:
+        # A record-closed prefix owns the verified entry of each listed member,
+        # including the member cut at the prefix end (its remainder stays raw).
+        return any((m['name'], m['start'], m['end']) ==
+                   (function['name'], function['start'], function['end'])
+                   for m in recipe['prefix_members'])
     if not (owner['start'] <= function['start'] and function['end'] <= owner['end']):
         return False
     return recipe.get('id') == owner['name'] and any(
@@ -67,6 +73,36 @@ def _reference_entry_target(name, target, proof, inventory, owners, image):
             any(o['kind']=='UNRESOLVED_RAW' and o['start']<=target['start'] and
                 target['start']+len(raw)<=o['end'] for o in owners),
             'Partial entry bytes are not raw-owned')
+    return target['start']
+
+
+def _module_entry_target(name, target, symbol, owners, image):
+    """An entry of an accepted whole ASM module (integ25).
+
+    A PARTIAL_UNMAPPED inventory row (start known, end unmapped) can still
+    be a far-code target when an accepted `asm-module-extent-v1` owner lists
+    it as a module entry: that module proof re-grounds the entry from its
+    original relocated far CALLs (asm_module.checked_module) and the module's
+    own PUBDEF places it.  The alias spelling is the inventory C spelling;
+    the alias's own anchors are checked by the caller as usual."""
+    from asm_module import checked_module
+    proof = symbol['module_entry']
+    require(set(proof) == {'owner'} and name == '_' + target['name'] and
+            set(target) == {'name', 'start'},
+            'Module-entry alias shape differs')
+    found = [o for o in owners if o['id'] == proof['owner'] and o['kind'] == 'MATCHING_ASM' and
+             o.get('module_form') == 'asm-module' and 'recipe' in o]
+    require(len(found) == 1, 'Module-entry alias lacks its accepted ASM module owner')
+    recipe = read_json(ROOT/found[0]['recipe'])
+    require((recipe['start'], recipe['end']) == (found[0]['start'], found[0]['end']),
+            'Module-entry owner recipe differs')
+    checked_module(recipe, image)
+    entries = [m for m in recipe['members'] if m['name'] == target['name']]
+    publics = [p for p in recipe['object_declarations']['publics'] if p['name'] == name]
+    require(len(entries) == 1 and len(publics) == 1 and
+            entries[0]['start'] == target['start'] == recipe['start'] + publics[0]['offset'] and
+            symbol['frame_load_address'] == recipe['original_frame_load_address'],
+            'Module-entry alias differs from the accepted module public')
     return target['start']
 
 
@@ -111,9 +147,14 @@ def resolve_code_symbols(names, image, relocations):
             target=symbol['mapped_target']
             # MASM 5.10 keeps 31 significant characters: a reviewed truncated
             # public names the same longer inventory entry.
-            truncated = (len('_' + target['name']) > 31 and
-                         name == ('_' + target['name'])[:31] and
-                         symbol.get('masm_truncated_public') is True)
+            truncated = ((len('_' + target['name']) > 31 and
+                          name == ('_' + target['name'])[:31] and
+                          symbol.get('masm_truncated_public') is True) or
+                         # MSC 5.10 C externals keep 31 identifier characters
+                         # plus the underscore (asm_module.c_public).
+                         (len('_' + target['name']) > 32 and
+                          name == ('_' + target['name'])[:32] and
+                          symbol.get('c_truncated_public') is True))
             require(name == '_' + target['name'] or symbol.get('reviewed_alias') == name or
                     truncated, 'Far code alias name lacks inventory or explicit review')
             if inventory is None:
@@ -122,6 +163,9 @@ def resolve_code_symbols(names, image, relocations):
             if 'entry_proof' in symbol:
                 address=_reference_entry_target(name,target,symbol['entry_proof'],
                                                 inventory,owners,image)
+                function=None
+            elif 'module_entry' in symbol:
+                address=_module_entry_target(name,target,symbol,owners,image)
                 function=None
             else:
                 function=None
@@ -141,7 +185,7 @@ def resolve_code_symbols(names, image, relocations):
                           (f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED'
                            and ((f.get('start_evidence') and f.get('end_evidence')) or
                                 neighbour_bounded(f))))]
-            if function is None and 'entry_proof' not in symbol:
+            if function is None and 'entry_proof' not in symbol and 'module_entry' not in symbol:
                 require(len(matches)==1, 'Far code alias lacks unique verified mapped target')
                 function=matches[0]
                 if function['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' and function.get('bytes_hex'):
@@ -236,6 +280,32 @@ def resolve_callback_pointer(image, relocations):
             'load_address': target['start']}
 
 
+def _far_data(names, image, relocations):
+    from data_only import resolve_far_data_symbols
+    return resolve_far_data_symbols(names, image, relocations)
+
+
+def _c_dgroup_base_fixups(recipe):
+    """Every `_DATA` segment fixup is a zero-addend base16 with the DGROUP group
+    frame, and `_DATA` is a zero-length DATA SEGDEF listed in DGROUP."""
+    declarations=(recipe.get('binding',{}).get('declarations') or
+                  recipe.get('object_declarations') or {})
+    data=[d for d in declarations.get('segments',[]) if d.get('name')=='_DATA']
+    groups=[g for g in declarations.get('groups',[]) if g.get('name')=='DGROUP']
+    if len(data)!=1 or len(groups)!=1:
+        return False
+    definition,group=data[0],groups[0]
+    return (definition.get('length')==0 and definition.get('class')=='DATA' and
+            definition.get('index') in group.get('segment_indices',[]) and
+            all(f['loc']=='base16' and f['width']==2 and not f['self_relative'] and
+                f['target_method']==0 and f['target_index']==definition['index'] and
+                (f['frame_method'],f['frame_kind'],f['frame'],f['frame_index'])==
+                (1,'group','DGROUP',group['index']) and
+                f['displacement']==0 and f['encoded_addend']=='0000'
+                for f in recipe['expected_fixups']
+                if f['target_kind']=='segment' and f['target']=='_DATA'))
+
+
 def resolve_recipe_symbols(recipe, image, relocations):
     names={f['target'] for f in recipe['expected_fixups']}
     if not names:return None
@@ -244,7 +314,12 @@ def resolve_recipe_symbols(recipe, image, relocations):
                   if s.get('storage')=='code_island'}
     cs_named=recipe.get('kind')=='asm' and any(
         (n if n.startswith('_') else '_'+n) in island_names for n in names)
-    if (cs_named and mode=='asm-external-dgroup-offset16-v1') or (
+    # A C object reloading DS from DGROUP (zero-length _DATA base16) composes
+    # per fixup whatever its external shapes are (integ26).
+    c_data_base=(recipe.get('kind','c')=='c' and
+                 any(f['target_kind']=='segment' and f['target']=='_DATA'
+                     for f in recipe['expected_fixups']))
+    if c_data_base or (cs_named and mode=='asm-external-dgroup-offset16-v1') or (
             mode in ('external-far-call-dgroup-offset16-v1',
                 'external-far-call-code-pointer-dgroup-offset16-v1')) or (
             mode=='asm-external-far-call-self-base16-v1') or (
@@ -258,7 +333,9 @@ def resolve_recipe_symbols(recipe, image, relocations):
                                   checked_dseg_base, checked_dgroup_layout)
         fixes=recipe['expected_fixups']; seg=recipe['object_segment']
         local={f['target'] for f in fixes if f['target_kind']=='segment'}
-        require(local <= {seg,'DSEG'}, 'Unreviewed composed segment target')
+        data_base='_DATA' in local and recipe.get('kind','c')=='c' and _c_dgroup_base_fixups(recipe)
+        require(local <= {seg,'DSEG'} | ({'_DATA'} if data_base else set()),
+                'Unreviewed composed segment target')
         code={f['target'] for f in fixes if f['target_kind']=='external' and
               f['loc'] in ('pointer32','base16','loader-offset16')}
         near={f['target'] for f in fixes if f['target_kind']=='external' and
@@ -283,19 +360,35 @@ def resolve_recipe_symbols(recipe, image, relocations):
         require(all(f['loc'] in ('offset16','base16') for f in fixes if f['target'] in cs_data),
                 'CS data fixup form differs')
         data-=cs_data; code-=cs_data
+        # A public of an accepted FAR_DATA module is named by an offset16 and
+        # its segment word (base16), like a far code pointer pair.
+        from data_only import far_data_publics
+        far_data=(code|data)&set(far_data_publics())
+        require(all(f['loc'] in ('offset16','base16') and not f['self_relative']
+                    for f in fixes if f['target'] in far_data),
+                'Far-data fixup form differs')
+        code-=far_data; data-=far_data
         require(not code.intersection(data|near|code_offsets) and
                 not data.intersection(near|code_offsets) and
-                code|data|cs_data|near|code_offsets|absolute|local==names,
+                code|data|cs_data|far_data|near|code_offsets|absolute|local==names,
                 'Composed fixups need distinct grounded code/data targets')
         from data_symbols import resolve_cs_symbols
         result={**(resolve_code_symbols(code,image,relocations) if code else {}),
                 **(resolve_symbols(data,image,relocations) if data else {}),
                 **(resolve_cs_symbols(cs_data,image,relocations) if cs_data else {}),
+                **(_far_data(far_data,image,relocations) if far_data else {}),
                 **(resolve_near_code_symbols(near|code_offsets,recipe,image)
                    if near or code_offsets else {})}
         if seg in local:
             result[seg]={'kind':'local-text','frame_load_address':
                          recipe['original_frame_load_address']}
+        if data_base:
+            # MSC `_loadds` / `/Au` DS reload: `mov ax,DGROUP` is a base16
+            # FIXUPP to the object's zero-length _DATA with the DGROUP group
+            # frame; its value is the DGROUP paragraph, grounded by the
+            # startup evidence and its ordered MZ relocation (checked_dgroup_layout).
+            result['_DATA']={'kind':'local-dgroup-base','frame_load_address':
+                             checked_dgroup_layout(image,relocations)['frame_load_address']}
         if absolute:
             from runtime_absolute import ahshift
             result['__AHSHIFT']=ahshift(image,relocations)

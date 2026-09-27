@@ -1,0 +1,279 @@
+{
+  "end": 157866,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "oracle_lock": "layout/oracle.lock.json",
+    "scope": "Scratch whole-object group reconstruction retaining accepted locate_many_resources."
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_locate_shape_nofatal",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 206,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_locate_shape_nofatal",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_locate_sound_fatal",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 140,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_locate_sound_fatal",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_locate_shape_nofatal",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 74,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_locate_shape_nofatal",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_locate_shape_fatal",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 16,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_locate_shape_fatal",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 157826,
+      "offset": 26754,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157760,
+      "offset": 26688,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157694,
+      "offset": 26622,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157636,
+      "offset": 26564,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-v1"
+  },
+  "id": "obj_seg016_group",
+  "kind": "c",
+  "members": [
+    {
+      "end": 157668,
+      "name": "locate_many_resources",
+      "public": "_locate_many_resources",
+      "stable_id": "load_267b2",
+      "start": 157618,
+      "target": {
+        "sha256": "e9f614c22850d41859faef7bd208ed6b86ccae855881667b9dffd7ec605058ce",
+        "size": 50
+      }
+    },
+    {
+      "end": 157734,
+      "name": "nopsub_367E4",
+      "public": "_nopsub_367E4",
+      "stable_id": "load_267e4",
+      "start": 157668,
+      "target": {
+        "sha256": "c57f6f6a3798abc25e66bce1e42d624bc251719c77a5444b74d9e4daf69f1b41",
+        "size": 66
+      }
+    },
+    {
+      "end": 157800,
+      "name": "nopsub_36826",
+      "public": "_nopsub_36826",
+      "stable_id": "load_26826",
+      "start": 157734,
+      "target": {
+        "sha256": "f9476613b28c3d047c65dcd451ca61098b149d0382cf317ae1704c48d886c0f2",
+        "size": 66
+      }
+    },
+    {
+      "end": 157866,
+      "name": "nopsub_36868",
+      "public": "_nopsub_36868",
+      "stable_id": "load_26868",
+      "start": 157800,
+      "target": {
+        "sha256": "c57f6f6a3798abc25e66bce1e42d624bc251719c77a5444b74d9e4daf69f1b41",
+        "size": 66
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_nopsub_36826",
+      "_nopsub_36868",
+      "_locate_shape_fatal",
+      "_locate_many_resources",
+      "_locate_shape_nofatal",
+      "_nopsub_367E4",
+      "_locate_sound_fatal"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_nopsub_36826",
+        "offset": 116,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_nopsub_36868",
+        "offset": 182,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_locate_many_resources",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_nopsub_367E4",
+        "offset": 50,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 248,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "source": "src/obj_seg016_group.c",
+  "start": 157618,
+  "subsumed_owners": [
+    "load_267b2"
+  ],
+  "target": {
+    "sha256": "7b421d318ff50c311630b6e7da55b0ab745c2999524bae49ab2543de4167820c",
+    "size": 248
+  }
+}

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 extrn sprite1:byte
 public _sprite_copy_arg_to_both
 _sprite_copy_arg_to_both proc far
@@ -22,5 +22,5 @@ _sprite_copy_arg_to_both proc far
  pop bp
  ret
 _sprite_copy_arg_to_both endp
-_TEXT ends
+S012_TEXT ends
 end

@@ -42,6 +42,58 @@ _FRAME_CALLBACK_SYMBOLS = {
 }
 
 
+def link_order_sites(sites):
+    """Executable MZ order of relocation sites listed in candidate FIXUPP order.
+
+    The pinned LINK (3.65 and 3.61, both pinned distributions) copies relocation-bearing
+    FIXUPPs into the MZ table in the order the object emits them: ascending
+    MASM 5.10 FIXUPPs stay ascending and descending MSC FIXUPPs stay
+    descending (tools/link_order_probe.py; tests/test_link_order.py run the
+    pinned LINK on both).  The oracle MZ table was then EXEPACKed, which
+    regroups entries into 64 KiB banks in bank order while keeping the order
+    inside each bank.  The input must be the candidate's own emitted order;
+    this never consults the oracle order.
+    """
+    return sorted(sites, key=lambda site: site // 65536)
+
+
+def fixup_relocation_sites(fixes, start, segment=None):
+    """Load offsets of the MZ entries these FIXUPPs generate, in FIXUPP order."""
+    sites = []
+    for fix in fixes:
+        if segment is not None and fix['segment'] != segment:
+            continue
+        if fix['loc'] == 'pointer32':
+            sites.append(start + fix['offset'] + 2)
+        elif fix['loc'] == 'base16':
+            sites.append(start + fix['offset'])
+    return sites
+
+
+def require_relocations_from_fixups(obj, recipe, relocations):
+    """Every original MZ-relocated word inside the contribution needs its own
+    candidate FIXUPP generating that relocation (integ25 audit 12a).
+
+    A candidate that emits the original absolute segment:offset literal (for
+    example a far pointer constant such as 0x26af0002L) instead of a FIXUPP
+    would reproduce the bytes while standing in for a relocation; it is a
+    hard-coded program address and fails here, before any binding, for the
+    CODE segment and every owned secondary segment alike."""
+    spans = [(recipe['object_segment'], recipe['start'], recipe['end'])]
+    for name, spec in recipe.get('secondary_dgroup_segments', {}).items():
+        if name != '_BSS':
+            spans.append((name, spec['start'], spec['end']))
+    for segment, start, end in spans:
+        generated = set(fixup_relocation_sites(obj.linker_fixups, start, segment))
+        for row in relocations:
+            site = row['load_offset']
+            if start <= site and site + 2 <= end:
+                require(site in generated,
+                        'Original MZ-relocated word at load offset %d has no candidate '
+                        'FIXUPP: an absolute literal stands in for a relocation '
+                        '(hard-coded program address)' % site)
+
+
 def _checked_data_addend(target, encoded):
     addend = int.from_bytes(encoded, 'little')
     signed = int.from_bytes(encoded, 'little', signed=True)
@@ -55,6 +107,9 @@ def _checked_data_addend(target, encoded):
                 signed == -lower*stride + field and
                 0 <= field and (upper-lower)*stride+field+2 <= width,
                 'Folded DGROUP addend escapes reviewed indexed object')
+        return signed
+    if signed < 0 and signed in target.get('negative_folded_addends', {}):
+        # Reviewed per FIXUPP by data_symbols.check_negative_folds (integ28).
         return signed
     require(addend in target.get('allowed_addends', [0]),
             'DGROUP addend leaves independently grounded object/field')
@@ -161,6 +216,13 @@ def bind_contribution(obj, recipe, symbols=None):
     require('relocation_order_basis' not in recipe,
             'Recipe cannot supply a relocation order basis')
     args = (obj, recipe['object_segment'], recipe['public'], recipe['end'] - recipe['start'])
+    if (recipe.get('kind','c') == 'c' and
+            recipe.get('binding',{}).get('mode') in ('external-far-call-v1',
+                                                     'external-dgroup-offset16-v1') and
+            any(f['target_kind']=='segment' and f['target']=='_DATA'
+                for f in recipe['expected_fixups'])):
+        # DGROUP DS reload (`_loadds`/`/Au`) composes per fixup (integ26).
+        return bind_composed(obj,recipe,symbols)
     if recipe.get('binding',{}).get('mode') == 'external-frame-callback-v1':
         return bind_frame_callback(*args, recipe['expected_fixups'], recipe['binding']['declarations'],
                                    symbols, recipe['start'], recipe['expected_relocations'])
@@ -605,6 +667,30 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
                                'target': fix['target'], 'linked_value': value})
             if fix['loc'] == 'base16':
                 relocation_sites.append(start + at)
+        elif target.get('kind') == 'far-data' and (fix['loc'], fix['width']) in (
+                ('offset16', 2), ('base16', 2)):
+            # A public of an accepted FAR_DATA module (integ25): the offset
+            # within its paragraph-aligned segment (addend inside the declared
+            # object) and the segment word, each an immediate of MOV r16,imm16
+            # or MOV [disp16],imm16.  Only the segment word is relocated.
+            frame, address = target['frame_load_address'], target['load_address']
+            encoded = bytes.fromhex(fix['encoded_addend'])
+            addend = int.from_bytes(encoded, 'little')
+            immediate = ((at >= 1 and 0xb8 <= payload[at-1] <= 0xbf) or
+                         (at >= 4 and payload[at-4] == 0xc7 and payload[at-3] == 0x06))
+            require(2 <= at + 2 <= length and immediate and len(encoded) == 2 and
+                    payload[at:at+2] == encoded and type(frame) is int and frame % 16 == 0 and
+                    type(address) is int and 0 <= address - frame <= 65535 and
+                    (addend < target['width'] if fix['loc'] == 'offset16' else addend == 0) and
+                    not occupied.intersection(range(at, at+2)),
+                    'Unsupported far-data offset/segment field')
+            occupied.update(range(at, at+2))
+            value = address - frame + addend if fix['loc'] == 'offset16' else frame // 16
+            struct.pack_into('<H', payload, at, value)
+            fixup_rows.append({'kind': 'far-data-' + fix['loc'], 'offset': at,
+                               'target': fix['target'], 'linked_value': value})
+            if fix['loc'] == 'base16':
+                relocation_sites.append(start + at)
         elif code_pointers and (fix['loc'], fix['width']) in (
                 ('base16', 2), ('loader-offset16', 2)):
             require(1 <= at <= length-2 and target.get('kind') == 'far-code' and
@@ -645,7 +731,12 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
         else:
             require(False, 'Unsupported mixed fixup kind/width')
     cs_rows = [row for row in fixup_rows if row['kind'].startswith('cs-data-')]
-    require(far_rows and (not pointer_only and (data_rows or cs_rows) or
+    # The pinned absolute __AHSHIFT word (huge-pointer shift, MOV CX,imm) is a
+    # reviewed non-far obligation of its own: far CALLs plus __AHSHIFT without
+    # any DGROUP data is a complete mixed object as well (seg029, integ25).
+    absolute_rows = [row for row in fixup_rows if row['kind'] == 'absolute-runtime-word' or
+                     row['kind'].startswith('far-data-')]
+    require(far_rows and (not pointer_only and (data_rows or cs_rows or absolute_rows) or
                           pointer_only and code_pointers and not data_rows and not cs_rows),
             'Mixed mode far CALL/data or pointer-only obligations differ')
     cs_pairs = {}
@@ -662,7 +753,12 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
             if row['kind'] in ('far-code-base16','far-code-loader-offset16'):
                 pairs.setdefault(row['target'], {'base16':[], 'loader-offset16':[]})[
                     row['kind'][9:]].append(row['offset'])
-        require(pairs and all(len(v['base16'])==len(v['loader-offset16']) for v in pairs.values()),
+        # The code-pointer mode is selected by segment-word/offset shapes; the
+        # same shapes may belong to far data or the absolute __AHSHIFT word, so
+        # an object without an actual code pointer pair is an ordinary mixed
+        # object (pointer-only objects still need one).
+        require((pairs or not pointer_only) and
+                all(len(v['base16'])==len(v['loader-offset16']) for v in pairs.values()),
                 'Unpaired far code pointer fields')
         for fields in pairs.values():
             require(sorted(x-3 for x in fields['base16']) == sorted(fields['loader-offset16']),
@@ -699,12 +795,17 @@ def bind_composed(obj, recipe, symbols):
     # entries (switch tables): MSC stores the in-segment offset in the LEDATA
     # word with a zero FIXUPP displacement.  They bind only to the module's own
     # segment at its original frame and must stay inside the module.
+    # It may also reload DS from DGROUP (`_loadds` / `/Au`): a base16 FIXUPP to
+    # its zero-length _DATA with the DGROUP group frame (integ26).
     c_local = (not asm and 'members' not in recipe and
                any(f['target_kind']=='segment' for f in fixes) and
                all(f['target_kind']=='external' or
                    (f['target_kind']=='segment' and f['target']==segment and
                     f['loc']=='offset16' and not f['self_relative'] and
-                    f['displacement']==0)
+                    f['displacement']==0) or
+                   (f['target_kind']=='segment' and f['target']=='_DATA' and
+                    f['loc']=='base16' and
+                    (symbols or {}).get('_DATA',{}).get('kind')=='local-dgroup-base')
                    for f in fixes))
     require((asm or c_local) and fixes and obj.linker_fixups==fixes and
             recipe['binding']['declarations']==
@@ -729,6 +830,7 @@ def bind_composed(obj, recipe, symbols):
             'Composed symbol set differs')
     groups=[g for g in obj.groups if g['name']=='DGROUP']
     payload=bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]; sites=[]
+    code_pointer_fields={}; cs_pointer_fields={}
     for fix in fixes:
         at=fix['offset']; width=fix['width']; target_name=fix['target']
         require(fix['segment']==segment and
@@ -789,17 +891,31 @@ def bind_composed(obj, recipe, symbols):
                     struct.pack_into('<H',payload,at,value)
                 rows.append({'offset':at,'target':target_name,'linked_value':value})
                 continue
+            dgroup_base=(not asm and target_name=='_DATA' and len(groups)==1 and
+                         (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                         (1,'group','DGROUP',groups[0]['index']))
             require(fix['loc']=='base16' and width==2 and encoded==b'\0\0' and
                     fix['target_method']==0 and fix['target_index']>0 and
-                    fix['frame_method']==0 and fix['frame_kind']=='segment' and
-                    fix['frame']==target_name and fix['frame_index']==fix['target_index'] and
+                    (dgroup_base or
+                     fix['frame_method']==0 and fix['frame_kind']=='segment' and
+                     fix['frame']==target_name and fix['frame_index']==fix['target_index']) and
                     fix['displacement']==0 and at>=1 and 0xb8<=payload[at-1]<=0xbf,
                     'Unsupported composed self-segment base')
             definition_target=[d for d in obj.segment_defs if d['index']==fix['target_index']
                                and d['name']==target_name]
-            require(len(definition_target)==1 and target_name in (segment,'DSEG'),
+            require(len(definition_target)==1 and target_name in (segment,'DSEG','_DATA'),
                     'Composed base lacks own segment declaration')
-            if target_name=='DSEG':
+            if target_name=='_DATA':
+                # MOV r16,DGROUP: the zero-length _DATA of this C object is a
+                # DGROUP member; the value is the independently grounded DGROUP
+                # paragraph and the word needs its own ordered MZ relocation.
+                require(dgroup_base and definition_target[0]['length']==0 and
+                        definition_target[0]['class']=='DATA' and
+                        fix['target_index'] in groups[0]['segment_indices'] and
+                        symbols['_DATA']['kind']=='local-dgroup-base',
+                        'Composed _DATA base lacks grounded DGROUP placement')
+                base=symbols['_DATA']['frame_load_address']
+            elif target_name=='DSEG':
                 require(definition_target[0]['length']==0 and
                         definition_target[0]['class'] in ('STUNTSD','DATA') and
                         symbols['DSEG']['kind']=='local-dseg-base',
@@ -818,7 +934,21 @@ def bind_composed(obj, recipe, symbols):
                     'Composed external datum differs')
             target=symbols[target_name]
             frame_tuple=(fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])
-            if fix['self_relative']:
+            if target_name=='__AHSHIFT':
+                # The pinned absolute runtime word, per fixup exactly as in the
+                # mixed binder: a zero-addend MOV CX,imm16 (B9) receiving 12,
+                # with no MZ relocation (integ28, whole seg005).
+                require(target.get('kind')=='absolute-runtime-word' and
+                        target.get('public')=='__AHSHIFT' and target.get('value')==12 and
+                        fix['loc']=='loader-offset16' and width==2 and
+                        not fix['self_relative'] and fix['displacement']==0 and
+                        encoded==bytes(2) and at>=1 and payload[at-1]==0xb9 and
+                        frame_tuple in ((5,'target',target_name,0),
+                                        (2,'external',target_name,fix['target_index'])),
+                        'Unsupported composed __AHSHIFT absolute runtime fixup')
+                value=12
+                struct.pack_into('<H',payload,at,value)
+            elif fix['self_relative']:
                 require(fix['loc']=='offset16' and width==2 and
                         fix['displacement']==0 and encoded==bytes(2) and
                         at>=1 and payload[at-1] in (0xe8,0xe9) and
@@ -846,13 +976,39 @@ def bind_composed(obj, recipe, symbols):
                         'Composed far target frame/offset differs')
                 value=[address-base,base//16]
                 struct.pack_into('<HH',payload,at,*value); sites.append(start+at+2)
+            elif (not asm and target.get('kind')=='cs-data' and
+                  fix['loc'] in ('offset16','base16')):
+                # The mixed binder's CS-island pair, per fixup (integ26): a
+                # zero-addend MOV AX,offset / MOV DX,seg naming a reviewed
+                # island datum; the segment word carries its own MZ relocation.
+                base=target['frame_load_address']; address=target['load_address']
+                require(width==2 and encoded==bytes(2) and fix['displacement']==0 and at>=1 and
+                        payload[at-1]==(0xb8 if fix['loc']=='offset16' else 0xba) and
+                        frame_tuple in ((5,'target',target_name,0),
+                                        (2,'external',target_name,fix['target_index'])) and
+                        type(base) is int and base%16==0 and 0<=base<=0xffff0 and
+                        target['island_start']<=address and
+                        address+target['width']<=target['island_end'] and
+                        0<=address-base<=65535,
+                        'Composed CS data pointer differs')
+                value=address-base if fix['loc']=='offset16' else base//16
+                struct.pack_into('<H',payload,at,value)
+                cs_pointer_fields.setdefault(target_name,{'offset16':[],'base16':[]})[
+                    fix['loc']].append(at)
+                if fix['loc']=='base16': sites.append(start+at)
             elif fix['loc']=='offset16' and target.get('kind')=='cs-data':
                 # Same rule as the complete ASM CS-data mode: an own-segment
                 # frame, a CS override memory operand with a complete disp16
                 # (or LEA), an in-object displacement inside the reviewed island.
+                # A MOV r16,imm16 offset (B8+r) of the island may also name it
+                # (e.g. `mov di,offset sprite1` after ES=CS), framed by the
+                # own segment or by the island symbol itself (integ26).
+                mov_immediate=at>=1 and 0xb8<=payload[at-1]<=0xbf
                 require(width==2 and encoded==bytes(2) and asm and
-                        _cs_operand(payload, at) and
-                        frame_tuple==(0,'segment',segment,definition['index']) and
+                        (_cs_operand(payload, at) or mov_immediate) and
+                        (frame_tuple==(0,'segment',segment,definition['index']) or
+                         mov_immediate and
+                         frame_tuple==(2,'external',target_name,fix['target_index'])) and
                         type(fix['displacement']) is int and
                         0<=fix['displacement']<target['width'] and
                         target['frame_load_address']==frame and
@@ -907,20 +1063,47 @@ def bind_composed(obj, recipe, symbols):
                 value=address-base+displacement+_checked_data_addend(target,encoded)
                 require(0<=value<=65535,'Composed data offset overflows')
                 struct.pack_into('<H',payload,at,value)
+            elif ('code-pointer' in mode and fix['loc'] in ('base16','loader-offset16') and
+                  target.get('kind')=='far-code'):
+                # A far code pointer (MOV AX,offset / MOV DX,seg) to a reviewed
+                # far-code alias, as in the mixed binder, per fixup (integ26).
+                require(width==2 and encoded==bytes(2) and fix['displacement']==0 and
+                        frame_tuple in ((5,'target',target_name,0),
+                                        (2,'external',target_name,fix['target_index'])) and at>=1 and
+                        payload[at-1]==(0xba if fix['loc']=='base16' else 0xb8),
+                        'Composed far code pointer field differs')
+                base=target['frame_load_address']; address=target['load_address']
+                require(type(base) is int and base%16==0 and 0<=base<=0xffff0 and
+                        type(address) is int and 0<=address-base<=65535,
+                        'Composed far code pointer target differs')
+                value=base//16 if fix['loc']=='base16' else address-base
+                struct.pack_into('<H',payload,at,value)
+                code_pointer_fields.setdefault(target_name,{'base16':[],'loader-offset16':[]})[
+                    fix['loc']].append(at)
+                if fix['loc']=='base16': sites.append(start+at)
             else:
                 require(False,'Unsupported composed fixup form')
         rows.append({'offset':at,'target':target_name,'linked_value':value})
+    require(all(sorted(x-3 for x in v['base16'])==sorted(v['loader-offset16']) and v['base16']
+                for v in code_pointer_fields.values()),
+            'Composed far code pointer words are not adjacent MOV pairs')
+    require(all(v['base16'] and sorted(x+3 for x in v['offset16'])==sorted(v['base16'])
+                for v in cs_pointer_fields.values()),
+            'Composed CS data pointer words are not adjacent MOV pairs')
     expected_sites=[r['load_offset'] for r in recipe['expected_relocations']]
-    # MASM FIXUPP order does not determine the executable relocation order.
-    # Probe checks the recipe's exact order against the immutable MZ table;
-    # here every relocation site must still come from precisely one fixup.
-    require(sorted(expected_sites)==sorted(sites) and
-            all(set(r)=={'segment','offset','load_offset'} and
+    require(all(set(r)=={'segment','offset','load_offset'} and
                 type(r['segment']) is int and type(r['offset']) is int and
                 0<=r['segment']<=65535 and 0<=r['offset']<=65535 and
                 16*r['segment']+r['offset']==r['load_offset']
                 for r in recipe['expected_relocations']),
             'Composed ordered MZ relocation obligations differ')
+    # C and ASM alike: the MZ entries follow this object's own FIXUPP
+    # traversal exactly as the pinned LINK emits them (link_order_sites).
+    # The candidate stream is compared in order; it is never sorted into, or
+    # taken from, the oracle order.
+    require(expected_sites==link_order_sites(sites),
+            'Composed relocation order differs from its candidate FIXUPP order'
+            if asm else 'Composed C relocation order differs from its FIXUPP order')
     return bytes(payload),{'mode':mode,'fixups':rows,
                            'generated_relocations':recipe['expected_relocations']}
 

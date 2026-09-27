@@ -1,6 +1,15 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+_DATA segment word public 'DATA'
+_DATA ends
+_BSS segment word public 'BSS'
+_BSS ends
+CONST segment word public 'CONST'
+CONST ends
+DGROUP group CONST,_BSS,_DATA
+extrn _timer_callback_counter:word
+extrn _word_2F87A:word
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT, ds:DGROUP
 public _timer_custom_delta
 _timer_custom_delta proc far
     push bp
@@ -8,13 +17,13 @@ _timer_custom_delta proc far
     mov bx, word ptr [bp + 6]
     mov cx, word ptr [bp + 8]
     cli
-    mov ax, word ptr ds:[4108h]
-    mov dx, word ptr ds:[410Ah]
+    mov ax, word ptr ds:[_timer_callback_counter]
+    mov dx, word ptr ds:[_word_2F87A]
     sti
     sub ax, bx
     sbb dx, cx
     pop bp
     retf
 _timer_custom_delta endp
-_TEXT ends
+S012_TEXT ends
 end

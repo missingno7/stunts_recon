@@ -1,8 +1,8 @@
 .8086
 .8086
 extrn _copy_paras_reverse:far
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _file_decomp_rle, _file_decomp_rle_single, _file_decomp_rle_seq
 _file_decomp_rle proc far
     var_lenlo = word ptr -26
@@ -288,5 +288,5 @@ loc_30D5A:
     jmp     loc_30CED
 
 _file_decomp_rle_seq endp
-_TEXT ends
+S012_TEXT ends
 end

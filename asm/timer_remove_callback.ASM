@@ -4,8 +4,8 @@ dseg segment byte public 'STUNTSD'
 assume ds:dseg
 extrn _timerintr:dword
 dseg ends
-_TEXT segment word public 'CODE'
-assume cs:_TEXT, ds:dseg
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT, ds:dseg
 public _timer_remove_callback
 _timer_remove_callback proc far
      s = byte ptr 0
@@ -47,5 +47,5 @@ loc_30311:
     pop     bp
     retf
 _timer_remove_callback endp
-_TEXT ends
+S012_TEXT ends
 end

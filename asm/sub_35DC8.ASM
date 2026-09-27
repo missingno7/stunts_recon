@@ -1,9 +1,9 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _incnums:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _sub_35DC8
 copy_bytes equ 100h
-incnums_base equ 72A8h
 _sub_35DC8 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -19,7 +19,7 @@ _sub_35DC8 proc far
     mov si, [bp+arg_0]
     mov ax, cs
     mov es, ax
-    mov di, incnums_base
+    mov di, offset _incnums
     cld
     rep movsb
     pop di
@@ -28,5 +28,5 @@ _sub_35DC8 proc far
     pop bp
     retf
 _sub_35DC8 endp
-_TEXT ends
+S012_TEXT ends
 end

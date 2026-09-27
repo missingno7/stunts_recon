@@ -1,0 +1,745 @@
+{
+  "binding": {
+    "declarations": {
+      "externals": [
+        "__acrtused",
+        "_multiply_and_scale",
+        "_preRender_sphere_helper2"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            3,
+            4,
+            2
+          ],
+          "segments": [
+            "CONST",
+            "_BSS",
+            "_DATA"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_preRender_sphere_helper2",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 928,
+          "name": "UNIT_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "_DATA",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CONST",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 3,
+          "length": 0,
+          "name": "CONST",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "BSS",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 4,
+          "length": 0,
+          "name": "_BSS",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-v1"
+  },
+  "compiler_flags": [
+    "/AM",
+    "/Oa",
+    "/Gs"
+  ],
+  "compiler_flags_register": "TUFLAG-Oa-seg023-025",
+  "end": 157618,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 855,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 830,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 805,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 781,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 757,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 732,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 707,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 676,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 646,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 621,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 596,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 572,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 548,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 517,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 487,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 462,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 437,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 412,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 388,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 363,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 338,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 313,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 289,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 264,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 239,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 214,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 190,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_multiply_and_scale",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 165,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_multiply_and_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 157547,
+      "offset": 26475,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157522,
+      "offset": 26450,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157497,
+      "offset": 26425,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157473,
+      "offset": 26401,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157449,
+      "offset": 26377,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157424,
+      "offset": 26352,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157399,
+      "offset": 26327,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157368,
+      "offset": 26296,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157338,
+      "offset": 26266,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157313,
+      "offset": 26241,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157288,
+      "offset": 26216,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157264,
+      "offset": 26192,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157240,
+      "offset": 26168,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157209,
+      "offset": 26137,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157179,
+      "offset": 26107,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157154,
+      "offset": 26082,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157129,
+      "offset": 26057,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157104,
+      "offset": 26032,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157080,
+      "offset": 26008,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157055,
+      "offset": 25983,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157030,
+      "offset": 25958,
+      "segment": 8192
+    },
+    {
+      "load_offset": 157005,
+      "offset": 25933,
+      "segment": 8192
+    },
+    {
+      "load_offset": 156981,
+      "offset": 25909,
+      "segment": 8192
+    },
+    {
+      "load_offset": 156956,
+      "offset": 25884,
+      "segment": 8192
+    },
+    {
+      "load_offset": 156931,
+      "offset": 25859,
+      "segment": 8192
+    },
+    {
+      "load_offset": 156906,
+      "offset": 25834,
+      "segment": 8192
+    },
+    {
+      "load_offset": 156882,
+      "offset": 25810,
+      "segment": 8192
+    },
+    {
+      "load_offset": 156857,
+      "offset": 25785,
+      "segment": 8192
+    }
+  ],
+  "id": "preRender_sphere_helper2",
+  "include_closure": [],
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_preRender_sphere_helper2",
+  "source": "src/preRender_sphere_helper2.c",
+  "stable_id": "load_26412",
+  "start": 156690,
+  "target": {
+    "sha256": "6fdfe6fa031ac9c260732dce91cc10d4098287dab9b28d4a2be7f4f3020fce13",
+    "size": 928
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "data_only": true,
+  "end": 178032,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "far_data": true,
+  "far_placement": {
+    "anchors": [
+      {
+        "alias": "_fontdefseg",
+        "kind": "data-segment-word",
+        "relocation": {
+          "load_offset": 198144,
+          "offset": 1536,
+          "segment": 12288
+        }
+      }
+    ],
+    "basis": "relocated-segment-word-v1",
+    "offset_anchors": []
+  },
+  "id": "fardata_11039",
+  "kind": "c",
+  "object_declarations": {
+    "externals": [
+      "__acrtused"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_fontdef_default",
+        "offset": 0,
+        "segment": "UNIT5_DATA"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 104,
+        "alignment": "paragraph",
+        "alignment_code": 3,
+        "big": false,
+        "class": "FAR_DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 5,
+        "length": 1408,
+        "name": "UNIT5_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT5_DATA",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public_object_sizes": {
+    "_fontdef_default": 1408
+  },
+  "required_pointer_sites": [],
+  "source": "src/fardata_11039.c",
+  "start": 176624,
+  "subsumed_data_owners": [],
+  "target": {
+    "sha256": "9ecfc80db6eaf751582e01d4e27e3734d5c45ebb5c52ab78d5295d8259b1bb7a",
+    "size": 1408
+  }
+}

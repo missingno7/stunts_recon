@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment byte public 'CODE'
+assume cs:S012_TEXT
 extrn _mmgr_get_chunk_by_name:far
 extrn _file_paras:far
 extrn _mmgr_alloc_pages:far
@@ -58,5 +58,5 @@ empty_file:
     xor dx, dx
     jmp short load_complete
 _file_load_binary_nofatal endp
-_TEXT ends
+S012_TEXT ends
 end

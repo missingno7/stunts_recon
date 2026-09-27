@@ -9,9 +9,20 @@ _DIRECTIVE = re.compile(r'^\s*#\s*([A-Za-z_]+)\b(.*)$')
 _INCLUDE = re.compile(r'^\s*([<"])([^>"]+)[>"]\s*(?:/\*.*\*/\s*)?$')
 _ALLOWED = {'define', 'undef', 'if', 'ifdef', 'ifndef', 'else', 'endif', 'include'}
 _PACK = re.compile(r'^pack\s*\(\s*(1|2|4)?\s*\)\s*(?:/\*.*\*/\s*)?$', re.I)
+# MSC 5.10 intrinsic forms: the manual's list (string/memory, abs/labs and
+# rotates) plus the pinned README.DOC additions (floating point, _enable,
+# _disable, inpw, outpw).  Each non-floating-point name is verified with the
+# pinned compiler (tests/test_integ25.py): after its prototype the pragma is
+# accepted and the call is expanded inline (no EXTDEF).
 _INTRINSIC_NAMES = frozenset({'inp', 'outp', 'inpw', 'outpw', '_enable', '_disable',
+    'memcpy', 'memset', 'memcmp', 'strlen', 'strcpy', 'strcat', 'strcmp', 'strset',
+    'abs', 'labs', '_rotl', '_rotr', '_lrotl', '_lrotr',
     'acos', 'asin', 'atan', 'atan2', 'cos', 'cosh', 'exp', 'fabs', 'fmod',
     'log', 'log10', 'pow', 'sin', 'sinh', 'sqrt', 'tan', 'tanh'})
+# MSC 6.00A `#pragma optimize("letters", on|off)` regions: only for a profile
+# that declares the reviewed `pragma_optimize` source extension (the
+# register-gated MSC 6.00A profile); recorded in the closure with location.
+_OPTIMIZE_PRAGMA = re.compile(r'^optimize\s*\(\s*"([a-z]*)"\s*,\s*(on|off)\s*\)\s*(?:/\*.*\*/\s*)?$')
 _FUNCTION_PRAGMA = re.compile(r'^(intrinsic|function)\s*\(\s*([A-Za-z_]\w*(?:\s*,\s*[A-Za-z_]\w*)*)\s*\)\s*(?:/\*.*\*/\s*)?$', re.I)
 
 
@@ -50,6 +61,17 @@ def prepare(source, profile):
             if directive == 'pragma':
                 pack = _PACK.fullmatch(argument)
                 function = _FUNCTION_PRAGMA.fullmatch(argument)
+                optimize = _OPTIMIZE_PRAGMA.fullmatch(argument)
+                if optimize is not None:
+                    require(config.get('source_extensions', {}).get('pragma_optimize') is True,
+                            'Unsupported historical pragma for this profile')
+                    require(set(optimize.group(1)) <= set('acegilnoprstwz'),
+                            'Unsupported optimize pragma letters')
+                    pragmas.append({'pragma': 'optimize', 'letters': optimize.group(1),
+                                    'state': optimize.group(2),
+                                    'path': stack[-1] if stack else '<source>', 'line': line_number})
+                    output.append(line)
+                    continue
                 require(pack is not None or function is not None, 'Unsupported historical pragma')
                 if pack is not None:
                     pragmas.append({'pragma': 'pack', 'value': (int(pack.group(1)) if pack.group(1) else None),

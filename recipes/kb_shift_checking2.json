@@ -6,21 +6,21 @@
   "binding": {
     "declarations": {
       "externals": [
-        "kb_shift_state"
+        "_kb_checking"
       ],
       "groups": [],
       "publics": [
         {
           "name": "_kb_shift_checking2",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S018_TEXT"
         }
       ],
       "segments": [
         {
-          "acbp": 72,
-          "alignment": "word",
-          "alignment_code": 2,
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
           "big": false,
           "class": "CODE",
           "combine": "public",
@@ -28,7 +28,7 @@
           "frame": null,
           "index": 1,
           "length": 17,
-          "name": "_TEXT",
+          "name": "S018_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -49,15 +49,15 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "_kb_checking",
       "frame_index": 1,
-      "frame_kind": "segment",
-      "frame_method": 0,
+      "frame_kind": "external",
+      "frame_method": 2,
       "loc": "pointer32",
       "offset": 12,
-      "segment": "_TEXT",
+      "segment": "S018_TEXT",
       "self_relative": false,
-      "target": "kb_shift_state",
+      "target": "_kb_checking",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -76,21 +76,21 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "kb_shift_state"
+      "_kb_checking"
     ],
     "groups": [],
     "publics": [
       {
         "name": "_kb_shift_checking2",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S018_TEXT"
       }
     ],
     "segments": [
       {
-        "acbp": 72,
-        "alignment": "word",
-        "alignment_code": 2,
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
         "big": false,
         "class": "CODE",
         "combine": "public",
@@ -98,14 +98,14 @@
         "frame": null,
         "index": 1,
         "length": 17,
-        "name": "_TEXT",
+        "name": "S018_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S018_TEXT",
   "original_frame_load_address": 158448,
   "profile": "masm510-game",
   "public": "_kb_shift_checking2",

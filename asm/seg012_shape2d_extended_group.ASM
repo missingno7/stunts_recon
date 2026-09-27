@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_33DBE
 public _shape2d_op_unk5
 public _shape2d_op_unk
@@ -93,11 +94,11 @@ loc_33E1B:
 loc_33E27:
     mov     bx, [bp+var_4]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     [bp+var_10], bx
     mov     di, cs:[bx]
     add     di, [bp+var_2]
-    mov     ax, word ptr word ptr cs:[5F22h]
+    mov     ax, word ptr word ptr cs:[_sprite1+2]
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_6]
@@ -238,10 +239,10 @@ loc_33EED:
     mov     bx, [bp+var_4]
     mov     cx, [si+2]
     mov     ax, bx
-    cmp     ax, word ptr cs:[5F30h]
+    cmp     ax, word ptr cs:[_sprite1+16]
     jl      short loc_33F21
     add     ax, cx
-    sub     ax, word ptr cs:[5F32h]
+    sub     ax, word ptr cs:[_sprite1+18]
     jle     short loc_33F44
     inc     di
     sub     cx, ax
@@ -255,7 +256,7 @@ loc_33F1A:
     retf
 loc_33F21:
     inc     di
-    mov     bx, word ptr cs:[5F30h]
+    mov     bx, word ptr cs:[_sprite1+16]
     add     ax, cx
     sub     ax, bx
     jle     short loc_33F1A
@@ -265,7 +266,7 @@ loc_33F21:
     mov     dx, ax
     mov     ax, bx
     add     ax, cx
-    sub     ax, word ptr cs:[5F32h]
+    sub     ax, word ptr cs:[_sprite1+18]
     jle     short loc_33F44
     sub     cx, ax
     jle     short loc_33F1A
@@ -277,10 +278,10 @@ loc_33F44:
     mov     bx, [bp+var_2]
     mov     ax, bx
     mov     cx, [bp+var_6]
-    cmp     ax, word ptr cs:[5F2Ch]
+    cmp     ax, word ptr cs:[_sprite1+12]
     jl      short loc_33F71
     add     ax, cx
-    sub     ax, word ptr cs:[5F2Eh]
+    sub     ax, word ptr cs:[_sprite1+14]
     jle     short loc_33F97
     sub     cx, ax
     jle     short loc_33F1A
@@ -290,14 +291,14 @@ loc_33F44:
     db 144
 loc_33F71:
     inc     di
-    mov     bx, word ptr cs:[5F2Ch]
+    mov     bx, word ptr cs:[_sprite1+12]
     add     ax, cx
     sub     ax, bx
     jle     short loc_33F1A
     mov     si, cx
     sub     si, ax
     add     [bp+var_A], si
-    mov     si, word ptr cs:[5F2Eh]
+    mov     si, word ptr cs:[_sprite1+14]
     sub     si, bx
     cmp     ax, si
     jl      short loc_33F91
@@ -316,11 +317,11 @@ loc_33F97:
 loc_33FA9:
     mov     bx, [bp+var_4]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     [bp+var_10], bx
     mov     di, cs:[bx]
     add     di, [bp+var_2]
-    mov     ax, word ptr word ptr cs:[5F22h]
+    mov     ax, word ptr word ptr cs:[_sprite1+2]
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_A]
@@ -420,5 +421,5 @@ loc_34057:
     ; align 2
     db 0
 _shape2d_op_unk3 endp
-_TEXT ends
+S012_TEXT ends
 end

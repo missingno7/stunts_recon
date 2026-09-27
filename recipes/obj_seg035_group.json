@@ -1,0 +1,664 @@
+{
+  "end": 176314,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_resize_memory",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 934,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_resize_memory",
+      "target_index": 16,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "__aFNalshr",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 920,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "__aFNalshr",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d_helper",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 865,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d_helper",
+      "target_index": 13,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d_helper",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 847,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d_helper",
+      "target_index": 13,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d_helper",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 738,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d_helper",
+      "target_index": 13,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d_helper",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 720,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d_helper",
+      "target_index": 13,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d_helper2",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 700,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d_helper2",
+      "target_index": 14,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_parse_shape2d_helper",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 684,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_parse_shape2d_helper",
+      "target_index": 13,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_get_shape2d",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 664,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_file_get_shape2d",
+      "target_index": 12,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_parse_shape2d_helper3",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 348,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_parse_shape2d_helper3",
+      "target_index": 15,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_get_res_shape_count",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 211,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_file_get_res_shape_count",
+      "target_index": 11,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_op_unk",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 185,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_op_unk",
+      "target_index": 10,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_release",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 171,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_release",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_parse_shape2d",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 159,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_parse_shape2d",
+      "target_index": 18,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_alloc_pages",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 136,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_alloc_pages",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_get_chunk_size",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 121,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_get_chunk_size",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_load_shape2d",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 89,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_file_load_shape2d",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_get_chunk_by_name",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 57,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_get_chunk_by_name",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_path_to_name",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "pointer32",
+      "offset": 48,
+      "segment": "UNIT_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_path_to_name",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_file_load_shape2d_res",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 31,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_file_load_shape2d_res",
+      "target_index": 17,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_file_load_shape2d_res",
+      "frame_index": 0,
+      "frame_kind": "target",
+      "frame_method": 5,
+      "loc": "offset16",
+      "offset": 12,
+      "segment": "UNIT_TEXT",
+      "self_relative": true,
+      "target": "_file_load_shape2d_res",
+      "target_index": 17,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 176256,
+      "offset": 45184,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176242,
+      "offset": 45170,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176187,
+      "offset": 45115,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176169,
+      "offset": 45097,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176060,
+      "offset": 44988,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176042,
+      "offset": 44970,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176022,
+      "offset": 44950,
+      "segment": 8192
+    },
+    {
+      "load_offset": 176006,
+      "offset": 44934,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175986,
+      "offset": 44914,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175533,
+      "offset": 44461,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175507,
+      "offset": 44435,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175493,
+      "offset": 44421,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175458,
+      "offset": 44386,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175443,
+      "offset": 44371,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175411,
+      "offset": 44339,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175379,
+      "offset": 44307,
+      "segment": 8192
+    },
+    {
+      "load_offset": 175370,
+      "offset": 44298,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-v1"
+  },
+  "id": "obj_seg035_group",
+  "kind": "c",
+  "members": [
+    {
+      "end": 175340,
+      "local_symbol": false,
+      "name": "file_load_shape2d_res_fatal",
+      "public": "_file_load_shape2d_res_fatal",
+      "stable_id": "load_2acd8",
+      "start": 175320,
+      "target": {
+        "sha256": "68c4bd4d747ca1b1eadb9b9115301a0d6871940ee2db45b759d6d202ca7351c1",
+        "size": 20
+      }
+    },
+    {
+      "end": 175358,
+      "local_symbol": false,
+      "name": "file_load_shape2d_res_nofatal",
+      "public": "_file_load_shape2d_res_nofatal",
+      "stable_id": "load_2acec",
+      "start": 175340,
+      "target": {
+        "sha256": "8c0aee23fb3b48de8f827aa81776bc9619edb46ef9a326b248d548968486d7cf",
+        "size": 18
+      }
+    },
+    {
+      "end": 175516,
+      "local_symbol": false,
+      "name": "file_load_shape2d_res",
+      "public": "_file_load_shape2d_res",
+      "stable_id": "load_2acfe",
+      "start": 175358,
+      "target": {
+        "sha256": "b1f79bc38e9c8d599c8d3caa8993035b09b11c5b147b06c402c0a19799cd7ccf",
+        "size": 158
+      }
+    },
+    {
+      "end": 176268,
+      "local_symbol": false,
+      "name": "parse_shape2d",
+      "public": "_parse_shape2d",
+      "stable_id": "load_2ad9c",
+      "start": 175516,
+      "target": {
+        "sha256": "5e2ed37d2fc173fb03661e2a41f53e358104d865499eba900ca7947d5a7f6429",
+        "size": 752
+      }
+    },
+    {
+      "end": 176314,
+      "local_symbol": false,
+      "name": "parse_shape2d_helper3",
+      "public": "_parse_shape2d_helper3",
+      "stable_id": "load_2b08c",
+      "start": 176268,
+      "target": {
+        "sha256": "1c81f94a02413ee72f440cf2e167678f087f7bf0615c478a33d3478bf7c9596d",
+        "size": 46
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_file_load_shape2d_res_nofatal",
+      "__aFNalshr",
+      "_mmgr_path_to_name",
+      "_mmgr_get_chunk_by_name",
+      "_file_load_shape2d",
+      "_mmgr_get_chunk_size",
+      "_mmgr_alloc_pages",
+      "_mmgr_release",
+      "_mmgr_op_unk",
+      "_file_get_res_shape_count",
+      "_file_get_shape2d",
+      "_parse_shape2d_helper",
+      "_parse_shape2d_helper2",
+      "_parse_shape2d_helper3",
+      "_mmgr_resize_memory",
+      "_file_load_shape2d_res",
+      "_parse_shape2d",
+      "_file_load_shape2d_res_fatal"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_file_load_shape2d_res_nofatal",
+        "offset": 20,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_parse_shape2d_helper3",
+        "offset": 948,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_res",
+        "offset": 38,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_parse_shape2d",
+        "offset": 196,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_file_load_shape2d_res_fatal",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 994,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "review_notes": [
+    "unused original local: parse_shape2d declares `long baseOff;` that is never referenced; the target frame has an untouched 4-byte slot at BP-0x22 not explained by a register home, compiler temporary or struct member (supervisor RULING, integ25 item 4)"
+  ],
+  "source": "src/obj_seg035_group.c",
+  "stable_id": "group_obj_seg035",
+  "start": 175320,
+  "subsumed_owners": [
+    "load_2b08c"
+  ],
+  "target": {
+    "sha256": "21c8af537d814647e5920f59ed0985d8d78f266259a8966edc955cc4c1eda05b",
+    "size": 994
+  }
+}

@@ -53,7 +53,10 @@ class ProcedureTiedDataAliases(unittest.TestCase):
         names = ['_trackpos', '_terrainrows', '_word_6ae0', '_word_9260', '_mouse_buffer_count']
         resolved = resolve_symbols(names, self.image, self.relocations)
         self.assertEqual(resolved['_word_6ae0']['load_address'] - self.frame, 0x6AE0)
-        self.assertEqual(resolved['_trackpos']['allowed_addends'], [0])
+        # _trackpos now has its placed 60-byte label span (integ25 container
+        # policy); a compact alias without a reviewed width keeps address only.
+        self.assertEqual(resolved['_word_9260']['allowed_addends'], [0])
+        self.assertEqual(max(resolved['_trackpos']['allowed_addends']), 59)
 
     def test_legacy_seg003_alias_keeps_passing_with_placement_check(self):
         self.assertIn('_bravshape', resolve_symbols(['_bravshape'], self.image, self.relocations))
@@ -115,8 +118,8 @@ class PlacedReferenceWidths(unittest.TestCase):
         with layout_override('data_symbols', 'data-symbols.json', bad):
             with self.assertRaisesRegex(ValueError, 'not placed at the alias address'):
                 resolve_symbols(['_framespersec'], self.image, self.relocations)
-            self.assertEqual(resolve_symbols(['_trackpos'], self.image, self.relocations)
-                             ['_trackpos']['allowed_addends'], [0])
+            self.assertEqual(resolve_symbols(['_word_9260'], self.image, self.relocations)
+                             ['_word_9260']['allowed_addends'], [0])
 
     def test_withdrawn_widths_leave_only_the_anchored_address(self):
         # integ24 moved the misplaced spellings to their pinned labels; the
@@ -148,9 +151,13 @@ class PlacedReferenceWidths(unittest.TestCase):
 
     def test_folded_audiochunks_index_is_not_a_second_alias(self):
         # audio_init_chunk2's [bx+0x81FC] accesses are the reviewed folded
-        # audiochunks_unk2[i-16] witnesses; no separate audiochunks_unk alias.
-        with self.assertRaisesRegex(ValueError, 'Unknown data external'):
-            resolve_symbols(['_audiochunks_unk'], self.image, self.relocations)
+        # audiochunks_unk2[i-16] witnesses.  integ26 grounds the enclosing
+        # 24 x 76 table by its own counted-stride proof; the folded alias keeps
+        # its reviewed guarded addends and the container only whole-table ones.
+        resolved = resolve_symbols(['_audiochunks_unk', '_audiochunks_unk2'],
+                                   self.image, self.relocations)
+        self.assertEqual(resolved['_audiochunks_unk']['allowed_addends'], list(range(24 * 76)))
+        self.assertEqual(sorted(resolved['_audiochunks_unk2']['folded_addends']), [-1216, -1214])
 
 
 class Integ22CodeAliases(unittest.TestCase):

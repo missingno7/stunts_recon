@@ -1,0 +1,119 @@
+{
+  "end": 158452,
+  "evidence": {
+    "function_inventory": "layout/function-evidence.json (reviewed gap entry nopsub_36AF2)",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "nopsub_36AF2",
+  "object_declarations": {
+    "externals": [
+      "__acrtused",
+      "_nopsub_36AF2"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_nopsub_36AF2",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 2,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_nopsub_36AF2",
+  "review": [
+    "integ29: standalone MSC object. seg008 loads this entry as the relocated far pointer 26AF:0002 (MOV AX,2 / MOV DX,26AFh at 102605), so it lies in a segment framed 0x26AF, not in seg017 (frame 0x268A). Its two bytes are exactly the pinned MSC 5.10 emission of an empty far function (RETF plus the word-alignment 90). C is the default classification; no positive ASM evidence."
+  ],
+  "source": "src/nopsub_36AF2.c",
+  "stable_id": "load_26af2",
+  "start": 158450,
+  "target": {
+    "sha256": "c8a51d4867300f9df2241e4d32f72b027916ca03fcef86fac7fa83fae59c529c",
+    "size": 2
+  }
+}

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment byte public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -8,7 +8,7 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 MEMCHUNK struc
     resname db 12 dup (?)
     ressize dw ?
@@ -18,7 +18,7 @@ MEMCHUNK ends
 extrn _resendptr1:word
 extrn _resendptr2:word
 extrn _copy_paras_reverse:far
-_TEXT segment word public 'CODE'
+S012_TEXT segment byte public 'CODE'
 public _mmgr_find_free
 _mmgr_find_free proc far
      r = byte ptr 0
@@ -75,5 +75,5 @@ loc_31359:
     add     sp, 6
     jmp     short loc_31319
 _mmgr_find_free endp
-_TEXT ends
+S012_TEXT ends
 end

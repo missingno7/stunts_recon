@@ -23,14 +23,14 @@
       {
         "name": "_file_get_shape2d",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
       {
-        "acbp": 72,
-        "alignment": "word",
-        "alignment_code": 2,
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
         "big": false,
         "class": "CODE",
         "combine": "public",
@@ -38,14 +38,14 @@
         "frame": null,
         "index": 1,
         "length": 95,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_file_get_shape2d",
   "source": "asm/file_get_shape2d.ASM",

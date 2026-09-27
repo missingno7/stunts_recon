@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment word public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -8,10 +8,10 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 extrn aSFileError_0:byte
 extrn _fatal_error:far
-_TEXT segment word public 'CODE'
+S012_TEXT segment word public 'CODE'
 public _file_write_nofatal
 public _file_write_fatal
 _file_write_nofatal proc far
@@ -115,5 +115,5 @@ loc_325A7:
     pop     bp
     retf
 _file_write_fatal endp
-_TEXT ends
+S012_TEXT ends
 end

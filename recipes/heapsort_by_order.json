@@ -1,0 +1,28 @@
+{
+  "compiler_flags": [
+    "/AM",
+    "/Oa",
+    "/Gs"
+  ],
+  "compiler_flags_register": "TUFLAG-Oa-seg023-025",
+  "end": 158846,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "heapsort_by_order",
+  "include_closure": [],
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public": "_heapsort_by_order",
+  "source": "src/heapsort_by_order.c",
+  "stable_id": "load_26be8",
+  "start": 158696,
+  "target": {
+    "sha256": "79d242fe30f1ffea7a5ef31431efffcb0e6326abab3a4cddbb09d2dcc8593ca6",
+    "size": 150
+  }
+}

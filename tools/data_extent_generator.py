@@ -348,7 +348,11 @@ def derive(image, relocations, layout=None, inventory=None):
         if end > cap or base < (layout['bss_start'] if symbol['storage'] == 'bss' else frame):
             rejected.append({'base': base, 'reason': 'storage boundary'})
             continue
+        # A reviewed container wholly holding the slice (the counted 24 x 76
+        # audiochunks_unk table, integ26) is its enclosing object, not an anchor.
         conflicts = [(n, s) for n, s in layout['symbols'].items() if n != name and s['storage'] != 'code_island' and
+                     not (s.get('extent_proof', {}).get('kind') == 'counted-stride-loop-v1' and
+                          s['load_address'] <= base and end <= s['load_address'] + s['width']) and
                      ((s.get('width') and base < s['load_address']+s['width'] and s['load_address'] < end) or
                       (base < s['load_address'] < end))]
         if conflicts:

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 extrn _file_get_shape2d:far
 public _file_unflip_shape2d_pes
 _file_unflip_shape2d_pes proc far
@@ -130,7 +130,7 @@ loc_361B8:
 loc_361BA:
     jmp     short loc_3614E
 _file_unflip_shape2d_pes endp
-_TEXT ends
+S012_TEXT ends
 dseg segment byte public 'STUNTSD'
 dseg ends
 end

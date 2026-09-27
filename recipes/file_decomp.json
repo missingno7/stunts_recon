@@ -1,0 +1,52 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 134647,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "file_decomp",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_file_decomp",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 17,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_file_decomp",
+  "source": "asm/file_decomp.ASM",
+  "stable_id": "load_20de6",
+  "start": 134630,
+  "target": {
+    "sha256": "d2fcbc3be61fccaa84d602d115e222d38a706bf96df9738faf6060a47a1b50dc",
+    "size": 17
+  }
+}

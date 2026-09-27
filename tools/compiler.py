@@ -42,6 +42,13 @@ def toolchain_path(logical):
 
 
 def verify_toolchain(profile):
+    # Within one verification session the pinned identities are checked once
+    # and checked again, uncached, when the session ends (tools/memo.py).
+    import memo
+    return memo.cached('verify_toolchain', profile, lambda: _verify_toolchain(profile), recheck=True)
+
+
+def _verify_toolchain(profile):
     lock = read_json(ROOT / 'layout/toolchain.json')
     require(profile in lock['profiles'], 'Unknown compiler profile')
     config = lock['profiles'][profile]
@@ -51,9 +58,80 @@ def verify_toolchain(profile):
             path = ROOT / path
         require(path.is_file() and identity(path.read_bytes()) == {'size': item['size'], 'sha256': item['sha256']},
                 f'Toolchain hash mismatch: {path}')
+    # The DOS-visible pass directory and TEMP enter every pass's own
+    # environment (MSC_CMD_FLAGS -ef/-il) and its near-heap budget; they are
+    # part of the pinned profile (tools/pass_environment.py).
+    from pass_environment import check_player_directory
+    require(lock['runner'].get('argv_options') == ['-e', '-v5.00'], 'Pinned runner options differ')
+    check_player_directory(config, (ROOT / config['directory']).resolve())
     return config, lock['runner']
 
-def compile_source(source, profile, flags=None, *, research_local_symbols=False):
+# Readable inline assembly is a reviewed extension of the register-gated MSC
+# 6.00A profile only (USER DECISION 2026-09-27, CC-MSC600A-*): each statement
+# is an 8086/80286 integer mnemonic with symbolic or numeric operands, or a
+# label.  Raw byte emission (`_emit`, `__emit`, data directives, bare
+# numbers) is refused under every profile.
+INLINE_ASM_POLICY = 'readable-mnemonics-v1'
+_ASM_MNEMONICS = frozenset('''
+aaa aad aam aas adc add and call cbw clc cld cli cmc cmp cmpsb cmpsw cwd daa das dec div
+enter hlt idiv imul in inc insb insw int into iret ja jae jb jbe jc jcxz je jg jge jl jle jmp
+jna jnae jnb jnbe jnc jne jng jnge jnl jnle jno jnp jns jnz jo jp jpe jpo js jz lahf lds lea
+leave les lodsb lodsw loop loope loopne loopnz loopz mov movsb movsw mul neg nop not or out
+outsb outsw pop popa popf push pusha pushf rcl rcr ret retf rol ror sahf sal sar sbb scasb
+scasw shl shr stc std sti stosb stosw sub test wait xchg xlat xor rep repe repne repnz repz
+'''.split())
+
+
+def _asm_statements(text):
+    """(line number, statement) for every `_asm {...}` / `_asm stmt` use."""
+    out = []
+    for match in re.finditer(r'\b__?asm\b', text):
+        line = text.count('\n', 0, match.start()) + 1
+        rest = text[match.end():]
+        stripped = rest.lstrip(' \t')
+        if stripped.startswith('{'):
+            close = stripped.find('}')
+            require(close > 0, 'Unterminated _asm block')
+            body = stripped[1:close]
+            for offset, raw in enumerate(body.split('\n')):
+                out.append((line + offset, raw))
+        else:
+            out.append((line, stripped.split('\n', 1)[0]))
+    return out
+
+
+def check_inline_asm(text, config):
+    """Profile-gated inline assembly check; returns the reviewed statement count."""
+    require(not re.search(r'\b(?:__emit|_emit)\b', text), 'Raw byte emission forbidden for matching C')
+    uses = re.search(r'\b(?:_asm|__asm|asm)\b', text)
+    if uses is None:
+        return None
+    policy = config.get('source_extensions', {}).get('inline_asm')
+    require(policy == INLINE_ASM_POLICY and not re.search(r'(?<![_\w])asm\b', text),
+            'Inline assembly/raw emission forbidden for matching C')
+    count = 0
+    for line, raw in _asm_statements(text):
+        statement = re.sub(r';.*$', '', raw).strip()
+        if not statement:
+            continue
+        if re.fullmatch(r'[A-Za-z_]\w*:', statement):
+            continue
+        word = statement.split()[0].lower()
+        require(word in _ASM_MNEMONICS,
+                f'Inline assembly statement is not a reviewed mnemonic (line {line}): {statement}')
+        require(not re.search(r'\b(?:db|dw|dd|dq|dt|_emit|__emit)\b', statement, re.I),
+                f'Inline assembly data emission forbidden (line {line})')
+        count += 1
+    return {'policy': INLINE_ASM_POLICY, 'statements': count}
+
+
+def object_policy(config):
+    """Reviewed object-reader options of a profile (MSC 6 /Zi CodeView segments)."""
+    policy = config.get('object_debug_segments')
+    return {'debug_segments': policy} if policy else {}
+
+
+def compile_source(source, profile, flags=None, *, research_local_symbols=False, sparse_zero=None):
     config, runner = verify_toolchain(profile)
     root = ROOT / 'build/probes'
     root.mkdir(parents=True, exist_ok=True)
@@ -68,9 +146,11 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False)
     except ValueError as error:
         write_json(work/'receipt.json',source_receipt)
         raise CompileFailure(str(error),source_receipt,'UNSUPPORTED_SOURCE') from error
-    if re.search(r'\b(?:_asm|__asm|asm|__emit)\b',text,re.M):
+    try:
+        source_receipt['inline_asm'] = check_inline_asm(text, config)
+    except ValueError as error:
         write_json(work/'receipt.json',source_receipt)
-        raise CompileFailure('Inline assembly/raw emission forbidden for matching C',source_receipt,'UNSUPPORTED_SOURCE')
+        raise CompileFailure(str(error),source_receipt,'UNSUPPORTED_SOURCE') from error
     staged = text.replace('\n', '\r\n').encode('ascii')
     (work / 'UNIT.C').write_bytes(staged)
     tc = (ROOT / config['directory']).resolve()
@@ -89,12 +169,17 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False)
                'preprocessor_closure': closure,
                'work_directory': str(work), 'compiler_stdout_sha256': sha(result.stdout),
                'research_local_symbols': research_local_symbols}
+    if source_receipt.get('inline_asm'):
+        receipt['inline_asm'] = source_receipt['inline_asm']
+    if sparse_zero is not None:
+        receipt['sparse_zero'] = sparse_zero
     write_json(work / 'receipt.json', receipt)
     verify_toolchain(profile)
     if result.returncode != 0 or data is None:
         raise CompileFailure(f'Compiler failed; see {work / "compiler.log"}', receipt, 'COMPILER_ERROR')
     try:
-        obj = read_object(data, research_local_symbols=research_local_symbols)
+        obj = read_object(data, research_local_symbols=research_local_symbols,
+                          sparse_zero=sparse_zero, **object_policy(config))
     except ValueError as error:
         raise CompileFailure(str(error), receipt, 'UNSUPPORTED_OBJECT') from error
     from common import json_bytes
@@ -102,5 +187,7 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False)
         'declarations':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,
         'externals':obj.externals,'fixups':obj.linker_fixups,
         'local_symbol_records':obj.local_symbol_records,'profile':profile,'flags':argv[5:-1]}))
+    if obj.debug_segments:
+        receipt['debug_segments'] = obj.debug_segments
     write_json(work/'receipt.json',receipt)
     return obj, receipt

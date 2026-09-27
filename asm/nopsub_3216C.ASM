@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment word public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -8,9 +8,9 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 extrn _byte_4032A:byte
-_TEXT segment word public 'CODE'
+S012_TEXT segment word public 'CODE'
 public _nopsub_3216C
 _nopsub_3216C proc far
      r = byte ptr 0
@@ -41,5 +41,5 @@ _nopsub_3216C proc far
     pop     si
     retf
 _nopsub_3216C endp
-_TEXT ends
+S012_TEXT ends
 end

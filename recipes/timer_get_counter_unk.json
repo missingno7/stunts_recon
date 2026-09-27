@@ -6,21 +6,21 @@
   "binding": {
     "declarations": {
       "externals": [
-        "timer_get_counter"
+        "_timer_get_counter"
       ],
       "groups": [],
       "publics": [
         {
           "name": "_timer_get_counter_unk",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
         {
-          "acbp": 72,
-          "alignment": "word",
-          "alignment_code": 2,
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
           "big": false,
           "class": "CODE",
           "combine": "public",
@@ -28,7 +28,7 @@
           "frame": null,
           "index": 1,
           "length": 45,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -49,15 +49,15 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 7,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "timer_get_counter",
+      "target": "_timer_get_counter",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -66,15 +66,15 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 24,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "timer_get_counter",
+      "target": "_timer_get_counter",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -98,21 +98,21 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "timer_get_counter"
+      "_timer_get_counter"
     ],
     "groups": [],
     "publics": [
       {
         "name": "_timer_get_counter_unk",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
       {
-        "acbp": 72,
-        "alignment": "word",
-        "alignment_code": 2,
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
         "big": false,
         "class": "CODE",
         "combine": "public",
@@ -120,14 +120,14 @@
         "frame": null,
         "index": 1,
         "length": 45,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_timer_get_counter_unk",

@@ -1,6 +1,6 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_3215A
 _nopsub_3215A proc far
     push di
@@ -14,5 +14,5 @@ _nopsub_3215A proc far
     pop di
     retf
 _nopsub_3215A endp
-_TEXT ends
+S012_TEXT ends
 end

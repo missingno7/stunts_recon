@@ -1,6 +1,7 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+extrn _sprite1:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_33AC0
 public _nopsub_33AE4
 public _shape2d_render_bmp_as_mask
@@ -89,11 +90,11 @@ loc_33B1D:
     mov     [bp+var_6], ax
     mov     bx, [bp+var_4]
     shl     bx, 1
-    add     bx, word ptr cs:[5F2Ah]
+    add     bx, word ptr cs:[_sprite1+10]
     mov     [bp+var_10], bx
     mov     di, cs:[bx]
     add     di, [bp+var_2]
-    mov     ax, word ptr word ptr cs:[5F22h]
+    mov     ax, word ptr word ptr cs:[_sprite1+2]
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_6]
@@ -144,5 +145,5 @@ loc_33B94:
     loop    loc_33B7C
     jmp     short loc_33B48
 _shape2d_render_bmp_as_mask endp
-_TEXT ends
+S012_TEXT ends
 end

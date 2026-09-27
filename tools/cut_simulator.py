@@ -84,6 +84,19 @@ def observed_code_records(data: bytes, segment_index: int) -> list[dict]:
     Diagnostic reader for compiled 16-bit OMF: THREAD subrecords are skipped
     and only FIXUP subrecords are counted against the preceding LEDATA.
     """
+    return [row for row in ordered_data_records(data)
+            if row['kind'] == 0xA0 and row['segment_index'] == segment_index]
+
+
+def ordered_data_records(data: bytes) -> list[dict]:
+    """Every LEDATA/LIDATA record in emitted order with its FIXUP subrecord count.
+
+    The count is the number of FIXUP (not THREAD) subrecords in the FIXUPP
+    records that follow the data record before the next data record, which is
+    the OMF rule that ties a FIXUPP to its preceding LEDATA. The prefix proof
+    uses this traversal of the candidate's own object; it never supplies
+    record boundaries from the oracle.
+    """
     records, at, last = [], 0, None
     while at < len(data):
         if at + 3 > len(data):
@@ -97,10 +110,19 @@ def observed_code_records(data: bytes, segment_index: int) -> list[dict]:
             index, pos = _omf_index(body, 0)
             if pos + 2 > len(body):
                 raise ValueError('Truncated LEDATA offset')
-            last = {'segment_index': index, 'offset': body[pos] | (body[pos + 1] << 8),
+            last = {'kind': 0xA0, 'segment_index': index,
+                    'offset': body[pos] | (body[pos + 1] << 8),
                     'size': len(body) - pos - 2, 'fixups': 0}
             records.append(last)
-        elif kind in (0xA2, 0xA1, 0xA3):
+        elif kind == 0xA2:
+            index, pos = _omf_index(body, 0)
+            if pos + 2 > len(body):
+                raise ValueError('Truncated LIDATA offset')
+            records.append({'kind': 0xA2, 'segment_index': index,
+                            'offset': body[pos] | (body[pos + 1] << 8),
+                            'size': None, 'fixups': 0})
+            last = None
+        elif kind in (0xA1, 0xA3):
             last = None
         elif kind == 0x9C:
             pos = 0
@@ -130,7 +152,7 @@ def observed_code_records(data: bytes, segment_index: int) -> list[dict]:
         at += 3 + length
         if kind in (0x8A, 0x8B):
             break
-    return [row for row in records if row['segment_index'] == segment_index]
+    return records
 
 
 def _checked_boundaries(values, length, name, label):

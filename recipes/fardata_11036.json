@@ -1,0 +1,162 @@
+{
+  "data_only": true,
+  "end": 176624,
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "far_data": true,
+  "far_placement": {
+    "anchors": [
+      {
+        "hex": "c706549d1c2b",
+        "kind": "code-immediate",
+        "relocation": {
+          "load_offset": 37892,
+          "offset": 37892,
+          "segment": 0
+        },
+        "site": 37888
+      }
+    ],
+    "basis": "relocated-segment-word-v1",
+    "offset_anchors": [
+      {
+        "hex": "c706529d0000",
+        "operand_offset": 4,
+        "public": "_plan_memres",
+        "site": 37882
+      }
+    ]
+  },
+  "id": "fardata_11036",
+  "kind": "c",
+  "object_declarations": {
+    "externals": [
+      "__acrtused"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          4,
+          2
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_plan_memres",
+        "offset": 0,
+        "segment": "UNIT5_DATA"
+      },
+      {
+        "name": "_unk_3B1E2",
+        "offset": 34,
+        "segment": "UNIT5_DATA"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "UNIT_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 104,
+        "alignment": "paragraph",
+        "alignment_code": 3,
+        "big": false,
+        "class": "FAR_DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 5,
+        "length": 48,
+        "name": "UNIT5_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "UNIT5_DATA",
+  "preprocessor_closure": [],
+  "profile": "msc510-medium",
+  "public_object_sizes": {
+    "_plan_memres": 34,
+    "_unk_3B1E2": 14
+  },
+  "required_pointer_sites": [],
+  "source": "src/fardata_11036.c",
+  "start": 176576,
+  "subsumed_data_owners": [],
+  "target": {
+    "sha256": "15ebad889387c48c0197ebb08115db8f7ff1725f7a754f31cc6ce463acd4670f",
+    "size": 48
+  }
+}

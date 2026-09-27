@@ -44,8 +44,56 @@ class Oracle:
 
 
 def owner(owner_id):
-    rows = [o for o in read_json(ROOT/'layout/manifest.json')['owners'] if o['id'] == owner_id]
-    return rows[0]
+    manifest = read_json(ROOT/'layout/manifest.json')
+    rows = [o for o in manifest['owners'] if o['id'] == owner_id]
+    if rows:
+        return rows[0]
+    # Once a whole module has reclassified the C owner, rebuild its row from
+    # the reclassification record and its retained recipe.
+    entries = [r for o in manifest['owners'] for r in o.get('reclassified_owners', [])
+               if r['id'] == owner_id]
+    if not entries:
+        # Subsumed by a later exact whole object: rebuild the row from the
+        # retained recipe named by the subsuming owner's recipe.
+        subsumer, = [o for o in manifest['owners'] if 'recipe' in o and
+                     owner_id in read_json(ROOT/o['recipe']).get('subsumed_owners', [])]
+        recipe = read_json(ROOT/'recipes'/(owner_id + '.json'))
+        return {'id': owner_id, 'name': owner_id, 'kind': 'MATCHING_C', 'start': recipe['start'],
+                'end': recipe['end'], 'classification': 'GAME_C',
+                'recipe': 'recipes/' + owner_id + '.json', 'subsumed_by': subsumer['id']}
+    entry, = entries
+    recipe = read_json(ROOT/entry['recipe'])
+    return {'id': owner_id, 'name': entry['name'], 'kind': entry['from'], 'start': recipe['start'],
+            'end': recipe['end'], 'classification': 'GAME_C', 'recipe': entry['recipe']}
+
+
+def pre_promotion(manifest, rows):
+    """Reconstruct an earlier ownership window: each row replaces whatever now
+    covers it, with explicit raw ownership around it (test fixture only)."""
+    result = copy.deepcopy(manifest)
+    for row in sorted(rows, key=lambda r: r['start']):
+        owners = result['owners']
+        overlaps = [o for o in owners if o['start'] < row['end'] and row['start'] < o['end']]
+        first = owners.index(overlaps[0])
+        pieces = []
+        if overlaps[0]['start'] < row['start']:
+            pieces.append({'id': f"raw_{overlaps[0]['start']:05x}_{row['start']:05x}",
+                           'kind': 'UNRESOLVED_RAW', 'classification': 'UNRESOLVED_MIXED',
+                           'start': overlaps[0]['start'], 'end': row['start']})
+        pieces.append(row)
+        if row['end'] < overlaps[-1]['end']:
+            pieces.append({'id': f"raw_{row['end']:05x}_{overlaps[-1]['end']:05x}",
+                           'kind': 'UNRESOLVED_RAW', 'classification': 'UNRESOLVED_MIXED',
+                           'start': row['end'], 'end': overlaps[-1]['end']})
+        owners[first:first + len(overlaps)] = pieces
+    return result
+
+
+def recipe_owner(owner_id, name, kind):
+    recipe = read_json(ROOT/'recipes'/(name + '.json'))
+    return {'id': owner_id, 'name': name, 'kind': kind, 'start': recipe['start'], 'end': recipe['end'],
+            'classification': 'GAME_ASM' if kind == 'MATCHING_ASM' else 'GAME_C',
+            'recipe': 'recipes/' + name + '.json'}
 
 
 class PerObjectFlags(unittest.TestCase):
@@ -248,7 +296,7 @@ class CrossKindSubsumption(unittest.TestCase):
     def test_ordinary_group_cannot_subsume_c(self):
         from promote import replace_group
         oracle = verify(write=False)
-        manifest = read_json(ROOT/'layout/manifest.json')
+        manifest = pre_promotion(read_json(ROOT/'layout/manifest.json'), [owner('load_207b4')])
         recipe = {'id':'x', 'kind':'asm', 'start':133044, 'end':133074,
                   'subsumed_owners':['load_207b4'],
                   'members':[{'name':'sub_307B4','start':133044,'end':133074}]}
@@ -491,8 +539,8 @@ class DataRegistry(unittest.TestCase):
             self.assertEqual(resolved[name]['allowed_addends'], [0, 1, 2, 3])
 
     def test_unwidened_alias_keeps_address_only(self):
-        self.assertEqual(resolve_symbols(['_trackpos'], self.image, self.relocations)
-                         ['_trackpos']['allowed_addends'], [0])
+        self.assertEqual(resolve_symbols(['_word_9260'], self.image, self.relocations)
+                         ['_word_9260']['allowed_addends'], [0])
 
     def test_reviewed_widths(self):
         resolved = resolve_symbols(['_timerintr', '_terrainrows', '_g_kevinrandom_seed',
@@ -558,6 +606,24 @@ class GapEntries(unittest.TestCase):
 
 
 class ModuleReclassification(unittest.TestCase):
+    # The historical ownership window re-probes retired pre-integ29 recipes
+    # whose code segment is still `_TEXT`; the link-faithful segment rule
+    # (tests/test_integ29.py) is orthogonal to the cross-kind link proof.
+    def setUp(self):
+        from unittest import mock
+        patcher = mock.patch('link_frames.check_asm_object', lambda obj, recipe: None)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    @staticmethod
+    def manifest():
+        # The ownership window before asm012_133660 was published.
+        return pre_promotion(read_json(ROOT/'layout/manifest.json'), [
+            recipe_owner('load_20a21', 'kb_read_char', 'MATCHING_ASM'),
+            recipe_owner('load_20a35', 'kb_checking', 'MATCHING_ASM'),
+            owner('load_20a55'),
+            recipe_owner('load_20a68', 'kb_check', 'MATCHING_ASM')])
+
     def recipe(self, links):
         image, _ = Oracle.load()
         rows = {f['name']: f for f in current_inventory(image)['functions']}
@@ -578,7 +644,7 @@ class ModuleReclassification(unittest.TestCase):
     def test_module_reclassifies_linked_c_owner(self):
         from promote import replace_group
         oracle = verify(write=False)
-        manifest = read_json(ROOT/'layout/manifest.json')
+        manifest = self.manifest()
         staged = replace_group(manifest, self.recipe([{'owner':'load_20a55','kind':'odd-start'}]), oracle)
         row, = [o for o in staged['owners'] if o['id'] == 'asm012_133660']
         self.assertEqual((row['kind'], row['module_form']), ('MATCHING_ASM', 'asm-module'))
@@ -589,7 +655,7 @@ class ModuleReclassification(unittest.TestCase):
     def test_module_without_link_cannot_reclassify(self):
         from promote import replace_group
         oracle = verify(write=False)
-        manifest = read_json(ROOT/'layout/manifest.json')
+        manifest = self.manifest()
         with self.assertRaisesRegex(ValueError, 'same-module link'):
             replace_group(manifest, self.recipe([]), oracle)
 

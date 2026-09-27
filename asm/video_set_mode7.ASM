@@ -1,13 +1,21 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
-extrn set_bios_mode3:far
+_DATA segment word public 'DATA'
+_DATA ends
+_BSS segment word public 'BSS'
+_BSS ends
+CONST segment word public 'CONST'
+CONST ends
+DGROUP group CONST,_BSS,_DATA
+extrn _byte_3F85A:byte
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT, ds:DGROUP
+extrn _set_bios_mode3:far
 public _video_set_mode7
 _video_set_mode7 proc far
     push di
-    cmp byte ptr ds:[40EAh], 0
+    cmp byte ptr ds:[_byte_3F85A], 0
     jne loc_2012F
-    call far ptr set_bios_mode3
+    call far ptr _set_bios_mode3
     pop di
     retf
 loc_2012F:
@@ -51,5 +59,5 @@ loc_20156:
     pop di
     retf
 _video_set_mode7 endp
-_TEXT ends
+S012_TEXT ends
 end

@@ -16,6 +16,13 @@ def _reference_label_offsets(lines):
 
     The reference declares one db/dw/dd/dq item per line inside `dseg segment`;
     a DUP or other data-bearing directive makes the placement fail closed."""
+    import memo
+    lines = list(lines)
+    return memo.cached('reference_label_offsets', memo.digest('\n'.join(lines).encode('latin1')),
+                       lambda: _label_offsets(lines))
+
+
+def _label_offsets(lines):
     import re
     sizes = {'db': 1, 'dw': 2, 'dd': 4, 'dq': 8}
     offsets, offset, inside = {}, 0, False
@@ -251,6 +258,323 @@ def _check_ascii_table_extent(name, symbol, layout, image):
             'ASCII table bytes/padding/endpoint differ')
 
 
+_NAME_BUFFER_WITNESS = {
+    # Caller: four consecutive byte stores to DS:AC74..AC77, then the address
+    # of the first byte is pushed as one argument of a relocated far CALL.
+    'caller': ('load_tracks_menu_shapes', [
+        (107633, '268a07'), (107636, 'a274ac'), (107639, '268a4701'), (107643, 'a275ac'),
+        (107646, '268a4702'), (107650, 'a276ac'), (107653, '268a4703'), (107657, 'a277ac'),
+        (107660, 'b874ac'), (107663, '50'), (107664, 'ff76d8'), (107667, 'ff76d6'),
+        (107670, '9a7d25a21e')]),
+    # Callee body shared by the locate_* entries: ES = DGROUP, DI = the name
+    # argument [bp+0Ah], and both loops read at most CX = 4 bytes of it.
+    'callee': ('locate_sound_fatal', [
+        (135097, 'b8772b'), (135100, '8ec0'), (135102, '8b7e0a'), (135105, 'b90400'),
+        (135108, 'bb0000'), (135111, '26803900'), (135117, '43'), (135118, 'e2f7'),
+        (135134, '8b7e0a'), (135137, 'b90400'), (135140, 'a6'), (135143, 'e2fb')]),
+}
+
+
+def _check_name_buffer_extent(name, symbol, layout, image, relocations):
+    """The 4-byte resource-name buffer at DS:AC74 (integ26).
+
+    The pinned reference splits it into resID_byte1..4 labels; original code
+    fills all four bytes and passes the address of the first as one name
+    argument to the locate_* body, which reads at most four bytes of it in
+    DGROUP. That makes [AC74, AC78) one object (a lower bound: other code
+    indexes it as a longer text buffer, whose end is not independently
+    known). Every witness instruction is rechecked in its instruction-verified,
+    hash-checked procedure, and the far CALL against its MZ relocation and
+    verified entry."""
+    from function_evidence import current_inventory
+    proof = symbol.get('extent_proof', {})
+    frame = layout['frame_load_address']
+    require(name == '_resID_byte1' and symbol['load_address'] == frame + 0xac74 and
+            symbol['storage'] == 'bss' and symbol['width'] == 4 and
+            proof == {'kind': 'name-buffer-consumer-v1', 'caller': 'load_tracks_menu_shapes',
+                      'callee': 'locate_sound_fatal', 'entry': 'locate_shape_fatal'},
+            'Unreviewed name-buffer extent')
+    inventory = current_inventory(image)['functions']
+    def verified(proc):
+        rows = [f for f in inventory if f.get('name') == proc and
+                f.get('status') == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                sha(image[f['start']:f['end']]) == f['sha256']]
+        require(len(rows) == 1, 'Name-buffer witness procedure is not verified: ' + proc)
+        return rows[0]
+    for role in ('caller', 'callee'):
+        proc, anchors = _NAME_BUFFER_WITNESS[role]
+        f = verified(proc)
+        at = anchors[0][0]
+        for site, raw in anchors:
+            data = bytes.fromhex(raw)
+            require(role == 'callee' or site == at, 'Name-buffer caller stores are not contiguous')
+            require(f['start'] <= site and site + len(data) <= f['end'] and
+                    image[site:site+len(data)] == data,
+                    'Name-buffer witness instruction differs')
+            at = site + len(data)
+    require(frame // 16 == 0x2b77, 'Name-buffer consumer ES is not the DGROUP paragraph')
+    entry = verified('locate_shape_fatal')
+    call = 107670
+    require(any(r['load_offset'] == call + 3 for r in relocations) and
+            int.from_bytes(image[call+3:call+5], 'little') * 16 +
+            int.from_bytes(image[call+1:call+3], 'little') == entry['start'] and
+            image[entry['start'] + 9:entry['start'] + 11] == bytes.fromhex('eb0a') and
+            entry['start'] + 11 + 0x0a == 135090 and
+            not any(r['load_offset'] in (107637, 107644, 107651, 107658, 107661)
+                    for r in relocations),
+            'Name-buffer far CALL does not reach the verified consumer body')
+    base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
+    for other_name, other in layout['symbols'].items():
+        if other_name == name or other['storage'] == 'code_island':
+            continue
+        width = other.get('width')
+        if width is None:
+            continue
+        other_base = other['load_address']
+        require(not (base < other_base + width and other_base < end) or
+                (base <= other_base and other_base + width <= end),
+                'Name-buffer extent partially overlaps another reviewed object')
+
+
+_STRIDE_TABLES = {
+    # audio_unk walks DI from 81FCh+28h in 76-byte steps while SI counts 0..23
+    # and reads [DI] (field 28h of every element) in the loop body.
+    '_audiochunks_unk': {
+        'label': 'audiochunks_unk', 'offset': 0x81fc, 'stride': 76, 'count': 24,
+        'end_label': 'word_4408C', 'interior': ('byte_43B34', 'audiochunks_unk2'),
+        'proof': {'kind': 'counted-stride-loop-v1', 'witness': 'audio_unk', 'stride': 76,
+                  'count': 24, 'field_offset': 0x28, 'end_label': 'word_4408C'},
+        'witness': ('audio_unk', 160304,
+                    '2bf6' 'bf2482' '803ec34e01' '7405' '83fe10' '7d12' '8a05' '88844e71'
+                    '2bc0' '50' '56' '9a1c066328' '83c404' '83c74c' '46' '83fe18' '7cd9'),
+        # sub si,si; mov di,base+28h; head: ... mov al,[di] ...; step: add di,76;
+        # inc si; cmp si,24; jl head (rel8 -39 from the end of the JL).
+        'shape': lambda c: (c[0:2] == b'\x2b\xf6' and int.from_bytes(c[3:5], 'little') == 0x81fc + 0x28 and
+                            c[15:17] == b'\x7d\x12' and 15 + 2 + 0x12 == 35 and
+                            c[17:19] == b'\x8a\x05' and c[35:38] == b'\x83\xc7\x4c' and
+                            c[38:39] == b'\x46' and c[39:42] == b'\x83\xfe\x18' and
+                            c[42:44] == b'\x7c\xd9' and 44 - 0x27 == 5),
+        'relocation_free': 27},
+    # update_frame copies all 15 eight-byte rectangles: SI counts 0..14, AX/BX =
+    # SI*8, LEA AX,[BX+9294h] is the source of four MOVSW (8 bytes) each pass.
+    '_rect_unk': {
+        'label': 'rect_unk', 'offset': 0x9294, 'stride': 8, 'count': 15,
+        'end_label': 'voicefileptr',
+        'interior': ('rect_unk2', 'rect_unk6', 'rect_unk12', 'rect_unk15', 'rect_skybox',
+                     'rect_unk11', 'rect_unk9'),
+        'proof': {'kind': 'counted-stride-loop-v1', 'witness': 'update_frame', 'stride': 8,
+                  'count': 15, 'field_offset': 0, 'end_label': 'voicefileptr'},
+        'witness': ('update_frame', 49838,
+                    '2bf6' '8bc6' 'b103' 'd3e0' '8986acfe' '8bd8' '8d879492' '8b9eacfe'
+                    '031e9a00' '56' '57' '8bfb' '8bf0' '1e' '07' 'a5a5a5a5' '5f' '5e' '46'
+                    '83fe0f' '7cd4'),
+        # sub si,si; head: mov ax,si; shl ax,3; ...; lea ax,[bx+9294h]; ...;
+        # mov si,ax; 4 x movsw; ...; inc si; cmp si,15; jl head.
+        'shape': lambda c: (c[0:2] == b'\x2b\xf6' and c[2:4] == b'\x8b\xc6' and
+                            c[4:8] == b'\xb1\x03\xd3\xe0' and c[12:14] == b'\x8b\xd8' and
+                            c[14:16] == b'\x8d\x87' and int.from_bytes(c[16:18], 'little') == 0x9294 and
+                            c[30:32] == b'\x8b\xf0' and c[34:38] == b'\xa5' * 4 and
+                            c[40:41] == b'\x46' and c[41:44] == b'\x83\xfe\x0f' and
+                            c[44:46] == b'\x7c\xd4' and 46 - 0x2c == 2),
+        'relocation_free': 46},
+}
+
+
+def _check_counted_stride_extent(name, symbol, layout, image, relocations):
+    """A reviewed table of `count` equal `stride`-byte elements (integ26).
+
+    One instruction-verified loop, rechecked byte for byte, counts an index
+    over every element and accesses each element (see _STRIDE_TABLES), so one
+    object spans all of them. The element base is the placed pinned label and
+    the whole table ends exactly at the next placed pinned label outside it;
+    the pinned labels in between are interior element names, and reviewed
+    objects inside are wholly contained names. A partial overlap is refused."""
+    from function_evidence import current_inventory
+    spec = _STRIDE_TABLES.get(name)
+    frame = layout['frame_load_address']
+    require(spec is not None and symbol['load_address'] == frame + spec['offset'] and
+            symbol['storage'] == 'bss' and symbol['width'] == spec['stride'] * spec['count'] and
+            symbol.get('reference_label', spec['label']) == spec['label'] and
+            symbol.get('extent_proof') == spec['proof'],
+            'Unreviewed counted-stride extent')
+    proc, at, raw = spec['witness']
+    found = [f for f in current_inventory(image)['functions'] if f.get('name') == proc and
+             f.get('status') == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+             sha(image[f['start']:f['end']]) == f['sha256']]
+    require(len(found) == 1, 'Counted-stride witness procedure is not verified')
+    f = found[0]
+    code = bytes.fromhex(raw)
+    require(f['start'] <= at and at + len(code) <= f['end'] and image[at:at+len(code)] == code,
+            'Counted-stride witness instructions differ')
+    require(spec['shape'](code) and
+            not any(at <= r['load_offset'] < at + spec['relocation_free'] for r in relocations),
+            'Counted-stride loop shape differs')
+    from common import identity
+    path = 'src/restunts/asmorig/dseg.asm'
+    source = ROOT/'build/references/restunts'/path
+    require(identity(source.read_bytes()) ==
+            read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path],
+            'Counted-stride reference source differs')
+    offsets = _reference_label_offsets(source.read_text(encoding='latin1').splitlines())
+    end_offset = spec['offset'] + spec['stride'] * spec['count']
+    require(offsets.get(spec['label'], (None,))[0] == spec['offset'] and
+            offsets.get(spec['end_label'], (None,))[0] == end_offset and
+            all(not spec['offset'] < off < end_offset or label in spec['interior']
+                for label, (off, _) in offsets.items()),
+            'Counted-stride pinned endpoints differ')
+    base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
+    for other_name, other in layout['symbols'].items():
+        if other_name == name or other['storage'] == 'code_island' or other.get('width') is None:
+            continue
+        o_base, o_end = other['load_address'], other['load_address'] + other['width']
+        require(not (base < o_end and o_base < end) or (base <= o_base and o_end <= end),
+                'Counted-stride table partially overlaps another reviewed object')
+
+
+_PAIR_EXTENTS = {
+    # skybox_op indexes a word array at 928Ch by [bp+6]*2 and stores/compares
+    # word_463D6 there; sub_19F14 performs the same store/compare at the
+    # constant 928Eh: element 1 of the same array (two elements, 4 bytes).
+    '_word_449FC': {
+        'label': 'word_449FC', 'offset': 0x928c, 'interior': ('word_449FE',), 'end_label': 'opp_res',
+        'kind': 'indexed-constant-twin-v1',
+        'witnesses': (('skybox_op', 51814, '8b5e06' 'd1e3' 'a166ac' '89878c92'
+                                           '8b5e06' 'd1e3' '8b4610' '39878c92'),
+                      ('sub_19F14', 40787, 'a166ac' 'a38e92' 'a166ac' '39068e92'))},
+    # load_skybox stores a far CALL's DX:AX result at A9F8h/A9FAh; unload_skybox
+    # pushes A9FAh then A9F8h as one far pointer argument (4 bytes).
+    '_skybox_res_ofs': {
+        'label': 'skybox_res_ofs', 'offset': 0xa9f8, 'interior': ('skybox_res_seg',),
+        'end_label': 'mouse_xpos', 'kind': 'far-pointer-word-pair-v1',
+        'witnesses': (('load_skybox', 55270, '9a3c4ea21e' '83c402' 'a3f8a9' '8916faa9'),
+                      ('unload_skybox', 55483, 'ff36faa9' 'ff36f8a9'))},
+    # setup_car_shapes stores DX:AX at 9D2Ch/9D2Eh; run_game pushes 9D2Eh then
+    # 9D2Ch as one far pointer argument (dastbmp_y2/dastseg labels, 4 bytes).
+    '_dastshapeptr': {
+        'label': 'dastbmp_y2', 'offset': 0x9d2c, 'interior': ('dastseg',),
+        'end_label': 'dasmshapeptr', 'kind': 'far-pointer-word-pair-v1',
+        'witnesses': (('setup_car_shapes', 77634, 'a32c9d' '89162e9d'),
+                      ('run_game', 73931, 'ff362e9d' 'ff362c9d'))},
+}
+
+
+_LIST_TABLES = {
+    # update_frame selects one list by (count, start) = (1,932h) (2,936h)
+    # (2,93Eh) (4,946h); its loop reads two words per element through the one
+    # pointer [bp-0DAh], advancing it by 4. The four windows tile
+    # [932h,956h) exactly, up to the placed label byte_3C0C6: one 9 x 4 table.
+    '_unk_3C0A2': {
+        'label': 'unk_3C0A2', 'offset': 0x932, 'element': 4, 'end_label': 'byte_3C0C6',
+        'interior': ('unk_3C0A6', 'unk_3C0AE', 'unk_3C0B6'),
+        'witness': ('update_frame', 45564,
+                    'bf0100c78626ff3209c78622ff0000eb2990bf0200c78626ff3609ebec90'
+                    'bf0200c78626ff3e09ebe090bf0400c78626ff4609ebd490ff8622ff39be22ff'
+                    '7d728b9e26ff838626ff028b070346bca3ca728b46bea3cc728b9e26ff'
+                    '838626ff028b0703'),
+        # (offset of MOV DI,count; offset of MOV [bp-0DAh],start) per list.
+        'lists': ((0, 3), (18, 21), (30, 33), (42, 45)),
+        # loop: cmp [bp-0DEh],di / jge; two reads of [bx] after
+        # mov bx,[bp-0DAh] / add word [bp-0DAh],2.
+        'loop': ((58, '39be22ff7d72'), (64, '8b9e26ff838626ff028b07'),
+                 (87, '8b9e26ff838626ff028b07'))},
+}
+
+
+def _check_list_table_extent(name, symbol, layout, image, relocations):
+    """A reviewed table read as counted element lists through one pointer (integ26)."""
+    from function_evidence import current_inventory
+    from common import identity
+    spec = _LIST_TABLES.get(name)
+    frame = layout['frame_load_address']
+    proc, at, raw = spec['witness'] if spec else (None, 0, '')
+    code = bytes.fromhex(raw)
+    require(spec is not None and symbol['load_address'] == frame + spec['offset'] and
+            symbol.get('extent_proof') == {'kind': 'pointer-list-table-v1',
+                                           'end_label': spec['end_label']},
+            'Unreviewed list-table extent')
+    rows = [f for f in current_inventory(image)['functions'] if f.get('name') == proc and
+            f.get('status') == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+            f['start'] <= at and at + len(code) <= f['end'] and
+            sha(image[f['start']:f['end']]) == f['sha256']]
+    require(len(rows) == 1 and image[at:at+len(code)] == code and
+            not any(at <= r['load_offset'] < at + len(code) for r in relocations) and
+            all(code[i:i+len(bytes.fromhex(h))] == bytes.fromhex(h) for i, h in spec['loop']),
+            'List-table witness differs')
+    windows = []
+    for count_at, start_at in spec['lists']:
+        require(code[count_at] == 0xbf and code[start_at:start_at+4] == b'\xc7\x86\x26\xff',
+                'List-table selector differs')
+        count = int.from_bytes(code[count_at+1:count_at+3], 'little')
+        first = int.from_bytes(code[start_at+4:start_at+6], 'little')
+        windows.append((first, first + count * spec['element']))
+    windows.sort()
+    require(windows[0][0] == spec['offset'] and
+            all(a[1] == b[0] for a, b in zip(windows, windows[1:])) and
+            windows[-1][1] == spec['offset'] + symbol['width'],
+            'List-table windows do not tile the reviewed extent')
+    path = 'src/restunts/asmorig/dseg.asm'
+    source = ROOT/'build/references/restunts'/path
+    require(identity(source.read_bytes()) ==
+            read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path],
+            'List-table reference source differs')
+    offsets = _reference_label_offsets(source.read_text(encoding='latin1').splitlines())
+    end_offset = spec['offset'] + symbol['width']
+    require(offsets.get(spec['label'], (None,))[0] == spec['offset'] and
+            offsets.get(spec['end_label'], (None,))[0] == end_offset and
+            all(not spec['offset'] < off < end_offset or label in spec['interior']
+                for label, (off, _) in offsets.items()),
+            'List-table pinned labels differ')
+    base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
+    for other_name, other in layout['symbols'].items():
+        if other_name == name or other['storage'] == 'code_island' or other.get('width') is None:
+            continue
+        o_base, o_end = other['load_address'], other['load_address'] + other['width']
+        require(not (base < o_end and o_base < end) or (base <= o_base and o_end <= end),
+                'List table partially overlaps another reviewed object')
+
+
+def _check_pair_extent(name, symbol, layout, image, relocations):
+    """A reviewed 4-byte object made of two pinned word labels (integ26)."""
+    from function_evidence import current_inventory
+    from common import identity
+    spec = _PAIR_EXTENTS.get(name)
+    frame = layout['frame_load_address']
+    require(spec is not None and symbol['load_address'] == frame + spec['offset'] and
+            symbol['width'] == 4 and symbol.get('extent_proof') ==
+            {'kind': spec['kind'], 'end_label': spec['end_label']},
+            'Unreviewed word-pair extent')
+    inventory = current_inventory(image)['functions']
+    for proc, at, raw in spec['witnesses']:
+        code = bytes.fromhex(raw)
+        rows = [f for f in inventory if f.get('name') == proc and
+                f.get('status') == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                f['start'] <= at and at + len(code) <= f['end'] and
+                sha(image[f['start']:f['end']]) == f['sha256']]
+        require(len(rows) == 1 and image[at:at+len(code)] == code,
+                'Word-pair witness differs: ' + proc)
+    if spec['kind'] == 'far-pointer-word-pair-v1' and spec['witnesses'][0][2].startswith('9a'):
+        call = spec['witnesses'][0][1]
+        require(any(r['load_offset'] == call + 3 for r in relocations),
+                'Word-pair far CALL lacks its MZ relocation')
+    path = 'src/restunts/asmorig/dseg.asm'
+    source = ROOT/'build/references/restunts'/path
+    require(identity(source.read_bytes()) ==
+            read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path],
+            'Word-pair reference source differs')
+    offsets = _reference_label_offsets(source.read_text(encoding='latin1').splitlines())
+    require(offsets.get(spec['label'], (None,))[0] == spec['offset'] and
+            offsets.get(spec['interior'][0], (None,))[0] == spec['offset'] + 2 and
+            offsets.get(spec['end_label'], (None,))[0] == spec['offset'] + 4,
+            'Word-pair pinned labels differ')
+    base, end = symbol['load_address'], symbol['load_address'] + 4
+    for other_name, other in layout['symbols'].items():
+        if other_name == name or other['storage'] == 'code_island' or other.get('width') is None:
+            continue
+        o_base, o_end = other['load_address'], other['load_address'] + other['width']
+        require(not (base < o_end and o_base < end) or (base <= o_base and o_end <= end),
+                'Word-pair object partially overlaps another reviewed object')
+
+
 def _check_state_extent(name, symbol, layout):
     """Recount the pinned contiguous state declaration, including its endpoint."""
     from common import identity
@@ -376,7 +700,11 @@ def _check_folded_extent(name, symbol, layout, image, relocations):
         other_width = other.get('width')
         if other_width is not None:
             other_base = other['load_address']
-            require(not (base < other_base+other_width and other_base < end),
+            # A reviewed container wholly holding this table (the counted
+            # 24 x 76 audiochunks_unk extent, integ26) is not a conflict.
+            container = (other.get('extent_proof', {}).get('kind') == 'counted-stride-loop-v1' and
+                         other_base <= base and end <= other_base + other_width)
+            require(container or not (base < other_base+other_width and other_base < end),
                     'Folded-index object overlaps another reviewed extent')
     return {-16*76: {'stride': 76, 'field_offset': 0, 'index_bound': [16,23]},
             -16*76+2: {'stride': 76, 'field_offset': 2, 'index_bound': [16,23]}}
@@ -422,8 +750,47 @@ def checked_dseg_base(image, relocations):
     return base
 
 
+CLONE_KEYS = {'load_address', 'storage', 'width', 'width_provenance', 'clone_of', 'name_provenance'}
+
+
+def clone_sources(symbols, names):
+    """Binding aliases declared as second names of a grounded alias (integ27).
+
+    A `clone_of` entry is an address-bound binding name only (for example a
+    pressure-constrained short linker name): it must repeat its source's
+    address, storage and width exactly, carry nothing else, and resolves
+    through the source alias with all of the source's own evidence checks."""
+    mapping = {}
+    for name in names:
+        symbol = symbols.get(name)
+        if symbol is None or 'clone_of' not in symbol:
+            continue
+        source = symbols.get(symbol['clone_of'])
+        require(source is not None and 'clone_of' not in source and set(symbol) <= CLONE_KEYS and
+                all(symbol.get(k) == source.get(k)
+                    for k in ('load_address', 'storage', 'width', 'width_provenance')),
+                'Clone data alias differs from its grounded source alias: ' + name)
+        mapping[name] = symbol['clone_of']
+    return mapping
+
+
 def resolve_symbols(names, image, relocations):
+    # Each name resolves independently of the other requested names; a
+    # verification session reuses identical per-name results (tools/memo.py).
+    import memo
+    from common import sha
+    key = (sha(image), memo.digest(relocations))
+    return memo.cached_items('data_symbols.resolve', key, names,
+                             lambda wanted: _resolve_symbols(wanted, image, relocations))
+
+
+def _resolve_symbols(names, image, relocations):
     layout = checked_dgroup_layout(image, relocations)
+    clones = clone_sources(layout['symbols'], names)
+    if clones:
+        wanted = [clones.get(name, name) for name in names]
+        resolved = resolve_symbols(list(dict.fromkeys(wanted)), image, relocations)
+        return {name: dict(resolved[clones.get(name, name)]) for name in names}
     frame = layout['frame_load_address']
     result = {}
     generated = None
@@ -501,6 +868,15 @@ def resolve_symbols(names, image, relocations):
                 folded = _check_folded_extent(name, symbol, layout, image, relocations)
             elif symbol.get('extent_proof', {}).get('kind') == 'ascii-table-256-v1':
                 _check_ascii_table_extent(name,symbol,layout,image)
+            elif symbol.get('extent_proof', {}).get('kind') == 'name-buffer-consumer-v1':
+                _check_name_buffer_extent(name,symbol,layout,image,relocations)
+            elif symbol.get('extent_proof', {}).get('kind') == 'counted-stride-loop-v1':
+                _check_counted_stride_extent(name,symbol,layout,image,relocations)
+            elif symbol.get('extent_proof', {}).get('kind') in ('indexed-constant-twin-v1',
+                                                               'far-pointer-word-pair-v1'):
+                _check_pair_extent(name,symbol,layout,image,relocations)
+            elif symbol.get('extent_proof', {}).get('kind') == 'pointer-list-table-v1':
+                _check_list_table_extent(name,symbol,layout,image,relocations)
             elif 'extent_proof' in symbol:
                 _check_state_extent(name, symbol, layout)
             elif 'generated_extent' not in symbol:
@@ -552,6 +928,169 @@ def check_folded_recipe(recipe, symbols, image):
                          'field_offset': field, 'witness': matches[0][0]['function']})
     require(recipe.get('folded_index_bindings', []) == required,
             'Folded-index recipe evidence differs')
+    check_negative_folds(recipe, symbols, image)
+
+
+NEGATIVE_FOLD_FORM = 'negative folded index a[i-k]'
+NEGATIVE_FOLD_KEYS = {'offset', 'target', 'k', 'element_size', 'index_operand', 'witness_site', 'form'}
+# Extended ruling (Opus, integ29): byte arrays, k <= 4, index computed in the
+# same function from the SAME array by strlen (the extension-replacement idiom
+# `a[strlen(a) - 4]`); the inline strlen of that array is the witness.
+NEGATIVE_FOLD_STRLEN_FORM = 'negative folded index a[strlen(a)-k]'
+NEGATIVE_FOLD_STRLEN_KEYS = {'offset', 'target', 'k', 'element_size', 'strlen_site', 'form'}
+# The pinned MSC 5.10 /Ox inline strlen of a DGROUP array feeding an index
+# register: mov di,offset a / mov ax,ds / mov es,ax / mov cx,-1 / xor ax,ax /
+# repne scasb / not cx / dec cx / mov R,cx.
+_INLINE_STRLEN = [('mov', 'di, '), ('mov', 'ax, ds'), ('mov', 'es, ax'), ('mov', 'cx, 0xffff'),
+                  ('xor', 'ax, ax'), ('repne scasb', 'al, byte ptr es:[di]'), ('not', 'cx'),
+                  ('dec', 'cx'), ('mov', None)]
+
+
+def _checked_strlen_fold(row, fix, recipe, target, signed, frame, image):
+    require(set(row) == NEGATIVE_FOLD_STRLEN_KEYS and row['form'] == NEGATIVE_FOLD_STRLEN_FORM and
+            row['element_size'] == 1 and row['k'] in (1, 2, 3, 4) and signed == -row['k'] and
+            fix['displacement'] == 0 and fix['width'] == 2 and not fix['self_relative'],
+            'Negative folded strlen index binding form differs')
+    width = target.get('allowed_addends') and max(target['allowed_addends']) + 1
+    require(type(width) is int and width >= row['k'],
+            'Negative folded strlen index lacks a grounded byte-array extent')
+    site = recipe['start'] + fix['offset']
+    offset = target['load_address'] - frame
+    function, instructions = _decoded_function_instructions(site, image)
+    access = [i for i in instructions if i.address < site < i.address + i.size and
+              i.address + i.disp_offset == site]
+    require(len(access) == 1 and _indexed_operand(access[0]) is not None and
+            int.from_bytes(image[site:site+2], 'little') == (offset + signed) & 0xffff,
+            'Negative folded strlen index site is not the original runtime-indexed access')
+    index = access[0].reg_name(_indexed_operand(access[0]).mem.base)
+    at = [n for n, i in enumerate(instructions) if i.address == row['strlen_site']]
+    require(len(at) == 1 and at[0] + len(_INLINE_STRLEN) < len(instructions) and
+            instructions[at[0] + len(_INLINE_STRLEN)].address == access[0].address,
+            'Negative folded strlen witness does not immediately precede the access')
+    sequence = instructions[at[0]:at[0] + len(_INLINE_STRLEN)]
+    for ins, (mnemonic, operands) in zip(sequence, _INLINE_STRLEN):
+        require(ins.mnemonic == mnemonic and
+                (operands is None or ins.op_str.startswith(operands) if mnemonic == 'mov' and operands == 'di, '
+                 else operands is None or ins.op_str == operands),
+                'Negative folded strlen witness is not the inline strlen of the array')
+    require(sequence[0].op_str == 'di, 0x%x' % offset and
+            sequence[-1].op_str == '%s, cx' % index and index in ('bx', 'si', 'di'),
+            'Negative folded strlen witness scans another array or feeds another index')
+    # The strlen operand is the same array through its own zero-addend FIXUPP.
+    witness_offset = row['strlen_site'] + 1 - recipe['start']
+    require(any(f['offset'] == witness_offset and f['target'] == fix['target'] and
+                f['encoded_addend'] == '0000' and f['loc'] == 'offset16'
+                for f in recipe['expected_fixups']),
+            'Negative folded strlen witness lacks its own zero-addend FIXUPP of the array')
+    target.setdefault('negative_folded_addends', {})[signed] = {
+        'k': row['k'], 'element_size': 1, 'function': function['name'], 'form': row['form']}
+
+
+def _decoded_function_instructions(site, image):
+    """(function row, capstone instructions) of the instruction-verified,
+    hash-checked inventory procedure containing `site`."""
+    import sys
+    from common import sha
+    location = str(ROOT/'build/python')
+    if location not in sys.path: sys.path.insert(0, location)
+    import capstone
+    require(capstone.__version__ == '5.0.3', 'Pinned instruction decoder differs')
+    from function_evidence import current_inventory
+    rows = [f for f in current_inventory(image)['functions']
+            if f.get('status') == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+            type(f.get('start')) is int and f['start'] <= site < f['end'] and
+            sha(image[f['start']:f['end']]) == f['sha256']]
+    require(len(rows) == 1, 'Negative folded index site lies outside one verified procedure')
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
+    decoder.detail = True
+    return rows[0], list(decoder.disasm(image[rows[0]['start']:rows[0]['end']], rows[0]['start']))
+
+
+def _indexed_operand(ins):
+    import capstone
+    for op in ins.operands:
+        if op.type == capstone.x86.X86_OP_MEM and ins.disp_size == 2 and \
+                (ins.reg_name(op.mem.base) in ('bx', 'si', 'di') or
+                 ins.reg_name(op.mem.index) in ('si', 'di')) and \
+                ins.reg_name(op.mem.segment) not in ('cs', 'es', 'ss'):
+            return op
+    return None
+
+
+def _index_loaded_from(instructions, at, operand, window=6):
+    """The index of the access at `at` is loaded from `operand` shortly before."""
+    before = [i for i in instructions if i.address < at][-window:]
+    return any(i.mnemonic == 'mov' and i.op_str.split(', ', 1)[-1] == operand for i in before)
+
+
+def check_negative_folds(recipe, symbols, image):
+    """RULING (Opus, integ28): negative folded index addends.
+
+    MSC folds `a[i - k]` into the EXTDEF of `a` with displacement
+    -k*sizeof(element).  Such an addend binds only when (1) the original
+    instruction at the FIXUPP site is runtime-indexed (base/index register),
+    (2) its displacement is the symbol minus k (1..2) elements of the declared
+    element size, (3) the same original procedure also accesses the same array
+    at a non-negative element offset with the index loaded from the same
+    variable, and (4) the recipe records it as 'negative folded index a[i-k]'.
+    Everything else stays refused by _checked_data_addend."""
+    listed = recipe.get('negative_folded_index_bindings', [])
+    require(type(listed) is list, 'Negative folded-index bindings must be a list')
+    if not listed:
+        return
+    layout = read_json(ROOT/'layout/data-symbols.json')
+    frame = layout['frame_load_address']
+    verified, unlisted = [], []
+    for fix in recipe['expected_fixups']:
+        target = (symbols or {}).get(fix['target'])
+        if not isinstance(target, dict) or target.get('group') != 'DGROUP' or fix['loc'] != 'offset16':
+            continue
+        encoded = bytes.fromhex(fix['encoded_addend'])
+        signed = int.from_bytes(encoded, 'little', signed=True) if len(encoded) == 2 else 0
+        if signed >= 0 or signed in target.get('folded_addends', {}):
+            continue
+        rows = [r for r in listed if r.get('offset') == fix['offset'] and r.get('target') == fix['target']]
+        if not rows:
+            unlisted.append((fix['target'], signed))
+            continue
+        row = rows[0]
+        if row.get('form') == NEGATIVE_FOLD_STRLEN_FORM:
+            _checked_strlen_fold(row, fix, recipe, target, signed, frame, image)
+            verified.append(row)
+            continue
+        require(set(row) == NEGATIVE_FOLD_KEYS and row['form'] == NEGATIVE_FOLD_FORM and
+                row['k'] in (1, 2) and row['element_size'] in (1, 2, 4) and
+                signed == -row['k'] * row['element_size'] and fix['displacement'] == 0 and
+                fix['width'] == 2 and not fix['self_relative'],
+                'Negative folded index binding form differs')
+        width = target.get('allowed_addends') and max(target['allowed_addends']) + 1
+        require(type(width) is int and width >= row['element_size'] and
+                width % row['element_size'] == 0,
+                'Negative folded index lacks an element-sized grounded array extent')
+        site = recipe['start'] + fix['offset']
+        offset = target['load_address'] - frame
+        function, instructions = _decoded_function_instructions(site, image)
+        access = [i for i in instructions if i.address < site < i.address + i.size and
+                  i.address + i.disp_offset == site]
+        require(len(access) == 1 and _indexed_operand(access[0]) is not None and
+                int.from_bytes(image[site:site+2], 'little') == (offset + signed) & 0xffff,
+                'Negative folded index site is not the original runtime-indexed access')
+        witness = [i for i in instructions if i.address == row['witness_site']]
+        operand = _indexed_operand(witness[0]) if len(witness) == 1 else None
+        require(operand is not None and
+                0 <= ((operand.mem.disp & 0xffff) - offset) < width and
+                ((operand.mem.disp & 0xffff) - offset) % row['element_size'] == 0,
+                'Negative folded index lacks a non-negative access to the same array')
+        require(_index_loaded_from(instructions, access[0].address, row['index_operand']) and
+                _index_loaded_from(instructions, witness[0].address, row['index_operand']),
+                'Negative folded index and witness do not share the same index variable')
+        target.setdefault('negative_folded_addends', {})[signed] = {
+            'k': row['k'], 'element_size': row['element_size'], 'function': function['name']}
+        verified.append(row)
+    require(listed == verified, 'Negative folded-index recipe evidence differs')
+    require(not any(signed in (symbols[name].get('negative_folded_addends') or {})
+                    for name, signed in unlisted),
+            'A negative folded addend is used by an unreviewed FIXUPP')
 
 
 def _resolve_generic_cs_island(name, symbol, layout, image, relocations):

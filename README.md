@@ -21,7 +21,11 @@ python tools/search.py build/workers/NAME/candidate.c --function rect_adjust_fro
 # Repeat or pass several candidate files; compiler failures are useful evidence.
 python tools/promote.py FUNCTION build/workers/NAME/candidate.c --verify-only
 python tools/promote.py FUNCTION build/workers/NAME/candidate.c
+# Several candidates, one transaction (each verified alone, one union whole-image build):
+python tools/promote.py --batch build/workers/NAME/batch.txt [--verify-only]
 python tools/validate.py
+# Diagnostic real LINK 3.65 + EXEPACK rebuild (not a gate):
+python tools/validate.py --image
 ```
 
 For a reviewed assembly extent, use a self-contained MASM source and an explicit recipe with `"kind": "asm"`, `"profile": "masm510-game"`, `"assembler_flags": ["/Mx", "/I."]`, complete OMF declarations, FIXUPPs, and ordered relocations:

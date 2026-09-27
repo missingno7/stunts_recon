@@ -13,7 +13,7 @@
         {
           "name": "_file_unflip_shape2d_pes",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
@@ -28,7 +28,7 @@
           "frame": null,
           "index": 1,
           "length": 198,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -71,7 +71,7 @@
       "frame_method": 0,
       "loc": "base16",
       "offset": 40,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "DSEG",
       "target_index": 2,
@@ -82,13 +82,13 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_TEXT",
+      "frame": "S012_TEXT",
       "frame_index": 1,
       "frame_kind": "segment",
       "frame_method": 0,
       "loc": "pointer32",
       "offset": 45,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_file_get_shape2d",
       "target_index": 1,
@@ -121,7 +121,7 @@
       {
         "name": "_file_unflip_shape2d_pes",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -136,7 +136,7 @@
         "frame": null,
         "index": 1,
         "length": 198,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
@@ -159,7 +159,7 @@
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_file_unflip_shape2d_pes",

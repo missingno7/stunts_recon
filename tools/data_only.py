@@ -242,3 +242,45 @@ def bind_data_only(obj, recipe, image, relocations):
             'Data-only relocation obligation differs')
     return bytes(payload), {'mode':'data-only-dgroup-v1',
                             'pointer_fixups':proof,'generated_relocations':[]}
+
+
+def far_data_publics():
+    """name -> (owner row, recipe, public offset) for accepted far-data modules."""
+    result = {}
+    for owner in read_json(ROOT/'layout/manifest.json')['owners']:
+        if not (owner.get('far_data') is True and owner.get('module_form') == 'data-only' and
+                owner['kind'] in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA') and 'recipe' in owner):
+            continue
+        recipe = read_json(ROOT/owner['recipe'])
+        for public in recipe['object_declarations']['publics']:
+            require(public['name'] not in result, 'Far-data public is declared twice')
+            result[public['name']] = (owner, recipe, public['offset'])
+    return result
+
+
+def resolve_far_data_symbols(names, image, relocations):
+    """External C references to a public of an accepted FAR_DATA module (integ25).
+
+    The module's paragraph is re-grounded from its own relocated segment-word
+    anchors; the public offset and declared object size come from the accepted
+    module recipe, whose complete bytes are verified on every build.  Offsets
+    bind inside that object only; the segment word is an MZ relocation."""
+    publics = far_data_publics()
+    result = {}
+    for name in names:
+        require(name in publics, 'Far-data symbol lacks an accepted far-data module public: ' + name)
+        owner, recipe, offset = publics[name]
+        start = recipe['start']
+        require((start, recipe['end']) == (owner['start'], owner['end']) and start % 16 == 0 and
+                recipe.get('far_data') is True, 'Far-data owner and recipe differ')
+        placement = recipe.get('far_placement', {})
+        require(placement.get('basis') == 'relocated-segment-word-v1' and placement.get('anchors'),
+                'Far-data owner lacks its relocated segment-word placement')
+        for anchor in placement['anchors']:
+            _checked_far_anchor(anchor, start, image, relocations)
+        width = recipe['public_object_sizes'][name]
+        require(type(width) is int and 0 < width and start + offset + width <= recipe['end'],
+                'Far-data public extent differs')
+        result[name] = {'kind': 'far-data', 'frame_load_address': start,
+                        'load_address': start + offset, 'width': width, 'owner': owner['id']}
+    return result

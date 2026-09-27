@@ -33,6 +33,22 @@ def construct(asset_dir=ROOT / 'assets'):
             require(path.name.upper() not in found, 'Duplicate case-insensitive oracle asset')
             found[path.name.upper()] = path.read_bytes()
     require(set(found) == set(NAMES), 'Missing required MCGA asset')
+    # Pure function of the asset bytes: an identical byte set reuses the
+    # decoded result (the assets are re-read and re-hashed on every call).
+    import copy, hashlib
+    key = hashlib.sha256(b''.join(n.encode() + b'|' + hashlib.sha256(found[n]).digest()
+                                  for n in NAMES)).hexdigest()
+    if _CONSTRUCTED.get('key') == key:
+        return copy.deepcopy(_CONSTRUCTED['value'])
+    value = _construct(found)
+    _CONSTRUCTED.clear(); _CONSTRUCTED.update(key=key, value=copy.deepcopy(value))
+    return value
+
+
+_CONSTRUCTED = {}
+
+
+def _construct(found):
     header = found['MCGA.HDR']
     require(len(header) == 30 and header[:2] == b'MZ', 'Unexpected distributed header')
     decoded = {name: decode(found[name]) for name in NAMES if name != 'MCGA.HDR'}

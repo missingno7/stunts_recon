@@ -4,8 +4,8 @@ dseg segment byte public 'STUNTSD'
 assume ds:dseg
 extrn _dword_3F874:dword
 dseg ends
-_TEXT segment word public 'CODE'
-assume cs:_TEXT, ds:dseg
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT, ds:dseg
 public _audio_stop_unk
 _audio_stop_unk proc far
 
@@ -46,5 +46,5 @@ loc_30281:
     out     61h, al         ; PC/XT PPI port B bits:
     retf
 _audio_stop_unk endp
-_TEXT ends
+S012_TEXT ends
 end

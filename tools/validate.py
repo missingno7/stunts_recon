@@ -47,7 +47,9 @@ def validate(independent=True, baseline=None):
             acceptance = build()
             if independent:
                 from crosscheck_runner import main as crosscheck
-                crosscheck()
+                import memo
+                with memo.session():
+                    crosscheck()
                 parity = read_json(ROOT/'build/validation/independent.json')
                 require(parity['inputs'] == before, 'Independent compiler snapshot differs')
                 report['independent_compiler'] = {'functions':len(parity['results']), 'status':'PASS'}
@@ -62,21 +64,54 @@ def validate(independent=True, baseline=None):
                           accepted_asm=[o['name'] for o in owners if o['kind']=='MATCHING_ASM'],
                           ownership={k:sum(o['end']-o['start'] for o in owners if o['kind']==k)
                                      for k in ('MATCHING_C','MATCHING_C_DATA','MATCHING_ASM',
-                                               'MATCHING_ASM_DATA','KNOWN_TOOLCHAIN_LIBRARY','UNRESOLVED_RAW')},
+                                               'MATCHING_ASM_DATA','KNOWN_TOOLCHAIN_LIBRARY','LINK_FILL',
+                                               'UNRESOLVED_RAW')},
                           matching_asm_bytes=acceptance['matching_asm_bytes'], inputs=before)
+            # Re-derived record-closed prefix owners (RECORD_CLOSED_EXACT, ACCEPTED);
+            # their proofs came from this fresh build, never from a stored receipt.
+            prefixes=[r['binding']['prefix'] for r in acceptance['compiler_receipts']
+                      if isinstance(r.get('binding'),dict) and
+                      r['binding'].get('mode')=='record-closed-prefix-v1']
+            report['record_closed_prefixes']={'owners':prefixes,
+                                              'bytes':sum(x['owned_end_offset'] for x in prefixes)}
             write_json(destination, report)
         return report
     except Exception as error:
         report.update(status='FAILED', error=str(error)); write_json(destination, report); raise
 
 
+def real_link_summary():
+    """Real-link divergence summary (integ29).  Diagnostic: grants and gates
+    nothing; its processing order is oracle-derived and raw debt is linked as
+    explicit raw objects (see tools/reallink.py)."""
+    try:
+        import reallink
+        summary = reallink.summary(reallink.run(tag='validate', log=lambda *args: None))
+    except Exception as error:
+        summary = {'status': 'DIAGNOSTIC_ERROR', 'error': str(error)}
+    write_json(ROOT/'build/validation/real-link.json', summary)
+    print('Real link (diagnostic):', {k: summary.get(k) for k in (
+        'status', 'link_returncode', 'image_equal', 'image_mismatch_bytes', 'relocation_set_equal',
+        'bank_order_equal', 'packed_equal', 'alias_shims', 'error') if k in summary})
+    return summary
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--no-independent', action='store_true', help='Explicitly omit DOSBox-X parity; incomplete release verification')
     p.add_argument('--baseline', help='Optional recorded migration baseline to compare exact ownership and source identities')
+    p.add_argument('--image', action='store_true',
+                   help='Diagnostic only (not a gate): after validation, rebuild the executable with one real '
+                        'LINK 3.65 run + EXEPACK (tools/reallink.py) and report the divergence summary')
     a = p.parse_args(); report = validate(not a.no_independent, a.baseline)
+    if a.image:
+        report['real_link'] = real_link_summary()
     print('PASS:', report['tests']['passed'], 'tests;', report['full_image'], '; independent compiler', report['independent_compiler']['status'])
     print('Ownership bytes:', report['ownership'], '; matching ASM', report['matching_asm_bytes'])
+    prefixes=report['record_closed_prefixes']
+    print('Record-closed prefix owners:', len(prefixes['owners']), 'owning', prefixes['bytes'], 'bytes',
+          [(x['owner'], x['owned_records'], x['derived_records'], x['candidate_record_count'])
+           for x in prefixes['owners']])
 
 
 if __name__ == '__main__': main()

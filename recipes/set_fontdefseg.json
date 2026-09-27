@@ -28,7 +28,7 @@
         {
           "name": "_set_fontdefseg",
           "offset": 0,
-          "segment": "_TEXT"
+          "segment": "S012_TEXT"
         }
       ],
       "segments": [
@@ -91,7 +91,7 @@
           "frame": null,
           "index": 4,
           "length": 12,
-          "name": "_TEXT",
+          "name": "S012_TEXT",
           "offset": null,
           "overlay_index": 1,
           "use_32bit_offset": false
@@ -118,7 +118,7 @@
       "frame_method": 1,
       "loc": "offset16",
       "offset": 7,
-      "segment": "_TEXT",
+      "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_fontdefseg",
       "target_index": 1,
@@ -155,7 +155,7 @@
       {
         "name": "_set_fontdefseg",
         "offset": 0,
-        "segment": "_TEXT"
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [
@@ -218,18 +218,30 @@
         "frame": null,
         "index": 4,
         "length": 12,
-        "name": "_TEXT",
+        "name": "S012_TEXT",
         "offset": null,
         "overlay_index": 1,
         "use_32bit_offset": false
       }
     ]
   },
-  "object_segment": "_TEXT",
+  "object_segment": "S012_TEXT",
+  "ownership_correction": {
+    "basis": "owner-identity-repair",
+    "owner": null,
+    "previous": {
+      "data_intervals": [],
+      "end": 150408,
+      "kind": "MATCHING_ASM",
+      "start": 150396
+    },
+    "reason": "The accepted owner row has no owner id and its recipe no stable id; the inventory row has no stable_id, so the ASM rule's derived identity asm_load_24b7c applies (same source, bytes and extent).",
+    "schema": "ownership-correction-v1"
+  },
   "profile": "masm510-game",
   "public": "_set_fontdefseg",
   "source": "asm/set_fontdefseg.ASM",
-  "stable_id": null,
+  "stable_id": "asm_load_24b7c",
   "start": 150396,
   "target": {
     "sha256": "1468b9883dd04af10b7d1122e9f78329a508ec9f1b21c186fabdb4f2e106c085",

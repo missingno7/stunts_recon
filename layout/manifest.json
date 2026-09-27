@@ -3,747 +3,211 @@
   "oracle_sha256": "4fc3340e2dc5d139a95a9a92278ef09902003d2c6857e5d9cdf0112870f3789e",
   "owners": [
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 6356,
-      "id": "raw_00000_018d4",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 179538,
+          "segment": "_DATA",
+          "start": 178098,
+          "target": {
+            "sha256": "28a895194065770c7724ff166c3d3276614f1da97f38c7a5712ef5457a3390de",
+            "size": 1440
+          }
+        }
+      ],
+      "end": 18194,
+      "id": "obj_seg000",
+      "kind": "MATCHING_C",
+      "name": "obj_seg000",
+      "recipe": "recipes/obj_seg000.json",
       "start": 0
     },
     {
       "classification": "GAME_C",
       "data_intervals": [
         {
-          "end": 178875,
+          "end": 179756,
           "segment": "_DATA",
-          "start": 178871,
+          "start": 179736,
           "target": {
-            "sha256": "14a4cc14b45ccadc5b677eeab759dcb62bdde391ceba9e8e97cfafdf6c265f08",
-            "size": 4
+            "sha256": "155dac3640d517b89f380a7e187f1bb13dcb32039d3cfeb905bc2e9a484ae32e",
+            "size": 20
           }
         }
       ],
-      "end": 6684,
-      "id": "load_018d4",
+      "end": 40390,
+      "id": "obj_seg001_complete",
       "kind": "MATCHING_C",
-      "name": "print_highscore_entry",
-      "recipe": "recipes/print_highscore_entry.json",
-      "start": 6356
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 18148,
-      "id": "raw_01a1c_046e4",
-      "kind": "UNRESOLVED_RAW",
-      "start": 6684
-    },
-    {
-      "classification": "GAME_C",
-      "end": 18194,
-      "id": "load_046e4",
-      "kind": "MATCHING_C",
-      "name": "set_default_car",
-      "recipe": "recipes/set_default_car.json",
-      "start": 18148
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 19820,
-      "id": "raw_04712_04d6c",
-      "kind": "UNRESOLVED_RAW",
+      "name": "obj_seg001_complete",
+      "recipe": "recipes/obj_seg001_complete.json",
       "start": 18194
     },
     {
+      "classification": "GAME_ASM",
+      "end": 40724,
+      "id": "obj_seg002",
+      "kind": "MATCHING_ASM",
+      "module_form": "asm-module",
+      "name": "obj_seg002",
+      "recipe": "recipes/obj_seg002.json",
+      "start": 40390
+    },
+    {
       "classification": "GAME_C",
-      "end": 19874,
-      "id": "load_04d6c",
+      "data_intervals": [
+        {
+          "end": 180662,
+          "segment": "_DATA",
+          "start": 180578,
+          "target": {
+            "sha256": "65b1c989fb30f7416510db1928970bbb170078235fecb29face71f6acdb8958e",
+            "size": 84
+          }
+        }
+      ],
+      "end": 57760,
+      "id": "obj_seg003",
       "kind": "MATCHING_C",
-      "name": "mat_mul_vector2",
-      "recipe": "recipes/mat_mul_vector2.json",
-      "start": 19820
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 26776,
-      "id": "raw_04da2_06898",
-      "kind": "UNRESOLVED_RAW",
-      "start": 19874
-    },
-    {
-      "classification": "GAME_C",
-      "end": 27394,
-      "id": "load_06898",
-      "kind": "MATCHING_C",
-      "name": "init_carstate_from_simd",
-      "recipe": "recipes/init_carstate_from_simd.json",
-      "start": 26776
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 34738,
-      "id": "raw_06b02_087b2",
-      "kind": "UNRESOLVED_RAW",
-      "start": 27394
-    },
-    {
-      "classification": "GAME_C",
-      "end": 34980,
-      "id": "load_087b2",
-      "kind": "MATCHING_C",
-      "name": "upd_statef20_from_steer_input",
-      "recipe": "recipes/upd_statef20_from_steer_input.json",
-      "start": 34738
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 36056,
-      "id": "raw_088a4_08cd8",
-      "kind": "UNRESOLVED_RAW",
-      "start": 34980
+      "name": "obj_seg003",
+      "ownership_corrections": [
+        {
+          "basis": "link-data-alignment",
+          "previous": {
+            "data_intervals": [
+              {
+                "end": 180662,
+                "segment": "_DATA",
+                "start": 180605,
+                "target": {
+                  "sha256": "59cf6d69dd445cadd9c61133f4b0e4ef5a603edd0f5f81519479836e5e267adf",
+                  "size": 57
+                }
+              }
+            ],
+            "end": 57760,
+            "kind": "MATCHING_C",
+            "start": 40724
+          },
+          "previous_owner": "obj_seg003",
+          "reason": "MSC _DATA SEGDEFs are WORD aligned, so the object's _DATA cannot start at odd 180605 (real LINK run: +1 cascade through DGROUP). The preceding 27 bytes 'crak','cinf','scensce2sce3sce4' are string literals of this object's own init_crak/load_skybox (formerly externs), so _DATA starts at even 180578; the old 57-byte RESOURCE_NAMES struct is replaced by the literals of load_sdgame2_shapes/setup_intro plus the word-aligned global aCarcoun_0 (its alignment hole is the zero byte at 180653)."
+        }
+      ],
+      "recipe": "recipes/obj_seg003.json",
+      "start": 40724
     },
     {
       "classification": "GAME_C",
-      "end": 36102,
-      "id": "load_08cd8",
-      "kind": "MATCHING_C",
-      "name": "audio_unk3",
-      "recipe": "recipes/audio_unk3.json",
-      "start": 36056
-    },
-    {
-      "classification": "GAME_C",
-      "end": 36192,
-      "id": "load_08d06",
-      "kind": "MATCHING_C",
-      "name": "sub_18D06",
-      "recipe": "recipes/sub_18D06.json",
-      "start": 36102
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 39346,
-      "id": "raw_08d60_099b2",
-      "kind": "UNRESOLVED_RAW",
-      "start": 36192
-    },
-    {
-      "classification": "GAME_C",
-      "end": 39468,
-      "id": "load_099b2",
-      "kind": "MATCHING_C",
-      "name": "vec_normalInnerProduct",
-      "recipe": "recipes/vec_normalInnerProduct.json",
-      "start": 39346
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 39840,
-      "id": "raw_09a2c_09ba0",
-      "kind": "UNRESOLVED_RAW",
-      "start": 39468
-    },
-    {
-      "classification": "GAME_C",
-      "end": 40098,
-      "id": "load_09ba0",
-      "kind": "MATCHING_C",
-      "name": "sub_19BA0",
-      "recipe": "recipes/sub_19BA0.json",
-      "start": 39840
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 52096,
-      "id": "raw_09ca2_0cb80",
-      "kind": "UNRESOLVED_RAW",
-      "start": 40098
-    },
-    {
-      "classification": "GAME_C",
-      "end": 52188,
-      "id": "load_0cb80",
-      "kind": "MATCHING_C",
-      "name": "transformed_shape_add_for_sort",
-      "recipe": "recipes/transformed_shape_add_for_sort.json",
-      "start": 52096
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 54580,
-      "id": "raw_0cbdc_0d534",
-      "kind": "UNRESOLVED_RAW",
-      "start": 52188
-    },
-    {
-      "classification": "GAME_C",
-      "end": 54708,
-      "id": "load_0d534",
-      "kind": "MATCHING_C",
-      "name": "do_sinking",
-      "recipe": "recipes/do_sinking.json",
-      "start": 54580
-    },
-    {
-      "classification": "GAME_C",
-      "end": 55202,
-      "id": "load_0d5b4",
-      "kind": "MATCHING_C",
-      "name": "init_crak",
-      "recipe": "recipes/init_crak.json",
-      "start": 54708
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 55594,
-      "id": "raw_0d7a2_0d92a",
-      "kind": "UNRESOLVED_RAW",
-      "start": 55202
-    },
-    {
-      "classification": "GAME_C",
-      "end": 55612,
-      "id": "load_0d92a",
-      "kind": "MATCHING_C",
-      "name": "free_sdgame2",
-      "recipe": "recipes/free_sdgame2.json",
-      "start": 55594
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 65374,
-      "id": "raw_0d93c_0ff5e",
-      "kind": "UNRESOLVED_RAW",
-      "start": 55612
-    },
-    {
-      "classification": "GAME_C",
-      "end": 65426,
-      "id": "load_0ff5e",
-      "kind": "MATCHING_C",
-      "name": "shape3d_free_all",
-      "recipe": "recipes/shape3d_free_all.json",
-      "start": 65374
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 72282,
-      "id": "raw_0ff92_11a5a",
-      "kind": "UNRESOLVED_RAW",
-      "start": 65426
-    },
-    {
-      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 190343,
+          "segment": "_DATA",
+          "start": 190232,
+          "target": {
+            "sha256": "5d6d51f4a069cba832f90a0bfa5c2e920653598f987d8265f4696d0350962258",
+            "size": 111
+          }
+        }
+      ],
       "end": 72570,
-      "id": "load_11a5a",
+      "id": "obj_seg004",
       "kind": "MATCHING_C",
-      "name": "subst_hillroad_track",
-      "recipe": "recipes/subst_hillroad_track.json",
-      "start": 72282
+      "name": "obj_seg004",
+      "recipe": "recipes/obj_seg004.json",
+      "start": 57760
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 75058,
-      "id": "raw_11b7a_12532",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 191064,
+          "segment": "_DATA",
+          "start": 190344,
+          "target": {
+            "sha256": "ae58b7e032e63d4c4764c57d9c4d1671f4c4f73f6cdb8f8bae65fac9c4cad523",
+            "size": 720
+          }
+        }
+      ],
+      "end": 85348,
+      "id": "obj_seg005",
+      "kind": "MATCHING_C",
+      "name": "obj_seg005",
+      "recipe": "recipes/obj_seg005.json",
       "start": 72570
     },
     {
       "classification": "GAME_C",
-      "end": 75158,
-      "id": "frame_helpers_group",
-      "kind": "MATCHING_C",
-      "name": "frame_helpers_group",
-      "recipe": "recipes/frame_helpers_group.json",
-      "start": 75058
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 76172,
-      "id": "frame_callback_replay_group",
-      "kind": "MATCHING_ASM",
-      "name": "frame_callback_replay_group",
-      "recipe": "recipes/frame_callback_replay_group.json",
-      "start": 75158
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 76946,
-      "id": "raw_1298c_12c92",
-      "kind": "UNRESOLVED_RAW",
-      "start": 76172
-    },
-    {
-      "classification": "GAME_C",
       "data_intervals": [
         {
-          "end": 190595,
+          "end": 191073,
           "segment": "_DATA",
-          "start": 190590,
+          "start": 191064,
           "target": {
-            "sha256": "40d513641f46da2d55faff2ba512b607038dd60d8d8431611676c1cd051f0e5a",
-            "size": 5
+            "sha256": "fc739b847b31314860186a9c52f502e4a15ea1554f3ddd320f0eb5d56d8387e4",
+            "size": 9
           }
         }
       ],
-      "end": 77032,
-      "id": "load_12c92",
-      "kind": "MATCHING_C",
-      "name": "file_load_replay",
-      "recipe": "recipes/file_load_replay.json",
-      "start": 76946
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 80464,
-      "id": "raw_12ce8_13a50",
-      "kind": "UNRESOLVED_RAW",
-      "start": 77032
-    },
-    {
-      "classification": "GAME_C",
-      "end": 80536,
-      "id": "load_13a50",
-      "kind": "MATCHING_C",
-      "name": "mouse_minmax_position",
-      "recipe": "recipes/mouse_minmax_position.json",
-      "start": 80464
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 85442,
-      "id": "raw_13a98_14dc2",
-      "kind": "UNRESOLVED_RAW",
-      "start": 80536
-    },
-    {
-      "classification": "GAME_C",
-      "end": 85478,
-      "id": "load_14dc2",
-      "kind": "MATCHING_C",
-      "name": "copy_material_list_pointers",
-      "recipe": "recipes/copy_material_list_pointers.json",
-      "start": 85442
-    },
-    {
-      "classification": "GAME_C",
-      "end": 85510,
-      "id": "load_14de6",
-      "kind": "MATCHING_C",
-      "name": "polyinfo_reset",
-      "recipe": "recipes/polyinfo_reset.json",
-      "start": 85478
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 89636,
-      "id": "raw_14e06_15e24",
-      "kind": "UNRESOLVED_RAW",
-      "start": 85510
-    },
-    {
-      "classification": "GAME_C",
-      "end": 89826,
-      "id": "load_15e24",
-      "kind": "MATCHING_C",
-      "name": "insert_newest_poly_in_poly_linked_list_40ED6",
-      "recipe": "recipes/insert_newest_poly_in_poly_linked_list_40ED6.json",
-      "start": 89636
-    },
-    {
-      "classification": "GAME_C",
-      "end": 89902,
-      "id": "load_15ee2",
-      "kind": "MATCHING_C",
-      "name": "rect_compare_point",
-      "recipe": "recipes/rect_compare_point.json",
-      "start": 89826
-    },
-    {
-      "classification": "GAME_C",
-      "end": 90102,
-      "id": "load_15f2e",
-      "kind": "MATCHING_C",
-      "name": "is_facing_camera",
-      "recipe": "recipes/is_facing_camera.json",
-      "start": 89902
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 90618,
-      "id": "raw_15ff6_161fa",
-      "kind": "UNRESOLVED_RAW",
-      "start": 90102
-    },
-    {
-      "classification": "GAME_C",
-      "end": 91002,
-      "id": "load_161fa",
-      "kind": "MATCHING_C",
-      "name": "mat_rot_zxy",
-      "recipe": "recipes/mat_rot_zxy.json",
-      "start": 90618
-    },
-    {
-      "classification": "GAME_C",
-      "end": 91078,
-      "id": "load_1637a",
-      "kind": "MATCHING_C",
-      "name": "rect_adjust_from_point",
-      "recipe": "recipes/rect_adjust_from_point.json",
-      "start": 91002
-    },
-    {
-      "classification": "GAME_C",
-      "end": 91392,
-      "id": "load_163c6",
-      "kind": "MATCHING_C",
-      "name": "vector_op_unk2",
-      "recipe": "recipes/vector_op_unk2.json",
-      "start": 91078
-    },
-    {
-      "classification": "GAME_C",
-      "end": 91474,
-      "id": "load_16500",
-      "kind": "MATCHING_C",
-      "name": "calc_sincos80",
-      "recipe": "recipes/calc_sincos80.json",
-      "start": 91392
-    },
-    {
-      "classification": "GAME_C",
-      "end": 91506,
-      "id": "load_16552",
-      "kind": "MATCHING_C",
-      "name": "nopsub_26552",
-      "recipe": "recipes/nopsub_26552.json",
-      "start": 91474
-    },
-    {
-      "classification": "GAME_C",
-      "end": 93002,
-      "id": "rectlist_core_group",
-      "kind": "MATCHING_C",
-      "name": "rectlist_core_group",
-      "recipe": "recipes/rectlist_core_group.json",
-      "start": 91506
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
       "end": 93102,
-      "id": "raw_16b4a_16bae",
-      "kind": "UNRESOLVED_RAW",
-      "start": 93002
+      "id": "obj_seg006",
+      "kind": "MATCHING_C",
+      "name": "obj_seg006",
+      "recipe": "recipes/obj_seg006.json",
+      "start": 85348
     },
     {
-      "classification": "GAME_ASM",
-      "end": 93141,
-      "id": "load_16bae",
-      "kind": "MATCHING_ASM",
-      "name": "audio_add_driver_timer",
-      "recipe": "recipes/audio_add_driver_timer.json",
+      "classification": "UNRESOLVED_MIXED",
+      "end": 95408,
+      "id": "raw_16bae_174b0",
+      "kind": "UNRESOLVED_RAW",
       "start": 93102
     },
     {
-      "classification": "GAME_ASM",
-      "end": 93190,
-      "id": "load_16bd5",
-      "kind": "MATCHING_ASM",
-      "name": "audio_remove_driver_timer",
-      "recipe": "recipes/audio_remove_driver_timer.json",
-      "start": 93141
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 94061,
-      "id": "raw_16c06_16f6d",
-      "kind": "UNRESOLVED_RAW",
-      "start": 93190
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 94115,
-      "id": "load_16f6d",
-      "kind": "MATCHING_ASM",
-      "name": "audio_function2",
-      "recipe": "recipes/audio_function2.json",
-      "start": 94061
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 99778,
-      "id": "raw_16fa3_185c2",
-      "kind": "UNRESOLVED_RAW",
-      "start": 94115
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 191519,
+          "segment": "_DATA",
+          "start": 191310,
+          "target": {
+            "sha256": "e2e399bc64b6594a45107d5718e8422160a839284b8b203e511647899b09ffe2",
+            "size": 209
+          }
+        }
+      ],
+      "end": 107196,
+      "id": "obj_seg008",
+      "kind": "MATCHING_C",
+      "name": "obj_seg008",
+      "recipe": "recipes/obj_seg008.json",
+      "start": 95408
     },
     {
       "classification": "GAME_C",
       "data_intervals": [
         {
-          "end": 191403,
+          "end": 191625,
           "segment": "_DATA",
-          "start": 191401,
+          "start": 191520,
           "target": {
-            "sha256": "1472d0645f552820b5472b91341c2d9a118c8a96f4a72758d6aeeb14c10a1107",
-            "size": 2
+            "sha256": "d88918cc94015602a63b9c5700228f3c4937aaff98113a1ba7b7703b0333129d",
+            "size": 105
           }
         }
       ],
-      "end": 99898,
-      "id": "load_185c2",
+      "end": 117842,
+      "id": "obj_seg009",
       "kind": "MATCHING_C",
-      "name": "file_build_path",
-      "recipe": "recipes/file_build_path.json",
-      "start": 99778
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 100194,
-      "id": "raw_1863a_18762",
-      "kind": "UNRESOLVED_RAW",
-      "start": 99898
-    },
-    {
-      "classification": "GAME_C",
-      "end": 100292,
-      "id": "load_18762",
-      "kind": "MATCHING_C",
-      "name": "parse_filepath_separators",
-      "recipe": "recipes/parse_filepath_separators.json",
-      "start": 100194
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 100984,
-      "id": "raw_187c4_18a78",
-      "kind": "UNRESOLVED_RAW",
-      "start": 100292
-    },
-    {
-      "classification": "GAME_C",
-      "end": 101004,
-      "id": "load_18a78",
-      "kind": "MATCHING_C",
-      "name": "unload_resource",
-      "recipe": "recipes/unload_resource.json",
-      "start": 100984
-    },
-    {
-      "classification": "GAME_C",
-      "end": 101026,
-      "id": "load_18a8c",
-      "kind": "MATCHING_C",
-      "name": "locate_shape_alt",
-      "recipe": "recipes/locate_shape_alt.json",
-      "start": 101004
-    },
-    {
-      "classification": "GAME_C",
-      "end": 101078,
-      "id": "load_18aa2",
-      "kind": "MATCHING_C",
-      "name": "locate_text_res",
-      "recipe": "recipes/locate_text_res.json",
-      "start": 101026
-    },
-    {
-      "classification": "GAME_C",
-      "end": 101134,
-      "id": "load_18ad6",
-      "kind": "MATCHING_C",
-      "name": "copy_string",
-      "recipe": "recipes/copy_string.json",
-      "start": 101078
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 101832,
-      "id": "raw_18b0e_18dc8",
-      "kind": "UNRESOLVED_RAW",
-      "start": 101134
-    },
-    {
-      "classification": "GAME_C",
-      "end": 101892,
-      "id": "load_18dc8",
-      "kind": "MATCHING_C",
-      "name": "mouse_draw_opaque",
-      "recipe": "recipes/mouse_draw_opaque.json",
-      "start": 101832
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102032,
-      "id": "load_18e04",
-      "kind": "MATCHING_C",
-      "name": "mouse_draw_transparent",
-      "recipe": "recipes/mouse_draw_transparent.json",
-      "start": 101892
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102116,
-      "id": "load_18e90",
-      "kind": "MATCHING_C",
-      "name": "mouse_multi_hittest",
-      "recipe": "recipes/mouse_multi_hittest.json",
-      "start": 102032
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 102204,
-      "id": "raw_18ee4_18f3c",
-      "kind": "UNRESOLVED_RAW",
-      "start": 102116
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102222,
-      "id": "load_18f3c",
-      "kind": "MATCHING_C",
-      "name": "sprite_copy_2_to_1_2",
-      "recipe": "recipes/sprite_copy_2_to_1_2.json",
-      "start": 102204
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102250,
-      "id": "load_18f4e",
-      "kind": "MATCHING_C",
-      "name": "sprite_copy_2_to_1_clear",
-      "recipe": "recipes/sprite_copy_2_to_1_clear.json",
-      "start": 102222
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102268,
-      "id": "load_18f6a",
-      "kind": "MATCHING_C",
-      "name": "sprite_copy_wnd_to_1",
-      "recipe": "recipes/sprite_copy_wnd_to_1.json",
-      "start": 102250
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102296,
-      "id": "load_18f7c",
-      "kind": "MATCHING_C",
-      "name": "sprite_copy_wnd_to_1_clear",
-      "recipe": "recipes/sprite_copy_wnd_to_1_clear.json",
-      "start": 102268
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102408,
-      "id": "load_18f98",
-      "kind": "MATCHING_C",
-      "name": "intro_draw_text",
-      "recipe": "recipes/intro_draw_text.json",
-      "start": 102296
-    },
-    {
-      "classification": "GAME_C",
-      "end": 102588,
-      "id": "load_19008",
-      "kind": "MATCHING_C",
-      "name": "hiscore_draw_text",
-      "recipe": "recipes/hiscore_draw_text.json",
-      "start": 102408
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 103770,
-      "id": "raw_190bc_1955a",
-      "kind": "UNRESOLVED_RAW",
-      "start": 102588
-    },
-    {
-      "classification": "GAME_C",
-      "end": 103968,
-      "id": "run_02",
-      "kind": "MATCHING_C",
-      "name": "run_02",
-      "recipe": "recipes/run_02.json",
-      "start": 103770
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 104160,
-      "id": "raw_19620_196e0",
-      "kind": "UNRESOLVED_RAW",
-      "start": 103968
-    },
-    {
-      "classification": "GAME_C",
-      "end": 104326,
-      "id": "run_03",
-      "kind": "MATCHING_C",
-      "name": "run_03",
-      "recipe": "recipes/run_03.json",
-      "start": 104160
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 104536,
-      "id": "raw_19786_19858",
-      "kind": "UNRESOLVED_RAW",
-      "start": 104326
-    },
-    {
-      "classification": "GAME_C",
-      "end": 104586,
-      "id": "load_19858",
-      "kind": "MATCHING_C",
-      "name": "audio_unload",
-      "recipe": "recipes/audio_unload.json",
-      "start": 104536
-    },
-    {
-      "classification": "GAME_C",
-      "end": 104616,
-      "id": "load_1988a",
-      "kind": "MATCHING_C",
-      "name": "font_set_fontdef2",
-      "recipe": "recipes/font_set_fontdef2.json",
-      "start": 104586
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 105196,
-      "id": "raw_198a8_19aec",
-      "kind": "UNRESOLVED_RAW",
-      "start": 104616
-    },
-    {
-      "classification": "GAME_C",
-      "end": 105224,
-      "id": "load_19aec",
-      "kind": "MATCHING_C",
-      "name": "input_push_status",
-      "recipe": "recipes/input_push_status.json",
-      "start": 105196
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 107056,
-      "id": "raw_19b08_1a230",
-      "kind": "UNRESOLVED_RAW",
-      "start": 105224
-    },
-    {
-      "classification": "GAME_C",
-      "end": 107062,
-      "id": "load_1a230",
-      "kind": "MATCHING_C",
-      "name": "timer_get_delta_alt",
-      "recipe": "recipes/timer_get_delta_alt.json",
-      "start": 107056
+      "name": "obj_seg009",
+      "recipe": "recipes/obj_seg009.json",
+      "start": 107196
     },
     {
       "classification": "UNRESOLVED_MIXED",
       "end": 118410,
-      "id": "raw_1a236_1ce8a",
+      "id": "raw_1cc52_1ce8a",
       "kind": "UNRESOLVED_RAW",
-      "start": 107062
+      "start": 117842
     },
     {
       "binding": {
@@ -8071,115 +7535,14 @@
       "start": 125448
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 125652,
-      "id": "raw_1ea2a_1ead4",
-      "kind": "UNRESOLVED_RAW",
-      "start": 125482
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 125768,
-      "id": "sub_2EAD4_group",
-      "kind": "MATCHING_ASM",
-      "name": "sub_2EAD4_group",
-      "recipe": "recipes/sub_2EAD4_group.json",
-      "start": 125652
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 127764,
-      "id": "seg012_draw_line_related_group",
-      "kind": "MATCHING_ASM",
-      "name": "seg012_draw_line_related_group",
-      "recipe": "recipes/seg012_draw_line_related_group.json",
-      "start": 125768
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 127796,
-      "id": "load_1f314",
-      "kind": "MATCHING_ASM",
-      "name": "parse_shape2d_helper",
-      "recipe": "recipes/parse_shape2d_helper.json",
-      "start": 127764
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 127836,
-      "id": "asm_load_1f334",
-      "kind": "MATCHING_ASM",
-      "name": "parse_shape2d_helper2",
-      "recipe": "recipes/parse_shape2d_helper2.json",
-      "start": 127796
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 127962,
-      "id": "raw_1f35c_1f3da",
-      "kind": "UNRESOLVED_RAW",
-      "start": 127836
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 128054,
-      "id": "preRender_unk",
-      "kind": "MATCHING_ASM",
-      "name": "preRender_unk",
-      "recipe": "recipes/preRender_unk.json",
-      "start": 127962
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 130690,
-      "id": "raw_1f436_1fe82",
-      "kind": "UNRESOLVED_RAW",
-      "start": 128054
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 130854,
-      "id": "file_paras_group",
-      "kind": "MATCHING_ASM",
-      "name": "file_paras_group",
-      "recipe": "recipes/file_paras_group.json",
-      "start": 130690
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 131028,
-      "id": "file_decomp_paras",
-      "kind": "MATCHING_ASM",
-      "name": "file_decomp_paras",
-      "recipe": "recipes/file_decomp_paras.json",
-      "start": 130854
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 131140,
-      "id": "file_find",
-      "kind": "MATCHING_ASM",
-      "name": "file_find",
-      "recipe": "recipes/file_find.json",
-      "start": 131028
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 131166,
-      "id": "load_20044",
-      "kind": "MATCHING_ASM",
-      "name": "multiply_and_scale",
-      "recipe": "recipes/multiply_and_scale.json",
-      "start": 131140
-    },
-    {
       "classification": "GAME_ASM",
       "end": 131254,
-      "id": "load_2005e",
+      "id": "asm012_125482",
       "kind": "MATCHING_ASM",
-      "name": "video_set_mode4",
-      "recipe": "recipes/video_set_mode4.json",
-      "start": 131166
+      "module_form": "asm-module",
+      "name": "asm012_125482",
+      "recipe": "recipes/asm012_125482.json",
+      "start": 125482
     },
     {
       "classification": "GAME_ASM",
@@ -8245,106 +7608,32 @@
       "start": 131869
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 132026,
-      "id": "raw_20329_203ba",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_ASM",
+      "end": 132056,
+      "id": "timer_intr_group",
+      "kind": "MATCHING_ASM",
+      "name": "timer_intr_group",
+      "recipe": "recipes/timer_intr_group.json",
       "start": 131881
     },
     {
       "classification": "GAME_ASM",
-      "end": 132056,
-      "id": "asm_load_203ba",
-      "kind": "MATCHING_ASM",
-      "name": "sub_303BA",
-      "recipe": "recipes/sub_303BA.json",
-      "start": 132026
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 132100,
-      "id": "raw_203d8_20404",
-      "kind": "UNRESOLVED_RAW",
-      "start": 132056
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 132190,
-      "id": "load_20404",
-      "kind": "MATCHING_ASM",
-      "name": "kb_parse_key",
-      "recipe": "recipes/kb_parse_key.json",
-      "start": 132100
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 132278,
-      "id": "kb_reg_callback",
-      "kind": "MATCHING_ASM",
-      "name": "kb_reg_callback",
-      "recipe": "recipes/kb_reg_callback.json",
-      "start": 132190
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 132377,
-      "id": "load_204b6",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_304B6",
-      "recipe": "recipes/nopsub_304B6.json",
-      "start": 132278
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 132408,
-      "id": "load_20519",
-      "kind": "MATCHING_ASM",
-      "name": "kb_get_char",
-      "recipe": "recipes/kb_get_char.json",
-      "start": 132377
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 133044,
-      "id": "get_kb_or_joy_flags",
-      "kind": "MATCHING_ASM",
-      "name": "get_kb_or_joy_flags",
-      "recipe": "recipes/get_kb_or_joy_flags.json",
-      "start": 132408
-    },
-    {
-      "classification": "GAME_C",
-      "end": 133074,
-      "id": "load_207b4",
-      "kind": "MATCHING_C",
-      "name": "sub_307B4",
-      "recipe": "recipes/sub_307B4.json",
-      "start": 133044
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 133091,
-      "id": "load_207d2",
-      "kind": "MATCHING_ASM",
-      "name": "sub_307D2",
-      "recipe": "recipes/sub_307D2.json",
-      "start": 133074
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 133114,
-      "id": "load_207e3",
-      "kind": "MATCHING_ASM",
-      "name": "sub_307E3",
-      "recipe": "recipes/sub_307E3.json",
-      "start": 133091
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
       "end": 133138,
-      "id": "raw_207fa_20812",
-      "kind": "UNRESOLVED_RAW",
-      "start": 133114
+      "id": "asm012_132056",
+      "kind": "MATCHING_ASM",
+      "module_form": "asm-module",
+      "name": "asm012_132056",
+      "recipe": "recipes/asm012_132056.json",
+      "reclassified_owners": [
+        {
+          "from": "MATCHING_C",
+          "id": "load_207b4",
+          "link": "shared-asm-frame",
+          "name": "sub_307B4",
+          "recipe": "recipes/sub_307B4.json"
+        }
+      ],
+      "start": 132056
     },
     {
       "classification": "GAME_ASM",
@@ -8356,68 +7645,23 @@
       "start": 133138
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 133665,
-      "id": "raw_20a1c_20a21",
-      "kind": "UNRESOLVED_RAW",
-      "start": 133660
-    },
-    {
       "classification": "GAME_ASM",
-      "end": 133685,
-      "id": "load_20a21",
-      "kind": "MATCHING_ASM",
-      "name": "kb_read_char",
-      "recipe": "recipes/kb_read_char.json",
-      "start": 133665
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 133700,
-      "id": "load_20a35",
-      "kind": "MATCHING_ASM",
-      "name": "kb_checking",
-      "recipe": "recipes/kb_checking.json",
-      "start": 133685
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 133717,
-      "id": "raw_20a44_20a55",
-      "kind": "UNRESOLVED_RAW",
-      "start": 133700
-    },
-    {
-      "classification": "GAME_C",
-      "end": 133725,
-      "id": "load_20a55",
-      "kind": "MATCHING_C",
-      "name": "nopsub_kb_get_readchar_callback",
-      "recipe": "recipes/nopsub_kb_get_readchar_callback.json",
-      "start": 133717
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 133736,
-      "id": "raw_20a5d_20a68",
-      "kind": "UNRESOLVED_RAW",
-      "start": 133725
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 133751,
-      "id": "load_20a68",
-      "kind": "MATCHING_ASM",
-      "name": "kb_check",
-      "recipe": "recipes/kb_check.json",
-      "start": 133736
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
       "end": 133840,
-      "id": "raw_20a77_20ad0",
-      "kind": "UNRESOLVED_RAW",
-      "start": 133751
+      "id": "asm012_133660",
+      "kind": "MATCHING_ASM",
+      "module_form": "asm-module",
+      "name": "asm012_133660",
+      "recipe": "recipes/asm012_133660.json",
+      "reclassified_owners": [
+        {
+          "from": "MATCHING_C",
+          "id": "load_20a55",
+          "link": "odd-start",
+          "name": "nopsub_kb_get_readchar_callback",
+          "recipe": "recipes/nopsub_kb_get_readchar_callback.json"
+        }
+      ],
+      "start": 133660
     },
     {
       "classification": "GAME_ASM",
@@ -8447,11 +7691,29 @@
       "start": 134521
     },
     {
+      "classification": "GAME_ASM",
+      "end": 134647,
+      "id": "load_20de6",
+      "kind": "MATCHING_ASM",
+      "name": "file_decomp",
+      "recipe": "recipes/file_decomp.json",
+      "start": 134630
+    },
+    {
+      "classification": "GAME_ASM",
+      "end": 134663,
+      "id": "load_20df7",
+      "kind": "MATCHING_ASM",
+      "name": "file_decomp_nofatal",
+      "recipe": "recipes/file_decomp_nofatal.json",
+      "start": 134647
+    },
+    {
       "classification": "UNRESOLVED_MIXED",
       "end": 135058,
-      "id": "raw_20de6_20f92",
+      "id": "raw_20e07_20f92",
       "kind": "UNRESOLVED_RAW",
-      "start": 134630
+      "start": 134663
     },
     {
       "classification": "GAME_ASM",
@@ -8464,19 +7726,12 @@
     },
     {
       "classification": "GAME_ASM",
-      "end": 135453,
-      "id": "mmgr_alloc_call_group",
-      "kind": "MATCHING_ASM",
-      "name": "mmgr_alloc_call_group",
-      "recipe": "recipes/mmgr_alloc_call_group.json",
-      "start": 135290
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
       "end": 135511,
-      "id": "raw_2111d_21157",
-      "kind": "UNRESOLVED_RAW",
-      "start": 135453
+      "id": "mmgr_alloc_nop3111d_group",
+      "kind": "MATCHING_ASM",
+      "name": "mmgr_alloc_nop3111d_group",
+      "recipe": "recipes/mmgr_alloc_nop3111d_group.json",
+      "start": 135290
     },
     {
       "classification": "GAME_ASM",
@@ -8497,11 +7752,28 @@
       "start": 135529
     },
     {
-      "classification": "GAME_C",
+      "classification": "GAME_ASM",
       "end": 135565,
       "id": "load_2117b",
-      "kind": "MATCHING_C",
+      "kind": "MATCHING_ASM",
       "name": "mmgr_get_ofs_diff",
+      "ownership_corrections": [
+        {
+          "basis": "odd-start-asm-continuation",
+          "previous": {
+            "data_intervals": [],
+            "end": 135565,
+            "kind": "MATCHING_C",
+            "start": 135547
+          },
+          "previous_owner": "load_2117b",
+          "reason": "The accepted C owner starts at odd 135547 directly after the RETF of accepted ASM nopsub_31169 with no pad byte; MSC word-aligns every function and every object, so no separately compiled MSC object can start there (a real LINK run inserts a pad and shifts seg012 by one). The 18 bytes are reassembled from readable MASM with the same DGROUP fixups.",
+          "reclassified_from": {
+            "kind": "MATCHING_C",
+            "recipe": "recipes/mmgr_get_ofs_diff.json"
+          }
+        }
+      ],
       "recipe": "recipes/mmgr_get_ofs_diff.json",
       "start": 135547
     },
@@ -8533,10 +7805,12 @@
       "start": 135720
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_ASM",
       "end": 135933,
-      "id": "raw_21248_212fd",
-      "kind": "UNRESOLVED_RAW",
+      "id": "load_21248",
+      "kind": "MATCHING_ASM",
+      "name": "mmgr_alloc_pages",
+      "recipe": "recipes/mmgr_alloc_pages.json",
       "start": 135752
     },
     {
@@ -8549,10 +7823,12 @@
       "start": 135933
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_ASM",
       "end": 136233,
-      "id": "raw_2136a_21429",
-      "kind": "UNRESOLVED_RAW",
+      "id": "load_2136a",
+      "kind": "MATCHING_ASM",
+      "name": "mmgr_get_chunk_by_name",
+      "recipe": "recipes/mmgr_get_chunk_by_name.json",
       "start": 136042
     },
     {
@@ -8566,35 +7842,29 @@
     },
     {
       "classification": "GAME_ASM",
-      "end": 136866,
-      "id": "mmgr_free_entries",
+      "end": 137138,
+      "id": "mmgr_free_resize_op_group",
       "kind": "MATCHING_ASM",
-      "name": "mmgr_free_entries",
-      "recipe": "recipes/mmgr_free_entries.json",
+      "name": "mmgr_free_resize_op_group",
+      "recipe": "recipes/mmgr_free_resize_op_group.json",
       "start": 136316
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 137831,
-      "id": "raw_216a2_21a67",
-      "kind": "UNRESOLVED_RAW",
-      "start": 136866
-    },
-    {
       "classification": "GAME_ASM",
-      "end": 138078,
-      "id": "asm_load_21a67",
+      "end": 139609,
+      "id": "asm012_137138",
       "kind": "MATCHING_ASM",
-      "name": "preRender_helper2",
-      "recipe": "recipes/preRender_helper2.json",
-      "start": 137831
+      "module_form": "asm-module",
+      "name": "asm012_137138",
+      "recipe": "recipes/asm012_137138.json",
+      "start": 137138
     },
     {
       "classification": "UNRESOLVED_MIXED",
       "end": 139610,
-      "id": "raw_21b5e_2215a",
+      "id": "raw_22159_2215a",
       "kind": "UNRESOLVED_RAW",
-      "start": 138078
+      "start": 139609
     },
     {
       "classification": "GAME_ASM",
@@ -8841,105 +8111,23 @@
     },
     {
       "classification": "GAME_ASM",
-      "end": 141446,
-      "id": "font_entries",
-      "kind": "MATCHING_ASM",
-      "name": "font_entries",
-      "recipe": "recipes/font_entries.json",
-      "start": 141362
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 141550,
-      "id": "raw_22886_228ee",
-      "kind": "UNRESOLVED_RAW",
-      "start": 141446
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141810,
-      "id": "load_228ee",
-      "kind": "MATCHING_ASM",
-      "name": "mat_mul_vector",
-      "recipe": "recipes/mat_mul_vector.json",
-      "start": 141550
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141938,
-      "id": "load_229f2",
-      "kind": "MATCHING_ASM",
-      "name": "mat_multiply",
-      "recipe": "recipes/mat_multiply.json",
-      "start": 141810
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 143342,
-      "id": "raw_22a72_22fee",
-      "kind": "UNRESOLVED_RAW",
-      "start": 141938
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 143356,
-      "id": "load_22fee",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_32FEE",
-      "recipe": "recipes/nopsub_32FEE.json",
-      "start": 143342
-    },
-    {
-      "classification": "GAME_ASM",
       "end": 143366,
-      "id": "asm_load_22ffc",
+      "id": "asm012_141362",
       "kind": "MATCHING_ASM",
-      "name": "video_get_status",
-      "recipe": "recipes/video_get_status.json",
-      "start": 143356
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 143465,
-      "id": "seg012_vector_entry_group",
-      "kind": "MATCHING_ASM",
-      "name": "seg012_vector_entry_group",
-      "recipe": "recipes/seg012_vector_entry_group.json",
-      "start": 143366
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 143886,
-      "id": "raw_23069_2320e",
-      "kind": "UNRESOLVED_RAW",
-      "start": 143465
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 143999,
-      "id": "load_2320e",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_3320E",
-      "recipe": "recipes/nopsub_3320E.json",
-      "start": 143886
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 144040,
-      "id": "load_2327f",
-      "kind": "MATCHING_ASM",
-      "name": "sprite_set_1_size",
-      "recipe": "recipes/sprite_set_1_size.json",
-      "start": 143999
+      "module_form": "asm-module",
+      "name": "asm012_141362",
+      "recipe": "recipes/asm012_141362.json",
+      "start": 141362
     },
     {
       "classification": "GAME_ASM",
       "end": 144064,
-      "id": "asm_load_232a8",
+      "id": "asm012_143366",
       "kind": "MATCHING_ASM",
-      "name": "video_clear_color",
-      "recipe": "recipes/video_clear_color.json",
-      "start": 144040
+      "module_form": "asm-module",
+      "name": "asm012_143366",
+      "recipe": "recipes/asm012_143366.json",
+      "start": 143366
     },
     {
       "classification": "GAME_ASM",
@@ -8960,10 +8148,12 @@
       "start": 144176
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_ASM",
       "end": 144760,
-      "id": "raw_233c0_23578",
-      "kind": "UNRESOLVED_RAW",
+      "id": "asm_load_233c0",
+      "kind": "MATCHING_ASM",
+      "name": "putpixel_line1_maybe",
+      "recipe": "recipes/putpixel_line1_maybe.json",
       "start": 144320
     },
     {
@@ -8994,10 +8184,12 @@
       "start": 145430
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_ASM",
       "end": 145516,
-      "id": "raw_23848_2386c",
-      "kind": "UNRESOLVED_RAW",
+      "id": "file_load_shape2d_thunks",
+      "kind": "MATCHING_ASM",
+      "name": "file_load_shape2d_thunks",
+      "recipe": "recipes/file_load_shape2d_thunks.json",
       "start": 145480
     },
     {
@@ -9055,20 +8247,13 @@
       "start": 146878
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 149155,
-      "id": "raw_24060_246a3",
-      "kind": "UNRESOLVED_RAW",
-      "start": 147552
-    },
-    {
       "classification": "GAME_ASM",
       "end": 149180,
-      "id": "asm_load_246a3",
+      "id": "asm012_144064_late",
       "kind": "MATCHING_ASM",
-      "name": "video_set_palette",
-      "recipe": "recipes/video_set_palette.json",
-      "start": 149155
+      "name": "asm012_144064_late",
+      "recipe": "recipes/asm012_144064_late.json",
+      "start": 147552
     },
     {
       "classification": "GAME_ASM",
@@ -9107,61 +8292,34 @@
     {
       "classification": "GAME_ASM",
       "end": 150408,
-      "id": null,
+      "id": "asm_load_24b7c",
       "kind": "MATCHING_ASM",
       "name": "set_fontdefseg",
+      "ownership_corrections": [
+        {
+          "basis": "owner-identity-repair",
+          "previous": {
+            "data_intervals": [],
+            "end": 150408,
+            "kind": "MATCHING_ASM",
+            "start": 150396
+          },
+          "previous_owner": null,
+          "reason": "The accepted owner row has no owner id and its recipe no stable id; the inventory row has no stable_id, so the ASM rule's derived identity asm_load_24b7c applies (same source, bytes and extent)."
+        }
+      ],
       "recipe": "recipes/set_fontdefseg.json",
       "start": 150396
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 150422,
-      "id": "raw_24b88_24b96",
-      "kind": "UNRESOLVED_RAW",
-      "start": 150408
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 150540,
-      "id": "asm_load_24b96",
-      "kind": "MATCHING_ASM",
-      "name": "draw_patterned_lines",
-      "recipe": "recipes/draw_patterned_lines.json",
-      "start": 150422
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 150756,
-      "id": "load_24c0c",
-      "kind": "MATCHING_ASM",
-      "name": "sprite_make_wnd",
-      "recipe": "recipes/sprite_make_wnd.json",
-      "start": 150540
-    },
-    {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 154358,
-      "id": "raw_24ce4_25af6",
-      "kind": "UNRESOLVED_RAW",
-      "start": 150756
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 154388,
-      "id": "load_25af6",
-      "kind": "MATCHING_ASM",
-      "name": "sprite_set_1_from_argptr",
-      "recipe": "recipes/sprite_set_1_from_argptr.json",
-      "start": 154358
-    },
-    {
       "classification": "GAME_ASM",
       "end": 154406,
-      "id": "asm_load_25b14",
+      "id": "asm012_150408",
       "kind": "MATCHING_ASM",
-      "name": "sprite_copy_2_to_1",
-      "recipe": "recipes/sprite_copy_2_to_1.json",
-      "start": 154388
+      "module_form": "asm-module",
+      "name": "asm012_150408",
+      "recipe": "recipes/asm012_150408.json",
+      "start": 150408
     },
     {
       "classification": "GAME_ASM",
@@ -9173,11 +8331,22 @@
       "start": 154406
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 155080,
-      "id": "raw_25b76_25dc8",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_ASM",
+      "end": 154702,
+      "id": "asm_load_25b76",
+      "kind": "MATCHING_ASM",
+      "name": "sub_35B76",
+      "recipe": "recipes/sub_35B76.json",
       "start": 154486
+    },
+    {
+      "classification": "GAME_ASM",
+      "end": 155080,
+      "id": "load_25c4e",
+      "kind": "MATCHING_ASM",
+      "name": "sub_35C4E",
+      "recipe": "recipes/sub_35C4E.json",
+      "start": 154702
     },
     {
       "classification": "GAME_ASM",
@@ -9198,10 +8367,12 @@
       "start": 155110
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_ASM",
       "end": 155464,
-      "id": "raw_25e08_25f48",
-      "kind": "UNRESOLVED_RAW",
+      "id": "asm_load_25e08",
+      "kind": "MATCHING_ASM",
+      "name": "sub_35E08",
+      "recipe": "recipes/sub_35E08.json",
       "start": 155144
     },
     {
@@ -9232,42 +8403,70 @@
       "start": 155894
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 157618,
-      "id": "raw_261bc_267b2",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "end": 156230,
+      "id": "load_261bc",
+      "kind": "MATCHING_C",
+      "name": "sprite_1_unk4",
+      "recipe": "recipes/sprite_1_unk4.json",
       "start": 156092
     },
     {
       "classification": "GAME_C",
-      "end": 157668,
-      "id": "load_267b2",
+      "end": 156690,
+      "id": "load_26246",
       "kind": "MATCHING_C",
-      "name": "locate_many_resources",
-      "recipe": "recipes/locate_many_resources.json",
-      "start": 157618
+      "name": "preRender_wheel_helper3",
+      "recipe": "recipes/preRender_wheel_helper3.json",
+      "start": 156230
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_C",
+      "end": 157618,
+      "id": "load_26412",
+      "kind": "MATCHING_C",
+      "name": "preRender_sphere_helper2",
+      "recipe": "recipes/preRender_sphere_helper2.json",
+      "start": 156690
+    },
+    {
+      "classification": "GAME_C",
       "end": 157866,
-      "id": "raw_267e4_268aa",
-      "kind": "UNRESOLVED_RAW",
-      "start": 157668
+      "id": "obj_seg016_group",
+      "kind": "MATCHING_C",
+      "name": "obj_seg016_group",
+      "recipe": "recipes/obj_seg016_group.json",
+      "start": 157618
     },
     {
       "classification": "GAME_C",
       "end": 158450,
-      "id": "seg017_mouse_partial",
+      "id": "seg017_mouse_whole",
       "kind": "MATCHING_C",
-      "name": "seg017_mouse_partial",
-      "recipe": "recipes/seg017_mouse_partial.json",
+      "name": "seg017_mouse_whole",
+      "ownership_corrections": [
+        {
+          "basis": "link-frame-reassignment",
+          "previous": {
+            "data_intervals": [],
+            "end": 158452,
+            "kind": "MATCHING_C",
+            "start": 157866
+          },
+          "previous_owner": "seg017_mouse_whole",
+          "reason": "seg008 loads nopsub_36AF2 as the relocated far pointer 26AF:0002 (MOV AX,2 / MOV DX,26AFh at 102605, relocation 102609): its segment is framed 0x26AF, not seg017's 0x268A. [158450,158452) is therefore not part of this seg017 object, which ends at 158450 after nopsub_36ACA; a real LINK run otherwise produces 268A:0252."
+        }
+      ],
+      "recipe": "recipes/seg017_mouse_whole.json",
       "start": 157866
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_C",
       "end": 158452,
-      "id": "raw_26af2_26af4",
-      "kind": "UNRESOLVED_RAW",
+      "id": "load_26af2",
+      "kind": "MATCHING_C",
+      "name": "nopsub_36AF2",
+      "recipe": "recipes/nopsub_36AF2.json",
       "start": 158450
     },
     {
@@ -9289,10 +8488,12 @@
       "start": 158469
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_C",
       "end": 158654,
-      "id": "raw_26b16_26bbe",
-      "kind": "UNRESOLVED_RAW",
+      "id": "load_26b16",
+      "kind": "MATCHING_C",
+      "name": "preRender_wheel_helper2",
+      "recipe": "recipes/preRender_wheel_helper2.json",
       "start": 158486
     },
     {
@@ -9305,11 +8506,49 @@
       "start": 158654
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 159930,
-      "id": "raw_26be8_270ba",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "end": 158846,
+      "id": "load_26be8",
+      "kind": "MATCHING_C",
+      "name": "heapsort_by_order",
+      "recipe": "recipes/heapsort_by_order.json",
       "start": 158696
+    },
+    {
+      "classification": "GAME_C",
+      "end": 159424,
+      "id": "load_26c7e",
+      "kind": "MATCHING_C",
+      "name": "preRender_wheel",
+      "recipe": "recipes/preRender_wheel.json",
+      "start": 158846
+    },
+    {
+      "classification": "GAME_C",
+      "end": 159530,
+      "id": "load_26ec0",
+      "kind": "MATCHING_C",
+      "name": "preRender_wheel_helper",
+      "recipe": "recipes/preRender_wheel_helper.json",
+      "start": 159424
+    },
+    {
+      "classification": "GAME_C",
+      "end": 159790,
+      "id": "seg024_matrot",
+      "kind": "MATCHING_C",
+      "name": "seg024_matrot",
+      "recipe": "recipes/seg024_matrot.json",
+      "start": 159530
+    },
+    {
+      "classification": "GAME_C",
+      "end": 159930,
+      "id": "load_2702e",
+      "kind": "MATCHING_C",
+      "name": "sub_3702E",
+      "recipe": "recipes/sub_3702E.json",
+      "start": 159790
     },
     {
       "classification": "GAME_C",
@@ -9321,147 +8560,140 @@
       "start": 159930
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 160690,
-      "id": "raw_270d2_273b2",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 198570,
+          "segment": "_DATA",
+          "start": 198148,
+          "target": {
+            "sha256": "acdcd1641ff9c0b045d3dece32b18dfbfdb04f501da334640fc359277b26bd0d",
+            "size": 422
+          }
+        }
+      ],
+      "end": 165436,
+      "id": "obj_seg027",
+      "kind": "MATCHING_C",
+      "name": "obj_seg027",
+      "recipe": "recipes/obj_seg027.json",
       "start": 159954
     },
     {
-      "classification": "GAME_C",
-      "end": 160766,
-      "id": "audio_flag2_group",
-      "kind": "MATCHING_C",
-      "name": "audio_flag2_group",
-      "recipe": "recipes/audio_flag2_group.json",
-      "start": 160690
-    },
-    {
       "classification": "UNRESOLVED_MIXED",
-      "end": 161966,
-      "id": "raw_273fe_278ae",
+      "end": 166596,
+      "id": "raw_2863c_28ac4",
       "kind": "UNRESOLVED_RAW",
-      "start": 160766
+      "start": 165436
     },
     {
       "classification": "GAME_C",
-      "end": 161980,
-      "id": "load_278ae",
+      "end": 166634,
+      "id": "load_28ac4",
       "kind": "MATCHING_C",
-      "name": "nopsub_378AE",
-      "recipe": "recipes/nopsub_378AE.json",
-      "start": 161966
+      "name": "sub_38AC4",
+      "recipe": "recipes/sub_38AC4.json",
+      "start": 166596
     },
     {
       "classification": "GAME_C",
-      "end": 161994,
-      "id": "load_278bc",
+      "end": 166890,
+      "id": "load_28aea",
       "kind": "MATCHING_C",
-      "name": "nopsub_378BC",
-      "recipe": "recipes/nopsub_378BC.json",
-      "start": 161980
+      "name": "sub_38AEA",
+      "recipe": "recipes/sub_38AEA.json",
+      "start": 166634
+    },
+    {
+      "classification": "GAME_C",
+      "end": 166988,
+      "id": "load_28bea",
+      "kind": "MATCHING_C",
+      "name": "sub_38BEA",
+      "recipe": "recipes/sub_38BEA.json",
+      "start": 166890
+    },
+    {
+      "classification": "GAME_C",
+      "end": 167160,
+      "id": "load_28c4c",
+      "kind": "MATCHING_C",
+      "name": "audio_unk2",
+      "recipe": "recipes/audio_unk2.json",
+      "start": 166988
+    },
+    {
+      "classification": "GAME_C",
+      "end": 167398,
+      "id": "load_28cf8",
+      "kind": "MATCHING_C",
+      "name": "sub_38CF8",
+      "recipe": "recipes/sub_38CF8.json",
+      "start": 167160
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 162872,
-      "id": "raw_278ca_27c38",
+      "end": 168072,
+      "id": "raw_28de6_29088",
       "kind": "UNRESOLVED_RAW",
-      "start": 161994
+      "start": 167398
     },
     {
       "classification": "GAME_C",
-      "end": 162884,
-      "id": "load_27c38",
+      "end": 168136,
+      "id": "load_29088",
       "kind": "MATCHING_C",
-      "name": "sub_37C38",
-      "recipe": "recipes/sub_37C38.json",
-      "start": 162872
+      "name": "sub_39088",
+      "recipe": "recipes/sub_39088.json",
+      "start": 168072
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 165114,
-      "id": "raw_27c44_284fa",
+      "end": 169532,
+      "id": "raw_290c8_2963c",
       "kind": "UNRESOLVED_RAW",
-      "start": 162884
+      "start": 168136
     },
     {
       "classification": "GAME_C",
-      "end": 165140,
-      "id": "load_284fa",
+      "end": 170342,
+      "id": "group_3963C_3968A_39700",
       "kind": "MATCHING_C",
-      "name": "audioresource_get_dword",
-      "recipe": "recipes/audioresource_get_dword.json",
-      "start": 165114
-    },
-    {
-      "classification": "GAME_C",
-      "end": 165160,
-      "id": "load_28514",
-      "kind": "MATCHING_C",
-      "name": "audioresource_get_word",
-      "recipe": "recipes/audioresource_get_word.json",
-      "start": 165140
-    },
-    {
-      "classification": "GAME_C",
-      "end": 165232,
-      "id": "load_28528",
-      "kind": "MATCHING_C",
-      "name": "audioresource_copy_4_bytes",
-      "recipe": "recipes/audioresource_copy_4_bytes.json",
-      "start": 165160
+      "name": "group_3963C_3968A_39700",
+      "recipe": "recipes/group_3963C_3968A_39700.json",
+      "start": 169532
     },
     {
       "classification": "UNRESOLVED_MIXED",
+      "end": 170708,
+      "id": "raw_29966_29ad4",
+      "kind": "UNRESOLVED_RAW",
+      "start": 170342
+    },
+    {
+      "classification": "GAME_C",
+      "end": 171213,
+      "id": "obj_seg029",
+      "kind": "MATCHING_C",
+      "name": "obj_seg029",
+      "recipe": "recipes/obj_seg029.json",
+      "start": 170708
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 171214,
+      "id": "raw_29ccd_29cce",
+      "kind": "UNRESOLVED_RAW",
+      "start": 171213
+    },
+    {
+      "classification": "GAME_C",
       "end": 171540,
-      "id": "raw_28570_29e14",
-      "kind": "UNRESOLVED_RAW",
-      "start": 165232
-    },
-    {
-      "classification": "GAME_C",
-      "end": 171556,
-      "id": "load_29e14",
+      "id": "load_29cce",
       "kind": "MATCHING_C",
-      "name": "file_load_shape2d_nofatal2",
-      "recipe": "recipes/file_load_shape2d_nofatal2.json",
-      "start": 171540
-    },
-    {
-      "classification": "GAME_C",
-      "end": 171596,
-      "id": "load_29e24",
-      "kind": "MATCHING_C",
-      "name": "file_combine_and_find",
-      "recipe": "recipes/file_combine_and_find.json",
-      "start": 171556
-    },
-    {
-      "classification": "GAME_C",
-      "end": 171602,
-      "id": "load_29e4c",
-      "kind": "MATCHING_C",
-      "name": "file_find_next_alt",
-      "recipe": "recipes/file_find_next_alt.json",
-      "start": 171596
-    },
-    {
-      "classification": "GAME_C",
-      "end": 171604,
-      "id": "load_29e52",
-      "kind": "MATCHING_C",
-      "name": "nullsub_1",
-      "recipe": "recipes/nullsub_1.json",
-      "start": 171602
-    },
-    {
-      "classification": "GAME_C",
-      "end": 171606,
-      "id": "load_29e54",
-      "kind": "MATCHING_C",
-      "name": "nullsub_2",
-      "recipe": "recipes/nullsub_2.json",
-      "start": 171604
+      "name": "audio_make_filename",
+      "recipe": "recipes/audio_make_filename.json",
+      "start": 171214
     },
     {
       "classification": "GAME_C",
@@ -9469,87 +8701,100 @@
         {
           "end": 199481,
           "segment": "_DATA",
-          "start": 199447,
+          "start": 199442,
           "target": {
-            "sha256": "f6896d538de8739bdbb03861d6b4d66280d5aee946b26a094974eaa9b66133e0",
-            "size": 34
+            "sha256": "685b4a693011128b7632d102704b5e349a0107998047bc0341f26e2aa7b7f700",
+            "size": 39
           }
         }
       ],
-      "end": 173148,
-      "id": "init_main",
-      "kind": "MATCHING_C",
-      "name": "init_main",
-      "recipe": "recipes/init_main.json",
-      "start": 171606
-    },
-    {
-      "classification": "GAME_C",
-      "end": 173152,
-      "id": "load_2a45c",
-      "kind": "MATCHING_C",
-      "name": "get_0",
-      "recipe": "recipes/get_0.json",
-      "start": 173148
-    },
-    {
-      "classification": "GAME_C",
-      "end": 173188,
-      "id": "load_2a460",
-      "kind": "MATCHING_C",
-      "name": "mmgr_alloc_resbytes",
-      "recipe": "recipes/mmgr_alloc_resbytes.json",
-      "start": 173152
-    },
-    {
-      "classification": "GAME_C",
-      "end": 173206,
-      "id": "load_2a484",
-      "kind": "MATCHING_C",
-      "name": "mmgr_get_res_ofs_diff_scaled",
-      "recipe": "recipes/mmgr_get_res_ofs_diff_scaled.json",
-      "start": 173188
-    },
-    {
-      "classification": "GAME_C",
       "end": 173238,
-      "id": "load_2a496",
+      "id": "obj_seg031",
       "kind": "MATCHING_C",
-      "name": "mmgr_get_chunk_size_bytes",
-      "recipe": "recipes/mmgr_get_chunk_size_bytes.json",
-      "start": 173206
+      "name": "obj_seg031",
+      "ownership_corrections": [
+        {
+          "basis": "link-data-alignment",
+          "previous": {
+            "data_intervals": [
+              {
+                "end": 199481,
+                "segment": "_DATA",
+                "start": 199447,
+                "target": {
+                  "sha256": "f6896d538de8739bdbb03861d6b4d66280d5aee946b26a094974eaa9b66133e0",
+                  "size": 34
+                }
+              }
+            ],
+            "end": 173238,
+            "kind": "MATCHING_C",
+            "start": 171540
+          },
+          "previous_owner": "obj_seg031",
+          "reason": "MSC _DATA SEGDEFs are WORD aligned, so the object's _DATA cannot start at odd 199447. The preceding 5 bytes 'pc15' are the writable driver-name array that init_main of this object patches (audiodriverstring[0..1]); it is defined here (char audiodriverstring[] = \"pc15\"), so _DATA starts at even 199442 at its reviewed alias address."
+        }
+      ],
+      "recipe": "recipes/obj_seg031.json",
+      "start": 171540
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 175280,
-      "id": "raw_2a4b6_2acb0",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 199484,
+          "segment": "_DATA",
+          "start": 199482,
+          "target": {
+            "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4",
+            "size": 2
+          }
+        }
+      ],
+      "end": 174424,
+      "id": "obj_seg032_group",
+      "kind": "MATCHING_C",
+      "name": "obj_seg032_group",
+      "recipe": "recipes/obj_seg032_group.json",
       "start": 173238
     },
     {
       "classification": "GAME_C",
-      "end": 175320,
-      "id": "load_2acb0",
+      "end": 174550,
+      "id": "seg033_mcgawnd",
       "kind": "MATCHING_C",
-      "name": "file_load_shape2d_palmap_init",
-      "recipe": "recipes/file_load_shape2d_palmap_init.json",
-      "start": 175280
+      "name": "seg033_mcgawnd",
+      "recipe": "recipes/seg033_mcgawnd.json",
+      "start": 174424
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 176268,
-      "id": "raw_2acd8_2b08c",
-      "kind": "UNRESOLVED_RAW",
-      "start": 175320
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 199705,
+          "segment": "_DATA",
+          "start": 199666,
+          "target": {
+            "sha256": "2d229ee340998648e783ff1d06a99c822fe4e64f99c7657a7f28ea800e85d0cc",
+            "size": 39
+          }
+        }
+      ],
+      "end": 175320,
+      "id": "seg034_shape2d_group",
+      "kind": "MATCHING_C",
+      "name": "seg034_shape2d_group",
+      "recipe": "recipes/seg034_shape2d_group.json",
+      "start": 174550
     },
     {
       "classification": "GAME_C",
       "end": 176314,
-      "id": "load_2b08c",
+      "id": "obj_seg035_group",
       "kind": "MATCHING_C",
-      "name": "parse_shape2d_helper3",
-      "recipe": "recipes/parse_shape2d_helper3.json",
-      "start": 176268
+      "name": "obj_seg035_group",
+      "recipe": "recipes/obj_seg035_group.json",
+      "start": 175320
     },
     {
       "classification": "GAME_C",
@@ -9561,31 +8806,120 @@
       "start": 176314
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 178871,
-      "id": "raw_2b12a_2bab7",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "end": 176564,
+      "id": "load_2b12a",
+      "kind": "MATCHING_C",
+      "name": "file_load_shape2d_expandedsize",
+      "recipe": "recipes/file_load_shape2d_expandedsize.json",
       "start": 176426
     },
     {
+      "basis": "link-paragraph-alignment-v1",
+      "end": 176576,
+      "id": "fill_2b1b4_2b1c0",
+      "kind": "LINK_FILL",
+      "object": "load_2b12a",
+      "start": 176564
+    },
+    {
       "classification": "GAME_C",
-      "end": 178875,
-      "id": "print_highscore_entry:_DATA",
+      "end": 176624,
+      "far_data": true,
+      "id": "fardata_11036",
       "kind": "MATCHING_C_DATA",
-      "parent": "load_018d4",
-      "segment": "_DATA",
-      "start": 178871,
+      "module_form": "data-only",
+      "name": "fardata_11036",
+      "recipe": "recipes/fardata_11036.json",
+      "segment": "UNIT5_DATA",
+      "start": 176576,
       "target": {
-        "sha256": "14a4cc14b45ccadc5b677eeab759dcb62bdde391ceba9e8e97cfafdf6c265f08",
-        "size": 4
+        "sha256": "15ebad889387c48c0197ebb08115db8f7ff1725f7a754f31cc6ce463acd4670f",
+        "size": 48
+      }
+    },
+    {
+      "classification": "GAME_C",
+      "end": 178032,
+      "far_data": true,
+      "id": "fardata_11039",
+      "kind": "MATCHING_C_DATA",
+      "module_form": "data-only",
+      "name": "fardata_11039",
+      "recipe": "recipes/fardata_11039.json",
+      "segment": "UNIT5_DATA",
+      "start": 176624,
+      "target": {
+        "sha256": "9ecfc80db6eaf751582e01d4e27e3734d5c45ebb5c52ab78d5295d8259b1bb7a",
+        "size": 1408
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 178098,
+      "id": "raw_2b770_2b7b2",
+      "kind": "UNRESOLVED_RAW",
+      "start": 178032
+    },
+    {
+      "classification": "GAME_C",
+      "end": 179538,
+      "id": "obj_seg000:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg000",
+      "segment": "_DATA",
+      "start": 178098,
+      "target": {
+        "sha256": "28a895194065770c7724ff166c3d3276614f1da97f38c7a5712ef5457a3390de",
+        "size": 1440
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 179736,
+      "id": "raw_2bd52_2be18",
+      "kind": "UNRESOLVED_RAW",
+      "start": 179538
+    },
+    {
+      "classification": "GAME_C",
+      "end": 179756,
+      "id": "obj_seg001_complete:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg001_complete",
+      "segment": "_DATA",
+      "start": 179736,
+      "target": {
+        "sha256": "155dac3640d517b89f380a7e187f1bb13dcb32039d3cfeb905bc2e9a484ae32e",
+        "size": 20
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 180578,
+      "id": "raw_2be2c_2c162",
+      "kind": "UNRESOLVED_RAW",
+      "start": 179756
+    },
+    {
+      "classification": "GAME_C",
+      "end": 180662,
+      "id": "obj_seg003:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg003",
+      "segment": "_DATA",
+      "start": 180578,
+      "target": {
+        "sha256": "65b1c989fb30f7416510db1928970bbb170078235fecb29face71f6acdb8958e",
+        "size": 84
       }
     },
     {
       "classification": "UNRESOLVED_MIXED",
       "end": 180672,
-      "id": "raw_2babb_2c1c0",
+      "id": "raw_2c1b6_2c1c0",
       "kind": "UNRESOLVED_RAW",
-      "start": 178875
+      "start": 180662
     },
     {
       "classification": "GAME_C",
@@ -9603,71 +8937,177 @@
       }
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 190590,
-      "id": "raw_2e718_2e87e",
-      "kind": "UNRESOLVED_RAW",
-      "start": 190232
-    },
-    {
       "classification": "GAME_C",
-      "end": 190595,
-      "id": "file_load_replay:_DATA",
+      "end": 190343,
+      "id": "obj_seg004:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "load_12c92",
+      "parent": "obj_seg004",
       "segment": "_DATA",
-      "start": 190590,
+      "start": 190232,
       "target": {
-        "sha256": "40d513641f46da2d55faff2ba512b607038dd60d8d8431611676c1cd051f0e5a",
-        "size": 5
+        "sha256": "5d6d51f4a069cba832f90a0bfa5c2e920653598f987d8265f4696d0350962258",
+        "size": 111
       }
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 191401,
-      "id": "raw_2e883_2eba9",
+      "end": 190344,
+      "id": "raw_2e787_2e788",
       "kind": "UNRESOLVED_RAW",
-      "start": 190595
+      "start": 190343
     },
     {
       "classification": "GAME_C",
-      "end": 191403,
-      "id": "file_build_path:_DATA",
+      "end": 191064,
+      "id": "obj_seg005:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "load_185c2",
+      "parent": "obj_seg005",
       "segment": "_DATA",
-      "start": 191401,
+      "start": 190344,
       "target": {
-        "sha256": "1472d0645f552820b5472b91341c2d9a118c8a96f4a72758d6aeeb14c10a1107",
+        "sha256": "ae58b7e032e63d4c4764c57d9c4d1671f4c4f73f6cdb8f8bae65fac9c4cad523",
+        "size": 720
+      }
+    },
+    {
+      "classification": "GAME_C",
+      "end": 191073,
+      "id": "obj_seg006:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg006",
+      "segment": "_DATA",
+      "start": 191064,
+      "target": {
+        "sha256": "fc739b847b31314860186a9c52f502e4a15ea1554f3ddd320f0eb5d56d8387e4",
+        "size": 9
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 191310,
+      "id": "raw_2ea61_2eb4e",
+      "kind": "UNRESOLVED_RAW",
+      "start": 191073
+    },
+    {
+      "classification": "GAME_C",
+      "end": 191519,
+      "id": "obj_seg008:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg008",
+      "segment": "_DATA",
+      "start": 191310,
+      "target": {
+        "sha256": "e2e399bc64b6594a45107d5718e8422160a839284b8b203e511647899b09ffe2",
+        "size": 209
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 191520,
+      "id": "raw_2ec1f_2ec20",
+      "kind": "UNRESOLVED_RAW",
+      "start": 191519
+    },
+    {
+      "classification": "GAME_C",
+      "end": 191625,
+      "id": "obj_seg009:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg009",
+      "segment": "_DATA",
+      "start": 191520,
+      "target": {
+        "sha256": "d88918cc94015602a63b9c5700228f3c4937aaff98113a1ba7b7703b0333129d",
+        "size": 105
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 198148,
+      "id": "raw_2ec89_30604",
+      "kind": "UNRESOLVED_RAW",
+      "start": 191625
+    },
+    {
+      "classification": "GAME_C",
+      "end": 198570,
+      "id": "obj_seg027:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg027",
+      "segment": "_DATA",
+      "start": 198148,
+      "target": {
+        "sha256": "acdcd1641ff9c0b045d3dece32b18dfbfdb04f501da334640fc359277b26bd0d",
+        "size": 422
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 199442,
+      "id": "raw_307aa_30b12",
+      "kind": "UNRESOLVED_RAW",
+      "start": 198570
+    },
+    {
+      "classification": "GAME_C",
+      "end": 199481,
+      "id": "obj_seg031:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg031",
+      "segment": "_DATA",
+      "start": 199442,
+      "target": {
+        "sha256": "685b4a693011128b7632d102704b5e349a0107998047bc0341f26e2aa7b7f700",
+        "size": 39
+      }
+    },
+    {
+      "classification": "UNRESOLVED_MIXED",
+      "end": 199482,
+      "id": "raw_30b39_30b3a",
+      "kind": "UNRESOLVED_RAW",
+      "start": 199481
+    },
+    {
+      "classification": "GAME_C",
+      "end": 199484,
+      "id": "obj_seg032_group:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg032_group",
+      "segment": "_DATA",
+      "start": 199482,
+      "target": {
+        "sha256": "869f1dfb999a452f497a4cf7f44db2d6ee661f74a9e7e05251bc1420e50672d4",
         "size": 2
       }
     },
     {
       "classification": "UNRESOLVED_MIXED",
-      "end": 199447,
-      "id": "raw_2ebab_30b17",
+      "end": 199666,
+      "id": "raw_30b3c_30bf2",
       "kind": "UNRESOLVED_RAW",
-      "start": 191403
+      "start": 199484
     },
     {
       "classification": "GAME_C",
-      "end": 199481,
-      "id": "init_main:_DATA",
+      "end": 199705,
+      "id": "seg034_shape2d_group:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "init_main",
+      "parent": "seg034_shape2d_group",
       "segment": "_DATA",
-      "start": 199447,
+      "start": 199666,
       "target": {
-        "sha256": "f6896d538de8739bdbb03861d6b4d66280d5aee946b26a094974eaa9b66133e0",
-        "size": 34
+        "sha256": "2d229ee340998648e783ff1d06a99c822fe4e64f99c7657a7f28ea800e85d0cc",
+        "size": 39
       }
     },
     {
       "classification": "UNRESOLVED_MIXED",
       "end": 200000,
-      "id": "raw_30b39_30d40",
+      "id": "raw_30c19_30d40",
       "kind": "UNRESOLVED_RAW",
-      "start": 199481
+      "start": 199705
     }
   ],
   "schema": 1

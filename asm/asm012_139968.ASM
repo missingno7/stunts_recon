@@ -1,11 +1,12 @@
 .8086
+extrn _data_303C2:word
 VECTOR struc
 vx dw ?
 vy dw ?
 vz dw ?
 VECTOR ends
-_TEXT segment word public 'CODE'
-_TEXT ends
+S012_TEXT segment word public 'CODE'
+S012_TEXT ends
 _DATA segment word public 'DATA'
 _DATA ends
 CONST segment word public 'CONST'
@@ -13,7 +14,7 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
-assume cs:_TEXT, ds:DGROUP
+assume cs:S012_TEXT, ds:DGROUP
 extrn _word_303AE:word
 extrn _word_303B2:word
 extrn _word_303B6:word
@@ -29,8 +30,8 @@ extrn _word_303BE:word
 extrn _word_303C0:word
 extrn _mmgr_release:far
 extrn _fatal_error:far
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
 public _nopsub_322C0
 public _nopsub_322DF
 public _set_projection
@@ -333,9 +334,9 @@ _sprite_free_wnd proc far
 loc_324EC:
     mov     ax, ss
     mov     ds, ax
-    lea     ax, ds:[4C52h]
+    lea     ax, ds:[_data_303C2]
     push    ax
     call    far ptr _fatal_error
 _sprite_free_wnd endp
-_TEXT ends
+S012_TEXT ends
 end

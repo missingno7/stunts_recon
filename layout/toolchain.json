@@ -832,7 +832,62 @@
         "/Gs"
       ],
       "historical_version_proven": false,
+      "pass_environment": {"schema": "dos-pass-environment-v1", "dos_directory": "C:\\TOOLS\\MSC-5.00", "temp": ".",
+        "pass_memory_paragraphs": {"runner": {"C1": 39601, "C2": 39601, "C3": 39601}, "independent_runner": {"C1": 39597, "C2": 39601, "C3": 39599}}},
       "status": "multiple local game matches; 5.0 and 5.1 remain indistinguishable on accepted functions"
+    },
+    "msc600a-medium-zi": {
+      "directory": "C:/tools/msc-6.00a-simantw/BIN", "logical_directory": "toolchain/msc600a",
+      "executable": "CL.EXE",
+      "files": [
+        {"path": "toolchain/msc600a/API.LIB", "sha256": "65579446a378c8b6db04f9b250535cf0d4fe5099d674a9ff78b872f0a64682f7", "size": 74240},
+        {"path": "toolchain/msc600a/APILMR.OBJ", "sha256": "d6f469457160122513ff2be166fa2ea6a9ee8010e11ff640de58ad8aa3c9b706", "size": 112},
+        {"path": "toolchain/msc600a/BIND.EXE", "sha256": "0788d254b5c4855a55bc0a91a9f960b9e771d0e17f36555f635fc8946ab1b887", "size": 39255},
+        {"path": "toolchain/msc600a/C1.ERR", "sha256": "637444915870f3283d5df41c5cdb1be8c32cc6c19b080f2bb3891edbc3751c6e", "size": 19500},
+        {"path": "toolchain/msc600a/C1.EXE", "sha256": "286cee7fe1fe3770d98f198c57350a62596095e83ad6c106c1a59101490b6507", "size": 148060},
+        {"path": "toolchain/msc600a/C1L.EXE", "sha256": "d01c20b4a39185075f90b17b3ae6b53d27b8fbeda39f53d96641cf9d7825c731", "size": 189952},
+        {"path": "toolchain/msc600a/C2.EXE", "sha256": "1b370eb86adc28e23ddca9d89c9ae627f8e280b28e63c67c4c3824004d4059d7", "size": 354338},
+        {"path": "toolchain/msc600a/C23.ERR", "sha256": "22944a0dffef336c0ebb8f6d5aeb97b4dbeb5c9758a48759557176bff49d1151", "size": 3649},
+        {"path": "toolchain/msc600a/C2L.EXE", "sha256": "48f7d15d0416b56dcb5d9e348b3561835f63097c88fe9f55d7883bfff33d0151", "size": 431786},
+        {"path": "toolchain/msc600a/C3.EXE", "sha256": "224727d55a715057288d56c00fdd524700f1354e79b487705f1888283c079344", "size": 150076},
+        {"path": "toolchain/msc600a/C3L.EXE", "sha256": "2660fae853cc8bfb2ca2aefa36b29f9af48d934a53d6feabdebaec18deaaa9b7", "size": 172987},
+        {"path": "toolchain/msc600a/CDLLOBJS.DEF", "sha256": "15e427dbf0836b53eac60e75afe815b29e50cdd4900fed380ae8745dd87c004f", "size": 6336},
+        {"path": "toolchain/msc600a/CDLLOBJS.LIB", "sha256": "fff574a6910c72c0be3df9d464b098af13c37d5c5fb7a82a4ccc35625f22808f", "size": 258829},
+        {"path": "toolchain/msc600a/CDLLSUPP.LIB", "sha256": "edd922efb4a8dccc7aaec4bb372568b12405f28844fbb4eedb20652d3c0faf8e", "size": 23433},
+        {"path": "toolchain/msc600a/CL.ERR", "sha256": "ca22f37e5e0c09faebde9e4d549dd1f53523cc6f23049d2239a040cd19a424e7", "size": 1656},
+        {"path": "toolchain/msc600a/CL.EXE", "sha256": "9f452b39def257b3e07a9f4e07857d6d8a6e36da869a30c6e20ac51ea98b9816", "size": 28858},
+        {"path": "toolchain/msc600a/CL.MSG", "sha256": "3379f283aec74842bc82205e4c848d759e6e2dcbb6d4820eec9719f1297213ec", "size": 2697},
+        {"path": "toolchain/msc600a/CLIBCP.LIB", "sha256": "5bbd883405ecffcbe4f35e227ed29119e7decbc0f84a9c2d63a70e6c1f1352aa", "size": 135645},
+        {"path": "toolchain/msc600a/CV.EXE", "sha256": "9fa2b70f329513a5a37ee67a0dd7cc2f8cf911ed82059a779eac6c45c1ace4f7", "size": 519648},
+        {"path": "toolchain/msc600a/CVP.EXE", "sha256": "aea778749ea81556825ad7cbc58ff0b09d230d2e46bc0302f9e684308f3bed14", "size": 362968},
+        {"path": "toolchain/msc600a/CVPACK.EXE", "sha256": "3b02810b9f864221a4a210fe70c465fb71982c832c49eb7343f2d9a14cf7f062", "size": 49661},
+        {"path": "toolchain/msc600a/EXEHDR.EXE", "sha256": "278e6deffd6f5be930e7ea352d78810b54bdced5c8d2820c82532625dc20b94d", "size": 46277},
+        {"path": "toolchain/msc600a/GRTEXTP.LIB", "sha256": "08a59123d517671bb777e55802dcd198ed04a8c9446a8558c3e370b599ea4931", "size": 18707},
+        {"path": "toolchain/msc600a/ILINK.EXE", "sha256": "14a45b760c632251e8de0c9414edc92f24764e571cbb2ccc76d5bc23efbf8690", "size": 104335},
+        {"path": "toolchain/msc600a/IMPLIB.EXE", "sha256": "e5eb0f2afd19e08b793991588dfcc7967fb94f0b39291389b91f8906c2806f38", "size": 34727},
+        {"path": "toolchain/msc600a/LIB.EXE", "sha256": "418aec4161ef09084aaf2bed66e4de9e007eb6f2bedd1990b73707f624336ff3", "size": 54736},
+        {"path": "toolchain/msc600a/LINK.EXE", "sha256": "163d8b86c18b93ccae9b2380d850cd42a9a5e1fd89a163b16170979afbbabb07", "size": 142015},
+        {"path": "toolchain/msc600a/LLIBCDLL.LIB", "sha256": "c558ded5ec1982e06d8f61480a02a6ad89095d67775cd4d47812a7d5d296b2fd", "size": 224177},
+        {"path": "toolchain/msc600a/LLIBCP.LIB", "sha256": "17b225b7214f827920a9ce0ab76b68dc573cf62e68bc2a8adff7aeb7336d8789", "size": 137181},
+        {"path": "toolchain/msc600a/MGRAPHFA.LIB", "sha256": "5b1ecd33db6ab5c20944c2bd165f8b38c22d9ee4ef0770fe5f972addf24ce88a", "size": 3619},
+        {"path": "toolchain/msc600a/MGRAPHFP.LIB", "sha256": "855b25e1dbd031bb547de000b47afee3dfb95fc4aa39674cc721da9132be436d", "size": 3619},
+        {"path": "toolchain/msc600a/MLIBCP.LIB", "sha256": "0bad0e18a0d3dae2480b1b4f8c675f32ab5ebf7d04b7c8b6875193afb1b03c82", "size": 130495},
+        {"path": "toolchain/msc600a/NMAKE.EXE", "sha256": "860e38b8a104e25f796d91aa85978084b2cd0e5f2605b6df719c5718b3760444", "size": 86539},
+        {"path": "toolchain/msc600a/OS2.LIB", "sha256": "c0d61d96c4f62b982c91f198cb36d4e778d7ac823683a9050571542de2c503a6", "size": 131671},
+        {"path": "toolchain/msc600a/QCC.EXE", "sha256": "185fc02221832803799c33eda0e3eb1329c78fbc7a9ac050095c6dfc24439be7", "size": 221234},
+        {"path": "toolchain/msc600a/RC.EXE", "sha256": "c06838d8e40c0ecd20c0ab5c58f1af82af6ec1bb54c076d06f0bde652399b418", "size": 81697},
+        {"path": "toolchain/msc600a/RCPP.ERR", "sha256": "8aa38c50d5e78d678cb9f1bd2a0fd4327731c52a9d1039c673d21c918b0bfda2", "size": 15314},
+        {"path": "toolchain/msc600a/RCPP.EXE", "sha256": "922ee8eccf59fa3038ecfcd23308a20d5962e32a76d48a4ad41ce9dd23474c0a", "size": 52686},
+        {"path": "toolchain/msc600a/SGRAPHFP.LIB", "sha256": "ae5e6a790536e6f5788b221e16a258816c267cdedb65c478167e65b9e2dec735", "size": 3619},
+        {"path": "toolchain/msc600a/SLIBCP.LIB", "sha256": "bb3b6428fd2dbdd6b2ef8e6ddebcb0ee6e949e7c19193f18dace680b3a79b400", "size": 128959}
+      ],
+      "flags": ["/AM", "/Os", "/Oe", "/Og", "/Gs", "/Zi"],
+      "register_gated": "CC-MSC600A-*",
+      "source_extensions": {"inline_asm": "readable-mnemonics-v1", "pragma_optimize": true},
+      "object_debug_segments": "msc6-codeview-debsym-debtyp-v1",
+      "pass_environment": {"schema": "dos-pass-environment-v1", "dos_directory": "C:\\TOOLS\\MSC-6.00A-SIMANTW\\BIN", "temp": "."},
+      "historical_version_proven": false,
+      "status": "Register-gated per-object profile (USER DECISION 2026-09-27): only recipes of objects with a SUPPORTED CC-MSC600A-* register entry (seg007), with the ruled flag set; runs under the pinned MS-DOS Player (byte-identical to DOSBox-X, s007c6 runner_equiv.json)."
     },
     "msc510-medium": {
       "directory": "C:/tools/msc-5.10", "logical_directory": "toolchain/msc510",
@@ -1765,15 +1820,26 @@
         "/Gs"
       ],
       "historical_version_proven": false,
+      "pass_environment": {"schema": "dos-pass-environment-v1", "dos_directory": "C:\\TOOLS\\MSC-5.10", "temp": ".",
+        "pass_memory_paragraphs": {"runner": {"C1": 40159, "C2": 40159, "C3": 40159}, "independent_runner": {"C1": 40155, "C2": 40159, "C3": 40157}}},
       "status": "multiple local game matches; 5.0 and 5.1 remain indistinguishable on accepted functions"
     }
   },
   "provenance": "recovery/msc510-provenance.json and recovery/msc500-provenance.json",
   "quickc": "1.00/1.01 available under same directories, BAKPAT rejected for production; 2.x not investigated",
+  "independent_runner": {
+    "path": "C:/tools/dosbox-x/dosbox-x.exe",
+    "sha256": "b028a4d328302ea270722dec69f3ec3a10ebf76beba72a51970db33a88df2bf6",
+    "size": 20481536,
+    "conf": ["[dosbox]", "machine=mda", "allow more than 640kb base memory=true", "[dos]", "minimum mcb free=716"],
+    "note": "Reproduces the pinned runner's pass memory: arena end AFFFh (MDA machine, base memory past 640 KB) and C2 at PSP 1320h (minimum mcb free). C1/C3 differ by 4/2 paragraphs only because DOSBox-X sizes each copied pass environment to its content while MS-DOS Player allocates 512 paragraphs. C compiles use a hash-verified read-only mirror of the profile at its pinned DOS pass directory."
+  },
   "runner": {
     "path": "C:/tools/nmlgcdos/msdos.exe",
     "sha256": "f7f6cb0a3e816c5edb13112d327c1bddbf7463fe7bf9a005ca1eb5317751bd02",
-    "size": 686592
+    "size": 686592,
+    "argv_options": ["-e", "-v5.00"],
+    "note": "Each C profile pins in pass_environment the free memory each MSC pass receives (paragraphs from its PSP to the end of the free arena at AFFFh), measured by tools/pass_environment.py (tools/probes/memprobe.c substituted with CL -Bn). Part of the pinned profile with the DOS-visible pass directory (FACT-compiler-memory-environment)."
   },
   "schema": 1
 }

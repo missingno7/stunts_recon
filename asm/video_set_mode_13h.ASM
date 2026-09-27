@@ -1,11 +1,11 @@
 .8086
-_TEXT segment word public 'CODE'
-assume cs:_TEXT
-extrn video_clear_color:far
-extrn video_add_exithandler:far
+S012_TEXT segment word public 'CODE'
+assume cs:S012_TEXT
+extrn _video_clear_color:far
+extrn _video_add_exithandler:far
 public _video_set_mode_13h
 _video_set_mode_13h proc far
- call far ptr video_add_exithandler
+ call far ptr _video_add_exithandler
  mov ax,40h
  mov es,ax
  mov ax,word ptr es:[10h]
@@ -21,9 +21,9 @@ _video_set_mode_13h proc far
  xor ax,ax
  push ax
  push ax
- call far ptr video_clear_color
+ call far ptr _video_clear_color
  add sp,4
  ret
 _video_set_mode_13h endp
-_TEXT ends
+S012_TEXT ends
 end
