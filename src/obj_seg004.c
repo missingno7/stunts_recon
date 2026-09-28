@@ -1,26 +1,39 @@
-/* Scratch whole-object candidate in target member order. */
-struct VECTOR { short x; short y; short z; };
-struct SHAPE3D { unsigned short numverts; struct VECTOR far *shape3d_verts; unsigned short numprimitives; unsigned char numpaints; unsigned char reserved; void far *primitives; void far *cull1; void far *cull2; };
-struct TRKOBJINFO { unsigned char noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; short arrowOrient; short *cameraDataOffset; union { struct { unsigned char opponent1,opponent2; } opponent; unsigned short cameraOffsetOverride; } cameraOverlay; unsigned char opponent3,opponentSpeedCode; };
-struct TRACKOBJECT { struct TRKOBJINFO *info; short rotation; struct SHAPE3D *shape,*lowShape; unsigned char overlay; char surface,ignoreZ,multiTile,physicalModel,unknown; };
-struct TrackNode { unsigned char column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; short parent; };
-struct GAMESTATE { unsigned char before_game_inputmode[0x3f5]; char game_inputmode; };
-struct WALLREC { short orientation,x,z; };
-struct GAMEINFO { char game_playercarid[4],game_playermaterial,game_playertransmission,game_opponenttype,game_opponentcarid[4],game_opponentmaterial,game_opponenttransmission,game_trackname[9]; unsigned short game_framespersec,game_recordedframes; };
+#define FAR far
+#define NEAR near
+#define HUGE huge
+#define FAST_TRIG_ANGLE_MASK 0x3FF
+#include "stunts_types.h"
+/* Scratch whole-object candidate in target member order. */ /* PORT: plain char signedness follows the pinned MSC target. */
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct VECTOR { I16S x; I16S y; I16S z; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct SHAPE3D { U16S  numverts; struct VECTOR far *shape3d_verts; U16S  numprimitives; U8  numpaints; U8  reserved; void far *primitives; void far *cull1; void far *cull2; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct TRKOBJINFO { U8  noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; I16S arrowOrient; I16S *cameraDataOffset; union { struct { U8  opponent1,opponent2; } opponent; U16S  cameraOffsetOverride; } cameraOverlay; U8  opponent3,opponentSpeedCode; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct TRACKOBJECT { struct TRKOBJINFO *info; I16S rotation; struct SHAPE3D *shape,*lowShape; U8  overlay; I8 surface,ignoreZ,multiTile,physicalModel,unknown; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct GAMESTATE { U8  before_game_inputmode[0x3f5]; I8 game_inputmode; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct WALLREC { I16S orientation,x,z; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct GAMEINFO { I8 game_playercarid[4],game_playermaterial,game_playertransmission,game_opponenttype,game_opponentcarid[4],game_opponentmaterial,game_opponenttransmission,game_trackname[9]; U16S  game_framespersec,game_recordedframes; };
 extern struct GAMESTATE core;
-extern int lnoffsets[30];
-extern int gterrtrk[30];
+extern I16 lnoffsets[30];
+extern I16 gterrtrk[30];
 int postable[30];
 int r_zp[30];
-extern int row_ctr_zs[30];
+extern I16 row_ctr_zs[30];
 int xcols[30];
-extern int trackctrpos2[30];
+extern I16 trackctrpos2[30];
 int z_ctr_pos[30];
-extern unsigned char far *td14tb;
-extern unsigned char far *td15p_9;
+extern U8  far *td14tb;
+extern U8  far *td15p_9;
 extern struct TRACKOBJECT trklst[215];
-extern int far sinfast(int),far cosfast(int),far mulscl(int,int);
-extern int far polradius2d(int,int),far polang(int,int);
+extern I16 far sinfast(I16),far cosfast(I16),far mulscl(I16,I16);
+extern I16 far polradius2d(I16,I16),far polang(I16,I16);
 short pl_i;
 short road_num;
 short wall_wallelement;
@@ -31,30 +44,30 @@ unsigned char test_pln;
 short hgthgt;
 short x_course_part;
 short road_elem_ctrz;
-extern short hillconsts[];
+extern I16S hillconsts[];
 struct WALLREC far *wallrecrecord;
-extern unsigned char far *g_planlist;
-extern unsigned char far *plncurrptr;
-extern short wall_facingang;
+extern U8  far *g_planlist;
+extern U8  far *plncurrptr;
+extern I16S wall_facingang;
 short wallanchor_x;
-extern short wallanchor_z;
-extern short highEntrZBounds0[],highEntrXInnBounds0[],highEntrXOutBounds0[];
-extern short loopSurface_ZBounds0[],loopSurface_XBounds0[];
-extern short loopBase_ZBounds0[],loopBae_InnXBounds0[],loopBase_OutXBounds0[];
-extern short bkRdEntr_triang_zAdjust[],corkLR_negZBound[],corkLR_posZBound[];
+extern I16S wallanchor_z;
+extern I16S highEntrZBounds0[],highEntrXInnBounds0[],highEntrXOutBounds0[];
+extern I16S loopSurface_ZBounds0[],loopSurface_XBounds0[];
+extern I16S loopBase_ZBounds0[],loopBae_InnXBounds0[],loopBase_OutXBounds0[];
+extern I16S bkRdEntr_triang_zAdjust[],corkLR_negZBound[],corkLR_posZBound[];
 void far *g_game13dresource;
 void far *game2res_pointer;
 void far *ptr_model_active;
-extern long far mmgr_get_res_ofs_diff_scaled(void),far mmgr_get_chunk_size_bytes(char far *);
-extern char far *file_load_3dres(char *name);
-extern char far *locate_shape_fatal();
-extern char far *locate_shape_nofatal();
-extern void shape3d_init_shape(char far *,struct SHAPE3D *);
+extern I32 far mmgr_get_res_ofs_diff_scaled(void),far mmgr_get_chunk_size_bytes(I8 far *);
+extern I8 far *file_load_3dres(I8 *name);
+extern I8 far *locate_shape_fatal();
+extern I8 far *locate_shape_nofatal();
+extern void shape3d_init_shape(I8 far *,struct SHAPE3D *);
 struct SHAPE3D g_shapes3d[130];
-extern char aBarn[116][5];
-extern char aGame1[],aGame2[];
-extern char aCar0[][5];
-extern char aStxxx[];
+extern I8 aBarn[116][5];
+extern I8 aGame1[],aGame2[];
+extern I8 aCar0[][5];
+extern I8 aStxxx[];
 char far *pl_carres_3d;
 char far *carcopyresourceptr;
 struct VECTOR pos_pt;
@@ -71,68 +84,69 @@ struct VECTOR opponent_pointc[6];
 struct VECTOR veh_od[6];
 short ywhlang[5];
 short buf_obase[5];
-extern short car_wheel_offsets[4];
+extern I16S car_wheel_offsets[4];
 extern struct VECTOR shape_template_points_a[],shape_template_points_b[],shape_template_points_c[],shape_template_points_d[],shape_template_points_e[],shape_template_points_f[];
 char g_road_piece_id;
 char trk_sample_count;
-extern char far *mmgr_alloc_resbytes(char *,long);
+extern I8 far *mmgr_alloc_resbytes(I8 *,I32);
 extern void far mmgr_free(void far *),far mmgr_release(void far *);
-extern char far *word_338A8;
-extern char far *word_33892;
-extern int bto_auxiliary1(int,int,struct VECTOR *);
-extern void wheel_update(struct VECTOR far *,int,short *,short *,struct VECTOR *,short *);
-extern unsigned char subst_hillroad(unsigned char,unsigned char);
+extern I8 far *word_338A8;
+extern I8 far *word_33892;
+extern I16 bto_auxiliary1(I16,I16,struct VECTOR *);
+extern void wheel_update(struct VECTOR far *,I16,I16S *,I16S *,struct VECTOR *,I16S *);
+extern U8  subst_hillroad(U8 ,U8 );
 short far *g_td01_track_filecpy;
-extern short far *trackdata_penalty_related;
+extern I16S far *trackdata_penalty_related;
 unsigned char far *td19hdl;
-extern unsigned char far *road_trk;
-extern unsigned char far *td_18_ref;
-extern unsigned char far *trkd23adr;
-extern unsigned char far *g_column_of_trkdata21_pth;
-extern unsigned char far *tdfrompathrow22;
+extern U8  far *road_trk;
+extern U8  far *td_18_ref;
+extern U8  far *trkd23adr;
+extern U8  far *g_column_of_trkdata21_pth;
+extern U8  far *tdfrompathrow22;
 int g_trackpiecescounter;
-extern unsigned short st_hdg;
-extern char idxtrk,tagtrk,g_hillf;
-extern unsigned char sampled_trk_column;
+extern U16S  st_hdg;
+extern I8 idxtrk,tagtrk,g_hillf;
+extern U8  sampled_trk_column;
 short gap_trackrow_1;
 unsigned char g_cur_track_row;
 unsigned short far *g_td08d;
-extern unsigned short far *td6_ptr_b;
+extern U16S  far *td6_ptr_b;
 unsigned short far *trackdat7;
 extern struct VECTOR far *td10checkptr;
 struct VECTOR far *trkptrpath;
 extern struct GAMEINFO globalgamesettings;
-extern unsigned char opponent_spd_tbl[16];
-extern short far *td3;
-extern char aOpp1[],opptext_label[];
-extern void far *file_load_resource_file(const char *);
-extern char far *locate_text_resource(void far *,const char *);
-extern char far *locate_shape_alt(void far *,const char *);
-extern void copy_string(char *,char far *);
+extern U8  opponent_spd_tbl[16];
+extern I16S far *td3;
+extern I8 aOpp1[],opptext_label[];
+extern void far *file_load_resource_file(const I8 *);
+extern I8 far *locate_text_resource(void far *,const I8 *);
+extern I8 far *locate_shape_alt(void far *,const I8 *);
+extern void copy_string(I8 *,I8 far *);
 extern void far unload_resource(void far *);
 
+/* Adds track objects and wall anchors for adjacent positions. Params: current and next track positions. Returns: none. State: reads track tables and updates object lists and anchors. */
 void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 {
 	struct TRACKOBJECT *o;
-	short wallOrientationState;
-	short angAngle;
-	unsigned char cellTerr;
+	I16S wallOrientationState;
+	I16S angAngle;
+	U8  cellTerr;
 	struct VECTOR absLocalCrds;
 	struct VECTOR locElemCrds;
-	short physModel;
-	short side;
-	signed char trkR;
-	short localX;
-	short baseIndex;
-	signed char trackCol;
+	I16S physModel;
+	I16S side;
+	I8S  trkR;
+	I16S localX;
+	I16S baseIndex;
+	I8S  trackCol;
 	struct VECTOR nextPositionElemCrds;
-	unsigned char surfType;
-	short elementAngle;
-	short wallIx;
-	short wallHi;
-	register short step;
-	short turnRadius;
-	unsigned char tileElem;
+	U8  surfType;
+	I16S elementAngle;
+	I16S wallIx;
+	I16S wallHi;
+	register I16S step;
+	I16S turnRadius;
+	U8  tileElem;
 	struct VECTOR effElemCrds;
 
 	pl_i = 0;
@@ -146,8 +160,8 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 	wallOrientationState = step;
 	elementAngle = step;
 	hgthgt = step;
-	trackCol = (signed char)(position->x >> 10);
-	trkR = (signed char)(position->z >> 10);
+	trackCol = (I8S )(position->x >> 10);
+	trkR = (I8S )(position->z >> 10);
 	physModel = -1;
 	if (trackCol < 0 || trackCol > 29 || trkR < 0 || trkR > 29)
 		goto select_plan;
@@ -172,8 +186,8 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		case 5:
 			step = -0x80;
 		slope:
-			locElemCrds.x = (short)(position->x - x_course_part);
-			locElemCrds.z = (short)(position->z - road_elem_ctrz);
+			locElemCrds.x = (I16S)(position->x - x_course_part);
+			locElemCrds.z = (I16S)(position->z - road_elem_ctrz);
 			side = mulscl(cosfast(step), locElemCrds.x) +
 				mulscl(sinfast(step), locElemCrds.z);
 			if (side < 0)
@@ -219,10 +233,10 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 			x_course_part = xcols[trackCol + 1];
 	}
 
-	locElemCrds.x = (short)(position->x - x_course_part);
-	locElemCrds.z = (short)(position->z - road_elem_ctrz);
-	nextPositionElemCrds.x = (short)(nextPosition->x - x_course_part);
-	nextPositionElemCrds.z = (short)(nextPosition->z - road_elem_ctrz);
+	locElemCrds.x = (I16S)(position->x - x_course_part);
+	locElemCrds.z = (I16S)(position->z - road_elem_ctrz);
+	nextPositionElemCrds.x = (I16S)(nextPosition->x - x_course_part);
+	nextPositionElemCrds.z = (I16S)(nextPosition->z - road_elem_ctrz);
 	if (tileElem != 0 && cellTerr >= 7 && cellTerr < 11)
 		tileElem = subst_hillroad(cellTerr, tileElem);
 
@@ -235,32 +249,32 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 	case 0x300:
 		localX = locElemCrds.x;
 		locElemCrds.x = locElemCrds.z;
-		locElemCrds.z = (short)-localX;
+		locElemCrds.z = (I16S)-localX;
 		localX = nextPositionElemCrds.x;
 		nextPositionElemCrds.x = nextPositionElemCrds.z;
-		nextPositionElemCrds.z = (short)-localX;
+		nextPositionElemCrds.z = (I16S)-localX;
 		break;
 	case 0x200:
-		locElemCrds.z = (short)-locElemCrds.z;
-		locElemCrds.x = (short)-locElemCrds.x;
-		nextPositionElemCrds.z = (short)-nextPositionElemCrds.z;
-		nextPositionElemCrds.x = (short)-nextPositionElemCrds.x;
+		locElemCrds.z = (I16S)-locElemCrds.z;
+		locElemCrds.x = (I16S)-locElemCrds.x;
+		nextPositionElemCrds.z = (I16S)-nextPositionElemCrds.z;
+		nextPositionElemCrds.x = (I16S)-nextPositionElemCrds.x;
 		break;
 	case 0x100:
 		localX = locElemCrds.x;
-		locElemCrds.x = (short)-locElemCrds.z;
+		locElemCrds.x = (I16S)-locElemCrds.z;
 		locElemCrds.z = localX;
 		localX = nextPositionElemCrds.x;
-		nextPositionElemCrds.x = (short)-nextPositionElemCrds.z;
+		nextPositionElemCrds.x = (I16S)-nextPositionElemCrds.z;
 		nextPositionElemCrds.z = localX;
 		break;
 	}
 	angAngle = 0;
-	surfType = (unsigned char)(o->surface + 1);
-	if ((signed char)surfType < 1)
+	surfType = (U8 )(o->surface + 1);
+	if ((I8S )surfType < 1)
 		surfType = 1;
-	absLocalCrds.x = locElemCrds.x < 0 ? (short)-locElemCrds.x : locElemCrds.x;
-	absLocalCrds.z = locElemCrds.z < 0 ? (short)-locElemCrds.z : locElemCrds.z;
+	absLocalCrds.x = locElemCrds.x < 0 ? (I16S)-locElemCrds.x : locElemCrds.x;
+	absLocalCrds.z = locElemCrds.z < 0 ? (I16S)-locElemCrds.z : locElemCrds.z;
 	switch (physModel) {
 	case 0:
 		if (core.game_inputmode == 0 && locElemCrds.x > 0) {
@@ -321,15 +335,15 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		if (highEntrXInnBounds0[step + 1] == highEntrXInnBounds0[step])
 			localX = highEntrXInnBounds0[step];
 		else
-			localX = (short)(highEntrXInnBounds0[step] +
-				(long)(highEntrXInnBounds0[step + 1] - highEntrXInnBounds0[step]) *
+			localX = (I16S)(highEntrXInnBounds0[step] +
+				(I32)(highEntrXInnBounds0[step + 1] - highEntrXInnBounds0[step]) *
 				(locElemCrds.z - highEntrZBounds0[step]) /
 				(highEntrZBounds0[step + 1] - highEntrZBounds0[step]));
 		if (highEntrXOutBounds0[step + 1] == highEntrXOutBounds0[step])
 			side = highEntrXOutBounds0[step];
 		else
-			side = (short)(highEntrXOutBounds0[step] +
-				(long)(highEntrXOutBounds0[step + 1] - highEntrXOutBounds0[step]) *
+			side = (I16S)(highEntrXOutBounds0[step] +
+				(I32)(highEntrXOutBounds0[step + 1] - highEntrXOutBounds0[step]) *
 				(locElemCrds.z - highEntrZBounds0[step]) /
 				(highEntrZBounds0[step + 1] - highEntrZBounds0[step]));
 		if (baseIndex > localX && baseIndex < side) {
@@ -414,18 +428,18 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		break;
 	case 21:
 		if (position->y - hgthgt <= 0x186) goto finish;
-		turnRadius = (short)(polradius2d((short)(locElemCrds.x + 0x400), (short)(locElemCrds.z + 0x400)) - 0x600);
+		turnRadius = (I16S)(polradius2d((I16S)(locElemCrds.x + 0x400), (I16S)(locElemCrds.z + 0x400)) - 0x600);
 		if (turnRadius <= -0x96 || turnRadius >= 0x96) goto finish;
 		g_cursurfacekindvalue = surfType;
 		pl_i = 2;
 		test_pln = 0;
 		if (turnRadius >= -0x6c && turnRadius <= 0x6c) goto finish;
 		side = (polang(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
-		localX = (short)(0x11 - (side >> 8));
+		localX = (I16S)(0x11 - (side >> 8));
 		wall_wallelement = 0x2a;
 		element_min_wall = -12;
-		if (turnRadius < 0) road_num = (short)(localX + 0x69);
-		else road_num = (short)(localX + 0x7b);
+		if (turnRadius < 0) road_num = (I16S)(localX + 0x69);
+		else road_num = (I16S)(localX + 0x7b);
 		break;
 	case 24:
 		baseIndex = 0x23;
@@ -467,22 +481,22 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		road_num = 0x65;
 		break;
 	case 26:
-		turnRadius = (short)(polradius2d((short)(locElemCrds.x + 0x400), (short)(locElemCrds.z + 0x400)) - 0x600);
+		turnRadius = (I16S)(polradius2d((I16S)(locElemCrds.x + 0x400), (I16S)(locElemCrds.z + 0x400)) - 0x600);
 		if (turnRadius <= -0x78 || turnRadius >= 0x7e) goto finish;
 		side = (polang(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
-		localX = (short)(0x11 - (side >> 8));
-		pl_i = (short)(localX + 7);
+		localX = (I16S)(0x11 - (side >> 8));
+		pl_i = (I16S)(localX + 7);
 		g_cursurfacekindvalue = surfType;
 		if (turnRadius <= 0x66) goto finish;
 		wallOrientationState = 0x200;
-		road_num = (short)(localX + 0x7b);
+		road_num = (I16S)(localX + 0x7b);
 		test_pln = 0;
 		break;
 	case 27:
 		if (locElemCrds.z < 0) {
 			baseIndex = 0x33;
-			effElemCrds.x = (short)-locElemCrds.x;
-			effElemCrds.z = (short)-locElemCrds.z;
+			effElemCrds.x = (I16S)-locElemCrds.x;
+			effElemCrds.z = (I16S)-locElemCrds.z;
 		} else {
 			baseIndex = 0x2d;
 			effElemCrds.x = locElemCrds.x;
@@ -497,7 +511,7 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 			step = 5 - step;
 			if (loopSurface_XBounds0[step] <= effElemCrds.x && loopSurface_XBounds0[step + 1] + 0x190 >= effElemCrds.x) {
 				if (loopSurface_XBounds0[step + 1] >= effElemCrds.x || loopSurface_XBounds0[step] + 0x190 <= effElemCrds.x) {
-					side = (long)(loopSurface_XBounds0[step] - loopSurface_XBounds0[step + 1]) *
+					side = (I32)(loopSurface_XBounds0[step] - loopSurface_XBounds0[step + 1]) *
 						(loopSurface_ZBounds0[step] - localX) /
 						(loopSurface_ZBounds0[step + 1] - loopSurface_ZBounds0[step]);
 					if (loopSurface_XBounds0[step] + side >= effElemCrds.x || loopSurface_XBounds0[step] + side + 0x190 <= effElemCrds.x) break;
@@ -512,7 +526,7 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		if (loopSurface_XBounds0[step] <= effElemCrds.x && loopSurface_XBounds0[step + 1] + 0x190 >= effElemCrds.x) {
 			if (loopSurface_XBounds0[step + 1] >= effElemCrds.x || loopSurface_XBounds0[step] + 0x190 <= effElemCrds.x) {
 				if (loopSurface_XBounds0[step + 1] == loopSurface_XBounds0[step]) goto loop_base;
-				side = (long)(loopSurface_XBounds0[step] - loopSurface_XBounds0[step + 1]) *
+				side = (I32)(loopSurface_XBounds0[step] - loopSurface_XBounds0[step + 1]) *
 					(loopSurface_ZBounds0[step] - localX) /
 					(loopSurface_ZBounds0[step + 1] - loopSurface_ZBounds0[step]);
 				if (loopSurface_XBounds0[step] + side >= effElemCrds.x || loopSurface_XBounds0[step] + side + 0x190 <= effElemCrds.x) goto loop_base;
@@ -524,12 +538,12 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		}
 loop_base:
 		for (step = 0; effElemCrds.z > loopBase_ZBounds0[step + 1]; ++step) { }
-		localX = (short)(loopBae_InnXBounds0[step] +
-			(long)(loopBae_InnXBounds0[step + 1] - loopBae_InnXBounds0[step]) *
+		localX = (I16S)(loopBae_InnXBounds0[step] +
+			(I32)(loopBae_InnXBounds0[step + 1] - loopBae_InnXBounds0[step]) *
 			(effElemCrds.z - loopBase_ZBounds0[step]) /
 			(loopBase_ZBounds0[step + 1] - loopBase_ZBounds0[step]));
-		side = (short)(loopBase_OutXBounds0[step] +
-			(long)(loopBase_OutXBounds0[step + 1] - loopBase_OutXBounds0[step]) *
+		side = (I16S)(loopBase_OutXBounds0[step] +
+			(I32)(loopBase_OutXBounds0[step + 1] - loopBase_OutXBounds0[step]) *
 			(effElemCrds.z - loopBase_ZBounds0[step]) /
 			(loopBase_ZBounds0[step + 1] - loopBase_ZBounds0[step]));
 		if (effElemCrds.x >= localX && effElemCrds.x <= side) g_cursurfacekindvalue = surfType;
@@ -656,7 +670,7 @@ loop_base:
 		}
 		break;
 	case 32:
-		localX = (short)-locElemCrds.x;
+		localX = (I16S)-locElemCrds.x;
 		side = 0x4f;
 		wallHi = 0x32;
 		wallIx = 0x4b;
@@ -685,7 +699,7 @@ loop_base:
 		}
 		turnRadius = polradius2d(localX, locElemCrds.z);
 		if (turnRadius <= 0x14c || turnRadius >= 0x2b4) break;
-		step = ((0x100 - polang(localX, locElemCrds.z)) & 0x3ff) * 0x18 >> 10;
+		step = ((0x100 - polang(localX, locElemCrds.z)) & FAST_TRIG_ANGLE_MASK) * 0x18 >> 10;
 		pl_i = side + step + 1;
 		g_cursurfacekindvalue = surfType;
 		test_pln = 0;
@@ -771,8 +785,8 @@ loop_base:
 
 finish:
 	if (cellTerr >= 7) {
-		locElemCrds.x = (short)(position->x - trackctrpos2[trackCol]);
-		locElemCrds.z = (short)(position->z - z_ctr_pos[trkR]);
+		locElemCrds.x = (I16S)(position->x - trackctrpos2[trackCol]);
+		locElemCrds.z = (I16S)(position->z - z_ctr_pos[trkR]);
 		switch (cellTerr) {
 		case 7: case 11: case 15:
 			elementAngle = 0;
@@ -781,17 +795,17 @@ finish:
 			elementAngle = 0x300;
 			localX = locElemCrds.x;
 			locElemCrds.x = locElemCrds.z;
-			locElemCrds.z = (short)-localX;
+			locElemCrds.z = (I16S)-localX;
 			break;
 		case 9: case 13: case 17:
 			elementAngle = 0x200;
-			locElemCrds.z = (short)-locElemCrds.z;
-			locElemCrds.x = (short)-locElemCrds.x;
+			locElemCrds.z = (I16S)-locElemCrds.z;
+			locElemCrds.x = (I16S)-locElemCrds.x;
 			break;
 		case 10: case 14: case 18:
 			elementAngle = 0x100;
 			localX = locElemCrds.x;
-			locElemCrds.x = (short)-locElemCrds.z;
+			locElemCrds.x = (I16S)-locElemCrds.z;
 			locElemCrds.z = localX;
 			break;
 		}
@@ -829,7 +843,7 @@ select_plan:
 
 position_wall:
 	if (road_num < 0) return;
-	wall_facingang = (short)((-wallrecrecord[road_num].orientation + elementAngle + wallOrientationState) & 0x3ff);
+	wall_facingang = (I16S)((-wallrecrecord[road_num].orientation + elementAngle + wallOrientationState) & FAST_TRIG_ANGLE_MASK);
 	switch (elementAngle) {
 	case 0:
 		wallanchor_x = wallrecrecord[road_num].x;
@@ -852,16 +866,17 @@ position_wall:
 	wallanchor_z += road_elem_ctrz;
 }
 
-int bto_auxiliary1(int column, int row, struct VECTOR *vertices) {
-    unsigned char tileElement;
-    int centerRow;
-    int height;
-    int rotationY;
-    int centerX;
+/* Builds auxiliary geometry for one track tile. Params: tile column, row and output vertices. Returns: generated vertex count. State: reads track templates and terrain data. */
+I16 bto_auxiliary1(I16 column, I16 row, struct VECTOR *vertices) {
+    U8  tileElement;
+    I16 centerRow;
+    I16 height;
+    I16 rotationY;
+    I16 centerX;
     struct VECTOR *templatePoints;
-    register int point;
-    register int numPoints;
-    unsigned char terrainIndex;
+    register I16 point;
+    register I16 numPoints;
+    U8  terrainIndex;
 
     tileElement = td14tb[column + lnoffsets[row]];
     if (tileElement == 0) return 0;
@@ -959,9 +974,9 @@ int bto_auxiliary1(int column, int row, struct VECTOR *vertices) {
 /* Loads the shared 3D shape resources. Params: none. Returns: load status. State: updates shared shape-resource handles. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-int shape3d_load_all(void)
+I16 shape3d_load_all(void)
 {
-    register int i;
+    register I16 i;
 
     g_game13dresource = 0;
     game2res_pointer = 0;
@@ -995,12 +1010,12 @@ void shape3d_free_all(void)
 /* Loads player and opponent car shapes. Params: player and opponent car IDs. Returns: none. State: updates car-shape resource pointers. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
-	long copyOffset;
-	long sizeBytes;
-	register int loopIndex;
+void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
+	I32 copyOffset;
+	I32 sizeBytes;
+	register I16 loopIndex;
 	struct VECTOR far *vertices;
-	char firstOpponent;
+	I8 firstOpponent;
 	aStxxx[2] = arg_playercarid[0];
 	aStxxx[3] = arg_playercarid[1];
 	aStxxx[4] = arg_playercarid[2];
@@ -1092,24 +1107,25 @@ void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 void shape3d_free_car_shapes(void)
 {
     if (carcopyresourceptr != 0) {
-        wheel_update(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (short *)&ctrmesh);
+        wheel_update(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
         /* PLATFORM(memory): release a resource block. */ mmgr_release(carcopyresourceptr);
     }
-    wheel_update(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (short *)&pos_pt);
+    wheel_update(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
     /* PLATFORM(memory): release resource memory. */ mmgr_free(pl_carres_3d);
 }
 
-void wheel_update(struct VECTOR far *out, int angle,
-              short *base, short *last_angle_and_y,
-              struct VECTOR *source, short *origin)
+/* Rebuilds cached wheel vertices when steering or wheel height changes. Params: output vertices, steering angle, base heights, cached values, source offsets and origin. Returns: none. State: updates wheel geometry and cached values. */
+void wheel_update(struct VECTOR far *out, I16 angle,
+              I16S *base, I16S *last_angle_and_y,
+              struct VECTOR *source, I16S *origin)
 {
-    int y;
-    register int i;
-    register int j;
-    int end;
-    int span_start;
-    int sine;
-    int cosine;
+    I16 y;
+    register I16 i;
+    register I16 j;
+    I16 end;
+    I16 span_start;
+    I16 sine;
+    I16 cosine;
 
     if (last_angle_and_y[4] != angle) {
         sine = sinfast(angle >> 1);
@@ -1137,6 +1153,7 @@ void wheel_update(struct VECTOR far *out, int angle,
     }
 
     for (j = 0; j < 4; ++j) {
+        /* PORT: short base heights are promoted to 16-bit int for signed division. */
         y = base[j] / 64;
         if (last_angle_and_y[j] != y) {
             span_start = j * 6;
@@ -1151,57 +1168,57 @@ void wheel_update(struct VECTOR far *out, int angle,
     }
 }
 
-static unsigned char arrowConn0[6] = { 0, 0, 1, 0, 1, 0 };
-static unsigned char arrowConn1[6] = { 0, 1, 0, 0, 1, 0 };
-static unsigned char terrConnDataEtoW[19] = { 0, 0, 0, 0, 0, 0, 1, 2, 1, 3, 0, 2, 3, 0, 0, 1, 1, 3, 2 };
-static unsigned char terrConnDataWtoE[19] = { 0, 0, 0, 0, 0, 0, 1, 2, 0, 3, 1, 0, 0, 3, 2, 2, 3, 1, 1 };
-static unsigned char terrConnDataNtoS[19] = { 0, 0, 0, 0, 0, 0, 1, 1, 5, 0, 4, 5, 0, 0, 4, 1, 5, 4, 1 };
-static unsigned char terrConnDataStoN[19] = { 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 4, 0, 5, 4, 0, 5, 1, 1, 4 };
+static U8  arrowConn0[6] = { 0, 0, 1, 0, 1, 0 };
+static U8  arrowConn1[6] = { 0, 1, 0, 0, 1, 0 };
+static U8  terrConnDataEtoW[19] = { 0, 0, 0, 0, 0, 0, 1, 2, 1, 3, 0, 2, 3, 0, 0, 1, 1, 3, 2 };
+static U8  terrConnDataWtoE[19] = { 0, 0, 0, 0, 0, 0, 1, 2, 0, 3, 1, 0, 0, 3, 2, 2, 3, 1, 1 };
+static U8  terrConnDataNtoS[19] = { 0, 0, 0, 0, 0, 0, 1, 1, 5, 0, 4, 5, 0, 0, 4, 1, 5, 4, 1 };
+static U8  terrConnDataStoN[19] = { 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 4, 0, 5, 4, 0, 5, 1, 1, 4 };
 
 /* Builds track and route data from the selected track resources. Params: none. Returns: setup status. State: reads track resources and updates track tables. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-int track_setup(void)
+I16 track_setup(void)
 {
-  char matches;
-  unsigned char entryPt;
-  unsigned char runway;
-  unsigned char runLength;
-  char startCount;
-  signed char cur_col;
-  int xsave;
+  I8 matches;
+  U8  entryPt;
+  U8  runway;
+  U8  runLength;
+  I8 startCount;
+  I8S  cur_col;
+  I16 xsave;
   struct TrackNode far *qnode;
   struct TRKOBJINFO *objInfo;
-  signed char oldRow;
-  unsigned char connStatusOf[0x385];
-  char prev_exit_type;
-  signed char oldX;
-  unsigned char object;
-  int elem_idx;
-  int sampleIdx;
-  int angle;
-  unsigned char prevBlock;
-  signed char y;
-  unsigned char on_path[0x385];
-  register int i;
-  char err;
+  I8S  oldRow;
+  U8  connStatusOf[0x385];
+  I8 prev_exit_type;
+  I8S  oldX;
+  U8  object;
+  I16 elem_idx;
+  I16 sampleIdx;
+  I16 angle;
+  U8  prevBlock;
+  I8S  y;
+  U8  on_path[0x385];
+  register I16 i;
+  I8 err;
   struct TRKOBJINFO *blk;
-  int prev_path;
-  unsigned char qCount;
-  unsigned char exit;
-  unsigned char sub;
-  signed char prev_reversed_dir;
-  signed char connStat;
-  register int j;
+  I16 prev_path;
+  U8  qCount;
+  U8  exit;
+  U8  sub;
+  I8S  prev_reversed_dir;
+  I8S  connStat;
+  register I16 j;
   struct TrackNode far *alloc;
   struct VECTOR far *camData;
   struct VECTOR cur_pos;
-  unsigned char part_of[0x385];
-  unsigned char tileTerr;
-  char arrow;
+  U8  part_of[0x385];
+  U8  tileTerr;
+  I8 arrow;
   struct TrackNode far *queuePtr;
-  signed char conn;
-  char loop_done;
-  unsigned char prev_elem;
+  I8S  conn;
+  I8 loop_done;
+  U8  prev_elem;
   /* PLATFORM(memory): allocate resource memory. */ alloc = mmgr_alloc_resbytes("tcomp", 0x380L);
   if (alloc == 0)
     return 2;
@@ -1503,7 +1520,7 @@ int track_setup(void)
         {
           for (j = 0; j < g_trackpiecescounter; j++)
           {
-            if (g_column_of_trkdata21_pth[j] == cur_col && tdfrompathrow22[j] == y && part_of[j] == ((unsigned char) i))
+            if (g_column_of_trkdata21_pth[j] == cur_col && tdfrompathrow22[j] == y && part_of[j] == ((U8 ) i))
             {
               if (connStatusOf[j] != conn)
               {
@@ -1874,7 +1891,7 @@ int track_setup(void)
   sampled_trk_column = cur_col;
   g_cur_track_row = y;
   /* PLATFORM(memory): release a resource block. */ release:
-  mmgr_release((char far *) alloc);
+  mmgr_release((I8 far *) alloc);
 
   return err;
 }
@@ -1884,29 +1901,29 @@ int track_setup(void)
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
 void load_opponent_data(void)
 {
-    unsigned long savedSums[256];
-    short savedIndices[256];
+    U32  savedSums[256];
+    I16S savedIndices[256];
     void far *res;
-    short dep;
-    short count;
-    unsigned long minSum;
-    char far *pathData;
-    short f;
-    short rt[256];
-    unsigned long sum;
-    unsigned char far *tbl;
-    short el;
-    short fork;
-    short valid;
-    register short i;
-    short sequence[901];
-    register short visited;
+    I16S dep;
+    I16S count;
+    U32  minSum;
+    I8 far *pathData;
+    I16S f;
+    I16S rt[256];
+    U32  sum;
+    U8  far *tbl;
+    I16S el;
+    I16S fork;
+    I16S valid;
+    register I16S i;
+    I16S sequence[901];
+    register I16S visited;
 
-    aOpp1[3] = (char)(globalgamesettings.game_opponenttype + '0');
+    aOpp1[3] = (I8)(globalgamesettings.game_opponenttype + '0');
     /* PLATFORM(file): load a resource file. */ res = file_load_resource_file(aOpp1);
     copy_string(opptext_label, locate_text_resource(res, "nam"));
-    pathData = locate_shape_alt(res, "path");
-    tbl = (unsigned char far *)locate_shape_alt(res, "sped");
+    /* PLATFORM(file): locate opponent path data in the loaded bundle. */ pathData = locate_shape_alt(res, "path");
+    /* PORT: the speed table is traversed through a segmented FAR resource pointer. */ /* PLATFORM(file): locate opponent speed data in the loaded bundle. */ tbl = (U8  far *)locate_shape_alt(res, "sped");
     for (i = 0; i < 16; i++)
         opponent_spd_tbl[i] = tbl[i];
 
@@ -1933,7 +1950,7 @@ void load_opponent_data(void)
             }
         }
         sequence[count++] = i;
-        sum += (unsigned char)tbl[(unsigned char)road_trk[i]] + 1;
+        sum += (U8 )tbl[(U8 )road_trk[i]] + 1;
         if (f != 0) {
             if (valid != 0 && sum < minSum) {
                 sequence[count++] = 0;
@@ -1963,7 +1980,8 @@ void load_opponent_data(void)
     }
 }
 
-unsigned char subst_hillroad(unsigned char a, unsigned char b)
+/* Maps a terrain and object pair to its hill-road replacement. Params: terrain and object IDs. Returns: replacement object ID. State: reads fixed substitution tables. */
+U8  subst_hillroad(U8  a, U8  b)
 {
     switch (a) {
     case 7:

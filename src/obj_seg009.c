@@ -1,211 +1,244 @@
 #include "platform_hw.h"
+#define TRACK_MAP_ROW_COUNT 30
+#define TRACK_MAP_COLUMN_COUNT 30
+#define TRACK_MAP_CELL_COUNT 900
+#define TRACK_PREVIEW_ROW_COUNT 11
+#define TRACK_PREVIEW_COLUMN_COUNT 12
+#define TRACK_EDITOR_CELL_PIXELS 16
+#define TRACK_EDITOR_CELL_SHIFT 4
+#define TRACK_EDITOR_CELL_ORIGIN_X 8
+#define TRACK_EDITOR_CELL_ORIGIN_Y 4
+#define TRACK_EDITOR_CELL_LEFT_X (-8)
+#define TRACK_EDITOR_CELL_RIGHT_X 24
+#define TRACK_EDITOR_CELL_ABOVE_Y (-12)
+#define TRACK_EDITOR_CELL_BELOW_Y 20
+#define TRACK_PALETTE_GRID_SIDE 6
+#define TRACK_PALETTE_PAGE_CELL_COUNT 36
+#define TRACK_EDITOR_GRID_X_ORIGIN 220
+#define TRACK_EDITOR_GRID_Y_ORIGIN 36
+#define TRACK_EDITOR_PALETTE_ROW_Y_ORIGIN 28
+#define TRACK_ELEMENT_SPECIAL_BASE 0xfd /* First byte reserved for multi-cell continuation codes. */
+#define TRACK_ELEMENT_CONTINUATION_BASE 0xfe /* Lowest palette continuation marker used in layout scans. */
+#define TRACK_TILE_CONTINUE_DOWN_RIGHT 0xfd /* Multi-cell piece continues down and right. */
+#define TRACK_TILE_CONTINUE_DOWN 0xfe /* Multi-cell piece continues into the row below. */
+#define TRACK_TILE_CONTINUE_RIGHT 0xff /* Multi-cell piece continues into the next column. */
+#define TRACK_CACHE_INVALID 0xff /* Cached map value has not been drawn yet. */
+#define TRACK_SHAPE_CACHE_INVALID 0xff /* Cached hover shape has not been drawn yet. */
+#define TRACK_PIECE_SHAPE_COUNT 186
+#define TERRAIN_SHAPE_COUNT 19
+#define TRACK_EDITOR_CURSOR_COUNT 4
+#define ROAD_TILE_SHAPE_COUNT 4
+#include "stunts_types.h"
+/* PORT: Resource records contain far pointers and depend on MSC default 2-byte packing; never use the host layout as the file layout. */
 struct SHAPE2D {
-    int s2d_width;
-    int s2d_height;
+    I16 s2d_width;
+    I16 s2d_height;
     unsigned s2d_unk1;
     unsigned s2d_unk2;
     unsigned s2d_pos_x;
     unsigned s2d_pos_y;
-    unsigned char s2d_unk3;
-    unsigned char s2d_unk4;
+    U8  s2d_unk3;
+    U8  s2d_unk4;
 };
 struct SPRITE {
     struct SHAPE2D far *sprite_bitmapptr;
-    unsigned short sprite_unk1;
-    unsigned short sprite_unk2;
+    U16S  sprite_unk1;
+    U16S  sprite_unk2;
 };
+/* PORT: Track records use 16-bit near pointers and MSC default structure alignment; keep verified offsets. */
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
-    short ss_rotY;
+    I16S ss_rotY;
     struct SHAPE3D *ss_shapePtr;
     struct SHAPE3D *ss_loShapePtr;
-    unsigned char ss_ssOvelay;
-    char ss_surfaceType;
-    char ss_ignoreZBias;
-    char ss_multiTileFlag;
-    char ss_physicalModel;
-    char scene_unk5;
+    U8  ss_ssOvelay;
+    I8 ss_surfaceType;
+    I8 ss_ignoreZBias;
+    I8 ss_multiTileFlag;
+    I8 ss_physicalModel;
+    I8 scene_unk5;
 };
+/* PORT: Game-info records are byte/word layouts from the original 16-bit executable; preserve packing and widths. */
 struct GAMEINFO {
-    char game_playercarid[4];
-    char game_playermaterial;
-    char game_playertransmission;
-    char game_opponenttype;
-    char game_opponentcarid[4];
-    char game_opponentmaterial;
-    char game_opponenttransmission;
-    char game_trackname[9];
-    unsigned short game_framespersec;
-    unsigned short game_recordedframes;
+    I8 game_playercarid[4];
+    I8 game_playermaterial;
+    I8 game_playertransmission;
+    I8 game_opponenttype;
+    I8 game_opponentcarid[4];
+    I8 game_opponentmaterial;
+    I8 game_opponenttransmission;
+    I8 game_trackname[9];
+    U16S  game_framespersec;
+    U16S  game_recordedframes;
 };
 
 extern struct TRACKOBJECT trklst[];
 extern struct GAMEINFO globalgamesettings;
-static unsigned char far *terrain_tile_shapes[19];
-static struct SHAPE2D far *track_editor_cursors[4];
-static struct SHAPE2D far *road_tile_shapes[4];
-static unsigned char far *piece_mask_shapes[186];
-static unsigned char far *piece_fill_shapes[186];
-static unsigned char far *palette_piece_layout;
+static U8  far *terrain_tile_shapes[TERRAIN_SHAPE_COUNT];
+static struct SHAPE2D far *track_editor_cursors[TRACK_EDITOR_CURSOR_COUNT];
+static struct SHAPE2D far *road_tile_shapes[ROAD_TILE_SHAPE_COUNT];
+static U8  far *piece_mask_shapes[TRACK_PIECE_SHAPE_COUNT];
+static U8  far *piece_fill_shapes[TRACK_PIECE_SHAPE_COUNT];
+static U8  far *palette_piece_layout;
 extern struct SPRITE far *g_wndspr;
 unsigned char far *td14tb;
 unsigned char far *td15p_9;
-extern unsigned char far *g_column_of_trkdata21_pth;
-extern unsigned char far *tdfrompathrow22;
-extern unsigned char far *main_data_file_addr;
+extern U8  far *g_column_of_trkdata21_pth;
+extern U8  far *tdfrompathrow22;
+extern U8  far *main_data_file_addr;
 int gterrtrk[30];
 int lnoffsets[30];
-extern char resbuftext[];
+extern I8 resbuftext[];
 unsigned char sampled_trk_column;
-extern unsigned char g_cur_track_row;
-extern int pixel_scales;
-extern int performGraphColor;
-extern int dialogarg2;
-extern int dlg_colour;
-extern int palette_window_line_color, palette_window_fill_color, palette_window_line_style;
-extern int text_cursor_outline_color;
-extern int menu_button_color_a, menu_button_color_b, menu_button_color_c;
-extern int g_trackpiecescounter;
-extern int msecoordx, pos_y_ms;
-extern unsigned char flagsdown;
-extern char buf_g_path[];
-extern char track_file[];
-extern unsigned char g_is_busy;
+extern U8  g_cur_track_row;
+extern I16 pixel_scales;
+extern I16 performGraphColor;
+extern I16 dialogarg2;
+extern I16 dlg_colour;
+extern I16 palette_window_line_color, palette_window_fill_color, palette_window_line_style;
+extern I16 text_cursor_outline_color;
+extern I16 menu_button_color_a, menu_button_color_b, menu_button_color_c;
+extern I16 g_trackpiecescounter;
+extern I16 msecoordx, pos_y_ms;
+extern U8  flagsdown;
+extern I8 buf_g_path[];
+extern I8 track_file[];
+extern U8  g_is_busy;
 
-extern unsigned char far * far file_load_shape2d_fatal_thunk(char *name);
-extern void far locate_many_resources(unsigned char far *data, char *names, char far **result);
-extern unsigned char far * far file_load_resource_file(char *name);
-extern unsigned char far * far locate_shape_alt(unsigned char far *data, char *name);
-extern unsigned char far * far locate_shape_fatal(unsigned char far *data, char *name);
-extern char far * far locate_text_resource(unsigned char far *data, char *name);
-extern struct SPRITE far * far sprite_make_window(int width, int height, int flags);
+extern U8  far * far file_load_shape2d_fatal_thunk(I8 *name);
+extern void far locate_many_resources(U8  far *data, I8 *names, I8 far **result);
+extern U8  far * far file_load_resource_file(I8 *name);
+extern U8  far * far locate_shape_alt(U8  far *data, I8 *name);
+extern U8  far * far locate_shape_fatal(U8  far *data, I8 *name);
+extern I8 far * far locate_text_resource(U8  far *data, I8 *name);
+extern struct SPRITE far * far sprite_make_window(I16 width, I16 height, I16 flags);
 extern void far sprite_copy_wnd_to_1_clear(void);
 extern void far draw_button();
 extern void far draw_lines_unknown();
 extern void far sprite_copy_wnd_to_1(void);
-extern void far sprset1size(int left, int right, int top, int bottom);
+extern void far sprset1size(I16 left, I16 right, I16 top, I16 bottom);
 extern void far sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
-extern int far mouse_track_op();
-extern void far sprite_blit_to_video(struct SPRITE far *sprite, int mode);
-extern void far preRender_line(int x1, int y1, int x2, int y2, int color);
+extern I16 far mouse_track_op();
+extern void far sprite_blit_to_video(struct SPRITE far *sprite, I16 mode);
+extern void far preRender_line(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
 extern void far sprcopy2to12(void);
-extern void far sprite_shape_to_1(void far *shape, int x, int y);
-extern void far sprite_clear_shape_alt(void far *shape, int x, int y);
-extern void far sprite_putimage_and_alt(void far *shape, int x, int y);
-extern void far sprite_putimage_and(void far *shape, int x, int y);
-extern void far sprite_putimage_or(void far *shape, int x, int y);
-extern void far putpixel_iconMask(void far *shape, int x, int y);
-extern void far putpixel_iconFillings(void far *shape, int x, int y);
+extern void far sprite_shape_to_1(void far *shape, I16 x, I16 y);
+extern void far sprite_clear_shape_alt(void far *shape, I16 x, I16 y);
+extern void far sprite_putimage_and_alt(void far *shape, I16 x, I16 y);
+extern void far sprite_putimage_and(void far *shape, I16 x, I16 y);
+extern void far sprite_putimage_or(void far *shape, I16 x, I16 y);
+extern void far putpixel_iconMask(void far *shape, I16 x, I16 y);
+extern void far putpixel_iconFillings(void far *shape, I16 x, I16 y);
 extern void far msdrawopaquechk(void);
 extern void far msdrawtransparentchk(void);
-extern void far font_setup_unknown(int colour, int mode);
-extern void far copy_string(char *destination, char far *source);
-extern int far font_op2(char *name);
-extern void far draw_text_at(char *text, int x, int y);
-extern void far sprite_1_unk(int x, int y, int width, int height, int color);
-extern int far show_dialog();
-extern int far timer_get_delta_alt(void);
-extern int far input_checking(int delta);
-extern char far mouse_multi_hittest(int count, int *x1, int *x2, int *y1, int *y2);
-extern void far timer_get_counter_unk(long ticks);
-extern char far track_setup(void);
+extern void far font_setup_unknown(I16 colour, I16 mode);
+extern void far copy_string(I8 *destination, I8 far *source);
+extern I16 far font_op2(I8 *name);
+extern void far draw_text_at(I8 *text, I16 x, I16 y);
+extern void far sprite_1_unk(I16 x, I16 y, I16 width, I16 height, I16 color);
+extern I16 far show_dialog();
+extern I16 far timer_get_delta_alt(void);
+extern I16 far input_checking(I16 delta);
+extern I8 far mouse_multi_hittest(I16 count, I16 *x1, I16 *x2, I16 *y1, I16 *y2);
+extern void far timer_get_counter_unk(I32 ticks);
+extern I8 far track_setup(void);
 extern void far check_input(void);
-extern char far do_fileselect_dialog(char *dir, char *name, char *ext, char far *title);
-extern char far do_savefile_dialog(char *dir, char *name, char far *title);
-extern void far file_build_path(char *dir, char *name, char *ext, char *dst);
-extern void far file_read_fatal(char *path, unsigned char far *buffer);
-extern int far file_write_fatal(char *path, unsigned char far *buffer, long size);
-extern int far file_find(char *query);
-extern void far highscore_write_a(int mode);
-extern void far draw_rect_outline(int x1, int y1, int x2, int y2, int color);
+extern I8 far do_fileselect_dialog(I8 *dir, I8 *name, I8 *ext, I8 far *title);
+extern I8 far do_savefile_dialog(I8 *dir, I8 *name, I8 far *title);
+extern void far file_build_path(I8 *dir, I8 *name, I8 *ext, I8 *dst);
+extern void far file_read_fatal(I8 *path, U8  far *buffer);
+extern I16 far file_write_fatal(I8 *path, U8  far *buffer, I32 size);
+extern I16 far file_find(I8 *query);
+extern void far highscore_write_a(I16 mode);
+extern void far draw_rect_outline(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
 extern void far sprite_free_window(struct SPRITE far *sprite);
-extern void far unload_resource(unsigned char far *data);
-extern void far mmgr_free(unsigned char far *data);
-extern unsigned char far subst_hillroad(unsigned int terrain, unsigned int element);
+extern void far unload_resource(U8  far *data);
+extern void far mmgr_free(U8  far *data);
+extern U8  far subst_hillroad(U16  terrain, U16  element);
 
-char validate_track_elements();
+I8 validate_track_elements();
 void clear_invalid_track_tiles();
 void preRender_icons();
 void draw_2DtrackMap();
 
-char aEokenseieemseedewwefuenpestej[] = "eokenseieemseedewwefuenpestejsejdeteewaefteat";
-char aTer0[] = "ter0";
-unsigned int function_key_scan_codes[12] = { BIOS_KEY_F1, BIOS_KEY_F2, BIOS_KEY_F3, BIOS_KEY_F4, BIOS_KEY_F5, BIOS_KEY_F6, BIOS_KEY_F7, BIOS_KEY_F8, BIOS_KEY_F9, BIOS_KEY_F10, 0, 0 }; /* PLATFORM(input_kb): maps BIOS F1-F10 return values to menu shortcuts. */
-int trackmenu2_buttons_x1[5] = { 9, 202, 220, 8, 220 };
-int trackmenu2_buttons_x2[5] = { 199, 206, 315, 199, 315 };
-int trackmenu2_buttons_y1[5] = { 181, 4, 132, 4, 36 };
-int trackmenu2_buttons_y2[5] = { 187, 179, 139, 179, 187 };
-unsigned char palette_column_limits[2] = { 30, 6 };
-unsigned char palette_row_limits[2] = { 29, 9 };
-char aFlatlakelak1lak2lak3lak4highg[] = "flatlakelak1lak2lak3lak4highgoungouwgousgouegou1gou2gou3gou4gou5gou6gou7gou8";
-char aCrs0crs1crs2crs3[] = "crs0crs1crs2crs3";
-char aUcr0ucr1ucr2ucr3[] = "ucr0ucr1ucr2ucr3";
+I8 aEokenseieemseedewwefuenpestej[] = "eokenseieemseedewwefuenpestejsejdeteewaefteat";
+I8 aTer0[] = "ter0";
+U16  function_key_scan_codes[12] = { BIOS_KEY_F1, BIOS_KEY_F2, BIOS_KEY_F3, BIOS_KEY_F4, BIOS_KEY_F5, BIOS_KEY_F6, BIOS_KEY_F7, BIOS_KEY_F8, BIOS_KEY_F9, BIOS_KEY_F10, 0, 0 }; /* PLATFORM(input_kb): maps BIOS F1-F10 return values to menu shortcuts. */
+I16 trackmenu2_buttons_x1[5] = { 9, 202, 220, 8, 220 };
+I16 trackmenu2_buttons_x2[5] = { 199, 206, 315, 199, 315 };
+I16 trackmenu2_buttons_y1[5] = { 181, 4, 132, 4, 36 };
+I16 trackmenu2_buttons_y2[5] = { 187, 179, 139, 179, 187 };
+U8  palette_column_limits[2] = { TRACK_MAP_COLUMN_COUNT, 6 };
+U8  palette_row_limits[2] = { 29, 9 };
+I8 aFlatlakelak1lak2lak3lak4highg[] = "flatlakelak1lak2lak3lak4highgoungouwgousgouegou1gou2gou3gou4gou5gou6gou7gou8";
+I8 aCrs0crs1crs2crs3[] = "crs0crs1crs2crs3";
+I8 aUcr0ucr1ucr2ucr3[] = "ucr0ucr1ucr2ucr3";
 
 void load_tracks_menu_shapes(void)
 { /* PURPOSE: Load track editor assets, draw the menu and map preview, then process selection and file actions. Params: none. Returns: void. Globals: reads track/map data, resource and tile caches, palette layout and menu settings; writes selection state, map/resource pointers and activity flags. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(input_mouse): polls or updates mouse state. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
-    char answer;
-    unsigned char paletteModified;
-    signed char originX;
-    signed char objectHeight;
-    unsigned char far *mediumTextData;
-    int trackStep;
-    signed char drawnMode;
-    signed char shapeWidth;
-    signed char errorMsg;
-    unsigned char far *terrainTemplate;
-    unsigned char tmpShape;
-    signed char boxHeight;
-    unsigned char far *shortNames;
-    unsigned char far *teditData;
-    unsigned char savedShape;
-    unsigned char far *sdtBuffer;
-    signed char cursorPixW;
-    signed char lastType;
-    unsigned char pathFlag;
-    signed char imageMode;
-    signed char paletteArea;
-    unsigned char mapChanged;
-    int cursorLeft;
-    unsigned int key;
-    signed char activeGroup;
-    signed char tileSize;
-    unsigned char lastHoverShape;
-    signed char droppedPosY;
-    unsigned char terrainCache[132];
-    int animationCount;
-    int lastTextWidth;
-    signed char destPosX;
-    unsigned char mapDirty;
-    unsigned char far *pieceNames;
-    register int j;
-    int blinkFlag;
-    signed char lastScrollX;
-    char far *textPtr;
-    unsigned char boxMarker;
-    signed char saveOutcome;
-    signed char destPosY;
+    I8 answer;
+    U8  paletteModified;
+    I8S  originX;
+    I8S  objectHeight;
+    U8  far *mediumTextData;
+    I16 trackStep;
+    I8S  drawnMode;
+    I8S  shapeWidth;
+    I8S  errorMsg;
+    U8  far *terrainTemplate;
+    U8  tmpShape;
+    I8S  boxHeight;
+    U8  far *shortNames;
+    U8  far *teditData;
+    U8  savedShape;
+    U8  far *sdtBuffer;
+    I8S  cursorPixW;
+    I8S  lastType;
+    U8  pathFlag;
+    I8S  imageMode;
+    I8S  paletteArea;
+    U8  mapChanged;
+    I16 cursorLeft;
+    U16  key;
+    I8S  activeGroup;
+    I8S  tileSize;
+    U8  lastHoverShape;
+    I8S  droppedPosY;
+    U8  terrainCache[132];
+    I16 animationCount;
+    I16 lastTextWidth;
+    I8S  destPosX;
+    U8  mapDirty;
+    U8  far *pieceNames;
+    register I16 j;
+    I16 blinkFlag;
+    I8S  lastScrollX;
+    I8 far *textPtr;
+    U8  boxMarker;
+    I8S  saveOutcome;
+    I8S  destPosY;
     struct SPRITE far *windows[4];
-    unsigned char elementState[132];
-    register int stepTime;
-    int screenPosY;
-    signed char lastPutCol;
-    signed char prevViewTop;
-    signed char selRow[2];
-    unsigned char value;
-    unsigned char sliderChanged;
-    unsigned char hovered;
-    signed char selectCol[2];
-    signed char viewTop;
-    signed char hitArea;
-    unsigned char inEditor;
-    unsigned char oldCell;
-    unsigned char selectedPiece;
+    U8  elementState[132];
+    register I16 stepTime;
+    I16 screenPosY;
+    I8S  lastPutCol;
+    I8S  prevViewTop;
+    I8S  selRow[2];
+    U8  value;
+    U8  sliderChanged;
+    U8  hovered;
+    I8S  selectCol[2];
+    I8S  viewTop;
+    I8S  hitArea;
+    U8  inEditor;
+    U8  oldCell;
+    U8  selectedPiece;
 
 
     sdtBuffer = file_load_shape2d_fatal_thunk("sdtedit") /* PLATFORM(file): load a 2D shape or enter the fatal-error path. */;
     locate_many_resources(sdtBuffer, aFlatlakelak1lak2lak3lak4highg, terrain_tile_shapes) /* PLATFORM(file): resolve the requested names in one resource block. */;
-    locate_many_resources(sdtBuffer, aCrs0crs1crs2crs3, (char far **)track_editor_cursors) /* PLATFORM(file): resolve the requested names in one resource block. */;
-    locate_many_resources(sdtBuffer, aUcr0ucr1ucr2ucr3, (char far **)road_tile_shapes) /* PLATFORM(file): resolve the requested names in one resource block. */;
+    locate_many_resources(sdtBuffer, aCrs0crs1crs2crs3, (I8 far **)track_editor_cursors) /* PLATFORM(file): resolve the requested names in one resource block. */;
+    locate_many_resources(sdtBuffer, aUcr0ucr1ucr2ucr3, (I8 far **)road_tile_shapes) /* PLATFORM(file): resolve the requested names in one resource block. */;
     windows[0] = sprite_make_window(track_editor_cursors[0]->s2d_width * pixel_scales,
         track_editor_cursors[0]->s2d_height, 15) /* PLATFORM(video): allocate a temporary sprite window. */;
     windows[1] = sprite_make_window(track_editor_cursors[1]->s2d_width * pixel_scales,
@@ -222,8 +255,8 @@ void load_tracks_menu_shapes(void)
     pieceNames = locate_shape_alt(teditData, "tnam") /* PLATFORM(file): locate a named shape in resource data. */;
     mapDirty = 0;
     for (j = 0; j < 132; ++j) {
-        elementState[j] = 0xff;
-        terrainCache[j] = 0xff;
+        elementState[j] = TRACK_CACHE_INVALID;
+        terrainCache[j] = TRACK_CACHE_INVALID;
     }
     for (j = 0; j < 186; ++j) {
         textPtr = shortNames + j * 4;
@@ -325,8 +358,8 @@ nextFrame:
         if (lastType != activeGroup) {
             paletteModified = 1;
             lastType = activeGroup;
-            while (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
-                if (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] == 0xff)
+            while (palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]] >= TRACK_ELEMENT_CONTINUATION_BASE) {
+                if (palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]] == TRACK_TILE_CONTINUE_RIGHT)
                     --selectCol[1];
                 else
                     --selRow[1];
@@ -374,40 +407,40 @@ nextFrame:
             }
             sprite_blit_to_video(g_wndspr, imageMode) /* PLATFORM(video): present the active sprite buffer on the display. */;
             imageMode = -2;
-            lastHoverShape = 0xff;
+            lastHoverShape = TRACK_SHAPE_CACHE_INVALID;
         }
 
         sprcopy2to12() /* PLATFORM(video): copy the current sprite into the active buffer. */;
         if (!paletteArea) {
-            cursorPixW = shapeWidth << 4;
-            boxHeight = objectHeight << 4;
-            cursorLeft = ((selectCol[0] - originX) << 4) + 8;
-            screenPosY = ((selRow[0] - viewTop) << 4) + 4;
+            cursorPixW = shapeWidth << TRACK_EDITOR_CELL_SHIFT;
+            boxHeight = objectHeight << TRACK_EDITOR_CELL_SHIFT;
+            cursorLeft = ((selectCol[0] - originX) << TRACK_EDITOR_CELL_SHIFT) + 8;
+            screenPosY = ((selRow[0] - viewTop) << TRACK_EDITOR_CELL_SHIFT) + 4;
             hovered = td14tb[lnoffsets[selRow[0]] + selectCol[0]];
             switch (hovered) {
-            case 0xfd:
+            case TRACK_TILE_CONTINUE_DOWN_RIGHT:
                 hovered = td14tb[lnoffsets[selRow[0] - 1] + selectCol[0] - 1];
                 break;
-            case 0xfe:
+            case TRACK_TILE_CONTINUE_DOWN:
                 hovered = td14tb[lnoffsets[selRow[0] - 1] + selectCol[0]];
                 break;
-            case 0xff:
+            case TRACK_TILE_CONTINUE_RIGHT:
                 hovered = td14tb[lnoffsets[selRow[0]] + selectCol[0] - 1];
                 break;
             }
         } else {
-            cursorPixW = 0x10;
-            boxHeight = 0x10;
-            screenPosY = (selRow[1] << 4) + 0x24;
-            if (selRow[1] == 6) {
-                cursorLeft = 0xdc;
+            cursorPixW = TRACK_EDITOR_CELL_PIXELS;
+            boxHeight = TRACK_EDITOR_CELL_PIXELS;
+            screenPosY = (selRow[1] << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_GRID_Y_ORIGIN;
+            if (selRow[1] == TRACK_PALETTE_GRID_SIDE) {
+                cursorLeft = TRACK_EDITOR_GRID_X_ORIGIN;
                 boxHeight = 8;
-                cursorPixW = 0x60;
+                cursorPixW = (TRACK_PALETTE_GRID_SIDE * TRACK_EDITOR_CELL_PIXELS);
             } else if (selRow[1] == 7) {
                 screenPosY -= 8;
                 selectCol[1] = 0;
-                cursorLeft = 0xdc;
-                cursorPixW = 0x60;
+                cursorLeft = TRACK_EDITOR_GRID_X_ORIGIN;
+                cursorPixW = (TRACK_PALETTE_GRID_SIDE * TRACK_EDITOR_CELL_PIXELS);
                 hovered = 0;
             } else if (selRow[1] > 7) {
                 screenPosY -= 8;
@@ -415,19 +448,19 @@ nextFrame:
                     selectCol[1] = 0;
                 else
                     selectCol[1] = 3;
-                cursorLeft = (selectCol[1] << 4) + 0xdc;
-                cursorPixW = 0x30;
+                cursorLeft = (selectCol[1] << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_GRID_X_ORIGIN;
+                cursorPixW = (3 * TRACK_EDITOR_CELL_PIXELS);
                 hovered = 0;
             } else {
-                cursorLeft = (selectCol[1] << 4) + 0xdc;
+                cursorLeft = (selectCol[1] << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_GRID_X_ORIGIN;
                 if (selRow[1] < 5 &&
-                        palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + 6] == 0xfe)
-                    boxHeight = 0x20;
+                        palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1] + TRACK_PALETTE_GRID_SIDE] == TRACK_TILE_CONTINUE_DOWN)
+                    boxHeight = (2 * TRACK_EDITOR_CELL_PIXELS);
                 if (selectCol[1] < 5 &&
-                        palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + 1] == 0xff)
-                    cursorPixW = 0x20;
-                hovered = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
-                if (hovered >= 0xfd)
+                        palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1] + 1] == TRACK_TILE_CONTINUE_RIGHT)
+                    cursorPixW = (2 * TRACK_EDITOR_CELL_PIXELS);
+                hovered = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]];
+                if (hovered >= TRACK_ELEMENT_SPECIAL_BASE)
                     hovered = 0;
             }
             if (activeGroup == 0)
@@ -514,8 +547,8 @@ nextFrame:
                     }
                     break;
                 case 3:
-                    destPosX = (msecoordx - 8) / 16;
-                    destPosY = (pos_y_ms - 4) / 16;
+                    destPosX = (msecoordx - TRACK_EDITOR_CELL_ORIGIN_X) / TRACK_EDITOR_CELL_PIXELS;
+                    destPosY = (pos_y_ms - TRACK_EDITOR_CELL_ORIGIN_Y) / TRACK_EDITOR_CELL_PIXELS;
                     if (activeGroup != 0) {
                         if (destPosY == 10 && (trklst[selectedPiece].ss_multiTileFlag & 1))
                             --destPosY;
@@ -534,15 +567,15 @@ nextFrame:
                         key = 0x0d;
                     break;
                 case 4:
-                    destPosX = (msecoordx - 0xdc) / 16;
-                    destPosY = (pos_y_ms - 0x24) / 16;
+                    destPosX = (msecoordx - TRACK_EDITOR_GRID_X_ORIGIN) / TRACK_EDITOR_CELL_PIXELS;
+                    destPosY = (pos_y_ms - TRACK_EDITOR_GRID_Y_ORIGIN) / TRACK_EDITOR_CELL_PIXELS;
                     if (destPosY < 6) {
-                        if (palette_piece_layout[activeGroup * 36 + destPosY * 6 + destPosX] == 0xfe)
+                        if (palette_piece_layout[activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + destPosY * TRACK_PALETTE_GRID_SIDE + destPosX] == TRACK_TILE_CONTINUE_DOWN)
                             --destPosY;
-                        if (palette_piece_layout[activeGroup * 36 + destPosY * 6 + destPosX] == 0xff)
+                        if (palette_piece_layout[activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + destPosY * TRACK_PALETTE_GRID_SIDE + destPosX] == TRACK_TILE_CONTINUE_RIGHT)
                             --destPosX;
                     } else {
-                        destPosY = (pos_y_ms - 0x1c) / 16;
+                        destPosY = (pos_y_ms - TRACK_EDITOR_PALETTE_ROW_Y_ORIGIN) / TRACK_EDITOR_CELL_PIXELS;
                         if (destPosY == 7) {
                             destPosX = 0;
                             goto paletteClick;
@@ -606,8 +639,8 @@ paletteClick:
         }
 
         switch (key) {
-        case 0x20:
-        case 0x5200:
+        case KEY_ASCII_SPACE:
+        case KEY_SCAN_INSERT:
             paletteArea ^= 1;
             break;
         case '-':
@@ -645,8 +678,8 @@ paletteClick:
             break;
         case 0x0d:
             if (paletteArea) {
-                if (selRow[1] < 6) {
-                    selectedPiece = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
+                if (selRow[1] < TRACK_PALETTE_GRID_SIDE) {
+                    selectedPiece = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]];
                     if (activeGroup != 0) {
                         if ((trklst[selectedPiece].ss_multiTileFlag & 1) &&
                                 selRow[0] - viewTop == 10)
@@ -659,7 +692,7 @@ paletteClick:
                     paletteArea = 0;
                 } else {
                     pathFlag = 1;
-                    if (selRow[1] == 6) {
+                    if (selRow[1] == TRACK_PALETTE_GRID_SIDE) {
                         if (++activeGroup > 10)
                             activeGroup = 1;
                     } else if (selRow[1] == 7) {
@@ -771,7 +804,7 @@ save:
                     ++paletteModified;
                 } else {
                     oldCell = td14tb[lnoffsets[selRow[0]] + selectCol[0]];
-                    if (oldCell >= 0xfd)
+                    if (oldCell >= TRACK_ELEMENT_SPECIAL_BASE)
                         oldCell = 0;
                     lastPutCol = selectCol[0];
                     droppedPosY = selRow[0];
@@ -782,21 +815,21 @@ save:
                 ++mapChanged;
                 switch (trklst[selectedPiece].ss_multiTileFlag) {
                 case 1:
-                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol] = 0xfe;
+                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol] = TRACK_TILE_CONTINUE_DOWN;
                     break;
                 case 2:
-                    td14tb[lnoffsets[droppedPosY] + lastPutCol + 1] = 0xff;
+                    td14tb[lnoffsets[droppedPosY] + lastPutCol + 1] = TRACK_TILE_CONTINUE_RIGHT;
                     break;
                 case 3:
-                    td14tb[lnoffsets[droppedPosY] + lastPutCol + 1] = 0xff;
-                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol] = 0xfe;
-                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol + 1] = 0xfd;
+                    td14tb[lnoffsets[droppedPosY] + lastPutCol + 1] = TRACK_TILE_CONTINUE_RIGHT;
+                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol] = TRACK_TILE_CONTINUE_DOWN;
+                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol + 1] = TRACK_TILE_CONTINUE_DOWN_RIGHT;
                     break;
                 }
             }
             check_input();
             break;
-        case 0x4700:
+        case KEY_SCAN_HOME:
             if (paletteArea) {
                 selRow[1] = 0;
                 selectCol[1] = 0;
@@ -809,36 +842,36 @@ save:
                 selectCol[0] = originX;
             }
             break;
-        case 0x4800:
+        case KEY_SCAN_UP:
             if (selRow[paletteArea] != 0) {
                 lastPutCol = -1;
                 --selRow[paletteArea];
-                if (paletteArea && selRow[1] < 6) {
-                    while (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
-                        boxMarker = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
-                        if (boxMarker == 0xff)
+                if (paletteArea && selRow[1] < TRACK_PALETTE_GRID_SIDE) {
+                    while (palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]] >= TRACK_ELEMENT_CONTINUATION_BASE) {
+                        boxMarker = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]];
+                        if (boxMarker == TRACK_TILE_CONTINUE_RIGHT)
                             --selectCol[1];
-                        else if (boxMarker == 0xfe)
+                        else if (boxMarker == TRACK_TILE_CONTINUE_DOWN)
                             --selRow[1];
                     }
                 }
             }
             break;
-        case 0x5000:
+        case KEY_SCAN_DOWN:
             if (selRow[paletteArea] < palette_row_limits[paletteArea]) {
                 lastPutCol = -1;
                 ++selRow[paletteArea];
-                if (paletteArea && selRow[1] < 6) {
-                    boxMarker = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
-                    if (boxMarker == 0xff)
+                if (paletteArea && selRow[1] < TRACK_PALETTE_GRID_SIDE) {
+                    boxMarker = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]];
+                    if (boxMarker == TRACK_TILE_CONTINUE_RIGHT)
                         --selectCol[1];
-                    else if (boxMarker == 0xfe)
+                    else if (boxMarker == TRACK_TILE_CONTINUE_DOWN)
                         ++selRow[1];
                 }
             }
             break;
-        case 0x4b00:
-            if (paletteArea && selRow[1] == 6) {
+        case KEY_SCAN_LEFT:
+            if (paletteArea && selRow[1] == TRACK_PALETTE_GRID_SIDE) {
                 if (activeGroup > 1)
                     --activeGroup;
             } else if (selectCol[paletteArea] != 0) {
@@ -848,18 +881,18 @@ save:
                     if (selRow[1] > 5)
                         selectCol[1] = 0;
                     else
-                        while (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
-                            boxMarker = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
-                            if (boxMarker == 0xff)
+                        while (palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]] >= TRACK_ELEMENT_CONTINUATION_BASE) {
+                            boxMarker = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]];
+                            if (boxMarker == TRACK_TILE_CONTINUE_RIGHT)
                                 --selectCol[1];
-                            else if (boxMarker == 0xfe)
+                            else if (boxMarker == TRACK_TILE_CONTINUE_DOWN)
                                 --selRow[1];
                         }
                 }
             }
             break;
-        case 0x4d00:
-            if (paletteArea && selRow[1] == 6) {
+        case KEY_SCAN_RIGHT:
+            if (paletteArea && selRow[1] == TRACK_PALETTE_GRID_SIDE) {
                 if (activeGroup < 10)
                     ++activeGroup;
             } else {
@@ -869,11 +902,11 @@ save:
                         boxMarker = 3;
                     else
                         while (selectCol[paletteArea] + boxMarker < palette_column_limits[paletteArea] &&
-                                palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + boxMarker] >= 0xfe) {
-                            value = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + boxMarker];
-                            if (value == 0xff)
+                                palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1] + boxMarker] >= TRACK_ELEMENT_CONTINUATION_BASE) {
+                            value = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1] + boxMarker];
+                            if (value == TRACK_TILE_CONTINUE_RIGHT)
                                 ++boxMarker;
-                            else if (value == 0xfe)
+                            else if (value == TRACK_TILE_CONTINUE_DOWN)
                                 --selRow[1];
                         }
                 }
@@ -895,159 +928,159 @@ save:
     mmgr_free(sdtBuffer) /* PLATFORM(memory): release the resource through game memory management. */;
 }
 
-void preRender_icons(unsigned char mode)
+void preRender_icons(U8  mode)
 { /* PURPOSE: Draw the six-by-six terrain and track-piece icon grid. Params: mode. Returns: void. Globals: reads palette_piece_layout, piece_fill_shapes, piece_mask_shapes, terrain_tile_shapes, trklst; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
-    unsigned char iconIndex;
-    unsigned char row;
-    unsigned char stateId;
-    for (iconIndex = 0; iconIndex < 6; ++iconIndex) {
-        for (row = 0; row < 6; ++row) {
-            stateId = palette_piece_layout[mode * 36 + iconIndex * 6 + row];
+    U8  iconIndex;
+    U8  row;
+    U8  stateId;
+    for (iconIndex = 0; iconIndex < TRACK_PALETTE_GRID_SIDE; ++iconIndex) {
+        for (row = 0; row < TRACK_PALETTE_GRID_SIDE; ++row) {
+            stateId = palette_piece_layout[mode * TRACK_PALETTE_PAGE_CELL_COUNT + iconIndex * TRACK_PALETTE_GRID_SIDE + row];
             if (mode == 0) {
-                sprite_shape_to_1(terrain_tile_shapes[stateId], 220 + (row << 4),
-                    36 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
-            } else if (stateId < 0xfd) {
-                sprite_shape_to_1(terrain_tile_shapes[0], 220 + (row << 4),
-                    36 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                sprite_shape_to_1(terrain_tile_shapes[stateId], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                    TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+            } else if (stateId < TRACK_ELEMENT_SPECIAL_BASE) {
+                sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                    TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                 switch (trklst[stateId].ss_multiTileFlag) {
                 case 1:
-                    sprite_shape_to_1(terrain_tile_shapes[0], 220 + (row << 4),
-                        52 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                        TRACK_EDITOR_GRID_Y_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     break;
                 case 2:
-                    sprite_shape_to_1(terrain_tile_shapes[0], 236 + (row << 4),
-                        36 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
+                        TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     break;
                 case 3:
-                    sprite_shape_to_1(terrain_tile_shapes[0], 236 + (row << 4),
-                        36 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
-                    sprite_shape_to_1(terrain_tile_shapes[0], 220 + (row << 4),
-                        52 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
-                    sprite_shape_to_1(terrain_tile_shapes[0], 236 + (row << 4),
-                        52 + (iconIndex << 4)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
+                        TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                        TRACK_EDITOR_GRID_Y_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
+                        TRACK_EDITOR_GRID_Y_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     break;
                 }
-                putpixel_iconMask(piece_mask_shapes[stateId], 220 + (row << 4),
-                    36 + (iconIndex << 4)) /* PLATFORM(video): apply a track-piece icon mask. */;
+                putpixel_iconMask(piece_mask_shapes[stateId], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                    TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): apply a track-piece icon mask. */;
                 putpixel_iconFillings(piece_fill_shapes[stateId],
-                    220 + (row << 4), 36 + (iconIndex << 4)) /* PLATFORM(video): apply a track-piece icon fill. */;
+                    TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT), TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): apply a track-piece icon fill. */;
             }
         }
     }
 }
 
-void draw_2DtrackMap(unsigned char rowBase, unsigned char columnBase, unsigned char *lastElement, unsigned char *lastTerrain)
+void draw_2DtrackMap(U8  rowBase, U8  columnBase, U8  *lastElement, U8  *lastTerrain)
 { /* PURPOSE: Draw the cached twelve-by-eleven track map preview. Params: rowBase, columnBase, lastElement, lastTerrain. Returns: void. Globals: reads gterrtrk, lnoffsets, piece_fill_shapes, piece_mask_shapes, td14tb, td15p_9, terrain_tile_shapes, trklst; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
-    unsigned int rowIndex;
-    signed char columnIndex;
-    signed char mapRow;
-    unsigned int mapIndex;
-    unsigned char surface;
-    unsigned char tileId;
+    U16  rowIndex;
+    I8S  columnIndex;
+    I8S  mapRow;
+    U16  mapIndex;
+    U8  surface;
+    U8  tileId;
 
-    for (mapRow = 0; mapRow < 11; ++mapRow) {
-        rowIndex = mapRow * 12;
-        for (columnIndex = 0; columnIndex < 12; ++columnIndex) {
-            tileId = td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase];
+    for (mapRow = 0; mapRow < TRACK_PREVIEW_ROW_COUNT; ++mapRow) {
+        rowIndex = mapRow * TRACK_PREVIEW_COLUMN_COUNT; /* PORT: signed 8-bit mapRow is promoted to 16-bit int; keep the target row-major index width. */
+        for (columnIndex = 0; columnIndex < TRACK_PREVIEW_COLUMN_COUNT; ++columnIndex) {
+            tileId = td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase]; /* PORT: this index arithmetic is 16-bit int over a far resource table; preserve segment-bounded access. */
             surface = td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase];
             mapIndex = rowIndex + columnIndex;
 
-            if (tileId >= 0xfd && (mapRow == 0 || columnIndex == 0)) {
-                lastElement[mapIndex] = 0xff;
-                if (tileId == 0xff && columnIndex == 0) {
+            if (tileId >= TRACK_ELEMENT_SPECIAL_BASE && (mapRow == 0 || columnIndex == 0)) {
+                lastElement[mapIndex] = TRACK_CACHE_INVALID; /* PORT: 0xff is the byte-cache invalid sentinel, distinct from the serialized continuation codes. */
+                if (tileId == TRACK_TILE_CONTINUE_RIGHT && columnIndex == 0) {
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
-                        (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
-                        (columnIndex << 4) + 8, (mapRow << 4) + 20) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
-                        (columnIndex << 4) - 8, (mapRow << 4) + 4) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
                     sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
-                        (columnIndex << 4) - 8, (mapRow << 4) + 4) /* PLATFORM(video): apply sprite pixels at the requested position. */;
-                } else if (tileId == 0xfe && mapRow == 0) {
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                } else if (tileId == TRACK_TILE_CONTINUE_DOWN && mapRow == 0) {
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
-                        (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
-                        (columnIndex << 4) + 24, (mapRow << 4) + 4) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
-                        (columnIndex << 4) + 8, (mapRow << 4) - 12) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
                     sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
-                        (columnIndex << 4) + 8, (mapRow << 4) - 12) /* PLATFORM(video): apply sprite pixels at the requested position. */;
-                } else if (tileId == 0xfd && mapRow == 0 && columnIndex == 0) {
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                } else if (tileId == TRACK_TILE_CONTINUE_DOWN_RIGHT && mapRow == 0 && columnIndex == 0) {
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
-                        (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
-                        (columnIndex << 4) - 8, (mapRow << 4) - 12) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
                     sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
-                        (columnIndex << 4) - 8, (mapRow << 4) - 12) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                        (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                 }
             } else if (tileId == 0) {
                 if (lastElement[mapIndex] != 0 || lastTerrain[mapIndex] != surface) {
-                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     lastElement[mapIndex] = 0;
                     lastTerrain[mapIndex] = surface;
                 }
-            } else if (tileId < 0xfd) {
+            } else if (tileId < TRACK_ELEMENT_SPECIAL_BASE) {
                 if (lastElement[mapIndex] != tileId || lastTerrain[mapIndex] != surface) {
                     lastElement[mapIndex] = tileId;
                     lastTerrain[mapIndex] = surface;
-                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     switch (trklst[tileId].ss_multiTileFlag) {
                     case 0:
-                        putpixel_iconMask(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply a track-piece icon mask. */;
-                        putpixel_iconFillings(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply a track-piece icon fill. */;
+                        putpixel_iconMask(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a track-piece icon mask. */;
+                        putpixel_iconFillings(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a track-piece icon fill. */;
                         break;
                     case 1:
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
-                            (columnIndex << 4) + 8, (mapRow << 4) + 20) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                            (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                         break;
                     case 2:
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
-                            (columnIndex << 4) + 24, (mapRow << 4) + 4) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                            (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                         break;
                     case 3:
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
-                            (columnIndex << 4) + 24, (mapRow << 4) + 4) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                            (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
-                            (columnIndex << 4) + 8, (mapRow << 4) + 20) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                            (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase + 1]],
-                            (columnIndex << 4) + 24, (mapRow << 4) + 20) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                            (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
+                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                         break;
                     }
                 }
             } else {
-                lastElement[mapIndex] = 0xff;
-                lastTerrain[mapIndex] = 0xff;
+                lastElement[mapIndex] = TRACK_CACHE_INVALID; /* PORT: 0xff is the byte-cache invalid sentinel, distinct from the serialized continuation codes. */
+                lastTerrain[mapIndex] = TRACK_CACHE_INVALID;
             }
         }
     }
 }
 
-char validate_track_elements(void)
+I8 validate_track_elements(void)
 { /* PURPOSE: Check track/terrain pairs, clear invalid entries, and return the error code. Params: none. Returns: char. Globals: reads gterrtrk, lnoffsets, td14tb, td15p_9; writes none. */
-    unsigned char elem, colidx;
-    unsigned char terrain, rowno;
-    char error;
+    U8  elem, colidx;
+    U8  terrain, rowno;
+    I8 error;
 
     clear_invalid_track_tiles();
     error = 0;
-    for (rowno = 0; rowno < 30; ++rowno) {
-        for (colidx = 0; colidx < 30; ++colidx) {
+    for (rowno = 0; rowno < TRACK_MAP_ROW_COUNT; ++rowno) {
+        for (colidx = 0; colidx < TRACK_MAP_COLUMN_COUNT; ++colidx) {
             terrain = td15p_9[gterrtrk[rowno] + colidx];
             elem = td14tb[lnoffsets[rowno] + colidx];
             if (elem != 0 && terrain != 0 && terrain != 6) {
                 switch (terrain) {
                 case 1: case 2: case 3: case 4: case 5:
-                    if (elem == 0xff)
+                    if (elem == TRACK_TILE_CONTINUE_RIGHT)
                         elem = td14tb[lnoffsets[rowno] + colidx - 1];
-                    else if (elem == 0xfe)
+                    else if (elem == TRACK_TILE_CONTINUE_DOWN)
                         elem = td14tb[lnoffsets[rowno - 1] + colidx];
-                    else if (elem == 0xfd)
+                    else if (elem == TRACK_TILE_CONTINUE_DOWN_RIGHT)
                         elem = td14tb[lnoffsets[rowno - 1] + colidx - 1];
                     switch (elem) {
                     case 0x22: case 0x23:
@@ -1078,20 +1111,20 @@ char validate_track_elements(void)
 
 void clear_invalid_track_tiles(void)
 { /* PURPOSE: Remove dangling cells from multi-tile track pieces. Params: none. Returns: void. Globals: reads lnoffsets, td14tb, trklst; writes none. */
-    unsigned char used[900];
-    unsigned char rowIdx;
-    unsigned char x;
-    unsigned char element;
-    register int clear;
+    U8  used[TRACK_MAP_CELL_COUNT];
+    U8  rowIdx;
+    U8  x;
+    U8  element;
+    register I16 clear;
 
-    for (clear = 0; clear < 900; ++clear)
+    for (clear = 0; clear < TRACK_MAP_CELL_COUNT; ++clear)
         used[clear] = 0;
 
-    for (rowIdx = 0; rowIdx < 30; ++rowIdx) {
-        for (x = 0; x < 30; ++x) {
+    for (rowIdx = 0; rowIdx < TRACK_MAP_ROW_COUNT; ++rowIdx) {
+        for (x = 0; x < TRACK_MAP_COLUMN_COUNT; ++x) {
             element = td14tb[lnoffsets[rowIdx] + x];
             if (element != 0) {
-                if (element >= 0xfd) {
+                if (element >= TRACK_ELEMENT_SPECIAL_BASE) {
                     if (used[lnoffsets[rowIdx] + x] == 0)
                         td14tb[lnoffsets[rowIdx] + x] = 0;
                 } else {
@@ -1099,7 +1132,7 @@ void clear_invalid_track_tiles(void)
                     case 1:
                         if (used[lnoffsets[rowIdx + 1] + x] != 0)
                             td14tb[lnoffsets[rowIdx] + x] = 0;
-                        else if (td14tb[lnoffsets[rowIdx + 1] + x] != 0xfe)
+                        else if (td14tb[lnoffsets[rowIdx + 1] + x] != TRACK_TILE_CONTINUE_DOWN)
                             td14tb[lnoffsets[rowIdx] + x] = 0;
                         else
                             used[lnoffsets[rowIdx + 1] + x] = 1;
@@ -1108,7 +1141,7 @@ void clear_invalid_track_tiles(void)
                         if (used[lnoffsets[rowIdx] + x + 1] != 0) {
                             td14tb[lnoffsets[rowIdx] + x] = 0;
                         } else {
-                            if (td14tb[lnoffsets[rowIdx] + x + 1] != 0xff)
+                            if (td14tb[lnoffsets[rowIdx] + x + 1] != TRACK_TILE_CONTINUE_RIGHT)
                                 td14tb[lnoffsets[rowIdx] + x] = 0;
                             else
                                 used[lnoffsets[rowIdx] + x + 1] = 1;
@@ -1119,9 +1152,9 @@ void clear_invalid_track_tiles(void)
                             used[lnoffsets[rowIdx] + x + 1] +
                             used[lnoffsets[rowIdx + 1] + x] != 0) {
                             td14tb[lnoffsets[rowIdx] + x] = 0;
-                        } else if (td14tb[lnoffsets[rowIdx] + x + 1] != 0xff ||
-                                   td14tb[lnoffsets[rowIdx + 1] + x] != 0xfe ||
-                                   td14tb[lnoffsets[rowIdx + 1] + x + 1] != 0xfd) {
+                        } else if (td14tb[lnoffsets[rowIdx] + x + 1] != TRACK_TILE_CONTINUE_RIGHT ||
+                                   td14tb[lnoffsets[rowIdx + 1] + x] != TRACK_TILE_CONTINUE_DOWN ||
+                                   td14tb[lnoffsets[rowIdx + 1] + x + 1] != TRACK_ELEMENT_SPECIAL_BASE) {
                             td14tb[lnoffsets[rowIdx] + x] = 0;
                         } else {
                             used[lnoffsets[rowIdx] + x + 1] = 1;

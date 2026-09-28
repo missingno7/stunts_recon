@@ -7756,13 +7756,18 @@
   "original_frame_load_address": 159952,
   "preprocessor_closure": [
     {
-      "line": 15,
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    },
+    {
+      "line": 17,
       "path": "<source>",
       "pragma": "pack",
       "value": 1
     },
     {
-      "line": 45,
+      "line": 47,
       "path": "<source>",
       "pragma": "pack",
       "value": null

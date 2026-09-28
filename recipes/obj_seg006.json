@@ -7895,7 +7895,13 @@
   },
   "object_segment": "UNIT_TEXT",
   "original_frame_load_address": 85344,
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "s006bss: the complete file-scope static set of seg006 is 30 static objects (3,144 B _BSS at [200332,203476)); the code bytes outside FIXUPP fields, fixup locations/kinds and relocations are identical to the canonical extern form (control: extern->static storage change alone leaves the object identical apart from the 203 _BSS FIXUPP targets; name lengths -/+ tested without codegen change). MSC 5.10 orders file statics by the identifier-spelling bucket sum(b&0xDF) mod 256 ascending (ties newest declaration first; L9-mschash), so every renamed static is a compiler-hash-constrained reconstruction name (readable, semantic, never recovered originals); polyinfoptr, polyinfo_reset_marker and transformed_shape_material keep their spellings. poly_padding_bytes (char[6], _BSS+0x9AC) and shape3d_unused (char[576], _BSS+0xA08) are unreferenced storage inside the proven _BSS extent; element type not recoverable (no seg006 FIXUPP points into them and no data symbol is grounded there).",

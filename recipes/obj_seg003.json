@@ -24822,7 +24822,13 @@
     "reason": "MSC _DATA SEGDEFs are WORD aligned, so the object's _DATA cannot start at odd 180605 (real LINK run: +1 cascade through DGROUP). The preceding 27 bytes 'crak','cinf','scensce2sce3sce4' are string literals of this object's own init_crak/load_skybox (formerly externs), so _DATA starts at even 180578; the old 57-byte RESOURCE_NAMES struct is replaced by the literals of load_sdgame2_shapes/setup_intro plus the word-aligned global aCarcoun_0 (its alignment hole is the zero byte at 180653).",
     "schema": "ownership-correction-v1"
   },
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review": [
     "Whole seg003 object (16 members). Source: src/obj_seg003_prefix.c (accepted prefix owner source) with the fence pair lists referenced through their pinned labels unk_3C0EE/unk_3C0F0/unk_3C0F4/unk_3C0F8 (the _unk_3C0EE container width is refused under RULING: skybox_op reads word_2C0FC[i] for i=2..5, i.e. DS:990h..997h, outside [97Eh,990h)), then renamed with the integ28 names registry proposal (build/namefit/names_registry_integ28.json).",

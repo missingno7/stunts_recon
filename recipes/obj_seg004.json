@@ -16675,7 +16675,13 @@
   },
   "object_segment": "UNIT_TEXT",
   "original_frame_load_address": 57760,
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review": [
     "Whole seg004 object (10 members), source build/workers/s004c/tu_v9.c copied byte-for-byte.",

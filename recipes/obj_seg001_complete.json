@@ -23387,7 +23387,13 @@
   },
   "object_segment": "UNIT_TEXT",
   "original_frame_load_address": 18192,
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "carState_rc_op keeps the literal identity assignment `car->car_rc5[wheel] = car->car_rc5[wheel];`: the target contains the 24-byte load/store-back and no natural alternative among 34 tried forms reproduces it (supervisor RULING, tuflags4); plausibly macro residue",

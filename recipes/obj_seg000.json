@@ -36166,7 +36166,13 @@
   },
   "object_segment": "UNIT_TEXT",
   "original_frame_load_address": 0,
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "integ34 (L8-msstatic, supervisor RULING): the complete file-scope static set of seg000 is six `static short` (12 B _BSS at [199994,200006)); MSC 5.10 allocates file statics in an order that depends on the identifier spelling (compiler symbol hash; declaration and first-use order are irrelevant), so hiscore_rank_prev, hiscore_old_entry, hiscore_opponent_earlier, hiscore_current_place, end_hiscore_random and hiscore_opponent_live are compiler-hash-constrained reconstruction names (readable, semantic, never recovered originals; same class as pressure- and link-hash-constrained names)",

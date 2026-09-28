@@ -51,6 +51,17 @@
 #define KEY_ASCII_ESCAPE 27 /* ASCII Escape control character. */
 #define KEY_ASCII_SPACE 0x20 /* ASCII space character. */
 #define KEY_ASCII_Z 0x7A /* ASCII lowercase 'z'. */
+#define KEY_ASCII_UPPER_C 0x43 /* ASCII uppercase 'C'. */
+#define KEY_ASCII_UPPER_D 0x44 /* ASCII uppercase 'D'. */
+#define KEY_ASCII_UPPER_H 0x48 /* ASCII uppercase 'H'. */
+#define KEY_ASCII_UPPER_M 0x4D /* ASCII uppercase 'M'. */
+#define KEY_ASCII_UPPER_R 0x52 /* ASCII uppercase 'R'. */
+#define KEY_ASCII_LOWER_C 0x63 /* ASCII lowercase 'c'. */
+#define KEY_ASCII_LOWER_D 0x64 /* ASCII lowercase 'd'. */
+#define KEY_ASCII_LOWER_H 0x68 /* ASCII lowercase 'h'. */
+#define KEY_ASCII_LOWER_M 0x6D /* ASCII lowercase 'm'. */
+#define KEY_ASCII_LOWER_R 0x72 /* ASCII lowercase 'r'. */
+#define KEY_ASCII_LOWER_T 0x74 /* ASCII lowercase 't'. */
 
 /* Port, segment, and interrupt constants shared with platform_hw.inc. */
 #define R5HW_DOS_TERMINATE_INT 0x20 /* DOS terminate-process interrupt. */

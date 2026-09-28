@@ -1,31 +1,34 @@
+#include "stunts_types.h"
 #include "platform_hw.h"
+#define MOUSE_DEFAULT_PIXEL_RATIO 16
 /* READABILITY: Adapt the DOS mouse driver register interface to the game cursor state and coordinate conventions. */
+/* PORT: INT register packets require 16-bit word fields and MSC-compatible struct layout. */
 typedef struct MouseRegs {
-    unsigned int ax;
-    unsigned int bx;
-    unsigned int cx;
-    unsigned int dx;
-    unsigned int si;
-    unsigned int di;
-    unsigned int cflag;
+    U16 ax;
+    U16 bx;
+    U16 cx;
+    U16 dx;
+    U16 si;
+    U16 di;
+    U16 cflag;
 } MouseRegs;
 
 MouseRegs msregisterms;
 unsigned int ms_buttons;
 unsigned int cursorxposition;
 unsigned int mouse_api_y;
-extern unsigned int mousehorscale;
-extern int mouse_button_state_cache;
-extern int showmouse;
-extern int far int86(unsigned int interrupt_no, MouseRegs *input, MouseRegs *output);
-void far mouse_set_pixratio(unsigned int xratio, unsigned int yratio);
-void far mouse_set_minmax(unsigned int xmin, unsigned int ymin, unsigned int xmax, unsigned int ymax);
+extern U16 mousehorscale;
+extern I16 mouse_button_state_cache;
+extern I16 showmouse;
+extern I16 FAR int86(U16 interrupt_no, MouseRegs *input, MouseRegs *output);
+void FAR mouse_set_pixratio(U16 xratio, U16 yratio);
+void FAR mouse_set_minmax(U16 xmin, U16 ymin, U16 xmax, U16 ymax);
 
 /* Set the DOS mouse horizontal and vertical pixel ratios.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): this service call sets DOS mouse pixel scaling. */
-void far mouse_set_pixratio(unsigned int xratio, unsigned int yratio)
+void FAR mouse_set_pixratio(U16 xratio, U16 yratio)
 {
     msregisterms.ax = MOUSE_FN_SET_PIXEL_RATIO;
     msregisterms.cx = xratio;
@@ -38,9 +41,9 @@ void far mouse_set_pixratio(unsigned int xratio, unsigned int yratio)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): initialize the DOS mouse and set its game bounds. */
-int far mouse_init(unsigned int width, unsigned int height)
+I16 FAR mouse_init(U16 width, U16 height)
 {
-    unsigned int status;
+    U16 status;
     msregisterms.ax = PLATFORM_BIOS_MOUSE_INIT_SELECTOR;
     /* PLATFORM(bios): call BIOS INT 15h with the mouse initialization selector. */
     int86(PLATFORM_BIOS_MOUSE_INTERRUPT, &msregisterms, &msregisterms);
@@ -50,10 +53,10 @@ int far mouse_init(unsigned int width, unsigned int height)
     status = msregisterms.ax;
     ms_buttons = msregisterms.bx;
     if (status != 0) {
-        if (width == 320) mousehorscale = 1;
+        if (width == PLATFORM_SCREEN_WIDTH_PIXELS) mousehorscale = 1;
         else mousehorscale = 0;
         mouse_set_minmax(0, 0, width - 1, height - 1);
-        mouse_set_pixratio(16, 16);
+        mouse_set_pixratio(MOUSE_DEFAULT_PIXEL_RATIO, MOUSE_DEFAULT_PIXEL_RATIO);
         mouse_button_state_cache = 0xffff;
     }
     return status;
@@ -63,8 +66,8 @@ int far mouse_init(unsigned int width, unsigned int height)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): set DOS mouse horizontal and vertical limits. */
-void far mouse_set_minmax(unsigned int xmin, unsigned int ymin,
-                          unsigned int xmax, unsigned int ymax)
+void FAR mouse_set_minmax(U16 xmin, U16 ymin,
+                          U16 xmax, U16 ymax)
 {
     msregisterms.ax = MOUSE_FN_SET_HORIZONTAL_RANGE;
     msregisterms.cx = xmin << mousehorscale;
@@ -82,7 +85,7 @@ void far mouse_set_minmax(unsigned int xmin, unsigned int ymin,
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): read cursor coordinates and button state. */
-static unsigned int far mouse_get_position(void)
+static U16 FAR mouse_get_position(void)
 {
     msregisterms.ax = MOUSE_FN_GET_POSITION_AND_BUTTONS;
     /* PLATFORM(input_mouse): call the DOS mouse driver through INT 33h. */
@@ -97,7 +100,7 @@ static unsigned int far mouse_get_position(void)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): show the DOS mouse cursor. */
-static void far mouse_show_cursor(void)
+static void FAR mouse_show_cursor(void)
 {
     ++showmouse;
     if (showmouse < 1) return;
@@ -111,7 +114,7 @@ static void far mouse_show_cursor(void)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): hide the DOS mouse cursor. */
-static void far mouse_hide_cursor(void)
+static void FAR mouse_hide_cursor(void)
 {
     --showmouse;
     if (showmouse != 0) return;
@@ -124,7 +127,7 @@ static void far mouse_hide_cursor(void)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): move the DOS mouse cursor. */
-void far mouse_set_position(unsigned int x, unsigned int y)
+void FAR mouse_set_position(U16 x, U16 y)
 {
     msregisterms.ax = MOUSE_FN_SET_POSITION;
     cursorxposition = x;
@@ -139,7 +142,7 @@ void far mouse_set_position(unsigned int x, unsigned int y)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): read the DOS mouse button and coordinate state. */
-void far mouse_get_state(unsigned int *ax, unsigned int *cx, unsigned int *dx)
+void FAR mouse_get_state(U16 *ax, U16 *cx, U16 *dx)
 {
     msregisterms.ax = MOUSE_FN_GET_POSITION_AND_BUTTONS;
     /* PLATFORM(input_mouse): call the DOS mouse driver through INT 33h. */
@@ -153,7 +156,7 @@ void far mouse_get_state(unsigned int *ax, unsigned int *cx, unsigned int *dx)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): update the DOS mouse horizontal range. */
-void far nopsub_36A9A(int xmin, int xmax)
+void FAR nopsub_36A9A(I16 xmin, I16 xmax)
 {
     msregisterms.ax = MOUSE_FN_SET_HORIZONTAL_RANGE;
     msregisterms.cx = xmin >> mousehorscale;
@@ -166,7 +169,7 @@ void far nopsub_36A9A(int xmin, int xmax)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): update the DOS mouse vertical range. */
-void far nopsub_36ACA(unsigned int ymin, unsigned int ymax)
+void FAR nopsub_36ACA(U16 ymin, U16 ymax)
 {
     msregisterms.ax = MOUSE_FN_SET_VERTICAL_RANGE;
     msregisterms.cx = ymin;
@@ -175,6 +178,6 @@ void far nopsub_36ACA(unsigned int ymin, unsigned int ymax)
     int86(PLATFORM_DOS_MOUSE_INTERRUPT, &msregisterms, &msregisterms);
 }
 
-int mouse_button_state_cache = 0;
-unsigned int mousehorscale = 0;
-int showmouse = 0;
+I16 mouse_button_state_cache = 0;
+U16 mousehorscale = 0;
+I16 showmouse = 0;

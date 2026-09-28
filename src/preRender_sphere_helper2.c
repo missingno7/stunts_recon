@@ -1,22 +1,27 @@
+#include "stunts_types.h"
 /* READABILITY: Build the thirty-two front/back perimeter points for a sphere section from three source points. */
-struct Point { int x; int y; };
-extern int far mulscl(int, int);
+
+#define SPHERE_RING_POINT_COUNT 16
+#define SPHERE_BACK_RING_OFFSET 16
+struct Point { I16 x; I16 y; };
+extern I16 FAR mulscl(I16, I16);
 /* Interpolate and translate the front and rear sphere-section point rings.
  * Params and return follow the declared C signature. */
-void far preRender_sphere_helper2(struct Point *source, struct Point *output)
+void FAR preRender_sphere_helper2(struct Point *source, struct Point *output)
 {
-    int startHalfX, startHalfY;
-    int threeQuarterX0, threeQuarterY0;
-    int initialQuarterX, initialQuarterY;
-    int index;
-    int endHalfX, endHalfY;
-    int threeQuarterX8, threeQuarterY8;
-    int outermostQuarterX, outermostQuarterY;
+    I16 startHalfX, startHalfY;
+    I16 threeQuarterX0, threeQuarterY0;
+    I16 initialQuarterX, initialQuarterY;
+    I16 index;
+    I16 endHalfX, endHalfY;
+    I16 threeQuarterX8, threeQuarterY8;
+    I16 outermostQuarterX, outermostQuarterY;
 
     output[0].x = source[1].x - source[0].x;
     output[0].y = source[1].y - source[0].y;
     output[8].x = source[2].x - source[0].x;
     output[8].y = source[2].y - source[0].y;
+    /* PORT: Signed geometry coordinates use arithmetic right shifts when halved. */
     startHalfX = output[0].x >> 1;
     initialQuarterX = startHalfX >> 1;
     threeQuarterX0 = startHalfX + initialQuarterX;
@@ -60,9 +65,9 @@ void far preRender_sphere_helper2(struct Point *source, struct Point *output)
     output[11].x = mulscl(output[8].x - threeQuarterX0, 0x3333);
     output[11].y = mulscl(output[8].y - threeQuarterY0, 0x3333);
 
-    for (index = 0; index < 16; ++index) {
-        output[index + 16].x = source[0].x - output[index].x;
-        output[index + 16].y = source[0].y - output[index].y;
+    for (index = 0; index < SPHERE_RING_POINT_COUNT; ++index) {
+        output[index + SPHERE_BACK_RING_OFFSET].x = source[0].x - output[index].x;
+        output[index + SPHERE_BACK_RING_OFFSET].y = source[0].y - output[index].y;
         output[index].x += source[0].x;
         output[index].y += source[0].y;
     }

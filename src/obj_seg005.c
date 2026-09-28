@@ -1,45 +1,81 @@
-/* Scratch TU. Header declarations are semantic leads from Restunts; no preprocessor directives. */
+#define FAR far
+#define NEAR near
+#define HUGE huge
+#define WORLD_COORDINATE_SHIFT 6
+#define CAR_SPEED_Q8_SHIFT 8
+#define SPEEDOMETER_HUNDREDS_BASE 100
+#define SPEEDOMETER_TWO_HUNDREDS_BASE 200
+#define PLATFORM_SCREEN_WIDTH_PIXELS 320
+#define PLATFORM_SCREEN_HEIGHT_PIXELS 200
+#define BIOS_KEY_F1 0x3B00
+#define BIOS_KEY_F2 0x3C00
+#define BIOS_KEY_F3 0x3D00
+#define BIOS_KEY_F4 0x3E00
+#define KEY_SCAN_UP 0x4800
+#define KEY_SCAN_LEFT 0x4B00
+#define KEY_SCAN_RIGHT 0x4D00
+#define KEY_SCAN_DOWN 0x5000
+#define KEY_ASCII_ESCAPE 0x1B
+#define KEY_ASCII_UPPER_C 0x43
+#define KEY_ASCII_UPPER_D 0x44
+#define KEY_ASCII_UPPER_H 0x48
+#define KEY_ASCII_UPPER_M 0x4D
+#define KEY_ASCII_UPPER_R 0x52
+#define KEY_ASCII_LOWER_C 0x63
+#define KEY_ASCII_LOWER_D 0x64
+#define KEY_ASCII_LOWER_H 0x68
+#define KEY_ASCII_LOWER_M 0x6D
+#define KEY_ASCII_LOWER_R 0x72
+#define KEY_ASCII_LOWER_T 0x74
+#include "stunts_types.h"
+/* Scratch TU. Header declarations are semantic leads from Restunts; no preprocessor directives. */ /* PORT: plain char signedness follows the pinned MSC target. */
 extern void sprcopy2to12(void);
 extern void msdrawtransparentchk(void);
 
 
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct RECTANGLE {
-	int left, right;
-	int top, bottom;
+	I16 left, right;
+	I16 top, bottom;
 	//int x1, y1;
 	//int x2, y2;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct VECTOR {
-	short x, y, z;
+	I16S x, y, z;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct VECTORLONG {
-	long lx, ly, lz;
+	I32 lx, ly, lz;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct POINT2D {
-	int px, py;
+	I16 px, py;
 };
 
-struct MATRIX { int vals[9]; };;
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+struct MATRIX { I16 vals[9]; };;
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct PLANE {
-	int plane_yz;
-	int plane_xy;
+	I16 plane_yz;
+	I16 plane_xy;
 	struct VECTOR plane_origin;
 	struct VECTOR plane_normal;
 	struct MATRIX plane_rotation;
 };
 
 
-short sinfast(unsigned short s);
-short cosfast(unsigned short s);
+I16S sinfast(U16S  s);
+I16S cosfast(U16S  s);
 
-int polang(int z, int y);
-int polradius2d(int z, int y);
-int polarRadius3D(struct VECTOR* vec);
+I16 polang(I16 z, I16 y);
+I16 polradius2d(I16 z, I16 y);
+I16 polarRadius3D(struct VECTOR* vec);
 
 unsigned rect_compare_point(struct POINT2D* pt);
 
@@ -47,215 +83,221 @@ void mat_vec(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
 void mat_mul_vector2(struct VECTOR* invec, struct MATRIX far* mat, struct VECTOR* outvec);
 void mat_multiply(struct MATRIX* rmat, struct MATRIX* lmat, struct MATRIX* outmat);
 void mat_invert(struct MATRIX* inmat, struct MATRIX* outmat);
-void mat_rot_x(struct MATRIX* outmat, int angle);
-void matroty(struct MATRIX* outmat, int angle);
-void mat_rot_z(struct MATRIX* outmat, int angle);
-struct MATRIX* matrotzxy(int z, int x, int y, int unk);
+void mat_rot_x(struct MATRIX* outmat, I16 angle);
+void matroty(struct MATRIX* outmat, I16 angle);
+void mat_rot_z(struct MATRIX* outmat, I16 angle);
+struct MATRIX* matrotzxy(I16 z, I16 x, I16 y, I16 unk);
 
 void rect_adjust_from_point(struct POINT2D* pt, struct RECTANGLE* rc);
 
-int vector_op_unk2(struct VECTOR* vec);
+I16 vector_op_unk2(struct VECTOR* vec);
 void vector_to_point(struct VECTOR* vec, struct POINT2D* outpt);
-void vector_op_unk(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, short i);
+void vector_op_unk(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
 
-short mulscl(short a1, short a2);
+I16S mulscl(I16S a1, I16S a2);
 
 void rcunion(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
-int rcintersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
+I16 rcintersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
 
 void plnrotop(void);
-int plnoriginop(int index, int b, int c, int d);
+I16 plnoriginop(I16 index, I16 b, I16 c, I16 d);
 
 
 
 
 
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct GAMEINFO {
-	char game_playercarid[4];
-	char game_playermaterial;
-	char game_playertransmission;
-	char game_opponenttype;
-	char game_opponentcarid[4];
-	char game_opponentmaterial;
-	char game_opponenttransmission;
-	char game_trackname[9];
-	char game_framespersec;
-	short game_recordedframes;
+	I8 game_playercarid[4];
+	I8 game_playermaterial;
+	I8 game_playertransmission;
+	I8 game_opponenttype;
+	I8 game_opponentcarid[4];
+	I8 game_opponentmaterial;
+	I8 game_opponenttransmission;
+	I8 game_trackname[9];
+	I8 game_framespersec;
+	I16S game_recordedframes;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct CARSTATE {
 	struct VECTORLONG car_posWorld1;
 	struct VECTORLONG car_posWorld2;
 	struct VECTOR car_rotate; // applying the (x, y, z) vector notation to rotation
                               // angles is a source of confusion.
-	short car_pseudoGravity;
-	short car_steeringAngle;
-	short car_currpm;
-	short car_lastrpm;
-	short car_idlerpm2;
-	short car_speeddiff; // former gripdiff
-	unsigned short car_speed;     // former trackgrip
+	I16S car_pseudoGravity;
+	I16S car_steeringAngle;
+	I16S car_currpm;
+	I16S car_lastrpm;
+	I16S car_idlerpm2;
+	I16S car_speeddiff; // former gripdiff
+	U16S  car_speed;     // former trackgrip
                          // value is 2^8*(mph value) and unsigned
-	unsigned short car_speed2;    // former trackgrip2
+	U16S  car_speed2;    // former trackgrip2
                          // speed is the rev-coupled speed, while speed2 is
                          // the actual car speed. They are different, for
                          // instance, during jumps (where accelerating increases
                          // revs without making the car go faster).
-	unsigned short car_lastspeed; // former lasttrackgrip
-	unsigned short car_gearratio;
-	unsigned short car_gearratioshr8;
-	short car_knob_x;
-	short car_36MwhlAngle;
-	short car_knob_y;
-	short car_knob_x2;
-	short car_knob_y2;
-	short car_angle_z;
-	short car_40MfrontWhlAngle;
-	short field_42;
-	short car_demandedGrip;
-	short car_surfacegrip_sum;
-	short field_48;
-	short car_trackdata3_index;
-	short car_rc1[4]; // four words, one for each wheel.
-	short car_rc2[4];
-	short car_rc3[4];
-	short car_rc4[4];
-	short car_rc5[4];
+	U16S  car_lastspeed; // former lasttrackgrip
+	U16S  car_gearratio;
+	U16S  car_gearratioshr8;
+	I16S car_knob_x;
+	I16S car_36MwhlAngle;
+	I16S car_knob_y;
+	I16S car_knob_x2;
+	I16S car_knob_y2;
+	I16S car_angle_z;
+	I16S car_40MfrontWhlAngle;
+	I16S field_42;
+	I16S car_demandedGrip;
+	I16S car_surfacegrip_sum;
+	I16S field_48;
+	I16S car_trackdata3_index;
+	I16S car_rc1[4]; // four words, one for each wheel.
+	I16S car_rc2[4];
+	I16S car_rc3[4];
+	I16S car_rc4[4];
+	I16S car_rc5[4];
 	struct VECTOR car_whlWorldCrds1[4];
 	struct VECTOR car_whlWorldCrds2[4];
 	struct VECTOR car_vec_unk3;
 	struct VECTOR car_vec_unk4;
 	struct VECTOR car_vec_unk5;
-	short field_B6;
-	short field_B8;
-	short field_BA;
-	char car_is_braking;
-	char car_is_accelerating;
-	char car_current_gear;
-	char car_sumSurfFrontWheels;
-	char car_sumSurfRearWheels;
-	char car_sumSurfAllWheels; // used as jump flag.
-	char car_surfaceWhl[4];      // surface types for each of the wheels, it seems.
-	char car_engineLimiterTimer;
-	char car_slidingFlag;
-	char field_C8;
-	char car_crashBmpFlag;
-	char car_changing_gear;
-	char car_fpsmul2;
-	char car_transmission;
-	char field_CD;
-	char field_CE; // is added?
-	char field_CF; // is initialized?
+	I16S field_B6;
+	I16S field_B8;
+	I16S field_BA;
+	I8 car_is_braking;
+	I8 car_is_accelerating;
+	I8 car_current_gear;
+	I8 car_sumSurfFrontWheels;
+	I8 car_sumSurfRearWheels;
+	I8 car_sumSurfAllWheels; // used as jump flag.
+	I8 car_surfaceWhl[4];      // surface types for each of the wheels, it seems.
+	I8 car_engineLimiterTimer;
+	I8 car_slidingFlag;
+	I8 field_C8;
+	I8 car_crashBmpFlag;
+	I8 car_changing_gear;
+	I8 car_fpsmul2;
+	I8 car_transmission;
+	I8 field_CD;
+	I8 field_CE; // is added?
+	I8 field_CF; // is initialized?
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct GAMESTATE {
-	long game_longs1[24]; // x
-	long game_longs2[24]; // y
-	long game_longs3[24]; // z
+	I32 game_longs1[24]; // x
+	I32 game_longs2[24]; // y
+	I32 game_longs3[24]; // z
 	struct VECTOR game_vec1[2]; // 0 = player, 1 = opponent
 	struct VECTOR game_vec3[2]; // [0] player, [1] opponent
-	short game_frame_in_sec;
-	short game_frames_per_sec;
-	long  game_travDist;
-	unsigned short game_frame;
-	short game_total_finish; // finish time + penalty when crossed finish line
-	short field_144;
-	short game_pEndFrame;
-	short game_oEndFrame;   // former game_frame2
-	short game_penalty; // probably penalty counter
-	unsigned short game_impactSpeed;
-	unsigned short game_topSpeed;
-	short game_jumpCount;
+	I16S game_frame_in_sec;
+	I16S game_frames_per_sec;
+	I32  game_travDist;
+	U16S  game_frame;
+	I16S game_total_finish; // finish time + penalty when crossed finish line
+	I16S field_144;
+	I16S game_pEndFrame;
+	I16S game_oEndFrame;   // former game_frame2
+	I16S game_penalty; // probably penalty counter
+	U16S  game_impactSpeed;
+	U16S  game_topSpeed;
+	I16S game_jumpCount;
 	struct CARSTATE playerstate;
 	struct CARSTATE opponentstate;
-	short field_2F2;
-	short field_2F4;
-	short game_startcol;
-	short game_startcol2;
-	short game_startrow;
-	short game_startrow2;
-	short field_2FE[24];
-	short field_32E[24];
-	short field_35E[24];
-	short field_38E[24];
-	char field_3BE[48];
-	char kevinseed[6];
-	char field_3F4;
-	char game_inputmode; // 0 = waiting for input, 1 = input active, 2 = no input (during the intro)
-	char game_3F6autoLoadEvalFlag;
-	char field_3F7[2]; // 0 = player, 1 = opponent
-	char field_3F9;
-	char field_3FA[48];
-	char field_42A;
-	char field_42B[24];
-	char field_443[24];
-	char field_45B;
-	char field_45C;
-	char field_45D;
-	char field_45E;
-	char field_45F;
+	I16S field_2F2;
+	I16S field_2F4;
+	I16S game_startcol;
+	I16S game_startcol2;
+	I16S game_startrow;
+	I16S game_startrow2;
+	I16S field_2FE[24];
+	I16S field_32E[24];
+	I16S field_35E[24];
+	I16S field_38E[24];
+	I8 field_3BE[48];
+	I8 kevinseed[6];
+	I8 field_3F4;
+	I8 game_inputmode; // 0 = waiting for input, 1 = input active, 2 = no input (during the intro)
+	I8 game_3F6autoLoadEvalFlag;
+	I8 field_3F7[2]; // 0 = player, 1 = opponent
+	I8 field_3F9;
+	I8 field_3FA[48];
+	I8 field_42A;
+	I8 field_42B[24];
+	I8 field_443[24];
+	I8 field_45B;
+	I8 field_45C;
+	I8 field_45D;
+	I8 field_45E;
+	I8 field_45F;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct SIMD {
-	char num_gears;
-	char simd_unk;
-	short car_mass;
-	short braking_eff;
-	short idle_rpm;
-	short downshift_rpm;
-	short upshift_rpm;
-	short max_rpm;
-	unsigned short gear_ratios[7];
+	I8 num_gears;
+	I8 simd_unk;
+	I16S car_mass;
+	I16S braking_eff;
+	I16S idle_rpm;
+	I16S downshift_rpm;
+	I16S upshift_rpm;
+	I16S max_rpm;
+	U16S  gear_ratios[7];
 	struct POINT2D knob_points[7];
-	short aero_resistance;
-	char idle_torque;
-	char torque_curve[104];
-	char field_A3;
-	short grip;
-	short field_A6[7];
-	short sliding;
-	short surface_grip[4];
-	char simd_unk3[10];
+	I16S aero_resistance;
+	I8 idle_torque;
+	I8 torque_curve[104];
+	I8 field_A3;
+	I16S grip;
+	I16S field_A6[7];
+	I16S sliding;
+	I16S surface_grip[4];
+	I8 simd_unk3[10];
 	struct POINT2D collide_points[2];
-	short car_height;
+	I16S car_height;
 	struct VECTOR wheel_coords[4];
-	unsigned char steeringdots[62];
+	U8  steeringdots[62];
 	struct POINT2D spdcenter;
-	short spdnumpoints;
-	unsigned char spdpoints[208];
+	I16S spdnumpoints;
+	U8  spdpoints[208];
 	struct POINT2D revcenter;
-	short revnumpoints;
-	unsigned char revpoints[256];
-	short far* aerorestable;
+	I16S revnumpoints;
+	U8  revpoints[256];
+	I16S far* aerorestable;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct TRKOBJINFO {
-	char  si_noOfBlocks;      // How many shapeInfo pieces compose the element. Arbitrary for the first piece, 0 for the following ones.
-	char  si_entryPoint;      // Connectivity of the track element regarding tiles.
-	char  si_exitPoint;
-	char  si_entryType;        // Connectivity of the track element regarding element types.
-	char  si_exitType;
-	char  si_arrowType;        // Type of the element for determining penalty-arrow behaviour.
-	short si_arrowOrient;      // Orientation angle for penalty-arrow purposes
-	short* si_cameraDataOffset; // offset (0003B770)
-	char  si_opp1;             //Appears to affect how the opponent AI approaches an element.
-	char  si_opp2;
-	char  si_opp3;
-	char  si_oppSpedCode;
+	I8  si_noOfBlocks;      // How many shapeInfo pieces compose the element. Arbitrary for the first piece, 0 for the following ones.
+	I8  si_entryPoint;      // Connectivity of the track element regarding tiles.
+	I8  si_exitPoint;
+	I8  si_entryType;        // Connectivity of the track element regarding element types.
+	I8  si_exitType;
+	I8  si_arrowType;        // Type of the element for determining penalty-arrow behaviour.
+	I16S si_arrowOrient;      // Orientation angle for penalty-arrow purposes
+	I16S* si_cameraDataOffset; // offset (0003B770)
+	I8  si_opp1;             //Appears to affect how the opponent AI approaches an element.
+	I8  si_opp2;
+	I8  si_opp3;
+	I8  si_oppSpedCode;
 };
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct TRACKOBJECT {
 	struct TRKOBJINFO* ss_trkObjInfoPtr; // offset (0003B770)
-	short ss_rotY;           // Horizontal orientation of the element.
+	I16S ss_rotY;           // Horizontal orientation of the element.
 	struct SHAPE3D* ss_shapePtr;       // offset (0003B770)
 	struct SHAPE3D* ss_loShapePtr;     // offset (0003B770)
-	unsigned char  ss_ssOvelay;       // Renders additional sceneShapes over the current one.
-	char  ss_surfaceType;    // Paintjob. FF will induce alternating paintjobs.
-	char  ss_ignoreZBias;    // Appears to be Z-bias override flag, mostly used for roads and corners.
-	char  ss_multiTileFlag;  // 0 = one-tile, 1 = two-tile vertical, 2 = two-tile horizontal, 3 = four-tile.
-	char  ss_physicalModel;  // sets the physical model in build_track_object
-	char  scene_unk5;        // always zero.
+	U8   ss_ssOvelay;       // Renders additional sceneShapes over the current one.
+	I8  ss_surfaceType;    // Paintjob. FF will induce alternating paintjobs.
+	I8  ss_ignoreZBias;    // Appears to be Z-bias override flag, mostly used for roads and corners.
+	I8  ss_multiTileFlag;  // 0 = one-tile, 1 = two-tile vertical, 2 = two-tile horizontal, 3 = four-tile.
+	I8  ss_physicalModel;  // sets the physical model in build_track_object
+	I8  scene_unk5;        // always zero.
 };
 
 
@@ -265,11 +307,11 @@ extern struct GAMEINFO gmconfigbackup;
 extern struct GAMESTATE core;
 extern struct SIMD ophys_7;
 
-extern short pixel_scales;
-extern short g_vid_flg2_set;
+extern I16S pixel_scales;
+extern I16S g_vid_flg2_set;
 short vidflg4_is1;
 char g_videoflg5;
-extern short g_vid_flag6;
+extern I16S g_vid_flag6;
 
 unsigned char timeraud;
 unsigned char slomodiv8;
@@ -278,43 +320,43 @@ unsigned short tmr2;
 unsigned char sigframe;
 unsigned char g_rpl_init;
 char gm_playmode; // 0 = playing, 1 = paused, 2 = replay
-extern short g_sgateopn;
+extern I16S g_sgateopn;
 
-extern short elapsed_time1; // current frame?
-extern short g_cvxintvl; // fps * 30
-extern short frmcs_time; // 100 / fps
-extern short st_hdg;
+extern I16S elapsed_time1; // current frame?
+extern I16S g_cvxintvl; // fps * 30
+extern I16S frmcs_time; // 100 / fps
+extern I16S st_hdg;
 extern void* table_lookup;
 extern void* steerWhlRespTable_10fps;
 extern void* steerWhlRespTable_20fps;
-extern char idxtrk, tagtrk;
-extern char g_hillf;
-extern short hillconsts[];
+extern I8 idxtrk, tagtrk;
+extern I8 g_hillf;
+extern I16S hillconsts[];
 
 struct RECTANGLE boundglassrect;
 short bitmapdash;
-extern int runrndx;
+extern I16 runrndx;
 char replaybar_toggle;
 char inrepflg;
-extern char cammd;
+extern I8 cammd;
 char g_rplmodui;
 char gm_saved_rpl_mode;
 char numid;
 char g_rplbfask;
 char on_off_dash;
 char cam_idg;
-extern char pen_flag_count;
+extern I8 pen_flag_count;
 int replayrst;
 char popupact;
-extern char byte_3B8F2;
-extern char byte_3FE00;
+extern I8 byte_3B8F2;
+extern I8 byte_3FE00;
 extern void far* gamerptrs;
 void far* dasm_shp_7;
-extern int word_3F88E;
+extern I16 word_3F88E;
 char dashbtogglesaved;
 char g_replaybarcpytgl;
 char is_in_rplcopy;
-extern char follow_op;
+extern I8 follow_op;
 char opp_follow_flag_backup;
 int roofbmphgt_saved;
 char mode_flag;
@@ -330,92 +372,92 @@ int dashbmy9;
 int rfy5;
 extern struct RECTANGLE* rectp;
 
-extern void player_op(char);
+extern void player_op(I8);
 extern void opponent_op(void);
 extern void audio_carstate(void);
-extern void setup_car_shapes(int);
-extern void update_frame(char, struct RECTANGLE*);
-extern void loop_game(int, int, int);
+extern void setup_car_shapes(I16);
+extern void update_frame(I8, struct RECTANGLE*);
+extern void loop_game(I16, I16, I16);
 extern void set_frame_callback(void);
-extern void mouse_minmax_position(int);
-extern int kb_get_char(void);
-extern void far update_crash_state(int, int);
+extern void mouse_minmax_position(I16);
+extern I16 kb_get_char(void);
+extern void far update_crash_state(I16, I16);
 extern void far do_mou_resource_text(void);
-extern void far initialize_game_state(int);
-extern char handle_ingame_kb_shortcuts(unsigned);
+extern void far initialize_game_state(I16);
+extern I8 handle_ingame_kb_shortcuts(unsigned);
 
-extern int flagsdown;
-extern int msecoordx;
-extern int pos_y_ms;
-extern int performGraphColor;
-extern char resbuftext;
-extern int waitm_ms;
+extern I16 flagsdown;
+extern I16 msecoordx;
+extern I16 pos_y_ms;
+extern I16 performGraphColor;
+extern I8 resbuftext;
+extern I16 waitm_ms;
 
 extern void far* fntndat;
 extern void far* def_fntadr;
 extern void far* main_data_file_addr;
 extern struct GAMESTATE huge* cvxs_a;
-extern int lnoffsets[];
-extern int gterrtrk[];
-extern int r_zp[];
-extern int row_ctr_zs[];
-extern int postable[];
-extern int z_ctr_pos[];
-extern int xcols[];
-extern int trackctrpos2[];
-extern short far* g_td01_track_filecpy; //trackdata1;
-extern short far* trackdata_penalty_related; //trackdata2;
-extern char far* td3;
-extern short far* track04_plyraero; //trackdata4;
-extern short far* trackdata_05_opp_aerotbl; //trackdata5;
-extern char far* td6_ptr_b;
-extern char far* trackdat7;
-extern int far* g_td08d; //trackdata8;
+extern I16 lnoffsets[];
+extern I16 gterrtrk[];
+extern I16 r_zp[];
+extern I16 row_ctr_zs[];
+extern I16 postable[];
+extern I16 z_ctr_pos[];
+extern I16 xcols[];
+extern I16 trackctrpos2[];
+extern I16S far* g_td01_track_filecpy; //trackdata1;
+extern I16S far* trackdata_penalty_related; //trackdata2;
+extern I8 far* td3;
+extern I16S far* track04_plyraero; //trackdata4;
+extern I16S far* trackdata_05_opp_aerotbl; //trackdata5;
+extern I8 far* td6_ptr_b;
+extern I8 far* trackdat7;
+extern I16 far* g_td08d; //trackdata8;
 extern struct VECTOR far* trkptrpath;
-extern int far* td10checkptr;// trackdata10;
-extern char far* hscore_trk11_ptr; //trackdata11;
-extern char far* savedptr_ms;
+extern I16 far* td10checkptr;// trackdata10;
+extern I8 far* hscore_trk11_ptr; //trackdata11;
+extern I8 far* savedptr_ms;
 char far* td13_replay_hdr; //trackdata13;
-extern unsigned char far* td14tb; //trackdata14;
-extern unsigned char far* td15p_9; //trackdata15;
+extern U8  far* td14tb; //trackdata14;
+extern U8  far* td15p_9; //trackdata15;
 char far* g_tdreplay16buf; //trackdata16;
-extern char far* road_trk; //trackdata17;
-extern char far* td_18_ref;
-extern unsigned char far* td19hdl;
-extern char far* coursedataappend_address; //trackdata20;
-extern char far* g_column_of_trkdata21_pth; //trackdata21;
-extern char far* tdfrompathrow22; //trackdata22;
-extern unsigned char far* trkd23adr; // indexes into trkObjectList
-extern char kbormouse;
-extern char pass_check_flag;
-extern char g_is_busy;
-extern char buf_g_path[];
-extern char track_file[];
-extern char menutimeout;
-extern unsigned short dialogarg2;
-extern char replay_file[];
+extern I8 far* road_trk; //trackdata17;
+extern I8 far* td_18_ref;
+extern U8  far* td19hdl;
+extern I8 far* coursedataappend_address; //trackdata20;
+extern I8 far* g_column_of_trkdata21_pth; //trackdata21;
+extern I8 far* tdfrompathrow22; //trackdata22;
+extern U8  far* trkd23adr; // indexes into trkObjectList
+extern I8 kbormouse;
+extern I8 pass_check_flag;
+extern I8 g_is_busy;
+extern I8 buf_g_path[];
+extern I8 track_file[];
+extern I8 menutimeout;
+extern U16S  dialogarg2;
+extern I8 replay_file[];
 char endhsdemo;
-extern char aMain[];
-extern char aMisc_1[];
-extern char aFontdef_fnt[];
-extern char aFontn_fnt[];
-extern char aTrakdata[];
-extern char aDefault_0[];
-extern char aCvx[];
-extern char aTedit__0[];
-extern char aSlct[];
-extern char aSkidms_0[];
-extern char aSkidslct[];
-extern char aDos[];
+extern I8 aMain[];
+extern I8 aMisc_1[];
+extern I8 aFontdef_fnt[];
+extern I8 aFontn_fnt[];
+extern I8 aTrakdata[];
+extern I8 aDefault_0[];
+extern I8 aCvx[];
+extern I8 aTedit__0[];
+extern I8 aSlct[];
+extern I8 aSkidms_0[];
+extern I8 aSkidslct[];
+extern I8 aDos[];
 
-extern int rate_frame;
+extern I16 rate_frame;
 unsigned short frm_rate2;
-extern unsigned short slow_video_mode_state;
-extern unsigned short statemgmtcpy;
-extern unsigned char detail_lvl;
+extern U16S  slow_video_mode_state;
+extern U16S  statemgmtcpy;
+extern U8  detail_lvl;
 
-extern unsigned short pspofs;
-extern unsigned short pspseg;
+extern U16S  pspofs;
+extern U16S  pspseg;
 extern unsigned resmem_end_seg;
 extern unsigned resmem_base_seg;
 
@@ -423,75 +465,75 @@ extern struct MEMCHUNK* resptr1;
 extern struct MEMCHUNK* resptr2;
 extern struct MEMCHUNK* resendptr1;
 extern struct MEMCHUNK* resendptr2;
-extern unsigned short resmaxsize;
+extern U16S  resmaxsize;
 
-extern unsigned long timer_callback_counter;
-extern unsigned long last_timer_callback_counter;
-extern unsigned long timer_copy_unk;
+extern U32  timer_callback_counter;
+extern U32  last_timer_callback_counter;
+extern U32  timer_copy_unk;
 
-extern unsigned char randomseeds[];
-extern const char aReservememoryO[];
-extern const char aReservememoryOutOfMemory[];
-extern const char aMemoryManagerB[];
-extern const char aResizememoryNo[];
-extern const char aResizememoryCa[];
-extern const char aSFileError[];
-extern const char aSFileError_0[];
-extern const char aSFileError_1[];
-extern const char aSInvalidPackTy[];
-extern const char aLocateshape4_4sShapeNotF[];
-extern const char aLocatesound4_4sSoundNotF[];
-extern char audiodriverstring[];
+extern U8  randomseeds[];
+extern const I8 aReservememoryO[];
+extern const I8 aReservememoryOutOfMemory[];
+extern const I8 aMemoryManagerB[];
+extern const I8 aResizememoryNo[];
+extern const I8 aResizememoryCa[];
+extern const I8 aSFileError[];
+extern const I8 aSFileError_0[];
+extern const I8 aSFileError_1[];
+extern const I8 aSInvalidPackTy[];
+extern const I8 aLocateshape4_4sShapeNotF[];
+extern const I8 aLocatesound4_4sSoundNotF[];
+extern I8 audiodriverstring[];
 
-extern unsigned short idx_time_gm;
-extern short is_audioloaded;
+extern U16S  idx_time_gm;
+extern I16S is_audioloaded;
 extern void far* musicfile;
 extern void far* openvfile;
-extern char textrespfxchr; // = 'e'
-extern char* shapeexts[];
-extern unsigned char palmap[];
+extern I8 textrespfxchr; // = 'e'
+extern I8* shapeexts[];
+extern U8  palmap[];
 
-extern int* material_clrlist_ptr;
-extern int* mat_copy_clr_lst_ptr;
-extern int* material_clrlist2_ptr;
-extern int* g_mat_clrlist_copy_2_ptr;
-extern int* material_patlist_ptr;
-extern int* material_patlistptr_copy;
-extern int* material_patlist2_ptr;
-extern int* matpatlistcopypointer2;
-extern unsigned short video_cnstval;
+extern I16* material_clrlist_ptr;
+extern I16* mat_copy_clr_lst_ptr;
+extern I16* material_clrlist2_ptr;
+extern I16* g_mat_clrlist_copy_2_ptr;
+extern I16* material_patlist_ptr;
+extern I16* material_patlistptr_copy;
+extern I16* material_patlist2_ptr;
+extern I16* matpatlistcopypointer2;
+extern U16S  video_cnstval;
 
-extern short track_edge_points(short car_trackdata3_index, struct VECTOR* car_vec_unk3, short field_CE, short* unk);
+extern I16S track_edge_points(I16S car_trackdata3_index, struct VECTOR* car_vec_unk3, I16S field_CE, I16S* unk);
 extern void fontsetfontdef(void);
 extern void initialize_polyinfo(void);
-extern unsigned short run_intro_looped(void);
-extern unsigned short show_dialog(int unk1, int unk2, void far* textresptr, unsigned short unk3, unsigned short unk4, int arg, void* unk5, int unk6);
-extern char run_menu(void);
-extern char setup_track(void);
-extern void run_tracks_menu(int unk);
+extern U16S  run_intro_looped(void);
+extern U16S  show_dialog(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
+extern I8 run_menu(void);
+extern I8 setup_track(void);
+extern void run_tracks_menu(I16 unk);
 extern void run_opponent_menu(void);
 extern void show_waiting(void);
-extern void run_car_menu(struct GAMEINFO* unk, char* unk2, char* unk3, unsigned int unk4);
+extern void run_car_menu(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
 extern 
 /* TU function declarations needed before address-ordered definitions. */
-char far file_load_replay(const char *dir, const char *name);
-short far file_write_replay(const char far *filename);
-int far file_write_fatal(const char *filename, void far *buffer, unsigned long length);
+I8 far file_load_replay(const I8 *dir, const I8 *name);
+I16S far file_write_replay(const I8 far *filename);
+I16 far file_write_fatal(const I8 *filename, void far *buffer, U32  length);
 void far remove_frame_callback(void);
-void far replay_unk2(int mode);
+void far replay_unk2(I16 mode);
 void far replay_unk(void);
 void far free_player_cars(void);
 extern struct SPRITE far *g_wndspr;
-extern char aCarcoun[];
+extern I8 aCarcoun[];
 void far *eng1resourceptr;
 void far *engdata;
-extern int g_player_sound_id;
-extern char sndpendingstate;
-extern char g_plyr_snd_state;
-extern char audiooppflag;
-extern int op_eng_sound_id;
+extern I16 g_player_sound_id;
+extern I8 sndpendingstate;
+extern I8 g_plyr_snd_state;
+extern I8 audiooppflag;
+extern I16 op_eng_sound_id;
 int g_audio_frms_ix;
-extern int sndposrecord;
+extern I16 sndposrecord;
 int snd_tick_clock;
 void far *fntled_res;
 void far *sdgresourcehandle;
@@ -503,30 +545,30 @@ extern unsigned end_hiscore(void);
 extern unsigned run_option_menu(void);
 extern void security_check(void);
 
-extern void ensure_file_exists(int unk);
+extern void ensure_file_exists(I16 unk);
 
-extern void far* load_song_file(const char* filename);
-extern void far* load_voice_file(const char* filename);
-extern void far* load_sfx_file(const char* filename);
-extern void far* load_shape2d_nofatal_thunk(const char* filename);
-extern void far* load_shape2d_res_nofatal_thunk(const char* filename);
-extern void far* file_load_shape2d_nofatal(char* shapename);
-extern void far* file_load_shape2d_nofatal2(char* shapename);
-extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const char* name);
+extern void far* load_song_file(const I8* filename);
+extern void far* load_voice_file(const I8* filename);
+extern void far* load_sfx_file(const I8* filename);
+extern void far* load_shape2d_nofatal_thunk(const I8* filename);
+extern void far* load_shape2d_res_nofatal_thunk(const I8* filename);
+extern void far* file_load_shape2d_nofatal(I8* shapename);
+extern void far* file_load_shape2d_nofatal2(I8* shapename);
+extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const I8* name);
 extern void load_audio_finalize(void far* audiores);
-extern short audio_load_driver(char* driver, short a2, short a3);
+extern I16S audio_load_driver(I8* driver, I16S a2, I16S a3);
 extern void audio_unload(void);
-extern short audio_toggle_flag2(void);
-extern short audio_toggle_flag6(void);
+extern I16S audio_toggle_flag2(void);
+extern I16S audio_toggle_flag6(void);
 extern void audio_stop_unknown(void);
 extern void audiodrv_atexit(void);
 
 extern void check_input(void);
-extern int input_do_checking(int unk);
+extern I16 input_do_checking(I16 unk);
 extern void keyboard_exit_handler(void);
 extern void keyboard_shift_checking1(void);
 extern void kb_shift_checking2(void);
-extern void kb_reg_callback(int code, void (far* callback)(void));
+extern void kb_reg_callback(I16 code, void (far* callback)(void));
 extern void show_graphic_levels_menu(void);
 extern void do_joystick_resource_text(void);
 extern void do_key_resource_text(void);
@@ -534,62 +576,63 @@ extern void do_mof_resource_text(void);
 extern void do_pau_restext(void);
 extern void do_dos_resource_text(void);
 extern void do_sonsof_resource_text(void);
-extern short get_kb_or_joy_flags(void);
+extern I16S get_kb_or_joy_flags(void);
 
-extern short mouse_init(short a1, short a2);
+extern I16S mouse_init(I16S a1, I16S a2);
 extern void msdrawopaquechk(void);
 
 extern void video_set_mode4(void);
 extern void video_set_mode7(void);
 extern void video_set_mode_13h(void);
 
-extern void shape3d_load_car_shapes(char* carid, char* oppcarid);
+extern void shape3d_load_car_shapes(I8* carid, I8* oppcarid);
 
 extern void load_palandcursor(void);
-extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
-extern void sprite_clear_1_color(unsigned char);
+extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
+extern void sprite_clear_1_color(U8 );
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
-extern short intr0_handler(void);
-extern short (far* old_intr0_handler)(void);
+extern I16S intr0_handler(void);
+extern I16S (far* old_intr0_handler)(void);
 extern void timer_setup_interrupt(void);
-extern unsigned long timer_get_delta_alt(void);
+extern U32  timer_get_delta_alt(void);
 
-extern short set_criterr_handler(short (far* callback)(void));
-extern void exit(short a1);
-extern void fatal_error(const char*, ...);
-extern short do_dea_textres(void);
+extern I16S set_criterr_handler(I16S (far* callback)(void));
+extern void exit(I16S a1);
+extern void fatal_error(const I8*, ...);
+extern I16S do_dea_textres(void);
 
 extern void* _memcpy(void*, const void*, unsigned);
-extern char* _strcpy(char* dest, const char* src);
-extern char* _strcat(char* dest, const char* src);
-extern int _strcmp(const char* dest, const char* src);
-extern int _stricmp(const char* dest, const char* src);
-extern unsigned _strlen(const char* str);
+extern I8* _strcpy(I8* dest, const I8* src);
+extern I8* _strcat(I8* dest, const I8* src);
+extern I16 _strcmp(const I8* dest, const I8* src);
+extern I16 _stricmp(const I8* dest, const I8* src);
+extern unsigned _strlen(const I8* str);
 extern void far* __fmemcpy(void far*, const void far*, unsigned);
 extern unsigned _abs(unsigned);
-extern int _rand(void);
-extern void _srand(unsigned int);
+extern I16 _rand(void);
+extern void _srand(U16 );
 
 
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct ENGINESOUND {
-	int es_unk0;
-	int es_unk2;
-	int es_unk4;
-	int es_unk6;
-	char far *es_names[10];
+	I16 es_unk0;
+	I16 es_unk2;
+	I16 es_unk4;
+	I16 es_unk6;
+	I8 far *es_names[10];
 };
 struct ENGINESOUND player_engine_profile = { 500, 10000, 9000, 0,
 	{ "ENGI", "ENGI", "STAR", "STOP", "BLOW", "CRAS", "SKID", "SKI2", "BUMP", "SCRA" } };
 struct ENGINESOUND opponent_engine_profile = { 500, 10000, 9000, 0,
 	{ "ENGI", "ENGI", "STAR", "STOP", "BLOW", "CRAS", "SKID", "SKI2", "BUMP", "SCRA" } };
-char replay_axis_magnitude[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56,
+I8 replay_axis_magnitude[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56,
 	60, 64, 68, 72, 76, 84, 90, 98, 106, 114, 121, 127, 127, 127 };
 
 /* run_game: reconstructed from the target listing (s005c) */
-void loop_game(int mode, int frame_index, int frame_offset);
-extern void far *locate_text_resource(void far *res, char *name);
+void loop_game(I16 mode, I16 frame_index, I16 frame_offset);
+extern void far *locate_text_resource(void far *res, I8 *name);
 
 /* Runs the game and replay interface. Params: none. Returns: none. State: reads and updates game, menu, replay and camera state. */
 /* PLATFORM(audio): updates audio playback or hooks. */
@@ -600,15 +643,15 @@ extern void far *locate_text_resource(void far *res, char *name);
 /* PLATFORM(timer): reads timer state or registers a callback. */
 /* PLATFORM(video): draws to or configures the display surface. */
 void run_game(void) {
-	int dialog_values[2];
-	int replay_key_code, replaybar_height, last_game_frame;
+	I16 dialog_values[2];
+	I16 replay_key_code, replaybar_height, last_game_frame;
 	struct RECTANGLE temp_rect;
-	int previous_roof;
-	register int dialog_result;
+	I16 previous_roof;
+	register I16 dialog_result;
 
 	last_game_frame = -1;
 	boundglassrect.left = 0;
-	boundglassrect.right = 320;
+	boundglassrect.right = PLATFORM_SCREEN_WIDTH_PIXELS;
 	previous_roof = -1;
 	bitmapdash = -1;
 	runrndx = get_kevinrandom() << 3;
@@ -667,8 +710,8 @@ void run_game(void) {
 			g_rpl_init = 1;
 			/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
 			gm_playmode = 1;
-			core.playerstate.car_posWorld1.lx += (long)mulscl(sinfast(st_hdg), -240) << 6;
-			core.playerstate.car_posWorld1.lz += (long)mulscl(cosfast(st_hdg), -240) << 6;
+			core.playerstate.car_posWorld1.lx += (I32)mulscl(sinfast(st_hdg), -240) << 6;
+			core.playerstate.car_posWorld1.lz += (I32)mulscl(cosfast(st_hdg), -240) << 6;
 			core.playerstate.car_posWorld1.ly += 0x580;
 			endhsdemo = 1;
 		} else {
@@ -756,12 +799,12 @@ void run_game(void) {
 replaybar_done:
 
 				if (menutimeout != 0) {
-					dashbmpy_copy = 200;
+					dashbmpy_copy = PLATFORM_SCREEN_HEIGHT_PIXELS;
 				} else if (on_off_dash != 0 && follow_op == 0) {
 					if (gm_playmode == 2 && g_rplybarenable != 0) {
 						rplbarabovehgt = 151;
 					} else {
-						rplbarabovehgt = 200;
+						rplbarabovehgt = PLATFORM_SCREEN_HEIGHT_PIXELS;
 					}
 					mode_flag = 1;
 					roofbmphgt_saved = rfy5;
@@ -769,12 +812,12 @@ replaybar_done:
 				} else if (gm_playmode == 2 && g_rplybarenable != 0) {
 					dashbmpy_copy = 151;
 				} else {
-					dashbmpy_copy = 200;
+					dashbmpy_copy = PLATFORM_SCREEN_HEIGHT_PIXELS;
 				}
 
 				if (previous_roof != roofbmphgt_saved || dashbmpy_copy != bitmapdash || replaybar_height != rplbarabovehgt) {
 					g_simprect = g_vid_flag6;
-					set_projection(35, dashbmpy_copy / 6, 320, dashbmpy_copy);
+					set_projection(35, dashbmpy_copy / 6, PLATFORM_SCREEN_WIDTH_PIXELS, dashbmpy_copy);
 					boundglassrect.top = roofbmphgt_saved;
 					boundglassrect.bottom = dashbmpy_copy;
 					previous_roof = roofbmphgt_saved;
@@ -786,11 +829,11 @@ replaybar_done:
 			if (g_simprect != 0) {
 				g_viewinx[cam_idg] = 0;
 				if (mode_flag != 0) {
-					/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
+					/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, dashbmpy_copy, rplbarabovehgt);
 					setup_car_shapes(1);
 				}
 				if (g_rplybarenable != 0) {
-					/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, 0, 200);
+					/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS);
 					loop_game(1, core.game_frame, core.game_frame);
 				}
 			} else if (g_rplybarenable == 0) {
@@ -801,7 +844,7 @@ replaybar_done:
 			if (dasty != 0 && mode_flag != 0) {
 				if (statemgmtcpy != 0) {
 					temp_rect.left = 0;
-					temp_rect.right = 320;
+					temp_rect.right = PLATFORM_SCREEN_WIDTH_PIXELS;
 					temp_rect.top = dasty;
 					temp_rect.bottom = dashbmpy_copy;
 					if (rectp != 0) {
@@ -814,9 +857,9 @@ replaybar_done:
 
 			draw_clip(&boundglassrect);
 			if (mode_flag != 0) {
-				/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
+				/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, dashbmpy_copy, rplbarabovehgt);
 				setup_car_shapes(2);
-				/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, 0, 200);
+				/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS);
 			}
 
 			if (g_simprect != 0) {
@@ -869,10 +912,10 @@ replaybar_done:
 					/* PLATFORM(input_kb): dispatch a normalized game key. */ handle_ingame_kb_shortcuts(replay_key_code);
 				}
 				switch (replay_key_code) {
-				case 0x4800:
-				case 0x4B00:
-				case 0x4D00:
-				case 0x5000:
+				case KEY_SCAN_UP:
+				case KEY_SCAN_LEFT:
+				case KEY_SCAN_RIGHT:
+				case KEY_SCAN_DOWN:
 					continue;
 				}
 				break;
@@ -893,7 +936,7 @@ replaybar_done:
 		if (g_videoflg5 != 0 && get_0() != 0) {
 			/* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
 			setup_mcgawnd2();
-			/* PLATFORM(video): clear a display rectangle. */ clear_rect(0, 0, 320, 200, 0);
+			/* PLATFORM(video): clear a display rectangle. */ clear_rect(0, 0, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS, 0);
 			setup_mcgawnd1();
 			/* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
 		}
@@ -934,8 +977,8 @@ replaybar_done:
 	/* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
 	/* PLATFORM(input_joy): collect waiting-dialog joystick input. */ /* PLATFORM(timer): wait for dialog input using timer ticks. */ /* PLATFORM(video): render a waiting dialog. */ show_waiting();
 }
-extern char byte_349BA;
-extern char HKeyFlag;
+extern I8 byte_349BA;
+extern I8 HKeyFlag;
 /* Maps a normalized key code to an in-game action. Params: key code. Returns: action/status byte. State: updates game and menu state. */
 /* PLATFORM(audio): updates audio playback or hooks. */
 /* PLATFORM(input_joy): reads joystick state. */
@@ -943,26 +986,26 @@ extern char HKeyFlag;
 /* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
 /* PLATFORM(video): draws to or configures the display surface. */
-char handle_ingame_kb_shortcuts(unsigned key)
+I8 handle_ingame_kb_shortcuts(unsigned key)
 {
     switch (key) {
-    case 0x1B:
+    case KEY_ASCII_ESCAPE:
         if (gm_playmode == 0) {
             update_crash_state(4, 0);
         }
         sigframe = 1;
         break;
-    case 0x3C00:
+    case BIOS_KEY_F2:
         cammd = 1;
         break;
-    case 0x3D00:
+    case BIOS_KEY_F3:
         cammd = 2;
         break;
-    case 0x3E00:
+    case BIOS_KEY_F4:
         cammd = 3;
         break;
-    case 0x48:
-    case 0x68:
+    case KEY_ASCII_UPPER_H:
+    case KEY_ASCII_LOWER_H:
         HKeyFlag ^= 1;
         break;
     /* PLATFORM(audio): pause and restore audio for mouse help. */
@@ -971,21 +1014,21 @@ char handle_ingame_kb_shortcuts(unsigned key)
     /* PLATFORM(input_mouse): collect mouse-help pointer input. */
     /* PLATFORM(timer): wait for mouse help input using timer ticks. */
     /* PLATFORM(video): draw the mouse help interface. */
-    case 0x4D:
-    case 0x6D:
+    case KEY_ASCII_UPPER_M:
+    case KEY_ASCII_LOWER_M:
         do_mou_resource_text();
         /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
         break;
-    case 0x44:
-    case 0x64:
+    case KEY_ASCII_UPPER_D:
+    case KEY_ASCII_LOWER_D:
         on_off_dash ^= 1;
         break;
-    case 0x52:
-    case 0x72:
+    case KEY_ASCII_UPPER_R:
+    case KEY_ASCII_LOWER_R:
         replaybar_toggle ^= 1;
         break;
-    case 0x43:
-    case 0x63:
+    case KEY_ASCII_UPPER_C:
+    case KEY_ASCII_LOWER_C:
         if (gm_playmode != 1) {
             cammd++;
             if (cammd == 4) {
@@ -993,10 +1036,10 @@ char handle_ingame_kb_shortcuts(unsigned key)
             }
         }
         break;
-    case 0x3B00:
+    case BIOS_KEY_F1:
         cammd = 0;
         break;
-    case 0x74:
+    case KEY_ASCII_LOWER_T:
         if (globalgamesettings.game_opponenttype != 0) {
             follow_op ^= 1;
         }
@@ -1016,9 +1059,10 @@ char handle_ingame_kb_shortcuts(unsigned key)
 }
 
 /* semantic lead: init_unknown from restunts.c */
+/* Resets frame-timer and replay state. Params: none. Returns: none. State: initializes timer and replay globals. */
 void initialize_unknown(void)
 {
-	register int zero;
+	register I16 zero;
 	timeraud = 1;
 	slomodiv8 = 2;
 	zero = 0;
@@ -1041,7 +1085,7 @@ void far set_frame_callback(void) {
 }
 
 
-extern unsigned long far timer_get_counter_unk(unsigned long ticks);
+extern U32  far timer_get_counter_unk(U32  ticks);
 extern void far timer_remove_callback(callback_t callback);
 /* Stops per-frame callback processing. Params: none. Returns: none. State: removes the registered timer callback. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
@@ -1051,9 +1095,9 @@ void far remove_frame_callback(void)
     /* PLATFORM(timer): remove the timer callback. */ timer_remove_callback(frame_callback);
 }
 
-extern int far compare_ds_ss(void);
-extern void far apply_audio_frame(char* record, int frame_count);
-extern char audio_frmarr[];
+extern I16 far compare_ds_ss(void);
+extern void far apply_audio_frame(I8* record, I16 frame_count);
+extern I8 audio_frmarr[];
 /* Processes one timer frame. Params: none. Returns: none. State: reads frame timing and updates audio-frame state. */
 /* PLATFORM(audio): updates audio playback or hooks. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
@@ -1095,7 +1139,7 @@ void far frame_callback(void)
 
     timeraud--;
     if (timeraud == 0) {
-        timeraud = (char)frmcs_time;
+        timeraud = (I8)frmcs_time;
         g_clocks++;
         if (gm_playmode == 2) {
             switch (g_rplmodui) {
@@ -1122,19 +1166,19 @@ frame_callback_done:
 
 signed char array_rpl[64];
 unsigned char replay_steer_flag[64];
-static char replay_control;
-extern int far kb_get_key_state(int);
-extern char far replay_axis_value(void);
-extern int far abs(int);
+static I8 replay_control;
+extern I16 far kb_get_key_state(I16);
+extern I8 far replay_axis_value(void);
+extern I16 far abs(I16);
 /* Processes replay input for the selected mode. Params: mode. Returns: none. State: reads and updates replay, camera and input state. */
 /* PLATFORM(audio): updates audio playback or hooks. */
 /* PLATFORM(input_joy): reads joystick state. */
 /* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
 /* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
-void far replay_unk2(int mode)
+void far replay_unk2(I16 mode)
 {
-    register int input;
-    register int i;
+    register I16 input;
+    register I16 i;
 
     if (mode != 0) {
         input = 0;
@@ -1220,25 +1264,26 @@ record_input:
     globalgamesettings.game_recordedframes++;
 }
 
-extern char trk_sample_count;
+extern I8 trk_sample_count;
+/* Selects the car used as the camera target and refreshes its coordinates. Params: none. Returns: none. State: reads car states and updates camera-target globals. */
 void far update_camera_target(void)
 {
-    int nearest_range;
-    int car_count;
-    long dz;
+    I16 nearest_range;
+    I16 car_count;
+    I32 dz;
     struct CARSTATE *selected_car_state;
     struct VECTOR car_position;
-    register int index;
-    register int delta;
-    short bearing;
-    short facing;
-    int cam_y;
-    int climb;
-    char track_segment;
+    register I16 index;
+    register I16 delta;
+    I16S bearing;
+    I16S facing;
+    I16 cam_y;
+    I16 climb;
+    I8 track_segment;
     struct VECTOR focus;
-    int point_range;
-    long dx;
-    int threshold;
+    I16 point_range;
+    I32 dx;
+    I16 threshold;
 
     car_count = 1;
     if (globalgamesettings.game_opponenttype != 0)
@@ -1250,9 +1295,12 @@ void far update_camera_target(void)
         else
             selected_car_state = &core.opponentstate;
 
-        car_position.y = (short)(selected_car_state->car_posWorld1.ly >> 6);
-        car_position.x = (short)(selected_car_state->car_posWorld1.lx >> 6);
-        car_position.z = (short)(selected_car_state->car_posWorld1.lz >> 6);
+        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */
+        car_position.y = (I16S)(selected_car_state->car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
+        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */
+        car_position.x = (I16S)(selected_car_state->car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
+        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */
+        car_position.z = (I16S)(selected_car_state->car_posWorld1.lz >> WORLD_COORDINATE_SHIFT);
         focus = selected_car_state->car_vec_unk3;
         facing = selected_car_state->field_48;
 
@@ -1293,13 +1341,13 @@ void far update_camera_target(void)
         if (core.game_frame % (rate_frame >> 1) == 0) {
             nearest_range = 0x2710;
             for (track_segment = 0; track_segment < trk_sample_count; ++track_segment) {
-                dx = (long)trkptrpath[track_segment].x - car_position.x;
-                dz = (long)trkptrpath[track_segment].z - car_position.z;
+                dx = (I32)trkptrpath[track_segment].x - car_position.x;
+                dz = (I32)trkptrpath[track_segment].z - car_position.z;
                 if ((dx < 0 ? -dx : dx) < nearest_range &&
                     (dz < 0 ? -dz : dz) < nearest_range) {
-                    point_range = polradius2d((int)dx, (int)dz);
+                    point_range = polradius2d((I16)dx, (I16)dz);
                     if (point_range < nearest_range) {
-                        core.field_3F7[index] = (char)track_segment;
+                        core.field_3F7[index] = (I8)track_segment;
                         nearest_range = point_range;
                     }
                 }
@@ -1311,7 +1359,7 @@ void far update_camera_target(void)
 /* semantic lead: file_load_replay from fileio.c */
 /* Builds and reads the replay file header. Params: directory and replay name. Returns: load status. State: writes the replay header buffer. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
-char file_load_replay(const char* dir, const char* name)
+I8 file_load_replay(const I8* dir, const I8* name)
 {
 	/* PLATFORM(file): build a file path. */ file_build_path(dir, name, ".rpl", buf_g_path);
 
@@ -1325,90 +1373,92 @@ char file_load_replay(const char* dir, const char* name)
 /* semantic lead: file_write_replay from fileio.c */
 /* Writes the replay header and data. Params: filename. Returns: write status. State: reads replay buffers. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
-short file_write_replay(const char* filename)
+I16S file_write_replay(const I8* filename)
 {
-	register int ret;
-	long write_length;
+	register I16 ret;
+	I32 write_length;
 
 	*(struct GAMEINFO far*)td13_replay_hdr = globalgamesettings;
 	write_length = globalgamesettings.game_recordedframes + 0x724;
 	g_is_busy = 1;
 	/* PLATFORM(file): write replay data to a file. */ ret = file_write_fatal(filename, td13_replay_hdr, write_length);
 	g_is_busy = 0;
-	return (char)ret;
+	return (I8)ret;
 }
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct SHAPE2D {
-    short s2d_width;
-    unsigned short s2d_height;
-    unsigned short s2d_unk1;
-    unsigned short s2d_unk2;
-    unsigned short s2d_pos_x;
-    unsigned short s2d_pos_y;
-    unsigned char s2d_unk3;
-    unsigned char s2d_unk4;
-    unsigned char s2d_unk5;
-    unsigned char s2d_unk6;
+    I16S s2d_width;
+    U16S  s2d_height;
+    U16S  s2d_unk1;
+    U16S  s2d_unk2;
+    U16S  s2d_pos_x;
+    U16S  s2d_pos_y;
+    U8  s2d_unk3;
+    U8  s2d_unk4;
+    U8  s2d_unk5;
+    U8  s2d_unk6;
 };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct SPRITE {
     struct SHAPE2D far *sprite_bitmapptr;
-    unsigned short sprite_unk1;
-    unsigned short sprite_unk2;
-    unsigned short sprite_unk3;
-    unsigned int *sprite_lineofs;
-    unsigned short sprite_left;
-    unsigned short sprite_right;
-    unsigned short sprite_top;
-    unsigned short sprite_height;
-    unsigned short sprite_pitch;
-    unsigned short sprite_unk4;
-    unsigned short sprite_width2;
-    unsigned short sprite_left2;
-    unsigned short sprite_widthsum;
+    U16S  sprite_unk1;
+    U16S  sprite_unk2;
+    U16S  sprite_unk3;
+    U16  *sprite_lineofs;
+    U16S  sprite_left;
+    U16S  sprite_right;
+    U16S  sprite_top;
+    U16S  sprite_height;
+    U16S  sprite_pitch;
+    U16S  sprite_unk4;
+    U16S  sprite_width2;
+    U16S  sprite_left2;
+    U16S  sprite_widthsum;
 };
 
-extern char aWhl1whl2whl3ins2gboxins1i[];
-extern char aGnobgnabdotDotadot1dot2[];
-extern char aDig0dig1dig2dig3dig4dig5d[];
-extern char aDash[];
-extern char aRoof[];
-extern char aRoof_0[];
-extern char aRoof_1[];
-extern char aRoof_2[];
-extern char aDash_0[];
-extern char aDast[];
-extern char aDasm[];
-extern void far *file_load_resource(int type, const char *name);
-extern void locate_many_resources(void far *data, char *names, char far **result);
-extern char far *locate_shape_nofatal(void far *data, char *name);
-extern char far *locate_shape_fatal(void far *data, char *name);
-extern struct SPRITE far *sprite_make_window(unsigned int width, unsigned int height, unsigned int color);
+extern I8 aWhl1whl2whl3ins2gboxins1i[];
+extern I8 aGnobgnabdotDotadot1dot2[];
+extern I8 aDig0dig1dig2dig3dig4dig5d[];
+extern I8 aDash[];
+extern I8 aRoof[];
+extern I8 aRoof_0[];
+extern I8 aRoof_1[];
+extern I8 aRoof_2[];
+extern I8 aDash_0[];
+extern I8 aDast[];
+extern I8 aDasm[];
+extern void far *file_load_resource(I16 type, const I8 *name);
+extern void locate_many_resources(void far *data, I8 *names, I8 far **result);
+extern I8 far *locate_shape_nofatal(void far *data, I8 *name);
+extern I8 far *locate_shape_fatal(void far *data, I8 *name);
+extern struct SPRITE far *sprite_make_window(U16  width, U16  height, U16  color);
 extern void sprite_free_window(struct SPRITE far *sprite);
 extern void sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
 extern void sprite_copy_2_to_1(void);
-extern void sprite_putimage_and_alt(struct SHAPE2D far *shape, int x, int y);
-extern void sprite_putimage_and_alt2(struct SHAPE2D far *shape, int x, int y);
-extern void sprite_putimage_or_alt(struct SHAPE2D far *shape, int x, int y);
+extern void sprite_putimage_and_alt(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void sprite_putimage_and_alt2(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void sprite_putimage_or_alt(struct SHAPE2D far *shape, I16 x, I16 y);
 extern void shape2d_op_unk(struct SHAPE2D far *shape);
-extern void shape2d_op_unk2(struct SHAPE2D far *shape, int x, int y);
+extern void shape2d_op_unk2(struct SHAPE2D far *shape, I16 x, I16 y);
 extern void shape2d_op_unk3(struct SHAPE2D far *shape);
-extern void shape2d_op_unknown5(struct SHAPE2D far *shape, int x, int y);
-extern void sprite_putimage_or(struct SHAPE2D far *shape, int x, int y);
-extern void sprite_clear_shape_alt(struct SHAPE2D far *shape, int x, int y);
-extern void preRender_line(int x1, int y1, int x2, int y2, int color);
-extern void far *mmgr_free(char far *ptr);
-char aStdaxxxx[] = "stdaxxxx";
-char aStdbxxxx[] = "stdbxxxx";
+extern void shape2d_op_unknown5(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void sprite_putimage_or(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void sprite_clear_shape_alt(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void preRender_line(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
+extern void far *mmgr_free(I8 far *ptr);
+I8 aStdaxxxx[] = "stdaxxxx";
+I8 aStdbxxxx[] = "stdbxxxx";
 /* Prepares car dashboard and shape sprites. Params: mode. Returns: none. State: reads car/camera state and updates shape/resource handles. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
 /* PLATFORM(video): draws to or configures the display surface. */
-void far setup_car_shapes(int mode)
+void far setup_car_shapes(I16 mode)
 {
     extern struct SIMD simdp7;
-    extern short vidflg3is_minus1;
-    static short last_steering_step[2];
-    static char steering_zone[2];
+    extern I16S vidflg3is_minus1;
+    static I16S last_steering_step[2];
+    static I8 steering_zone[2];
     static struct SPRITE far * meters_sprite;
     static struct SPRITE far * gnob_sprite;
     static struct SPRITE far * gear_base_sprite;
@@ -1417,27 +1467,27 @@ void far setup_car_shapes(int mode)
     static struct SHAPE2D far * wheel_shapes[9];
     static struct SHAPE2D far * gnobshapes[6];
     static struct SHAPE2D far * digshapes[10];
-    extern short spdneedlegaugeclr;
-    static char gear_knob_visible_view[2];
-    static short steering_dot_x[2];
-    static short steering_dot_y[2];
-    static short last_speedo[2];
-    static short gear_knob_x_last[2];
-    static short gear_knob_y_last[2];
-    static short last_tacho[2];
+    extern I16S spdneedlegaugeclr;
+    static I8 gear_knob_visible_view[2];
+    static I16S steering_dot_x[2];
+    static I16S steering_dot_y[2];
+    static I16S last_speedo[2];
+    static I16S gear_knob_x_last[2];
+    static I16S gear_knob_y_last[2];
+    static I16S last_tacho[2];
     struct SHAPE2D far *shape;
-    int digit;
-    char speedo_type;
-    int steering;
-    char wheel_zone;
-    unsigned char *dot;
-    register int x;
-    unsigned char x_pos;
-    register int y;
-    char changed;
-    unsigned char y_pos;
-    char knob_removed;
-    char has_digit;
+    I16 digit;
+    I8 speedo_type;
+    I16 steering;
+    I8 wheel_zone;
+    U8  *dot;
+    register I16 x;
+    U8  x_pos;
+    register I16 y;
+    I8 changed;
+    U8  y_pos;
+    I8 knob_removed;
+    I8 has_digit;
 
     switch (mode) {
     case 0:
@@ -1451,10 +1501,10 @@ void far setup_car_shapes(int mode)
         aStdbxxxx[7] = globalgamesettings.game_playercarid[3];
         /* PLATFORM(file): load a named resource. */ stdares = file_load_resource(3, aStdaxxxx);
         /* PLATFORM(file): load a named resource. */ stdbres = file_load_resource(2, aStdbxxxx);
-        locate_many_resources(stdares, "whl1whl2whl3ins2gboxins1ins3inm1inm3", (char far **)wheel_shapes);
-        locate_many_resources(stdbres, "gnobgnabdot dotadot1dot2", (char far **)gnobshapes);
+        locate_many_resources(stdares, "whl1whl2whl3ins2gboxins1ins3inm1inm3", (I8 far **)wheel_shapes);
+        locate_many_resources(stdbres, "gnobgnabdot dotadot1dot2", (I8 far **)gnobshapes);
         if (simdp7.spdcenter.py == 0)
-            locate_many_resources(stdbres, "dig0dig1dig2dig3dig4dig5dig6dig7dig8dig9", (char far **)digshapes);
+            locate_many_resources(stdbres, "dig0dig1dig2dig3dig4dig5dig6dig7dig8dig9", (I8 far **)digshapes);
         /* PLATFORM(video): create an offscreen sprite surface. */ meters_sprite = sprite_make_window(wheel_shapes[3]->s2d_width * pixel_scales, wheel_shapes[3]->s2d_height, 15);
         /* PLATFORM(video): create an offscreen sprite surface. */ gnob_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
         /* PLATFORM(video): create an offscreen sprite surface. */ gear_base_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
@@ -1487,7 +1537,7 @@ void far setup_car_shapes(int mode)
         x = 0;
         gear_knob_visible_view[cam_idg] = g_viewinx[cam_idg] = 0;
         steering_dot_y[cam_idg] = x;
-        steering_zone[cam_idg] = (char)x;
+        steering_zone[cam_idg] = (I8)x;
         x--;
         last_steering_step[cam_idg] = x;
         last_speedo[cam_idg] = x;
@@ -1498,7 +1548,7 @@ void far setup_car_shapes(int mode)
             gear_knob_visible_view[cam_idg] != 0) {
             /* PLATFORM(video): select the opaque drawing path. */ if (g_videoflg5 == 0)
                 msdrawopaquechk();
-            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, rplbarabovehgt);
             /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gear_base_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
             gear_knob_visible_view[cam_idg] = 0;
         } else if (gear_knob_visible_view[cam_idg] != core.playerstate.car_changing_gear ||
@@ -1520,7 +1570,7 @@ void far setup_car_shapes(int mode)
                 /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
                 /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
             }
-            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, rplbarabovehgt);
             /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gnob_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
         }
 
@@ -1568,9 +1618,10 @@ void far setup_car_shapes(int mode)
             break;
         case 0:
             speedo_type = 1;
-            x = core.playerstate.car_speed >> 8;
+            /* PORT: car_speed is unsigned 16-bit Q8 mph; this shift is a zero-fill conversion. */
+            x = core.playerstate.car_speed >> CAR_SPEED_Q8_SHIFT;
         }
-        y = (unsigned short)core.playerstate.car_currpm >> 7;
+        y = (U16S )core.playerstate.car_currpm >> 7;
         if (y >= simdp7.revnumpoints)
             y = simdp7.revnumpoints - 1;
 
@@ -1589,12 +1640,12 @@ void far setup_car_shapes(int mode)
             last_tacho[cam_idg] = y;
             if (speedo_type == 1) {
                 digit = 0;
-                if (x >= 200) {
+                if (x >= SPEEDOMETER_TWO_HUNDREDS_BASE) {
                     digit = 2;
-                    x -= 200;
-                } else if (x >= 100) {
+                    x -= SPEEDOMETER_TWO_HUNDREDS_BASE;
+                } else if (x >= SPEEDOMETER_HUNDREDS_BASE) {
                     digit = 1;
-                    x -= 100;
+                    x -= SPEEDOMETER_HUNDREDS_BASE;
                 }
                 if (digit != 0) {
                     /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[digit], simdp7.spdpoints[0], simdp7.spdpoints[1]);
@@ -1629,14 +1680,14 @@ void far setup_car_shapes(int mode)
                 setup_mcgawnd2();
             /* PLATFORM(video): copy the working sprite pages. */ else
                 sprcopy2to12();
-            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, rplbarabovehgt);
             /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(meters_sprite->sprite_bitmapptr, wheel_shapes[3]->s2d_pos_x, wheel_shapes[3]->s2d_pos_y);
         }
 
         if (last_steering_step[cam_idg] != steering || g_simprect != 0 || knob_removed != 0) {
             /* PLATFORM(video): select the opaque drawing path. */ if (g_videoflg5 == 0)
                 msdrawopaquechk();
-            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, rplbarabovehgt);
             if (steering_dot_y[cam_idg] != 0) {
                 /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
                 steering_dot_y[cam_idg] = 0;
@@ -1659,17 +1710,17 @@ void far setup_car_shapes(int mode)
         sprite_free_window(gear_base_sprite);
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(gnob_sprite);
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(meters_sprite);
-        /* PLATFORM(memory): release resource memory. */ mmgr_free((char far *)stdbres);
-        /* PLATFORM(memory): release resource memory. */ mmgr_free((char far *)stdares);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free((I8 far *)stdbres);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free((I8 far *)stdares);
         return;
     }
 }
 
 /* semantic lead: setup_player_cars from restunts.c */
-extern void far *file_load_resource_file(char *name);
-extern void far *locate_shape_alt(void far *res, char *name);
-extern int audio_init_engine(int id, void far *data, void far *eng1, void far *eng);
-extern long mmgr_get_res_ofs_diff_scaled(void);
+extern void far *file_load_resource_file(I8 *name);
+extern void far *locate_shape_alt(void far *res, I8 *name);
+extern I16 audio_init_engine(I16 id, void far *data, void far *eng1, void far *eng);
+extern I32 mmgr_get_res_ofs_diff_scaled(void);
 /* Loads player/opponent car and engine resources. Params: none. Returns: setup status. State: updates resource handles and engine IDs. */
 /* PLATFORM(audio): updates audio playback or hooks. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
@@ -1679,9 +1730,9 @@ extern long mmgr_get_res_ofs_diff_scaled(void);
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
 /* PLATFORM(video): draws to or configures the display surface. */
-int setup_player_cars(void) {
+I16 setup_player_cars(void) {
 	void far* carresptr;
-	long mem_limit;
+	I32 mem_limit;
 
 	g_wndspr = 0;
 	/* PLATFORM(file): check required files and request missing files. */
@@ -1768,7 +1819,7 @@ int setup_player_cars(void) {
 		/* PLATFORM(memory): query available resource memory. */ if (mmgr_get_res_ofs_diff_scaled() <= mem_limit) {
 			return 1;
 		}
-		/* PLATFORM(video): create an offscreen sprite surface. */ g_wndspr = sprite_make_window(0x140, 0xC8, 0x0F);
+		/* PLATFORM(video): create an offscreen sprite surface. */ g_wndspr = sprite_make_window(PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS, 0x0F);
 	}
 
 	follow_op = 0;
@@ -1803,33 +1854,34 @@ void free_player_cars(void) {
 	shape3d_free_car_shapes();
 }
 
-void mouse_set_minmax(int, int, int, int);
-void mouse_set_position(int, int);
+void mouse_set_minmax(I16, I16, I16, I16);
+void mouse_set_position(I16, I16);
 /* Sets the in-game mouse bounds. Params: enabled flag. Returns: none. State: maps the flag to mouse range and position. */
 /* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
-void mouse_minmax_position(int enabled)
+void mouse_minmax_position(I16 enabled)
 {
     if (enabled) {
-        /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(15, 0, 0x131, 0xC8);
+        /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(15, 0, 0x131, PLATFORM_SCREEN_HEIGHT_PIXELS);
         /* PLATFORM(input_mouse): set the mouse position. */ mouse_set_position(0xA0, 0x64);
         return;
     }
-    /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(0, 0, 0x140, 0xC8);
+    /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(0, 0, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
 }
+/* Applies the current replay steering sample. Params: none. Returns: none. State: reads replay samples and updates steering state. */
 void far replay_unk(void)
 {
-    register int frame_index = core.game_frame & 0x3F;
-    register int steering;
-    char speed_index;
-    char response;
-    char angle;
+    register I16 frame_index = core.game_frame & 0x3F;
+    register I16 steering;
+    I8 speed_index;
+    I8 response;
+    I8 angle;
 
     if (replay_steer_flag[frame_index] == 0)
         return;
 
     steering = array_rpl[frame_index];
-    speed_index = (char)((core.playerstate.car_speed2 >> 10) & 0xFC);
-    response = ((char*)table_lookup)[(int)speed_index + 1];
+    speed_index = (I8)((core.playerstate.car_speed2 >> 10) & 0xFC);
+    response = ((I8*)table_lookup)[(I16)speed_index + 1];
 
     if (core.playerstate.car_steeringAngle < steering) {
         if (core.playerstate.car_steeringAngle < -1)
@@ -1854,56 +1906,56 @@ void far replay_unk(void)
     replay_steer_flag[frame_index] = 0;
 }
 
-char camera_button_index = 6;
-char camera_button_count_mode[10] = { 1, 7, 3, 4, 5, 6, 7, 8, 8, 0 };
-char camera_mode_select_a[10] = { 0, 0, 2, 2, 3, 4, 5, 1, 7, 0 };
-char camera_mode_select_b[10] = { 2, 6, 2, 3, 4, 5, 6, 7, 8, 0 };
-char camera_mode_select_c[10] = { 0, 1, 0, 0, 1, 1, 1, 7, 8, 0 };
-char game_camera_buttons_count[4] = { 6, 6, 8, 7 };
-int game_camera_buttons_x1[9] = { 272, 109, 274, 232, 190, 151, 108, 66, 10 };
-int game_camera_buttons_x2[9] = { 314, 151, 314, 274, 232, 190, 151, 91, 47 };
-int game_camera_buttons_y1[9] = { 176, 176, 156, 156, 156, 156, 156, 156, 156 };
-int game_camera_buttons_y2[9] = { 193, 193, 173, 173, 173, 173, 173, 193, 193 };
-int gameunk_button_x1[1] = { 0 };
-int gameunk_button_x2[1] = { 104 };
-int gameunk_button_y1[1] = { 151 };
-int gameunk_button_y2[1] = { 200 };
-static char view_camera_choice[2];
-static char camera_buttons_pressed[9];
-static char unused_40E73;
-static char camera_mode_view[2];
-static char camera_buttons_state_per_view[18];
-extern int camera_select_fill_color;
-extern int camera_select_outline_color;
-static int camera_button_row[2];
-static int camera_button_tick[2];
-static int camera_button_col_cache[2];
+I8 camera_button_index = 6;
+I8 camera_button_count_mode[10] = { 1, 7, 3, 4, 5, 6, 7, 8, 8, 0 };
+I8 camera_mode_select_a[10] = { 0, 0, 2, 2, 3, 4, 5, 1, 7, 0 };
+I8 camera_mode_select_b[10] = { 2, 6, 2, 3, 4, 5, 6, 7, 8, 0 };
+I8 camera_mode_select_c[10] = { 0, 1, 0, 0, 1, 1, 1, 7, 8, 0 };
+I8 game_camera_buttons_count[4] = { 6, 6, 8, 7 };
+I16 game_camera_buttons_x1[9] = { 272, 109, 274, 232, 190, 151, 108, 66, 10 };
+I16 game_camera_buttons_x2[9] = { 314, 151, 314, 274, 232, 190, 151, 91, 47 };
+I16 game_camera_buttons_y1[9] = { 176, 176, 156, 156, 156, 156, 156, 156, 156 };
+I16 game_camera_buttons_y2[9] = { 193, 193, 173, 173, 173, 173, 173, 193, 193 };
+I16 gameunk_button_x1[1] = { 0 };
+I16 gameunk_button_x2[1] = { 104 };
+I16 gameunk_button_y1[1] = { 151 };
+I16 gameunk_button_y2[1] = { PLATFORM_SCREEN_HEIGHT_PIXELS };
+static I8 view_camera_choice[2];
+static I8 camera_buttons_pressed[9];
+static I8 unused_40E73;
+static I8 camera_mode_view[2];
+static I8 camera_buttons_state_per_view[18];
+extern I16 camera_select_fill_color;
+extern I16 camera_select_outline_color;
+static I16 camera_button_row[2];
+static I16 camera_button_tick[2];
+static I16 camera_button_col_cache[2];
 int viewyshift;
-extern char kbjoyflags;
-extern int custom_azim_angle;
-extern int custom_dist;
-extern int custom_elev_angle;
+extern I8 kbjoyflags;
+extern I16 custom_azim_angle;
+extern I16 custom_dist;
+extern I16 custom_elev_angle;
 
-extern int dlg_colour;
+extern I16 dlg_colour;
 extern struct RECTANGLE *rcpunk2;
 static void far *replayshapes[23];
-extern void far font_setup_unknown(int, int);
+extern void far font_setup_unknown(I16, I16);
 extern void far fontsetfontdef2(void far *);
-extern void far sprite_1_unk(int, int, int, int, int);
-extern void far sprite_1_unk4(int, int, int, int, int);
-extern int far input_checking(int);
-extern int far mouse_multi_hittest(int, int *, int *, int *, int *);
-extern int far kb_get_key_state(int);
-extern char far do_fileselect_dialog(char *, char *, char *, void far *);
-extern char far do_savefile_dialog(char *, char *, void far *);
-extern int far file_find(char *);
-extern void far copy_string(char *, char far *);
-extern struct RECTANGLE * far introtext(char *, int, int, int, int);
+extern void far sprite_1_unk(I16, I16, I16, I16, I16);
+extern void far sprite_1_unk4(I16, I16, I16, I16, I16);
+extern I16 far input_checking(I16);
+extern I16 far mouse_multi_hittest(I16, I16 *, I16 *, I16 *, I16 *);
+extern I16 far kb_get_key_state(I16);
+extern I8 far do_fileselect_dialog(I8 *, I8 *, I8 *, void far *);
+extern I8 far do_savefile_dialog(I8 *, I8 *, void far *);
+extern I16 far file_find(I8 *);
+extern void far copy_string(I8 *, I8 far *);
+extern struct RECTANGLE * far introtext(I8 *, I16, I16, I16, I16);
 
-extern char aDefault_1[];
-extern int far file_find(char *path);
-extern struct RECTANGLE *introtext(char *text, int x, int y, int color, int unk);
-extern void far copy_string(char *dst, char far *src);
+extern I8 aDefault_1[];
+extern I16 far file_find(I8 *path);
+extern struct RECTANGLE *introtext(I8 *text, I16 x, I16 y, I16 color, I16 unk);
+extern void far copy_string(I8 *dst, I8 far *src);
 /* Runs one game/replay loop step and updates its UI. Params: mode, frame index and frame offset. Returns: none. State: reads and updates game, replay, camera and UI state. */
 /* PLATFORM(audio): updates audio playback or hooks. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
@@ -1912,26 +1964,26 @@ extern void far copy_string(char *dst, char far *src);
 /* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
 /* PLATFORM(video): draws to or configures the display surface. */
-void loop_game(int mode, int frame_index, int frame_offset)
+void loop_game(I16 mode, I16 frame_index, I16 frame_offset)
 {
-    char answer;
+    I8 answer;
     unsigned key_code;
-    int dialog_params[8];
-    int prev_sky;
-    int time_delta;
-    register int i;
-    register int j;
-    char write_state;
-    char button;
-    long travel;
-    char modifier;
+    I16 dialog_params[8];
+    I16 prev_sky;
+    I16 time_delta;
+    register I16 i;
+    register I16 j;
+    I8 write_state;
+    I8 button;
+    I32 travel;
+    I8 modifier;
     struct GAMEINFO oldcfg;
 
     switch (mode) {
     case 0:
         locate_many_resources(sdgresourcehandle,
             "rplyrpicrpacrpmcrptcbof6bof5bof4bof3bof2bof1bof0zoompannbon6bon5bon4bon3bon2bon1bof0zoompann",
-            (char far **)replayshapes);
+            (I8 far **)replayshapes);
         frame_index = 4;
     case 2:
         for (i = 0; i < 9; i++)
@@ -1978,8 +2030,8 @@ void loop_game(int mode, int frame_index, int frame_offset)
             i = 0;
             j = 0;
         } else {
-            i = (long)frame_index * 110 / globalgamesettings.game_recordedframes;
-            j = (long)frame_offset * 110 / globalgamesettings.game_recordedframes;
+            i = (I32)frame_index * 110 / globalgamesettings.game_recordedframes;
+            j = (I32)frame_offset * 110 / globalgamesettings.game_recordedframes;
         }
         if (camera_button_col_cache[cam_idg] != i || camera_button_row[cam_idg] != j) {
             /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
@@ -2042,24 +2094,24 @@ void loop_game(int mode, int frame_index, int frame_offset)
             if ((key_code == ' ' || key_code == '\r') && camera_button_index >= 7) {
                 if (camera_button_index == 7) {
                     if ((game_camera_buttons_y1[7] + game_camera_buttons_y2[7]) >> 1 < pos_y_ms)
-                        key_code = 0x5000;
+                        key_code = KEY_SCAN_DOWN;
                     else
-                        key_code = 0x4800;
+                        key_code = KEY_SCAN_UP;
                 } else {
                     switch (((polang(msecoordx - ((game_camera_buttons_x1[8] + game_camera_buttons_x2[8]) >> 1),
                                          ((game_camera_buttons_y1[8] + game_camera_buttons_y2[8]) >> 1) - pos_y_ms)
                               + 0x80) & 0x3FF) >> 8) {
                     case 0:
-                        key_code = 0x4800;
+                        key_code = KEY_SCAN_UP;
                         break;
                     case 1:
-                        key_code = 0x4D00;
+                        key_code = KEY_SCAN_RIGHT;
                         break;
                     case 2:
-                        key_code = 0x5000;
+                        key_code = KEY_SCAN_DOWN;
                         break;
                     case 3:
-                        key_code = 0x4B00;
+                        key_code = KEY_SCAN_LEFT;
                         break;
                     }
                 }
@@ -2089,19 +2141,19 @@ void loop_game(int mode, int frame_index, int frame_offset)
             modifier = 1;
         if (modifier != 0) {
             switch (key_code) {
-            case 0x4D00:
+            case KEY_SCAN_RIGHT:
                 custom_azim_angle += 0x10;
                 return;
-            case 0x4B00:
+            case KEY_SCAN_LEFT:
                 custom_azim_angle -= 0x10;
                 return;
-            case 0x4800:
+            case KEY_SCAN_UP:
                 if (custom_elev_angle + 0x10 < 0x100) {
                     custom_elev_angle += 0x10;
                     return;
                 }
                 break;
-            case 0x5000:
+            case KEY_SCAN_DOWN:
                 if (custom_elev_angle - 0x10 > -0x100) {
                     custom_elev_angle -= 0x10;
                     return;
@@ -2139,22 +2191,22 @@ zoom_in:
             goto zoom_in;
         case '-':
             goto zoom_out;
-        case 0x4B00:
+        case KEY_SCAN_LEFT:
             if (game_camera_buttons_count[cammd] >= camera_button_count_mode[camera_button_index])
                 camera_button_index = camera_button_count_mode[camera_button_index];
         default:
 redraw_input:
             loop_game(1, core.game_frame, core.game_frame);
             goto next_input;
-        case 0x4D00:
+        case KEY_SCAN_RIGHT:
             camera_button_index = camera_mode_select_a[camera_button_index];
             goto redraw_input;
-        case 0x4800:
+        case KEY_SCAN_UP:
             if (camera_button_index == 7)
                 goto zoom_in;
             camera_button_index = camera_mode_select_b[camera_button_index];
             goto redraw_input;
-        case 0x5000:
+        case KEY_SCAN_DOWN:
             if (camera_button_index == 7)
                 goto zoom_out;
             camera_button_index = camera_mode_select_c[camera_button_index];
@@ -2374,12 +2426,12 @@ pause_menu:
                     /* PLATFORM(timer): read the elapsed timer interval. */ i = (time_delta = timer_get_delta_alt()) * j;
                     travel += i;
                     if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
-                        travel = (long)(globalgamesettings.game_recordedframes - tmr2) * 20;
+                        travel = (I32)(globalgamesettings.game_recordedframes - tmr2) * 20;
                     loop_game(1, core.game_frame, travel / 20 + tmr2);
                     /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
                 }
                 if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
-                    travel = (long)(globalgamesettings.game_recordedframes - tmr2) * 20;
+                    travel = (I32)(globalgamesettings.game_recordedframes - tmr2) * 20;
                 i = travel / 20 + tmr2;
                 if (i > globalgamesettings.game_recordedframes)
                     i = globalgamesettings.game_recordedframes;
@@ -2412,12 +2464,12 @@ pause_menu:
                     i = time_delta * j;
                     travel += i;
                     if ((unsigned)(travel / 20) > tmr2)
-                        travel = (long)tmr2 * 20;
+                        travel = (I32)tmr2 * 20;
                     loop_game(1, core.game_frame, tmr2 - travel / 20);
                     /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
                 }
                 if ((unsigned)(travel / 20) > tmr2)
-                    travel = (long)tmr2 * 20;
+                    travel = (I32)tmr2 * 20;
                 j = travel / 20;
                 loop_game(2, 4, 0);
                 if (j != 0) {
@@ -2436,7 +2488,7 @@ pause_menu:
                         while (core.game_frame != tmr2) {
                             update_gamestate();
                             i--;
-                            loop_game(1, (long)i * j / prev_sky + tmr2, tmr2);
+                            loop_game(1, (I32)i * j / prev_sky + tmr2, tmr2);
                             /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1);
                         }
                     }

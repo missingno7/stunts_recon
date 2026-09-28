@@ -1,11 +1,12 @@
+#include "stunts_types.h"
 /* READABILITY: Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
-extern int far toupper(int value);
-extern unsigned long far audioresource_get_dword(char far *address);
+extern I16 FAR toupper(I16 value);
+extern U32 FAR audioresource_get_dword(I8 FAR *address);
 
 /* Compare up to count bytes of two names, optionally using case-sensitive matching.
  * Params and return follow the declared C signature. */
-int far audioresource_compare_chunknames(int caseSensitive, unsigned char far *chunkName,
-                                         unsigned char far *foundName, int count)
+I16 FAR audioresource_compare_chunknames(I16 caseSensitive, U8 FAR *chunkName,
+                                         U8 FAR *foundName, I16 count)
 {
     if (count != 0) {
         do {
@@ -25,12 +26,12 @@ int far audioresource_compare_chunknames(int caseSensitive, unsigned char far *c
 
 /* Scan four-byte resource names at the given stride and return the matching entry index.
  * Params and return follow the declared C signature. */
-int far audioresource_get_chunk_index(int stride, int numChunks, unsigned char *chunkName,
-                                      char far *chunkNames)
+I16 FAR audioresource_get_chunk_index(I16 stride, I16 numChunks, U8 *chunkName,
+                                      I8 FAR *chunkNames)
 {
-    unsigned char name[5];
-    int index;
-    int byteIndex;
+    U8 name[5];
+    I16 index;
+    I16 byteIndex;
 
     name[4] = 0;
     for (index = 0; index < numChunks; index++) {
@@ -45,30 +46,31 @@ int far audioresource_get_chunk_index(int stride, int numChunks, unsigned char *
 
 /* Find a named entry in a packed audio resource and return its far data pointer.
  * Params and return follow the declared C signature. */
-char far * far audioresource_find(char huge *resource, unsigned char *chunkName)
+I8 FAR * FAR audioresource_find(I8 HUGE *resource, U8 *chunkName)
 {
-    unsigned num;
-    int index;
-    char far *entry;
-    unsigned long offset;
-    char far *chunkData;
+    U16 num;
+    I16 index;
+    I8 FAR *entry;
+    U32 offset;
+    I8 FAR *chunkData;
 
     chunkData = 0;
-    num = *(unsigned far *)(resource + 4);
+    num = *(U16 FAR *)(resource + 4);
     index = audioresource_get_chunk_index(0, num, chunkName, resource + 6);
     if (index >= 0) {
-        entry = (char far *)resource + 6 + num * 4 + index * 4;
+        /* PORT: Huge-pointer addition must preserve segment:offset normalization within this resource. */
+        entry = (I8 FAR *)resource + 6 + num * 4 + index * 4;
         offset = audioresource_get_dword(entry);
-        chunkData = (char far *)resource + 6 + num * 8 + offset;
+        chunkData = (I8 FAR *)resource + 6 + num * 8 + offset;
     }
     return chunkData;
 }
 
 /* Copy size bytes from the far source span into the far destination span.
  * Params and return follow the declared C signature. */
-void far audioresource_copy_n_bytes(unsigned char far *src, char far *dst, int size)
+void FAR audioresource_copy_n_bytes(U8 FAR *src, I8 FAR *dst, I16 size)
 {
-    int i;
+    I16 i;
 
     for (i = 0; i < size; i++, src++, dst++)
         *dst = *src;

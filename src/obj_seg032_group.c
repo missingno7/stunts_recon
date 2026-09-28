@@ -1,40 +1,41 @@
+#include "stunts_types.h"
 #include "platform_hw.h"
 /* READABILITY: Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
 struct SCREEN_RECT {
-    short width;
-    short height;
-    short reserved[7];
-    short bottom;
+    I16S width;
+    I16S height;
+    I16S reserved[7];
+    I16S bottom;
 };
 
-static char *line_input_text_buffer;
-static short line_input_cursor_vertical, line_edit_x, line_edit_y;
-static short cursor_flash_state, line_text_max_width, line_input_cursor_slot;
-extern struct SCREEN_RECT far *line_input_screen_rect;
+static I8 *line_input_text_buffer;
+static I16S line_input_cursor_vertical, line_edit_x, line_edit_y;
+static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
+extern struct SCREEN_RECT FAR *line_input_screen_rect;
 
-extern int strlen(char *text);
+extern I16 strlen(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern int far font_op(char *text, int count);
-extern int far font_op2(char *text);
+extern I16 FAR font_op(I8 *text, I16 count);
+extern I16 FAR font_op2(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void far draw_filled_rect(int x, int y, int width, int height, int right);
+extern void FAR draw_filled_rect(I16 x, I16 y, I16 width, I16 height, I16 right);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void far draw_text_at(char *text, int x, int y);
+extern void FAR draw_text_at(I8 *text, I16 x, I16 y);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void far sprite1_unknown2(int x, int y, int width, int height, int right);
-extern void far sprite_copy_2_to_1(void);
-extern void far read_line_helper(void);
-extern void far read_line_helper2(void);
+extern void FAR sprite1_unknown2(I16 x, I16 y, I16 width, I16 height, I16 right);
+extern void FAR sprite_copy_2_to_1(void);
+extern void FAR read_line_helper(void);
+extern void FAR read_line_helper2(void);
     /* PLATFORM(input_kb): poll the game input-abort state. */
-extern int far poll_input_abort(void);
+extern I16 FAR poll_input_abort(void);
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
-extern int far kb_call_readchar_callback(void);
+extern I16 FAR kb_call_readchar_callback(void);
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
-extern void far timer_copy_counter(int offset, int segment);
+extern void FAR timer_copy_counter(I16 offset, I16 segment);
     /* PLATFORM(timer): set the cursor-blink timer interval. */
-extern void far set_add_value(long ticks);
+extern void FAR set_add_value(I32 ticks);
     /* PLATFORM(timer): check whether the timer countdown expired. */
-extern int far timer_compare_dx(void);
+extern I16 FAR timer_compare_dx(void);
 
 /* Edit a bounded text buffer using keyboard input, blink timing, and the line-rendering helpers.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -42,15 +43,15 @@ extern int far timer_compare_dx(void);
 /* PLATFORM(input_kb): poll the keyboard and abort callback for edit keys. */
 /* PLATFORM(video): copy the render surface before drawing line edits. */
 /* PLATFORM(timer): refresh cursor blink timing while waiting for input. */
-int far read_line(char flags, char *buffer, int pendingKey, int bufferLimit,
-                  int maxWidth, int x, int y,
-                  int (far *readCallback)(void), int timerOffset, int timerSegment)
+I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
+                  I16 maxWidth, I16 x, I16 y,
+                  I16 (FAR *readCallback)(void), I16 timerOffset, I16 timerSegment)
 {
-  short firstKey;
-  short savedBlink;
-  short inputKey;
-  short cursorIndex;
-  short insertMode;
+  I16S firstKey;
+  I16S savedBlink;
+  I16S inputKey;
+  I16S cursorIndex;
+  I16S insertMode;
     /* PLATFORM(video): copy the active render surface before editing. */
   sprite_copy_2_to_1();
   line_edit_x = x;
@@ -82,7 +83,7 @@ int far read_line(char flags, char *buffer, int pendingKey, int bufferLimit,
   {
     if (pendingKey != 0)
     {
-      inputKey = (short) pendingKey;
+      inputKey = (I16S) pendingKey;
       pendingKey = 0;
     }
     else
@@ -236,7 +237,7 @@ done:
         }
 
       }
-      buffer[line_input_cursor_slot] = (char) inputKey;
+      buffer[line_input_cursor_slot] = (I8) inputKey;
       if (line_input_cursor_slot < bufferLimit)
         ++line_input_cursor_slot;
       read_line_helper2();
@@ -256,11 +257,11 @@ done:
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(video): measure and draw the text cursor using the renderer. */
-void far read_line_helper(void)
+void FAR read_line_helper(void)
 {
-    short width;
-    short x;
-    short y;
+    I16S width;
+    I16S x;
+    I16S y;
 
     if (cursor_flash_state == 0)
         return;
@@ -285,11 +286,11 @@ void far read_line_helper(void)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(video): clip and draw the editable text line. */
-void far read_line_helper2(void)
+void FAR read_line_helper2(void)
 {
-    short length;
-    short unusedWidth;
-    short fontWidth;
+    I16S length;
+    I16S unusedWidth;
+    I16S fontWidth;
 
     if (line_text_max_width != 0) {
         for (;;) {

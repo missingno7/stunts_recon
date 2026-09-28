@@ -15563,7 +15563,18 @@
   },
   "object_segment": "UNIT_TEXT",
   "original_frame_load_address": 95408,
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/platform_hw.h",
+      "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
+      "size": 6111
+    },
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "integ35 (L9-bssS): the complete file-scope static set of seg008 is eight `static int` text bound/outline words (16 B _BSS at [205384,205400)); textboundsleft, text_bounds_upper, txt_bounds_bottom, textoutlineleft and txt_outline_top are compiler-hash-constrained reconstruction names (spelling fitted to the MSC 5.10 static-order hash; readable, never recovered originals). The block-scope `extern int` redeclarations inside the two text-bounds helpers refer to these file statics (internal linkage, C89 6.1.2.2) and were kept from the verified form",

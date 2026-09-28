@@ -5320,7 +5320,13 @@
     "start": 170706
   },
   "original_frame_load_address": 165424,
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "sub_38702 keeps a redundant `(unsigned char)chunk->channelNumber` cast on the first driver-call argument (channelNumber is already unsigned char): without it MSC 5.10 /Ox keeps the byte in SI across both indirect far calls (26 bytes shorter); plausibly macro/typedef residue, required by FACT-cse-tree-identity-char-cast; no natural alternative found (build/workers/s028cast: lvalue path 944/934, (&x)[0] folded for struct member refs, no spare frame slot). Accepted with review note (supervisor RULING, integ31 item 1)",

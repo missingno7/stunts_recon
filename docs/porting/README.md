@@ -1,13 +1,39 @@
-﻿# Porting documentation
+# Porting documentation
 
-This index collects compatibility contracts and source/image evidence for the Stunts 1.1 MCGA port. The inventory is planning documentation; it does not implement replacement services.
+This index connects the original executable's platform boundaries to resource formats, deterministic state, and observed runtime behavior. It documents compatibility contracts and evidence; it does not implement replacement services.
 
-- [Platform boundary inventory](platform-boundary.md): DOS, BIOS, input, timer, audio, memory, and indexed video-surface boundaries, with observed behavior and unresolved coverage gaps.
-- [Structured platform boundary data](platform-boundary.json): machine-readable entries, caller leads, confidence, and evidence locations for the same inventory.
+## Types and pointer model
 
-- [Asset formats](formats.md): observed resource/archive layouts, evidence strength, and sample validation; parser output is generated under `build/porting/`.
-- [Audio drivers and banks](audio-drivers.md): `.DRV` far-call vectors, observed hardware paths, VCE/KMS/SFX layouts, and open ABI details.
-- [Runtime model](runtime-model.md): startup, simulation, input, replay, timing and rendering behavior, with superseded editor/audio claims corrected.
-- [Modes and built-in editor](modes-and-editor.md): menu transitions, track-editor loop, placement/validation, save flow, race setup and replay selection.
+`include/stunts_types.h` names the original 8-, 16-, and 32-bit integer spellings with macros (`I8`, `U8`, `I8S`, `I16`, `U16`, `I16S`, `U16S`, `I32`, and `U32`). `I16`/`U16` expand to the original 16-bit `int`/`unsigned int`; `I16S`/`U16S` preserve source declarations spelled `short`. The original medium model uses far code and near data, with segmented `FAR`, `NEAR`, and `HUGE` pointer qualifiers. A host port can redefine the listed macros before including the header to use its fixed-width integers and flat pointers. The header uses macros instead of typedefs because typedef substitutions changed OMF `EXTDEF`/`COMDEF` ordering in the Q2, Q3, and Q4 probes.
 
-The parsers are read-only with respect to `assets/`. Run `python tools/porting/format_reference.py assets --report build/porting/asset-validation.json` and `python tools/porting/audio_bank.py --verify-all --json build/porting/audio-bank-validation.json`; both generated reports stay under ignored `build/`.
+Keep one-line `/* PORT: ... */` comments beside code whose behavior depends on the original ABI or machine, such as 16-bit integer wraparound, segment:offset arithmetic, far-pointer normalization, structure packing, signed shifts, or plain-char signedness. Find subsystem annotations and portability hazards with `git grep -n -E 'PLATFORM\([^)]*\)|PORT:' -- src`; PowerShell also supports `Get-ChildItem src -Filter *.c | Select-String -Pattern 'PLATFORM\([^)]*\)|PORT:'`.
+
+## Subsystem map
+
+| Subsystem | Platform boundary rows | Formats and assets | State contract | Runtime behavior and measurements |
+|---|---|---|---|---|
+| Video and palette | [Platform boundary inventory](platform-boundary.md): rendering surface, video mode, palette and retrace rows | [Asset formats](formats.md): PVS/PES palettes, sprites and shape archives | [State model](state-model.md): presentation buffers, palette and process-local pointers stay outside the physics checkpoint | [Runtime model](runtime-model.md): render order, window buffers and retrace; [measurements](runtime-measurements.md): 70.086 Hz emulator refresh, palette/retrace I/O gaps |
+| Input and replay | [Platform boundary inventory](platform-boundary.md): keyboard, joystick, mouse and software interrupt rows | [Asset formats](formats.md): `.RPL` event stream and `.TRK` map; [modes/editor](modes-and-editor.md): menu routing | [State model](state-model.md): physical device state versus ordered per-frame replay bytes | [Runtime model](runtime-model.md): input sampling and capture; [measurements](runtime-measurements.md): idle replay and scheduled-key live-setup trace |
+| Timer and frame pacing | [Platform boundary inventory](platform-boundary.md): timer/audio and exception rows | No on-disk timer format; replay frame count is in [`.RPL`](formats.md) | [State model](state-model.md): callback/device state is outside `GAMESTATE`; checkpoints keep frame and seed | [Runtime model](runtime-model.md): PIT counters and 10/20 fps target; [measurements](runtime-measurements.md): `0x2E9C`, `0xB6` channel-selection quirk, unmeasured live rate |
+| Audio | [Platform boundary inventory](platform-boundary.md): timer/audio and DOS runtime rows | [Audio drivers and banks](audio-drivers.md): `.DRV`, KMS/SFX/VCE; [asset formats](formats.md): resource containers | [State model](state-model.md): `AUDIO_CAR_FRAME` records are derived presentation data | [Runtime model](runtime-model.md): far-call driver ABI and callback hooks; [measurements](runtime-measurements.md): AD15 mode and callback cadence remain unmeasured |
+| File and resource I/O | [Platform boundary inventory](platform-boundary.md): DOS file, runtime and software interrupt rows | [Asset formats](formats.md): archive directory, RLE/VLE, shape, track, replay, high-score and font records | [State model](state-model.md): resource owners and pointer slots; preserve deterministic resource contents separately from local handles | [Runtime model](runtime-model.md): startup loads and track/replay resource flow; [modes/editor](modes-and-editor.md): editor and save paths |
+| Memory | [Platform boundary inventory](platform-boundary.md): DOS memory and video-memory rows | No separate file format; allocations hold the resource formats above | [State model](state-model.md): far/near pointer values are process-local; keep complete aggregate and pointee extents | [Runtime model](runtime-model.md): DOS arena/startup and buffer use; [measurements](runtime-measurements.md): runtime allocation and buffer counts were not instrumented |
+
+## Remaining unknowns and evidence needed
+
+| Unknown | Current limit | Best next evidence |
+|---|---|---|
+| Live PIT mode/rate, INT 8 chaining and callback counts | `0xB6` selects channel 2 while writes target channel 0; DOSBox-X logs did not expose guest port events. | Add guest-level PIT-port and IVT instrumentation, then capture startup, menu, replay and active-race phases. See [runtime measurements](runtime-measurements.md#pit-and-display-rate). |
+| Palette writes and retrace polling frequency | Startup palette upload is BIOS INT 10h `AX=1012h`; direct DAC and `0x3DA` event counts were not visible. | Trace BIOS video calls and guest VGA port accesses through startup and rendered frames. |
+| Live input and update/render cadence | The scheduled-key run reached live setup, but input IRQs, chosen `rate_frame`, simulation steps and rendered frames were not counted. | Instrument the original guest at the keyboard/joystick boundary and at `replay_unk2`, `update_gamestate` and `update_frame`. |
+| Audio mode and hook cadence | Game-side driver call shapes are known; AD15's selected mode and actual timer rate were not measured. | Trace driver return values, `audio_driver_mode`, and audio callback entries against the PIT callback counter; locate or capture the matching `.DRV` implementation for callee semantics. |
+| Unclassified global state | The generated inventory leaves 11 replay roles and 342 physical units unknown; escaped-pointer accesses are not transitively attributed. | Expand accepted access/call-flow evidence or collect runtime values for the specific fields required by a port consumer. Keep other fields unknown. |
+| Incomplete format coverage | `.VCE` declared-size semantics remain uncertain; fallback formats such as `.XVS` have no supplied samples, and some extensions have only inventory-level coverage. | Inspect a real sample with the accepted reader or acquire an original asset and compare its fields with parser output. See [formats](formats.md#remaining-asset-types-not-specified-as-game-data). |
+
+## Evidence and tools
+
+- [Platform boundary inventory](platform-boundary.md) and [structured boundary data](platform-boundary.json) map DOS/BIOS, input, timer, audio, memory and video-service call sites.
+- [State model](state-model.md) is the curated replay/layout guide. Run `python tools/porting/state_model.py` to regenerate the full symbol and per-translation-unit type inventories under ignored `build/porting/state-model.{md,json}`. Compiler sizes and nested aggregate offsets use isolated canonical-profile probes; `--no-probes` reuses the complete current caches `build/porting/typeprobe-reports.json` and `build/porting/member-offset-results.json`.
+- [Runtime measurements](runtime-measurements.md) records measured observations and gaps. Reproduce the no-input DOSBox-X run with `tools/porting/run_runtime_probe.ps1`; the script uses original local `assets/` and the local DOSBox-X executable and writes only under `build/porting/runtime-probe/`.
+- Run `python tools/porting/format_reference.py assets --report build/porting/asset-validation.json` and `python tools/porting/audio_bank.py --verify-all --json build/porting/audio-bank-validation.json` to regenerate format and audio-bank reports. Both readers are read-only with respect to `assets/`.
+- Other guides: [audio drivers and banks](audio-drivers.md), [runtime execution model](runtime-model.md), [modes and built-in editor](modes-and-editor.md), and [asset formats](formats.md).

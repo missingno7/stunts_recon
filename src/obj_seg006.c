@@ -1,64 +1,79 @@
+#define ANGLE_UNITS_PER_TURN 0x400
+#define ANGLE_QUARTER_TURN 0x100
+#define ANGLE_HALF_TURN 0x200
+#define ANGLE_THREE_QUARTERS_TURN 0x300
+#define ANGLE_TURN_MASK 0x3ff
+#define ANGLE_EIGHTH_TURN 0x80
+#define POLYINFO_CAPACITY 400
+#define POLYINFO_POOL_BYTES 0x28A0
+#define POLYINFO_RESET_SENTINEL 0xffff
+#define RECT_EMPTY_MIN_SENTINEL 9999
+#define RECT_EMPTY_MAX_SENTINEL -1
+#include "stunts_types.h"
 /* obj_seg006: whole seg006 object (22 functions, file order = image order).
    Globals without a reviewed semantic alias use their bound data names:
    data_31852 = transshapenumpaints, transformed_shape_material = transshapematerial,
    transformed_shape_bounds = transshaperectptr, transformed_primitive_cursor = transshapeprimptr,
    transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
    projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
-struct RECTANGLE { int left, right, top, bottom; };
-struct VECTOR { int x, y, z; };
-struct POINT2D { int x, y; };
-struct MATRIX { int vals[9]; };
+struct RECTANGLE { I16 left, right, top, bottom; };
+struct VECTOR { I16 x, y, z; };
+struct POINT2D { I16 x, y; };
+struct MATRIX { I16 vals[9]; };
+/* PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization. */
 struct SHAPE3D {
     unsigned numverts;
     struct VECTOR far* verts;
     unsigned numprimitives;
-    char numpaints;
-    char reserved;
-    unsigned char far* primitives;
-    long far* cull1;
-    long far* cull2;
+    I8 numpaints;
+    I8 reserved;
+    U8  far* primitives;
+    I32 far* cull1;
+    I32 far* cull2;
 };
+/* PORT: This record contains a near pointer; MSC pointer width and default 2-byte packing determine its offsets. */
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
     struct SHAPE3D* shapeptr;
     struct RECTANGLE* rectptr;
     struct VECTOR rotvec;
-    int unk;
-    unsigned char ts_flags;
-    unsigned char material;
+    I16 unk;
+    U8  ts_flags;
+    U8  material;
 };
+/* PORT: This record is a 16-bit packed renderer structure; preserve MSC field alignment and signed widths. */
 struct POLYINFO {
-    int depth;
-    unsigned char material;
-    char numpoints;
-    char type;
-    char reserved;
+    I16 depth;
+    U8  material;
+    I8 numpoints;
+    I8 type;
+    I8 reserved;
     struct POINT2D points[10];
 };
 
-extern int far abs(int);
-extern int far polang(int, int);
-extern unsigned far polradius2d(int, int);
-extern int far polarRadius3D(struct VECTOR*);
-extern int far projectiondata9_times_ratio(int, int);
-extern void far matroty(struct MATRIX*, int);
-extern void far mat_rot_x(struct MATRIX*, int);
-extern void far mat_rot_z(struct MATRIX*, int);
+extern I16 far abs(I16);
+extern I16 far polang(I16, I16);
+extern unsigned far polradius2d(I16, I16);
+extern I16 far polarRadius3D(struct VECTOR*);
+extern I16 far projectiondata9_times_ratio(I16, I16);
+extern void far matroty(struct MATRIX*, I16);
+extern void far mat_rot_x(struct MATRIX*, I16);
+extern void far mat_rot_z(struct MATRIX*, I16);
 extern void far mat_vec(struct VECTOR*, struct MATRIX*, struct VECTOR*);
 extern void far mat_multiply(struct MATRIX*, struct MATRIX*, struct MATRIX*);
 extern void far mat_invert(struct MATRIX*, struct MATRIX*);
 extern void far vector_to_point(struct VECTOR*, struct POINT2D*);
-extern void far vector_op_unk(struct VECTOR*, struct VECTOR*, struct VECTOR*, int);
-extern void far* far mmgr_alloc_resbytes(char*, long);
-extern int far sinfast(unsigned);
-extern int far cosfast(unsigned);
-extern void far preRender_default(int, int, struct POINT2D*);
-extern void far preRender_patterned(int, int, int, struct POINT2D*);
-extern void far preRender_unk(int, int, int, int, struct POINT2D*);
-extern void far preRender_line(int, int, int, int, int);
-extern void far preRender_sphere(int, int, int, int);
-extern void far preRender_wheel(struct POINT2D*, int, int, int, int);
-extern void far putpixel_single_maybe(int, int, int);
+extern void far vector_op_unk(struct VECTOR*, struct VECTOR*, struct VECTOR*, I16);
+extern void far* far mmgr_alloc_resbytes(I8*, I32);
+extern I16 far sinfast(unsigned);
+extern I16 far cosfast(unsigned);
+extern void far preRender_default(I16, I16, struct POINT2D*);
+extern void far preRender_patterned(I16, I16, I16, struct POINT2D*);
+extern void far preRender_unk(I16, I16, I16, I16, struct POINT2D*);
+extern void far preRender_line(I16, I16, I16, I16, I16);
+extern void far preRender_sphere(I16, I16, I16, I16);
+extern void far preRender_wheel(struct POINT2D*, I16, I16, I16, I16);
+extern void far putpixel_single_maybe(I16, I16, I16);
 
 static struct MATRIX mat_no_turn, mat_quarter_turn, mat_half_turn, mat_three_quarters_turn;
 struct MATRIX g_matrix_yrot;
@@ -68,67 +83,67 @@ struct MATRIX matrotation_tmp;
 extern unsigned mat_y_rot_angle;
 extern struct MATRIX wkmatx;
 static struct RECTANGLE selection_rect;
-static int half_scale_flag;
+static I16 half_scale_flag;
 int * mat_copy_clr_lst_ptr;
 int * g_mat_clrlist_copy_2_ptr;
 int * material_patlistptr_copy;
 short material_pad_7;
 int * matpatlistcopypointer2;
 unsigned short video_cnstval;
-static long vector_angle_cos, vector_angle_sin, vector_angle_sin2, vector_angle_cos2;
-static char shape3d_unused[576];
+static I32 vector_angle_cos, vector_angle_sin, vector_angle_sin2, vector_angle_cos2;
+static I8 shape3d_unused[576];
 
 unsigned polygonnumber;
 static unsigned polyinfo_offset;
-static int poly_list_insert_result;
-static int polyinfo_reset_marker;
+static I16 poly_list_insert_result;
+static I16 polyinfo_reset_marker;
 int poly_cursor1;
 int facenodeiterator;
 int polygon_link_3_list_iter;
 int poly_link_listit4;
-static int poly_link_list[400];
-static char far* polyinfoptr;
-static struct POLYINFO far* poly_info_ptrs[400];
-static char poly_padding_bytes[6];
+static I16 poly_link_list[POLYINFO_CAPACITY];
+static I8 far* polyinfoptr;
+static struct POLYINFO far* poly_info_ptrs[POLYINFO_CAPACITY];
+static I8 poly_padding_bytes[6];
 static struct POLYINFO far* shape_polyinfo;
 static unsigned vertex_count;
 static struct VECTOR far* obj_verts;
-static unsigned char far* current_prim_start;
-static unsigned char far* current_prim_verts;
-static unsigned char far* shape_prim_next;
-static int current_num_paints;
-static unsigned char transformed_shape_material;
-static unsigned char obj_flags;
+static U8  far* current_prim_start;
+static U8  far* current_prim_verts;
+static U8  far* shape_prim_next;
+static I16 current_num_paints;
+static U8  transformed_shape_material;
+static U8  obj_flags;
 unsigned char transformed_vert_count;
 static struct RECTANGLE* current_rect;
-static char current_paintjob;
-extern char backlightovr8;
+static I8 current_paintjob;
+extern I8 backlightovr8;
 char g_vector_bitix;
-extern long inverse_power_of_two_table[];
-extern unsigned char primidxcounttab[];
-extern unsigned char primitive_type_table[];
+extern I32 inverse_power_of_two_table[];
+extern U8  primidxcounttab[];
+extern U8  primitive_type_table[];
 static struct POINT2D* projected_point_ptr_table[11];
 
 void polyinfo_reset(void);
 void calc_sincos80(void);
-struct MATRIX* matrotzxy(int, int, int, int);
+struct MATRIX* matrotzxy(I16, I16, I16, I16);
 unsigned rect_compare_point(struct POINT2D*);
-char is_facing_camera(struct POINT2D far*);
+I8 is_facing_camera(struct POINT2D far*);
 void rect_adjust_from_point(struct POINT2D*, struct RECTANGLE*);
 vector_op_unk2(struct VECTOR*);
 unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned, unsigned);
 
 void initialize_polyinfo(void)
 { /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
-    polyinfoptr = mmgr_alloc_resbytes("polyinfo", 0x28A0) /* PLATFORM(memory): allocate the polygon information buffer from game memory. */;
+    polyinfoptr = mmgr_alloc_resbytes("polyinfo", POLYINFO_POOL_BYTES) /* PLATFORM(memory): allocate the polygon information buffer from game memory. */;
     matroty(&mat_no_turn, 0);
-    matroty(&mat_quarter_turn, 0x100);
-    matroty(&mat_half_turn, 0x200);
-    matroty(&mat_three_quarters_turn, 0x300);
+    matroty(&mat_quarter_turn, ANGLE_QUARTER_TURN);
+    matroty(&mat_half_turn, ANGLE_HALF_TURN);
+    matroty(&mat_three_quarters_turn, ANGLE_THREE_QUARTERS_TURN);
     calc_sincos80();
 }
 
-void copy_material_list_pointers(void* clrlist, void* clrlist2, void* patlist, void* patlist2, unsigned short videoConst)
+void copy_material_list_pointers(void* clrlist, void* clrlist2, void* patlist, void* patlist2, U16S  videoConst)
 { /* PURPOSE: Save the material color and pattern tables used by polygon drawing. Params: clrlist, clrlist2, patlist, patlist2, videoConst. Returns: void. Globals: reads none; writes g_mat_clrlist_copy_2_ptr, mat_copy_clr_lst_ptr, material_patlistptr_copy, matpatlistcopypointer2, video_cnstval. */
     mat_copy_clr_lst_ptr = clrlist;
     g_mat_clrlist_copy_2_ptr = clrlist2;
@@ -142,11 +157,11 @@ void polyinfo_reset(void)
     polygonnumber = 0;
     polyinfo_offset = 0;
     poly_list_insert_result = 0;
-    polyinfo_reset_marker = 0xffff;
-    facenodeiterator = 0x190;
+    polyinfo_reset_marker = POLYINFO_RESET_SENTINEL;
+    facenodeiterator = POLYINFO_CAPACITY;
 }
 
-unsigned select_rot(int angZ, int angX, int angY, struct RECTANGLE* cliprect, int unk)
+unsigned select_rot(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk)
 { /* PURPOSE: Build the requested view rotations and return the camera-facing angle. Params: angZ, angX, angY, cliprect, unk. Returns: unsigned. Globals: reads none; writes half_scale_flag, selection_rect, wkmatx. */
     struct MATRIX* matptr;
     struct VECTOR vec, vec2;
@@ -160,46 +175,46 @@ unsigned select_rot(int angZ, int angX, int angY, struct RECTANGLE* cliprect, in
     vec.y = 0;
     vec.x = 0;
     mat_vec(&vec, matptr, &vec2);
-    return polang(vec2.x, vec2.z) & 0x3FF;
+    return polang(vec2.x, vec2.z) & ANGLE_TURN_MASK;
 }
 
 unsigned trans_op(struct TRANSFORMEDSHAPE3D* ts)
 { /* PURPOSE: Transform a 3D shape, clip its primitives, and append visible polygons. Params: ts. Returns: unsigned. Globals: reads the shape, transform, material and clip state; writes projected-vertex, polygon-list and clipping scratch state. */
-    unsigned char ptype;
-    int added;
-    int primflag;
-    long cullbits2;
-    int someclipped;
-    long depth;
+    U8  ptype;
+    I16 added;
+    I16 primflag;
+    I32 cullbits2;
+    I16 someclipped;
+    I32 depth;
     struct VECTOR position;
     unsigned npts;
     unsigned idx;
     struct POINT2D screenpts[255];
     struct MATRIX invview;
-    long far* cull2ptr;
+    I32 far* cull2ptr;
     struct POINT2D far* out;
     struct MATRIX* matptr;
     struct MATRIX mview;
     unsigned prim;
     struct POINT2D corner;
-    register int i;
-    char rectcode;
+    register I16 i;
+    I8 rectcode;
     unsigned lastidx;
-    register int j;
+    register I16 j;
     struct VECTOR local;
     struct POINT2D far* srcpt;
     struct VECTOR viewvert;
-    int ptx;
-    char vertcode[256];
-    int pixsize;
-    int hidden;
-    int numdrawn;
-    long cullmask;
+    I16 ptx;
+    I8 vertcode[256];
+    I16 pixsize;
+    I16 hidden;
+    I16 numdrawn;
+    I32 cullmask;
     struct POINT2D ipt;
-    int pty;
+    I16 pty;
     struct VECTOR surfvec;
     struct VECTOR vertbuf[255];
-    long far* cullwords;
+    I32 far* cullwords;
 
     if (poly_list_insert_result != 0)
         return 1;
@@ -210,7 +225,7 @@ unsigned trans_op(struct TRANSFORMEDSHAPE3D* ts)
     cullwords = ts->shapeptr->cull1;
     cull2ptr = ts->shapeptr->cull2;
     transformed_shape_material = ts->material;
-    if (transformed_shape_material >= (unsigned char)current_num_paints)
+    if (transformed_shape_material >= (U8 )current_num_paints)
         transformed_shape_material = 0;
     obj_flags = ts->ts_flags;
     if (obj_flags & 8)
@@ -260,9 +275,9 @@ unsigned trans_op(struct TRANSFORMEDSHAPE3D* ts)
         projected_point_ptr_table[i] = &screenpts[i];
         local = obj_verts[i];
         if (half_scale_flag != 0) {
-            local.x >>= 1;
-            local.y >>= 1;
-            local.z >>= 1;
+            local.x >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+            local.y >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+            local.z >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
         }
         mat_vec(&local, &mview, &viewvert);
         viewvert.x += position.x;
@@ -315,9 +330,9 @@ visible:
                 case -1:
                     local = obj_verts[i];
                     if (half_scale_flag != 0) {
-                        local.x >>= 1;
-                        local.y >>= 1;
-                        local.z >>= 1;
+                        local.x >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+                        local.y >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+                        local.z >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
                     }
                     mat_vec(&local, &mview, &viewvert);
                     viewvert.x += position.x;
@@ -451,9 +466,9 @@ visible:
                         shape_polyinfo->points[1] = *projected_point_ptr_table[4];
                         shape_polyinfo->points[2] = *projected_point_ptr_table[5];
                         shape_polyinfo->points[3] = *projected_point_ptr_table[0];
-                        depth = (long)vertbuf[current_prim_start[3]].z << 2;
+                        depth = (I32)vertbuf[current_prim_start[3]].z << 2;
                     } else {
-                        depth = (long)vertbuf[current_prim_start[0]].z << 2;
+                        depth = (I32)vertbuf[current_prim_start[0]].z << 2;
                     }
                     i = polradius2d(shape_polyinfo->points[0].x - shape_polyinfo->points[1].x,
                                       shape_polyinfo->points[0].y - shape_polyinfo->points[1].y);
@@ -563,8 +578,8 @@ visible:
     return 0;
 }
 extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, unsigned search_sorted_position) { /* PURPOSE: Handle the insert newest poly in poly linked list 40ed6 operation. Params: depth, search_sorted_position. Returns: unsigned. Globals: reads poly_cursor1, poly_info_ptrs, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset, transformed_vert_count; writes facenodeiterator, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset. */
-    register int remaining;
-    register int list_index;
+    register I16 remaining;
+    register I16 list_index;
     if (search_sorted_position == 0) {
         list_index = poly_link_list[poly_link_listit4];
     } else {
@@ -574,7 +589,7 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, uns
         goto scan_test;
     scan_body:
         if (remaining-- == 0) goto scan_done;
-        if (poly_info_ptrs[list_index]->depth < (int)depth) goto scan_done;
+        if (poly_info_ptrs[list_index]->depth < (I16)depth) goto scan_done;
         poly_link_listit4 = list_index;
         list_index = poly_link_list[list_index];
     scan_test:
@@ -589,12 +604,12 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, uns
     poly_link_listit4 = poly_link_list[poly_link_listit4];
     polygonnumber++;
     polyinfo_offset += transformed_vert_count * sizeof(struct POINT2D) + 6;
-    return polygonnumber == 0x190 || (int)polyinfo_offset > 0x2872;
+    return polygonnumber == POLYINFO_CAPACITY || (I16)polyinfo_offset > 0x2872;
 }
 
 unsigned rect_compare_point(struct POINT2D *point) { /* PURPOSE: Return the clip-rectangle outcode for one projected point. Params: point. Returns: unsigned. Globals: reads selection_rect; writes none. */
     register struct POINT2D *p = point;
-    char flag;
+    I8 flag;
     if (p->y < selection_rect.top) flag=1;
     else if (p->y > selection_rect.bottom) flag=2;
     else flag=0;
@@ -603,17 +618,17 @@ unsigned rect_compare_point(struct POINT2D *point) { /* PURPOSE: Return the clip
     return flag;
 }
 
-char is_facing_camera(struct POINT2D far *pts)
+I8 is_facing_camera(struct POINT2D far *pts)
 { /* PURPOSE: Test the winding of a projected polygon against the camera. Params: pts. Returns: char. Globals: none. */
-    long dx0, dx1, dy0, dy1;
+    I32 dx0, dx1, dy0, dy1;
 
-    dx0 = (long)pts[0].x - pts[1].x;
-    dx1 = (long)pts[2].x - pts[1].x;
+    dx0 = (I32)pts[0].x - pts[1].x;
+    dx1 = (I32)pts[2].x - pts[1].x;
     if (dx0 != 0 || dx1 != 0) {
         dy0 = pts[0].y - pts[1].y;
         dy1 = pts[2].y - pts[1].y;
         if (dy0 != 0 || dy1 != 0)
-            return (char)(dx1 * dy0 - dx0 * dy1 > 0);
+            return (I8)(dx1 * dy0 - dx0 * dy1 > 0);
     }
     return 0;
 }
@@ -622,16 +637,16 @@ void polyinfo(void)
 { /* PURPOSE: Draw queued polygon records through the matching primitive renderer. Params: none. Returns: void. Globals: reads g_mat_clrlist_copy_2_ptr, mat_copy_clr_lst_ptr, material_patlistptr_copy, matpatlistcopypointer2, poly_info_ptrs, poly_link_list, polygonnumber; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
     struct POINT2D far* srcpts;
     struct POLYINFO far* info;
-    register int polyIndex;
-    register int link;
+    register I16 polyIndex;
+    register I16 link;
     struct POINT2D polypts[10];
     struct POINT2D* out;
-    int fill;
-    int materialIndex;
+    I16 fill;
+    I16 materialIndex;
     unsigned idx;
     unsigned pointCount;
 
-    link = 0x190;
+    link = POLYINFO_CAPACITY;
     for (polyIndex = 0; polyIndex < polygonnumber; polyIndex++) {
         link = poly_link_list[link];
         info = poly_info_ptrs[link];
@@ -680,36 +695,36 @@ void polyinfo(void)
 }
 
 
-struct MATRIX* matrotzxy(int z, int x, int y, int unk) { /* PURPOSE: Compose cached Z, X, and Y rotation matrices in the requested order. Params: z, x, y, unk. Returns: struct MATRIX*. Globals: reads g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals; writes g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals. */
-    register int rotation_flags = 0;
+struct MATRIX* matrotzxy(I16 z, I16 x, I16 y, I16 unk) { /* PURPOSE: Compose cached Z, X, and Y rotation matrices in the requested order. Params: z, x, y, unk. Returns: struct MATRIX*. Globals: reads g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals; writes g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals. */
+    register I16 rotation_flags = 0;
     register struct MATRIX* result;
 
-    if ((z & 0x3ff) != 0) {
+    if ((z & ANGLE_TURN_MASK) != 0) {
         rotation_flags |= 4;
         mat_rot_z(&g_rot_mat_z, z);
     }
-    if ((x & 0x3ff) != 0) {
+    if ((x & ANGLE_TURN_MASK) != 0) {
         rotation_flags |= 2;
         mat_rot_x(&matrix_x_rotation, x);
     }
-    if ((y & 0x3ff) != 0) {
+    if ((y & ANGLE_TURN_MASK) != 0) {
         rotation_flags |= 1;
-        if ((y & 0x3ff) == mat_y_rot_angle) {
+        if ((y & ANGLE_TURN_MASK) == mat_y_rot_angle) {
             result = &g_matrix_yrot;
         } else {
-            switch (y & 0x3ff) {
-            case 0x100:
+            switch (y & ANGLE_TURN_MASK) {
+            case ANGLE_QUARTER_TURN:
                 result = &mat_quarter_turn;
                 break;
-            case 0x200:
+            case ANGLE_HALF_TURN:
                 result = &mat_half_turn;
                 break;
-            case 0x300:
+            case ANGLE_THREE_QUARTERS_TURN:
                 result = &mat_three_quarters_turn;
                 break;
             default:
                 matroty(&g_matrix_yrot, y);
-                mat_y_rot_angle = y & 0x3ff;
+                mat_y_rot_angle = y & ANGLE_TURN_MASK;
                 result = &g_matrix_yrot;
                 break;
             }
@@ -765,20 +780,20 @@ struct MATRIX* matrotzxy(int z, int x, int y, int unk) { /* PURPOSE: Compose cac
 }
 
 void rect_adjust_from_point(struct POINT2D *pt, struct RECTANGLE *rc) { /* PURPOSE: Expand a rectangle to include one projected point. Params: pt, rc. Returns: void. Globals: none. */
-    register int x, y;
+    register I16 x, y;
     x=pt->x; y=pt->y;
     if(rc->left>x) rc->left=x;
-    { int temp=x+1; if(rc->right<temp) rc->right=temp; }
+    { I16 temp=x+1; if(rc->right<temp) rc->right=temp; }
     if(rc->top>y) rc->top=y;
-    { int temp=y+1; if(rc->bottom<temp) rc->bottom=temp; }
+    { I16 temp=y+1; if(rc->bottom<temp) rc->bottom=temp; }
 }
 
 vector_op_unk2(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the renderer angle and octant table. Params: vec. Returns: unspecified. Globals: reads vector_angle_cos, vector_angle_sin; writes none. */
-	long height;
-	long temp;
-	char octant;
-	int below;
-	int angle;
+	I32 height;
+	I32 temp;
+	I8 octant;
+	I16 below;
+	I16 angle;
 	
 	height = abs(vec->y);
 	
@@ -805,34 +820,34 @@ vector_op_unk2(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the
 	
 	angle = -polang(vec->z, -vec->x);
 	if (angle < 0) {
-		angle += 0x400;
+		angle += ANGLE_UNITS_PER_TURN;
 	}
 	
-	octant += (((long)angle * 15L) >> 10);
+	octant += (((I32)angle * 15L) >> 10);
 	
 	return octant;
 }
 
 void calc_sincos80(void) { /* PURPOSE: Cache the sine and cosine values used by view-vector classification. Params: none. Returns: void. Globals: reads none; writes vector_angle_cos, vector_angle_cos2, vector_angle_sin, vector_angle_sin2. */
-    vector_angle_sin = (long)sinfast(0x80);
-    vector_angle_cos = (long)cosfast(0x80);
-    vector_angle_sin2 = (long)sinfast(0x80);
-    vector_angle_cos2 = (long)cosfast(0x80);
+    vector_angle_sin = (I32)sinfast(ANGLE_EIGHTH_TURN);
+    vector_angle_cos = (I32)cosfast(ANGLE_EIGHTH_TURN);
+    vector_angle_sin2 = (I32)sinfast(ANGLE_EIGHTH_TURN);
+    vector_angle_cos2 = (I32)cosfast(ANGLE_EIGHTH_TURN);
 }
 
-long nopsub_26552(long value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
+I32 nopsub_26552(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
 
 
 short g_vid_flg2_set;
 short vidflg3is_minus1;
-extern void fatal_error(char *);
+extern void fatal_error(I8 *);
 void rcunion(struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *);
-char rcintersect(struct RECTANGLE *, struct RECTANGLE *);
-char rect_is_overlapping(struct RECTANGLE *, struct RECTANGLE *);
-char rect_is_inside(struct RECTANGLE *, struct RECTANGLE *);
-char rect_is_adjacent(struct RECTANGLE *, struct RECTANGLE *);
-void rectlist_add_rect(char *, struct RECTANGLE *, struct RECTANGLE *);
-void rectlist_add(unsigned char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
+I8 rcintersect(struct RECTANGLE *, struct RECTANGLE *);
+I8 rect_is_overlapping(struct RECTANGLE *, struct RECTANGLE *);
+I8 rect_is_inside(struct RECTANGLE *, struct RECTANGLE *);
+I8 rect_is_adjacent(struct RECTANGLE *, struct RECTANGLE *);
+void rectlist_add_rect(I8 *, struct RECTANGLE *, struct RECTANGLE *);
+void rectlist_add(U8 , I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
 
 void rcunion(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
 { /* PURPOSE: Write the smallest rectangle that covers both input rectangles. Params: r1, r2, out. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */
@@ -845,7 +860,7 @@ void rcunion(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
     }
 }
 
-char rcintersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
+I8 rcintersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
 { /* PURPOSE: Clip the first rectangle to the second and report an empty intersection. Params: r1, r2. Returns: char. Globals: none. */
     if (r1->right < r1->left) return 1;
     if (r2->right <= r1->left) return 1;
@@ -860,15 +875,15 @@ char rcintersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
     return 0;
 }
 
-void rectlist_add_rect(char* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr, struct RECTANGLE* rect) { /* PURPOSE: Merge or split a rectangle as needed before adding it to a clip list. Params: arg_rect_array_length_ptr, arg_rect_array_ptr, rect. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */	
+void rectlist_add_rect(I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr, struct RECTANGLE* rect) { /* PURPOSE: Merge or split a rectangle as needed before adding it to a clip list. Params: arg_rect_array_length_ptr, arg_rect_array_ptr, rect. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */	
 	struct RECTANGLE bottom_rect;
 	struct RECTANGLE merged;
-	char shift_index;
-	char rect_count;
-	char top_needed;
+	I8 shift_index;
+	I8 rect_count;
+	I8 top_needed;
 	struct RECTANGLE* entry_ptr;
 	struct RECTANGLE top_piece;
-	char bottom_needed;
+	I8 bottom_needed;
 
 	if (g_vid_flg2_set != 1) {
 		rect->right = (rect->right + g_vid_flg2_set - 1) & vidflg3is_minus1;
@@ -979,7 +994,7 @@ void rectlist_add_rect(char* arg_rect_array_length_ptr, struct RECTANGLE* arg_re
 	(*arg_rect_array_length_ptr)++;
 }
 
-char rect_is_overlapping(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two half-open rectangles overlap. Params: r1, r2. Returns: char. Globals: none. */
+I8 rect_is_overlapping(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two half-open rectangles overlap. Params: r1, r2. Returns: char. Globals: none. */
 	if (r1->right <= r2->left) {
 		return 0;
 	}
@@ -999,9 +1014,9 @@ char rect_is_overlapping(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOS
 	return 1;
 }
 
-char rect_is_inside(struct RECTANGLE *a,struct RECTANGLE *b){ /* PURPOSE: Test whether the first rectangle is contained in the second. Params: a, b. Returns: char. Globals: none. */return a->right<=b->right && a->left>=b->left && a->top>=b->top && a->bottom<=b->bottom;}
+I8 rect_is_inside(struct RECTANGLE *a,struct RECTANGLE *b){ /* PURPOSE: Test whether the first rectangle is contained in the second. Params: a, b. Returns: char. Globals: none. */return a->right<=b->right && a->left>=b->left && a->top>=b->top && a->bottom<=b->bottom;}
 
-char rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two rectangles share a complete edge. Params: r1, r2. Returns: char. Globals: none. */
+I8 rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two rectangles share a complete edge. Params: r1, r2. Returns: char. Globals: none. */
  if (r1->bottom == r2->top) { if (r1->left != r2->left) return 0; if (r1->right != r2->right) return 0; return 1; }
  else if (r1->top == r2->bottom) { if (r1->left != r2->left) return 0; if (r1->right != r2->right) return 0; return 1; }
  else if (r1->right == r2->left) { if (r1->top != r2->top) return 0; if (r1->bottom != r2->bottom) return 0; return 1; }
@@ -1009,16 +1024,16 @@ char rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: 
  return 0;
 }
 
-void rectlist_add(unsigned char arg_rectcount, char* arg_rectarray_indices, 
+void rectlist_add(U8  arg_rectcount, I8* arg_rectarray_indices, 
 	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2, 
-	struct RECTANGLE* arg_rectptr, char* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 
+	struct RECTANGLE* arg_rectptr, I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 
 { /* PURPOSE: Select, clip, and add the requested source rectangles to the result list. Params: arg_rectcount, arg_rectarray_indices, arg_rectarray1, arg_rectarray2, arg_rectptr, arg_rect_array_length_ptr, arg_rect_array_ptr. Returns: void. Globals: none. */
-	char has_result;
+	I8 has_result;
 	struct RECTANGLE* selected_rect_ptr;
 	struct RECTANGLE cover_rect;
 	struct RECTANGLE* first_ptr;
-	char rect_counter;
-	char source_flags;
+	I8 rect_counter;
+	I8 source_flags;
 	struct RECTANGLE input_rect;
 	struct RECTANGLE* second_rect_ptr;
 /*
@@ -1061,11 +1076,11 @@ void rectlist_add(unsigned char arg_rectcount, char* arg_rectarray_indices,
 
 }
 
-void heapsortorder(int, int*, int*);
+void heapsortorder(I16, I16*, I16*);
 
-void rectsorttop(char arg_array_length, struct RECTANGLE* arg_rect_array, int* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
-    register int sortIndex;
-    int intbuffer[256];
+void rectsorttop(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
+    register I16 sortIndex;
+    I16 intbuffer[256];
     if (arg_array_length > 1) {
         for (sortIndex = 0; sortIndex < arg_array_length; sortIndex++) {
             intbuffer[sortIndex] = -arg_rect_array[sortIndex].top;
@@ -1077,13 +1092,13 @@ void rectsorttop(char arg_array_length, struct RECTANGLE* arg_rect_array, int* a
     }
 }
 
-unsigned char primidxcounttab[16] = {
+U8  primidxcounttab[16] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 6, 3, 0, 0
 };
-unsigned char primitive_type_table[16] = {
+U8  primitive_type_table[16] = {
     0, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 0, 0
 };
-long inverse_power_of_two_table[32] = {
+I32 inverse_power_of_two_table[32] = {
     (-2147483647L - 1L), 1073741824L, 536870912L, 268435456L,
     134217728L, 67108864L, 33554432L, 16777216L,
     8388608L, 4194304L, 2097152L, 1048576L,
@@ -1094,4 +1109,4 @@ long inverse_power_of_two_table[32] = {
     8L, 4L, 2L, 1L
 };
 unsigned mat_y_rot_angle = 0xFFFF;
-struct RECTANGLE clipunk = { 9999, -1, 9999, -1 };
+struct RECTANGLE clipunk = { RECT_EMPTY_MIN_SENTINEL, RECT_EMPTY_MAX_SENTINEL, RECT_EMPTY_MIN_SENTINEL, RECT_EMPTY_MAX_SENTINEL };

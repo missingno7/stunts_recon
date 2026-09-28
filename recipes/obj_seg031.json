@@ -3174,8 +3174,13 @@
   "preprocessor_closure": [
     {
       "path": "include/platform_hw.h",
-      "sha256": "e958f10febf7ae73b96df4b542be4b11513d792f9cde1fcc676c2aace8932e17",
-      "size": 5473
+      "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
+      "size": 6111
+    },
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
     }
   ],
   "profile": "msc510-medium",

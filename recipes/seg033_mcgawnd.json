@@ -482,7 +482,18 @@
     ]
   },
   "object_segment": "UNIT_TEXT",
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/platform_hw.h",
+      "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
+      "size": 6111
+    },
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order."

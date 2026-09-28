@@ -1,3 +1,4 @@
+#include "stunts_types.h"
 #include "platform_hw.h"
 /* READABILITY: Initialize game startup state, set up input/video/audio services, and load the palette and cursor resources. */
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
@@ -7,127 +8,127 @@
 #define islower(c) ((_ctype+1)[c] & _LOWER)
 #define _tolower(c) ((c)-'A'+'a')
 #define tolower(c) (isupper(c) ? _tolower(c) : (c))
-extern void far* load_shape2d_nofatal_thunk(char* shapename);
+extern void FAR* load_shape2d_nofatal_thunk(I8* shapename);
 /* Forward a nonfatal shape-resource load to its shared loader.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(file): forward the shape path to the shared file/resource loader. */
-void far* file_load_shape2d_nofatal2(char* shapename) { return load_shape2d_nofatal_thunk(shapename); }
+void FAR* file_load_shape2d_nofatal2(I8* shapename) { return load_shape2d_nofatal_thunk(shapename); }
     /* PLATFORM(file): use the game file and resource search service. */
-extern void far file_build_path(char *dir, char *name, char *ext, char *dst);
+extern void FAR file_build_path(I8 *dir, I8 *name, I8 *ext, I8 *dst);
     /* PLATFORM(file): use the game file and resource search service. */
-extern char * far file_find(char *query);
+extern I8 * FAR file_find(I8 *query);
 /* Build a directory/name/extension path and ask the file service to find it.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(file): build a DOS path and request a file search. */
-char * far file_combine_and_find(char *dir, char *name, char *ext)
+I8 * FAR file_combine_and_find(I8 *dir, I8 *name, I8 *ext)
 {
-    char path[80];
+    I8 path[80];
     /* PLATFORM(file): use the game file and resource search service. */
     file_build_path(dir, name, ext, path);
     /* PLATFORM(file): use the game file and resource search service. */
     return file_find(path);
 }
     /* PLATFORM(file): use the game file and resource search service. */
-extern const char* file_find_next(void);
+extern const I8* file_find_next(void);
 /* Forward enumeration to the shared file-search service.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(file): continue the shared DOS file search. */
-const char* file_find_next_alt(void) { return file_find_next(); }
+const I8* file_find_next_alt(void) { return file_find_next(); }
 void nullsub_1(void) {}
 void nullsub_2(void) {}
-struct POINT2D { int px, py; };
-struct RECTANGLE { int left, right, top, bottom; };
-extern short pixel_scales, g_vid_flg2_set, vidflg3is_minus1, vidflg4_is1;
-extern unsigned char g_videoflg5;
+struct POINT2D { I16 px, py; };
+struct RECTANGLE { I16 left, right, top, bottom; };
+extern I16S pixel_scales, g_vid_flg2_set, vidflg3is_minus1, vidflg4_is1;
+extern U8 g_videoflg5;
 unsigned char g_vid_flag6;
-extern char textrespfxchr;
-char audiodriverstring[] = "pc15";
-extern unsigned char _ctype[];
+extern I8 textrespfxchr;
+I8 audiodriverstring[] = "pc15";
+extern U8 _ctype[];
 unsigned short slow_video_mode_state;
-extern unsigned short frm_rate2;
-extern unsigned short rate_frame;
-extern unsigned short statemgmtcpy;
-extern unsigned char detail_lvl;
-extern int *material_pattern2_table_ptr, *material_pattern_table_pointer, *material_color_table_pointer, *material_clrlist_ptr;
+extern U16S frm_rate2;
+extern U16S rate_frame;
+extern U16S statemgmtcpy;
+extern U8 detail_lvl;
+extern I16 *material_pattern2_table_ptr, *material_pattern_table_pointer, *material_color_table_pointer, *material_clrlist_ptr;
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-extern void far kb_init_interrupt(void);
+extern void FAR kb_init_interrupt(void);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-extern void far kb_shift_checking2(void);
+extern void FAR kb_shift_checking2(void);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-extern int far kb_call_readchar_callback(void);
+extern I16 FAR kb_call_readchar_callback(void);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-extern void far kb_reg_callback(int, void (far *)(void));
-extern void far show_graphic_levels_menu(void);
-extern void far do_joystick_resource_text(void);
-extern void far do_key_resource_text(void);
-extern void far do_mof_resource_text(void);
-extern void far do_pau_restext(void);
-extern void far do_dos_resource_text(void);
-extern void far do_sonsof_resource_text(void);
-extern short far do_dea_textres(void);
+extern void FAR kb_reg_callback(I16, void (FAR *)(void));
+extern void FAR show_graphic_levels_menu(void);
+extern void FAR do_joystick_resource_text(void);
+extern void FAR do_key_resource_text(void);
+extern void FAR do_mof_resource_text(void);
+extern void FAR do_pau_restext(void);
+extern void FAR do_dos_resource_text(void);
+extern void FAR do_sonsof_resource_text(void);
+extern I16S FAR do_dea_textres(void);
     /* PLATFORM(memory): use the game-managed far-memory service. */
-extern void far mmgr_alloc_a000(void);
+extern void FAR mmgr_alloc_a000(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far video_set_mode_13h(void);
+extern void FAR video_set_mode_13h(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far video_set_mode4(void);
+extern void FAR video_set_mode4(void);
     /* PLATFORM(timer): use the game timer service. */
-extern void far timer_setup_interrupt(void);
+extern void FAR timer_setup_interrupt(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprite_copy_2_to_1_clear(void);
+extern void FAR sprite_copy_2_to_1_clear(void);
     /* PLATFORM(input_mouse): initialize DOS mouse bounds for the display. */
-extern short far mouse_init(unsigned short, unsigned short);
+extern I16S FAR mouse_init(U16S, U16S);
     /* PLATFORM(audio): call the configured DOS audio driver service. */
-extern short far audio_load_driver(char*, short, short);
+extern I16S FAR audio_load_driver(I8*, I16S, I16S);
     /* PLATFORM(audio): call the configured DOS audio driver service. */
-extern void far audio_stop_unknown(void);
-extern void far exit(short);
+extern void FAR audio_stop_unknown(void);
+extern void FAR exit(I16S);
     /* PLATFORM(audio): call the configured DOS audio driver service. */
-extern short far audio_toggle_flag2(void);
+extern I16S FAR audio_toggle_flag2(void);
     /* PLATFORM(audio): call the configured DOS audio driver service. */
-extern short far audio_toggle_flag6(void);
-extern short far set_criterr_handler(short (far *)(void));
+extern I16S FAR audio_toggle_flag6(void);
+extern I16S FAR set_criterr_handler(I16S (FAR *)(void));
 void load_palandcursor(void);
 void random_wait(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprite_copy_2_to_1(void);
+extern void FAR sprite_copy_2_to_1(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprset1size(unsigned short, unsigned short, unsigned short, unsigned short);
+extern void FAR sprset1size(U16S, U16S, U16S, U16S);
     /* PLATFORM(timer): use the game timer service. */
-extern int far timer_get_delta_alt(void);
+extern I16 FAR timer_get_delta_alt(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprite_clear_1_color(unsigned char);
+extern void FAR sprite_clear_1_color(U8);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprite_clear_1_color(unsigned char);
-extern void far rect_adjust_from_point(struct POINT2D*, struct RECTANGLE*);
-extern void far copy_material_list_pointers(void*, void*, void*, void*, unsigned short);
-extern unsigned int far strlen(char*);
+extern void FAR sprite_clear_1_color(U8);
+extern void FAR rect_adjust_from_point(struct POINT2D*, struct RECTANGLE*);
+extern void FAR copy_material_list_pointers(void*, void*, void*, void*, U16S);
+extern U16 FAR strlen(I8*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern int far video_get_status(void);
-extern int far rand(void);
-extern int far get_kevinrandom(void);
+extern I16 FAR video_get_status(void);
+extern I16 FAR rand(void);
+extern I16 FAR get_kevinrandom(void);
     /* PLATFORM(file): read startup shape resources through the game file service. */
-extern void far * far file_load_shape2d_fatal_thunk(char*);
+extern void FAR * FAR file_load_shape2d_fatal_thunk(I8*);
     /* PLATFORM(file): read startup shape resources through the game file service. */
-extern void far * far locate_shape_fatal(void far*, char*);
+extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far video_set_palette(unsigned short, unsigned short, unsigned char*);
+extern void FAR video_set_palette(U16S, U16S, U8*);
     /* PLATFORM(memory): use the game-managed far-memory service. */
-extern void far mmgr_free(void far*);
+extern void FAR mmgr_free(void FAR*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far * far sprite_make_window(unsigned short, unsigned short, unsigned short);
+extern void FAR * FAR sprite_make_window(U16S, U16S, U16S);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprite_setup1_from_arg_pointer(void far*);
+extern void FAR sprite_setup1_from_arg_pointer(void FAR*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprite_shape_to_1(void far*, unsigned short, unsigned short);
+extern void FAR sprite_shape_to_1(void FAR*, U16S, U16S);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void far sprcopy2to12(void);
+extern void FAR sprcopy2to12(void);
 void far *spritepointermini;
 void far *mouse_ptr_cursor;
-extern void far *mouse_unk_sprite_ptr;
+extern void FAR *mouse_unk_sprite_ptr;
 
 
 /* Initialize game input, video, timer, mouse, audio, and startup resources; choose timing-dependent detail settings.
@@ -140,11 +141,11 @@ extern void far *mouse_unk_sprite_ptr;
 /* PLATFORM(input_mouse): initialize the DOS mouse for the 320x200 screen. */
 /* PLATFORM(audio): initialize or disable the selected DOS sound driver. */
 /* PLATFORM(file): load the startup shape and palette resources. */
-void initialize_main(int argc, char* argv[])
+void initialize_main(I16 argc, I8* argv[])
 {
-	register int i, j;
-	unsigned char mode_4, nosound, unknown;
-	int timer1, middle_delta, timerdelta3;
+	register I16 i, j;
+	U8 mode_4, nosound, unknown;
+	I16 timer1, middle_delta, timerdelta3;
 	struct POINT2D tmppoint;
 	struct RECTANGLE limits;
 
@@ -349,7 +350,7 @@ void initialize_main(int argc, char* argv[])
 /* PLATFORM(video): synchronize the startup delay against video status. */
 void random_wait(void)
 {
-    register int status1, i;
+    register I16 status1, i;
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     status1 = video_get_status();
     i = 0;
@@ -358,7 +359,7 @@ void random_wait(void)
         ++i;
     if (i == 1024)
         /* PLATFORM(bios): read the BIOS tick-count byte as the fallback seed. */
-        i = *((signed char *)0x046c);
+        i = *((I8S *)0x046c);
     while (i--) { rand(); get_kevinrandom(); }
     i &= 0xff;
     while (i--) { get_kevinrandom(); rand(); }
@@ -372,18 +373,18 @@ void random_wait(void)
 /* PLATFORM(memory): release loaded shape pages after copying the cursor. */
 void load_palandcursor(void)
 {
-    unsigned char colors[PLATFORM_PALETTE_RGB_BYTES];
-    unsigned char far *palptr;
-    int count;
-    int height;
-    void far *shape_data;
-    void far *filedata;
-    int cursor_width;
+    U8 colors[PLATFORM_PALETTE_RGB_BYTES];
+    U8 FAR *palptr;
+    I16 count;
+    I16 height;
+    void FAR *shape_data;
+    void FAR *filedata;
+    I16 cursor_width;
 
     /* PLATFORM(file): read startup shape resources through the game file service. */
     filedata = file_load_shape2d_fatal_thunk("sdmain");
     /* PLATFORM(file): read startup shape resources through the game file service. */
-    palptr = (unsigned char far *)locate_shape_fatal(filedata, "!pal");
+    palptr = (U8 FAR *)locate_shape_fatal(filedata, "!pal");
     palptr += 0x10;
     for (count = 0; count < 0x300; ++count)
         colors[count] = palptr[count];
@@ -392,8 +393,8 @@ void load_palandcursor(void)
 
     /* PLATFORM(file): read startup shape resources through the game file service. */
     shape_data = locate_shape_fatal(filedata, "smou");
-    cursor_width = ((short far *)shape_data)[0] * g_vid_flg2_set;
-    height = ((short far *)shape_data)[1];
+    cursor_width = ((I16S FAR *)shape_data)[0] * g_vid_flg2_set;
+    height = ((I16S FAR *)shape_data)[1];
     /* PLATFORM(memory): use the game-managed far-memory service. */
     mmgr_free(filedata);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
@@ -418,32 +419,32 @@ void load_palandcursor(void)
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     sprcopy2to12();
 }
-int get_0(void) { return 0; }
+I16 get_0(void) { return 0; }
     /* PLATFORM(memory): use the game-managed far-memory service. */
-extern void far *mmgr_alloc_pages(const char *name, unsigned short paras);
+extern void FAR *mmgr_alloc_pages(const I8 *name, U16S paras);
 
 /* Convert byte count to paragraph count and request pages from the game memory manager.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(memory): request paragraph-backed storage from the game memory manager. */
-void far *mmgr_alloc_resbytes(const char *name, long int size)
+void FAR *mmgr_alloc_resbytes(const I8 *name, I32 size)
 {
     /* PLATFORM(memory): use the game-managed far-memory service. */
     return mmgr_alloc_pages(name, size / 16 + 1);
 }
-extern unsigned short mmgr_get_ofs_diff(void);
+extern U16S mmgr_get_ofs_diff(void);
 
-unsigned long mmgr_get_res_ofs_diff_scaled(void)
+U32 mmgr_get_res_ofs_diff_scaled(void)
 {
     /* PLATFORM(memory): read the current game-memory-manager offset difference. */
-    return ((unsigned long)mmgr_get_ofs_diff()) << 4;
+    return ((U32)mmgr_get_ofs_diff()) << 4;
 }
-extern unsigned short far mmgr_get_chunk_size(char far *ptr);
+extern U16S FAR mmgr_get_chunk_size(I8 FAR *ptr);
 
 /* Convert a memory-manager chunk size from paragraphs to bytes.
  * PLATFORM(memory): query the game memory manager chunk record. */
-unsigned long far mmgr_get_chunk_size_bytes(char far *ptr)
+U32 FAR mmgr_get_chunk_size_bytes(I8 FAR *ptr)
 {
     /* PLATFORM(memory): read this game-memory-manager chunk size. */
-    return ((unsigned long)mmgr_get_chunk_size(ptr)) << 4;
+    return ((U32)mmgr_get_chunk_size(ptr)) << 4;
 }

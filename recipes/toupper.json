@@ -9,6 +9,13 @@
   "expected_relocations": [],
   "id": "toupper",
   "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
   "profile": "msc510-medium",
   "public": "_toupper",
   "source": "src/toupper.c",
