@@ -1,10 +1,19 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _nopsub_33AC0
 public _nopsub_33AE4
 public _shape2d_render_bmp_as_mask
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 33AC0.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_33AC0 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -33,6 +42,14 @@ _nopsub_33AC0 proc far
     ; align 2
     db 144
 _nopsub_33AC0 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 33AE4.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_33AE4 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -59,6 +76,15 @@ _nopsub_33AE4 proc far
     ; align 2
     db 144
 _nopsub_33AE4 endp
+; -----------------------------------------------------------------------------
+; Purpose: Render a 2D bitmap shape as a mask.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 6); arg_shapeseg (word ptr 8).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _shape2d_render_bmp_as_mask proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -114,7 +140,7 @@ bmp_as_mask_when_greater:
     xor     ch, ch
     lodsb
 render_bmp_as_mask_scan_loop:
-    and     es:[di], al
+    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     dec     dx
     jg      short bmp_as_mask_when_greater_2
@@ -132,7 +158,7 @@ render_bmp_as_mask_when_less:
     xor     ch, ch
 render_bmp_as_mask_read_loop_2:
     lodsb
-    and     es:[di], al
+    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     dec     dx
     jg      short bmp_as_mask_when_greater_3

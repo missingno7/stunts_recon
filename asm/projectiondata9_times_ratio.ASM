@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'
@@ -12,6 +13,13 @@ assume cs:S012_TEXT, ds:DGROUP
 extrn _projection_x_scale:word
 S012_TEXT segment word public 'CODE'
 public _projectiondata9_times_ratio
+; -----------------------------------------------------------------------------
+; Purpose: Implement the graphics or geometry helper identified by projectiondata9 times ratio.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _projection_x_scale.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _projectiondata9_times_ratio proc far
     push bp
     mov bp, sp

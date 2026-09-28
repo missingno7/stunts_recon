@@ -1,43 +1,77 @@
+/* READABILITY: Cache or load shape resources, parse their run-length encoded image data, and size the resulting pages. */
 struct SHAPE2D { int width,height,unknown1,unknown2,pos_x,pos_y; unsigned char unknown3,unknown4,unknown5,unknown6; };
 extern char *mmgr_path_to_name(const char *);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 extern void far *mmgr_get_chunk_by_name(const char *);
+    /* PLATFORM(file): load the named shape resource. */
 extern void far *file_load_shape2d(char *, int);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 extern unsigned short mmgr_get_chunk_size(void far *);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 extern void far *mmgr_alloc_pages(const char *, unsigned short);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 extern void mmgr_release(void far *);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 extern void far *mmgr_op_unk(void far *);
 extern unsigned short file_get_res_shape_count(void far *);
 extern struct SHAPE2D far *file_get_shape2d(unsigned char far *, int);
 extern long parse_shape2d_helper(unsigned char far *);
 extern void far *parse_shape2d_helper2(long);
 extern int parse_shape2d_helper3(char far *);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 extern void mmgr_resize_memory(void far *, unsigned short);
 void far *file_load_shape2d_res(char *, int);
 void parse_shape2d(void far *, void far *);
+/* Load a shape resource and report failures as fatal.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(file): load a named shape resource with fatal-error behavior. */
 void far* file_load_shape2d_res_fatal(char* resname) {
+    /* PLATFORM(file): request this shape through the shared resource loader. */
 	return file_load_shape2d_res(resname, 1);
 }
+/* Load a shape resource without fatal-error reporting.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(file): load a named shape resource without fatal-error behavior. */
 void far* file_load_shape2d_res_nofatal(char* resname) {
+    /* PLATFORM(file): request this shape through the shared resource loader. */
 	return file_load_shape2d_res(resname, 0);
 }
+/* Reuse a cached shape resource or load and parse it into managed pages.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(file): load a shape resource through the shared file service. */
+/* PLATFORM(memory): reuse or allocate game-managed resource pages. */
 void far* file_load_shape2d_res(char* resname, int fatal) {
     void far* memchunk;
     {
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
         void far* cached = mmgr_get_chunk_by_name(mmgr_path_to_name(resname));
         if (cached) return cached;
     }
     {
         int chunksize;
         void far* pages;
+    /* PLATFORM(file): load the named shape resource. */
         memchunk = file_load_shape2d(resname, fatal);
         if (!memchunk) return memchunk;
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
         chunksize = mmgr_get_chunk_size(memchunk);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
         pages = mmgr_alloc_pages(resname, chunksize);
         parse_shape2d(memchunk, pages);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
         mmgr_release(memchunk);
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
         return mmgr_op_unk(pages);
     }
 }
+/* Expand each packed shape stream into destination pages and resize the allocation.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(file): read shape descriptors and packed image data from the loaded resource. */
+/* PLATFORM(memory): resize game-managed pages to the expanded shape image data. */
 void parse_shape2d(void far *memchunk, void far *mempages)
 {
     int shape_data_num;
@@ -58,6 +92,7 @@ void parse_shape2d(void far *memchunk, void far *mempages)
     unsigned char far *page_data;
     struct SHAPE2D far *shape;
 
+    /* PLATFORM(file): read the shape count from the loaded resource block. */
     index = file_get_res_shape_count(memchunk);
     pagescnt = (unsigned long far *)((unsigned char far *)mempages + index * 4 + 6);
     page_data = (unsigned char far *)mempages;
@@ -69,6 +104,7 @@ void parse_shape2d(void far *memchunk, void far *mempages)
     dest = (unsigned char far *)mempages + index * 8 + 6;
     baseaddr = dest;
     for (shape_index = 0; shape_index < index; shape_index++) {
+    /* PLATFORM(file): read the current shape descriptor from the loaded resource block. */
         shape = file_get_shape2d((unsigned char far *)memchunk, shape_index);
         page_position = parse_shape2d_helper(dest);
         dest = (unsigned char far *)parse_shape2d_helper2(page_position);
@@ -127,9 +163,13 @@ void parse_shape2d(void far *memchunk, void far *mempages)
     } else {
         output_size >>= 4;
     }
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
     mmgr_resize_memory(mempages, (unsigned short)output_size);
 }
 
+/* Count the repeated byte run beginning at the source pointer.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
 int parse_shape2d_helper3(char far *source)
 {
     char value = *source;

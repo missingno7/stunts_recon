@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_135290
 MEMCHUNK struc
 resname db 12 dup (?)
@@ -36,6 +37,15 @@ public _mmgr_get_chunk_size
 public _mmgr_resize_memory
 public _mmgr_op_unk
 public _aReservememoryOutOfMemory, _aResizememoryCa, _aResizememoryNo, _resources
+; -----------------------------------------------------------------------------
+; Purpose: Allocate a resource-memory slot and associate the requested region.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr2, _resmem_base_seg, _resmem_end_seg, _resptr1.
+; Globals written: _pspofs, _pspseg, _resendptr1, _resmem_base_seg, _resmem_end_seg, _resptr2.
+; /* PLATFORM(dos): calls a DOS service. */
+; /* PLATFORM(memory): calls a DOS memory-allocation service. */
+; -----------------------------------------------------------------------------
 _mmgr_alloc_resmem proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -46,12 +56,12 @@ _mmgr_alloc_resmem proc far
     push    si
     push    di
     mov     ax, 3000h
-    int     21h             ; DOS - GET DOS VERSION
+    int     R5HW_DOS_INT ; DOS - GET DOS VERSION /* PLATFORM(dos): calls a DOS service. */
     mov     bx, cs
     cmp     al, 3
     jl      short resmem_alloc_branch_path_01
     mov     ah, 62h
-    int     21h             ; DOS - 3+ - GET PSP ADDRESS
+    int     R5HW_DOS_INT ; DOS - 3+ - GET PSP ADDRESS /* PLATFORM(dos): calls a DOS service. */
 resmem_alloc_branch_path_01:
     mov     _pspofs, bx
     mov     _pspseg, ds
@@ -59,7 +69,7 @@ resmem_alloc_branch_path_01:
     jnz     short resmem_alloc_loop_head_01
     mov     bx, 64h ; 'd'
     mov     ah, 48h
-    int     21h             ; DOS - 2+ - ALLOCATE MEMORY
+    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
     mov     si, _resptr1
     mov     [si+MEMCHUNK.resofs], ax
     mov     _resmem_base_seg, ax
@@ -67,9 +77,9 @@ resmem_alloc_branch_path_01:
     mov     bx, [bp+arg_0]
     sub     bx, [si+MEMCHUNK.resofs]
     mov     ah, 4Ah
-    int     21h             ; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK)
+    int     R5HW_DOS_INT ; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
     mov     ah, 4Ah
-    int     21h             ; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK)
+    int     R5HW_DOS_INT ; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
     mov     ax, _resmem_base_seg
     add     ax, bx
     mov     si, _resendptr2
@@ -92,14 +102,30 @@ resmem_alloc_branch_path_02:
     pop     bp
     retf
 _mmgr_alloc_resmem endp
+; -----------------------------------------------------------------------------
+; Purpose: Allocate a memory block at the A0000h graphics-memory base.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): selects a video-memory segment. */
+; -----------------------------------------------------------------------------
 _mmgr_alloc_a000 proc far
 
-    mov     ax, 0A000h
+    mov     ax, R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     push    ax
     call    _mmgr_alloc_resmem
     add     sp, 2
     retf
 _mmgr_alloc_a000 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 310FE.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr2, _resmem_end_seg.
+; Globals written: _resmem_end_seg.
+; /* PLATFORM(video): selects a video-memory segment. */
+; -----------------------------------------------------------------------------
 _nopsub_310FE proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -107,7 +133,7 @@ _nopsub_310FE proc far
 
     push    bp
     mov     bp, sp
-    mov     ax, 0A000h
+    mov     ax, R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     push    ax
     call    _mmgr_alloc_resmem
     add     sp, 2
@@ -118,6 +144,14 @@ _nopsub_310FE proc far
     pop     bp
     retf
 _nopsub_310FE endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 3111D. Its internal flow uses noop_entry2_branch_path_01.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, SI, DI, BP, SP, CS, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr2, _resmem_end_seg, _resptr1.
+; Globals written: _pspofs, _pspseg, _resmem_base_seg, _resmem_end_seg.
+; /* PLATFORM(memory): calls a DOS memory-allocation service. */
+; -----------------------------------------------------------------------------
 _nopsub_3111D proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -133,10 +167,10 @@ _nopsub_3111D proc far
     jnz     short resmem_alloc_loop_head_01
     mov     bx, [bp+arg_0]
     mov     ah, 48h
-    int     21h             ; DOS - 2+ - ALLOCATE MEMORY
+    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
     jnb     short noop_entry2_branch_path_01
     mov     ah, 48h
-    int     21h             ; DOS - 2+ - ALLOCATE MEMORY
+    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
 noop_entry2_branch_path_01:
     mov     si, _resptr1
     mov     [si+MEMCHUNK.resofs], ax
@@ -147,6 +181,13 @@ noop_entry2_branch_path_01:
     mov     _resmem_end_seg, ax
     jmp     resmem_alloc_loop_head_01
 _nopsub_3111D endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 31157.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resptr2.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_31157 proc far
 
     mov     bx, _resendptr1
@@ -156,6 +197,13 @@ _nopsub_31157 proc far
     sub     ax, [bx+MEMCHUNK.ressize]
     retf
 _nopsub_31157 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 31169.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resptr1, _resptr2.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_31169 proc far
 
     mov     bx, _resptr2
@@ -165,6 +213,13 @@ _nopsub_31169 proc far
     sub     ax, [bx+MEMCHUNK.resofs]
     retf
 _nopsub_31169 endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the offset difference between two memory locations.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr2, _resptr2.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mmgr_get_ofs_diff proc far
 
     mov     bx, _resendptr2
@@ -174,6 +229,13 @@ _mmgr_get_ofs_diff proc far
     sub     ax, [bx+MEMCHUNK.ressize]
     retf
 _mmgr_get_ofs_diff endp
+; -----------------------------------------------------------------------------
+; Purpose: Copy a block of memory measured in DOS paragraphs.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mmgr_copy_paras proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -221,6 +283,13 @@ copy_fwd_branch_path_02:
     pop     bp
     retf
 _mmgr_copy_paras endp
+; -----------------------------------------------------------------------------
+; Purpose: Copy a paragraph block in reverse order to handle overlap.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _copy_paras_reverse proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -276,6 +345,13 @@ copy_rev_branch_path_02:
     pop     bp
     retf
 _copy_paras_reverse endp
+; -----------------------------------------------------------------------------
+; Purpose: Extract a resource name from its path.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, SI, BP, SP; balanced explicit saves/restores observed: SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mmgr_path_to_name proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -304,6 +380,14 @@ path_name_branch_path_02:
     pop     bp
     retf
 _mmgr_path_to_name endp
+; -----------------------------------------------------------------------------
+; Purpose: Allocate the requested number of memory pages.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resendptr2, _resmaxsize, _resptr2.
+; Globals written: _resendptr1, _resmaxsize, _resptr2.
+; Global addresses taken: _aReservememoryO, _aReservememoryOutOfMemory.
+; -----------------------------------------------------------------------------
 _mmgr_alloc_pages proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -386,6 +470,13 @@ pages_alloc_branch_path_04:
     push    ax
     call    far ptr _fatal_error
 _mmgr_alloc_pages endp
+; -----------------------------------------------------------------------------
+; Purpose: Find a free memory-manager entry for the requested block.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, SP; balanced explicit saves/restores observed: DI, DX, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resendptr2.
+; Globals written: _resendptr1.
+; -----------------------------------------------------------------------------
 _mmgr_find_free proc far
      r = byte ptr 0
 
@@ -441,6 +532,13 @@ find_free_loop_head_03:
     add     sp, 6
     jmp     short find_free_loop_head_02
 _mmgr_find_free endp
+; -----------------------------------------------------------------------------
+; Purpose: Find a memory-manager chunk by its name.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resendptr2, _resptr2.
+; Globals written: _resendptr1, _resptr2.
+; -----------------------------------------------------------------------------
 _mmgr_get_chunk_by_name proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -530,6 +628,13 @@ find_chunk_branch_path_06:
     mov     dx, [di+MEMCHUNK.resofs]
     jmp     short find_chunk_loop_head_03
 _mmgr_get_chunk_by_name endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 31429. Its internal flow uses noop_entry5_loop_head_01, noop_entry5_loop_head_02.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resendptr2.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_31429 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -583,6 +688,14 @@ noop_entry5_branch_path_04:
     pop     bp
     retf
 _nopsub_31429 endp
+; -----------------------------------------------------------------------------
+; Purpose: Release the selected memory-manager allocation.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resptr1, _resptr2.
+; Globals written: _resendptr1, _resptr2.
+; Global addresses taken: _aMemoryManagerB.
+; -----------------------------------------------------------------------------
 _mmgr_free proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -660,6 +773,13 @@ free_chunk_branch_path_04:
     pop     bp
     retf
 _mmgr_free endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 31525. Its internal flow uses noop_entry6_loop_head_01, noop_entry6_branch_path_01.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resendptr2, _resptr1, _resptr2.
+; Globals written: _resendptr1, _resptr2.
+; -----------------------------------------------------------------------------
 _nopsub_31525 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -785,6 +905,13 @@ noop_entry6_branch_path_08:
     pop     bp
     retf
 _nopsub_31525 endp
+; -----------------------------------------------------------------------------
+; Purpose: Release memory-manager state associated with the selected block.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resptr1, _resptr2.
+; Globals written: _resptr2.
+; -----------------------------------------------------------------------------
 _mmgr_release proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -820,6 +947,13 @@ release_chunk_branch_path_03:
     pop     bp
     retf
 _mmgr_release endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the size of the requested memory-manager chunk.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resptr1, _resptr2.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mmgr_get_chunk_size proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -847,6 +981,14 @@ chunk_size_branch_path_02:
     pop     bp
     retf
 _mmgr_get_chunk_size endp
+; -----------------------------------------------------------------------------
+; Purpose: Resize an existing memory-manager allocation.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resendptr1, _resendptr2, _resmaxsize, _resptr1, _resptr2.
+; Globals written: _resendptr1, _resmaxsize.
+; Global addresses taken: _aResizememoryCa, _aResizememoryNo.
+; -----------------------------------------------------------------------------
 _mmgr_resize_memory proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -920,6 +1062,13 @@ resize_mem_error_path_02:
     push    ax
     call    far ptr _fatal_error
 _mmgr_resize_memory endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the memory-manager operation identified by mmgr op unk.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _resptr1, _resptr2.
+; Globals written: _resptr2.
+; -----------------------------------------------------------------------------
 _mmgr_op_unk proc far
      s = byte ptr 0
      r = byte ptr 2

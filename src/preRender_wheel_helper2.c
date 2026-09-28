@@ -1,7 +1,10 @@
+/* READABILITY: Interpolate the wheel section corners, then derive the paired point rings. */
 struct Point { int x, y; };
 struct WheelRect { struct Point p0, p1, p2; };
 extern int far mulscl(int delta, int scale);
 extern void far preRender_wheel_helper3(struct Point *source, struct Point *output);
+/* Interpolate the two wheel-section endpoint vectors and generate their point rings.
+ * Params and return follow the declared C signature. */
 void preRender_wheel_helper2(struct WheelRect *rect, struct Point *output, int scale)
 {
     struct WheelRect points;

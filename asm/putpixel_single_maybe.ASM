@@ -1,8 +1,17 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _putpixel_single_maybe
+; -----------------------------------------------------------------------------
+; Purpose: Write one pixel to the selected video page.
+; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _putpixel_single_maybe proc far
  push bp
  mov bp,sp
@@ -35,7 +44,7 @@ write_pixel:
  add di,word ptr cs:[si]
  mov es,word ptr cs:[_sprite1+2]
  mov ax,word ptr [bp+0Ah]
- mov byte ptr es:[di],al
+ mov byte ptr es:[di],al ;/* PLATFORM(video): accesses display memory through ES. */
  pop di
  pop si
  pop bp

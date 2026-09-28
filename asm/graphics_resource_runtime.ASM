@@ -1,3 +1,4 @@
+INCLUDE include\platform_hw.inc
 DSEG segment byte public 'STUNTSD'
 extrn _timer_elapsed_ticks_low:word
 extrn _timer_elapsed_ticks_high:word
@@ -222,6 +223,13 @@ public _file_find
 public _file_find_next
 public _mulscl
 public _video_set_mode4
+; -----------------------------------------------------------------------------
+; Purpose: Implement the error or input-control service identified by fatal error.
+; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _fatal_error proc near
     pop     ax
     pop     ax
@@ -241,6 +249,13 @@ fatal_abort:
     call    _abort
     db 0
 _fatal_error endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the polar angle for the supplied vector.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_x (word ptr 8); arg_z (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, DI, BP, SP, CS; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _atantable.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _polang proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -322,15 +337,30 @@ polar_quadrant_6:
     sub     ah, 2
     jmp     short polar_quadrant_1
 _polang endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper sub 2EAD4. Its internal flow uses timer_snapshot_complete, timer_snapshot_return.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _timer_elapsed_ticks_high, _timer_elapsed_ticks_low.
+; Globals written: none identified.
+; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+; -----------------------------------------------------------------------------
 _sub_2EAD4 proc far
-    cli
+    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov     ax, _timer_elapsed_ticks_low
     mov     dx, _timer_elapsed_ticks_high
 timer_snapshot_complete:
-    sti
+    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
 timer_snapshot_return:
     retf
 _sub_2EAD4 endp
+; -----------------------------------------------------------------------------
+; Purpose: Add a delay to the current timer count and store the resulting deadline.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: input_deadline_tick_high, input_deadline_tick_low.
+; Globals written: input_deadline_tick_high, input_deadline_tick_low.
+; -----------------------------------------------------------------------------
 _set_add_value proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -359,6 +389,13 @@ deadline_wait_until_reached:
     jb      short deadline_wait_until_reached
     retf
 _set_add_value endp
+; -----------------------------------------------------------------------------
+; Purpose: Poll keyboard and joystick input for the abort command.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: input_deadline_tick_high, input_deadline_tick_low.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _poll_input_abort proc far
     call    _sub_2EAD4
     xor     cx, cx
@@ -371,6 +408,13 @@ deadline_reached_result:
     mov     ax, cx
     retf
 _poll_input_abort endp
+; -----------------------------------------------------------------------------
+; Purpose: Wait for the input deadline while polling for an abort.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _wait_for_input_delay proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -396,6 +440,13 @@ delay_deadline_poll_loop:
     pop     bp
     retf
 _wait_for_input_delay endp
+; -----------------------------------------------------------------------------
+; Purpose: Build line-rendering descriptors using the alternate path.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _draw_line_related_alt proc far
     var_4 = byte ptr -4
      s = byte ptr 0
@@ -408,6 +459,14 @@ _draw_line_related_alt proc far
     mov     [bp+var_4], 1
     jmp     short line_init_output_record
 _draw_line_related_alt endp
+; -----------------------------------------------------------------------------
+; Purpose: Build line-rendering descriptors for the requested endpoints.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_8 (word ptr 14); arg_endX (word ptr 10); arg_endY (word ptr 12); arg_startX (word ptr
+;   6); arg_startY (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _draw_line_related proc far
     var_4 = byte ptr -4
     var_2 = word ptr -2
@@ -1279,6 +1338,13 @@ line_fallback_retreat_x:
     sub     [si+8], dx
     jmp     short line_fallback_check_start_y
 _draw_line_related endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the operation identified by parse shape2d helper.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _parse_shape2d_helper proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1301,6 +1367,13 @@ _parse_shape2d_helper proc far
     pop     bp
     retf
 _parse_shape2d_helper endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the operation identified by parse shape2d helper2.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _parse_shape2d_helper2 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1327,6 +1400,15 @@ saved_int24_vector_segment     dw 0
 criterr_handler_offset     dw 0
 criterr_handler_segment     dw 0
 _parse_shape2d_helper2 endp
+; -----------------------------------------------------------------------------
+; Purpose: Handle the critical-error interrupt and report its result.
+; ABI: FAR entry; source return form: IRET; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS, DS, ES, SS; balanced explicit saves/restores observed: BX, CX, DI, DS, DX, ES, SI; path-specific inputs and outputs
+;   follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(bios): returns from a hardware interrupt. */
+; -----------------------------------------------------------------------------
 _criterr_interrupt_handler proc far
      r = byte ptr 0
     push    bx
@@ -1349,8 +1431,16 @@ _criterr_interrupt_handler proc far
     pop     cx
     pop     dx
     pop     bx
-    iret
+    iret ;/* PLATFORM(bios): returns from a hardware interrupt. */
 _criterr_interrupt_handler endp
+; -----------------------------------------------------------------------------
+; Purpose: Install the critical-error interrupt handler.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, DX, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DS; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(dos): calls a DOS service. */
+; -----------------------------------------------------------------------------
 _set_criterr_handler proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1380,11 +1470,19 @@ _set_criterr_handler proc far
     mov     ds, ax
     mov     al, 24h
     mov     ah, 25h
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
     pop     ds
     pop     bp
     retf
 _set_criterr_handler endp
+; -----------------------------------------------------------------------------
+; Purpose: Restore the previous critical-error vector at process exit.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, CS, DS; balanced explicit saves/restores observed: DS; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(dos): calls a DOS service. */
+; -----------------------------------------------------------------------------
 _criterr_exithandler proc far
     push    ds
     mov     ax, cs:saved_int24_vector_segment
@@ -1394,11 +1492,19 @@ _criterr_exithandler proc far
     mov     ds, cs:saved_int24_vector_segment
     mov     al, 24h
     mov     ah, 25h
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
 criterr_restore_previous_vector:
     pop     ds
     retf
 _criterr_exithandler endp
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender unk.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 8); arg_6 (word ptr 12);
+;   arg_8 (word ptr 14).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _imagefunc, _line_pattern_bits, _prerender_auxiliary_arg, _spritefunc.
+; -----------------------------------------------------------------------------
 _preRender_unk proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -1438,6 +1544,13 @@ prerender_setup_shared_core:
     mov     _imagefunc, ax
     jmp     _loc_3180A
 _preRender_unk endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 2F424.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_8 (word ptr 14).
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_2F424 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -1452,6 +1565,13 @@ _nopsub_2F424 proc far
     mov     [bp+var_A], 0
     jmp     short prerender_setup_shared_core
 _nopsub_2F424 endp
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender unk mode 1.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_8 (word ptr 14).
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_unk_mode_1 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -2693,6 +2813,14 @@ line_interp_profile_49     dw 64170
     dw 62861
     dw 64198
 preRender_unk_mode_1 endp
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender line.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 14); arg_endX (word ptr 10); arg_endY (word ptr 12); arg_startX (word
+;   ptr 6); arg_startY (word ptr 8).
+; Register ABI: touches AX, BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _preRender_line proc far
     var_1C = byte ptr -28
      s = byte ptr 0
@@ -2728,6 +2856,14 @@ prerender_line_return:
     pop     bp
     retf
 _preRender_line endp
+; -----------------------------------------------------------------------------
+; Purpose: Add a far callback to the process exit-handler table.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _aExitListOverflow, _exitlistfuncs.
+; -----------------------------------------------------------------------------
 _add_exit_handler proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -2761,6 +2897,13 @@ exitlist_return:
     pop     bp
     retf
 _add_exit_handler endp
+; -----------------------------------------------------------------------------
+; Purpose: Call the registered process exit handlers in reverse order.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DI; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _exitlistfuncs.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _call_exitlist proc far
      r = byte ptr 0
     push    di
@@ -2780,6 +2923,13 @@ exitlist_callbacks_done:
     pop     di
     retf
 _call_exitlist endp
+; -----------------------------------------------------------------------------
+; Purpose: Call the exit-handler list and terminate the process.
+; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _call_exitlist2 proc near
     call far ptr _call_exitlist
     xor     ax, ax
@@ -2787,6 +2937,13 @@ _call_exitlist2 proc near
     call    far ptr _exit
     db 0
 _call_exitlist2 endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the file size rounded up to DOS memory paragraphs.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_paras proc far
     var_fatal = word ptr -6
     var_length = word ptr -4
@@ -2806,6 +2963,13 @@ _file_paras proc far
     jmp     short file_paras_body
     db 144
 _file_paras endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the file size in DOS paragraphs without fatal error handling.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_paras_nofatal proc far
     var_6 = word ptr -6
      s = byte ptr 0
@@ -2820,6 +2984,16 @@ _file_paras_nofatal proc far
     jmp     short file_paras_body
     db 144
 _file_paras_nofatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the file size in DOS paragraphs with fatal error handling.
+; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI, DS, DX, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _aSFileError_1.
+; /* PLATFORM(file): calls a DOS file service. */
+; -----------------------------------------------------------------------------
 _file_paras_fatal proc near
     var_fatal = word ptr -6
      s = byte ptr 0
@@ -2842,7 +3016,7 @@ file_paras_body:
     mov     dx, [bp+arg_filename]
     mov     ah, 3Dh
     xor     al, al
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     jnb     short file_paras_file_opened
     cmp     [bp+var_fatal], 0
     jnz     short file_paras_open_error
@@ -2866,12 +3040,12 @@ file_paras_file_opened:
     sub     cx, cx
     sub     dx, dx
     mov     ax, 4202h
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     push    dx
     push    ax
     sub     dx, dx
     mov     ax, 4200h
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     pop     ax
     pop     dx
     xor     bx, bx
@@ -2891,7 +3065,7 @@ file_paras_count_from_bytes:
     mov     [bp+var_length], ax
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     mov     ax, [bp+var_length]
     pop     di
     pop     si
@@ -2900,6 +3074,13 @@ file_paras_count_from_bytes:
     pop     bp
     retf
 _file_paras_fatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file decomp paras.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp_paras proc far
     var_fatal = word ptr -8
     var_6 = byte ptr -6
@@ -2920,6 +3101,13 @@ _file_decomp_paras proc far
     jmp     short file_decomp_paras_body
     db 144
 _file_decomp_paras endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file decomp paras nofatal.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp_paras_nofatal proc far
     var_fatal = word ptr -8
      s = byte ptr 0
@@ -2934,6 +3122,16 @@ _file_decomp_paras_nofatal proc far
     jmp     short file_decomp_paras_body
     db 144
 _file_decomp_paras_nofatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file decomp paras fatal.
+; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _aSFileError_1.
+; /* PLATFORM(file): calls a DOS file service. */
+; -----------------------------------------------------------------------------
 _file_decomp_paras_fatal proc near
     var_fatal = word ptr -8
      s = byte ptr 0
@@ -2958,7 +3156,7 @@ file_decomp_paras_body:
     mov     dx, [bp+arg_filename]
     mov     ah, 3Dh
     xor     al, al
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     jnb     short decomp_file_read_header
     jmp     short decomp_nonfatal_return
     db 144
@@ -2976,12 +3174,12 @@ decomp_file_read_header:
     lea     dx, [bp+var_6]
     mov     cx, 4
     mov     ah, 3Fh
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     cmp     ax, cx
     jnz     short decomp_close_short_read
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     mov     ax, [bp+var_5]
     mov     dx, [bp-3]
     xor     dh, dh
@@ -3008,7 +3206,7 @@ decomp_convert_size_to_paras:
 decomp_close_short_read:
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
 decomp_nonfatal_return:
     cmp     [bp+var_fatal], 0
     jnz     short decomp_report_fatal_error
@@ -3028,6 +3226,16 @@ decomp_report_fatal_error:
 decomp_call_fatal_handler:
     call    far ptr _fatal_error
 _file_decomp_paras_fatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Search for the first file matching the DOS search pattern.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _foundfileptr.
+; Globals written: _foundfileptr.
+; Global addresses taken: _dtatransbuffer, _foundfile, _foundfilepath.
+; /* PLATFORM(dos): calls a DOS service. */
+; /* PLATFORM(file): calls a DOS file service. */
+; -----------------------------------------------------------------------------
 _file_find proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3039,11 +3247,11 @@ _file_find proc far
     push    di
     mov     dx, offset DGROUP:_dtatransbuffer
     mov     ah, 1Ah
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
     mov     dx, [bp+arg_0]
     mov     cl, 6
     mov     ah, 4Eh
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     jb      short _file_find_err
     mov     di, offset DGROUP:_foundfile
     mov     _foundfileptr, di
@@ -3083,6 +3291,16 @@ _file_find_err:
     xor     ax, ax
     jmp     short file_find_return
 _file_find endp
+; -----------------------------------------------------------------------------
+; Purpose: Continue the current DOS file search.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _dtatransbuffer.
+; /* PLATFORM(dos): calls a DOS service. */
+; /* PLATFORM(file): calls a DOS file service. */
+; -----------------------------------------------------------------------------
 _file_find_next proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3093,13 +3311,20 @@ _file_find_next proc far
     push    di
     mov     dx, offset DGROUP:_dtatransbuffer
     mov     ah, 1Ah
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
     mov     ah, 4Fh
-    int     21h
+    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
     jb      short _file_find_err
     jmp     short _file_find_ok
     db 0
 _file_find_next endp
+; -----------------------------------------------------------------------------
+; Purpose: Multiply two values and apply the fixed-point scaling shift.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mulscl proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3119,6 +3344,17 @@ _mulscl proc far
     pop     bp
     retf
 _mulscl endp
+; -----------------------------------------------------------------------------
+; Purpose: Configure the MCGA mode-4 display and clear its text page.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, DI, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: video_mode4_register_values.
+; Globals written: _video_mode4_active.
+; /* PLATFORM(video): calls a BIOS video service. */
+; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+; /* PLATFORM(video): selects a video-memory segment. */
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _video_set_mode4 proc far
      r = byte ptr 0
     push    di
@@ -3131,35 +3367,35 @@ _video_set_mode4 proc far
     mov     es:10h, ax
     mov     ah, 0
     mov     al, 4
-    int     10h
+    int     R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
     mov     al, 3
-    mov     dx, 3BFh
-    out     dx, al
+    mov     dx, R5HW_VIDEO_MONO_MISC_PORT
+    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     mov     al, 2
-    mov     dx, 3B8h
-    out     dx, al
+    mov     dx, R5HW_VIDEO_MONO_MODE_PORT
+    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     mov     cx, 0Ch
-    mov     dx, 3B4h
+    mov     dx, R5HW_VIDEO_MONO_CRTC_INDEX_PORT
     xor     bx, bx
 video_mode4_write_register_loop:
     mov     al, bl
-    out     dx, al
+    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     inc     dx
     mov     al, video_mode4_register_values[bx]
-    out     dx, al
+    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     dec     dx
     inc     bx
     loop    video_mode4_write_register_loop
     cld
-    mov     ax, 0B800h
+    mov     ax, R5HW_VIDEO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov     es, ax
     xor     di, di
     mov     cx, 4000h
     xor     ax, ax
-    rep stosw
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     mov     al, 8Ah
-    mov     dx, 3B8h
-    out     dx, al
+    mov     dx, R5HW_VIDEO_MONO_MODE_PORT
+    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     pop     di
     retf
 _video_set_mode4 endp

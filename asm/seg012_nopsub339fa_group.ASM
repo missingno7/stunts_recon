@@ -1,9 +1,18 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _nopsub_339FA
 public _putpixel_iconMask
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 339FA.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_339FA proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -32,6 +41,15 @@ _nopsub_339FA proc far
     ; align 2
     db 144
 _nopsub_339FA endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by putpixel iconMask.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _putpixel_iconMask proc far
     var_6 = word ptr -6
     var_4 = word ptr -4
@@ -92,12 +110,12 @@ putpixel_iconmask_read_loop:
     mov     cx, [bp+var_6]
 putpixel_iconmask_read_loop_2:
     lodsw
-    and     es:[di], ax
+    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    putpixel_iconmask_read_loop_2
     lodsb
-    and     es:[di], al
+    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     dec     dx
     jg      short putpixel_iconmask_read_loop
@@ -112,7 +130,7 @@ putpixel_iconmask_read_loop_3:
     mov     cx, [bp+var_6]
 putpixel_iconmask_read_loop_4:
     lodsw
-    and     es:[di], ax
+    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    putpixel_iconmask_read_loop_4
@@ -124,7 +142,7 @@ putpixel_iconmask_when_zero:
     inc     bx
 putpixel_iconmask_read_loop_5:
     lodsb
-    and     es:[di], ax
+    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     dec     dx
     jg      short putpixel_iconmask_read_loop_5

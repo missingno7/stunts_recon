@@ -497,12 +497,16 @@ def check_candidate(name, source, recipe_data, manifest, oracle, image):
     destination = ('asm/'+name+'.ASM' if kind == 'asm' else 'src/'+name+'.c')
     recipe = {**recipe, 'source':destination}
     if kind == 'asm':
-        asm_source(source)
+        from assembler import prepare_asm
+        _, closure = prepare_asm(source)
         require(recipe['profile'] == 'masm510-game', 'ASM profile differs')
         from compiler import verify_toolchain
         require(recipe.get('assembler_flags') == verify_toolchain(recipe['profile'])[0]['flags'],
                 'ASM recipe flags differ from pinned profile')
-        recipe.setdefault('include_closure', [])
+        if 'include_closure' not in recipe:
+            recipe['include_closure'] = closure
+        require(recipe['include_closure'] == closure,
+                'ASM recipe include closure differs from tracked include files')
     else:
         closure = prepare_source(source, recipe['profile'])[1]
         if 'preprocessor_closure' not in recipe:
@@ -556,6 +560,23 @@ def _cosmetic_compile(recipe, source):
     return raw
 
 
+def _cosmetic_closure(recipe, source):
+    """Resolve a source's literal dependencies using the accepted frontend."""
+    if recipe.get('kind', 'c') == 'asm':
+        from assembler import prepare_asm
+        return 'include_closure', prepare_asm(source)[1]
+    return 'preprocessor_closure', prepare_source(source, recipe['profile'])[1]
+
+
+def _cosmetic_closure_update(recipe_path, recipe, old_source, new_source):
+    field, old_closure = _cosmetic_closure(recipe, old_source)
+    accepted_closure = recipe.get(field, [])
+    require(accepted_closure == old_closure,
+            f'Accepted {field} differs from its current source: {recipe_path}')
+    _, new_closure = _cosmetic_closure(recipe, new_source)
+    return ({recipe_path: {field: new_closure}} if new_closure != accepted_closure else {})
+
+
 def _cosmetic_source_path(value):
     """A canonical source path selects the module-source cosmetic form."""
     if not isinstance(value, str) or ('/' not in value and '\\' not in value):
@@ -570,11 +591,12 @@ def _cosmetic_source_path(value):
 
 
 def check_cosmetic_source(source_path, candidate, source, before):
-    """Prove a complete source-file edit preserves every recipe object using it.
+    """Prove a complete source-file edit preserves each full recipe object.
 
     Grouped ASM owners have one active module recipe while their constituent
     function recipes may be inactive. Checking by source path makes the complete
     module the unit of comparison and records the active owners separately.
+    Frontend-derived include closure updates may accompany the source change.
     """
     source_path = _cosmetic_source_path(source_path)
     require(source_path is not None, 'Cosmetic source target is not a canonical source path')
@@ -620,7 +642,13 @@ def check_cosmetic_source(source_path, candidate, source, before):
             'An active owner recipe is absent from the source-file recipe inventory')
 
     comparisons = []
+    recipe_closure_updates = {}
     for recipe_path, recipe in recipes.items():
+        update = _cosmetic_closure_update(recipe_path, recipe, current_source, source)
+        for path, fields in update.items():
+            require(path not in recipe_closure_updates or recipe_closure_updates[path] == fields,
+                    'Cosmetic candidates disagree on recipe include closure: '+path)
+            recipe_closure_updates[path] = fields
         old_obj = _cosmetic_compile(recipe, current_source)
         new_obj = _cosmetic_compile(recipe, source)
         old_identity, new_identity = identity(old_obj), identity(new_obj)
@@ -636,6 +664,7 @@ def check_cosmetic_source(source_path, candidate, source, before):
             'new_source': identity(source), 'candidate': str(candidate_path),
             'active_owners': sorted({name for names in active_owners.values() for name in names}),
             'comparisons': comparisons,
+            'recipe_closure_updates': recipe_closure_updates,
             'bytes': len(source)}
 
 
@@ -675,11 +704,33 @@ def check_cosmetic(name, candidate, source, before):
     require(new_identity == old_identity,
             'Cosmetic source refused: full pinned-tool OBJ identity differs from accepted source')
     require(inputs() == before, 'Canonical inputs changed during cosmetic comparison')
+    recipe_closure_updates = _cosmetic_closure_update(recipe_path, recipe, current_source, source)
     return {'function': name, 'destination': destination, 'recipe': recipe_path,
             'kind': recipe.get('kind', 'c'), 'profile': recipe['profile'],
             'old_source': identity(current_source), 'new_source': identity(source),
             'object': old_identity, 'candidate': str(candidate_path),
+            'recipe_closure_updates': recipe_closure_updates,
             'bytes': len(old_obj)}
+
+
+def cosmetic_recipe_changes(rows):
+    """Serialize only frontend-derived dependency closures from cosmetic rows."""
+    updates = {}
+    for row in rows:
+        for recipe_path, fields in row.get('recipe_closure_updates', {}).items():
+            require(recipe_path not in updates or updates[recipe_path] == fields,
+                    'Cosmetic candidates disagree on recipe closure: '+recipe_path)
+            updates[recipe_path] = fields
+    changes = {}
+    for recipe_path, fields in updates.items():
+        recipe = read_json(ROOT/recipe_path)
+        changed = dict(recipe)
+        for field, value in fields.items():
+            require(field in ('include_closure', 'preprocessor_closure'),
+                    'Cosmetic closure field is unsupported')
+            changed[field] = value
+        changes[recipe_path] = json_bytes(changed)
+    return changes
 
 
 def cosmetic_report_id(row):
@@ -688,7 +739,7 @@ def cosmetic_report_id(row):
 
 
 def cosmetic_promote(name, candidate, verify_only=False):
-    """Publish only a source whose complete pinned-tool OMF OBJ is unchanged."""
+    """Publish only a source whose full OMF is unchanged, with derived closure updates."""
     candidate = Path(candidate).resolve()
     source = candidate.read_bytes()
     if verify_only:
@@ -704,6 +755,7 @@ def cosmetic_promote(name, candidate, verify_only=False):
         result = check_cosmetic(name, candidate, source, before)
         require(candidate.read_bytes() == source, 'Cosmetic candidate changed before publication')
         changes = {} if source == (ROOT/result['destination']).read_bytes() else {result['destination']: source}
+        changes.update(cosmetic_recipe_changes([result]))
         if changes:
             expected = {**before, **{path: sha(raw) for path, raw in changes.items()}}
             with publishing():

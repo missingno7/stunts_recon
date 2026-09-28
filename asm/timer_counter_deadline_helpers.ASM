@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_141210
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP
@@ -27,13 +28,21 @@ public _timer_compare_dx
 public _timer_get_counter_unk
 
 ; timer_get_delta
+; -----------------------------------------------------------------------------
+; Purpose: Compute the elapsed timer delta between stored counter values.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _last_timer_callback_counter, _timer_callback_counter.
+; Globals written: _last_timer_callback_counter.
+; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+; -----------------------------------------------------------------------------
 _timer_get_delta proc far
     mov bx, word ptr ds:[_last_timer_callback_counter]
     mov cx, word ptr ds:[previous_timer_counter_hi]
-    cli
+    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov ax, word ptr ds:[_timer_callback_counter]
     mov dx, word ptr ds:[_timer_callback_counter+2]
-    sti
+    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov word ptr ds:[_last_timer_callback_counter], ax
     mov word ptr ds:[previous_timer_counter_hi], dx
     sub ax, bx
@@ -41,6 +50,13 @@ _timer_get_delta proc far
     retf
 _timer_get_delta endp
 ; timer_reset
+; -----------------------------------------------------------------------------
+; Purpose: Reset the timer counter state.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _timer_callback_counter.
+; -----------------------------------------------------------------------------
 _timer_reset proc far
     xor     ax, ax
     mov     word ptr _timer_callback_counter, ax
@@ -48,6 +64,13 @@ _timer_reset proc far
     retf
 _timer_reset endp
 ; timer_copy_counter
+; -----------------------------------------------------------------------------
+; Purpose: Copy the current timer counter into the caller-provided value.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_ticksh (word ptr 8); arg_ticksl (word ptr 6).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _timer_copy_unk.
+; -----------------------------------------------------------------------------
 _timer_copy_counter proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -65,6 +88,13 @@ _timer_copy_counter proc far
     retf
 _timer_copy_counter endp
 ; timer_wait_for_dx
+; -----------------------------------------------------------------------------
+; Purpose: Wait until the timer counter reaches the requested high-word value.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _timer_copy_unk.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _timer_wait_for_dx proc far
     call    _timer_get_counter
     cmp     dx, word ptr _timer_copy_target_high
@@ -76,6 +106,13 @@ return_when_deadline_reached:
     retf
 _timer_wait_for_dx endp
 ; timer_compare_dx
+; -----------------------------------------------------------------------------
+; Purpose: Compare the timer counter high word with the requested value.
+; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _timer_copy_unk.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _timer_compare_dx proc far
  call far ptr _timer_get_counter
  cmp dx,word ptr ds:[_timer_copy_target_high]
@@ -91,6 +128,13 @@ zero_result:
  ret
 _timer_compare_dx endp
 ; timer_get_counter_unk
+; -----------------------------------------------------------------------------
+; Purpose: Implement the timer service identified by timer get counter unk.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _timer_get_counter_unk proc far
     push bp
     mov bp, sp

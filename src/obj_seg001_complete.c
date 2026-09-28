@@ -694,6 +694,15 @@ int collision_point_y_signs[4] = { 0, 0, 1, 1 };
 int f36f40_whlData = 9999;
 int last_track_rotation = 9999;
 
+/* Purpose: Advances opponent driving state at the selected frame rate.
+ * Parameters: none.
+ * Returns: none.
+ * Globals read: core, idxtrk, ophys_7, rate_frame, row_ctr_zs, simdp7, st_hdg, tagtrk, td3,
+ *            trackctrpos2
+ * Globals written: core
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void opponent_op(void)
 {
     struct VECTOR goal;
@@ -717,7 +726,7 @@ void opponent_op(void)
     int z1;
     int z2;
 
-    if (rate_frame == 20) {
+    if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 20) {
         max = 8;
         brake = 1;
     } else {
@@ -901,6 +910,26 @@ steer:
 
 void mat_mul_vector2(struct VECTOR *invec, struct MATRIX far *mat, struct VECTOR *outvec) { struct MATRIX tmpmat; tmpmat=*mat; mat_vec(invec,&tmpmat,outvec); }
 
+/* Purpose: Updates player and opponent vehicle simulation state.
+ * Parameters: arg_pState, arg_pSimd, arg_oState, arg_oSimd, arg_MplayerFlag.
+ * Returns: none.
+ * Globals read: anglerotate_car, centerpos, collision_point_set_a, collision_point_set_b,
+ *            collision_point_set_c, collision_rotation_offsets, core, element_min_wall,
+ *            frwhl_angadjusted, g_cursurfacekindvalue, g_hillf, g_planlist,
+ *            g_player_sound_id, globalgamesettings, gm_playmode, hgthgt, hillconsts,
+ *            idxtrk, inrepflg, lnoffsets, matrix_transform_view, nextpos_normalip,
+ *            op_eng_sound_id, pl_i, pln_rot_output, rate_frame, road_elem_ctrz, road_num,
+ *            rotxvehicle, row_ctr_zs, st_hdg, tagtrk, td10checkptr, td19hdl, test_pln,
+ *            trackctrpos2, veh_position, veh_z, wall_facingang, wall_wallelement,
+ *            wallanchor_x, wallanchor_z, x_course_part, yrotrotveh
+ * Globals written: anglerotate_car, car_rotate_xc, car_roty_pln, centerpos, core,
+ *            frwhl_angadjusted, g_cursurfacekindvalue, g_planidx2,
+ *            matrix_transform_view, nextpos_normalip, pl_i, pln_rotate_z, plncurrptr,
+ *            road_num, rotxvehicle, test_pln, tvec2, veh_position, veh_z, yrotrotveh
+ * PLATFORM(audio): Legacy audio service or audio-resource loading.
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void update_player_state(struct CARSTATE* arg_pState, struct SIMD* arg_pSimd, struct CARSTATE* arg_oState, struct SIMD* arg_oSimd, char arg_MplayerFlag) {
 	int planIdx;
 	struct VECTOR p0;
@@ -955,7 +984,7 @@ void update_player_state(struct CARSTATE* arg_pState, struct SIMD* arg_pSimd, st
 		frontSteer = arg_pState->car_40MfrontWhlAngle >> 2;
 	else
 		frontSteer = 0;
-	if (rate_frame == 10)
+	if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10)
 		spd = (long)arg_pState->car_speed2 * 0x580 / 0x1E00U;
 	else
 		spd = (long)arg_pState->car_speed2 * 0x580 / 0x3C00U;
@@ -1141,7 +1170,7 @@ check_height:
 			} else {
 				arg_pState->car_rc1[w] += collision_rotation_offsets[w];
 				curWhl->ly -= arg_pState->car_rc1[w];
-				if (rate_frame == 10) {
+				if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10) {
 					arg_pState->car_rc1[w] += collision_rotation_offsets[w];
 					curWhl->ly -= arg_pState->car_rc1[w];
 				}
@@ -1348,9 +1377,9 @@ wheels_done:
 		goto store_state;
 	if (inrepflg == 0) {
 		if (arg_MplayerFlag != 0)
-			audio_unk3(arg_pState->field_CF, op_eng_sound_id);
+			/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unk3(arg_pState->field_CF, op_eng_sound_id);
 		else
-			audio_unk3(arg_pState->field_CF, g_player_sound_id);
+			/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unk3(arg_pState->field_CF, g_player_sound_id);
 	}
 	rotMat = matrotzxy(-anglerotate_car, -yrotrotveh, -rotxvehicle, 0);
 	for (w = 0; w < 4; w++) {
@@ -1528,6 +1557,16 @@ void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
     playerstate->field_CF = 1;
 }
 
+/* Purpose: Initializes race state and frame-rate dependent timing.
+ * Parameters: arg.
+ * Returns: none.
+ * Globals read: core, g_hillf, globalgamesettings, hillconsts, idxtrk, ophys_7, r_zp,
+ *            rate_frame, row_ctr_zs, simdp7, st_hdg, steerWhlRespTable_10fps,
+ *            steerWhlRespTable_20fps, tagtrk, td3, trackctrpos2
+ * Globals written: core, cvxs_a, elaptm1, frmcs_time, g_cvxintvl, table_lookup
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void initialize_game_state(short arg)
 {
 	register int zeroValue = 0;
@@ -1542,15 +1581,15 @@ void initialize_game_state(short arg)
 		}
 	}
 	
-	if (rate_frame == 10) {
+	if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10) {
 		table_lookup = &steerWhlRespTable_10fps;
 	}
 	else {
 		table_lookup = &steerWhlRespTable_20fps;
 	}
 	
-	g_cvxintvl = rate_frame * 30;
-	frmcs_time = 100 / rate_frame;
+	g_cvxintvl = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame * 30;
+	frmcs_time = 100 / /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
 
 	if (arg != -3) {
 		initialize_unknown();
@@ -1668,6 +1707,14 @@ void initialize_game_state(short arg)
 	}
 }
 
+/* Purpose: Restores saved game state and timer position.
+ * Parameters: frame.
+ * Returns: none.
+ * Globals read: core, cvxs_a, elaptm1, g_cvxintvl
+ * Globals written: core, tmr2
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void restore_gamestate(int frame)
 {
     register int curframe;
@@ -1688,12 +1735,21 @@ void restore_gamestate(int frame)
 restore:
             core = cvxs_a[curframe];
             initialize_kevin_random(core.kevinseed);
-            tmr2 = core.game_frame;
+            /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ tmr2 = core.game_frame;
             return;
         }
         --curframe;
     }
 }
+
+/* Purpose: Advances race state and dispatches engine audio updates.
+ * Parameters: none.
+ * Returns: none.
+ * Globals read: core, g_cvxintvl, g_rpl_init, g_sgateopn, g_tdreplay16buf, globalgamesettings,
+ *            gm_playmode, idxtrk, row_ctr_zs, sigframe, st_hdg, tagtrk, trackctrpos2
+ * Globals written: core, cvxs_a, g_rpl_init, g_sgateopn, sigframe
+ * PLATFORM(audio): Legacy audio service or audio-resource loading.
+ */
 
 void update_gamestate() {
 	char var_carInputByte;
@@ -1736,11 +1792,11 @@ void update_gamestate() {
 			update_crash_debris();
 		}
 
-		audio_carstate();
+		/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_carstate();
 
 	} else if (gm_playmode == 1) {
 		
-		audio_carstate();
+		/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_carstate();
 		if (g_rpl_init != 0) {
 			if (g_sgateopn < 0x1C2) {
 				g_sgateopn += 8;
@@ -1771,6 +1827,16 @@ void update_gamestate() {
 		}
 	}
 }
+
+/* Purpose: Applies player driving input to the race simulation.
+ * Parameters: arg_carInputByte.
+ * Returns: none.
+ * Globals read: core, g_penaltytm, g_td01_track_filecpy, idxtrk, ophys_7, pen_flag_count,
+ *            rate_frame, row_ctr_zs, simdp7, st_hdg, tagtrk, trackctrpos2,
+ *            trackdata_penalty_related
+ * Globals written: core, g_penaltytm, pen_flag_count
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
 
 void player_op(char arg_carInputByte) {
 	struct VECTOR player_plane_vec;
@@ -1842,8 +1908,8 @@ next_lap:
 					core.field_2F2 = tile_index;
 					core.field_45C = 0;
 					if (penalty_ctr > 0) {
-						g_penaltytm = penalty_ctr * rate_frame * 3;
-						pen_flag_count = rate_frame << 2;
+						g_penaltytm = penalty_ctr * /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame * 3;
+						pen_flag_count = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame << 2;
 						core.game_penalty += g_penaltytm;
 					}
 				}
@@ -2071,6 +2137,14 @@ invalid_coords:
     }
 }
 
+/* Purpose: Updates gear, speed, and engine state for one car.
+ * Parameters: arg_carInputByte, arg_MplayerFlag, arg_carState, arg_simd.
+ * Returns: none.
+ * Globals read: core, opponent_spd_tbl, rate_frame
+ * Globals written: core
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void update_car_speed(char arg_carInputByte, char arg_MplayerFlag, struct CARSTATE* arg_carState, struct SIMD* arg_simd) {
 	int knobStep;
 	int offset;
@@ -2078,7 +2152,7 @@ void update_car_speed(char arg_carInputByte, char arg_MplayerFlag, struct CARSTA
 	int speedDelta;
 	unsigned char currTorque;
 
-	if (rate_frame == 20)
+	if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 20)
 		knobStep = 6;
 	else
 		knobStep = 12;
@@ -2108,7 +2182,7 @@ downshift:
 				arg_carState->car_current_gear--;
 shifted:
 				arg_carState->car_changing_gear = 1;
-				arg_carState->car_fpsmul2 = ((char)rate_frame >> 1) + (char)rate_frame;
+				arg_carState->car_fpsmul2 = ((char)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame >> 1) + (char)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
 				arg_carState->car_knob_x2 = arg_simd->knob_points[arg_carState->car_current_gear].px;
 				arg_carState->car_knob_y2 = arg_simd->knob_points[arg_carState->car_current_gear].py;
 			}
@@ -2174,7 +2248,7 @@ brake:
 			arg_carState->car_is_accelerating = 1;
 			if (arg_carState->car_changing_gear != 0) {
 				arg_carState->car_engineLimiterTimer = 0;
-				if (rate_frame == 10)
+				if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10)
 					arg_carState->car_currpm -= 80;
 				else
 					arg_carState->car_currpm -= 40;
@@ -2201,7 +2275,7 @@ brake:
 			break;
 		}
 	}
-	if (rate_frame == 10)
+	if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10)
 		speedDelta += speedDelta;
 
 if (speedDelta >= 0) {
@@ -2523,6 +2597,14 @@ int carState_rc_op(struct CARSTATE *car, int value, int wheel)
     return oldRc + target;
 }
 
+/* Purpose: Updates steering response for the selected frame rate.
+ * Parameters: input.
+ * Returns: none.
+ * Globals read: core, rate_frame, table_lookup
+ * Globals written: core
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void upd_statef20_from_steer_input(char input)
 {
     register int response;
@@ -2548,7 +2630,7 @@ void upd_statef20_from_steer_input(char input)
         }
     }
 
-    if (rate_frame == 10) {
+    if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10) {
         if (response > 160) response = 160;
         if (response < -160) response = -160;
     } else {
@@ -2564,6 +2646,17 @@ void upd_statef20_from_steer_input(char input)
         oldAngle = 0;
     core.playerstate.car_steeringAngle = oldAngle;
 }
+
+/* Purpose: Updates engine audio from the current car state.
+ * Parameters: none.
+ * Returns: none.
+ * Globals read: audio_frmarr, audiooppflag, cammd, core, follow_op, g_player_sound_id,
+ *            g_plyr_snd_state, globalgamesettings, inrepflg, op_eng_sound_id,
+ *            replay_state_cache, sndpendingstate, sndposrecord, trkptrpath, viewyshift
+ * Globals written: audiooppflag, g_audio_frms_ix, g_plyr_snd_state, replay_state_cache,
+ *            sndpendingstate, sndposrecord
+ * PLATFORM(audio): Legacy audio service or audio-resource loading.
+ */
 
 void audio_carstate(void)
 {
@@ -2584,14 +2677,14 @@ void audio_carstate(void)
         if (sndpendingstate != 0) {
             g_audio_frms_ix = sndposrecord;
             if ((g_plyr_snd_state & 6) != 0)
-                audio_op_unk7(g_player_sound_id);
+                /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk7(g_player_sound_id);
             if ((g_plyr_snd_state & 1) != 0)
-                audio_function2(g_player_sound_id);
+                /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2(g_player_sound_id);
             if (globalgamesettings.game_opponenttype != 0) {
                 if ((audiooppflag & 6) != 0)
-                    audio_op_unk7(op_eng_sound_id);
+                    /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk7(op_eng_sound_id);
                 if ((audiooppflag & 1) != 0)
-                    audio_function2(op_eng_sound_id);
+                    /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2(op_eng_sound_id);
             }
             sndpendingstate = 0;
             g_plyr_snd_state = 0;
@@ -2676,21 +2769,21 @@ void audio_carstate(void)
         if (selectedCar->field_CF & 1) {
             if (!(soundMode & 1)) {
                 soundMode |= 1;
-                audio_op_unk(audioId);
+                /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk(audioId);
             }
         } else if (soundMode & 1) {
             soundMode--;
-            audio_function2(audioId);
+            /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2(audioId);
         }
         if (selectedCar->field_CF & 6) {
             if ((soundMode & 6) != (selectedCar->field_CF & 6)) {
                 if (soundMode & 6)
                     goto stop_skid;
                 if (selectedCar->field_CF & 2) {
-                    audio_op_unk5(audioId);
+                    /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk5(audioId);
                     soundMode += 2;
                 } else {
-                    audio_op_unk6(audioId);
+                    /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk6(audioId);
                     soundMode += 4;
                 }
             }
@@ -2700,7 +2793,7 @@ stop_skid:
                 soundMode -= 2;
             if (soundMode & 4)
                 soundMode -= 4;
-            audio_op_unk7(audioId);
+            /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk7(audioId);
         }
         if (carIndex != 0)
             audiooppflag = soundMode;
@@ -2716,16 +2809,32 @@ audio_done:
     replay_state_cache = inrepflg;
 }
 
-void audio_unk3(char flags, short audioId) { if (sndpendingstate != 0) { if (flags & 0x10) audio_op_unk4(audioId); if (flags & 0x20) audio_op_unk3(audioId); } }
+/* Purpose: Dispatches pending audio events selected by the state flags.
+ * Parameters: flags, audioId.
+ * Returns: none.
+ * Globals read: sndpendingstate
+ * Globals written: none detected
+ * PLATFORM(audio): Legacy audio service or audio-resource loading.
+ */
+
+void audio_unk3(char flags, short audioId) { if (sndpendingstate != 0) { if (flags & 0x10) /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk4(audioId); if (flags & 0x20) /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk3(audioId); } }
+
+/* Purpose: Applies a recorded audio frame to the player and opponent.
+ * Parameters: record, value.
+ * Returns: none.
+ * Globals read: g_player_sound_id, globalgamesettings, op_eng_sound_id
+ * Globals written: none detected
+ * PLATFORM(audio): Legacy audio service or audio-resource loading.
+ */
 
 void apply_audio_frame(struct AUDIO_CAR_FRAME *record, short value)
 {
-    audio_op_unk2(g_player_sound_id, record->player_rpm,
+    /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk2(g_player_sound_id, record->player_rpm,
         record->player_offsets[0], record->player_offsets[1],
         record->player_offsets[2], record->player_offsets[3],
         record->player_offsets[4], record->player_offsets[5], value);
     if (globalgamesettings.game_opponenttype != 0)
-        audio_op_unk2(op_eng_sound_id, record->opponent_rpm,
+        /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk2(op_eng_sound_id, record->opponent_rpm,
             record->opponent_offsets[0], record->opponent_offsets[1],
             record->opponent_offsets[2], record->opponent_offsets[3],
             record->opponent_offsets[4], record->opponent_offsets[5], value);
@@ -2972,6 +3081,16 @@ void init_plantrak(void)
 
 void do_opponent_op(void) { opponent_op(); }
 
+/* Purpose: Applies crash transitions and updates engine audio state.
+ * Parameters: arg_someFlag, arg_MplayerFlag.
+ * Returns: none.
+ * Globals read: core, elaptm1, endhsdemo, g_player_sound_id, inrepflg, op_eng_sound_id,
+ *            rate_frame, sndpendingstate
+ * Globals written: core, race_stats
+ * PLATFORM(audio): Legacy audio service or audio-resource loading.
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void update_crash_state(int arg_someFlag, int arg_MplayerFlag) {
 	char suppress_car_speed;
 	struct CARSTATE* var_cState;
@@ -3001,34 +3120,34 @@ void update_crash_state(int arg_someFlag, int arg_MplayerFlag) {
 		state_op_unk(arg_MplayerFlag, var_cState->car_rotate.x, 0);
 		if (arg_MplayerFlag == 0) {
 			core.game_impactSpeed = var_cState->car_speed2;
-			core.game_frames_per_sec = rate_frame << 2;
+			core.game_frames_per_sec = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame << 2;
 		}
 		if (inrepflg == 0 && sndpendingstate != 0) {
 			if (arg_MplayerFlag == 0)
-				audio_function2_wrap(g_player_sound_id);
+				/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2_wrap(g_player_sound_id);
 			else
-				audio_function2_wrap(op_eng_sound_id);
+				/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2_wrap(op_eng_sound_id);
 		}
 		break;
 	case 2:
 		if (inrepflg == 0 && sndpendingstate != 0) {
 			if (arg_MplayerFlag == 0)
-				audio_function2_wrap(g_player_sound_id);
+				/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2_wrap(g_player_sound_id);
 			else
-				audio_function2_wrap(op_eng_sound_id);
+				/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2_wrap(op_eng_sound_id);
 		}
 		var_cState->car_crashBmpFlag = 2;
 		suppress_car_speed = 1;
 		if (arg_MplayerFlag == 0) {
 			core.game_impactSpeed = var_cState->car_speed2;
-			core.game_frames_per_sec = rate_frame << 2;
+			core.game_frames_per_sec = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame << 2;
 		}
 		break;
 	case 3:
 		var_cState->car_crashBmpFlag = 3;
 		if (arg_MplayerFlag == 0) {
 			core.game_total_finish = core.game_frame + core.game_penalty + elaptm1;
-			core.game_frames_per_sec = rate_frame;
+			core.game_frames_per_sec = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
 		} else {
 			core.field_144 = core.game_frame + elaptm1;
 		}
@@ -3173,6 +3292,14 @@ void state_op_unk(int mode, short angle, short speed)
     }
 }
 
+/* Purpose: Updates crash debris using frame-rate dependent timing.
+ * Parameters: none.
+ * Returns: none.
+ * Globals read: core, rate_frame
+ * Globals written: core
+ * PLATFORM(timer): Timer-selected frame rate or timer position.
+ */
+
 void update_crash_debris(void)
 {
     struct MATRIX *matrixPointer;
@@ -3191,7 +3318,7 @@ void update_crash_debris(void)
             core.game_longs3[i] += outputVector.z;
             core.field_3BE[i] -= 0x13;
             core.game_longs2[i] += core.field_3BE[i];
-            if (rate_frame == 10) {
+            if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10) {
                 core.field_3BE[i] -= 0x13;
                 core.game_longs2[i] += core.field_3BE[i];
             }

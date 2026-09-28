@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'
@@ -30,6 +31,13 @@ extrn _fatal_error:far
 S012_TEXT segment word public 'CODE'
 public _file_write_nofatal
 public _file_write_fatal
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file write nofatal.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_write_nofatal proc far
     var_fatal = word ptr -4
      s = byte ptr 0
@@ -45,6 +53,17 @@ _file_write_nofatal proc far
     jmp     short _file_write
     db 144
 _file_write_nofatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file write fatal.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_filename (word ptr 6); arg_lenh (word ptr 14); arg_lenl (word ptr 12); arg_srcoff (word
+;   ptr 8); arg_srcseg (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: aSFileError_0.
+; /* PLATFORM(file): calls a DOS file service. */
+; -----------------------------------------------------------------------------
 _file_write_fatal proc far
     var_errno = word ptr -6
     var_fatal = word ptr -4
@@ -68,7 +87,7 @@ _file_write:
     mov     dx, [bp+arg_filename]
     xor     cx, cx
     mov     ah, 3Ch
-    int     21h             ; DOS - 2+ - CREATE A FILE WITH HANDLE (CREAT)
+    int     R5HW_DOS_INT ; DOS - 2+ - CREATE A FILE WITH HANDLE (CREAT) /* PLATFORM(file): calls a DOS file service. */
     jb      short write_file_fatal_when_below
     mov     [bp+var_filehandle], ax
 write_file_fatal_scan_loop:
@@ -91,7 +110,7 @@ file_fatal_when_not_below:
     mov     dx, [bp+arg_srcoff]
     mov     bx, [bp+var_filehandle]
     mov     ah, 40h
-    int     21h             ; DOS - 2+ - WRITE TO FILE WITH HANDLE
+    int     R5HW_DOS_INT ; DOS - 2+ - WRITE TO FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
     jb      short write_file_fatal_when_below
     cmp     ax, cx
     jnz     short file_fatal_when_nonzero_2
@@ -103,12 +122,12 @@ write_file_fatal_when_below:
     mov     [bp+var_errno], ax
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     21h             ; DOS - 2+ - CLOSE A FILE WITH HANDLE
+    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
     mov     ax, ss
     mov     ds, ax
     mov     dx, [bp+arg_filename]
     mov     ah, 41h
-    int     21h             ; DOS - 2+ - DELETE A FILE (UNLINK)
+    int     R5HW_DOS_INT ; DOS - 2+ - DELETE A FILE (UNLINK) /* PLATFORM(file): calls a DOS file service. */
     mov     ax, [bp+var_errno]
     cmp     [bp+var_fatal], 0
     jnz     short file_fatal_return_if_nonzero
@@ -121,7 +140,7 @@ write_file_fatal_when_below:
 write_file_fatal_when_zero:
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     21h             ; DOS - 2+ - CLOSE A FILE WITH HANDLE
+    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
     xor     ax, ax
 file_fatal_return_if_nonzero:
     pop     di

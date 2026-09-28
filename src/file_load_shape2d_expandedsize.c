@@ -1,9 +1,12 @@
+/* READABILITY: Compute expanded shape-resource storage requirements in paragraph units. */
 struct SHAPE2D {
     int width; int height; int unknown1; int unknown2;
     int x; int y; char unknown3, unknown4, unknown5, unknown6;
 };
 extern int far file_get_res_shape_count(void far *memchunk);
 extern struct SHAPE2D far * far file_get_shape2d(unsigned char far *memchunk, int index);
+/* Sum each shape header and expanded pixel span, then return the paragraph count.
+ * Params and return follow the declared C signature. */
 int far file_load_shape2d_expandedsize(void far *memchunk) {
     int shapecount, i;
     unsigned int pixels;

@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 _DATA segment word public 'DATA'
 _DATA ends
 _BSS segment word public 'BSS'
@@ -15,6 +16,13 @@ public _draw_unknown_lines
 extrn _sprite1:byte
 sprite_lineofs equ 0Ah
 sprite_bitmapptr equ 0
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 33330.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_A (word ptr 16); arg_C (word ptr 18).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _line_pattern_bits, _prerender_auxiliary_arg.
+; -----------------------------------------------------------------------------
 _nopsub_33330 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -32,6 +40,17 @@ _nopsub_33330 proc far
     jmp     short unknown_lines_when_condition
     db 144
 _nopsub_33330 endp
+; -----------------------------------------------------------------------------
+; Purpose: Draw the line set from the prepared line records.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12); arg_8
+;   (byte ptr 14).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _line_pattern_bits, _prerender_auxiliary_arg, _sprite1.
+; Globals written: _line_pattern_bits.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _draw_unknown_lines proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -79,7 +98,7 @@ draw_unknown_lines_draw_loop:
 draw_unknown_lines_fill_loop:
     rol     ah, 1
     jb      short draw_unknown_lines_when_below
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     loop    draw_unknown_lines_fill_loop
 draw_unknown_lines_draw_loop_2:
     add     [bp+arg_2], 2
@@ -95,7 +114,7 @@ draw_unknown_lines_draw_loop_2:
     pop     bp
     retf
 draw_unknown_lines_when_below:
-    mov     es:[di], dl
+    mov     es:[di], dl ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     loop    draw_unknown_lines_fill_loop
     jmp     short draw_unknown_lines_draw_loop_2

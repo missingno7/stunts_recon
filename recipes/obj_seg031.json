@@ -3171,7 +3171,13 @@
     "reason": "MSC _DATA SEGDEFs are WORD aligned, so the object's _DATA cannot start at odd 199447. The preceding 5 bytes 'pc15' are the writable driver-name array that init_main of this object patches (audiodriverstring[0..1]); it is defined here (char audiodriverstring[] = \"pc15\"), so _DATA starts at even 199442 at its reviewed alias address.",
     "schema": "ownership-correction-v1"
   },
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/platform_hw.h",
+      "sha256": "e958f10febf7ae73b96df4b542be4b11513d792f9cde1fcc676c2aace8932e17",
+      "size": 5473
+    }
+  ],
   "profile": "msc510-medium",
   "review": [
     "integ29 ownership correction: _DATA 199442..199481 (39 B) begins with the defined global audiodriverstring = \"pc15\" (was an extern)."

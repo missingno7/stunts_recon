@@ -1,9 +1,18 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _sprite_putimage_and_alt2
 public _sprite_putimage_and
+; -----------------------------------------------------------------------------
+; Purpose: Draw a sprite image using the second alternate AND path.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10);
+;   arg_8 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sprite_putimage_and_alt2 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -32,6 +41,15 @@ _sprite_putimage_and_alt2 proc far
     ; align 2
     db 144
 _sprite_putimage_and_alt2 endp
+; -----------------------------------------------------------------------------
+; Purpose: Draw a sprite image using the AND compositing operation.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _sprite_putimage_and proc far
     var_E = word ptr -14
     var_C = word ptr -12
@@ -169,7 +187,7 @@ putimage_and_read_loop:
     mov     cx, [bp+var_6]
 putimage_and_read_loop_2:
     lodsb
-    and     es:[di], al
+    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     loop    putimage_and_read_loop_2
     add     si, [bp+var_8]
@@ -189,12 +207,12 @@ putimage_and_read_loop_3:
     mov     cx, [bp+var_E]
 putimage_and_read_loop_4:
     lodsw
-    and     es:[di], ax
+    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    putimage_and_read_loop_4
     lodsb
-    and     es:[di], al
+    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     dec     dx
     jg      short putimage_and_read_loop_3
@@ -203,7 +221,7 @@ putimage_and_read_loop_5:
     mov     cx, [bp+var_E]
 putimage_and_read_loop_6:
     lodsw
-    and     es:[di], ax
+    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    putimage_and_read_loop_6
@@ -215,7 +233,7 @@ putimage_and_when_zero_2:
     inc     bx
 putimage_and_read_loop_7:
     lodsb
-    and     es:[di], al
+    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     inc     bx
     dec     dx

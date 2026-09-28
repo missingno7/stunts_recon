@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _sprite1:byte
@@ -20,6 +21,15 @@ SPRITE struc
  sprite_left2 dw ?
  sprite_widthsum dw ?
 SPRITE ends
+; -----------------------------------------------------------------------------
+; Purpose: Write the current line pixel pattern to video memory.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _putpixel_line1_maybe proc far
     var_E = byte ptr -14
     var_A = word ptr -10
@@ -76,7 +86,7 @@ line_load_source_value:
     add     di, cs:_sprite1.sprite_lineofs
     mov     di, cs:[di]
     add     di, [bp+var_4]
-    rep stosb
+    rep stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     pop     di
     pop     si
     mov     sp, bp
@@ -89,7 +99,7 @@ putpixel_line_load_source_byte:
     add     di, cs:_sprite1.sprite_lineofs
     mov     di, cs:[di]
     add     di, [bp+var_4]
-    mov     es:[di], al
+    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     pop     di
     pop     si
     mov     sp, bp
@@ -104,7 +114,7 @@ line_load_source_value_2:
     add     si, cs:_sprite1.sprite_lineofs
 putpixel_line_draw_loop:
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     si, 2
     loop    putpixel_line_draw_loop
     pop     di
@@ -121,7 +131,7 @@ line_load_source_value_3:
     mov     bx, [bp+var_4]
 putpixel_line_draw_loop_2:
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     dec     bx
     add     si, 2
     loop    putpixel_line_draw_loop_2
@@ -139,7 +149,7 @@ line_load_source_value_4:
     mov     bx, [bp+var_4]
 putpixel_line_draw_loop_3:
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     bx
     add     si, 2
     loop    putpixel_line_draw_loop_3
@@ -158,7 +168,7 @@ line_load_source_value_5:
     mov     bx, [bp+var_4]
 putpixel_line_draw_loop_4:
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     si, 2
     sub     [bp+var_2], dx
     sbb     bx, 0
@@ -178,7 +188,7 @@ line_load_source_value_6:
     mov     bx, [bp+var_4]
 putpixel_line_draw_loop_5:
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     si, 2
     add     [bp+var_2], dx
     adc     bx, 0
@@ -198,7 +208,7 @@ putpixel_line_draw_loop_6:
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     dec     bx
     add     [bp+var_6], dx
     adc     [bp+var_8], 0
@@ -218,7 +228,7 @@ putpixel_line_draw_loop_7:
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     di, cs:[si]
-    mov     es:[bx+di], al
+    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     bx
     add     [bp+var_6], dx
     adc     [bp+var_8], 0

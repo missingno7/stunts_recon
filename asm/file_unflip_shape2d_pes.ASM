@@ -1,8 +1,19 @@
 .8086
+INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _file_get_shape2d:far
 public _file_unflip_shape2d_pes
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file unflip shape2d pes.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_memchunkoff (word ptr 6); arg_memchunkseg (word ptr 8); arg_mempagesoff (word ptr 10);
+;   arg_mempagesseg (word ptr 12).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _file_unflip_shape2d_pes proc far
     var_val = byte ptr -20
     var_iterations = byte ptr -18
@@ -98,7 +109,7 @@ shape_unflip_fill_loop:
     mov     cx, [bp+var_width]
 shape_unflip_fill_loop_2:
     mov     al, [si]
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
 unflip_advance_source_pointer:
     add     si, bx
 shape_unflip_continue_path:

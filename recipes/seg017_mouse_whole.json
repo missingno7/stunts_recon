@@ -1696,7 +1696,13 @@
     "reason": "seg008 loads nopsub_36AF2 as the relocated far pointer 26AF:0002 (MOV AX,2 / MOV DX,26AFh at 102605, relocation 102609): its segment is framed 0x26AF, not seg017's 0x268A. [158450,158452) is therefore not part of this seg017 object, which ends at 158450 after nopsub_36ACA; a real LINK run otherwise produces 268A:0252.",
     "schema": "ownership-correction-v1"
   },
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/platform_hw.h",
+      "sha256": "e958f10febf7ae73b96df4b542be4b11513d792f9cde1fcc676c2aace8932e17",
+      "size": 5473
+    }
+  ],
   "profile": "msc510-medium",
   "review": [
     "integ29 ownership correction: object ends at 158450 (10 members); nopsub_36AF2 is a separate object in the 0x26AF frame."

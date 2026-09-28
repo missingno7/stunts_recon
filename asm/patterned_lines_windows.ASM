@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_150408
 SHAPE2D struc
 s2d_width dw ?
@@ -60,6 +61,15 @@ public _sprite_copy_2_to_1
     ; align 2
     db 144
 _draw_patterned_lines label far
+; -----------------------------------------------------------------------------
+; Purpose: Draw or clear the graphics content identified by draw patterned lines.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12); arg_8
+;   (byte ptr 14).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _line_pattern_bits.
+; Globals written: _line_pattern_bits.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 draw_patterned_lines proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -106,7 +116,7 @@ pattern_lines_loop_head_01:
 pattern_lines_loop_head_02:
     rol     ah, 1
     jnb     short pattern_lines_branch_path_02
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     loop    pattern_lines_loop_head_02
 pattern_lines_loop_head_03:
     add     [bp+arg_2], 2
@@ -129,6 +139,15 @@ pattern_lines_branch_path_02:
     db 0
 draw_patterned_lines endp
 _sprite_make_window label far
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite make wnd.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, SS; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: aMcgaWindow, aWindowdefOutOfRowTableSpa.
+; -----------------------------------------------------------------------------
 sprite_make_wnd proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
@@ -3825,6 +3844,14 @@ wnd_defs     db 0
     db 0
 sprite_make_wnd endp
 _sprite_setup1_from_arg_pointer label far
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite set 1 from argptr.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, CX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _sprite1.
+; -----------------------------------------------------------------------------
 sprite_set_1_from_argptr proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3851,6 +3878,14 @@ sprite_set_1_from_argptr proc far
     retf
 sprite_set_1_from_argptr endp
 _sprite_copy_2_to_1 label far
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite copy 2 to 1.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _sprite2.
+; -----------------------------------------------------------------------------
 sprite_copy_2_to_1 proc far
 
     mov     ax, seg S012_TEXT

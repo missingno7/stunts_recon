@@ -10517,7 +10517,13 @@
     ]
   },
   "object_segment": "UNIT_TEXT",
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/platform_hw.h",
+      "sha256": "e958f10febf7ae73b96df4b542be4b11513d792f9cde1fcc676c2aace8932e17",
+      "size": 5473
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "s009bss: the complete file-scope static set of seg009 is six static far-pointer objects (1,600 B _BSS at [205400,207000)); the code bytes outside FIXUPP fields, fixup locations/kinds and relocations are identical to the canonical extern form (control: extern->static storage change alone leaves the object identical apart from the 98 _BSS FIXUPP targets). MSC 5.10 orders file statics by the identifier-spelling bucket sum(b&0xDF) mod 256 ascending (ties newest declaration first; L9-mschash), so piece_fill_shapes, piece_mask_shapes and track_editor_cursors are compiler-hash-constrained reconstruction names (readable, semantic, never recovered originals); palette_piece_layout, terrain_tile_shapes and road_tile_shapes keep their registry spellings",

@@ -56,11 +56,11 @@ def _probe(recipe, oracle_result=None, source_override=None):
     require(kind in ('c', 'asm'), 'Unknown contribution kind')
     if kind == 'asm':
         from compiler import verify_toolchain
+        from assembler import check_asm_closure
         require(recipe['profile'] == 'masm510-game', 'ASM reproduction profile differs')
         require(recipe.get('assembler_flags') == verify_toolchain(recipe['profile'])[0]['flags'],
                 'ASM recipe flags differ from pinned profile')
-        asm_source(source)
-        require(recipe.get('include_closure') == [], 'ASM include closure differs')
+        closure = check_asm_closure(source, recipe)
     else:
         _, closure = prepare(source, recipe['profile'])
         check_recipe(recipe, closure)
@@ -147,7 +147,7 @@ def _probe(recipe, oracle_result=None, source_override=None):
     if source_override is None:
         require(project_path(recipe['source']).read_bytes() == source, 'Source changed during compilation')
     if kind == 'asm':
-        require(asm_source(source) and recipe['include_closure'] == [],
+        require(asm_source(source) and check_asm_closure(source, recipe) == closure,
                 'ASM source closure changed during assembly')
     else:
         require(prepare(source, recipe['profile'])[1] == closure,

@@ -1,6 +1,9 @@
+/* READABILITY: Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
 extern int far toupper(int value);
 extern unsigned long far audioresource_get_dword(char far *address);
 
+/* Compare up to count bytes of two names, optionally using case-sensitive matching.
+ * Params and return follow the declared C signature. */
 int far audioresource_compare_chunknames(int caseSensitive, unsigned char far *chunkName,
                                          unsigned char far *foundName, int count)
 {
@@ -20,6 +23,8 @@ int far audioresource_compare_chunknames(int caseSensitive, unsigned char far *c
     return 1;
 }
 
+/* Scan four-byte resource names at the given stride and return the matching entry index.
+ * Params and return follow the declared C signature. */
 int far audioresource_get_chunk_index(int stride, int numChunks, unsigned char *chunkName,
                                       char far *chunkNames)
 {
@@ -38,6 +43,8 @@ int far audioresource_get_chunk_index(int stride, int numChunks, unsigned char *
     return -1;
 }
 
+/* Find a named entry in a packed audio resource and return its far data pointer.
+ * Params and return follow the declared C signature. */
 char far * far audioresource_find(char huge *resource, unsigned char *chunkName)
 {
     unsigned num;
@@ -57,6 +64,8 @@ char far * far audioresource_find(char huge *resource, unsigned char *chunkName)
     return chunkData;
 }
 
+/* Copy size bytes from the far source span into the far destination span.
+ * Params and return follow the declared C signature. */
 void far audioresource_copy_n_bytes(unsigned char far *src, char far *dst, int size)
 {
     int i;

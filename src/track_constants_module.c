@@ -1,3 +1,4 @@
+/* READABILITY: Define track-name identifiers, shape constants, and image-addressed track data as one data-only contribution. */
 /* Candidate interval [0x2C1C0,0x2E718): 9,560 bytes; includes the full aStxxx and code-addressed unk_3E710 objects. */
 /* Track and shape constants: candidate data-only C module; placement remains scratch evidence. */
 char aBarn[116][5] = {

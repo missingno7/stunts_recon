@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_131254
 DGROUP group DSEG, _DATA
 DSEG segment byte public 'STUNTSD'
@@ -56,6 +57,13 @@ extrn _add_exit_handler:far
 extrn _fatal_error:far
 
 ; polarRadius2D: _polradius2d
+; -----------------------------------------------------------------------------
+; Purpose: Return the 2D polar radius for the supplied point.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_y (word ptr 8); arg_z (word ptr 6).
+; Register ABI: touches AX, BX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _polradius2d proc far
     arg_z = word ptr 6
     arg_y = word ptr 8
@@ -114,6 +122,18 @@ radius_scale_absolute_x:
 _polradius2d endp
 
 ; video_set_mode7: _video_set_mode7
+; -----------------------------------------------------------------------------
+; Purpose: Configure the BIOS mode-7 text display.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, DI, DS, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _video_mode4_active.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+; /* PLATFORM(video): selects a video-memory segment. */
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; /* PLATFORM(video): calls a BIOS video service. */
+; -----------------------------------------------------------------------------
 _video_set_mode7 proc far
     push di
     cmp byte ptr ds:[_video_mode4_active], 0
@@ -124,46 +144,53 @@ _video_set_mode7 proc far
 mode7_program_crtc:
     mov ax, 40h
     mov es, ax
-    mov ax, word ptr es:[10h]
+    mov ax, word ptr es:[10h] ;/* PLATFORM(video): accesses display memory through ES. */
     and ax, 0FFCFh
     or ax, 30h
-    mov word ptr es:[10h], ax
+    mov word ptr es:[10h], ax ;/* PLATFORM(video): accesses display memory through ES. */
     mov al, 3
-    mov dx, 3BFh
-    out dx, al
+    mov dx, R5HW_VIDEO_MONO_MISC_PORT
+    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     mov al, 20h
-    mov dx, 3B8h
-    out dx, al
+    mov dx, R5HW_VIDEO_MONO_MODE_PORT
+    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     mov cx, 0Ch
-    mov dx, 3B4h
+    mov dx, R5HW_VIDEO_MONO_CRTC_INDEX_PORT
     xor bx, bx
 mode7_write_crtc_register_loop:
     mov al, bl
-    out dx, al
+    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     inc dx
     mov al, byte ptr [bx + 40F8h]
-    out dx, al
+    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     dec dx
     inc bx
     loop mode7_write_crtc_register_loop
     cld
-    mov ax, 0B800h
+    mov ax, R5HW_VIDEO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov es, ax
     xor di, di
     mov cx, 4000h
     xor ax, ax
-    rep stosw
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     mov al, 28h
-    mov dx, 3B8h
-    out dx, al
+    mov dx, R5HW_VIDEO_MONO_MODE_PORT
+    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
     mov ah, 0
     mov al, 7
-    int 10h
+    int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
     pop di
     retf
 _video_set_mode7 endp
 
 ; nopsub_30180: _nopsub_30180
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 30180.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _bios_tick_countdown, _timer_interrupt_reload_value, _timer_sound_countdown_active, _timer_sound_countdown_ticks.
+; -----------------------------------------------------------------------------
 _nopsub_30180 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -182,6 +209,17 @@ _nopsub_30180 proc far
 _nopsub_30180 endp
 
 ; nopsub_30180: _timer_setup_interrupt
+; -----------------------------------------------------------------------------
+; Purpose: Install and configure the game timer interrupt handler.
+; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, DX, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _bios_tick_countdown, _previous_timer_irq_vector, _timer_callback_busy, _timer_interrupt_reload_value, _timer_sound_countdown_active,
+;   _timer_sound_countdown_enabled, _timer_sound_countdown_ticks, _timerintr.
+; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+; /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; /* PLATFORM(timer): accesses the programmable interval timer port. */
+; -----------------------------------------------------------------------------
 _timer_setup_interrupt proc far
  push bp
  mov dx,2E9Ch
@@ -212,22 +250,22 @@ _timer_setup_interrupt proc far
  mov word ptr ds:[_timer_sound_countdown_ticks],64h
  mov byte ptr ds:[_timer_sound_countdown_active],1
 shared_setup:
- cli
+ cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
  mov byte ptr ds:[_timer_callback_busy],0
  mov word ptr ds:[_timerintr],0
  mov word ptr ds:[_timerintr+2],0
- sti
- in al,61h
+ sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+ in al,R5HW_KEYBOARD_CONTROL_PORT ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
  and al,0FCh
- out 61h,al
+ out R5HW_KEYBOARD_CONTROL_PORT,al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
  mov al,0B6h
- out 43h,al
- in al,21h
+ out R5HW_PIT_CONTROL_PORT,al ;/* PLATFORM(timer): accesses the programmable interval timer port. */
+ in al,R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
  or al,3
- out 21h,al
+ out R5HW_PIC_MASTER_MASK_PORT,al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
  xor ax,ax
  mov es,ax
- cli
+ cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
  mov ax,word ptr es:[20h]
  cmp ax,1909h
  je setup_after_old_off
@@ -241,14 +279,14 @@ setup_after_old_off:
  mov word ptr es:[20h],1909h
  mov word ptr es:[22h],cs
 setup_after_old_seg:
- in al,21h
+ in al,R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
  and al,0FCh
- out 21h,al
- sti
+ out R5HW_PIC_MASTER_MASK_PORT,al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+ sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
  mov al,dl
- out 40h,al
+ out R5HW_PIT_CHANNEL0_PORT,al ;/* PLATFORM(timer): accesses the programmable interval timer port. */
  mov al,dh
- out 40h,al
+ out R5HW_PIT_CHANNEL0_PORT,al ;/* PLATFORM(timer): accesses the programmable interval timer port. */
  push cs
  mov ax,1848h
  push ax
@@ -260,6 +298,16 @@ setup_after_old_seg:
 _timer_setup_interrupt endp
 
 ; audio_stop_unk: _audio_stop_unknown
+; -----------------------------------------------------------------------------
+; Purpose: Implement the operation identified by audio stop unknown.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, CS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _previous_timer_irq_vector.
+; Globals written: none identified.
+; /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+; /* PLATFORM(timer): accesses the programmable interval timer port. */
+; -----------------------------------------------------------------------------
 _audio_stop_unknown proc far
 
     xor     ax, ax
@@ -275,32 +323,40 @@ timer_restore_owner_check:
     jz      short timer_restore_prev_irq_vector
     retf
 timer_restore_prev_irq_vector:
-    in      al, 21h         ; Interrupt controller, 8259A.
+    in      al, R5HW_PIC_MASTER_MASK_PORT ; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
     or      al, 3
-    out     21h, al         ; Interrupt controller, 8259A.
-    cli
+    out     R5HW_PIC_MASTER_MASK_PORT, al ; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov     ax, word ptr _previous_timer_irq_vector
     mov     es:20h, ax
     mov     ax, word ptr _previous_timer_irq_vector+2
     mov     es:22h, ax
-    in      al, 21h         ; Interrupt controller, 8259A.
+    in      al, R5HW_PIC_MASTER_MASK_PORT ; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
 
     and     al, 0FCh
 
-    out     21h, al         ; Interrupt controller, 8259A.
-    sti
+    out     R5HW_PIC_MASTER_MASK_PORT, al ; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov     al, 0
-    out     40h, al         ; Timer 8253-5 (AT: 8254.2).
-    out     40h, al         ; Timer 8253-5 (AT: 8254.2).
-    in      al, 61h         ; PC/XT PPI port B bits:
+    out     R5HW_PIT_CHANNEL0_PORT, al ; Timer 8253-5 (AT: 8254.2). /* PLATFORM(timer): accesses the programmable interval timer port. */
+    out     R5HW_PIT_CHANNEL0_PORT, al ; Timer 8253-5 (AT: 8254.2). /* PLATFORM(timer): accesses the programmable interval timer port. */
+    in      al, R5HW_KEYBOARD_CONTROL_PORT ; PC/XT PPI port B bits: /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
 
     and     al, 0FCh
 
-    out     61h, al         ; PC/XT PPI port B bits:
+    out     R5HW_KEYBOARD_CONTROL_PORT, al ; PC/XT PPI port B bits: /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
     retf
 _audio_stop_unknown endp
 
 ; timer_reg_callback: _timer_reg_callback
+; -----------------------------------------------------------------------------
+; Purpose: Register a timer callback in the callback table.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _aNoRoomLeftOnTimerInterru, _timerintr.
+; -----------------------------------------------------------------------------
 _timer_reg_callback proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -331,6 +387,15 @@ timer_callback_slot_available:
 _timer_reg_callback endp
 
 ; timer_remove_callback: _timer_remove_callback
+; -----------------------------------------------------------------------------
+; Purpose: Remove a timer callback from the callback table.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _timerintr.
+; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+; -----------------------------------------------------------------------------
 _timer_remove_callback proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -354,7 +419,7 @@ timer_remove_advance_slot:
     pop     bp
     retf
 timer_remove_disable_interrupts:
-    cli
+    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     dec     cx
     jz      short timer_remove_clear_tail_slot
 timer_remove_shift_slots:
@@ -367,12 +432,19 @@ timer_remove_shift_slots:
 timer_remove_clear_tail_slot:
     mov     word ptr [bx], 0
     mov     word ptr [bx+2], 0
-    sti
+    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     pop     bp
     retf
 _timer_remove_callback endp
 
 ; compare_ds_ss: _compare_ds_ss
+; -----------------------------------------------------------------------------
+; Purpose: Implement the timer service identified by compare ds ss.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, DX, DS, SS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _compare_ds_ss proc far
 
     xor     ax, ax
@@ -386,8 +458,21 @@ compare_equal_segment_return:
 _compare_ds_ss endp
 
 ; timer_intr_group: _timer_intr_callback
+; -----------------------------------------------------------------------------
+; Purpose: Dispatch the timer interrupt callback and acknowledge the interrupt.
+; ABI: FAR entry; source return form: IRET; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES; balanced explicit saves/restores observed: AX, BX, CX, DI, DS, DX, ES, SI; path-specific inputs and outputs follow
+;   the listed operands.
+; Globals read: _bios_tick_countdown, _timer_callback_busy, _timer_callback_counter, _timer_callback_reentry_depth, _timer_callback_reentry_peak, _timer_elapsed_ticks_high,
+;   _timer_elapsed_ticks_low, _timer_interrupt_reload_value, _timer_sound_countdown_enabled, _timerintr, _word_3F88E.
+; Globals written: _bios_tick_countdown, _timer_callback_busy, _timer_callback_counter, _timer_callback_reentry_depth, _timer_callback_reentry_peak, _timer_elapsed_ticks_high,
+;   _timer_elapsed_ticks_low.
+; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+; /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; /* PLATFORM(timer): returns from a hardware timer interrupt. */
+; -----------------------------------------------------------------------------
 _timer_intr_callback proc far
-    cli
+    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     push ds
     push es
     push ax
@@ -399,7 +484,7 @@ _timer_intr_callback proc far
     push bp
     mov ax, seg dseg
     mov ds, ax
-    sti
+    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     dec word ptr _bios_tick_countdown
     jg timer_send_pic_eoi
     inc word ptr _timer_elapsed_ticks_low
@@ -415,7 +500,7 @@ timer_reload_tick_counter:
     nop
 timer_send_pic_eoi:
     mov al, 20h
-    out 20h, al
+    out R5HW_PIC_MASTER_COMMAND_PORT, al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
 timer_check_callback_enable:
     cmp byte ptr _word_3F88E, 0
     jne timer_clear_reentry_state
@@ -424,11 +509,11 @@ timer_check_callback_enable:
     inc word ptr _timer_callback_counter+2
 timer_advance_callback_clock:
     xor di, di
-    cli
+    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     cmp byte ptr _timer_callback_busy, 0
     jne timer_count_reentrant_tick
     mov byte ptr _timer_callback_busy, 1
-    sti
+    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
 timer_start_callback_scan:
     mov ax, word ptr _timerintr[di+2]
     or ax, ax
@@ -457,10 +542,17 @@ timer_restore_irq_frame:
     pop ax
     pop es
     pop ds
-    iret
+    iret ;/* PLATFORM(timer): returns from a hardware timer interrupt. */
 _timer_intr_callback endp
 
 ; timer_intr_group: _sub_303BA
+; -----------------------------------------------------------------------------
+; Purpose: Advance the timer sound countdown and chain to the previous timer interrupt.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches none; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _timer_sound_countdown_active, _timer_sound_countdown_ticks.
+; Globals written: _timer_sound_countdown_active, _timer_sound_countdown_enabled, _timer_sound_countdown_ticks.
+; -----------------------------------------------------------------------------
 _sub_303BA proc near
 timer_sound_countdown_entry:
     cmp byte ptr _timer_sound_countdown_active, 0

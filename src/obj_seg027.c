@@ -43,6 +43,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
     long unk48;                     /* 48 */
 };
 #pragma pack()
+/* READABILITY: Load and drive the DOS audio module, schedule its timer callback, and resolve audio resources. */
 
 struct AUDIOVOICE {                 /* 0x2E bytes */
     unsigned char unk00;            /* 00 */
@@ -85,16 +86,24 @@ void far audio_unk2(int index, unsigned char value);
 void far audio_driver_func1E(int first, int last);
 void far reset_audio_event_state(void);
 char * far audio_make_filename(char *name, char *ext, char *kind);
+    /* PLATFORM(file): load or decompress the named audio resource. */
 void far * far file_load_binary_nofatal(char *name);
+    /* PLATFORM(file): load or decompress the named audio resource. */
 void far * far file_decomp_nofatal(char *name);
+    /* PLATFORM(memory): release storage through the game memory manager. */
 void far mmgr_release(void far *ptr);
 void far fatal_error(char *format, ...);
 void far add_exit_handler(void (far *handler)(void));
+    /* PLATFORM(timer): use or register the game timer service. */
 void far timer_reg_callback(void (far *callback)(void));
+    /* PLATFORM(timer): use or register the game timer service. */
 void far timer_remove_callback(void (far *callback)(void));
 void far audiodriver_timer(void);
+    /* PLATFORM(timer): use or register the game timer service. */
 void far timer_copy_counter(long ticks);
+    /* PLATFORM(timer): use or register the game timer service. */
 void far timer_wait_for_dx(void);
+    /* PLATFORM(file): resolve an audio resource entry in the loaded bundle. */
 void far * far locate_shape_nofatal(void far *shapes, char *name);
 int far audioresource_get_chunk_index(int start, int count, char *name, char far *names);
 int far audioresource_compare_chunknames(int flag, char far *name1, char far *name2, int length);
@@ -154,6 +163,10 @@ unsigned char audio_driver_volume_command[4] = { 0x10, 0x00, 0x16, 0x00 };
 int audio_update_lock = 1;
 int audio_load_error_policy = 0;
 
+/* Call the loaded audio driver finalization entry.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(audio): dispatch into the loaded DOS sound-driver image. */
 void far load_audio_finalize(void far *song)
 {
     int offset;
@@ -163,6 +176,7 @@ void far load_audio_finalize(void far *song)
     if (song == 0) return;
     if (((char far *)song)[4] != 0) return;
     if (((char far *)song)[5] != 1) return;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
     ((DRVPROC)((char far *)audiodriverbinary + 0x18))();
     snd_sample_rate_phase = 0;
     mus_samplelimit = 0x80;
@@ -173,6 +187,10 @@ void far load_audio_finalize(void far *song)
     audio_update_lock = 0;
 }
 
+/* Send the currently prepared volume command to the loaded audio driver.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(audio): dispatch the prepared volume command into the DOS sound driver. */
 void far audio_unk(void)
 {
     struct AUDIOVOICE *channel;
@@ -189,18 +207,25 @@ void far audio_unk(void)
         }
     } else {
         audio_driver_volume_command[3] = 0;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
     }
     if (audio_driver_mode == 0) {
         for (i = 0; i < 16; i++) {
             channel = &snd_voices_tbl[i];
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
             ((DRVPROC)((char far *)audiodriverbinary + 0x27))(channel->unk2C, channel, channel->unk2A, channel->unk10);
         }
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 0x30))(snd_voices_tbl);
     }
     audio_update_lock = 0;
 }
 
+/* Restore the default volume through the loaded audio driver.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(audio): restore output volume through the DOS sound driver. */
 void far restore_audio_volume(void)
 {
     int i;
@@ -214,6 +239,7 @@ void far restore_audio_volume(void)
         }
     } else {
         audio_driver_volume_command[3] = 100;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
     }
     audio_update_lock = 0;
@@ -386,6 +412,11 @@ void far nopsub_37750(unsigned int chunk, long value)
     audiochunktable[chunk].unk48 = value;
 }
 
+/* Change the driver volume while waiting against the game timer.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(timer): pace the audio volume transition using the DOS timer. */
+/* PLATFORM(audio): send volume commands through the loaded sound driver. */
 void far audio_driver_func3F(int ticks)
 {
     int counter;
@@ -395,24 +426,32 @@ void far audio_driver_func3F(int ticks)
             audio_update_lock = 1;
             set_all_audio_chunk_volume(counter);
             audio_update_lock = 0;
+    /* PLATFORM(timer): use or register the game timer service. */
             timer_copy_counter((long)ticks);
+    /* PLATFORM(timer): use or register the game timer service. */
             timer_wait_for_dx();
         }
     } else {
         for (counter = 100; counter > 0; counter -= 2) {
             audio_update_lock = 1;
             audio_driver_volume_command[3] = (unsigned char)counter;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
             ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
             audio_update_lock = 0;
+    /* PLATFORM(timer): use or register the game timer service. */
             timer_copy_counter((long)ticks);
+    /* PLATFORM(timer): use or register the game timer service. */
             timer_wait_for_dx();
         }
     }
     reset_audio_chunks();
     if (audio_driver_mode != 0) {
+    /* PLATFORM(timer): use or register the game timer service. */
         timer_copy_counter(50L);
+    /* PLATFORM(timer): use or register the game timer service. */
         timer_wait_for_dx();
         audio_driver_volume_command[3] = 100;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
     }
 }
@@ -437,6 +476,11 @@ unsigned int far nopsub_378AE(int index) { return g_audchnkvalue[index]; }
 
 unsigned int far nopsub_378BC(int index) { return audioblock[index]; }
 
+/* Load and initialize the audio driver, install its timer callback, and optionally load patches.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(audio): load and initialize the DOS sound-driver module. */
+/* PLATFORM(timer): register the audio callback with the game timer. */
 int far audio_load_driver(char *filename, int unused, int signature)
 {
     unsigned int len;
@@ -459,6 +503,7 @@ int far audio_load_driver(char *filename, int unused, int signature)
     g_drvaudiocode[1] = filename[len + 1];
     g_drvaudiocode[2] = 0;
     path = audio_make_filename(filename, "drv", "");
+    /* PLATFORM(file): load or decompress the named audio resource. */
     audiodriverbinary = file_load_binary_nofatal(path);
     g_musicvolumesetting = 0x7f;
     sfx_audio_vol = 0x7f;
@@ -473,13 +518,18 @@ int far audio_load_driver(char *filename, int unused, int signature)
         audio_driver_extension_mode = 0;
     }
     reset_audio_driver_state();
+    /* PLATFORM(timer): use or register the game timer service. */
     timer_reg_callback(audiodriver_timer);
     if (audio_driver_mode != 0) {
+    /* PLATFORM(file): load or decompress the named audio resource. */
         patches = file_load_binary_nofatal("mt32.plb");
         if (patches != 0) {
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
             ((DRVPROC)((char far *)audiodriverbinary + 0x42))(patches);
+    /* PLATFORM(memory): release storage through the game memory manager. */
             mmgr_release(patches);
             audio_driver_volume_command[3] = 100;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
             ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
         }
     }
@@ -492,19 +542,29 @@ fail:
     fatal_error("Can't find driver!\n");
 }
 
+/* Remove the audio timer callback, shut down the driver, and release its loaded image.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(audio): shut down the DOS sound driver. */
+/* PLATFORM(timer): remove the audio callback from the game timer. */
 void far audiodrv_atexit(void)
 {
     audio_update_lock = 1;
     if (audiodriverbinary != 0) {
+    /* PLATFORM(timer): use or register the game timer service. */
         timer_remove_callback(audiodriver_timer);
         audioflag2 = 0;
         audioflag6 = 0;
         if (audio_driver_mode != 0) {
             audio_driver_volume_command[3] = 100;
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
             ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
         }
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 6))();
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 3))();
+    /* PLATFORM(memory): release storage through the game memory manager. */
         mmgr_release(audiodriverbinary);
         audiodriverbinary = 0;
         audio_driver_mode = 0;
@@ -513,11 +573,16 @@ void far audiodrv_atexit(void)
     audio_update_lock = 0;
 }
 
+/* Load or decompress an audio resource using its filename, extension, and resource kind.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(file): fetch or decompress sound data through the game file service. */
 void far * far load_sfx_ge(char *filename, char *extension, char *kind)
 {
     char buffer[4];
     void far *resource;
 
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_load_binary_nofatal(audio_make_filename(filename, extension, kind));
     if (resource != 0)
         return resource;
@@ -525,21 +590,27 @@ void far * far load_sfx_ge(char *filename, char *extension, char *kind)
     buffer[1] = extension[0];
     buffer[2] = extension[1];
     buffer[3] = 0;
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_decomp_nofatal(audio_make_filename(filename, buffer, kind));
     if (resource != 0)
         return resource;
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_load_binary_nofatal(audio_make_filename(filename, extension, "ge"));
     if (resource != 0)
         return resource;
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_decomp_nofatal(audio_make_filename(filename, buffer, "ge"));
     if (resource != 0)
         return resource;
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_load_binary_nofatal(audio_make_filename(filename, extension, ""));
     if (resource != 0)
         return resource;
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_decomp_nofatal(audio_make_filename(filename, buffer, ""));
     if (resource != 0)
         return resource;
+    /* PLATFORM(file): load or decompress the named audio resource. */
     resource = file_load_binary_nofatal(filename);
     if (resource != 0)
         return resource;
@@ -693,6 +764,7 @@ void far link_audio_shape_resources(unsigned char far *res, void far *shapes)
             for (j = 0; j < 4; j++)
                 name[j] = resptr[j + 6];
             destptr = resptr + 6;
+    /* PLATFORM(file): resolve an audio resource entry in the loaded bundle. */
             shapeptr = locate_shape_nofatal(shapes, name);
             if (shapeptr != 0) {
                 audioresource_copy_4_bytes((unsigned char far *)destptr, (unsigned char far *)&shapeptr);
@@ -709,6 +781,10 @@ void far reset_audio_voice_length(int index)
     voice->length = 1;
 }
 
+/* Reset the loaded audio driver voices and effect state.
+ * Params and return follow the declared C signature; shared state is noted where the body writes it.
+ */
+/* PLATFORM(audio): reset state in the loaded DOS sound-driver image. */
 void far reset_audio_driver_state(void)
 {
     int i;
@@ -716,6 +792,7 @@ void far reset_audio_driver_state(void)
     audio_update_lock = 1;
     audio_init_chunk(0, 0x17, 0, 0, 0x7f, 0);
     for (i = 0; i < g_audiodrvvoices_count; i++) {
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((char far *)audiodriverbinary + 0x1e))(i);
         snd_voices_tbl[i].state = 0;
         snd_voices_tbl[i].unk00 = 0xff;
@@ -723,7 +800,9 @@ void far reset_audio_driver_state(void)
         snd_voices_tbl[i].unk10 = 0;
         snd_voices_tbl[i].unk2C = 0xff;
     }
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
     ((DRVPROC)((char far *)audiodriverbinary + 0x18))();
+    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
     ((DRVPROC)((char far *)audiodriverbinary + 6))();
     audio_update_lock = 0;
 }

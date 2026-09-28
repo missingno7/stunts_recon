@@ -1,8 +1,18 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _sprite_clear_1_color
+; -----------------------------------------------------------------------------
+; Purpose: Clear sprite image 1 to the requested color.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (byte ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _sprite_clear_1_color proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -33,7 +43,7 @@ _sprite_clear_1_color proc far
     jb      short clear_1_color_when_below
 sprite_clear_1_color_fill_loop:
     mov     cx, bx
-    rep stosw
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     di, si
     dec     dx
     jg      short sprite_clear_1_color_fill_loop
@@ -48,8 +58,8 @@ clear_1_color_when_below:
     inc     si
 clear_1_color_fill_loop_2:
     mov     cx, bx
-    rep stosw
-    mov     es:[di], al
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, si
     dec     dx
     jg      short clear_1_color_fill_loop_2
@@ -57,7 +67,7 @@ clear_1_color_fill_loop_2:
 sprite_clear_1_color_when_zero:
     inc     si
 clear_1_color_draw_loop_2:
-    mov     es:[di], al
+    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, si
     dec     dx
     jg      short clear_1_color_draw_loop_2

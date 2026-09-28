@@ -53,7 +53,7 @@ def read_batch(path):
 
 
 def cosmetic_batch(batch_entries, *, verify_only=False):
-    """Atomic source-only republication gated by complete OBJ byte identity."""
+    """Atomic cosmetic republication gated by complete OBJ byte identity."""
     require(batch_entries and all('communal' not in e for e in batch_entries),
             'Cosmetic batch accepts only NAME CANDIDATE rows')
     require(all(e.get('recipe') is None for e in batch_entries),
@@ -88,6 +88,7 @@ def cosmetic_batch(batch_entries, *, verify_only=False):
             changes = {row['destination']: entry['source']
                        for row, entry in zip(rows, entries)
                        if entry['source'] != (ROOT/row['destination']).read_bytes()}
+            changes.update(P.cosmetic_recipe_changes(rows))
             if changes:
                 expected = {**before, **{path: sha(data) for path, data in changes.items()}}
                 with publishing():

@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 DSEG segment byte public 'STUNTSD'
 DSEG ends
 _DATA segment word public 'DATA'
@@ -24,9 +25,17 @@ assume cs:S012_TEXT, ds:DGROUP
 
 ; nopsub_3215A
 assume cs:S012_TEXT
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 3215A.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, CX, DI, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): selects a video-memory segment. */
+; -----------------------------------------------------------------------------
 _nopsub_3215A proc far
     push di
-    mov ax, 0B000h
+    mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov es, ax
     xor di, di
     mov cx, 07D0h
@@ -38,6 +47,13 @@ _nopsub_3215A proc far
 _nopsub_3215A endp
 
 ; nopsub_3216C
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 3216C.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, CX, SI, DI, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: console_cursor_row.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_3216C proc far
      r = byte ptr 0
 
@@ -69,6 +85,15 @@ _nopsub_3216C proc far
 _nopsub_3216C endp
 
 ; nopsub_3219D
+; -----------------------------------------------------------------------------
+; Purpose: Implement the operation identified by debug printf text.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, DX, SI, BP, SP, ES; balanced explicit saves/restores observed: AX, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: console_cursor_offset, console_return_cs, console_return_ip, console_save_cursor, console_saved_cursor, console_text_attribute.
+; Globals written: console_cursor_offset, console_cursor_row, console_return_cs, console_return_ip, console_save_cursor, console_saved_cursor.
+; Global addresses taken: _output_buffer.
+; /* PLATFORM(video): selects a video-memory segment. */
+; -----------------------------------------------------------------------------
 _debug_printf_text proc far
     pop ax
     mov word ptr console_return_ip, ax
@@ -87,7 +112,7 @@ noop_entry3_loop_head_01:
     mov ax, word ptr console_return_ip
     push ax
     push si
-    mov ax, 0B000h
+    mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov es, ax
     mov si, 4BC6h
     mov dh, byte ptr console_text_attribute
@@ -188,6 +213,13 @@ noop_entry3_branch_path_13:
 _debug_printf_text endp
 
 ; nopsub_322B4
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 322B4.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: console_text_attribute.
+; -----------------------------------------------------------------------------
 _nopsub_322B4 proc far
      s = byte ptr 0
      r = byte ptr 2

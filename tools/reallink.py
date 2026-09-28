@@ -42,6 +42,7 @@ sys.path.insert(0, str(ROOT / 'tools'))
 from common import read_json, require  # noqa: E402
 from compiler import verify_toolchain, toolchain_path, check_inline_asm  # noqa: E402
 from preprocessor import prepare  # noqa: E402
+from assembler import prepare_asm  # noqa: E402
 from object_flags import recipe_flags  # noqa: E402
 from omf import OmfReader  # noqa: E402
 from mz import MZ  # noqa: E402
@@ -305,13 +306,18 @@ def adapt_asm(text, link_segment, force_byte=False):
 
 def assemble(recipe, base, link_segment, force_byte=False):
     config, _ = verify_toolchain(recipe['profile'])
-    text = (ROOT / recipe['source']).read_bytes().decode('ascii').replace('\r\n', '\n').replace('\r', '\n')
+    source = (ROOT / recipe['source']).read_bytes()
+    expanded, include_closure = prepare_asm(source)
+    require(recipe.get('include_closure', []) == include_closure,
+            'real-link ASM include closure differs from tracked include files')
+    text = expanded.decode('ascii').replace('\r\n', '\n').replace('\r', '\n')
     text, changes = adapt_asm(text, link_segment, force_byte)
     staged = text.replace('\n', '\r\n').encode('ascii')
     key = sha(staged + json.dumps(config['flags']).encode())[:16]
     cache = OUT / 'cache' / f'{base}_{key}.OBJ'
     info = {'flags': config['flags'], 'profile': recipe['profile'], 'adaptations': changes,
-            'source': recipe['source'], 'invocation_kind': 'ASM'}
+            'source': recipe['source'], 'include_closure': include_closure,
+            'invocation_kind': 'ASM'}
     if cache.exists():
         return cache.read_bytes(), dict(info, cached=True)
     work = OUT / 'compile' / base
@@ -325,6 +331,9 @@ def assemble(recipe, base, link_segment, force_byte=False):
     obj = work / f'{base}.OBJ'
     if rc or not obj.exists():
         raise RuntimeError(f'assemble failed {recipe["source"]}: {out[-600:]}')
+    require((ROOT/recipe['source']).read_bytes() == source and
+            prepare_asm(source)[1] == include_closure,
+            'real-link ASM source/include closure changed during assembly')
     cache.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(obj, cache)
     info.update(command=argv, working_directory=str(work), cached=False)

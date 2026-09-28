@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_133660
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP
@@ -26,29 +27,52 @@ public _flush_stdin
 public _kb_check
 public _nopsub_30A77
 public _nopsub_30A97
+; -----------------------------------------------------------------------------
+; Purpose: Implement the keyboard or joystick service identified by kb call readchar callback.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _kb_call_readchar_callback proc far
     call    dword ptr ds:[_kb_readchar_callback]
     retf
 _kb_call_readchar_callback endp
+; -----------------------------------------------------------------------------
+; Purpose: Read a character and dispatch the configured read-character callback.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; -----------------------------------------------------------------------------
 _kb_read_char proc far
 
     mov     ah, 1
-    int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
+    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jnz     short readchar_consume_buffered_key
     xor     ax, ax
     retf
 readchar_consume_buffered_key:
     mov     ah, 0
-    int     16h             ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
+    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     or      al, al
     jz      short readchar_return_ascii_character
     xor     ah, ah
 readchar_return_ascii_character:
     retf
 _kb_read_char endp
+; -----------------------------------------------------------------------------
+; Purpose: Poll keyboard input and update the game input state.
+; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; -----------------------------------------------------------------------------
 _kb_checking proc far
     mov ah,1
-    int 16h
+    int R5HW_BIOS_KEYBOARD_INT ;/* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jnz have_key
     xor ax,ax
 have_key:
@@ -58,6 +82,13 @@ have_key:
 done:
     ret
 _kb_checking endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub kb set readchar callback.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _kb_readchar_callback, _readchar_callback_seg.
+; -----------------------------------------------------------------------------
 _nopsub_kb_set_readchar_callback proc far
     push    bp
     mov     bp, sp
@@ -68,29 +99,58 @@ _nopsub_kb_set_readchar_callback proc far
     pop     bp
     retf
 _nopsub_kb_set_readchar_callback endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub kb get readchar callback.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _kb_readchar_callback, _readchar_callback_seg.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_kb_get_readchar_callback proc far
     mov     ax, word ptr ds:[_kb_readchar_callback]
     mov     dx, word ptr ds:[_readchar_callback_seg]
     retf
 _nopsub_kb_get_readchar_callback endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the operation identified by flush stdin.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _flush_stdin proc far
     call    far ptr _kb_call_readchar_callback
     cmp     ax, 0
     jz      short _flush_stdin
     retf
 _flush_stdin endp
+; -----------------------------------------------------------------------------
+; Purpose: Check the BIOS keyboard buffer for a pending character.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; -----------------------------------------------------------------------------
 _kb_check proc far
 
     mov     ah, 1
-    int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
+    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jnz     short kb_check_consume_pending_key
     xor     ax, ax
     retf
 kb_check_consume_pending_key:
     mov     ah, 0
-    int     16h             ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
+    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jmp     short near ptr _kb_check
 _kb_check endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 30A77. Its internal flow uses readchar_poll_deadline_expired, readchar_timeout_return.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _timer_copy_target_high, _timer_copy_unk.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_30A77 proc far
     call    far ptr _kb_call_readchar_callback
     cmp     ax, 0
@@ -106,6 +166,13 @@ readchar_poll_deadline_expired:
 readchar_timeout_return:
     retf
 _nopsub_30A77 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 30A97. Its internal flow uses readchar_timeout_poll_loop, readchar_timeout_return_zero.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_30A97 proc far
     push    bp
     mov     bp, sp

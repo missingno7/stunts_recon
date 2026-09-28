@@ -128,6 +128,21 @@ class CosmeticPublicationTests(unittest.TestCase):
                 self.assertEqual(saved['old_source'], row['old_source'])
                 self.assertEqual(saved['new_source'], row['new_source'])
 
+    def test_cosmetic_recipe_changes_are_limited_to_resolved_closures(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root/'recipes').mkdir()
+            (root/'recipes/foo.json').write_text(json.dumps({
+                'id':'foo', 'kind':'asm', 'include_closure':[]}), encoding='utf-8')
+            closure = [{'path':'include/platform_hw.inc', 'size':12, 'sha256':'a'*64}]
+            rows = [{'recipe_closure_updates': {
+                'recipes/foo.json': {'include_closure':closure}}}]
+            with mock.patch.object(promote, 'ROOT', root):
+                changes = promote.cosmetic_recipe_changes(rows)
+            updated = json.loads(changes['recipes/foo.json'].decode('utf-8'))
+            self.assertEqual(updated['include_closure'], closure)
+            self.assertEqual(set(updated), {'id','kind','include_closure'})
+
     def test_communal_inventory_can_refresh_only_same_accepted_owner_extent(self):
         manifest = copy.deepcopy(read_json(ROOT/'layout/manifest.json'))
         candidate = communal_unit.load_candidate(ROOT/'build/workers/L19-race/communal_unit.json')

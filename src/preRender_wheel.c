@@ -1,8 +1,12 @@
+/* READABILITY: Generate, rotate, and submit the front/back wheel outline and side faces for rendering. */
 struct Point { int x; int y; };
 struct WheelRect { int left, top, unused0, unused1, unused2, unused3, x, y; };
 extern void far preRender_wheel_helper(struct WheelRect *, int *, int);
 extern void far preRender_wheel_helper4(int, int, ...);
 extern void far preRender_default_alt(int, int, char *);
+/* Construct the wheel perimeter and submit front, back, and side vertices for drawing.
+ * Params and return follow the declared C signature. */
+/* PLATFORM(video): submit wheel faces and point buffers to the renderer. */
 void far preRender_wheel(struct WheelRect *rect, int count, int color,
     int styleA, int styleB)
 {
@@ -21,6 +25,7 @@ void far preRender_wheel(struct WheelRect *rect, int count, int color,
     preRender_wheel_helper(rect, (int *)vertices, count);
     pointPtr = vertices;
     for (position = 0; position < 15; ++position) {
+    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
         preRender_wheel_helper4(color, 4,
             pointPtr[0].x, pointPtr[0].y,
             pointPtr[1].x, pointPtr[1].y,
@@ -28,6 +33,7 @@ void far preRender_wheel(struct WheelRect *rect, int count, int color,
             pointPtr[32].x, pointPtr[32].y);
         ++pointPtr;
     }
+    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     preRender_wheel_helper4(color, 4,
         pointPtr[0].x, pointPtr[0].y,
         vertices[0].x, vertices[0].y,
@@ -64,6 +70,7 @@ void far preRender_wheel(struct WheelRect *rect, int count, int color,
             ++secondSet;
         }
     }
+    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     preRender_default_alt(styleA, 0x12, (char *)drawVertices);
 
     firstPoint = vertices + topPoint;
@@ -85,6 +92,8 @@ void far preRender_wheel(struct WheelRect *rect, int count, int color,
             --secondSet;
         }
     }
+    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     preRender_default_alt(styleA, 0x12, (char *)drawVertices);
+    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     preRender_default_alt(styleB, 0x10, (char *)(vertices + 16));
 }

@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 VECTOR struc
 vx dw ?
 vy dw ?
@@ -80,6 +81,13 @@ public _nopsub_322DF
 public _set_projection
 public _vector_to_point
 public _sprite_free_window
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 322C0.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _projection_half_height, _projection_half_width.
+; Globals written: _projection_center_x, _projection_center_y, _projection_left_origin, _projection_top_origin.
+; -----------------------------------------------------------------------------
 _nopsub_322C0 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -99,6 +107,13 @@ _nopsub_322C0 proc far
     pop     bp
     retf
 _nopsub_322C0 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 322DF.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _projection_x_angle, _projection_y_angle.
+; -----------------------------------------------------------------------------
 _nopsub_322DF proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -116,6 +131,14 @@ _nopsub_322DF proc far
     jmp     short projection_join_01
     db 144
 _nopsub_322DF endp
+; -----------------------------------------------------------------------------
+; Purpose: Set the projection parameters used by vector rendering.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _projection_half_height, _projection_half_width, _projection_left_origin, _projection_top_origin, _projection_x_angle, _projection_y_angle.
+; Globals written: _projection_center_x, _projection_center_y, _projection_half_height, _projection_half_width, _projection_x_angle, _projection_x_scale, _projection_y_angle,
+;   _projection_y_scale.
+; -----------------------------------------------------------------------------
 _set_projection proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -221,6 +244,13 @@ projection_branch_path_01:
     pop     bp
     retf
 _set_projection endp
+; -----------------------------------------------------------------------------
+; Purpose: Project a vector into screen-space coordinates.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_point2dout (word ptr 8); arg_vec (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _projection_center_x, _projection_center_y, _projection_x_scale, _projection_y_scale.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _vector_to_point proc far
     var_8000 = byte ptr -32768
      s = byte ptr 0
@@ -343,6 +373,15 @@ vector_point_branch_path_13:
     mov     [di+2], ax
     jmp     short vector_point_loop_head_01
 _vector_to_point endp
+; -----------------------------------------------------------------------------
+; Purpose: Release the selected sprite window.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, ES, SS; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _window_release_order_error_msg.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _sprite_free_window proc far
     push    bp
     mov     bp, sp
@@ -351,8 +390,8 @@ _sprite_free_window proc far
     push    di
     mov     es, word ptr [bp+8]
     mov     di, word ptr [bp+6]
-    mov     ds, word ptr es:[di+2]
-    mov     si, word ptr es:[di]
+    mov     ds, word ptr es:[di+2] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     si, word ptr es:[di] ;/* PLATFORM(video): accesses display memory through ES. */
     mov     ax, word ptr [si+2]
     add     ax, 0Fh
     shl     ax, 1

@@ -1,5 +1,8 @@
+/* READABILITY: Build the thirty-two front/back perimeter points for a sphere section from three source points. */
 struct Point { int x; int y; };
 extern int far mulscl(int, int);
+/* Interpolate and translate the front and rear sphere-section point rings.
+ * Params and return follow the declared C signature. */
 void far preRender_sphere_helper2(struct Point *source, struct Point *output)
 {
     int startHalfX, startHalfY;

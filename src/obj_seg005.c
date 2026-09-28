@@ -591,6 +591,14 @@ char replay_axis_magnitude[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 3
 void loop_game(int mode, int frame_index, int frame_offset);
 extern void far *locate_text_resource(void far *res, char *name);
 
+/* Runs the game and replay interface. Params: none. Returns: none. State: reads and updates game, menu, replay and camera state. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(input_joy): reads joystick state. */
+/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void run_game(void) {
 	int dialog_values[2];
 	int replay_key_code, replaybar_height, last_game_frame;
@@ -612,7 +620,7 @@ void run_game(void) {
 			cammd = 0;
 		}
 		gm_playmode = 2;
-		if (file_load_replay(0, "default") != 0) {
+		/* PLATFORM(file): load replay data from a file. */ if (file_load_replay(0, "default") != 0) {
 			return;
 		}
 		track_setup();
@@ -627,6 +635,11 @@ void run_game(void) {
 
 	if (setup_player_cars() != 0) {
 		free_player_cars();
+		/* PLATFORM(input_joy): collect menu-text joystick input. */
+		/* PLATFORM(input_kb): collect menu-text key input. */
+		/* PLATFORM(input_mouse): collect menu-text pointer input. */
+		/* PLATFORM(timer): wait for menu text input using timer ticks. */
+		/* PLATFORM(video): draw the menu resource text. */
 		do_mer_restext();
 	} else {
 		kbormouse = 0;
@@ -652,7 +665,7 @@ void run_game(void) {
 			replayrst = 0;
 			popupact = 0;
 			g_rpl_init = 1;
-			mouse_minmax_position(byte_3B8F2);
+			/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
 			gm_playmode = 1;
 			core.playerstate.car_posWorld1.lx += (long)mulscl(sinfast(st_hdg), -240) << 6;
 			core.playerstate.car_posWorld1.lz += (long)mulscl(cosfast(st_hdg), -240) << 6;
@@ -666,7 +679,7 @@ void run_game(void) {
 			restore_gamestate(0);
 			restore_gamestate(globalgamesettings.game_recordedframes);
 			while (globalgamesettings.game_recordedframes != core.game_frame) {
-				if (input_do_checking(1) != 27)
+				/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ if (input_do_checking(1) != 27)
 					update_gamestate();
 				else
 					break;
@@ -700,14 +713,17 @@ void run_game(void) {
 			}
 
 			if (g_rplbfask != 0) {
-				input_push_status();
-				audio_unk();
+				/* PLATFORM(input_kb): save the active input source. */ /* PLATFORM(input_mouse): save mouse input mode. */ input_push_status();
+				/* PLATFORM(audio): update the active audio mode. */ audio_unk();
+				/* PLATFORM(input_joy): collect dialog joystick input. */
+				/* PLATFORM(timer): wait for dialog input using timer ticks. */
+				/* PLATFORM(video): render a modal dialog. */
 				dialog_result = show_dialog(2, 1, locate_text_resource(gamerptrs, "rbf"), -1, -1, dialogarg2, 0, 0);
 				if (dialog_result == -1)
 					dialog_result = 0;
-				restore_audio_volume();
+				/* PLATFORM(audio): restore audio playback volume. */ restore_audio_volume();
 				word_3F88E = 0;
-				input_pop_status();
+				/* PLATFORM(input_kb): restore the active input source. */ /* PLATFORM(input_mouse): restore mouse input mode. */ /* PLATFORM(video): restore the opaque draw mode. */ input_pop_status();
 				if (dialog_result != 0) {
 					update_crash_state(4, 0);
 					sigframe = 1;
@@ -719,7 +735,7 @@ void run_game(void) {
 				setup_mcgawnd2();
 				cam_idg = numid;
 			} else {
-				sprite_copy_wnd_to_1();
+				/* PLATFORM(video): copy the window sprite to the display page. */ sprite_copy_wnd_to_1();
 			}
 
 			if (gm_playmode != gm_saved_rpl_mode || on_off_dash != dashbtogglesaved || replaybar_toggle != g_replaybarcpytgl || inrepflg != is_in_rplcopy || follow_op != opp_follow_flag_backup) {
@@ -770,11 +786,11 @@ replaybar_done:
 			if (g_simprect != 0) {
 				g_viewinx[cam_idg] = 0;
 				if (mode_flag != 0) {
-					sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
+					/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
 					setup_car_shapes(1);
 				}
 				if (g_rplybarenable != 0) {
-					sprset1size(0, 320, 0, 200);
+					/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, 0, 200);
 					loop_game(1, core.game_frame, core.game_frame);
 				}
 			} else if (g_rplybarenable == 0) {
@@ -792,15 +808,15 @@ replaybar_done:
 						rcunion(rectp, &temp_rect, rectp);
 					}
 				}
-				shape2d_render_bmp_as_mask(dasm_shp_7);
-				shape2d_op_unk4(g_dastbmpbuf);
+				/* PLATFORM(video): draw a bitmap mask. */ shape2d_render_bmp_as_mask(dasm_shp_7);
+				/* PLATFORM(video): draw a shape layer. */ shape2d_op_unk4(g_dastbmpbuf);
 			}
 
 			draw_clip(&boundglassrect);
 			if (mode_flag != 0) {
-				sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
+				/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
 				setup_car_shapes(2);
-				sprset1size(0, 320, 0, 200);
+				/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, 0, 200);
 			}
 
 			if (g_simprect != 0) {
@@ -808,11 +824,11 @@ replaybar_done:
 			}
 
 			if (g_videoflg5 != 0) {
-				msdrawopaquechk();
+				/* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
 				setup_mcgawnd1();
 				numid ^= 1;
 				cam_idg = numid;
-				msdrawtransparentchk();
+				/* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
 			}
 
 			if (gm_playmode == 1 && g_rpl_init == 0) {
@@ -823,7 +839,7 @@ replaybar_done:
 			}
 
 			if (menutimeout != 0) {
-				if (kb_get_char() != 0 || sigframe != 0 || get_kb_or_joy_flags() != 0)
+				/* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ if (kb_get_char() != 0 || sigframe != 0 || get_kb_or_joy_flags() != 0)
 					break;
 				continue;
 			}
@@ -835,11 +851,11 @@ replaybar_done:
 					break;
 				sigframe = 0;
 				gm_playmode = 2;
-				mouse_minmax_position(0);
+				/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(0);
 				loop_game(0, 0, 0);
 				loop_game(2, 4, 0);
 				inrepflg = 1;
-				audio_carstate();
+				/* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
 			}
 
 			if (gm_playmode == 2) {
@@ -848,9 +864,9 @@ replaybar_done:
 			}
 
 			for (;;) {
-				replay_key_code = kb_get_char();
+				/* PLATFORM(input_kb): read the next key code. */ replay_key_code = kb_get_char();
 				if (replay_key_code != 0) {
-					handle_ingame_kb_shortcuts(replay_key_code);
+					/* PLATFORM(input_kb): dispatch a normalized game key. */ handle_ingame_kb_shortcuts(replay_key_code);
 				}
 				switch (replay_key_code) {
 				case 0x4800:
@@ -863,8 +879,8 @@ replaybar_done:
 			}
 
 			if (gm_playmode == 1) {
-				mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
-				if ((flagsdown & 3) != 0 || (get_kb_or_joy_flags() & 0x30) != 0) {
+				/* PLATFORM(input_mouse): read mouse buttons and coordinates. */ mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
+				/* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ if ((flagsdown & 3) != 0 || (get_kb_or_joy_flags() & 0x30) != 0) {
 					gm_playmode = 0;
 					g_rpl_init = 0;
 					rate_frame = frm_rate2;
@@ -875,18 +891,21 @@ replaybar_done:
 		}
 
 		if (g_videoflg5 != 0 && get_0() != 0) {
-			msdrawopaquechk();
+			/* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
 			setup_mcgawnd2();
-			clear_rect(0, 0, 320, 200, 0);
+			/* PLATFORM(video): clear a display rectangle. */ clear_rect(0, 0, 320, 200, 0);
 			setup_mcgawnd1();
-			msdrawtransparentchk();
+			/* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
 		}
 
-		sprcopy2to12();
+		/* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
 		inrepflg = 1;
-		audio_carstate();
-		audio_remove_driver_timer();
+		/* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+		/* PLATFORM(audio): remove the audio timer hook. */ audio_remove_driver_timer();
 		if (gm_playmode == 0 && globalgamesettings.game_opponenttype != 0 && core.opponentstate.car_crashBmpFlag == 0) {
+			/* PLATFORM(input_joy): collect dialog joystick input. */
+			/* PLATFORM(timer): wait for dialog input using timer ticks. */
+			/* PLATFORM(video): render a modal dialog. */
 			show_dialog(3, 0, locate_text_resource(gamerptrs, "cop"), -1, 80, performGraphColor, dialog_values, 0);
 			popupact = 1;
 			dialog_result = rate_frame;
@@ -897,26 +916,33 @@ replaybar_done:
 				if (++dialog_result == rate_frame) {
 					dialog_result = 0;
 					fmtframestr(&resbuftext, core.game_frame + elaptm1, 1);
-					msdrawopaquechk();
-					draw_text_at(&resbuftext, font_op2_alt(&resbuftext), dialog_values[1]);
-					msdrawtransparentchk();
+					/* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+					/* PLATFORM(video): use the display text or sprite interface. */ draw_text_at(&resbuftext, font_op2_alt(&resbuftext), dialog_values[1]);
+					/* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
 				}
-			} while (input_do_checking(1) != 27 && core.opponentstate.car_crashBmpFlag == 0 &&
+			} /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ while (input_do_checking(1) != 27 && core.opponentstate.car_crashBmpFlag == 0 &&
 				 1500 * rate_frame != core.game_frame + elaptm1);
 		}
 
 		popupact = 0;
-		mouse_minmax_position(0);
+		/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(0);
 		remove_frame_callback();
 		free_player_cars();
 	}
 
 	waitm_ms = 100;
-	check_input();
-	show_waiting();
+	/* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
+	/* PLATFORM(input_joy): collect waiting-dialog joystick input. */ /* PLATFORM(timer): wait for dialog input using timer ticks. */ /* PLATFORM(video): render a waiting dialog. */ show_waiting();
 }
 extern char byte_349BA;
 extern char HKeyFlag;
+/* Maps a normalized key code to an in-game action. Params: key code. Returns: action/status byte. State: updates game and menu state. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(input_joy): reads joystick state. */
+/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
+/* PLATFORM(video): draws to or configures the display surface. */
 char handle_ingame_kb_shortcuts(unsigned key)
 {
     switch (key) {
@@ -939,10 +965,16 @@ char handle_ingame_kb_shortcuts(unsigned key)
     case 0x68:
         HKeyFlag ^= 1;
         break;
+    /* PLATFORM(audio): pause and restore audio for mouse help. */
+    /* PLATFORM(input_joy): collect mouse-help joystick input. */
+    /* PLATFORM(input_kb): collect mouse-help key input. */
+    /* PLATFORM(input_mouse): collect mouse-help pointer input. */
+    /* PLATFORM(timer): wait for mouse help input using timer ticks. */
+    /* PLATFORM(video): draw the mouse help interface. */
     case 0x4D:
     case 0x6D:
         do_mou_resource_text();
-        mouse_minmax_position(byte_3B8F2);
+        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
         break;
     case 0x44:
     case 0x64:
@@ -1000,24 +1032,31 @@ extern void far frame_callback(void);
 extern void far timer_reg_callback(callback_t callback);
 unsigned g_clocks;
 unsigned char call_proc_flag;
+/* Starts per-frame callback processing. Params: none. Returns: none. State: resets the callback counter and registration flag. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
 void far set_frame_callback(void) {
     g_clocks = 0;
-    timer_reg_callback(frame_callback);
+    /* PLATFORM(timer): register the timer callback. */ timer_reg_callback(frame_callback);
     call_proc_flag = 0;
 }
 
 
 extern unsigned long far timer_get_counter_unk(unsigned long ticks);
 extern void far timer_remove_callback(callback_t callback);
+/* Stops per-frame callback processing. Params: none. Returns: none. State: removes the registered timer callback. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
 void far remove_frame_callback(void)
 {
-    (void)timer_get_counter_unk(10L);
-    timer_remove_callback(frame_callback);
+    /* PLATFORM(timer): read the timer counter. */ (void)timer_get_counter_unk(10L);
+    /* PLATFORM(timer): remove the timer callback. */ timer_remove_callback(frame_callback);
 }
 
 extern int far compare_ds_ss(void);
 extern void far apply_audio_frame(char* record, int frame_count);
 extern char audio_frmarr[];
+/* Processes one timer frame. Params: none. Returns: none. State: reads frame timing and updates audio-frame state. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
 void far frame_callback(void)
 {
     if (compare_ds_ss() == 0) {
@@ -1034,7 +1073,7 @@ void far frame_callback(void)
 
     snd_tick_clock++;
     if (snd_tick_clock >= frmcs_time && g_audio_frms_ix != sndposrecord) {
-        apply_audio_frame(&audio_frmarr[g_audio_frms_ix * 0x22], snd_tick_clock);
+        /* PLATFORM(audio): apply recorded engine audio state. */ apply_audio_frame(&audio_frmarr[g_audio_frms_ix * 0x22], snd_tick_clock);
         snd_tick_clock = 0;
         g_audio_frms_ix++;
         if (g_audio_frms_ix == 0x28) {
@@ -1050,7 +1089,7 @@ void far frame_callback(void)
     }
     if (gm_playmode == 0 && core.game_frame_in_sec >= core.game_frames_per_sec) {
         inrepflg = 1;
-        audio_carstate();
+        /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
         goto frame_callback_done;
     }
 
@@ -1087,6 +1126,11 @@ static char replay_control;
 extern int far kb_get_key_state(int);
 extern char far replay_axis_value(void);
 extern int far abs(int);
+/* Processes replay input for the selected mode. Params: mode. Returns: none. State: reads and updates replay, camera and input state. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(input_joy): reads joystick state. */
+/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
 void far replay_unk2(int mode)
 {
     register int input;
@@ -1104,7 +1148,7 @@ void far replay_unk2(int mode)
         if (sigframe != 0)
             return;
         inrepflg = 1;
-        audio_carstate();
+        /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
 replay_finished:
         sigframe = 1;
         return;
@@ -1117,7 +1161,7 @@ replay_finished:
         update_crash_state(1, 0);
     if (byte_3B8F2 != 0 || byte_3FE00 != 0) {
         if (byte_3B8F2 != 0) {
-            mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
+            /* PLATFORM(input_mouse): read mouse buttons and coordinates. */ mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
             i = msecoordx - 0xA0;
             if (abs(i) < 0x12)
                 i = 0;
@@ -1138,17 +1182,17 @@ replay_finished:
                 replay_control = replay_axis_magnitude[replay_control];
             else if (replay_control < 0)
                 replay_control = -replay_axis_magnitude[-replay_control];
-            input = get_kb_or_joy_flags() & 0x33;
+            /* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ input = get_kb_or_joy_flags() & 0x33;
         }
         i = tmr2 & 0x3F;
         array_rpl[i] = replay_control;
         replay_steer_flag[i] = 1;
     } else {
-        input = get_kb_or_joy_flags();
+        /* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ input = get_kb_or_joy_flags();
     }
-    if (kb_get_key_state(0x1E))
+    /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x1E))
         input |= 0x10;
-    if (kb_get_key_state(0x2C))
+    /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x2C))
         input |= 0x20;
 record_input:
     if (1500 * rate_frame <= tmr2 + elaptm1) {
@@ -1265,18 +1309,22 @@ void far update_camera_target(void)
 }
 
 /* semantic lead: file_load_replay from fileio.c */
+/* Builds and reads the replay file header. Params: directory and replay name. Returns: load status. State: writes the replay header buffer. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
 char file_load_replay(const char* dir, const char* name)
 {
-	file_build_path(dir, name, ".rpl", buf_g_path);
+	/* PLATFORM(file): build a file path. */ file_build_path(dir, name, ".rpl", buf_g_path);
 
 	g_is_busy = 1;
-	file_read_fatal(buf_g_path, td13_replay_hdr);
+	/* PLATFORM(file): read replay data from a file. */ file_read_fatal(buf_g_path, td13_replay_hdr);
 	globalgamesettings = *(struct GAMEINFO far*)td13_replay_hdr;
 	g_is_busy = 0;
 	return 0;
 }
 
 /* semantic lead: file_write_replay from fileio.c */
+/* Writes the replay header and data. Params: filename. Returns: write status. State: reads replay buffers. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
 short file_write_replay(const char* filename)
 {
 	register int ret;
@@ -1285,7 +1333,7 @@ short file_write_replay(const char* filename)
 	*(struct GAMEINFO far*)td13_replay_hdr = globalgamesettings;
 	write_length = globalgamesettings.game_recordedframes + 0x724;
 	g_is_busy = 1;
-	ret = file_write_fatal(filename, td13_replay_hdr, write_length);
+	/* PLATFORM(file): write replay data to a file. */ ret = file_write_fatal(filename, td13_replay_hdr, write_length);
 	g_is_busy = 0;
 	return (char)ret;
 }
@@ -1351,6 +1399,10 @@ extern void preRender_line(int x1, int y1, int x2, int y2, int color);
 extern void far *mmgr_free(char far *ptr);
 char aStdaxxxx[] = "stdaxxxx";
 char aStdbxxxx[] = "stdbxxxx";
+/* Prepares car dashboard and shape sprites. Params: mode. Returns: none. State: reads car/camera state and updates shape/resource handles. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void far setup_car_shapes(int mode)
 {
     extern struct SIMD simdp7;
@@ -1397,20 +1449,20 @@ void far setup_car_shapes(int mode)
         aStdbxxxx[5] = globalgamesettings.game_playercarid[1];
         aStdbxxxx[6] = globalgamesettings.game_playercarid[2];
         aStdbxxxx[7] = globalgamesettings.game_playercarid[3];
-        stdares = file_load_resource(3, aStdaxxxx);
-        stdbres = file_load_resource(2, aStdbxxxx);
+        /* PLATFORM(file): load a named resource. */ stdares = file_load_resource(3, aStdaxxxx);
+        /* PLATFORM(file): load a named resource. */ stdbres = file_load_resource(2, aStdbxxxx);
         locate_many_resources(stdares, "whl1whl2whl3ins2gboxins1ins3inm1inm3", (char far **)wheel_shapes);
         locate_many_resources(stdbres, "gnobgnabdot dotadot1dot2", (char far **)gnobshapes);
         if (simdp7.spdcenter.py == 0)
             locate_many_resources(stdbres, "dig0dig1dig2dig3dig4dig5dig6dig7dig8dig9", (char far **)digshapes);
-        meters_sprite = sprite_make_window(wheel_shapes[3]->s2d_width * pixel_scales, wheel_shapes[3]->s2d_height, 15);
-        gnob_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
-        gear_base_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
+        /* PLATFORM(video): create an offscreen sprite surface. */ meters_sprite = sprite_make_window(wheel_shapes[3]->s2d_width * pixel_scales, wheel_shapes[3]->s2d_height, 15);
+        /* PLATFORM(video): create an offscreen sprite surface. */ gnob_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
+        /* PLATFORM(video): create an offscreen sprite surface. */ gear_base_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
         shape = (struct SHAPE2D far *)locate_shape_fatal(stdares, "dash");
-        sprite_setup1_from_arg_pointer(gear_base_sprite);
-        shape2d_op_unk2(shape, shape->s2d_pos_x - wheel_shapes[4]->s2d_pos_x,
+        /* PLATFORM(video): select the sprite surface for drawing. */ sprite_setup1_from_arg_pointer(gear_base_sprite);
+        /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk2(shape, shape->s2d_pos_x - wheel_shapes[4]->s2d_pos_x,
                         shape->s2d_pos_y - wheel_shapes[4]->s2d_pos_y);
-        sprite_copy_2_to_1();
+        /* PLATFORM(video): copy the working sprite page. */ sprite_copy_2_to_1();
         dashbmy9 = shape->s2d_pos_y;
         if (locate_shape_nofatal(stdares, "roof") != 0)
             rfy5 = ((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"))->s2d_height;
@@ -1425,13 +1477,13 @@ void far setup_car_shapes(int mode)
         }
         dasty = 0;
         return;
-    case 1:
+    /* PLATFORM(video): select the opaque drawing path. */ case 1:
         msdrawopaquechk();
-        if (locate_shape_nofatal(stdares, "roof") != 0)
+        /* PLATFORM(video): draw a shape layer. */ if (locate_shape_nofatal(stdares, "roof") != 0)
             shape2d_op_unk((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"));
-        shape2d_op_unk3((struct SHAPE2D far *)locate_shape_fatal(stdares, "dash"));
-        shape2d_op_unk3(wheel_shapes[1]);
-        msdrawtransparentchk();
+        /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk3((struct SHAPE2D far *)locate_shape_fatal(stdares, "dash"));
+        /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk3(wheel_shapes[1]);
+        /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
         x = 0;
         gear_knob_visible_view[cam_idg] = g_viewinx[cam_idg] = 0;
         steering_dot_y[cam_idg] = x;
@@ -1444,32 +1496,32 @@ void far setup_car_shapes(int mode)
     case 2:
         if ((core.playerstate.car_changing_gear | core.playerstate.car_fpsmul2) == 0 &&
             gear_knob_visible_view[cam_idg] != 0) {
-            if (g_videoflg5 == 0)
+            /* PLATFORM(video): select the opaque drawing path. */ if (g_videoflg5 == 0)
                 msdrawopaquechk();
-            sprset1size(0, 0x140, 0, rplbarabovehgt);
-            sprite_putimage_and_alt(gear_base_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gear_base_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
             gear_knob_visible_view[cam_idg] = 0;
         } else if (gear_knob_visible_view[cam_idg] != core.playerstate.car_changing_gear ||
                    gear_knob_x_last[cam_idg] != core.playerstate.car_knob_x ||
                    gear_knob_y_last[cam_idg] != core.playerstate.car_knob_y ||
                    (core.playerstate.car_fpsmul2 != 0 && gear_knob_visible_view[cam_idg] == 0)) {
-            sprite_setup1_from_arg_pointer(gnob_sprite);
+            /* PLATFORM(video): select the sprite surface for drawing. */ sprite_setup1_from_arg_pointer(gnob_sprite);
             gear_knob_visible_view[cam_idg] = 1;
-            shape2d_op_unk2(wheel_shapes[4], 0, 0);
+            /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk2(wheel_shapes[4], 0, 0);
             x = core.playerstate.car_knob_x;
             y = core.playerstate.car_knob_y;
             gear_knob_x_last[cam_idg] = x;
             gear_knob_y_last[cam_idg] = y;
-            sprite_putimage_and_alt2(gnobshapes[1], x, y);
-            sprite_putimage_or_alt(gnobshapes[0], x, y);
+            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt2(gnobshapes[1], x, y);
+            /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or_alt(gnobshapes[0], x, y);
             if (g_videoflg5 != 0)
                 setup_mcgawnd2();
             else {
-                sprcopy2to12();
-                msdrawopaquechk();
+                /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
+                /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
             }
-            sprset1size(0, 0x140, 0, rplbarabovehgt);
-            sprite_putimage_and_alt(gnob_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gnob_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
         }
 
         knob_removed = 0;
@@ -1480,21 +1532,21 @@ void far setup_car_shapes(int mode)
         else if (steering > 10)
             wheel_zone = 2;
         if (steering_zone[cam_idg] != wheel_zone || g_simprect != 0) {
-            if (g_videoflg5 == 0)
+            /* PLATFORM(video): select the opaque drawing path. */ if (g_videoflg5 == 0)
                 msdrawopaquechk();
             if (steering_dot_y[cam_idg] != 0) {
-                sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
                 steering_dot_y[cam_idg] = 0;
                 knob_removed = 1;
             }
             switch (wheel_zone) {
-            case 0:
+            /* PLATFORM(video): draw a shape layer. */ case 0:
                 shape2d_op_unk3(wheel_shapes[0]);
                 break;
-            case 1:
+            /* PLATFORM(video): draw a shape layer. */ case 1:
                 shape2d_op_unk3(wheel_shapes[1]);
                 break;
-            case 2:
+            /* PLATFORM(video): draw a shape layer. */ case 2:
                 shape2d_op_unk3(wheel_shapes[2]);
                 break;
             }
@@ -1524,15 +1576,15 @@ void far setup_car_shapes(int mode)
 
         if (changed != 0 || g_simprect != 0 ||
             last_speedo[cam_idg] != x || last_tacho[cam_idg] != y) {
-            if (g_videoflg5 == 0)
+            /* PLATFORM(video): select the opaque drawing path. */ if (g_videoflg5 == 0)
                 msdrawopaquechk();
             if (steering_dot_y[cam_idg] != 0) {
-                sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
                 steering_dot_y[cam_idg] = 0;
                 knob_removed = 1;
             }
-            sprite_setup1_from_arg_pointer(meters_sprite);
-            shape2d_op_unknown5(wheel_shapes[3], 0, 0);
+            /* PLATFORM(video): select the sprite surface for drawing. */ sprite_setup1_from_arg_pointer(meters_sprite);
+            /* PLATFORM(video): draw a shape layer. */ shape2d_op_unknown5(wheel_shapes[3], 0, 0);
             last_speedo[cam_idg] = x;
             last_tacho[cam_idg] = y;
             if (speedo_type == 1) {
@@ -1545,48 +1597,48 @@ void far setup_car_shapes(int mode)
                     x -= 100;
                 }
                 if (digit != 0) {
-                    sprite_putimage_or(digshapes[digit], simdp7.spdpoints[0], simdp7.spdpoints[1]);
+                    /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[digit], simdp7.spdpoints[0], simdp7.spdpoints[1]);
                     has_digit = 1;
                 }
                 digit = x / 10;
                 if (digit != 0 || has_digit != 0) {
-                    sprite_putimage_or(digshapes[digit], simdp7.spdpoints[2], simdp7.spdpoints[3]);
+                    /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[digit], simdp7.spdpoints[2], simdp7.spdpoints[3]);
                     x -= digit * 10;
                     has_digit = 1;
                 }
-                sprite_putimage_or(digshapes[x], simdp7.spdpoints[4], simdp7.spdpoints[5]);
+                /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[x], simdp7.spdpoints[4], simdp7.spdpoints[5]);
             } else if (speedo_type == 0) {
-                preRender_line(simdp7.spdcenter.px, simdp7.spdcenter.py,
+                /* PLATFORM(video): draw a preview line. */ preRender_line(simdp7.spdcenter.px, simdp7.spdcenter.py,
                                simdp7.spdpoints[x * 2], simdp7.spdpoints[x * 2 + 1],
                                spdneedlegaugeclr);
             }
-            preRender_line(simdp7.revcenter.px, simdp7.revcenter.py,
+            /* PLATFORM(video): draw a preview line. */ preRender_line(simdp7.revcenter.px, simdp7.revcenter.py,
                            simdp7.revpoints[y * 2], simdp7.revpoints[y * 2 + 1],
                            spdneedlegaugeclr);
             switch (wheel_zone) {
-            case 0:
+            /* PLATFORM(video): draw a bitmap mask. */ case 0:
                 shape2d_render_bmp_as_mask(wheel_shapes[7]);
-                shape2d_op_unk4(wheel_shapes[5]);
+                /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk4(wheel_shapes[5]);
                 break;
-            case 2:
+            /* PLATFORM(video): draw a bitmap mask. */ case 2:
                 shape2d_render_bmp_as_mask(wheel_shapes[8]);
-                shape2d_op_unk4(wheel_shapes[6]);
+                /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk4(wheel_shapes[6]);
                 break;
             }
             if (g_videoflg5 != 0)
                 setup_mcgawnd2();
-            else
+            /* PLATFORM(video): copy the working sprite pages. */ else
                 sprcopy2to12();
-            sprset1size(0, 0x140, 0, rplbarabovehgt);
-            sprite_putimage_and_alt(meters_sprite->sprite_bitmapptr, wheel_shapes[3]->s2d_pos_x, wheel_shapes[3]->s2d_pos_y);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(meters_sprite->sprite_bitmapptr, wheel_shapes[3]->s2d_pos_x, wheel_shapes[3]->s2d_pos_y);
         }
 
         if (last_steering_step[cam_idg] != steering || g_simprect != 0 || knob_removed != 0) {
-            if (g_videoflg5 == 0)
+            /* PLATFORM(video): select the opaque drawing path. */ if (g_videoflg5 == 0)
                 msdrawopaquechk();
-            sprset1size(0, 0x140, 0, rplbarabovehgt);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, rplbarabovehgt);
             if (steering_dot_y[cam_idg] != 0) {
-                sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
                 steering_dot_y[cam_idg] = 0;
             }
             dot = &simdp7.steeringdots[(steering < 0 ? -steering : steering) * 2];
@@ -1596,19 +1648,19 @@ void far setup_car_shapes(int mode)
                 x_pos -= (x_pos - simdp7.steeringdots[0]) * 2;
             steering_dot_x[cam_idg] = (x_pos - gnobshapes[2]->s2d_unk1) & vidflg3is_minus1;
             steering_dot_y[cam_idg] = y_pos - gnobshapes[2]->s2d_unk2;
-            sprite_clear_shape_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
-            sprite_putimage_and_alt2(gnobshapes[3], x_pos, y_pos);
-            sprite_putimage_or_alt(gnobshapes[2], x_pos, y_pos);
+            /* PLATFORM(video): use the display text or sprite interface. */ sprite_clear_shape_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt2(gnobshapes[3], x_pos, y_pos);
+            /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or_alt(gnobshapes[2], x_pos, y_pos);
             last_steering_step[cam_idg] = steering;
         }
-        msdrawtransparentchk();
+        /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
         return;
-    case 3:
+    /* PLATFORM(video): release an offscreen sprite surface. */ case 3:
         sprite_free_window(gear_base_sprite);
-        sprite_free_window(gnob_sprite);
-        sprite_free_window(meters_sprite);
-        mmgr_free((char far *)stdbres);
-        mmgr_free((char far *)stdares);
+        /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(gnob_sprite);
+        /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(meters_sprite);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free((char far *)stdbres);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free((char far *)stdares);
         return;
     }
 }
@@ -1618,51 +1670,78 @@ extern void far *file_load_resource_file(char *name);
 extern void far *locate_shape_alt(void far *res, char *name);
 extern int audio_init_engine(int id, void far *data, void far *eng1, void far *eng);
 extern long mmgr_get_res_ofs_diff_scaled(void);
+/* Loads player/opponent car and engine resources. Params: none. Returns: setup status. State: updates resource handles and engine IDs. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(input_joy): reads joystick state. */
+/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
+/* PLATFORM(video): draws to or configures the display surface. */
 int setup_player_cars(void) {
 	void far* carresptr;
 	long mem_limit;
 
 	g_wndspr = 0;
+	/* PLATFORM(file): check required files and request missing files. */
+	/* PLATFORM(input_joy): collect file-confirmation joystick input. */
+	/* PLATFORM(input_kb): collect file-confirmation key input. */
+	/* PLATFORM(input_mouse): collect file-confirmation pointer input. */
+	/* PLATFORM(timer): wait for file confirmation using timer ticks. */
+	/* PLATFORM(video): show missing-file guidance. */
 	ensure_file_exists(2);
 	shape3d_load_car_shapes(globalgamesettings.game_playercarid, globalgamesettings.game_opponentcarid);
 	aCarcoun[3] = globalgamesettings.game_playercarid[0];
 	aCarcoun[4] = globalgamesettings.game_playercarid[1];
 	aCarcoun[5] = globalgamesettings.game_playercarid[2];
 	aCarcoun[6] = globalgamesettings.game_playercarid[3];
-	carresptr = file_load_resource_file(aCarcoun);
+	/* PLATFORM(file): load a resource file. */ carresptr = file_load_resource_file(aCarcoun);
 	setup_aero_trackdata(carresptr, 0);
-	unload_resource(carresptr);
+	/* PLATFORM(memory): release a loaded resource. */ unload_resource(carresptr);
 
 	if (globalgamesettings.game_opponenttype != 0) {
 		aCarcoun[3] = globalgamesettings.game_opponentcarid[0];
 		aCarcoun[4] = globalgamesettings.game_opponentcarid[1];
 		aCarcoun[5] = globalgamesettings.game_opponentcarid[2];
 		aCarcoun[6] = globalgamesettings.game_opponentcarid[3];
-		carresptr = file_load_resource_file(aCarcoun);
+		/* PLATFORM(file): load a resource file. */ carresptr = file_load_resource_file(aCarcoun);
 		setup_aero_trackdata(carresptr, 1);
-		unload_resource(carresptr);
+		/* PLATFORM(memory): release a loaded resource. */ unload_resource(carresptr);
 		
+		/* PLATFORM(file): check required files and request missing files. */
+		/* PLATFORM(input_joy): collect file-confirmation joystick input. */
+		/* PLATFORM(input_kb): collect file-confirmation key input. */
+		/* PLATFORM(input_mouse): collect file-confirmation pointer input. */
+		/* PLATFORM(timer): wait for file confirmation using timer ticks. */
+		/* PLATFORM(video): show missing-file guidance. */
 		ensure_file_exists(4);
 		load_opponent_data();
 	}
 
+	/* PLATFORM(file): check required files and request missing files. */
+	/* PLATFORM(input_joy): collect file-confirmation joystick input. */
+	/* PLATFORM(input_kb): collect file-confirmation key input. */
+	/* PLATFORM(input_mouse): collect file-confirmation pointer input. */
+	/* PLATFORM(timer): wait for file confirmation using timer ticks. */
+	/* PLATFORM(video): show missing-file guidance. */
 	ensure_file_exists(3);
-	eng1resourceptr = file_load_resource(5, "eng1");//aEng1); // "eng1"
-	engdata = file_load_resource(6, "eng");//aEng); // "eng"
-	audio_add_driver_timer();
-	g_player_sound_id = audio_init_engine(0x21, &player_engine_profile, eng1resourceptr, engdata);
+	/* PLATFORM(file): load a named resource. */ eng1resourceptr = file_load_resource(5, "eng1");//aEng1); // "eng1"
+	/* PLATFORM(file): load a named resource. */ engdata = file_load_resource(6, "eng");//aEng); // "eng"
+	/* PLATFORM(audio): install the audio timer hook. */ audio_add_driver_timer();
+	/* PLATFORM(audio): start an engine audio stream. */ g_player_sound_id = audio_init_engine(0x21, &player_engine_profile, eng1resourceptr, engdata);
 
 	sndpendingstate = 0;
 	g_plyr_snd_state = 0;
 	audiooppflag = 0;
 	if (globalgamesettings.game_opponenttype != 0) {
-		op_eng_sound_id = audio_init_engine(0x20, &opponent_engine_profile, eng1resourceptr, engdata);
+		/* PLATFORM(audio): start an engine audio stream. */ op_eng_sound_id = audio_init_engine(0x20, &opponent_engine_profile, eng1resourceptr, engdata);
 	}
 
 	g_audio_frms_ix = 0;
 	sndposrecord = 0;
 	snd_tick_clock = 0;
-	fntled_res = file_load_resource(0, "fontled.fnt");//aFontled_fnt); // "fontled.fnt"
+	/* PLATFORM(file): load a named resource. */ fntled_res = file_load_resource(0, "fontled.fnt");//aFontled_fnt); // "fontled.fnt"
 	statemgmtcpy = slow_video_mode_state;
 	init_rect_arrays();
 	if (menutimeout == 0) {
@@ -1670,11 +1749,11 @@ int setup_player_cars(void) {
 	}
 
 	if (menutimeout == 0) {
-		sdgresourcehandle = file_load_resource(3, "sdgame");//aSdgame); // "sdgame"
+		/* PLATFORM(file): load a named resource. */ sdgresourcehandle = file_load_resource(3, "sdgame");//aSdgame); // "sdgame"
 		loop_game(0, 0, 0);
 	}
 
-	gamerptrs = file_load_resource_file("game");
+	/* PLATFORM(file): load a resource file. */ gamerptrs = file_load_resource_file("game");
 	g_planlist = locate_shape_alt(gamerptrs, "plan");//aPlan); // "plan"
 	wallrecrecord = locate_shape_alt(gamerptrs, "wall");//aWall); // "wall"
 	load_sdgame2_shapes();
@@ -1686,10 +1765,10 @@ int setup_player_cars(void) {
 	if (g_videoflg5 == 0) {
 		
 		mem_limit = 0xFA00L / (pixel_scales * vidflg4_is1) + 0x12;
-		if (mmgr_get_res_ofs_diff_scaled() <= mem_limit) {
+		/* PLATFORM(memory): query available resource memory. */ if (mmgr_get_res_ofs_diff_scaled() <= mem_limit) {
 			return 1;
 		}
-		g_wndspr = sprite_make_window(0x140, 0xC8, 0x0F);
+		/* PLATFORM(video): create an offscreen sprite surface. */ g_wndspr = sprite_make_window(0x140, 0xC8, 0x0F);
 	}
 
 	follow_op = 0;
@@ -1698,38 +1777,44 @@ int setup_player_cars(void) {
 }
 
 /* semantic lead: free_player_cars from restunts.c */
+/* Releases player/opponent resources and audio hooks. Params: none. Returns: none. State: reads and clears resource handles. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void free_player_cars(void) {
 	if (g_videoflg5 == 0) {
 		if (g_wndspr != 0) {
-			sprite_free_window(g_wndspr);
+			/* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(g_wndspr);
 		}
 	}
 	shape3d_free_all();
 	unload_skybox();
 	free_sdgame2();
-	unload_resource(gamerptrs);
+	/* PLATFORM(memory): release a loaded resource. */ unload_resource(gamerptrs);
 	if (menutimeout == 0) {
-		mmgr_free(sdgresourcehandle);
+		/* PLATFORM(memory): release resource memory. */ mmgr_free(sdgresourcehandle);
 		setup_car_shapes(3);
 	}
 
-	mmgr_free(fntled_res);
-	audio_remove_driver_timer();
-	mmgr_free(engdata);
-	mmgr_free(eng1resourceptr);
+	/* PLATFORM(memory): release resource memory. */ mmgr_free(fntled_res);
+	/* PLATFORM(audio): remove the audio timer hook. */ audio_remove_driver_timer();
+	/* PLATFORM(memory): release resource memory. */ mmgr_free(engdata);
+	/* PLATFORM(memory): release resource memory. */ mmgr_free(eng1resourceptr);
 	shape3d_free_car_shapes();
 }
 
 void mouse_set_minmax(int, int, int, int);
 void mouse_set_position(int, int);
+/* Sets the in-game mouse bounds. Params: enabled flag. Returns: none. State: maps the flag to mouse range and position. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
 void mouse_minmax_position(int enabled)
 {
     if (enabled) {
-        mouse_set_minmax(15, 0, 0x131, 0xC8);
-        mouse_set_position(0xA0, 0x64);
+        /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(15, 0, 0x131, 0xC8);
+        /* PLATFORM(input_mouse): set the mouse position. */ mouse_set_position(0xA0, 0x64);
         return;
     }
-    mouse_set_minmax(0, 0, 0x140, 0xC8);
+    /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(0, 0, 0x140, 0xC8);
 }
 void far replay_unk(void)
 {
@@ -1819,6 +1904,14 @@ extern char aDefault_1[];
 extern int far file_find(char *path);
 extern struct RECTANGLE *introtext(char *text, int x, int y, int color, int unk);
 extern void far copy_string(char *dst, char far *src);
+/* Runs one game/replay loop step and updates its UI. Params: mode, frame index and frame offset. Returns: none. State: reads and updates game, replay, camera and UI state. */
+/* PLATFORM(audio): updates audio playback or hooks. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(input_joy): reads joystick state. */
+/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void loop_game(int mode, int frame_index, int frame_offset)
 {
     char answer;
@@ -1852,30 +1945,30 @@ void loop_game(int mode, int frame_index, int frame_offset)
             view_camera_choice[cam_idg] = -1;
             for (i = 0; i < 9; i++)
                 camera_buttons_state_per_view[i * 2 + cam_idg] = 0;
-            msdrawopaquechk();
-            shape2d_op_unk(replayshapes[0]);
+            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+            /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[0]);
             camera_button_tick[cam_idg] = -1;
             camera_button_col_cache[cam_idg] = -1;
             fmtframestr(&resbuftext, globalgamesettings.game_recordedframes + elaptm1, 1);
-            font_setup_unknown(dlg_colour, 0);
-            fontsetfontdef2(fntled_res);
-            draw_text_at(&resbuftext, 0xD8, 0xBB);
-            fontsetfontdef();
+            /* PLATFORM(video): set the font drawing state. */ font_setup_unknown(dlg_colour, 0);
+            /* PLATFORM(video): select a font definition. */ fontsetfontdef2(fntled_res);
+            /* PLATFORM(video): draw text at screen coordinates. */ draw_text_at(&resbuftext, 0xD8, 0xBB);
+            /* PLATFORM(video): select the active font definition. */ fontsetfontdef();
         }
         if (camera_button_tick[cam_idg] != frame_offset + elaptm1) {
             camera_button_tick[cam_idg] = frame_offset + elaptm1;
             fmtframestr(&resbuftext, frame_offset + elaptm1, 1);
-            font_setup_unknown(dlg_colour, 0);
-            msdrawopaquechk();
-            fontsetfontdef2(fntled_res);
-            draw_text_at(&resbuftext, 0x98, 0xBB);
-            fontsetfontdef();
+            /* PLATFORM(video): set the font drawing state. */ font_setup_unknown(dlg_colour, 0);
+            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+            /* PLATFORM(video): select a font definition. */ fontsetfontdef2(fntled_res);
+            /* PLATFORM(video): draw text at screen coordinates. */ draw_text_at(&resbuftext, 0x98, 0xBB);
+            /* PLATFORM(video): select the active font definition. */ fontsetfontdef();
         }
         if (camera_mode_view[cam_idg] != cammd) {
             camera_mode_view[cam_idg] = cammd;
             camera_button_col_cache[cam_idg] = -1;
-            msdrawopaquechk();
-            shape2d_op_unk(replayshapes[cammd + 1]);
+            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+            /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[cammd + 1]);
             if (game_camera_buttons_count[cammd] < camera_button_index)
                 camera_button_index = game_camera_buttons_count[cammd];
             if (view_camera_choice[cam_idg] > 6)
@@ -1889,12 +1982,12 @@ void loop_game(int mode, int frame_index, int frame_offset)
             j = (long)frame_offset * 110 / globalgamesettings.game_recordedframes;
         }
         if (camera_button_col_cache[cam_idg] != i || camera_button_row[cam_idg] != j) {
-            msdrawopaquechk();
+            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
             camera_button_col_cache[cam_idg] = i;
             camera_button_row[cam_idg] = j;
-            sprite_1_unk(0x9A, 0xB1, 0x74, 6, camera_select_fill_color);
-            sprite_1_unk(i + 0x9A, 0xB1, 6, 6, dlg_colour);
-            sprite_1_unk4(j + 0x9A, 0xB1, j + 0x9F, 0xB6, camera_select_outline_color);
+            /* PLATFORM(video): draw a UI sprite. */ sprite_1_unk(0x9A, 0xB1, 0x74, 6, camera_select_fill_color);
+            /* PLATFORM(video): draw a UI sprite. */ sprite_1_unk(i + 0x9A, 0xB1, 6, 6, dlg_colour);
+            /* PLATFORM(video): draw a UI sprite outline. */ sprite_1_unk4(j + 0x9A, 0xB1, j + 0x9F, 0xB6, camera_select_outline_color);
         }
         if (view_camera_choice[cam_idg] != camera_button_index)
             goto redraw_buttons;
@@ -1903,44 +1996,44 @@ void loop_game(int mode, int frame_index, int frame_offset)
                 goto redraw_buttons;
         }
         goto buttons_done;
-redraw_buttons:
+/* PLATFORM(video): select the opaque drawing path. */ redraw_buttons:
         msdrawopaquechk();
         if (view_camera_choice[cam_idg] != -1) {
-            if (camera_buttons_state_per_view[view_camera_choice[cam_idg] * 2 + cam_idg] != 0)
+            /* PLATFORM(video): draw a shape layer. */ if (camera_buttons_state_per_view[view_camera_choice[cam_idg] * 2 + cam_idg] != 0)
                 shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 14]);
-            else
+            /* PLATFORM(video): draw a shape layer. */ else
                 shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 5]);
             view_camera_choice[cam_idg] = -1;
         }
         for (button = 0; button < 7; button++) {
             if (camera_buttons_pressed[button] == 0 && camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button]) {
-                shape2d_op_unk(replayshapes[button + 5]);
+                /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[button + 5]);
                 camera_buttons_state_per_view[button * 2 + cam_idg] = 0;
             }
         }
         for (button = 0; button < 7; button++) {
             if (camera_buttons_pressed[button] != 0) {
                 camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
-                shape2d_op_unk(replayshapes[button + 14]);
+                /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[button + 14]);
                 camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
             }
         }
         view_camera_choice[cam_idg] = camera_button_index;
-        if (camera_button_index != -1)
+        /* PLATFORM(video): draw a UI sprite outline. */ if (camera_button_index != -1)
             sprite_1_unk4(game_camera_buttons_x1[camera_button_index], game_camera_buttons_y1[camera_button_index],
                           game_camera_buttons_x2[camera_button_index], game_camera_buttons_y2[camera_button_index], camera_select_outline_color);
-buttons_done:
+/* PLATFORM(video): select the transparent drawing path. */ buttons_done:
         msdrawtransparentchk();
         break;
     case 3:
         if (game_camera_buttons_count[cammd] < camera_button_index && cammd != 2)
             camera_button_index = game_camera_buttons_count[cammd];
-        sprite_copy_2_to_1();
+        /* PLATFORM(video): copy the working sprite page. */ sprite_copy_2_to_1();
         if (g_videoflg5 != 0)
             cam_idg = numid ^ 1;
-next_input:
+/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ /* PLATFORM(timer): read the elapsed timer interval. */ next_input:
         key_code = input_checking(timer_get_delta_alt());
-        button = mouse_multi_hittest(game_camera_buttons_count[cammd] + 1, game_camera_buttons_x1,
+        /* PLATFORM(input_mouse): test the current pointer against UI buttons. */ button = mouse_multi_hittest(game_camera_buttons_count[cammd] + 1, game_camera_buttons_x1,
                                      game_camera_buttons_x2, game_camera_buttons_y1, game_camera_buttons_y2);
         if (button != -1) {
             if (button != camera_button_index && key_code == 0)
@@ -1972,11 +2065,11 @@ next_input:
                 }
             }
         } else {
-            button = mouse_multi_hittest(1, gameunk_button_x1, gameunk_button_x2, gameunk_button_y1, gameunk_button_y2);
+            /* PLATFORM(input_mouse): test the current pointer against UI buttons. */ button = mouse_multi_hittest(1, gameunk_button_x1, gameunk_button_x2, gameunk_button_y1, gameunk_button_y2);
             if (button == 0 && (key_code == ' ' || key_code == '\r'))
                 key_code = 'c';
         }
-        if (key_code != 0 && key_code != 0x1B && handle_ingame_kb_shortcuts(key_code) != 0)
+        /* PLATFORM(input_kb): dispatch a normalized game key. */ if (key_code != 0 && key_code != 0x1B && handle_ingame_kb_shortcuts(key_code) != 0)
             break;
         if (inrepflg == 0 && key_code == 0) {
             if (g_rplybarenable == 0)
@@ -1992,7 +2085,7 @@ next_input:
             loop_game(2, 4, 0);
         loop_game(1, core.game_frame, core.game_frame);
         modifier = 0;
-        if (kb_get_key_state(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
+        /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
             modifier = 1;
         if (modifier != 0) {
             switch (key_code) {
@@ -2072,7 +2165,7 @@ redraw_input:
             case 6:
 pause_menu:
                 inrepflg = 1;
-                audio_carstate();
+                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
                 loop_game(2, 4, 0);
                 loop_game(1, core.game_frame, core.game_frame);
                 for (i = 0; i < 8; i++)
@@ -2088,9 +2181,12 @@ pause_menu:
                 if ((endhsdemo & 4) == 0)
                     dialog_params[1] = 1;
                 g_simprect = g_vid_flag6;
+                /* PLATFORM(input_joy): collect dialog joystick input. */
+                /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                /* PLATFORM(video): render a modal dialog. */
                 answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "men"), -1, -1, dialogarg2, dialog_params, 0);
                 switch (answer) {
-                case 2:
+                /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ case 2:
                     check_input();
                     rate_frame = frm_rate2;
                     globalgamesettings.game_framespersec = frm_rate2;
@@ -2104,6 +2200,9 @@ pause_menu:
                     if (endhsdemo & 2)
                         endhsdemo = 3;
                     else if (globalgamesettings.game_recordedframes != tmr2) {
+                        /* PLATFORM(input_joy): collect dialog joystick input. */
+                        /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                        /* PLATFORM(video): render a modal dialog. */
                         i = show_dialog(2, 0, locate_text_resource(gamerptrs, "con"), -1, -1, performGraphColor, 0, 0);
                         if (i < 1)
                             break;
@@ -2122,21 +2221,25 @@ pause_menu:
                     g_rplmodui = 0;
                     loop_game(2, 3, 0);
                     inrepflg = 0;
-                    mouse_minmax_position(byte_3B8F2);
-                    check_input();
+                    /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
+                    /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
                     kbormouse = 0;
                     break;
                 case 4:
                     endhsdemo = 0;
-                    audio_carstate();
+                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                    /* PLATFORM(file): open the file selection interface. */
+                    /* PLATFORM(input_joy): collect file-selection joystick input. */
+                    /* PLATFORM(timer): wait for file selection using timer ticks. */
+                    /* PLATFORM(video): draw the file selection interface. */
                     i = do_fileselect_dialog(replay_file, aDefault_1, ".rpl", locate_text_resource(main_data_file_addr, "rep"));
                     if (i == 0)
                         break;
                     waitm_ms = 150;
-                    show_waiting();
+                    /* PLATFORM(input_joy): collect waiting-dialog joystick input. */ /* PLATFORM(timer): wait for dialog input using timer ticks. */ /* PLATFORM(video): render a waiting dialog. */ show_waiting();
                     oldcfg = globalgamesettings;
                     prev_sky = td14tb[0x384];
-                    if (file_load_replay(replay_file, aDefault_1) != 0)
+                    /* PLATFORM(file): load replay data from a file. */ if (file_load_replay(replay_file, aDefault_1) != 0)
                         globalgamesettings.game_recordedframes = 0;
                     on_off_dash = 0;
                     track_setup();
@@ -2157,6 +2260,12 @@ pause_menu:
                             oldcfg.game_opponentcarid[3] != globalgamesettings.game_opponentcarid[3])
                             i = 1;
                         else {
+                            /* PLATFORM(file): check required files and request missing files. */
+                            /* PLATFORM(input_joy): collect file-confirmation joystick input. */
+                            /* PLATFORM(input_kb): collect file-confirmation key input. */
+                            /* PLATFORM(input_mouse): collect file-confirmation pointer input. */
+                            /* PLATFORM(timer): wait for file confirmation using timer ticks. */
+                            /* PLATFORM(video): show missing-file guidance. */
                             ensure_file_exists(2);
                             load_opponent_data();
                         }
@@ -2168,15 +2277,22 @@ pause_menu:
                     rate_frame = globalgamesettings.game_framespersec;
                     initialize_game_state(-1);
                     break;
-                case 5:
+                /* PLATFORM(audio): update engine audio from car state. */ case 5:
                     audio_carstate();
                     write_state = 0;
                     while (write_state == 0) {
+                        /* PLATFORM(file): open the save-file interface. */
+                        /* PLATFORM(input_joy): collect file-entry joystick input. */
+                        /* PLATFORM(timer): wait for file entry using timer ticks. */
+                        /* PLATFORM(video): draw the save-file interface. */
                         if (do_savefile_dialog(replay_file, aDefault_1, locate_text_resource(main_data_file_addr, "rep")) != 0) {
-                            file_build_path(replay_file, aDefault_1, ".rpl", buf_g_path);
+                            /* PLATFORM(file): build a file path. */ file_build_path(replay_file, aDefault_1, ".rpl", buf_g_path);
                             write_state = 1;
                             g_is_busy = 1;
-                            if (file_find(buf_g_path) != 0) {
+                            /* PLATFORM(file): check whether a file exists. */ if (file_find(buf_g_path) != 0) {
+                                /* PLATFORM(input_joy): collect dialog joystick input. */
+                                /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                                /* PLATFORM(video): render a modal dialog. */
                                 i = show_dialog(2, 0, locate_text_resource(main_data_file_addr, "fex"), -1, -1, performGraphColor, 0, 0);
                                 if (i == -1)
                                     write_state = -1;
@@ -2187,8 +2303,11 @@ pause_menu:
                         } else
                             write_state = -1;
                         if (write_state == 1) {
-                            button = file_write_replay(buf_g_path);
+                            /* PLATFORM(file): write replay data to a file. */ button = file_write_replay(buf_g_path);
                             if (button != 0) {
+                                /* PLATFORM(input_joy): collect dialog joystick input. */
+                                /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                                /* PLATFORM(video): render a modal dialog. */
                                 show_dialog(1, 0, locate_text_resource(main_data_file_addr, "ser"), -1, -1, performGraphColor, 0, 0);
                                 write_state = 0;
                             }
@@ -2209,6 +2328,9 @@ pause_menu:
                         dialog_params[i] = 0;
                     if (globalgamesettings.game_opponenttype == 0)
                         dialog_params[4] = 1;
+                    /* PLATFORM(input_joy): collect dialog joystick input. */
+                    /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                    /* PLATFORM(video): render a modal dialog. */
                     answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "mdo"), -1, -1, dialogarg2, dialog_params, 0);
                     switch (answer) {
                     case 0:
@@ -2222,6 +2344,12 @@ pause_menu:
                         if (cammd == 4)
                             cammd = 0;
                         break;
+                    /* PLATFORM(audio): pause and restore audio around the graphics menu. */
+                    /* PLATFORM(input_joy): collect graphics-menu joystick input. */
+                    /* PLATFORM(input_kb): collect graphics-menu key input. */
+                    /* PLATFORM(input_mouse): collect graphics-menu pointer input. */
+                    /* PLATFORM(timer): wait for graphics selection using timer ticks. */
+                    /* PLATFORM(video): draw the graphics-level selection interface. */
                     case 3:
                         show_graphic_levels_menu();
                         break;
@@ -2231,24 +2359,24 @@ pause_menu:
                     }
                     break;
                 }
-                check_input();
+                /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
                 goto done;
             case 0:
                 inrepflg = 1;
-                audio_carstate();
+                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
                 loop_game(2, 0, 0);
-                timer_get_delta_alt();
+                /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta_alt();
                 travel = 20;
                 while (kbjoyflags & 0x30) {
                     j = travel / 50 + 3;
                     if (j > 100)
                         j = 100;
-                    i = (time_delta = timer_get_delta_alt()) * j;
+                    /* PLATFORM(timer): read the elapsed timer interval. */ i = (time_delta = timer_get_delta_alt()) * j;
                     travel += i;
                     if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
                         travel = (long)(globalgamesettings.game_recordedframes - tmr2) * 20;
                     loop_game(1, core.game_frame, travel / 20 + tmr2);
-                    input_do_checking(time_delta);
+                    /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
                 }
                 if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
                     travel = (long)(globalgamesettings.game_recordedframes - tmr2) * 20;
@@ -2259,34 +2387,34 @@ pause_menu:
                 tmr2 = i;
                 loop_game(2, 4, 0);
                 copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
-                if (statemgmtcpy != 0)
+                /* PLATFORM(video): use the display text or sprite interface. */ if (statemgmtcpy != 0)
                     rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
                                rcpunk2);
-                else
+                /* PLATFORM(video): use the display text or sprite interface. */ else
                     introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
                 while (core.game_frame != tmr2) {
                     update_gamestate();
                     loop_game(1, core.game_frame, tmr2);
                 }
-                input_do_checking(1000);
+                /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1000);
                 goto done;
             case 1:
                 inrepflg = 1;
-                audio_carstate();
+                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
                 loop_game(2, 1, 0);
-                timer_get_delta_alt();
+                /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta_alt();
                 travel = 20;
                 while (kbjoyflags & 0x30) {
                     j = travel / 50 + 3;
                     if (j > 100)
                         j = 100;
-                    time_delta = timer_get_delta_alt();
+                    /* PLATFORM(timer): read the elapsed timer interval. */ time_delta = timer_get_delta_alt();
                     i = time_delta * j;
                     travel += i;
                     if ((unsigned)(travel / 20) > tmr2)
                         travel = (long)tmr2 * 20;
                     loop_game(1, core.game_frame, tmr2 - travel / 20);
-                    input_do_checking(time_delta);
+                    /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
                 }
                 if ((unsigned)(travel / 20) > tmr2)
                     travel = (long)tmr2 * 20;
@@ -2294,10 +2422,10 @@ pause_menu:
                 loop_game(2, 4, 0);
                 if (j != 0) {
                     copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
-                    if (statemgmtcpy != 0)
+                    /* PLATFORM(video): use the display text or sprite interface. */ if (statemgmtcpy != 0)
                         rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
                                    rcpunk2);
-                    else
+                    /* PLATFORM(video): use the display text or sprite interface. */ else
                         introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
                     i = tmr2 - j;
                     restore_gamestate(i);
@@ -2309,12 +2437,12 @@ pause_menu:
                             update_gamestate();
                             i--;
                             loop_game(1, (long)i * j / prev_sky + tmr2, tmr2);
-                            input_do_checking(1);
+                            /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1);
                         }
                     }
                 }
                 loop_game(1, core.game_frame, core.game_frame);
-                input_do_checking(1000);
+                /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1000);
                 goto done;
             case 3:
                 g_rplmodui = 0;
@@ -2323,17 +2451,17 @@ pause_menu:
                 break;
             case 4:
                 inrepflg = 1;
-                audio_carstate();
+                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
                 loop_game(2, 4, 0);
                 loop_game(1, core.game_frame, core.game_frame);
                 goto redraw_input;
             case 5:
                 inrepflg = 1;
-                audio_carstate();
+                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
                 loop_game(2, 5, 0);
                 loop_game(1, core.game_frame, core.game_frame);
                 restore_gamestate(0);
-                timer_get_counter_unk(50);
+                /* PLATFORM(timer): read the timer counter. */ timer_get_counter_unk(50);
                 loop_game(2, 4, 0);
                 loop_game(1, core.game_frame, core.game_frame);
                 return;

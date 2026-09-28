@@ -956,17 +956,20 @@ int bto_auxiliary1(int column, int row, struct VECTOR *vertices) {
     return numPoints;
 }
 
+/* Loads the shared 3D shape resources. Params: none. Returns: load status. State: updates shared shape-resource handles. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 int shape3d_load_all(void)
 {
     register int i;
 
     g_game13dresource = 0;
     game2res_pointer = 0;
-    if (mmgr_get_res_ofs_diff_scaled() < 65000L) {
+    /* PLATFORM(memory): query available resource memory. */ if (mmgr_get_res_ofs_diff_scaled() < 65000L) {
         return 1;
     }
-    g_game13dresource = file_load_3dres(aGame1);
-    game2res_pointer = file_load_3dres(aGame2);
+    /* PLATFORM(file): load a 3D resource. */ g_game13dresource = file_load_3dres(aGame1);
+    /* PLATFORM(file): load a 3D resource. */ game2res_pointer = file_load_3dres(aGame2);
     for (i = 0; i < 0x74; ++i) {
         ptr_model_active = locate_shape_nofatal(g_game13dresource, aBarn[i]);
         if (ptr_model_active == 0) {
@@ -977,16 +980,21 @@ int shape3d_load_all(void)
     return 0;
 }
 
+/* Releases shared 3D shape resources. Params: none. Returns: none. State: reads and clears shared resource handles. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void shape3d_free_all(void)
 {
     if (g_game13dresource != 0) {
-        mmgr_free(g_game13dresource);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free(g_game13dresource);
     }
     if (game2res_pointer != 0) {
-        mmgr_free(game2res_pointer);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free(game2res_pointer);
     }
 }
 
+/* Loads player and opponent car shapes. Params: player and opponent car IDs. Returns: none. State: updates car-shape resource pointers. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 	long copyOffset;
 	long sizeBytes;
@@ -997,7 +1005,7 @@ void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 	aStxxx[3] = arg_playercarid[1];
 	aStxxx[4] = arg_playercarid[2];
 	aStxxx[5] = arg_playercarid[3];
-	pl_carres_3d = file_load_3dres(aStxxx);
+	/* PLATFORM(file): load a 3D resource. */ pl_carres_3d = file_load_3dres(aStxxx);
 	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[124]);
 	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[126]);
 
@@ -1033,8 +1041,8 @@ void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 		if (arg_playercarid[0] == firstOpponent && arg_playercarid[1] == arg_opponentcarid[1] &&
 			arg_playercarid[2] == arg_opponentcarid[2] && arg_playercarid[3] == arg_opponentcarid[3])
 		{
-			sizeBytes = mmgr_get_chunk_size_bytes(pl_carres_3d);
-			carcopyresourceptr = mmgr_alloc_resbytes(aCar0[7], sizeBytes);
+			/* PLATFORM(memory): query a resource block size. */ sizeBytes = mmgr_get_chunk_size_bytes(pl_carres_3d);
+			/* PLATFORM(memory): allocate resource memory. */ carcopyresourceptr = mmgr_alloc_resbytes(aCar0[7], sizeBytes);
 			
 			for (copyOffset = 0; copyOffset < sizeBytes; copyOffset++) {
 				carcopyresourceptr[copyOffset] = pl_carres_3d[copyOffset];
@@ -1044,7 +1052,7 @@ void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 			aStxxx[3] = arg_opponentcarid[1];
 			aStxxx[4] = arg_opponentcarid[2];
 			aStxxx[5] = arg_opponentcarid[3];
-			carcopyresourceptr = file_load_3dres(aStxxx);
+			/* PLATFORM(file): load a 3D resource. */ carcopyresourceptr = file_load_3dres(aStxxx);
 		}
 
 		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[125]);
@@ -1079,14 +1087,16 @@ void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 	}
 }
 
+/* Releases player and opponent car-shape resources. Params: none. Returns: none. State: reads and clears car resource pointers. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void shape3d_free_car_shapes(void)
 {
     if (carcopyresourceptr != 0) {
         wheel_update(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (short *)&ctrmesh);
-        mmgr_release(carcopyresourceptr);
+        /* PLATFORM(memory): release a resource block. */ mmgr_release(carcopyresourceptr);
     }
     wheel_update(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (short *)&pos_pt);
-    mmgr_free(pl_carres_3d);
+    /* PLATFORM(memory): release resource memory. */ mmgr_free(pl_carres_3d);
 }
 
 void wheel_update(struct VECTOR far *out, int angle,
@@ -1148,6 +1158,8 @@ static unsigned char terrConnDataWtoE[19] = { 0, 0, 0, 0, 0, 0, 1, 2, 0, 3, 1, 0
 static unsigned char terrConnDataNtoS[19] = { 0, 0, 0, 0, 0, 0, 1, 1, 5, 0, 4, 5, 0, 0, 4, 1, 5, 4, 1 };
 static unsigned char terrConnDataStoN[19] = { 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 4, 0, 5, 4, 0, 5, 1, 1, 4 };
 
+/* Builds track and route data from the selected track resources. Params: none. Returns: setup status. State: reads track resources and updates track tables. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 int track_setup(void)
 {
   char matches;
@@ -1190,7 +1202,7 @@ int track_setup(void)
   signed char conn;
   char loop_done;
   unsigned char prev_elem;
-  alloc = mmgr_alloc_resbytes("tcomp", 0x380L);
+  /* PLATFORM(memory): allocate resource memory. */ alloc = mmgr_alloc_resbytes("tcomp", 0x380L);
   if (alloc == 0)
     return 2;
   queuePtr = alloc;
@@ -1861,12 +1873,15 @@ int track_setup(void)
     y = 29;
   sampled_trk_column = cur_col;
   g_cur_track_row = y;
-  release:
+  /* PLATFORM(memory): release a resource block. */ release:
   mmgr_release((char far *) alloc);
 
   return err;
 }
 
+/* Loads opponent-specific data. Params: none. Returns: none. State: stores the loaded opponent resource. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void load_opponent_data(void)
 {
     unsigned long savedSums[256];
@@ -1888,7 +1903,7 @@ void load_opponent_data(void)
     register short visited;
 
     aOpp1[3] = (char)(globalgamesettings.game_opponenttype + '0');
-    res = file_load_resource_file(aOpp1);
+    /* PLATFORM(file): load a resource file. */ res = file_load_resource_file(aOpp1);
     copy_string(opptext_label, locate_text_resource(res, "nam"));
     pathData = locate_shape_alt(res, "path");
     tbl = (unsigned char far *)locate_shape_alt(res, "sped");
@@ -1929,7 +1944,7 @@ void load_opponent_data(void)
                 td3[count + 1] = 1;
             }
             if (dep == 0) {
-                unload_resource(res);
+                /* PLATFORM(memory): release a loaded resource. */ unload_resource(res);
                 return;
             }
             dep--;

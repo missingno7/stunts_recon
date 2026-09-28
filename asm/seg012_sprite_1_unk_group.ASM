@@ -1,10 +1,19 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _sprite1_unknown2
 public _sprite_1_unk
 public _sprite_1_unk3
+; -----------------------------------------------------------------------------
+; Purpose: Apply the legacy sprite-1 operation exposed at this entry.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10);
+;   arg_8 (word ptr 12).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sprite1_unknown2 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -54,6 +63,17 @@ sprite1_unknown2_draw_loop:
     ; align 2
     db 144
 _sprite1_unknown2 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite 1 unk.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10); arg_8
+;   (word ptr 12).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _sprite_1_unk proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -92,7 +112,7 @@ sprite_1_unk_shared_path:
     jle     short sprite_1_unk_draw_loop
 sprite_1_unk_fill_loop:
     mov     cx, [bp+arg_4]
-    rep stosw
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     di, dx
     dec     si
     jg      short sprite_1_unk_fill_loop
@@ -107,8 +127,8 @@ sprite_1_unk_when_below:
     inc     dx
 sprite_1_unk_fill_loop_2:
     mov     cx, [bp+arg_4]
-    rep stosw
-    mov     es:[di], al
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, dx
     dec     si
     jg      short sprite_1_unk_fill_loop_2
@@ -116,7 +136,7 @@ sprite_1_unk_fill_loop_2:
 sprite_1_unk_when_zero:
     inc     dx
 sprite_1_unk_draw_loop_2:
-    mov     es:[di], al
+    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, dx
     dec     si
     jg      short sprite_1_unk_draw_loop_2
@@ -159,6 +179,15 @@ sprite_run_post_skip_by_phase     db 3
     ; align 2
     db 144
 _sprite_1_unk endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite 1 unk3.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _sprite_1_unk3 proc far
     var_16 = word ptr -22
     var_14 = word ptr -20
@@ -236,7 +265,7 @@ sprite_1_unk3_draw_loop_3:
     add     si, ax
     add     di, ax
     mov     al, [si]
-    mov     es:[di], al
+    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     mov     al, cs:sprite_run_post_skip_by_phase[bx]
     add     si, ax
     add     di, ax

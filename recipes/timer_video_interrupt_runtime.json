@@ -1050,7 +1050,13 @@
     "mode": "external-far-call-dgroup-offset16-v1"
   },
   "id": "timer_video_interrupt_runtime",
-  "include_closure": [],
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
   "kind": "asm",
   "members": [
     {

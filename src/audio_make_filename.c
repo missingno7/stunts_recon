@@ -1,9 +1,12 @@
+/* READABILITY: Construct an audio resource path and define the initialized palette, material, and UI color tables owned by this module. */
 char audiofiletmp[128];
 extern char *strrchr(const char *string, int ch);
 extern char *strcpy(char *destination, const char *source);
 extern char *strcat(char *destination, const char *source);
 extern unsigned int strlen(const char *string);
 
+/* Build a path from its directory, optional prefix, filename, and extension.
+ * Params and return follow the declared C signature. */
 char *audio_make_filename(char *filename, char *extension, char *prefix)
 {
     char *slash;

@@ -4,7 +4,7 @@ This workspace replaces explicit raw regions of the original MCGA image with byt
 
 ## Current status
 
-The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes all 689 tests, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` reports zero raw-debt OMF objects; its separate library-order diagnostic still has a relocation-order residual.
+The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes all 704 tests, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` reports zero raw-debt OMF objects; its separate library-order diagnostic still has a relocation-order residual.
 
 ## Setup
 
@@ -23,15 +23,26 @@ python tools/histbuild.py
 ```
 
 Each run freshly compiles every accepted C contribution from `src/` with its
-recipe's pinned CL profile, assembles accepted ASM modules with pinned MASM,
-builds the game library in image-derived order, lets LINK search the pinned
-`MLIBCR.LIB`/`LIBH.LIB` for runtime members, then runs one LINK 3.65
-(`/ST:8000`) and one EXEPACK. A zero-segment EXTDEF root keeps every reviewed
-game and runtime library contribution in the link through normal LINK library
-search. It compares the linked image, relocation
-set/order, header and packed executable to the locked oracle and prints the
-separate C, ASM, pinned-runtime, LINK-fill and raw-debt totals. Raw OMF debt
-inputs are named `Dnnn.OBJ` and listed with their source ranges in the report.
+recipe's pinned CL profile and assembles accepted ASM modules with pinned MASM.
+The current `combined` link hypothesis starts `GAME.LIB` with pinned
+`MLIBCR.LIB`, appends reconstructed game modules in image-derived order, and
+searches pinned `LIBH.LIB` separately with LINK 3.65
+(`/DOSSEG /NOI /NOD /MAP /CP:1 /ST:8000`) before EXEPACK. This arrangement is a **reconstruction
+assumption**, not a recovered original LINK command or library recipe. The
+independent evidence has not identified a natural command that reproduces the
+target image and relocation order; the latest MLIBCE-based candidate still
+omits six game members and seven runtime members. See [the link-configuration
+evidence](docs/acceptance.md#link-configuration-evidence-integ47). The byte-exact
+`validate.py --image` result uses the separately labelled oracle-derived order
+and does not verify this historical-link assumption.
+
+A zero-segment EXTDEF root retains reviewed game and accepted pinned-runtime
+contributions through normal LINK library search; any other runtime member
+still depends on its original root/EXTDEF chain. The build compares its linked
+image, relocation set/order, header and packed executable to the locked oracle
+and prints the separate C, ASM, pinned-runtime, LINK-fill and raw-debt totals.
+Raw OMF debt inputs are named `Dnnn.OBJ` and listed with their source ranges in
+the report.
 
 Detailed logs, fresh compiler commands, raw-debt inventory, the DOS-side
 `MAKEFILE`/response bundle and `report.json` are written under a unique

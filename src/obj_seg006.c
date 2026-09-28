@@ -119,8 +119,8 @@ vector_op_unk2(struct VECTOR*);
 unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned, unsigned);
 
 void initialize_polyinfo(void)
-{
-    polyinfoptr = mmgr_alloc_resbytes("polyinfo", 0x28A0);
+{ /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
+    polyinfoptr = mmgr_alloc_resbytes("polyinfo", 0x28A0) /* PLATFORM(memory): allocate the polygon information buffer from game memory. */;
     matroty(&mat_no_turn, 0);
     matroty(&mat_quarter_turn, 0x100);
     matroty(&mat_half_turn, 0x200);
@@ -129,7 +129,7 @@ void initialize_polyinfo(void)
 }
 
 void copy_material_list_pointers(void* clrlist, void* clrlist2, void* patlist, void* patlist2, unsigned short videoConst)
-{
+{ /* PURPOSE: Save the material color and pattern tables used by polygon drawing. Params: clrlist, clrlist2, patlist, patlist2, videoConst. Returns: void. Globals: reads none; writes g_mat_clrlist_copy_2_ptr, mat_copy_clr_lst_ptr, material_patlistptr_copy, matpatlistcopypointer2, video_cnstval. */
     mat_copy_clr_lst_ptr = clrlist;
     g_mat_clrlist_copy_2_ptr = clrlist2;
     material_patlistptr_copy = patlist;
@@ -138,7 +138,7 @@ void copy_material_list_pointers(void* clrlist, void* clrlist2, void* patlist, v
 }
 
 void polyinfo_reset(void)
-{
+{ /* PURPOSE: Reset polygon numbering, insertion state, and face-list cursors. Params: none. Returns: void. Globals: reads none; writes facenodeiterator, poly_list_insert_result, polygonnumber, polyinfo_offset, polyinfo_reset_marker. */
     polygonnumber = 0;
     polyinfo_offset = 0;
     poly_list_insert_result = 0;
@@ -147,7 +147,7 @@ void polyinfo_reset(void)
 }
 
 unsigned select_rot(int angZ, int angX, int angY, struct RECTANGLE* cliprect, int unk)
-{
+{ /* PURPOSE: Build the requested view rotations and return the camera-facing angle. Params: angZ, angX, angY, cliprect, unk. Returns: unsigned. Globals: reads none; writes half_scale_flag, selection_rect, wkmatx. */
     struct MATRIX* matptr;
     struct VECTOR vec, vec2;
 
@@ -164,7 +164,7 @@ unsigned select_rot(int angZ, int angX, int angY, struct RECTANGLE* cliprect, in
 }
 
 unsigned trans_op(struct TRANSFORMEDSHAPE3D* ts)
-{
+{ /* PURPOSE: Transform a 3D shape, clip its primitives, and append visible polygons. Params: ts. Returns: unsigned. Globals: reads the shape, transform, material and clip state; writes projected-vertex, polygon-list and clipping scratch state. */
     unsigned char ptype;
     int added;
     int primflag;
@@ -562,7 +562,7 @@ visible:
         return -1;
     return 0;
 }
-extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, unsigned search_sorted_position) {
+extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, unsigned search_sorted_position) { /* PURPOSE: Handle the insert newest poly in poly linked list 40ed6 operation. Params: depth, search_sorted_position. Returns: unsigned. Globals: reads poly_cursor1, poly_info_ptrs, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset, transformed_vert_count; writes facenodeiterator, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset. */
     register int remaining;
     register int list_index;
     if (search_sorted_position == 0) {
@@ -592,7 +592,7 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, uns
     return polygonnumber == 0x190 || (int)polyinfo_offset > 0x2872;
 }
 
-unsigned rect_compare_point(struct POINT2D *point) {
+unsigned rect_compare_point(struct POINT2D *point) { /* PURPOSE: Return the clip-rectangle outcode for one projected point. Params: point. Returns: unsigned. Globals: reads selection_rect; writes none. */
     register struct POINT2D *p = point;
     char flag;
     if (p->y < selection_rect.top) flag=1;
@@ -604,7 +604,7 @@ unsigned rect_compare_point(struct POINT2D *point) {
 }
 
 char is_facing_camera(struct POINT2D far *pts)
-{
+{ /* PURPOSE: Test the winding of a projected polygon against the camera. Params: pts. Returns: char. Globals: none. */
     long dx0, dx1, dy0, dy1;
 
     dx0 = (long)pts[0].x - pts[1].x;
@@ -619,7 +619,7 @@ char is_facing_camera(struct POINT2D far *pts)
 }
 
 void polyinfo(void)
-{
+{ /* PURPOSE: Draw queued polygon records through the matching primitive renderer. Params: none. Returns: void. Globals: reads g_mat_clrlist_copy_2_ptr, mat_copy_clr_lst_ptr, material_patlistptr_copy, matpatlistcopypointer2, poly_info_ptrs, poly_link_list, polygonnumber; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
     struct POINT2D far* srcpts;
     struct POLYINFO far* info;
     register int polyIndex;
@@ -649,30 +649,30 @@ void polyinfo(void)
             }
             switch (material_patlistptr_copy[materialIndex]) {
             case 0:
-                preRender_default(fill, pointCount, polypts);
+                preRender_default(fill, pointCount, polypts) /* PLATFORM(video): draw a filled polygon. */;
                 break;
             case 1:
                 if (matpatlistcopypointer2[materialIndex] != 0)
-                    preRender_patterned(matpatlistcopypointer2[materialIndex], fill, pointCount, polypts);
+                    preRender_patterned(matpatlistcopypointer2[materialIndex], fill, pointCount, polypts) /* PLATFORM(video): draw a patterned polygon. */;
                 break;
             case 2:
-                preRender_unk(matpatlistcopypointer2[materialIndex], g_mat_clrlist_copy_2_ptr[materialIndex], fill, pointCount, polypts);
+                preRender_unk(matpatlistcopypointer2[materialIndex], g_mat_clrlist_copy_2_ptr[materialIndex], fill, pointCount, polypts) /* PLATFORM(video): draw a polygon using the secondary fill parameters. */;
                 break;
             }
             break;
         case 1:
-            preRender_line(info->points[0].x, info->points[0].y, info->points[1].x, info->points[1].y, fill);
+            preRender_line(info->points[0].x, info->points[0].y, info->points[1].x, info->points[1].y, fill) /* PLATFORM(video): draw a line primitive. */;
             break;
         case 3:
             for (idx = 0; idx < 4; idx++)
                 polypts[idx] = info->points[idx];
-            preRender_wheel(polypts, 0x2500, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]);
+            preRender_wheel(polypts, 0x2500, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]) /* PLATFORM(video): draw a wheel primitive. */;
             break;
         case 2:
-            preRender_sphere(info->points[0].x, info->points[0].y, info->points[1].x, fill);
+            preRender_sphere(info->points[0].x, info->points[0].y, info->points[1].x, fill) /* PLATFORM(video): draw a sphere primitive. */;
             break;
         case 5:
-            putpixel_single_maybe(info->points[0].x, info->points[0].y, fill);
+            putpixel_single_maybe(info->points[0].x, info->points[0].y, fill) /* PLATFORM(video): plot a pixel primitive. */;
             break;
         }
     }
@@ -680,7 +680,7 @@ void polyinfo(void)
 }
 
 
-struct MATRIX* matrotzxy(int z, int x, int y, int unk) {
+struct MATRIX* matrotzxy(int z, int x, int y, int unk) { /* PURPOSE: Compose cached Z, X, and Y rotation matrices in the requested order. Params: z, x, y, unk. Returns: struct MATRIX*. Globals: reads g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals; writes g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals. */
     register int rotation_flags = 0;
     register struct MATRIX* result;
 
@@ -764,7 +764,7 @@ struct MATRIX* matrotzxy(int z, int x, int y, int unk) {
     return result;
 }
 
-void rect_adjust_from_point(struct POINT2D *pt, struct RECTANGLE *rc) {
+void rect_adjust_from_point(struct POINT2D *pt, struct RECTANGLE *rc) { /* PURPOSE: Expand a rectangle to include one projected point. Params: pt, rc. Returns: void. Globals: none. */
     register int x, y;
     x=pt->x; y=pt->y;
     if(rc->left>x) rc->left=x;
@@ -773,7 +773,7 @@ void rect_adjust_from_point(struct POINT2D *pt, struct RECTANGLE *rc) {
     { int temp=y+1; if(rc->bottom<temp) rc->bottom=temp; }
 }
 
-vector_op_unk2(struct VECTOR* vec) {
+vector_op_unk2(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the renderer angle and octant table. Params: vec. Returns: unspecified. Globals: reads vector_angle_cos, vector_angle_sin; writes none. */
 	long height;
 	long temp;
 	char octant;
@@ -813,14 +813,14 @@ vector_op_unk2(struct VECTOR* vec) {
 	return octant;
 }
 
-void calc_sincos80(void) {
+void calc_sincos80(void) { /* PURPOSE: Cache the sine and cosine values used by view-vector classification. Params: none. Returns: void. Globals: reads none; writes vector_angle_cos, vector_angle_cos2, vector_angle_sin, vector_angle_sin2. */
     vector_angle_sin = (long)sinfast(0x80);
     vector_angle_cos = (long)cosfast(0x80);
     vector_angle_sin2 = (long)sinfast(0x80);
     vector_angle_cos2 = (long)cosfast(0x80);
 }
 
-long nopsub_26552(long value) { if (value < 0) return -value; return value; }
+long nopsub_26552(long value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
 
 
 short g_vid_flg2_set;
@@ -835,7 +835,7 @@ void rectlist_add_rect(char *, struct RECTANGLE *, struct RECTANGLE *);
 void rectlist_add(unsigned char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
 
 void rcunion(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
-{
+{ /* PURPOSE: Write the smallest rectangle that covers both input rectangles. Params: r1, r2, out. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */
     out->left = r1->left <= r2->left ? r1->left : r2->left;
     out->right = r1->right >= r2->right ? r1->right : r2->right;
     out->top = r1->top <= r2->top ? r1->top : r2->top;
@@ -846,7 +846,7 @@ void rcunion(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
 }
 
 char rcintersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
-{
+{ /* PURPOSE: Clip the first rectangle to the second and report an empty intersection. Params: r1, r2. Returns: char. Globals: none. */
     if (r1->right < r1->left) return 1;
     if (r2->right <= r1->left) return 1;
     if (r1->right <= r2->left) return 1;
@@ -860,7 +860,7 @@ char rcintersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
     return 0;
 }
 
-void rectlist_add_rect(char* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr, struct RECTANGLE* rect) {	
+void rectlist_add_rect(char* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr, struct RECTANGLE* rect) { /* PURPOSE: Merge or split a rectangle as needed before adding it to a clip list. Params: arg_rect_array_length_ptr, arg_rect_array_ptr, rect. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */	
 	struct RECTANGLE bottom_rect;
 	struct RECTANGLE merged;
 	char shift_index;
@@ -979,7 +979,7 @@ void rectlist_add_rect(char* arg_rect_array_length_ptr, struct RECTANGLE* arg_re
 	(*arg_rect_array_length_ptr)++;
 }
 
-char rect_is_overlapping(struct RECTANGLE* r1, struct RECTANGLE* r2) {
+char rect_is_overlapping(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two half-open rectangles overlap. Params: r1, r2. Returns: char. Globals: none. */
 	if (r1->right <= r2->left) {
 		return 0;
 	}
@@ -999,9 +999,9 @@ char rect_is_overlapping(struct RECTANGLE* r1, struct RECTANGLE* r2) {
 	return 1;
 }
 
-char rect_is_inside(struct RECTANGLE *a,struct RECTANGLE *b){return a->right<=b->right && a->left>=b->left && a->top>=b->top && a->bottom<=b->bottom;}
+char rect_is_inside(struct RECTANGLE *a,struct RECTANGLE *b){ /* PURPOSE: Test whether the first rectangle is contained in the second. Params: a, b. Returns: char. Globals: none. */return a->right<=b->right && a->left>=b->left && a->top>=b->top && a->bottom<=b->bottom;}
 
-char rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) {
+char rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two rectangles share a complete edge. Params: r1, r2. Returns: char. Globals: none. */
  if (r1->bottom == r2->top) { if (r1->left != r2->left) return 0; if (r1->right != r2->right) return 0; return 1; }
  else if (r1->top == r2->bottom) { if (r1->left != r2->left) return 0; if (r1->right != r2->right) return 0; return 1; }
  else if (r1->right == r2->left) { if (r1->top != r2->top) return 0; if (r1->bottom != r2->bottom) return 0; return 1; }
@@ -1012,7 +1012,7 @@ char rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) {
 void rectlist_add(unsigned char arg_rectcount, char* arg_rectarray_indices, 
 	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2, 
 	struct RECTANGLE* arg_rectptr, char* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 
-{
+{ /* PURPOSE: Select, clip, and add the requested source rectangles to the result list. Params: arg_rectcount, arg_rectarray_indices, arg_rectarray1, arg_rectarray2, arg_rectptr, arg_rect_array_length_ptr, arg_rect_array_ptr. Returns: void. Globals: none. */
 	char has_result;
 	struct RECTANGLE* selected_rect_ptr;
 	struct RECTANGLE cover_rect;
@@ -1063,7 +1063,7 @@ void rectlist_add(unsigned char arg_rectcount, char* arg_rectarray_indices,
 
 void heapsortorder(int, int*, int*);
 
-void rectsorttop(char arg_array_length, struct RECTANGLE* arg_rect_array, int* arg_array_indices) {
+void rectsorttop(char arg_array_length, struct RECTANGLE* arg_rect_array, int* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
     register int sortIndex;
     int intbuffer[256];
     if (arg_array_length > 1) {

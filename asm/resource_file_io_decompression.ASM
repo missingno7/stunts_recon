@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_133840
 DSEG segment byte public 'STUNTSD'
 DSEG ends
@@ -32,6 +33,13 @@ assume cs:S012_TEXT, ds:DGROUP
 
 ; file_read
 assume cs:S012_TEXT
+; -----------------------------------------------------------------------------
+; Purpose: Read file data through the DOS handle API.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 12).
+; Register ABI: touches AX, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_read proc far
     var_fatal = word ptr -8
      s = byte ptr 0
@@ -49,6 +57,13 @@ _file_read proc far
     db 144
 
 _file_read endp
+; -----------------------------------------------------------------------------
+; Purpose: Read file data and return failure without raising a fatal error.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_read_nofatal proc far
     var_fatal = word ptr -8
      s = byte ptr 0
@@ -63,6 +78,15 @@ _file_read_nofatal proc far
     db 144
 
 _file_read_nofatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Read file data and route failures to the fatal-error handler.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 8); arg_dstseg (word ptr 10); arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, BP, SP, DS, SS; balanced explicit saves/restores observed: DS; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _aSFileError.
+; /* PLATFORM(file): calls a DOS file service. */
+; -----------------------------------------------------------------------------
 _file_read_fatal proc far
     var_fatal = word ptr -8
     var_curseg = word ptr -6
@@ -87,7 +111,7 @@ read_body:
     mov     dx, [bp+arg_filename]
     xor     al, al
     mov     ah, 3Dh
-    int     21h             ; DOS - 2+ - OPEN DISK FILE WITH HANDLE
+    int     R5HW_DOS_INT ; DOS - 2+ - OPEN DISK FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
     jb      short error
     mov     [bp+var_filehandle], ax
 readloop:
@@ -96,14 +120,14 @@ readloop:
     mov     cx, 4000h
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Fh
-    int     21h             ; DOS - 2+ - READ FROM FILE WITH HANDLE
+    int     R5HW_DOS_INT ; DOS - 2+ - READ FROM FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
     jb      short error
     add     [bp+var_curseg], 400h
     cmp     ax, 4000h
     jz      short readloop
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     21h             ; DOS - 2+ - CLOSE A FILE WITH HANDLE
+    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
     mov     ax, [bp+arg_dstoff]
     mov     dx, [bp+arg_dstseg]
     pop     ds
@@ -131,6 +155,15 @@ _file_read_fatal endp
 
 ; file_decomp_rle
 assume cs:S012_TEXT
+; -----------------------------------------------------------------------------
+; Purpose: Expand an RLE-compressed resource stream.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 8); arg_dstseg (word ptr 10); arg_srcoff (word ptr 6); arg_srcseg
+;   (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp_rle proc far
     var_lenlo = word ptr -26
     var_lenhi = word ptr -24
@@ -213,6 +246,14 @@ skip_seq_pass:
     retf
 
 _file_decomp_rle endp
+; -----------------------------------------------------------------------------
+; Purpose: Expand one RLE-compressed resource block.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES, SS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp_rle_single proc near
     mov     cx, 80h ; ''
     lea     di, [bp-11Ch]
@@ -323,6 +364,13 @@ rle_single_join_02:
     jmp     rle_single_loop_head_04
 
 _file_decomp_rle_single endp
+; -----------------------------------------------------------------------------
+; Purpose: Expand a sequence of RLE-compressed resource blocks.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: arg_srcoff (word ptr 6); arg_srcseg (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES; balanced explicit saves/restores observed: CX, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp_rle_seq proc near
     cmp     byte ptr [bp-12h], 1; _file_decomp_rle::var_esclen
     jnz     short has_codes
@@ -418,6 +466,13 @@ _file_decomp_rle_seq endp
 
 ; file_load_binary_group
 assume cs:S012_TEXT
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file load binary.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_load_binary proc far
     push bp
     mov bp, sp
@@ -427,6 +482,13 @@ _file_load_binary proc far
     jmp short common_entry
     nop
 _file_load_binary endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file load binary nofatal.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_load_binary_nofatal proc far
     push bp
     mov bp, sp
@@ -471,6 +533,13 @@ empty_file:
 _file_load_binary_nofatal endp
 
 ; file_decomp_group
+; -----------------------------------------------------------------------------
+; Purpose: Dispatch resource decompression.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp proc far
     var_fatal = word ptr -12
      s = byte ptr 0
@@ -487,6 +556,13 @@ _file_decomp proc far
     jmp     short decomp_body
     db 144
 _file_decomp endp
+; -----------------------------------------------------------------------------
+; Purpose: Dispatch resource decompression with nonfatal error handling.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _file_decomp_nofatal proc far
     var_fatal = word ptr -12
      s = byte ptr 0
@@ -501,6 +577,14 @@ _file_decomp_nofatal proc far
     jmp     short decomp_body
     db 144
 _file_decomp_nofatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Dispatch resource decompression with fatal error handling.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_6 (word ptr 12); arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, SS; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _aSInvalidPackTy.
+; -----------------------------------------------------------------------------
 _file_decomp_fatal proc far
     var_fatal = word ptr -12
     var_nextsrcseg = word ptr -10
@@ -691,6 +775,13 @@ decomp_fatal_join_02:
 _file_decomp_fatal endp
 
 ; locate_entries
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by locate shape nofatal.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _locate_shape_nofatal proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -704,6 +795,13 @@ _locate_shape_nofatal proc far
     jmp     short _alt_locate_resource
     db 144
 _locate_shape_nofatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by locate shape fatal.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _locate_shape_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -717,6 +815,16 @@ _locate_shape_fatal proc far
     jmp     short _alt_locate_resource
     db 144
 _locate_shape_fatal endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by locate sound fatal.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: aLocateshape4_4sShapeNotF, aLocatesound4_4sSoundNotF.
+; /* PLATFORM(dos): terminates the DOS process. */
+; -----------------------------------------------------------------------------
 _locate_sound_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -786,7 +894,7 @@ find_sound_fatal_error_path_01:
     push    [bp+arg_4]
     push    dx
     call    far ptr _fatal_error
-    int     20h             ; DOS - PROGRAM TERMINATION
+    int     R5HW_DOS_TERMINATE_INT ; DOS - PROGRAM TERMINATION /* PLATFORM(dos): terminates the DOS process. */
 find_sound_fatal_branch_path_04:
     xor     ax, ax
     jmp     short find_sound_fatal_join_01

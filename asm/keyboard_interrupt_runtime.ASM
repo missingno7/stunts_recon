@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_133138
 _DATA segment word public 'DATA'
 old_kb_intr_ofs dw 0
@@ -59,31 +60,41 @@ public _keyboard_exit_handler
 public _kb_int9_handler
 public _kb_int16_handler
 public _kb_get_key_state
+; -----------------------------------------------------------------------------
+; Purpose: Install keyboard IRQ and BIOS keyboard handlers and register their exit cleanup.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DI, SP, CS, DS, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: old_kb_intr_bios_ofs, old_kb_intr_bios_seg, old_kb_intr_ofs, old_kb_intr_seg.
+; Global addresses taken: _kbinput.
+; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+; -----------------------------------------------------------------------------
 _kb_init_interrupt proc far
     push di
-    in al, 21h
+    in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ah, al
     or al, 3
-    out 21h, al
+    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     xor bx, bx
     mov es, bx
-    mov bx, word ptr es:[24h]
+    mov bx, word ptr es:[24h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     cmp bx, offset _kb_int9_handler
     je keyboard_init_finish_setup
     mov word ptr ds:[old_kb_intr_ofs], bx
-    mov bx, word ptr es:[26h]
+    mov bx, word ptr es:[26h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov word ptr ds:[old_kb_intr_seg], bx
-    mov word ptr es:[24h], offset _kb_int9_handler
-    mov word ptr es:[26h], cs
-    mov bx, word ptr es:[58h]
+    mov word ptr es:[24h], offset _kb_int9_handler ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov word ptr es:[26h], cs ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov bx, word ptr es:[58h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov word ptr ds:[old_kb_intr_bios_ofs], bx
-    mov bx, word ptr es:[5Ah]
+    mov bx, word ptr es:[5Ah] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov word ptr ds:[old_kb_intr_bios_seg], bx
-    mov word ptr es:[58h], offset _kb_int16_handler
-    mov word ptr es:[5Ah], cs
+    mov word ptr es:[58h], offset _kb_int16_handler ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov word ptr es:[5Ah], cs ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
 keyboard_init_finish_setup:
     mov al, ah
-    out 21h, al
+    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ax, ds
     mov es, ax
     mov di, offset DGROUP:_kbinput
@@ -99,33 +110,52 @@ keyboard_init_finish_setup:
     pop di
     retf
 _kb_init_interrupt endp
+; -----------------------------------------------------------------------------
+; Purpose: Restore the prior keyboard interrupt vectors and keyboard controller state.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches BX, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: old_kb_intr_bios_ofs, old_kb_intr_bios_seg, old_kb_intr_ofs, old_kb_intr_seg.
+; Globals written: none identified.
+; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+; -----------------------------------------------------------------------------
 _keyboard_exit_handler proc far
-    in al, 21h
+    in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ah, al
     or al, 3
-    out 21h, al
+    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     xor bx, bx
     mov es, bx
     mov bx, word ptr ds:[old_kb_intr_ofs]
     or bx, bx
     je keyboard_exit_restore_flags
-    mov word ptr es:[24h], bx
+    mov word ptr es:[24h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov bx, word ptr ds:[old_kb_intr_seg]
-    mov word ptr es:[26h], bx
+    mov word ptr es:[26h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov bx, word ptr ds:[old_kb_intr_bios_ofs]
-    mov word ptr es:[58h], bx
+    mov word ptr es:[58h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov bx, word ptr ds:[old_kb_intr_bios_seg]
-    mov word ptr es:[5Ah], bx
+    mov word ptr es:[5Ah], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov al, byte ptr es:[417h]
     and al, 0F0h
     mov byte ptr es:[417h], al
 keyboard_exit_restore_flags:
     mov al, ah
-    out 21h, al
+    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     retf
 _keyboard_exit_handler endp
+; -----------------------------------------------------------------------------
+; Purpose: Handle keyboard scan-code IRQs and enqueue translated key events.
+; ABI: FAR entry; source return form: IRET; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, DS; balanced explicit saves/restores observed: AX, BX, CX, DS, DX; path-specific inputs and outputs follow the listed operands.
+; Globals read: _kbinput, kb_intr_data, kb_intr_data3, kb_intr_data4, keymap1, keymap2, keymap3, keymap4, keymap5.
+; Globals written: _kbinput, kb_intr_data, kb_intr_data2, kb_intr_data4, kb_intr_data_array, kblastinput.
+; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+; /* PLATFORM(input_kb): returns from a keyboard hardware interrupt. */
+; -----------------------------------------------------------------------------
 _kb_int9_handler proc far
-    sti
+    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     push ax
     push bx
     push cx
@@ -133,14 +163,14 @@ _kb_int9_handler proc far
     push ds
     mov ax, seg dseg
     mov ds, ax
-    in al, 60h
+    in al, R5HW_KEYBOARD_DATA_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     push ax
-    in al, 61h
+    in al, R5HW_KEYBOARD_CONTROL_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ah, al
     or al, 80h
-    out 61h, al
+    out R5HW_KEYBOARD_CONTROL_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     xchg ah, al
-    out 61h, al
+    out R5HW_KEYBOARD_CONTROL_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     pop ax
     test al, 80h
     je keyboard_irq_decode_make_code
@@ -148,13 +178,13 @@ _kb_int9_handler proc far
     jmp keyboard_irq_map_control_state
 keyboard_irq_send_eoi_restore:
     mov al, 20h
-    out 20h, al
+    out R5HW_PIC_MASTER_COMMAND_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     pop ds
     pop dx
     pop cx
     pop bx
     pop ax
-    iret
+    iret ;/* PLATFORM(input_kb): returns from a keyboard hardware interrupt. */
 keyboard_irq_decode_make_code:
     xor ah, ah
     mov bx, ax
@@ -181,7 +211,7 @@ keyboard_irq_store_make_state:
     xor ah, ah
 keyboard_irq_translate_key:
     mov bx, word ptr ds:[kb_intr_data]
-    cli
+    cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     mov word ptr kb_intr_data_array[bx], ax
     add bx, 2
     cmp bx, word ptr ds:[kb_intr_data3]
@@ -198,7 +228,7 @@ keyboard_irq_enqueue_key_event:
     mov word ptr ds:[kb_intr_data2], ax
 keyboard_irq_advance_queue_head:
     mov word ptr ds:[kb_intr_data4], bx
-    sti
+    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     jmp keyboard_irq_send_eoi_restore
 keyboard_irq_commit_queue_tail:
     mov ah, al
@@ -230,6 +260,14 @@ keyboard_irq_clear_break_state:
     mov byte ptr _kbinput[bx], 0
     jmp keyboard_irq_send_eoi_restore
 _kb_int9_handler endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the BIOS keyboard read, peek, and modifier-state services.
+; ABI: FAR entry; source return form: RETF 2 mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, DS; balanced explicit saves/restores observed: BX, DS; path-specific inputs and outputs follow the listed operands.
+; Globals read: _kbinput, kb_intr_data2, kb_intr_data3, kb_intr_data4, kb_intr_data_array.
+; Globals written: kb_intr_data2, kb_intr_data4.
+; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+; -----------------------------------------------------------------------------
 _kb_int16_handler proc far
     push bx
     push ds
@@ -244,12 +282,12 @@ _kb_int16_handler proc far
 keyboard_bios_unknown_function:
     xor ax, ax
 keyboard_bios_return_common:
-    sti
+    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     pop ds
     pop bx
     retf 2
 keyboard_bios_read_waiting_key:
-    cli
+    cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     cmp word ptr ds:[kb_intr_data4], 0
     je keyboard_bios_unknown_function
     mov bx, word ptr ds:[kb_intr_data2]
@@ -267,7 +305,7 @@ kb_bios_advance_read_index:
 keyboard_bios_peek_key:
     cmp word ptr ds:[kb_intr_data4], 0
     je keyboard_bios_unknown_function
-    sti
+    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     mov bx, word ptr ds:[kb_intr_data2]
     mov ax, word ptr kb_intr_data_array[bx]
     pop ds
@@ -278,6 +316,13 @@ kb_bios_read_modifier_flags:
     or al, byte ptr ds:[_kbinput+54]
     jmp keyboard_bios_return_common
 _kb_int16_handler endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the keyboard or joystick service identified by kb get key state.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _kbinput.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _kb_get_key_state proc far
     push bp
     mov bp, sp

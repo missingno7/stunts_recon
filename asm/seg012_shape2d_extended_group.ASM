@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
@@ -8,6 +9,14 @@ public _shape2d_op_unk
 public _nopsub_33E90
 public _shape2d_op_unk2
 public _shape2d_op_unk3
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 33DBE.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_33DBE proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -36,6 +45,14 @@ _nopsub_33DBE proc far
     ; align 2
     db 144
 _nopsub_33DBE endp
+; -----------------------------------------------------------------------------
+; Purpose: Process the fifth 2D shape operation.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
+;   arg_8 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _shape2d_op_unknown5 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -62,6 +79,15 @@ _shape2d_op_unknown5 proc far
     ; align 2
     db 144
 _shape2d_op_unknown5 endp
+; -----------------------------------------------------------------------------
+; Purpose: Process a 2D shape operation.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 8); arg_shapeseg (word ptr 6).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _shape2d_op_unk proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -118,7 +144,7 @@ shape_op_unk_when_greater:
     xor     ch, ch
     lodsb
 shape_op_unk_fill_loop:
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     dec     dx
     jg      short shape_op_unk_when_greater_2
     add     [bp+var_10], 2
@@ -148,6 +174,14 @@ shape_op_unk_when_greater_3:
     ; align 2
     db 0
 _shape2d_op_unk endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 33E90.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_33E90 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -176,6 +210,14 @@ _nopsub_33E90 proc far
     ; align 2
     db 144
 _nopsub_33E90 endp
+; -----------------------------------------------------------------------------
+; Purpose: Process a 2D shape operation variant.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
+;   arg_8 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _shape2d_op_unk2 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -202,6 +244,15 @@ _shape2d_op_unk2 proc far
     ; align 2
     db 144
 _shape2d_op_unk2 endp
+; -----------------------------------------------------------------------------
+; Purpose: Process a 2D shape operation variant.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shape2dofs (word ptr 6); arg_shape2dseg (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _shape2d_op_unk3 proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -346,7 +397,7 @@ shape_op_unk3_when_greater:
     xor     ch, ch
     lodsb
 shape_op_unk3_fill_loop:
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     dec     dx
     jle     short op_unk3_when_less_or_equal_2
     loop    shape_op_unk3_fill_loop

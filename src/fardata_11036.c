@@ -1,3 +1,4 @@
+/* READABILITY: Define far plane and vector state initialized in the far-data contribution. */
 struct VECTOR { int x, y, z; };
 struct MATRIX { int m[9]; };
 struct PLANE {

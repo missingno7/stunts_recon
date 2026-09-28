@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 SHAPE2D struc
 s2d_width dw ?
 s2d_height dw ?
@@ -66,6 +67,14 @@ public _draw_text_at
 public _video_set_palette
 S012_TEXT segment word public 'CODE'
 
+; -----------------------------------------------------------------------------
+; Purpose: Draw a sprite image using the alternate OR compositing path.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10);
+;   arg_8 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sprite_putimage_or_alt proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -94,6 +103,15 @@ _sprite_putimage_or_alt proc far
     ; align 2
     db 144
 _sprite_putimage_or_alt endp
+; -----------------------------------------------------------------------------
+; Purpose: Draw a sprite image using the OR compositing operation.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _sprite_putimage_or proc far
     var_E = word ptr -14
     var_C = word ptr -12
@@ -232,7 +250,7 @@ sprite_or_loop_head_02:
     mov     cx, [bp+var_6]
 sprite_or_loop_head_03:
     lodsb
-    or      es:[di], al
+    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     loop    sprite_or_loop_head_03
     add     si, [bp+var_8]
@@ -252,12 +270,12 @@ sprite_or_loop_head_04:
     mov     cx, [bp+var_E]
 sprite_or_loop_head_05:
     lodsw
-    or      es:[di], ax
+    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    sprite_or_loop_head_05
     lodsb
-    or      es:[di], al
+    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     dec     dx
     jg      short sprite_or_loop_head_04
@@ -266,7 +284,7 @@ sprite_or_loop_head_06:
     mov     cx, [bp+var_E]
 sprite_or_loop_head_07:
     lodsw
-    or      es:[di], ax
+    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    sprite_or_loop_head_07
@@ -278,7 +296,7 @@ sprite_or_branch_path_09:
     inc     bx
 sprite_or_loop_head_08:
     lodsb
-    or      es:[di], al
+    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     inc     bx
     dec     dx
@@ -304,6 +322,15 @@ sprite_or_loop_head_08:
     ; align 2
     db 144
 _sprite_putimage_or endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by putpixel iconFillings.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8); arg_6 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _putpixel_iconFillings proc far
     var_6 = word ptr -6
     var_4 = word ptr -4
@@ -364,12 +391,12 @@ icon_fill_loop_head_01:
     mov     cx, [bp+var_6]
 icon_fill_loop_head_02:
     lodsw
-    or      es:[di], ax
+    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    icon_fill_loop_head_02
     lodsb
-    or      es:[di], al
+    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     dec     dx
     jg      short icon_fill_loop_head_01
@@ -384,7 +411,7 @@ icon_fill_loop_head_04:
     mov     cx, [bp+var_6]
 icon_fill_loop_head_05:
     lodsw
-    or      es:[di], ax
+    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    icon_fill_loop_head_05
@@ -396,7 +423,7 @@ icon_fill_branch_path_01:
     inc     bx
 icon_fill_loop_head_06:
     lodsb
-    or      es:[di], ax
+    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, bx
     dec     dx
     jg      short icon_fill_loop_head_06
@@ -436,6 +463,15 @@ icon_fill_loop_head_06:
     ; align 2
     db 144
 _putpixel_iconFillings endp
+; -----------------------------------------------------------------------------
+; Purpose: Process a 2D shape operation variant.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 6); arg_shapeseg (word ptr 8).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _shape2d_op_unk4 proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -491,7 +527,7 @@ shape_op4_branch_path_01:
     xor     ch, ch
     lodsb
 shape_op4_loop_head_02:
-    or      es:[di], al
+    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     dec     dx
     jg      short shape_op4_branch_path_02
@@ -509,7 +545,7 @@ shape_op4_branch_path_03:
     xor     ch, ch
 shape_op4_loop_head_03:
     lodsb
-    or      es:[di], al
+    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     dec     dx
     jg      short shape_op4_branch_path_04
@@ -539,6 +575,15 @@ shape_op4_branch_path_04:
     ; align 2
     db 144
 _shape2d_op_unk4 endp
+; -----------------------------------------------------------------------------
+; Purpose: Draw a sprite image while preserving transparent pixels.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_4 (word ptr 8); arg_6 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _incnums, _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _sprite_putimage_transparent proc far
     var_bmpptr = word ptr -12
     var_A = word ptr -10
@@ -678,7 +723,7 @@ sprite_alpha_loop_head_03:
     mov     al, cs:_incnums[bx]
     cmp     al, ah
     jz      short sprite_alpha_branch_path_07
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     loop    sprite_alpha_loop_head_03
     jmp     short sprite_alpha_join_02
     db 144
@@ -732,6 +777,16 @@ sprite_alpha_branch_path_08:
     ; align 2
     db 144
 _sprite_putimage_transparent endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the operation identified by release shape resources.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _fontdefseg, _incnums, _sprite1.
+; Globals written: _aCopyrightCUnlimitedSoftwareInc_198, fh_x, fh_y.
+; Global addresses taken: _aCopyrightCUnlimitedSoftwareInc_198.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _release_shape_resources proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
@@ -778,7 +833,7 @@ shape_release_loop_head_02:
     mov     al, cs:_incnums[bx]
     cmp     al, 0FFh
     jz      short shape_release_branch_path_01
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     loop    shape_release_loop_head_02
     jmp     short shape_release_join_02
     db 144
@@ -814,6 +869,16 @@ shape_release_join_02:
     ; align 2
     db 144
 _release_shape_resources endp
+; -----------------------------------------------------------------------------
+; Purpose: Draw or clear the graphics content identified by draw text at.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, CS, DS, ES, SS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: _fontdefseg, _sprite1, fh_advance, fh_bgcolor, fh_fgcolor, fh_glyphs, fh_height, fh_left, fh_lineheight, fh_proportional, fh_rowbytes, fh_x, fh_y.
+; Globals written: fh_advance, fh_rowbytes, fh_x, fh_y.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _draw_text_at proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -909,7 +974,7 @@ draw_text_loop_head_03:
 draw_text_loop_head_04:
     shl     dl, 1
     jnb     short draw_text_branch_path_05
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     loop    draw_text_loop_head_04
     inc     si
     dec     dh
@@ -923,7 +988,7 @@ draw_text_loop_head_05:
     add     word ptr ds:[fh_x], ax
     jmp     draw_text_loop_head_01
 draw_text_branch_path_05:
-    mov     es:[di], ah
+    mov     es:[di], ah ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     loop    draw_text_loop_head_04
     inc     si
@@ -938,6 +1003,14 @@ draw_text_branch_path_05:
     jmp     short palette_join_01
     db 144
 _draw_text_at endp
+; -----------------------------------------------------------------------------
+; Purpose: Load a block of palette entries through the BIOS video service.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 6); arg_4 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, BP, SP, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(palette): calls the BIOS palette service. */
+; -----------------------------------------------------------------------------
 _video_set_palette proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -955,7 +1028,7 @@ palette_join_01:
     mov     cx, [bp+arg_2]
     mov     ah, 10h
     mov     al, 12h
-    int     10h             ; - VIDEO - SET BLOCK OF DAC REGISTERS (EGA, VGA/MCGA)
+    int     R5HW_BIOS_VIDEO_INT ; - VIDEO - SET BLOCK OF DAC REGISTERS (EGA, VGA/MCGA) /* PLATFORM(palette): calls the BIOS palette service. */
     pop     bp
     retf
     ; align 2

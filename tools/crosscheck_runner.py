@@ -1,4 +1,4 @@
-"""Optional independent DOSBox-X compiler cross-check for active C recipes."""
+"""Optional independent DOSBox-X compiler/assembler cross-check for active recipes."""
 import os
 import subprocess
 import tempfile
@@ -14,7 +14,7 @@ from secondary_contribution import bind_single_secondary
 from oracle import verify
 from mz import MZ
 from build_exact import inputs
-from assembler import asm_source
+from assembler import asm_source, prepare_asm
 from object_flags import recipe_flags, object_control_flags, same_object
 
 # Hash-identical copy of the former C:/DOSBox-X install (SHA-256 b028a4d3...).
@@ -88,12 +88,12 @@ def independent_row(r, source, oracle, image, runner=None):
     work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
     asm = r.get('kind') == 'asm'
     if asm:
-        require(r['profile']=='masm510-game' and r.get('include_closure')==[],
+        expanded, closure = prepare_asm(source)
+        require(r['profile']=='masm510-game' and r.get('include_closure',[])==closure,
                 'Independent ASM profile/closure differs')
         require(r.get('assembler_flags')==config['flags'],
                 'Independent ASM recipe flags differ')
-        (work/'UNIT.ASM').write_bytes(asm_source(source))
-        closure=[]
+        (work/'UNIT.ASM').write_bytes(expanded)
     else:
         expanded, closure = prepare(source, r['profile'])
         check_recipe(r, closure)
@@ -122,7 +122,8 @@ def independent_row(r, source, oracle, image, runner=None):
                     **reader_policy)
     check_object_communals(obj, r)
     if asm:
-        require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),
+        require(asm_source(source)==(work/'UNIT.ASM').read_bytes() and
+                prepare_asm(source)[1] == closure,
                 'Independent ASM source changed during assembly')
         require(r['object_declarations']==
                 {'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},

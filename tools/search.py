@@ -308,9 +308,8 @@ def run(source_path, profile=None, recipe_path=None, function=None):
     asm = Path(source_path).suffix.lower() == '.asm' or (recipe or {}).get('kind') == 'asm'
     selected_profile = profile or (recipe or {}).get('profile') or ('masm510-game' if asm else 'msc510-medium')
     if asm:
-        from assembler import asm_source
-        asm_source(source)
-        closure=[]
+        from assembler import prepare_asm
+        _, closure = prepare_asm(source)
     else:
         from preprocessor import prepare
         _, closure = prepare(source, selected_profile)
@@ -363,7 +362,7 @@ def run(source_path, profile=None, recipe_path=None, function=None):
         if asm:
             from assembler import assemble_source
             obj, receipt = assemble_source(source, selected_profile, communals=communal_names)
-            require(receipt.get('include_closure') == [], 'ASM include closure changed')
+            require(receipt.get('include_closure') == closure, 'ASM include closure changed')
         else:
             # A recipe may select a registered per-object flag set; the same
             # policy check as acceptance refuses any other override.

@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_143366
 _DATA segment word public 'DATA'
 _DATA ends
@@ -21,6 +22,13 @@ public _preRender_sphere
 public _nopsub_3320E
 public _sprset1size
 public _video_clear_color
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 33006.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _vector_op_base_z.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_33006 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -35,6 +43,13 @@ _nopsub_33006 proc far
     ; align 2
     db 144
 _nopsub_33006 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the graphics or geometry helper identified by vector op unk.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12).
+; Register ABI: touches AX, BX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _vector_op_unk proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -89,6 +104,13 @@ vector_set_base_z:
     mov     bp, sp
     mov     ax, [bp+6]
     mov     ds:_vector_op_base_z, ax
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender sphere.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _prerender_max_line_width, _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _preRender_sphere proc far
     push bp
     mov bp, sp
@@ -270,6 +292,14 @@ sphere_render_branch_path_08:
     pop bp
     retf
 _preRender_sphere endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 3320E. Its internal flow uses noop_entry2_branch_path_01.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12); arg_8
+;   (word ptr 14); arg_A (word ptr 16).
+; Register ABI: touches AX, SI, BP, SP, CS, DS; balanced explicit saves/restores observed: DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: _sprite1.
+; -----------------------------------------------------------------------------
 _nopsub_3320E proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -325,6 +355,13 @@ noop_entry2_branch_path_01:
     pop     bp
     retf
 _nopsub_3320E endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprset1size.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12).
+; Register ABI: touches AX, BP, SP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _sprite1.
+; -----------------------------------------------------------------------------
 _sprset1size proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -348,16 +385,25 @@ _sprset1size proc far
     pop     bp
     retf
 _sprset1size endp
+; -----------------------------------------------------------------------------
+; Purpose: Clear the active video page to the requested color.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, CX, DI, BP, SP, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): selects a video-memory segment. */
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _video_clear_color proc far
     push bp
     mov bp,sp
     push di
-    mov ax,0A000h
+    mov ax,R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov es,ax
     mov ax,word ptr [bp+6]
     mov di,0
     mov cx,0FA00h
-    rep stosw
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     pop di
     pop bp
     retf

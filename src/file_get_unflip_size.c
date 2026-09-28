@@ -1,3 +1,4 @@
+/* READABILITY: Compute the largest unflipped shape allocation in paragraph units. */
 struct SHAPE2D {
     int s2d_width;
     int s2d_height;
@@ -11,6 +12,8 @@ struct SHAPE2D {
 extern int far file_get_res_shape_count(char far *memchunk);
 extern struct SHAPE2D far * far file_get_shape2d(char far *memchunk, int index);
 
+/* Find the largest pixel area among a resource?s shapes and return its paragraph allocation size.
+ * Params and return follow the declared C signature. */
 unsigned far file_get_unflip_size(char far *memchunk)
 {
     int i, shapecount;

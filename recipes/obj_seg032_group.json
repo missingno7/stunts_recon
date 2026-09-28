@@ -2028,7 +2028,13 @@
     ]
   },
   "object_segment": "UNIT_TEXT",
-  "preprocessor_closure": [],
+  "preprocessor_closure": [
+    {
+      "path": "include/platform_hw.h",
+      "sha256": "e958f10febf7ae73b96df4b542be4b11513d792f9cde1fcc676c2aace8932e17",
+      "size": 5473
+    }
+  ],
   "profile": "msc510-medium",
   "review_notes": [
     "integ35 (L9-bssS): the complete file-scope static set of seg032 is six `static short` and one near `char *` text pointer (14 B _BSS at [207382,207396)); line_input_cursor_vertical, line_edit_x, line_edit_y, cursor_flash_state, line_input_text_buffer, line_text_max_width and line_input_cursor_slot are compiler-hash-constrained reconstruction names (MSC 5.10 static-order hash; readable, never recovered originals)"

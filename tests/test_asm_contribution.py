@@ -1,4 +1,5 @@
 import copy
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -6,7 +7,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools'))
-from assembler import asm_source, assemble_source
+from assembler import asm_source, assemble_source, prepare_asm
 from common import identity
 from multi_contribution import bind_multi
 from oracle import verify
@@ -54,9 +55,36 @@ class AsmContributionTests(unittest.TestCase):
                 probe({**self.recipe, **change}, self.oracle, VIDEO)
 
     def test_asm_rejects_external_source_closure(self):
-        for source in (b'include other.inc\n', b'org 100h\n', b'\xff'):
+        for source in (b'include include\\missing_file.inc\n',
+                       b'include include\\..\\src\\obj_seg000.c\n',
+                       b'includelib external.lib\n', b'org 100h\n', b'\xff'):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 asm_source(source)
+
+    def test_tracked_asm_include_closure_and_full_omf_identity(self):
+        source = (b'include include\\platform_hw.inc\n' +
+                  VIDEO.replace(b'03DAh', b'R5HW_VIDEO_STATUS_PORT'))
+        expanded, closure = prepare_asm(source)
+        self.assertNotIn(b'include include', expanded.lower())
+        self.assertIn(b'R5HW_VIDEO_STATUS_PORT EQU 3DAh', expanded)
+        self.assertEqual(closure, [{'path':'include/platform_hw.inc',
+                                    **identity((ROOT/'include/platform_hw.inc').read_bytes())}])
+        included_obj, included_receipt = assemble_source(source, 'masm510-game')
+        base_obj, base_receipt = assemble_source(VIDEO, 'masm510-game')
+        self.assertEqual(included_receipt['object'], base_receipt['object'])
+        self.assertEqual(included_receipt['include_closure'], closure)
+        self.assertEqual(included_obj.segment_bytes('S012_TEXT'), base_obj.segment_bytes('S012_TEXT'))
+
+    def test_platform_c_and_masm_shared_values_match(self):
+        header = (ROOT/'include/platform_hw.h').read_text(encoding='ascii')
+        include = (ROOT/'include/platform_hw.inc').read_text(encoding='ascii')
+        def number(value):
+            return int(value[:-1], 16) if value.lower().endswith('h') else int(value, 0)
+        c_values = {name:number(value) for name,value in re.findall(
+            r'^#define\s+(R5HW_\w+)\s+(0[xX][0-9A-Fa-f]+|\d+)\b', header, re.M)}
+        asm_values = {name:number(value) for name,value in re.findall(
+            r'^(R5HW_\w+)\s+EQU\s+([0-9A-Fa-f]+h|\d+)\b', include, re.M|re.I)}
+        self.assertEqual(c_values, asm_values)
 
     def test_two_public_module_with_internal_call(self):
         source = b'''_TEXT segment word public 'CODE'\nassume cs:_TEXT\npublic _first, _second\n_first proc far\n call _second\n ret\n_first endp\n_second proc near\n mov ax,1\n ret\n_second endp\n_TEXT ends\nend\n'''

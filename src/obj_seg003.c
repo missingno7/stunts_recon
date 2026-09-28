@@ -734,6 +734,8 @@ extern char far setup_intro(void);
 extern void far intro_op(int, int, int, int, int, int, int, struct VECTOR *, struct POINT2D *, int *, struct RECTANGLE, struct RECTANGLE *, struct RECTANGLE *);
 
 
+/* Copies a clipped window region. Params: clip rectangle. Returns: none. State: reads the active window sprite and clip state. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void far draw_clip(struct RECTANGLE *clipRect)
 {
 	extern char g_simprect;
@@ -755,7 +757,7 @@ void far draw_clip(struct RECTANGLE *clipRect)
     struct RECTANGLE *currentRect;
     if (g_videoflg5 != 0)
         return;
-    sprcopy2to12();
+    /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
     if (g_simprect == 0) {
         if (statemgmtcpy != 0) {
             for (i=0; i<15; ++i)
@@ -775,29 +777,29 @@ void far draw_clip(struct RECTANGLE *clipRect)
             if (rect_num3 != 0) {
                 rectsorttop(rect_num3,
                     rectclip, rcmapix);
-                msdrawopaquechk();
+                /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
                 i = 0;
                 goto draw_rect_check;
                 do {
                     currentRect = &rectclip[rcmapix[i]];
-                    sprset1size(currentRect->left, currentRect->right,
+                    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(currentRect->left, currentRect->right,
                         currentRect->top, currentRect->bottom);
-                    sprputimage(g_wndspr->image);
+                    /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
                     ++i;
 draw_rect_check:
                     ;
                 } while (rect_num3 > i);
                 goto draw_transparent;
             }
-            sprset1size(0, 320, clipRect->top, clipRect->bottom);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 320, clipRect->top, clipRect->bottom);
         } else {
-            sprset1size(clipRect->left, clipRect->right,
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(clipRect->left, clipRect->right,
                 clipRect->top, clipRect->bottom);
         }
     }
-    msdrawopaquechk();
-    sprputimage(g_wndspr->image);
-draw_transparent:
+    /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+    /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
+/* PLATFORM(video): select the transparent drawing path. */ draw_transparent:
     msdrawtransparentchk();
     if (statemgmtcpy != 0) {
         rotpr[1] = prevcamrot;
@@ -820,6 +822,8 @@ void far init_rect_arrays(void)
         }
     }
 }
+/* Updates the visible game frame. Params: page and clip rectangle. Returns: none. State: reads frame, scene, camera and sprite globals; updates render lists. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void update_frame(char page, struct RECTANGLE* clip) {
 	extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
 	extern int rotpr[];
@@ -1863,7 +1867,7 @@ void update_frame(char page, struct RECTANGLE* clip) {
 draw_done:
 	// Draw the skybox
 	skybox_result = skybox_op(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);
-	sprset1size(0, 0x140, clip->top, clip->bottom);
+	/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, clip->top, clip->bottom);
 	polyinfo();
 
 	// This supposedly draws the explosion. The fact that it cycles three
@@ -1883,7 +1887,7 @@ draw_done:
 		}
 
 		if (rcintersect(rect_ptr, clip) == 0) {
-			sprset1size(rect_ptr->left, rect_ptr->right, rect_ptr->top, rect_ptr->bottom);
+			/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rect_ptr->left, rect_ptr->right, rect_ptr->top, rect_ptr->bottom);
 			offset_v.x = (rect_ptr->right + rect_ptr->left) >> 1;
 			offset_v.y = (rect_ptr->top + rect_ptr->bottom) >> 1;
 			j = rect_ptr->right - rect_ptr->left;
@@ -1903,7 +1907,7 @@ draw_done:
 */
 
 	// Depict windscreen cracking after a crash
-	sprset1size(0, 0x140, clip->top, clip->bottom);
+	/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, clip->top, clip->bottom);
 	if (cammd == 0) {
 
 		if (follow_op != 0) {
@@ -1933,14 +1937,14 @@ draw_done:
 	if (gm_playmode == 0) {
 		if (core.game_inputmode != 0) {
 			fmtframestr(&resbuftext, elaptm1 + tmr2, 0);
-			fontsetfontdef2(fntled_res);
+			/* PLATFORM(video): select a font definition. */ fontsetfontdef2(fntled_res);
 			if (statemgmtcpy != 0) {
-				rcunion(introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
+				/* PLATFORM(video): draw the introduction text. */ rcunion(introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
 			} else {
-				introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
+				/* PLATFORM(video): draw the introduction text. */ introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
 			}
 
-			fontsetfontdef();
+			/* PLATFORM(video): select the active font definition. */ fontsetfontdef();
 		}
 	}
 
@@ -1982,6 +1986,8 @@ extern struct SPRITE far *g_wndspr;
 extern int rotpr[];
 extern int prevcamrot;
 
+/* Draws the sky and ground bands. Params: clip rectangle, x offset and horizon. Returns: none. State: reads skybox images, heights and colors. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
 {
     {
@@ -1995,8 +2001,8 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
             upper_height = rectptr->bottom - rectptr->top;
 
         if (upper_height > 0) {
-            sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->top + upper_height);
-            sprite_clear_1_color(g_skybox_sky_clr);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->top + upper_height);
+            /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(g_skybox_sky_clr);
         }
     }
 
@@ -2005,12 +2011,12 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
         if (detail_lvl != 4) {
             sky_x = ((x + 0x200) & 0x3ff) - 0x400;
             if (rectptr->top < horizon && horizon - maxscnh <= rectptr->bottom) {
-                sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                sprite_putimage_and_alt(skypics[0], sky_x, horizon - scene_1ht);
-                sprite_putimage_and_alt(skypics[1], sky_x + 0x140, horizon - scene_2ht);
-                sprite_putimage_and_alt(skypics[2], sky_x + 0x200, horizon - scene_3ht);
-                sprite_putimage_and_alt(skypics[3], sky_x + 0x340, horizon - scene_4ht);
-                sprite_putimage_and_alt(skypics[0], sky_x + 0x400, horizon - scene_1ht);
+                /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[0], sky_x, horizon - scene_1ht);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[1], sky_x + 0x140, horizon - scene_2ht);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[2], sky_x + 0x200, horizon - scene_3ht);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[3], sky_x + 0x340, horizon - scene_4ht);
+                /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[0], sky_x + 0x400, horizon - scene_1ht);
             }
         }
     }
@@ -2025,12 +2031,14 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
 
         lower_height = rectptr->bottom - ground_top;
         if (lower_height > 0) {
-            sprset1size(rectptr->left, rectptr->right, ground_top, ground_top + lower_height);
-            sprite_clear_1_color(ground_skybox);
+            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rectptr->left, rectptr->right, ground_top, ground_top + lower_height);
+            /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(ground_skybox);
         }
     }
 }
 
+/* Builds and draws the skybox view. Params: preview, clip, latitude, rotation, mode, detail and camera height. Returns: draw status. State: reads skybox/terrain state and updates clip rectangles. */
+/* PLATFORM(video): draws to or configures the display surface. */
 int skybox_op(int preview_index, struct RECTANGLE *clip, int latitude,
               struct MATRIX *rotation, int projection_mode, int detail, int camera_y)
 {
@@ -2051,7 +2059,7 @@ int skybox_op(int preview_index, struct RECTANGLE *clip, int latitude,
 
     rect_num3 = 0;
     draw_result = 0;
-    sprset1size(0, 0x140, clip->top, clip->bottom);
+    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, clip->top, clip->bottom);
 
     if (projection_mode != 0) {
         transform_input.x = 0x4650 * latitude;
@@ -2063,9 +2071,9 @@ int skybox_op(int preview_index, struct RECTANGLE *clip, int latitude,
 
         if (vecs[0].z < 0 || vecs[1].z < 0) {
             temp = g_skybox_sky_clr;
-fill:
+/* PLATFORM(video): select the sprite clip rectangle. */ fill:
             sprset1size(0, 0x140, clip->top, clip->bottom);
-            sprite_clear_1_color(temp);
+            /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(temp);
             draw_result = 1;
             goto done;
         }
@@ -2151,8 +2159,8 @@ fill:
                                            &rc, &rect_num3, rectclip);
                         for (temp = 0; temp < rect_num3; temp++) {
                             rectptr = &rectclip[temp];
-                            sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                            sprite_clear_1_color(g_skybox_sky_clr);
+                            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
+                            /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(g_skybox_sky_clr);
                         }
                     }
 
@@ -2164,8 +2172,8 @@ fill:
                                            &rc, &rect_num3, rectclip);
                         for (temp = 0; temp < rect_num3; temp++) {
                             rectptr = &rectclip[temp];
-                            sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                            sprite_clear_1_color(ground_skybox);
+                            /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
+                            /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(ground_skybox);
                         }
                     }
                 }
@@ -2212,7 +2220,7 @@ fill:
         transform_input.z = 0x3a98 * latitude;
         mat_vec(&transform_input, rotation, &vecs[0]);
         if (vecs[0].z < 0) {
-            sprite_clear_1_color(g_skybox_sky_clr);
+            /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(g_skybox_sky_clr);
             if (statemgmtcpy != 0) {
                 draw_result = 1;
                 tparr[5].left = 0;
@@ -2266,13 +2274,13 @@ simple:
             if (clip->bottom - clip->top < i)
                 i = clip->bottom - clip->top;
             if (i > 0) {
-                sprset1size(0, 0x140, clip->top, clip->top + i);
-                sprite_clear_1_color(ground_skybox);
+                /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, clip->top, clip->top + i);
+                /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(ground_skybox);
             }
             i = clip->bottom - horizon;
             if (i > 0) {
-                sprset1size(0, 0x140, horizon, horizon + i);
-                sprite_clear_1_color(g_skybox_sky_clr);
+                /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, horizon, horizon + i);
+                /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(g_skybox_sky_clr);
             }
             draw_result = 1;
         }
@@ -2294,6 +2302,8 @@ void transformed_shape_add_for_sort(int zadjust, char sort_group_id) {
 	g_curr_tsp++;
 }
 
+/* Draws the track preview background. Params: none. Returns: none. State: reads current track, camera and skybox state. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void draw_track_preview(void)
 {
     struct TRACKOBJECT *overlay;
@@ -2326,14 +2336,14 @@ void draw_track_preview(void)
     horizon = screen_point.py;
     if (horizon < 0)
         horizon = 0;
-    sprset1size(0, 0x140, 0, horizon - sky_hgt_world);
-    sprite_clear_1_color(g_skybox_sky_clr);
-    sprset1size(0, 0x140, 0, 0x64);
-    sprite_putimage_and_alt(skypics[2], 0, horizon - scene_3ht);
-    sprite_putimage_and_alt(skypics[3], 0x140, horizon - scene_4ht);
-    sprset1size(0, 0x140, horizon, 0xc8);
-    sprite_clear_1_color(ground_skybox);
-    sprset1size(0, 0x140, 0, 0xc8);
+    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, horizon - sky_hgt_world);
+    /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(g_skybox_sky_clr);
+    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, 0x64);
+    /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[2], 0, horizon - scene_3ht);
+    /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt(skypics[3], 0x140, horizon - scene_4ht);
+    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, horizon, 0xc8);
+    /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(ground_skybox);
+    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, 0, 0xc8);
     select_rot(0, rot_angle, 0, &trackpreview_cliprect, 1);
 
     transformed.rotvec.x = 0;
@@ -2485,6 +2495,8 @@ void draw_track_preview(void)
     }
 }
 
+/* Draws the in-game text overlay. Params: none. Returns: the affected rectangle. State: reads and updates text and game-display state. */
+/* PLATFORM(video): draws to or configures the display surface. */
 struct RECTANGLE *draw_ingame_text(void)
 {
     register int remainder;
@@ -2493,42 +2505,42 @@ struct RECTANGLE *draw_ingame_text(void)
 
     if (menutimeout != 0) {
         copy_string(&resbuftext, locate_text_resource(gamerptrs, aDm1));
-        rcunion(&game_rect_txt_in,
+        /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
             introtext(&resbuftext, font_op2_alt(&resbuftext), 0xAA, dlg_colour, 0),
             &game_rect_txt_in);
 
         copy_string(&resbuftext, locate_text_resource(gamerptrs, aDm2));
-        rcunion(&game_rect_txt_in,
+        /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
             introtext(&resbuftext, font_op2_alt(&resbuftext), 0xB6, dlg_colour, 0),
             &game_rect_txt_in);
     } else if (gm_playmode == 0) {
         if (core.game_inputmode == 0) {
             copy_string(&resbuftext, locate_text_resource(gamerptrs, aPre));
-            rcunion(&game_rect_txt_in,
+            /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
                 introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5A, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (pass_check_flag == 0) {
             copy_string(&resbuftext, locate_text_resource(gamerptrs, aSe1));
-            rcunion(&game_rect_txt_in,
+            /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
                 introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5D, dlg_colour, 0),
                 &game_rect_txt_in);
             copy_string(&resbuftext, locate_text_resource(gamerptrs, aSe2));
-            rcunion(&game_rect_txt_in,
+            /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
                 introtext(&resbuftext, font_op2_alt(&resbuftext), 0x69, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (follow_op == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
             switch ((int)core.field_45D) {
-            case 1:
+            /* PLATFORM(video): blit a transparent shape. */ case 1:
                 sprite_putimage_transparent(sdgbmp_v[3], 0x94, 0x5D);
                 rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
-            case 2:
+            /* PLATFORM(video): blit a transparent shape. */ case 2:
                 sprite_putimage_transparent(sdgbmp_v[4], 0x94, 0x5D);
                 rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 3:
                 copy_string(&resbuftext, locate_text_resource(gamerptrs, aWww));
-                rcunion(&game_rect_txt_in,
+                /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
                     introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5D, dlg_colour, 0),
                     &game_rect_txt_in);
                 break;
@@ -2536,12 +2548,12 @@ struct RECTANGLE *draw_ingame_text(void)
 
             resbuftext = 0;
             switch ((int)core.field_45E) {
-            case 1:
+            /* PLATFORM(video): blit a transparent shape. */ case 1:
                 sprite_putimage_transparent(sdgbmp_v[3], 0x44, 0x71);
                 rcunion(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
                 copy_string(&resbuftext, locate_text_resource(gamerptrs, aOpp));
                 break;
-            case 2:
+            /* PLATFORM(video): blit a transparent shape. */ case 2:
                 sprite_putimage_transparent(sdgbmp_v[4], 0xE4, 0x71);
                 rcunion(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
                 copy_string(&resbuftext, locate_text_resource(gamerptrs, aOpp_0));
@@ -2549,7 +2561,7 @@ struct RECTANGLE *draw_ingame_text(void)
             }
 
             if (resbuftext != 0) {
-                rcunion(&game_rect_txt_in,
+                /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
                     introtext(&resbuftext, font_op2_alt(&resbuftext), 0x74, dlg_colour, 0),
                     &game_rect_txt_in);
             }
@@ -2557,7 +2569,7 @@ struct RECTANGLE *draw_ingame_text(void)
             if (pen_flag_count != 0) {
                 copy_string(&resbuftext, locate_text_resource(gamerptrs, aPen));
                 fmtframestr(&resbuftext + strlen(&resbuftext), g_penaltytm, 0);
-                rcunion(&game_rect_txt_in,
+                /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
                     introtext(&resbuftext, font_op2_alt(&resbuftext), 0x66, dlg_colour, 0),
                     &game_rect_txt_in);
             }
@@ -2566,7 +2578,7 @@ struct RECTANGLE *draw_ingame_text(void)
         remainder = core.game_frame % rate_frame;
         if (remainder < ((short)rate_frame >> 1)) {
             copy_string(&resbuftext, locate_text_resource(gamerptrs, aRpl_0));
-            rcunion(&game_rect_txt_in,
+            /* PLATFORM(video): draw the introduction text. */ rcunion(&game_rect_txt_in,
                 introtext(&resbuftext, 0x138 - (strlen(&resbuftext) << 3), 0x0F, dlg_colour, 0),
                 &game_rect_txt_in);
         }
@@ -2575,6 +2587,8 @@ struct RECTANGLE *draw_ingame_text(void)
     return &game_rect_txt_in;
 }
 
+/* Updates the sinking message animation. Params: frame, top and height. Returns: affected rectangle. State: reads and updates message-rectangle state. */
+/* PLATFORM(video): draws to or configures the display surface. */
 struct RECTANGLE *do_sinking(int frame, int top, int height)
 {
     register int offset;
@@ -2589,8 +2603,8 @@ struct RECTANGLE *do_sinking(int frame, int top, int height)
     game_rect_txt_in.top = top + height - offset;
     game_rect_txt_in.bottom = top + height;
 
-    sprset1size(0, 0x140, game_rect_txt_in.top, game_rect_txt_in.bottom);
-    sprite_clear_1_color(g_skyboxwat_clr);
+    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, 0x140, game_rect_txt_in.top, game_rect_txt_in.bottom);
+    /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(g_skyboxwat_clr);
     return &game_rect_txt_in;
 }
 
@@ -2864,6 +2878,8 @@ struct RECTANGLE rect_ingame_text4 = { 228, 252, 113, 128 };
 
 static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
+/* Updates the crack/crash overlay. Params: frame, top and height. Returns: affected rectangle. State: reads and updates crash-overlay state. */
+/* PLATFORM(video): draws to or configures the display surface. */
 struct RECTANGLE *init_crak(int frame, int top, int height)
 {
     struct CRACK_LINE { struct POINT2D start, end; };
@@ -2890,11 +2906,11 @@ struct RECTANGLE *init_crak(int frame, int top, int height)
         start_point.py = (int)(((long)start_point.py * height) / 200);
         crack_end.py = (int)(((long)crack_end.py * height) / 200);
 
-        preRender_line(start_point.px, start_point.py + top - 1,
+        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top - 1,
                        crack_end.px, crack_end.py + top - 1, 0);
-        preRender_line(start_point.px, start_point.py + top + 1,
+        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top + 1,
                        crack_end.px, crack_end.py + top + 1, 0);
-        preRender_line(start_point.px, start_point.py + top,
+        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top,
                        crack_end.px, crack_end.py + top, dlg_colour);
 
         if (statemgmtcpy != 0) {
@@ -2921,6 +2937,8 @@ struct RECTANGLE *init_crak(int frame, int top, int height)
 
 
 
+/* Loads the selected skybox. Params: skybox mode. Returns: none. State: updates the skybox resource handle and loaded-state flag. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
 void far load_skybox(char mode)
 {
     register int skyHeight;
@@ -2934,7 +2952,7 @@ void far load_skybox(char mode)
         unload_skybox();
         scene_idx = mode;
         skybox_loaded = 1;
-        skyres_handle.pointer = file_load_shape2d_fatal_thunk(scenery_names + 9 * mode);
+        /* PLATFORM(file): load the selected skybox resource. */ skyres_handle.pointer = file_load_shape2d_fatal_thunk(scenery_names + 9 * mode);
         locate_many_resources(skyres_handle.pointer, "scensce2sce3sce4",
                               (char far **)skypics);
         scene_1ht = skypics[0]->height;
@@ -2960,27 +2978,41 @@ void far load_skybox(char mode)
     spdneedlegaugeclr = dlg_colour;
 }
 
+/* Releases the active skybox resource. Params: none. Returns: none. State: clears the skybox resource handle and loaded-state flag. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void far unload_skybox(void)
 {
-    if (skybox_loaded != 0)
+    /* PLATFORM(memory): release resource memory. */ if (skybox_loaded != 0)
         mmgr_free(skyres_handle.pointer);
     skybox_loaded = 0;
 }
 
+/* Loads the SD game shape set. Params: none. Returns: none. State: stores the loaded resource handle. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
 void far load_sdgame2_shapes(void)
 {
     register int i;
-    sdgame2hdl = file_load_resource(8, "sdgame2");
+    /* PLATFORM(file): load a named resource. */ sdgame2hdl = file_load_resource(8, "sdgame2");
     locate_many_resources(sdgame2hdl, "ex01ex02ex03leftrigh",
                           (char far **)sdgbmp_v);
     for (i = 0; i < 3; ++i)
         exwd[i] = sdgbmp_v[i]->width;
 }
 
-void far free_sdgame2(void) { mmgr_free(sdgame2hdl); }
+/* Releases the SD game shape set. Params: none. Returns: none. State: reads the stored resource handle. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
+void far free_sdgame2(void) { /* PLATFORM(memory): release resource memory. */ mmgr_free(sdgame2hdl); }
 
 char aCarcoun_0[] = "carcoun";
 
+/* Loads and prepares the introduction scene. Params: none. Returns: setup status. State: reads resource names and updates intro/render state. */
+/* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* PLATFORM(input_joy): reads joystick state. */
+/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
+/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
+/* PLATFORM(memory): queries, allocates or releases resource memory. */
+/* PLATFORM(timer): reads timer state or registers a callback. */
+/* PLATFORM(video): draws to or configures the display surface. */
 char far setup_intro(void)
 {
     int lastElapsedFrames;
@@ -3018,12 +3050,12 @@ char far setup_intro(void)
     int savedGoalZ;
 
     operationResult = 0;
-    title3dresValue = file_load_3dres("title");
+    /* PLATFORM(file): load a 3D resource. */ title3dresValue = file_load_3dres("title");
     locate_many_resources(title3dresValue, "logolog2brav", lastShapeResources);
     shape3d_init_shape(lastShapeResources[0], &intro_alt);
     shape3d_init_shape(lastShapeResources[1], &logo_title);
     shape3d_init_shape(lastShapeResources[2], &brav);
-    if (g_videoflg5 == 0)
+    /* PLATFORM(video): create an offscreen sprite surface. */ if (g_videoflg5 == 0)
         g_wndspr = sprite_make_window(0x140, 0xc8, 0x0f);
 
     targetApproachDifference = 0;
@@ -3040,11 +3072,11 @@ char far setup_intro(void)
     cameraYIdle = 0x12c;
     oldPhase = 0;
     lastElapsedFrames = 0;
-    otherCarResource = file_load_resource_file(aCarcoun_0);
+    /* PLATFORM(file): load a resource file. */ otherCarResource = file_load_resource_file(aCarcoun_0);
     setup_aero_trackdata(otherCarResource, 1);
-    unload_resource(otherCarResource);
+    /* PLATFORM(memory): release a loaded resource. */ unload_resource(otherCarResource);
     init_plantrak();
-    timer_get_delta();
+    /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta();
     pointTotalB = 0;
     activePointCountA = 0;
     ((int)statemgmtcpy) = ((int)slow_video_mode_state);
@@ -3058,7 +3090,7 @@ char far setup_intro(void)
     frameReady = 1;
 
     do {
-        baseFrameDelta = timer_get_delta();
+        /* PLATFORM(timer): read the elapsed timer interval. */ baseFrameDelta = timer_get_delta();
         frmexcess += baseFrameDelta;
         while (frmexcess > frmcs_time) {
             frmexcess -= frmcs_time;
@@ -3091,7 +3123,7 @@ char far setup_intro(void)
         frameReady = 0;
         if (g_videoflg5 != 0)
             setup_mcgawnd2();
-        else
+        /* PLATFORM(video): copy the window sprite to the display page. */ else
             sprite_copy_wnd_to_1();
 
         carHeadingData = 0xffff;
@@ -3135,33 +3167,33 @@ char far setup_intro(void)
                  tparr[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
 
         if (g_videoflg5 != 0) {
-            msdrawopaquechk();
+            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
             setup_mcgawnd1();
-            msdrawtransparentchk();
+            /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
             if (((int)statemgmtcpy) != 0)
                 tparr[savedRectangleIndex] = gameRestoredRect;
             savedRectangleIndex ^= 1;
         } else {
-            sprcopy2to12();
+            /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
             if (((int)statemgmtcpy) != 0) {
                 rcunion(&lastDrawRect, &tparr[2], &oldSavedRect);
                 if (rcintersect(&oldSavedRect, &rc0_cpy) == 0) {
-                    sprset1size(oldSavedRect.left, oldSavedRect.right,
+                    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(oldSavedRect.left, oldSavedRect.right,
                                       oldSavedRect.top, oldSavedRect.bottom);
-                    msdrawopaquechk();
-                    sprputimage(g_wndspr->image);
-                    msdrawtransparentchk();
+                    /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+                    /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
+                    /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
                     tparr[0] = gameRestoredRect;
                     tparr[2] = lastDrawRect;
                 }
             } else {
-                msdrawopaquechk();
-                sprputimage(g_wndspr->image);
-                msdrawtransparentchk();
+                /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+                /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
+                /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
             }
         }
 
-check_input:
+/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ check_input:
         if (input_do_checking(baseFrameDelta)) {
             operationResult = 1;
             break;
@@ -3171,18 +3203,20 @@ check_input:
     if (g_videoflg5 != 0) {
         if (get_0() != 0) {
             setup_mcgawnd2();
-            clear_rect(0, 0, 0x140, 0xc8, 0);
-            msdrawopaquechk();
+            /* PLATFORM(video): clear a display rectangle. */ clear_rect(0, 0, 0x140, 0xc8, 0);
+            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
             setup_mcgawnd1();
-            msdrawtransparentchk();
+            /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
         }
     } else {
-        sprite_free_window(g_wndspr);
+        /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(g_wndspr);
     }
-    mmgr_free(title3dresValue);
+    /* PLATFORM(memory): release resource memory. */ mmgr_free(title3dresValue);
     return (char)operationResult;
 }
 
+/* Draws the introduction scene. Params: camera, projection and clip data from the signature. Returns: none. State: reads intro-scene and sprite state. */
+/* PLATFORM(video): draws to or configures the display surface. */
 void far intro_op(int camX, int camY, int camZ, int logoRotation,
                   int cloudRotation, int showOpponent, int useLogo,
                   struct VECTOR *cloudPoints, struct POINT2D *oldPoints,
@@ -3246,24 +3280,24 @@ logo_complete:
         index = 0;
         while (index < *oldPointCount) {
             projectedPoint = oldPoints[index];
-            putpixel_single_maybe(projectedPoint.px, projectedPoint.py, 0);
+            /* PLATFORM(video): draw a display pixel. */ putpixel_single_maybe(projectedPoint.px, projectedPoint.py, 0);
             ++index;
         }
     }
     rcunion(oldClip, &inputClip, &unionRect);
     if (rcintersect(&unionRect, &rc0_cpy) == 0) {
-        sprset1size(unionRect.left, unionRect.right,
+        /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(unionRect.left, unionRect.right,
                           unionRect.top, unionRect.bottom);
-        sprite_clear_1_color(0);
+        /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(0);
     }
     previousClip = initialClip;
     goto prepare_draw;
 
-no_incremental:
+/* PLATFORM(video): select the sprite clip rectangle. */ no_incremental:
     sprset1size(intro_cliprect.left, intro_cliprect.right,
                       intro_cliprect.top, intro_cliprect.bottom);
-    sprite_clear_1_color(0);
-prepare_draw:
+    /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(0);
+/* PLATFORM(video): select the sprite clip rectangle. */ prepare_draw:
     sprset1size(intro_cliprect.left, intro_cliprect.right,
                       intro_cliprect.top, intro_cliprect.bottom);
     count = 0;
@@ -3275,7 +3309,7 @@ prepare_draw:
         mat_vec(&inputPoint, &wkmatx, &relativeVector);
         if (relativeVector.z > 0xc8) {
             vector_to_point(&relativeVector, &projectedPoint);
-            putpixel_single_maybe(projectedPoint.px, projectedPoint.py,
+            /* PLATFORM(video): draw a display pixel. */ putpixel_single_maybe(projectedPoint.px, projectedPoint.py,
                                   intro_colorvalue);
             if (((int)statemgmtcpy) != 0) {
                 oldPoints[count++] = projectedPoint;

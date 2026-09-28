@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_154486
 DGROUP group _DATA
 assume ds:DGROUP, ss:DGROUP
@@ -33,6 +34,16 @@ public _sub_35DC8
 public _sub_35DE6
 public _sub_35E08
 public _loc_35ED9
+; -----------------------------------------------------------------------------
+; Purpose: Draw a filled rectangle using the scaled sprite blitter.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
+;   arg_8 (byte ptr 14).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _draw_filled_rect proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -113,7 +124,7 @@ handle_odd_rectangle_width:
 draw_rectangle_rows:
     mov     cx, [bp+arg_4]
 write_rectangle_word_pixels:
-    xor     es:[di], ax
+    xor     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    write_rectangle_word_pixels
@@ -132,11 +143,11 @@ draw_odd_rectangle_width:
 draw_odd_rectangle_rows:
     mov     cx, [bp+arg_4]
 write_odd_rect_word_pixels:
-    xor     es:[di], ax
+    xor     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     inc     di
     inc     di
     loop    write_odd_rect_word_pixels
-    xor     es:[di], al
+    xor     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, dx
     dec     si
     jg      short draw_odd_rectangle_rows
@@ -144,7 +155,7 @@ write_odd_rect_word_pixels:
 draw_single_pixel_rows:
     inc     dx
 write_single_pixel_rows:
-    xor     es:[di], al
+    xor     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, dx
     dec     si
     jg      short write_single_pixel_rows
@@ -152,6 +163,15 @@ write_single_pixel_rows:
     ; align 2
     db 0
 _draw_filled_rect endp
+; -----------------------------------------------------------------------------
+; Purpose: Clear a rectangle in the active sprite or video buffer.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12); arg_8
+;   (byte ptr 14).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _clear_rect proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -479,6 +499,13 @@ _incnums    db 0
     db 255
 _clear_rect endp
 copy_bytes equ 100h
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper sub 35DC8.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, CX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sub_35DC8 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -503,6 +530,13 @@ _sub_35DC8 proc far
     pop bp
     retf
 _sub_35DC8 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper sub 35DE6. Its internal flow uses clear_copy_direction_flag, copy_bytes_to_increment_table.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12).
+; Register ABI: touches AX, CX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sub_35DE6 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -532,6 +566,15 @@ copy_bytes_to_increment_table:
     pop bp
     retf
 _sub_35DE6 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper sub 35E08. Its internal flow uses allocate_sprite_scale_locals, prepare_sprite_dimensions.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
+;   arg_8 (byte ptr 14); arg_shapeptr (dword ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES, SS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the
+;   listed operands.
+; Globals read: source_row_fraction_accumulator.
+; Globals written: source_row_fraction_accumulator.
+; -----------------------------------------------------------------------------
 _sub_35E08 proc far
     var_14 = word ptr -20
     var_12 = word ptr -18

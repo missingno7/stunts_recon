@@ -14,7 +14,13 @@
   "expected_fixups": [],
   "expected_relocations": [],
   "id": "file_get_res_shape_count",
-  "include_closure": [],
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
   "kind": "asm",
   "object_declarations": {
     "externals": [],

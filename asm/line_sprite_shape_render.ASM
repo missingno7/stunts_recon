@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_149180
 _DATA segment word public 'DATA'
 _DATA ends
@@ -37,6 +38,15 @@ public _sprite1
 public _sprite2
 public _font_setup_unknown
 public _set_fontdefseg
+; -----------------------------------------------------------------------------
+; Purpose: Draw filled scan lines from the prepared line descriptors.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 14); arg_numlines (word ptr 12); arg_x1arr (word ptr 6); arg_x2arr
+;   (word ptr 8); arg_y (word ptr 10).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _draw_filled_lines proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -73,7 +83,7 @@ fill_lines_loop_head_01:
     add     di, bx
     test    cx, 0FFF8h
     jnz     short fill_lines_branch_path_02 ; jump if (cx & 0xFFF8), ie jump if cx >= 8.
-    rep stosb               ; rep count = cx = (arg2->member0 - arg0->member0) + 1
+    rep stosb ; rep count = cx = (arg2->member0 - arg0->member0) + 1 /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 fill_lines_loop_head_02:
     add     [bp+arg_x2arr], 2
     add     [bp+arg_x1arr], 2
@@ -91,27 +101,35 @@ fill_lines_branch_path_02:
     jnz     short fill_lines_branch_path_04
     shr     cx, 1
     jb      short fill_lines_branch_path_03
-    rep stosw
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     jmp     short fill_lines_loop_head_02
 fill_lines_branch_path_03:
-    rep stosw
-    stosb
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     jmp     short fill_lines_loop_head_02
 fill_lines_branch_path_04:
     shr     cx, 1
     jb      short fill_lines_branch_path_05
     dec     cx
-    stosb
-    rep stosw
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     jmp     short fill_lines_loop_head_02
 fill_lines_branch_path_05:
-    stosb
-    rep stosw
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     jmp     short fill_lines_loop_head_02
     ; align 2
     db 0
 _draw_filled_lines endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 34736.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_34736 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -140,6 +158,14 @@ _nopsub_34736 proc far
     ; align 2
     db 144
 _nopsub_34736 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite clear shape alt.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
+;   arg_8 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sprite_clear_shape_alt proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -168,6 +194,14 @@ _sprite_clear_shape_alt proc far
     ; align 2
     db 144
 _sprite_clear_shape_alt endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by sprite clear shape.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sprite_clear_shape proc far
     var_A = word ptr -10
     var_8 = word ptr -8
@@ -221,6 +255,15 @@ shape_clear_loop_head_01:
     pop     bp
     retf
 _sprite_clear_shape endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the sprite or 2D-shape operation identified by shapeexpl.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_6 (word ptr 12); arg_8 (word ptr 12); arg_shapeptr (dword ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): selects a video-memory segment. */
+; -----------------------------------------------------------------------------
 _shapeexpl proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -403,8 +446,8 @@ shape_explode_branch_path_06:
     mov     sp, bp
     pop     bp
     retf
-_sprite1 dw 0,0A000h,0,0,0,offset lineoffsets,0,0140h,0,00C8h,0140h,0,0140h,0,0140h
-_sprite2 dw 0,0A000h,0,0,0,offset lineoffsets,0,0140h,0,00C8h,0140h,0,0140h,0,0140h
+_sprite1 dw 0,0A000h,0,0,0,offset lineoffsets,0,0140h,0,00C8h,0140h,0,0140h,0,0140h ;/* PLATFORM(video): selects a video-memory segment. */
+_sprite2 dw 0,0A000h,0,0,0,offset lineoffsets,0,0140h,0,00C8h,0140h,0,0140h,0,0140h ;/* PLATFORM(video): selects a video-memory segment. */
 lineoffsets     dw 0
     dw 320
     dw 640
@@ -606,6 +649,14 @@ lineoffsets     dw 0
     dw 63360
     dw 63680
 _shapeexpl endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the graphics or geometry helper identified by font setup unknown.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
+; Register ABI: touches AX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _fontdefseg.
+; Globals written: _fontdefseg.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _font_setup_unknown proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -643,7 +694,7 @@ _font_setup_unknown proc far
     mov     es, ax
     mov     ds, ds:[_fontdefseg]
     cld
-    mov     word ptr es:[di+16h], ds
+    mov     word ptr es:[di+16h], ds ;/* PLATFORM(video): accesses display memory through ES. */
     mov     cx, 0Bh
     rep movsw
     pop     si
@@ -668,6 +719,13 @@ _font_setup_unknown proc far
     pop     bp
     retf
 _font_setup_unknown endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the video or display setup operation identified by set fontdefseg.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
+; Register ABI: touches AX, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _fontdefseg.
+; -----------------------------------------------------------------------------
 _set_fontdefseg proc far
      s = byte ptr 0
      r = byte ptr 2

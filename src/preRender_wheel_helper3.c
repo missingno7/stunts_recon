@@ -1,8 +1,11 @@
+/* READABILITY: Build the sixteen front/back perimeter points for a wheel section from three source points. */
 typedef struct Point {
     int x;
     int y;
 } Point;
 extern int far mulscl(int, int);
+/* Interpolate and translate the front and rear wheel-section point rings.
+ * Params and return follow the declared C signature. */
 void preRender_wheel_helper3(Point *source, Point *output)
 {
     int half_dx;

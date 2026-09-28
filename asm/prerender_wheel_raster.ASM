@@ -1,3 +1,4 @@
+INCLUDE include\platform_hw.inc
 .model medium
 name asm012_137138
 SPRITE struc
@@ -58,6 +59,13 @@ public _preRender_helper3
 public _nopsub_31F39
 public _nopsub_31F55
 _preRender_default label far
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender default.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_default proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -71,6 +79,13 @@ preRender_default proc far
     jmp     short pre_default_alt_join_01
 preRender_default endp
 _preRender_default_alt label far
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender default alt.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_6 (word ptr 10).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_default_alt proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -91,6 +106,13 @@ pre_default_alt_join_01:
     jmp     short _loc_3180A
 preRender_default_alt endp
 _skybox_op_helper label far
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by skybox op helper.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 skybox_op_helper proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -104,6 +126,14 @@ skybox_op_helper proc far
     jmp     short wheel_raster_join_01
 skybox_op_helper endp
 _preRender_wheel_helper4 label far
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender wheel helper4.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 6); arg_vertlinecount (word ptr 8); arg_vertlines (byte ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES, SS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_wheel_helper4 proc far
     var_7D0 = word ptr -2000
     var_798 = word ptr -1944
@@ -345,6 +375,13 @@ wheel_raster_branch_path_18:
     retf
 preRender_wheel_helper4 endp
 _preRender_helper label near
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender helper.
+; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: CX, DI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_helper proc near
     var_18 = word ptr -24
      s = byte ptr 0
@@ -424,6 +461,13 @@ edge_clear_branch_path_03:
     rep stosw
 preRender_helper endp
 _preRender_helper2 label near
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender helper2.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_helper2 proc near
     var_18 = word ptr -24
      r = byte ptr 0
@@ -553,6 +597,13 @@ slope_fill_branch_path_02:
     retn
 preRender_helper2 endp
 _preRender_helper3 label near
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender helper3.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 preRender_helper3 proc near
     var_18 = word ptr -24
     var_C = byte ptr -12
@@ -1051,6 +1102,13 @@ slope_raster_return_01:
     retn
 preRender_helper3 endp
 _nopsub_31F39 label far
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 31F39.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (byte ptr 10).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 nopsub_31F39 proc far
     var_7D0 = word ptr -2000
     var_798 = byte ptr -1944
@@ -1086,6 +1144,14 @@ nopsub_31F39 proc far
     db 144
 nopsub_31F39 endp
 _nopsub_31F55 label near
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 31F55. Its internal flow uses line_raster_join_01, line_raster_branch_path_01.
+; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (byte ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES, SS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: _sprite1.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 nopsub_31F55 proc near
     var_A = byte ptr -10
      s = byte ptr 0

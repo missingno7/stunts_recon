@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 name asm012_141362
 MATRIX struc
 _11 dw ?
@@ -66,6 +67,13 @@ public _nopsub_32FEE
 public _video_get_status
 S012_TEXT segment word public 'CODE'
 
+; -----------------------------------------------------------------------------
+; Purpose: Dispatch one font or glyph drawing operation.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_4 (word ptr 8).
+; Register ABI: touches AX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _font_op proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -82,6 +90,14 @@ _font_op proc far
     jmp     short font_op2_branch_path_03
     db 144
 _font_op endp
+; -----------------------------------------------------------------------------
+; Purpose: Dispatch a font operation using the alternate glyph path.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: _fontdefseg.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses display memory through ES. */
+; -----------------------------------------------------------------------------
 _font_op2 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -105,12 +121,12 @@ font_op2_loop_head_01:
     inc     si
     xor     bh, bh
     shl     bx, 1
-    mov     bx, es:[bx+16h]
+    mov     bx, es:[bx+16h] ;/* PLATFORM(video): accesses display memory through ES. */
     or      bx, bx
     jz      short font_op2_loop_head_01
     or      cl, cl
     jz      short font_op2_branch_path_02
-    mov     bl, es:[bx]
+    mov     bl, es:[bx] ;/* PLATFORM(video): accesses display memory through ES. */
     xor     bh, bh
     mov     di, bx
 font_op2_branch_path_02:
@@ -124,6 +140,14 @@ font_op2_branch_path_03:
     pop     bp
     retf
 _font_op2 endp
+; -----------------------------------------------------------------------------
+; Purpose: Prepare rendering data for the operation identified by preRender patterned.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 8);
+;   arg_6 (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: _imagefunc, _line_pattern_bits, _spritefunc.
+; -----------------------------------------------------------------------------
 _preRender_patterned proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -161,6 +185,13 @@ patterned_loop_head_01:
     mov     _imagefunc, ax
     jmp     _loc_3180A
 _preRender_patterned endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 328C9.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_6 (word ptr 12).
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_328C9 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -176,6 +207,13 @@ _nopsub_328C9 proc far
     mov     [bp+var_A], 1
     jmp     short patterned_loop_head_01
 _nopsub_328C9 endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 328DB.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_6 (word ptr 12).
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _nopsub_328DB proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -193,6 +231,13 @@ _nopsub_328DB proc far
     ; align 2
     db 0
 _nopsub_328DB endp
+; -----------------------------------------------------------------------------
+; Purpose: Multiply a matrix by a vector using the supplied fixed-point values.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_inpVector (word ptr 6); arg_matrix (word ptr 8); arg_outVector (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mat_vec proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -332,6 +377,13 @@ matrix_vec_branch_path_09:
     pop     bp
     retf
 _mat_vec endp
+; -----------------------------------------------------------------------------
+; Purpose: Multiply two fixed-point matrices.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_leftMatrix (word ptr 8); arg_outputMatrix (word ptr 10); arg_rightMatrix (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mat_multiply proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -405,6 +457,13 @@ matrix_mul_branch_path_04:
     pop     bp
     retf
 _mat_multiply endp
+; -----------------------------------------------------------------------------
+; Purpose: Invert the fixed-point matrix in the supplied workspace.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_mat_in (word ptr 6); arg_mat_out (word ptr 8).
+; Register ABI: touches AX, CX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _mat_invert proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -462,6 +521,16 @@ fliphandlers     dw offset fliptype0
     dw offset fliptype1
     dw offset fliptype2
 _mat_invert endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file unflip shape2d.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_memchunkofs (word ptr 6); arg_memchunkseg (word ptr 8); arg_mempagesofs (word ptr 10);
+;   arg_mempagesseg (word ptr 12).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+; -----------------------------------------------------------------------------
 _file_unflip_shape2d proc far
     var_height = word ptr -14
     var_width = word ptr -12
@@ -553,7 +622,7 @@ fliptype0:
     mov     cx, [bp+var_width]
 unflip_shape_loop_head_03:
     mov     al, [bx]
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     bx, [bp+var_height]
     loop    unflip_shape_loop_head_03
     inc     dx
@@ -568,7 +637,7 @@ fliptype1:
     mov     cx, [bp+var_width]
 unflip_shape_loop_head_04:
     mov     al, [bx]
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     bx, [bp+var_height]
     loop    unflip_shape_loop_head_04
     add     di, [bp+var_width]
@@ -588,7 +657,7 @@ unflip_shape_loop_head_05:
     mov     cx, [bp+var_width]
 unflip_shape_loop_head_06:
     mov     al, [bx]
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     bx, [bp+var_height]
     loop    unflip_shape_loop_head_06
     add     di, [bp+var_width]
@@ -610,7 +679,7 @@ fliptype2:
     adc     si, 0
 unflip_shape_loop_head_07:
     mov     al, [bx]
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     bx, si
     loop    unflip_shape_loop_head_07
     inc     dx
@@ -621,7 +690,7 @@ unflip_shape_loop_head_07:
     shr     si, 1
 unflip_shape_loop_head_08:
     mov     al, [bx]
-    stosb
+    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     add     bx, si
     loop    unflip_shape_loop_head_08
     inc     dx
@@ -950,6 +1019,16 @@ vle_esc2     db 0
     db 0
     db 0
 _file_unflip_shape2d endp
+; -----------------------------------------------------------------------------
+; Purpose: Perform the resource-file operation identified by file decomp vle.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 10); arg_dstseg (word ptr 12); arg_srcoff (word ptr 6); arg_srcseg
+;   (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+;   operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; Global addresses taken: _callbackflags2.
+; -----------------------------------------------------------------------------
 _file_decomp_vle proc far
     var_lengths = byte ptr -528
     var_symbols = byte ptr -272
@@ -1276,23 +1355,39 @@ vle_decode_branch_path_13:
     ; align 2
     db 0
 _file_decomp_vle endp
+; -----------------------------------------------------------------------------
+; Purpose: Implement the legacy internal helper nopsub 32FEE. Its internal flow uses noop_entry3_loop_head_01, noop_entry3_loop_head_02.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+; -----------------------------------------------------------------------------
 _nopsub_32FEE proc far
 
-    mov     dx, 3DAh
+    mov     dx, R5HW_VIDEO_STATUS_PORT
 noop_entry3_loop_head_01:
-    in      al, dx          ; Video status bits:
+    in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
     test    al, 8
     jnz     short noop_entry3_loop_head_01
 noop_entry3_loop_head_02:
-    in      al, dx          ; Video status bits:
+    in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
     test    al, 8
     jz      short noop_entry3_loop_head_02
     retf
 _nopsub_32FEE endp
+; -----------------------------------------------------------------------------
+; Purpose: Read the video status register and return its status bits.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+; -----------------------------------------------------------------------------
 _video_get_status proc far
 
-    mov     dx, 3DAh
-    in      al, dx          ; Video status bits:
+    mov     dx, R5HW_VIDEO_STATUS_PORT
+    in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
     and     al, 8
     xor     ah, ah
     retf

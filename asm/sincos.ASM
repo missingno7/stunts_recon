@@ -1,4 +1,5 @@
 .8086
+INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'
@@ -270,6 +271,13 @@ assume cs:S012_TEXT, ds:DGROUP
 S012_TEXT segment word public 'CODE'
 public _sinfast
 public _cosfast
+; -----------------------------------------------------------------------------
+; Purpose: Return the fast fixed-point sine approximation.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BX, BP, SP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: _sinetable.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _sinfast proc far
      sin_fast_s = byte ptr 0
      sin_fast_r = byte ptr 2
@@ -317,6 +325,13 @@ sinfast_finish_4:
     pop     bp
     retf
 _sinfast endp
+; -----------------------------------------------------------------------------
+; Purpose: Return the fast fixed-point cosine approximation.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Globals read: none identified.
+; Globals written: none identified.
+; -----------------------------------------------------------------------------
 _cosfast proc far
      cos_fast_s = byte ptr 0
      cos_fast_r = byte ptr 2
