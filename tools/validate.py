@@ -56,6 +56,13 @@ def validate(independent=True, baseline=None):
             else:
                 report['independent_compiler'] = {'status':'NOT_RUN'}
             if baseline: report['migration_baseline'] = compare_baseline(baseline)
+            # integ32: accepted BSS storage is re-proven by a fresh real link;
+            # integ36: so is every linked pinned runtime storage row.
+            import bss_link
+            report['bss_real_link'] = bss_link.canonical_gate()
+            # integ35: BSS ownership per object (accepted storage, raw per-object
+            # placeholders, pinned-runtime raw, fill and the raw communal unit).
+            report['bss_ownership'] = bss_link.ownership_report(bss_link.load_partition())
             owners = read_json(ROOT/'layout/manifest.json')['owners']
             require(inputs() == before and acceptance['inputs'] == before, 'Inputs changed during validation')
             report.update(status='PASS', full_image=acceptance['status'], executable=acceptance['executable'],
@@ -64,8 +71,9 @@ def validate(independent=True, baseline=None):
                           accepted_asm=[o['name'] for o in owners if o['kind']=='MATCHING_ASM'],
                           ownership={k:sum(o['end']-o['start'] for o in owners if o['kind']==k)
                                      for k in ('MATCHING_C','MATCHING_C_DATA','MATCHING_ASM',
-                                               'MATCHING_ASM_DATA','KNOWN_TOOLCHAIN_LIBRARY','LINK_FILL',
-                                               'UNRESOLVED_RAW')},
+                                               'MATCHING_ASM_DATA','KNOWN_TOOLCHAIN_LIBRARY',
+                                               'KNOWN_TOOLCHAIN_LIBRARY_DATA','LINK_FILL',
+                                               'BSS_IN_IMAGE','UNRESOLVED_RAW')},
                           matching_asm_bytes=acceptance['matching_asm_bytes'], inputs=before)
             # Re-derived record-closed prefix owners (RECORD_CLOSED_EXACT, ACCEPTED);
             # their proofs came from this fresh build, never from a stored receipt.
@@ -108,6 +116,12 @@ def main():
         report['real_link'] = real_link_summary()
     print('PASS:', report['tests']['passed'], 'tests;', report['full_image'], '; independent compiler', report['independent_compiler']['status'])
     print('Ownership bytes:', report['ownership'], '; matching ASM', report['matching_asm_bytes'])
+    if report.get('bss_real_link'):
+        print('BSS/runtime real-link gate:', report['bss_real_link']['status'], report['bss_real_link']['owners'])
+    bss = report.get('bss_ownership')
+    if bss:
+        print('BSS ownership bytes:', bss['bytes'])
+        print('BSS raw per object:', bss['raw_objects'], '; pinned runtime raw:', bss['raw_runtime'])
     prefixes=report['record_closed_prefixes']
     print('Record-closed prefix owners:', len(prefixes['owners']), 'owning', prefixes['bytes'], 'bytes',
           [(x['owner'], x['owned_records'], x['derived_records'], x['candidate_record_count'])

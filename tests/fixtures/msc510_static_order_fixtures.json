@@ -1,0 +1,1274 @@
+{
+ "schema": "msc510-static-order-fixtures-v1",
+ "source": "L9-mschash: pinned MSC 5.10 /AM /O /Gs compiles of file-scope statics (search.py observed objects); `static short` sets unless typed; `declared` is the source declaration order",
+ "short_fixtures": [
+  {
+   "fixture": "case_single",
+   "declared": [
+    "A",
+    "a",
+    "B",
+    "b",
+    "C",
+    "c",
+    "Z",
+    "z"
+   ],
+   "observed_order": [
+    "a",
+    "A",
+    "b",
+    "B",
+    "c",
+    "C",
+    "z",
+    "Z"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "punct_single",
+   "declared": [
+    "a",
+    "a_",
+    "a__",
+    "a___",
+    "a0",
+    "a1",
+    "a9",
+    "aA"
+   ],
+   "observed_order": [
+    "a",
+    "a0",
+    "a1",
+    "a9",
+    "a___",
+    "aA",
+    "a_",
+    "a__"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "digits_tail",
+   "declared": [
+    "a0",
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "a5",
+    "a6",
+    "a7",
+    "a8",
+    "a9"
+   ],
+   "observed_order": [
+    "a0",
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "a5",
+    "a6",
+    "a7",
+    "a8",
+    "a9"
+   ],
+   "bss_length": 20,
+   "set": "corpus"
+  },
+  {
+   "fixture": "underscore_tail",
+   "declared": [
+    "a_",
+    "b_",
+    "c_",
+    "d_",
+    "e_",
+    "f_",
+    "g_",
+    "h_",
+    "i_",
+    "j_"
+   ],
+   "observed_order": [
+    "a_",
+    "b_",
+    "c_",
+    "d_",
+    "e_",
+    "f_",
+    "g_",
+    "h_",
+    "i_",
+    "j_"
+   ],
+   "bss_length": 20,
+   "set": "corpus"
+  },
+  {
+   "fixture": "length_prefix",
+   "declared": [
+    "a",
+    "aa",
+    "aaa",
+    "aaaa",
+    "aaaaa",
+    "aaaaaa",
+    "aaaaaaa",
+    "aaaaaaaa"
+   ],
+   "observed_order": [
+    "aaaa",
+    "aaaaaaaa",
+    "a",
+    "aaaaa",
+    "aa",
+    "aaaaaa",
+    "aaa",
+    "aaaaaaa"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "length_suffix",
+   "declared": [
+    "a",
+    "ba",
+    "cba",
+    "dcba",
+    "edcba",
+    "fedcba",
+    "gfedcba",
+    "hgfedcba"
+   ],
+   "observed_order": [
+    "dcba",
+    "hgfedcba",
+    "a",
+    "edcba",
+    "ba",
+    "fedcba",
+    "cba",
+    "gfedcba"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "alpha_reverse",
+   "declared": [
+    "p",
+    "o",
+    "n",
+    "m",
+    "l",
+    "k",
+    "j",
+    "i",
+    "h",
+    "g",
+    "f",
+    "e",
+    "d",
+    "c",
+    "b",
+    "a"
+   ],
+   "observed_order": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p"
+   ],
+   "bss_length": 32,
+   "set": "corpus"
+  },
+  {
+   "fixture": "digits_letters",
+   "declared": [
+    "a0",
+    "b1",
+    "c2",
+    "d3",
+    "e4",
+    "f5",
+    "g6",
+    "h7",
+    "i8",
+    "j9"
+   ],
+   "observed_order": [
+    "a0",
+    "b1",
+    "c2",
+    "d3",
+    "e4",
+    "f5",
+    "g6",
+    "h7",
+    "i8",
+    "j9"
+   ],
+   "bss_length": 20,
+   "set": "corpus"
+  },
+  {
+   "fixture": "punct_collisions",
+   "declared": [
+    "ab",
+    "ba",
+    "ac",
+    "ca",
+    "a_",
+    "qa",
+    "a0",
+    "za0"
+   ],
+   "observed_order": [
+    "a0",
+    "ba",
+    "ab",
+    "ca",
+    "ac",
+    "qa",
+    "a_",
+    "za0"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "long_case",
+   "declared": [
+    "alpha",
+    "Alpha",
+    "ALPHA",
+    "aLPHA",
+    "alphA",
+    "Alpha0",
+    "alpha0",
+    "ALPHA0"
+   ],
+   "observed_order": [
+    "alphA",
+    "aLPHA",
+    "ALPHA",
+    "Alpha",
+    "alpha",
+    "ALPHA0",
+    "alpha0",
+    "Alpha0"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "second_byte",
+   "declared": [
+    "a",
+    "aA",
+    "aa",
+    "aB",
+    "ab",
+    "aC",
+    "ac",
+    "aZ",
+    "az",
+    "a0",
+    "a1",
+    "a9",
+    "a_"
+   ],
+   "observed_order": [
+    "a",
+    "a0",
+    "a1",
+    "a9",
+    "aa",
+    "aA",
+    "ab",
+    "aB",
+    "ac",
+    "aC",
+    "az",
+    "aZ",
+    "a_"
+   ],
+   "bss_length": 26,
+   "set": "corpus"
+  },
+  {
+   "fixture": "first_byte",
+   "declared": [
+    "ax",
+    "aX",
+    "bx",
+    "bX",
+    "cx",
+    "cX",
+    "dx",
+    "dX",
+    "ex",
+    "eX",
+    "fx",
+    "fX",
+    "gx",
+    "gX",
+    "hx",
+    "hX",
+    "zx",
+    "zX"
+   ],
+   "observed_order": [
+    "aX",
+    "ax",
+    "bX",
+    "bx",
+    "cX",
+    "cx",
+    "dX",
+    "dx",
+    "eX",
+    "ex",
+    "fX",
+    "fx",
+    "gX",
+    "gx",
+    "hX",
+    "hx",
+    "zX",
+    "zx"
+   ],
+   "bss_length": 36,
+   "set": "corpus"
+  },
+  {
+   "fixture": "same_last",
+   "declared": [
+    "aa",
+    "ba",
+    "ca",
+    "da",
+    "ea",
+    "fa",
+    "ga",
+    "ha",
+    "ia",
+    "ja",
+    "ka",
+    "la",
+    "ma",
+    "na",
+    "oa",
+    "pa"
+   ],
+   "observed_order": [
+    "aa",
+    "ba",
+    "ca",
+    "da",
+    "ea",
+    "fa",
+    "ga",
+    "ha",
+    "ia",
+    "ja",
+    "ka",
+    "la",
+    "ma",
+    "na",
+    "oa",
+    "pa"
+   ],
+   "bss_length": 32,
+   "set": "corpus"
+  },
+  {
+   "fixture": "underscore_positions",
+   "declared": [
+    "ab",
+    "a_b",
+    "a__b",
+    "a___b",
+    "a_b_",
+    "a__b_",
+    "a___b_",
+    "a_b__"
+   ],
+   "observed_order": [
+    "a_b_",
+    "a__b",
+    "ab",
+    "a_b__",
+    "a__b_",
+    "a___b",
+    "a_b",
+    "a___b_"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "lengths_1_16",
+   "declared": [
+    "a",
+    "aa",
+    "aaa",
+    "aaaa",
+    "aaaaa",
+    "aaaaaa",
+    "aaaaaaa",
+    "aaaaaaaa",
+    "aaaaaaaaa",
+    "aaaaaaaaaa",
+    "aaaaaaaaaaa",
+    "aaaaaaaaaaaa",
+    "aaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaa"
+   ],
+   "observed_order": [
+    "aaaa",
+    "aaaaaaaa",
+    "aaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaa",
+    "a",
+    "aaaaa",
+    "aaaaaaaaa",
+    "aaaaaaaaaaaaa",
+    "aa",
+    "aaaaaa",
+    "aaaaaaaaaa",
+    "aaaaaaaaaaaaaa",
+    "aaa",
+    "aaaaaaa",
+    "aaaaaaaaaaa",
+    "aaaaaaaaaaaaaaa"
+   ],
+   "bss_length": 32,
+   "set": "corpus"
+  },
+  {
+   "fixture": "lengths_17_31",
+   "declared": [
+    "aaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   ],
+   "observed_order": [
+    "aaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   ],
+   "bss_length": 30,
+   "set": "corpus"
+  },
+  {
+   "fixture": "length_31_collision",
+   "declared": [
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaabb",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaabbb",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa_a",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaba_"
+   ],
+   "observed_order": [
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaabb",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaabbb",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa_a",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaba_"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "digit_weight_probe",
+   "declared": [
+    "A",
+    "a0",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+   ],
+   "observed_order": [
+    "A",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "a0"
+   ],
+   "bss_length": 18,
+   "set": "corpus"
+  },
+  {
+   "fixture": "underscore_weight_probe",
+   "declared": [
+    "A",
+    "a_",
+    "PL",
+    "PM",
+    "PN",
+    "PO",
+    "PP",
+    "PQ",
+    "PR"
+   ],
+   "observed_order": [
+    "A",
+    "PL",
+    "PM",
+    "PN",
+    "PO",
+    "PP",
+    "a_",
+    "PQ",
+    "PR"
+   ],
+   "bss_length": 18,
+   "set": "corpus"
+  },
+  {
+   "fixture": "double_underscore_probe",
+   "declared": [
+    "a__",
+    "ZZC",
+    "ZZD",
+    "ZZE",
+    "ZZF",
+    "ZZG",
+    "ZZH",
+    "ZZI",
+    "ZZJ",
+    "ZZK",
+    "A"
+   ],
+   "observed_order": [
+    "A",
+    "ZZC",
+    "ZZD",
+    "ZZE",
+    "ZZF",
+    "ZZG",
+    "ZZH",
+    "ZZI",
+    "ZZJ",
+    "ZZK",
+    "a__"
+   ],
+   "bss_length": 22,
+   "set": "corpus"
+  },
+  {
+   "fixture": "order_collision_probe",
+   "declared": [
+    "ABC",
+    "BCA",
+    "CAB",
+    "ACB",
+    "BAC",
+    "CBA",
+    "AAB",
+    "ABA",
+    "BAA"
+   ],
+   "observed_order": [
+    "BAA",
+    "ABA",
+    "AAB",
+    "CBA",
+    "BAC",
+    "ACB",
+    "CAB",
+    "BCA",
+    "ABC"
+   ],
+   "bss_length": 18,
+   "set": "corpus"
+  },
+  {
+   "fixture": "head_a",
+   "declared": [
+    "amber",
+    "birch",
+    "copper",
+    "daisy",
+    "elm",
+    "falcon"
+   ],
+   "observed_order": [
+    "amber",
+    "birch",
+    "daisy",
+    "falcon",
+    "copper",
+    "elm"
+   ],
+   "bss_length": 12,
+   "set": "corpus"
+  },
+  {
+   "fixture": "head_b",
+   "declared": [
+    "jasmine",
+    "amber",
+    "birch",
+    "copper",
+    "daisy",
+    "elm",
+    "falcon"
+   ],
+   "observed_order": [
+    "jasmine",
+    "amber",
+    "birch",
+    "daisy",
+    "falcon",
+    "copper",
+    "elm"
+   ],
+   "bss_length": 14,
+   "set": "corpus"
+  },
+  {
+   "fixture": "head_c",
+   "declared": [
+    "zoo",
+    "jasmine",
+    "amber",
+    "birch",
+    "copper",
+    "daisy",
+    "elm",
+    "falcon"
+   ],
+   "observed_order": [
+    "jasmine",
+    "amber",
+    "birch",
+    "daisy",
+    "falcon",
+    "copper",
+    "elm",
+    "zoo"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "digit_mask_probe",
+   "declared": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "a0",
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "a5",
+    "a6",
+    "a7",
+    "a8",
+    "a9"
+   ],
+   "observed_order": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "a0",
+    "Q",
+    "a1",
+    "R",
+    "a2",
+    "S",
+    "a3",
+    "T",
+    "a4",
+    "U",
+    "a5",
+    "V",
+    "a6",
+    "W",
+    "a7",
+    "X",
+    "a8",
+    "Y",
+    "a9",
+    "Z"
+   ],
+   "bss_length": 72,
+   "set": "corpus"
+  },
+  {
+   "fixture": "tie_decl_rev_use_fwd",
+   "declared": [
+    "ba",
+    "ab"
+   ],
+   "observed_order": [
+    "ab",
+    "ba"
+   ],
+   "bss_length": 4,
+   "set": "corpus"
+  },
+  {
+   "fixture": "tie_decl_fwd_use_rev",
+   "declared": [
+    "ab",
+    "ba"
+   ],
+   "observed_order": [
+    "ba",
+    "ab"
+   ],
+   "bss_length": 4,
+   "set": "corpus"
+  },
+  {
+   "fixture": "mixed_digit_case_permutation_probe",
+   "declared": [
+    "xQ",
+    "x0A",
+    "xA0"
+   ],
+   "observed_order": [
+    "xA0",
+    "x0A",
+    "xQ"
+   ],
+   "bss_length": 6,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_alpha",
+   "declared": [
+    "alder",
+    "birch",
+    "cedar",
+    "dogwood",
+    "elm",
+    "fir",
+    "hemlock"
+   ],
+   "observed_order": [
+    "hemlock",
+    "dogwood",
+    "cedar",
+    "birch",
+    "alder",
+    "elm",
+    "fir"
+   ],
+   "bss_length": 14,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_case_digits",
+   "declared": [
+    "p0",
+    "P",
+    "p1",
+    "Q",
+    "q2",
+    "R",
+    "p_",
+    "S"
+   ],
+   "observed_order": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "p0",
+    "p1",
+    "q2",
+    "p_"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_underscore",
+   "declared": [
+    "a__",
+    "b_",
+    "c__",
+    "d_",
+    "e__",
+    "f_",
+    "g__",
+    "h_"
+   ],
+   "observed_order": [
+    "c__",
+    "e__",
+    "g__",
+    "b_",
+    "d_",
+    "f_",
+    "h_",
+    "a__"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_length_cycle",
+   "declared": [
+    "x",
+    "xx",
+    "xxx",
+    "xxxx",
+    "xxxxx",
+    "xxxxxx",
+    "xxxxxxx",
+    "xxxxxxxx"
+   ],
+   "observed_order": [
+    "xxx",
+    "xxxxxx",
+    "x",
+    "xxxx",
+    "xxxxxxx",
+    "xx",
+    "xxxxx",
+    "xxxxxxxx"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_collision_perm",
+   "declared": [
+    "ACD",
+    "DAC",
+    "CDA",
+    "aCD",
+    "cDA",
+    "dAC"
+   ],
+   "observed_order": [
+    "dAC",
+    "cDA",
+    "aCD",
+    "CDA",
+    "DAC",
+    "ACD"
+   ],
+   "bss_length": 12,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_head",
+   "declared": [
+    "amber",
+    "birch",
+    "copper",
+    "daisy",
+    "elm",
+    "falcon",
+    "a"
+   ],
+   "observed_order": [
+    "a",
+    "amber",
+    "birch",
+    "daisy",
+    "falcon",
+    "copper",
+    "elm"
+   ],
+   "bss_length": 14,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_wrap",
+   "declared": [
+    "z",
+    "zz",
+    "zzz",
+    "zzzz",
+    "zzzzz",
+    "zzzzzzzz",
+    "zzzzzzzzzzzz",
+    "zzzzzzzzzzzzzzzz"
+   ],
+   "observed_order": [
+    "zzz",
+    "zzzzzzzzzzzz",
+    "z",
+    "zzzz",
+    "zzzzzzzzzzzzzzzz",
+    "zz",
+    "zzzzz",
+    "zzzzzzzz"
+   ],
+   "bss_length": 16,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_high_bucket",
+   "declared": [
+    "a___",
+    "b__",
+    "c_",
+    "d",
+    "e___",
+    "f__",
+    "g_"
+   ],
+   "observed_order": [
+    "b__",
+    "f__",
+    "d",
+    "a___",
+    "e___",
+    "c_",
+    "g_"
+   ],
+   "bss_length": 14,
+   "set": "corpus"
+  },
+  {
+   "fixture": "fresh_alpha",
+   "declared": [
+    "alder",
+    "birch",
+    "cedar",
+    "dogwood",
+    "elm",
+    "fir",
+    "hemlock"
+   ],
+   "observed_order": [
+    "hemlock",
+    "dogwood",
+    "cedar",
+    "birch",
+    "alder",
+    "elm",
+    "fir"
+   ],
+   "bss_length": 14,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_case_digits",
+   "declared": [
+    "p0",
+    "P",
+    "p1",
+    "Q",
+    "q2",
+    "R",
+    "p_",
+    "S"
+   ],
+   "observed_order": [
+    "P",
+    "Q",
+    "R",
+    "S",
+    "p0",
+    "p1",
+    "q2",
+    "p_"
+   ],
+   "bss_length": 16,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_underscore",
+   "declared": [
+    "a__",
+    "b_",
+    "c__",
+    "d_",
+    "e__",
+    "f_",
+    "g__",
+    "h_"
+   ],
+   "observed_order": [
+    "c__",
+    "e__",
+    "g__",
+    "b_",
+    "d_",
+    "f_",
+    "h_",
+    "a__"
+   ],
+   "bss_length": 16,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_length_cycle",
+   "declared": [
+    "x",
+    "xx",
+    "xxx",
+    "xxxx",
+    "xxxxx",
+    "xxxxxx",
+    "xxxxxxx",
+    "xxxxxxxx"
+   ],
+   "observed_order": [
+    "xxx",
+    "xxxxxx",
+    "x",
+    "xxxx",
+    "xxxxxxx",
+    "xx",
+    "xxxxx",
+    "xxxxxxxx"
+   ],
+   "bss_length": 16,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_collision_perm",
+   "declared": [
+    "ACD",
+    "DAC",
+    "CDA",
+    "aCD",
+    "cDA",
+    "dAC"
+   ],
+   "observed_order": [
+    "dAC",
+    "cDA",
+    "aCD",
+    "CDA",
+    "DAC",
+    "ACD"
+   ],
+   "bss_length": 12,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_head",
+   "declared": [
+    "amber",
+    "birch",
+    "copper",
+    "daisy",
+    "elm",
+    "falcon",
+    "a"
+   ],
+   "observed_order": [
+    "a",
+    "amber",
+    "birch",
+    "daisy",
+    "falcon",
+    "copper",
+    "elm"
+   ],
+   "bss_length": 14,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_wrap",
+   "declared": [
+    "z",
+    "zz",
+    "zzz",
+    "zzzz",
+    "zzzzz",
+    "zzzzzzzz",
+    "zzzzzzzzzzzz",
+    "zzzzzzzzzzzzzzzz"
+   ],
+   "observed_order": [
+    "zzz",
+    "zzzzzzzzzzzz",
+    "z",
+    "zzzz",
+    "zzzzzzzzzzzzzzzz",
+    "zz",
+    "zzzzz",
+    "zzzzzzzz"
+   ],
+   "bss_length": 16,
+   "set": "held-out (predicted before compile)"
+  },
+  {
+   "fixture": "fresh_high_bucket",
+   "declared": [
+    "a___",
+    "b__",
+    "c_",
+    "d",
+    "e___",
+    "f__",
+    "g_"
+   ],
+   "observed_order": [
+    "b__",
+    "f__",
+    "d",
+    "a___",
+    "e___",
+    "c_",
+    "g_"
+   ],
+   "bss_length": 14,
+   "set": "held-out (predicted before compile)"
+  }
+ ],
+ "typed_fixture": {
+  "fixture": "typed_layout_probe",
+  "declared": [
+   [
+    "h",
+    "long",
+    4
+   ],
+   [
+    "g",
+    "char[2]",
+    2
+   ],
+   [
+    "f",
+    "short[2]",
+    4
+   ],
+   [
+    "e",
+    "struct S",
+    6
+   ],
+   [
+    "d",
+    "long",
+    4
+   ],
+   [
+    "c",
+    "char[3]",
+    3
+   ],
+   [
+    "b",
+    "short",
+    2
+   ],
+   [
+    "a",
+    "char",
+    1
+   ]
+  ],
+  "observed_offsets": {
+   "h": 24,
+   "g": 22,
+   "f": 18,
+   "e": 12,
+   "d": 8,
+   "c": 4,
+   "b": 2,
+   "a": 0
+  },
+  "bss_length": 28
+ }
+}

@@ -354,20 +354,27 @@ def run(source_path, profile=None, recipe_path=None, function=None):
     receipt = None
     compiler_log = b''
     compiler_error = None
+    communal_names = None
+    if recipe:
+        from communal_unit import recipe_declarations, check_object_communals
+        declarations = recipe_declarations(recipe)
+        communal_names = None if declarations is None else [name for name, _ in declarations]
     try:
         if asm:
             from assembler import assemble_source
-            obj, receipt = assemble_source(source, selected_profile)
+            obj, receipt = assemble_source(source, selected_profile, communals=communal_names)
             require(receipt.get('include_closure') == [], 'ASM include closure changed')
         else:
             # A recipe may select a registered per-object flag set; the same
             # policy check as acceptance refuses any other override.
             from object_flags import recipe_flags
             flags = recipe_flags(recipe) if recipe else None
-            obj, receipt = (compile_source(source, selected_profile) if flags is None
-                            else compile_source(source, selected_profile, flags))
+            obj, receipt = compile_source(source, selected_profile, flags,
+                                          communals=communal_names)
             require(receipt.get('preprocessor_closure', closure) == closure,
                     'Preprocessor closure changed after search snapshot')
+        if recipe:
+            check_object_communals(obj, recipe)
         report['compiler'] = {'profile': selected_profile, 'status': 'ASSEMBLED' if asm else 'COMPILED', 'receipt': receipt}
     except CompileFailure as error:
         compiler_error = error
@@ -384,7 +391,7 @@ def run(source_path, profile=None, recipe_path=None, function=None):
         try:
             from object_probe import read_object
             raw_object = (ROOT / work_artifact['object_path']).read_bytes()
-            obj = read_object(raw_object, research_local_symbols=True)
+            obj = read_object(raw_object, research_local_symbols=True, communals=communal_names)
             report['compiler']['research_fallback'] = {
                 'status': 'LOCAL_SYMBOL_RESEARCH_PARSE',
                 'object_identity': identity(raw_object),

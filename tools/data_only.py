@@ -46,6 +46,29 @@ def _checked_far_anchor(anchor, start, image, relocations):
     return {'kind': 'data-segment-word', 'alias': name}
 
 
+def far_data_segment_targets(names, image, relocations):
+    """integ33: publics of accepted far-data modules named by a DGROUP `dw seg X`
+    word (MASM `dw SEG sym`, FIXUPP base16, target and frame the EXTDEF).  The
+    word's value is the module's paragraph; each use must be one of that module's
+    own reviewed `data-segment-word` placement anchors (checked by the caller)."""
+    names = set(names)
+    out = {}
+    for owner in read_json(ROOT/'layout/manifest.json')['owners']:
+        if owner['kind'] != 'MATCHING_C_DATA' or not owner.get('recipe'):
+            continue
+        recipe = read_json(ROOT/owner['recipe'])
+        if recipe.get('far_data') is not True:
+            continue
+        for public in recipe['object_declarations']['publics']:
+            if public['name'] in names and public['segment'] == recipe['object_segment']:
+                require(public['name'] not in out, 'Ambiguous far-data public')
+                out[public['name']] = {'owner': owner['id'], 'start': recipe['start'],
+                                       'end': recipe['end'], 'offset': public['offset'],
+                                       'anchors': recipe['far_placement']['anchors']}
+    require(set(out) == names, 'Unknown far-data segment-word target')
+    return out
+
+
 def bind_far_data(obj, recipe, image, relocations):
     """A complete paragraph-aligned FAR_DATA module placed by relocated segment words."""
     segment = recipe['object_segment']; start, end = recipe['start'], recipe['end']

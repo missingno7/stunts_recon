@@ -37,21 +37,21 @@ struct POLYINFO {
 };
 
 extern int far abs(int);
-extern int far polarAngle(int, int);
-extern unsigned far polarRadius2D(int, int);
+extern int far polang(int, int);
+extern unsigned far polradius2d(int, int);
 extern int far polarRadius3D(struct VECTOR*);
 extern int far projectiondata9_times_ratio(int, int);
-extern void far mat_rot_y(struct MATRIX*, int);
+extern void far matroty(struct MATRIX*, int);
 extern void far mat_rot_x(struct MATRIX*, int);
 extern void far mat_rot_z(struct MATRIX*, int);
-extern void far mat_mul_vector(struct VECTOR*, struct MATRIX*, struct VECTOR*);
+extern void far mat_vec(struct VECTOR*, struct MATRIX*, struct VECTOR*);
 extern void far mat_multiply(struct MATRIX*, struct MATRIX*, struct MATRIX*);
 extern void far mat_invert(struct MATRIX*, struct MATRIX*);
 extern void far vector_to_point(struct VECTOR*, struct POINT2D*);
 extern void far vector_op_unk(struct VECTOR*, struct VECTOR*, struct VECTOR*, int);
 extern void far* far mmgr_alloc_resbytes(char*, long);
-extern int far sin_fast(unsigned);
-extern int far cos_fast(unsigned);
+extern int far sinfast(unsigned);
+extern int far cosfast(unsigned);
 extern void far preRender_default(int, int, struct POINT2D*);
 extern void far preRender_patterned(int, int, int, struct POINT2D*);
 extern void far preRender_unk(int, int, int, int, struct POINT2D*);
@@ -60,104 +60,110 @@ extern void far preRender_sphere(int, int, int, int);
 extern void far preRender_wheel(struct POINT2D*, int, int, int, int);
 extern void far putpixel_single_maybe(int, int, int);
 
-extern struct MATRIX mat_y0, mat_y100, mat_y200, mat_y300;
-extern struct MATRIX mat_y_rot, mat_x_rot, mat_z_rot, mat_rot_temp;
+static struct MATRIX mat_no_turn, mat_quarter_turn, mat_half_turn, mat_three_quarters_turn;
+struct MATRIX g_matrix_yrot;
+struct MATRIX matrix_x_rotation;
+struct MATRIX g_rot_mat_z;
+struct MATRIX matrotation_tmp;
 extern unsigned mat_y_rot_angle;
-extern struct MATRIX mat_temp;
-extern struct RECTANGLE select_rect_rc;
-extern int select_rect_param;
-extern int* material_clrlist_ptr_cpy;
-extern int* material_clrlist2_ptr_cpy;
-extern int* material_patlist_ptr_cpy;
-extern int* material_patlist2_ptr_cpy;
-extern unsigned short someZeroVideoConst;
-extern long var_6114, var_6118, var_6120, var_611c;
+extern struct MATRIX wkmatx;
+static struct RECTANGLE selection_rect;
+static int half_scale_flag;
+int * mat_copy_clr_lst_ptr;
+int * g_mat_clrlist_copy_2_ptr;
+int * material_patlistptr_copy;
+short material_pad_7;
+int * matpatlistcopypointer2;
+unsigned short video_cnstval;
+static long vector_angle_cos, vector_angle_sin, vector_angle_sin2, vector_angle_cos2;
+static char shape3d_unused[576];
 
-extern unsigned polyinfonumpolys;
-extern unsigned polyinfoptrnext;
-extern int word_40ECE;
-extern int word_411F6;
-extern int poly_linklist_40ED6_iter1;
-extern int poly_linklist_40ED6_iter2;
-extern int poly_linklist_40ED6_iter3;
-extern int poly_linklist_40ED6_iter4;
-extern int poly_linked_list_40ED6[];
-extern char far* polyinfoptr;
-extern struct POLYINFO far* polyinfoptrs[];
-extern struct POLYINFO far* transshapepolyinfo;
-extern unsigned transshapenumverts;
-extern struct VECTOR far* transshapeverts;
-extern unsigned char far* transshapeprimitives;
-extern unsigned char far* transshapeprimindexptr;
-extern unsigned char far* word_3186A;
-extern int data_31852;
-extern unsigned char byte_3187A;
-extern unsigned char transshapeflags;
-extern unsigned char transshapenumvertscopy;
-extern struct RECTANGLE* word_31878;
-extern char byte_31882;
-extern char byte_35514;
-extern char byte_4393D;
-extern long word_2EA82[];
+unsigned polygonnumber;
+static unsigned polyinfo_offset;
+static int poly_list_insert_result;
+static int polyinfo_reset_marker;
+int poly_cursor1;
+int facenodeiterator;
+int polygon_link_3_list_iter;
+int poly_link_listit4;
+static int poly_link_list[400];
+static char far* polyinfoptr;
+static struct POLYINFO far* poly_info_ptrs[400];
+static char poly_padding_bytes[6];
+static struct POLYINFO far* shape_polyinfo;
+static unsigned vertex_count;
+static struct VECTOR far* obj_verts;
+static unsigned char far* current_prim_start;
+static unsigned char far* current_prim_verts;
+static unsigned char far* shape_prim_next;
+static int current_num_paints;
+static unsigned char transformed_shape_material;
+static unsigned char obj_flags;
+unsigned char transformed_vert_count;
+static struct RECTANGLE* current_rect;
+static char current_paintjob;
+extern char backlightovr8;
+char g_vector_bitix;
+extern long inverse_power_of_two_table[];
 extern unsigned char primidxcounttab[];
-extern unsigned char byte_2EA72[];
-extern struct POINT2D* word_31854[];
+extern unsigned char primitive_type_table[];
+static struct POINT2D* projected_point_ptr_table[11];
 
 void polyinfo_reset(void);
 void calc_sincos80(void);
-struct MATRIX* mat_rot_zxy(int, int, int, int);
+struct MATRIX* matrotzxy(int, int, int, int);
 unsigned rect_compare_point(struct POINT2D*);
 char is_facing_camera(struct POINT2D far*);
 void rect_adjust_from_point(struct POINT2D*, struct RECTANGLE*);
 vector_op_unk2(struct VECTOR*);
 unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned, unsigned);
 
-void init_polyinfo(void)
+void initialize_polyinfo(void)
 {
     polyinfoptr = mmgr_alloc_resbytes("polyinfo", 0x28A0);
-    mat_rot_y(&mat_y0, 0);
-    mat_rot_y(&mat_y100, 0x100);
-    mat_rot_y(&mat_y200, 0x200);
-    mat_rot_y(&mat_y300, 0x300);
+    matroty(&mat_no_turn, 0);
+    matroty(&mat_quarter_turn, 0x100);
+    matroty(&mat_half_turn, 0x200);
+    matroty(&mat_three_quarters_turn, 0x300);
     calc_sincos80();
 }
 
 void copy_material_list_pointers(void* clrlist, void* clrlist2, void* patlist, void* patlist2, unsigned short videoConst)
 {
-    material_clrlist_ptr_cpy = clrlist;
-    material_clrlist2_ptr_cpy = clrlist2;
-    material_patlist_ptr_cpy = patlist;
-    material_patlist2_ptr_cpy = patlist2;
-    someZeroVideoConst = videoConst;
+    mat_copy_clr_lst_ptr = clrlist;
+    g_mat_clrlist_copy_2_ptr = clrlist2;
+    material_patlistptr_copy = patlist;
+    matpatlistcopypointer2 = patlist2;
+    video_cnstval = videoConst;
 }
 
 void polyinfo_reset(void)
 {
-    polyinfonumpolys = 0;
-    polyinfoptrnext = 0;
-    word_40ECE = 0;
-    word_411F6 = 0xffff;
-    poly_linklist_40ED6_iter2 = 0x190;
+    polygonnumber = 0;
+    polyinfo_offset = 0;
+    poly_list_insert_result = 0;
+    polyinfo_reset_marker = 0xffff;
+    facenodeiterator = 0x190;
 }
 
-unsigned select_cliprect_rotate(int angZ, int angX, int angY, struct RECTANGLE* cliprect, int unk)
+unsigned select_rot(int angZ, int angX, int angY, struct RECTANGLE* cliprect, int unk)
 {
     struct MATRIX* matptr;
     struct VECTOR vec, vec2;
 
-    mat_temp = *mat_rot_zxy(angZ, angX, angY, 1);
+    wkmatx = *matrotzxy(angZ, angX, angY, 1);
     polyinfo_reset();
-    select_rect_rc = *cliprect;
-    select_rect_param = unk;
-    matptr = mat_rot_zxy(-angZ, -angX, -angY, 0);
+    selection_rect = *cliprect;
+    half_scale_flag = unk;
+    matptr = matrotzxy(-angZ, -angX, -angY, 0);
     vec.z = 0x2710;
     vec.y = 0;
     vec.x = 0;
-    mat_mul_vector(&vec, matptr, &vec2);
-    return polarAngle(vec2.x, vec2.z) & 0x3FF;
+    mat_vec(&vec, matptr, &vec2);
+    return polang(vec2.x, vec2.z) & 0x3FF;
 }
 
-unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* ts)
+unsigned trans_op(struct TRANSFORMEDSHAPE3D* ts)
 {
     unsigned char ptype;
     int added;
@@ -195,70 +201,70 @@ unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* ts)
     struct VECTOR vertbuf[255];
     long far* cullwords;
 
-    if (word_40ECE != 0)
+    if (poly_list_insert_result != 0)
         return 1;
-    transshapenumverts = ts->shapeptr->numverts;
-    transshapeprimitives = ts->shapeptr->primitives;
-    transshapeverts = ts->shapeptr->verts;
-    data_31852 = ts->shapeptr->numpaints;
+    vertex_count = ts->shapeptr->numverts;
+    current_prim_start = ts->shapeptr->primitives;
+    obj_verts = ts->shapeptr->verts;
+    current_num_paints = ts->shapeptr->numpaints;
     cullwords = ts->shapeptr->cull1;
     cull2ptr = ts->shapeptr->cull2;
-    byte_3187A = ts->material;
-    if (byte_3187A >= (unsigned char)data_31852)
-        byte_3187A = 0;
-    transshapeflags = ts->ts_flags;
-    if (transshapeflags & 8)
-        word_31878 = ts->rectptr;
-    for (i = 0; i < transshapenumverts; i++)
+    transformed_shape_material = ts->material;
+    if (transformed_shape_material >= (unsigned char)current_num_paints)
+        transformed_shape_material = 0;
+    obj_flags = ts->ts_flags;
+    if (obj_flags & 8)
+        current_rect = ts->rectptr;
+    for (i = 0; i < vertex_count; i++)
         vertcode[i] = -1;
 
-    if (transshapeflags & 2) {
-        matptr = mat_rot_zxy(ts->rotvec.x, ts->rotvec.y, ts->rotvec.z, 0);
-        mat_multiply(matptr, &mat_temp, &mview);
+    if (obj_flags & 2) {
+        matptr = matrotzxy(ts->rotvec.x, ts->rotvec.y, ts->rotvec.z, 0);
+        mat_multiply(matptr, &wkmatx, &mview);
         position = ts->pos;
         cullmask = -1L;
         cullbits2 = 0;
     } else {
-        matptr = mat_rot_zxy(ts->rotvec.x, ts->rotvec.y, ts->rotvec.z, 0);
-        mat_mul_vector(&ts->pos, &mat_temp, &position);
-        mat_multiply(matptr, &mat_temp, &mview);
+        matptr = matrotzxy(ts->rotvec.x, ts->rotvec.y, ts->rotvec.z, 0);
+        mat_vec(&ts->pos, &wkmatx, &position);
+        mat_multiply(matptr, &wkmatx, &mview);
         mat_invert(&mview, &invview);
         local.x = 0;
         local.y = 0;
         local.z = 0x1000;
-        mat_mul_vector(&local, &invview, &viewvert);
+        mat_vec(&local, &invview, &viewvert);
         if ((viewvert.y > 0 && ts->pos.y < 0) ||
             (ts->unk * 2 > abs(position.x) && ts->unk * 2 > abs(position.z))) {
             cullmask = -1L;
             cullbits2 = 0;
         } else {
-            byte_4393D = vector_op_unk2(&viewvert);
-            cullbits2 = cullmask = word_2EA82[byte_4393D];
+            g_vector_bitix = vector_op_unk2(&viewvert);
+            cullbits2 = cullmask = inverse_power_of_two_table[g_vector_bitix];
         }
     }
 
-    poly_linklist_40ED6_iter4 = poly_linklist_40ED6_iter1 = poly_linklist_40ED6_iter2;
-    poly_linklist_40ED6_iter3 = 0;
+    poly_link_listit4 = poly_cursor1 = facenodeiterator;
+    polygon_link_3_list_iter = 0;
     numdrawn = 0;
-    if (transshapenumverts > 8)
-        transshapenumvertscopy = 8;
+    if (vertex_count > 8)
+        transformed_vert_count = 8;
     else
-        transshapenumvertscopy = transshapenumverts;
-    if (transshapenumvertscopy > 4 && transshapeverts[0].y == transshapeverts[4].y)
-        transshapenumvertscopy = 4;
+        transformed_vert_count = vertex_count;
+    if (transformed_vert_count > 4 && obj_verts[0].y == obj_verts[4].y)
+        transformed_vert_count = 4;
 
     rectcode = 0x0F;
     hidden = 1;
     someclipped = 0;
-    for (i = 0; i < transshapenumvertscopy; i++) {
-        word_31854[i] = &screenpts[i];
-        local = transshapeverts[i];
-        if (select_rect_param != 0) {
+    for (i = 0; i < transformed_vert_count; i++) {
+        projected_point_ptr_table[i] = &screenpts[i];
+        local = obj_verts[i];
+        if (half_scale_flag != 0) {
             local.x >>= 1;
             local.y >>= 1;
             local.z >>= 1;
         }
-        mat_mul_vector(&local, &mview, &viewvert);
+        mat_vec(&local, &mview, &viewvert);
         viewvert.x += position.x;
         viewvert.y += position.y;
         viewvert.z += position.z;
@@ -269,9 +275,9 @@ unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* ts)
         } else {
             hidden = 0;
             vertcode[i] = 0;
-            vector_to_point(&viewvert, word_31854[i]);
+            vector_to_point(&viewvert, projected_point_ptr_table[i]);
             if (rectcode != 0)
-                rectcode &= rect_compare_point(word_31854[i]);
+                rectcode &= rect_compare_point(projected_point_ptr_table[i]);
             if (rectcode == 0)
                 goto visible;
         }
@@ -280,40 +286,40 @@ unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* ts)
         return -1;
 
 visible:
-    transshapeprimitives = ts->shapeptr->primitives;
+    current_prim_start = ts->shapeptr->primitives;
     do {
-        word_3186A = transshapeprimitives + primidxcounttab[*transshapeprimitives] + data_31852 + 2;
-        primflag = transshapeprimitives[1];
+        shape_prim_next = current_prim_start + primidxcounttab[*current_prim_start] + current_num_paints + 2;
+        primflag = current_prim_start[1];
         added = 0;
         if (*cullwords & cullmask) {
-            prim = transshapeprimitives[0];
-            transshapenumvertscopy = primidxcounttab[prim];
-            ptype = byte_2EA72[prim];
-            transshapepolyinfo = (struct POLYINFO far*)(polyinfoptr + polyinfoptrnext);
-            polyinfoptrs[polyinfonumpolys] = transshapepolyinfo;
-            byte_31882 = transshapeprimitives[byte_3187A + 2];
-            transshapeprimitives += data_31852 + 2;
+            prim = current_prim_start[0];
+            transformed_vert_count = primidxcounttab[prim];
+            ptype = primitive_type_table[prim];
+            shape_polyinfo = (struct POLYINFO far*)(polyinfoptr + polyinfo_offset);
+            poly_info_ptrs[polygonnumber] = shape_polyinfo;
+            current_paintjob = current_prim_start[transformed_shape_material + 2];
+            current_prim_start += current_num_paints + 2;
             rectcode = 0x0F;
             hidden = 1;
             someclipped = 0;
-            transshapeprimindexptr = transshapeprimitives;
-            for (npts = 0; npts < transshapenumvertscopy; npts++) {
-                i = *transshapeprimindexptr++;
-                word_31854[npts] = &screenpts[i];
+            current_prim_verts = current_prim_start;
+            for (npts = 0; npts < transformed_vert_count; npts++) {
+                i = *current_prim_verts++;
+                projected_point_ptr_table[npts] = &screenpts[i];
                 switch (vertcode[i]) {
                 case 0:
                     hidden = 0;
                     if (rectcode != 0)
-                        rectcode &= rect_compare_point(word_31854[npts]);
+                        rectcode &= rect_compare_point(projected_point_ptr_table[npts]);
                     break;
                 case -1:
-                    local = transshapeverts[i];
-                    if (select_rect_param != 0) {
+                    local = obj_verts[i];
+                    if (half_scale_flag != 0) {
                         local.x >>= 1;
                         local.y >>= 1;
                         local.z >>= 1;
                     }
-                    mat_mul_vector(&local, &mview, &viewvert);
+                    mat_vec(&local, &mview, &viewvert);
                     viewvert.x += position.x;
                     viewvert.y += position.y;
                     viewvert.z += position.z;
@@ -324,9 +330,9 @@ visible:
                     } else {
                         hidden = 0;
                         vertcode[i] = 0;
-                        vector_to_point(&viewvert, word_31854[npts]);
+                        vector_to_point(&viewvert, projected_point_ptr_table[npts]);
                         if (rectcode != 0)
-                            rectcode &= rect_compare_point(word_31854[npts]);
+                            rectcode &= rect_compare_point(projected_point_ptr_table[npts]);
                     }
                     break;
                 case 1:
@@ -337,24 +343,24 @@ visible:
             if (hidden == 0 && (rectcode == 0 || someclipped != 0)) {
                 switch (ptype) {
                 case 0:
-                    out = transshapepolyinfo->points;
-                    transshapeprimindexptr = transshapeprimitives;
+                    out = shape_polyinfo->points;
+                    current_prim_verts = current_prim_start;
                     depth = 0;
                     rectcode = 0x0F;
                     if (someclipped == 0) {
-                        for (i = 0; i < transshapenumvertscopy; i++) {
-                            idx = *transshapeprimindexptr++;
+                        for (i = 0; i < transformed_vert_count; i++) {
+                            idx = *current_prim_verts++;
                             depth += vertbuf[idx].z;
-                            *out = *word_31854[i];
+                            *out = *projected_point_ptr_table[i];
                             if (rectcode != 0)
-                                rectcode &= rect_compare_point(word_31854[i]);
+                                rectcode &= rect_compare_point(projected_point_ptr_table[i]);
                             out++;
                         }
                     } else {
                         npts = 0;
-                        lastidx = transshapeprimitives[transshapenumvertscopy - 1];
-                        for (i = 0; i < transshapenumvertscopy; i++) {
-                            idx = *transshapeprimindexptr++;
+                        lastidx = current_prim_start[transformed_vert_count - 1];
+                        for (i = 0; i < transformed_vert_count; i++) {
+                            idx = *current_prim_verts++;
                             depth += vertbuf[idx].z;
                             if (vertcode[idx] == 0) {
                                 if (vertcode[lastidx] != 0) {
@@ -368,9 +374,9 @@ visible:
                                         npts++;
                                     }
                                 }
-                                *out = *word_31854[i];
+                                *out = *projected_point_ptr_table[i];
                                 if (rectcode != 0)
-                                    rectcode &= rect_compare_point(word_31854[i]);
+                                    rectcode &= rect_compare_point(projected_point_ptr_table[i]);
                                 out++;
                                 npts++;
                             } else {
@@ -388,32 +394,32 @@ visible:
                             }
                             lastidx = idx;
                         }
-                        transshapenumvertscopy = npts;
+                        transformed_vert_count = npts;
                     }
-                    if (transshapenumvertscopy != 0 && rectcode == 0) {
-                        if ((primflag & 1) || (*cull2ptr & cullbits2) || is_facing_camera(transshapepolyinfo->points))
+                    if (transformed_vert_count != 0 && rectcode == 0) {
+                        if ((primflag & 1) || (*cull2ptr & cullbits2) || is_facing_camera(shape_polyinfo->points))
                             added++;
-                        if (added != 0 && (transshapeflags & 8) != 0) {
-                    srcpt = transshapepolyinfo->points;
-                    for (npts = 0; npts < transshapenumvertscopy; npts++) {
+                        if (added != 0 && (obj_flags & 8) != 0) {
+                    srcpt = shape_polyinfo->points;
+                    for (npts = 0; npts < transformed_vert_count; npts++) {
                         ptx = srcpt->x;
                         pty = srcpt->y;
                         srcpt++;
-                        if (ptx < word_31878->left)
-                            word_31878->left = ptx;
-                        if (word_31878->right < ptx + 1)
-                            word_31878->right = ptx + 1;
-                        if (word_31878->top > pty)
-                            word_31878->top = pty;
-                        if (word_31878->bottom < pty + 1)
-                            word_31878->bottom = pty + 1;
+                        if (ptx < current_rect->left)
+                            current_rect->left = ptx;
+                        if (current_rect->right < ptx + 1)
+                            current_rect->right = ptx + 1;
+                        if (current_rect->top > pty)
+                            current_rect->top = pty;
+                        if (current_rect->bottom < pty + 1)
+                            current_rect->bottom = pty + 1;
                     }
                         }
                     }
                     break;
                 case 1:
-                    i = transshapeprimitives[0];
-                    j = transshapeprimitives[1];
+                    i = current_prim_start[0];
+                    j = current_prim_start[1];
                     if (vertcode[i] + vertcode[j] == 2)
                         break;
                     if (vertcode[i] != 0) {
@@ -424,113 +430,113 @@ visible:
                         vector_to_point(&local, &screenpts[j]);
                     }
                     depth = vertbuf[i].z + vertbuf[j].z;
-                    transshapepolyinfo->points[0] = *word_31854[0];
-                    transshapepolyinfo->points[1] = *word_31854[1];
-                    if (transshapeflags & 8) {
-                        rect_adjust_from_point(word_31854[0], word_31878);
-                        rect_adjust_from_point(word_31854[1], word_31878);
+                    shape_polyinfo->points[0] = *projected_point_ptr_table[0];
+                    shape_polyinfo->points[1] = *projected_point_ptr_table[1];
+                    if (obj_flags & 8) {
+                        rect_adjust_from_point(projected_point_ptr_table[0], current_rect);
+                        rect_adjust_from_point(projected_point_ptr_table[1], current_rect);
                     }
-                    transshapenumvertscopy = 2;
+                    transformed_vert_count = 2;
                     added++;
                     break;
                 case 3:
                     if (someclipped != 0)
                         break;
-                    transshapepolyinfo->points[0] = *word_31854[0];
-                    transshapepolyinfo->points[1] = *word_31854[1];
-                    transshapepolyinfo->points[2] = *word_31854[2];
-                    transshapepolyinfo->points[3] = *word_31854[3];
-                    if (!is_facing_camera(transshapepolyinfo->points)) {
-                        transshapepolyinfo->points[0] = *word_31854[3];
-                        transshapepolyinfo->points[1] = *word_31854[4];
-                        transshapepolyinfo->points[2] = *word_31854[5];
-                        transshapepolyinfo->points[3] = *word_31854[0];
-                        depth = (long)vertbuf[transshapeprimitives[3]].z << 2;
+                    shape_polyinfo->points[0] = *projected_point_ptr_table[0];
+                    shape_polyinfo->points[1] = *projected_point_ptr_table[1];
+                    shape_polyinfo->points[2] = *projected_point_ptr_table[2];
+                    shape_polyinfo->points[3] = *projected_point_ptr_table[3];
+                    if (!is_facing_camera(shape_polyinfo->points)) {
+                        shape_polyinfo->points[0] = *projected_point_ptr_table[3];
+                        shape_polyinfo->points[1] = *projected_point_ptr_table[4];
+                        shape_polyinfo->points[2] = *projected_point_ptr_table[5];
+                        shape_polyinfo->points[3] = *projected_point_ptr_table[0];
+                        depth = (long)vertbuf[current_prim_start[3]].z << 2;
                     } else {
-                        depth = (long)vertbuf[transshapeprimitives[0]].z << 2;
+                        depth = (long)vertbuf[current_prim_start[0]].z << 2;
                     }
-                    i = polarRadius2D(transshapepolyinfo->points[0].x - transshapepolyinfo->points[1].x,
-                                      transshapepolyinfo->points[0].y - transshapepolyinfo->points[1].y);
-                    j = polarRadius2D(transshapepolyinfo->points[0].x - transshapepolyinfo->points[2].x,
-                                      transshapepolyinfo->points[0].y - transshapepolyinfo->points[2].y);
+                    i = polradius2d(shape_polyinfo->points[0].x - shape_polyinfo->points[1].x,
+                                      shape_polyinfo->points[0].y - shape_polyinfo->points[1].y);
+                    j = polradius2d(shape_polyinfo->points[0].x - shape_polyinfo->points[2].x,
+                                      shape_polyinfo->points[0].y - shape_polyinfo->points[2].y);
                     if (j > i)
                         i = j;
-                    if (transshapeflags & 8) {
-                        corner.x = transshapepolyinfo->points[0].x - i - 1;
-                        corner.y = transshapepolyinfo->points[0].y - i - 1;
-                        rect_adjust_from_point(&corner, word_31878);
-                        corner.y = transshapepolyinfo->points[0].y + i + 1;
-                        corner.x = transshapepolyinfo->points[0].x + i + 1;
-                        rect_adjust_from_point(&corner, word_31878);
-                        corner.x = transshapepolyinfo->points[3].x - i - 1;
-                        corner.y = transshapepolyinfo->points[3].y - i - 1;
-                        rect_adjust_from_point(&corner, word_31878);
-                        corner.y = transshapepolyinfo->points[3].y + i + 1;
-                        corner.x = transshapepolyinfo->points[3].x + i + 1;
-                        rect_adjust_from_point(&corner, word_31878);
+                    if (obj_flags & 8) {
+                        corner.x = shape_polyinfo->points[0].x - i - 1;
+                        corner.y = shape_polyinfo->points[0].y - i - 1;
+                        rect_adjust_from_point(&corner, current_rect);
+                        corner.y = shape_polyinfo->points[0].y + i + 1;
+                        corner.x = shape_polyinfo->points[0].x + i + 1;
+                        rect_adjust_from_point(&corner, current_rect);
+                        corner.x = shape_polyinfo->points[3].x - i - 1;
+                        corner.y = shape_polyinfo->points[3].y - i - 1;
+                        rect_adjust_from_point(&corner, current_rect);
+                        corner.y = shape_polyinfo->points[3].y + i + 1;
+                        corner.x = shape_polyinfo->points[3].x + i + 1;
+                        rect_adjust_from_point(&corner, current_rect);
                     }
-                    transshapenumvertscopy = 4;
+                    transformed_vert_count = 4;
                     added = 1;
                     break;
                 case 2:
-                    i = transshapeprimitives[0];
-                    j = transshapeprimitives[1];
+                    i = current_prim_start[0];
+                    j = current_prim_start[1];
                     depth = vertbuf[i].z + vertbuf[j].z;
                     if (vertcode[i] + vertcode[j] == 0) {
-                        transshapepolyinfo->points[0] = *word_31854[0];
+                        shape_polyinfo->points[0] = *projected_point_ptr_table[0];
                         viewvert = vertbuf[i];
                         surfvec = vertbuf[j];
                         local.x = viewvert.x - surfvec.x;
                         local.y = viewvert.y - surfvec.y;
                         local.z = viewvert.z - surfvec.z;
                         pixsize = projectiondata9_times_ratio(polarRadius3D(&local), viewvert.z);
-                        transshapepolyinfo->points[1].x = pixsize;
-                        if (transshapeflags & 8) {
-                            corner.y = word_31854[0]->y - pixsize;
-                            corner.x = word_31854[0]->x - pixsize;
-                            rect_adjust_from_point(&corner, word_31878);
-                            corner.x = pixsize + word_31854[0]->x;
-                            corner.x = word_31854[0]->y + pixsize;  /* sic: original stores .x twice */
-                            rect_adjust_from_point(&corner, word_31878);
+                        shape_polyinfo->points[1].x = pixsize;
+                        if (obj_flags & 8) {
+                            corner.y = projected_point_ptr_table[0]->y - pixsize;
+                            corner.x = projected_point_ptr_table[0]->x - pixsize;
+                            rect_adjust_from_point(&corner, current_rect);
+                            corner.x = pixsize + projected_point_ptr_table[0]->x;
+                            corner.x = projected_point_ptr_table[0]->y + pixsize;  /* sic: original stores .x twice */
+                            rect_adjust_from_point(&corner, current_rect);
                         }
-                        transshapenumvertscopy = 2;
+                        transformed_vert_count = 2;
                         added++;
                     }
                     break;
                 case 5:
-                    i = transshapeprimitives[0];
+                    i = current_prim_start[0];
                     if (vertcode[i] != 0)
                         break;
                     depth = vertbuf[i].z;
-                    transshapepolyinfo->points[0] = *word_31854[0];
-                    if (transshapeflags & 8)
-                        rect_adjust_from_point(word_31854[0], word_31878);
-                    transshapenumvertscopy = 1;
+                    shape_polyinfo->points[0] = *projected_point_ptr_table[0];
+                    if (obj_flags & 8)
+                        rect_adjust_from_point(projected_point_ptr_table[0], current_rect);
+                    transformed_vert_count = 1;
                     added++;
                     break;
                 }
             }
         }
-        transshapeprimitives = word_3186A;
+        current_prim_start = shape_prim_next;
         cull2ptr++;
         cullwords++;
         if (added == 0) {
             if ((primflag & 2) == 0) {
-                while (transshapeprimitives[1] & 2) {
-                    transshapeprimitives += primidxcounttab[*transshapeprimitives] + data_31852 + 2;
+                while (current_prim_start[1] & 2) {
+                    current_prim_start += primidxcounttab[*current_prim_start] + current_num_paints + 2;
                     cullwords++;
                     cull2ptr++;
                 }
             }
         } else {
             numdrawn++;
-            transshapepolyinfo->numpoints = transshapenumvertscopy;
-            transshapepolyinfo->type = ptype;
-            if (byte_31882 == 0x2D)
-                transshapepolyinfo->material = byte_35514;
+            shape_polyinfo->numpoints = transformed_vert_count;
+            shape_polyinfo->type = ptype;
+            if (current_paintjob == 0x2D)
+                shape_polyinfo->material = backlightovr8;
             else
-                transshapepolyinfo->material = byte_31882;
-            switch (transshapenumvertscopy) {
+                shape_polyinfo->material = current_paintjob;
+            switch (transformed_vert_count) {
             case 1:
                 i = depth;
                 break;
@@ -544,56 +550,56 @@ visible:
                 i = depth >> 3;
                 break;
             default:
-                i = depth / transshapenumvertscopy;
+                i = depth / transformed_vert_count;
                 break;
             }
-            transshapepolyinfo->depth = i;
-            if ((word_40ECE = insert_newest_poly_in_poly_linked_list_40ED6(i, (transshapeflags & 1) || (primflag & 2) ? 0 : 1)) != 0)
+            shape_polyinfo->depth = i;
+            if ((poly_list_insert_result = insert_newest_poly_in_poly_linked_list_40ED6(i, (obj_flags & 1) || (primflag & 2) ? 0 : 1)) != 0)
                 return 1;
         }
-    } while (*transshapeprimitives != 0);
+    } while (*current_prim_start != 0);
     if (numdrawn == 0)
         return -1;
     return 0;
 }
-extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, unsigned arg_2) {
+extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, unsigned search_sorted_position) {
     register int remaining;
     register int list_index;
-    if (arg_2 == 0) {
-        list_index = poly_linked_list_40ED6[poly_linklist_40ED6_iter4];
+    if (search_sorted_position == 0) {
+        list_index = poly_link_list[poly_link_listit4];
     } else {
-        poly_linklist_40ED6_iter4 = poly_linklist_40ED6_iter1;
-        list_index = poly_linked_list_40ED6[poly_linklist_40ED6_iter1];
-        remaining = poly_linklist_40ED6_iter3;
+        poly_link_listit4 = poly_cursor1;
+        list_index = poly_link_list[poly_cursor1];
+        remaining = polygon_link_3_list_iter;
         goto scan_test;
     scan_body:
         if (remaining-- == 0) goto scan_done;
-        if (polyinfoptrs[list_index]->depth < (int)arg_0) goto scan_done;
-        poly_linklist_40ED6_iter4 = list_index;
-        list_index = poly_linked_list_40ED6[list_index];
+        if (poly_info_ptrs[list_index]->depth < (int)depth) goto scan_done;
+        poly_link_listit4 = list_index;
+        list_index = poly_link_list[list_index];
     scan_test:
         if (list_index >= 0) goto scan_body;
     scan_done:
         ;
     }
-    poly_linked_list_40ED6[polyinfonumpolys] = list_index;
-    poly_linked_list_40ED6[poly_linklist_40ED6_iter4] = polyinfonumpolys;
-    poly_linklist_40ED6_iter3++;
-    if (list_index < 0) poly_linklist_40ED6_iter2 = polyinfonumpolys;
-    poly_linklist_40ED6_iter4 = poly_linked_list_40ED6[poly_linklist_40ED6_iter4];
-    polyinfonumpolys++;
-    polyinfoptrnext += transshapenumvertscopy * sizeof(struct POINT2D) + 6;
-    return polyinfonumpolys == 0x190 || (int)polyinfoptrnext > 0x2872;
+    poly_link_list[polygonnumber] = list_index;
+    poly_link_list[poly_link_listit4] = polygonnumber;
+    polygon_link_3_list_iter++;
+    if (list_index < 0) facenodeiterator = polygonnumber;
+    poly_link_listit4 = poly_link_list[poly_link_listit4];
+    polygonnumber++;
+    polyinfo_offset += transformed_vert_count * sizeof(struct POINT2D) + 6;
+    return polygonnumber == 0x190 || (int)polyinfo_offset > 0x2872;
 }
 
 unsigned rect_compare_point(struct POINT2D *point) {
     register struct POINT2D *p = point;
     char flag;
-    if (p->y < select_rect_rc.top) flag=1;
-    else if (p->y > select_rect_rc.bottom) flag=2;
+    if (p->y < selection_rect.top) flag=1;
+    else if (p->y > selection_rect.bottom) flag=2;
     else flag=0;
-    if (p->x < select_rect_rc.left) flag|=4;
-    else if (p->x > select_rect_rc.right) flag|=8;
+    if (p->x < selection_rect.left) flag|=4;
+    else if (p->x > selection_rect.right) flag|=8;
     return flag;
 }
 
@@ -612,7 +618,7 @@ char is_facing_camera(struct POINT2D far *pts)
     return 0;
 }
 
-void get_a_poly_info(void)
+void polyinfo(void)
 {
     struct POINT2D far* srcpts;
     struct POLYINFO far* info;
@@ -626,11 +632,11 @@ void get_a_poly_info(void)
     unsigned pointCount;
 
     link = 0x190;
-    for (polyIndex = 0; polyIndex < polyinfonumpolys; polyIndex++) {
-        link = poly_linked_list_40ED6[link];
-        info = polyinfoptrs[link];
+    for (polyIndex = 0; polyIndex < polygonnumber; polyIndex++) {
+        link = poly_link_list[link];
+        info = poly_info_ptrs[link];
         materialIndex = info->material;
-        fill = material_clrlist_ptr_cpy[materialIndex];
+        fill = mat_copy_clr_lst_ptr[materialIndex];
         switch (info->type) {
         case 0:
             pointCount = info->numpoints;
@@ -641,16 +647,16 @@ void get_a_poly_info(void)
                 out++;
                 srcpts++;
             }
-            switch (material_patlist_ptr_cpy[materialIndex]) {
+            switch (material_patlistptr_copy[materialIndex]) {
             case 0:
                 preRender_default(fill, pointCount, polypts);
                 break;
             case 1:
-                if (material_patlist2_ptr_cpy[materialIndex] != 0)
-                    preRender_patterned(material_patlist2_ptr_cpy[materialIndex], fill, pointCount, polypts);
+                if (matpatlistcopypointer2[materialIndex] != 0)
+                    preRender_patterned(matpatlistcopypointer2[materialIndex], fill, pointCount, polypts);
                 break;
             case 2:
-                preRender_unk(material_patlist2_ptr_cpy[materialIndex], material_clrlist2_ptr_cpy[materialIndex], fill, pointCount, polypts);
+                preRender_unk(matpatlistcopypointer2[materialIndex], g_mat_clrlist_copy_2_ptr[materialIndex], fill, pointCount, polypts);
                 break;
             }
             break;
@@ -660,7 +666,7 @@ void get_a_poly_info(void)
         case 3:
             for (idx = 0; idx < 4; idx++)
                 polypts[idx] = info->points[idx];
-            preRender_wheel(polypts, 0x2500, fill, material_clrlist_ptr_cpy[materialIndex + 1], material_clrlist_ptr_cpy[materialIndex + 2]);
+            preRender_wheel(polypts, 0x2500, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]);
             break;
         case 2:
             preRender_sphere(info->points[0].x, info->points[0].y, info->points[1].x, fill);
@@ -674,37 +680,37 @@ void get_a_poly_info(void)
 }
 
 
-struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk) {
+struct MATRIX* matrotzxy(int z, int x, int y, int unk) {
     register int rotation_flags = 0;
     register struct MATRIX* result;
 
     if ((z & 0x3ff) != 0) {
         rotation_flags |= 4;
-        mat_rot_z(&mat_z_rot, z);
+        mat_rot_z(&g_rot_mat_z, z);
     }
     if ((x & 0x3ff) != 0) {
         rotation_flags |= 2;
-        mat_rot_x(&mat_x_rot, x);
+        mat_rot_x(&matrix_x_rotation, x);
     }
     if ((y & 0x3ff) != 0) {
         rotation_flags |= 1;
         if ((y & 0x3ff) == mat_y_rot_angle) {
-            result = &mat_y_rot;
+            result = &g_matrix_yrot;
         } else {
             switch (y & 0x3ff) {
             case 0x100:
-                result = &mat_y100;
+                result = &mat_quarter_turn;
                 break;
             case 0x200:
-                result = &mat_y200;
+                result = &mat_half_turn;
                 break;
             case 0x300:
-                result = &mat_y300;
+                result = &mat_three_quarters_turn;
                 break;
             default:
-                mat_rot_y(&mat_y_rot, y);
+                matroty(&g_matrix_yrot, y);
                 mat_y_rot_angle = y & 0x3ff;
-                result = &mat_y_rot;
+                result = &g_matrix_yrot;
                 break;
             }
         }
@@ -712,46 +718,46 @@ struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk) {
 
     switch (rotation_flags) {
     case 0:
-        result = &mat_y0;
+        result = &mat_no_turn;
         break;
     case 1:
         break;
     case 2:
-        result = &mat_x_rot;
+        result = &matrix_x_rotation;
         break;
     case 3:
         if ((unk & 1) != 0)
-            mat_multiply(result, &mat_x_rot, &mat_rot_temp);
+            mat_multiply(result, &matrix_x_rotation, &matrotation_tmp);
         else
-            mat_multiply(&mat_x_rot, result, &mat_rot_temp);
-        result = &mat_rot_temp;
+            mat_multiply(&matrix_x_rotation, result, &matrotation_tmp);
+        result = &matrotation_tmp;
         break;
     case 4:
-        result = &mat_z_rot;
+        result = &g_rot_mat_z;
         break;
     case 5:
         if ((unk & 1) != 0)
-            mat_multiply(result, &mat_z_rot, &mat_rot_temp);
+            mat_multiply(result, &g_rot_mat_z, &matrotation_tmp);
         else
-            mat_multiply(&mat_z_rot, result, &mat_rot_temp);
-        result = &mat_rot_temp;
+            mat_multiply(&g_rot_mat_z, result, &matrotation_tmp);
+        result = &matrotation_tmp;
         break;
     case 6:
         if ((unk & 1) != 0)
-            mat_multiply(&mat_x_rot, &mat_z_rot, &mat_rot_temp);
+            mat_multiply(&matrix_x_rotation, &g_rot_mat_z, &matrotation_tmp);
         else
-            mat_multiply(&mat_z_rot, &mat_x_rot, &mat_rot_temp);
-        result = &mat_rot_temp;
+            mat_multiply(&g_rot_mat_z, &matrix_x_rotation, &matrotation_tmp);
+        result = &matrotation_tmp;
         break;
     case 7:
         if ((unk & 1) != 0) {
-            mat_multiply(result, &mat_x_rot, &mat_rot_temp);
-            mat_multiply(&mat_rot_temp, &mat_z_rot, &mat_x_rot);
-            result = &mat_x_rot;
+            mat_multiply(result, &matrix_x_rotation, &matrotation_tmp);
+            mat_multiply(&matrotation_tmp, &g_rot_mat_z, &matrix_x_rotation);
+            result = &matrix_x_rotation;
         } else {
-            mat_multiply(&mat_z_rot, &mat_x_rot, &mat_rot_temp);
-            mat_multiply(&mat_rot_temp, result, &mat_z_rot);
-            result = &mat_z_rot;
+            mat_multiply(&g_rot_mat_z, &matrix_x_rotation, &matrotation_tmp);
+            mat_multiply(&matrotation_tmp, result, &g_rot_mat_z);
+            result = &g_rot_mat_z;
         }
         break;
     }
@@ -776,12 +782,12 @@ vector_op_unk2(struct VECTOR* vec) {
 	
 	height = abs(vec->y);
 	
-	temp = polarRadius2D(abs(vec->x), abs(vec->z));
+	temp = polradius2d(abs(vec->x), abs(vec->z));
 	
-	if (var_6114 == var_6118) {
+	if (vector_angle_cos == vector_angle_sin) {
 		below = temp < height;
 	} else {
-		below = temp * var_6114 < height * var_6118;
+		below = temp * vector_angle_cos < height * vector_angle_sin;
 	}
 	
 	if (vec->y < 0) {
@@ -797,7 +803,7 @@ vector_op_unk2(struct VECTOR* vec) {
 		octant = 0;
 	}
 	
-	angle = -polarAngle(vec->z, -vec->x);
+	angle = -polang(vec->z, -vec->x);
 	if (angle < 0) {
 		angle += 0x400;
 	}
@@ -808,38 +814,38 @@ vector_op_unk2(struct VECTOR* vec) {
 }
 
 void calc_sincos80(void) {
-    var_6118 = (long)sin_fast(0x80);
-    var_6114 = (long)cos_fast(0x80);
-    var_6120 = (long)sin_fast(0x80);
-    var_611c = (long)cos_fast(0x80);
+    vector_angle_sin = (long)sinfast(0x80);
+    vector_angle_cos = (long)cosfast(0x80);
+    vector_angle_sin2 = (long)sinfast(0x80);
+    vector_angle_cos2 = (long)cosfast(0x80);
 }
 
 long nopsub_26552(long value) { if (value < 0) return -value; return value; }
 
 
-extern short video_flag2_is1;
-extern short video_flag3_isFFFF;
+short g_vid_flg2_set;
+short vidflg3is_minus1;
 extern void fatal_error(char *);
-void rect_union(struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *);
-char rect_intersect(struct RECTANGLE *, struct RECTANGLE *);
+void rcunion(struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *);
+char rcintersect(struct RECTANGLE *, struct RECTANGLE *);
 char rect_is_overlapping(struct RECTANGLE *, struct RECTANGLE *);
 char rect_is_inside(struct RECTANGLE *, struct RECTANGLE *);
 char rect_is_adjacent(struct RECTANGLE *, struct RECTANGLE *);
 void rectlist_add_rect(char *, struct RECTANGLE *, struct RECTANGLE *);
-void rectlist_add_rects(unsigned char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
+void rectlist_add(unsigned char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
 
-void rect_union(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
+void rcunion(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
 {
     out->left = r1->left <= r2->left ? r1->left : r2->left;
     out->right = r1->right >= r2->right ? r1->right : r2->right;
     out->top = r1->top <= r2->top ? r1->top : r2->top;
     out->bottom = r1->bottom >= r2->bottom ? r1->bottom : r2->bottom;
-    if (video_flag2_is1 != 1) {
-        out->right = (out->right + video_flag2_is1 - 1) & video_flag3_isFFFF;
+    if (g_vid_flg2_set != 1) {
+        out->right = (out->right + g_vid_flg2_set - 1) & vidflg3is_minus1;
     }
 }
 
-char rect_intersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
+char rcintersect(struct RECTANGLE *r1, struct RECTANGLE *r2)
 {
     if (r1->right < r1->left) return 1;
     if (r2->right <= r1->left) return 1;
@@ -864,8 +870,8 @@ void rectlist_add_rect(char* arg_rect_array_length_ptr, struct RECTANGLE* arg_re
 	struct RECTANGLE top_piece;
 	char bottom_needed;
 
-	if (video_flag2_is1 != 1) {
-		rect->right = (rect->right + video_flag2_is1 - 1) & video_flag3_isFFFF;
+	if (g_vid_flg2_set != 1) {
+		rect->right = (rect->right + g_vid_flg2_set - 1) & vidflg3is_minus1;
 		/*
 		mov     bx, [bp+arg_rectptr]
 		mov     si, bx
@@ -1003,7 +1009,7 @@ char rect_is_adjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) {
  return 0;
 }
 
-void rectlist_add_rects(unsigned char arg_rectcount, char* arg_rectarray_indices, 
+void rectlist_add(unsigned char arg_rectcount, char* arg_rectarray_indices, 
 	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2, 
 	struct RECTANGLE* arg_rectptr, char* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 
 {
@@ -1033,7 +1039,7 @@ void rectlist_add_rects(unsigned char arg_rectcount, char* arg_rectarray_indices
 
 		if ((source_flags & 1) != 0 && first_ptr->right > first_ptr->left) {
 			if ((source_flags & 2) != 0 && second_rect_ptr->right > second_rect_ptr->left) {
-				rect_union(first_ptr, second_rect_ptr, &cover_rect);
+				rcunion(first_ptr, second_rect_ptr, &cover_rect);
 				selected_rect_ptr = &cover_rect;
 			} else {
 				selected_rect_ptr = first_ptr;
@@ -1047,7 +1053,7 @@ void rectlist_add_rects(unsigned char arg_rectcount, char* arg_rectarray_indices
 		}
 		if (has_result != 0) {
 			input_rect = *selected_rect_ptr;
-			if (rect_intersect(&input_rect, arg_rectptr) == 0) {
+			if (rcintersect(&input_rect, arg_rectptr) == 0) {
 				rectlist_add_rect(arg_rect_array_length_ptr, arg_rect_array_ptr, &input_rect);
 			}
 		}
@@ -1055,9 +1061,9 @@ void rectlist_add_rects(unsigned char arg_rectcount, char* arg_rectarray_indices
 
 }
 
-void heapsort_by_order(int, int*, int*);
+void heapsortorder(int, int*, int*);
 
-void rect_array_sort_by_top(char arg_array_length, struct RECTANGLE* arg_rect_array, int* arg_array_indices) {
+void rectsorttop(char arg_array_length, struct RECTANGLE* arg_rect_array, int* arg_array_indices) {
     register int sortIndex;
     int intbuffer[256];
     if (arg_array_length > 1) {
@@ -1065,8 +1071,27 @@ void rect_array_sort_by_top(char arg_array_length, struct RECTANGLE* arg_rect_ar
             intbuffer[sortIndex] = -arg_rect_array[sortIndex].top;
             arg_array_indices[sortIndex] = sortIndex;
         }
-        heapsort_by_order(arg_array_length, intbuffer, arg_array_indices);
+        heapsortorder(arg_array_length, intbuffer, arg_array_indices);
     } else {
         arg_array_indices[0] = 0;
     }
 }
+
+unsigned char primidxcounttab[16] = {
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 6, 3, 0, 0
+};
+unsigned char primitive_type_table[16] = {
+    0, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 0, 0
+};
+long inverse_power_of_two_table[32] = {
+    (-2147483647L - 1L), 1073741824L, 536870912L, 268435456L,
+    134217728L, 67108864L, 33554432L, 16777216L,
+    8388608L, 4194304L, 2097152L, 1048576L,
+    524288L, 262144L, 131072L, 65536L,
+    32768L, 16384L, 8192L, 4096L,
+    2048L, 1024L, 512L, 256L,
+    128L, 64L, 32L, 16L,
+    8L, 4L, 2L, 1L
+};
+unsigned mat_y_rot_angle = 0xFFFF;
+struct RECTANGLE clipunk = { 9999, -1, 9999, -1 };

@@ -40,9 +40,10 @@ class TUBench(unittest.TestCase):
     def test_map_from_canonical_inputs(self):
         document = build_tu_map()
         # Newly reviewed boundaries expose additional original near-call edges
-        # (integ26: run_option_menu and audio_map_song_tracks join closures).
-        self.assertEqual(document["closure_count"], 40)
-        self.assertEqual(document["near_call_edges"], 469)
+        # (integ26: run_option_menu and audio_map_song_tracks join closures;
+        # integ31: the reviewed sub_38702 / loc_390C8 rows join seg028's).
+        self.assertEqual(document["closure_count"], 39)
+        self.assertEqual(document["near_call_edges"], 481)
         self.assertTrue(any(row['name']=='mat_rot_zxy' for closure in document['closures']
                             for row in closure['members']))
         self.assertTrue(document["near_call_decode_anomalies"])

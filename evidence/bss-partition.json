@@ -1,0 +1,109 @@
+{
+  "rows": [
+    {
+      "end": 200042,
+      "extent_basis": "Two 18-byte DSEG semantic extents; accepted users collapse to the one original C code segment S001 (objmap one-object-per-C-segment fact).",
+      "id": "raw_bss_obj_seg001",
+      "object": "obj_seg001",
+      "raw_form": "object-bss",
+      "start": 200006
+    },
+    {
+      "end": 200332,
+      "extent_basis": "Address-local accepted OMF users plus DSEG label spans total 290 B to the next segment-owned run.",
+      "id": "raw_bss_obj_seg005",
+      "object": "obj_seg005",
+      "raw_form": "object-bss",
+      "start": 200042
+    },
+    {
+      "end": 203476,
+      "extent_basis": "Address-local accepted OMF users plus DSEG label spans total 3,144 B; the last 580-byte span ends exactly at audiotimers.",
+      "id": "raw_bss_obj_seg006",
+      "object": "obj_seg006",
+      "raw_form": "object-bss",
+      "start": 200332
+    },
+    {
+      "end": 205383,
+      "extent_basis": "Restunts seg007.asm is the unique semantic user: audiotimers is 1,900 B, followed by three words and one byte (1,907 B total). No accepted OMF BSS SEGDEF is available.",
+      "id": "raw_bss_obj_seg007",
+      "object": "obj_seg007",
+      "raw_form": "object-bss",
+      "start": 203476
+    },
+    {
+      "end": 205384,
+      "extent_basis": "one zero byte after the odd 1,907-byte seg007 placeholder; the next contribution (seg008, MSC _BSS) is WORD aligned, so LINK re-creates it",
+      "id": "raw_bss_fill_205383",
+      "object": null,
+      "raw_form": "link-word-fill",
+      "start": 205383
+    },
+    {
+      "end": 205400,
+      "extent_basis": "Eight consecutive 2-byte labels with accepted OMF uses; 16 B.",
+      "id": "raw_bss_obj_seg008",
+      "object": "obj_seg008",
+      "raw_form": "object-bss",
+      "start": 205384
+    },
+    {
+      "end": 207000,
+      "extent_basis": "Accepted OMF user cluster and DSEG widths (744+4+744+16+76+16) total 1,600 B.",
+      "id": "raw_bss_obj_seg009",
+      "object": "obj_seg009",
+      "raw_form": "object-bss",
+      "start": 205400
+    },
+    {
+      "end": 207038,
+      "extent_basis": "pinned MLIBCR.LIB output.c _BSS SEGDEF is 38 B; all 164 of its own-_BSS FIXUPPs, read from the image at its _TEXT start 120254, resolve to base 207000 (re-derived at link time by tools/reallink.py)",
+      "id": "raw_bss_rt_output.c_120254",
+      "object": "rt_output.c_120254",
+      "pinned_member": {
+        "library": "toolchain/msc510/MLIBCR.LIB",
+        "module": "output.c",
+        "own_bss_fixups": 164,
+        "segment_length": 38
+      },
+      "raw_form": "object-bss",
+      "start": 207000
+    },
+    {
+      "end": 207086,
+      "extent_basis": "Two 24-byte local target extents at 207038 and 207062; accepted OMF users are in S027.",
+      "id": "raw_bss_obj_seg027",
+      "object": "obj_seg027",
+      "raw_form": "object-bss",
+      "start": 207038
+    },
+    {
+      "end": 207382,
+      "extent_basis": "Target buffer begins at 207086 and spans to 207346; following semantic data extents reach 207382; accepted OMF users are in S028.",
+      "id": "raw_bss_obj_seg028",
+      "object": "obj_seg028",
+      "raw_form": "object-bss",
+      "start": 207086
+    },
+    {
+      "end": 207396,
+      "extent_basis": "Seven consecutive 2-byte labels with accepted OMF users; ends exactly at XOB/XOE.",
+      "id": "raw_bss_obj_seg032",
+      "object": "obj_seg032",
+      "raw_form": "object-bss",
+      "start": 207382
+    },
+    {
+      "end": 222352,
+      "extent_basis": "integ39: LINK c_common is PARAGRAPH aligned (pinned LINK 3.65 fixture tests/fixtures/masm510_comm_near_fixture.json; commfit staged link of the real program: MAP c_common 207408). CRT0DAT XOB=XO=XOE end the BSS-class sections at 207396 (real-link-v1 anchor); [207396,207408) is LINK paragraph fill (bss_owners LINK_FILL link-communal-paragraph-v1). c_common [207408,_end 222352) (MZ SS) holds the game near communals interleaved with _file.c __bufout/__bufin/__buferr in LINK 3.65 bucket order; one raw unit until the whole unit is accepted at once (tools/communal_unit.py)",
+      "id": "raw_bss_c_common",
+      "object": null,
+      "raw_form": "communal-unit",
+      "start": 207408
+    }
+  ],
+  "rule": "integ35 ruling: raw BSS debt occupies its own place in link order, like raw code. Each object whose _BSS is not accepted keeps one UNRESOLVED_RAW placeholder of its complete extent, linked as a raw _BSS contribution immediately after that object in processing order; the extents are oracle-sized raw debt (L8-bsspre address accounting) and never size or place accepted storage. Word fill is re-created by LINK; [XOE,_end) is LINK paragraph fill then one raw c_common unit (integ39).",
+  "schema": "bss-raw-placeholders-v1",
+  "source": "L8-bsspre partition (address accounting of [_edata, XOB) = 7,401 B + 1 B fill)"
+}

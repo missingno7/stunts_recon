@@ -508,7 +508,14 @@ class SwitchTableGroup(unittest.TestCase):
         from multi_contribution import bind_multi
         o = Oracle.load()
         recipe = self.locate()
-        obj, _ = compile_source((ROOT/recipe['source']).read_bytes(), recipe['profile'])
+        from object_probe import recipe_sparse_zero
+        from communal_unit import recipe_declarations, check_object_communals
+        declarations = recipe_declarations(recipe)
+        communals = None if declarations is None else [name for name, _ in declarations]
+        # integ31: seg006 owns its complete _DATA (MSC alignment hole policy).
+        obj, _ = compile_source((ROOT/recipe['source']).read_bytes(), recipe['profile'],
+                                sparse_zero=recipe_sparse_zero(recipe), communals=communals)
+        check_object_communals(obj, recipe)
         self.assertTrue(any(f['target_kind'] == 'segment' and f['loc'] == 'offset16'
                             for f in obj.linker_fixups))
         payload, _ = bind_multi(obj, recipe, o.image, o.relocations)

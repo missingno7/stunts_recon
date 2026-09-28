@@ -6,7 +6,7 @@
   "binding": {
     "declarations": {
       "externals": [
-        "sprite1"
+        "_sprite1"
       ],
       "groups": [],
       "publics": [
@@ -57,7 +57,7 @@
       "offset": 8,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -70,7 +70,7 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "sprite1"
+      "_sprite1"
     ],
     "groups": [],
     "publics": [

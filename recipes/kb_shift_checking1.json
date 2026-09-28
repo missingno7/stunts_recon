@@ -11,7 +11,7 @@
       "groups": [],
       "publics": [
         {
-          "name": "_kb_shift_checking1",
+          "name": "_keyboard_shift_checking1",
           "offset": 0,
           "segment": "S018_TEXT"
         }
@@ -81,7 +81,7 @@
     "groups": [],
     "publics": [
       {
-        "name": "_kb_shift_checking1",
+        "name": "_keyboard_shift_checking1",
         "offset": 0,
         "segment": "S018_TEXT"
       }
@@ -108,7 +108,7 @@
   "object_segment": "S018_TEXT",
   "original_frame_load_address": 158448,
   "profile": "masm510-game",
-  "public": "_kb_shift_checking1",
+  "public": "_keyboard_shift_checking1",
   "source": "asm/kb_shift_checking1.ASM",
   "stable_id": "load_26af4",
   "start": 158452,

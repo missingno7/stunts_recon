@@ -131,7 +131,7 @@ def object_policy(config):
     return {'debug_segments': policy} if policy else {}
 
 
-def compile_source(source, profile, flags=None, *, research_local_symbols=False, sparse_zero=None):
+def compile_source(source, profile, flags=None, *, research_local_symbols=False, sparse_zero=None, communals=None):
     config, runner = verify_toolchain(profile)
     root = ROOT / 'build/probes'
     root.mkdir(parents=True, exist_ok=True)
@@ -178,15 +178,18 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False,
     if result.returncode != 0 or data is None:
         raise CompileFailure(f'Compiler failed; see {work / "compiler.log"}', receipt, 'COMPILER_ERROR')
     try:
+        # integ39: COMDEF records only for a recipe's reviewed communal
+        # declarations (tools/communal_unit.py); otherwise refused.
         obj = read_object(data, research_local_symbols=research_local_symbols,
-                          sparse_zero=sparse_zero, **object_policy(config))
+                          sparse_zero=sparse_zero, communals=communals, **object_policy(config))
     except ValueError as error:
         raise CompileFailure(str(error), receipt, 'UNSUPPORTED_OBJECT') from error
     from common import json_bytes
     receipt['effective_code']=sha(json_bytes({'segments':{k:identity(v) for k,v in obj.segments.items()},
         'declarations':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,
         'externals':obj.externals,'fixups':obj.linker_fixups,
-        'local_symbol_records':obj.local_symbol_records,'profile':profile,'flags':argv[5:-1]}))
+        'local_symbol_records':obj.local_symbol_records,'profile':profile,'flags':argv[5:-1],
+        **({'communals':obj.communals} if getattr(obj,'communals',None) else {})}))
     if obj.debug_segments:
         receipt['debug_segments'] = obj.debug_segments
     write_json(work/'receipt.json',receipt)

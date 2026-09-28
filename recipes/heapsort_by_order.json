@@ -17,7 +17,7 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [],
   "profile": "msc510-medium",
-  "public": "_heapsort_by_order",
+  "public": "_heapsortorder",
   "source": "src/heapsort_by_order.c",
   "stable_id": "load_26be8",
   "start": 158696,

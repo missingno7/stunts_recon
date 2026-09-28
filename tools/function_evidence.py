@@ -17,7 +17,78 @@ GENERIC_DISPATCH_SITES = {
     'sub_3945A': ((169173, 169384, 18),),
     'run_option_menu': ((12361, 12618, 8),),
     'audio_map_song_tracks': ((164565, 164768, 18),),
+    'sub_38702': ((165767, 166430, 18),),
 }
+
+
+# integ30: reviewed far-pointer tables inside a procedure (`dd proc` entries
+# read by a returning indirect far CALL cs:[bx+table]).  The pinned listing's
+# PROC..ENDP span of file_decomp_fatal also holds three unreferenced wrapper
+# stubs after its RETF; they are further reviewed entries of the same span.
+REVIEWED_FAR_POINTER_TABLES = {
+    'file_decomp_fatal': {'extent': (134663, 135058), 'island': 134916, 'call_site': 134847,
+                          'targets': ('file_decomp_rle', 'file_decomp_vle'),
+                          'source_path': 'src/restunts/asmorig/seg012.asm', 'source_line': 5303,
+                          'proc_lines': (5184, 5372), 'stub_entries': (134992, 135009, 135025)},
+}
+
+
+def _checked_far_pointer_table(f, by, island_by, image):
+    """Recheck a reviewed far-pointer table island; returns extra CFG entries."""
+    from oracle import verify
+    spec = REVIEWED_FAR_POINTER_TABLES.get(f['name'])
+    require(spec is not None and (f['start'], f['end']) == spec['extent'] and
+            set(island_by) == {spec['island']},
+            'Unreviewed far-pointer table function')
+    raw, island = island_by[spec['island']]
+    frame = f['frame_load_address']
+    require(island['kind'] == 'far_pointer_table32' and len(raw) == 4*len(spec['targets']) and
+            island.get('indirect_call_site') == spec['call_site'] and
+            f.get('segment_paragraph') is not None and frame == f['segment_paragraph']*16 and
+            by.get(spec['call_site']) == bytes.fromhex('2eff9f') + (spec['island']-frame).to_bytes(2, 'little'),
+            'Far-pointer table island or its indirect far CALL differs')
+    relocations = {r['load_offset'] for r in verify(write=False)[2]['unpacked_mz']['relocations']}
+    base = {g['name']: g for g in read_json(ROOT/'evidence/functions.json')['functions']}
+    for index, name in enumerate(spec['targets']):
+        at = spec['island'] + 4*index
+        offset = int.from_bytes(raw[4*index:4*index+2], 'little')
+        segment = int.from_bytes(raw[4*index+2:4*index+4], 'little')
+        target = base.get(name)
+        require(target is not None and at+2 in relocations and segment*16 == frame and
+                frame + offset == target['start'] and
+                sha(image[target['start']:target['end']]) == target['sha256'] and
+                (target['status'] == 'BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' or
+                 (target['status'] == 'BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' and
+                  target.get('start_evidence') and target.get('end_evidence'))),
+                'Far-pointer table entry does not name its verified target: ' + name)
+    reference = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
+    source = ROOT/'build/references/restunts'/spec['source_path']
+    from common import identity
+    require(identity(source.read_bytes()) == reference[spec['source_path']],
+            'Far-pointer table reference listing differs')
+    lines = source.read_text(encoding='latin1').splitlines()
+    first, last = spec['proc_lines']
+    words = lambda line: ' '.join(line.split()).lower()
+    require(words(lines[spec['source_line']-1]) ==
+            island.get('label', '').lower() + ' dd ' + spec['targets'][0] and
+            all(words(lines[spec['source_line']-1+i]) == 'dd ' + name
+                for i, name in enumerate(spec['targets']) if i) and
+            words(lines[first-1]) == f['name'].lower() + ' proc far' and
+            words(lines[last-1]) == f['name'].lower() + ' endp' and
+            first < spec['source_line'] < last,
+            'Far-pointer table lacks its pinned declaration inside the procedure')
+    # Unreferenced stub entries: standard frame prologue directly after an
+    # unconditional transfer or its single 90 pad.
+    for entry in spec['stub_entries']:
+        before = [a for a in by if a < entry]
+        prev = max(before)
+        prev_raw = by[prev]
+        if prev_raw == bytes([0x90]):
+            prev_raw = by[max(a for a in before if a < prev)]
+        require(image[entry:entry+3] == bytes.fromhex('558bec') and entry in by and
+                (prev_raw[0] in (0xcb, 0xca, 0xc3, 0xc2, 0xeb, 0xe9)),
+                'Reviewed stub entry is not a prologue after an unconditional transfer')
+    return list(spec['stub_entries'])
 
 
 def _generic_dispatch_targets(f, by, island_by, image):
@@ -118,7 +189,9 @@ def _reviewed_functions(image):
             raw=bytes.fromhex(island['hex']);island_start=island['load_offset']
             require(raw and start<=island_start and island_start+len(raw)<=end and
                     island_start not in island_by and
-                    island.get('kind') in ('jump_table16','lookup_table8') and
+                    (island.get('kind') in ('jump_table16','lookup_table8') or
+                     (island.get('kind')=='far_pointer_table32' and
+                      f.get('verification_kind')=='embedded_far_pointer_table_v1')) and
                     image[island_start:island_start+len(raw)]==raw and
                     (not island.get('sha256') or sha(raw)==island['sha256']),
                     'Unsupported or changed reviewed code data island')
@@ -127,7 +200,7 @@ def _reviewed_functions(image):
             require(f.get('bytes_hex')==code.hex() and f.get('boundary_anchors') and
                     f.get('boundary_proof'), 'Reviewed embedded data emission/boundary proof missing')
             require(f.get('verification_kind') in ('embedded_data_dispatch_v1',
-                    'embedded_jump_table16_mat_rot_zxy_v1') or
+                    'embedded_jump_table16_mat_rot_zxy_v1', 'embedded_far_pointer_table_v1') or
                     (f.get('verification_kind')=='embedded_jump_table16' and
                      f['name']=='sin_fast' and (start,end)==(141022,141100) and
                      len(islands)==1 and islands[0]['load_offset']==141042 and
@@ -286,6 +359,8 @@ def _reviewed_functions(image):
                 f.get('verification_kind')=='embedded_data_dispatch_v1' else True,
                 'Reviewed indirect-jump coverage incomplete')
         pending=[start];seen=set()
+        if f.get('verification_kind')=='embedded_far_pointer_table_v1':
+            pending+=_checked_far_pointer_table(f, by, island_by, image)
         while pending:
             at=pending.pop()
             if at in seen:continue
@@ -321,7 +396,8 @@ def _reviewed_functions(image):
         for name, site, island_site, encoded in (
                 ('track_setup',70804,70780,'e952f5'),
                 ('loop_game',85294,85280,'e9b6f5'),
-                ('audio_map_song_tracks',164804,164768,'eb88')):
+                ('audio_map_song_tracks',164804,164768,'eb88'),
+                ('sub_38702',166466,166430,'eb23')):
             if f['name'] != name: continue
             raw=by.get(site)
             require(raw==bytes.fromhex(encoded) and island_site in island_by and

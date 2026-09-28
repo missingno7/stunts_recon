@@ -255,7 +255,7 @@
     {
       "end": 144850,
       "name": "sprite_1_unk2",
-      "public": "_sprite_1_unk2",
+      "public": "_sprite1_unknown2",
       "stable_id": "load_23578",
       "start": 144760,
       "target": {
@@ -298,13 +298,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_1_unk2",
-        "offset": 0,
+        "name": "_sprite_1_unk3",
+        "offset": 258,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_1_unk3",
-        "offset": 258,
+        "name": "_sprite1_unknown2",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

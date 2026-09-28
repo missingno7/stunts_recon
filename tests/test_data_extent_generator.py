@@ -100,6 +100,7 @@ class GeneratedExtents(unittest.TestCase):
         layout = read_json(ROOT/'layout/data-symbols.json')
         wrong = copy.deepcopy(layout)
         wrong['symbols']['_unk_44F4C']['width'] = 1359
+        wrong['symbols']['_audio_frmarr']['width'] = 1359
         with self.assertRaisesRegex(ValueError, 'disagree'):
             derive(self.image, self.relocations, wrong)
         overlap = copy.deepcopy(layout)

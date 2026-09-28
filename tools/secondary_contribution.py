@@ -16,15 +16,21 @@ def _data_fixups(obj, recipe, name, raw, specs, image, relocations):
     names={f['target'] for f in fixes if f['target_kind']=='external'}
     declared=recipe.get('secondary_external_targets',{})
     code=set(declared.get('code',[])); data=set(declared.get('data',[]))
-    require(code.isdisjoint(data) and code|data==names,
+    far=set(declared.get('far_data',[]))
+    require(code.isdisjoint(data) and far.isdisjoint(code|data) and code|data|far==names,
             'Secondary data fixups lack exact reviewed target partition')
     symbols={**(resolve_code_symbols(code,image,relocations) if code else {}),
              **(resolve_symbols(data,image,relocations) if data else {})}
+    if far:
+        from data_only import far_data_segment_targets
+        far_targets=far_data_segment_targets(far,image,relocations)
     output=bytearray(raw); occupied=set(); rows=[]; generated=[]
     frame=checked_dgroup_layout(image,relocations)['frame_load_address']
     for fix in fixes:
         at=fix['offset']; width=fix['width']; loc=fix['loc']
-        require(not fix['self_relative'] and fix['displacement']==0 and
+        require(not fix['self_relative'] and
+                (fix['displacement']==0 or
+                 (recipe.get('kind')=='asm' and fix['target_kind']=='segment')) and
                 type(at)is int and 0<=at<=len(raw)-width and
                 not occupied.intersection(range(at,at+width)),
                 'Unsupported or overlapping secondary data fixup')
@@ -32,7 +38,31 @@ def _data_fixups(obj, recipe, name, raw, specs, image, relocations):
         encoded=bytes.fromhex(fix['encoded_addend'])
         require(len(encoded)==width and raw[at:at+width]==encoded,
                 'Secondary data encoded addend differs')
-        if fix['target_kind']=='external':
+        if fix['target_kind']=='external' and fix['target'] in far:
+            # integ33: `dw seg X` naming a public of an accepted far-data module.
+            # MASM frames the EXTDEF itself (F2); LINK writes the paragraph of
+            # X's FAR_DATA segment and an MZ relocation.  The word must be one
+            # of that module's own reviewed placement anchors (the pinned
+            # `dw seg` declaration of this very alias, rechecked here), so the
+            # binding is grounded independently of the candidate.
+            from data_only import _checked_far_anchor
+            target=far_targets[fix['target']]
+            site=specs[name]['start']+at
+            anchors=[a for a in target['anchors'] if a.get('kind')=='data-segment-word' and
+                     (a.get('relocation') or {}).get('load_offset')==site]
+            here={p['name'] for p in obj.publics if p['segment']==name and p['offset']==at}
+            require(loc=='base16' and width==2 and encoded==bytes(2) and
+                    fix['displacement']==0 and fix['target_method']==2 and
+                    1<=fix['target_index']<=len(obj.externals) and
+                    obj.externals[fix['target_index']-1]==fix['target'] and
+                    (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                    (2,'external',fix['target'],fix['target_index']) and
+                    len(anchors)==1 and anchors[0].get('alias') in here and
+                    target['start']%16==0,
+                    'Unsupported far-data segment word')
+            _checked_far_anchor(anchors[0],target['start'],image,relocations)
+            base,offset=target['start'],0
+        elif fix['target_kind']=='external':
             require(fix['target_method']==2 and
                     1<=fix['target_index']<=len(obj.externals) and
                     obj.externals[fix['target_index']-1]==fix['target'] and
@@ -51,6 +81,27 @@ def _data_fixups(obj, recipe, name, raw, specs, image, relocations):
             else:
                 require(target['group']=='DGROUP','Secondary data target not DGROUP')
             offset=address-base+addend
+        elif (fix['target_kind']=='segment' and recipe.get('kind')=='asm' and
+              fix['target']==recipe['object_segment']):
+            # integ31: a whole ASM module's data naming its own code (the
+            # `dw offset proc` / `dw seg proc` far callback of asm012_133660):
+            # the module's own segment frame (F0) at its original, reviewed
+            # code frame; the displacement stays inside the module and the
+            # segment word's MZ relocation is an ordered data obligation.
+            definition,=[d for d in obj.segment_defs if d['name']==fix['target']]
+            code_frame=recipe.get('original_frame_load_address')
+            length=recipe['end']-recipe['start']
+            require('module_proof' in recipe and fix['target_method']==0 and
+                    fix['target_index']==definition['index'] and
+                    (fix['frame_method'],fix['frame_kind'],fix['frame'],fix['frame_index'])==
+                    (0,'segment',fix['target'],definition['index']) and
+                    type(code_frame) is int and code_frame%16==0 and
+                    code_frame<=recipe['start'] and recipe['end']<=code_frame+65536 and
+                    loc in ('offset16','base16') and encoded==bytes(width) and
+                    type(fix['displacement']) is int and 0<=fix['displacement']<length,
+                    'Unsupported own-code data fixup')
+            base=code_frame
+            offset=recipe['start']-code_frame+fix['displacement']
         elif fix['target_kind']=='segment':
             target_name=fix['target']
             require(target_name in specs and
@@ -62,7 +113,7 @@ def _data_fixups(obj, recipe, name, raw, specs, image, relocations):
                     fix['target_index']==definition['index'],
                     'Secondary segment datum differs')
             base=frame; address=specs[target_name]['start']
-            addend=int.from_bytes(encoded[:2],'little')
+            addend=_own_addend(fix,encoded[:2],recipe)
             require(addend<specs[target_name]['end']-address,
                     'Secondary segment addend escapes complete object')
             offset=address-base+addend
@@ -95,6 +146,19 @@ def _data_fixups(obj, recipe, name, raw, specs, image, relocations):
         rows.append({'segment':name,'offset':at,'loc':loc,
                      'target':fix['target'],'linked_value':value})
     return bytes(output), rows, generated
+
+
+def _own_addend(fix, encoded, recipe):
+    """The in-segment offset of an own-data FIXUPP.  MSC stores it in the
+    LEDATA word (displacement 0); MASM 5.10 stores it as the FIXUPP target
+    displacement over a zero word (integ31, ASM module _DATA)."""
+    addend = int.from_bytes(encoded, 'little')
+    if fix['displacement']:
+        require(recipe.get('kind') == 'asm' and addend == 0 and
+                type(fix['displacement']) is int and 0 < fix['displacement'] < 65536,
+                'Own-data displacement form differs')
+        addend = fix['displacement']
+    return addend
 
 
 def check_data_publics(obj, specs, code):
@@ -176,13 +240,14 @@ def bind_secondary(obj, recipe, image, relocations, code_payload, code_fixups):
         for fix in own:
             require((fix['segment'], fix['loc'], fix['width'], fix['self_relative'],
                      fix['target_method'], fix['target_index'], fix['frame_method'],
-                     fix['frame_kind'], fix['frame'], fix['frame_index'], fix['displacement']) ==
+                     fix['frame_kind'], fix['frame'], fix['frame_index']) ==
                     (code, 'offset16', 2, False, 0, definitions[name]['index'],
-                     1, 'group', 'DGROUP', groups[0]['index'], 0),
+                     1, 'group', 'DGROUP', groups[0]['index']) and
+                    type(fix['displacement']) is int,
                     'Unsupported own-data CODE fixup')
             at = fix['offset']
             encoded = bytes.fromhex(fix['encoded_addend'])
-            addend = int.from_bytes(encoded, 'little')
+            addend = _own_addend(fix, encoded, recipe)
             require(len(encoded) == 2 and 0 <= at <= len(code_bytes)-2 and
                     at not in occupied and at+1 not in occupied and
                     code_bytes[at:at+2] == encoded and 0 <= addend < size,
@@ -203,7 +268,8 @@ def bind_secondary(obj, recipe, image, relocations, code_payload, code_fixups):
     used={f['target'] for f in obj.linker_fixups if f['segment'] in specs and
           f['target_kind']=='external'}
     declared=recipe.get('secondary_external_targets',{})
-    require(set(declared.get('code',[]))|set(declared.get('data',[]))==used,
+    require(set(declared.get('code',[]))|set(declared.get('data',[]))|
+            set(declared.get('far_data',[]))==used,
             'Unused secondary external declarations')
     return bytes(code_bytes), contribution, proof, generated
 
@@ -220,11 +286,17 @@ def bind_single_secondary(obj, recipe, image, relocations):
             'Complete secondary C declarations differ')
     require(obj.linker_fixups==recipe['expected_fixups'],
             'Complete ordered secondary C FIXUPPs differ')
-    own=[f for f in obj.linker_fixups if f['target_kind']=='segment' and
-         f['target'] in specs]
+    own=[f for f in obj.linker_fixups if f['segment']==code and
+         f['target_kind']=='segment' and f['target'] in specs]
     external=[f for f in obj.linker_fixups if f['segment']==code and f not in own]
     view=copy.copy(obj)
     view.segment_lengths={**obj.segment_lengths,**{name:0 for name in specs}}
+    # Global data the TU defines in its own placed segments (integ31, seg030)
+    # is checked by bind_secondary/check_data_publics; the CODE binder sees
+    # only the code public.
+    view.publics=[p for p in obj.publics if p['segment'] not in specs]
+    view.segment_defs=[{**d,'length':0} if d['name'] in specs else d
+                       for d in obj.segment_defs]
     view.linker_fixups=external
     sub={**recipe,'expected_fixups':external}
     if external:

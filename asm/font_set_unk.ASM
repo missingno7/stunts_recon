@@ -9,8 +9,8 @@ DGROUP group CONST,_BSS,_DATA
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT,ds:DGROUP
 extrn _fontdefseg:word
-public _font_set_unk
-_font_set_unk proc far
+public _font_setup_unknown
+_font_setup_unknown proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -71,6 +71,6 @@ _font_set_unk proc far
     pop     di
     pop     bp
     retf
-_font_set_unk endp
+_font_setup_unknown endp
 S012_TEXT ends
 end

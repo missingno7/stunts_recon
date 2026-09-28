@@ -53,9 +53,14 @@ IMAGE_INIT_END = 199994          # _edata: start of the WORD-aligned _BSS (EXEPA
 # from 199993, integ29).  The linked image is compared zero-padded to _edata.
 INIT_DATA_END = 199993
 BSS_END = 222352
-STACK_SIZE = 8000
+# Link recipe (integ32): the MZ SP of 8000 is LINK /ST:8000 over the pinned CRT0 STACK
+# segment (2,048 bytes, paragraph, combine stack, in DGROUP).  L6-comdef fixtures
+# MAP_STACK_SUM_ST: with /ST:n the linked STACK and SP are n even with an explicit CRT
+# STACK; without /ST, STACK contributions add.  No synthetic stack contribution.
+LINK_STACK = 8000
+LINK_OPTIONS = ['/DOSSEG', '/NOI', '/NOD', '/MAP', '/CP:1', '/ST:%d' % LINK_STACK]
+CRT0_MEMBER = ('toolchain/msc510/MLIBCR.LIB', 'dos' + chr(92) + 'crt0.asm')
 # absolute runtime markers (pinned CRT sources; acceptance doc: __AHSHIFT = 12, __acrtused = 9876h)
-STACK_IN_DGROUP = True
 ABSOLUTES = {'__AHSHIFT': 12, '__acrtused': 0x9876}
 
 
@@ -226,7 +231,8 @@ def compile_c(recipe, base, workname=None):
     key = sha(staged + json.dumps([profile, flags, base]).encode())[:16]
     cache = OUT / 'cache' / f'{base}_{key}.OBJ'
     if cache.exists():
-        return cache.read_bytes(), {'cached': True, 'flags': flags, 'profile': profile}
+        return cache.read_bytes(), {'cached': True, 'flags': flags, 'profile': profile,
+                                    'source': recipe['source'], 'invocation_kind': 'C'}
     work = OUT / 'compile' / (workname or base)
     if work.exists():
         shutil.rmtree(work)
@@ -240,7 +246,9 @@ def compile_c(recipe, base, workname=None):
         raise RuntimeError(f'compile failed {recipe["source"]}: {out[-400:]}')
     cache.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(obj, cache)
-    return obj.read_bytes(), {'cached': False, 'flags': flags, 'profile': profile}
+    return obj.read_bytes(), {'cached': False, 'flags': flags, 'profile': profile,
+                              'source': recipe['source'], 'invocation_kind': 'C',
+                              'command': argv, 'working_directory': str(work)}
 
 
 SEGLINE = re.compile(r'^(\s*)([A-Za-z_$@?][\w$@?]*)(\s+segment\b)(.*)$', re.I)
@@ -252,7 +260,10 @@ def adapt_asm(text, link_segment, force_byte=False):
     Only the CODE segment is renamed to the link unit's output segment and
     its class set to 'CODE' (reconstruction ASM uses _TEXT / seg012 with class
     'STUNTSC', which a real link would merge into the runtime _TEXT or move
-    behind all CODE segments).  Returns (text, list_of_changes)."""
+    behind all CODE segments).  integ37: the zero-length reconstruction DSEG
+    (class 'STUNTSD' or 'DATA') is linked as class 'BEGDATA', like the link
+    prelude, so /DOSSEG keeps it at the DGROUP base before chksum's NULL.
+    Returns (text, list_of_changes)."""
     changes = []
     code_names = set()
     lines = text.split('\n')
@@ -262,8 +273,8 @@ def adapt_asm(text, link_segment, force_byte=False):
             continue
         name, rest = m.group(2), m.group(4)
         cls = re.search(r"'([^']*)'", rest)
-        if name.upper() == 'DSEG' and cls and cls.group(1).upper() == 'DATA':
-            new = f"{m.group(1)}{name}{m.group(3)} byte public 'STUNTSD'"
+        if name.upper() == 'DSEG' and cls and cls.group(1).upper() in ('DATA', 'STUNTSD'):
+            new = f"{m.group(1)}{name}{m.group(3)} byte public 'BEGDATA'"
             changes.append((line.strip(), new.strip()))
             lines[i] = new
             continue
@@ -277,7 +288,7 @@ def adapt_asm(text, link_segment, force_byte=False):
                 changes.append((line.strip(), new.strip()))
             lines[i] = new
     if not code_names:
-        return text, changes
+        return '\n'.join(lines), changes
     pat = re.compile(r'\b(' + '|'.join(re.escape(n) for n in code_names) + r')\b', re.I)
     for i, line in enumerate(lines):
         if SEGLINE.match(line):
@@ -298,9 +309,10 @@ def assemble(recipe, base, link_segment, force_byte=False):
     staged = text.replace('\n', '\r\n').encode('ascii')
     key = sha(staged + json.dumps(config['flags']).encode())[:16]
     cache = OUT / 'cache' / f'{base}_{key}.OBJ'
-    info = {'flags': config['flags'], 'profile': recipe['profile'], 'adaptations': changes}
+    info = {'flags': config['flags'], 'profile': recipe['profile'], 'adaptations': changes,
+            'source': recipe['source'], 'invocation_kind': 'ASM'}
     if cache.exists():
-        return cache.read_bytes(), info
+        return cache.read_bytes(), dict(info, cached=True)
     work = OUT / 'compile' / base
     if work.exists():
         shutil.rmtree(work)
@@ -314,6 +326,7 @@ def assemble(recipe, base, link_segment, force_byte=False):
         raise RuntimeError(f'assemble failed {recipe["source"]}: {out[-600:]}')
     cache.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(obj, cache)
+    info.update(command=argv, working_directory=str(work), cached=False)
     return obj.read_bytes(), info
 
 
@@ -325,6 +338,45 @@ def library_member(owner):
     hits = [b for n, b in R().split_library(data) if n == owner['module'] and sha(b) == owner['module_sha256']]
     assert len(hits) == 1, owner['module']
     return hits[0]
+
+
+def data_member_object(owner, communal_unit_accepted=False):
+    """integ37: the link input of a data-only pinned runtime member: the
+    hash-pinned member itself.  A member whose COMDEF communals stay part of
+    the raw communal unit (omf_policy.communals, `_file.c`) is linked with
+    exactly its COMDEF record re-declared as an EXTDEF of the same names in the
+    same external-index order; every other record is the member's own.  LINK
+    then resolves those names to the raw communal unit, which keeps their
+    storage as explicit raw debt.  integ39: once the whole communal unit is
+    accepted the member is linked unchanged, COMDEFs included."""
+    blob = library_member(owner)
+    info = {'library': owner['library'], 'module': owner['module'], 'module_sha256': sha(blob)}
+    names = owner.get('omf_policy', {}).get('communals')
+    if not names or communal_unit_accepted:
+        return blob, info
+    out, at, replaced = bytearray(), 0, 0
+    while at < len(blob):
+        kind, length = blob[at], struct.unpack_from('<H', blob, at + 1)[0]
+        end = at + 3 + length
+        if kind == 0xB0:
+            body = blob[at + 3:end - 1]
+            parsed, pos = [], 0
+            while pos < len(body):
+                n = body[pos]; name = body[pos + 1:pos + 1 + n].decode('latin1'); pos += 1 + n
+                pos += 1                                   # type index 0
+                data_type = body[pos]; pos += 1
+                assert data_type == 0x62, 'only near communals are re-declared'
+                v = body[pos]; pos += 1 + {0x81: 2, 0x84: 3, 0x88: 4}.get(v, 0)
+                parsed.append(name)
+            assert parsed == list(names), (parsed, names)
+            out += rec(0x8C, b''.join(nm(n) + b'\x00' for n in parsed))
+            replaced += 1
+        else:
+            out += blob[at:end]
+        at = end
+    assert replaced == 1, 'expected exactly one COMDEF record'
+    info.update({'comdef_as_extdef': list(names), 'link_object_sha256': sha(bytes(out))})
+    return bytes(out), info
 
 
 # --------------------------------------------------------------------------- inputs
@@ -391,8 +443,80 @@ def owners_in(c, lo, hi):
     return [o for o in c.manifest['owners'] if o['start'] < hi and lo < o['end']]
 
 
+# integ36: runtime DGROUP model.  An accepted pinned runtime member whose
+# DGROUP storage rows are all modelled is linked as its own hash-pinned OBJ;
+# every storage row it declares (initialized DGROUP segments) is carved out of
+# the raw DGROUP debt, so LINK places those contributions itself.  A member
+# stays raw bytes when a COMMON segment's complete overlay is not supplied by
+# linked members (LINK sizes a common by its largest contribution).
+# integ37: BEGDATA is linked.  /DOSSEG puts class BEGDATA first in DGROUP, so
+# chksum.asm's paragraph-aligned NULL is the DGROUP base, where it is in the
+# image.  The zero-length reconstruction DSEG (prelude and every ASM module's
+# DSEG) is itself linked as class BEGDATA (adapt_asm), first by appearance, so
+# it stays at the DGROUP base in front of NULL.
+RUNTIME_UNMODELLED_CLASSES = ()
+RUNTIME_BSS_PLACEMENT = 'link-runtime-member-v1'      # runtime_binding.RUNTIME_BSS_PLACEMENT
+# LINK /DOSSEG defines these itself (start of class BSS / class STACK).
+LINK_DOSSEG_SYMBOLS = ('_edata', '_end')
+RUNTIME_COMMONS = {'PAD': (199973, 199992), 'EPAD': (199992, 199993)}
+
+
+def runtime_link_plan(c):
+    plan = {}
+    from runtime_binding import runtime_owners
+    owners = [o for o in runtime_owners(c.manifest) if o.get('binding')]
+    commons = defaultdict(list)
+    for o in owners:
+        decl = {s['name']: s for s in o['binding']['declarations']['segments']}
+        rows, reason = [], None
+        for name, row in sorted(o['binding'].get('storage', {}).items(), key=lambda t: t[1]['start']):
+            seg = decl.get(name)
+            if seg is None:
+                reason = 'storage row %s without SEGDEF' % name
+                break
+            if seg['class'] in ('STACK',) or name == '_BSS':
+                continue                      # STACK: /ST; _BSS: bss_owners rows
+            if seg['class'] in RUNTIME_UNMODELLED_CLASSES:
+                reason = '%s class %s segment is not linked by the runtime DGROUP model' % (name, seg['class'])
+                break
+            if seg['combine'] == 'common':
+                commons[name].append((o['id'], row['start'], row['end']))
+            if row['end'] > row['start']:
+                rows.append((name, row['start'], row['end']))
+        plan[o['id']] = {'linked': reason is None, 'data': rows, 'reason': reason}
+    changed = True
+    while changed:
+        changed = False
+        for name, rows in commons.items():
+            # The complete pinned MSG COMMON overlay (runtime_binding.verify_runtime_common).
+            full = RUNTIME_COMMONS.get(name, (min(r[1] for r in rows), max(r[2] for r in rows)))
+            linked = [r for r in rows if plan[r[0]]['linked']]
+            if linked and not any((r[1], r[2]) == full for r in linked):
+                for r in linked:
+                    plan[r[0]].update(linked=False, reason='COMMON %s [%d,%d) is not wholly supplied by linked members'
+                                      % (name, full[0], full[1]))
+                changed = True
+    return plan
+
+
+def carve(pieces, holes):
+    """Subtract [s,e) holes from [s,e) pieces."""
+    out = []
+    for s, e in pieces:
+        cuts = sorted((max(a, s), min(b, e)) for a, b in holes if a < e and s < b)
+        at = s
+        for a, b in cuts:
+            if at < a:
+                out.append((at, a))
+            at = max(at, b)
+        if at < e:
+            out.append((at, e))
+    return out
+
+
 def build_units(c, args):
     units = []
+    c.runtime_plan = runtime_link_plan(c) if args.runtime in ('members', 'libraries') else {}
     objs = sorted(c.objmap['objects'], key=lambda o: o['start'])
     code_objs = [o for o in objs if o['kind'] in ('C', 'ASM', 'RUNTIME')]
     next_start = {id(o): (code_objs[i + 1]['start'] if i + 1 < len(code_objs) else 176576)
@@ -447,13 +571,26 @@ def build_units(c, args):
             if lib:
                 segs_ = lib[0].get('binding', {}).get('declarations', {}).get('segments') or []
                 data_segs = [x['name'] for x in segs_ if x['class'] != 'CODE' and x['length']]
-            if args.runtime == 'members' and lib and data_segs:
+            if args.runtime in ('members', 'libraries') and lib and data_segs:
+                plan = c.runtime_plan.get(lib[0]['id'])
+                if args.runtime in ('members', 'libraries') and plan and plan['linked'] and not raw_real and contained:
+                    # integ36 runtime DGROUP model: the hash-pinned member OBJ itself,
+                    # or, in library mode, the member loaded by normal LINK search;
+                    # its DGROUP contributions are carved out of raw DGROUP debt.
+                    u = Unit(f'rt_{lib[0]["id"]}', 'rt', seg, lo, max(w['end'] for w in accepted))
+                    u.pieces = accepted
+                    u.data = list(plan['data'])
+                    u.notes.append(('normal LINK library member with its DGROUP segments ' if args.runtime == 'libraries'
+                                    else 'pinned member OBJ with its DGROUP segments ') +
+                                   ','.join('%s[%d,%d)' % d for d in u.data))
+                    units.append(u)
+                    continue
                 u = Unit(f'raw_{o["id"]}', 'raw-code', seg, lo, hi)
                 u.notes.append('pinned member carries DGROUP data ' + ','.join(data_segs) +
-                               ': needs a runtime DGROUP segment model; linked as raw')
+                               ': linked as raw (%s)' % ((plan or {}).get('reason') or 'no runtime DGROUP plan'))
                 units.append(u)
                 continue
-            if args.runtime == 'members' and lib and not raw_real and contained:
+            if args.runtime in ('members', 'libraries') and lib and not raw_real and contained:
                 u = Unit(f'rt_{lib[0]["id"]}', 'rt', seg, lo, max(w['end'] for w in accepted))
                 u.pieces = accepted
             else:
@@ -486,6 +623,27 @@ def build_units(c, args):
                 u.notes.append('partially accepted C object linked as raw debt: ' +
                                ', '.join(str(w['id'] or w['name']) for w in accepted))
             units.append(u)
+    # integ37: hash-pinned data-only runtime members (no code): the member OBJ
+    # itself, its DGROUP contributions carved out of raw DGROUP debt.
+    from runtime_binding import runtime_data_members
+    for member in runtime_data_members(c.manifest):
+        plan = c.runtime_plan.get(member['id']) if args.runtime in ('members', 'libraries') else None
+        if plan and plan['linked'] and plan['data']:
+            u = Unit(f'rtd_{member["id"]}', 'rt-data', None, None, None)
+            u.pieces = [member]
+            u.data = list(plan['data'])
+            u.key = min(a for _, a, _ in u.data)
+            u.notes.append('pinned data-only member OBJ with its DGROUP segments ' +
+                           ','.join('%s[%d,%d)' % d for d in u.data))
+            units.append(u)
+    # integ35: the objmap object of every code unit (host of its raw _BSS placeholder)
+    for u in units:
+        if u.start is None:
+            continue                    # integ37: data-only runtime members have no code object
+        for o in code_objs:
+            if o['start'] <= u.start < next_start[id(o)]:
+                u.object = o['id']
+                break
     # far data modules
     for o in objs:
         if o['kind'] == 'DATA' and 'far data' in o['segment']:
@@ -499,11 +657,30 @@ def build_units(c, args):
     for u in units:
         for p in u.pieces:
             byid[p['id']] = u
+    c.owned_dgroup_fill = []
+    carved = [(a, b) for u in units if u.kind in ('rt', 'rt-data') for _, a, b in u.data]
     for w in owners_in(c, DGROUP_BASE, INIT_DATA_END):
         s, e = max(w['start'], DGROUP_BASE), min(w['end'], INIT_DATA_END)
-        if w['kind'] == 'MATCHING_C_DATA' and w.get('parent'):
+        if w['kind'] == 'LINK_FILL':
+            # integ33: owned DGROUP word-alignment fill; LINK re-creates it
+            # from the following contribution's WORD alignment (link_fill).
+            c.owned_dgroup_fill.append(s)
+            continue
+        if w['kind'] == 'KNOWN_TOOLCHAIN_LIBRARY_DATA':
+            # integ36: owned pinned runtime data is linked by its member OBJ.
             parent = byid.get(w['parent'])
-            if parent is None or parent.kind != 'c':
+            if parent is None or parent.kind not in ('rt', 'rt-data') or (w['segment'], w['start'], w['end']) not in parent.data:
+                for a, b in carve([(s, e)], carved):
+                    u = Unit(f'rawdata_{a}', 'raw-data', '_DATA', a, b)
+                    u.notes.append(f'owned runtime data of non-linked member {w["parent"]}')
+                    units.append(u)
+                c.runtime_problems = getattr(c, 'runtime_problems', []) + [
+                    'owned runtime data %s is not linked from its pinned member' % w['id']]
+            continue
+        if w['kind'] in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA') and w.get('parent'):
+            # integ31: a whole ASM module's own _DATA is placed like a C TU's.
+            parent = byid.get(w['parent'])
+            if parent is None or parent.kind != ('asm' if w['kind'] == 'MATCHING_ASM_DATA' else 'c'):
                 u = Unit(f'rawdata_{s}', 'raw-data', '_DATA', s, e)
                 u.notes.append(f'accepted data of non-linked parent {w["parent"]}')
                 units.append(u)
@@ -515,7 +692,22 @@ def build_units(c, args):
             units.append(u)
         else:
             assert w['kind'] == 'UNRESOLVED_RAW', w
-            units.append(Unit(f'rawdata_{s}', 'raw-data', '_DATA', s, e))
+            for a, b in carve([(s, e)], carved):
+                units.append(Unit(f'rawdata_{a}', 'raw-data', '_DATA', a, b))
+    # integ32: accepted BSS storage (bss_owners) belongs to its object's own _BSS
+    # (link-module-order-v1) or to its communals (link-communal-v1); integ35: raw
+    # BSS debt is one placeholder per object plus the communal unit
+    # (add_special_units, place_bss_placeholders).
+    c.bss_problems = []
+    for w in c.manifest.get('bss_owners', []):
+        if w['kind'] in ('UNRESOLVED_RAW', 'LINK_FILL', 'LINK_COMMUNAL'):
+            continue                # integ39: fill re-created by LINK; communals allocated by LINK
+        parent = byid.get(w.get('parent'))
+        if parent is None:
+            c.bss_problems.append(f'BSS owner {w["id"]}: parent {w.get("parent")} is not linked from source')
+            continue
+        parent.data.append((w['segment'], w['start'], w['end']))
+        parent.bss_rows = getattr(parent, 'bss_rows', []) + [w]
     return units
 
 
@@ -535,9 +727,11 @@ def model_dgroup_tail(units, enabled=True):
             out.append(u); continue
         pos = u.start
         for s, e, seg, cls in DGROUP_TAIL:
+            if e <= pos or u.end <= s:
+                continue
             if pos < s:
                 out.append(Unit(f'rawdata_{pos}', 'raw-data', '_DATA', pos, s)); pos = s
-            v = Unit(f'rawdata_{seg}_{s}', 'raw-data', seg, max(s, pos), min(e, u.end))
+            v = Unit(f'rawdata_{seg}_{pos}', 'raw-data', seg, pos, min(e, u.end))
             v.notes.append(f'DGROUP tail modelled as segment {seg} class {cls}')
             out.append(v); pos = min(e, u.end)
     return out
@@ -574,19 +768,95 @@ def split_raw_data(c, units):
     return out
 
 
+def image_game_order(c, game, report=None, all_units=None, carry_forward=True):
+    """Game library member order from image facts only (integ31, diagnostic):
+    chains keep their within-segment address order; a member's anchor is its
+    own accepted _DATA start or else the lowest unowned DGROUP address in the
+    game library data region that only its code addresses (DS memory
+    operands; immediates are not trusted).  A member without an anchor
+    follows its chain predecessor (`image`); the variant `image-back` lets C
+    members without one precede their chain successor instead.  Never reads
+    the MZ relocation table."""
+    import sys as _sys
+    loc = str(ROOT / 'build/python')
+    if loc not in _sys.path:
+        _sys.path.insert(0, loc)
+    import capstone
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
+    md.detail = True
+    lo, hi = 191860, 199722            # after the explicit objects' _DATA, before the DGROUP tail
+    refs = defaultdict(set)
+    units = [u for u, _ in game]
+    scan = all_units if all_units is not None else units
+    owned = [(s, e) for u in scan for seg, s, e in u.data if seg == '_DATA']
+    for u in scan:
+        if u.start is None or u.segment in (None, '_DATA') or u.kind == 'raw-data':
+            continue
+        for ins in md.disasm(c.image[u.start:u.end], u.start):
+            if ins.disp_size != 2 or ins.disp_offset <= 0:
+                continue
+            mem = [op for op in ins.operands if op.type == capstone.x86.X86_OP_MEM]
+            if any(ins.reg_name(op.mem.segment) in ('cs', 'es', 'ss') or
+                   ins.reg_name(op.mem.base) == 'bp' for op in mem):
+                continue
+            v = DGROUP_BASE + w16(c.image, ins.address + ins.disp_offset)
+            if lo <= v < hi and not any(s <= v < e for s, e in owned):
+                refs[v].add(u.id)
+    anchor = {}
+    for u in units:
+        own = [s for seg, s, e in u.data if seg == '_DATA']
+        if u.segment == '_DATA' and u.start is not None:
+            own.append(u.start)
+        excl = [v for v, us in refs.items() if us == {u.id}]
+        if own or excl:
+            anchor[u.id] = min(own) if own else min(excl)
+    chains = defaultdict(list)
+    for u in units:
+        chains['C' if u.kind == 'c' else (u.segment or u.kind)].append(u)
+    key = {}
+    for name, chain in chains.items():
+        chain.sort(key=lambda u: (u.start if u.start is not None else 1 << 30))
+        if name == 'C' and not carry_forward:
+            nxt = 1 << 30
+            for u in reversed(chain):
+                nxt = min(nxt, anchor.get(u.id, nxt))
+                key[u.id] = (nxt, 0, u.start or 0)
+        else:
+            prev = -1
+            for u in chain:
+                prev = max(prev, anchor.get(u.id, prev))
+                key[u.id] = (prev, 1, u.start or 0)
+    ordered = sorted(game, key=lambda t: key[t[0].id])
+    if report is not None:
+        report.update({'anchored': len(anchor), 'members': len(units),
+                       'order': [u.id for u, _ in ordered]})
+    return ordered
+
+
 def drop_alignment_fill(c, units):
     """A single zero byte at an odd address directly before an accepted
     word-aligned _DATA contribution is LINK alignment fill, not an object:
     LINK re-creates it from the next contribution's WORD alignment."""
-    starts = {s for u in units if u.kind in ('c', 'data-module') for seg, s, e in u.extents() if seg == '_DATA'}
-    out, fills = [], []
+    starts = {s for u in units if u.kind in ('c', 'asm', 'data-module', 'rt', 'rt-data') for seg, s, e in u.extents() if seg == '_DATA'}
+    # integ31: likewise the zero byte at an odd address right after an
+    # odd-length accepted _DATA (asm012_133660's 5 bytes) and before raw
+    # data: the raw debt piece then starts at the next word, WORD aligned.
+    ends = {e for u in units if u.kind in ('c', 'asm', 'data-module', 'rt', 'rt-data') for seg, s, e in u.extents() if seg == '_DATA'}
+    out, fills = [], list(getattr(c, 'owned_dgroup_fill', []))
     for u in units:
         if (u.kind == 'raw-data' and u.end - u.start == 1 and u.start % 2 == 1 and
                 c.image[u.start] == 0 and u.end in starts):
             fills.append(u.start)
             continue
+        if (u.kind == 'raw-data' and u.segment == '_DATA' and u.start % 2 == 1 and
+                u.end - u.start > 1 and c.image[u.start] == 0 and u.start in ends):
+            fills.append(u.start)
+            u.start += 1
+            u.key = u.start
+            u.after_fill = True
+            u.notes.append('leading zero byte is LINK word-alignment fill after an odd-length accepted _DATA')
         out.append(u)
-    return out, fills
+    return out, sorted(fills)
 
 
 # --------------------------------------------------------------------------- accepted objects
@@ -615,11 +885,15 @@ def build_accepted(c, units, args):
                     info['forced_byte_alignment'] = True
             elif u.kind == 'rt':
                 data, info = library_member(p), {'library': p['library'], 'module': p['module']}
+            elif u.kind == 'rt-data':
+                data, info = data_member_object(p, communal_unit_accepted(c.manifest))
             else:
                 raise AssertionError(u.kind)
-            obj = OmfReader().read(data)
+            # integ39: COMDEF-bearing accepted objects (communal unit) are read with
+            # their communals; the strict checks are communal_unit's.
+            obj = OmfReader(communals=True).read(data)
             u.objs.append({'bytes': data, 'obj': obj, 'piece': p, 'info': info})
-            rows.append({'unit': u.id, 'piece': p.get('id') or p.get('name'), 'info': info,
+            rows.append({'unit': u.id, 'kind': u.kind, 'piece': p.get('id') or p.get('name'), 'info': info,
                          'segments': {s['name']: [s['class'], s['alignment'], s['length']]
                                       for s in obj.segment_defs}})
     return rows
@@ -634,6 +908,22 @@ def placements(u, entry):
             continue
         if s['class'] in ('CODE',) or (u.kind == 'far-data' and s['class'] == 'FAR_DATA'):
             place[s['name']] = p['start']
+        elif s['name'] == '_BSS':
+            d = [x for x in u.data if x[0] == '_BSS']
+            if d:
+                place['_BSS'] = d[0][1]
+            elif u.kind == 'rt' and getattr(u, 'bss_placeholder', None):
+                place['_BSS'] = u.bss_placeholder['start']     # raw-owned: placement checked, not granted
+            else:
+                problems.append(f'{u.id}: emitted _BSS {s["length"]} B without an accepted BSS owner')
+        elif u.kind == 'rt' and s['class'] == 'STACK':
+            continue                              # CRT0 STACK: LINK /ST sets the linked stack
+        elif u.kind in ('rt', 'rt-data') and s['name'] != '_BSS' and s['name'] != '_DATA':
+            d = [x for x in u.data if x[0] == s['name']]
+            if d:
+                place[s['name']] = d[0][1]
+            else:
+                problems.append(f'{u.id}: emitted {s["name"]} ({s["class"]}) {s["length"]} B without a storage row')
         elif s['name'] == '_DATA':
             if u.kind == 'data-module':
                 place['_DATA'] = p['start']
@@ -721,12 +1011,15 @@ def resolve_symbols(c, units):
                 if p['name'] in defined and p['name'] not in ('__acrtused', '__acrtmsg'):
                     defined.setdefault('$dups', []).append(p['name'])
                 defined.setdefault(p['name'], u.id)
+    # integ39: a name any linked object declares as a COMDEF is allocated by LINK.
+    communal = {cm['name'] for u in units for e in u.objs for cm in getattr(e['obj'], 'communals', [])}
     needed = set()
     for u in units:
         for e in u.objs:
             obj = e['obj']
             for name, scope in zip(obj.externals, obj.external_scopes or ['external'] * len(obj.externals)):
-                if scope == 'external' and name not in defined:
+                if scope == 'external' and name not in defined and name not in LINK_DOSSEG_SYMBOLS \
+                        and name not in communal:
                     needed.add(name)
     derived, problems = derive_symbols(c, units)
     resolved, conflicts, unresolved = {}, [], []
@@ -811,7 +1104,8 @@ def make_raw_objects(c, units, seg_frames, anchors):
             align = 'word' if (first or not u.start & 1) else 'byte'
             r = RawObject(u.id[:40], u.segment, 'CODE', align, c.image[u.start:u.end])
         else:
-            r = RawObject(u.id[:40], u.segment, RAW_DATA_CLASS[u.segment], 'byte', c.image[u.start:u.end],
+            r = RawObject(u.id[:40], u.segment, RAW_DATA_CLASS[u.segment],
+                          'word' if getattr(u, 'after_fill', False) else 'byte', c.image[u.start:u.end],
                           group='DGROUP')
         sites = [s for s in c.relocs if u.start <= s and s + 2 <= u.end]
         sites.sort(key=lambda s: c.reloc_index[s])
@@ -873,10 +1167,16 @@ def processing_order(c, units):
                     key=lambda t: t[0])
     for (_, a), (_, b) in zip(dchain, dchain[1:]):
         edge(a.id, b.id, 'DGROUP _DATA address order')
+    # (4b) integ36: address order of the other public initialized DGROUP
+    # segments (MSG) once linked pinned members and raw pieces share them.
+    for name in ('MSG',):
+        chain = sorted([(e[1], u) for u in units for e in u.extents() if e[0] == name], key=lambda t: t[0])
+        for (_, a), (_, b) in zip(chain, chain[1:]):
+            edge(a.id, b.id, 'DGROUP %s address order' % name)
     # keys for data-only units
     last = -1.0
     for i, (_, u) in enumerate(dchain):
-        if u.kind in ('raw-data', 'data-module'):
+        if u.kind in ('raw-data', 'data-module', 'rt-data'):
             u.key = last + 1e-3
             last = u.key
         else:
@@ -943,6 +1243,7 @@ def merge_raw_runs(c, ordered):
             shift = u.start - p.start
             r.publics = p.raw.publics + [(n, o + shift) for n, o in u.raw.publics]
             r.absolutes = p.raw.absolutes + u.raw.absolutes
+            r.extra_segdefs = p.raw.extra_segdefs + u.raw.extra_segdefs
             r.fixups = p.raw.fixups + [(o + shift, n) for o, n in u.raw.fixups]
             r.start = p.raw.start if p.raw.start is not None else (
                 None if u.raw.start is None else u.raw.start + shift)
@@ -1126,23 +1427,378 @@ def compare(c, units, exe, packed, mapping):
                 break
     deltas.sort(key=lambda d: d['expected'])
     rep['misplaced_units'] = deltas
+    rep['bss'] = bss_placement(c, units, img, segs, pubs)
+    rep['runtime'] = runtime_placement(c, units, img, segs, pubs, mapping)
     return rep
 
 
+def runtime_placement(c, units, img, segs, pubs, mapping):
+    """integ36: where this real link placed every `linked` storage row of each
+    linked pinned runtime member (runtime_binding: owned runtime data and the
+    zero-length real-link-v1 sections).  Three readings, all of which must
+    agree with the row: a MAP public the member defines in that segment; the
+    linked value of every own-segment DGROUP offset FIXUPP in the member's
+    linked code; the only occurrence in the linked DGROUP of a fixup-free
+    contribution's bytes; and, when the member is the only module declaring
+    the segment, the MAP segment itself (for a COMMON segment its whole extent)."""
+    origin = re.search(r'^\s*([0-9A-F]{4}):0\s+DGROUP\s*$', mapping, re.M)
+    dgroup = int(origin[1], 16) * 16 if origin else None
+    declarers = defaultdict(set)
+    contributors = defaultdict(set)          # integ37: declarers with a nonzero contribution
+    for u in units:
+        for e in u.objs:
+            for sd in e['obj'].segment_defs:
+                declarers[sd['name']].add(u.id)
+                if sd['length']:
+                    contributors[sd['name']].add(u.id)
+        if not u.accepted and u.raw is not None:
+            declarers[u.raw.segment].add(u.id)
+            if u.raw.length:
+                contributors[u.raw.segment].add(u.id)
+            for n, _, _, ln, _ in u.raw.extra_segdefs:
+                declarers[n].add(u.id)
+                if ln:
+                    contributors[n].add(u.id)
+    by_name = defaultdict(list)
+    for sg in segs:
+        by_name[sg['name']].append(sg)
+    rows, problems = [], list(getattr(c, 'runtime_problems', []))
+    ids = {u.id: u for u in units}
+    checked = set()
+    for u in units:
+        if u.kind not in ('rt', 'rt-data'):
+            continue
+        for e in u.objs:
+            owner, obj = e['piece'], e['obj']
+            checked.add(owner.get('id'))
+            storage = owner.get('binding', {}).get('storage', {})
+            local = {p['name'] for p in obj.local_publics}
+            code = {pubs[p['name']] - p['offset'] for p in obj.publics
+                    if p['segment'] == '_TEXT' and p['name'] in pubs and p['name'] not in local}
+            for name, row in sorted(storage.items()):
+                if row.get('ownership') != 'linked':
+                    continue
+                found = {}
+                for p in obj.publics:
+                    if p['segment'] == name and p['name'] in pubs and p['name'] not in local:
+                        found.setdefault('map-public', set()).add(pubs[p['name']] - p['offset'])
+                if len(code) == 1 and dgroup is not None:
+                    base = next(iter(code))
+                    for f in obj.linker_fixups:
+                        if (f['segment'] == '_TEXT' and f['target_kind'] == 'segment' and f['target'] == name and
+                                f['loc'] == 'offset16' and not f['self_relative'] and f['frame_method'] == 1):
+                            addend = struct.unpack_from('<H', bytes.fromhex(f['encoded_addend']))[0] + (f['displacement'] or 0)
+                            found.setdefault('linked-fixups', set()).add(dgroup + w16(img, base + f['offset']) - addend)
+                if (name in obj.segments and row['end'] > row['start'] and dgroup is not None and
+                        not any(f['segment'] == name for f in obj.linker_fixups)):
+                    # A fixup-free contribution whose bytes occur exactly once in
+                    # the linked DGROUP can only have been written there.
+                    data = bytes(obj.segment_bytes(name))
+                    at = img.find(data, dgroup, len(img))
+                    if at >= 0 and img.find(data, at + 1, len(img)) < 0:
+                        found['linked-unique-bytes'] = {at}
+                sole = declarers.get(name) == {u.id} and len(by_name.get(name, [])) == 1
+                if sole:
+                    sg = by_name[name][0]
+                    found['map-segment'] = {sg['start']}
+                    if sg['length'] != row['end'] - row['start']:
+                        problems.append('%s %s: MAP segment length %d differs from the row' % (owner['id'], name, sg['length']))
+                seg = next((sd for sd in obj.segment_defs if sd['name'] == name), {})
+                if (not sole and seg.get('combine') == 'public' and contributors.get(name) == {u.id} and
+                        len(by_name.get(name, [])) == 1 and by_name[name][0]['length'] == row['end'] - row['start']):
+                    # integ37: the only nonzero contribution to a public segment
+                    # (other members declare it empty, e.g. CRT0DAT's XP): the
+                    # MAP segment is exactly this member's contribution.
+                    found['map-segment-sole-contributor'] = {by_name[name][0]['start']}
+                overlay = (seg.get('combine') == 'common' and not sole and len(by_name.get(name, [])) == 1 and
+                           all(ids[x].accepted for x in declarers.get(name, ())) and
+                           by_name[name][0]['length'] == row['end'] - row['start'] == seg.get('length'))
+                if overlay:
+                    # integ37: the multi-member MSG COMMON overlay, every declarer a
+                    # linked accepted member; this member supplies its complete extent.
+                    found['map-common-overlay'] = {by_name[name][0]['start']}
+                if seg.get('combine') == 'common' and not sole and not overlay:
+                    problems.append('%s %s: linked COMMON segment is not the sole declaration' % (owner['id'], name))
+                starts = set().union(*found.values()) if found else set()
+                result = {'owner': owner['id'], 'segment': name, 'start': row['start'], 'end': row['end'],
+                          'readings': {k: sorted(v) for k, v in found.items()}}
+                if not found:
+                    problems.append('%s %s: the real link gives no reading of its placement' % (owner['id'], name))
+                elif starts != {row['start']}:
+                    problems.append('%s %s: real link placed it at %s, row %d' % (owner['id'], name, sorted(starts), row['start']))
+                rows.append(result)
+    # A linked row of a member that this link did not link from its OBJ is unproven.
+    from runtime_binding import runtime_owners
+    for o in runtime_owners(getattr(c, 'manifest', {'owners': []})):
+        if o['id'] not in checked and any(
+                r.get('ownership') == 'linked' for r in o.get('binding', {}).get('storage', {}).values()):
+            problems.append('%s: linked storage, but the member is not linked from its pinned OBJ' % o['id'])
+    return {'rows': rows, 'problems': problems, 'placed': not problems}
+
+
+def link_modules(units, image=None):
+    """integ34: every OBJ module of the link input with its CODE SEGDEF names,
+    its nonempty _BSS and the static owner rows it carries (for the image-derived
+    `_BSS` order proof, bss_link.independent_static_order).  integ35: each raw
+    `_BSS` placeholder is a module hosted by its object's last module; the raw
+    communal unit (c_common, after every `_BSS` by class order) is excluded."""
+    out = []
+
+    def raw_module(uid, raw):
+        segdefs = [(raw.segment, raw.klass, raw.length)] + [(n, k, ln) for n, k, _, ln, _ in raw.extra_segdefs]
+        bss = sum(ln for n, _, ln in segdefs if n == '_BSS')
+        return {'id': uid, 'code': [n for n, k, _ in segdefs if k == 'CODE'],
+                'code_nonempty': [n for n, k, ln in segdefs if k == 'CODE' and ln],
+                'bss': bss, 'bss_align': raw.align, 'owners': []}
+    last = {}
+    for u in units:
+        if u.kind == 'bss':
+            continue
+        count = len(out)
+        for segment, shim in u.shims.items():
+            out.append(raw_module('%s:shim:%s' % (u.id, segment), shim))
+        if u.accepted:
+            rows = [r['id'] for r in getattr(u, 'bss_rows', [])]
+            for i, e in enumerate(u.objs):
+                obj = e['obj']
+                code = [s for s in obj.segment_defs if s['class'] == 'CODE']
+                bss = [s for s in obj.segment_defs if s['name'] == '_BSS' and s['length']]
+                out.append({'id': '%s#%d' % (u.id, i), 'code': [s['name'] for s in code],
+                            'code_nonempty': [s['name'] for s in code if s['length']],
+                            'bss': sum(s['length'] for s in bss),
+                            'bss_align': bss[0]['alignment'] if bss else None,
+                            'owners': rows if bss else []})
+                if u.kind == 'rt' and bss:
+                    # integ36: a linked pinned member's own _BSS in shared _TEXT is
+                    # grounded by the image operands of its own-_BSS FIXUPPs.
+                    import bss_link
+                    out[-1]['grounded'] = bss_link.grounded_member_bss(obj, u.start, image, DGROUP_BASE)[0] if image is not None else None
+        elif u.raw is not None:
+            out.append(raw_module(u.id, u.raw))
+        if len(out) > count:
+            last[u.id] = out[-1]['id']
+    # integ35: a raw _BSS placeholder is linked right after its host unit's last module.
+    for u in units:
+        if u.kind == 'bss' and getattr(u, 'host', None) is not None:
+            out.append({'id': u.id, 'code': [], 'code_nonempty': [], 'bss': u.raw.length,
+                        'bss_align': u.raw.align, 'owners': [], 'host': last.get(u.host.id),
+                        'grounded': getattr(u, 'grounded', None)})
+    return out
+
+
+def communal_unit_accepted(manifest):
+    return any(o.get('kind') == 'LINK_COMMUNAL' for o in manifest.get('bss_owners', []))
+
+
+def communal_placement(c, units, img, segs, pubs):
+    """integ39: decide the accepted LINK_COMMUNAL row from this real link
+    (communal_unit.check_link): declarers re-derived from the linked objects'
+    COMDEF records, MAP publics and c_common, the linked operand of every
+    FIXUPP that names a communal.  A COMDEF linked from an accepted source while
+    the communal unit is raw is refused (the pinned `_file.c` member links its
+    COMDEFs as EXTDEFs then, data_member_object)."""
+    import communal_unit
+    accepted = [o for o in c.manifest.get('bss_owners', []) if o.get('kind') == 'LINK_COMMUNAL']
+    declared, objects = {}, []
+    for u in units:
+        for e in u.objs:
+            piece = e['piece']
+            owner = piece.get('id') or piece.get('name')
+            place, _ = placements(u, e)
+            objects.append({'id': owner, 'obj': e['obj'], 'place': place})
+            for cm in getattr(e['obj'], 'communals', []):
+                declared.setdefault(cm['name'], []).append((owner, cm['length'], u.accepted))
+    if not accepted:
+        stray = sorted(declared)
+        if not stray:
+            return True, []
+        return False, [{'id': 'c_common', 'placed': False,
+                        'problems': ['COMDEF %s linked without the accepted communal unit' % n for n in stray]}]
+    row = accepted[0]
+    items = row['communals']
+    names = {i['name'] for i in items}
+    refs = communal_unit.linked_references(objects, names, img, DGROUP_BASE)
+    problems = communal_unit.check_link(items, declared, refs, pubs, segs, c.image, DGROUP_BASE)
+    problems += communal_unit.check_names(items, c.manifest)
+    result = communal_unit.gate_result(problems)
+    return not problems, [{'id': row['id'], 'placement': row.get('placement'), 'communals': len(items),
+                           'references': len(refs), 'conditions': result['conditions'],
+                           'problems': problems, 'placed': not problems}]
+
+
+def bss_placement(c, units, img, segs, pubs):
+    """integ32: read the real link's placement of every accepted BSS owner."""
+    import bss_link
+    located, static_rows, communal_rows = {}, [], []
+    runtime_rows = []
+    for u in units:
+        for row in getattr(u, 'bss_rows', []):
+            if row.get('placement') == RUNTIME_BSS_PLACEMENT:
+                runtime_rows.append(row)
+            else:
+                (communal_rows if row.get('placement') == bss_link.COMMUNAL else static_rows).append(row)
+            for e in u.objs:
+                obj = e['obj']
+                if not obj.segment_lengths.get('_BSS'):
+                    continue
+                code = [s['name'] for s in obj.segment_defs if s['class'] == 'CODE' and s['length']]
+                place, _ = placements(u, e)
+                if len(code) == 1 and code[0] in place:
+                    located[row['id']] = (obj, code[0], place[code[0]])
+    order = bss_link.independent_static_order(static_rows, link_modules(units, c.image), segment_layout(units)[0],
+                                              IMAGE_INIT_END)
+    ok_s, static = bss_link.check_static(static_rows, located, img, segs, IMAGE_INIT_END, DGROUP_BASE, order)
+    ok_c, communal = communal_placement(c, units, img, segs, pubs)
+    ok_r, runtime = bss_link.check_runtime_bss(runtime_rows, located, c.image, img, segs, IMAGE_INIT_END, DGROUP_BASE)
+    problems = list(getattr(c, 'bss_problems', []))
+    # integ35: every raw placeholder must also land where the partition puts it
+    # (a check of the raw debt model, never a placement proof for accepted storage).
+    raw = []
+    for u in units:
+        if u.kind != 'bss':
+            continue
+        # linked start: the MAP c_common segment, else any public the raw unit defines
+        seg = [s for s in segs if s['name'] == 'c_common'] if u.segment == 'c_common' else []
+        starts = {seg[0]['start']} if len(seg) == 1 else set()
+        starts |= {pubs[n] - off for n, off in u.raw.publics if n in pubs}
+        raw.append({'unit': u.id, 'start': u.start, 'end': u.end, 'host': getattr(getattr(u, 'host', None), 'id', None),
+                    'grounded': getattr(u, 'grounded', None), 'linked_starts': sorted(starts),
+                    'publics': len(u.raw.publics)})
+        if (u.segment == 'c_common' and len(seg) != 1) or starts - {u.start}:
+            problems.append('raw BSS unit %s linked at %s, partition %d' % (u.id, sorted(starts), u.start))
+    # integ39: the owned c_common paragraph fill is re-created by LINK: the BSS
+    # sections end (XOE) at its start and c_common starts at its end.
+    for w in c.manifest.get('bss_owners', []):
+        if w['kind'] != 'LINK_FILL':
+            continue
+        cc = [s for s in segs if s['name'] == 'c_common']
+        xoe = [s for s in segs if s['name'] == 'XOE']
+        if len(cc) != 1 or cc[0]['start'] != w['end']:
+            problems.append('c_common paragraph fill %s: MAP c_common starts at %s'
+                            % (w['id'], [s['start'] for s in cc]))
+        if len(xoe) != 1 or xoe[0]['start'] != w['start']:
+            problems.append('c_common paragraph fill %s: MAP XOE at %s' % (w['id'], [s['start'] for s in xoe]))
+    return {'owners': static + communal + runtime, 'problems': problems, 'raw_placeholders': raw,
+            'placed': ok_s and ok_c and ok_r and not problems}
+
+
 # --------------------------------------------------------------------------- main
-def add_special_units(units):
+def crt0_stack():
+    """The pinned CRT0 member's own STACK SEGDEF (name, class, alignment, length,
+    combine, DGROUP membership) -- the stack contribution of the real link."""
+    lib, member = CRT0_MEMBER
+    for name, blob in OmfReader().split_library(toolchain_path(lib).read_bytes()):
+        if name == member:
+            obj = OmfReader().read(blob)
+            rows = [s for s in obj.segment_defs if s['class'] == 'STACK']
+            assert len(rows) == 1 and rows[0]['combine'] == 'stack', rows
+            grouped = any(rows[0]['name'] in g['segments'] for g in obj.groups if g['name'] == 'DGROUP')
+            return dict(rows[0], dgroup=grouped, member=member, library=lib)
+    raise AssertionError('pinned CRT0 member missing')
+
+
+def bss_placeholder_units(c, units):
+    """integ35: raw BSS debt as explicit link units (bss_link.check_partition).
+
+    Each `object-bss` placeholder is a raw `_BSS` contribution (WORD aligned, no
+    bytes) hosted by its object's code unit: place_bss_placeholders links it
+    immediately after that unit, where the object's own `_BSS` would be.  A
+    pinned runtime member's placeholder must equal the member's complete `_BSS`
+    SEGDEF, placed where the image operands of its own-`_BSS` FIXUPPs put it.
+    The `link-word-fill` byte is not linked (LINK re-creates it).  The trailing
+    `communal-unit` is LINK's c_common (class BSS, after every `_BSS`)."""
+    import bss_link
+    out, problems = [], []
+    try:
+        rows = bss_link.load_partition(c.manifest)
+    except ValueError as error:
+        c.bss_problems = getattr(c, 'bss_problems', []) + ['BSS partition: %s' % error]
+        rows = []
+    hosts = defaultdict(list)
+    for u in units:
+        if getattr(u, 'object', None):
+            hosts[u.object].append(u)
+    for row in rows:
+        if row['kind'] != 'UNRESOLVED_RAW' or row['form'] == bss_link.WORD_FILL:
+            continue
+        size = row['end'] - row['start']
+        if row['form'] == bss_link.COMMUNAL_UNIT:
+            u = Unit('bss', 'bss', 'c_common', row['start'], row['end'])
+            u.key = 1e9
+            # integ39: LINK's c_common is PARAGRAPH aligned; the fill before it is
+            # an owned LINK_FILL row that LINK re-creates (not linked).
+            u.raw = RawObject('bss_c_common', 'c_common', 'BSS', 'para', b'', length=size, group='DGROUP')
+            u.notes.append('raw communal unit [XOE,_end): LINK c_common, one raw unit until the '
+                           'communals are reconstructed (%s)' % row['id'])
+            out.append(u)
+            continue
+        host = sorted(hosts.get(row['object'], []), key=lambda h: h.start)
+        if host and host[-1].kind == 'rt' and any(e['obj'].segment_lengths.get('_BSS') for e in host[-1].objs):
+            # integ36: the pinned member OBJ itself is linked and emits its own
+            # _BSS; its raw placeholder is not linked a second time.
+            h = host[-1]
+            h.bss_placeholder = row
+            h.notes.append('own pinned _BSS linked in place of raw placeholder %s' % row['id'])
+            continue
+        u = Unit('bssraw_' + row['object'], 'bss', '_BSS', row['start'], row['end'])
+        u.raw = RawObject(('bssraw_' + row['object'])[:40], '_BSS', 'BSS', 'word', b'', length=size,
+                          group='DGROUP')
+        u.row = row
+        u.host = host[-1] if host else None
+        u.key = (u.host.key + 1e-6) if u.host else 1e9 - 1
+        u.notes.append('raw _BSS placeholder of %s (%d B, oracle-sized raw debt)' % (row['object'], size))
+        if u.host is None:
+            problems.append('BSS placeholder %s: object %s is not in the link input' % (row['id'], row['object']))
+        elif u.host.segment == '_TEXT':
+            try:
+                lib, module, blob = pinned_runtime_members(c, [u.host])[u.host.id]
+                obj = OmfReader().read(blob)
+                start, refs = bss_link.grounded_member_bss(obj, u.host.start, c.image, DGROUP_BASE)
+                u.grounded = start
+                u.notes.append('pinned %s _BSS %d B grounded at %s by %d own-_BSS operands'
+                               % (module, obj.segment_lengths.get('_BSS', 0), start, refs))
+                if obj.segment_lengths.get('_BSS', 0) != size or start != row['start']:
+                    problems.append('BSS placeholder %s differs from pinned %s _BSS (%s B at %s)'
+                                    % (row['id'], module, obj.segment_lengths.get('_BSS'), start))
+            except (AssertionError, KeyError, ValueError) as error:
+                problems.append('BSS placeholder %s: runtime member not grounded (%s)' % (row['id'], error))
+        out.append(u)
+    c.bss_problems = getattr(c, 'bss_problems', []) + problems
+    return out
+
+
+def place_bss_placeholders(ordered):
+    """Move each hosted raw `_BSS` placeholder right after its host unit."""
+    hosted = [u for u in ordered if getattr(u, 'host', None) is not None]
+    rest = [u for u in ordered if u not in hosted]
+    for p in hosted:
+        rest.insert(rest.index(p.host) + 1, p)
+    return rest
+
+
+def add_special_units(units, c=None, stack=True):
+    """Prelude, the raw BSS placeholders and communal unit, and the CRT0 STACK.
+
+    integ35: raw BSS debt is placed like raw code (bss_placeholder_units); the
+    stack is the pinned CRT0 STACK declaration (LINK /ST sets its size)."""
     pre = Unit('prelude', 'prelude')
     pre.key = -10
-    pre.raw = RawObject('prelude', 'DSEG', 'STUNTSD', 'byte', b'', group='DGROUP')
-    pre.notes.append('zero-length DGROUP declaration so MASM F0 DSEG frames equal the DGROUP base')
-    bss = Unit('bss', 'bss', '_BSS', IMAGE_INIT_END, BSS_END)
-    bss.key = 1e9
-    bss.raw = RawObject('bss', '_BSS', 'BSS', 'word', b'', length=BSS_END - IMAGE_INIT_END, group='DGROUP')
-    stack = Unit('stack', 'stack', 'STACK', None, None)
-    stack.key = 1e9 + 1
-    stack.raw = RawObject('stack', 'STACK', 'STACK', 'para', b'', length=STACK_SIZE, combine=5,
-                          group='DGROUP' if STACK_IN_DGROUP else None)
-    return [pre] + units + [bss, stack]
+    pre.raw = RawObject('prelude', 'DSEG', 'BEGDATA', 'byte', b'', group='DGROUP')
+    pre.notes.append('zero-length DGROUP declaration (class BEGDATA, first by appearance) so MASM F0 '
+                     'DSEG frames equal the DGROUP base, also in front of a linked chksum NULL')
+    out = [pre] + units + (bss_placeholder_units(c, units) if c is not None else [])
+    if stack and any(u.kind == 'rt' and any(p.get('module') == CRT0_MEMBER[1] for p in u.pieces) for u in units):
+        stack = False                 # integ36: the linked pinned CRT0 OBJ carries its own STACK SEGDEF
+    if stack:
+        s = crt0_stack()
+        st = Unit('stack', 'stack', 'STACK', None, None)
+        st.key = 1e9 + 1
+        st.raw = RawObject('crt0_stack', s['name'], s['class'], 'para', b'', length=s['length'],
+                           combine=5, group='DGROUP' if s['dgroup'] else None)
+        st.notes.append('pinned %s STACK SEGDEF (%d B); LINK /ST:%d sets the linked stack'
+                        % (s['member'], s['length'], LINK_STACK))
+        out.append(st)
+    return out
 
 
 def choose_anchors(c, units):
@@ -1201,7 +1857,7 @@ def summarize_bytes(units):
     acc = defaultdict(int)
     for u in units:
         for seg, s, e in u.extents():
-            if u.kind == 'bss':
+            if u.kind == 'bss' or seg == '_BSS':
                 continue
             acc[('accepted-' + u.kind) if u.accepted else u.kind] += e - s
     return dict(acc)
@@ -1244,13 +1900,176 @@ def _run_sequence(sites, unit_of):
     return seq
 
 
+PINNED_RUNTIME_LIBRARIES = ('toolchain/msc510/MLIBCR.LIB', 'toolchain/msc510/LIBH.LIB')
+
+
+PUBLIC_LINE = re.compile(r'^' + chr(92) + 's*([0-9A-F]{4}):([0-9A-F]{4})' + chr(92) + 's+(?:Abs' + chr(92) +
+                         's+|Res' + chr(92) + 's+|Imp' + chr(92) + 's+)?(' + chr(92) + 'S+)' + chr(92) + 's*$', re.M)
+
+
+def library_root_object(names):
+    """An EXTDEF-only OMF root to retain every reviewed library contribution.
+
+    LINK still resolves each symbol from the pinned/runtime or game library;
+    this zero-segment module supplies no bytes, fixups, or relocation sites.
+    """
+    unique, seen = [], set()
+    for name in names:
+        if name not in seen:
+            seen.add(name)
+            unique.append(name)
+    out = [rec(0x80, nm('HISTROOT'))]
+    body = b''
+    for name in unique:
+        entry = nm(name) + b'\x00'
+        if body and len(body) + len(entry) > 800:
+            out.append(rec(0x8C, body)); body = b''
+        body += entry
+    if body:
+        out.append(rec(0x8C, body))
+    out.append(rec(0x8A, b'\x00'))
+    return b''.join(out)
+
+
+def library_public_names(blob):
+    """PUBDEF (0x90) names of one OMF module, read record by record (also for
+    COMDEF-bearing members that the strict reader refuses)."""
+    names, at = set(), 0
+    while at + 3 <= len(blob):
+        kind = blob[at]
+        length = struct.unpack_from('<H', blob, at + 1)[0]
+        body = blob[at + 3:at + 2 + length]
+        if kind == 0x90:
+            i = 0
+
+            def index():
+                nonlocal i
+                v = body[i]
+                if v & 0x80:
+                    v = ((v & 0x7F) << 8) | body[i + 1]
+                    i += 2
+                else:
+                    i += 1
+                return v
+            index()
+            segment = index()
+            if segment == 0:
+                i += 2
+            while i < len(body):
+                n = body[i]
+                names.add(body[i + 1:i + 1 + n].decode('ascii', 'replace'))
+                i += 1 + n + 2
+                index()
+        if kind == 0x8A:
+            break
+        at += 3 + length
+    return names
+
+
+def pinned_runtime_members(c, units):
+    """integ30: the pinned library member of every runtime _TEXT unit.
+
+    Accepted runtime owners name their pinned module identity; a raw runtime
+    unit is matched by its complete bytes outside the member's own FIXUPP
+    fields (every such unit is exactly one member of MLIBCR.LIB or LIBH.LIB).
+    Returns {unit id: (library, module, member bytes)}."""
+    members = []
+    for lib in PINNED_RUNTIME_LIBRARIES:
+        data = toolchain_path(lib).read_bytes()
+        for name, blob in OmfReader().split_library(data):
+            try:
+                obj = OmfReader().read(blob)
+            except Exception:       # e.g. COMDEF-bearing data members (no _TEXT code)
+                continue
+            if '_TEXT' not in obj.segment_lengths or not obj.segment_lengths['_TEXT']:
+                continue
+            code = obj.segment_bytes('_TEXT')
+            mask = bytearray(len(code))
+            for f in obj.linker_fixups:
+                if f['segment'] == '_TEXT':
+                    mask[f['offset']:f['offset'] + f['width']] = bytes([1]) * f['width']
+            members.append((lib, name, blob, code, mask, sha(blob)))
+    out = {}
+    for u in units:
+        if u.segment != '_TEXT' or u.start is None:
+            continue
+        pinned = [p.get('module_sha256') for p in u.pieces if p.get('module_sha256')]
+        hits = [m for m in members if m[5] in pinned] if pinned else [
+            m for m in members if len(m[3]) <= u.end - u.start + 1 and
+            all(m[4][i] or m[3][i] == c.image[u.start + i] for i in range(len(m[3])))]
+        # identical code bytes (closeall.c/flushall.c): the reviewed unit map names the member
+        named = u.id.split('rt_', 1)[-1].rsplit('_', 1)[0]
+        named = chr(92).join(named.split('_', 1)) if named.startswith('dos_') else named
+        if len({(m[0], m[1]) for m in hits}) > 1:
+            hits = [m for m in hits if m[1] == named]
+        names = {(m[0], m[1]) for m in hits}
+        assert len(names) == 1, (u.id, sorted(names))
+        out[u.id] = hits[0][:3]
+    return out
+
+
+def render_historical_response(name, replacements):
+    """Render a checked-in DOS response template with CRLF line endings."""
+    template_path = ROOT / 'historical' / name
+    text = template_path.read_text(encoding='ascii')
+    for token, value in replacements.items():
+        text = text.replace(token, value)
+    unresolved = re.findall(r'@[A-Z_]+@', text)
+    if unresolved:
+        raise ValueError(f'unexpanded {name} tokens: {unresolved}')
+    return text.replace('\r\n', '\n').replace('\n', '\r\n')
+
+
 def library_link(c, ordered, args):
     """Library-search hypothesis: explicit seg000-seg009 objects (plus raw
     DGROUP debt, BSS and STACK), then RT.LIB (runtime _TEXT units) and
     GAME.LIB (seg011-seg037, the seg012 modules and the far/DGROUP data
     modules).  LINK chooses which library modules to load and in which order;
-    nothing here is taken from the oracle order."""
+    nothing here is taken from the oracle order.
+
+    With --runtime libraries (integ30) the runtime is not rebuilt from units:
+    LINK searches the unchanged pinned MLIBCR.LIB and LIBH.LIB themselves, so
+    every runtime member carries its real EXTDEFs/PUBDEFs and DGROUP segments
+    (the raw DGROUP debt still holds their original data bytes; only code
+    placement and relocation order are compared).  Raw game debt that names the
+    runtime code frame refers to crt0's `__astart`."""
     import bisect
+    pinned = args.runtime == 'libraries'
+    members = pinned_runtime_members(c, ordered) if pinned else {}
+    if pinned:
+        # Names the pinned members define themselves are not re-declared by raw debt.
+        defined = set()
+        for lib in PINNED_RUNTIME_LIBRARIES:
+            for _, blob in OmfReader().split_library(toolchain_path(lib).read_bytes()):
+                defined |= library_public_names(blob)
+        # A raw far pointer/CALL into the runtime names the pinned public at its
+        # exact target (the reference the original object carried); other
+        # runtime segment words name crt0's __astart.
+        at_address = {}
+        by_id = {u.id: u for u in ordered}
+        for uid, (lib, module, blob) in members.items():
+            try:
+                obj = OmfReader().read(blob)
+            except Exception:
+                continue
+            for q in obj.publics:
+                if q['segment'] == '_TEXT':
+                    at_address.setdefault(by_id[uid].start + q['offset'], q['name'])
+        frame = 117840
+
+        def runtime_name(u, o):
+            site = u.start + o
+            if o >= 2:
+                offset = w16(c.image, site - 2)
+                name = at_address.get(frame + offset)
+                if name and w16(c.image, site) * 16 == frame:
+                    return name
+            return '__astart'
+        for u in ordered:
+            if u.raw is not None and u.segment != '_TEXT':
+                u.raw.fixups = [(o, runtime_name(u, o) if n == '$$F__TEXT' else n) for o, n in u.raw.fixups]
+                u.raw.publics = [(n, o) for n, o in u.raw.publics if n not in defined]
+                u.raw.absolutes = [(n, v) for n, v in u.raw.absolutes if n not in defined]
     config, _ = verify_toolchain('msc510-medium')
     tc = (ROOT / config['directory']).resolve()
     work = OUT / 'link-library'
@@ -1262,47 +2081,205 @@ def library_link(c, ordered, args):
     for u in ordered:
         blobs = [sh.build() for sh in u.shims.values()]
         blobs += [e['bytes'] for e in u.objs] if u.accepted else [u.raw.build(getattr(u, 'cuts', None))]
-        if u.kind in ('prelude', 'raw-data', 'bss', 'stack') or u.segment in explicit_segments:
+        host = getattr(u, 'host', None)
+        if host is not None and pinned and host.segment == '_TEXT':
+            continue      # integ35: the pinned library member carries its own real _BSS
+        if pinned and u.kind == 'rt-data':
+            runtime.append((u, []))     # let LINK search the pinned data-only member
+            continue
+        if (getattr(args, 'game_input', 'library') == 'explicit' and
+                u.kind == 'raw-data' and u.segment == '_DATA'):
+            game.append((u, blobs))
+        elif u.kind in ('prelude', 'raw-data', 'bss', 'stack') or u.segment in explicit_segments:
             explicit.append((u, blobs))
         elif u.segment == '_TEXT':
-            runtime.append((u, blobs))
+            runtime.append((u, [] if pinned else blobs))
         else:
             game.append((u, blobs))
     # prelude first (DSEG at the DGROUP base), then the explicit code objects in
     # address order, raw DGROUP debt, BSS/STACK last (segment declarations only)
+    # integ35: a raw _BSS placeholder follows its explicit host object; one hosted
+    # by a library member cannot be loaded with it (it defines nothing the member
+    # needs), so it is linked with the BSS tail (library experiment, diagnostic).
     rank = {'prelude': 0, 'raw-data': 2, 'bss': 3, 'stack': 4}
-    explicit.sort(key=lambda t: (rank.get(t[0].kind, 1), t[0].start if t[0].kind != 'raw-data' else 0))
+
+    def explicit_key(t):
+        u = t[0]
+        host = getattr(u, 'host', None)
+        if host is not None and host.segment in explicit_segments:
+            return (1, host.start + 0.5)
+        if u.kind == 'bss':
+            return (3, u.start if host is not None else 1 << 30)
+        return (rank.get(u.kind, 1), u.start if u.kind != 'raw-data' else 0)
+    explicit.sort(key=explicit_key)
+    if getattr(args, 'game_order', 'oracle') in ('image', 'image-back'):
+        # integ31 hypothesis: image-derived member order (no relocation-table
+        # information): the code-segment chains (C objects by segment, ASM
+        # modules by address inside S012/S018) merged by each member's DGROUP
+        # anchor -- its own accepted _DATA start, else the lowest game-library
+        # DGROUP address that only its code references.
+        game[:] = image_game_order(c, game, all_units=[u for u, _ in explicit + runtime + game],
+                                   carry_forward=args.game_order == 'image')
+    if getattr(args, 'game_order', 'oracle') == 'address':
+        # Independent hypothesis (integ30): game library members in load-image
+        # address order (the within-segment placement order is an image fact;
+        # the cross-segment interleaving is not assumed from the oracle).
+        game.sort(key=lambda t: (t[0].start if t[0].start is not None else 1 << 30))
     names = []
 
-    def write(group, prefix):
+    object_manifest = []
+    def write(group, prefix, group_name):
         out = []
         for u, blobs in group:
-            for b in blobs:
-                fn = '%s%03d.OBJ' % (prefix, len(names))
+            # `blobs` is the exact set passed to LINK or LIB. In pinned-library
+            # mode it is intentionally empty for runtime members: LINK searches
+            # MLIBCR/LIBH instead of receiving extracted runtime OBJ files.
+            shim_names = list(u.shims)
+            for i, b in enumerate(blobs):
+                if i < len(shim_names):
+                    object_kind, piece_id, shim_segment = 'link-shim', None, shim_names[i]
+                elif u.accepted:
+                    piece = u.objs[i - len(shim_names)]['piece']
+                    object_kind = 'accepted'
+                    piece_id = piece.get('id') or piece.get('name')
+                    shim_segment = None
+                else:
+                    object_kind = 'raw-debt' if u.kind in ('raw-code', 'raw-data', 'bss') else 'link-scaffold'
+                    piece_id, shim_segment = None, None
+                # Debt OMF inputs stay conspicuous in both DOS 8.3 filenames and
+                # the sidecar inventory; their payload still comes only from the
+                # locked image / reviewed BSS partition.
+                file_prefix = 'D' if object_kind == 'raw-debt' else ('S' if object_kind == 'link-shim' else prefix)
+                fn = '%s%03d.OBJ' % (file_prefix, len(names))
                 (work / fn).write_bytes(b)
                 names.append(fn)
                 out.append(fn)
+                object_manifest.append({
+                    'file': fn, 'group': group_name, 'unit': u.id, 'unit_kind': u.kind,
+                    'object_kind': object_kind, 'piece': piece_id, 'shim_segment': shim_segment,
+                    'start': u.start, 'end': u.end, 'sha256': sha(b),
+                    'generated_from': (
+                        ('reviewed-bss-partition' if u.kind == 'bss' else
+                         'locked-oracle-load-image-and-relocations')
+                        if object_kind == 'raw-debt' else None),
+                })
         return out
-    exp = write(explicit, 'E')
-    rt = write(runtime, 'R')
-    gm = write(game, 'G')
+    exp = write(explicit, 'E', 'explicit')
+    rt = write(runtime, 'R', 'runtime')
+    gm = write(game, 'G', 'explicit-game' if getattr(args, 'game_input', 'library') == 'explicit'
+               else 'game-library')
+    root_names = []
+    root_seen = set()
+
+    def root_add(name):
+        if name not in root_seen:
+            root_seen.add(name)
+            root_names.append(name)
+
+    if pinned:
+        # The archive members are hash-pinned contributions in the accepted
+        # image. Root their reviewed publics so LINK's ordinary library search
+        # retains even a member whose entry is reached indirectly.
+        runtime_owner_rows = [o for o in c.manifest.get('owners', [])
+                              if o['kind'] == 'KNOWN_TOOLCHAIN_LIBRARY']
+        from runtime_binding import runtime_data_members
+        runtime_owner_rows.extend(runtime_data_members(c.manifest))
+        runtime_members_by_identity = {
+            (owner.get('library'), owner.get('module'), owner.get('module_sha256')): owner
+            for owner in runtime_owner_rows}
+        for lib in PINNED_RUNTIME_LIBRARIES:
+            for module, blob in OmfReader().split_library(toolchain_path(lib).read_bytes()):
+                owner = runtime_members_by_identity.get((lib, module, sha(blob)))
+                if owner is None:
+                    continue
+                obj = OmfReader(communals=True).read(blob)
+                local = {p['name'] for p in obj.local_publics}
+                for pub in obj.publics:
+                    if pub['name'] not in local:
+                        root_add(pub['name'])
+        if getattr(args, 'game_input', 'library') == 'library':
+            for u, _ in game:
+                for entry in u.objs:
+                    local = {p['name'] for p in entry['obj'].local_publics}
+                    for pub in entry['obj'].publics:
+                        if pub['name'] not in local:
+                            root_add(pub['name'])
+                for shim in u.shims.values():
+                    for name, _offset in shim.publics:
+                        root_add(name)
+        root_blob = library_root_object(root_names)
+        root_file = 'ROOT.OBJ'
+        (work / root_file).write_bytes(root_blob)
+        object_manifest.append({
+            'file': root_file, 'group': 'explicit', 'unit': 'link_root', 'unit_kind': 'link-root',
+            'object_kind': 'link-root', 'piece': None, 'shim_segment': None,
+            'start': None, 'end': None, 'sha256': sha(root_blob), 'generated_from': 'reviewed-publics',
+        })
+        exp.append(root_file)
+    (work / 'objects.json').write_text(json.dumps(object_manifest, indent=1))
     logs = {}
+    libraries = ['RT.LIB', 'GAME.LIB']
+    if pinned:
+        # The unchanged pinned runtime libraries (identity checked by toolchain_path).
+        pinned_names = []
+        for lib in PINNED_RUNTIME_LIBRARIES:
+            data = toolchain_path(lib).read_bytes()
+            (work / Path(lib).name).write_bytes(data)
+            pinned_names.append(Path(lib).name)
+            logs[Path(lib).name] = {'pinned': lib, 'sha256': sha(data)}
+        if getattr(args, 'game_input', 'library') == 'explicit':
+            libraries = pinned_names
+        else:
+            libraries = (['GAME.LIB'] + pinned_names if args.library_order == 'game-first'
+                         else pinned_names + ['GAME.LIB'])
+        if args.library_order == 'combined' and getattr(args, 'game_input', 'library') != 'explicit':
+            # Hypothesis: the game modules were appended to a copy of the pinned
+            # MLIBCR.LIB (one library, game modules after member 220).
+            (work / 'GAME.LIB').write_bytes((work / 'MLIBCR.LIB').read_bytes())
+            libraries = ['GAME.LIB'] + pinned_names[1:]
     for lib, files in (('RT.LIB', rt), ('GAME.LIB', gm)):
-        rsp = ['+%s &' % f for f in files[:-1]] + ['+%s' % files[-1], 'NUL;'] if files else []
-        (work / (lib[:-4] + '.RSP')).write_bytes(('\r\n'.join([lib, 'Y'] + rsp) + '\r\n').encode('ascii'))
-        rc, out, _ = run_dos(tc / 'LIB.EXE', ['@%s.RSP' % lib[:-4]], work, 300)
-        logs[lib] = {'returncode': rc, 'log': out[-1500:], 'modules': len(files)}
+        if pinned and (lib == 'RT.LIB' or
+                       (lib == 'GAME.LIB' and getattr(args, 'game_input', 'library') == 'explicit')):
+            continue
+        rsp = ['+%s &' % f for f in files[:-1]] + ['+%s' % files[-1]] if files else []
+        head = [lib] if (work / lib).exists() else [lib, 'Y']
+        if lib == 'GAME.LIB':
+            response = render_historical_response('GAME.RSP.in', {
+                '@LIBRARY_HEADER@': '\r\n'.join(head),
+                '@GAME_MODULES@': '\r\n'.join(rsp),
+            })
+        else:
+            response = '\r\n'.join(head + rsp + ['NUL;']) + '\r\n'
+        (work / (lib[:-4] + '.RSP')).write_bytes(response.encode('ascii'))
+        rc, out, argv = run_dos(tc / 'LIB.EXE', ['@%s.RSP' % lib[:-4]], work, 300)
+        logs[lib] = {'returncode': rc, 'log': out[-1500:], 'modules': len(files), 'command': argv}
     lines = []
-    for i in range(0, len(exp), 8):
-        chunk = '+'.join(x[:-4] for x in exp[i:i + 8])
-        lines.append(chunk + ('+' if i + 8 < len(exp) else ''))
+    link_objects = exp + gm if getattr(args, 'game_input', 'library') == 'explicit' else exp
+    for i in range(0, len(link_objects), 8):
+        chunk = '+'.join(x[:-4] for x in link_objects[i:i + 8])
+        lines.append(chunk + ('+' if i + 8 < len(link_objects) else ''))
     opts = ' '.join(args.link_options)
-    resp = '\r\n'.join(lines + ['RESULT.EXE', 'RESULT.MAP', 'RT.LIB+GAME.LIB ' + opts + ';']) + '\r\n'
+    resp = render_historical_response('LINK.RSP.in', {
+        '@OBJECT_MODULES@': '\r\n'.join(lines),
+        '@OUTPUT_EXE@': 'RESULT.EXE',
+        '@MAP_FILE@': 'RESULT.MAP',
+        '@LIBRARIES_AND_OPTIONS@': '+'.join(libraries) + ' ' + opts,
+    })
     (work / 'LINK.RSP').write_bytes(resp.encode('ascii'))
     rc, out, argv = run_dos(tc / 'LINK.EXE', ['@LINK.RSP'], work, 600)
     (work / 'link.log').write_text(out)
-    result = {'mode': 'library', 'libraries': logs, 'link_returncode': rc, 'link_log': out[-3000:],
-              'explicit_objects': len(exp), 'runtime_library_modules': len(rt), 'game_library_modules': len(gm)}
+    result = {'mode': 'library', 'runtime': 'pinned libraries' if pinned else 'units',
+              'game_library_order': getattr(args, 'game_order', 'oracle'),
+              'library_line': '+'.join(libraries), 'libraries': logs, 'link_returncode': rc,
+              'link_log': out[-3000:], 'link_command': argv,
+              'object_manifest': 'objects.json',
+              'link_root': {'file': 'ROOT.OBJ', 'publics': len(root_names),
+                            'sha256': sha(root_blob)} if pinned else None,
+              'raw_debt_objects': [r['file'] for r in object_manifest if r['object_kind'] == 'raw-debt'],
+              'game_input': getattr(args, 'game_input', 'library'),
+              'explicit_objects': len(link_objects),
+              'runtime_library_modules': len(members) if pinned else len(rt),
+              'game_library_modules': 0 if getattr(args, 'game_input', 'library') == 'explicit' else len(gm)}
     if not (work / 'RESULT.EXE').exists():
         return result
     exe = (work / 'RESULT.EXE').read_bytes()
@@ -1311,10 +2288,24 @@ def library_link(c, ordered, args):
     img = mz.load_image(exe)
     units = [u for u, _ in explicit + runtime + game]
     placed = _unit_placements(units, mapping)
+    if pinned:
+        # Runtime units: linked start from one code public of their pinned member.
+        pubs = {}
+        for m in PUBLIC_LINE.finditer(mapping):
+            pubs[m[3]] = int(m[1], 16) * 16 + int(m[2], 16)
+        for uid, (lib, module, blob) in members.items():
+            obj = OmfReader().read(blob)
+            local = {q['name'] for q in obj.local_publics}
+            code = [q for q in obj.publics if q['segment'] == '_TEXT' and q['name'] not in local
+                    and q['name'] in pubs]
+            if code:
+                placed[uid] = pubs[code[0]['name']] - code[0]['offset']
+        result['runtime_members_placed'] = sum(1 for uid in members if uid in placed)
     loaded = [u for u in units if u.id in placed]
     result['units_total'] = len([u for u in units if u.start is not None])
     result['units_placed'] = len(loaded)
-    result['library_units_not_loaded'] = sorted(u.id for u, _ in runtime + game
+    checked_groups = runtime if getattr(args, 'game_input', 'library') == 'explicit' else runtime + game
+    result['library_units_not_loaded'] = sorted(u.id for u, _ in checked_groups
                                                 if u.id not in placed and u.start is not None)[:80]
     result['image_size'] = len(img)
     result['image_equal'] = img == c.image[:IMAGE_INIT_END]
@@ -1356,7 +2347,7 @@ def library_link(c, ordered, args):
                        'first_divergence': d,
                        'context': None if d is None else {'linked': lseq[max(0, d - 3):d + 6],
                                                           'oracle': oseq[max(0, d - 3):d + 6]}}
-        if bank == 1:
+        if bank in (1, 2):
             banks[bank]['linked_sequence'] = lseq
             banks[bank]['oracle_sequence'] = oseq
     result['relocation_unit_runs_by_bank'] = banks
@@ -1366,20 +2357,61 @@ def library_link(c, ordered, args):
 
 
 # --------------------------------------------------------------------------- driver
+def stage_inputs(c, stage):
+    """integ32: compose candidate (name, source bytes, recipe) triples into the
+    manifest exactly as promotion does (promote.apply_ownership), sources written
+    under build/reallink/stage/.  Used by the BSS real-link gate and --stage."""
+    if not stage:
+        return []
+    import copy
+    import promote as P
+    from oracle import verify
+    oracle = verify(write=False)
+    image = MZ.parse(oracle[1]).load_image(oracle[1])
+    work = OUT / 'stage'
+    work.mkdir(parents=True, exist_ok=True)
+    names = []
+    for name, source, recipe in stage:
+        recipe = copy.deepcopy(recipe)
+        path = work / (name + Path(recipe['source']).suffix)
+        path.write_bytes(source)
+        recipe['source'] = path.relative_to(ROOT).as_posix()
+        c.manifest = P.apply_ownership(c.manifest, name, recipe, oracle, image)
+        c.recipes['recipes/%s.json' % name] = recipe
+        names.append(name)
+    return names
+
+
 def run(runtime='members', partial='raw', link_options=None, no_alias_shims=False,
-        flat_dgroup=False, order='oracle', tag='default', log=log):
-    args = argparse.Namespace(runtime=runtime, partial=partial,
-                              link_options=link_options or ['/DOSSEG', '/NOI', '/NOD', '/MAP', '/CP:1'],
+        flat_dgroup=False, order='oracle', tag='default', log=log, library_order='runtime-first',
+        game_order='oracle', stage=None, stage_runtime=None, stage_communal=None,
+        game_input='library'):
+    args = argparse.Namespace(runtime=runtime, partial=partial, library_order=library_order,
+                              game_order=game_order,
+                              game_input=game_input,
+                              link_options=link_options or list(LINK_OPTIONS),
                               no_alias_shims=no_alias_shims, flat_dgroup=flat_dgroup, order=order, tag=tag)
     OUT.mkdir(parents=True, exist_ok=True)
     c = load_inputs()
+    staged = stage_inputs(c, stage)
+    if stage_communal is not None:
+        # integ39: the whole communal unit, composed as batch publication does.
+        import communal_unit
+        c.manifest = communal_unit.attach(c.manifest, stage_communal)
+        staged.append(stage_communal['id'])
+    if stage_runtime:
+        # integ36: pinned runtime candidates composed as promote_runtime composes them.
+        import promote_runtime
+        for candidate in stage_runtime:
+            c.manifest = promote_runtime.replace_raw_library(c.manifest, candidate)
+            staged.append(candidate.get('id') or candidate.get('owner') or 'fill_%d' % candidate['start'])
     units = model_dgroup_tail(split_raw_data(c, build_units(c, args)), not args.flat_dgroup)
     units, fills = drop_alignment_fill(c, units)
     odd = odd_data_hypothesis(c, units, apply=False)
     log('%d units' % len(units))
     rows = build_accepted(c, units, args)
     log('%d accepted objects built' % len(rows))
-    units = add_special_units(units)
+    units = add_special_units(units, c, stack=not (order == 'library' and runtime == 'libraries'))
     defined, resolved, conflicts, unresolved, problems = resolve_symbols(c, units)
     anchors, anchor_pubs, frames = choose_anchors(c, units)
     issues = make_raw_objects(c, units, frames, anchors)
@@ -1388,23 +2420,29 @@ def run(runtime='members', partial='raw', link_options=None, no_alias_shims=Fals
     hidden, aliases = [], []
     placed_syms = 0
     kinds_raw = ('raw-code', 'raw-data', 'bss')
-    crt0 = next(u for u in units if u.id.startswith('raw_rt_dos_crt0.asm'))
+    crt0 = next((u for u in units if u.id.startswith('raw_rt_dos_crt0.asm')), None)
+    # integ36: with the pinned CRT0 OBJ linked, its MODEND carries the entry and
+    # unresolved absolutes go to the first raw _TEXT unit.
+    # integ37: with every runtime _TEXT member linked from its OBJ (chksum.asm
+    # included) no raw _TEXT unit remains; the zero-length prelude hosts them.
+    absolute_host = crt0 or next((u for u in units if u.kind == 'raw-code' and u.segment == '_TEXT'),
+                                 next(u for u in units if u.kind == 'prelude'))
     for name, (kind, addr, frame, src) in sorted(resolved.items()):
         if kind == 'absolute':
-            crt0.raw.absolutes.append((name, addr))
+            absolute_host.raw.absolutes.append((name, addr))
             continue
         u, seg, s = containing_unit(units, addr, kinds_raw)
         if u is None:
-            au, aseg, as_ = containing_unit(units, addr, ('c', 'asm', 'rt', 'far-data', 'data-module'))
+            au, aseg, as_ = containing_unit(units, addr, ('c', 'asm', 'rt', 'rt-data', 'far-data', 'data-module'))
             if au is None:
                 hidden.append({'symbol': name, 'address': addr, 'source': src, 'inside': None})
                 continue
             # alias shim: zero-length contribution emitted right before the accepted
             # object, same segment/alignment, PUBDEF at the original address.
             e0 = au.objs[0]['obj']
-            if aseg == '_DATA':
-                sd = next(x for x in e0.segment_defs if x['name'] == '_DATA')
-                segname, klass, grp = '_DATA', 'DATA', 'DGROUP'
+            if aseg in ('_DATA', '_BSS'):
+                sd = next(x for x in e0.segment_defs if x['name'] == aseg)
+                segname, klass, grp = aseg, {'_DATA': 'DATA', '_BSS': 'BSS'}[aseg], 'DGROUP'
             elif au.kind == 'far-data':
                 sd = next(x for x in e0.segment_defs if x['class'] == 'FAR_DATA')
                 segname, klass, grp = sd['name'], 'FAR_DATA', None
@@ -1424,11 +2462,13 @@ def run(runtime='members', partial='raw', link_options=None, no_alias_shims=Fals
                             % (name, frame, frames.get(u.segment), u.segment))
         u.raw.publics.append((name, addr - s))
         placed_syms += 1
-    crt0.raw.start = 0
+    if crt0 is not None:
+        crt0.raw.start = 0
     ordered, dropped, noncontig = processing_order(c, units)
+    ordered = place_bss_placeholders(ordered)
     log('order: %d units, %d dropped order edges' % (len(ordered), len(dropped)))
     adaptations = [r for r in rows if r['info'].get('adaptations')]
-    report = {'tag': args.tag, 'args': vars(args), 'bytes': summarize_bytes(units),
+    report = {'tag': args.tag, 'args': vars(args), 'staged': staged, 'bytes': summarize_bytes(units),
               'order_basis': ('oracle-derived: address order, segment first appearance, DGROUP order and '
                               'the oracle per-bank relocation order (not independent evidence)'
                               if order == 'oracle' else
@@ -1483,16 +2523,27 @@ def summary(report):
             'packed_equal': pk.get('equal'), 'packed_mismatch_bytes': pk.get('mismatch_bytes'),
             'bytes': report['bytes'], 'alias_shims': len(report['symbols']['alias_shims']),
             'asm_link_adaptations': len(report['asm_link_adaptations']),
-            'odd_data_starts': report['odd_data_starts']}
+            'odd_data_starts': report['odd_data_starts'],
+            'link_options': link.get('options'), 'bss': cm.get('bss'), 'runtime': cm.get('runtime')}
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--runtime', choices=['raw', 'members'], default='members',
-                    help='raw: runtime _TEXT as raw debt; members: accepted pinned members as extracted OBJs')
+    ap.add_argument('--runtime', choices=['raw', 'members', 'libraries'], default='members',
+                    help='raw: runtime _TEXT as raw debt; members: accepted pinned members as extracted OBJs; '
+                         'libraries (--order library only): LINK searches the pinned MLIBCR.LIB/LIBH.LIB')
+    ap.add_argument('--game-order', choices=['oracle', 'address', 'image', 'image-back'], default='oracle',
+                    help='--order library: GAME.LIB member order (oracle-derived processing order, '
+                         'independent load-image address order, or the image-derived DGROUP-anchor '
+                         'merge of the code-segment chains, integ31)')
+    ap.add_argument('--library-order', choices=['runtime-first', 'game-first', 'combined'],
+                    default='runtime-first',
+                    help='--runtime libraries: library search order on the LINK line')
+    ap.add_argument('--game-input', choices=['library', 'explicit'], default='library',
+                    help='library: package game units in GAME.LIB; explicit: pass every game unit to LINK')
     ap.add_argument('--partial', choices=['raw', 'split'], default='raw',
                     help='partially accepted C objects: whole raw debt (default) or accepted pieces + raw pieces')
-    ap.add_argument('--link-options', nargs='*', default=['/DOSSEG', '/NOI', '/NOD', '/MAP', '/CP:1'],
+    ap.add_argument('--link-options', nargs='*', default=list(LINK_OPTIONS),
                     help='LINK switches (bash users: MSYS_NO_PATHCONV=1)')
     ap.add_argument('--no-alias-shims', action='store_true',
                     help='do not emit alias PUBDEF shims (leaves name-binding debt unresolved)')
@@ -1501,8 +2552,13 @@ def main():
     ap.add_argument('--order', choices=['oracle', 'library'], default='oracle',
                     help='oracle: oracle-derived processing order (default); library: library-search experiment')
     ap.add_argument('--tag', default='default', help='report name under build/reallink/')
+    ap.add_argument('--stage', nargs=3, action='append', metavar=('NAME', 'SOURCE', 'RECIPE'),
+                    help='compose a candidate into the manifest as promotion would (diagnostic)')
     a = ap.parse_args()
-    report = run(a.runtime, a.partial, a.link_options, a.no_alias_shims, a.flat_dgroup, a.order, a.tag)
+    stage = [(n, Path(s).read_bytes(), read_json(Path(r))) for n, s, r in (a.stage or [])]
+    report = run(a.runtime, a.partial, a.link_options, a.no_alias_shims, a.flat_dgroup, a.order, a.tag,
+                 library_order=a.library_order, game_order=a.game_order, stage=stage,
+                 game_input=a.game_input)
     if a.order == 'library':
         lib = report['library']
         log(json.dumps({k: v for k, v in lib.items() if k != 'relocation_unit_runs_by_bank'}, indent=1)[:6000])

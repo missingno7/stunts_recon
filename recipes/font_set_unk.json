@@ -26,7 +26,7 @@
       ],
       "publics": [
         {
-          "name": "_font_set_unk",
+          "name": "_font_setup_unknown",
           "offset": 0,
           "segment": "S012_TEXT"
         }
@@ -204,7 +204,7 @@
     ],
     "publics": [
       {
-        "name": "_font_set_unk",
+        "name": "_font_setup_unknown",
         "offset": 0,
         "segment": "S012_TEXT"
       }
@@ -278,7 +278,7 @@
   },
   "object_segment": "S012_TEXT",
   "profile": "masm510-game",
-  "public": "_font_set_unk",
+  "public": "_font_setup_unknown",
   "source": "asm/font_set_unk.ASM",
   "stable_id": "load_24b0c",
   "start": 150284,

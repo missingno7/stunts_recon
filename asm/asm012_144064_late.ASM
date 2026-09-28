@@ -11,6 +11,23 @@ s2d_unk4 db ?
 s2d_unk5 db ?
 s2d_unk6 db ?
 SHAPE2D ends
+; Font header at DS/ES = _fontdefseg: 0Bh words, then the 256-entry glyph offset table.
+FONTHDR struc
+fh_fgcolor dw ?
+fh_bgcolor dw ?
+fh_left dw ?
+fh_unk06 dw ?
+fh_x dw ?
+fh_y dw ?
+fh_rowbytes db ?
+fh_unk0D db ?
+fh_height dw ?
+fh_advance dw ?
+fh_lineheight dw ?
+fh_proportional db ?
+fh_unk15 db ?
+fh_glyphs dw 256 dup (?)
+FONTHDR ends
 SPRITE_BITMAPPTR = 00h
 SPRITE_LINEOFS = 0Ah
 SPRITE_LEFT = 0Ch
@@ -25,21 +42,17 @@ SPRITE_WIDTHSUM = 1Ch
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'
+_aCopyrightCUnlimitedSoftwareInc_198 db 'Copyright (C) Unlimited Software Inc. 1989,1990.  All rights reserved.', 6 dup (0)
 _DATA ends
 CONST segment word public 'CONST'
 CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
-DGROUP group _DATA, CONST, _BSS
+DGROUP group _DATA, CONST, _BSS, dseg
 dseg segment byte public 'STUNTSD'
-extrn _word_3B770:word
-extrn _word_3B772:word
-extrn _word_3B774:word
-extrn _aMsRunTimeLibraryCop:byte
 extrn _fontdefseg:word
-extrn _aCopyrightCUnlimitedSoftwareInc_198:byte
 dseg ends
-assume cs:S012_TEXT,ds:dseg
+assume cs:S012_TEXT,ds:DGROUP
 extrn _sprite1:byte
 extrn _incnums:byte
 public _sprite_putimage_or_alt
@@ -47,8 +60,8 @@ public _sprite_putimage_or
 public _putpixel_iconFillings
 public _shape2d_op_unk4
 public _sprite_putimage_transparent
-public _sub_34526
-public _sub_345BC
+public _release_shape_resources
+public _draw_text_at
 public _video_set_palette
 S012_TEXT segment word public 'CODE'
 
@@ -718,7 +731,7 @@ loc_344DC:
     ; align 2
     db 144
 _sprite_putimage_transparent endp
-_sub_34526 proc far
+_release_shape_resources proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
     var_4 = word ptr -4
@@ -789,18 +802,18 @@ loc_34586:
     push    di
     mov     ax, [bp+6]
     mov     byte ptr _aCopyrightCUnlimitedSoftwareInc_198+46h, al
-    mov     ax, 5416h
+    mov     ax, offset DGROUP:_aCopyrightCUnlimitedSoftwareInc_198+46h
     mov     [bp+6], ax
     mov     ds, _fontdefseg
     mov     ax, [bp+8]
-    mov     word ptr _aMsRunTimeLibraryCop, ax; "MS Run-Time Library - Copyright (c) 198"...
+    mov     word ptr ds:[fh_x], ax
     mov     ax, [bp+0Ah]
-    mov     word ptr _aMsRunTimeLibraryCop+2, ax
+    mov     word ptr ds:[fh_y], ax
     jmp     short loc_345E5
     ; align 2
     db 144
-_sub_34526 endp
-_sub_345BC proc far
+_release_shape_resources endp
+_draw_text_at proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -817,9 +830,9 @@ _sub_345BC proc far
     push    di
     mov     ds, _fontdefseg  ; ds = seg039
     mov     ax, [bp+arg_2]
-    mov     ds:8, ax
+    mov     ds:[fh_x], ax
     mov     ax, [bp+arg_4]
-    mov     word ptr _aMsRunTimeLibraryCop+2, ax
+    mov     word ptr ds:[fh_y], ax
     jmp     short loc_345E5
     ; align 2
     db 144
@@ -842,7 +855,7 @@ loc_345EB:
     inc     [bp+arg_0]
     xor     bh, bh
     shl     bx, 1
-    add     bx, 16h
+    add     bx, fh_glyphs
     mov     si, [bx]
     cmp     si, 0
     jnz     short loc_34626
@@ -851,10 +864,10 @@ loc_345EB:
     cmp     al, 0Ah
     jnz     short loc_345EB
 loc_34610:
-    mov     ax, _word_3B774
-    mov     word ptr _aMsRunTimeLibraryCop, ax; "MS Run-Time Library - Copyright (c) 198"...
-    mov     ax, word ptr _aMsRunTimeLibraryCop+0Ah
-    add     word ptr _aMsRunTimeLibraryCop+2, ax
+    mov     ax, ds:[fh_left]
+    mov     word ptr ds:[fh_x], ax
+    mov     ax, word ptr ds:[fh_lineheight]
+    add     word ptr ds:[fh_y], ax
     jmp     short loc_345EB
 loc_3461F:
     pop     di
@@ -864,31 +877,31 @@ loc_3461F:
     pop     bp
     retf
 loc_34626:
-    mov     ax, word ptr _aMsRunTimeLibraryCop; "MS Run-Time Library - Copyright (c) 198"...
+    mov     ax, word ptr ds:[fh_x]
     mov     [bp+var_2], ax
-    cmp     byte ptr _aMsRunTimeLibraryCop+0Ch, 0
+    cmp     byte ptr ds:[fh_proportional], 0
     jz      short loc_34647
     mov     al, [si]
     xor     ah, ah
     inc     si
-    mov     word ptr _aMsRunTimeLibraryCop+8, ax
+    mov     word ptr ds:[fh_advance], ax
     add     ax, 7
     shr     ax, 1
     shr     ax, 1
     shr     ax, 1
-    mov     byte ptr _aMsRunTimeLibraryCop+4, al
+    mov     byte ptr ds:[fh_rowbytes], al
 loc_34647:
-    mov     al, byte ptr _word_3B770
-    mov     ah, byte ptr _word_3B772
-    mov     cx, word ptr _aMsRunTimeLibraryCop+6
+    mov     al, byte ptr ds:[fh_fgcolor]
+    mov     ah, byte ptr ds:[fh_bgcolor]
+    mov     cx, word ptr ds:[fh_height]
     mov     [bp+var_4], cx
-    mov     bx, word ptr _aMsRunTimeLibraryCop+2
+    mov     bx, word ptr ds:[fh_y]
     shl     bx, 1
     add     bx, cs:_sprite1+SPRITE_LINEOFS
 loc_34660:
     mov     di, cs:[bx]
     add     di, [bp+var_2]
-    mov     dh, byte ptr _aMsRunTimeLibraryCop+4
+    mov     dh, byte ptr ds:[fh_rowbytes]
 loc_3466A:
     mov     cx, 8
     mov     dl, [si]
@@ -905,8 +918,8 @@ loc_3467B:
     inc     bx
     dec     [bp+var_4]
     jg      short loc_34660
-    mov     ax, word ptr _aMsRunTimeLibraryCop+8
-    add     word ptr _aMsRunTimeLibraryCop, ax; "MS Run-Time Library - Copyright (c) 198"...
+    mov     ax, word ptr ds:[fh_advance]
+    add     word ptr ds:[fh_x], ax
     jmp     loc_345EB
 loc_3468C:
     mov     es:[di], ah
@@ -923,7 +936,7 @@ loc_3468C:
     mov     ax, [bp+0Ch]
     jmp     short loc_346A8
     db 144
-_sub_345BC endp
+_draw_text_at endp
 _video_set_palette proc far
      s = byte ptr 0
      r = byte ptr 2

@@ -7,19 +7,121 @@
   "expected_fixups": [
     {
       "displacement": 0,
+      "encoded_addend": "1900",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 36,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "1400",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 34,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0f00",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 32,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0a00",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 30,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0500",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 28,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_palmap",
-      "frame_index": 0,
-      "frame_kind": "target",
-      "frame_method": 5,
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 26,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "2600",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
       "loc": "offset16",
       "offset": 753,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_palmap",
-      "target_index": 3,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -34,26 +136,26 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_palmap_apply",
-      "target_index": 20,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "0000",
-      "frame": "_palmap",
-      "frame_index": 0,
-      "frame_kind": "target",
-      "frame_method": 5,
+      "encoded_addend": "2600",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
       "loc": "offset16",
       "offset": 712,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_palmap",
-      "target_index": 3,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -68,7 +170,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_op_unk",
-      "target_index": 19,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -85,7 +187,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_release",
-      "target_index": 13,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -102,7 +204,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_expand",
-      "target_index": 18,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -119,7 +221,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_binary",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -136,7 +238,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_binary",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -153,14 +255,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "1d00",
+      "encoded_addend": "5300",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -187,7 +289,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_alloc_pages",
-      "target_index": 10,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -204,7 +306,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_file_load_shape2d_palmap_init",
-      "target_index": 17,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -221,14 +323,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_nofatal",
-      "target_index": 16,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "2200",
+      "encoded_addend": "5800",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -255,7 +357,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_expandedsize",
-      "target_index": 15,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -272,7 +374,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_release",
-      "target_index": 13,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -289,7 +391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_unflip_shape2d_pes",
-      "target_index": 12,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -306,14 +408,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_alloc_pages",
-      "target_index": 10,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "1600",
+      "encoded_addend": "4c00",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -340,7 +442,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_decomp",
-      "target_index": 8,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -357,14 +459,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "1100",
+      "encoded_addend": "4700",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -391,7 +493,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_decomp",
-      "target_index": 8,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -408,14 +510,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "0c00",
+      "encoded_addend": "4200",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -442,7 +544,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_release",
-      "target_index": 13,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -459,7 +561,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_unflip_shape2d",
-      "target_index": 11,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -476,14 +578,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_alloc_pages",
-      "target_index": 10,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "0500",
+      "encoded_addend": "3b00",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -510,7 +612,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_get_unflip_size",
-      "target_index": 9,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -527,7 +629,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_decomp",
-      "target_index": 8,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -544,14 +646,14 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "0000",
+      "encoded_addend": "3600",
       "frame": "DGROUP",
       "frame_index": 1,
       "frame_kind": "group",
@@ -578,7 +680,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 4,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -595,7 +697,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_get_chunk_by_name",
-      "target_index": 6,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -612,7 +714,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_get_chunk_by_name",
-      "target_index": 6,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -629,26 +731,26 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 4,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
     },
     {
       "displacement": 0,
-      "encoded_addend": "0000",
-      "frame": "_word_30BD6",
-      "frame_index": 0,
-      "frame_kind": "target",
-      "frame_method": 5,
+      "encoded_addend": "1a00",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
       "loc": "offset16",
       "offset": 132,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_word_30BD6",
+      "target": "_DATA",
       "target_index": 2,
-      "target_kind": "external",
-      "target_method": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -663,7 +765,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_find",
-      "target_index": 7,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -680,7 +782,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 4,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -697,7 +799,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_file_load_shape2d",
-      "target_index": 21,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -714,7 +816,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_file_load_shape2d",
-      "target_index": 21,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -868,7 +970,7 @@
     }
   ],
   "external_binding": {
-    "mode": "external-far-call-dgroup-offset16-v1"
+    "mode": "external-far-call-v1"
   },
   "id": "seg034_shape2d_group",
   "include_closure": [],
@@ -921,8 +1023,6 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_word_30BD6",
-      "_palmap",
       "_strcpy",
       "_stricmp",
       "_mmgr_get_chunk_by_name",
@@ -961,6 +1061,21 @@
       }
     ],
     "publics": [
+      {
+        "name": "_shape_extensions",
+        "offset": 0,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape2d_extension_suffixes",
+        "offset": 26,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palmap",
+        "offset": 38,
+        "segment": "_DATA"
+      },
       {
         "name": "_file_load_shape2d_palmap_init",
         "offset": 730,
@@ -1009,7 +1124,7 @@
         "combine_code": 2,
         "frame": null,
         "index": 2,
-        "length": 39,
+        "length": 93,
         "name": "_DATA",
         "offset": null,
         "overlay_index": 1,
@@ -1054,19 +1169,22 @@
   "profile": "msc510-medium",
   "secondary_dgroup_segments": {
     "_DATA": {
-      "dgroup_offset": 21634,
+      "dgroup_offset": 21580,
       "end": 199705,
       "expected_relocations": [],
-      "start": 199666,
+      "start": 199612,
       "target": {
-        "sha256": "2d229ee340998648e783ff1d06a99c822fe4e64f99c7657a7f28ea800e85d0cc",
-        "size": 39
+        "sha256": "1bcca0dcb5b6c278e23970c7ef5436b9365de1487baad00d7d595e2448ff1827",
+        "size": 93
       }
     }
   },
   "source": "src/seg034_shape2d_group.c",
   "stable_id": "multi_seg034_shape2d_group",
   "start": 174550,
+  "subsumed_data_owners": [
+    "seg034_shape2d_group:_DATA"
+  ],
   "subsumed_owners": [
     "load_2acb0"
   ],

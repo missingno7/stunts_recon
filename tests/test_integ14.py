@@ -31,7 +31,8 @@ class Integ14Tests(unittest.TestCase):
         # integ26 reviewed audio_map_song_tracks with its structural post-table
         # jump; the other conditional rows stay outside the overlay.
         for row in proposal['conditional_row_proposals']:
-            if row['name']=='audio_map_song_tracks':
+            # integ31 reviewed sub_38702 (extent 934 B, 18-word dispatch).
+            if row['name'] in ('audio_map_song_tracks','sub_38702'):
                 continue
             self.assertNotIn(row['name'],rows)
         self.assertIn('audio_map_song_tracks',rows)

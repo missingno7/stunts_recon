@@ -263,76 +263,76 @@ struct TRACKOBJECT {
 };
 
 
-extern struct GAMEINFO gmcfg;
-extern struct GAMEINFO gameconfigcopy;
+extern struct GAMEINFO globalgamesettings;
+extern struct GAMEINFO gmconfigbackup;
 
-extern struct GAMESTATE state;
-extern struct SIMD simdpl;
-extern struct SIMD simdopp;
+extern struct GAMESTATE core;
+extern struct SIMD simdp7;
+extern struct SIMD ophys_7;
 
-extern short video_flag1_is1;
-extern short video_flag2_is1;
-extern short video_flag3_isFFFF;
-extern short video_flag4_is1;
-extern char vidflag5is0;
-extern short video_flag6_is1;
+extern short pixel_scales;
+extern short g_vid_flg2_set;
+extern short vidflg3is_minus1;
+extern short vidflg4_is1;
+extern char g_videoflg5;
+extern short g_vid_flag6;
 
-extern unsigned char byte_44A8A;
-extern unsigned char byte_4552F;
+extern unsigned char timeraud;
+extern unsigned char slomodiv8;
 extern unsigned short elaptm1;
-extern unsigned short elaptm2;
-extern unsigned char byte_449DA;
-extern unsigned char byte_4393C;
-extern unsigned char replay_mode; // 0 = playing, 1 = paused, 2 = replay
-extern short word_44DCA;
+extern unsigned short tmr2;
+extern unsigned char sigframe;
+extern unsigned char g_rpl_init;
+extern unsigned char gm_playmode; // 0 = playing, 1 = paused, 2 = replay
+extern short g_sgateopn;
 
 extern short word_45A24; // current frame?
-extern short word_45A00; // fps * 30
-extern short word_4499C; // 100 / fps
-extern short trkang;
-extern void* steerWhlRespTable_ptr;
+extern short g_cvxintvl; // fps * 30
+extern short frmcs_time; // 100 / fps
+extern short st_hdg;
+extern void* table_lookup;
 extern void* steerWhlRespTable_10fps;
 extern void* steerWhlRespTable_20fps;
-extern char stcol2, strow2;
-extern char hillFlag;
+extern char idxtrk, tagtrk;
+extern char g_hillf;
 extern short hillconsts[];
 
-extern struct RECTANGLE rect_windshield;
-extern short word_449EA;
-extern int runrandom;
+extern struct RECTANGLE boundglassrect;
+extern short bitmapdash;
+extern int runrndx;
 extern char replaybar_toggle;
-extern char is_in_replay;
+extern char inrepflg;
 extern char cammd;
-extern char byte_449E6;
-extern char game_replay_mode_copy;
-extern char byte_44346;
-extern char byte_46467;
-extern char dashb_toggle;
-extern char byte_4432A;
-extern char show_penalty_counter;
-extern int word_45D94;
-extern int word_45D3E;
+extern char g_rplmodui;
+extern char gm_saved_rpl_mode;
+extern char numid;
+extern char g_rplbfask;
+extern char on_off_dash;
+extern char cam_idg;
+extern char pen_flag_count;
+extern int replayrst;
+extern int popupact;
 extern char byte_3B8F2;
 extern char byte_3FE00;
-extern void far* gameresptr;
-extern void far* dasmshapeptr;
+extern void far* gamerptrs;
+extern void far* dasm_shp_7;
 extern int word_3F88E;
-extern char dashb_toggle_copy;
-extern char replaybar_toggle_copy;
-extern char is_in_replay_copy;
-extern char followflg;
-extern char followOpponentFlag_copy;
-extern int roofbmpheight_copy;
-extern char byte_449E2;
-extern char replaybar_enabled;
-extern int dashbmp_y_copy;
-extern int height_above_replaybar;
-extern char byte_449D8[];
+extern char dashbtogglesaved;
+extern char g_replaybarcpytgl;
+extern char is_in_rplcopy;
+extern char follow_op;
+extern char opp_follow_flag_backup;
+extern int roofbmphgt_saved;
+extern char mode_flag;
+extern char g_rplybarenable;
+extern int dashbmpy_copy;
+extern int rplbarabovehgt;
+extern char g_viewinx[];
 extern int dastseg;
-extern int dastbmp_y;
-extern int dastbmp_y2;
-extern int dashbmp_y;
-extern int roofhgt;
+extern int dasty;
+extern int g_dastbmpbuf;
+extern int dashbmy9;
+extern int rfy5;
 extern struct RECTANGLE* rectp;
 
 extern void player_op(char);
@@ -346,57 +346,57 @@ extern void mouse_minmax_position(int);
 extern int kb_get_char(void);
 extern void handle_ingame_kb_shortcuts(int);
 
-extern int mouse_butstate;
-extern int mouse_xpos;
-extern int mouse_ypos;
+extern int flagsdown;
+extern int msecoordx;
+extern int pos_y_ms;
 extern int performGraphColor;
-extern char residbyte1;
-extern int waitflag;
+extern char resbuftext;
+extern int waitm_ms;
 
-extern void far* fontnptr;
-extern void far* fontdefptr;
-extern void far* mainresourcepointer;
-extern struct GAMESTATE far* cvxptr;
-extern int trackrows[];
-extern int terrrows[];
-extern int trkp[];
-extern int trackctrpos[];
-extern int terrainposition[];
-extern int terraincenterposition[];
-extern int trkp2[];
+extern void far* fntndat;
+extern void far* def_fntadr;
+extern void far* main_data_file_addr;
+extern struct GAMESTATE far* cvxs_a;
+extern int lnoffsets[];
+extern int gterrtrk[];
+extern int r_zp[];
+extern int row_ctr_zs[];
+extern int postable[];
+extern int z_ctr_pos[];
+extern int xcols[];
 extern int trackctrpos2[];
-extern short far* trackdata01_track_file_cpy; //trackdata1;
-extern short far* trackdata02_penalty_related; //trackdata2;
-extern char far* trackdata3;
-extern short far* trackdata04_aerotable_pl; //trackdata4;
-extern short far* trackdata05_aerotable_op; //trackdata5;
-extern char far* trackdata6;
-extern char far* trackdata7;
-extern int far* td08dir; //trackdata8;
-extern struct VECTOR far* trackdata9;
-extern int far* td10checkrel;// trackdata10;
-extern char far* trackdata11_highscores; //trackdata11;
-extern char far* trackdata12;
-extern char far* trackdata13_replay_header; //trackdata13;
-extern unsigned char far* td14map; //trackdata14;
-extern unsigned char far* td15map; //trackdata15;
-extern char far* trackdata16_replay_buffer; //trackdata16;
-extern char far* trackdata17_trk_elem_ordered; //trackdata17;
-extern char far* trackdata18;
-extern unsigned char far* trkdata19;
-extern char far* trackdata20_trk_file_appnd; //trackdata20;
-extern char far* trackdata21_col_from_path; //trackdata21;
-extern char far* trackdata22_row_from_path; //trackdata22;
-extern unsigned char far* trkdata23; // indexes into trkObjectList
+extern short far* g_td01_track_filecpy; //trackdata1;
+extern short far* trackdata_penalty_related; //trackdata2;
+extern char far* td3;
+extern short far* track04_plyraero; //trackdata4;
+extern short far* trackdata_05_opp_aerotbl; //trackdata5;
+extern char far* td6_ptr_b;
+extern char far* trackdat7;
+extern int far* g_td08d; //trackdata8;
+extern struct VECTOR far* trkptrpath;
+extern int far* td10checkptr;// trackdata10;
+extern char far* hscore_trk11_ptr; //trackdata11;
+extern char far* savedptr_ms;
+extern char far* td13_replay_hdr; //trackdata13;
+extern unsigned char far* td14tb; //trackdata14;
+extern unsigned char far* td15p_9; //trackdata15;
+extern char far* g_tdreplay16buf; //trackdata16;
+extern char far* road_trk; //trackdata17;
+extern char far* td_18_ref;
+extern unsigned char far* td19hdl;
+extern char far* coursedataappend_address; //trackdata20;
+extern char far* g_column_of_trkdata21_pth; //trackdata21;
+extern char far* tdfrompathrow22; //trackdata22;
+extern unsigned char far* trkd23adr; // indexes into trkObjectList
 extern char kbormouse;
-extern char passed_security;
+extern char pass_check_flag;
 extern char g_is_busy;
-extern char g_path_buffer[];
-extern char byte_3B80C[];
-extern char idle_expired;
+extern char buf_g_path[];
+extern char track_file[];
+extern char menutimeout;
 extern unsigned short dialogarg2;
-extern char byte_3B85E[];
-extern char byte_43966;
+extern char replay_file[];
+extern char endhsdemo;
 extern char aMain[];
 extern char aMisc_1[];
 extern char aFontdef_fnt[];
@@ -410,16 +410,16 @@ extern char aSkidms_0[];
 extern char aSkidslct[];
 extern char aDos[];
 
-extern unsigned short framespersec;
-extern unsigned short framespersec2;
-extern unsigned short slow_video_management;
-extern unsigned short slowmgmtcopy;
+extern unsigned short rate_frame;
+extern unsigned short frm_rate2;
+extern unsigned short slow_video_mode_state;
+extern unsigned short statemgmtcpy;
 extern unsigned char detail_lvl;
 
 extern unsigned short pspofs;
 extern unsigned short pspseg;
-extern unsigned word_3FF82;
-extern unsigned word_3FF84;
+extern unsigned resmem_end_seg;
+extern unsigned resmem_base_seg;
 
 extern struct MEMCHUNK* resptr1;
 extern struct MEMCHUNK* resptr2;
@@ -431,7 +431,7 @@ extern unsigned long timer_callback_counter;
 extern unsigned long last_timer_callback_counter;
 extern unsigned long timer_copy_unk;
 
-extern unsigned char g_kevinrandom_seed[];
+extern unsigned char randomseeds[];
 extern const char aReservememoryO[];
 extern const char aReservememoryOutOfMemory[];
 extern const char aMemoryManagerB[];
@@ -445,25 +445,25 @@ extern const char aLocateshape4_4sShapeNotF[];
 extern const char aLocatesound4_4sSoundNotF[];
 extern char audiodriverstring[];
 
-extern unsigned short gState_frame;
+extern unsigned short idx_time_gm;
 extern short is_audioloaded;
-extern void far* songfileptr;
-extern void far* voicefileptr;
-extern char textresprefix; // = 'e'
+extern void far* musicfile;
+extern void far* openvfile;
+extern char textrespfxchr; // = 'e'
 extern char* shapeexts[];
 extern unsigned char palmap[];
 
 extern struct MATERIALCLRLIST *material_clrlist_ptr;
-extern int* material_clrlist_ptr_cpy;
+extern int* mat_copy_clr_lst_ptr;
 extern int* material_clrlist2_ptr;
-extern int* material_clrlist2_ptr_cpy;
+extern int* g_mat_clrlist_copy_2_ptr;
 extern int* material_patlist_ptr;
-extern int* material_patlist_ptr_cpy;
+extern int* material_patlistptr_copy;
 extern int* material_patlist2_ptr;
-extern int* material_patlist2_ptr_cpy;
-extern unsigned short someZeroVideoConst;
+extern int* matpatlistcopypointer2;
+extern unsigned short video_cnstval;
 
-extern short sub_18D60(short car_trackdata3_index, struct VECTOR* car_vec_unk3, short field_CE, short* unk);
+extern short track_edge_points(short car_trackdata3_index, struct VECTOR* car_vec_unk3, short field_CE, short* unk);
 extern void fontsetfontdef(void);
 extern void initialize_polyinfo(void);
 extern unsigned short run_intro_looped(void);
@@ -484,8 +484,8 @@ extern void ensure_file_exists(int unk);
 extern void far* load_song_file(const char* filename);
 extern void far* load_voice_file(const char* filename);
 extern void far* load_sfx_file(const char* filename);
-extern void far* file_load_shape2d_nofatal_thunk(const char* filename);
-extern void far* file_load_shape2d_res_nofatal_thunk(const char* filename);
+extern void far* load_shape2d_nofatal_thunk(const char* filename);
+extern void far* load_shape2d_res_nofatal_thunk(const char* filename);
 extern void far* file_load_shape2d_nofatal(char* shapename);
 extern void far* file_load_shape2d_nofatal2(char* shapename);
 extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const char* name);
@@ -529,7 +529,7 @@ extern void timer_setup_interrupt(void);
 extern unsigned long timer_get_delta_alt(void);
 
 extern short set_criterr_handler(short (far* callback)(void));
-extern void libsub_quit_to_dos_alt(short a1);
+extern void exit(short a1);
 extern void fatal_error(const char*, ...);
 extern short do_dea_textres(void);
 
@@ -586,68 +586,68 @@ unsigned select_rot(int angZ, int angX, int angY, struct RECTANGLE* cliprect, in
 void initialize_polyinfo(void);
 void polyinfo_reset(void);
 void polyinfo(void);
-void sub_204AE(struct VECTOR far* arg_verts, int arg_4, short* arg_6, short* arg_8, struct VECTOR* arg_vecarray, struct VECTOR* arg_vecptr);
+void wheel_update(struct VECTOR far* wheel_vertices, int steering_angle, short* base_heights, short* cached_angles_and_heights, struct VECTOR* wheel_offsets, struct VECTOR* car_origin);
 
 
 extern struct RECTANGLE* rcpunk2;
-extern struct RECTANGLE rectarr[];
-extern struct RECTANGLE rectarr2[];
-extern struct RECTANGLE rcunk[];
+extern struct RECTANGLE rclist[];
+extern struct RECTANGLE g_savrc[];
+extern struct RECTANGLE tparr[];
 extern struct RECTANGLE clipunk;
-extern struct VECTOR vunk2;
-extern struct VECTOR vplanerotopresult;
-extern int planindexcpy;
-extern int pstateminusz2, pstateminusx2, pstateminusy2, pstf36mminf40sar2;
-extern struct MATRIX mattmp;
+extern struct VECTOR tvec2;
+extern struct VECTOR pln_rot_output;
+extern int g_planidx2;
+extern int pln_rotate_z, car_roty_pln, car_rotate_xc, frwhl_angadjusted;
+extern struct MATRIX wkmatx;
 extern int custom_dist;
 extern int custom_elev_angle;
 extern int custom_azim_angle;
-extern int word_44D20;
+extern int viewyshift;
 extern char detthrlevel[];
-extern char byte_3C0C6[];
-extern unsigned word_46468;
-extern int word_3BE34[];
+extern char paint_cycle[];
+extern unsigned g_clocks;
+extern int fence_offsets[];
 extern char* ahead_tables[];
-extern struct SHAPE3D* off_3BE44[];
-extern int terrhgt;
-extern int planindex;
-extern char byte_4392C;
-extern struct TRANSFORMEDSHAPE3D curtshape[29];
+extern struct SHAPE3D* fence_shapes[];
+extern int hgthgt;
+extern int pl_i;
+extern char test_pln;
+extern struct TRANSFORMEDSHAPE3D cur_shps[29];
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
-extern struct TRANSFORMEDSHAPE3D* curtshapep;
+extern struct TRANSFORMEDSHAPE3D* g_curr_tsp;
 extern struct TRACKOBJECT trklst[215]; // 215 entries
 extern unsigned char fence_codes[];
 
-extern char unk_3C0EE[];         /* fence (dx,dz) pair lists: 1-,2-,3-,4-entry lists at the pinned labels unk_3C0EE/3C0F0/3C0F8/3C0F4 */
-extern char unk_3C0F0[];
-extern char unk_3C0F8[];
-extern char unk_3C0F4[];
-extern int word_3C0D6[];
-extern int unk_3C0A2[9][2];      /* hill (x,z) offsets: 1,2,2,4 pairs at pairs 0,1,3,5; exactly fills [0x3C0A2,0x3C0C6) */
+extern char fence_off_1[];         /* fence (dx,dz) pair lists: 1-,2-,3-,4-entry lists at the pinned labels unk_3C0EE/3C0F0/3C0F8/3C0F4 */
+extern char fence_off_2[];
+extern char fence_off_4[];
+extern char fence_off_3[];
+extern int shape_rot[];
+extern int hill_offs[9][2];      /* hill (x,z) offsets: 1,2,2,4 pairs at pairs 0,1,3,5; exactly fills [0x3C0A2,0x3C0C6) */
 extern int unk_3C0A6[];
 extern int unk_3C0AE[];
 extern int unk_3C0B6[];
 extern struct TRACKOBJECT scene2[];
 extern struct TRACKOBJECT scene3[];
-extern struct SHAPE3D game3dshapes[130];
-extern struct VECTOR carvec;
-extern struct VECTOR carvecs[6];
-extern short word_443E8[];
-extern struct VECTOR ocarvec;
-extern struct VECTOR ocarvecs[6];
-extern short word_4448A[];
-extern char backlights_ovr;
-extern int tshapezs[];
-extern int tshapeixs[];
-extern char tshapearg2arr[];
-extern short sdg2widths[3];
-extern struct SHAPE2D far *sdg2shps[3];
-extern void far* fontledresptr;
+extern struct SHAPE3D g_shapes3d[130];
+extern struct VECTOR pos_pt;
+extern struct VECTOR pts_set[6];
+extern short ywhlang[];
+extern struct VECTOR ctrmesh;
+extern struct VECTOR veco[6];
+extern short buf_obase[];
+extern char backlightovr8;
+extern int g_tdist[];
+extern int tsix[];
+extern char tshapearrarg2[];
+extern short exwd[3];
+extern struct SHAPE2D far *sdgbmp_v[5];
+extern void far* fntled_res;
 extern int dlg_colour;
-extern char tshapecnt;
+extern char g_ts_num;
 
 void build_obj(struct VECTOR* a, struct VECTOR* b);
-void transformed_shape_add_for_sort(int zadjust, char arg_2);
+void transformed_shape_add_for_sort(int zadjust, char sort_group_id);
 unsigned char subst_hillroad(unsigned char a, unsigned char b);
 int skybox_op(int a, struct RECTANGLE* rectptr, int e, struct MATRIX* matptr, int c, int f, int g);
 struct RECTANGLE* draw_ingame_text(void);
@@ -660,26 +660,26 @@ void shapeexpl(int a, void far* shp, int x, int y);
 void heapsortorder(int n, int* heap, int* data);
 
 
-extern struct RECTANGLE rect_ingame_text, rect_ingame_text2, rect_ingame_text3, rect_ingame_text4;
+extern struct RECTANGLE game_rect_txt_in, rect_ingame_text2, rect_ingame_text3, rect_ingame_text4;
 extern char aDm1[], aDm2[], aPre[], aSe1[], aSe2[], aWww[], aOpp[], aPen[], aRpl_0[], aOpp_0[];
 extern char far * far locate_text_resource(void far *data, char *name);
 extern void copy_string(char *destination, char far *source);
 extern int far font_op2_alt(char *name);
 extern void sprite_putimage_transparent(void far *shape, int x, int y);
 extern unsigned strlen(char *s);
-extern int penalty_time;
-extern int skybox_wat_color;
+extern int g_penaltytm;
+extern int g_skyboxwat_clr;
 extern void preRender_line(int x1, int y1, int x2, int y2, int color);
 extern char far *locate_shape_alt(char far *data, char *name);
-extern int skybox_current, word_454CE;
-extern unsigned short skybox_ptr1, skybox_ptr2, skybox_ptr3, skybox_ptr4;
-extern int skybox_sky_color, skybox_ground_color;
-extern struct SHAPE2D far *skyboxes[4];
+extern int sky_hgt_world, maxscnh;
+extern unsigned short scene_1ht, scene_2ht, scene_3ht, scene_4ht;
+extern int g_skybox_sky_clr, ground_skybox;
+extern struct SHAPE2D far *skypics[4];
 extern void sprite_putimage_and_alt(void far *shape, int x, int y);
 extern struct RECTANGLE trackpreview_cliprect;
-extern short word_2C0FC[];
-extern int word_3C112, word_3C10C, word_3C10E, word_3C108, word_3C110, word_3C10A;
-extern struct VECTOR unk_3C114;
+extern short horizon_angles[];
+extern int camera_aim_z, camera_pos_z, camera_aim_x, camera_pos_x, camera_aim_y, camera_pos_y;
+extern struct VECTOR track_prev_vec;
 extern unsigned draw_line_related(unsigned, unsigned, unsigned, unsigned, int *);
 void far skybox_op_helper(unsigned color, unsigned count, struct POINT2D p1, struct POINT2D p2, struct POINT2D p3, struct POINT2D p4);
 void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon);
@@ -692,10 +692,10 @@ union FARRESOURCE { void far *pointer; struct { unsigned short offset, segment; 
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; int scale; unsigned char flags, material; };
 struct SPRITE { void far *image; unsigned short words[13]; };
 
-extern struct SHAPE3D logoshape, logo2shape, bravshape;
-extern char far *tempdatapointer;
+extern struct SHAPE3D intro_alt, logo_title, brav;
+extern char far *loadedresourceptr;
 extern int word_34A06, word_34A08, word_34A0A;
-extern int intro_colorvalue, word_407CC;
+extern int intro_colorvalue, intro_color_max;
 extern void far *file_load_3dres(char *);
 extern void far locate_many_resources(void far *, char *, char far **);
 extern void far *sprite_make_window(int, int, int);
@@ -710,83 +710,83 @@ extern void far setup_mcgawnd2(void);
 extern void far setup_mcgawnd1(void);
 extern void far sprite_copy_wnd_to_1(void);
 extern int far get_0(void);
-extern void far sub_35C4E(int, int, int, int, int);
+extern void far clear_rect(int, int, int, int, int);
 extern void far sprite_free_window(void far *);
 extern void far mmgr_free(void far *);
 
-extern int word_449FE, word_44DCC;
-extern int meter_needle_color;
-extern unsigned char byte_3B8F6, byte_46167;
-extern struct RECTANGLE rect_unk3;
+extern int word_449FE, frmexcess;
+extern int spdneedlegaugeclr;
+extern unsigned char skybox_loaded, scene_idx;
+extern struct RECTANGLE rc0_cpy;
 extern struct RECTANGLE intro_cliprect;
-extern union FARRESOURCE skybox_res_ofs;
-extern char aDesert[];
+extern union FARRESOURCE skyres_handle;
+extern char scenery_names[];
 extern void far *file_load_shape2d_fatal_thunk(char *);
-extern char far *sdgame2ptr;
+extern char far *sdgame2hdl;
 extern void far *file_load_resource(int, char *);
 extern void far load_sdgame2_shapes(void);
 extern void far free_sdgame2(void);
 extern void far init_rect_arrays(void);
-extern void far sub_19F14(struct RECTANGLE *);
+extern void far draw_clip(struct RECTANGLE *);
 extern void far load_skybox(char);
 extern void far unload_skybox(void);
 extern char far setup_intro(void);
 extern void far intro_op(int, int, int, int, int, int, int, struct VECTOR *, struct POINT2D *, int *, struct RECTANGLE, struct RECTANGLE *, struct RECTANGLE *);
 
 
-void far sub_19F14(struct RECTANGLE *clipRect)
+void far draw_clip(struct RECTANGLE *clipRect)
 {
-	extern char byte_454A4;
+	extern char g_simprect;
 	extern void far msdrawopaquechk(void);
 	extern void far msdrawtransparentchk(void);
 	extern void far rectsorttop(char, struct RECTANGLE *, int *);
-	extern struct RECTANGLE rectarr3[15];
-	extern int word_355D4[15];
-	extern char rectarr3len;
-	extern char rcarrayixs[15];
+	extern struct RECTANGLE rectclip[15];
+	extern int rcmapix[45];
+	extern char rect_num3;
+	extern char rects_updt[15];
 	extern void far rectlist_add(char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
 	extern void far sprcopy2to12(void);
 	extern void far sprputimage(void far *);
 	extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
-	extern struct SPRITE far *wndsprite;
-	extern int word_449FC[];
-	extern int word_463D6;
+	extern struct SPRITE far *g_wndspr;
+	extern int rotpr[];
+	extern int prevcamrot;
     register int i;
     struct RECTANGLE *currentRect;
-    if (vidflag5is0 != 0)
+    if (g_videoflg5 != 0)
         return;
     sprcopy2to12();
-    if (byte_454A4 == 0) {
-        if (slowmgmtcopy != 0) {
+    if (g_simprect == 0) {
+        if (statemgmtcpy != 0) {
             for (i=0; i<15; ++i)
-                rcarrayixs[i] = 3;
+                rects_updt[i] = 3;
             if (detail_lvl == 4)
-                word_449FC[1] = word_463D6;
-            if (word_449FC[1] == word_463D6 &&
-                rectarr[5].left == rectarr2[5].left &&
-                rectarr[5].right == rectarr2[5].right &&
-                rectarr[5].top == rectarr2[5].top &&
-                rectarr[5].bottom == rectarr2[5].bottom)
-                rcarrayixs[5] = 0;
-            rectarr3len = 0;
-            rectlist_add(15, rcarrayixs, rectarr,
-                rectarr2, clipRect, &rectarr3len,
-                rectarr3);
-            if (rectarr3len != 0) {
-                rectsorttop(rectarr3len,
-                    rectarr3, word_355D4);
+                rotpr[1] = prevcamrot;
+            if (rotpr[1] == prevcamrot &&
+                rclist[5].left == g_savrc[5].left &&
+                rclist[5].right == g_savrc[5].right &&
+                rclist[5].top == g_savrc[5].top &&
+                rclist[5].bottom == g_savrc[5].bottom)
+                rects_updt[5] = 0;
+            rect_num3 = 0;
+            rectlist_add(15, rects_updt, rclist,
+                g_savrc, clipRect, &rect_num3,
+                rectclip);
+            if (rect_num3 != 0) {
+                rectsorttop(rect_num3,
+                    rectclip, rcmapix);
                 msdrawopaquechk();
                 i = 0;
                 goto draw_rect_check;
                 do {
-                    currentRect = &rectarr3[word_355D4[i]];
+                    currentRect = &rectclip[rcmapix[i]];
                     sprset1size(currentRect->left, currentRect->right,
                         currentRect->top, currentRect->bottom);
-                    sprputimage(wndsprite->image);
+                    sprputimage(g_wndspr->image);
                     ++i;
 draw_rect_check:
                     ;
-                } while (rectarr3len > i);
+                } while (rect_num3 > i);
                 goto draw_transparent;
             }
             sprset1size(0, 320, clipRect->top, clipRect->bottom);
@@ -796,13 +796,13 @@ draw_rect_check:
         }
     }
     msdrawopaquechk();
-    sprputimage(wndsprite->image);
+    sprputimage(g_wndspr->image);
 draw_transparent:
     msdrawtransparentchk();
-    if (slowmgmtcopy != 0) {
-        word_449FC[1] = word_463D6;
+    if (statemgmtcpy != 0) {
+        rotpr[1] = prevcamrot;
         for (i=0; i<15; ++i)
-            rectarr2[i] = rectarr[i];
+            g_savrc[i] = rclist[i];
     }
 }
 
@@ -811,19 +811,19 @@ void far init_rect_arrays(void)
 	extern struct RECTANGLE rcunk5;
     register int i;
 
-    if (slowmgmtcopy != 0) {
-        rectarr[0] = rcunk5;
-        rectarr2[0] = rcunk5;
+    if (statemgmtcpy != 0) {
+        rclist[0] = rcunk5;
+        g_savrc[0] = rcunk5;
         for (i = 1; i < 15; ++i) {
-            rectarr[i] = clipunk;
-            rectarr2[i] = clipunk;
+            rclist[i] = clipunk;
+            g_savrc[i] = clipunk;
         }
     }
 }
 void update_frame(char page, struct RECTANGLE* clip) {
 	extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
-	extern int word_449FC[];
-	extern int word_463D6;
+	extern int rotpr[];
+	extern int prevcamrot;
 	char skipped[24];
 	unsigned char terrain_list[24];
 	int cur_sky_sign;
@@ -895,17 +895,17 @@ void update_frame(char page, struct RECTANGLE* clip) {
 
 	crashed[0] = 0;
 	crashed[1] = 0;
-	if (vidflag5is0 != 0 && page != 0) {
-		rcpunk2 = rectarr;
-		rectp = rectarr2;
+	if (g_videoflg5 != 0 && page != 0) {
+		rcpunk2 = rclist;
+		rectp = g_savrc;
 	} else {
-		rectp = rectarr;
-		rcpunk2 = rectarr2;
+		rectp = rclist;
+		rcpunk2 = g_savrc;
 	}
 
-	if (slowmgmtcopy != 0) {
+	if (statemgmtcpy != 0) {
 		flagbits = 8;
-		rect_ptr = rcunk;
+		rect_ptr = tparr;
 		for (si = 0; si < 15; si++) {
 			*rect_ptr++ = clipunk;
 		}
@@ -914,20 +914,20 @@ void update_frame(char page, struct RECTANGLE* clip) {
 	}
 
 	// Set car position (own or opponent's)
-	if (followflg == 0) {		
-		car_coord.x = state.playerstate.car_posWorld1.lx >> 6;
-		car_coord.y = state.playerstate.car_posWorld1.ly >> 6;
-		car_coord.z = state.playerstate.car_posWorld1.lz >> 6;
-		car_angle_y = state.playerstate.car_rotate.y;
-		my_car_bank = state.playerstate.car_rotate.z;
-		rot_x = state.playerstate.car_rotate.x;
+	if (follow_op == 0) {		
+		car_coord.x = core.playerstate.car_posWorld1.lx >> 6;
+		car_coord.y = core.playerstate.car_posWorld1.ly >> 6;
+		car_coord.z = core.playerstate.car_posWorld1.lz >> 6;
+		car_angle_y = core.playerstate.car_rotate.y;
+		my_car_bank = core.playerstate.car_rotate.z;
+		rot_x = core.playerstate.car_rotate.x;
 	} else {
-		car_coord.x = state.opponentstate.car_posWorld1.lx >> 6;
-		car_coord.y = state.opponentstate.car_posWorld1.ly >> 6;
-		car_coord.z = state.opponentstate.car_posWorld1.lz >> 6;
-		car_angle_y = state.opponentstate.car_rotate.y;
-		my_car_bank = state.opponentstate.car_rotate.z;
-		rot_x = state.opponentstate.car_rotate.x;
+		car_coord.x = core.opponentstate.car_posWorld1.lx >> 6;
+		car_coord.y = core.opponentstate.car_posWorld1.ly >> 6;
+		car_coord.z = core.opponentstate.car_posWorld1.lz >> 6;
+		car_angle_y = core.opponentstate.car_rotate.y;
+		my_car_bank = core.opponentstate.car_rotate.z;
+		rot_x = core.opponentstate.car_rotate.x;
 	}
 
 	view_rot_x = -1;
@@ -952,9 +952,9 @@ void update_frame(char page, struct RECTANGLE* clip) {
 		viewpoint.z = car_coord.z + rot_ofs.z;
 		break;
 	case 1:
-		viewpoint.x = state.game_vec1[followflg].x;
-		viewpoint.z = state.game_vec1[followflg].z;
-		viewpoint.y = state.game_vec1[followflg].y;
+		viewpoint.x = core.game_vec1[follow_op].x;
+		viewpoint.z = core.game_vec1[follow_op].z;
+		viewpoint.y = core.game_vec1[follow_op].y;
 		break;
 	case 0:
 		view_rot_x = rot_x & 0x3ff;
@@ -963,41 +963,41 @@ void update_frame(char page, struct RECTANGLE* clip) {
 		car_matrix = matrotzxy(-my_car_bank, -car_angle_y, -rot_x, 0);
 		offset_v.x = 0;
 		offset_v.z = 0;
-		offset_v.y = simdpl.car_height - 6;
+		offset_v.y = simdp7.car_height - 6;
 		mat_vec(&offset_v, car_matrix, &rot_ofs);
 		viewpoint.x = car_coord.x + rot_ofs.x;
 		viewpoint.y = car_coord.y + rot_ofs.y;
 		viewpoint.z = car_coord.z + rot_ofs.z;
 		break;
 	case 3:
-		viewpoint.x = trackdata9[state.field_3F7[followflg]].x;
-		viewpoint.y = trackdata9[state.field_3F7[followflg]].y + word_44D20 + 0x5A;
-		viewpoint.z = trackdata9[state.field_3F7[followflg]].z;
+		viewpoint.x = trkptrpath[core.field_3F7[follow_op]].x;
+		viewpoint.y = trkptrpath[core.field_3F7[follow_op]].y + viewyshift + 0x5A;
+		viewpoint.z = trkptrpath[core.field_3F7[follow_op]].z;
 		break;
 	}
 
 	// Unknown part; seems to be performing some initialization
 	if (view_rot_x == -1) {
 		build_obj(&viewpoint, &viewpoint);
-		if (viewpoint.y < terrhgt) {
-			viewpoint.y = terrhgt;
+		if (viewpoint.y < hgthgt) {
+			viewpoint.y = hgthgt;
 		}
 
-		if (byte_4392C != 0) {		
-			si = plnoriginop(planindex, viewpoint.x, viewpoint.y, viewpoint.z);
+		if (test_pln != 0) {		
+			si = plnoriginop(pl_i, viewpoint.x, viewpoint.y, viewpoint.z);
 			if (si < 0xC) {			
-				vunk2.x = 0;
-				vunk2.y = 0xC - si;
-				vunk2.z = 0;
-				planindexcpy = planindex;
-				pstf36mminf40sar2 = 0;
-				pstateminusx2 = 0;
-				pstateminusz2 = 0;
-				pstateminusy2 = 0;
+				tvec2.x = 0;
+				tvec2.y = 0xC - si;
+				tvec2.z = 0;
+				g_planidx2 = pl_i;
+				frwhl_angadjusted = 0;
+				car_roty_pln = 0;
+				pln_rotate_z = 0;
+				car_rotate_xc = 0;
 				plnrotop();
-				viewpoint.x += vplanerotopresult.x;
-				viewpoint.y += vplanerotopresult.y;
-				viewpoint.z += vplanerotopresult.z;
+				viewpoint.x += pln_rot_output.x;
+				viewpoint.y += pln_rot_output.y;
+				viewpoint.z += pln_rot_output.z;
 			}
 		}
 
@@ -1012,7 +1012,7 @@ void update_frame(char page, struct RECTANGLE* clip) {
 		bank = 0;
 	}
 
-	paint = byte_3C0C6[(state.game_frame == 0 ? word_46468 : state.game_frame) & 0xF];
+	paint = paint_cycle[(core.game_frame == 0 ? g_clocks : core.game_frame) & 0xF];
 
 	// Select the vector specifying the 23 tiles to draw. The vector contains
 	// 24 elements, each 3 bytes long, in format (east_offset, south_offset,
@@ -1051,15 +1051,15 @@ void update_frame(char page, struct RECTANGLE* clip) {
 	// Draw 8 shapes (still TBD what they are), but only if the detail
 	// level is the max one
 	if (detail_lvl == 0) {
-		curtshape->rectptr = &rcunk[7];
-		curtshape->ts_flags = flagbits | 7;
-		curtshape->rotvec.x = 0;
-		curtshape->rotvec.y = 0;
-		curtshape->unk = 0x400;
-		curtshape->material = 0;
+		cur_shps->rectptr = &tparr[7];
+		cur_shps->ts_flags = flagbits | 7;
+		cur_shps->rotvec.x = 0;
+		cur_shps->rotvec.y = 0;
+		cur_shps->unk = 0x400;
+		cur_shps->material = 0;
 
 		for (nfences = 0; nfences < 8; nfences++) {
-			si = (word_3BE34[nfences] + view_rot_x + runrandom) & 0x3ff;
+			si = (fence_offsets[nfences] + view_rot_x + runrndx) & 0x3ff;
 			if (si < 0x87 || si > 0x379) {
 				matroty(&sky_mat, si);
 				offset_v.x = 0;
@@ -1067,11 +1067,11 @@ void update_frame(char page, struct RECTANGLE* clip) {
 				offset_v.z = 0x3A98; //15000
 				mat_vec(&offset_v, &sky_mat, &rot_ofs);
 				rot_ofs.z = 0x3A98; //15000
-				mat_vec(&rot_ofs, &view_mat, &curtshape->pos);
-				if (curtshape->pos.z > 0xC8) {
-					curtshape->shapeptr = off_3BE44[nfences];
-					curtshape->rotvec.z = -view_rot_x;
-					result = trans_op(&curtshape[0]);
+				mat_vec(&rot_ofs, &view_mat, &cur_shps->pos);
+				if (cur_shps->pos.z > 0xC8) {
+					cur_shps->shapeptr = fence_shapes[nfences];
+					cur_shps->rotvec.z = -view_rot_x;
+					result = trans_op(&cur_shps[0]);
 					(void) result; // we cannot be out of memory as we are just starting to process
 				}
 			}
@@ -1085,8 +1085,8 @@ void update_frame(char page, struct RECTANGLE* clip) {
 	cam_tx = viewpoint.x >> 0xA;
 	cam_tz = -((viewpoint.z >> 0xA) - 0x1D);
 	if (detail_lvl != 0) {
-		car_x_tile = state.playerstate.car_posWorld1.lx >> 16;
-		car_z_tile = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
+		car_x_tile = core.playerstate.car_posWorld1.lx >> 16;
+		car_z_tile = 0x1D - (core.playerstate.car_posWorld1.lz >> 16);
 	}
 
 	for (si = 0; si < 0x17; si++) {
@@ -1108,8 +1108,8 @@ void update_frame(char page, struct RECTANGLE* clip) {
 	if (tx < 0 || tx > 0x1D || trow < 0 || trow > 0x1D) {
 	skipped[si] = 2;
 	} else {
-					track_elem = td14map[trackrows[trow] + tx];
-					tile_ground = td15map[terrrows[trow] + tx];
+					track_elem = td14tb[lnoffsets[trow] + tx];
+					tile_ground = td15p_9[gterrtrk[trow] + tx];
 	
 					if (track_elem != 0) {
 						if (tile_ground >= 7 && tile_ground < 0xB) {
@@ -1121,18 +1121,18 @@ void update_frame(char page, struct RECTANGLE* clip) {
 						case 0xFD:
 							tx--;
 							trow--;
-							track_elem = td14map[trackrows[trow] + tx];
-							tile_ground = td15map[terrrows[trow] + tx];
+							track_elem = td14tb[lnoffsets[trow] + tx];
+							tile_ground = td15p_9[gterrtrk[trow] + tx];
 							break;
 						case 0xFE:
 							trow--;
-							track_elem = td14map[trackrows[trow] + tx];
-							tile_ground = td15map[terrrows[trow] + tx];
+							track_elem = td14tb[lnoffsets[trow] + tx];
+							tile_ground = td15p_9[gterrtrk[trow] + tx];
 							break;
 						case 0xFF:
 							tx--;
-							track_elem = td14map[trackrows[trow] + tx];
-							tile_ground = td15map[terrrows[trow] + tx];
+							track_elem = td14tb[lnoffsets[trow] + tx];
+							tile_ground = td15p_9[gterrtrk[trow] + tx];
 							break;
 						}
 					}
@@ -1192,19 +1192,19 @@ void update_frame(char page, struct RECTANGLE* clip) {
 	// Draw own wheels
 	car_east1 = -1;
 	car_zofs = 0;
-	if (cammd != 0 || followflg != 0) {
+	if (cammd != 0 || follow_op != 0) {
 
-		if (state.playerstate.car_crashBmpFlag != 2) {
+		if (core.playerstate.car_crashBmpFlag != 2) {
 
-			car_matrix = matrotzxy(-state.playerstate.car_rotate.z, -state.playerstate.car_rotate.y, -state.playerstate.car_rotate.x, 0);
+			car_matrix = matrotzxy(-core.playerstate.car_rotate.z, -core.playerstate.car_rotate.y, -core.playerstate.car_rotate.x, 0);
 			j = -1;
 			j2 = -1;
 			for (wheel_idx = 0; wheel_idx < 4; wheel_idx++) {
-				offset_v = simdpl.wheel_coords[wheel_idx];
+				offset_v = simdp7.wheel_coords[wheel_idx];
 				mat_vec(&offset_v, car_matrix, &elem_pos); //; rotating car wheels, maybe?
 				// Tile where the wheel is standing
-				tx = (elem_pos.x + state.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
-				trow = -(((elem_pos.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
+				tx = (elem_pos.x + core.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
+				trow = -(((elem_pos.z + core.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
 
 				for (si = 0x16; si > j; si--) {
 					if (skipped[si] != 2 && tile_table[si * 3] + cam_tx == tx && tile_table[si * 3 + 1] + cam_tz == trow) {
@@ -1217,12 +1217,12 @@ void update_frame(char page, struct RECTANGLE* clip) {
 			}
 
 			if (j2 != -1) {
-				if (state.playerstate.car_surfaceWhl[0] != 4 || state.playerstate.car_surfaceWhl[1] != 4 || state.playerstate.car_surfaceWhl[2] != 4 || state.playerstate.car_surfaceWhl[3] != 4) {
+				if (core.playerstate.car_surfaceWhl[0] != 4 || core.playerstate.car_surfaceWhl[1] != 4 || core.playerstate.car_surfaceWhl[2] != 4 || core.playerstate.car_surfaceWhl[3] != 4) {
 					offset_v.x = 0;
 					offset_v.z = 0;
 					offset_v.y = 0x7530;
 					mat_vec(&offset_v, car_matrix, &elem_pos);
-					mat_vec(&elem_pos, &mattmp, &offset_v);
+					mat_vec(&elem_pos, &wkmatx, &offset_v);
 					if (offset_v.z <= 0) {
 						car_zofs = -0x800 ;
 					} else {
@@ -1236,19 +1236,19 @@ void update_frame(char page, struct RECTANGLE* clip) {
 	// Draw opponent's wheels
 	cur_opp_east = -1;
 	opp_zbias_val = 0;
-	if (gmcfg.game_opponenttype != 0) {
+	if (globalgamesettings.game_opponenttype != 0) {
 
-		if (cammd != 0 || followflg == 0) {
-			if (state.opponentstate.car_crashBmpFlag != 2) {
-				car_matrix = matrotzxy(-state.opponentstate.car_rotate.z, -state.opponentstate.car_rotate.y, -state.opponentstate.car_rotate.x, 0);
+		if (cammd != 0 || follow_op == 0) {
+			if (core.opponentstate.car_crashBmpFlag != 2) {
+				car_matrix = matrotzxy(-core.opponentstate.car_rotate.z, -core.opponentstate.car_rotate.y, -core.opponentstate.car_rotate.x, 0);
 				j = -1;
 				j2 = -1;
 
 				for (wheel_idx = 0; wheel_idx < 4; wheel_idx++) {
-					offset_v = simdopp.wheel_coords[wheel_idx];
+					offset_v = ophys_7.wheel_coords[wheel_idx];
 					mat_vec(&offset_v, car_matrix, &elem_pos); //; rotating car wheels, maybe?
-					tx = (elem_pos.x + state.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
-					trow = -(((elem_pos.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
+					tx = (elem_pos.x + core.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
+					trow = -(((elem_pos.z + core.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
 
 					for (si = 0x16; si > j; si--) {
 						if (skipped[si] != 2 && tile_table[si * 3] + cam_tx == tx && tile_table[si * 3 + 1] + cam_tz == trow) {
@@ -1262,12 +1262,12 @@ void update_frame(char page, struct RECTANGLE* clip) {
 
 				if (j2 != -1) {
 						
-					if (state.opponentstate.car_surfaceWhl[0] != 4 || state.opponentstate.car_surfaceWhl[1] != 4 || state.opponentstate.car_surfaceWhl[2] != 4 || state.opponentstate.car_surfaceWhl[3] != 4) {
+					if (core.opponentstate.car_surfaceWhl[0] != 4 || core.opponentstate.car_surfaceWhl[1] != 4 || core.opponentstate.car_surfaceWhl[2] != 4 || core.opponentstate.car_surfaceWhl[3] != 4) {
 						offset_v.x = 0;
 						offset_v.z = 0;
 						offset_v.y = 0x7530;
 						mat_vec(&offset_v, car_matrix, &elem_pos);
-						mat_vec(&elem_pos, &mattmp, &offset_v);
+						mat_vec(&elem_pos, &wkmatx, &offset_v);
 						if (offset_v.z <= 0) {
 							opp_zbias_val = -0x800; //0xF800; // signed number!
 						} else {
@@ -1302,24 +1302,24 @@ void update_frame(char page, struct RECTANGLE* clip) {
 			switch (trkobj->ss_multiTileFlag) {
 			case 0:
 				nfences = 1;
-				fence_list = unk_3C0EE;
+				fence_list = fence_off_1;
 				break;
 			case 1:
 				nfences = 2;
-				fence_list = unk_3C0F0;
+				fence_list = fence_off_2;
 				break;
 			case 2:
 				nfences = 3;
-				fence_list = unk_3C0F4;
+				fence_list = fence_off_3;
 				break;
 			case 3:
 				nfences = 4;
-				fence_list = unk_3C0F8;
+				fence_list = fence_off_4;
 				break;
 			}
 		} else {
 			nfences = 1;
-			fence_list = unk_3C0F4;
+			fence_list = fence_off_3;
 		}
 
 		// Draw the fence
@@ -1370,18 +1370,18 @@ void update_frame(char page, struct RECTANGLE* clip) {
 
 			if (j2 != -1) {
 				ovl = &trklst[fence_codes[j2]];
-				curtshape->shapeptr = (tile_lod == 0) ? ovl->ss_shapePtr : ovl->ss_loShapePtr;
-				curtshape->pos.x = trackctrpos2[tile_east2] - viewpoint.x;
-				curtshape->pos.y = -viewpoint.y;
-				curtshape->pos.z = trackctrpos[drow] - viewpoint.z;
-				curtshape->rectptr = &rcunk[1];
-				curtshape->ts_flags = flagbits | 5;
-				curtshape->rotvec.x = 0;
-				curtshape->rotvec.y = 0;
-				curtshape->rotvec.z = word_3C0D6[j2];
-				curtshape->unk = 0x400;
-				curtshape->material = 0;
-				result = trans_op(&curtshape[0]);
+				cur_shps->shapeptr = (tile_lod == 0) ? ovl->ss_shapePtr : ovl->ss_loShapePtr;
+				cur_shps->pos.x = trackctrpos2[tile_east2] - viewpoint.x;
+				cur_shps->pos.y = -viewpoint.y;
+				cur_shps->pos.z = row_ctr_zs[drow] - viewpoint.z;
+				cur_shps->rectptr = &tparr[1];
+				cur_shps->ts_flags = flagbits | 5;
+				cur_shps->rotvec.x = 0;
+				cur_shps->rotvec.y = 0;
+				cur_shps->rotvec.z = shape_rot[j2];
+				cur_shps->unk = 0x400;
+				cur_shps->material = 0;
+				result = trans_op(&cur_shps[0]);
 				if (result > 0)
 					goto draw_done;
 			}
@@ -1421,21 +1421,21 @@ void update_frame(char page, struct RECTANGLE* clip) {
 						drow = trow + 1;
 						break;
 					}
-					tile_ground = td15map[terrrows[drow] + tile_east2];
+					tile_ground = td15p_9[gterrtrk[drow] + tile_east2];
 					if (tile_ground != 0) {
 						trkobj = &scene2[tile_ground];
-						curtshape->shapeptr = trkobj->ss_shapePtr;
-						curtshape->pos.x = trackctrpos2[tile_east2] - viewpoint.x;
-						curtshape->pos.y = -viewpoint.y;
-						curtshape->pos.z = trackctrpos[drow] - viewpoint.z;
-						curtshape->rectptr = &rcunk[1];
-						curtshape->ts_flags = flagbits | 5;
-						curtshape->rotvec.x = 0;
-						curtshape->rotvec.y = 0;
-						curtshape->rotvec.z = trkobj->ss_rotY;
-						curtshape->unk = 0x400;
-						curtshape->material = 0;
-						result = trans_op(&curtshape[0]);
+						cur_shps->shapeptr = trkobj->ss_shapePtr;
+						cur_shps->pos.x = trackctrpos2[tile_east2] - viewpoint.x;
+						cur_shps->pos.y = -viewpoint.y;
+						cur_shps->pos.z = row_ctr_zs[drow] - viewpoint.z;
+						cur_shps->rectptr = &tparr[1];
+						cur_shps->ts_flags = flagbits | 5;
+						cur_shps->rotvec.x = 0;
+						cur_shps->rotvec.y = 0;
+						cur_shps->rotvec.z = trkobj->ss_rotY;
+						cur_shps->unk = 0x400;
+						cur_shps->material = 0;
+						result = trans_op(&cur_shps[0]);
 						if (result > 0)
 							goto draw_done;
 					}
@@ -1452,41 +1452,41 @@ void update_frame(char page, struct RECTANGLE* clip) {
 
 		if (tile_ground != 0) {
 			trkobj = &scene2[tile_ground];
-			curtshape->shapeptr = trkobj->ss_shapePtr;
-			curtshape->pos.x = trackctrpos2[tx] - viewpoint.x;
-			curtshape->pos.y = hill_elev - viewpoint.y;
-			curtshape->pos.z = trackctrpos[trow] - viewpoint.z;
+			cur_shps->shapeptr = trkobj->ss_shapePtr;
+			cur_shps->pos.x = trackctrpos2[tx] - viewpoint.x;
+			cur_shps->pos.y = hill_elev - viewpoint.y;
+			cur_shps->pos.z = row_ctr_zs[trow] - viewpoint.z;
 			if (hill_elev == 0) {
-				curtshape->rectptr = &rcunk[1];
+				cur_shps->rectptr = &tparr[1];
 			} else {
-				curtshape->rectptr = &rcunk[2];
+				cur_shps->rectptr = &tparr[2];
 			}
 
-			curtshape->ts_flags = flagbits | 5;
-			curtshape->rotvec.x = 0;
-			curtshape->rotvec.y = 0;
-			curtshape->rotvec.z = trkobj->ss_rotY;
-			curtshape->unk = 0x400;
-			curtshape->material = 0;
-			result = trans_op(&curtshape[0]);
+			cur_shps->ts_flags = flagbits | 5;
+			cur_shps->rotvec.x = 0;
+			cur_shps->rotvec.y = 0;
+			cur_shps->rotvec.z = trkobj->ss_rotY;
+			cur_shps->unk = 0x400;
+			cur_shps->material = 0;
+			result = trans_op(&cur_shps[0]);
 			if (result > 0)
 				goto draw_done;
 		}
 
-		tshapecnt = 0;
-		curtshapep = curtshape;
+		g_ts_num = 0;
+		g_curr_tsp = cur_shps;
 		if (track_elem != 0) {
 			trkobj = &trklst[track_elem];
 			if ((trkobj->ss_multiTileFlag & 1) != 0) {
-				obj_zpos = trkp[trow];
+				obj_zpos = r_zp[trow];
 				drow = trow + 1;
 			} else {
-				obj_zpos = trackctrpos[trow];
+				obj_zpos = row_ctr_zs[trow];
 				drow = trow;
 			}
 
 			if ((trkobj->ss_multiTileFlag & 2) != 0) {
-				objx = trkp2[1 + tx];
+				objx = xcols[1 + tx];
 				tile_east2 = tx + 1;
 			} else {
 				objx = trackctrpos2[tx];
@@ -1500,35 +1500,35 @@ void update_frame(char page, struct RECTANGLE* clip) {
 				switch (trkobj->ss_multiTileFlag) {
 				case 0:
 					j2 = 1;
-					offsets = unk_3C0A2[0];
+					offsets = hill_offs[0];
 					break;
 				case 1:
 					j2 = 2;
-					offsets = unk_3C0A2[1];
+					offsets = hill_offs[1];
 					break;
 				case 2:
 					j2 = 2;
-					offsets = unk_3C0A2[3];
+					offsets = hill_offs[3];
 					break;
 				case 3:
 					j2 = 4;
-					offsets = unk_3C0A2[5];
+					offsets = hill_offs[5];
 					break;
 				}
 
 				for (j = 0; j < j2; j++) {
-					curtshape->pos.x = *offsets++ + elem_pos.x;
-					curtshape->pos.y = elem_pos.y;
-					curtshape->pos.z = *offsets++ + elem_pos.z;
-					curtshape->shapeptr = &game3dshapes[0x3B2 / sizeof(struct SHAPE3D)];
-					curtshape->rectptr = &rcunk[2];
-					curtshape->ts_flags = flagbits | 5;
-					curtshape->rotvec.x = 0;
-					curtshape->rotvec.y = 0;
-					curtshape->rotvec.z = 0;
-					curtshape->unk = 0x800;
-					curtshape->material = 0;
-					result = trans_op(&curtshape[0]);
+					cur_shps->pos.x = *offsets++ + elem_pos.x;
+					cur_shps->pos.y = elem_pos.y;
+					cur_shps->pos.z = *offsets++ + elem_pos.z;
+					cur_shps->shapeptr = &g_shapes3d[0x3B2 / sizeof(struct SHAPE3D)];
+					cur_shps->rectptr = &tparr[2];
+					cur_shps->ts_flags = flagbits | 5;
+					cur_shps->rotvec.x = 0;
+					cur_shps->rotvec.y = 0;
+					cur_shps->rotvec.z = 0;
+					cur_shps->unk = 0x800;
+					cur_shps->material = 0;
+					result = trans_op(&cur_shps[0]);
 					if (result > 0)
 						goto draw_done;
 				}
@@ -1537,71 +1537,71 @@ void update_frame(char page, struct RECTANGLE* clip) {
 			if (trkobj->ss_ssOvelay != 0) {
 				ovl = &trklst[trkobj->ss_ssOvelay];
 				if (tile_lod != 0) {
-					curtshape[1].shapeptr = ovl->ss_loShapePtr;
+					cur_shps[1].shapeptr = ovl->ss_loShapePtr;
 				} else {
-					curtshape[1].shapeptr = ovl->ss_shapePtr;
+					cur_shps[1].shapeptr = ovl->ss_shapePtr;
 				}
 
-				if (curtshape[1].shapeptr != 0) {
-					curtshape[1].pos = elem_pos;
-					curtshape[1].rotvec.x = 0;
-					curtshape[1].rotvec.y = 0;
-					curtshape[1].rotvec.z = ovl->ss_rotY;
+				if (cur_shps[1].shapeptr != 0) {
+					cur_shps[1].pos = elem_pos;
+					cur_shps[1].rotvec.x = 0;
+					cur_shps[1].rotvec.y = 0;
+					cur_shps[1].rotvec.z = ovl->ss_rotY;
 					if (ovl->ss_multiTileFlag != 0) {
-						curtshape[1].unk = 0x400;
+						cur_shps[1].unk = 0x400;
 					} else {
-						curtshape[1].unk = 0x800;
+						cur_shps[1].unk = 0x800;
 					}
 
 					if (ovl->ss_surfaceType >= 0) {
-						curtshape[1].material = ovl->ss_surfaceType;
+						cur_shps[1].material = ovl->ss_surfaceType;
 					} else {
-						curtshape[1].material = paint;
+						cur_shps[1].material = paint;
 					}
 
-					curtshape[1].ts_flags = ovl->ss_ignoreZBias | flagbits | 4;
-					if ((curtshape[1].ts_flags & 1) != 0) {
-						curtshape[1].rectptr = &rcunk[1];
-						result = trans_op(&curtshape[1]);
+					cur_shps[1].ts_flags = ovl->ss_ignoreZBias | flagbits | 4;
+					if ((cur_shps[1].ts_flags & 1) != 0) {
+						cur_shps[1].rectptr = &tparr[1];
+						result = trans_op(&cur_shps[1]);
 						if (result > 0)
 							goto draw_done;
 					} else {
-						curtshape[1].rectptr = &rcunk[2];
+						cur_shps[1].rectptr = &tparr[2];
 						ovl_pending = 1;
 					}
 				}
 			}
 
 			if (tile_lod != 0) {
-				curtshape->shapeptr = trkobj->ss_loShapePtr;
+				cur_shps->shapeptr = trkobj->ss_loShapePtr;
 			} else {
-				curtshape->shapeptr = trkobj->ss_shapePtr;
+				cur_shps->shapeptr = trkobj->ss_shapePtr;
 			}
 
-			curtshape->pos = elem_pos; // whatever
-			curtshape->rotvec.x = 0;
-			curtshape->rotvec.y = 0;
-			curtshape->rotvec.z = trkobj->ss_rotY;
+			cur_shps->pos = elem_pos; // whatever
+			cur_shps->rotvec.x = 0;
+			cur_shps->rotvec.y = 0;
+			cur_shps->rotvec.z = trkobj->ss_rotY;
 			if (trkobj->ss_multiTileFlag != 0) {
-				curtshape->unk = 0x400;
+				cur_shps->unk = 0x400;
 			} else {
-				curtshape->unk = 0x800;
+				cur_shps->unk = 0x800;
 			}
 
-			curtshape->ts_flags = trkobj->ss_ignoreZBias | flagbits | 4;
+			cur_shps->ts_flags = trkobj->ss_ignoreZBias | flagbits | 4;
 			if (trkobj->ss_surfaceType >= 0) {
-				curtshape->material = trkobj->ss_surfaceType;
+				cur_shps->material = trkobj->ss_surfaceType;
 			} else {
-				curtshape->material = paint;
+				cur_shps->material = paint;
 			}
 
 			if ((trkobj->ss_ignoreZBias & 1) != 0) {
-				curtshape->rectptr = &rcunk[1];
-				result = trans_op(&curtshape[0]);
+				cur_shps->rectptr = &tparr[1];
+				result = trans_op(&cur_shps[0]);
 				if (result > 0)
 					goto draw_done;
 			} else {
-				curtshape->rectptr = &rcunk[2];
+				cur_shps->rectptr = &tparr[2];
 				transformed_shape_add_for_sort(0, 0);
 				if (ovl_pending != 0) {
 					ovl_pending = 0;
@@ -1615,48 +1615,48 @@ void update_frame(char page, struct RECTANGLE* clip) {
 					}
 				}
 
-				if (tx == stcol2 && trow == strow2) {
+				if (tx == idxtrk && trow == tagtrk) {
 					start_bias = 0;
 				} else {
 					start_bias = -1;
 				}
 			}
 
-			checkpoint_no = trkdata19[trackrows[trow] + tx];
+			checkpoint_no = td19hdl[lnoffsets[trow] + tx];
 			if (checkpoint_no != -1) {
-				if (state.field_3FA[checkpoint_no] != 0) {
-					if (state.field_42A != 0) {
+				if (core.field_3FA[checkpoint_no] != 0) {
+					if (core.field_42A != 0) {
 						for (j2 = 0; j2 < 0x18; j2++) {
-							if (state.field_38E[j2] != 0) if (checkpoint_no + 2 == state.field_443[j2]) {
-								trkobj = &scene3[state.field_42B[j2]];
-								curtshapep->pos.x = (state.game_longs1[j2] >> 6) + td10checkrel[checkpoint_no * 3 + 0] - viewpoint.x;
-								curtshapep->pos.y = (state.game_longs2[j2] >> 6) + td10checkrel[checkpoint_no * 3 + 1] - viewpoint.y;
-								curtshapep->pos.z = (state.game_longs3[j2] >> 6) + td10checkrel[checkpoint_no * 3 + 2] - viewpoint.z;
-								curtshapep->shapeptr = trkobj->ss_shapePtr;
-								curtshapep->rectptr = &rcunk[2];
-								curtshapep->ts_flags = flagbits | 5;
-								curtshapep->rotvec.x = -state.field_2FE[j2];
-								curtshapep->rotvec.y = -state.field_32E[j2];
-								curtshapep->rotvec.z = -state.field_35E[j2];
-								curtshapep->unk = 0x400;
-								curtshapep->material = 0;
+							if (core.field_38E[j2] != 0) if (checkpoint_no + 2 == core.field_443[j2]) {
+								trkobj = &scene3[core.field_42B[j2]];
+								g_curr_tsp->pos.x = (core.game_longs1[j2] >> 6) + td10checkptr[checkpoint_no * 3 + 0] - viewpoint.x;
+								g_curr_tsp->pos.y = (core.game_longs2[j2] >> 6) + td10checkptr[checkpoint_no * 3 + 1] - viewpoint.y;
+								g_curr_tsp->pos.z = (core.game_longs3[j2] >> 6) + td10checkptr[checkpoint_no * 3 + 2] - viewpoint.z;
+								g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
+								g_curr_tsp->rectptr = &tparr[2];
+								g_curr_tsp->ts_flags = flagbits | 5;
+								g_curr_tsp->rotvec.x = -core.field_2FE[j2];
+								g_curr_tsp->rotvec.y = -core.field_32E[j2];
+								g_curr_tsp->rotvec.z = -core.field_35E[j2];
+								g_curr_tsp->unk = 0x400;
+								g_curr_tsp->material = 0;
 								transformed_shape_add_for_sort(0, 0);
 							}
 						}
 					}
 				} else {
-					trkobj = &trklst[212 + trkdata23[checkpoint_no]];
-					curtshapep->pos.x = td10checkrel[checkpoint_no * 3 + 0] - viewpoint.x;
-					curtshapep->pos.y = td10checkrel[checkpoint_no * 3 + 1] - viewpoint.y;
-					curtshapep->pos.z = td10checkrel[checkpoint_no * 3 + 2] - viewpoint.z;
-					curtshapep->shapeptr = trkobj->ss_shapePtr;
-					curtshapep->rectptr = &rcunk[2];
-					curtshapep->ts_flags = flagbits | 4;
-					curtshapep->rotvec.x = 0;
-					curtshapep->rotvec.y = 0;
-					curtshapep->rotvec.z = td08dir[checkpoint_no];
-					curtshapep->unk = 0x64;
-					curtshapep->material = 0;
+					trkobj = &trklst[212 + trkd23adr[checkpoint_no]];
+					g_curr_tsp->pos.x = td10checkptr[checkpoint_no * 3 + 0] - viewpoint.x;
+					g_curr_tsp->pos.y = td10checkptr[checkpoint_no * 3 + 1] - viewpoint.y;
+					g_curr_tsp->pos.z = td10checkptr[checkpoint_no * 3 + 2] - viewpoint.z;
+					g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
+					g_curr_tsp->rectptr = &tparr[2];
+					g_curr_tsp->ts_flags = flagbits | 4;
+					g_curr_tsp->rotvec.x = 0;
+					g_curr_tsp->rotvec.y = 0;
+					g_curr_tsp->rotvec.z = g_td08d[checkpoint_no];
+					g_curr_tsp->unk = 0x64;
+					g_curr_tsp->material = 0;
 					transformed_shape_add_for_sort(0, 0);
 				}
 			}
@@ -1666,117 +1666,117 @@ void update_frame(char page, struct RECTANGLE* clip) {
 		}
 
 		if ((car_east1 == tx || car_east1 == tile_east2) && (wheel_south == trow || wheel_south == drow)) {
-			if (state.field_42A != 0) {
+			if (core.field_42A != 0) {
 				for (j2 = 0; j2 < 0x18; j2++) {
-					if (state.field_38E[j2] != 0) if (state.field_443[j2] == 0) {
-						trkobj = &scene3[state.field_42B[j2]];
-						curtshapep->pos.x = (state.game_longs1[j2] + state.playerstate.car_posWorld1.lx >> 6) - viewpoint.x;
-						curtshapep->pos.y = (state.game_longs2[j2] + state.playerstate.car_posWorld1.ly >> 6) - viewpoint.y;
-						curtshapep->pos.z = (state.game_longs3[j2] + state.playerstate.car_posWorld1.lz >> 6) - viewpoint.z;
-						curtshapep->shapeptr = trkobj->ss_shapePtr;
-						curtshapep->rectptr = &rcunk[2];
-						curtshapep->ts_flags = flagbits | 5;
-						curtshapep->rotvec.x = -state.field_2FE[j2];
-						curtshapep->rotvec.y = -state.field_32E[j2];
-						curtshapep->rotvec.z = -state.field_35E[j2];
-						curtshapep->unk = 0x400;
-						curtshapep->material = gmcfg.game_playermaterial;
+					if (core.field_38E[j2] != 0) if (core.field_443[j2] == 0) {
+						trkobj = &scene3[core.field_42B[j2]];
+						g_curr_tsp->pos.x = (core.game_longs1[j2] + core.playerstate.car_posWorld1.lx >> 6) - viewpoint.x;
+						g_curr_tsp->pos.y = (core.game_longs2[j2] + core.playerstate.car_posWorld1.ly >> 6) - viewpoint.y;
+						g_curr_tsp->pos.z = (core.game_longs3[j2] + core.playerstate.car_posWorld1.lz >> 6) - viewpoint.z;
+						g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
+						g_curr_tsp->rectptr = &tparr[2];
+						g_curr_tsp->ts_flags = flagbits | 5;
+						g_curr_tsp->rotvec.x = -core.field_2FE[j2];
+						g_curr_tsp->rotvec.y = -core.field_32E[j2];
+						g_curr_tsp->rotvec.z = -core.field_35E[j2];
+						g_curr_tsp->unk = 0x400;
+						g_curr_tsp->material = globalgamesettings.game_playermaterial;
 						transformed_shape_add_for_sort(car_zofs & start_bias, 0);
 					}
 				}
 			}
 
 			trkobj = &trklst[2];//0x1C / sizeof(struct TRACKOBJECT)];
-			curtshapep->pos.x = (state.playerstate.car_posWorld1.lx >> 6) - viewpoint.x;
-			curtshapep->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - viewpoint.y;
-			curtshapep->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - viewpoint.z;
+			g_curr_tsp->pos.x = (core.playerstate.car_posWorld1.lx >> 6) - viewpoint.x;
+			g_curr_tsp->pos.y = (core.playerstate.car_posWorld1.ly >> 6) - viewpoint.y;
+			g_curr_tsp->pos.z = (core.playerstate.car_posWorld1.lz >> 6) - viewpoint.z;
 			
 			if (tile_lod != 0 || detail_lvl > 2) {
-				curtshapep->shapeptr = trkobj->ss_loShapePtr;
+				g_curr_tsp->shapeptr = trkobj->ss_loShapePtr;
 			} else {
-				curtshapep->shapeptr = trkobj->ss_shapePtr;
-				sub_204AE(&game3dshapes[0x0AD4 / sizeof(struct SHAPE3D)].shape3d_verts[8], state.playerstate.car_steeringAngle, &state.playerstate.car_rc2, word_443E8, carvecs, &carvec);
+				g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
+				wheel_update(&g_shapes3d[0x0AD4 / sizeof(struct SHAPE3D)].shape3d_verts[8], core.playerstate.car_steeringAngle, &core.playerstate.car_rc2, ywhlang, pts_set, &pos_pt);
 			}
 
-			if (slowmgmtcopy != 0) {
-				curtshapep->rectptr = &rcunk[3];
-				curtshapep->ts_flags = 0xC;
-			} else if (state.playerstate.car_crashBmpFlag == 1) {
+			if (statemgmtcpy != 0) {
+				g_curr_tsp->rectptr = &tparr[3];
+				g_curr_tsp->ts_flags = 0xC;
+			} else if (core.playerstate.car_crashBmpFlag == 1) {
 				cliprect1 = clipunk;
-				curtshapep->rectptr = &cliprect1;
-				curtshapep->ts_flags = 0xC;
+				g_curr_tsp->rectptr = &cliprect1;
+				g_curr_tsp->ts_flags = 0xC;
 			} else {
-				curtshapep->ts_flags = 4;
+				g_curr_tsp->ts_flags = 4;
 			}
 
-			curtshapep->rotvec.x = -state.playerstate.car_rotate.z;
-			curtshapep->rotvec.y = -state.playerstate.car_rotate.y;
-			curtshapep->rotvec.z = -state.playerstate.car_rotate.x;
-			curtshapep->unk = 0x12C;
-			curtshapep->material = gmcfg.game_playermaterial;
+			g_curr_tsp->rotvec.x = -core.playerstate.car_rotate.z;
+			g_curr_tsp->rotvec.y = -core.playerstate.car_rotate.y;
+			g_curr_tsp->rotvec.z = -core.playerstate.car_rotate.x;
+			g_curr_tsp->unk = 0x12C;
+			g_curr_tsp->material = globalgamesettings.game_playermaterial;
 			transformed_shape_add_for_sort(car_zofs & start_bias, 2);
 		}
 		
 		if ((cur_opp_east == tx || cur_opp_east == tile_east2) && (opp_wheel_south_val == trow || opp_wheel_south_val == drow)) {
-			if (state.field_42A != 0) {
+			if (core.field_42A != 0) {
 				for (j2 = 0; j2 < 0x18; j2++) {
-					if (state.field_38E[j2] != 0) {
-						if (state.field_443[j2] == 1) {
-							trkobj = &scene3[state.field_42B[j2]];
-							curtshapep->pos.x = (state.game_longs1[j2] + state.opponentstate.car_posWorld1.lx >> 6) - viewpoint.x;
-							curtshapep->pos.y = (state.game_longs2[j2] + state.opponentstate.car_posWorld1.ly >> 6) - viewpoint.y;
-							curtshapep->pos.z = (state.game_longs3[j2] + state.opponentstate.car_posWorld1.lz >> 6) - viewpoint.z;
-							curtshapep->shapeptr = trkobj->ss_shapePtr;
-							curtshapep->rectptr = &rcunk[2];
-							curtshapep->ts_flags = flagbits | 5;
-							curtshapep->rotvec.x = -state.field_2FE[j2];
-							curtshapep->rotvec.y = -state.field_32E[j2];
-							curtshapep->rotvec.z = -state.field_35E[j2];
-							curtshapep->unk = 0x400;
-							curtshapep->material = gmcfg.game_opponentmaterial;
+					if (core.field_38E[j2] != 0) {
+						if (core.field_443[j2] == 1) {
+							trkobj = &scene3[core.field_42B[j2]];
+							g_curr_tsp->pos.x = (core.game_longs1[j2] + core.opponentstate.car_posWorld1.lx >> 6) - viewpoint.x;
+							g_curr_tsp->pos.y = (core.game_longs2[j2] + core.opponentstate.car_posWorld1.ly >> 6) - viewpoint.y;
+							g_curr_tsp->pos.z = (core.game_longs3[j2] + core.opponentstate.car_posWorld1.lz >> 6) - viewpoint.z;
+							g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
+							g_curr_tsp->rectptr = &tparr[2];
+							g_curr_tsp->ts_flags = flagbits | 5;
+							g_curr_tsp->rotvec.x = -core.field_2FE[j2];
+							g_curr_tsp->rotvec.y = -core.field_32E[j2];
+							g_curr_tsp->rotvec.z = -core.field_35E[j2];
+							g_curr_tsp->unk = 0x400;
+							g_curr_tsp->material = globalgamesettings.game_opponentmaterial;
 							transformed_shape_add_for_sort(opp_zbias_val & start_bias, 0);
 						}
 					}
 				}
 			}
 			trkobj = &trklst[3];//0x2A / sizeof(struct TRACKOBJECT)];
-			curtshapep->pos.x = (state.opponentstate.car_posWorld1.lx >> 6) - viewpoint.x;
-			curtshapep->pos.y = (state.opponentstate.car_posWorld1.ly >> 6) - viewpoint.y;
-			curtshapep->pos.z = (state.opponentstate.car_posWorld1.lz >> 6) - viewpoint.z;
+			g_curr_tsp->pos.x = (core.opponentstate.car_posWorld1.lx >> 6) - viewpoint.x;
+			g_curr_tsp->pos.y = (core.opponentstate.car_posWorld1.ly >> 6) - viewpoint.y;
+			g_curr_tsp->pos.z = (core.opponentstate.car_posWorld1.lz >> 6) - viewpoint.z;
 
 			if (tile_lod != 0 || detail_lvl > 2) {
-				curtshapep->shapeptr = trkobj->ss_loShapePtr;
+				g_curr_tsp->shapeptr = trkobj->ss_loShapePtr;
 			} else {
-				curtshapep->shapeptr = trkobj->ss_shapePtr;
-				sub_204AE(&game3dshapes[0x0AEA / sizeof(struct SHAPE3D)].shape3d_verts[8], state.opponentstate.car_steeringAngle, &state.opponentstate.car_rc2, word_4448A, ocarvecs, &ocarvec);
+				g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
+				wheel_update(&g_shapes3d[0x0AEA / sizeof(struct SHAPE3D)].shape3d_verts[8], core.opponentstate.car_steeringAngle, &core.opponentstate.car_rc2, buf_obase, veco, &ctrmesh);
 			}
 
-			if (slowmgmtcopy != 0) {
-				curtshapep->rectptr = &rcunk[4];
-				curtshapep->ts_flags = 0xC;
-			} else if (state.opponentstate.car_crashBmpFlag == 1) {
+			if (statemgmtcpy != 0) {
+				g_curr_tsp->rectptr = &tparr[4];
+				g_curr_tsp->ts_flags = 0xC;
+			} else if (core.opponentstate.car_crashBmpFlag == 1) {
 				cliprect2 = clipunk;
-				curtshapep->rectptr = &cliprect2;
-				curtshapep->ts_flags = 0xC;
+				g_curr_tsp->rectptr = &cliprect2;
+				g_curr_tsp->ts_flags = 0xC;
 			} else {
-				curtshapep->ts_flags = 4;
+				g_curr_tsp->ts_flags = 4;
 			}
 
-			curtshapep->rotvec.x = -state.opponentstate.car_rotate.z;
-			curtshapep->rotvec.y = -state.opponentstate.car_rotate.y;
-			curtshapep->rotvec.z = -state.opponentstate.car_rotate.x;
-			curtshapep->unk = 0x12C;
-			curtshapep->material = gmcfg.game_opponentmaterial;
+			g_curr_tsp->rotvec.x = -core.opponentstate.car_rotate.z;
+			g_curr_tsp->rotvec.y = -core.opponentstate.car_rotate.y;
+			g_curr_tsp->rotvec.z = -core.opponentstate.car_rotate.x;
+			g_curr_tsp->unk = 0x12C;
+			g_curr_tsp->material = globalgamesettings.game_opponentmaterial;
 			transformed_shape_add_for_sort(opp_zbias_val & start_bias, 3);
 		}
 
-		if (state.game_inputmode == 0) {
-			if ((tx == stcol2 || tile_east2 == stcol2) && (trow == strow2 || drow == strow2)) {
+		if (core.game_inputmode == 0) {
+			if ((tx == idxtrk || tile_east2 == idxtrk) && (trow == tagtrk || drow == tagtrk)) {
 
-				j = mulscl(cosfast(word_44DCA), 0x24);
-				nfences = mulscl(sinfast(word_44DCA), 0x24) + 0x38;
+				j = mulscl(cosfast(g_sgateopn), 0x24);
+				nfences = mulscl(sinfast(g_sgateopn), 0x24) + 0x38;
 
-				vptr = &game3dshapes[0x98A / sizeof(struct SHAPE3D)].shape3d_verts[8];
+				vptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)].shape3d_verts[8];
 				vptr[0].x = j - 0x24;
 				vptr[1].x = j - 0x24;
 				vptr[2].x = 0x24 - j;
@@ -1787,71 +1787,71 @@ void update_frame(char page, struct RECTANGLE* clip) {
 				vptr[2].z = nfences;
 				vptr[3].z = nfences;
 				 
-				curtshapep->pos.x =
-					mulscl(sinfast(trkang + 0x200), 0x1B6) +
-					mulscl(sinfast(trkang + 0x100), 0x24) + 
-					trackctrpos2[stcol2] - viewpoint.x;
-				curtshapep->pos.y = hillconsts[hillFlag] - viewpoint.y;
-				curtshapep->pos.z =
-					mulscl(cosfast(trkang + 0x200), 0x1B6) +
-					mulscl(cosfast(trkang + 0x100), 0x24) + 
-					trackctrpos[strow2] - viewpoint.z;
+				g_curr_tsp->pos.x =
+					mulscl(sinfast(st_hdg + 0x200), 0x1B6) +
+					mulscl(sinfast(st_hdg + 0x100), 0x24) + 
+					trackctrpos2[idxtrk] - viewpoint.x;
+				g_curr_tsp->pos.y = hillconsts[g_hillf] - viewpoint.y;
+				g_curr_tsp->pos.z =
+					mulscl(cosfast(st_hdg + 0x200), 0x1B6) +
+					mulscl(cosfast(st_hdg + 0x100), 0x24) + 
+					row_ctr_zs[tagtrk] - viewpoint.z;
 
-				curtshapep->shapeptr = &game3dshapes[0x98A / sizeof(struct SHAPE3D)];
-				curtshapep->rectptr = &rcunk[2];
-				curtshapep->ts_flags = flagbits | 4;
-				curtshapep->rotvec.x = 0;
-				curtshapep->rotvec.y = 0;
-				curtshapep->rotvec.z = trkang;
-				curtshapep->unk = 0x400;
-				j = word_44DCA >> 6;
+				g_curr_tsp->shapeptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)];
+				g_curr_tsp->rectptr = &tparr[2];
+				g_curr_tsp->ts_flags = flagbits | 4;
+				g_curr_tsp->rotvec.x = 0;
+				g_curr_tsp->rotvec.y = 0;
+				g_curr_tsp->rotvec.z = st_hdg;
+				g_curr_tsp->unk = 0x400;
+				j = g_sgateopn >> 6;
 				if (j > 3) {
 					j = 3;
 				}
 
-				curtshapep->material = j;
+				g_curr_tsp->material = j;
 				transformed_shape_add_for_sort(start_bias & -0x800 /*0xF800*/, 0);
 			}
 		}
 
-		if (tshapecnt != 0) {
-			if (tshapecnt > 1) {
-				heapsortorder(tshapecnt, tshapezs, tshapeixs);
+		if (g_ts_num != 0) {
+			if (g_ts_num > 1) {
+				heapsortorder(g_ts_num, g_tdist, tsix);
 			}
 
 			// Draw red overlights on the brake lights on own and opponent's car
-			for (j = 0; j < tshapecnt; j++) {
+			for (j = 0; j < g_ts_num; j++) {
 				// j2 is used for index into currenttransshape elsewhere
-				j2 = tshapeixs[j];
-				switch (tshapearg2arr[j2]) {
+				j2 = tsix[j];
+				switch (tshapearrarg2[j2]) {
 				case 2:
-					if (state.playerstate.car_is_braking != 0) {
-						backlights_ovr = 0x2F;
+					if (core.playerstate.car_is_braking != 0) {
+						backlightovr8 = 0x2F;
 					} else {
-						backlights_ovr = 0x2E;
+						backlightovr8 = 0x2E;
 					}
 					break;
 				case 3:
-					if (state.opponentstate.car_is_braking != 0) {
-						backlights_ovr = 0x2F;
+					if (core.opponentstate.car_is_braking != 0) {
+						backlightovr8 = 0x2F;
 					} else {
-						backlights_ovr = 0x2E;
+						backlightovr8 = 0x2E;
 					}
 					break;
 				}
 
-				result = trans_op(&curtshape[j2]);
+				result = trans_op(&cur_shps[j2]);
 				if (result > 0)
 					goto draw_done;
 
 				if (result == 0) {
-					switch (tshapearg2arr[j2]) {
+					switch (tshapearrarg2[j2]) {
 					case 2:
-						if (state.playerstate.car_crashBmpFlag == 1)
+						if (core.playerstate.car_crashBmpFlag == 1)
 							crashed[0] = 1;
 						break;
 					case 3:
-						if (state.opponentstate.car_crashBmpFlag == 1)
+						if (core.opponentstate.car_crashBmpFlag == 1)
 							crashed[1] = 1;
 						break;
 					}
@@ -1873,11 +1873,11 @@ draw_done:
 		if (crashed[si] == 0) {
 			continue;
 		}
-		if (slowmgmtcopy != 0) {
+		if (statemgmtcpy != 0) {
 			if (si == 0)
-				rect_ptr = &rcunk[3];
+				rect_ptr = &tparr[3];
 			else
-				rect_ptr = &rcunk[4];
+				rect_ptr = &tparr[4];
 		} else {
 			rect_ptr = (si == 0) ? &cliprect1 : &cliprect2;
 		}
@@ -1892,9 +1892,9 @@ draw_done:
 				j = nfences;
 			}
 
-			j2 = (state.game_frame >> 2) % 3 ;
-			nfences = ((long)j << 8) / (long)sdg2widths[j2];
-			shapeexpl(nfences, sdg2shps[j2], offset_v.x, offset_v.y);
+			j2 = (core.game_frame >> 2) % 3 ;
+			nfences = ((long)j << 8) / (long)exwd[j2];
+			shapeexpl(nfences, sdgbmp_v[j2], offset_v.x, offset_v.y);
 		}
 	}
 
@@ -1906,58 +1906,58 @@ draw_done:
 	sprset1size(0, 0x140, clip->top, clip->bottom);
 	if (cammd == 0) {
 
-		if (followflg != 0) {
-			followed = &state.opponentstate;
-			si = state.game_oEndFrame;
+		if (follow_op != 0) {
+			followed = &core.opponentstate;
+			si = core.game_oEndFrame;
 		} else {
-			followed = &state.playerstate;
-			si = state.game_pEndFrame;
+			followed = &core.playerstate;
+			si = core.game_pEndFrame;
 		}
 
 		if (followed->car_crashBmpFlag == 1) {
-			if (slowmgmtcopy != 0) {
-				rcunion(init_crak(state.game_frame - si, clip->top, clip->bottom - clip->top), rcunk, rcunk);
+			if (statemgmtcpy != 0) {
+				rcunion(init_crak(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
 			} else {
-				init_crak(state.game_frame - si, clip->top, clip->bottom - clip->top);
+				init_crak(core.game_frame - si, clip->top, clip->bottom - clip->top);
 			}
 		} else if (followed->car_crashBmpFlag == 2) {
-			if (slowmgmtcopy != 0) {
-				rcunion(do_sinking(state.game_frame - si, clip->top, clip->bottom - clip->top), rcunk, rcunk);
+			if (statemgmtcpy != 0) {
+				rcunion(do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
 			} else {
-				do_sinking(state.game_frame - si, clip->top, clip->bottom - clip->top);
+				do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top);
 			}
 		}
 	}
 
 	// Show elapsed time
-	if (replay_mode == 0) {
-		if (state.game_inputmode != 0) {
-			fmtframestr(&residbyte1, elaptm1 + elaptm2, 0);
-			fontsetfontdef2(fontledresptr);
-			if (slowmgmtcopy != 0) {
-				rcunion(introtext(&residbyte1, 0x8C, roofhgt + 2, dlg_colour, 0), &rcunk[6], &rcunk[6]);
+	if (gm_playmode == 0) {
+		if (core.game_inputmode != 0) {
+			fmtframestr(&resbuftext, elaptm1 + tmr2, 0);
+			fontsetfontdef2(fntled_res);
+			if (statemgmtcpy != 0) {
+				rcunion(introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
 			} else {
-				introtext(&residbyte1, 0x8C, roofhgt + 2, dlg_colour, 0);
+				introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
 			}
 
 			fontsetfontdef();
 		}
 	}
 
-	if (slowmgmtcopy != 0) {
-		rcunion(draw_ingame_text(), rcunk, rcunk);
+	if (statemgmtcpy != 0) {
+		rcunion(draw_ingame_text(), tparr, tparr);
 		if (skybox_result != 0) {
-			rcunk[0] = *clip;
+			tparr[0] = *clip;
 			for (si = 1; si < 15; si++) {
-				rcunk[si] = clipunk;
+				tparr[si] = clipunk;
 			}
 		}
 
 		for (si = 0; si < 15; si++) {
-			rectp[si] = rcunk[si];
+			rectp[si] = tparr[si];
 		}
-		word_449FC[page] = view_rot_x;
-		word_463D6 = view_rot_x;
+		rotpr[page] = view_rot_x;
+		prevcamrot = view_rot_x;
 
 	} else {
 		draw_ingame_text();
@@ -1965,29 +1965,29 @@ draw_done:
 
 }
 
-extern char byte_454A4;
+extern char g_simprect;
 extern void far msdrawopaquechk(void);
 extern void far msdrawtransparentchk(void);
 extern void far rectsorttop(char, struct RECTANGLE *, int *);
-extern struct RECTANGLE rectarr3[15];
-extern int word_355D4[15];
-extern char rectarr3len;
-extern char rcarrayixs[15];
+extern struct RECTANGLE rectclip[15];
+extern int rcmapix[45];
+extern char rect_num3;
+extern char rects_updt[15];
 extern struct RECTANGLE rcunk5;
 extern void far rectlist_add(char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
 extern void far sprcopy2to12(void);
 extern void far sprputimage(void far *);
 extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
-extern struct SPRITE far *wndsprite;
-extern int word_449FC[];
-extern int word_463D6;
+extern struct SPRITE far *g_wndspr;
+extern int rotpr[];
+extern int prevcamrot;
 
 void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
 {
     {
         register int upper_height;
         if (detail_lvl != 4)
-            upper_height = horizon - rectptr->top - skybox_current;
+            upper_height = horizon - rectptr->top - sky_hgt_world;
         else
             upper_height = horizon - rectptr->top;
 
@@ -1996,7 +1996,7 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
 
         if (upper_height > 0) {
             sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->top + upper_height);
-            sprite_clear_1_color(skybox_sky_color);
+            sprite_clear_1_color(g_skybox_sky_clr);
         }
     }
 
@@ -2004,13 +2004,13 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
         register int sky_x;
         if (detail_lvl != 4) {
             sky_x = ((x + 0x200) & 0x3ff) - 0x400;
-            if (rectptr->top < horizon && horizon - word_454CE <= rectptr->bottom) {
+            if (rectptr->top < horizon && horizon - maxscnh <= rectptr->bottom) {
                 sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                sprite_putimage_and_alt(skyboxes[0], sky_x, horizon - skybox_ptr1);
-                sprite_putimage_and_alt(skyboxes[1], sky_x + 0x140, horizon - skybox_ptr2);
-                sprite_putimage_and_alt(skyboxes[2], sky_x + 0x200, horizon - skybox_ptr3);
-                sprite_putimage_and_alt(skyboxes[3], sky_x + 0x340, horizon - skybox_ptr4);
-                sprite_putimage_and_alt(skyboxes[0], sky_x + 0x400, horizon - skybox_ptr1);
+                sprite_putimage_and_alt(skypics[0], sky_x, horizon - scene_1ht);
+                sprite_putimage_and_alt(skypics[1], sky_x + 0x140, horizon - scene_2ht);
+                sprite_putimage_and_alt(skypics[2], sky_x + 0x200, horizon - scene_3ht);
+                sprite_putimage_and_alt(skypics[3], sky_x + 0x340, horizon - scene_4ht);
+                sprite_putimage_and_alt(skypics[0], sky_x + 0x400, horizon - scene_1ht);
             }
         }
     }
@@ -2026,7 +2026,7 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, int x, int horizon)
         lower_height = rectptr->bottom - ground_top;
         if (lower_height > 0) {
             sprset1size(rectptr->left, rectptr->right, ground_top, ground_top + lower_height);
-            sprite_clear_1_color(skybox_ground_color);
+            sprite_clear_1_color(ground_skybox);
         }
     }
 }
@@ -2049,7 +2049,7 @@ int skybox_op(int preview_index, struct RECTANGLE *clip, int latitude,
     struct RECTANGLE rc;
     struct RECTANGLE *rectptr;
 
-    rectarr3len = 0;
+    rect_num3 = 0;
     draw_result = 0;
     sprset1size(0, 0x140, clip->top, clip->bottom);
 
@@ -2062,7 +2062,7 @@ int skybox_op(int preview_index, struct RECTANGLE *clip, int latitude,
         mat_vec(&transform_input, rotation, &vecs[1]);
 
         if (vecs[0].z < 0 || vecs[1].z < 0) {
-            temp = skybox_sky_color;
+            temp = g_skybox_sky_clr;
 fill:
             sprset1size(0, 0x140, clip->top, clip->bottom);
             sprite_clear_1_color(temp);
@@ -2075,34 +2075,34 @@ fill:
 
         if (pts[0].px > 0x140 && pts[1].px > 0x140) {
             if (pts[0].py < pts[1].py) {
-                temp = skybox_sky_color;
+                temp = g_skybox_sky_clr;
                 goto fill;
             }
-            temp = skybox_ground_color;
+            temp = ground_skybox;
             goto fill;
         }
         if (pts[0].px < 0 && pts[1].px < 0) {
             if (pts[0].py <= pts[1].py) {
-                temp = skybox_ground_color;
+                temp = ground_skybox;
                 goto fill;
             }
-            temp = skybox_sky_color;
+            temp = g_skybox_sky_clr;
             goto fill;
         }
         if (pts[0].py > clip->bottom && pts[1].py > clip->bottom) {
             if (pts[0].px <= pts[1].px) {
-                temp = skybox_ground_color;
+                temp = ground_skybox;
                 goto fill;
             }
-            temp = skybox_sky_color;
+            temp = g_skybox_sky_clr;
             goto fill;
         }
         if (pts[0].py < clip->top && pts[1].py < clip->top) {
             if (pts[0].px >= pts[1].px) {
-                temp = skybox_ground_color;
+                temp = ground_skybox;
                 goto fill;
             }
-            temp = skybox_sky_color;
+            temp = g_skybox_sky_clr;
             goto fill;
         }
 
@@ -2125,52 +2125,52 @@ fill:
         }
 
         if (found != 0) {
-            if (slowmgmtcopy != 0) {
+            if (statemgmtcpy != 0) {
                 rc.left = 0;
-                rcunk[5].left = 0;
+                tparr[5].left = 0;
                 rc.right = 0x140;
-                rcunk[5].right = 0x140;
-                if (byte_454A4 != 0) {
-                    rcunk[5].top = clip->top;
-                    rcunk[5].bottom = clip->bottom;
+                tparr[5].right = 0x140;
+                if (g_simprect != 0) {
+                    tparr[5].top = clip->top;
+                    tparr[5].bottom = clip->bottom;
                 } else {
-                    rcunk[5].top = (start_y < start_y + slope ? start_y : start_y + slope) - word_454CE;
-                    if (clip->top > rcunk[5].top)
-                        rcunk[5].top = clip->top;
-                    rcunk[5].bottom = start_y > start_y + slope ? start_y : start_y + slope;
+                    tparr[5].top = (start_y < start_y + slope ? start_y : start_y + slope) - maxscnh;
+                    if (clip->top > tparr[5].top)
+                        tparr[5].top = clip->top;
+                    tparr[5].bottom = start_y > start_y + slope ? start_y : start_y + slope;
 
                     for (i = 0; i < 15; i++)
-                        rcarrayixs[i] = 1;
-                    rcarrayixs[5] = 3;
+                        rects_updt[i] = 1;
+                    rects_updt[5] = 3;
 
                     rc.top = 0;
-                    rc.bottom = rcunk[5].top;
+                    rc.bottom = tparr[5].top;
                     if (!rcintersect(&rc, clip)) {
-                        rectarr3len = 0;
-                        rectlist_add(15, rcarrayixs, rectp, rcunk,
-                                           &rc, &rectarr3len, rectarr3);
-                        for (temp = 0; temp < rectarr3len; temp++) {
-                            rectptr = &rectarr3[temp];
+                        rect_num3 = 0;
+                        rectlist_add(15, rects_updt, rectp, tparr,
+                                           &rc, &rect_num3, rectclip);
+                        for (temp = 0; temp < rect_num3; temp++) {
+                            rectptr = &rectclip[temp];
                             sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                            sprite_clear_1_color(skybox_sky_color);
+                            sprite_clear_1_color(g_skybox_sky_clr);
                         }
                     }
 
-                    rc.top = rcunk[5].bottom;
+                    rc.top = tparr[5].bottom;
                     rc.bottom = 0xc8;
                     if (!rcintersect(&rc, clip)) {
-                        rectarr3len = 0;
-                        rectlist_add(15, rcarrayixs, rectp, rcunk,
-                                           &rc, &rectarr3len, rectarr3);
-                        for (temp = 0; temp < rectarr3len; temp++) {
-                            rectptr = &rectarr3[temp];
+                        rect_num3 = 0;
+                        rectlist_add(15, rects_updt, rectp, tparr,
+                                           &rc, &rect_num3, rectclip);
+                        for (temp = 0; temp < rect_num3; temp++) {
+                            rectptr = &rectclip[temp];
                             sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                            sprite_clear_1_color(skybox_ground_color);
+                            sprite_clear_1_color(ground_skybox);
                         }
                     }
                 }
-                rc.top = rcunk[5].top;
-                rc.bottom = rcunk[5].bottom;
+                rc.top = tparr[5].top;
+                rc.bottom = tparr[5].bottom;
             } else {
                 rc.top = clip->top;
                 rc.bottom = clip->bottom;
@@ -2184,7 +2184,7 @@ fill:
                     temp = 0x20;
                 for (i = 0; i < temp; i++) {
                     rc.left = xstart;
-                    rc.right = ((0x140 * i + 0x140) / temp) & video_flag3_isFFFF;
+                    rc.right = ((0x140 * i + 0x140) / temp) & vidflg3is_minus1;
                     if (rc.left != rc.right) {
                         horizon = start_y + (slope * i) / temp;
                         skybox_op_helper2(&rc, detail, horizon);
@@ -2199,11 +2199,11 @@ fill:
                     temp = 0;
                 else
                     temp = 1;
-                pts[slope].px = pts[temp].px + mulscl(0x3e80, sinfast(word_2C0FC[slope] + i));
-                pts[slope].py = pts[temp].py + mulscl(0x3e80, cosfast(word_2C0FC[slope] + i));
+                pts[slope].px = pts[temp].px + mulscl(0x3e80, sinfast(horizon_angles[slope - 2] + i));
+                pts[slope].py = pts[temp].py + mulscl(0x3e80, cosfast(horizon_angles[slope - 2] + i));
             }
-            skybox_op_helper(skybox_sky_color, 4, pts[0], pts[1], pts[3], pts[2]);
-            skybox_op_helper(skybox_ground_color, 4, pts[0], pts[1], pts[4], pts[5]);
+            skybox_op_helper(g_skybox_sky_clr, 4, pts[0], pts[1], pts[3], pts[2]);
+            skybox_op_helper(ground_skybox, 4, pts[0], pts[1], pts[4], pts[5]);
             draw_result = 1;
         }
     } else {
@@ -2212,13 +2212,13 @@ fill:
         transform_input.z = 0x3a98 * latitude;
         mat_vec(&transform_input, rotation, &vecs[0]);
         if (vecs[0].z < 0) {
-            sprite_clear_1_color(skybox_sky_color);
-            if (slowmgmtcopy != 0) {
+            sprite_clear_1_color(g_skybox_sky_clr);
+            if (statemgmtcpy != 0) {
                 draw_result = 1;
-                rcunk[5].left = 0;
-                rcunk[5].right = 0x140;
-                rcunk[5].top = clip->top;
-                rcunk[5].bottom = clip->bottom;
+                tparr[5].left = 0;
+                tparr[5].right = 0x140;
+                tparr[5].top = clip->top;
+                tparr[5].bottom = clip->bottom;
             }
             goto done;
         }
@@ -2229,13 +2229,13 @@ fill:
             horizon = clip->top;
 
         if (latitude == 1) {
-            if (slowmgmtcopy == 0)
+            if (statemgmtcpy == 0)
                 goto simple;
-            rcunk[5].top = (detail_lvl == 4) ? horizon - 1 : horizon - word_454CE;
-            rcunk[5].left = 0;
-            rcunk[5].right = 0x140;
-            rcunk[5].bottom = horizon;
-            if (byte_454A4 != 0) {
+            tparr[5].top = (detail_lvl == 4) ? horizon - 1 : horizon - maxscnh;
+            tparr[5].left = 0;
+            tparr[5].right = 0x140;
+            tparr[5].bottom = horizon;
+            if (g_simprect != 0) {
 simple:
                 rc.left = 0;
                 rc.right = 0x140;
@@ -2244,22 +2244,22 @@ simple:
                 skybox_op_helper2(&rc, detail, horizon);
             } else {
                 for (i = 0; i < 15; i++)
-                    rcarrayixs[i] = 1;
+                    rects_updt[i] = 1;
                 if (detail_lvl == 4)
-                    word_449FC[preview_index] = word_463D6;
-                if (word_449FC[preview_index] == detail &&
-                    rectp[5].left == rcunk[5].left &&
-                    rectp[5].right == rcunk[5].right &&
-                    rectp[5].top == rcunk[5].top &&
-                    rectp[5].bottom == rcunk[5].bottom)
-                    rcarrayixs[5] = 0;
+                    rotpr[preview_index] = prevcamrot;
+                if (rotpr[preview_index] == detail &&
+                    rectp[5].left == tparr[5].left &&
+                    rectp[5].right == tparr[5].right &&
+                    rectp[5].top == tparr[5].top &&
+                    rectp[5].bottom == tparr[5].bottom)
+                    rects_updt[5] = 0;
                 else
-                    rcarrayixs[5] = 3;
-                rectarr3len = 0;
-                rectlist_add(15, rcarrayixs, rectp, rcunk,
-                                   clip, &rectarr3len, rectarr3);
-                for (temp = 0; temp < rectarr3len; temp++)
-                    skybox_op_helper2(&rectarr3[temp], detail, horizon);
+                    rects_updt[5] = 3;
+                rect_num3 = 0;
+                rectlist_add(15, rects_updt, rectp, tparr,
+                                   clip, &rect_num3, rectclip);
+                for (temp = 0; temp < rect_num3; temp++)
+                    skybox_op_helper2(&rectclip[temp], detail, horizon);
             }
         } else {
             i = horizon - clip->top;
@@ -2267,12 +2267,12 @@ simple:
                 i = clip->bottom - clip->top;
             if (i > 0) {
                 sprset1size(0, 0x140, clip->top, clip->top + i);
-                sprite_clear_1_color(skybox_ground_color);
+                sprite_clear_1_color(ground_skybox);
             }
             i = clip->bottom - horizon;
             if (i > 0) {
                 sprset1size(0, 0x140, horizon, horizon + i);
-                sprite_clear_1_color(skybox_sky_color);
+                sprite_clear_1_color(g_skybox_sky_clr);
             }
             draw_result = 1;
         }
@@ -2281,17 +2281,17 @@ done:
     return draw_result;
 }
 
-void transformed_shape_add_for_sort(int zadjust, char arg_2) {
+void transformed_shape_add_for_sort(int zadjust, char sort_group_id) {
 	struct VECTOR transformedpos;
 	struct VECTOR shapepos;
 
-	shapepos = curtshapep->pos;
-	mat_vec(&shapepos, &mattmp, &transformedpos);
-	tshapezs[(int)tshapecnt] = transformedpos.z + zadjust;
-	tshapearg2arr[(int)tshapecnt] = arg_2;
-	tshapeixs[(int)tshapecnt] = (int)tshapecnt;
-	tshapecnt++;
-	curtshapep++;
+	shapepos = g_curr_tsp->pos;
+	mat_vec(&shapepos, &wkmatx, &transformedpos);
+	g_tdist[(int)g_ts_num] = transformedpos.z + zadjust;
+	tshapearrarg2[(int)g_ts_num] = sort_group_id;
+	tsix[(int)g_ts_num] = (int)g_ts_num;
+	g_ts_num++;
+	g_curr_tsp++;
 }
 
 void draw_track_preview(void)
@@ -2316,23 +2316,23 @@ void draw_track_preview(void)
     unsigned char terr;
     struct TRACKOBJECT *track_obj;
 
-    camera_distance = polradius2d(word_3C10E - word_3C108,
-                                    word_3C112 - word_3C10C);
-    rot_angle = polang(word_3C110 - word_3C10A, camera_distance);
+    camera_distance = polradius2d(camera_aim_x - camera_pos_x,
+                                    camera_aim_z - camera_pos_z);
+    rot_angle = polang(camera_aim_y - camera_pos_y, camera_distance);
     cam_matrix = matrotzxy(0, rot_angle, 0, 1);
-    mat_vec(&unk_3C114, cam_matrix, &vector);
+    mat_vec(&track_prev_vec, cam_matrix, &vector);
     vector_to_point(&vector, &screen_point);
 
     horizon = screen_point.py;
     if (horizon < 0)
         horizon = 0;
-    sprset1size(0, 0x140, 0, horizon - skybox_current);
-    sprite_clear_1_color(skybox_sky_color);
+    sprset1size(0, 0x140, 0, horizon - sky_hgt_world);
+    sprite_clear_1_color(g_skybox_sky_clr);
     sprset1size(0, 0x140, 0, 0x64);
-    sprite_putimage_and_alt(skyboxes[2], 0, horizon - skybox_ptr3);
-    sprite_putimage_and_alt(skyboxes[3], 0x140, horizon - skybox_ptr4);
+    sprite_putimage_and_alt(skypics[2], 0, horizon - scene_3ht);
+    sprite_putimage_and_alt(skypics[3], 0x140, horizon - scene_4ht);
     sprset1size(0, 0x140, horizon, 0xc8);
-    sprite_clear_1_color(skybox_ground_color);
+    sprite_clear_1_color(ground_skybox);
     sprset1size(0, 0x140, 0, 0xc8);
     select_rot(0, rot_angle, 0, &trackpreview_cliprect, 1);
 
@@ -2342,8 +2342,8 @@ void draw_track_preview(void)
 
     for (row_idx = 0; row_idx < 30; row_idx++) {
         for (tile_col = 0; tile_col < 30; tile_col++) {
-            elem = td14map[trackrows[row_idx] + tile_col];
-            terr = td15map[terrrows[row_idx] + tile_col];
+            elem = td14tb[lnoffsets[row_idx] + tile_col];
+            terr = td15p_9[gterrtrk[row_idx] + tile_col];
             if (elem != 0) {
                 if (terr >= 7 && terr < 11) {
                     elem = subst_hillroad(terr, elem);
@@ -2389,13 +2389,13 @@ void draw_track_preview(void)
                             cz = row_idx + 1;
                             break;
                         }
-                        terr = td15map[terrrows[cz] + cx];
+                        terr = td15p_9[gterrtrk[cz] + cx];
                         if (terr != 0) {
                             track_obj = &scene2[terr];
                             transformed.shapeptr = track_obj->ss_shapePtr;
-                            transformed.pos.x = (trackctrpos2[cx] - word_3C108) >> 1;
-                            transformed.pos.y = (-word_3C10A) >> 1;
-                            transformed.pos.z = (trackctrpos[cz] - word_3C10C) >> 1;
+                            transformed.pos.x = (trackctrpos2[cx] - camera_pos_x) >> 1;
+                            transformed.pos.y = (-camera_pos_y) >> 1;
+                            transformed.pos.z = (row_ctr_zs[cz] - camera_pos_z) >> 1;
                             transformed.ts_flags = 5;
                             transformed.rotvec.x = 0;
                             transformed.rotvec.y = 0;
@@ -2413,9 +2413,9 @@ void draw_track_preview(void)
             if (terr != 0) {
                 track_obj = &scene2[terr];
                 transformed.shapeptr = track_obj->ss_loShapePtr;
-                transformed.pos.x = (trackctrpos2[tile_col] - word_3C108) >> 1;
-                transformed.pos.y = (obj_height - word_3C10A) >> 1;
-                transformed.pos.z = (trackctrpos[row_idx] - word_3C10C) >> 1;
+                transformed.pos.x = (trackctrpos2[tile_col] - camera_pos_x) >> 1;
+                transformed.pos.y = (obj_height - camera_pos_y) >> 1;
+                transformed.pos.z = (row_ctr_zs[row_idx] - camera_pos_z) >> 1;
                 transformed.rotvec.z = track_obj->ss_rotY;
                 transformed.ts_flags = 5;
                 transformed.material = 0;
@@ -2424,28 +2424,28 @@ void draw_track_preview(void)
 
             if (elem != 0) {
                 track_obj = &trklst[elem];
-                obj_z = (track_obj->ss_multiTileFlag & 1) ? trkp[row_idx] : trackctrpos[row_idx];
+                obj_z = (track_obj->ss_multiTileFlag & 1) ? r_zp[row_idx] : row_ctr_zs[row_idx];
                 if (track_obj->ss_multiTileFlag & 2)
-                    obj_x_pos = trkp2[tile_col + 1];
+                    obj_x_pos = xcols[tile_col + 1];
                 else
                     obj_x_pos = trackctrpos2[tile_col];
-                vector.x = (obj_x_pos - word_3C108) >> 1;
-                vector.y = (obj_height - word_3C10A) >> 1;
-                vector.z = (obj_z - word_3C10C) >> 1;
+                vector.x = (obj_x_pos - camera_pos_x) >> 1;
+                vector.y = (obj_height - camera_pos_y) >> 1;
+                vector.z = (obj_z - camera_pos_z) >> 1;
 
                 if (obj_height != 0) {
                     switch (track_obj->ss_multiTileFlag) {
                     case 0:
-                        transformed.shapeptr = &game3dshapes[43];
+                        transformed.shapeptr = &g_shapes3d[43];
                         break;
                     case 1:
-                        transformed.shapeptr = &game3dshapes[91];
+                        transformed.shapeptr = &g_shapes3d[91];
                         break;
                     case 2:
-                        transformed.shapeptr = &game3dshapes[92];
+                        transformed.shapeptr = &g_shapes3d[92];
                         break;
                     case 3:
-                        transformed.shapeptr = &game3dshapes[93];
+                        transformed.shapeptr = &g_shapes3d[93];
                         break;
                     }
                     transformed.pos = vector;
@@ -2489,110 +2489,380 @@ struct RECTANGLE *draw_ingame_text(void)
 {
     register int remainder;
 
-    rect_ingame_text = clipunk;
+    game_rect_txt_in = clipunk;
 
-    if (idle_expired != 0) {
-        copy_string(&residbyte1, locate_text_resource(gameresptr, aDm1));
-        rcunion(&rect_ingame_text,
-            introtext(&residbyte1, font_op2_alt(&residbyte1), 0xAA, dlg_colour, 0),
-            &rect_ingame_text);
+    if (menutimeout != 0) {
+        copy_string(&resbuftext, locate_text_resource(gamerptrs, aDm1));
+        rcunion(&game_rect_txt_in,
+            introtext(&resbuftext, font_op2_alt(&resbuftext), 0xAA, dlg_colour, 0),
+            &game_rect_txt_in);
 
-        copy_string(&residbyte1, locate_text_resource(gameresptr, aDm2));
-        rcunion(&rect_ingame_text,
-            introtext(&residbyte1, font_op2_alt(&residbyte1), 0xB6, dlg_colour, 0),
-            &rect_ingame_text);
-    } else if (replay_mode == 0) {
-        if (state.game_inputmode == 0) {
-            copy_string(&residbyte1, locate_text_resource(gameresptr, aPre));
-            rcunion(&rect_ingame_text,
-                introtext(&residbyte1, font_op2_alt(&residbyte1), 0x5A, dlg_colour, 0),
-                &rect_ingame_text);
-        } else if (passed_security == 0) {
-            copy_string(&residbyte1, locate_text_resource(gameresptr, aSe1));
-            rcunion(&rect_ingame_text,
-                introtext(&residbyte1, font_op2_alt(&residbyte1), 0x5D, dlg_colour, 0),
-                &rect_ingame_text);
-            copy_string(&residbyte1, locate_text_resource(gameresptr, aSe2));
-            rcunion(&rect_ingame_text,
-                introtext(&residbyte1, font_op2_alt(&residbyte1), 0x69, dlg_colour, 0),
-                &rect_ingame_text);
-        } else if (followflg == 0 && cammd == 0 && state.playerstate.car_crashBmpFlag == 0) {
-            switch ((int)state.field_45D) {
+        copy_string(&resbuftext, locate_text_resource(gamerptrs, aDm2));
+        rcunion(&game_rect_txt_in,
+            introtext(&resbuftext, font_op2_alt(&resbuftext), 0xB6, dlg_colour, 0),
+            &game_rect_txt_in);
+    } else if (gm_playmode == 0) {
+        if (core.game_inputmode == 0) {
+            copy_string(&resbuftext, locate_text_resource(gamerptrs, aPre));
+            rcunion(&game_rect_txt_in,
+                introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5A, dlg_colour, 0),
+                &game_rect_txt_in);
+        } else if (pass_check_flag == 0) {
+            copy_string(&resbuftext, locate_text_resource(gamerptrs, aSe1));
+            rcunion(&game_rect_txt_in,
+                introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5D, dlg_colour, 0),
+                &game_rect_txt_in);
+            copy_string(&resbuftext, locate_text_resource(gamerptrs, aSe2));
+            rcunion(&game_rect_txt_in,
+                introtext(&resbuftext, font_op2_alt(&resbuftext), 0x69, dlg_colour, 0),
+                &game_rect_txt_in);
+        } else if (follow_op == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
+            switch ((int)core.field_45D) {
             case 1:
-                sprite_putimage_transparent(sdg2shps[3], 0x94, 0x5D);
-                rcunion(&rect_ingame_text, &rect_ingame_text2, &rect_ingame_text);
+                sprite_putimage_transparent(sdgbmp_v[3], 0x94, 0x5D);
+                rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 2:
-                sprite_putimage_transparent(sdg2shps[4], 0x94, 0x5D);
-                rcunion(&rect_ingame_text, &rect_ingame_text2, &rect_ingame_text);
+                sprite_putimage_transparent(sdgbmp_v[4], 0x94, 0x5D);
+                rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 3:
-                copy_string(&residbyte1, locate_text_resource(gameresptr, aWww));
-                rcunion(&rect_ingame_text,
-                    introtext(&residbyte1, font_op2_alt(&residbyte1), 0x5D, dlg_colour, 0),
-                    &rect_ingame_text);
+                copy_string(&resbuftext, locate_text_resource(gamerptrs, aWww));
+                rcunion(&game_rect_txt_in,
+                    introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5D, dlg_colour, 0),
+                    &game_rect_txt_in);
                 break;
             }
 
-            residbyte1 = 0;
-            switch ((int)state.field_45E) {
+            resbuftext = 0;
+            switch ((int)core.field_45E) {
             case 1:
-                sprite_putimage_transparent(sdg2shps[3], 0x44, 0x71);
-                rcunion(&rect_ingame_text, &rect_ingame_text3, &rect_ingame_text);
-                copy_string(&residbyte1, locate_text_resource(gameresptr, aOpp));
+                sprite_putimage_transparent(sdgbmp_v[3], 0x44, 0x71);
+                rcunion(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
+                copy_string(&resbuftext, locate_text_resource(gamerptrs, aOpp));
                 break;
             case 2:
-                sprite_putimage_transparent(sdg2shps[4], 0xE4, 0x71);
-                rcunion(&rect_ingame_text, &rect_ingame_text4, &rect_ingame_text);
-                copy_string(&residbyte1, locate_text_resource(gameresptr, aOpp_0));
+                sprite_putimage_transparent(sdgbmp_v[4], 0xE4, 0x71);
+                rcunion(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
+                copy_string(&resbuftext, locate_text_resource(gamerptrs, aOpp_0));
                 break;
             }
 
-            if (residbyte1 != 0) {
-                rcunion(&rect_ingame_text,
-                    introtext(&residbyte1, font_op2_alt(&residbyte1), 0x74, dlg_colour, 0),
-                    &rect_ingame_text);
+            if (resbuftext != 0) {
+                rcunion(&game_rect_txt_in,
+                    introtext(&resbuftext, font_op2_alt(&resbuftext), 0x74, dlg_colour, 0),
+                    &game_rect_txt_in);
             }
 
-            if (show_penalty_counter != 0) {
-                copy_string(&residbyte1, locate_text_resource(gameresptr, aPen));
-                fmtframestr(&residbyte1 + strlen(&residbyte1), penalty_time, 0);
-                rcunion(&rect_ingame_text,
-                    introtext(&residbyte1, font_op2_alt(&residbyte1), 0x66, dlg_colour, 0),
-                    &rect_ingame_text);
+            if (pen_flag_count != 0) {
+                copy_string(&resbuftext, locate_text_resource(gamerptrs, aPen));
+                fmtframestr(&resbuftext + strlen(&resbuftext), g_penaltytm, 0);
+                rcunion(&game_rect_txt_in,
+                    introtext(&resbuftext, font_op2_alt(&resbuftext), 0x66, dlg_colour, 0),
+                    &game_rect_txt_in);
             }
         }
-    } else if (replay_mode == 2) {
-        remainder = state.game_frame % framespersec;
-        if (remainder < ((short)framespersec >> 1)) {
-            copy_string(&residbyte1, locate_text_resource(gameresptr, aRpl_0));
-            rcunion(&rect_ingame_text,
-                introtext(&residbyte1, 0x138 - (strlen(&residbyte1) << 3), 0x0F, dlg_colour, 0),
-                &rect_ingame_text);
+    } else if (gm_playmode == 2) {
+        remainder = core.game_frame % rate_frame;
+        if (remainder < ((short)rate_frame >> 1)) {
+            copy_string(&resbuftext, locate_text_resource(gamerptrs, aRpl_0));
+            rcunion(&game_rect_txt_in,
+                introtext(&resbuftext, 0x138 - (strlen(&resbuftext) << 3), 0x0F, dlg_colour, 0),
+                &game_rect_txt_in);
         }
     }
 
-    return &rect_ingame_text;
+    return &game_rect_txt_in;
 }
 
 struct RECTANGLE *do_sinking(int frame, int top, int height)
 {
     register int offset;
 
-    if (frame > (int)framespersec * 4)
-        frame = (int)framespersec * 4;
+    if (frame > (int)rate_frame * 4)
+        frame = (int)rate_frame * 4;
 
-    offset = (int)(((long)height * frame) / (long)((int)framespersec * 4));
+    offset = (int)(((long)height * frame) / (long)((int)rate_frame * 4));
 
-    rect_ingame_text.left = 0;
-    rect_ingame_text.right = 0x140;
-    rect_ingame_text.top = top + height - offset;
-    rect_ingame_text.bottom = top + height;
+    game_rect_txt_in.left = 0;
+    game_rect_txt_in.right = 0x140;
+    game_rect_txt_in.top = top + height - offset;
+    game_rect_txt_in.bottom = top + height;
 
-    sprset1size(0, 0x140, rect_ingame_text.top, rect_ingame_text.bottom);
-    sprite_clear_1_color(skybox_wat_color);
-    return &rect_ingame_text;
+    sprset1size(0, 0x140, game_rect_txt_in.top, game_rect_txt_in.bottom);
+    sprite_clear_1_color(g_skyboxwat_clr);
+    return &game_rect_txt_in;
 }
+
+struct LOOKAHEAD_TILE { char east_delta, south_delta, detail; };
+int fence_offsets[8] = { 30, 200, 320, 400, 530, 700, 880, 960 };
+struct SHAPE3D *fence_shapes[8] = {
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x420),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x40A),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x3F4),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x420),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x40A),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x3F4),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x420),
+    (struct SHAPE3D *)((char *)&g_shapes3d[0].shape3d_numverts + 0x40A),
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading0[23] = {
+    { -2, -4, 2 },
+    { -1, -4, 2 },
+    { 0, -4, 2 },
+    { 1, -4, 2 },
+    { 2, -4, 2 },
+    { -2, -3, 1 },
+    { -1, -3, 1 },
+    { 0, -3, 1 },
+    { 1, -3, 1 },
+    { 2, -3, 1 },
+    { -2, -2, 1 },
+    { -1, -2, 0 },
+    { 0, -2, 0 },
+    { 1, -2, 0 },
+    { 2, -2, 1 },
+    { -2, -1, 0 },
+    { -1, -1, 0 },
+    { 0, -1, 0 },
+    { 1, -1, 0 },
+    { 2, -1, 0 },
+    { -1, 0, 0 },
+    { 1, 0, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading1[23] = {
+    { 2, -4, 2 },
+    { 1, -4, 2 },
+    { 0, -4, 2 },
+    { -1, -4, 2 },
+    { -2, -4, 2 },
+    { 2, -3, 1 },
+    { 1, -3, 1 },
+    { 0, -3, 1 },
+    { -1, -3, 1 },
+    { -2, -3, 1 },
+    { 2, -2, 1 },
+    { 1, -2, 0 },
+    { 0, -2, 0 },
+    { -1, -2, 0 },
+    { -2, -2, 1 },
+    { 2, -1, 0 },
+    { 1, -1, 0 },
+    { 0, -1, 0 },
+    { -1, -1, 0 },
+    { -2, -1, 0 },
+    { 1, 0, 0 },
+    { -1, 0, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading2[23] = {
+    { 4, -2, 2 },
+    { 4, -1, 2 },
+    { 4, 0, 2 },
+    { 4, 1, 2 },
+    { 4, 2, 2 },
+    { 3, -2, 1 },
+    { 3, -1, 1 },
+    { 3, 0, 1 },
+    { 3, 1, 1 },
+    { 3, 2, 1 },
+    { 2, -2, 1 },
+    { 2, -1, 0 },
+    { 2, 0, 0 },
+    { 2, 1, 0 },
+    { 2, 2, 1 },
+    { 1, -2, 0 },
+    { 1, -1, 0 },
+    { 1, 0, 0 },
+    { 1, 1, 0 },
+    { 2, 2, 0 },
+    { 0, -1, 0 },
+    { 0, 1, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading3[23] = {
+    { 4, 2, 2 },
+    { 4, 1, 2 },
+    { 4, 0, 2 },
+    { 4, -1, 2 },
+    { 4, -2, 2 },
+    { 3, 2, 1 },
+    { 3, 1, 1 },
+    { 3, 0, 1 },
+    { 3, -1, 1 },
+    { 3, -2, 1 },
+    { 2, 2, 1 },
+    { 2, 1, 0 },
+    { 2, 0, 0 },
+    { 2, -1, 0 },
+    { 2, -2, 1 },
+    { 1, 2, 0 },
+    { 1, 1, 0 },
+    { 1, 0, 0 },
+    { 1, -1, 0 },
+    { 1, -2, 0 },
+    { 0, 1, 0 },
+    { 0, -1, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading4[23] = {
+    { 2, 4, 2 },
+    { 1, 4, 2 },
+    { 0, 4, 2 },
+    { -1, 4, 2 },
+    { -2, 4, 2 },
+    { 2, 3, 1 },
+    { 1, 3, 1 },
+    { 0, 3, 1 },
+    { -1, 3, 1 },
+    { -2, 3, 1 },
+    { 2, 2, 0 },
+    { 1, 2, 0 },
+    { 0, 2, 0 },
+    { -1, 2, 0 },
+    { -2, 2, 1 },
+    { 2, 1, 0 },
+    { 1, 1, 0 },
+    { 0, 1, 0 },
+    { -1, 1, 0 },
+    { -2, 1, 0 },
+    { 1, 0, 0 },
+    { -1, 0, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading5[23] = {
+    { -2, 4, 2 },
+    { -1, 4, 2 },
+    { 0, 4, 2 },
+    { 1, 4, 2 },
+    { 2, 4, 2 },
+    { -2, 3, 1 },
+    { -1, 3, 1 },
+    { 0, 3, 1 },
+    { 1, 3, 1 },
+    { 2, 3, 1 },
+    { -2, 2, 1 },
+    { -1, 2, 0 },
+    { 0, 2, 0 },
+    { 1, 2, 0 },
+    { 2, 2, 1 },
+    { -2, 1, 0 },
+    { -1, 1, 0 },
+    { 0, 1, 0 },
+    { 1, 1, 0 },
+    { 2, 1, 0 },
+    { -1, 0, 0 },
+    { 1, 0, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading6[23] = {
+    { -4, 2, 2 },
+    { -4, 1, 2 },
+    { -4, 0, 2 },
+    { -4, -1, 2 },
+    { -4, -2, 2 },
+    { -3, 2, 1 },
+    { -3, 1, 1 },
+    { -3, 0, 1 },
+    { -3, -1, 1 },
+    { -3, -2, 1 },
+    { -2, 2, 1 },
+    { -2, 1, 0 },
+    { -2, 0, 0 },
+    { -2, -1, 0 },
+    { -2, -2, 1 },
+    { -1, 2, 0 },
+    { -1, 1, 0 },
+    { -1, 0, 0 },
+    { -1, -1, 0 },
+    { -1, -2, 0 },
+    { 0, 1, 0 },
+    { 0, -1, 0 },
+    { 0, 0, 0 },
+};
+
+static struct LOOKAHEAD_TILE lookahead_heading7[23] = {
+    { -4, -2, 2 },
+    { -4, -1, 2 },
+    { -4, 0, 2 },
+    { -4, 1, 2 },
+    { -4, 2, 2 },
+    { -3, -2, 1 },
+    { -3, -1, 1 },
+    { -3, 0, 1 },
+    { -3, 1, 1 },
+    { -3, 2, 1 },
+    { -2, -2, 1 },
+    { -2, -1, 0 },
+    { -2, 0, 0 },
+    { -2, 1, 0 },
+    { -2, 2, 1 },
+    { -1, -2, 0 },
+    { -1, -1, 0 },
+    { -1, 0, 0 },
+    { -1, 1, 0 },
+    { -1, 2, 0 },
+    { 0, -1, 0 },
+    { 0, 1, 0 },
+    { 0, 0, 0 },
+};
+
+char *ahead_tables[8] = { (char *)lookahead_heading1, (char *)lookahead_heading2, (char *)lookahead_heading3, (char *)lookahead_heading4, (char *)lookahead_heading5, (char *)lookahead_heading6, (char *)lookahead_heading7, (char *)lookahead_heading0 };
+struct RECTANGLE rcunk5 = { 0, 320, 0, 200 };
+char detthrlevel[6] = { 2, 2, 1, 0, 0, 0 };
+int hill_offs[9][2] = {
+    { 0, 0 },
+    { 0, 512 },
+    { 0, -512 },
+    { 512, 0 },
+    { -512, 0 },
+    { -512, 512 },
+    { -512, -512 },
+    { 512, 512 },
+    { 512, -512 },
+};
+char paint_cycle[16] = { 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3 };
+int shape_rot[8] = { 0, 0, 256, 256, 512, 512, 768, 768 };
+unsigned char fence_codes[8] = { 214, 215, 214, 215, 214, 215, 214, 215 };
+char fence_off_1[2] = { 0, 0 };
+char fence_off_2[4] = { 0, 0, 0, 1 };
+char fence_off_3[4] = { 0, 0, 1, 0 };
+char fence_off_4[8] = { 0, 0, 1, 0, 0, 1, 1, 1 };
+short horizon_angles[4] = { 128, 384, 640, 896 };
+int camera_pos_x = 15360;
+int camera_pos_y = 20200;
+int camera_pos_z = -2800;
+int camera_aim_x = 15360;
+int camera_aim_y = 2800;
+int camera_aim_z = 10960;
+struct VECTOR track_prev_vec = { 0, -10100, 16760 };
+struct RECTANGLE trackpreview_cliprect = { 0, 320, 0, 200 };
+char aDm1[] = "dm1";
+char aDm2[] = "dm2";
+char aPre[] = "pre";
+char aSe1[] = "se1";
+char aSe2[] = "se2";
+char aWww[] = "www";
+char aOpp[] = "opp";
+char aOpp_0[] = "opp";
+char aPen[] = "pen";
+char aRpl_0[] = "rpl";
+struct RECTANGLE rect_ingame_text2 = { 148, 172, 93, 108 };
+struct RECTANGLE rect_ingame_text3 = { 68, 92, 113, 128 };
+struct RECTANGLE rect_ingame_text4 = { 228, 252, 113, 128 };
+
+
+
+
+static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
 struct RECTANGLE *init_crak(int frame, int top, int height)
 {
@@ -2604,15 +2874,15 @@ struct RECTANGLE *init_crak(int frame, int top, int height)
     struct POINT2D start_point, crack_end, adjust_point;
     register int crackIndex;
 
-    crak_shape = (struct CRACK_LINE far *)locate_shape_alt(gameresptr, "crak");
-    cinf_shape = (int far *)locate_shape_alt(gameresptr, "cinf");
+    crak_shape = (struct CRACK_LINE far *)locate_shape_alt(gamerptrs, init_crak_resource_names[0]);
+    cinf_shape = (int far *)locate_shape_alt(gamerptrs, init_crak_resource_names[1]);
 
-    animation_counter = frame / ((int)framespersec / 7);
+    animation_counter = frame / ((int)rate_frame / 7);
     if (animation_counter >= cinf_shape[0])
         animation_counter = cinf_shape[0] - 1;
     total_lines = cinf_shape[animation_counter + 1];
 
-    rect_ingame_text = clipunk;
+    game_rect_txt_in = clipunk;
     for (crackIndex = 0; crackIndex < total_lines; ++crackIndex) {
             start_point = crak_shape[crackIndex].start;
             crack_end = crak_shape[crackIndex].end;
@@ -2627,26 +2897,26 @@ struct RECTANGLE *init_crak(int frame, int top, int height)
         preRender_line(start_point.px, start_point.py + top,
                        crack_end.px, crack_end.py + top, dlg_colour);
 
-        if (slowmgmtcopy != 0) {
+        if (statemgmtcpy != 0) {
             adjust_point.px = start_point.px;
             adjust_point.py = start_point.py + top - 1;
-            rect_adjust_from_point(&adjust_point, &rect_ingame_text);
+            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
 
             adjust_point.px = crack_end.px;
             adjust_point.py = crack_end.py + top + 1;
-            rect_adjust_from_point(&adjust_point, &rect_ingame_text);
+            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
 
             adjust_point.px = start_point.px;
             adjust_point.py = start_point.py + top + 1;
-            rect_adjust_from_point(&adjust_point, &rect_ingame_text);
+            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
 
             adjust_point.px = crack_end.px;
             adjust_point.py = crack_end.py + top - 1;
-            rect_adjust_from_point(&adjust_point, &rect_ingame_text);
+            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
         }
     }
 
-    return &rect_ingame_text;
+    return &game_rect_txt_in;
 }
 
 
@@ -2658,56 +2928,56 @@ void far load_skybox(char mode)
 
     if (mode & 8)
         mode &= 7;
-    else if (byte_3B8F6 != 0 && mode == byte_46167)
+    else if (skybox_loaded != 0 && mode == scene_idx)
         return;
     else {
         unload_skybox();
-        byte_46167 = mode;
-        byte_3B8F6 = 1;
-        skybox_res_ofs.pointer = file_load_shape2d_fatal_thunk(aDesert + 9 * mode);
-        locate_many_resources(skybox_res_ofs.pointer, "scensce2sce3sce4",
-                              (char far **)skyboxes);
-        skybox_ptr1 = skyboxes[0]->height;
-        skybox_ptr2 = skyboxes[1]->height;
-        skybox_ptr3 = skyboxes[2]->height;
-        skybox_ptr4 = skyboxes[3]->height;
-        skyHeight = skybox_ptr1;
-        if (skyHeight > skybox_ptr2) skyHeight = skybox_ptr2;
-        if (skyHeight > skybox_ptr3) skyHeight = skybox_ptr3;
-        if (skyHeight > skybox_ptr4) skyHeight = skybox_ptr4;
-        skybox_current = skyHeight;
-        skyHeight = skybox_ptr1;
-        if (skyHeight < skybox_ptr2) skyHeight = skybox_ptr2;
-        if (skyHeight < skybox_ptr3) skyHeight = skybox_ptr3;
-        if (skyHeight < skybox_ptr4) skyHeight = skybox_ptr4;
-        word_454CE = skyHeight;
+        scene_idx = mode;
+        skybox_loaded = 1;
+        skyres_handle.pointer = file_load_shape2d_fatal_thunk(scenery_names + 9 * mode);
+        locate_many_resources(skyres_handle.pointer, "scensce2sce3sce4",
+                              (char far **)skypics);
+        scene_1ht = skypics[0]->height;
+        scene_2ht = skypics[1]->height;
+        scene_3ht = skypics[2]->height;
+        scene_4ht = skypics[3]->height;
+        skyHeight = scene_1ht;
+        if (skyHeight > scene_2ht) skyHeight = scene_2ht;
+        if (skyHeight > scene_3ht) skyHeight = scene_3ht;
+        if (skyHeight > scene_4ht) skyHeight = scene_4ht;
+        sky_hgt_world = skyHeight;
+        skyHeight = scene_1ht;
+        if (skyHeight < scene_2ht) skyHeight = scene_2ht;
+        if (skyHeight < scene_3ht) skyHeight = scene_3ht;
+        if (skyHeight < scene_4ht) skyHeight = scene_4ht;
+        maxscnh = skyHeight;
     }
 
     materials = material_clrlist_ptr;
-    skybox_sky_color = materials->sky;
-    skybox_ground_color = materials->ground;
-    skybox_wat_color = materials->water;
-    meter_needle_color = dlg_colour;
+    g_skybox_sky_clr = materials->sky;
+    ground_skybox = materials->ground;
+    g_skyboxwat_clr = materials->water;
+    spdneedlegaugeclr = dlg_colour;
 }
 
 void far unload_skybox(void)
 {
-    if (byte_3B8F6 != 0)
-        mmgr_free(skybox_res_ofs.pointer);
-    byte_3B8F6 = 0;
+    if (skybox_loaded != 0)
+        mmgr_free(skyres_handle.pointer);
+    skybox_loaded = 0;
 }
 
 void far load_sdgame2_shapes(void)
 {
     register int i;
-    sdgame2ptr = file_load_resource(8, "sdgame2");
-    locate_many_resources(sdgame2ptr, "ex01ex02ex03leftrigh",
-                          (char far **)sdg2shps);
+    sdgame2hdl = file_load_resource(8, "sdgame2");
+    locate_many_resources(sdgame2hdl, "ex01ex02ex03leftrigh",
+                          (char far **)sdgbmp_v);
     for (i = 0; i < 3; ++i)
-        sdg2widths[i] = sdg2shps[i]->width;
+        exwd[i] = sdgbmp_v[i]->width;
 }
 
-void far free_sdgame2(void) { mmgr_free(sdgame2ptr); }
+void far free_sdgame2(void) { mmgr_free(sdgame2hdl); }
 
 char aCarcoun_0[] = "carcoun";
 
@@ -2750,11 +3020,11 @@ char far setup_intro(void)
     operationResult = 0;
     title3dresValue = file_load_3dres("title");
     locate_many_resources(title3dresValue, "logolog2brav", lastShapeResources);
-    shape3d_init_shape(lastShapeResources[0], &logoshape);
-    shape3d_init_shape(lastShapeResources[1], &logo2shape);
-    shape3d_init_shape(lastShapeResources[2], &bravshape);
-    if (vidflag5is0 == 0)
-        wndsprite = sprite_make_window(0x140, 0xc8, 0x0f);
+    shape3d_init_shape(lastShapeResources[0], &intro_alt);
+    shape3d_init_shape(lastShapeResources[1], &logo_title);
+    shape3d_init_shape(lastShapeResources[2], &brav);
+    if (g_videoflg5 == 0)
+        g_wndspr = sprite_make_window(0x140, 0xc8, 0x0f);
 
     targetApproachDifference = 0;
     do {
@@ -2777,24 +3047,24 @@ char far setup_intro(void)
     timer_get_delta();
     pointTotalB = 0;
     activePointCountA = 0;
-    ((int)slowmgmtcopy) = ((int)slow_video_management);
-    rcunk[0].left = 0;
-    rcunk[0].right = 0x140;
-    rcunk[0].top = 0;
-    rcunk[0].bottom = 0xc8;
-    rcunk[1] = rcunk[0];
-    rect_unk3 = rcunk[0];
+    ((int)statemgmtcpy) = ((int)slow_video_mode_state);
+    tparr[0].left = 0;
+    tparr[0].right = 0x140;
+    tparr[0].top = 0;
+    tparr[0].bottom = 0xc8;
+    tparr[1] = tparr[0];
+    rc0_cpy = tparr[0];
     savedRectangleIndex = 0;
     frameReady = 1;
 
     do {
         baseFrameDelta = timer_get_delta();
-        word_44DCC += baseFrameDelta;
-        while (word_44DCC > word_4499C) {
-            word_44DCC -= word_4499C;
+        frmexcess += baseFrameDelta;
+        while (frmexcess > frmcs_time) {
+            frmexcess -= frmcs_time;
             do_opponent_op();
             frameReady = 1;
-            if (11 * ((int)framespersec) < ++lastElapsedFrames) {
+            if (11 * ((int)rate_frame) < ++lastElapsedFrames) {
                 oldPhase = 1;
                 cameraYIdle += 20;
                 cameraZPrevious -= 5;
@@ -2819,24 +3089,24 @@ char far setup_intro(void)
         if (!frameReady)
             goto check_input;
         frameReady = 0;
-        if (vidflag5is0 != 0)
+        if (g_videoflg5 != 0)
             setup_mcgawnd2();
         else
             sprite_copy_wnd_to_1();
 
         carHeadingData = 0xffff;
         oldDrawOpponent = 1;
-        opponentXPosition = (int)(state.opponentstate.car_posWorld1.lx >> 6);
-        lastOpponentY = (int)(state.opponentstate.car_posWorld1.ly >> 6);
-        savedOpponentZ = (int)(state.opponentstate.car_posWorld1.lz >> 6);
-        if (6 * ((int)framespersec) > lastElapsedFrames) {
+        opponentXPosition = (int)(core.opponentstate.car_posWorld1.lx >> 6);
+        lastOpponentY = (int)(core.opponentstate.car_posWorld1.ly >> 6);
+        savedOpponentZ = (int)(core.opponentstate.car_posWorld1.lz >> 6);
+        if (6 * ((int)rate_frame) > lastElapsedFrames) {
             oldDrawOpponent = 0;
-            carHeadingData = state.opponentstate.car_rotate.x & 0x03ff;
+            carHeadingData = core.opponentstate.car_rotate.x & 0x03ff;
             introCloudTilt = 0;
             oldCameraX = opponentXPosition;
             cameraYIdle = lastOpponentY + 20;
             cameraZPrevious = savedOpponentZ;
-        } else if (11 * ((int)framespersec) > lastElapsedFrames) {
+        } else if (11 * ((int)rate_frame) > lastElapsedFrames) {
             oldCameraX = 0x400;
             cameraZPrevious = 0x400;
             cameraYIdle = 0x5a;
@@ -2850,7 +3120,7 @@ char far setup_intro(void)
             introCloudTilt = polang(lastGoalY - cameraYIdle, oldCarDistance) & 0x03ff;
         }
 
-        if (((int)slowmgmtcopy) != 0) {
+        if (((int)statemgmtcpy) != 0) {
             if (savedRectangleIndex == 0) {
                 currentPoints = (int *)gamePointBufferB;
                 drawSelectedCount = &pointTotalB;
@@ -2862,31 +3132,31 @@ char far setup_intro(void)
         intro_op(oldCameraX, cameraYIdle, cameraZPrevious, carHeadingData, introCloudTilt,
                  oldDrawOpponent, oldPhase, cloudPointsList,
                  (struct POINT2D *)currentPoints, drawSelectedCount,
-                 rcunk[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
+                 tparr[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
 
-        if (vidflag5is0 != 0) {
+        if (g_videoflg5 != 0) {
             msdrawopaquechk();
             setup_mcgawnd1();
             msdrawtransparentchk();
-            if (((int)slowmgmtcopy) != 0)
-                rcunk[savedRectangleIndex] = gameRestoredRect;
+            if (((int)statemgmtcpy) != 0)
+                tparr[savedRectangleIndex] = gameRestoredRect;
             savedRectangleIndex ^= 1;
         } else {
             sprcopy2to12();
-            if (((int)slowmgmtcopy) != 0) {
-                rcunion(&lastDrawRect, &rcunk[2], &oldSavedRect);
-                if (rcintersect(&oldSavedRect, &rect_unk3) == 0) {
+            if (((int)statemgmtcpy) != 0) {
+                rcunion(&lastDrawRect, &tparr[2], &oldSavedRect);
+                if (rcintersect(&oldSavedRect, &rc0_cpy) == 0) {
                     sprset1size(oldSavedRect.left, oldSavedRect.right,
                                       oldSavedRect.top, oldSavedRect.bottom);
                     msdrawopaquechk();
-                    sprputimage(wndsprite->image);
+                    sprputimage(g_wndspr->image);
                     msdrawtransparentchk();
-                    rcunk[0] = gameRestoredRect;
-                    rcunk[2] = lastDrawRect;
+                    tparr[0] = gameRestoredRect;
+                    tparr[2] = lastDrawRect;
                 }
             } else {
                 msdrawopaquechk();
-                sprputimage(wndsprite->image);
+                sprputimage(g_wndspr->image);
                 msdrawtransparentchk();
             }
         }
@@ -2896,18 +3166,18 @@ check_input:
             operationResult = 1;
             break;
         }
-    } while (23 * ((int)framespersec) > lastElapsedFrames);
+    } while (23 * ((int)rate_frame) > lastElapsedFrames);
 
-    if (vidflag5is0 != 0) {
+    if (g_videoflg5 != 0) {
         if (get_0() != 0) {
             setup_mcgawnd2();
-            sub_35C4E(0, 0, 0x140, 0xc8, 0);
+            clear_rect(0, 0, 0x140, 0xc8, 0);
             msdrawopaquechk();
             setup_mcgawnd1();
             msdrawtransparentchk();
         }
     } else {
-        sprite_free_window(wndsprite);
+        sprite_free_window(g_wndspr);
     }
     mmgr_free(title3dresValue);
     return (char)operationResult;
@@ -2932,13 +3202,13 @@ void far intro_op(int camX, int camY, int camZ, int logoRotation,
     initialClip = clipunk;
     select_rot(0, cloudRotation, logoRotation, &intro_cliprect, 0);
     if (useLogo)
-        modelShape.shape = &logoshape;
+        modelShape.shape = &intro_alt;
     else
-        modelShape.shape = &logo2shape;
+        modelShape.shape = &logo_title;
     modelShape.pos.x = 0x400 - camX;
     modelShape.pos.y = -camY;
     modelShape.pos.z = 0x400 - camZ;
-    if (((int)slowmgmtcopy) != 0) {
+    if (((int)statemgmtcpy) != 0) {
         modelShape.rect = &initialClip;
         modelShape.flags = 0x0c;
     } else {
@@ -2952,11 +3222,11 @@ void far intro_op(int camX, int camY, int camZ, int logoRotation,
     trans_op(&modelShape);
     if (!showOpponent)
         goto logo_complete;
-    modelShape.pos.x = (int)(state.opponentstate.car_posWorld1.lx >> 6) - camX;
-    modelShape.pos.y = (int)(state.opponentstate.car_posWorld1.ly >> 6) - camY;
-    modelShape.pos.z = (int)(state.opponentstate.car_posWorld1.lz >> 6) - camZ;
-    modelShape.shape = &bravshape;
-    if (((int)slowmgmtcopy) != 0) {
+    modelShape.pos.x = (int)(core.opponentstate.car_posWorld1.lx >> 6) - camX;
+    modelShape.pos.y = (int)(core.opponentstate.car_posWorld1.ly >> 6) - camY;
+    modelShape.pos.z = (int)(core.opponentstate.car_posWorld1.lz >> 6) - camZ;
+    modelShape.shape = &brav;
+    if (((int)statemgmtcpy) != 0) {
         modelShape.rect = &initialClip;
         modelShape.flags = 0x0c;
     } else {
@@ -2964,13 +3234,13 @@ void far intro_op(int camX, int camY, int camZ, int logoRotation,
     }
     modelShape.rotation.x = 0;
     modelShape.rotation.y = 0;
-    modelShape.rotation.z = -state.opponentstate.car_rotate.x;
+    modelShape.rotation.z = -core.opponentstate.car_rotate.x;
     modelShape.scale = 0x400;
     modelShape.material = 0;
     trans_op(&modelShape);
 
 logo_complete:
-    if (((int)slowmgmtcopy) == 0)
+    if (((int)statemgmtcpy) == 0)
         goto no_incremental;
     if (*oldPointCount != 0) {
         index = 0;
@@ -2981,7 +3251,7 @@ logo_complete:
         }
     }
     rcunion(oldClip, &inputClip, &unionRect);
-    if (rcintersect(&unionRect, &rect_unk3) == 0) {
+    if (rcintersect(&unionRect, &rc0_cpy) == 0) {
         sprset1size(unionRect.left, unionRect.right,
                           unionRect.top, unionRect.bottom);
         sprite_clear_1_color(0);
@@ -3002,26 +3272,77 @@ prepare_draw:
         inputPoint.x = cloudPoints[index].x - camX;
         inputPoint.y = cloudPoints[index].y - camY;
         inputPoint.z = cloudPoints[index].z - camZ;
-        mat_vec(&inputPoint, &mattmp, &relativeVector);
+        mat_vec(&inputPoint, &wkmatx, &relativeVector);
         if (relativeVector.z > 0xc8) {
             vector_to_point(&relativeVector, &projectedPoint);
             putpixel_single_maybe(projectedPoint.px, projectedPoint.py,
                                   intro_colorvalue);
-            if (((int)slowmgmtcopy) != 0) {
+            if (((int)statemgmtcpy) != 0) {
                 oldPoints[count++] = projectedPoint;
                 rect_adjust_from_point(&projectedPoint, &previousClip);
             }
             ++intro_colorvalue;
-            if (intro_colorvalue == word_407CC)
+            if (intro_colorvalue == intro_color_max)
                 intro_colorvalue = 1;
         }
         ++index;
     } while (index < 100);
-    if (((int)slowmgmtcopy) != 0)
+    if (((int)statemgmtcpy) != 0)
         *oldPointCount = count;
     polyinfo();
-    if (((int)slowmgmtcopy) != 0) {
+    if (((int)statemgmtcpy) != 0) {
         *oldClip = initialClip;
         *oldUnion = previousClip;
     }
 }
+
+struct RECTANGLE intro_cliprect = { 0, 320, 0, 200 };
+int intro_colorvalue = 1;
+
+/* Communals defined by this module (tentative definitions). */
+int far* td10checkptr;
+struct TRANSFORMEDSHAPE3D cur_shps[29];
+int runrndx;
+int sky_hgt_world;
+struct SHAPE3D intro_alt;
+struct SHAPE3D logo_title;
+unsigned short statemgmtcpy;
+short frmcs_time;
+void far* gamerptrs;
+int rotpr[2];
+struct RECTANGLE tparr[15];
+int ground_skybox;
+struct SHAPE3D brav;
+int spdneedlegaugeclr;
+int frmexcess;
+struct RECTANGLE rectclip[15];
+int maxscnh;
+int g_tdist[29];
+char backlightovr8;
+unsigned short scene_1ht;
+unsigned short scene_2ht;
+unsigned short scene_3ht;
+unsigned short scene_4ht;
+char rects_updt[15];
+struct RECTANGLE rclist[15];
+int g_skybox_sky_clr;
+int rcmapix[45];
+short exwd[3];
+struct RECTANGLE rc0_cpy;
+struct RECTANGLE g_savrc[15];
+char tshapearrarg2[30];
+char g_ts_num;
+struct SHAPE2D far *skypics[4];
+struct SHAPE2D far *sdgbmp_v[5];
+int tsix[29];
+char rect_num3;
+unsigned char scene_idx;
+union FARRESOURCE skyres_handle;
+struct RECTANGLE game_rect_txt_in;
+int prevcamrot;
+char far *sdgame2hdl;
+char follow_op;
+int g_skyboxwat_clr;
+struct TRANSFORMEDSHAPE3D * g_curr_tsp;
+struct MATRIX wkmatx;
+short cliprects_spare4[120];

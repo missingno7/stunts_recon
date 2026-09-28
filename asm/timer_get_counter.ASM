@@ -5,15 +5,14 @@ _BSS ends
 CONST segment word public 'CONST'
 CONST ends
 DGROUP group CONST,_BSS,_DATA
-extrn _timer_callback_counter:word
-extrn _word_2F87A:word
+extrn _timer_callback_counter:dword
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
 public _timer_get_counter
 _timer_get_counter proc far
     cli
     mov ax,word ptr ds:[_timer_callback_counter]
-    mov dx,word ptr ds:[_word_2F87A]
+    mov dx,word ptr ds:[_timer_callback_counter+2]
     sti
     ret
 _timer_get_counter endp

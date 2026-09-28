@@ -3,7 +3,7 @@ extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _nopsub_33DBE
-public _shape2d_op_unk5
+public _shape2d_op_unknown5
 public _shape2d_op_unk
 public _nopsub_33E90
 public _shape2d_op_unk2
@@ -36,7 +36,7 @@ _nopsub_33DBE proc far
     ; align 2
     db 144
 _nopsub_33DBE endp
-_shape2d_op_unk5 proc far
+_shape2d_op_unknown5 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -61,7 +61,7 @@ _shape2d_op_unk5 proc far
     jmp     short loc_33E1B ; goto shape2d_op_unk3
     ; align 2
     db 144
-_shape2d_op_unk5 endp
+_shape2d_op_unknown5 endp
 _shape2d_op_unk proc far
     var_10 = word ptr -16
     var_E = word ptr -14

@@ -1,5 +1,4 @@
 .8086
-extrn _data_303C2:word
 VECTOR struc
 vx dw ?
 vy dw ?
@@ -7,27 +6,61 @@ vz dw ?
 VECTOR ends
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
+DGROUP group _DATA, CONST, _BSS
+assume ds:DGROUP
 _DATA segment word public 'DATA'
+public _word_303AE, _word_303B0, _word_303B2, _word_303B4, _word_303B6, _word_303B8, _word_303BA, _word_303BC, _word_303BE, _word_303C0, _data_303C2
+_word_303AE     dw 160
+_word_303B0     dw 100
+_word_303B2     dw 0
+_word_303B4     dw 0
+_word_303B6     dw 160
+_word_303B8     dw 100
+_word_303BA     dw 0
+_word_303BC     dw 0
+_word_303BE     dw 0
+_word_303C0     dw 0
+_data_303C2     db 87
+    db 105
+    db 110
+    db 100
+    db 111
+    db 119
+    db 32
+    db 82
+    db 101
+    db 108
+    db 101
+    db 97
+    db 115
+    db 101
+    db 100
+    db 32
+    db 79
+    db 117
+    db 116
+    db 32
+    db 111
+    db 102
+    db 32
+    db 79
+    db 114
+    db 100
+    db 101
+    db 114
+    db 13
+    db 10
+    db 0
+    db 0
 _DATA ends
 CONST segment word public 'CONST'
 CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
-DGROUP group _DATA, CONST, _BSS
 assume cs:S012_TEXT, ds:DGROUP
-extrn _word_303AE:word
-extrn _word_303B2:word
-extrn _word_303B6:word
-extrn _word_303B0:word
-extrn _word_303B4:word
-extrn _word_303B8:word
-extrn _cos_fast:far
-extrn _polarAngle:far
-extrn _sin_fast:far
-extrn _word_303BA:word
-extrn _word_303BC:word
-extrn _word_303BE:word
-extrn _word_303C0:word
+extrn _cosfast:far
+extrn _polang:far
+extrn _sinfast:far
 extrn _mmgr_release:far
 extrn _fatal_error:far
 S012_TEXT segment word public 'CODE'
@@ -36,7 +69,7 @@ public _nopsub_322C0
 public _nopsub_322DF
 public _set_projection
 public _vector_to_point
-public _sprite_free_wnd
+public _sprite_free_window
 _nopsub_322C0 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -125,13 +158,13 @@ loc_32334:
     add     ax, _word_303B4
     mov     _word_303B8, ax
     push    _word_303BE
-    call _cos_fast
+    call _cosfast
     add     sp, 2
     mul     _word_303AE
     mov     si, ax
     mov     di, dx
     push    _word_303BE
-    call _sin_fast
+    call _sinfast
     add     sp, 2
     mov     cx, ax
     mov     dx, di
@@ -142,13 +175,13 @@ loc_32334:
     or      bx, bx
     jz      short loc_323B4
     push    _word_303C0
-    call _cos_fast
+    call _cosfast
     add     sp, 2
     mul     _word_303B0
     mov     si, ax
     mov     di, dx
     push    _word_303C0
-    call _sin_fast
+    call _sinfast
     add     sp, 2
     mov     cx, ax
     mov     dx, di
@@ -170,7 +203,7 @@ loc_323B4:
     mov     _word_303BC, ax
     push    _word_303B0
     push    ax
-    call _polarAngle
+    call _polang
     add     sp, 4
     mov     _word_303C0, ax
     pop     di
@@ -300,7 +333,7 @@ loc_324A2:
     mov     [di+2], ax
     jmp     short loc_32472
 _vector_to_point endp
-_sprite_free_wnd proc far
+_sprite_free_window proc far
     push    bp
     mov     bp, sp
     push    ds
@@ -337,6 +370,6 @@ loc_324EC:
     lea     ax, ds:[_data_303C2]
     push    ax
     call    far ptr _fatal_error
-_sprite_free_wnd endp
+_sprite_free_window endp
 S012_TEXT ends
 end

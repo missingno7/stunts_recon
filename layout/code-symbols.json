@@ -651,6 +651,31 @@
         "start": 130588
       }
     },
+    "_apply_audio_frame": {
+      "anchors": [
+        {
+          "caller_task": "load_12596",
+          "hex": "9af6457104",
+          "relocation": {
+            "load_offset": 75234,
+            "offset": 9698,
+            "segment": 4096
+          },
+          "site": 75231
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 36192,
+        "name": "sub_18D06",
+        "sha256": "a247d7ec4647e63df9a348713c7e19daa384880cb9bccc68da5fac37618737c9",
+        "stable_id": "load_08d06",
+        "start": 36102
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_apply_audio_frame"
+    },
     "_audio_add_driver_timer": {
       "anchors": [
         {
@@ -737,6 +762,31 @@
         "stable_id": "load_2751a",
         "start": 161050
       }
+    },
+    "_audio_chunk_is_unavailable": {
+      "anchors": [
+        {
+          "caller_task": "load_16fa3",
+          "hex": "9a4e060d27",
+          "relocation": {
+            "load_offset": 94452,
+            "offset": 28916,
+            "segment": 4096
+          },
+          "site": 94449
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 161616,
+        "name": "sub_3771E",
+        "sha256": "aff5965217bd2966c8550bef114580fdf23261c86514d98e0092b79ae596a6b9",
+        "stable_id": "load_2771e",
+        "start": 161566
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_audio_chunk_is_unavailable"
     },
     "_audio_driver_func1E": {
       "anchors": [
@@ -870,6 +920,29 @@
         "sha256": "700ae774d91732ea0e16aa4dd22ed7c71bb46cccaadf634342cbbf595aeaa9cb",
         "stable_id": "load_172f4",
         "start": 94964
+      }
+    },
+    "_audio_init_chunk": {
+      "anchors": [
+        {
+          "caller_task": "load_28702",
+          "hex": "9aec0c0d27",
+          "relocation": {
+            "load_offset": 166014,
+            "offset": 34942,
+            "segment": 8192
+          },
+          "site": 166011
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 163520,
+        "name": "audio_init_chunk",
+        "sha256": "558e3d29a3b8cdead6f7ed3f9e851b81304d87211d1dafd4a4faef7246abb6e5",
+        "stable_id": "load_27dbc",
+        "start": 163260
       }
     },
     "_audio_init_chunk2": {
@@ -1197,6 +1270,31 @@
         "stable_id": "load_20268",
         "start": 131688
       }
+    },
+    "_audio_stop_unknown": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a4818a21e",
+          "relocation": {
+            "load_offset": 172219,
+            "offset": 41147,
+            "segment": 8192
+          },
+          "site": 172216
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131754,
+        "name": "audio_stop_unk",
+        "sha256": "b7bc0fd7821a6cdf354652bd9b8b218fcda1993bd18fbf4df329f97db64fc86a",
+        "stable_id": "load_20268",
+        "start": 131688
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_audio_stop_unknown"
     },
     "_audio_toggle_flag2": {
       "anchors": [
@@ -1800,6 +1898,42 @@
         "stable_id": "load_18ee4",
         "start": 102116
       }
+    },
+    "_clear_rect": {
+      "anchors": [
+        {
+          "caller_task": "load_0d93c",
+          "hex": "9a2e72a21e",
+          "relocation": {
+            "load_offset": 56933,
+            "offset": 56933,
+            "segment": 0
+          },
+          "site": 56930
+        },
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a2e72a21e",
+          "relocation": {
+            "load_offset": 74436,
+            "offset": 8900,
+            "segment": 4096
+          },
+          "site": 74433
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 155080,
+        "name": "sub_35C4E",
+        "sha256": "bd68c2379553309161c21b759582077a860c0438838e7cef6d4029e2f3f3fcd2",
+        "stable_id": "load_25c4e",
+        "start": 154702
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
+      "reviewed_alias": "_clear_rect"
     },
     "_code_load_09ee8": {
       "anchors": [
@@ -3035,6 +3169,31 @@
       ],
       "reviewed_alias": "_do_dea_textres"
     },
+    "_do_dos_resource_text": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106422,
+        "name": "do_dos_restext",
+        "sha256": "b5ed4ca3d37bc5ba91dbf1c68df14b00191a9dd99b59c282073e2f8958139428",
+        "stable_id": "load_19f5c",
+        "start": 106332
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8ac2aba4b17",
+          "relocation": {
+            "load_offset": 171753,
+            "offset": 40681,
+            "segment": 8192
+          },
+          "site": 171749
+        }
+      ],
+      "reviewed_alias": "_do_dos_resource_text"
+    },
     "_do_dos_restext": {
       "distinct_verified_callers": 1,
       "frame_load_address": 95408,
@@ -3115,6 +3274,56 @@
       ],
       "reviewed_alias": "_do_joy_restext"
     },
+    "_do_joystick_resource_text": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105882,
+        "name": "do_joy_restext",
+        "sha256": "f1463c7241e625155fd4500fd2a9c391b24d8be0a2e045fc7da3c3ec8fe35ae7",
+        "stable_id": "load_19b32",
+        "start": 105266
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b88226ba4b17",
+          "relocation": {
+            "load_offset": 171653,
+            "offset": 40581,
+            "segment": 8192
+          },
+          "site": 171649
+        }
+      ],
+      "reviewed_alias": "_do_joystick_resource_text"
+    },
+    "_do_key_resource_text": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105972,
+        "name": "do_key_restext",
+        "sha256": "8ea8594a2149266f3a93af268f80b5c0ea1d26316c89b33b53861ba04e3fe7e5",
+        "stable_id": "load_19d9a",
+        "start": 105882
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8ea28ba4b17",
+          "relocation": {
+            "load_offset": 171673,
+            "offset": 40601,
+            "segment": 8192
+          },
+          "site": 171669
+        }
+      ],
+      "reviewed_alias": "_do_key_resource_text"
+    },
     "_do_key_restext": {
       "distinct_verified_callers": 1,
       "frame_load_address": 95408,
@@ -3162,6 +3371,31 @@
         "start": 107008
       }
     },
+    "_do_mof_resource_text": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106234,
+        "name": "do_mof_restext",
+        "sha256": "17154fa58f8f57d6601eef63cdb773f17ab24910c4779d6a2fd42195321b74d8",
+        "stable_id": "load_19e98",
+        "start": 106136
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b8e829ba4b17",
+          "relocation": {
+            "load_offset": 171693,
+            "offset": 40621,
+            "segment": 8192
+          },
+          "site": 171689
+        }
+      ],
+      "reviewed_alias": "_do_mof_resource_text"
+    },
     "_do_mof_restext": {
       "distinct_verified_callers": 1,
       "frame_load_address": 95408,
@@ -3185,6 +3419,31 @@
         }
       ],
       "reviewed_alias": "_do_mof_restext"
+    },
+    "_do_mou_resource_text": {
+      "anchors": [
+        {
+          "caller_task": "load_123fa",
+          "hex": "9a44294b17",
+          "relocation": {
+            "load_offset": 74849,
+            "offset": 9313,
+            "segment": 4096
+          },
+          "site": 74846
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106058,
+        "name": "do_mou_restext",
+        "sha256": "60bbbf97f8509299621b5c79f8ff2ac3246f2de5abf79bb71fff4312fc41cbe0",
+        "stable_id": "load_19df4",
+        "start": 105972
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_do_mou_resource_text"
     },
     "_do_mou_restext": {
       "anchors": [
@@ -3279,6 +3538,31 @@
         "start": 99898
       }
     },
+    "_do_sonsof_resource_text": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106332,
+        "name": "do_sonsof_restext",
+        "sha256": "fde598ab98df9a70439f10f4af433dafc396bf02138bc766b2a0e6bb2e68e4e5",
+        "stable_id": "load_19efa",
+        "start": 106234
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "pointer_anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "b84a2aba4b17",
+          "relocation": {
+            "load_offset": 171773,
+            "offset": 40701,
+            "segment": 8192
+          },
+          "site": 171769
+        }
+      ],
+      "reviewed_alias": "_do_sonsof_resource_text"
+    },
     "_do_sonsof_restext": {
       "distinct_verified_callers": 1,
       "frame_load_address": 95408,
@@ -3335,6 +3619,31 @@
         "start": 103132
       }
     },
+    "_draw_clip": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a0400f109",
+          "relocation": {
+            "load_offset": 73954,
+            "offset": 8418,
+            "segment": 4096
+          },
+          "site": 73951
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40720,
+      "mapped_target": {
+        "end": 41110,
+        "name": "sub_19F14",
+        "sha256": "543a1bd0c93bb293cdbf259c4a8f379be2fdfcb653fff4df00c157cfee75facd",
+        "stable_id": "load_09f14",
+        "start": 40724
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_draw_clip"
+    },
     "_draw_filled_lines": {
       "anchors": [
         {
@@ -3356,6 +3665,70 @@
         "sha256": "28a9366e01991f3756dc90007187a55eef30b1915c47fe2764bcc3a624b44630",
         "start": 149180
       }
+    },
+    "_draw_filled_rect": {
+      "anchors": [
+        {
+          "caller_task": "load_2702e",
+          "hex": "9a5671a21e",
+          "relocation": {
+            "load_offset": 159920,
+            "offset": 28848,
+            "segment": 8192
+          },
+          "site": 159917
+        },
+        {
+          "caller_task": "load_2702e",
+          "hex": "9a5671a21e",
+          "relocation": {
+            "load_offset": 159898,
+            "offset": 28826,
+            "segment": 8192
+          },
+          "site": 159895
+        },
+        {
+          "caller_task": "load_2702e",
+          "hex": "9a5671a21e",
+          "relocation": {
+            "load_offset": 159866,
+            "offset": 28794,
+            "segment": 8192
+          },
+          "site": 159863
+        },
+        {
+          "caller_task": "load_2702e",
+          "hex": "9a5671a21e",
+          "relocation": {
+            "load_offset": 159842,
+            "offset": 28770,
+            "segment": 8192
+          },
+          "site": 159839
+        },
+        {
+          "caller_task": "load_2a7f6",
+          "hex": "9a5671a21e",
+          "relocation": {
+            "load_offset": 174220,
+            "offset": 43148,
+            "segment": 8192
+          },
+          "site": 174217
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 154702,
+        "name": "sub_35B76",
+        "sha256": "f6c00ce789b24ac416754fc8dbe422282b0ea2cb0beaebe910badcd2d6858be8",
+        "start": 154486
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_draw_filled_rect"
     },
     "_draw_line_related": {
       "anchors": [
@@ -3465,6 +3838,99 @@
         "start": 102766
       }
     },
+    "_draw_lines_unknown": {
+      "anchors": [
+        {
+          "caller_task": "load_03178",
+          "hex": "9abe1c4b17",
+          "relocation": {
+            "load_offset": 15033,
+            "offset": 15033,
+            "segment": 0
+          },
+          "site": 15030
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9abe1c4b17",
+          "relocation": {
+            "load_offset": 107984,
+            "offset": 42448,
+            "segment": 4096
+          },
+          "site": 107981
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 103132,
+        "name": "draw_lines_unk",
+        "sha256": "4d2845b9bd3d10449207895d451a85de60236c0644aac99c3308c94ccb04e16f",
+        "stable_id": "load_1916e",
+        "start": 102766
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_draw_lines_unknown"
+    },
+    "_draw_rect_outline": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a0e000227",
+          "relocation": {
+            "load_offset": 110330,
+            "offset": 44794,
+            "segment": 4096
+          },
+          "site": 110327
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159776,
+      "mapped_target": {
+        "end": 159930,
+        "name": "sub_3702E",
+        "sha256": "b660a055a6dd091d942261ec22f8f549811a76f699d1216903e757488f4e2c34",
+        "stable_id": "load_2702e",
+        "start": 159790
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_draw_rect_outline"
+    },
+    "_draw_text_at": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a9c5ba21e",
+          "relocation": {
+            "load_offset": 74645,
+            "offset": 9109,
+            "segment": 4096
+          },
+          "site": 74642
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9a9c5ba21e",
+          "relocation": {
+            "load_offset": 80988,
+            "offset": 15452,
+            "segment": 4096
+          },
+          "site": 80985
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 149155,
+        "name": "sub_345BC",
+        "sha256": "9616660f37f992025155b2c9edc0bd84af26f6d18e1876fa621205f2ca629c06",
+        "start": 148924
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_draw_text_at"
+    },
     "_draw_track_preview": {
       "anchors": [
         {
@@ -3519,6 +3985,31 @@
         "stable_id": "load_1a1a6",
         "start": 106918
       }
+    },
+    "_exit": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a9c01c51c",
+          "relocation": {
+            "load_offset": 172228,
+            "offset": 41156,
+            "segment": 8192
+          },
+          "site": 172225
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 118275,
+        "name": "libsub_quit_to_dos_alt",
+        "sha256": "7764c221965c8b728b1ddfd8c107e22652e7df8d45a96382bf8bea2bcc09c483",
+        "stable_id": "load_1cdec",
+        "start": 118252
+      },
+      "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member dos\\crt0dat.asm defines _exit at this entry (integ30 program-wide name)",
+      "reviewed_alias": "_exit"
     },
     "_fatal_error": {
       "anchors": [
@@ -3706,6 +4197,71 @@
         "stable_id": "load_20df7",
         "start": 134647
       }
+    },
+    "_file_decomp_paras": {
+      "anchors": [
+        {
+          "caller_task": "load_20e07",
+          "hex": "9a0615a21e",
+          "relocation": {
+            "load_offset": 134709,
+            "offset": 3637,
+            "segment": 8192
+          },
+          "site": 134706
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130872,
+        "name": "file_decomp_paras",
+        "sha256": "131a8844b54e934fc53af7420e3ba35a26db15f6fba45de85c13f6ca59137508",
+        "stable_id": "load_1ff26",
+        "start": 130854
+      }
+    },
+    "_file_decomp_rle": {
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134136,
+        "name": "file_decomp_rle",
+        "sha256": "4beb46c06301d78aa7e07600576e29dcaf6d9efb61967efe6068e5ed0383b934",
+        "stable_id": "load_20b62",
+        "start": 133986
+      },
+      "table_anchors": [
+        {
+          "caller_task": "load_20e07",
+          "hex": "4221a21e",
+          "relocation": {
+            "load_offset": 134918,
+            "offset": 3846,
+            "segment": 8192
+          },
+          "site": 134916
+        }
+      ]
+    },
+    "_file_decomp_vle": {
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 143342,
+        "name": "file_decomp_vle",
+        "sha256": "154ecf921dec0ebb463f623157240fad07a6d7609f712c4574bace98b83b332a",
+        "start": 142716
+      },
+      "table_anchors": [
+        {
+          "caller_task": "load_20e07",
+          "hex": "5c43a21e",
+          "relocation": {
+            "load_offset": 134922,
+            "offset": 3850,
+            "segment": 8192
+          },
+          "site": 134920
+        }
+      ]
     },
     "_file_find": {
       "anchors": [
@@ -3911,6 +4467,40 @@
         "stable_id": "load_1a236",
         "start": 107062
       }
+    },
+    "_file_load_audio_resource": {
+      "anchors": [
+        {
+          "caller_task": "load_0059a",
+          "hex": "9a4c234b17",
+          "relocation": {
+            "load_offset": 1456,
+            "offset": 1456,
+            "segment": 0
+          },
+          "site": 1453
+        },
+        {
+          "caller_task": "load_03178",
+          "hex": "9a4c234b17",
+          "relocation": {
+            "load_offset": 13567,
+            "offset": 13567,
+            "segment": 0
+          },
+          "site": 13564
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104536,
+        "name": "file_load_audiores",
+        "sha256": "5ad013a4d105141df1fa70ab0883aedd07c7a8789bd394c2b21bcb276b7fcbc4",
+        "stable_id": "load_197fc",
+        "start": 104444
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_file_load_audio_resource"
     },
     "_file_load_audiores": {
       "anchors": [
@@ -4881,6 +5471,41 @@
         "start": 150284
       }
     },
+    "_font_setup_unknown": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9aec60a21e",
+          "relocation": {
+            "load_offset": 4731,
+            "offset": 4731,
+            "segment": 0
+          },
+          "site": 4728
+        },
+        {
+          "caller_task": "load_0168e",
+          "hex": "9aec60a21e",
+          "relocation": {
+            "load_offset": 6204,
+            "offset": 6204,
+            "segment": 0
+          },
+          "site": 6201
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150396,
+        "name": "font_set_unk",
+        "sha256": "37bbcf3ffd9ad307d41b1b8a826f257d2e664ccb4b68455858abaa3d70f840a6",
+        "stable_id": "load_24b0c",
+        "start": 150284
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_font_setup_unknown"
+    },
     "_fontsetfontdef": {
       "anchors": [
         {
@@ -5587,6 +6212,164 @@
         "start": 75058
       }
     },
+    "_initialize_div0": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a2801dc09",
+          "relocation": {
+            "load_offset": 25,
+            "offset": 25,
+            "segment": 0
+          },
+          "site": 22
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40722,
+        "name": "init_div0",
+        "sha256": "d91499ce16e61bf7b0a7b4d8d112a68251c30437fb3240467a50eef2c039e6d0",
+        "start": 40680
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_initialize_div0"
+    },
+    "_initialize_game_state": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9af2237104",
+          "relocation": {
+            "load_offset": 4436,
+            "offset": 4436,
+            "segment": 0
+          },
+          "site": 4433
+        },
+        {
+          "caller_task": "load_01c42",
+          "hex": "9af2237104",
+          "relocation": {
+            "load_offset": 8895,
+            "offset": 8895,
+            "segment": 0
+          },
+          "site": 8892
+        }
+      ],
+      "frame_load_address": 18192,
+      "mapped_target": {
+        "end": 28474,
+        "name": "init_game_state",
+        "sha256": "4edb6e9defcc42006d95ea299639e9c369d7df6a4254c474391e2c8befa4f6dd",
+        "stable_id": "load_06b02",
+        "start": 27394
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_initialize_game_state"
+    },
+    "_initialize_kevin_random": {
+      "anchors": [
+        {
+          "caller_task": "load_06f3a",
+          "hex": "9a6100dc09",
+          "relocation": {
+            "load_offset": 28650,
+            "offset": 28650,
+            "segment": 0
+          },
+          "site": 28647
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 40384,
+      "mapped_target": {
+        "end": 40526,
+        "name": "init_kevinrandom",
+        "sha256": "426d6442b1f75fc8000d3a819620dafea3667fa7fa44bb8518a36b3f3be487c2",
+        "stable_id": "load_09e21",
+        "start": 40481
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_initialize_kevin_random"
+    },
+    "_initialize_main": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a4600e129",
+          "relocation": {
+            "load_offset": 17,
+            "offset": 17,
+            "segment": 0
+          },
+          "site": 14
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 171536,
+      "mapped_target": {
+        "end": 172636,
+        "name": "init_main",
+        "sha256": "501da7ceb125c3e55fc146c47194d5b6eff3f991c78123b5507b2714b6fc8420",
+        "stable_id": "load_29e56",
+        "start": 171606
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_initialize_main"
+    },
+    "_initialize_polyinfo": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0400d614",
+          "relocation": {
+            "load_offset": 244,
+            "offset": 244,
+            "segment": 0
+          },
+          "site": 241
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 85442,
+        "name": "init_polyinfo",
+        "sha256": "e378ab6e78a64e8ffc54999c186280290f97efb9ff1f9a2faa4f641a0a3fb318",
+        "stable_id": "load_14d64",
+        "start": 85348
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_initialize_polyinfo"
+    },
+    "_initialize_unknown": {
+      "anchors": [
+        {
+          "caller_task": "load_06b02",
+          "hex": "9ac209b711",
+          "relocation": {
+            "load_offset": 27525,
+            "offset": 27525,
+            "segment": 0
+          },
+          "site": 27522
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 75098,
+        "name": "init_unknown",
+        "sha256": "1cdf56b7dea9b26d9b0d655e05f0292f7b85b05da5e8afaafb6c61540a6e802f",
+        "stable_id": "load_12532",
+        "start": 75058
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_initialize_unknown"
+    },
     "_input_checking": {
       "anchors": [
         {
@@ -5839,6 +6622,31 @@
         "start": 123808
       },
       "owner": "library_itoa_123808"
+    },
+    "_joystick_flags_to_index": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9ab21da21e",
+          "relocation": {
+            "load_offset": 105657,
+            "offset": 40121,
+            "segment": 4096
+          },
+          "site": 105654
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133091,
+        "name": "sub_307D2",
+        "sha256": "372806e7d3af2c17ff4d92078bf35c28af4c00f09d0c2b19ea667163b9095e38",
+        "stable_id": "load_207d2",
+        "start": 133074
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_joystick_flags_to_index"
     },
     "_kb_call_readchar_callback": {
       "anchors": [
@@ -6151,6 +6959,56 @@
         "start": 158469
       }
     },
+    "_keyboard_exit_handler": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a631ea21e",
+          "relocation": {
+            "load_offset": 1415,
+            "offset": 1415,
+            "segment": 0
+          },
+          "site": 1412
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133318,
+        "name": "kb_exit_handler",
+        "sha256": "2fcc8b964fb5876117a312399ee4945965c0df78f6c109cf4a905e9bb0a7b704",
+        "stable_id": "load_20883",
+        "start": 133251
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_keyboard_exit_handler"
+    },
+    "_keyboard_shift_checking1": {
+      "anchors": [
+        {
+          "caller_task": "load_00000",
+          "hex": "9a0400af26",
+          "relocation": {
+            "load_offset": 1420,
+            "offset": 1420,
+            "segment": 0
+          },
+          "site": 1417
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158448,
+      "mapped_target": {
+        "end": 158469,
+        "name": "kb_shift_checking1",
+        "sha256": "6e5e4b20bc2f42032d0c0ec0df231c091ed697b0bd45ab1048c6cfacc293cee3",
+        "stable_id": "load_26af4",
+        "start": 158452
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_keyboard_shift_checking1"
+    },
     "_libsub_quit_to_dos": {
       "anchors": [
         {
@@ -6288,6 +7146,56 @@
         "stable_id": "load_27c44",
         "start": 162884
       }
+    },
+    "_load_shape2d_nofatal_thunk": {
+      "anchors": [
+        {
+          "caller_task": "load_29e14",
+          "hex": "9a414ea21e",
+          "relocation": {
+            "load_offset": 171549,
+            "offset": 40477,
+            "segment": 8192
+          },
+          "site": 171546
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145510,
+        "name": "file_load_shape2d_nofatal_thunk",
+        "sha256": "e2336bc3b8040f674834299e0b2259a3c31146af6998b4ab8ff3e46cdc264fb9",
+        "stable_id": "load_23861",
+        "start": 145505
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_load_shape2d_nofatal_thunk"
+    },
+    "_load_shape2d_res_nofatal_thunk": {
+      "anchors": [
+        {
+          "caller_task": "load_199ca",
+          "hex": "9a2d4ea21e",
+          "relocation": {
+            "load_offset": 104994,
+            "offset": 39458,
+            "segment": 4096
+          },
+          "site": 104991
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145490,
+        "name": "file_load_shape2d_res_nofatal_thunk",
+        "sha256": "163af1755b5be4b282ef6d7475ca7429b3221cae2d850e2e7c782f113a63e7af",
+        "stable_id": "load_2384d",
+        "start": 145485
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_load_shape2d_res_nofatal_thunk"
     },
     "_load_skybox": {
       "anchors": [
@@ -7607,6 +8515,40 @@
         "start": 104326
       }
     },
+    "_mouse_timer_sprite_unknown": {
+      "anchors": [
+        {
+          "caller_task": "load_00f3c",
+          "hex": "9ad6224b17",
+          "relocation": {
+            "load_offset": 4111,
+            "offset": 4111,
+            "segment": 0
+          },
+          "site": 4108
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9ad6224b17",
+          "relocation": {
+            "load_offset": 5125,
+            "offset": 5125,
+            "segment": 0
+          },
+          "site": 5122
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104444,
+        "name": "mouse_timer_sprite_unk",
+        "sha256": "02700897f05341e66a5fc3af3ecdb181f0bdfc5b1794c34bd2b86438278a7ea9",
+        "stable_id": "load_19786",
+        "start": 104326
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_mouse_timer_sprite_unknown"
+    },
     "_mouse_track_op": {
       "anchors": [
         {
@@ -8219,6 +9161,31 @@
         "stable_id": "load_1ea08",
         "start": 125448
       }
+    },
+    "_poll_input_abort": {
+      "anchors": [
+        {
+          "caller_task": "load_2a4b6",
+          "hex": "9ae700a21e",
+          "relocation": {
+            "load_offset": 173454,
+            "offset": 42382,
+            "segment": 8192
+          },
+          "site": 173451
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125726,
+        "name": "sub_2EB07",
+        "sha256": "6c8baaff4a832a084c2b30accdd6f9ab964113672749f9f1356c0f7be7d156e1",
+        "stable_id": "load_1eb07",
+        "start": 125703
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_poll_input_abort"
     },
     "_polradius2d": {
       "anchors": [
@@ -8971,6 +9938,31 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_rcunion"
     },
+    "_read_file_with_retry": {
+      "anchors": [
+        {
+          "caller_task": "load_01588",
+          "hex": "9ad6254b17",
+          "relocation": {
+            "load_offset": 5605,
+            "offset": 5605,
+            "segment": 0
+          },
+          "site": 5602
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105196,
+        "name": "sub_29A86",
+        "sha256": "18b35984a2c2aae49b788dd23b1c06e751545c97a7d9556f1fdbe9814f38f68f",
+        "stable_id": "load_19a86",
+        "start": 105094
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_read_file_with_retry"
+    },
     "_read_line": {
       "anchors": [
         {
@@ -9204,6 +10196,283 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_rectsorttop"
     },
+    "_release_audio_chunk": {
+      "anchors": [
+        {
+          "caller_task": "load_16bd5",
+          "hex": "9a0e040d27",
+          "relocation": {
+            "load_offset": 93158,
+            "offset": 27622,
+            "segment": 4096
+          },
+          "site": 93155
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 161018,
+        "name": "sub_374DE",
+        "sha256": "604778f43636c2906a15790c802cb5b7e8261d3a61a3a2ff8c584d42dd7944f0",
+        "stable_id": "load_274de",
+        "start": 160990
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_release_audio_chunk"
+    },
+    "_release_shape_resources": {
+      "anchors": [
+        {
+          "caller_task": "load_0293c",
+          "hex": "9a065ba21e",
+          "relocation": {
+            "load_offset": 11244,
+            "offset": 11244,
+            "segment": 0
+          },
+          "site": 11241
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 148924,
+        "name": "sub_34526",
+        "sha256": "8b9842fb5682f83951facba4b6b38bf131dcfac8b7fd094a927f6c349672fab5",
+        "stable_id": "load_24526",
+        "start": 148774
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_release_shape_resources"
+    },
+    "_replay_axis_value": {
+      "anchors": [
+        {
+          "caller_task": "load_12698",
+          "hex": "9ac31da21e",
+          "relocation": {
+            "load_offset": 75677,
+            "offset": 10141,
+            "segment": 4096
+          },
+          "site": 75674
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133114,
+        "name": "sub_307E3",
+        "sha256": "ee03a77d7e0b6c20970c62193a64bb6f0d007d5d72d4419fe8f84917ed989bb0",
+        "stable_id": "load_207e3",
+        "start": 133091
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_replay_axis_value"
+    },
+    "_reserve_audio_chunk": {
+      "anchors": [
+        {
+          "caller_task": "load_16c3c",
+          "hex": "9aa0030d27",
+          "relocation": {
+            "load_offset": 93807,
+            "offset": 28271,
+            "segment": 4096
+          },
+          "site": 93804
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 160990,
+        "name": "sub_37470",
+        "sha256": "55bf2855f2d986367f505a5dedfb350c944752cd96b05d1a006df4877b116224",
+        "stable_id": "load_27470",
+        "start": 160880
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_reserve_audio_chunk"
+    },
+    "_reset_audio_driver_state": {
+      "anchors": [
+        {
+          "caller_task": "load_088a4",
+          "hex": "9aa8100d27",
+          "relocation": {
+            "load_offset": 35124,
+            "offset": 35124,
+            "segment": 0
+          },
+          "site": 35121
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 164436,
+        "name": "sub_38178",
+        "sha256": "420952ca5dbafeca5ba89e4c036fbed0938ec08af10337fe78103d6c764adf2f",
+        "stable_id": "load_28178",
+        "start": 164216
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_reset_audio_driver_state"
+    },
+    "_reset_audio_event_state": {
+      "anchors": [
+        {
+          "caller_task": "load_2736a",
+          "hex": "9ad0106328",
+          "relocation": {
+            "load_offset": 160680,
+            "offset": 29608,
+            "segment": 8192
+          },
+          "site": 160677
+        },
+        {
+          "caller_task": "load_273b8",
+          "hex": "9ad0106328",
+          "relocation": {
+            "load_offset": 160735,
+            "offset": 29663,
+            "segment": 8192
+          },
+          "site": 160732
+        }
+      ],
+      "frame_load_address": 165424,
+      "mapped_target": {
+        "end": 170342,
+        "name": "sub_39700",
+        "sha256": "3161d85d45fff2e9faf3e8a0c8652e5da981ee33c5039439e5b3dc827f19e29d",
+        "stable_id": "load_29700",
+        "start": 169728
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_reset_audio_event_state"
+    },
+    "_reset_audio_voice_length": {
+      "anchors": [
+        {
+          "caller_task": "load_16f6d",
+          "hex": "9a86100d27",
+          "relocation": {
+            "load_offset": 94094,
+            "offset": 28558,
+            "segment": 4096
+          },
+          "site": 94091
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 164216,
+        "name": "sub_38156",
+        "sha256": "9aec0787aa20a3a3004f70468e4dbe9e1bacc64981ea0848d87316874a53bceb",
+        "stable_id": "load_28156",
+        "start": 164182
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_reset_audio_voice_length"
+    },
+    "_reset_idle_counters": {
+      "anchors": [
+        {
+          "caller_task": "load_00f3c",
+          "hex": "9ac2224b17",
+          "relocation": {
+            "load_offset": 4077,
+            "offset": 4077,
+            "segment": 0
+          },
+          "site": 4074
+        },
+        {
+          "caller_task": "load_010d0",
+          "hex": "9ac2224b17",
+          "relocation": {
+            "load_offset": 5091,
+            "offset": 5091,
+            "segment": 0
+          },
+          "site": 5088
+        }
+      ],
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 104326,
+        "name": "sub_29772",
+        "sha256": "ce168967aa34370b0be43380a4bafb005d76a7454773ca357dde3f461e117b1b",
+        "stable_id": "load_19772",
+        "start": 104306
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_reset_idle_counters"
+    },
+    "_reset_joystick_selection": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a941da21e",
+          "relocation": {
+            "load_offset": 105620,
+            "offset": 40084,
+            "segment": 4096
+          },
+          "site": 105617
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133074,
+        "name": "sub_307B4",
+        "sha256": "2785435adbceff654e86bc7a7560a08d2f8e75dfd7e4a32ea43397c894fc8105",
+        "stable_id": "load_207b4",
+        "start": 133044
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_reset_joystick_selection"
+    },
+    "_restore_audio_volume": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9a24020d27",
+          "relocation": {
+            "load_offset": 73292,
+            "offset": 7756,
+            "segment": 4096
+          },
+          "site": 73289
+        },
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a24020d27",
+          "relocation": {
+            "load_offset": 105864,
+            "offset": 40328,
+            "segment": 4096
+          },
+          "site": 105861
+        }
+      ],
+      "frame_load_address": 159952,
+      "mapped_target": {
+        "end": 160618,
+        "name": "sub_372F4",
+        "sha256": "c5c777bd91ddf602190cf2e0330cb8b3ba7153ae06c6dcd3c5b78485d569a99a",
+        "stable_id": "load_272f4",
+        "start": 160500
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_restore_audio_volume"
+    },
     "_restore_gamestate": {
       "anchors": [
         {
@@ -9226,6 +10495,31 @@
         "stable_id": "load_06f3a",
         "start": 28474
       }
+    },
+    "_restore_mouse_sprite": {
+      "anchors": [
+        {
+          "caller_task": "load_044cf",
+          "hex": "9a16014b17",
+          "relocation": {
+            "load_offset": 18120,
+            "offset": 18120,
+            "segment": 0
+          },
+          "site": 18117
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 95878,
+        "name": "sub_275C6",
+        "sha256": "7e05c6eda0fe59d417180a8ea8ef615f8d646534237d82fd0d1e517cf998a5ec",
+        "stable_id": "load_175c6",
+        "start": 95686
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_restore_mouse_sprite"
     },
     "_run_game": {
       "anchors": [
@@ -9316,6 +10610,31 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_select_rot"
     },
+    "_send_audio_stop_event": {
+      "anchors": [
+        {
+          "caller_task": "load_16ef4",
+          "hex": "9a200a6328",
+          "relocation": {
+            "load_offset": 94027,
+            "offset": 28491,
+            "segment": 4096
+          },
+          "site": 94024
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 165424,
+      "mapped_target": {
+        "end": 168072,
+        "name": "sub_39050",
+        "sha256": "184260c08b703e4f87c221ee33a9ffecb8c20706a9b7f97700c59e503daf94ed",
+        "stable_id": "load_29050",
+        "start": 168016
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_send_audio_stop_event"
+    },
     "_set_add_value": {
       "anchors": [
         {
@@ -9338,6 +10657,30 @@
         "stable_id": "load_1eade",
         "start": 125662
       }
+    },
+    "_set_audio_voice_value": {
+      "anchors": [
+        {
+          "caller_task": "load_16fa3",
+          "hex": "9a580a6328",
+          "relocation": {
+            "load_offset": 94412,
+            "offset": 28876,
+            "segment": 4096
+          },
+          "site": 94409
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 165424,
+      "mapped_target": {
+        "end": 168136,
+        "name": "sub_39088",
+        "sha256": "e52d7ae8fb3eb0eed25b70b1a4f25a64e4ae14e2a72d01add54eb47168e72f5f",
+        "start": 168072
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_set_audio_voice_value"
     },
     "_set_bios_mode3": {
       "anchors": [
@@ -9759,6 +11102,41 @@
         "stable_id": "load_23de2",
         "start": 146914
       }
+    },
+    "_shape2d_op_unknown5": {
+      "anchors": [
+        {
+          "caller_task": "load_03178",
+          "hex": "9ac253a21e",
+          "relocation": {
+            "load_offset": 15090,
+            "offset": 15090,
+            "segment": 0
+          },
+          "site": 15087
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ac253a21e",
+          "relocation": {
+            "load_offset": 78696,
+            "offset": 13160,
+            "segment": 4096
+          },
+          "site": 78693
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146944,
+        "name": "shape2d_op_unk5",
+        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
+        "stable_id": "load_23de2",
+        "start": 146914
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_shape2d_op_unknown5"
     },
     "_shape2d_render_bmp_as_mask": {
       "anchors": [
@@ -10189,6 +11567,65 @@
       },
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_sprcopy2to12"
+    },
+    "_sprintf": {
+      "anchors": [
+        {
+          "caller_task": "load_2219d",
+          "hex": "9a3c18c51c",
+          "relocation": {
+            "load_offset": 139692,
+            "offset": 8620,
+            "segment": 8192
+          },
+          "site": 139689
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 117840,
+      "mapped_target": {
+        "end": 124134,
+        "name": "_sprintf",
+        "sha256": "4660ca0945019cd971d7ed0914f2b234d88dfd36d68868cff6b999fa52ee6ffa",
+        "stable_id": "load_1e48c",
+        "start": 124044
+      },
+      "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member sprintf.c defines _sprintf at this entry (integ30 program-wide name)",
+      "reviewed_alias": "_sprintf"
+    },
+    "_sprite1_unknown2": {
+      "anchors": [
+        {
+          "caller_task": "load_00786",
+          "hex": "9a584ba21e",
+          "relocation": {
+            "load_offset": 3533,
+            "offset": 3533,
+            "segment": 0
+          },
+          "site": 3530
+        },
+        {
+          "caller_task": "load_261bc",
+          "hex": "9a584ba21e",
+          "relocation": {
+            "load_offset": 156142,
+            "offset": 25070,
+            "segment": 8192
+          },
+          "site": 156139
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144850,
+        "name": "sprite_1_unk2",
+        "sha256": "3ff937e7406deeaad26031c94bc1f5fa58b78921941394bc27acd968005fb2eb",
+        "stable_id": "load_23578",
+        "start": 144760
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprite1_unknown2"
     },
     "_sprite_1_unk": {
       "anchors": [
@@ -11054,6 +12491,41 @@
         "start": 143999
       }
     },
+    "_sprite_setup1_from_arg_pointer": {
+      "anchors": [
+        {
+          "caller_task": "load_18f3c",
+          "hex": "9ad670a21e",
+          "relocation": {
+            "load_offset": 102215,
+            "offset": 36679,
+            "segment": 4096
+          },
+          "site": 102212
+        },
+        {
+          "caller_task": "load_18f4e",
+          "hex": "9ad670a21e",
+          "relocation": {
+            "load_offset": 102233,
+            "offset": 36697,
+            "segment": 4096
+          },
+          "site": 102230
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 154388,
+        "name": "sprite_set_1_from_argptr",
+        "sha256": "3ecb182b3b3aed8b93581894555164218965a0e2459b3577b505b546cee79861",
+        "stable_id": "load_25af6",
+        "start": 154358
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sprite_setup1_from_arg_pointer"
+    },
     "_sprite_shape_to_1": {
       "anchors": [
         {
@@ -11186,6 +12658,31 @@
       },
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_sprset1size"
+    },
+    "_start_audio_voice_sample": {
+      "anchors": [
+        {
+          "caller_task": "load_16ef4",
+          "hex": "9ac8066328",
+          "relocation": {
+            "load_offset": 93985,
+            "offset": 28449,
+            "segment": 4096
+          },
+          "site": 93982
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 165424,
+      "mapped_target": {
+        "end": 167398,
+        "name": "sub_38CF8",
+        "sha256": "75493458c4b20c1b5a73ad8138165498d4a48f5c51b293b638ce7a6fbb3b2ae7",
+        "stable_id": "load_28cf8",
+        "start": 167160
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_start_audio_voice_sample"
     },
     "_strcat": {
       "anchors": [
@@ -12758,6 +14255,31 @@
         "start": 55476
       }
     },
+    "_update_camera_target": {
+      "anchors": [
+        {
+          "caller_task": "load_07008",
+          "hex": "9a1c0eb711",
+          "relocation": {
+            "load_offset": 28895,
+            "offset": 28895,
+            "segment": 0
+          },
+          "site": 28892
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 72560,
+      "mapped_target": {
+        "end": 76946,
+        "name": "sub_2298C",
+        "sha256": "9589c27276c1c83d00b4802e3c740a07161fd6b4350cb9a3846766c6ced79b9e",
+        "stable_id": "load_1298c",
+        "start": 76172
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_update_camera_target"
+    },
     "_update_car_speed": {
       "anchors": [
         {
@@ -13115,6 +14637,56 @@
         "sha256": "0b27904c9117ae189242484dae1e2de35c1f20355e807cc535d7474f567cbf53",
         "start": 149155
       }
+    },
+    "_wait_for_input_delay": {
+      "anchors": [
+        {
+          "caller_task": "load_17686",
+          "hex": "9afe00a21e",
+          "relocation": {
+            "load_offset": 97155,
+            "offset": 31619,
+            "segment": 4096
+          },
+          "site": 97152
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125768,
+        "name": "sub_2EB1E",
+        "sha256": "2630eba0695c5ba1ef551e26f742107f68f918a61f7a4b526dd69e66b429fa63",
+        "stable_id": "load_1eb1e",
+        "start": 125726
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_wait_for_input_delay"
+    },
+    "_wheel_update": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9a0e231a0e",
+          "relocation": {
+            "load_offset": 48113,
+            "offset": 48113,
+            "segment": 0
+          },
+          "site": 48110
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 57760,
+      "mapped_target": {
+        "end": 67284,
+        "name": "sub_204AE",
+        "sha256": "5f65459dbfbf93e4e1babebdc485c4722ffd40b101320bf7398e417752ef80c8",
+        "stable_id": "load_104ae",
+        "start": 66734
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_wheel_update"
     },
     "_write": {
       "anchors": [

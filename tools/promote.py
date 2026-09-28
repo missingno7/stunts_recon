@@ -11,6 +11,7 @@ from mz import MZ
 from transaction import (exclusive, ensure_consistent, prepare, apply, finish, rollback, recover,
                          invalidate_receipts, lock_free_snapshot, publishing)
 from multi_contribution import checked_members
+from asm_module import registry_publics
 from preprocessor import prepare as prepare_source
 from assembler import asm_source
 
@@ -135,7 +136,7 @@ def checked_asm_function(name, recipe, image):
     require(recipe.get('stable_id') == stable and recipe['id'] == name
             and (recipe['start'], recipe['end']) == (f['start'], f['end'])
             and recipe['target'] == {'size': f['size'], 'sha256': f['sha256']}
-            and recipe['public'] == '_' + name,
+            and (recipe['public'] == '_' + name or recipe['public'] in registry_publics(name)),
             'ASM recipe differs from independent function evidence')
     if 'original_frame_load_address' in recipe:
         require(recipe['original_frame_load_address'] == f['segment_paragraph']*16,
@@ -337,15 +338,25 @@ def attach_secondary(manifest, recipe, image):
         if segment=='_BSS':
             require(layout['bss_start']<=start<end<=layout['bss_end'],
                     'BSS ownership outside verified clear range')
-            if 'bss_owners' not in result:
-                result['bss_owners']=[{'id':'raw_bss','kind':'UNRESOLVED_RAW',
-                                       'start':layout['bss_start'],'end':layout['bss_end']}]
+            require('bss_owners' in result, 'BSS ownership partition missing')
             partition=result['bss_owners']
         else:
             require(end<=len(image) and identity(image[start:end])==spec['target'],
                     'Secondary initialized owner differs from oracle')
             partition=result['owners']
         overlaps=[o for o in partition if o['start']<end and start<o['end']]
+        if segment=='_BSS':
+            # integ35: raw BSS debt is one placeholder per object; a static claim
+            # replaces exactly its own object's whole placeholder (bss_link).
+            import bss_link
+            objects=read_json(ROOT/'layout/link-objects.json')['objects']
+            host=[o['id'] for o in objects if o['start']<=parent['start']<o['end']]
+            require(len(overlaps)==1 and (overlaps[0]['start'],overlaps[0]['end'])==(start,end) and
+                    ((overlaps[0]['kind']=='UNRESOLVED_RAW' and
+                      overlaps[0].get('raw_form')==bss_link.OBJECT_BSS and
+                      host==[overlaps[0].get('object')]) or
+                     (overlaps[0]['kind']!='UNRESOLVED_RAW' and overlaps[0].get('parent')==parent['id'])),
+                    'BSS claim does not replace exactly its own object raw placeholder')
         prior_kind = 'MATCHING_ASM_DATA' if recipe.get('kind') == 'asm' else 'MATCHING_C_DATA'
         require(overlaps and overlaps[0]['start']<=start and end<=overlaps[-1]['end'],
                 'Secondary interval is not wholly covered')
@@ -394,10 +405,16 @@ def attach_secondary(manifest, recipe, image):
             replacement.append({**overlaps[0],'end':start,
                                 'id':f"raw_{overlaps[0]['start']:05x}_{start:05x}"})
         kind = 'MATCHING_ASM_DATA' if recipe.get('kind') == 'asm' else 'MATCHING_C_DATA'
-        replacement.append({'id':f"{recipe['id']}:{segment}", 'kind':kind,
-                            'classification':'GAME_ASM' if kind == 'MATCHING_ASM_DATA' else 'GAME_C',
-                            'parent':parent['id'], 'segment':segment,'start':start,'end':end,
-                            'target':spec['target']})
+        row={'id':f"{recipe['id']}:{segment}", 'kind':kind,
+             'classification':'GAME_ASM' if kind == 'MATCHING_ASM_DATA' else 'GAME_C',
+             'parent':parent['id'], 'segment':segment,'start':start,'end':end,
+             'target':spec['target']}
+        if segment=='_BSS':
+            # integ32: static storage placed by LINK module order; publication
+            # and validation require the real-link proof (tools/bss_link.py).
+            import bss_link
+            row['placement']=bss_link.STATIC
+        replacement.append(row)
         if end<overlaps[-1]['end']:
             require(overlaps[-1]['kind']=='UNRESOLVED_RAW','Secondary end cuts accepted owner')
             replacement.append({**overlaps[-1],'start':end,
@@ -609,6 +626,25 @@ def apply_ownership(manifest, name, recipe, oracle, image):
         require(len(active) == 1 and active[0]['recipe'] == 'recipes/'+name+'.json'
                 and (active[0]['start'],active[0]['end']) == (recipe['start'],recipe['end']),
                 'Existing ownership cannot change')
+        # integ31 (data ownership ruling): the same whole object may grow or
+        # add a secondary DGROUP segment over raw bytes (seg009's _DATA tail,
+        # seg028's _DATA).  No segment is dropped; attach_secondary rechecks
+        # the exact payload, the listed subsumed children and every cut.
+        if recipe.get('secondary_dgroup_segments'):
+            current = sorted(({'segment': row['segment'], 'start': row['start'], 'end': row['end'],
+                               'target': row['target']}
+                              for row in active[0].get('data_intervals', [])),
+                             key=lambda row: row['segment'])
+            requested = sorted(({'segment': segment, 'start': spec['start'], 'end': spec['end'],
+                                 'target': spec['target']}
+                                for segment, spec in recipe['secondary_dgroup_segments'].items()),
+                               key=lambda row: row['segment'])
+            require({row['segment'] for row in current} <= {row['segment'] for row in requested},
+                    'Existing secondary segment cannot be dropped')
+            if current != requested:
+                manifest = attach_secondary(manifest, recipe, image)
+        if 'dgroup_word_fill' in recipe:
+            manifest = attach_dgroup_word_fill(manifest, recipe, image)
         return manifest
     require(not (ROOT/destination).exists() and not (ROOT/'recipes'/(name+'.json')).exists(),
             'New publication would overwrite existing unowned files')
@@ -625,7 +661,41 @@ def _publish_ownership(manifest, name, recipe, oracle, image):
         staged_manifest = attach_secondary(staged_manifest, recipe, image)
     if 'link_fill' in recipe:
         staged_manifest = attach_link_fill(staged_manifest, recipe, image)
+    if 'dgroup_word_fill' in recipe:
+        staged_manifest = attach_dgroup_word_fill(staged_manifest, recipe, image)
     return staged_manifest
+
+
+def attach_dgroup_word_fill(manifest, recipe, image):
+    """integ33: own the one-byte DGROUP word-alignment fill LINK leaves after
+    this object's odd-length DGROUP segment (link_fill.WORD_BASIS).  The fill
+    row is re-derived from both neighbours on every build."""
+    from link_fill import WORD_BASIS, word_fill_row, checked_fill
+    result = copy.deepcopy(manifest)
+    spec = recipe['dgroup_word_fill']
+    require(set(spec) == {'segment', 'basis'} and spec['basis'] == WORD_BASIS and
+            spec['segment'] in recipe.get('secondary_dgroup_segments', {}),
+            'Unsupported recipe DGROUP fill form')
+    parents = [o for o in result['owners'] if o.get('name') == recipe['id'] and
+               (o['start'], o['end']) == (recipe['start'], recipe['end']) and
+               o['kind'] in ('MATCHING_C', 'MATCHING_ASM')]
+    require(len(parents) == 1, 'DGROUP fill lacks its object owner')
+    rows = [o for o in result['owners'] if o.get('parent') == parents[0]['id'] and
+            o.get('segment') == spec['segment']]
+    require(len(rows) == 1, 'DGROUP fill lacks its owned segment row')
+    start = rows[0]['end']
+    after = [o for o in result['owners'] if o['start'] == start]
+    require(len(after) == 1, 'DGROUP fill position is not a single owner')
+    fill = word_fill_row(rows[0]['id'], start)
+    if after[0].get('kind') == 'LINK_FILL':
+        require(after[0] == fill, 'Existing DGROUP fill differs')
+    else:
+        require(after[0]['kind'] == 'UNRESOLVED_RAW' and after[0]['end'] == start + 1,
+                'DGROUP fill is not exactly one raw-owned byte')
+        at = result['owners'].index(after[0])
+        result['owners'][at] = fill
+    checked_fill(fill, result, image)
+    return result
 
 
 def attach_link_fill(manifest, recipe, image):
@@ -665,12 +735,19 @@ def _stage(name, candidate, source, recipe_path, recipe_data, before, verify_onl
     staged = build(staged_manifest, {'recipes/'+name+'.json':recipe}, publish=False,
                    source_overrides={destination:source})
     require(inputs() == before and staged['inputs'] == before, 'Canonical inputs changed during acceptance')
+    import bss_link
+    bss = None
+    if bss_link.claims(recipe):
+        bss = bss_link.staged_gate([(name, source, recipe)])
+        require(inputs() == before, 'Canonical inputs changed during the BSS real-link gate')
     require(candidate.read_bytes() == source, 'Candidate source changed during acceptance')
     if recipe_path:
         require(Path(recipe_path).read_bytes() == recipe_data, 'Candidate recipe changed during acceptance')
     report = {'status':'VERIFIED_ONLY' if verify_only else 'PROMOTED', 'function':name,
               'source':identity(source), 'bytes':len(payload), 'whole_image':staged['executable'],
               'relocation_count':staged['relocation_count'], 'fast':fast, 'inputs':before}
+    if bss is not None:
+        report['bss_real_link'] = bss
     return report, destination, recipe, staged_manifest
 
 
@@ -727,7 +804,8 @@ def main():
     p.add_argument('function', nargs='?'); p.add_argument('candidate', nargs='?', type=Path)
     p.add_argument('--recipe', type=Path, help='Explicit reviewed binding recipe; optional for no-fixup contributions')
     p.add_argument('--verify-only', action='store_true'); p.add_argument('--recover', action='store_true')
-    p.add_argument('--batch', type=Path, help='Batch file (NAME CANDIDATE [RECIPE] per line): one journaled '
+    p.add_argument('--batch', type=Path, help='Batch file (NAME CANDIDATE [RECIPE] per line; integ39: one '
+                   '`COMMUNAL UNIT.json` line makes it an atomic communal transaction): one journaled '
                    'publication; each candidate verified individually, one fresh union whole-image build')
     p.add_argument('--no-independent', action='store_true',
                    help='Batch research runs only: omit the per-candidate DOSBox-X check (never for publication)')
@@ -744,6 +822,10 @@ def main():
         print(summary['status'], len(summary['published']), 'candidates',
               sum(x['bytes'] for x in summary['published']), 'bytes;', len(summary['dropped']), 'dropped;',
               summary['seconds'], 's')
+        if summary.get('communal_unit'):
+            # integ39: atomic communal transaction (tools/communal_unit.py)
+            print('communal unit', summary['communal_unit'], summary.get('communal_gate', {}).get('status') or
+                  summary['dropped'].get('@communal', {}).get('error', '')[:400])
         return
     if not a.function or not a.candidate: p.error('Supply FUNCTION CANDIDATE.c')
     report = promote(a.function, a.candidate, a.recipe, a.verify_only)

@@ -3,8 +3,7 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_audio_filetemp",
-        "_unk_407AC",
+        "_audiofiletmp",
         "_strrchr",
         "_audio_make_filename"
       ],
@@ -26,9 +25,194 @@
       ],
       "publics": [
         {
+          "name": "_material_clrlist_ptr",
+          "offset": 862,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_material_color_table_pointer",
+          "offset": 864,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_material_pattern_table_pointer",
+          "offset": 866,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_material_pattern2_table_ptr",
+          "offset": 868,
+          "segment": "_DATA"
+        },
+        {
           "name": "_audio_make_filename",
           "offset": 0,
           "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_one_through_fourteen_table",
+          "offset": 2,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_dlg_colour",
+          "offset": 30,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_color_max",
+          "offset": 32,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_menu_hover_color_a",
+          "offset": 34,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_menu_hover_color_b",
+          "offset": 36,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_animation_outline_color",
+          "offset": 38,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_a",
+          "offset": 40,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_a",
+          "offset": 42,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_b",
+          "offset": 44,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_b",
+          "offset": 46,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_c",
+          "offset": 48,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_c",
+          "offset": 50,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_d",
+          "offset": 52,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_d",
+          "offset": 54,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_e",
+          "offset": 56,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_e",
+          "offset": 58,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_f",
+          "offset": 60,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_f",
+          "offset": 62,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_palette_window_line_color",
+          "offset": 64,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_palette_window_fill_color",
+          "offset": 66,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_palette_window_line_style",
+          "offset": 68,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_text_cursor_outline_color",
+          "offset": 70,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_menu_button_color_a",
+          "offset": 72,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_menu_button_color_b",
+          "offset": 74,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_menu_button_color_c",
+          "offset": 76,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_menu_clear_color",
+          "offset": 78,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_camera_select_fill_color",
+          "offset": 80,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_camera_select_outline_color",
+          "offset": 82,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_performGraphColor",
+          "offset": 84,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_dialogarg2",
+          "offset": 86,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_material_color_list",
+          "offset": 88,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_material_pattern_list",
+          "offset": 346,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_material_pattern2_list",
+          "offset": 604,
+          "segment": "_DATA"
         }
       ],
       "segments": [
@@ -58,7 +242,7 @@
           "combine_code": 2,
           "frame": null,
           "index": 2,
-          "length": 0,
+          "length": 870,
           "name": "_DATA",
           "offset": null,
           "overlay_index": 1,
@@ -100,6 +284,12 @@
     },
     "mode": "external-far-call-dgroup-offset16-v1"
   },
+  "communal_declarations": [
+    {
+      "name": "_audiofiletmp",
+      "size": 128
+    }
+  ],
   "compiler_flags": [
     "/AM",
     "/Ox",
@@ -114,8 +304,76 @@
   "expected_fixups": [
     {
       "displacement": 0,
+      "encoded_addend": "5c02",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 868,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "5a01",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 866,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "5800",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 864,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "5800",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 862,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -123,7 +381,7 @@
       "offset": 318,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -132,7 +390,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -140,7 +398,7 @@
       "offset": 281,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -149,7 +407,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -157,7 +415,7 @@
       "offset": 245,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -166,24 +424,24 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_unk_407AC",
-      "frame_index": 0,
-      "frame_kind": "target",
-      "frame_method": 5,
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
       "loc": "offset16",
       "offset": 242,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_unk_407AC",
-      "target_index": 3,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -191,7 +449,7 @@
       "offset": 222,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -200,7 +458,7 @@
     {
       "displacement": 0,
       "encoded_addend": "fcff",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -208,7 +466,7 @@
       "offset": 216,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -217,7 +475,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -225,7 +483,7 @@
       "offset": 196,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -234,7 +492,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -242,7 +500,7 @@
       "offset": 157,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -251,7 +509,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -259,7 +517,7 @@
       "offset": 147,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -277,7 +535,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strrchr",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -285,7 +543,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -293,7 +551,7 @@
       "offset": 78,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -302,7 +560,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -310,7 +568,7 @@
       "offset": 74,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -328,7 +586,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strrchr",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -336,7 +594,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -344,7 +602,7 @@
       "offset": 42,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -353,7 +611,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_filetemp",
+      "frame": "_audiofiletmp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -361,7 +619,7 @@
       "offset": 9,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_filetemp",
+      "target": "_audiofiletmp",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -389,14 +647,13 @@
       "k": 4,
       "offset": 216,
       "strlen_site": 171409,
-      "target": "_audio_filetemp"
+      "target": "_audiofiletmp"
     }
   ],
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_audio_filetemp",
-      "_unk_407AC",
+      "_audiofiletmp",
       "_strrchr",
       "_audio_make_filename"
     ],
@@ -418,9 +675,194 @@
     ],
     "publics": [
       {
+        "name": "_material_clrlist_ptr",
+        "offset": 862,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_material_color_table_pointer",
+        "offset": 864,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_material_pattern_table_pointer",
+        "offset": 866,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_material_pattern2_table_ptr",
+        "offset": 868,
+        "segment": "_DATA"
+      },
+      {
         "name": "_audio_make_filename",
         "offset": 0,
         "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_one_through_fourteen_table",
+        "offset": 2,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_dlg_colour",
+        "offset": 30,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_color_max",
+        "offset": 32,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_menu_hover_color_a",
+        "offset": 34,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_menu_hover_color_b",
+        "offset": 36,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_animation_outline_color",
+        "offset": 38,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_a",
+        "offset": 40,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_a",
+        "offset": 42,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_b",
+        "offset": 44,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_b",
+        "offset": 46,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_c",
+        "offset": 48,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_c",
+        "offset": 50,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_d",
+        "offset": 52,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_d",
+        "offset": 54,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_e",
+        "offset": 56,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_e",
+        "offset": 58,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_f",
+        "offset": 60,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_f",
+        "offset": 62,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palette_window_line_color",
+        "offset": 64,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palette_window_fill_color",
+        "offset": 66,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palette_window_line_style",
+        "offset": 68,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_text_cursor_outline_color",
+        "offset": 70,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_menu_button_color_a",
+        "offset": 72,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_menu_button_color_b",
+        "offset": 74,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_menu_button_color_c",
+        "offset": 76,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_menu_clear_color",
+        "offset": 78,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_camera_select_fill_color",
+        "offset": 80,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_camera_select_outline_color",
+        "offset": 82,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_performGraphColor",
+        "offset": 84,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_dialogarg2",
+        "offset": 86,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_material_color_list",
+        "offset": 88,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_material_pattern_list",
+        "offset": 346,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_material_pattern2_list",
+        "offset": 604,
+        "segment": "_DATA"
       }
     ],
     "segments": [
@@ -450,7 +892,7 @@
         "combine_code": 2,
         "frame": null,
         "index": 2,
-        "length": 0,
+        "length": 870,
         "name": "_DATA",
         "offset": null,
         "overlay_index": 1,
@@ -497,9 +939,24 @@
   "review": [
     "audio_filetemp[strlen(audio_filetemp) - 4] (the extension check): MSC folds it to _audio_filetemp-4; accepted under the extended RULING (Opus, integ29): byte array, k=4, index computed in the same function by the inline strlen of the SAME array (mov di,offset audio_filetemp ... repne scasb ... mov bx,cx immediately before the access)."
   ],
+  "review_notes": [
+    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order."
+  ],
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 20540,
+      "end": 199442,
+      "start": 198572,
+      "target": {
+        "sha256": "255fdf2bf14be57596f5e06cba156403dc5dcf572bcf81dd08baedf5c1344e32",
+        "size": 870
+      }
+    }
+  },
   "source": "src/audio_make_filename.c",
   "stable_id": "load_29cce",
   "start": 171214,
+  "subsumed_data_owners": [],
   "target": {
     "sha256": "7ba63d2601199dc7986976108cb232d58b667e48c7040dca7c270802f7e0e80c",
     "size": 326

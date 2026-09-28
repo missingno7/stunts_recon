@@ -1,3 +1,13 @@
+/* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
+#define _UPPER 0x1
+#define _LOWER 0x2
+#define isupper(c) ((_ctype+1)[c] & _UPPER)
+#define islower(c) ((_ctype+1)[c] & _LOWER)
+#define _tolower(c) ((c)-'A'+'a')
+#define tolower(c) (isupper(c) ? _tolower(c) : (c))
+static int textboundsleft, text_bounds_right, text_bounds_upper, txt_bounds_bottom;
+static int textoutlineleft, text_outline_right, txt_outline_top, text_outline_bottom;
+
 extern char *itoa(int value, char *buffer, int radix);
 
 extern unsigned strlen(char *s);
@@ -5,23 +15,23 @@ extern char *strcpy(char *destination, char *source);
 extern char *strcat(char *destination, char *source);
 extern void far* mmgr_free(char far* ptr);
 extern char far *locate_shape_fatal(char far *data, char *name);
-extern char textresprefix;
-extern int mouse_xpos;
-extern int word_361CE;
+char textrespfxchr;
+int msecoordx;
+int pos_y_ms;
 extern char kbormouse;
 struct SHAPE2D { unsigned short words[6]; unsigned char bytes[4]; };
 struct SPRITE { struct SHAPE2D far *sprite_bitmapptr; unsigned short words[3]; unsigned int *lineofs; unsigned short words2[9]; };
 extern struct SPRITE far sprite2;
-extern struct SPRITE far *wndsprite;
-extern struct SPRITE far *mouseunkspriteptr;
-extern struct SPRITE far *mmouspriteptr;
-extern struct SPRITE far *smouspriteptr;
-void sprite_set_1_from_argptr(struct SPRITE far *argsprite);
+extern struct SPRITE far *g_wndspr;
+struct SPRITE far *mouse_unk_sprite_ptr;
+extern struct SPRITE far *mouse_ptr_cursor;
+extern struct SPRITE far *spritepointermini;
+void sprite_setup1_from_arg_pointer(struct SPRITE far *argsprite);
 void sprite_clear_1_color(unsigned char color);
 void far sprite_copy_2_to_1(void);
 void far sprite_copy_both_to_arg(struct SPRITE *argsprite);
 void far sprite_copy_arg_to_both(struct SPRITE *argsprite);
-void far sprite_putimage(struct SHAPE2D far *shape);
+void far sprputimage(struct SHAPE2D far *shape);
 void far sprite_clear_shape_alt(struct SHAPE2D far *shape, int x, int y);
 void far sprite_putimage_and(struct SHAPE2D far *shape, unsigned short x, unsigned short y);
 void far sprite_putimage_or(struct SHAPE2D far *shape, unsigned short x, unsigned short y);
@@ -29,53 +39,55 @@ void far sprite_1_unk3(struct SHAPE2D far *shape, int index);
 struct SHAPE3DHEADER { unsigned char numverts, numprimitives, numpaints, reserved; };
 struct SHAPE3D { unsigned short numverts; char far *verts; unsigned short numprimitives; unsigned char numpaints, reserved; char far *primitives; char far *cull1; char far *cull2; };
 extern int far font_op2(char *name);
-extern int word_A5AC, word_A596;
-extern unsigned int word_9282;
-extern int word_9260;
+int g_animphase;
+int g_hovercolor_idle;
+extern unsigned int unused_count;
+extern int rate_frame;
 struct FONTDEF_PREFIX { unsigned char bytes[14]; unsigned short value; };
-extern unsigned int fontdef_value;
-extern void far *fontdefptr;
+unsigned int fontdefvalue;
+extern void far *def_fntadr;
 extern void far set_fontdefseg(void far *data);
-extern signed char byte_3B8F7;
-extern signed char byte_45D0C[], byte_45D14[];
+extern signed char mouse_transparent_mode;
+signed char copy_mouse_modes[8];
+signed char input_device_modestack[8];
 extern unsigned long timer_get_delta(void);
 extern unsigned long far timer_get_delta_alt(void);
 extern unsigned long far timer_get_counter(void);
 extern int far rand(void);
 extern int far get_kevinrandom(void);
-extern unsigned short gState_frame;
+extern unsigned short idx_time_gm;
 extern int far input_checking(int delta);
 extern int far input_do_checking(int delta);
 extern int far input_repeat_check(int timeout);
-extern int kbjoyflags;
-extern int mouse_butstate, mouse_xpos, mouse_ypos;
-extern int video_flag2_is1;
+int kbjoyflags;
+int flagsdown;
+extern int g_vid_flg2_set;
 extern char mouse_isdirty;
 extern char g_is_busy;
 extern unsigned short dialogarg2;
-extern void far *mainresptr;
+void far *main_data_file_addr;
 extern int far kb_get_char(void);
 extern int far get_joy_flags(void);
 extern int far get_kb_or_joy_flags(void);
 extern void far mouse_get_state(int *buttons, int *x, int *y);
 extern void far mouse_draw_opaque(void);
 extern void far mouse_draw_transparent(void);
-extern void far mouse_draw_opaque_check(void);
-extern void far mouse_draw_transparent_check(void);
+extern void far msdrawopaquechk(void);
+extern void far msdrawtransparentchk(void);
 extern void far input_pop_status(void);
 extern void far check_input(void);
-extern void far mouse_draw_opaque_check(void);
-extern void far mouse_draw_transparent_check(void);
+extern void far msdrawopaquechk(void);
+extern void far msdrawtransparentchk(void);
 extern void far input_pop_status(void);
 extern void far file_build_path(char *dir, char *name, char *ext, char *dst);
 extern void far *file_load_resource(int type, char *filename);
-extern void far *file_load_resfile(char *filename);
-extern void far file_load_audiores(char *songfile, char *voicefile, char *name);
+extern void far *file_load_resource_file(char *filename);
+extern void far file_load_audio_resource(char *songfile, char *voicefile, char *name);
 extern void far *file_load_3dres(char *filename);
 extern short far do_dea_textres(void);
 extern void far *file_load_binary_nofatal(char *filename);
-extern void far *file_load_shape2d_nofatal_thunk(char *filename);
-extern void far *file_load_shape2d_res_nofatal_thunk(char *filename);
+extern void far *load_shape2d_nofatal_thunk(char *filename);
+extern void far *load_shape2d_res_nofatal_thunk(char *filename);
 extern void far *load_song_file(char *filename);
 extern void far *load_voice_file(char *filename);
 extern void far *load_sfx_file(char *filename);
@@ -85,10 +97,11 @@ extern void far *file_read_nofatal(unsigned int first, unsigned int second, unsi
 extern void far *init_audio_resources(void far *song, void far *voice, char *name);
 extern void far load_audio_finalize(void far *audiores);
 extern void far audio_driver_func3F(int command);
-extern void far *voicefileptr;
-extern void far *songfileptr;
+short voicefile_gap_c[4];
+void far *openvfile;
+void far *musicfile;
 extern char is_audioloaded;
-extern char far * far locate_text_res(char far *data, char *name);
+extern char far * far locate_text_resource(char far *data, char *name);
 extern void copy_string(char *destination, char far *source);
 extern void parse_filepath_separators(char *dest, char *path);
 
@@ -96,80 +109,83 @@ extern void parse_filepath_separators(char *dest, char *path);
 
 char *findfiletexts[4] = { "id1", "id2", "id3", "id4" };
 char *findfilenames[4] = { "setup.exe", "sdtitl.*", "tedit.*", "opp1.*" };
-unsigned int word_3EB90 = 0;
+unsigned int font_secondary_color = 0;
 
 /* target file_build_path @ 4370; candidate from build\workers\tuseg008\file_build_path_ch.c */
 /* merged owner s008-a member sub_274B0 */
-char far sub_274B0(int x1, int x2, int y1, int y2)
+char far point_in_rectangle(int x1, int x2, int y1, int y2)
 {
-    extern int word_9374;
-    extern int word_aa60;
+    extern int pixel_scales;
+    extern int vidflg4_is1;
     extern unsigned char mouse_buffer_count;
-    extern int mouse_saved_x[];
-    extern int mouse_saved_y[];
-    extern struct SPRITE far *mouse_sprite_stack[];
-    extern struct SPRITE far *mouse_background;
+    extern int g_mousesave_x_tbl[];
+    extern int g_mouseyposstacktable[];
+    extern struct SPRITE far *mssprite_arrays[];
+    extern struct SPRITE far *savedptr_ms;
     extern long far mmgr_get_res_ofs_diff_scaled(void);
-    extern struct SPRITE far *far sprite_make_wnd(int width, int height, int flags);
+    extern struct SPRITE far *far sprite_make_window(int width, int height, int flags);
     extern void far sprite_copy_both_to_arg(struct SPRITE *argsprite);
     extern void far sprite_copy_2_to_1(void);
     extern void far sprite_clear_shape_alt(struct SHAPE2D far *shape, int x, int y);
     struct SPRITE saved_sprites[2];
     long required;
-    required = ((long)(x2 - x1) * (y2 - y1)) / (long)(word_9374 * word_aa60) + 18L;
+    required = ((long)(x2 - x1) * (y2 - y1)) / (long)(pixel_scales * vidflg4_is1) + 18L;
     if (mmgr_get_res_ofs_diff_scaled() <= required) return 0;
 
-    mouse_draw_opaque_check();
-    mouse_sprite_stack[mouse_buffer_count] = sprite_make_wnd(x2 - x1, y2 - y1, 15);
-    mouse_saved_x[mouse_buffer_count] = x1;
-    mouse_saved_y[mouse_buffer_count] = y1;
+    msdrawopaquechk();
+    mssprite_arrays[mouse_buffer_count] = sprite_make_window(x2 - x1, y2 - y1, 15);
+    g_mousesave_x_tbl[mouse_buffer_count] = x1;
+    g_mouseyposstacktable[mouse_buffer_count] = y1;
     sprite_copy_both_to_arg(&saved_sprites[0]);
-    mouse_background[mouse_buffer_count * 2] = saved_sprites[0];
-    mouse_background[mouse_buffer_count * 2 + 1] = saved_sprites[1];
+    savedptr_ms[mouse_buffer_count * 2] = saved_sprites[0];
+    savedptr_ms[mouse_buffer_count * 2 + 1] = saved_sprites[1];
     sprite_copy_2_to_1();
-    sprite_clear_shape_alt(mouse_sprite_stack[mouse_buffer_count]->sprite_bitmapptr,
+    sprite_clear_shape_alt(mssprite_arrays[mouse_buffer_count]->sprite_bitmapptr,
                            x1, y1);
     ++mouse_buffer_count;
     return 1;
 }
+int g_mouseyposstacktable[5];
+int g_mousesave_x_tbl[4];
+struct SPRITE far *mssprite_arrays[4];
 
 /* merged owner s008-a member sub_275C6 */
-void far sub_275C6(void)
+void far restore_mouse_sprite(void)
 {
     extern unsigned char mouse_buffer_count;
-    extern int mouse_saved_x[];
-    extern int mouse_saved_y[];
-    extern struct SPRITE far *mouse_sprite_stack[];
-    extern struct SPRITE far *mouse_background;
+    extern int g_mousesave_x_tbl[];
+    extern int g_mouseyposstacktable[];
+    extern struct SPRITE far *mssprite_arrays[];
+    extern struct SPRITE far *savedptr_ms;
     extern void far sprite_shape_to_1(struct SHAPE2D far *shape, int x, int y);
     extern void far sprite_copy_arg_to_both(struct SPRITE *argsprite);
-    extern void far sprite_free_wnd(void far *window);
+    extern void far sprite_free_window(void far *window);
     struct SPRITE saved_sprites[2];
 
     if (mouse_buffer_count == 0) return;
     --mouse_buffer_count;
-    mouse_draw_opaque_check();
-    sprite_shape_to_1(mouse_sprite_stack[mouse_buffer_count]->sprite_bitmapptr,
-                      mouse_saved_x[mouse_buffer_count],
-                      mouse_saved_y[mouse_buffer_count]);
-    saved_sprites[0] = mouse_background[mouse_buffer_count * 2];
-    saved_sprites[1] = mouse_background[mouse_buffer_count * 2 + 1];
+    msdrawopaquechk();
+    sprite_shape_to_1(mssprite_arrays[mouse_buffer_count]->sprite_bitmapptr,
+                      g_mousesave_x_tbl[mouse_buffer_count],
+                      g_mouseyposstacktable[mouse_buffer_count]);
+    saved_sprites[0] = savedptr_ms[mouse_buffer_count * 2];
+    saved_sprites[1] = savedptr_ms[mouse_buffer_count * 2 + 1];
     sprite_copy_arg_to_both(&saved_sprites[0]);
-    sprite_free_wnd(mouse_sprite_stack[mouse_buffer_count]);
-    mouse_draw_transparent_check();
+    sprite_free_window(mssprite_arrays[mouse_buffer_count]);
+    msdrawtransparentchk();
 }
 
 /* merged owner s008-dlg member show_dialog */
 int far show_dialog(int type, int check, char far *message, int x, int y,
                     unsigned int frame_arg, int *disabled, char initial)
 {
-    extern unsigned int dialog_fnt_colour, word_3EB90, performGraphColor;
-    extern unsigned char g_ascii_props[];
-    extern int far sprite_set_1_size(int, int, int, int);
+    extern int dlg_colour; extern unsigned int font_secondary_color; extern int performGraphColor;
+    extern unsigned char _ctype[];
+    extern int far sprset1size(int, int, int, int);
     extern void far sprite_1_unk4(int, int, int, int, unsigned int);
-    extern void far font_set_unk(unsigned int, unsigned int);
-    extern void far sub_345BC(char *, int, int);
-    extern int far sub_2EB1E(long);
+    extern void far font_setup_unknown(unsigned int, unsigned int);
+    extern void far draw_text_at(char *, int, int);
+    extern int far wait_for_input_delay(long);
     extern int far mouse_multi_hittest(int, int *, int *, int *, int *);
     extern unsigned long far timer_get_delta_alt(void);
     char chr;
@@ -202,10 +218,10 @@ int far show_dialog(int type, int check, char far *message, int x, int y,
     int dlgframe[4];
     int btn_ls[20];
 
-    linehgt = fontdef_value + 2;
+    linehgt = fontdefvalue + 2;
     total_h = 0;
     wide = 32;
-    mouse_draw_opaque_check();
+    msdrawopaquechk();
     textptr = message;
     pos = 0;
     while ((chr = *textptr) != 0) {
@@ -239,15 +255,15 @@ int far show_dialog(int type, int check, char far *message, int x, int y,
     dlgframe[3] = y + total_h + 8;
     x += 8;
     wide -= 16;
-    if (check != 0 && !sub_274B0(dlgframe[0], dlgframe[1], dlgframe[2], dlgframe[3]))
+    if (check != 0 && !point_in_rectangle(dlgframe[0], dlgframe[1], dlgframe[2], dlgframe[3]))
         return -1;
     sprite_copy_2_to_1();
-    sprite_set_1_size(dlgframe[0], dlgframe[1], dlgframe[2], dlgframe[3]);
+    sprset1size(dlgframe[0], dlgframe[1], dlgframe[2], dlgframe[3]);
     sprite_clear_1_color(0);
     sprite_1_unk4(x - 4, y - 4, x + wide + 4, y + total_h + 4, frame_arg);
-    font_set_unk(dialog_fnt_colour, 0);
-    word_3EB90 = 0;
-    font_set_unk(dialog_fnt_colour, 0);
+    font_setup_unknown(dlg_colour, 0);
+    font_secondary_color = 0;
+    font_setup_unknown(dlg_colour, 0);
     pos = 0;
     markers = 0;
     textptr = message;
@@ -257,13 +273,13 @@ int far show_dialog(int type, int check, char far *message, int x, int y,
             goto buttons;
         if (chr == ']') {
             textbuf[pos] = 0;
-            sub_345BC(textbuf, x, y + total_h);
+            draw_text_at(textbuf, x, y + total_h);
             pos = 0;
             total_h += linehgt;
             line_start = textptr;
         } else if (*textptr == '}') {
             textbuf[pos] = 0;
-            sub_345BC(textbuf, x, y + total_h);
+            draw_text_at(textbuf, x, y + total_h);
             pos = 0;
             total_h += 4;
             line_start = textptr;
@@ -323,11 +339,11 @@ end_button:
         for (i = 0; i < count; ++i)
             btn_rs[i] = btn_ls[i] + wide;
     }
-    mouse_draw_transparent_check();
+    msdrawtransparentchk();
     ret = 1;
     switch (type) {
     case 4:
-        sub_2EB1E(8L);
+        wait_for_input_delay(8L);
         break;
     case 1:
         do {
@@ -345,41 +361,41 @@ end_button:
         ret = initial;
         oldchoice = -1;
         timer_get_delta_alt();
-        mouse_draw_opaque_check();
+        msdrawopaquechk();
         if (count == 2) {
             i = 0;
             do {
                 hot0 = (unsigned char)btn_text[0][i];
                 ++i;
             } while (hot0 == ' ');
-            if (g_ascii_props[hot0] & 1)
-                hot0 = (g_ascii_props[hot0] & 1) ? hot0 + 0x20 : hot0;
+            if (isupper(hot0))
+                hot0 = tolower(hot0);
             i = 0;
             do {
                 hot_1 = (unsigned char)btn_text[1][i];
                 ++i;
             } while (hot_1 == ' ');
-            if (g_ascii_props[hot_1] & 1)
-                hot_1 = (g_ascii_props[hot_1] & 1) ? hot_1 + 0x20 : hot_1;
+            if (isupper(hot_1))
+                hot_1 = tolower(hot_1);
         }
         busy = 1;
         while (busy) {
             if (ret != oldchoice) {
-                mouse_draw_opaque_check();
+                msdrawopaquechk();
                 for (i = 0; i < count; ++i) {
                     if (disabled != 0 && disabled[i] != 0)
-                        font_set_unk(performGraphColor, word_3EB90);
+                        font_setup_unknown(performGraphColor, font_secondary_color);
                     else if (ret == i)
-                        font_set_unk(word_3EB90, dialog_fnt_colour);
+                        font_setup_unknown(font_secondary_color, dlg_colour);
                     else
-                        font_set_unk(dialog_fnt_colour, word_3EB90);
+                        font_setup_unknown(dlg_colour, font_secondary_color);
                     textptr = btn_text[i];
                     for (pos = 0; pos < lengths[i]; ++pos)
                         labelstr[pos] = textptr[pos];
                     labelstr[pos] = 0;
-                    sub_345BC(labelstr, btn_ls[i], btn_ts[i]);
+                    draw_text_at(labelstr, btn_ls[i], btn_ts[i]);
                 }
-                mouse_draw_transparent_check();
+                msdrawtransparentchk();
                 if (oldchoice == -1)
                     check_input();
                 oldchoice = ret;
@@ -394,8 +410,8 @@ end_button:
             }
             if (count == 2 && key != 0) {
                 lowkey = key;
-                if (g_ascii_props[lowkey] & 1)
-                    lowkey = (g_ascii_props[lowkey] & 1) ? lowkey + 0x20 : lowkey;
+                if (isupper(lowkey))
+                    lowkey = tolower(lowkey);
                 if (hot0 == lowkey) {
                     ret = 0;
                     key = 13;
@@ -435,7 +451,7 @@ end_button:
         break;
     }
     if (check != 0)
-        sub_275C6();
+        restore_mouse_sprite();
     return ret;
 }
 
@@ -443,9 +459,9 @@ end_button:
 int far do_fileselect_dialog(char *path, char *selected_name, int attributes,
                              char far *heading)
 {
-    extern char resID_byte1[];
-    extern unsigned int dialog_fnt_colour, word_3EB90, performGraphColor;
-    extern unsigned char g_ascii_props[];
+    extern char resbuftext[];
+    extern int dlg_colour; extern unsigned int font_secondary_color; extern int performGraphColor;
+    extern unsigned char _ctype[];
     extern char *file_combine_and_find(char *, char *, int);
     extern char *file_find_next_alt(void);
     extern int far call_read_line(char *, int, int, int, long);
@@ -475,7 +491,7 @@ int far do_fileselect_dialog(char *path, char *selected_name, int attributes,
     int label_width;
     char prev_top;
 
-    if (show_dialog(3, 1, locate_text_res(mainresptr, "loa"),
+    if (show_dialog(3, 1, locate_text_resource(main_data_file_addr, "loa"),
                     -1, -1, dialogarg2, layout, 0) < 0)
         return 0;
 
@@ -483,9 +499,9 @@ int far do_fileselect_dialog(char *path, char *selected_name, int attributes,
     g_is_busy = 1;
     preRender_line(layout[4] - 4, layout[5] + 4, layout[4] + 0xab,
                    layout[5] + 4, dialogarg2);
-    font_set_unk(dialog_fnt_colour, word_3EB90);
-    copy_string(resID_byte1, heading);
-    sub_345BC(resID_byte1, layout[0], layout[1]);
+    font_setup_unknown(dlg_colour, font_secondary_color);
+    copy_string(resbuftext, heading);
+    draw_text_at(resbuftext, layout[0], layout[1]);
     x = layout[2];
     field_end = x + 0xa2;
     for (button = 0; button < 10; ++button) {
@@ -497,17 +513,17 @@ int far do_fileselect_dialog(char *path, char *selected_name, int attributes,
             hit_t[button] = layout[button * 2 + 3];
         hit_b[button] = hit_t[button] + 10;
     }
-    font_set_unk(dialog_fnt_colour, word_3EB90);
-    sub_345BC(path, x, layout[3]);
+    font_setup_unknown(dlg_colour, font_secondary_color);
+    draw_text_at(path, x, layout[3]);
 
 rescan:
-    mouse_draw_transparent_check();
+    msdrawtransparentchk();
     files_found = 0;
     found = file_combine_and_find(path, "*", attributes);
     if (found == 0) {
         nullsub_1();
 edit_path:
-        font_set_unk(dialog_fnt_colour, word_3EB90);
+        font_setup_unknown(dlg_colour, font_secondary_color);
         if (call_read_line(path, 0x12, x, layout[3], 30000L) != 0x1b)
             goto rescan;
 cancel:
@@ -527,18 +543,18 @@ cancel:
         for (idx = 0; idx < files_found - 1; ++idx) {
             for (other_idx = idx + 1; other_idx < files_found; ++other_idx) {
                 if (strcmp(names[idx], names[other_idx]) > 0) {
-                    strcpy(resID_byte1, names[idx]);
+                    strcpy(resbuftext, names[idx]);
                     strcpy(names[idx], names[other_idx]);
-                    strcpy(names[other_idx], resID_byte1);
+                    strcpy(names[other_idx], resbuftext);
                 }
             }
         }
     }
     if (files_found > 7) {
-        copy_string(resID_byte1, locate_text_res(mainresptr, "lsu"));
-        sub_345BC(resID_byte1, font_op2_alt(resID_byte1), hit_t[1]);
-        copy_string(resID_byte1, locate_text_res(mainresptr, "lsd"));
-        sub_345BC(resID_byte1, font_op2_alt(resID_byte1), hit_t[9] - 1);
+        copy_string(resbuftext, locate_text_resource(main_data_file_addr, "lsu"));
+        draw_text_at(resbuftext, font_op2_alt(resbuftext), hit_t[1]);
+        copy_string(resbuftext, locate_text_resource(main_data_file_addr, "lsd"));
+        draw_text_at(resbuftext, font_op2_alt(resbuftext), hit_t[9] - 1);
     }
     cursor = 0;
     first_visible = 0;
@@ -550,33 +566,33 @@ cancel:
         if (cursor != old_cur || first_visible != prev_top) {
             old_cur = cursor;
             prev_top = first_visible;
-            mouse_draw_opaque_check();
+            msdrawopaquechk();
             for (idx = 0; idx < 7; ++idx) {
                 if (first_visible + idx == cursor)
-                    font_set_unk(word_3EB90, dialog_fnt_colour);
+                    font_setup_unknown(font_secondary_color, dlg_colour);
                 else
-                    font_set_unk(dialog_fnt_colour, word_3EB90);
+                    font_setup_unknown(dlg_colour, font_secondary_color);
                 if (first_visible + idx < files_found) {
-                    strcpy(resID_byte1, names[first_visible + idx]);
-                    sub_345BC(resID_byte1, x, hit_t[idx + 2]);
+                    strcpy(resbuftext, names[first_visible + idx]);
+                    draw_text_at(resbuftext, x, hit_t[idx + 2]);
                 } else
-                    sub_345BC("        ", x, hit_t[idx + 2]);
-                label_width = font_op2(resID_byte1);
-                sprite_1_unk(label_width + x, hit_t[idx + 2], field_end - label_width - x, 8, word_3EB90);
+                    draw_text_at("        ", x, hit_t[idx + 2]);
+                label_width = font_op2(resbuftext);
+                sprite_1_unk(label_width + x, hit_t[idx + 2], field_end - label_width - x, 8, font_secondary_color);
             }
-            mouse_draw_transparent_check();
+            msdrawtransparentchk();
         }
         pressed = input_checking(timer_get_delta_alt());
         button = mouse_multi_hittest(10, hit_l, hit_r, hit_t, hit_b);
         if (button != -1) {
             if (button == 0) {
-                if (mouse_butstate & 3) {
+                if (flagsdown & 3) {
                     cursor = 0;
                     first_visible = -1;
                     pressed = 0;
                 }
             } else if (button == 1) {
-                if (mouse_butstate & 3) {
+                if (flagsdown & 3) {
                     if (cursor + first_visible != 0)
                         --cursor;
                     if (cursor < first_visible)
@@ -584,7 +600,7 @@ cancel:
                     pressed = 0;
                 }
             } else if (button == 9) {
-                if (mouse_butstate & 3) {
+                if (flagsdown & 3) {
                     if (files_found - 1 != cursor)
                         ++cursor;
                     pressed = 0;
@@ -608,10 +624,10 @@ cancel:
             answer = -1;
             break;
         default:
-            if (g_ascii_props[pressed] & 1 || g_ascii_props[pressed] & 2) {
-                first_char = g_ascii_props[pressed] & 1 ? pressed + 0x20 : pressed;
+            if (isupper(pressed) || islower(pressed)) {
+                first_char = tolower(pressed);
                 for (button = 0; button < files_found; ++button) {
-                    if ((char)(g_ascii_props[names[button][0]] & 1 ? names[button][0] + 0x20 : names[button][0]) == first_char) {
+                    if ((char)tolower(names[button][0]) == first_char) {
                         cursor = button;
                         break;
                     }
@@ -631,7 +647,7 @@ cancel:
     strcpy(selected_name, names[cursor]);
     rc = 1;
 finish:
-    sub_275C6();
+    restore_mouse_sprite();
     g_is_busy = old_busy;
     return rc;
 }
@@ -660,28 +676,28 @@ void file_build_path(char *dir, char *name, char *ext, char *dst)
 /* merged owner s008-dlg member do_savefile_dialog */
 int far do_savefile_dialog(char *name, char *directory, char far *title)
 {
-    extern char resID_byte1;
-    extern char far * far locate_text_res(char far *, char *);
+    extern char resbuftext;
+    extern char far * far locate_text_resource(char far *, char *);
     extern void copy_string(char *, char far *);
-    extern unsigned int dialog_fnt_colour, word_3EB90;
+    extern unsigned int dlg_colour, font_secondary_color;
     extern int far call_read_line(char *, int, int, int, long);
     register int key;
     char accepted;
     register int i;
     int layout[6];
 
-    if (show_dialog(3, 1, locate_text_res(mainresptr, "sav"),
+    if (show_dialog(3, 1, locate_text_resource(main_data_file_addr, "sav"),
                     -1, -1, dialogarg2, layout, 0) < 0)
         return 0;
 
     accepted = 0;
-    font_set_unk(dialog_fnt_colour, word_3EB90);
-    copy_string(&resID_byte1, title);
-    sub_345BC(&resID_byte1, layout[0], layout[1]);
-    font_set_unk(dialog_fnt_colour, word_3EB90);
-    sub_345BC(name, layout[2], layout[3]);
-    sub_345BC(directory, layout[4], layout[5]);
-    mouse_draw_transparent_check();
+    font_setup_unknown(dlg_colour, font_secondary_color);
+    copy_string(&resbuftext, title);
+    draw_text_at(&resbuftext, layout[0], layout[1]);
+    font_setup_unknown(dlg_colour, font_secondary_color);
+    draw_text_at(name, layout[2], layout[3]);
+    draw_text_at(directory, layout[4], layout[5]);
+    msdrawtransparentchk();
     goto read_directory;
     while (key != 13) {
         if (call_read_line(name, 18, layout[2], layout[3], 30000L) == 27)
@@ -696,7 +712,7 @@ read_directory:
     }
     accepted = 1;
 finish_dialog:
-    sub_275C6();
+    restore_mouse_sprite();
     return accepted;
 }
 
@@ -775,14 +791,14 @@ int input_checking(int delta)
     }
 
 mouse_poll:
-    mouse_get_state(&mouse_butstate, &mouse_xpos, &mouse_ypos);
-    if (mouse_oldx != mouse_xpos || mouse_oldy != mouse_ypos ||
-        mouse_oldbut != mouse_butstate) {
-        mouse_oldx = mouse_xpos;
-        mouse_oldy = mouse_ypos;
+    mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
+    if (mouse_oldx != msecoordx || mouse_oldy != pos_y_ms ||
+        mouse_oldbut != flagsdown) {
+        mouse_oldx = msecoordx;
+        mouse_oldy = pos_y_ms;
         kbormouse = 1;
         input_framecounter = 0;
-        if (byte_3B8F7 != 0) {
+        if (mouse_transparent_mode != 0) {
             if (mouse_isdirty != 0) mouse_draw_opaque();
             mouse_draw_transparent();
         }
@@ -796,19 +812,19 @@ mouse_poll:
     }
 
     if (kbormouse != 0) {
-        if (mouse_butstate != mouse_oldbut) {
-            mouse_oldbut = mouse_butstate;
+        if (flagsdown != mouse_oldbut) {
+            mouse_oldbut = flagsdown;
 mouse_button_code:
-            if (mouse_butstate & 1) mousebutinputcode = 0x20;
-            else if (mouse_butstate & 2) mousebutinputcode = 0x0d;
+            if (flagsdown & 1) mousebutinputcode = 0x20;
+            else if (flagsdown & 2) mousebutinputcode = 0x0d;
             if (mousebutinputcode != 0) input_framecount2 = input_framecount;
             input_framecounter = 0;
-        } else if (mouse_butstate != 0 && input_framecount2 + 20 < input_framecount) {
+        } else if (flagsdown != 0 && input_framecount2 + 20 < input_framecount) {
             goto mouse_button_code;
         }
-        if (mouse_butstate != 0) {
-            if (mouse_butstate & 1) kbjoyflags |= 0x20;
-            else if (mouse_butstate & 2) kbjoyflags |= 0x10;
+        if (flagsdown != 0) {
+            if (flagsdown & 1) kbjoyflags |= 0x20;
+            else if (flagsdown & 2) kbjoyflags |= 0x10;
         }
     }
 
@@ -829,7 +845,7 @@ repeat_joy:
 int far input_do_checking(int value) { return input_checking(value); }
 
 /* target file_load_resfile @ 5442; candidate from build\workers\tuseg008\file_load_resfile_scope.c */
-void far *file_load_resfile(char *filename)
+void far *file_load_resource_file(char *filename)
 {
     void far *result;
     while (1) {
@@ -862,10 +878,10 @@ char far *locate_shape_alt(char far *data, char *name)
 }
 
 /* target locate_text_res @ 5618; accepted source src/locate_text_res.c */
-char far * far locate_text_res(char far *data, char *name)
+char far * far locate_text_resource(char far *data, char *name)
 {
     char textname[4];
-    textname[0] = textresprefix;
+    textname[0] = textrespfxchr;
     textname[1] = name[0];
     textname[2] = name[1];
     textname[3] = name[2];
@@ -892,7 +908,7 @@ int far mouse_track_op(int op, int x, int width, int top, int height,
                        int value, int offset, int divisions)
 {
     extern int far sprite_1_unk(int, int, int, int, int);
-    extern int dialog_fnt_colour;
+    extern int dlg_colour;
     register int low;
     register int end_position;
     int swapped;
@@ -924,9 +940,9 @@ int far mouse_track_op(int op, int x, int width, int top, int height,
     case 0:
         sprite_1_unk(x, top, width, height, 0);
         if (swapped == 0)
-            sprite_1_unk(x + low, top, range_length, height, dialog_fnt_colour);
+            sprite_1_unk(x + low, top, range_length, height, dlg_colour);
         else
-            sprite_1_unk(x, top + low, width, range_length, dialog_fnt_colour);
+            sprite_1_unk(x, top + low, width, range_length, dlg_colour);
         return value;
     case 1:
         break;
@@ -935,13 +951,13 @@ int far mouse_track_op(int op, int x, int width, int top, int height,
     }
 
     if (swapped == 0)
-        pointer = mouse_xpos - x;
+        pointer = msecoordx - x;
     else
-        pointer = mouse_ypos - top;
+        pointer = pos_y_ms - top;
 
     if (pointer < low || pointer > end_position) {        do {
             input_checking(timer_get_delta_alt());
-        } while ((*(unsigned char *)&mouse_butstate & 3) != 0);
+        } while ((*(unsigned char *)&flagsdown & 3) != 0);
         if (pointer < low) {
             if (value != 0) --value;
         } else if (value < divisions - 1) {
@@ -953,9 +969,9 @@ int far mouse_track_op(int op, int x, int width, int top, int height,
         do {
             input_checking(timer_get_delta_alt());
             if (swapped == 0)
-                location = mouse_xpos - x;
+                location = msecoordx - x;
             else
-                location = mouse_ypos - top;
+                location = pos_y_ms - top;
             thumb = location - pointer + low;
             if (thumb < 0) {
                 thumb = 0;
@@ -964,15 +980,15 @@ int far mouse_track_op(int op, int x, int width, int top, int height,
             }
             if (thumb != past_thumb) {
                 past_thumb = thumb;
-                mouse_draw_opaque_check();
+                msdrawopaquechk();
                 sprite_1_unk(x, top, width, height, 0);
                 if (swapped == 0)
-                    sprite_1_unk(x + thumb, top, range_length, height, dialog_fnt_colour);
+                    sprite_1_unk(x + thumb, top, range_length, height, dlg_colour);
                 else
-                    sprite_1_unk(x, top + thumb, width, range_length, dialog_fnt_colour);
-                mouse_draw_transparent_check();
+                    sprite_1_unk(x, top + thumb, width, range_length, dlg_colour);
+                msdrawtransparentchk();
             }
-        } while ((*(unsigned char *)&mouse_butstate & 3) != 0);
+        } while ((*(unsigned char *)&flagsdown & 3) != 0);
 
     }
 
@@ -988,27 +1004,27 @@ int far mouse_track_op(int op, int x, int width, int top, int height,
         end_position = ((value + offset) * end_of_track << 2) / factor;
         range_length = end_position - low;
     }
-    mouse_draw_opaque_check();
+    msdrawopaquechk();
     sprite_1_unk(x, top, width, height, 0);
     if (swapped == 0)
-        sprite_1_unk(x + low, top, range_length, height, dialog_fnt_colour);
+        sprite_1_unk(x + low, top, range_length, height, dlg_colour);
     else
-        sprite_1_unk(x, top + low, width, range_length, dialog_fnt_colour);
-    mouse_draw_transparent_check();
+        sprite_1_unk(x, top + low, width, range_length, dlg_colour);
+    msdrawtransparentchk();
     return value;
 }
 
-void far mouse_draw_transparent_check(void)
+void far msdrawtransparentchk(void)
 {
-    byte_3B8F7 = 1;
+    mouse_transparent_mode = 1;
     if (kbormouse != 0 && mouse_isdirty == 0)
         mouse_draw_transparent();
 }
 
 /* target mouse_draw_opaque_check @ 6406; candidate from build\workers\periph\mouse_draw_opaque_check.c */
-void far mouse_draw_opaque_check(void)
+void far msdrawopaquechk(void)
 {
-    byte_3B8F7 = 0;
+    mouse_transparent_mode = 0;
     if (mouse_isdirty != 0)
         mouse_draw_opaque();
 }
@@ -1019,7 +1035,7 @@ void far mouse_draw_opaque(void)
     struct SPRITE saved_sprite[2];
     sprite_copy_both_to_arg(saved_sprite);
     sprite_copy_2_to_1();
-    sprite_putimage(mouseunkspriteptr->sprite_bitmapptr);
+    sprputimage(mouse_unk_sprite_ptr->sprite_bitmapptr);
     sprite_copy_arg_to_both(saved_sprite);
     mouse_isdirty = 0;
 }
@@ -1029,13 +1045,13 @@ void far mouse_draw_transparent(void)
 {
     struct SPRITE saved_sprite[2];
     register int xpos;
-    xpos = mouse_xpos;
-    xpos -= xpos % video_flag2_is1;
+    xpos = msecoordx;
+    xpos -= xpos % g_vid_flg2_set;
     sprite_copy_both_to_arg(saved_sprite);
     sprite_copy_2_to_1();
-    sprite_clear_shape_alt(mouseunkspriteptr->sprite_bitmapptr, xpos, mouse_ypos);
-    sprite_putimage_and(mmouspriteptr->sprite_bitmapptr, mouse_xpos, mouse_ypos);
-    sprite_putimage_or(smouspriteptr->sprite_bitmapptr, mouse_xpos, mouse_ypos);
+    sprite_clear_shape_alt(mouse_unk_sprite_ptr->sprite_bitmapptr, xpos, pos_y_ms);
+    sprite_putimage_and(mouse_ptr_cursor->sprite_bitmapptr, msecoordx, pos_y_ms);
+    sprite_putimage_or(spritepointermini->sprite_bitmapptr, msecoordx, pos_y_ms);
     sprite_copy_arg_to_both(saved_sprite);
     mouse_isdirty = 1;
 }
@@ -1046,10 +1062,10 @@ int far mouse_multi_hittest(int count, int *left, int *right, int *top, int *bot
     register int index;
     if (kbormouse != 0) {
         for (index = 0; index < count; ++index) {
-            if (left[index] <= mouse_xpos &&
-                right[index] >= mouse_xpos &&
-                top[index] <= word_361CE &&
-                bottom[index] >= word_361CE)
+            if (left[index] <= msecoordx &&
+                right[index] >= msecoordx &&
+                top[index] <= pos_y_ms &&
+                bottom[index] >= pos_y_ms)
                 return (signed char)index;
         }
     }
@@ -1065,7 +1081,7 @@ void far check_input(void)
             done = 1;
         } else if (input_checking(timer_get_delta_alt()) != 0) {
             done = 1;
-        } else if (kbormouse != 0 && (mouse_butstate & 3) != 0) {
+        } else if (kbormouse != 0 && (flagsdown & 3) != 0) {
             done = 1;
         } else {
             done = 0;
@@ -1081,57 +1097,57 @@ void far nopsub_28F26(void)
 }
 
 /* target sprite_copy_2_to_1_2 @ 6796; accepted source src/sprite_copy_2_to_1_2.c */
-void sprite_clear_1_color(unsigned char color);void sprite_copy_2_to_1_2(void) { sprite_set_1_from_argptr(&sprite2); }
+void sprite_clear_1_color(unsigned char color);void sprcopy2to12(void) { sprite_setup1_from_arg_pointer(&sprite2); }
 
 /* target sprite_copy_2_to_1_clear @ 6814; accepted source src/sprite_copy_2_to_1_clear.c */
-void sprite_clear_1_color(unsigned char color);void sprite_copy_2_to_1_clear(void) { sprite_set_1_from_argptr(&sprite2); sprite_clear_1_color(0); }
+void sprite_clear_1_color(unsigned char color);void sprite_copy_2_to_1_clear(void) { sprite_setup1_from_arg_pointer(&sprite2); sprite_clear_1_color(0); }
 
 /* target sprite_copy_wnd_to_1 @ 6842; accepted source src/sprite_copy_wnd_to_1.c */
-void sprite_clear_1_color(unsigned char color);void sprite_copy_wnd_to_1(void) { sprite_set_1_from_argptr(wndsprite); }
+void sprite_clear_1_color(unsigned char color);void sprite_copy_wnd_to_1(void) { sprite_setup1_from_arg_pointer(g_wndspr); }
 
 /* target sprite_copy_wnd_to_1_clear @ 6860; accepted source src/sprite_copy_wnd_to_1_clear.c */
-void sprite_clear_1_color(unsigned char color);void sprite_copy_wnd_to_1_clear(void) { sprite_set_1_from_argptr(wndsprite); sprite_clear_1_color(0); }
+void sprite_clear_1_color(unsigned char color);void sprite_copy_wnd_to_1_clear(void) { sprite_setup1_from_arg_pointer(g_wndspr); sprite_clear_1_color(0); }
 
 /* target input_repeat_check @ 7306; candidate from build\workers\inputtu\repeat_types_ulong.c */
 /* merged owner s008-rest member intro_draw_text */
-int * intro_draw_text(char *str, int x, int y, int color, int shadow)
+int * introtext(char *str, int x, int y, int color, int shadow)
 {
-    extern int word_6ad8, word_6ada, word_6adc, word_6ade;
-    extern int word_a282;
-    extern void far font_set_unk(int color, int flags);
+    extern int textboundsleft, text_bounds_right, text_bounds_upper, txt_bounds_bottom;
+    extern unsigned int fontdefvalue;
+    extern void far font_setup_unknown(int color, int flags);
     extern void far font_draw_text(char *text, int x, int y);
 
-    word_6adc = y;
-    word_6ade = y + word_a282 + 1;
-    word_6ad8 = x;
-    word_6ada = x + font_op2(str) + 1;
-    font_set_unk(shadow, 0);
+    text_bounds_upper = y;
+    txt_bounds_bottom = y + ((int)fontdefvalue) + 1;
+    textboundsleft = x;
+    text_bounds_right = x + font_op2(str) + 1;
+    font_setup_unknown(shadow, 0);
     font_draw_text(str, x + 1, y + 1);
-    font_set_unk(color, 0);
+    font_setup_unknown(color, 0);
     font_draw_text(str, x, y);
-    return &word_6ad8;
+    return &textboundsleft;
 }
 
 /* merged owner s008-rest member hiscore_draw_text */
 int * hiscore_draw_text(char *str, int x, int y, int color, int shadow)
 {
-    extern int word_6ae0, word_6ae2, word_6ae4, word_6ae6;
-    extern int word_a282;
-    extern void far font_set_unk(int color, int flags);
+    extern int textoutlineleft, text_outline_right, txt_outline_top, text_outline_bottom;
+    extern unsigned int fontdefvalue;
+    extern void far font_setup_unknown(int color, int flags);
     extern void far font_draw_text(char *text, int x, int y);
 
-    word_6ae4 = y - 1;
-    word_6ae6 = y + word_a282 + 1;
-    word_6ae0 = x - 1;
-    word_6ae2 = x + font_op2(str) + 1;
-    font_set_unk(shadow, 0);
+    txt_outline_top = y - 1;
+    text_outline_bottom = y + ((int)fontdefvalue) + 1;
+    textoutlineleft = x - 1;
+    text_outline_right = x + font_op2(str) + 1;
+    font_setup_unknown(shadow, 0);
     font_draw_text(str, x + 1, y + 1);
     font_draw_text(str, x - 1, y + 1);
     font_draw_text(str, x + 1, y - 1);
     font_draw_text(str, x - 1, y - 1);
-    font_set_unk(color, 0);
+    font_setup_unknown(color, 0);
     font_draw_text(str, x, y);
-    return &word_6ae0;
+    return &textoutlineleft;
 }
 
 /* merged owner s008-rest member call_read_line */
@@ -1142,11 +1158,11 @@ int far call_read_line(char *buffer, int x, int y, int width, int limit, int fla
     extern int far read_line(int, char *, int, int, int, int, int, void (far *)(void), int, int);
     extern void far nopsub_36AF2(void);
 
-    mouse_draw_opaque_check();
+    msdrawopaquechk();
     result = read_line(2, buffer, 0, x, x * 9 + 9, y, width,
                        nopsub_36AF2,
                        limit, flags);
-    mouse_draw_transparent_check();
+    msdrawtransparentchk();
     x = strlen(buffer);
     index = x - 1;
     while (buffer[index] == ' ')
@@ -1173,7 +1189,7 @@ int far input_repeat_check(int timeout)
 
 /* target shape3d_init_shape @ 8362; accepted source src/shape3d_init_shape.c */
 /* merged owner s008-rest member draw_lines_unk */
-void far draw_lines_unk(int left, int top, int width, int height,
+void far draw_lines_unknown(int left, int top, int width, int height,
                         int light, int middle, int dark)
 {
     register int x_right;
@@ -1220,10 +1236,10 @@ void far draw_button(char far *caption, int x, int y, int width, int height,
     register int bottom;
     int idx;
     int text_size;
-    extern char resID_byte1[];
+    extern char resbuftext[];
     extern int far sprite_1_unk(int, int, int, int, int);
     extern void far preRender_line(int, int, int, int, int);
-    extern void far font_set_unk(int, int);
+    extern void far font_setup_unknown(int, int);
     extern void far font_draw_text(char *, int, int);
 
     rgt = x + width;
@@ -1243,18 +1259,18 @@ void far draw_button(char far *caption, int x, int y, int width, int height,
     preRender_line(rgt - 2, y + 2, rgt - 2, bottom - 2, dark);
     if (caption == 0)
         return;
-    font_set_unk(font_style, 0);
-    copy_string(resID_byte1, caption);
+    font_setup_unknown(font_style, 0);
+    copy_string(resbuftext, caption);
     line_cnt = 1;
-    text_size = strlen(resID_byte1);
+    text_size = strlen(resbuftext);
     for (idx = 0; idx < text_size; idx++)
-        if (resID_byte1[idx] == ']')
+        if (resbuftext[idx] == ']')
             line_cnt++;
     pos = 0;
     line_no = 0;
     text_y = (height - line_cnt * 8) / 2 + 1;
     for (idx = 0; idx < text_size + 1; idx++) {
-        if ((c = resID_byte1[idx]) == ']' || c == 0) {
+        if ((c = resbuftext[idx]) == ']' || c == 0) {
             line[pos] = 0;
             font_draw_text(line, x + (width - font_op2(line)) / 2,
                            line_no * 8 + y + text_y);
@@ -1291,11 +1307,11 @@ int far sprite_blit_to_video(struct SPRITE far *sprite, int mode)
 {
     register int index;
     register int result;
-    sprite_copy_2_to_1_2();
-    mouse_draw_opaque_check();
+    sprcopy2to12();
+    msdrawopaquechk();
     if (mode == -2) {
-        sprite_putimage(sprite->sprite_bitmapptr);
-        mouse_draw_transparent_check();
+        sprputimage(sprite->sprite_bitmapptr);
+        msdrawtransparentchk();
         return 0;
     }
     switch (mode) {
@@ -1303,15 +1319,15 @@ int far sprite_blit_to_video(struct SPRITE far *sprite, int mode)
         for (index = 0; index < 4; ++index) {
             result = input_do_checking(timer_get_delta_alt());
             if (result != 0) {
-                sprite_copy_2_to_1_2();
-                sprite_putimage(sprite->sprite_bitmapptr);
-                mouse_draw_transparent_check();
+                sprcopy2to12();
+                sprputimage(sprite->sprite_bitmapptr);
+                msdrawtransparentchk();
                 return result;
             }
             sprite_1_unk3(sprite->sprite_bitmapptr, index);
         }
     }
-    mouse_draw_transparent_check();
+    msdrawtransparentchk();
     return 0;
 }
 
@@ -1320,10 +1336,10 @@ int far sprite_blit_to_video(struct SPRITE far *sprite, int mode)
 void far show_waiting(void)
 {
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
-    extern int waitflag;
-    show_dialog(0, 0, locate_text_res(mainresptr, "wai"),
-                0xffff, waitflag, dialogarg2, 0, 0);
-    mouse_draw_opaque_check();
+    extern int waitm_ms;
+    show_dialog(0, 0, locate_text_resource(main_data_file_addr, "wai"),
+                0xffff, waitm_ms, dialogarg2, 0, 0);
+    msdrawopaquechk();
 }
 
 void far print_int_as_string_maybe(char *buffer, int value, int zero_fill, int width)
@@ -1355,40 +1371,40 @@ void far print_int_as_string_maybe(char *buffer, int value, int zero_fill, int w
     }
 }
 
-void sub_29772(void) {
-    word_A5AC = 0;
-    word_A596 = 0;
-    word_9282 = 0;
+void reset_idle_counters(void) {
+    g_animphase = 0;
+    g_hovercolor_idle = 0;
+    unused_count = 0;
 }
 
 /* target file_load_audiores @ 9036; candidate from build\references\restunts\src\restunts\c\fileio.c */
 /* merged owner s008-rest member mouse_timer_sprite_unk */
-int far mouse_timer_sprite_unk(int index, int *a, int *b, int *c, int *d,
+int far mouse_timer_sprite_unknown(int index, int *a, int *b, int *c, int *d,
                                int first, int second)
 {
     register int delta;
     register int selected;
     extern void far sprite_1_unk4(int, int, int, int, int);
     delta = (int)timer_get_delta_alt();
-    word_A5AC += delta;
-    while (word_A5AC > 60)
-        word_A5AC -= 60;
-    if (word_A5AC > 30) selected = first;
+    g_animphase += delta;
+    while (g_animphase > 60)
+        g_animphase -= 60;
+    if (g_animphase > 30) selected = first;
     else selected = second;
-    if (selected != word_A596) {
-        word_A596 = selected;
-        mouse_draw_opaque_check();
+    if (selected != g_hovercolor_idle) {
+        g_hovercolor_idle = selected;
+        msdrawopaquechk();
         sprite_1_unk4(a[index], c[index], b[index], d[index], selected);
-        mouse_draw_transparent_check();
+        msdrawtransparentchk();
     }
     return delta;
 }
 
-void file_load_audiores(const char* songfile, const char* voicefile, const char* name) {
+void file_load_audio_resource(const char* songfile, const char* voicefile, const char* name) {
 	void far* audiores;
-	voicefileptr = file_load_resource(5, voicefile);
-	songfileptr = file_load_resource(4, songfile);
-	audiores = init_audio_resources(songfileptr, voicefileptr, name);
+	openvfile = file_load_resource(5, voicefile);
+	musicfile = file_load_resource(4, songfile);
+	audiores = init_audio_resources(musicfile, openvfile, name);
 	load_audio_finalize(audiores);
 	is_audioloaded = 1;
 }
@@ -1397,37 +1413,37 @@ void file_load_audiores(const char* songfile, const char* voicefile, const char*
 void far audio_unload(void)
 {
     audio_driver_func3F(2);
-    mmgr_free(songfileptr);
-    mmgr_free(voicefileptr);
+    mmgr_free(musicfile);
+    mmgr_free(openvfile);
     is_audioloaded = 0;
 }
 
 /* target font_set_fontdef2 @ 9178; accepted source src/font_set_fontdef2.c */
-void far font_set_fontdef2(void far *data)
+void far fontsetfontdef2(void far *data)
 {
     set_fontdefseg(data);
-    fontdef_value = ((struct FONTDEF_PREFIX far *)data)->value;
+    fontdefvalue = ((struct FONTDEF_PREFIX far *)data)->value;
 }
 
 /* target font_set_fontdef @ 9208; candidate from build\workers\font\font_set_fontdef.c */
-void far font_set_fontdef(void)
+void far fontsetfontdef(void)
 {
-    font_set_fontdef2(fontdefptr);
+    fontsetfontdef2(def_fntadr);
 }
 
 /* target get_super_random @ 9438; candidate from build\references\restunts\src\restunts\c\restunts.c */
-void far format_frame_as_string(char *destination, unsigned int frame_count, int hundredths)
+void far fmtframestr(char *destination, unsigned int frame_count, int hundredths)
 {
     register int minute_count;
     char buffer[18];
     register int seconds;
     int minute_frames;
 
-    minute_frames = 60 * word_9260;
+    minute_frames = 60 * rate_frame;
     minute_count = frame_count / minute_frames;
     frame_count -= minute_count * minute_frames;
-    seconds = frame_count / word_9260;
-    frame_count -= seconds * word_9260;
+    seconds = frame_count / rate_frame;
+    frame_count -= seconds * rate_frame;
     print_int_as_string_maybe(buffer, minute_count, 0, 2);
     strcpy(destination, buffer);
     strcat(destination, ":");
@@ -1435,14 +1451,14 @@ void far format_frame_as_string(char *destination, unsigned int frame_count, int
     strcat(destination, buffer);
     if (hundredths != 0) {
         strcat(destination, ".");
-        print_int_as_string_maybe(buffer, frame_count * (100 / word_9260), 1, 2);
+        print_int_as_string_maybe(buffer, frame_count * (100 / rate_frame), 1, 2);
         strcat(destination, buffer);
     }
 }
 
 int get_super_random(void)
 {
-    register int val = (int)(timer_get_counter() + get_kevinrandom() + rand() + gState_frame);
+    register int val = (int)(timer_get_counter() + get_kevinrandom() + rand() + idx_time_gm);
     return val < 0 ? -val : val;
 }
 
@@ -1465,12 +1481,12 @@ void far* file_load_resource(int type, const char* filename) {
 
 			case 2:
 				// try load a 2d shape and retry if it failed
-				result = file_load_shape2d_nofatal_thunk(filename);
+				result = load_shape2d_nofatal_thunk(filename);
 				goto check_result;
 
 			case 3:
 				// try load a 2d shape and retry if it failed
-				result = file_load_shape2d_res_nofatal_thunk(filename);
+				result = load_shape2d_res_nofatal_thunk(filename);
 				goto check_result;
 
 			case 4:
@@ -1503,7 +1519,7 @@ check_result:
 }
 
 /* target input_push_status @ 9788; accepted source src/input_push_status.c */
-void far *sub_29A86(int type, unsigned int first, unsigned int second, unsigned int third)
+void far *read_file_with_retry(int type, unsigned int first, unsigned int second, unsigned int third)
 {
     void far *result;
     for (;;) {
@@ -1519,43 +1535,43 @@ void far *sub_29A86(int type, unsigned int first, unsigned int second, unsigned 
     }
 }
 
-signed char byte_3EBD8 = 0;
+signed char input_status_stack_depth = 0;
 
 void far input_push_status(void)
 {
-    byte_45D0C[byte_3EBD8] = byte_3B8F7;
-    byte_45D14[byte_3EBD8] = kbormouse;
-    ++byte_3EBD8;
+    copy_mouse_modes[input_status_stack_depth] = mouse_transparent_mode;
+    input_device_modestack[input_status_stack_depth] = kbormouse;
+    ++input_status_stack_depth;
 }
 
 /* target input_pop_status @ 9816; candidate from build\workers\periph\input_pop_status.c */
 void far input_pop_status(void)
 {
-    if (byte_3EBD8 != 0) {
-        --byte_3EBD8;
-        byte_3B8F7 = byte_45D0C[byte_3EBD8];
-        kbormouse = byte_45D14[byte_3EBD8];
+    if (input_status_stack_depth != 0) {
+        --input_status_stack_depth;
+        mouse_transparent_mode = copy_mouse_modes[input_status_stack_depth];
+        kbormouse = input_device_modestack[input_status_stack_depth];
         if (kbormouse == 0)
-            mouse_draw_opaque_check();
+            msdrawopaquechk();
     }
 }
 
 /* target do_dea_textres @ 11368; candidate from build\workers\tuseg008\do_dea_textres.c */
 /* merged owner s008-rest member do_joy_restext */
-void far do_joy_restext(void)
+void far do_joystick_resource_text(void)
 {
     extern int word_3F88E;
     extern char byte_3FE00, byte_3B8F2;
     extern int far audio_unk(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int *, int);
-    extern void far sub_307B4(void);
-    extern int far sub_307D2(int);
+    extern void far reset_joystick_selection(void);
+    extern int far joystick_flags_to_index(int);
     extern int far kb_check(void);
     extern int far kb_read_char(void);
     extern int far get_joy_flags(void);
     extern int far sprite_1_unk(int, int, int, int, int);
-    extern unsigned int dialog_fnt_colour;
-    extern void far sub_372F4(void);
+    extern unsigned int dlg_colour;
+    extern void far restore_audio_volume(void);
     int ys[9];
     int ht;
     int xs[9];
@@ -1569,12 +1585,12 @@ void far do_joy_restext(void)
     input_push_status();
     word_3F88E = 1;
     audio_unk();
-    if (show_dialog(3, 1, locate_text_res(mainresptr, "joy"),
+    if (show_dialog(3, 1, locate_text_resource(main_data_file_addr, "joy"),
                     -1, -1, dialogarg2, coords, 0) > 0) {
         for (idx = 0; idx < 9; ++idx)
             hit[idx] = 0;
         byte_3FE00 = 1;
-        mouse_draw_opaque_check();
+        msdrawopaquechk();
         sprite_1_unk(coords[2] - 4, coords[3], 1, coords[13] - coords[3] - 8, dialogarg2);
         sprite_1_unk(coords[4] - 4, coords[5], 1, coords[13] - coords[3] - 8, dialogarg2);
         sprite_1_unk(coords[0], coords[9] - 4, coords[6] - coords[0], 1, dialogarg2);
@@ -1588,147 +1604,147 @@ void far do_joy_restext(void)
         cw = coords[2] - coords[0] - 8;
         ht = coords[9] - coords[1] - 8;
         lastpos = -1;
-        sub_307B4();
+        reset_joystick_selection();
         for (;;) {
             if (kb_read_char() != 0)
                 break;
             cur = get_joy_flags();
             if (cur & 0x30)
                 break;
-            cur = sub_307D2(cur);
+            cur = joystick_flags_to_index(cur);
             if (cur == lastpos)
                 continue;
             for (idx = 0; idx < 9; ++idx)
-                sprite_1_unk(xs[idx], ys[idx], cw, ht, word_3EB90);
-            sprite_1_unk(xs[cur], ys[cur], cw, ht, dialog_fnt_colour);
+                sprite_1_unk(xs[idx], ys[idx], cw, ht, font_secondary_color);
+            sprite_1_unk(xs[cur], ys[cur], cw, ht, dlg_colour);
             lastpos = cur;
             hit[cur] = 1;
         }
         for (idx = 0; idx < 9; ++idx)
             byte_3FE00 &= hit[idx];
-        sub_275C6();
+        restore_mouse_sprite();
         if (byte_3FE00 == 0)
-            show_dialog(1, 1, locate_text_res(mainresptr, "jox"),
+            show_dialog(1, 1, locate_text_resource(main_data_file_addr, "jox"),
                         -1, -1, dialogarg2, 0, 0);
     } else {
         byte_3FE00 = 0;
     }
     kb_check();
     byte_3B8F2 = 0;
-    sub_372F4();
+    restore_audio_volume();
     word_3F88E = 0;
     input_pop_status();
 }
 
 /* merged owner s008-rest member do_key_restext */
-void far do_key_restext(void)
+void far do_key_resource_text(void)
 {
-    extern unsigned int word_411e;
-    extern unsigned char byte_4690, byte_182;
+    extern unsigned int word_3F88E;
+    extern unsigned char byte_3FE00, byte_3B8F2;
     extern int far audio_unk(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
-    extern void far sub_372F4(void);
+    extern void far restore_audio_volume(void);
 
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     audio_unk();
-    show_dialog(4, 1, locate_text_res(mainresptr, "key"),
+    show_dialog(4, 1, locate_text_resource(main_data_file_addr, "key"),
                 0xffff, 0xffff, dialogarg2, 0, 0);
-    byte_4690 = 0;
-    byte_182 = 0;
-    word_411e = 0;
-    sub_372F4();
+    ((unsigned char)byte_3FE00) = 0;
+    ((unsigned char)byte_3B8F2) = 0;
+    ((unsigned int)word_3F88E) = 0;
+    restore_audio_volume();
     input_pop_status();
 }
 
 /* merged owner s008-rest member do_mou_restext */
-void far do_mou_restext(void)
+void far do_mou_resource_text(void)
 {
-    extern unsigned int word_411e;
-    extern unsigned char byte_182;
+    extern unsigned int word_3F88E;
+    extern unsigned char byte_3B8F2;
     extern int far audio_unk(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
-    extern void far sub_372F4(void);
+    extern void far restore_audio_volume(void);
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     audio_unk();
-    byte_182 = 1;
-    show_dialog(4, 1, locate_text_res(mainresptr, "mou"),
+    ((unsigned char)byte_3B8F2) = 1;
+    show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mou"),
                 0xffff, 0xffff, dialogarg2, 0, 0);
-    word_411e = 0;
-    sub_372F4();
+    ((unsigned int)word_3F88E) = 0;
+    restore_audio_volume();
     input_pop_status();
 }
 
 /* merged owner s008-rest member do_pau_restext */
 void far do_pau_restext(void)
 {
-    extern unsigned int word_411e;
+    extern unsigned int word_3F88E;
     extern int far audio_unk(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
-    extern void far sub_372F4(void);
+    extern void far restore_audio_volume(void);
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     audio_unk();
-    show_dialog(1, 1, locate_text_res(mainresptr, "pau"),
+    show_dialog(1, 1, locate_text_resource(main_data_file_addr, "pau"),
                 0xffff, 0xffff, dialogarg2, 0, 0);
-    word_411e = 0;
-    sub_372F4();
+    ((unsigned int)word_3F88E) = 0;
+    restore_audio_volume();
     input_pop_status();
 }
 
 /* merged owner s008-rest member do_mof_restext */
-void far do_mof_restext(void)
+void far do_mof_resource_text(void)
 {
-    extern unsigned int word_411e;
+    extern unsigned int word_3F88E;
     extern int far audio_toggle_flag2(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     if (audio_toggle_flag2())
-        show_dialog(4, 1, locate_text_res(mainresptr, "mon"),
+        show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mon"),
                     0xffff, 0xffff, dialogarg2, 0, 0);
     else
-        show_dialog(4, 1, locate_text_res(mainresptr, "mof"),
+        show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mof"),
                     0xffff, 0xffff, dialogarg2, 0, 0);
-    word_411e = 0;
+    ((unsigned int)word_3F88E) = 0;
     input_pop_status();
 }
 
 /* merged owner s008-rest member do_sonsof_restext */
-void far do_sonsof_restext(void)
+void far do_sonsof_resource_text(void)
 {
-    extern unsigned int word_411e;
+    extern unsigned int word_3F88E;
     extern int far audio_toggle_flag6(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     if (audio_toggle_flag6())
-        show_dialog(4, 1, locate_text_res(mainresptr, "son"),
+        show_dialog(4, 1, locate_text_resource(main_data_file_addr, "son"),
                     0xffff, 0xffff, dialogarg2, 0, 0);
     else
-        show_dialog(4, 1, locate_text_res(mainresptr, "sof"),
+        show_dialog(4, 1, locate_text_resource(main_data_file_addr, "sof"),
                     0xffff, 0xffff, dialogarg2, 0, 0);
-    word_411e = 0;
+    ((unsigned int)word_3F88E) = 0;
     input_pop_status();
 }
 
 /* merged owner s008-rest member do_dos_restext */
-void far do_dos_restext(void)
+void far do_dos_resource_text(void)
 {
-    extern unsigned int word_411e;
+    extern unsigned int word_3F88E;
     extern int far audio_unk(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
     extern void far call_exitlist2(void);
-    extern void far sub_372F4(void);
+    extern void far restore_audio_volume(void);
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     audio_unk();
-    if (show_dialog(2, 1, locate_text_res(mainresptr, "dos"),
+    if (show_dialog(2, 1, locate_text_resource(main_data_file_addr, "dos"),
                     0xffff, 0xffff, dialogarg2, 0, 0) == 1)
         call_exitlist2();
-    word_411e = 0;
-    sub_372F4();
+    ((unsigned int)word_3F88E) = 0;
+    restore_audio_volume();
     input_pop_status();
 }
 
@@ -1741,22 +1757,22 @@ void far show_graphic_levels_menu(void)
     int saved_rate;
     register int selection_index;
     register int cursor;
-    extern unsigned char byte_18a;
-    extern unsigned int word_957a, word_95de, word_411e, word_5090;
+    extern unsigned char detail_lvl;
+    extern unsigned int slow_video_mode_state, frm_rate2, word_3F88E; extern int performGraphColor;
     extern int far audio_unk(void);
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
 
     input_push_status();
-    word_411e = 1;
+    ((unsigned int)word_3F88E) = 1;
     audio_unk();
-    saved_rate = word_95de;
+    saved_rate = frm_rate2;
     rc = 0;
     for (;;) {
-        copy_string(menu, locate_text_res(mainresptr, "mrl"));
+        copy_string(menu, locate_text_resource(main_data_file_addr, "mrl"));
         for (selection_index = 0; selection_index < 9; ++selection_index) active[selection_index] = 0;
-        active[byte_18a] = 1;
-        active[word_957a + 5] = 1;
-        if (word_95de == 10) active[7] = 1;
+        active[detail_lvl] = 1;
+        active[slow_video_mode_state + 5] = 1;
+        if (frm_rate2 == 10) active[7] = 1;
         else active[8] = 1;
         cursor = 0;
         for (selection_index = 0; selection_index < 9; ++selection_index) {
@@ -1765,23 +1781,23 @@ void far show_graphic_levels_menu(void)
             ++cursor;
         }
         rc = show_dialog(2, 1, (char far *)menu,
-                         0xffff, 0xffff, word_5090, 0, rc);
+                         0xffff, 0xffff, performGraphColor, 0, rc);
         switch (rc) {
         case -1: goto after_menu;
-        case 5: word_957a = 0; continue;
-        case 6: word_957a = 1; continue;
-        case 7: word_95de = 10; continue;
-        case 8: word_95de = 20; continue;
+        case 5: slow_video_mode_state = 0; continue;
+        case 6: slow_video_mode_state = 1; continue;
+        case 7: frm_rate2 = 10; continue;
+        case 8: frm_rate2 = 20; continue;
         case 9: goto after_menu;
-        default: byte_18a = rc; continue;
+        default: detail_lvl = rc; continue;
         }
     }
 after_menu:
-    if (saved_rate != word_95de)
-        show_dialog(1, 1, locate_text_res(mainresptr, "mrs"),
+    if (saved_rate != frm_rate2)
+        show_dialog(1, 1, locate_text_resource(main_data_file_addr, "mrs"),
                     0xffff, 0xffff, dialogarg2, 0, 0);
-    word_411e = 0;
-    sub_372F4();
+    ((unsigned int)word_3F88E) = 0;
+    restore_audio_volume();
     input_pop_status();
 }
 
@@ -1790,12 +1806,12 @@ short far do_dea_textres(void)
     short result;
     input_push_status();
     if (g_is_busy != 0) {
-        result = show_dialog(2, 1, locate_text_res(mainresptr, "dea"),
+        result = show_dialog(2, 1, locate_text_resource(main_data_file_addr, "dea"),
                              0xffff, 0xffff, dialogarg2, 0, 0);
         if (result != 0) result = 0;
         else result = 1;
     } else {
-        show_dialog(1, 1, locate_text_res(mainresptr, "der"),
+        show_dialog(1, 1, locate_text_resource(main_data_file_addr, "der"),
                     0xffff, 0xffff, dialogarg2, 0, 0);
         result = 1;
     }
@@ -1810,16 +1826,16 @@ void far ensure_file_exists(int index)
     extern int far show_dialog(int, int, char far *, int, int, int, int, int);
     extern int far file_find(char *filename);
     while (file_find(findfilenames[index - 1]) == 0) {
-        show_dialog(1, 1, locate_text_res(mainresptr, findfiletexts[index - 1]),
+        show_dialog(1, 1, locate_text_resource(main_data_file_addr, findfiletexts[index - 1]),
                     0xffff, 0xffff, dialogarg2, 0, 0);
-        mouse_draw_opaque_check();
+        msdrawopaquechk();
         kbormouse = 0;
     }
 }
 
 void far do_mer_restext(void)
 {
-    show_dialog(1, 1, locate_text_res(mainresptr, "mer"),
+    show_dialog(1, 1, locate_text_resource(main_data_file_addr, "mer"),
                 0xffff, 0xffff, dialogarg2, 0, 0);
 }
 

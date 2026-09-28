@@ -10,11 +10,11 @@ extrn _file_load_shape2d_fatal:far
 extrn _file_load_shape2d_nofatal:far
 extrn _file_load_shape2d:far
 public _file_load_shape2d_res_fatal_thunk
-public _file_load_shape2d_res_nofatal_thunk
+public _load_shape2d_res_nofatal_thunk
 public _file_load_shape2d_res_thunk
 public _parse_shape2d_thunk
 public _file_load_shape2d_fatal_thunk
-public _file_load_shape2d_nofatal_thunk
+public _load_shape2d_nofatal_thunk
 public _file_load_shape2d_thunk
 S012_TEXT segment word public 'CODE'
 
@@ -22,10 +22,10 @@ _file_load_shape2d_res_fatal_thunk proc far
 
     jmp     _file_load_shape2d_res_fatal
 _file_load_shape2d_res_fatal_thunk endp
-_file_load_shape2d_res_nofatal_thunk proc far
+_load_shape2d_res_nofatal_thunk proc far
 
     jmp     _file_load_shape2d_res_nofatal
-_file_load_shape2d_res_nofatal_thunk endp
+_load_shape2d_res_nofatal_thunk endp
 _file_load_shape2d_res_thunk proc far
 
     jmp     _file_load_shape2d_res
@@ -38,10 +38,10 @@ _file_load_shape2d_fatal_thunk proc far
 
     jmp     _file_load_shape2d_fatal
 _file_load_shape2d_fatal_thunk endp
-_file_load_shape2d_nofatal_thunk proc far
+_load_shape2d_nofatal_thunk proc far
 
     jmp     _file_load_shape2d_nofatal
-_file_load_shape2d_nofatal_thunk endp
+_load_shape2d_nofatal_thunk endp
 _file_load_shape2d_thunk proc far
 
     jmp     _file_load_shape2d

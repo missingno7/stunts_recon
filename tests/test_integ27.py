@@ -235,7 +235,16 @@ class ShortNameAliases(unittest.TestCase):
         clones = {n: s for n, s in symbols.items() if 'clone_of' in s}
         self.assertGreaterEqual(len(clones), 49)
         for name, symbol in clones.items():
-            self.assertIn('pressure-constrained reconstruction name', symbol['name_provenance'])
+            # integ31: a clone may also carry the spelling of the accepted
+            # defining object's public at that address (names registry).
+            # integ33: reviewed readable reconstruction names (L7-naming).
+            # integ40: communal public spellings are constrained by LINK's
+            # first-sight hash allocation order.
+            self.assertTrue('pressure-constrained reconstruction name' in symbol['name_provenance'] or
+                            symbol['name_provenance'].startswith('readable reconstruction name (integ33') or
+                            symbol['name_provenance'].startswith('spelling of the accepted') or
+                            symbol['name_provenance'].startswith('link-hash-constrained reconstruction name (integ40'),
+                            symbol['name_provenance'])
             source = symbols[symbol['clone_of']]
             self.assertEqual((symbol['load_address'], symbol['storage'], symbol.get('width')),
                              (source['load_address'], source['storage'], source.get('width')))

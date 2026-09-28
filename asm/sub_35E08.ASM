@@ -18,8 +18,9 @@ sprite_width2 dw ?
 sprite_left2 dw ?
 sprite_widthsum dw ?
 SPRITE ends
-extrn sprite1:word
+extrn _sprite1:word
 public _sub_35E08
+public _loc_35ED9
 _sub_35E08 proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -117,7 +118,7 @@ loc_35E7A:
     or      ax, ax
     jz      short loc_35E58
     mov     [bp+var_6], ax
-    mov     dx, cs:sprite1.sprite_pitch
+    mov     dx, cs:_sprite1.sprite_pitch
     sub     dx, ax
     mov     [bp+var_C], dx
     add     si, 10h
@@ -155,12 +156,12 @@ loc_35ED3:
     arg_shapeptr = dword ptr 8
     arg_6 = word ptr 12
     arg_8 = word ptr 14
-loc_35ED9:
-    mov     ax, word ptr cs:sprite1.sprite_bitmapptr+2
+_loc_35ED9:
+    mov     ax, word ptr cs:_sprite1.sprite_bitmapptr+2
     mov     es, ax
     mov     bx, [bp+var_4]
     shl     bx, 1
-    add     bx, cs:sprite1.sprite_lineofs
+    add     bx, cs:_sprite1.sprite_lineofs
     mov     di, cs:[bx]
     add     di, [bp+var_2]
     mov     dx, [bp+var_10]

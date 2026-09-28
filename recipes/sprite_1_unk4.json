@@ -3,7 +3,7 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_sprite_1_unk2",
+        "_sprite1_unknown2",
         "_sprite_1_unk4"
       ],
       "groups": [
@@ -108,7 +108,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_1_unk2",
+      "frame": "_sprite1_unknown2",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -116,7 +116,7 @@
       "offset": 126,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_1_unk2",
+      "target": "_sprite1_unknown2",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -125,7 +125,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_1_unk2",
+      "frame": "_sprite1_unknown2",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -133,7 +133,7 @@
       "offset": 102,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_1_unk2",
+      "target": "_sprite1_unknown2",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -142,7 +142,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_1_unk2",
+      "frame": "_sprite1_unknown2",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -150,7 +150,7 @@
       "offset": 72,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_1_unk2",
+      "target": "_sprite1_unknown2",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -159,7 +159,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_1_unk2",
+      "frame": "_sprite1_unknown2",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -167,7 +167,7 @@
       "offset": 48,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_1_unk2",
+      "target": "_sprite1_unknown2",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,

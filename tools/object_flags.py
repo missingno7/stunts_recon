@@ -139,6 +139,13 @@ def recipe_segments(recipe, image=None):
         require(len(rows) == 1 and rows[0].get('segment'),
                 'Per-object flags need an inventory segment for every member')
         row = rows[0]
+        # integ31: a reviewed overlay row may correct a base row's extent
+        # (sub_38702); function_evidence rechecks that overlay on every use.
+        overlay = [f for f in read_json(ROOT/'layout/function-evidence.json')['functions']
+                   if f.get('name') == name and type(f.get('start')) is int and
+                   f.get('segment', row.get('segment')) == row.get('segment')]
+        if len(overlay) == 1:
+            row = {**row, 'start': overlay[0]['start'], 'end': overlay[0]['end']}
         require(all((m['start'], m['end']) == (row['start'], row['end']) for m in members),
                 'Per-object flag member extent differs from inventory')
         segments.add(row['segment'])
@@ -200,4 +207,5 @@ def same_object(left, right):
             left.segment_defs == right.segment_defs and left.groups == right.groups and
             left.publics == right.publics and left.externals == right.externals and
             left.linker_fixups == right.linker_fixups and
-            left.local_symbol_records == right.local_symbol_records)
+            left.local_symbol_records == right.local_symbol_records and
+            getattr(left, 'communals', []) == getattr(right, 'communals', []))

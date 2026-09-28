@@ -24,7 +24,7 @@
       ],
       "publics": [
         {
-          "name": "_audio_stop_unk",
+          "name": "_audio_stop_unknown",
           "offset": 0,
           "segment": "S012_TEXT"
         }
@@ -166,7 +166,7 @@
     ],
     "publics": [
       {
-        "name": "_audio_stop_unk",
+        "name": "_audio_stop_unknown",
         "offset": 0,
         "segment": "S012_TEXT"
       }
@@ -240,7 +240,7 @@
   },
   "object_segment": "S012_TEXT",
   "profile": "masm510-game",
-  "public": "_audio_stop_unk",
+  "public": "_audio_stop_unknown",
   "source": "asm/audio_stop_unk.ASM",
   "stable_id": "load_20268",
   "start": 131688,

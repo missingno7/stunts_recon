@@ -152,7 +152,7 @@ def in_raw(ctx, start, end=None):
 
 def owner_at(ctx, address):
     for o in ctx['owners']:
-        if o['kind'] in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA'):
+        if o['kind'] in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA', 'KNOWN_TOOLCHAIN_LIBRARY_DATA'):
             continue
         if o['start'] <= address < o['end']:
             return o
@@ -886,6 +886,14 @@ def derive(ctx, spelling='neutral'):
         if ref['kind'] not in ('far-call', 'far-jmp', 'pointer-pair'):
             continue
         result = classify_code(ref)
+        if result['status'] == 'provable' and not any(
+                a['frame'] == ref['frame'] and
+                not result['row']['start'] <= a['site'] < result['row']['end']
+                for a in code_anchors.get(ref['target'], [])):
+            # integ30: an entry reached only from inside its own extent (the
+            # unreferenced stubs of file_decomp_fatal) has no independent anchor.
+            result = {'status': 'not-provable', 'class': 'only-self-internal-anchors',
+                      'detail': 'every relocated reference lies inside the target extent'}
         if result['status'] == 'provable':
             row = result['row']
             stable = row.get('stable_id') or 'load_%05x' % row['start']

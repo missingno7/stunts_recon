@@ -2,6 +2,7 @@
 import copy, struct
 from common import ROOT, identity, read_json, require, sha
 from binder import bind_contribution, fixup_relocation_sites, link_order_sites
+from object_probe import declared_externals
 from code_symbols import resolve_recipe_symbols
 from function_evidence import current_inventory, reviewed_functions
 from secondary_contribution import bind_secondary
@@ -68,7 +69,14 @@ def _checked_object_tail(recipe, image, inventory, members):
             type(start) is int and type(end) is int and type(fill) is int and type(zeros) is int and
             start==members[-1]['end'] and end==start+fill+zeros and 0<fill+zeros<=4 and
             zeros>=1 and image[start:start+fill]==bytes([0x90])*fill and
-            image[start+fill:end]==bytes(zeros) and _ends_with_return(image,start) and
+            image[start+fill:end]==bytes(zeros) and
+            (_ends_with_return(image,start) or
+             # integ31: the last member may keep its own MSC word-alignment 90
+             # pad inside its reviewed inventory extent (audio_driver_func1E:
+             # RETF, 90); the tail is then only the declared zero bytes.
+             (fill==0 and image[start-1]==0x90 and _ends_with_return(image,start-1) and
+              any(f.get('name')==members[-1]['name'] and f.get('end')==start and
+                  start-1 in f.get('padding_offsets',()) for f in inventory['functions']))) and
             not any(type(f.get('start')) is int and type(f.get('end')) is int and
                     f['start']<end and start<f['end'] for f in inventory['functions']) and
             recipe.get('sparse_zero',{}).get(recipe['object_segment'])==
@@ -90,9 +98,12 @@ def checked_members(recipe, image):
     inv=current_inventory(image)
     require(inv['load_sha256']==sha(image),'Inventory/oracle identity differs')
     members=recipe['members']
-    require(type(members) is list and len(members)>=2, 'Multi recipe needs members')
+    # A one-member ASM recipe is admitted only to declare a reviewed embedded
+    # code-island public inside its own procedure (integ30, `_incnums`).
+    least=1 if recipe.get('embedded_publics') else 2
+    require(type(members) is list and len(members)>=least, 'Multi recipe needs members')
     tail_end=_checked_object_tail(recipe,image,inv,members)
-    require(len(members)>=2 and recipe['start']==members[0]['start'] and recipe['end']==tail_end,'Bad multi interval')
+    require(len(members)>=least and recipe['start']==members[0]['start'] and recipe['end']==tail_end,'Bad multi interval')
     require(identity(image[recipe['start']:recipe['end']])==recipe['target'],'Whole target identity differs')
     for i,m in enumerate(members):
         require(i==0 or members[i-1]['end']==m['start'],'Member gap/overlap')
@@ -125,7 +136,59 @@ def checked_members(recipe, image):
                 m['target']=={'size':f['size'],'sha256':f['sha256']},
                 'Member evidence differs')
         require(identity(image[f['start']:f['end']])==m['target'],'Member bytes differ')
+    _checked_embedded_islands(recipe, image)
     reviewed_functions(image)
+
+
+def _checked_embedded_islands(recipe, image):
+    """integ30: reviewed embedded publics of an ASM group.
+
+    (a) A labelled CS data island strictly inside a member procedure may be
+    declared PUBLIC under its reviewed code-island alias (layout/data-symbols.json,
+    storage code_island, independently anchored by an original operand), which
+    must name exactly that address.  (b) An interior code label `_loc_XXXXX`
+    strictly inside a member may be declared PUBLIC when the pinned seg012.asm
+    listing declares `loc_XXXXX:` at the recorded line, the label names this
+    load address, and it is an original instruction boundary of the member (the
+    near-target proof used by the referencing module).  Neither binds anything
+    nor is a function entry."""
+    rows=recipe.get('embedded_publics',[])
+    if not rows:
+        return
+    import re
+    symbols=read_json(ROOT/'layout/data-symbols.json')['symbols']
+    for p in rows:
+        require(recipe.get('kind')=='asm' and isinstance(p,dict) and
+                set(p) in ({'public','offset'},{'public','offset','source_line'}) and
+                type(p['offset']) is int,'Embedded public shape differs')
+        at=recipe['start']+p['offset']
+        members=[m for m in recipe['members'] if m['start']<at<m['end']]
+        require(len(members)==1 and at not in {m['start'] for m in recipe['members']},
+                'Embedded public lies outside a member procedure')
+        if 'source_line' not in p:
+            alias=symbols.get(p['public'])
+            require(alias is not None and alias.get('storage')=='code_island' and
+                    alias.get('load_address')==at and 'clone_of' not in alias,
+                    'Embedded island public lacks its reviewed code-island alias')
+            continue
+        label=re.fullmatch(r'_loc_([0-9A-Fa-f]+)',p['public'])
+        require(label is not None and int(label.group(1),16)-0x10000==at,
+                'Embedded label public does not name its load address')
+        path='src/restunts/asmorig/seg012.asm'
+        pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
+        source=ROOT/'build/references/restunts'/path
+        require(identity(source.read_bytes())==pinned,'Embedded label reference source differs')
+        lines=source.read_text(encoding='latin1').splitlines()
+        line=p['source_line']
+        require(type(line) is int and 1<=line<=len(lines) and
+                lines[line-1].strip().lower()==(p['public'][1:]+':').lower(),
+                'Embedded label lacks pinned source declaration')
+        from asm_module import _instruction_starts
+        member=members[0]
+        starts,_=_instruction_starts(image,member['start'],member['end'])
+        require(at in starts,'Embedded label is not an original instruction boundary')
+
+
 def _code_frame(recipe, image):
     """The C object's original code frame: the inventory segment paragraph of
     every member (integ25 switch-table rule)."""
@@ -181,12 +244,15 @@ def bind_multi(obj, recipe, image, relocations):
     # Reviewed module data labels outside every procedure (asm_module, integ26).
     embedded.update({p['public']:p['offset'] for p in
                      recipe.get('module_proof',{}).get('data_publics',[])})
+    # Reviewed code-island publics of an ASM group (integ30).
+    embedded.update({p['public']:p['offset'] for p in recipe.get('embedded_publics',[])})
     require(not set(embedded)&set(pubs),'Embedded public duplicates a member')
     near_labels=_checked_asm_near_labels(recipe,image)
     # A whole C object may define global data in its own TU-owned DGROUP
     # segments (integ26); those publics are checked by bind_secondary
     # against the complete placed segment and the reviewed alias registry.
-    data_publics=[p for p in obj.publics if recipe.get('kind','c')=='c' and
+    # integ31: a whole ASM module's own _DATA labels likewise (asm012_133660).
+    data_publics=[p for p in obj.publics if
                   p['segment']!=seg and p['segment'] in secondary]
     require(len(pubs)==len(recipe['members']) and
             len(obj.publics)==len(pubs)+len(embedded)+len(data_publics) and
@@ -197,11 +263,15 @@ def bind_multi(obj, recipe, image, relocations):
             'Local helper publics must be complete reviewed members')
     require(recipe['object_declarations']=={'segments':obj.segment_defs,'groups':obj.groups,'publics':obj.publics,'externals':obj.externals},'Full declarations differ')
     require(obj.linker_fixups==recipe['expected_fixups'],'Ordered FIXUPP differs')
-    require(set(obj.externals) <= set(pubs) | {'__acrtused'} | {f['target'] for f in obj.linker_fixups}, 'Unexpected external declaration')
+    require(declared_externals(obj) <= set(pubs) | {'__acrtused'} | {f['target'] for f in obj.linker_fixups}, 'Unexpected external declaration')
+    # CODE words only: FIXUPPs inside owned data segments (a module's own
+    # far callback pointer, integ31) are bound by bind_secondary.
     local=[f for f in obj.linker_fixups if recipe.get('kind')=='asm' and
+           f['segment']==seg and
            f['target_kind']=='segment' and f['target']==seg and
            f['loc']=='offset16']
     local_far=[f for f in obj.linker_fixups if recipe.get('kind')=='asm' and
+               f['segment']==seg and
                f['target_kind']=='segment' and f['target']==seg and
                f['loc']=='pointer32']
     internal=[f for f in obj.linker_fixups if f['target'] in pubs and
@@ -212,8 +282,12 @@ def bind_multi(obj, recipe, image, relocations):
     internal=[f for f in internal if f not in own_pointer]
     # CODE words naming the TU's own data; FIXUPPs inside the data segments
     # themselves (pointer tables) are bound by bind_secondary (integ26).
+    # A base16 word naming the TU's own _DATA is the DGROUP paragraph of a
+    # `_loadds` DS reload; it stays with the composed binder (integ26) even
+    # when the object now owns a nonempty _DATA (integ31, seg028).
     own_data=[f for f in obj.linker_fixups if f['segment']==seg and
-              f['target_kind']=='segment' and f['target'] in secondary]
+              f['target_kind']=='segment' and f['target'] in secondary and
+              not (f['loc']=='base16' and f['target']=='_DATA' and recipe.get('kind','c')=='c')]
     external=[f for f in obj.linker_fixups if f['segment']==seg and
               f not in internal and f not in own_pointer and f not in local and
               f not in local_far and f not in own_data]
@@ -236,9 +310,19 @@ def bind_multi(obj, recipe, image, relocations):
         require('external_binding' in recipe,'External binding absent')
         view=copy.copy(obj); view.publics=[{'name':recipe['members'][0]['public'],'segment':seg,'offset':0}]
         view.local_publics=[]; view.local_externals=[]
-        view.externals=[n for n in obj.externals if n not in pubs or n==view.publics[0]['name']]
+        # integ33: an EXTDEF named only by an owned data segment's FIXUPPs (a
+        # `dw seg` far-data word) is bound by bind_secondary, not by the CODE binder.
+        data_only_ext=({f['target'] for f in obj.linker_fixups if f['segment'] in secondary and
+                        f['target_kind']=='external'} -
+                       {f['target'] for f in obj.linker_fixups if f['segment']==seg})
+        view.externals=[n for n in obj.externals if (n not in pubs or n==view.publics[0]['name'])
+                        and n not in data_only_ext]
         view.segment_lengths={**obj.segment_lengths,
                               **{name:0 for name in secondary}}
+        # The CODE binder sees owned secondary segments as zero-length, as
+        # before they were owned (a `_loadds` base16 still names DGROUP).
+        view.segment_defs=[{**d,'length':0} if d['name'] in secondary else d
+                           for d in obj.segment_defs]
         view.linker_fixups=[]
         for f in external:
             row=dict(f)

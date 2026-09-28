@@ -161,10 +161,19 @@ class OwnershipCorrectionTests(unittest.TestCase):
                     'seg017_mouse_whole': 'link-frame-reassignment',
                     'load_2117b': 'odd-start-asm-continuation', 'asm_load_24b7c': 'owner-identity-repair'}
         for owner, basis in expected.items():
+            if owner not in rows:
+                # integ30: set_fontdefseg's repaired owner is now subsumed by the whole
+                # seg012 module asm012_149180; integ32: load_2117b by asm012_135290.
+                subsumers = [o for o in manifest['owners'] if o.get('recipe') and
+                             owner in read_json(ROOT / o['recipe']).get('subsumed_owners', [])]
+                whole = {'asm_load_24b7c': 'asm012_149180', 'load_2117b': 'asm012_135290'}
+                self.assertEqual([o['id'] for o in subsumers], [whole[owner]], owner)
+                self.assertEqual(rows[whole[owner]]['kind'], 'MATCHING_ASM')
+                continue
             self.assertEqual([r['basis'] for r in rows[owner]['ownership_corrections']], [basis])
+        # integ32: seg003's whole _DATA (still WORD aligned) starts at 179764.
         self.assertEqual((rows['obj_seg003:_DATA']['start'], rows['obj_seg031:_DATA']['start']),
-                         (180578, 199442))
-        self.assertEqual(rows['load_2117b']['kind'], 'MATCHING_ASM')
+                         (179764, 199442))
         self.assertEqual((rows['seg017_mouse_whole']['end'], rows['load_26af2']['kind']),
                          (158450, 'MATCHING_C'))
         self.assertTrue(all(o['start'] % 2 == 0 for o in manifest['owners']
@@ -179,19 +188,25 @@ class StrlenNegativeFoldTests(unittest.TestCase):
     def setUpClass(cls):
         from compiler import compile_source
         from object_flags import recipe_flags
+        from communal_unit import recipe_declarations, check_object_communals
         from oracle import verify
         from mz import MZ
         cls.recipe = read_json(ROOT / 'recipes/audio_make_filename.json')
         source = (ROOT / cls.recipe['source']).read_bytes()
-        cls.obj, _ = compile_source(source, cls.recipe['profile'], recipe_flags(cls.recipe))
+        declarations = recipe_declarations(cls.recipe)
+        communals = None if declarations is None else [name for name, _ in declarations]
+        cls.obj, _ = compile_source(source, cls.recipe['profile'], recipe_flags(cls.recipe),
+                                    communals=communals)
+        check_object_communals(cls.obj, cls.recipe)
         oracle = verify(write=False)
         cls.image = MZ.parse(oracle[1]).load_image(oracle[1])
         cls.relocations = oracle[2]['unpacked_mz']['relocations']
 
     def bind(self, recipe):
-        from code_symbols import resolve_recipe_symbols
-        from binder import bind_contribution
-        return bind_contribution(self.obj, recipe, resolve_recipe_symbols(recipe, self.image, self.relocations))
+        # integ31: seg030 owns its _DATA; the code binds through the single
+        # secondary path, which hands the CODE view to the same binders.
+        from secondary_contribution import bind_single_secondary
+        return bind_single_secondary(self.obj, recipe, self.image, self.relocations)
 
     def variant(self, **change):
         recipe = copy.deepcopy(self.recipe)

@@ -18,7 +18,7 @@ Unless stated otherwise the profile is pinned MSC 5.10 `CL /c /AM /O /Gs` (`msc5
 2. [Expressions and registers](#2-expressions-and-registers) E1-E17
 3. [Control-flow layout](#3-control-flow-layout) C1-C13
 4. [Declarations, keywords, pragmas](#4-declarations-keywords-pragmas) D1-D8
-5. [Object and OMF emission](#5-object-and-omf-emission) O1-O11
+5. [Object and OMF emission](#5-object-and-omf-emission) O1-O15
 6. [Optimisation-flag signatures](#6-optimisation-flag-signatures) F1-F6
 7. [Open, unexplained residuals](#7-open-unexplained-residuals) U1-U8
 8. [Contradictions and corrections found while writing this](#8-contradictions-and-corrections)
@@ -371,6 +371,10 @@ ascending ones. One descending run crossing a proposed object boundary proves on
 
 **O12 Zero tails of partially initialised aggregates are LIDATA - VERIFIED** (integ26, tests/test_integ26.py). `char big[82] = {0};` emits one LEDATA byte for the explicit initialiser and a LIDATA record repeating the zero for the remaining 81 bytes. The object needs no explicit zero list (seg000 `byte_3B80C`/`byte_3B85E`); research compiles count the LIDATA expansion as initialised coverage, so only word-alignment holes remain.
 
+**O13 `extern` -> file `static` (own `_BSS`) leaves /O code generation unchanged - VERIFIED** (s009bss, integ35). Changing seg009's six file-scope far-pointer objects from `extern` to `static` definitions in the object's own `_BSS` produces identical instructions, fixup locations, address folding and relocations. Only the FIXUPP target changes: an EXTDEF with an F5 frame becomes the `_BSS` segment with an F1 DGROUP frame, and the static's offset is added to the LEDATA addend (98 sites, all five members exact). The object stayed exact for name-length changes of -115..+65 characters, so seg009 lies outside its pressure band (`FACT-tu-extern-count-limits-cse`). The static-to-offset order within `_BSS` follows the identifier-spelling hash (L8-msstatic, L9-mschash; diagnostic model `tools/msc_static_model.py`).
+
+**O14 Static `_BSS` placement is flushed per function definition - VERIFIED** (s005bss, integ37; fixtures `tests/fixtures/msc510_static_flush_fixtures.json`). File-scope statics stay pending until the next function *definition*; prototypes, `extern` declarations and initialised data definitions do not flush them. At the definition the pending set is emitted in file-static hash order (bucket sum(byte & 0xDF) mod 256 ascending). Then the function's block statics follow, block by block: each block's own statics by the local-slot hash sum(byte) & 15 ascending, then its nested blocks (a nested block follows its enclosing block although its bucket may be lower; sibling blocks keep source order). Ties in both hashes go newest declaration first. Statics still pending at the end of the file are emitted last, and unreferenced statics are allocated like referenced ones (and cost symbol-table pressure). Ten compiled fixtures (e1-e10) and seg005's complete 27-static `_BSS` (replay_control flushed at `replay_unk2`, the 17 `setup_car_shapes` block statics, then the nine statics flushed at `loop_game`) are reproduced by the diagnostic `msc_static_model.layout` (`bss_link.static_layout`). A single flush group reduces to the O13 file-static order (seg006: all 30 statics precede its first definition).
+
 **O10 MSC 5.00 is byte-identical on these idioms — VERIFIED** (r08, r11 with `msc500-medium`;
 `CC-MSC500-same-flags` NON_DISCRIMINATING).
 
@@ -445,3 +449,8 @@ Found while reproducing; the register is unchanged (supervisor is its single wri
    ABS-macro operand order (E13) and goto-induced block motion (C12) reproduce both residuals (tuflags4).
 8. **Switch dispatch "cmp/jne/jmp per case"** (register wording): plain chains are value-sorted `cmp/je`; the
    `jne/jmp` pair is the far-target form (C1, C3).
+
+**O15 Tentative definitions: pressure, record order and block externs - VERIFIED** (integ40; the communal publication, `build/workers/integ40/bisect_conv.py`, `hashpos.py`). A file-scope tentative definition `T x;` emits a near COMDEF (62h) instead of an EXTDEF; referencing code and FIXUPPs are unchanged.
+- **Pressure.** Defining in place costs more C2 symbol-table pressure than an `extern`. In seg001 and seg003, turning their file-scope externs into in-place definitions changes the generated code (seg001: -24 bytes in `update_player_state`'s region; seg003: -6 bytes). Bisection shows a cumulative effect, with no single culprit. The same definitions placed after the last function (with the externs kept) leave every byte unchanged. seg000, seg004, seg005, seg006, seg008 and seg009 take in-place definitions (including unreferenced neutral ones) without change.
+- **Record order.** In these objects, EXTDEF, COMDEF and PUBDEF record order is the compiler's symbol-table walk. It depends on the spellings and is not source order: a definition appended at the end of seg001 is its 38th name record, and renames reorder PUBDEFs. Small probes happen to show declaration order. (This corrects the L9-mschash note "record order = source order" for real TUs.) So the LINK first-sight position of a communal inside its first module is spelling-dependent; the real link is the authority.
+- **Block externs.** A block-scope `extern` followed by a file-scope definition emits both an EXTDEF and a COMDEF for the name. LINK and the acceptance probes treat the pair as one communal.

@@ -9,17 +9,7 @@ DGROUP group CONST,_BSS,_DATA
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT,ds:DGROUP
 extrn _fontdefseg:word
-extrn _word_3B770:word
-extrn _word_3B772:word
-extrn _word_3B774:word
-extrn _aMsRunTimeLibraryCop:byte
-extrn _data_2B77A:byte
-extrn _data_2B77C:byte
-extrn _word_2B77E:word
-extrn _word_2B780:word
-extrn _word_2B782:word
 extrn _sprite1:byte
-extrn _data_2B784:byte
 public _font_draw_text
 SPRITE1 struc
 sprite_bitmapptr dw ?
@@ -38,6 +28,23 @@ sprite_field18 dw ?
 sprite_field1A dw ?
 sprite_field1C dw ?
 SPRITE1 ends
+; Font header at DS/ES = _fontdefseg: 0Bh words, then the 256-entry glyph offset table.
+FONTHDR struc
+fh_fgcolor dw ?
+fh_bgcolor dw ?
+fh_left dw ?
+fh_unk06 dw ?
+fh_x dw ?
+fh_y dw ?
+fh_rowbytes db ?
+fh_unk0D db ?
+fh_height dw ?
+fh_advance dw ?
+fh_lineheight dw ?
+fh_proportional db ?
+fh_unk15 db ?
+fh_glyphs dw 256 dup (?)
+FONTHDR ends
 _font_draw_text proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -52,9 +59,9 @@ _font_draw_text proc far
     push di
     mov ds, ds:[_fontdefseg]
     mov ax, [bp+arg_2]
-    mov ds:8, ax
+    mov ds:[fh_x], ax
     mov ax, [bp+arg_4]
-    mov ds:0Ah, ax
+    mov ds:[fh_y], ax
     jmp short loc_3376B
     db 90h
     push bp
@@ -76,7 +83,7 @@ loc_33771:
     inc [bp+arg_0]
     xor bh, bh
     shl bx, 1
-    add bx, 16h
+    add bx, fh_glyphs
     mov si, [bx]
     cmp si, 0
     jnz short loc_337AD
@@ -85,10 +92,10 @@ loc_33771:
     cmp al, 0Ah
     jnz short loc_33771
 loc_33797:
-    mov ax, ds:[_word_3B774]
-    mov ds:[_aMsRunTimeLibraryCop], ax
-    mov ax, ds:[_word_2B782]
-    add ds:[_aMsRunTimeLibraryCop+2], ax
+    mov ax, ds:[fh_left]
+    mov ds:[fh_x], ax
+    mov ax, ds:[fh_lineheight]
+    add ds:[fh_y], ax
     jmp short loc_33771
 loc_337A6:
     pop di
@@ -98,31 +105,31 @@ loc_337A6:
     pop bp
     retf
 loc_337AD:
-    mov ax, ds:[_aMsRunTimeLibraryCop]
+    mov ax, ds:[fh_x]
     mov [bp+var_2], ax
-    cmp byte ptr ds:[_data_2B784], 0
+    cmp byte ptr ds:[fh_proportional], 0
     jz short loc_337CE
     mov al, [si]
     xor ah, ah
     inc si
-    mov ds:[_word_2B780], ax
+    mov ds:[fh_advance], ax
     add ax, 7
     shr ax, 1
     shr ax, 1
     shr ax, 1
-    mov byte ptr ds:[_data_2B77C], al
+    mov byte ptr ds:[fh_rowbytes], al
 loc_337CE:
-    mov al, byte ptr ds:[_word_3B770]
-    mov ah, byte ptr ds:[_word_3B772]
-    mov cx, ds:[_word_2B77E]
+    mov al, byte ptr ds:[fh_fgcolor]
+    mov ah, byte ptr ds:[fh_bgcolor]
+    mov cx, ds:[fh_height]
     mov [bp+var_4], cx
-    mov bx, ds:[_data_2B77A]
+    mov bx, ds:[fh_y]
     shl bx, 1
     add bx, cs:[_sprite1+SPRITE1.sprite_lineofs]
 loc_337E7:
     mov di, cs:[bx]
     add di, [bp+var_2]
-    mov dh, byte ptr ds:[_data_2B77C]
+    mov dh, byte ptr ds:[fh_rowbytes]
 loc_337F1:
     mov cx, 8
     mov dl, [si]
@@ -140,8 +147,8 @@ loc_337FD:
     inc bx
     dec [bp+var_4]
     jg short loc_337E7
-    mov ax, ds:[_word_2B780]
-    add ds:[_aMsRunTimeLibraryCop], ax
+    mov ax, ds:[fh_advance]
+    add ds:[fh_x], ax
     jmp loc_33771
 _font_draw_text endp
 S012_TEXT ends

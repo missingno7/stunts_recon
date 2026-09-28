@@ -104,6 +104,11 @@ class Integ23StartupBinder(unittest.TestCase):
                     manifest['owners'][index] = {'id':'raw_%05x_%05x' % (row['start'], row['end']),
                                                  'kind':'UNRESOLVED_RAW', 'start':row['start'],
                                                  'end':row['end']}
+                # integ36: so is its owned (linked) runtime data, returned to raw.
+                if owner.get('kind') == 'KNOWN_TOOLCHAIN_LIBRARY_DATA' and owner.get('parent') == row['id']:
+                    manifest['owners'][index] = {'id':'raw_%05x_%05x' % (owner['start'], owner['end']),
+                                                 'kind':'UNRESOLVED_RAW', 'start':owner['start'],
+                                                 'end':owner['end']}
             manifest = replace_raw_library(manifest, row)
         return manifest
 
@@ -142,7 +147,7 @@ class Integ23StartupBinder(unittest.TestCase):
         cases = [
             (lambda b: b['dosseg_boundaries']['_end']['addends'].remove(-2), 'addend is not reviewed'),
             (lambda b: b['dosseg_boundaries']['_edata']['after'].update(owner='library_crt0fp_118446'),
-             'another accepted runtime owner'),
+             'another accepted runtime owner|independently anchored boundary'),
             (lambda b: b['dosseg_boundaries']['_edata']['after'].update(segment='PAD'),
              'final pinned non-BSS'),
             (lambda b: b['dosseg_boundaries']['_edata'].update(alignment=4), '_edata proof differs'),
@@ -200,7 +205,7 @@ class Integ23StartupBinder(unittest.TestCase):
             (lambda p: p['upper_neighbour'].update(owner='library_dos_crt0msg_118410', segment='MSG'),
              'order|far pointer|Unexplained'),
             (lambda p: p['upper_neighbour'].update(owner='library_crt0fp_118446', segment='MSG'),
-             'another accepted runtime owner'),
+             'another accepted runtime owner|Intervening far pointer|independently anchored'),
             (lambda p: p['upper_neighbour'].update(segment='EPAD'), 'independently anchored')]
         for mutate, message in cases:
             with self.subTest(message=message):
@@ -229,8 +234,11 @@ class Integ23StartupBinder(unittest.TestCase):
         self.assertEqual(payload, self.image[120142:120254])
         call = next(f for f in proof['binding']['fixups'] if f['target'] == '_write')
         self.assertEqual((call['address'], call['frame']), (122664, 117840))
-        for aliases, message in [(None, 'group public missing'),
-                                 (('_write','_fflush'), 'Unused runtime code-alias'),
+        # integ36: write.asm is now an accepted group member, so without the
+        # alias the CALL binds through its pinned public at the same address.
+        payload, proof = self.bind(self.fflush(None), [self.fflush(None)])
+        self.assertEqual(next(f for f in proof['binding']['fixups'] if f['target'] == '_write')['address'], 122664)
+        for aliases, message in [(('_write','_fflush'), 'Unused runtime code-alias'),
                                  (('_write','_no_such_alias'), 'Unknown far code symbol|Unused')]:
             with self.subTest(aliases=aliases):
                 bad = self.fflush(aliases)

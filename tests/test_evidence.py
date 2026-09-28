@@ -134,7 +134,8 @@ class EvidenceTests(unittest.TestCase):
     def test_reviewed_code_aliases_resolve_from_current_evidence(self):
         layout = read_json(ROOT / 'layout/code-symbols.json')
         far_names = {name for name, symbol in layout['symbols'].items()
-                     if symbol.get('anchors') or symbol.get('pointer_anchors')}
+                     if symbol.get('anchors') or symbol.get('pointer_anchors') or
+                     symbol.get('table_anchors')}
         resolved = resolve_code_symbols(far_names, self.image, self.relocations)
         resolved['_frame_callback'] = resolve_callback_pointer(self.image, self.relocations)
         self.assertEqual(set(resolved), set(layout['symbols']))

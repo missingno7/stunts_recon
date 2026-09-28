@@ -10,6 +10,35 @@ Install the diagnostic decoder with `python -m pip install --target build/python
 
 Full validation independently recompiles active C and reassembles active ASM under DOSBox-X at `C:/tools/dosbox-x/dosbox-x.exe` (hash-identical copy of `C:/DOSBox-X`); all compiles run under MS-DOS Player at `C:/tools/nmlgcdos/msdos.exe`. Configure local runner paths explicitly when moving machines, preserving pinned tool identities. The pinned MASM 5.10 ASM profile is a reproduction choice, not an attribution of the original assembler. No verification command updates the byte oracle.
 
+## Historical build
+
+Run the complete historical toolchain pipeline from the repository root with:
+
+```powershell
+python tools/histbuild.py
+```
+
+Each run freshly compiles every accepted C contribution from `src/` with its
+recipe's pinned CL profile, assembles accepted ASM modules with pinned MASM,
+builds the game library in image-derived order, lets LINK search the pinned
+`MLIBCR.LIB`/`LIBH.LIB` for runtime members, then runs one LINK 3.65
+(`/ST:8000`) and one EXEPACK. A zero-segment EXTDEF root keeps every reviewed
+game and runtime library contribution in the link through normal LINK library
+search. It compares the linked image, relocation
+set/order, header and packed executable to the locked oracle and prints the
+separate C, ASM, pinned-runtime, LINK-fill and raw-debt totals. Raw OMF debt
+inputs are named `Dnnn.OBJ` and listed with their source ranges in the report.
+
+Detailed logs, fresh compiler commands, raw-debt inventory, the DOS-side
+`MAKEFILE`/response bundle and `report.json` are written under a unique
+`build/histbuild/<run>/` directory. The generated NMAKE bundle reruns GAME.LIB
+construction, LINK and EXEPACK from that directory. Image-derived
+  ordering leaves a measured order residual: the independent build matches
+  2,023 of 2,588 relocation positions (bank 0 is exact; banks 1–3 differ).
+  The report gives per-bank counts and first member-order divergences. The
+separate `python tools/validate.py --image` acceptance diagnostic uses the
+oracle-derived order and checks the byte-exact full executable.
+
 ## Everyday work
 
 ```powershell
@@ -26,6 +55,23 @@ python tools/promote.py --batch build/workers/NAME/batch.txt [--verify-only]
 python tools/validate.py
 # Diagnostic real LINK 3.65 + EXEPACK rebuild (not a gate):
 python tools/validate.py --image
+# Library-search experiment against the pinned MLIBCR.LIB/LIBH.LIB (diagnostic):
+python tools/reallink.py --order library --runtime libraries --library-order combined --game-order address
+# Image-derived game member order (DGROUP data anchors; no relocation-table input):
+python tools/reallink.py --order library --runtime libraries --library-order combined --game-order image
+# Real link with a candidate composed as promotion would (BSS storage is accepted only when this places it):
+python tools/reallink.py --tag NAME --stage FUNCTION build/workers/NAME/candidate.c build/workers/NAME/candidate.recipe.json
+# Pinned runtime members (integ37: also data-only members, `module_form: data-only`),
+# word-alignment / DOSSEG-lead LINK_FILL rows or (integ36) RUNTIME_STORAGE ownership
+# updates, from a JSON list; runs the staged real link that must place all linked storage:
+python tools/promote_runtime.py build/workers/NAME/rows.json [--verify-only]
+# Communals (integ39): the whole c_common unit is one atomic batch, `COMMUNAL UNIT.json`
+# plus every republished declaring TU; judge any link directory without publishing:
+python tools/communal_unit.py dry-run build/commfit/stage/TAG --base-dir build/commfit/reallink/link
+# Diagnostic communal-name solver (data under build/commfit/):
+python tools/linkorder.py --run
+python tools/commfit.py solve --inventory INVENTORY.json
+python tools/stage_link.py --solution build/commfit/out/solution.json --tag TAG
 ```
 
 For a reviewed assembly extent, use a self-contained MASM source and an explicit recipe with `"kind": "asm"`, `"profile": "masm510-game"`, `"assembler_flags": ["/Mx", "/I."]`, complete OMF declarations, FIXUPPs, and ordered relocations:
@@ -51,10 +97,10 @@ Run complete validation at acceptance or tooling-change boundaries. Ordinary sou
 
 ## State and proof
 
-`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `src/` and ASM contributions from tracked `asm/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership.
+`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `src/` and ASM contributions from tracked `asm/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership. Raw BSS debt is one reviewed placeholder per object (`evidence/bss-partition.json`), linked where that object's `_BSS` would be; `tools/communal_order.py`, `tools/msc_static_model.py` and the commfit solver (`tools/commfit.py`, `linkorder.py`, `stage_link.py`, `maxkeep.py`) are diagnostic naming aids only. The LINK c_common communals are accepted only as one whole unit (`tools/communal_unit.py`).
 
 Promotion freezes the candidate, recompiles it, verifies its full contribution, then recompiles the entire staged hybrid image. It protects existing ownership, complete declarations, fixups, and exact ordered relocation obligations. The single publisher checks stable inputs, journals source/recipe/manifest writes, and freshly verifies the canonical image. `--verify-only` exercises the complete staged gate without changing canonical files. Validation also runs focused negative/isolation/transaction tests and the independent compiler backend.
 
 After an interruption, `python tools/promote.py --recover` obtains the same OS lock and rolls back the journal. It refuses to overwrite conflicting user edits. Resolve any reported conflict against `build/publication.json`, then retry recovery and validation. The persistent `build/promotion.lock` file is harmless: the operating system releases its lock when a process exits. Do not delete a live publisher's journal or lock.
 
-Recovered C, matching ASM, pinned runtime, and unresolved/raw bytes are reported separately by validation. See [technical scope](docs/acceptance.md), [selected compiler observations](evidence/compiler-notes.md), [toolchain hypothesis register](evidence/toolchain-hypotheses.json), and [migration results](MIGRATION.md).
+Program-wide public names (one per address) are recorded in `layout/names-registry.json`; `tools/namefit.py` checks that every accepted translation unit stays exact under them. Recovered C, matching ASM, pinned runtime (code and owned runtime data), and unresolved/raw bytes are reported separately by validation. See [technical scope](docs/acceptance.md), [selected compiler observations](evidence/compiler-notes.md), [toolchain hypothesis register](evidence/toolchain-hypotheses.json), and [migration results](MIGRATION.md).

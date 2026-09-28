@@ -32,6 +32,30 @@ def production_inputs(manifest=None, recipe_overrides=None, snapshot=None, sourc
     return result
 
 
+# integ38: the load image is rounded past _edata, so the first bytes of the
+# first _BSS contribution are physically in the image (seg000's 12-byte _BSS
+# at [199994,200006); the image ends at 200000).  Those in-image bytes are
+# owned by that BSS owner, not raw: one BSS_IN_IMAGE row, the last owner row,
+# naming the accepted bss_owners row that starts at bss_start and extends past
+# the image end.  Its bytes are that owner's verified zero _BSS prefix
+# (_finish rechecks the emitted zero extent against the oracle).
+BSS_IN_IMAGE = 'BSS_IN_IMAGE'
+_BSS_ACCEPTED = ('MATCHING_C_DATA', 'MATCHING_ASM_DATA', 'KNOWN_TOOLCHAIN_LIBRARY_DATA')
+
+
+def checked_bss_in_image(owner, manifest, size):
+    layout = read_json(ROOT/'layout/data-symbols.json')
+    rows = [o for o in manifest.get('bss_owners', []) if o['id'] == owner.get('bss_owner')]
+    require(set(owner) == {'id', 'kind', 'start', 'end', 'bss_owner'} and
+            owner['id'] == owner['bss_owner'] + '@image' and
+            owner['start'] == layout['bss_start'] and owner['end'] == size and
+            len(rows) == 1 and rows[0]['kind'] in _BSS_ACCEPTED and rows[0]['segment'] == '_BSS' and
+            rows[0]['start'] == owner['start'] and rows[0]['end'] >= owner['end'] and
+            manifest['bss_owners'][0] is rows[0],
+            'In-image BSS row is not the image prefix of the first accepted _BSS owner')
+    return {'bss_in_image': [owner['start'], owner['end']], 'bss_owner': rows[0]['id']}
+
+
 def validate_layout(manifest, size):
     require(len({o['id'] for o in manifest['owners']})==len(manifest['owners']),'Duplicate owner IDs')
     at = 0
@@ -39,14 +63,47 @@ def validate_layout(manifest, size):
         require(owner['start'] == at and at < owner['end'] <= size, 'Ownership gap/overlap/invalid extent')
         require(owner['kind'] in ['UNRESOLVED_RAW', 'MATCHING_C', 'MATCHING_ASM',
                                   'MATCHING_C_DATA', 'MATCHING_ASM_DATA', 'KNOWN_TOOLCHAIN_LIBRARY',
-                                  'LINK_FILL'],
+                                  'KNOWN_TOOLCHAIN_LIBRARY_DATA', 'LINK_FILL', BSS_IN_IMAGE],
                 'Unsupported production ownership')
+        if owner['kind'] == BSS_IN_IMAGE:
+            checked_bss_in_image(owner, manifest, size)
         require(owner.get('contribution_form') in (None, 'prefix_of_object') and
                 (owner.get('contribution_form') is None or owner['kind'] == 'MATCHING_C'),
                 'Unsupported contribution form')
         at = owner['end']
     require(at == size, 'Ownership does not cover full initialized image')
     parents={o['id']:o for o in manifest['owners'] if o['kind'] in ('MATCHING_C','MATCHING_ASM')}
+    # integ36: owned pinned runtime data (initialized rows and one _BSS row per
+    # member) mirrors exactly the member's `linked` storage rows.
+    libraries={o['id']:o for o in manifest['owners'] if o['kind']=='KNOWN_TOOLCHAIN_LIBRARY'}
+    # integ37: data-only pinned runtime members own bytes only through their
+    # linked storage rows; they have no code extent in the partition.
+    import runtime_binding
+    members=runtime_binding.runtime_data_members(manifest)
+    require(len({o['id'] for o in manifest['owners']}|{m['id'] for m in members})==
+            len(manifest['owners'])+len(members), 'Duplicate owner IDs')
+    for member in members:
+        runtime_binding.check_data_member_form(member)
+        require(any(r.get('ownership')=='linked' and r['end']>r['start']
+                    for r in member['binding']['storage'].values()),
+                'Data-only runtime member owns no bytes')
+        libraries[member['id']]=member
+    runtime_rows=[o for o in manifest['owners'] if o['kind']=='KNOWN_TOOLCHAIN_LIBRARY_DATA']
+    runtime_bss=[o for o in manifest.get('bss_owners',[]) if o['kind']=='KNOWN_TOOLCHAIN_LIBRARY_DATA']
+    for row in runtime_rows+runtime_bss:
+        parent=libraries.get(row.get('parent'))
+        linked=(parent or {}).get('binding',{}).get('storage',{}).get(row.get('segment'))
+        require(parent is not None and linked is not None and linked.get('ownership')=='linked' and
+                (linked['start'],linked['end'])==(row['start'],row['end']) and
+                row.get('id')==f"{parent['id']}:{row['segment']}" and
+                (row['segment']=='_BSS')==(row in runtime_bss) and
+                row.get('target',{}).get('size')==row['end']-row['start'],
+                'Orphaned or unlisted pinned runtime data owner')
+    for parent in libraries.values():
+        linked={n for n,r in parent.get('binding',{}).get('storage',{}).items()
+                if r.get('ownership')=='linked' and r['end']>r['start']}
+        require(sorted(r['segment'] for r in runtime_rows+runtime_bss if r['parent']==parent['id'])==sorted(linked),
+                'Linked runtime storage lacks exactly one owned row')
     data=[o for o in manifest['owners'] if o['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA')]
     bss_data=[o for o in manifest.get('bss_owners',[]) if o['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA')]
     for row in data:
@@ -77,17 +134,35 @@ def validate_layout(manifest, size):
     if 'bss_owners' in manifest:
         layout=read_json(ROOT/'layout/data-symbols.json')
         position=layout['bss_start']
+        # integ35: raw BSS debt is one reviewed placeholder per object (bss_link).
+        import bss_link
+        bss_link.load_partition(manifest)
         for owner in manifest['bss_owners']:
             require(owner['start']==position and position<owner['end']<=layout['bss_end'],
                     'BSS ownership gap/overlap')
             position=owner['end']
-            if owner['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA'):
+            if owner['kind']=='KNOWN_TOOLCHAIN_LIBRARY_DATA':
+                import runtime_binding
+                require(owner.get('placement')==runtime_binding.RUNTIME_BSS_PLACEMENT and owner['segment']=='_BSS',
+                        'Pinned runtime BSS owner lacks its real-link placement kind')
+            elif owner['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA'):
                 parent=parents.get(owner.get('parent'))
+                import bss_link
+                require(owner.get('placement') in bss_link.PLACEMENTS,
+                        'Accepted BSS owner lacks a real-link placement kind')
                 require(owner['segment']=='_BSS' and parent is not None and
                         owner['kind']==('MATCHING_ASM_DATA' if parent['kind']=='MATCHING_ASM' else 'MATCHING_C_DATA') and
                         {'segment':'_BSS','start':owner['start'],'end':owner['end'],
                          'target':owner['target']} in parent.get('data_intervals',[]),
                         'Orphaned BSS owner')
+            elif owner['kind']=='LINK_FILL':
+                # integ39: LINK's c_common paragraph fill, re-derived from its neighbours.
+                import communal_unit
+                communal_unit.checked_communal_fill(owner, manifest)
+            elif owner['kind']=='LINK_COMMUNAL':
+                # integ39: the whole c_common unit (declarers checked after the fresh compile).
+                import communal_unit
+                communal_unit.check_row_form(owner, layout)
             else:
                 require(owner['kind']=='UNRESOLVED_RAW','Unsupported BSS owner')
         require(position==layout['bss_end'],'BSS ownership does not cover clear range')
@@ -122,14 +197,32 @@ def _build(manifest=None, recipe_overrides=None, publish=True, source_overrides=
     emitted={}
     compiled={}
     compiled = _compile_owners(manifest, recipe_overrides, source_overrides, oracle)
+    # integ39: COMDEF declarations belong to the whole accepted communal unit
+    # (conditions a, c, d without a link; the real link decides b).
+    import communal_unit
+    communal=communal_unit.check_manifest(
+        manifest, lambda owner: (recipe_overrides or {}).get(owner['recipe']) or read_json(ROOT/owner['recipe']),
+        lambda path: (source_overrides or {}).get(path) or (ROOT/path).read_bytes())
     fill=0
+    bss_image=0
     for owner_id, result in compiled.items():
         emitted[owner_id]={name:bytes.fromhex(raw) for name,raw in
             result[1]['binding'].get('secondary_payloads',{}).items()}
+    # integ37: data-only pinned runtime members, bound from the hash-pinned member.
+    import runtime_binding
+    for member in runtime_binding.runtime_data_members(manifest):
+        _,receipt=bind_library(member,original,mz.relocations,manifest=manifest)
+        receipts.append(receipt)
+        emitted[member['id']]={name:bytes.fromhex(raw) for name,raw in
+            receipt['binding'].get('secondary_payloads',{}).items()}
     for owner in manifest['owners']:
         start, end = owner['start'], owner['end']
         if owner['kind'] == 'UNRESOLVED_RAW':
             chunks.append(original[start:end])
+        elif owner['kind']==BSS_IN_IMAGE:
+            receipts.append(checked_bss_in_image(owner, manifest, len(original)))
+            chunks.append(bytes(end-start))
+            bss_image+=end-start
         elif owner['kind']=='LINK_FILL':
             # LINK paragraph alignment fill, re-derived every build (link_fill).
             from link_fill import checked_fill
@@ -140,6 +233,17 @@ def _build(manifest=None, recipe_overrides=None, publish=True, source_overrides=
             payload,receipt=bind_library(owner,original,mz.relocations,manifest=manifest)
             chunks.append(payload)
             receipts.append(receipt)
+            libraries+=len(payload)
+            emitted[owner['id']]={name:bytes.fromhex(raw) for name,raw in
+                receipt.get('binding',{}).get('secondary_payloads',{}).items()}
+        elif owner['kind']=='KNOWN_TOOLCHAIN_LIBRARY_DATA':
+            # integ36: owned pinned runtime data, bound with its member above.
+            require(owner['parent'] in emitted and owner['segment'] in emitted[owner['parent']],
+                    'Pinned runtime data payload is missing from its bound member')
+            payload=emitted[owner['parent']][owner['segment']]
+            require(len(payload)==end-start and identity(payload)==owner['target'] and
+                    payload==original[start:end], 'Pinned runtime data payload differs from oracle')
+            chunks.append(payload)
             libraries+=len(payload)
         elif owner['kind'] in ('MATCHING_C_DATA','MATCHING_ASM_DATA'):
             if owner.get('module_form')=='data-only':
@@ -160,9 +264,11 @@ def _build(manifest=None, recipe_overrides=None, publish=True, source_overrides=
             receipts.append(receipt)
             if owner['kind']=='MATCHING_ASM': matching_asm+=len(payload)
             else: matching+=len(payload)
+    if communal is not None:
+        receipts.append(communal)
     return _finish(manifest, recipe_overrides, source_overrides, before, production_before, oracle, mz,
                    original, chunks, receipts, matching, matching_asm, libraries, emitted,
-                   publish, artifact, output, fill)
+                   publish, artifact, output, fill, bss_image)
 
 
 def workers():
@@ -229,11 +335,19 @@ def _compile_owners(manifest, recipe_overrides, source_overrides, oracle):
 
 def _finish(manifest, recipe_overrides, source_overrides, before, production_before, oracle, mz,
             original, chunks, receipts, matching, matching_asm, libraries, emitted,
-            publish, artifact, output, fill=0):
+            publish, artifact, output, fill=0, bss_image=0):
     image = b''.join(chunks)
     require(image == original, 'Full image mismatch')
     matching_bss=0; matching_asm_bss=0
+    library_bss=0
     for owner in manifest.get('bss_owners',[]):
+        if owner['kind']=='KNOWN_TOOLCHAIN_LIBRARY_DATA':
+            require(owner['parent'] in emitted and owner['segment']=='_BSS' and
+                    emitted[owner['parent']].get('_BSS')==bytes(owner['end']-owner['start']) and
+                    identity(emitted[owner['parent']]['_BSS'])==owner['target'],
+                    'Pinned runtime BSS contribution is not the verified zero extent')
+            library_bss+=owner['end']-owner['start']
+            continue
         if owner['kind'] not in ('MATCHING_C_DATA','MATCHING_ASM_DATA'): continue
         require(owner['parent'] in emitted and owner['segment']=='_BSS' and
                 emitted[owner['parent']].get('_BSS')==bytes(owner['end']-owner['start']) and
@@ -253,13 +367,15 @@ def _finish(manifest, recipe_overrides, source_overrides, before, production_bef
         verify_toolchain(profile)
     require(inputs() == before, 'Inputs changed during fresh construction')
     require(production_inputs(manifest, recipe_overrides, before, source_overrides) == production_before, 'Production dependencies changed')
-    report = {'status': 'HYBRID_EXACT', 'fully_recovered': matching + matching_asm + libraries + fill == len(image),
+    report = {'status': 'HYBRID_EXACT', 'fully_recovered': matching + matching_asm + libraries + fill + bss_image == len(image),
               'executable': identity(executable), 'load_image': identity(image),
               'matching_c_bytes': matching, 'matching_asm_bytes': matching_asm,
               'matching_c_bss_bytes':matching_bss,
               'matching_asm_bss_bytes':matching_asm_bss,
-              'raw_initialized_bytes': len(image) - matching - matching_asm - libraries - fill, 'library_production_bytes':libraries,
-              'link_fill_bytes': fill,
+              'library_bss_bytes':library_bss,
+              'raw_initialized_bytes': len(image) - matching - matching_asm - libraries - fill - bss_image,
+              'library_production_bytes':libraries,
+              'link_fill_bytes': fill, 'bss_in_image_bytes': bss_image,
               'relocation_count': len(mz.relocations), 'inputs': before,
               'production_inputs':production_before, 'compiler_receipts': receipts}
     if artifact is not None:

@@ -1,6 +1,6 @@
 /* Scratch TU. Header declarations are semantic leads from Restunts; no preprocessor directives. */
-extern void sprite_copy_2_to_1_2(void);
-extern void mouse_draw_transparent_check(void);
+extern void sprcopy2to12(void);
+extern void msdrawtransparentchk(void);
 
 
 
@@ -34,23 +34,23 @@ struct PLANE {
 };
 
 
-short sin_fast(unsigned short s);
-short cos_fast(unsigned short s);
+short sinfast(unsigned short s);
+short cosfast(unsigned short s);
 
-int polarAngle(int z, int y);
-int polarRadius2D(int z, int y);
+int polang(int z, int y);
+int polradius2d(int z, int y);
 int polarRadius3D(struct VECTOR* vec);
 
 unsigned rect_compare_point(struct POINT2D* pt);
 
-void mat_mul_vector(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
+void mat_vec(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
 void mat_mul_vector2(struct VECTOR* invec, struct MATRIX far* mat, struct VECTOR* outvec);
 void mat_multiply(struct MATRIX* rmat, struct MATRIX* lmat, struct MATRIX* outmat);
 void mat_invert(struct MATRIX* inmat, struct MATRIX* outmat);
 void mat_rot_x(struct MATRIX* outmat, int angle);
-void mat_rot_y(struct MATRIX* outmat, int angle);
+void matroty(struct MATRIX* outmat, int angle);
 void mat_rot_z(struct MATRIX* outmat, int angle);
-struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk);
+struct MATRIX* matrotzxy(int z, int x, int y, int unk);
 
 void rect_adjust_from_point(struct POINT2D* pt, struct RECTANGLE* rc);
 
@@ -58,13 +58,13 @@ int vector_op_unk2(struct VECTOR* vec);
 void vector_to_point(struct VECTOR* vec, struct POINT2D* outpt);
 void vector_op_unk(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, short i);
 
-short multiply_and_scale(short a1, short a2);
+short mulscl(short a1, short a2);
 
-void rect_union(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
-int rect_intersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
+void rcunion(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
+int rcintersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
 
-void plane_rotate_op(void);
-int plane_origin_op(int index, int b, int c, int d);
+void plnrotop(void);
+int plnoriginop(int index, int b, int c, int d);
 
 
 
@@ -259,76 +259,76 @@ struct TRACKOBJECT {
 };
 
 
-extern struct GAMEINFO gameconfig;
-extern struct GAMEINFO gameconfigcopy;
+extern struct GAMEINFO globalgamesettings;
+extern struct GAMEINFO gmconfigbackup;
 
-extern struct GAMESTATE state;
-extern struct SIMD simd_opponent;
+extern struct GAMESTATE core;
+extern struct SIMD ophys_7;
 
-extern short video_flag1_is1;
-extern short video_flag2_is1;
-extern short video_flag4_is1;
-extern char video_flag5_is0;
-extern short video_flag6_is1;
+extern short pixel_scales;
+extern short g_vid_flg2_set;
+short vidflg4_is1;
+char g_videoflg5;
+extern short g_vid_flag6;
 
-extern unsigned char byte_44A8A;
-extern unsigned char byte_4552F;
-extern unsigned short elapsed_time1;
-extern unsigned short elapsed_time2;
-extern unsigned char byte_449DA;
-extern unsigned char byte_4393C;
-extern char game_replay_mode; // 0 = playing, 1 = paused, 2 = replay
-extern short word_44DCA;
+unsigned char timeraud;
+unsigned char slomodiv8;
+unsigned short elaptm1;
+unsigned short tmr2;
+unsigned char sigframe;
+unsigned char g_rpl_init;
+char gm_playmode; // 0 = playing, 1 = paused, 2 = replay
+extern short g_sgateopn;
 
 extern short word_45A24; // current frame?
-extern short word_45A00; // fps * 30
-extern short word_4499C; // 100 / fps
-extern short track_angle;
-extern void* steerWhlRespTable_ptr;
+extern short g_cvxintvl; // fps * 30
+extern short frmcs_time; // 100 / fps
+extern short st_hdg;
+extern void* table_lookup;
 extern void* steerWhlRespTable_10fps;
 extern void* steerWhlRespTable_20fps;
-extern char startcol2, startrow2;
-extern char hillFlag;
-extern short hillHeightConsts[];
+extern char idxtrk, tagtrk;
+extern char g_hillf;
+extern short hillconsts[];
 
-extern struct RECTANGLE rect_windshield;
-extern short word_449EA;
-extern int run_game_random;
-extern char replaybar_toggle;
-extern char is_in_replay;
-extern char cameramode;
-extern char byte_449E6;
-extern char game_replay_mode_copy;
-extern char byte_44346;
-extern char byte_46467;
-extern char dashb_toggle;
-extern char byte_4432A;
-extern char show_penalty_counter;
-extern int word_45D94;
-extern char word_45D3E;
+struct RECTANGLE boundglassrect;
+short bitmapdash;
+extern int runrndx;
+char replaybar_toggle;
+char inrepflg;
+extern char cammd;
+char g_rplmodui;
+char gm_saved_rpl_mode;
+char numid;
+char g_rplbfask;
+char on_off_dash;
+char cam_idg;
+extern char pen_flag_count;
+int replayrst;
+char popupact;
 extern char byte_3B8F2;
 extern char byte_3FE00;
-extern void far* gameresptr;
-extern void far* dasmshapeptr;
+extern void far* gamerptrs;
+void far* dasm_shp_7;
 extern int word_3F88E;
-extern char dashb_toggle_copy;
-extern char replaybar_toggle_copy;
-extern char is_in_replay_copy;
-extern char followOpponentFlag;
-extern char followOpponentFlag_copy;
-extern int roofbmpheight_copy;
-extern char byte_449E2;
-extern char replaybar_enabled;
-extern int dashbmp_y_copy;
-extern int height_above_replaybar;
-extern char byte_454A4;
-extern char byte_449D8[];
+char dashbtogglesaved;
+char g_replaybarcpytgl;
+char is_in_rplcopy;
+extern char follow_op;
+char opp_follow_flag_backup;
+int roofbmphgt_saved;
+char mode_flag;
+char g_rplybarenable;
+int dashbmpy_copy;
+int rplbarabovehgt;
+char g_simprect;
+char g_viewinx[2];
 
-extern int dastbmp_y;
-extern struct SHAPE2D far *dastshapeptr;
-extern int dashbmp_y;
-extern int roofbmpheight;
-extern struct RECTANGLE* rectptr_unk;
+int dasty;
+struct SHAPE2D far *g_dastbmpbuf;
+int dashbmy9;
+int rfy5;
+extern struct RECTANGLE* rectp;
 
 extern void player_op(char);
 extern void opponent_op(void);
@@ -340,61 +340,61 @@ extern void set_frame_callback(void);
 extern void mouse_minmax_position(int);
 extern int kb_get_char(void);
 extern void far update_crash_state(int, int);
-extern void far do_mou_restext(void);
-extern void far init_game_state(int);
+extern void far do_mou_resource_text(void);
+extern void far initialize_game_state(int);
 extern char handle_ingame_kb_shortcuts(unsigned);
 
-extern int mouse_butstate;
-extern int mouse_xpos;
-extern int mouse_ypos;
+extern int flagsdown;
+extern int msecoordx;
+extern int pos_y_ms;
 extern int performGraphColor;
-extern char resID_byte1;
-extern int waitflag;
+extern char resbuftext;
+extern int waitm_ms;
 
-extern void far* fontnptr;
-extern void far* fontdefptr;
-extern void far* mainresptr;
-extern struct GAMESTATE huge* cvxptr;
-extern int trackrows[];
-extern int terrainrows[];
-extern int trackpos[];
-extern int trackcenterpos[];
-extern int terrainpos[];
-extern int terraincenterpos[];
-extern int trackpos2[];
-extern int trackcenterpos2[];
-extern short far* td01_track_file_cpy; //trackdata1;
-extern short far* td02_penalty_related; //trackdata2;
-extern char far* trackdata3;
-extern short far* td04_aerotable_pl; //trackdata4;
-extern short far* td05_aerotable_op; //trackdata5;
-extern char far* trackdata6;
-extern char far* trackdata7;
-extern int far* td08_direction_related; //trackdata8;
-extern struct VECTOR far* trackdata9;
-extern int far* td10_track_check_rel;// trackdata10;
-extern char far* td11_highscores; //trackdata11;
-extern char far* trackdata12;
-extern char far* td13_rpl_header; //trackdata13;
-extern unsigned char far* td14_elem_map_main; //trackdata14;
-extern unsigned char far* td15_terr_map_main; //trackdata15;
-extern char far* td16_rpl_buffer; //trackdata16;
-extern char far* td17_trk_elem_ordered; //trackdata17;
-extern char far* trackdata18;
-extern unsigned char far* trackdata19;
-extern char far* td20_trk_file_appnd; //trackdata20;
-extern char far* td21_col_from_path; //trackdata21;
-extern char far* td22_row_from_path; //trackdata22;
-extern unsigned char far* trackdata23; // indexes into trkObjectList
+extern void far* fntndat;
+extern void far* def_fntadr;
+extern void far* main_data_file_addr;
+extern struct GAMESTATE huge* cvxs_a;
+extern int lnoffsets[];
+extern int gterrtrk[];
+extern int r_zp[];
+extern int row_ctr_zs[];
+extern int postable[];
+extern int z_ctr_pos[];
+extern int xcols[];
+extern int trackctrpos2[];
+extern short far* g_td01_track_filecpy; //trackdata1;
+extern short far* trackdata_penalty_related; //trackdata2;
+extern char far* td3;
+extern short far* track04_plyraero; //trackdata4;
+extern short far* trackdata_05_opp_aerotbl; //trackdata5;
+extern char far* td6_ptr_b;
+extern char far* trackdat7;
+extern int far* g_td08d; //trackdata8;
+extern struct VECTOR far* trkptrpath;
+extern int far* td10checkptr;// trackdata10;
+extern char far* hscore_trk11_ptr; //trackdata11;
+extern char far* savedptr_ms;
+char far* td13_replay_hdr; //trackdata13;
+extern unsigned char far* td14tb; //trackdata14;
+extern unsigned char far* td15p_9; //trackdata15;
+char far* g_tdreplay16buf; //trackdata16;
+extern char far* road_trk; //trackdata17;
+extern char far* td_18_ref;
+extern unsigned char far* td19hdl;
+extern char far* coursedataappend_address; //trackdata20;
+extern char far* g_column_of_trkdata21_pth; //trackdata21;
+extern char far* tdfrompathrow22; //trackdata22;
+extern unsigned char far* trkd23adr; // indexes into trkObjectList
 extern char kbormouse;
-extern char passed_security;
+extern char pass_check_flag;
 extern char g_is_busy;
-extern char g_path_buf[];
-extern char byte_3B80C[];
-extern char idle_expired;
+extern char buf_g_path[];
+extern char track_file[];
+extern char menutimeout;
 extern unsigned short dialogarg2;
-extern char byte_3B85E[];
-extern char byte_43966;
+extern char replay_file[];
+char endhsdemo;
 extern char aMain[];
 extern char aMisc_1[];
 extern char aFontdef_fnt[];
@@ -408,16 +408,16 @@ extern char aSkidms_0[];
 extern char aSkidslct[];
 extern char aDos[];
 
-extern int framespersec;
-extern unsigned short framespersec2;
-extern unsigned short slow_video_mgmt;
-extern unsigned short slow_video_mgmt_copy;
-extern unsigned char detail_level;
+extern int rate_frame;
+unsigned short frm_rate2;
+extern unsigned short slow_video_mode_state;
+extern unsigned short statemgmtcpy;
+extern unsigned char detail_lvl;
 
 extern unsigned short pspofs;
 extern unsigned short pspseg;
-extern unsigned word_3FF82;
-extern unsigned word_3FF84;
+extern unsigned resmem_end_seg;
+extern unsigned resmem_base_seg;
 
 extern struct MEMCHUNK* resptr1;
 extern struct MEMCHUNK* resptr2;
@@ -429,7 +429,7 @@ extern unsigned long timer_callback_counter;
 extern unsigned long last_timer_callback_counter;
 extern unsigned long timer_copy_unk;
 
-extern unsigned char g_kevinrandom_seed[];
+extern unsigned char randomseeds[];
 extern const char aReservememoryO[];
 extern const char aReservememoryOutOfMemory[];
 extern const char aMemoryManagerB[];
@@ -443,27 +443,27 @@ extern const char aLocateshape4_4sShapeNotF[];
 extern const char aLocatesound4_4sSoundNotF[];
 extern char audiodriverstring[];
 
-extern unsigned short gState_frame;
+extern unsigned short idx_time_gm;
 extern short is_audioloaded;
-extern void far* songfileptr;
-extern void far* voicefileptr;
-extern char textresprefix; // = 'e'
+extern void far* musicfile;
+extern void far* openvfile;
+extern char textrespfxchr; // = 'e'
 extern char* shapeexts[];
 extern unsigned char palmap[];
 
 extern int* material_clrlist_ptr;
-extern int* material_clrlist_ptr_cpy;
+extern int* mat_copy_clr_lst_ptr;
 extern int* material_clrlist2_ptr;
-extern int* material_clrlist2_ptr_cpy;
+extern int* g_mat_clrlist_copy_2_ptr;
 extern int* material_patlist_ptr;
-extern int* material_patlist_ptr_cpy;
+extern int* material_patlistptr_copy;
 extern int* material_patlist2_ptr;
-extern int* material_patlist2_ptr_cpy;
-extern unsigned short someZeroVideoConst;
+extern int* matpatlistcopypointer2;
+extern unsigned short video_cnstval;
 
-extern short sub_18D60(short car_trackdata3_index, struct VECTOR* car_vec_unk3, short field_CE, short* unk);
-extern void font_set_fontdef(void);
-extern void init_polyinfo(void);
+extern short track_edge_points(short car_trackdata3_index, struct VECTOR* car_vec_unk3, short field_CE, short* unk);
+extern void fontsetfontdef(void);
+extern void initialize_polyinfo(void);
 extern unsigned short run_intro_looped(void);
 extern unsigned short show_dialog(int unk1, int unk2, void far* textresptr, unsigned short unk3, unsigned short unk4, int arg, void* unk5, int unk6);
 extern char run_menu(void);
@@ -481,22 +481,22 @@ void far remove_frame_callback(void);
 void far replay_unk2(int mode);
 void far replay_unk(void);
 void far free_player_cars(void);
-extern struct SPRITE far *wndsprite;
+extern struct SPRITE far *g_wndspr;
 extern char aCarcoun[];
-extern void far *eng1ptr;
-extern void far *engptr;
-extern int word_43964;
-extern char byte_459D8;
-extern char byte_42D26;
-extern char byte_42D2A;
-extern int word_4408C;
-extern int word_44D1E;
-extern int word_449E4;
-extern int word_443F4;
-extern void far *fontledresptr;
-extern void far *sdgameresptr;
-extern void far *planptr;
-extern void far *wallptr;
+void far *eng1resourceptr;
+void far *engdata;
+extern int g_player_sound_id;
+extern char sndpendingstate;
+extern char g_plyr_snd_state;
+extern char audiooppflag;
+extern int op_eng_sound_id;
+int g_audio_frms_ix;
+extern int sndposrecord;
+int snd_tick_clock;
+void far *fntled_res;
+void far *sdgresourcehandle;
+extern void far *g_planlist;
+extern void far *wallrecrecord;
 
 void run_game(void);
 extern unsigned end_hiscore(void);
@@ -508,8 +508,8 @@ extern void ensure_file_exists(int unk);
 extern void far* load_song_file(const char* filename);
 extern void far* load_voice_file(const char* filename);
 extern void far* load_sfx_file(const char* filename);
-extern void far* file_load_shape2d_nofatal_thunk(const char* filename);
-extern void far* file_load_shape2d_res_nofatal_thunk(const char* filename);
+extern void far* load_shape2d_nofatal_thunk(const char* filename);
+extern void far* load_shape2d_res_nofatal_thunk(const char* filename);
 extern void far* file_load_shape2d_nofatal(char* shapename);
 extern void far* file_load_shape2d_nofatal2(char* shapename);
 extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const char* name);
@@ -518,26 +518,26 @@ extern short audio_load_driver(char* driver, short a2, short a3);
 extern void audio_unload(void);
 extern short audio_toggle_flag2(void);
 extern short audio_toggle_flag6(void);
-extern void audio_stop_unk(void);
+extern void audio_stop_unknown(void);
 extern void audiodrv_atexit(void);
 
 extern void check_input(void);
 extern int input_do_checking(int unk);
-extern void kb_exit_handler(void);
-extern void kb_shift_checking1(void);
+extern void keyboard_exit_handler(void);
+extern void keyboard_shift_checking1(void);
 extern void kb_shift_checking2(void);
 extern void kb_reg_callback(int code, void (far* callback)(void));
 extern void show_graphic_levels_menu(void);
-extern void do_joy_restext(void);
-extern void do_key_restext(void);
-extern void do_mof_restext(void);
+extern void do_joystick_resource_text(void);
+extern void do_key_resource_text(void);
+extern void do_mof_resource_text(void);
 extern void do_pau_restext(void);
-extern void do_dos_restext(void);
-extern void do_sonsof_restext(void);
+extern void do_dos_resource_text(void);
+extern void do_sonsof_resource_text(void);
 extern short get_kb_or_joy_flags(void);
 
 extern short mouse_init(short a1, short a2);
-extern void mouse_draw_opaque_check(void);
+extern void msdrawopaquechk(void);
 
 extern void video_set_mode4(void);
 extern void video_set_mode7(void);
@@ -546,7 +546,7 @@ extern void video_set_mode_13h(void);
 extern void shape3d_load_car_shapes(char* carid, char* oppcarid);
 
 extern void load_palandcursor(void);
-extern void sprite_set_1_size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
+extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
 extern void sprite_clear_1_color(unsigned char);
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
@@ -556,7 +556,7 @@ extern void timer_setup_interrupt(void);
 extern unsigned long timer_get_delta_alt(void);
 
 extern short set_criterr_handler(short (far* callback)(void));
-extern void libsub_quit_to_dos_alt(short a1);
+extern void exit(short a1);
 extern void fatal_error(const char*, ...);
 extern short do_dea_textres(void);
 
@@ -580,16 +580,16 @@ struct ENGINESOUND {
 	int es_unk6;
 	char far *es_names[10];
 };
-struct ENGINESOUND unk_3E7FC = { 500, 10000, 9000, 0,
+struct ENGINESOUND player_engine_profile = { 500, 10000, 9000, 0,
 	{ "ENGI", "ENGI", "STAR", "STOP", "BLOW", "CRAS", "SKID", "SKI2", "BUMP", "SCRA" } };
-struct ENGINESOUND unk_3E82C = { 500, 10000, 9000, 0,
+struct ENGINESOUND opponent_engine_profile = { 500, 10000, 9000, 0,
 	{ "ENGI", "ENGI", "STAR", "STOP", "BLOW", "CRAS", "SKID", "SKI2", "BUMP", "SCRA" } };
-char byte_3E85C[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56,
+char replay_axis_magnitude[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56,
 	60, 64, 68, 72, 76, 84, 90, 98, 106, 114, 121, 127, 127, 127 };
 
 /* run_game: reconstructed from the target listing (s005c) */
 void loop_game(int mode, int frame_index, int frame_offset);
-extern void far *locate_text_res(void far *res, char *name);
+extern void far *locate_text_resource(void far *res, char *name);
 
 void run_game(void) {
 	int dialog_values[2];
@@ -599,30 +599,30 @@ void run_game(void) {
 	register int dialog_result;
 
 	last_game_frame = -1;
-	rect_windshield.left = 0;
-	rect_windshield.right = 320;
+	boundglassrect.left = 0;
+	boundglassrect.right = 320;
 	previous_roof = -1;
-	word_449EA = -1;
-	run_game_random = get_kevinrandom() << 3;
+	bitmapdash = -1;
+	runrndx = get_kevinrandom() << 3;
 	replaybar_toggle = 1;
-	is_in_replay = 0;
-	if (idle_expired != 0) {
-		cameramode++;
-		if (cameramode == 4) {
-			cameramode = 0;
+	inrepflg = 0;
+	if (menutimeout != 0) {
+		cammd++;
+		if (cammd == 4) {
+			cammd = 0;
 		}
-		game_replay_mode = 2;
+		gm_playmode = 2;
 		if (file_load_replay(0, "default") != 0) {
 			return;
 		}
 		track_setup();
-	} else if (gameconfig.game_recordedframes == 0) {
-		cameramode = 0;
-		game_replay_mode = 1;
+	} else if (globalgamesettings.game_recordedframes == 0) {
+		cammd = 0;
+		gm_playmode = 1;
 	} else {
-		cameramode = 0;
-		game_replay_mode = 2;
-		is_in_replay = 1;
+		cammd = 0;
+		gm_playmode = 2;
+		inrepflg = 1;
 	}
 
 	if (setup_player_cars() != 0) {
@@ -630,219 +630,219 @@ void run_game(void) {
 		do_mer_restext();
 	} else {
 		kbormouse = 0;
-		byte_449E6 = 0;
-		byte_449DA = 1;
+		g_rplmodui = 0;
+		sigframe = 1;
 		set_frame_callback();
-		game_replay_mode_copy = -1;
-		byte_44346 = 0;
-		byte_4432A = 0;
-		byte_46467 = 0;
-		dashb_toggle = 0;
+		gm_saved_rpl_mode = -1;
+		numid = 0;
+		cam_idg = 0;
+		g_rplbfask = 0;
+		on_off_dash = 0;
 
-		if (idle_expired != 0) {
-			framespersec = gameconfig.game_framespersec;
-			init_game_state(-1);
-		} else if (is_in_replay == 0) {
-			cameramode = 0;
-			dashb_toggle = 1;
-			show_penalty_counter = 0;
-			framespersec = framespersec2;
-			gameconfig.game_framespersec = framespersec2;
-			init_game_state(-1);
-			word_45D94 = 0;
-			word_45D3E = 0;
-			byte_4393C = 1;
+		if (menutimeout != 0) {
+			rate_frame = globalgamesettings.game_framespersec;
+			initialize_game_state(-1);
+		} else if (inrepflg == 0) {
+			cammd = 0;
+			on_off_dash = 1;
+			pen_flag_count = 0;
+			rate_frame = frm_rate2;
+			globalgamesettings.game_framespersec = frm_rate2;
+			initialize_game_state(-1);
+			replayrst = 0;
+			popupact = 0;
+			g_rpl_init = 1;
 			mouse_minmax_position(byte_3B8F2);
-			game_replay_mode = 1;
-			state.playerstate.car_posWorld1.lx += (long)multiply_and_scale(sin_fast(track_angle), -240) << 6;
-			state.playerstate.car_posWorld1.lz += (long)multiply_and_scale(cos_fast(track_angle), -240) << 6;
-			state.playerstate.car_posWorld1.ly += 0x580;
-			byte_43966 = 1;
+			gm_playmode = 1;
+			core.playerstate.car_posWorld1.lx += (long)mulscl(sinfast(st_hdg), -240) << 6;
+			core.playerstate.car_posWorld1.lz += (long)mulscl(cosfast(st_hdg), -240) << 6;
+			core.playerstate.car_posWorld1.ly += 0x580;
+			endhsdemo = 1;
 		} else {
-			cameramode = 0;
-			game_replay_mode = 2;
-			word_44DCA = 500;
-			framespersec = gameconfig.game_framespersec;
+			cammd = 0;
+			gm_playmode = 2;
+			g_sgateopn = 500;
+			rate_frame = globalgamesettings.game_framespersec;
 			restore_gamestate(0);
-			restore_gamestate(gameconfig.game_recordedframes);
-			while (gameconfig.game_recordedframes != state.game_frame) {
+			restore_gamestate(globalgamesettings.game_recordedframes);
+			while (globalgamesettings.game_recordedframes != core.game_frame) {
 				if (input_do_checking(1) != 27)
 					update_gamestate();
 				else
 					break;
 			}
-			elapsed_time2 = gameconfig.game_recordedframes;
+			tmr2 = globalgamesettings.game_recordedframes;
 		}
 
 		for (;;) {
-			while (state.game_frame != elapsed_time2) {
-				if ((byte_3B8F2 != 0 || byte_3FE00 != 0) && game_replay_mode == 0) {
+			while (core.game_frame != tmr2) {
+				if ((byte_3B8F2 != 0 || byte_3FE00 != 0) && gm_playmode == 0) {
 					replay_unk();
 				}
 				update_gamestate();
 			}
 
-			if (game_replay_mode == 0 && byte_449DA == 0 && state.game_inputmode != 0) {
-				if (last_game_frame == state.game_frame)
+			if (gm_playmode == 0 && sigframe == 0 && core.game_inputmode != 0) {
+				if (last_game_frame == core.game_frame)
 					continue;
-				last_game_frame = state.game_frame;
+				last_game_frame = core.game_frame;
 			}
 
-			if (state.game_inputmode == 0 && game_replay_mode == 0) {
-				elapsed_time2 = 0;
-				gameconfig.game_recordedframes = 0;
-				state.game_frame = 0;
+			if (core.game_inputmode == 0 && gm_playmode == 0) {
+				tmr2 = 0;
+				globalgamesettings.game_recordedframes = 0;
+				core.game_frame = 0;
 			}
 
-			if (slow_video_mgmt_copy != slow_video_mgmt) {
-				slow_video_mgmt_copy = slow_video_mgmt;
+			if (statemgmtcpy != slow_video_mode_state) {
+				statemgmtcpy = slow_video_mode_state;
 				init_rect_arrays();
 			}
 
-			if (byte_46467 != 0) {
+			if (g_rplbfask != 0) {
 				input_push_status();
 				audio_unk();
-				dialog_result = show_dialog(2, 1, locate_text_res(gameresptr, "rbf"), -1, -1, dialogarg2, 0, 0);
+				dialog_result = show_dialog(2, 1, locate_text_resource(gamerptrs, "rbf"), -1, -1, dialogarg2, 0, 0);
 				if (dialog_result == -1)
 					dialog_result = 0;
-				sub_372F4();
+				restore_audio_volume();
 				word_3F88E = 0;
 				input_pop_status();
 				if (dialog_result != 0) {
 					update_crash_state(4, 0);
-					byte_449DA = 1;
+					sigframe = 1;
 				}
-				byte_46467 = 0;
+				g_rplbfask = 0;
 			}
 
-			if (video_flag5_is0 != 0) {
+			if (g_videoflg5 != 0) {
 				setup_mcgawnd2();
-				byte_4432A = byte_44346;
+				cam_idg = numid;
 			} else {
 				sprite_copy_wnd_to_1();
 			}
 
-			if (game_replay_mode != game_replay_mode_copy || dashb_toggle != dashb_toggle_copy || replaybar_toggle != replaybar_toggle_copy || is_in_replay != is_in_replay_copy || followOpponentFlag != followOpponentFlag_copy) {
-				game_replay_mode_copy = game_replay_mode;
-				dashb_toggle_copy = dashb_toggle;
-				replaybar_toggle_copy = replaybar_toggle;
-				is_in_replay_copy = is_in_replay;
-				followOpponentFlag_copy = followOpponentFlag;
-				roofbmpheight_copy = 0;
-				byte_449E2 = 0;
+			if (gm_playmode != gm_saved_rpl_mode || on_off_dash != dashbtogglesaved || replaybar_toggle != g_replaybarcpytgl || inrepflg != is_in_rplcopy || follow_op != opp_follow_flag_backup) {
+				gm_saved_rpl_mode = gm_playmode;
+				dashbtogglesaved = on_off_dash;
+				g_replaybarcpytgl = replaybar_toggle;
+				is_in_rplcopy = inrepflg;
+				opp_follow_flag_backup = follow_op;
+				roofbmphgt_saved = 0;
+				mode_flag = 0;
 
-				if (game_replay_mode != 2 || idle_expired != 0 || (replaybar_toggle == 0 && is_in_replay == 0)) {
-						replaybar_enabled = 0;
+				if (gm_playmode != 2 || menutimeout != 0 || (replaybar_toggle == 0 && inrepflg == 0)) {
+						g_rplybarenable = 0;
 				} else {
-					replaybar_enabled = 1;
+					g_rplybarenable = 1;
 					goto replaybar_done;
 				}
 replaybar_done:
 
-				if (idle_expired != 0) {
-					dashbmp_y_copy = 200;
-				} else if (dashb_toggle != 0 && followOpponentFlag == 0) {
-					if (game_replay_mode == 2 && replaybar_enabled != 0) {
-						height_above_replaybar = 151;
+				if (menutimeout != 0) {
+					dashbmpy_copy = 200;
+				} else if (on_off_dash != 0 && follow_op == 0) {
+					if (gm_playmode == 2 && g_rplybarenable != 0) {
+						rplbarabovehgt = 151;
 					} else {
-						height_above_replaybar = 200;
+						rplbarabovehgt = 200;
 					}
-					byte_449E2 = 1;
-					roofbmpheight_copy = roofbmpheight;
-					dashbmp_y_copy = dashbmp_y;
-				} else if (game_replay_mode == 2 && replaybar_enabled != 0) {
-					dashbmp_y_copy = 151;
+					mode_flag = 1;
+					roofbmphgt_saved = rfy5;
+					dashbmpy_copy = dashbmy9;
+				} else if (gm_playmode == 2 && g_rplybarenable != 0) {
+					dashbmpy_copy = 151;
 				} else {
-					dashbmp_y_copy = 200;
+					dashbmpy_copy = 200;
 				}
 
-				if (previous_roof != roofbmpheight_copy || dashbmp_y_copy != word_449EA || replaybar_height != height_above_replaybar) {
-					byte_454A4 = video_flag6_is1;
-					set_projection(35, dashbmp_y_copy / 6, 320, dashbmp_y_copy);
-					rect_windshield.top = roofbmpheight_copy;
-					rect_windshield.bottom = dashbmp_y_copy;
-					previous_roof = roofbmpheight_copy;
-					word_449EA = dashbmp_y_copy;
-					replaybar_height = height_above_replaybar;
+				if (previous_roof != roofbmphgt_saved || dashbmpy_copy != bitmapdash || replaybar_height != rplbarabovehgt) {
+					g_simprect = g_vid_flag6;
+					set_projection(35, dashbmpy_copy / 6, 320, dashbmpy_copy);
+					boundglassrect.top = roofbmphgt_saved;
+					boundglassrect.bottom = dashbmpy_copy;
+					previous_roof = roofbmphgt_saved;
+					bitmapdash = dashbmpy_copy;
+					replaybar_height = rplbarabovehgt;
 				}
 			}
 
-			if (byte_454A4 != 0) {
-				byte_449D8[byte_4432A] = 0;
-				if (byte_449E2 != 0) {
-					sprite_set_1_size(0, 320, dashbmp_y_copy, height_above_replaybar);
+			if (g_simprect != 0) {
+				g_viewinx[cam_idg] = 0;
+				if (mode_flag != 0) {
+					sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
 					setup_car_shapes(1);
 				}
-				if (replaybar_enabled != 0) {
-					sprite_set_1_size(0, 320, 0, 200);
-					loop_game(1, state.game_frame, state.game_frame);
+				if (g_rplybarenable != 0) {
+					sprset1size(0, 320, 0, 200);
+					loop_game(1, core.game_frame, core.game_frame);
 				}
-			} else if (replaybar_enabled == 0) {
-				byte_449D8[byte_4432A] = 0;
+			} else if (g_rplybarenable == 0) {
+				g_viewinx[cam_idg] = 0;
 			}
 
-			update_frame(byte_44346, &rect_windshield);
-			if (dastbmp_y != 0 && byte_449E2 != 0) {
-				if (slow_video_mgmt_copy != 0) {
+			update_frame(numid, &boundglassrect);
+			if (dasty != 0 && mode_flag != 0) {
+				if (statemgmtcpy != 0) {
 					temp_rect.left = 0;
 					temp_rect.right = 320;
-					temp_rect.top = dastbmp_y;
-					temp_rect.bottom = dashbmp_y_copy;
-					if (rectptr_unk != 0) {
-						rect_union(rectptr_unk, &temp_rect, rectptr_unk);
+					temp_rect.top = dasty;
+					temp_rect.bottom = dashbmpy_copy;
+					if (rectp != 0) {
+						rcunion(rectp, &temp_rect, rectp);
 					}
 				}
-				shape2d_render_bmp_as_mask(dasmshapeptr);
-				shape2d_op_unk4(dastshapeptr);
+				shape2d_render_bmp_as_mask(dasm_shp_7);
+				shape2d_op_unk4(g_dastbmpbuf);
 			}
 
-			sub_19F14(&rect_windshield);
-			if (byte_449E2 != 0) {
-				sprite_set_1_size(0, 320, dashbmp_y_copy, height_above_replaybar);
+			draw_clip(&boundglassrect);
+			if (mode_flag != 0) {
+				sprset1size(0, 320, dashbmpy_copy, rplbarabovehgt);
 				setup_car_shapes(2);
-				sprite_set_1_size(0, 320, 0, 200);
+				sprset1size(0, 320, 0, 200);
 			}
 
-			if (byte_454A4 != 0) {
-				byte_454A4--;
+			if (g_simprect != 0) {
+				g_simprect--;
 			}
 
-			if (video_flag5_is0 != 0) {
-				mouse_draw_opaque_check();
+			if (g_videoflg5 != 0) {
+				msdrawopaquechk();
 				setup_mcgawnd1();
-				byte_44346 ^= 1;
-				byte_4432A = byte_44346;
-				mouse_draw_transparent_check();
+				numid ^= 1;
+				cam_idg = numid;
+				msdrawtransparentchk();
 			}
 
-			if (game_replay_mode == 1 && byte_4393C == 0) {
-				game_replay_mode = 0;
-				framespersec = framespersec2;
-				gameconfig.game_framespersec = framespersec2;
-				init_game_state(-1);
+			if (gm_playmode == 1 && g_rpl_init == 0) {
+				gm_playmode = 0;
+				rate_frame = frm_rate2;
+				globalgamesettings.game_framespersec = frm_rate2;
+				initialize_game_state(-1);
 			}
 
-			if (idle_expired != 0) {
-				if (kb_get_char() != 0 || byte_449DA != 0 || get_kb_or_joy_flags() != 0)
+			if (menutimeout != 0) {
+				if (kb_get_char() != 0 || sigframe != 0 || get_kb_or_joy_flags() != 0)
 					break;
 				continue;
 			}
 
-			if (byte_449DA != 0) {
-				if (game_replay_mode == 0 && state.game_3F6autoLoadEvalFlag != 4)
+			if (sigframe != 0) {
+				if (gm_playmode == 0 && core.game_3F6autoLoadEvalFlag != 4)
 					break;
-				if (byte_449DA == 2)
+				if (sigframe == 2)
 					break;
-				byte_449DA = 0;
-				game_replay_mode = 2;
+				sigframe = 0;
+				gm_playmode = 2;
 				mouse_minmax_position(0);
 				loop_game(0, 0, 0);
 				loop_game(2, 4, 0);
-				is_in_replay = 1;
+				inrepflg = 1;
 				audio_carstate();
 			}
 
-			if (game_replay_mode == 2) {
+			if (gm_playmode == 2) {
 				loop_game(3, 0, 0);
 				continue;
 			}
@@ -862,81 +862,78 @@ replaybar_done:
 				break;
 			}
 
-			if (game_replay_mode == 1) {
-				mouse_get_state(&mouse_butstate, &mouse_xpos, &mouse_ypos);
-				if ((mouse_butstate & 3) != 0 || (get_kb_or_joy_flags() & 0x30) != 0) {
-					game_replay_mode = 0;
-					byte_4393C = 0;
-					framespersec = framespersec2;
-					gameconfig.game_framespersec = framespersec2;
-					init_game_state(-1);
+			if (gm_playmode == 1) {
+				mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
+				if ((flagsdown & 3) != 0 || (get_kb_or_joy_flags() & 0x30) != 0) {
+					gm_playmode = 0;
+					g_rpl_init = 0;
+					rate_frame = frm_rate2;
+					globalgamesettings.game_framespersec = frm_rate2;
+					initialize_game_state(-1);
 				}
 			}
 		}
 
-		if (video_flag5_is0 != 0 && get_0() != 0) {
-			mouse_draw_opaque_check();
+		if (g_videoflg5 != 0 && get_0() != 0) {
+			msdrawopaquechk();
 			setup_mcgawnd2();
-			sub_35C4E(0, 0, 320, 200, 0);
+			clear_rect(0, 0, 320, 200, 0);
 			setup_mcgawnd1();
-			mouse_draw_transparent_check();
+			msdrawtransparentchk();
 		}
 
-		sprite_copy_2_to_1_2();
-		is_in_replay = 1;
+		sprcopy2to12();
+		inrepflg = 1;
 		audio_carstate();
 		audio_remove_driver_timer();
-		if (game_replay_mode == 0 && gameconfig.game_opponenttype != 0 && state.opponentstate.car_crashBmpFlag == 0) {
-			show_dialog(3, 0, locate_text_res(gameresptr, "cop"), -1, 80, performGraphColor, dialog_values, 0);
-			word_45D3E = 1;
-			dialog_result = framespersec;
+		if (gm_playmode == 0 && globalgamesettings.game_opponenttype != 0 && core.opponentstate.car_crashBmpFlag == 0) {
+			show_dialog(3, 0, locate_text_resource(gamerptrs, "cop"), -1, 80, performGraphColor, dialog_values, 0);
+			popupact = 1;
+			dialog_result = rate_frame;
 			dialog_result--;
 			do {
 				replay_unk2(1);
 				update_gamestate();
-				if (++dialog_result == framespersec) {
+				if (++dialog_result == rate_frame) {
 					dialog_result = 0;
-					format_frame_as_string(&resID_byte1, state.game_frame + elapsed_time1, 1);
-					mouse_draw_opaque_check();
-					sub_345BC(&resID_byte1, font_op2_alt(&resID_byte1), dialog_values[1]);
-					mouse_draw_transparent_check();
+					fmtframestr(&resbuftext, core.game_frame + elaptm1, 1);
+					msdrawopaquechk();
+					draw_text_at(&resbuftext, font_op2_alt(&resbuftext), dialog_values[1]);
+					msdrawtransparentchk();
 				}
-			} while (input_do_checking(1) != 27 && state.opponentstate.car_crashBmpFlag == 0 &&
-				 1500 * framespersec != state.game_frame + elapsed_time1);
+			} while (input_do_checking(1) != 27 && core.opponentstate.car_crashBmpFlag == 0 &&
+				 1500 * rate_frame != core.game_frame + elaptm1);
 		}
 
-		word_45D3E = 0;
+		popupact = 0;
 		mouse_minmax_position(0);
 		remove_frame_callback();
 		free_player_cars();
 	}
 
-	waitflag = 100;
+	waitm_ms = 100;
 	check_input();
 	show_waiting();
 }
-
-extern char byte_33950;
-extern char byte_349AA;
 extern char byte_349BA;
 extern char HKeyFlag;
 char handle_ingame_kb_shortcuts(unsigned key)
 {
     switch (key) {
     case 0x1B:
-        if (game_replay_mode == 0) {
+        if (gm_playmode == 0) {
             update_crash_state(4, 0);
         }
-        byte_449DA = 1;
+        sigframe = 1;
         break;
     case 0x3C00:
-        cameramode = 1;
+        cammd = 1;
         break;
     case 0x3D00:
-        cameramode = 2;
+        cammd = 2;
         break;
     case 0x3E00:
-        cameramode = 3;
+        cammd = 3;
         break;
     case 0x48:
     case 0x68:
@@ -944,12 +941,12 @@ char handle_ingame_kb_shortcuts(unsigned key)
         break;
     case 0x4D:
     case 0x6D:
-        do_mou_restext();
+        do_mou_resource_text();
         mouse_minmax_position(byte_3B8F2);
         break;
     case 0x44:
     case 0x64:
-        byte_33950 ^= 1;
+        on_off_dash ^= 1;
         break;
     case 0x52:
     case 0x72:
@@ -957,28 +954,28 @@ char handle_ingame_kb_shortcuts(unsigned key)
         break;
     case 0x43:
     case 0x63:
-        if (game_replay_mode != 1) {
-            cameramode++;
-            if (cameramode == 4) {
-                cameramode = 0;
+        if (gm_playmode != 1) {
+            cammd++;
+            if (cammd == 4) {
+                cammd = 0;
             }
         }
         break;
     case 0x3B00:
-        cameramode = 0;
+        cammd = 0;
         break;
     case 0x74:
-        if (byte_349AA != 0) {
-            followOpponentFlag ^= 1;
+        if (globalgamesettings.game_opponenttype != 0) {
+            follow_op ^= 1;
         }
         break;
     default:
-        if (game_replay_mode == 1) {
-            game_replay_mode = 0;
-            byte_4393C = 0;
-            framespersec = framespersec2;
-            gameconfig.game_framespersec = framespersec2;
-            init_game_state(-1);
+        if (gm_playmode == 1) {
+            gm_playmode = 0;
+            g_rpl_init = 0;
+            rate_frame = frm_rate2;
+            globalgamesettings.game_framespersec = frm_rate2;
+            initialize_game_state(-1);
             return 1;
         }
         return 0;
@@ -987,26 +984,26 @@ char handle_ingame_kb_shortcuts(unsigned key)
 }
 
 /* semantic lead: init_unknown from restunts.c */
-void init_unknown(void)
+void initialize_unknown(void)
 {
 	register int zero;
-	byte_44A8A = 1;
-	byte_4552F = 2;
+	timeraud = 1;
+	slomodiv8 = 2;
 	zero = 0;
-	elapsed_time2 = zero;
-	byte_4393C = byte_449DA = 0;
-	word_44DCA = zero;
+	tmr2 = zero;
+	g_rpl_init = sigframe = 0;
+	g_sgateopn = zero;
 }
 
 typedef void (far *callback_t)(void);
 extern void far frame_callback(void);
 extern void far timer_reg_callback(callback_t callback);
-extern unsigned word_46468;
-extern unsigned char byte_442E4;
+unsigned g_clocks;
+unsigned char call_proc_flag;
 void far set_frame_callback(void) {
-    word_46468 = 0;
+    g_clocks = 0;
     timer_reg_callback(frame_callback);
-    byte_442E4 = 0;
+    call_proc_flag = 0;
 }
 
 
@@ -1019,57 +1016,55 @@ void far remove_frame_callback(void)
 }
 
 extern int far compare_ds_ss(void);
-extern void far sub_18D06(char* record, int frame_count);
-extern short word_345CC;
-extern short word_345CE;
-extern char unk_44F4C[];
+extern void far apply_audio_frame(char* record, int frame_count);
+extern char audio_frmarr[];
 void far frame_callback(void)
 {
     if (compare_ds_ss() == 0) {
         return;
     }
-    if (byte_442E4 != 0) {
+    if (call_proc_flag != 0) {
         return;
     }
 
-    byte_442E4++;
-    if (byte_442E4 != 1) {
+    call_proc_flag++;
+    if (call_proc_flag != 1) {
         goto frame_callback_done;
     }
 
-    word_443F4++;
-    if (word_443F4 >= word_4499C && word_44D1E != word_449E4) {
-        sub_18D06(&unk_44F4C[word_44D1E * 0x22], word_443F4);
-        word_443F4 = 0;
-        word_44D1E++;
-        if (word_44D1E == 0x28) {
-            word_44D1E = 0;
+    snd_tick_clock++;
+    if (snd_tick_clock >= frmcs_time && g_audio_frms_ix != sndposrecord) {
+        apply_audio_frame(&audio_frmarr[g_audio_frms_ix * 0x22], snd_tick_clock);
+        snd_tick_clock = 0;
+        g_audio_frms_ix++;
+        if (g_audio_frms_ix == 0x28) {
+            g_audio_frms_ix = 0;
         }
     }
 
-    if (byte_449DA != 0 || byte_46467 != 0) {
+    if (sigframe != 0 || g_rplbfask != 0) {
         goto frame_callback_done;
     }
-    if (is_in_replay != 0 && game_replay_mode == 2) {
+    if (inrepflg != 0 && gm_playmode == 2) {
         goto frame_callback_done;
     }
-    if (game_replay_mode == 0 && word_345CC >= word_345CE) {
-        is_in_replay = 1;
+    if (gm_playmode == 0 && core.game_frame_in_sec >= core.game_frames_per_sec) {
+        inrepflg = 1;
         audio_carstate();
         goto frame_callback_done;
     }
 
-    byte_44A8A--;
-    if (byte_44A8A == 0) {
-        byte_44A8A = (char)word_4499C;
-        word_46468++;
-        if (game_replay_mode == 2) {
-            switch (byte_449E6) {
+    timeraud--;
+    if (timeraud == 0) {
+        timeraud = (char)frmcs_time;
+        g_clocks++;
+        if (gm_playmode == 2) {
+            switch (g_rplmodui) {
             case 2:
-                byte_4552F--;
-                if (byte_4552F == 0) {
+                slomodiv8--;
+                if (slomodiv8 == 0) {
                     replay_unk2(0);
-                    byte_4552F = 2;
+                    slomodiv8 = 2;
                 }
                 goto frame_callback_done;
             case 3:
@@ -1083,14 +1078,14 @@ void far frame_callback(void)
     }
 
 frame_callback_done:
-    byte_442E4--;
+    call_proc_flag--;
 }
 
-extern signed char byte_44292[64];
-extern unsigned char byte_442EA[64];
-extern char byte_40D6A;
+signed char array_rpl[64];
+unsigned char replay_steer_flag[64];
+static char replay_control;
 extern int far kb_get_key_state(int);
-extern char far sub_307E3(void);
+extern char far replay_axis_value(void);
 extern int far abs(int);
 void far replay_unk2(int mode)
 {
@@ -1101,53 +1096,53 @@ void far replay_unk2(int mode)
         input = 0;
         goto record_input;
     }
-    if (game_replay_mode == 2) {
-        if (elapsed_time2 < gameconfig.game_recordedframes) {
-            elapsed_time2++;
+    if (gm_playmode == 2) {
+        if (tmr2 < globalgamesettings.game_recordedframes) {
+            tmr2++;
             return;
         }
-        if (byte_449DA != 0)
+        if (sigframe != 0)
             return;
-        is_in_replay = 1;
+        inrepflg = 1;
         audio_carstate();
 replay_finished:
-        byte_449DA = 1;
+        sigframe = 1;
         return;
     }
-    if (byte_449DA != 0 || state.game_3F6autoLoadEvalFlag != 0 || game_replay_mode == 1) {
+    if (sigframe != 0 || core.game_3F6autoLoadEvalFlag != 0 || gm_playmode == 1) {
         input = 0;
         goto record_input;
     }
-    if (passed_security == 0 && byte_4393C == 0 && framespersec * 4 < state.game_frame)
+    if (pass_check_flag == 0 && g_rpl_init == 0 && rate_frame * 4 < core.game_frame)
         update_crash_state(1, 0);
     if (byte_3B8F2 != 0 || byte_3FE00 != 0) {
         if (byte_3B8F2 != 0) {
-            mouse_get_state(&mouse_butstate, &mouse_xpos, &mouse_ypos);
-            i = mouse_xpos - 0xA0;
+            mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
+            i = msecoordx - 0xA0;
             if (abs(i) < 0x12)
                 i = 0;
             else if (i > 0)
                 i -= 0x12;
             else
                 i += 0x12;
-            byte_40D6A = i;
-            if (mouse_butstate & 1)
+            replay_control = i;
+            if (flagsdown & 1)
                 input = 2;
-            else if (mouse_butstate & 2)
+            else if (flagsdown & 2)
                 input = 1;
             else
                 input = 0;
         } else {
-            byte_40D6A = sub_307E3();
-            if (byte_40D6A > 0)
-                byte_40D6A = byte_3E85C[byte_40D6A];
-            else if (byte_40D6A < 0)
-                byte_40D6A = -byte_3E85C[-byte_40D6A];
+            replay_control = replay_axis_value();
+            if (replay_control > 0)
+                replay_control = replay_axis_magnitude[replay_control];
+            else if (replay_control < 0)
+                replay_control = -replay_axis_magnitude[-replay_control];
             input = get_kb_or_joy_flags() & 0x33;
         }
-        i = elapsed_time2 & 0x3F;
-        byte_44292[i] = byte_40D6A;
-        byte_442EA[i] = 1;
+        i = tmr2 & 0x3F;
+        array_rpl[i] = replay_control;
+        replay_steer_flag[i] = 1;
     } else {
         input = get_kb_or_joy_flags();
     }
@@ -1156,33 +1151,33 @@ replay_finished:
     if (kb_get_key_state(0x2C))
         input |= 0x20;
 record_input:
-    if (1500 * framespersec <= elapsed_time2 + elapsed_time1) {
+    if (1500 * rate_frame <= tmr2 + elaptm1) {
         update_crash_state(4, 0);
         goto replay_finished;
     }
-    if (elapsed_time2 == 12000) {
-        if (elapsed_time1 == 0 && word_45D3E == 0) {
-            word_45D3E = 1;
-            byte_46467 = 1;
+    if (tmr2 == 12000) {
+        if (elaptm1 == 0 && popupact == 0) {
+            popupact = 1;
+            g_rplbfask = 1;
             return;
         }
-        for (i = 0; i < 12000 / (30 * framespersec) - 1; i++) {
-            cvxptr[i + 1].game_frame -= 30 * framespersec;
-            cvxptr[i] = cvxptr[i + 1];
+        for (i = 0; i < 12000 / (30 * rate_frame) - 1; i++) {
+            cvxs_a[i + 1].game_frame -= 30 * rate_frame;
+            cvxs_a[i] = cvxs_a[i + 1];
         }
-        for (i = 0; i < 12000 - 30 * framespersec; i++)
-            td16_rpl_buffer[i] = td16_rpl_buffer[i + 30 * framespersec];
-        elapsed_time2 -= 30 * framespersec;
-        gameconfig.game_recordedframes -= 30 * framespersec;
-        elapsed_time1 += 30 * framespersec;
-        state.game_frame -= 30 * framespersec;
+        for (i = 0; i < 12000 - 30 * rate_frame; i++)
+            g_tdreplay16buf[i] = g_tdreplay16buf[i + 30 * rate_frame];
+        tmr2 -= 30 * rate_frame;
+        globalgamesettings.game_recordedframes -= 30 * rate_frame;
+        elaptm1 += 30 * rate_frame;
+        core.game_frame -= 30 * rate_frame;
     }
-    td16_rpl_buffer[elapsed_time2++] = input;
-    gameconfig.game_recordedframes++;
+    g_tdreplay16buf[tmr2++] = input;
+    globalgamesettings.game_recordedframes++;
 }
 
-extern char byte_4616E;
-void far sub_2298C(void)
+extern char trk_sample_count;
+void far update_camera_target(void)
 {
     int nearest_range;
     int car_count;
@@ -1202,14 +1197,14 @@ void far sub_2298C(void)
     int threshold;
 
     car_count = 1;
-    if (gameconfig.game_opponenttype != 0)
+    if (globalgamesettings.game_opponenttype != 0)
         car_count = 2;
     for (index = 0; index < car_count; ++index) {
-        state.game_vec3[index] = state.game_vec1[index];
+        core.game_vec3[index] = core.game_vec1[index];
         if (index == 0)
-            selected_car_state = &state.playerstate;
+            selected_car_state = &core.playerstate;
         else
-            selected_car_state = &state.opponentstate;
+            selected_car_state = &core.opponentstate;
 
         car_position.y = (short)(selected_car_state->car_posWorld1.ly >> 6);
         car_position.x = (short)(selected_car_state->car_posWorld1.lx >> 6);
@@ -1217,7 +1212,7 @@ void far sub_2298C(void)
         focus = selected_car_state->car_vec_unk3;
         facing = selected_car_state->field_48;
 
-        if (index == 0 && (state.field_45B != 0 || state.field_45C != 0))
+        if (index == 0 && (core.field_45B != 0 || core.field_45C != 0))
             focus = car_position;
         else if (selected_car_state->field_B6 != 0 || selected_car_state->car_crashBmpFlag != 0 ||
                  selected_car_state->car_trackdata3_index == -1 ||
@@ -1226,41 +1221,41 @@ void far sub_2298C(void)
 
         threshold = 0x1C2;
         cam_y = car_position.y + 0x10E;
-        climb = state.game_vec1[index].y - cam_y;
+        climb = core.game_vec1[index].y - cam_y;
         if (climb != 0) {
             delta = climb;
             if (delta > 0x1E)
                 delta = 0x1E;
             else if (delta < -0x1E)
                 delta = -0x1E;
-            state.game_vec1[index].y -= delta;
+            core.game_vec1[index].y -= delta;
         }
 
-        bearing = polarAngle(focus.x - state.game_vec1[index].x,
-                                  focus.z - state.game_vec1[index].z);
-        delta = polarRadius2D(car_position.x - state.game_vec1[index].x,
-                              car_position.z - state.game_vec1[index].z);
+        bearing = polang(focus.x - core.game_vec1[index].x,
+                                  focus.z - core.game_vec1[index].z);
+        delta = polradius2d(car_position.x - core.game_vec1[index].x,
+                              car_position.z - core.game_vec1[index].z);
         if (delta > threshold) {
             delta -= threshold;
-            if (framespersec == 0x14) {
+            if (rate_frame == 0x14) {
                 if (delta > 0x78) delta = 0x78;
             } else if (delta > 0xF0) {
                 delta = 0xF0;
             }
-            state.game_vec1[index].x += multiply_and_scale(delta, sin_fast(bearing));
-            state.game_vec1[index].z += multiply_and_scale(delta, cos_fast(bearing));
+            core.game_vec1[index].x += mulscl(delta, sinfast(bearing));
+            core.game_vec1[index].z += mulscl(delta, cosfast(bearing));
         }
 
-        if (state.game_frame % (framespersec >> 1) == 0) {
+        if (core.game_frame % (rate_frame >> 1) == 0) {
             nearest_range = 0x2710;
-            for (track_segment = 0; track_segment < byte_4616E; ++track_segment) {
-                dx = (long)trackdata9[track_segment].x - car_position.x;
-                dz = (long)trackdata9[track_segment].z - car_position.z;
+            for (track_segment = 0; track_segment < trk_sample_count; ++track_segment) {
+                dx = (long)trkptrpath[track_segment].x - car_position.x;
+                dz = (long)trkptrpath[track_segment].z - car_position.z;
                 if ((dx < 0 ? -dx : dx) < nearest_range &&
                     (dz < 0 ? -dz : dz) < nearest_range) {
-                    point_range = polarRadius2D((int)dx, (int)dz);
+                    point_range = polradius2d((int)dx, (int)dz);
                     if (point_range < nearest_range) {
-                        state.field_3F7[index] = (char)track_segment;
+                        core.field_3F7[index] = (char)track_segment;
                         nearest_range = point_range;
                     }
                 }
@@ -1272,11 +1267,11 @@ void far sub_2298C(void)
 /* semantic lead: file_load_replay from fileio.c */
 char file_load_replay(const char* dir, const char* name)
 {
-	file_build_path(dir, name, ".rpl", g_path_buf);
+	file_build_path(dir, name, ".rpl", buf_g_path);
 
 	g_is_busy = 1;
-	file_read_fatal(g_path_buf, td13_rpl_header);
-	gameconfig = *(struct GAMEINFO far*)td13_rpl_header;
+	file_read_fatal(buf_g_path, td13_replay_hdr);
+	globalgamesettings = *(struct GAMEINFO far*)td13_replay_hdr;
 	g_is_busy = 0;
 	return 0;
 }
@@ -1287,10 +1282,10 @@ short file_write_replay(const char* filename)
 	register int ret;
 	long write_length;
 
-	*(struct GAMEINFO far*)td13_rpl_header = gameconfig;
-	write_length = gameconfig.game_recordedframes + 0x724;
+	*(struct GAMEINFO far*)td13_replay_hdr = globalgamesettings;
+	write_length = globalgamesettings.game_recordedframes + 0x724;
 	g_is_busy = 1;
-	ret = file_write_fatal(filename, td13_rpl_header, write_length);
+	ret = file_write_fatal(filename, td13_replay_hdr, write_length);
 	g_is_busy = 0;
 	return (char)ret;
 }
@@ -1339,9 +1334,9 @@ extern void far *file_load_resource(int type, const char *name);
 extern void locate_many_resources(void far *data, char *names, char far **result);
 extern char far *locate_shape_nofatal(void far *data, char *name);
 extern char far *locate_shape_fatal(void far *data, char *name);
-extern struct SPRITE far *sprite_make_wnd(unsigned int width, unsigned int height, unsigned int color);
-extern void sprite_free_wnd(struct SPRITE far *sprite);
-extern void sprite_set_1_from_argptr(struct SPRITE far *sprite);
+extern struct SPRITE far *sprite_make_window(unsigned int width, unsigned int height, unsigned int color);
+extern void sprite_free_window(struct SPRITE far *sprite);
+extern void sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
 extern void sprite_copy_2_to_1(void);
 extern void sprite_putimage_and_alt(struct SHAPE2D far *shape, int x, int y);
 extern void sprite_putimage_and_alt2(struct SHAPE2D far *shape, int x, int y);
@@ -1349,36 +1344,35 @@ extern void sprite_putimage_or_alt(struct SHAPE2D far *shape, int x, int y);
 extern void shape2d_op_unk(struct SHAPE2D far *shape);
 extern void shape2d_op_unk2(struct SHAPE2D far *shape, int x, int y);
 extern void shape2d_op_unk3(struct SHAPE2D far *shape);
-extern void shape2d_op_unk5(struct SHAPE2D far *shape, int x, int y);
+extern void shape2d_op_unknown5(struct SHAPE2D far *shape, int x, int y);
 extern void sprite_putimage_or(struct SHAPE2D far *shape, int x, int y);
 extern void sprite_clear_shape_alt(struct SHAPE2D far *shape, int x, int y);
 extern void preRender_line(int x1, int y1, int x2, int y2, int color);
 extern void far *mmgr_free(char far *ptr);
-extern char byte_454A4;
 char aStdaxxxx[] = "stdaxxxx";
 char aStdbxxxx[] = "stdbxxxx";
 void far setup_car_shapes(int mode)
 {
-    extern struct SIMD simd_player;
-    extern short video_flag3_isFFFF;
-    extern void far * stdaresptr;
-    extern void far * stdbresptr;
-    extern struct SHAPE2D far * whlshapes[10];
-    extern struct SHAPE2D far * gnobshapes[6];
-    extern struct SHAPE2D far * digshapes[10];
-    extern struct SPRITE far * whlsprite1;
-    extern struct SPRITE far * whlsprite2;
-    extern struct SPRITE far * whlsprite3;
-    extern char byte_40DF0[];
-    extern short meter_needle_color;
-    extern short word_40DF2[];
-    extern short word_40DF6[];
-    extern char byte_40DFA[];
-    extern short word_40D6C[];
-    extern short word_40D70[];
-    extern short word_40D74[];
-    extern short word_40D78[];
-    extern short word_40E00[];
+    extern struct SIMD simdp7;
+    extern short vidflg3is_minus1;
+    static short last_steering_step[2];
+    static char steering_zone[2];
+    static struct SPRITE far * meters_sprite;
+    static struct SPRITE far * gnob_sprite;
+    static struct SPRITE far * gear_base_sprite;
+    static void far * stdares;
+    static void far * stdbres;
+    static struct SHAPE2D far * wheel_shapes[9];
+    static struct SHAPE2D far * gnobshapes[6];
+    static struct SHAPE2D far * digshapes[10];
+    extern short spdneedlegaugeclr;
+    static char gear_knob_visible_view[2];
+    static short steering_dot_x[2];
+    static short steering_dot_y[2];
+    static short last_speedo[2];
+    static short gear_knob_x_last[2];
+    static short gear_knob_y_last[2];
+    static short last_tacho[2];
     struct SHAPE2D far *shape;
     int digit;
     char speedo_type;
@@ -1395,152 +1389,152 @@ void far setup_car_shapes(int mode)
 
     switch (mode) {
     case 0:
-        aStdaxxxx[4] = gameconfig.game_playercarid[0];
-        aStdaxxxx[5] = gameconfig.game_playercarid[1];
-        aStdaxxxx[6] = gameconfig.game_playercarid[2];
-        aStdaxxxx[7] = gameconfig.game_playercarid[3];
-        aStdbxxxx[4] = gameconfig.game_playercarid[0];
-        aStdbxxxx[5] = gameconfig.game_playercarid[1];
-        aStdbxxxx[6] = gameconfig.game_playercarid[2];
-        aStdbxxxx[7] = gameconfig.game_playercarid[3];
-        stdaresptr = file_load_resource(3, aStdaxxxx);
-        stdbresptr = file_load_resource(2, aStdbxxxx);
-        locate_many_resources(stdaresptr, "whl1whl2whl3ins2gboxins1ins3inm1inm3", (char far **)whlshapes);
-        locate_many_resources(stdbresptr, "gnobgnabdot dotadot1dot2", (char far **)gnobshapes);
-        if (simd_player.spdcenter.py == 0)
-            locate_many_resources(stdbresptr, "dig0dig1dig2dig3dig4dig5dig6dig7dig8dig9", (char far **)digshapes);
-        whlsprite1 = sprite_make_wnd(whlshapes[3]->s2d_width * video_flag1_is1, whlshapes[3]->s2d_height, 15);
-        whlsprite2 = sprite_make_wnd(whlshapes[4]->s2d_width * video_flag1_is1, whlshapes[4]->s2d_height, 15);
-        whlsprite3 = sprite_make_wnd(whlshapes[4]->s2d_width * video_flag1_is1, whlshapes[4]->s2d_height, 15);
-        shape = (struct SHAPE2D far *)locate_shape_fatal(stdaresptr, "dash");
-        sprite_set_1_from_argptr(whlsprite3);
-        shape2d_op_unk2(shape, shape->s2d_pos_x - whlshapes[4]->s2d_pos_x,
-                        shape->s2d_pos_y - whlshapes[4]->s2d_pos_y);
+        aStdaxxxx[4] = globalgamesettings.game_playercarid[0];
+        aStdaxxxx[5] = globalgamesettings.game_playercarid[1];
+        aStdaxxxx[6] = globalgamesettings.game_playercarid[2];
+        aStdaxxxx[7] = globalgamesettings.game_playercarid[3];
+        aStdbxxxx[4] = globalgamesettings.game_playercarid[0];
+        aStdbxxxx[5] = globalgamesettings.game_playercarid[1];
+        aStdbxxxx[6] = globalgamesettings.game_playercarid[2];
+        aStdbxxxx[7] = globalgamesettings.game_playercarid[3];
+        stdares = file_load_resource(3, aStdaxxxx);
+        stdbres = file_load_resource(2, aStdbxxxx);
+        locate_many_resources(stdares, "whl1whl2whl3ins2gboxins1ins3inm1inm3", (char far **)wheel_shapes);
+        locate_many_resources(stdbres, "gnobgnabdot dotadot1dot2", (char far **)gnobshapes);
+        if (simdp7.spdcenter.py == 0)
+            locate_many_resources(stdbres, "dig0dig1dig2dig3dig4dig5dig6dig7dig8dig9", (char far **)digshapes);
+        meters_sprite = sprite_make_window(wheel_shapes[3]->s2d_width * pixel_scales, wheel_shapes[3]->s2d_height, 15);
+        gnob_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
+        gear_base_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
+        shape = (struct SHAPE2D far *)locate_shape_fatal(stdares, "dash");
+        sprite_setup1_from_arg_pointer(gear_base_sprite);
+        shape2d_op_unk2(shape, shape->s2d_pos_x - wheel_shapes[4]->s2d_pos_x,
+                        shape->s2d_pos_y - wheel_shapes[4]->s2d_pos_y);
         sprite_copy_2_to_1();
-        dashbmp_y = shape->s2d_pos_y;
-        if (locate_shape_nofatal(stdaresptr, "roof") != 0)
-            roofbmpheight = ((struct SHAPE2D far *)locate_shape_fatal(stdaresptr, "roof"))->s2d_height;
+        dashbmy9 = shape->s2d_pos_y;
+        if (locate_shape_nofatal(stdares, "roof") != 0)
+            rfy5 = ((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"))->s2d_height;
         else
-            roofbmpheight = 0;
-        shape = (struct SHAPE2D far *)locate_shape_nofatal(stdaresptr, "dast");
+            rfy5 = 0;
+        shape = (struct SHAPE2D far *)locate_shape_nofatal(stdares, "dast");
         if (shape != 0) {
-            dastbmp_y = shape->s2d_pos_y;
-            dastshapeptr = shape;
-            dasmshapeptr = locate_shape_fatal(stdaresptr, "dasm");
+            dasty = shape->s2d_pos_y;
+            g_dastbmpbuf = shape;
+            dasm_shp_7 = locate_shape_fatal(stdares, "dasm");
             return;
         }
-        dastbmp_y = 0;
+        dasty = 0;
         return;
     case 1:
-        mouse_draw_opaque_check();
-        if (locate_shape_nofatal(stdaresptr, "roof") != 0)
-            shape2d_op_unk((struct SHAPE2D far *)locate_shape_fatal(stdaresptr, "roof"));
-        shape2d_op_unk3((struct SHAPE2D far *)locate_shape_fatal(stdaresptr, "dash"));
-        shape2d_op_unk3(whlshapes[1]);
-        mouse_draw_transparent_check();
+        msdrawopaquechk();
+        if (locate_shape_nofatal(stdares, "roof") != 0)
+            shape2d_op_unk((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"));
+        shape2d_op_unk3((struct SHAPE2D far *)locate_shape_fatal(stdares, "dash"));
+        shape2d_op_unk3(wheel_shapes[1]);
+        msdrawtransparentchk();
         x = 0;
-        byte_40DFA[byte_4432A] = byte_449D8[byte_4432A] = 0;
-        word_40DF6[byte_4432A] = x;
-        byte_40DF0[byte_4432A] = (char)x;
+        gear_knob_visible_view[cam_idg] = g_viewinx[cam_idg] = 0;
+        steering_dot_y[cam_idg] = x;
+        steering_zone[cam_idg] = (char)x;
         x--;
-        word_40E00[byte_4432A] = x;
-        word_40D78[byte_4432A] = x;
-        word_40D6C[byte_4432A] = x;
+        last_steering_step[cam_idg] = x;
+        last_speedo[cam_idg] = x;
+        last_tacho[cam_idg] = x;
         return;
     case 2:
-        if ((state.playerstate.car_changing_gear | state.playerstate.car_fpsmul2) == 0 &&
-            byte_40DFA[byte_4432A] != 0) {
-            if (video_flag5_is0 == 0)
-                mouse_draw_opaque_check();
-            sprite_set_1_size(0, 0x140, 0, height_above_replaybar);
-            sprite_putimage_and_alt(whlsprite3->sprite_bitmapptr, whlshapes[4]->s2d_pos_x, whlshapes[4]->s2d_pos_y);
-            byte_40DFA[byte_4432A] = 0;
-        } else if (byte_40DFA[byte_4432A] != state.playerstate.car_changing_gear ||
-                   word_40D70[byte_4432A] != state.playerstate.car_knob_x ||
-                   word_40D74[byte_4432A] != state.playerstate.car_knob_y ||
-                   (state.playerstate.car_fpsmul2 != 0 && byte_40DFA[byte_4432A] == 0)) {
-            sprite_set_1_from_argptr(whlsprite2);
-            byte_40DFA[byte_4432A] = 1;
-            shape2d_op_unk2(whlshapes[4], 0, 0);
-            x = state.playerstate.car_knob_x;
-            y = state.playerstate.car_knob_y;
-            word_40D70[byte_4432A] = x;
-            word_40D74[byte_4432A] = y;
+        if ((core.playerstate.car_changing_gear | core.playerstate.car_fpsmul2) == 0 &&
+            gear_knob_visible_view[cam_idg] != 0) {
+            if (g_videoflg5 == 0)
+                msdrawopaquechk();
+            sprset1size(0, 0x140, 0, rplbarabovehgt);
+            sprite_putimage_and_alt(gear_base_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
+            gear_knob_visible_view[cam_idg] = 0;
+        } else if (gear_knob_visible_view[cam_idg] != core.playerstate.car_changing_gear ||
+                   gear_knob_x_last[cam_idg] != core.playerstate.car_knob_x ||
+                   gear_knob_y_last[cam_idg] != core.playerstate.car_knob_y ||
+                   (core.playerstate.car_fpsmul2 != 0 && gear_knob_visible_view[cam_idg] == 0)) {
+            sprite_setup1_from_arg_pointer(gnob_sprite);
+            gear_knob_visible_view[cam_idg] = 1;
+            shape2d_op_unk2(wheel_shapes[4], 0, 0);
+            x = core.playerstate.car_knob_x;
+            y = core.playerstate.car_knob_y;
+            gear_knob_x_last[cam_idg] = x;
+            gear_knob_y_last[cam_idg] = y;
             sprite_putimage_and_alt2(gnobshapes[1], x, y);
             sprite_putimage_or_alt(gnobshapes[0], x, y);
-            if (video_flag5_is0 != 0)
+            if (g_videoflg5 != 0)
                 setup_mcgawnd2();
             else {
-                sprite_copy_2_to_1_2();
-                mouse_draw_opaque_check();
+                sprcopy2to12();
+                msdrawopaquechk();
             }
-            sprite_set_1_size(0, 0x140, 0, height_above_replaybar);
-            sprite_putimage_and_alt(whlsprite2->sprite_bitmapptr, whlshapes[4]->s2d_pos_x, whlshapes[4]->s2d_pos_y);
+            sprset1size(0, 0x140, 0, rplbarabovehgt);
+            sprite_putimage_and_alt(gnob_sprite->sprite_bitmapptr, wheel_shapes[4]->s2d_pos_x, wheel_shapes[4]->s2d_pos_y);
         }
 
         knob_removed = 0;
-        steering = state.playerstate.car_steeringAngle / 8;
+        steering = core.playerstate.car_steeringAngle / 8;
         wheel_zone = 1;
         if (steering < -10)
             wheel_zone = 0;
         else if (steering > 10)
             wheel_zone = 2;
-        if (byte_40DF0[byte_4432A] != wheel_zone || byte_454A4 != 0) {
-            if (video_flag5_is0 == 0)
-                mouse_draw_opaque_check();
-            if (word_40DF6[byte_4432A] != 0) {
-                sprite_putimage_and_alt(gnobshapes[byte_44346 + 4], word_40DF2[byte_4432A], word_40DF6[byte_4432A]);
-                word_40DF6[byte_4432A] = 0;
+        if (steering_zone[cam_idg] != wheel_zone || g_simprect != 0) {
+            if (g_videoflg5 == 0)
+                msdrawopaquechk();
+            if (steering_dot_y[cam_idg] != 0) {
+                sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+                steering_dot_y[cam_idg] = 0;
                 knob_removed = 1;
             }
             switch (wheel_zone) {
             case 0:
-                shape2d_op_unk3(whlshapes[0]);
+                shape2d_op_unk3(wheel_shapes[0]);
                 break;
             case 1:
-                shape2d_op_unk3(whlshapes[1]);
+                shape2d_op_unk3(wheel_shapes[1]);
                 break;
             case 2:
-                shape2d_op_unk3(whlshapes[2]);
+                shape2d_op_unk3(wheel_shapes[2]);
                 break;
             }
-            byte_40DF0[byte_4432A] = wheel_zone;
+            steering_zone[cam_idg] = wheel_zone;
             changed = 1;
         } else
             changed = 0;
 
-        switch (simd_player.spdcenter.py) {
+        switch (simdp7.spdcenter.py) {
         case -1:
             x = 0;
             speedo_type = 2;
             break;
         default:
             speedo_type = 0;
-            x = state.playerstate.car_speed / 0x280;
-            if (x >= simd_player.spdnumpoints)
-                x = simd_player.spdnumpoints - 1;
+            x = core.playerstate.car_speed / 0x280;
+            if (x >= simdp7.spdnumpoints)
+                x = simdp7.spdnumpoints - 1;
             break;
         case 0:
             speedo_type = 1;
-            x = state.playerstate.car_speed >> 8;
+            x = core.playerstate.car_speed >> 8;
         }
-        y = (unsigned short)state.playerstate.car_currpm >> 7;
-        if (y >= simd_player.revnumpoints)
-            y = simd_player.revnumpoints - 1;
+        y = (unsigned short)core.playerstate.car_currpm >> 7;
+        if (y >= simdp7.revnumpoints)
+            y = simdp7.revnumpoints - 1;
 
-        if (changed != 0 || byte_454A4 != 0 ||
-            word_40D78[byte_4432A] != x || word_40D6C[byte_4432A] != y) {
-            if (video_flag5_is0 == 0)
-                mouse_draw_opaque_check();
-            if (word_40DF6[byte_4432A] != 0) {
-                sprite_putimage_and_alt(gnobshapes[byte_44346 + 4], word_40DF2[byte_4432A], word_40DF6[byte_4432A]);
-                word_40DF6[byte_4432A] = 0;
+        if (changed != 0 || g_simprect != 0 ||
+            last_speedo[cam_idg] != x || last_tacho[cam_idg] != y) {
+            if (g_videoflg5 == 0)
+                msdrawopaquechk();
+            if (steering_dot_y[cam_idg] != 0) {
+                sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+                steering_dot_y[cam_idg] = 0;
                 knob_removed = 1;
             }
-            sprite_set_1_from_argptr(whlsprite1);
-            shape2d_op_unk5(whlshapes[3], 0, 0);
-            word_40D78[byte_4432A] = x;
-            word_40D6C[byte_4432A] = y;
+            sprite_setup1_from_arg_pointer(meters_sprite);
+            shape2d_op_unknown5(wheel_shapes[3], 0, 0);
+            last_speedo[cam_idg] = x;
+            last_tacho[cam_idg] = y;
             if (speedo_type == 1) {
                 digit = 0;
                 if (x >= 200) {
@@ -1551,76 +1545,76 @@ void far setup_car_shapes(int mode)
                     x -= 100;
                 }
                 if (digit != 0) {
-                    sprite_putimage_or(digshapes[digit], simd_player.spdpoints[0], simd_player.spdpoints[1]);
+                    sprite_putimage_or(digshapes[digit], simdp7.spdpoints[0], simdp7.spdpoints[1]);
                     has_digit = 1;
                 }
                 digit = x / 10;
                 if (digit != 0 || has_digit != 0) {
-                    sprite_putimage_or(digshapes[digit], simd_player.spdpoints[2], simd_player.spdpoints[3]);
+                    sprite_putimage_or(digshapes[digit], simdp7.spdpoints[2], simdp7.spdpoints[3]);
                     x -= digit * 10;
                     has_digit = 1;
                 }
-                sprite_putimage_or(digshapes[x], simd_player.spdpoints[4], simd_player.spdpoints[5]);
+                sprite_putimage_or(digshapes[x], simdp7.spdpoints[4], simdp7.spdpoints[5]);
             } else if (speedo_type == 0) {
-                preRender_line(simd_player.spdcenter.px, simd_player.spdcenter.py,
-                               simd_player.spdpoints[x * 2], simd_player.spdpoints[x * 2 + 1],
-                               meter_needle_color);
+                preRender_line(simdp7.spdcenter.px, simdp7.spdcenter.py,
+                               simdp7.spdpoints[x * 2], simdp7.spdpoints[x * 2 + 1],
+                               spdneedlegaugeclr);
             }
-            preRender_line(simd_player.revcenter.px, simd_player.revcenter.py,
-                           simd_player.revpoints[y * 2], simd_player.revpoints[y * 2 + 1],
-                           meter_needle_color);
+            preRender_line(simdp7.revcenter.px, simdp7.revcenter.py,
+                           simdp7.revpoints[y * 2], simdp7.revpoints[y * 2 + 1],
+                           spdneedlegaugeclr);
             switch (wheel_zone) {
             case 0:
-                shape2d_render_bmp_as_mask(whlshapes[7]);
-                shape2d_op_unk4(whlshapes[5]);
+                shape2d_render_bmp_as_mask(wheel_shapes[7]);
+                shape2d_op_unk4(wheel_shapes[5]);
                 break;
             case 2:
-                shape2d_render_bmp_as_mask(whlshapes[8]);
-                shape2d_op_unk4(whlshapes[6]);
+                shape2d_render_bmp_as_mask(wheel_shapes[8]);
+                shape2d_op_unk4(wheel_shapes[6]);
                 break;
             }
-            if (video_flag5_is0 != 0)
+            if (g_videoflg5 != 0)
                 setup_mcgawnd2();
             else
-                sprite_copy_2_to_1_2();
-            sprite_set_1_size(0, 0x140, 0, height_above_replaybar);
-            sprite_putimage_and_alt(whlsprite1->sprite_bitmapptr, whlshapes[3]->s2d_pos_x, whlshapes[3]->s2d_pos_y);
+                sprcopy2to12();
+            sprset1size(0, 0x140, 0, rplbarabovehgt);
+            sprite_putimage_and_alt(meters_sprite->sprite_bitmapptr, wheel_shapes[3]->s2d_pos_x, wheel_shapes[3]->s2d_pos_y);
         }
 
-        if (word_40E00[byte_4432A] != steering || byte_454A4 != 0 || knob_removed != 0) {
-            if (video_flag5_is0 == 0)
-                mouse_draw_opaque_check();
-            sprite_set_1_size(0, 0x140, 0, height_above_replaybar);
-            if (word_40DF6[byte_4432A] != 0) {
-                sprite_putimage_and_alt(gnobshapes[byte_44346 + 4], word_40DF2[byte_4432A], word_40DF6[byte_4432A]);
-                word_40DF6[byte_4432A] = 0;
+        if (last_steering_step[cam_idg] != steering || g_simprect != 0 || knob_removed != 0) {
+            if (g_videoflg5 == 0)
+                msdrawopaquechk();
+            sprset1size(0, 0x140, 0, rplbarabovehgt);
+            if (steering_dot_y[cam_idg] != 0) {
+                sprite_putimage_and_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
+                steering_dot_y[cam_idg] = 0;
             }
-            dot = &simd_player.steeringdots[(steering < 0 ? -steering : steering) * 2];
+            dot = &simdp7.steeringdots[(steering < 0 ? -steering : steering) * 2];
             y_pos = dot[1];
             x_pos = dot[0];
             if (steering < 0)
-                x_pos -= (x_pos - simd_player.steeringdots[0]) * 2;
-            word_40DF2[byte_4432A] = (x_pos - gnobshapes[2]->s2d_unk1) & video_flag3_isFFFF;
-            word_40DF6[byte_4432A] = y_pos - gnobshapes[2]->s2d_unk2;
-            sprite_clear_shape_alt(gnobshapes[byte_44346 + 4], word_40DF2[byte_4432A], word_40DF6[byte_4432A]);
+                x_pos -= (x_pos - simdp7.steeringdots[0]) * 2;
+            steering_dot_x[cam_idg] = (x_pos - gnobshapes[2]->s2d_unk1) & vidflg3is_minus1;
+            steering_dot_y[cam_idg] = y_pos - gnobshapes[2]->s2d_unk2;
+            sprite_clear_shape_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
             sprite_putimage_and_alt2(gnobshapes[3], x_pos, y_pos);
             sprite_putimage_or_alt(gnobshapes[2], x_pos, y_pos);
-            word_40E00[byte_4432A] = steering;
+            last_steering_step[cam_idg] = steering;
         }
-        mouse_draw_transparent_check();
+        msdrawtransparentchk();
         return;
     case 3:
-        sprite_free_wnd(whlsprite3);
-        sprite_free_wnd(whlsprite2);
-        sprite_free_wnd(whlsprite1);
-        mmgr_free((char far *)stdbresptr);
-        mmgr_free((char far *)stdaresptr);
+        sprite_free_window(gear_base_sprite);
+        sprite_free_window(gnob_sprite);
+        sprite_free_window(meters_sprite);
+        mmgr_free((char far *)stdbres);
+        mmgr_free((char far *)stdares);
         return;
     }
 }
 
 /* semantic lead: setup_player_cars from restunts.c */
-extern void far *file_load_resfile(char *name);
+extern void far *file_load_resource_file(char *name);
 extern void far *locate_shape_alt(void far *res, char *name);
 extern int audio_init_engine(int id, void far *data, void far *eng1, void far *eng);
 extern long mmgr_get_res_ofs_diff_scaled(void);
@@ -1628,23 +1622,23 @@ int setup_player_cars(void) {
 	void far* carresptr;
 	long mem_limit;
 
-	wndsprite = 0;
+	g_wndspr = 0;
 	ensure_file_exists(2);
-	shape3d_load_car_shapes(gameconfig.game_playercarid, gameconfig.game_opponentcarid);
-	aCarcoun[3] = gameconfig.game_playercarid[0];
-	aCarcoun[4] = gameconfig.game_playercarid[1];
-	aCarcoun[5] = gameconfig.game_playercarid[2];
-	aCarcoun[6] = gameconfig.game_playercarid[3];
-	carresptr = file_load_resfile(aCarcoun);
+	shape3d_load_car_shapes(globalgamesettings.game_playercarid, globalgamesettings.game_opponentcarid);
+	aCarcoun[3] = globalgamesettings.game_playercarid[0];
+	aCarcoun[4] = globalgamesettings.game_playercarid[1];
+	aCarcoun[5] = globalgamesettings.game_playercarid[2];
+	aCarcoun[6] = globalgamesettings.game_playercarid[3];
+	carresptr = file_load_resource_file(aCarcoun);
 	setup_aero_trackdata(carresptr, 0);
 	unload_resource(carresptr);
 
-	if (gameconfig.game_opponenttype != 0) {
-		aCarcoun[3] = gameconfig.game_opponentcarid[0];
-		aCarcoun[4] = gameconfig.game_opponentcarid[1];
-		aCarcoun[5] = gameconfig.game_opponentcarid[2];
-		aCarcoun[6] = gameconfig.game_opponentcarid[3];
-		carresptr = file_load_resfile(aCarcoun);
+	if (globalgamesettings.game_opponenttype != 0) {
+		aCarcoun[3] = globalgamesettings.game_opponentcarid[0];
+		aCarcoun[4] = globalgamesettings.game_opponentcarid[1];
+		aCarcoun[5] = globalgamesettings.game_opponentcarid[2];
+		aCarcoun[6] = globalgamesettings.game_opponentcarid[3];
+		carresptr = file_load_resource_file(aCarcoun);
 		setup_aero_trackdata(carresptr, 1);
 		unload_resource(carresptr);
 		
@@ -1653,76 +1647,76 @@ int setup_player_cars(void) {
 	}
 
 	ensure_file_exists(3);
-	eng1ptr = file_load_resource(5, "eng1");//aEng1); // "eng1"
-	engptr = file_load_resource(6, "eng");//aEng); // "eng"
+	eng1resourceptr = file_load_resource(5, "eng1");//aEng1); // "eng1"
+	engdata = file_load_resource(6, "eng");//aEng); // "eng"
 	audio_add_driver_timer();
-	word_43964 = audio_init_engine(0x21, &unk_3E7FC, eng1ptr, engptr);
+	g_player_sound_id = audio_init_engine(0x21, &player_engine_profile, eng1resourceptr, engdata);
 
-	byte_459D8 = 0;
-	byte_42D26 = 0;
-	byte_42D2A = 0;
-	if (gameconfig.game_opponenttype != 0) {
-		word_4408C = audio_init_engine(0x20, &unk_3E82C, eng1ptr, engptr);
+	sndpendingstate = 0;
+	g_plyr_snd_state = 0;
+	audiooppflag = 0;
+	if (globalgamesettings.game_opponenttype != 0) {
+		op_eng_sound_id = audio_init_engine(0x20, &opponent_engine_profile, eng1resourceptr, engdata);
 	}
 
-	word_44D1E = 0;
-	word_449E4 = 0;
-	word_443F4 = 0;
-	fontledresptr = file_load_resource(0, "fontled.fnt");//aFontled_fnt); // "fontled.fnt"
-	slow_video_mgmt_copy = slow_video_mgmt;
+	g_audio_frms_ix = 0;
+	sndposrecord = 0;
+	snd_tick_clock = 0;
+	fntled_res = file_load_resource(0, "fontled.fnt");//aFontled_fnt); // "fontled.fnt"
+	statemgmtcpy = slow_video_mode_state;
 	init_rect_arrays();
-	if (idle_expired == 0) {
+	if (menutimeout == 0) {
 		setup_car_shapes(0);
 	}
 
-	if (idle_expired == 0) {
-		sdgameresptr = file_load_resource(3, "sdgame");//aSdgame); // "sdgame"
+	if (menutimeout == 0) {
+		sdgresourcehandle = file_load_resource(3, "sdgame");//aSdgame); // "sdgame"
 		loop_game(0, 0, 0);
 	}
 
-	gameresptr = file_load_resfile("game");
-	planptr = locate_shape_alt(gameresptr, "plan");//aPlan); // "plan"
-	wallptr = locate_shape_alt(gameresptr, "wall");//aWall); // "wall"
+	gamerptrs = file_load_resource_file("game");
+	g_planlist = locate_shape_alt(gamerptrs, "plan");//aPlan); // "plan"
+	wallrecrecord = locate_shape_alt(gamerptrs, "wall");//aWall); // "wall"
 	load_sdgame2_shapes();
-	load_skybox(td14_elem_map_main[0x384]);
+	load_skybox(td14tb[0x384]);
 	if (shape3d_load_all() != 0) {
 		return 1;
 	}
 
-	if (video_flag5_is0 == 0) {
+	if (g_videoflg5 == 0) {
 		
-		mem_limit = 0xFA00L / (video_flag1_is1 * video_flag4_is1) + 0x12;
+		mem_limit = 0xFA00L / (pixel_scales * vidflg4_is1) + 0x12;
 		if (mmgr_get_res_ofs_diff_scaled() <= mem_limit) {
 			return 1;
 		}
-		wndsprite = sprite_make_wnd(0x140, 0xC8, 0x0F);
+		g_wndspr = sprite_make_window(0x140, 0xC8, 0x0F);
 	}
 
-	followOpponentFlag = 0;
-	is_in_replay_copy = -1;
+	follow_op = 0;
+	is_in_rplcopy = -1;
 	return 0;
 }
 
 /* semantic lead: free_player_cars from restunts.c */
 void free_player_cars(void) {
-	if (video_flag5_is0 == 0) {
-		if (wndsprite != 0) {
-			sprite_free_wnd(wndsprite);
+	if (g_videoflg5 == 0) {
+		if (g_wndspr != 0) {
+			sprite_free_window(g_wndspr);
 		}
 	}
 	shape3d_free_all();
 	unload_skybox();
 	free_sdgame2();
-	unload_resource(gameresptr);
-	if (idle_expired == 0) {
-		mmgr_free(sdgameresptr);
+	unload_resource(gamerptrs);
+	if (menutimeout == 0) {
+		mmgr_free(sdgresourcehandle);
 		setup_car_shapes(3);
 	}
 
-	mmgr_free(fontledresptr);
+	mmgr_free(fntled_res);
 	audio_remove_driver_timer();
-	mmgr_free(engptr);
-	mmgr_free(eng1ptr);
+	mmgr_free(engdata);
+	mmgr_free(eng1resourceptr);
 	shape3d_free_car_shapes();
 }
 
@@ -1737,53 +1731,49 @@ void mouse_minmax_position(int enabled)
     }
     mouse_set_minmax(0, 0, 0x140, 0xC8);
 }
-
-
-extern signed char byte_44292[64];
-extern unsigned char byte_442EA[64];
 void far replay_unk(void)
 {
-    register int frame_index = state.game_frame & 0x3F;
+    register int frame_index = core.game_frame & 0x3F;
     register int steering;
     char speed_index;
     char response;
     char angle;
 
-    if (byte_442EA[frame_index] == 0)
+    if (replay_steer_flag[frame_index] == 0)
         return;
 
-    steering = byte_44292[frame_index];
-    speed_index = (char)((state.playerstate.car_speed2 >> 10) & 0xFC);
-    response = ((char*)steerWhlRespTable_ptr)[(int)speed_index + 1];
+    steering = array_rpl[frame_index];
+    speed_index = (char)((core.playerstate.car_speed2 >> 10) & 0xFC);
+    response = ((char*)table_lookup)[(int)speed_index + 1];
 
-    if (state.playerstate.car_steeringAngle < steering) {
-        if (state.playerstate.car_steeringAngle < -1)
+    if (core.playerstate.car_steeringAngle < steering) {
+        if (core.playerstate.car_steeringAngle < -1)
             response <<= 2;
-    } else if (state.playerstate.car_steeringAngle > steering) {
-        if (state.playerstate.car_steeringAngle > 1)
+    } else if (core.playerstate.car_steeringAngle > steering) {
+        if (core.playerstate.car_steeringAngle > 1)
             response <<= 2;
     }
 
-    if (state.playerstate.car_steeringAngle > steering &&
-        state.playerstate.car_steeringAngle - response >= steering) {
+    if (core.playerstate.car_steeringAngle > steering &&
+        core.playerstate.car_steeringAngle - response >= steering) {
         angle = 8;
-    } else if (state.playerstate.car_steeringAngle < steering &&
-               state.playerstate.car_steeringAngle + response <= steering) {
+    } else if (core.playerstate.car_steeringAngle < steering &&
+               core.playerstate.car_steeringAngle + response <= steering) {
         angle = 4;
     } else {
         angle = 0;
     }
 
     if (angle != 0)
-        td16_rpl_buffer[state.game_frame] |= angle;
-    byte_442EA[frame_index] = 0;
+        g_tdreplay16buf[core.game_frame] |= angle;
+    replay_steer_flag[frame_index] = 0;
 }
 
-char byte_3E9DB = 6;
-char byte_3E9DC[10] = { 1, 7, 3, 4, 5, 6, 7, 8, 8, 0 };
-char byte_3E9E6[10] = { 0, 0, 2, 2, 3, 4, 5, 1, 7, 0 };
-char byte_3E9F0[10] = { 2, 6, 2, 3, 4, 5, 6, 7, 8, 0 };
-char byte_3E9FA[10] = { 0, 1, 0, 0, 1, 1, 1, 7, 8, 0 };
+char camera_button_index = 6;
+char camera_button_count_mode[10] = { 1, 7, 3, 4, 5, 6, 7, 8, 8, 0 };
+char camera_mode_select_a[10] = { 0, 0, 2, 2, 3, 4, 5, 1, 7, 0 };
+char camera_mode_select_b[10] = { 2, 6, 2, 3, 4, 5, 6, 7, 8, 0 };
+char camera_mode_select_c[10] = { 0, 1, 0, 0, 1, 1, 1, 7, 8, 0 };
 char game_camera_buttons_count[4] = { 6, 6, 8, 7 };
 int game_camera_buttons_x1[9] = { 272, 109, 274, 232, 190, 151, 108, 66, 10 };
 int game_camera_buttons_x2[9] = { 314, 151, 314, 274, 232, 190, 151, 91, 47 };
@@ -1793,28 +1783,27 @@ int gameunk_button_x1[1] = { 0 };
 int gameunk_button_x2[1] = { 104 };
 int gameunk_button_y1[1] = { 151 };
 int gameunk_button_y2[1] = { 200 };
-extern char byte_40E08[];
-extern char byte_40E6A[];
-extern char byte_40E6C;
-extern char byte_40E6D;
-extern char byte_40E74[];
-extern char byte_40E7A[];
-extern int word_407FC;
-extern int word_407FE;
-extern int word_40E04[];
-extern int word_40E0A[];
-extern int word_40E76[];
-extern int word_44D20;
+static char view_camera_choice[2];
+static char camera_buttons_pressed[9];
+static char unused_40E73;
+static char camera_mode_view[2];
+static char camera_buttons_state_per_view[18];
+extern int camera_select_fill_color;
+extern int camera_select_outline_color;
+static int camera_button_row[2];
+static int camera_button_tick[2];
+static int camera_button_col_cache[2];
+int viewyshift;
 extern char kbjoyflags;
-extern int custom_camera_azimuth_angle;
-extern int custom_camera_distance;
-extern int custom_camera_elevation_angle;
+extern int custom_azim_angle;
+extern int custom_dist;
+extern int custom_elev_angle;
 
-extern int dialog_fnt_colour;
-extern struct RECTANGLE *rectptr_unk2;
-extern void far *rplyshapes[16];
-extern void far font_set_unk(int, int);
-extern void far font_set_fontdef2(void far *);
+extern int dlg_colour;
+extern struct RECTANGLE *rcpunk2;
+static void far *replayshapes[23];
+extern void far font_setup_unknown(int, int);
+extern void far fontsetfontdef2(void far *);
 extern void far sprite_1_unk(int, int, int, int, int);
 extern void far sprite_1_unk4(int, int, int, int, int);
 extern int far input_checking(int);
@@ -1824,11 +1813,11 @@ extern char far do_fileselect_dialog(char *, char *, char *, void far *);
 extern char far do_savefile_dialog(char *, char *, void far *);
 extern int far file_find(char *);
 extern void far copy_string(char *, char far *);
-extern struct RECTANGLE * far intro_draw_text(char *, int, int, int, int);
+extern struct RECTANGLE * far introtext(char *, int, int, int, int);
 
-extern char byte_3B8B0[];
+extern char aDefault_1[];
 extern int far file_find(char *path);
-extern struct RECTANGLE *intro_draw_text(char *text, int x, int y, int color, int unk);
+extern struct RECTANGLE *introtext(char *text, int x, int y, int color, int unk);
 extern void far copy_string(char *dst, char far *src);
 void loop_game(int mode, int frame_index, int frame_offset)
 {
@@ -1847,125 +1836,125 @@ void loop_game(int mode, int frame_index, int frame_offset)
 
     switch (mode) {
     case 0:
-        locate_many_resources(sdgameresptr,
+        locate_many_resources(sdgresourcehandle,
             "rplyrpicrpacrpmcrptcbof6bof5bof4bof3bof2bof1bof0zoompannbon6bon5bon4bon3bon2bon1bof0zoompann",
-            (char far **)rplyshapes);
+            (char far **)replayshapes);
         frame_index = 4;
     case 2:
         for (i = 0; i < 9; i++)
-            byte_40E6A[i] = 0;
-        byte_40E6A[frame_index] = 1;
+            camera_buttons_pressed[i] = 0;
+        camera_buttons_pressed[frame_index] = 1;
         break;
     case 1:
-        if (byte_449D8[byte_4432A] == 0) {
-            byte_449D8[byte_4432A] = 1;
-            byte_40E74[byte_4432A] = -1;
-            byte_40E08[byte_4432A] = -1;
+        if (g_viewinx[cam_idg] == 0) {
+            g_viewinx[cam_idg] = 1;
+            camera_mode_view[cam_idg] = -1;
+            view_camera_choice[cam_idg] = -1;
             for (i = 0; i < 9; i++)
-                byte_40E7A[i * 2 + byte_4432A] = 0;
-            mouse_draw_opaque_check();
-            shape2d_op_unk(rplyshapes[0]);
-            word_40E0A[byte_4432A] = -1;
-            word_40E76[byte_4432A] = -1;
-            format_frame_as_string(&resID_byte1, gameconfig.game_recordedframes + elapsed_time1, 1);
-            font_set_unk(dialog_fnt_colour, 0);
-            font_set_fontdef2(fontledresptr);
-            sub_345BC(&resID_byte1, 0xD8, 0xBB);
-            font_set_fontdef();
+                camera_buttons_state_per_view[i * 2 + cam_idg] = 0;
+            msdrawopaquechk();
+            shape2d_op_unk(replayshapes[0]);
+            camera_button_tick[cam_idg] = -1;
+            camera_button_col_cache[cam_idg] = -1;
+            fmtframestr(&resbuftext, globalgamesettings.game_recordedframes + elaptm1, 1);
+            font_setup_unknown(dlg_colour, 0);
+            fontsetfontdef2(fntled_res);
+            draw_text_at(&resbuftext, 0xD8, 0xBB);
+            fontsetfontdef();
         }
-        if (word_40E0A[byte_4432A] != frame_offset + elapsed_time1) {
-            word_40E0A[byte_4432A] = frame_offset + elapsed_time1;
-            format_frame_as_string(&resID_byte1, frame_offset + elapsed_time1, 1);
-            font_set_unk(dialog_fnt_colour, 0);
-            mouse_draw_opaque_check();
-            font_set_fontdef2(fontledresptr);
-            sub_345BC(&resID_byte1, 0x98, 0xBB);
-            font_set_fontdef();
+        if (camera_button_tick[cam_idg] != frame_offset + elaptm1) {
+            camera_button_tick[cam_idg] = frame_offset + elaptm1;
+            fmtframestr(&resbuftext, frame_offset + elaptm1, 1);
+            font_setup_unknown(dlg_colour, 0);
+            msdrawopaquechk();
+            fontsetfontdef2(fntled_res);
+            draw_text_at(&resbuftext, 0x98, 0xBB);
+            fontsetfontdef();
         }
-        if (byte_40E74[byte_4432A] != cameramode) {
-            byte_40E74[byte_4432A] = cameramode;
-            word_40E76[byte_4432A] = -1;
-            mouse_draw_opaque_check();
-            shape2d_op_unk(rplyshapes[cameramode + 1]);
-            if (game_camera_buttons_count[cameramode] < byte_3E9DB)
-                byte_3E9DB = game_camera_buttons_count[cameramode];
-            if (byte_40E08[byte_4432A] > 6)
-                byte_40E08[byte_4432A] = -1;
+        if (camera_mode_view[cam_idg] != cammd) {
+            camera_mode_view[cam_idg] = cammd;
+            camera_button_col_cache[cam_idg] = -1;
+            msdrawopaquechk();
+            shape2d_op_unk(replayshapes[cammd + 1]);
+            if (game_camera_buttons_count[cammd] < camera_button_index)
+                camera_button_index = game_camera_buttons_count[cammd];
+            if (view_camera_choice[cam_idg] > 6)
+                view_camera_choice[cam_idg] = -1;
         }
-        if (gameconfig.game_recordedframes == 0) {
+        if (globalgamesettings.game_recordedframes == 0) {
             i = 0;
             j = 0;
         } else {
-            i = (long)frame_index * 110 / gameconfig.game_recordedframes;
-            j = (long)frame_offset * 110 / gameconfig.game_recordedframes;
+            i = (long)frame_index * 110 / globalgamesettings.game_recordedframes;
+            j = (long)frame_offset * 110 / globalgamesettings.game_recordedframes;
         }
-        if (word_40E76[byte_4432A] != i || word_40E04[byte_4432A] != j) {
-            mouse_draw_opaque_check();
-            word_40E76[byte_4432A] = i;
-            word_40E04[byte_4432A] = j;
-            sprite_1_unk(0x9A, 0xB1, 0x74, 6, word_407FC);
-            sprite_1_unk(i + 0x9A, 0xB1, 6, 6, dialog_fnt_colour);
-            sprite_1_unk4(j + 0x9A, 0xB1, j + 0x9F, 0xB6, word_407FE);
+        if (camera_button_col_cache[cam_idg] != i || camera_button_row[cam_idg] != j) {
+            msdrawopaquechk();
+            camera_button_col_cache[cam_idg] = i;
+            camera_button_row[cam_idg] = j;
+            sprite_1_unk(0x9A, 0xB1, 0x74, 6, camera_select_fill_color);
+            sprite_1_unk(i + 0x9A, 0xB1, 6, 6, dlg_colour);
+            sprite_1_unk4(j + 0x9A, 0xB1, j + 0x9F, 0xB6, camera_select_outline_color);
         }
-        if (byte_40E08[byte_4432A] != byte_3E9DB)
+        if (view_camera_choice[cam_idg] != camera_button_index)
             goto redraw_buttons;
         for (button = 0; button < 7; button++) {
-            if (byte_40E7A[button * 2 + byte_4432A] != byte_40E6A[button])
+            if (camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button])
                 goto redraw_buttons;
         }
         goto buttons_done;
 redraw_buttons:
-        mouse_draw_opaque_check();
-        if (byte_40E08[byte_4432A] != -1) {
-            if (byte_40E7A[byte_40E08[byte_4432A] * 2 + byte_4432A] != 0)
-                shape2d_op_unk(rplyshapes[byte_40E08[byte_4432A] + 14]);
+        msdrawopaquechk();
+        if (view_camera_choice[cam_idg] != -1) {
+            if (camera_buttons_state_per_view[view_camera_choice[cam_idg] * 2 + cam_idg] != 0)
+                shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 14]);
             else
-                shape2d_op_unk(rplyshapes[byte_40E08[byte_4432A] + 5]);
-            byte_40E08[byte_4432A] = -1;
+                shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 5]);
+            view_camera_choice[cam_idg] = -1;
         }
         for (button = 0; button < 7; button++) {
-            if (byte_40E6A[button] == 0 && byte_40E7A[button * 2 + byte_4432A] != byte_40E6A[button]) {
-                shape2d_op_unk(rplyshapes[button + 5]);
-                byte_40E7A[button * 2 + byte_4432A] = 0;
+            if (camera_buttons_pressed[button] == 0 && camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button]) {
+                shape2d_op_unk(replayshapes[button + 5]);
+                camera_buttons_state_per_view[button * 2 + cam_idg] = 0;
             }
         }
         for (button = 0; button < 7; button++) {
-            if (byte_40E6A[button] != 0) {
-                byte_40E7A[button * 2 + byte_4432A] = 1;
-                shape2d_op_unk(rplyshapes[button + 14]);
-                byte_40E7A[button * 2 + byte_4432A] = 1;
+            if (camera_buttons_pressed[button] != 0) {
+                camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
+                shape2d_op_unk(replayshapes[button + 14]);
+                camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
             }
         }
-        byte_40E08[byte_4432A] = byte_3E9DB;
-        if (byte_3E9DB != -1)
-            sprite_1_unk4(game_camera_buttons_x1[byte_3E9DB], game_camera_buttons_y1[byte_3E9DB],
-                          game_camera_buttons_x2[byte_3E9DB], game_camera_buttons_y2[byte_3E9DB], word_407FE);
+        view_camera_choice[cam_idg] = camera_button_index;
+        if (camera_button_index != -1)
+            sprite_1_unk4(game_camera_buttons_x1[camera_button_index], game_camera_buttons_y1[camera_button_index],
+                          game_camera_buttons_x2[camera_button_index], game_camera_buttons_y2[camera_button_index], camera_select_outline_color);
 buttons_done:
-        mouse_draw_transparent_check();
+        msdrawtransparentchk();
         break;
     case 3:
-        if (game_camera_buttons_count[cameramode] < byte_3E9DB && cameramode != 2)
-            byte_3E9DB = game_camera_buttons_count[cameramode];
+        if (game_camera_buttons_count[cammd] < camera_button_index && cammd != 2)
+            camera_button_index = game_camera_buttons_count[cammd];
         sprite_copy_2_to_1();
-        if (video_flag5_is0 != 0)
-            byte_4432A = byte_44346 ^ 1;
+        if (g_videoflg5 != 0)
+            cam_idg = numid ^ 1;
 next_input:
         key_code = input_checking(timer_get_delta_alt());
-        button = mouse_multi_hittest(game_camera_buttons_count[cameramode] + 1, game_camera_buttons_x1,
+        button = mouse_multi_hittest(game_camera_buttons_count[cammd] + 1, game_camera_buttons_x1,
                                      game_camera_buttons_x2, game_camera_buttons_y1, game_camera_buttons_y2);
         if (button != -1) {
-            if (button != byte_3E9DB && key_code == 0)
+            if (button != camera_button_index && key_code == 0)
                 key_code = 1;
-            byte_3E9DB = button;
-            if ((key_code == ' ' || key_code == '\r') && byte_3E9DB >= 7) {
-                if (byte_3E9DB == 7) {
-                    if ((game_camera_buttons_y1[7] + game_camera_buttons_y2[7]) >> 1 < mouse_ypos)
+            camera_button_index = button;
+            if ((key_code == ' ' || key_code == '\r') && camera_button_index >= 7) {
+                if (camera_button_index == 7) {
+                    if ((game_camera_buttons_y1[7] + game_camera_buttons_y2[7]) >> 1 < pos_y_ms)
                         key_code = 0x5000;
                     else
                         key_code = 0x4800;
                 } else {
-                    switch (((polarAngle(mouse_xpos - ((game_camera_buttons_x1[8] + game_camera_buttons_x2[8]) >> 1),
-                                         ((game_camera_buttons_y1[8] + game_camera_buttons_y2[8]) >> 1) - mouse_ypos)
+                    switch (((polang(msecoordx - ((game_camera_buttons_x1[8] + game_camera_buttons_x2[8]) >> 1),
+                                         ((game_camera_buttons_y1[8] + game_camera_buttons_y2[8]) >> 1) - pos_y_ms)
                               + 0x80) & 0x3FF) >> 8) {
                     case 0:
                         key_code = 0x4800;
@@ -1989,64 +1978,64 @@ next_input:
         }
         if (key_code != 0 && key_code != 0x1B && handle_ingame_kb_shortcuts(key_code) != 0)
             break;
-        if (is_in_replay == 0 && key_code == 0) {
-            if (replaybar_enabled == 0)
+        if (inrepflg == 0 && key_code == 0) {
+            if (g_rplybarenable == 0)
                 break;
-            loop_game(1, state.game_frame, state.game_frame);
+            loop_game(1, core.game_frame, core.game_frame);
             return;
         }
-        if (replaybar_enabled == 0) {
-            is_in_replay_copy = -1;
-            word_449EA = -1;
+        if (g_rplybarenable == 0) {
+            is_in_rplcopy = -1;
+            bitmapdash = -1;
         }
-        if (is_in_replay != 0 && (byte_40E6D != 0 || byte_40E6C != 0))
+        if (inrepflg != 0 && (camera_buttons_pressed[3] != 0 || camera_buttons_pressed[2] != 0))
             loop_game(2, 4, 0);
-        loop_game(1, state.game_frame, state.game_frame);
+        loop_game(1, core.game_frame, core.game_frame);
         modifier = 0;
-        if (kb_get_key_state(0x1D) != 0 || (byte_3E9DB == 8 && (kbjoyflags & 0x30) != 0))
+        if (kb_get_key_state(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
             modifier = 1;
         if (modifier != 0) {
             switch (key_code) {
             case 0x4D00:
-                custom_camera_azimuth_angle += 0x10;
+                custom_azim_angle += 0x10;
                 return;
             case 0x4B00:
-                custom_camera_azimuth_angle -= 0x10;
+                custom_azim_angle -= 0x10;
                 return;
             case 0x4800:
-                if (custom_camera_elevation_angle + 0x10 < 0x100) {
-                    custom_camera_elevation_angle += 0x10;
+                if (custom_elev_angle + 0x10 < 0x100) {
+                    custom_elev_angle += 0x10;
                     return;
                 }
                 break;
             case 0x5000:
-                if (custom_camera_elevation_angle - 0x10 > -0x100) {
-                    custom_camera_elevation_angle -= 0x10;
+                if (custom_elev_angle - 0x10 > -0x100) {
+                    custom_elev_angle -= 0x10;
                     return;
                 }
                 break;
             case '-':
 zoom_out:
-                if (cameramode == 3) {
-                    if (word_44D20 <= 0)
+                if (cammd == 3) {
+                    if (viewyshift <= 0)
                         break;
-                    word_44D20 -= 30;
+                    viewyshift -= 30;
                 } else {
-                    if (custom_camera_distance >= 1500)
+                    if (custom_dist >= 1500)
                         break;
-                    custom_camera_distance += 30;
+                    custom_dist += 30;
                 }
                 goto done;
             case '+':
 zoom_in:
-                if (cameramode == 3) {
-                    if (word_44D20 >= 900)
+                if (cammd == 3) {
+                    if (viewyshift >= 900)
                         break;
-                    word_44D20 += 30;
+                    viewyshift += 30;
                 } else {
-                    if (custom_camera_distance <= 120)
+                    if (custom_dist <= 120)
                         break;
-                    custom_camera_distance -= 30;
+                    custom_dist -= 30;
                 }
                 goto done;
             }
@@ -2058,114 +2047,114 @@ zoom_in:
         case '-':
             goto zoom_out;
         case 0x4B00:
-            if (game_camera_buttons_count[cameramode] >= byte_3E9DC[byte_3E9DB])
-                byte_3E9DB = byte_3E9DC[byte_3E9DB];
+            if (game_camera_buttons_count[cammd] >= camera_button_count_mode[camera_button_index])
+                camera_button_index = camera_button_count_mode[camera_button_index];
         default:
 redraw_input:
-            loop_game(1, state.game_frame, state.game_frame);
+            loop_game(1, core.game_frame, core.game_frame);
             goto next_input;
         case 0x4D00:
-            byte_3E9DB = byte_3E9E6[byte_3E9DB];
+            camera_button_index = camera_mode_select_a[camera_button_index];
             goto redraw_input;
         case 0x4800:
-            if (byte_3E9DB == 7)
+            if (camera_button_index == 7)
                 goto zoom_in;
-            byte_3E9DB = byte_3E9F0[byte_3E9DB];
+            camera_button_index = camera_mode_select_b[camera_button_index];
             goto redraw_input;
         case 0x5000:
-            if (byte_3E9DB == 7)
+            if (camera_button_index == 7)
                 goto zoom_out;
-            byte_3E9DB = byte_3E9FA[byte_3E9DB];
+            camera_button_index = camera_mode_select_c[camera_button_index];
             goto redraw_input;
         case '\r':
         case ' ':
-            switch (byte_3E9DB) {
+            switch (camera_button_index) {
             case 6:
 pause_menu:
-                is_in_replay = 1;
+                inrepflg = 1;
                 audio_carstate();
                 loop_game(2, 4, 0);
-                loop_game(1, state.game_frame, state.game_frame);
+                loop_game(1, core.game_frame, core.game_frame);
                 for (i = 0; i < 8; i++)
                     dialog_params[i] = 0;
-                if (state.playerstate.car_crashBmpFlag != 0)
+                if (core.playerstate.car_crashBmpFlag != 0)
                     dialog_params[3] = 1;
-                if (gameconfig.game_recordedframes == 0 || elapsed_time1 != 0)
+                if (globalgamesettings.game_recordedframes == 0 || elaptm1 != 0)
                     dialog_params[5] = 1;
-                if (passed_security == 0) {
+                if (pass_check_flag == 0) {
                     dialog_params[2] = 1;
                     dialog_params[3] = 1;
                 }
-                if ((byte_43966 & 4) == 0)
+                if ((endhsdemo & 4) == 0)
                     dialog_params[1] = 1;
-                byte_454A4 = video_flag6_is1;
-                answer = show_dialog(2, 0, locate_text_res(gameresptr, "men"), -1, -1, dialogarg2, dialog_params, 0);
+                g_simprect = g_vid_flag6;
+                answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "men"), -1, -1, dialogarg2, dialog_params, 0);
                 switch (answer) {
                 case 2:
                     check_input();
-                    framespersec = framespersec2;
-                    gameconfig.game_framespersec = framespersec2;
-                    init_game_state(-1);
-                    elapsed_time2 = 0;
-                    gameconfig.game_recordedframes = 0;
-                    word_45D3E = 0;
-                    byte_43966 = 1;
+                    rate_frame = frm_rate2;
+                    globalgamesettings.game_framespersec = frm_rate2;
+                    initialize_game_state(-1);
+                    tmr2 = 0;
+                    globalgamesettings.game_recordedframes = 0;
+                    popupact = 0;
+                    endhsdemo = 1;
                     goto continue_driving;
                 case 3:
-                    if (byte_43966 & 2)
-                        byte_43966 = 3;
-                    else if (gameconfig.game_recordedframes != elapsed_time2) {
-                        i = show_dialog(2, 0, locate_text_res(gameresptr, "con"), -1, -1, performGraphColor, 0, 0);
+                    if (endhsdemo & 2)
+                        endhsdemo = 3;
+                    else if (globalgamesettings.game_recordedframes != tmr2) {
+                        i = show_dialog(2, 0, locate_text_resource(gamerptrs, "con"), -1, -1, performGraphColor, 0, 0);
                         if (i < 1)
                             break;
-                        byte_43966 = 3;
+                        endhsdemo = 3;
                     } else
-                        byte_43966 = 1;
-                    gameconfig.game_recordedframes = elapsed_time2 = state.game_frame;
+                        endhsdemo = 1;
+                    globalgamesettings.game_recordedframes = tmr2 = core.game_frame;
     continue_driving:
-                    dashb_toggle = 1;
-                    show_penalty_counter = 0;
-                    followOpponentFlag = 0;
-                    game_replay_mode = 0;
-                    cameramode = 0;
-                    state.game_3F6autoLoadEvalFlag = 0;
-                    state.game_frame_in_sec = 0;
-                    byte_449E6 = 0;
+                    on_off_dash = 1;
+                    pen_flag_count = 0;
+                    follow_op = 0;
+                    gm_playmode = 0;
+                    cammd = 0;
+                    core.game_3F6autoLoadEvalFlag = 0;
+                    core.game_frame_in_sec = 0;
+                    g_rplmodui = 0;
                     loop_game(2, 3, 0);
-                    is_in_replay = 0;
+                    inrepflg = 0;
                     mouse_minmax_position(byte_3B8F2);
                     check_input();
                     kbormouse = 0;
                     break;
                 case 4:
-                    byte_43966 = 0;
+                    endhsdemo = 0;
                     audio_carstate();
-                    i = do_fileselect_dialog(byte_3B85E, byte_3B8B0, ".rpl", locate_text_res(mainresptr, "rep"));
+                    i = do_fileselect_dialog(replay_file, aDefault_1, ".rpl", locate_text_resource(main_data_file_addr, "rep"));
                     if (i == 0)
                         break;
-                    waitflag = 150;
+                    waitm_ms = 150;
                     show_waiting();
-                    oldcfg = gameconfig;
-                    prev_sky = td14_elem_map_main[0x384];
-                    if (file_load_replay(byte_3B85E, byte_3B8B0) != 0)
-                        gameconfig.game_recordedframes = 0;
-                    dashb_toggle = 0;
+                    oldcfg = globalgamesettings;
+                    prev_sky = td14tb[0x384];
+                    if (file_load_replay(replay_file, aDefault_1) != 0)
+                        globalgamesettings.game_recordedframes = 0;
+                    on_off_dash = 0;
                     track_setup();
                     i = 0;
-                    if (td14_elem_map_main[0x384] != prev_sky)
+                    if (td14tb[0x384] != prev_sky)
                         i = 1;
-                    if (oldcfg.game_playercarid[0] != gameconfig.game_playercarid[0] ||
-                        oldcfg.game_playercarid[1] != gameconfig.game_playercarid[1] ||
-                        oldcfg.game_playercarid[2] != gameconfig.game_playercarid[2] ||
-                        oldcfg.game_playercarid[3] != gameconfig.game_playercarid[3])
+                    if (oldcfg.game_playercarid[0] != globalgamesettings.game_playercarid[0] ||
+                        oldcfg.game_playercarid[1] != globalgamesettings.game_playercarid[1] ||
+                        oldcfg.game_playercarid[2] != globalgamesettings.game_playercarid[2] ||
+                        oldcfg.game_playercarid[3] != globalgamesettings.game_playercarid[3])
                         i = 1;
-                    else if (oldcfg.game_opponenttype != gameconfig.game_opponenttype)
+                    else if (oldcfg.game_opponenttype != globalgamesettings.game_opponenttype)
                         i = 1;
-                    else if (gameconfig.game_opponenttype != 0) {
-                        if (oldcfg.game_opponentcarid[0] != gameconfig.game_opponentcarid[0] ||
-                            oldcfg.game_opponentcarid[1] != gameconfig.game_opponentcarid[1] ||
-                            oldcfg.game_opponentcarid[2] != gameconfig.game_opponentcarid[2] ||
-                            oldcfg.game_opponentcarid[3] != gameconfig.game_opponentcarid[3])
+                    else if (globalgamesettings.game_opponenttype != 0) {
+                        if (oldcfg.game_opponentcarid[0] != globalgamesettings.game_opponentcarid[0] ||
+                            oldcfg.game_opponentcarid[1] != globalgamesettings.game_opponentcarid[1] ||
+                            oldcfg.game_opponentcarid[2] != globalgamesettings.game_opponentcarid[2] ||
+                            oldcfg.game_opponentcarid[3] != globalgamesettings.game_opponentcarid[3])
                             i = 1;
                         else {
                             ensure_file_exists(2);
@@ -2176,19 +2165,19 @@ pause_menu:
                         free_player_cars();
                         setup_player_cars();
                     }
-                    framespersec = gameconfig.game_framespersec;
-                    init_game_state(-1);
+                    rate_frame = globalgamesettings.game_framespersec;
+                    initialize_game_state(-1);
                     break;
                 case 5:
                     audio_carstate();
                     write_state = 0;
                     while (write_state == 0) {
-                        if (do_savefile_dialog(byte_3B85E, byte_3B8B0, locate_text_res(mainresptr, "rep")) != 0) {
-                            file_build_path(byte_3B85E, byte_3B8B0, ".rpl", g_path_buf);
+                        if (do_savefile_dialog(replay_file, aDefault_1, locate_text_resource(main_data_file_addr, "rep")) != 0) {
+                            file_build_path(replay_file, aDefault_1, ".rpl", buf_g_path);
                             write_state = 1;
                             g_is_busy = 1;
-                            if (file_find(g_path_buf) != 0) {
-                                i = show_dialog(2, 0, locate_text_res(mainresptr, "fex"), -1, -1, performGraphColor, 0, 0);
+                            if (file_find(buf_g_path) != 0) {
+                                i = show_dialog(2, 0, locate_text_resource(main_data_file_addr, "fex"), -1, -1, performGraphColor, 0, 0);
                                 if (i == -1)
                                     write_state = -1;
                                 else if (i == 0)
@@ -2198,9 +2187,9 @@ pause_menu:
                         } else
                             write_state = -1;
                         if (write_state == 1) {
-                            button = file_write_replay(g_path_buf);
+                            button = file_write_replay(buf_g_path);
                             if (button != 0) {
-                                show_dialog(1, 0, locate_text_res(mainresptr, "ser"), -1, -1, performGraphColor, 0, 0);
+                                show_dialog(1, 0, locate_text_resource(main_data_file_addr, "ser"), -1, -1, performGraphColor, 0, 0);
                                 write_state = 0;
                             }
                         }
@@ -2208,36 +2197,36 @@ pause_menu:
                     break;
                 case 1:
                     update_crash_state(4, 0);
-                    byte_449DA = 2;
+                    sigframe = 2;
                     break;
                 case 7:
                     update_crash_state(4, 0);
-                    byte_43966 = 0;
-                    byte_449DA = 2;
+                    endhsdemo = 0;
+                    sigframe = 2;
                     break;
                 case 6:
                     for (i = 0; i < 5; i++)
                         dialog_params[i] = 0;
-                    if (gameconfig.game_opponenttype == 0)
+                    if (globalgamesettings.game_opponenttype == 0)
                         dialog_params[4] = 1;
-                    answer = show_dialog(2, 0, locate_text_res(gameresptr, "mdo"), -1, -1, dialogarg2, dialog_params, 0);
+                    answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "mdo"), -1, -1, dialogarg2, dialog_params, 0);
                     switch (answer) {
                     case 0:
-                        dashb_toggle ^= 1;
+                        on_off_dash ^= 1;
                         break;
                     case 1:
                         replaybar_toggle ^= 1;
                         break;
                     case 2:
-                        cameramode++;
-                        if (cameramode == 4)
-                            cameramode = 0;
+                        cammd++;
+                        if (cammd == 4)
+                            cammd = 0;
                         break;
                     case 3:
                         show_graphic_levels_menu();
                         break;
                     case 4:
-                        followOpponentFlag ^= 1;
+                        follow_op ^= 1;
                         break;
                     }
                     break;
@@ -2245,7 +2234,7 @@ pause_menu:
                 check_input();
                 goto done;
             case 0:
-                is_in_replay = 1;
+                inrepflg = 1;
                 audio_carstate();
                 loop_game(2, 0, 0);
                 timer_get_delta_alt();
@@ -2256,33 +2245,33 @@ pause_menu:
                         j = 100;
                     i = (time_delta = timer_get_delta_alt()) * j;
                     travel += i;
-                    if (gameconfig.game_recordedframes - elapsed_time2 < (unsigned)(travel / 20))
-                        travel = (long)(gameconfig.game_recordedframes - elapsed_time2) * 20;
-                    loop_game(1, state.game_frame, travel / 20 + elapsed_time2);
+                    if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
+                        travel = (long)(globalgamesettings.game_recordedframes - tmr2) * 20;
+                    loop_game(1, core.game_frame, travel / 20 + tmr2);
                     input_do_checking(time_delta);
                 }
-                if (gameconfig.game_recordedframes - elapsed_time2 < (unsigned)(travel / 20))
-                    travel = (long)(gameconfig.game_recordedframes - elapsed_time2) * 20;
-                i = travel / 20 + elapsed_time2;
-                if (i > gameconfig.game_recordedframes)
-                    i = gameconfig.game_recordedframes;
+                if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
+                    travel = (long)(globalgamesettings.game_recordedframes - tmr2) * 20;
+                i = travel / 20 + tmr2;
+                if (i > globalgamesettings.game_recordedframes)
+                    i = globalgamesettings.game_recordedframes;
                 restore_gamestate(i);
-                elapsed_time2 = i;
+                tmr2 = i;
                 loop_game(2, 4, 0);
-                copy_string(&resID_byte1, locate_text_res(gameresptr, "wai"));
-                if (slow_video_mgmt_copy != 0)
-                    rect_union(rectptr_unk2, intro_draw_text(&resID_byte1, font_op2_alt(&resID_byte1), 100, dialog_fnt_colour, 0),
-                               rectptr_unk2);
+                copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
+                if (statemgmtcpy != 0)
+                    rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
+                               rcpunk2);
                 else
-                    intro_draw_text(&resID_byte1, font_op2_alt(&resID_byte1), 100, dialog_fnt_colour, 0);
-                while (state.game_frame != elapsed_time2) {
+                    introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
+                while (core.game_frame != tmr2) {
                     update_gamestate();
-                    loop_game(1, state.game_frame, elapsed_time2);
+                    loop_game(1, core.game_frame, tmr2);
                 }
                 input_do_checking(1000);
                 goto done;
             case 1:
-                is_in_replay = 1;
+                inrepflg = 1;
                 audio_carstate();
                 loop_game(2, 1, 0);
                 timer_get_delta_alt();
@@ -2294,64 +2283,64 @@ pause_menu:
                     time_delta = timer_get_delta_alt();
                     i = time_delta * j;
                     travel += i;
-                    if ((unsigned)(travel / 20) > elapsed_time2)
-                        travel = (long)elapsed_time2 * 20;
-                    loop_game(1, state.game_frame, elapsed_time2 - travel / 20);
+                    if ((unsigned)(travel / 20) > tmr2)
+                        travel = (long)tmr2 * 20;
+                    loop_game(1, core.game_frame, tmr2 - travel / 20);
                     input_do_checking(time_delta);
                 }
-                if ((unsigned)(travel / 20) > elapsed_time2)
-                    travel = (long)elapsed_time2 * 20;
+                if ((unsigned)(travel / 20) > tmr2)
+                    travel = (long)tmr2 * 20;
                 j = travel / 20;
                 loop_game(2, 4, 0);
                 if (j != 0) {
-                    copy_string(&resID_byte1, locate_text_res(gameresptr, "wai"));
-                    if (slow_video_mgmt_copy != 0)
-                        rect_union(rectptr_unk2, intro_draw_text(&resID_byte1, font_op2_alt(&resID_byte1), 100, dialog_fnt_colour, 0),
-                                   rectptr_unk2);
+                    copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
+                    if (statemgmtcpy != 0)
+                        rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
+                                   rcpunk2);
                     else
-                        intro_draw_text(&resID_byte1, font_op2_alt(&resID_byte1), 100, dialog_fnt_colour, 0);
-                    i = elapsed_time2 - j;
+                        introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
+                    i = tmr2 - j;
                     restore_gamestate(i);
-                    elapsed_time2 = i;
-                    prev_sky = i - state.game_frame;
+                    tmr2 = i;
+                    prev_sky = i - core.game_frame;
                     if (prev_sky != 0) {
                         i = prev_sky;
-                        while (state.game_frame != elapsed_time2) {
+                        while (core.game_frame != tmr2) {
                             update_gamestate();
                             i--;
-                            loop_game(1, (long)i * j / prev_sky + elapsed_time2, elapsed_time2);
+                            loop_game(1, (long)i * j / prev_sky + tmr2, tmr2);
                             input_do_checking(1);
                         }
                     }
                 }
-                loop_game(1, state.game_frame, state.game_frame);
+                loop_game(1, core.game_frame, core.game_frame);
                 input_do_checking(1000);
                 goto done;
             case 3:
-                byte_449E6 = 0;
+                g_rplmodui = 0;
                 loop_game(2, 3, 0);
-                is_in_replay = 0;
+                inrepflg = 0;
                 break;
             case 4:
-                is_in_replay = 1;
+                inrepflg = 1;
                 audio_carstate();
                 loop_game(2, 4, 0);
-                loop_game(1, state.game_frame, state.game_frame);
+                loop_game(1, core.game_frame, core.game_frame);
                 goto redraw_input;
             case 5:
-                is_in_replay = 1;
+                inrepflg = 1;
                 audio_carstate();
                 loop_game(2, 5, 0);
-                loop_game(1, state.game_frame, state.game_frame);
+                loop_game(1, core.game_frame, core.game_frame);
                 restore_gamestate(0);
                 timer_get_counter_unk(50);
                 loop_game(2, 4, 0);
-                loop_game(1, state.game_frame, state.game_frame);
+                loop_game(1, core.game_frame, core.game_frame);
                 return;
             case 2:
                 loop_game(2, 2, 0);
-                byte_449E6 = 3;
-                is_in_replay = 0;
+                g_rplmodui = 3;
+                inrepflg = 0;
                 break;
             }
             goto redraw_input;

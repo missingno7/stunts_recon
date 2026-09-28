@@ -255,7 +255,7 @@
     {
       "end": 146944,
       "name": "shape2d_op_unk5",
-      "public": "_shape2d_op_unk5",
+      "public": "_shape2d_op_unknown5",
       "stable_id": "load_23de2",
       "start": 146914,
       "target": {
@@ -325,6 +325,11 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_shape2d_op_unknown5",
+        "offset": 36,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_shape2d_op_unk",
         "offset": 66,
         "segment": "S012_TEXT"
@@ -337,11 +342,6 @@
       {
         "name": "_shape2d_op_unk3",
         "offset": 276,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_shape2d_op_unk5",
-        "offset": 36,
         "segment": "S012_TEXT"
       }
     ],

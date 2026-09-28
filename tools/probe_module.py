@@ -65,17 +65,22 @@ def _probe(recipe, oracle_result=None, source_override=None):
         _, closure = prepare(source, recipe['profile'])
         check_recipe(recipe, closure)
     control = None
+    # integ39: reviewed COMDEF declarations (tentative definitions / MASM COMM
+    # NEAR) for the accepted communal unit; any other COMDEF is refused.
+    from communal_unit import recipe_declarations, check_object_communals
+    declared = recipe_declarations(recipe)
+    communals = None if declared is None else [name for name, _ in declared]
     try:
         sparse = recipe_sparse_zero(recipe)
-        obj, receipt = (assemble_source(source, recipe['profile']) if kind == 'asm'
+        obj, receipt = (assemble_source(source, recipe['profile'], communals=communals) if kind == 'asm'
                         else compile_source(source, recipe['profile'], recipe_flags(recipe),
-                                            sparse_zero=sparse))
+                                            sparse_zero=sparse, communals=communals))
         # A canonical-flag C contribution inside an object with a registered
         # per-object flag set must reproduce the same object under that set.
         control = object_control_flags(recipe) if kind == 'c' else None
         if control is not None:
             control_obj, control_receipt = compile_source(source, recipe['profile'], control,
-                                                          sparse_zero=sparse)
+                                                          sparse_zero=sparse, communals=communals)
             receipt['object_flag_control'] = {'flags': control,
                                               'object': control_receipt['object']}
     except CompileFailure as error:
@@ -83,6 +88,7 @@ def _probe(recipe, oracle_result=None, source_override=None):
     if control is not None:
         require(same_object(control_obj, obj),
                 'C contribution differs under its object registered flag set')
+    check_object_communals(obj, recipe)
     segment = recipe['object_segment']
     details = {'receipt':receipt, 'expected_size':end-start, 'emitted_sizes':obj.segment_lengths,
                'publics':obj.publics, 'externals':obj.externals, 'fixups':obj.linker_fixups,
@@ -128,6 +134,8 @@ def _probe(recipe, oracle_result=None, source_override=None):
     except ValueError as error:
         raise ProbeFailure(str(error), {**compared(), 'category':'BINDING_REVIEW_REQUIRED'}) from error
     receipt['binding'] = binding
+    if getattr(obj, 'communals', None):
+        receipt['communals'] = [{'name': c['name'], 'size': c['length']} for c in obj.communals]
     if payload != image[start:end]:
         details['object_comparison'] = compared()['comparison']
         details['comparison'] = _diagnostic(image[start:end], payload, receipt, obj.linker_fixups, bound=True, segment=segment)

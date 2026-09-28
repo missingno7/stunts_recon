@@ -8,16 +8,16 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_fontdefseg",
-      "frame_index": 8,
+      "frame": "_fontdef_default",
+      "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
-      "loc": "offset16",
-      "offset": 26,
-      "segment": "S012_TEXT",
+      "loc": "base16",
+      "offset": 0,
+      "segment": "_DATA",
       "self_relative": false,
-      "target": "_fontdefseg",
-      "target_index": 8,
+      "target": "_fontdef_default",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25,8 +25,25 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 26,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
       "frame": "_word_4031E",
-      "frame_index": 6,
+      "frame_index": 7,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -34,7 +51,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_word_4031E",
-      "target_index": 6,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -196,7 +213,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_file_get_shape2d",
-      "frame_index": 7,
+      "frame_index": 8,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -204,7 +221,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_file_get_shape2d",
-      "target_index": 7,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -482,7 +499,7 @@
     },
     {
       "name": "mat_mul_vector",
-      "public": "_mat_mul_vector",
+      "public": "_mat_vec",
       "stable_id": "load_228ee",
       "start": 141550
     },
@@ -568,9 +585,9 @@
       "_preRender_line",
       "_draw_patterned_lines",
       "_imagefunc",
+      "_fontdef_default",
       "_word_4031E",
       "_file_get_shape2d",
-      "_fontdefseg",
       "_spritefunc"
     ],
     "groups": [
@@ -621,6 +638,11 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_mat_vec",
+        "offset": 188,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_preRender_patterned",
         "offset": 84,
         "segment": "S012_TEXT"
@@ -636,14 +658,19 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mat_mul_vector",
-        "offset": 188,
-        "segment": "S012_TEXT"
+        "name": "_word_30602",
+        "offset": 2,
+        "segment": "_DATA"
       },
       {
         "name": "_file_decomp_vle",
         "offset": 1354,
         "segment": "S012_TEXT"
+      },
+      {
+        "name": "_fontdefseg",
+        "offset": 0,
+        "segment": "_DATA"
       },
       {
         "name": "_mat_invert",
@@ -678,7 +705,7 @@
         "combine_code": 2,
         "frame": null,
         "index": 2,
-        "length": 0,
+        "length": 4,
         "name": "_DATA",
         "offset": null,
         "overlay_index": 1,
@@ -737,6 +764,9 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
+  "review_notes": [
+    "integ33: owns DGROUP _DATA [198144,198148): `_fontdefseg dw seg _fontdef_default` (the pinned dseg.asm `fontdefseg dw seg seg039`; relocated paragraph 0x2B1F of the accepted far-data module fardata_11039, whose own reviewed placement anchor is this word) and `_word_30602 dw 10`. Link order places the 4 bytes between asm012_141210 and obj_seg027 data; the only ASM module there is this one, and its own code reads fontdefseg (a C object cannot initialise a segment word)."
+  ],
   "reviewed_code_offsets": [
     "_draw_patterned_lines",
     "_preRender_line"
@@ -745,6 +775,29 @@
     "_loc_3180A": {
       "source_line": 6552
     }
+  },
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 20112,
+      "end": 198148,
+      "expected_relocations": [
+        {
+          "load_offset": 198144,
+          "offset": 1536,
+          "segment": 12288
+        }
+      ],
+      "start": 198144,
+      "target": {
+        "sha256": "f7c62befea0f2a421096e9fcdbfaf396fc444333d03c47b5f12a7a86f01c26ff",
+        "size": 4
+      }
+    }
+  },
+  "secondary_external_targets": {
+    "far_data": [
+      "_fontdef_default"
+    ]
   },
   "source": "asm/asm012_141362.ASM",
   "stable_id": "multi_asm012_141362",

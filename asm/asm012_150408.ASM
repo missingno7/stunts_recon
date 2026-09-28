@@ -29,22 +29,24 @@ sprite_widthsum dw ?
 SPRITE ends
 DSEG segment byte public 'STUNTSD'
 DSEG ends
-DGROUP group DSEG
+_DATA segment word public 'DATA'
+aMcgaWindow db 'MCGA WINDOW', 0
+aWindowdefOutOfRowTableSpa db 'windowdef - OUT OF ROW TABLE SPACE', 0Dh, 0
+_DATA ends
+DGROUP group DSEG, _DATA
 assume es:nothing, ss:nothing, ds:DSEG
 extrn _fatal_error:far
 extrn _mmgr_alloc_pages:far
-extrn sprite1:byte
-extrn sprite2:byte
+extrn _sprite1:byte
+extrn _sprite2:byte
 extrn _word_4031E:word
-extrn _aMcgaWindow:byte
-extrn _aWindowdefOutOfRowTableSpa:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DSEG
 public _draw_patterned_lines
-public _sprite_make_wnd
+public _sprite_make_window
 public _next_wnd_def
 public _wnd_defs
-public _sprite_set_1_from_argptr
+public _sprite_setup1_from_arg_pointer
 public _sprite_copy_2_to_1
 
     push    bp
@@ -81,8 +83,8 @@ loc_34B9B:
 loc_34BAD:
     mov     si, [bp+arg_4]
     shl     si, 1
-    add     si, cs:sprite1.sprite_lineofs
-    mov     ax, word ptr cs:sprite1.sprite_bitmapptr+2
+    add     si, cs:_sprite1.sprite_lineofs
+    mov     ax, word ptr cs:_sprite1.sprite_bitmapptr+2
     mov     es, ax
     mov     al, [bp+arg_8]
 loc_34BC0:
@@ -125,7 +127,7 @@ loc_34C06:
     ; align 2
     db 0
 draw_patterned_lines endp
-_sprite_make_wnd label far
+_sprite_make_window label far
 sprite_make_wnd proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
@@ -153,7 +155,7 @@ sprite_make_wnd proc far
     mov     bx, ax
     mov     [bp+var_6], ax
     push    ax
-    mov     ax, offset _aMcgaWindow; "MCGA WINDOW"
+    mov     ax, offset DGROUP:aMcgaWindow; "MCGA WINDOW"
     push    ax
     call    _mmgr_alloc_pages
     add     sp, 4
@@ -212,7 +214,7 @@ loc_34CBE:
 loc_34CD6:
     mov     ax, ss
     mov     ds, ax
-    mov     ax, offset _aWindowdefOutOfRowTableSpa; "windowdef - OUT OF ROW TABLE SPACE\r"
+    mov     ax, offset DGROUP:aWindowdefOutOfRowTableSpa; "windowdef - OUT OF ROW TABLE SPACE\r"
     push    ax
     call    far ptr _fatal_error
     ; align 2
@@ -3821,7 +3823,7 @@ wnd_defs     db 0
     db 0
     db 0
 sprite_make_wnd endp
-_sprite_set_1_from_argptr label far
+_sprite_setup1_from_arg_pointer label far
 sprite_set_1_from_argptr proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3839,7 +3841,7 @@ sprite_set_1_from_argptr proc far
     mov     cx, 0Fh
     mov     ax, cs
     mov     es, ax
-    mov     di, offset sprite1
+    mov     di, offset _sprite1
     rep movsw
     pop     di
     pop     si
@@ -3852,7 +3854,7 @@ sprite_copy_2_to_1 proc far
 
     mov     ax, seg S012_TEXT
     push    ax
-    mov     ax, offset sprite2
+    mov     ax, offset _sprite2
     push    ax
     call    sprite_set_1_from_argptr
     add     sp, 4

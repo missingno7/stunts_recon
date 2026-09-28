@@ -3,7 +3,7 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_multiply_and_scale",
+        "_mulscl",
         "_preRender_wheel_helper3",
         "_preRender_wheel_helper2"
       ],
@@ -148,7 +148,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_multiply_and_scale",
+      "frame": "_mulscl",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -156,7 +156,7 @@
       "offset": 113,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_multiply_and_scale",
+      "target": "_mulscl",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -165,7 +165,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_multiply_and_scale",
+      "frame": "_mulscl",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -173,7 +173,7 @@
       "offset": 87,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_multiply_and_scale",
+      "target": "_mulscl",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -182,7 +182,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_multiply_and_scale",
+      "frame": "_mulscl",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -190,7 +190,7 @@
       "offset": 59,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_multiply_and_scale",
+      "target": "_mulscl",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -199,7 +199,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_multiply_and_scale",
+      "frame": "_mulscl",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -207,7 +207,7 @@
       "offset": 33,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_multiply_and_scale",
+      "target": "_mulscl",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,

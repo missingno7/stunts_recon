@@ -115,7 +115,7 @@ def resolve_code_symbols(names, image, relocations):
     for name in names:
         require(name in layout['symbols'], 'Unknown far code symbol: '+name)
         symbol=layout['symbols'][name]
-        require(symbol.get('anchors') or symbol.get('pointer_anchors'),
+        require(symbol.get('anchors') or symbol.get('pointer_anchors') or symbol.get('table_anchors'),
                 'Code symbol lacks reviewed call/pointer evidence: '+name)
         if name == '_main':
             # CRT0's pinned _main EXTDEF is checked when its complete member
@@ -198,7 +198,8 @@ def resolve_code_symbols(names, image, relocations):
                 require(any(_complete_target_owner(o, function) for o in owners),
                         'Mapped target lacks a complete raw or exact active-C owner')
                 address=target['start']
-            anchors=symbol.get('anchors',[])+symbol.get('pointer_anchors',[])
+            anchors=(symbol.get('anchors',[])+symbol.get('pointer_anchors',[])+
+                     symbol.get('table_anchors',[]))
             require(anchors, 'Raw code target needs a relocated verified caller')
             if 'distinct_verified_callers' in symbol:
                 require(symbol['distinct_verified_callers']==len({a['caller_task'] for a in anchors}),
@@ -211,7 +212,7 @@ def resolve_code_symbols(names, image, relocations):
                 require(len(callers)==1 and not target['start']<=anchor['site']<target.get('end',target['start']+1),
                         'Far code anchor lacks independent verified caller')
         frame=symbol['frame_load_address']
-        require(symbol.get('anchors') or symbol.get('pointer_anchors'),
+        require(symbol.get('anchors') or symbol.get('pointer_anchors') or symbol.get('table_anchors'),
                 'Code frame needs independent evidence')
         for anchor in symbol.get('anchors',[]):
             at=anchor['site']; raw=bytes.fromhex(anchor['hex'])
@@ -231,8 +232,36 @@ def resolve_code_symbols(names, image, relocations):
             require(int.from_bytes(raw[4:6],'little')*16==frame and
                     int.from_bytes(raw[1:3],'little')+frame==address,
                     'Code pointer pair disagrees with mapped target')
-        result[name]={'kind':'far-code','frame_load_address':frame,'load_address':address}
+        table_sites=_checked_table_anchors(name,symbol,frame,address,image,relocations)
+        result[name]={'kind':'far-code','frame_load_address':frame,'load_address':address,
+                      **({'table_sites':table_sites} if table_sites else {})}
     return result
+
+
+def _checked_table_anchors(name, symbol, frame, address, image, relocations):
+    """integ30: entries of a reviewed far-pointer table (function-evidence island
+    `far_pointer_table32` inside an instruction-verified procedure).  Each entry is
+    the original relocated segment:offset of this alias's mapped entry."""
+    rows=symbol.get('table_anchors',[])
+    if not rows:
+        return []
+    from function_evidence import reviewed_functions
+    islands=[(f['name'],island) for f in reviewed_functions(image).values()
+             for island in f.get('data_islands',[]) if island.get('kind')=='far_pointer_table32']
+    sites=[]
+    for anchor in rows:
+        at=anchor['site']; raw=bytes.fromhex(anchor['hex'])
+        inside=[n for n,island in islands if island['load_offset']<=at and
+                at+4<=island['load_offset']+len(bytes.fromhex(island['hex'])) and
+                (at-island['load_offset'])%4==0]
+        require(set(anchor)=={'caller_task','site','hex','relocation'} and
+                len(raw)==4 and image[at:at+4]==raw and len(inside)==1 and
+                anchor['relocation'] in relocations and anchor['relocation']['load_offset']==at+2 and
+                int.from_bytes(raw[2:4],'little')*16==frame and
+                int.from_bytes(raw[0:2],'little')+frame==address,
+                'Code table anchor differs from its reviewed far-pointer table: '+name)
+        sites.append(at)
+    return sites
 
 
 def resolve_callback_pointer(image, relocations):
@@ -454,6 +483,16 @@ def resolve_recipe_symbols(recipe, image, relocations):
                         require(type(width) is int and width > 0,
                                 'DSEG displacement lacks reviewed object extent')
                         result[fix['target']]['width']=width
+        # integ38: a DGROUP-framed external with an addend (the high word of a
+        # dword, `_timer_callback_counter+2`) stays inside its reviewed object
+        # extent; the binder checks 0 <= displacement < width.
+        for fix in recipe['expected_fixups']:
+            if (fix['frame_method']!=0 and fix['target_kind']=='external' and
+                    fix['displacement'] and fix['target'] in result):
+                width=checked_dgroup_layout(image,relocations)['symbols'][fix['target']].get('width')
+                require(type(width) is int and width > 0,
+                        'DGROUP displacement lacks reviewed object extent')
+                result[fix['target']]['width']=width
         check_folded_recipe(recipe,result,image)
         return result
     if mode in ('external-far-call-v1','asm-external-far-call-v1'):
@@ -551,9 +590,14 @@ def resolve_near_code_symbols(names, recipe, image):
             require(type(line) is int and 1<=line<=len(lines) and
                     lines[line-1].strip().lower()==(name[1:]+':').lower(),
                     'Near label lacks pinned source declaration')
+            # The containing extent may also be emission-verified with both
+            # boundary evidences (as for entries above); the label must still be
+            # an original instruction boundary of it (integ30, L3-asm).
             containing=[f for f in inventory['functions'] if
                         f.get('start',10**9)<=address<f.get('end',-1) and
-                        f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' and
+                        (f['status']=='BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED' or
+                         (f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED' and
+                          f.get('start_evidence') and f.get('end_evidence'))) and
                         f.get('segment_paragraph',-1)*16==frame and
                         sha(image[f['start']:f['end']])==f['sha256'] and
                         any(_complete_target_owner(owner,f) for owner in owners)]

@@ -498,7 +498,7 @@
     },
     {
       "name": "sprite_set_1_size",
-      "public": "_sprite_set_1_size",
+      "public": "_sprset1size",
       "stable_id": "load_2327f",
       "start": 143999
     },
@@ -555,13 +555,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_video_clear_color",
-        "offset": 674,
+        "name": "_sprset1size",
+        "offset": 633,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_set_1_size",
-        "offset": 633,
+        "name": "_video_clear_color",
+        "offset": 674,
         "segment": "S012_TEXT"
       },
       {

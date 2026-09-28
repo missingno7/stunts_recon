@@ -21,7 +21,7 @@ def asm_source(source):
     return text.replace('\n', '\r\n').encode('ascii')
 
 
-def assemble_source(source, profile):
+def assemble_source(source, profile, communals=None):
     require(profile == 'masm510-game', 'Unknown ASM reproduction profile')
     config, runner = verify_toolchain(profile)
     staged = asm_source(source)
@@ -48,7 +48,8 @@ def assemble_source(source, profile):
     if result.returncode or data is None:
         raise CompileFailure(f'Assembler failed; see {work / "assembler.log"}', receipt, 'ASSEMBLER_ERROR')
     try:
-        obj = read_object(data)
+        # integ39: MASM `COMM NEAR` COMDEFs only for reviewed recipe declarations.
+        obj = read_object(data, communals=communals)
     except ValueError as error:
         raise CompileFailure(str(error), receipt, 'UNSUPPORTED_OBJECT') from error
     return obj, receipt

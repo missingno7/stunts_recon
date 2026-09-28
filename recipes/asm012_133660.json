@@ -3,8 +3,46 @@
     "/Mx",
     "/I."
   ],
+  "dgroup_word_fill": {
+    "basis": "link-dgroup-word-alignment-v1",
+    "segment": "_DATA"
+  },
   "end": 133840,
   "expected_fixups": [
+    {
+      "displacement": 5,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 4,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 0,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 4,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 4,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 2,
+      "segment": "_DATA",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 4,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
     {
       "displacement": 0,
       "encoded_addend": "0000",
@@ -16,10 +54,10 @@
       "offset": 2,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_kb_readchar_callback",
-      "target_index": 2,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -33,14 +71,14 @@
       "offset": 47,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_kb_readchar_callback",
-      "target_index": 2,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
-      "displacement": 0,
+      "displacement": 2,
       "encoded_addend": "0000",
       "frame": "DGROUP",
       "frame_index": 1,
@@ -50,10 +88,10 @@
       "offset": 53,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_readchar_callback_seg",
-      "target_index": 3,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -67,14 +105,14 @@
       "offset": 58,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_kb_readchar_callback",
-      "target_index": 2,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
-      "displacement": 0,
+      "displacement": 2,
       "encoded_addend": "0000",
       "frame": "DGROUP",
       "frame_index": 1,
@@ -84,10 +122,10 @@
       "offset": 62,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_readchar_callback_seg",
-      "target_index": 3,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -153,7 +191,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_word_305F8",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -170,7 +208,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_timer_copy_unk",
-      "target_index": 4,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -339,8 +377,6 @@
   "object_declarations": {
     "externals": [
       "_timer_get_counter",
-      "_kb_readchar_callback",
-      "_readchar_callback_seg",
       "_timer_copy_unk",
       "_word_305F8"
     ],
@@ -405,6 +441,11 @@
         "name": "_kb_check",
         "offset": 76,
         "segment": "S012_TEXT"
+      },
+      {
+        "name": "_byte_3FE00",
+        "offset": 4,
+        "segment": "_DATA"
       }
     ],
     "segments": [
@@ -418,7 +459,7 @@
         "combine_code": 2,
         "frame": null,
         "index": 1,
-        "length": 0,
+        "length": 5,
         "name": "_DATA",
         "offset": null,
         "overlay_index": 1,
@@ -477,6 +518,27 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
+  "review_notes": [
+    "integ37: DGROUP and assume ds:DGROUP are declared before the module's _DATA segment, so MASM 5.10 emits its data PUBDEFs relative to DGROUP, as an MSC public is. With chksum.asm's NULL linked at the DGROUP base (_DATA no longer starts there) LINK gives F5/external-frame references to these publics the DGROUP frame only in this form; the code, data, publics and FIXUPPs are otherwise unchanged."
+  ],
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 18060,
+      "end": 196097,
+      "expected_relocations": [
+        {
+          "load_offset": 196094,
+          "offset": 65022,
+          "segment": 8192
+        }
+      ],
+      "start": 196092,
+      "target": {
+        "sha256": "4304d820f79b05187a9a6c9a1dfcdd38e9a8ec608a26f6328a37abdf68a1f47c",
+        "size": 5
+      }
+    }
+  },
   "source": "asm/asm012_133660.ASM",
   "stable_id": "multi_asm012_133660",
   "start": 133660,

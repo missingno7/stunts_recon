@@ -2,7 +2,7 @@
 
 The byte oracle is reconstructed from the four supplied assets using DSI, DIF and EXEPACK decoding. `layout/oracle.lock.json` fixes asset identities, header metadata, complete unpacked image, and the ordered MZ relocation table. The independently unpacked comparison is preserved in `evidence/unpack.json`. Verification never updates expected bytes.
 
-The manifest partitions every initialized load-image byte into matching C CODE/data, matching ASM CODE/data, pinned runtime, or explicit raw ownership. A C CODE owner lists its complete `data_intervals`; each initialized interval also has one `MATCHING_C_DATA` partition owner tied to that CODE owner. `_BSS` contributions use a separate `bss_owners` partition of the verified startup clear range and contribute zero bytes, including any overlap with file-end zero fill. New C recipes must consume every nonempty SEGDEF as a full CODE or reviewed DGROUP contribution. Empty declarations, full public/external lists, all OMF fixups, and exact ordered relocations are checked. No secondary interval may overlap an unrelated accepted owner. An accepted data interval can be subsumed by a larger exact contribution only when its complete extent and bytes remain exact and the recipe names it in `subsumed_data_owners`. Unknown OMF records, corrupt checksums, holes, overflow, and unsupported communal/BIG/32-bit storage fail closed. COMDEF communal allocation is explicitly deferred: neither its allocation order nor its storage ownership is inferred, and production rejects it. MSC B4/B6 local externals/publics are parsed with their scope intact: each local external resolves to a distinct public inside the object, cannot shadow a global binding, and each local CODE public must be a complete reviewed member of a group recipe. Diagnostic object inspection cannot grant acceptance.
+The manifest partitions every initialized load-image byte into matching C CODE/data, matching ASM CODE/data, pinned runtime, or explicit raw ownership. A C CODE owner lists its complete `data_intervals`; each initialized interval also has one `MATCHING_C_DATA` partition owner tied to that CODE owner. `_BSS` contributions use a separate `bss_owners` partition of the verified startup clear range and contribute zero bytes, including any overlap with file-end zero fill. New C recipes must consume every nonempty SEGDEF as a full CODE or reviewed DGROUP contribution. Empty declarations, full public/external lists, all OMF fixups, and exact ordered relocations are checked. No secondary interval may overlap an unrelated accepted owner. An accepted data interval can be subsumed by a larger exact contribution only when its complete extent and bytes remain exact and the recipe names it in `subsumed_data_owners`. Unknown OMF records, corrupt checksums, holes, overflow, and unsupported communal/BIG/32-bit storage fail closed. COMDEF communal allocation order is never inferred: a COMDEF is accepted only as part of the whole LINK c_common unit placed by a real link (integ39 section); any other COMDEF is refused. BSS storage ownership is placed only by a real LINK run (integ32 section). MSC B4/B6 local externals/publics are parsed with their scope intact: each local external resolves to a distinct public inside the object, cannot shadow a global binding, and each local CODE public must be a complete reviewed member of a group recipe. Diagnostic object inspection cannot grant acceptance.
 
 The tested binders support no-fixup contributions, reviewed external DGROUP offsets, external far CALLs, the bounded mixed far-CALL/DGROUP mode, far code-pointer MOV offset/base pairs, paired CS-data offset/base MOVs with far CALLs, and the specific frame-callback object mode. MASM F0 offsets framed by DSEG require exact DGROUP membership and a grounded segment base: either a complete nonempty module DSEG placed by original group-framed CODE references and exact payload, or a zero-length module DSEG tied to the pinned reference first declaration at the independently verified DGROUP base. Bounded displacements must stay inside reviewed data objects. Self-relative external near CALL/JMP fixups require a unique inventory-verified entry or a pinned reference label at a verified original instruction boundary in the caller physical segment, an exact signed displacement, and no MZ relocation. Same-module near JMPs to interior labels require a pinned reference label at an original instruction boundary. The independent DOSBox-X path uses these same binding functions. Secondary DGROUP binding requires exact complete segment length and bound bytes, a raw or exactly subsumed owner, and at least one original CODE fixup whose target segment, group frame, bounded addend, and pristine operand independently place that whole contribution. Every data fixup is bound through reviewed code/data symbols or another complete secondary segment; unsupported shapes fail closed. Data-segment relocations are checked against the original ordered MZ table within their complete intervals. DOSBox-X independently recompiles or reassembles and binds each secondary contribution. The symbol tables check original instruction bytes and relocation anchors. The function inventory supplies address and boundary provenance; source names are binding aliases, not claims about original PUBDEF names or original translation units.
 
@@ -162,3 +162,342 @@ A reviewed far-code alias may name the verified entry of any listed prefix membe
 **Link-faithful ASM.** Every ASM contribution's code segment is the output segment of its original code frame (`S002_TEXT`, `S012_TEXT`, `S018_TEXT`; class CODE; reconstruction names spelled like C objects compiled as `S0nn.C`), BYTE-aligned when it starts at an odd address. An external far pointer or segment word framed on the module's own code segment (F0: `extrn X:far` declared inside the segment) must name a target in the module's own original frame; otherwise the declaration belongs outside every segment (F2), where LINK frames on the target (`tools/link_frames.py`, checked in every probe and in the DOSBox-X crosscheck; `python tools/link_frames.py` lints sources). Cross-object references of ASM modules use the defining public (`_add_exit_handler`, `_kb_checking`, ...), and the interior label `_loc_3180A` is a declared embedded public of `asm012_137138`.
 
 **Negative folded index, strlen form.** A byte array may bind `a[strlen(a) - k]` (k <= 4) as the addend `-k` when the recipe lists `negative folded index a[strlen(a)-k]` with the `strlen_site`, and the original procedure computes the index immediately before the runtime-indexed access by the pinned inline strlen of the same array (`mov di,offset a` with its own zero-addend FIXUPP ... `repne scasb`, `not cx`, `dec cx`, `mov R,cx`). seg030 `audio_make_filename` binds `audio_filetemp[strlen(audio_filetemp) - 4]` this way.
+
+# One program-wide name per address, embedded publics, far-pointer tables and the pinned-library link (integ30)
+
+**Names registry.** `layout/names-registry.json` records one public name per load address for every address that accepted objects named in more than one way (the integ28 plan C + readability registry, plus integ30 choices that keep an existing spelling, the pinned CRT0 `_main` EXTDEF for the program entry, and the pinned runtime publics `_exit` and `_sprintf`). Every accepted defining and referencing C, ASM and data-only object now uses these names. Each changed C translation unit compiles to the identical object apart from names, both under the pinned MS-DOS Player and under the independent DOSBox-X. The seg000 exactness band is re-measured on both hosts, and a rename that only MS-DOS Player tolerated was compensated with readable underscore spellings of seg000-only names. Names remain address-bound binding aliases and pressure-constrained reconstruction choices. Only `_main`, `_exit` and `_sprintf` rest on original evidence: pinned CRT0 and library PUBDEF/EXTDEF names. A defining object may spell a code public with the registry name of its inventory entry. `asm_module.registry_publics`, which `expected_publics` uses for group members, ASM modules, single ASM recipes and record-closed prefixes, reads the registry row (kind `code`, `inventory_name`, at most 30 identifier characters, so MASM 5.10 and MSC 5.10 emit the same spelling). Tests check that each code row's address is its inventory entry and that no accepted object still declares a superseded spelling. The MASM-31/MSC-32 truncation pair became `load_shape2d_res_nofatal_thunk` and `load_shape2d_nofatal_thunk`.
+
+**Track constants.** In `track_constants_module`, the three 21-word bound tables are split at the table bases that original code addresses separately: `loopSurface_ZBounds0[7]`/`loopSurface_XBounds0[14]`, `loopBase_ZBounds0`/`loopBae_InnXBounds0`/`loopBase_OutXBounds0[7]`, and `highEntrZBounds0`/`highEntrXInnBounds0`/`highEntrXOutBounds0[7]`. The bytes are unchanged. The other IDA labels (`*Bounds1`, `loopSurface_maxZ`, `aCar1`..`aExp3_1`) are folded element addresses: they are indexed with the same `step` beyond a one-element extent, and MSC word-aligns separate char arrays, which rules out odd-address strings. seg004 now writes them as `a[step + 1]`, `loopSurface_ZBounds0[3]` and `aCar0[k]` (`extern char aCar0[][5]`), and its code bytes are identical. The addends bind only through reviewed field anchors: the original instruction of each former label is recorded as a `fields` row of the base symbol. Field width may now be 2, or 5 for the name elements.
+
+**Embedded publics of ASM groups.** An ASM group recipe may list top-level `embedded_publics`, and a one-member group is admitted only to carry them. They may be (a) a CS data island strictly inside a member that is spelled as its reviewed `code_island` alias at exactly that address (`_incnums` in `sub_35C4E`), or (b) an interior label `_loc_XXXXX` that the pinned seg012 listing declares at the recorded line and that is an original instruction boundary of the member (`_loc_35ED9` in `sub_35E08`). Neither kind binds anything. A near-label target may also lie in an emission-verified extent that has both boundary evidences, as entries already may.
+
+**Far-pointer table island.** `function_evidence.REVIEWED_FAR_POINTER_TABLES` admits the `far_pointer_table32` island `compression_type` inside `file_decomp_fatal` under verification kind `embedded_far_pointer_table_v1`. Each check is repeated against the oracle and the pinned listing: the returning indirect far CALL `cs:[bx+24E4h]` names the island; each entry is a relocated segment:offset in the same frame that lands on the verified `file_decomp_rle` or `file_decomp_vle` entry; the pinned `dd` lines lie inside the pinned PROC..ENDP; and the three unreferenced wrapper stubs after the RETF are further entries (a prologue after an unconditional transfer). A far-code alias may carry `table_anchors` (entries of such an island). The composed binder accepts a `pointer32` datum without a preceding CALL/JMP opcode only at such a table site of its own target.
+
+**Pinned-library link experiment.** `python tools/reallink.py --order library --runtime libraries [--library-order runtime-first|game-first|combined] [--game-order oracle|address]` lets LINK search the unchanged pinned `MLIBCR.LIB` and `LIBH.LIB`. Every runtime member therefore carries its real EXTDEFs, PUBDEFs and DGROUP segments. Raw debt names a runtime target by the pinned public at its exact address, or by `__astart`. The pinned members place the runtime in library member-index order per pass. The hypothesis that the game modules were appended to a copy of `MLIBCR.LIB` (`combined`) with seg000-009 explicit reproduces the unit order of EXEPACK banks 0, 1 and 3 exactly. It leaves only bank 2 to the order of the game library members. The experiment grants nothing, and its report records whether the game member order is oracle-derived.
+
+# Whole seg028, data attached to its owner, image-derived link order (integ31)
+
+**Whole seg028.** `obj_seg028` [165436,170708) is one C object (registered `/AM /Ox /Gs`, `_loadds`): 19 members, 278 FIXUPPs, 22 ordered relocations, and a 2-byte declared-uninitialised CODE tail. It subsumes its earlier pieces. The reviewed overlay adds three rows: `sub_38702` [165634,166568) is corrected from the base row [165634,166596) and has its 18-word dispatch in `GENERIC_DISPATCH_SITES` plus a structural post-table `JMP`. `set_chunk_channel` [166568,166596) is an unreferenced static helper, emitted as a local public, whose entry is placed by the verified `RETF`+`90` before it. `loc_390C8` [168136,169050) is a verified-neighbours gap entry near-called by `sub_38DE6`. An `object_tail` may now follow a last member whose reviewed extent ends with its own `RETF` and `90` pad (the pad must be one of the member's `padding_offsets`, `fill_nops` 0). `object_flags.recipe_segments` reads a reviewed overlay's corrected extent. `sub_38702` keeps one redundant `(unsigned char)` cast. It is accepted under the supervisor ruling with a `review_notes` entry. The extern spellings `audiodriverbinary` and `audio_bit_masks` are the accepted seg027 `_DATA` publics at those addresses. The new binding aliases `_audio_event`, `_word_429F2` and the `_word_42A0A` fields are anchored by original operands, and the far-code alias `_audio_init_chunk` by the relocated far CALL at 166011.
+
+**Data belongs to its owner.** Identified TU or module data is attached to its owning object as that object's own complete `_DATA`, and not to a standalone slice. The owner is identified from its code references and the TU data order. MSC emits literals in parse order, and each initialised global is allocated at the end of the next function definition. So data that precedes a TU's first literal belongs to definitions placed before a literal-free function, and data after the last literal belongs to definitions at the end of the file. `promote.apply_ownership` lets an accepted object grow or add a secondary segment over raw bytes (no segment may be dropped). `attach_secondary` then rechecks the exact payload, every cut and the listed subsumed children.
+
+The following were attached, each with the complete object recompiled or reassembled on both hosts:
+- seg009 `_DATA` grows to 339 B (the menu strings and tables).
+- seg003 appends `intro_cliprect` and `intro_colorvalue` (94 B).
+- seg006 grows to 180 B: `primidxcounttab`, `primtypetab`, `invpow2tbl`, `mat_y_rot_angle` and `clipunk`.
+- seg001 grows to 218 B: the steering and physics tables, defined before its first function.
+- seg028 defines `word_407AA`.
+- seg030 grows to 870 B. `audio_make_filename` uses the literal `"."` (the former `unk_407AC`), followed by the dialog colour words and the three material lists with their pointers.
+- seg034 grows to 93 B: the shape extension strings, `word_30BD6` and `palmap`, defined before its literal-free first function.
+- seg017 (mouse) defines its three words `word_40318`, `mousehorscale` and `showmouse` (6 B).
+
+The L4 standalone data modules (`material_tables_data`, `shape2d_extension_data`, `physics_data`, `shape_tables`, `cliprect`, `intro_geometry`) are therefore not published. Their bytes belong to these owners.
+
+**ASM module data.** A whole ASM module, or a group whose extent is bounded by zero fill, may declare its own `_DATA` in DGROUP. The offsets are DGROUP-framed (F1; `offset DGROUP:x`). MASM stores an own-segment offset as the FIXUPP displacement over a zero word, and `_own_addend` accepts that form only for ASM. Data labels that other objects reference are declared PUBLIC and checked like C data publics. A module's data may name its own code (`dw offset proc` / `dw seg proc`, F0 own segment, `module_proof` required). The segment word is an ordered data relocation obligation. The CODE-side binders (`local`, `local_far`) consider CODE FIXUPPs only, and a `_loadds` `base16` to the TU's own `_DATA` stays with the composed binder.
+
+Attached module data:
+
+| Module | Data extent | Contents |
+|---|---|---|
+| `asm012_125482` | [192704,194664) | `atantable`, the 2-bpp expansion table, `_word_2F3C6`, the sphere row table (40 `offset DGROUP:` words) and rows, exit list and message, file-find buffers, video mode bytes |
+| `asm012_132056` | [194778,195400) | callback flags and table, key and joystick data |
+| `asm012_133138` | [195400,196092) | keyboard interrupt data and key maps; the former numeric `[bx+446Ah]`-style operands are now symbolic |
+| `asm012_133660` | [196092,196097) | the `kb_read_char` callback far pointer (relocation 196094) and `byte_3FE00` |
+| `asm012_144064_late` | [199488,199564) | the copyright buffer; `mov ax,5416h` became `offset DGROUP:...+46h` |
+| `asm012_150408` | [199564,199612) | the window strings |
+| `obj_seg002` | [179756,179764) | the divide-by-zero handler words |
+
+The real link now places the 196094 relocation with its module. With the oracle-derived member order, the pinned-library link reproduces all 2,552 mapped relocation positions in all four banks.
+
+**Real link helpers.** `reallink` places `MATCHING_ASM_DATA` like C TU data. It treats the zero byte after an odd-length accepted `_DATA` (133660's 5 bytes) as LINK word-alignment fill: the following raw piece starts at the next word, WORD aligned.
+
+**Image-derived member order (diagnostic).** `--game-order image` merges the code-segment chains: C objects in segment order, and ASM modules in S012/S018 address order. It orders them by each member's DGROUP anchor, which is its own accepted `_DATA` start, else the lowest unowned game-library DGROUP address that only its DS memory operands address. A member without an anchor follows its chain predecessor; `image-back` instead lets such a C member precede its successor. The MZ relocation table is never read. Own-data anchors agree with the oracle load order for all 11 anchored members that carry relocations (0 inversions). The other anchor rule adds 6 members with 1 inversion, a cross-module reference to 141362's `word_30602`. Relocation positions equal (of 2,552), with banks 0, 1 and 3 exact in each case:
+- `address`: 2,107
+- `image`: 2,161
+- `image-back`: 2,098
+
+The placement of dataless members in bank 2 stays undetermined without the oracle.
+
+# Real-link BSS ownership, the link stack recipe and seg012 module data (integ32)
+
+**BSS storage placed by the real link.** Zero-initialised DGROUP storage can be owned in two kinds (`tools/bss_link.py`). Neither kind is placed by the hybrid gate. The recipe's `_BSS` placement is checked against the original code operands as before. Acceptance additionally requires one run of the pinned LINK 3.65 in which the complete candidate state reproduces the image, and that run places the storage.
+- **`link-module-order-v1`: file-scope statics in an object's own `_BSS`.** LINK concatenates the `_BSS` contributions in module processing order. The complete SEGDEF length is the extent. In the real link, the raw BSS debt is one synthetic unit, shrunk by exactly the accepted bytes and linked after every module contribution. It is never sized or split from the oracle to move candidate storage. Accepted static storage must therefore be a prefix of the BSS range in link order. Otherwise the gate refuses, because a raw interval before it could only be sized from the oracle.
+- **The link proof for statics** reads the linked value of every own-`_BSS` code FIXUPP of the object. It also requires the MAP `_BSS` start at `_edata` (199994), whole-image, relocation-set, bank-order, header and packed-file equality, and zero alias shims.
+- **`link-communal-v1`: near COMDEFs.** LINK allocates these in `c_common` after the CRT0DAT XOE marker, in its symbol-table walk: the 8-bit weighted name hash, 256 buckets ascending, and head insertion at first sight. A duplicate COMDEF merges to the larger size, and an even-sized common starts even. `bss_link.communal_order` models this walk (L7-lhashB, checked against the L6-comdef/L7 fixture MAPs), but it is diagnostic only. A communal is proven only by the MAP address of its public name in a real link that reproduces the image. The synthetic raw unit has no names, so that proof becomes possible only when the storage walked before it is real. Production still refuses COMDEF-bearing objects.
+- **Where the proof runs.** Publication (`promote.py`, and `--batch` over the composed survivors) runs this staged real link, `reallink.run(stage=...)`, for any candidate claiming `_BSS` or communals. `validate.py` re-runs it whenever the manifest holds accepted BSS storage. Each accepted `bss_owners` row must carry its `placement` kind.
+- **The corrected COMDEF parser.** `bss_link.parse_comdef` reads the numeric leaves `81h`/`84h`/`88h` and the 62h near / 61h far forms. The pinned `_file.c` buffers are near and 512 bytes each. The L5 scanner bug was in a worker script, not in `tools/`.
+- **Prototype.** seg000 with `static short word_40D3A, word_40D3C` passes the strict gate and the staged real link. The real link places its 4-byte `_BSS` at 199994 and 199996 (4 linked references), with the synthetic unit at [199998,222352). It is not published. The four following words (199998..200004) are also referenced only by seg000. With six statics, MSC's static allocation order differs from the target order (L6-bssB), so the object's complete static set is still open.
+
+**Link recipe.** `reallink` links with `/ST:8000`. The stack contribution is the pinned CRT0 STACK SEGDEF (2,048 bytes, paragraph aligned, combine stack, in DGROUP). No synthetic stack exists. With `/ST:n`, the linked STACK and the MZ SP are `n`, even with an explicit CRT STACK; without it, STACK contributions add (L6-comdef `MAP_STACK_SUM_ST`). The oracle SP 8000 therefore records the link option. When LINK loads the pinned runtime libraries, their own CRT0 supplies the STACK.
+
+**Published.**
+- **Whole seg003 `_DATA` [179764,180672), 908 bytes.** The `init_crak` resource IDs are one natural table, `static char init_crak_resource_names[2][5]` (L7-s003lit; this supersedes the NUL-packed form). The fence list `unk_3C0F8` is its four pairs (8 bytes). The four horizon corner angles form a separate `short horizon_angles[4]`, which skybox_op reads as `horizon_angles[slope - 2]` inside `for (slope = 2; slope < 6; slope++)`: a loop-bounded negative folded index whose `-4` addend is the former label `word_2C0FC`. The object no longer references its own data through an external alias.
+- **seg004 and seg008 renames.** The seg004 static tables became `arrowConn0`/`arrowConn1`, and the seg008 `dlg_colour`/`performGraphColor` declarations became `int` (L6-names). The other 32 L6-names rows were identical to canonical.
+- **Eight whole seg012 ASM modules with DGROUP `_DATA`** (L6-asm12): 133840, 135290, 139610, 139968, `file_write_entries`, 140718, `sincos` (the 514-byte sine table) and 141210. `asm012_141210` declares `_word_405FE` PUBLIC.
+- **`asm012_137138` owns `_DATA` [197406,197418).** This is `_word_4031E`, `_word_40320` and the `_spritefunc`/`_imagefunc` far pointers, with `dw seg S012_TEXT` words at relocations 197412/197416. L6-asm12 proposed a separate `DSEG` (class `STUNTSD`) segment of 125482. That is not link-faithful: LINK places a segment of another class as a whole, apart from `_DATA`, and one module's `_DATA` is contiguous. The contributions between seg017's data (ending 197406) and 139610's data (from 197418) in link order are therefore the only possible owners. 137138 is one of them, and its own code writes and calls the two pointers. The real link reproduces the image and bank order with this owner.
+
+**Still open.**
+- `fontdefseg` [198144,198146) is the relocated segment word `0x2B1F`, the paragraph of the accepted far-data unit at 176624 (`F6245_DATA`, Restunts `seg039`). `word_30602` [198146,198148) holds 10. Both are placed in 141362's module by link order, but a far-data `dw seg` binder is missing.
+- The zero at 196097 lies between 133660's odd 5-byte `_DATA` and 133840's WORD-aligned `_DATA`. It is LINK word-alignment fill (the real link writes no byte there), but it stays raw until a DGROUP alignment-fill owner kind exists.
+
+# Readable registry names, far-data segment words and DGROUP word fill (integ33)
+
+**Readable names.** `layout/names-registry.json` adds 205 reviewed names from the L7-naming proposal (47 code, 158 data; 382 addresses in total). Each is a readable semantic name taken from accepted usage. Like every registry name it remains an address-bound binding alias, not a recovered original. All 16 affected C translation units, the data-only `track_constants_module` and seven ASM modules were renamed with `namefit.apply_map` plus reviewed local renames (for example `var_2` became `suppress_car_speed` and the seg003 `wheel_update` parameters got names). Each compiles or assembles to the identical object apart from names, on both hosts, and the real link stays exact with no alias shims. The review corrected or rejected these names:
+- `fence_off_3` and `fence_off_4` are swapped to follow `update_frame`'s `nfences` use.
+- `edge_state` became `track_edge_points`.
+- `state_a`/`state_b` became `resmem_end_seg`/`resmem_base_seg`. These are the DOS resource block end and base paragraphs of `asm012_135290`.
+- Rejected: `scene_angles`, because since integ32 that address is the folded `horizon_angles[slope-2]` addend. Also rejected: `hill_offs_b/c/d`, which are interior element addresses of `hill_offs[9][2]` with no object and no reference.
+
+The two `resmem_*` rows are module-private labels: no object declares any spelling of them. They carry `object_declared: false`, and the registry test checks instead that no accepted object declares any alias at that address. Pressure windows measured with the final names are:
+- seg005 exact through +3 name characters (first failure +4, in `loop_game`);
+- seg003 exact through +128 (first failure +136, in `update_frame`);
+- seg001 exact through at least +120.
+
+**Far-data segment words.** A DGROUP datum `dw SEG sym` of an ASM module may name a public of an accepted far-data module. The recipe lists it under `secondary_external_targets.far_data`. MASM emits a base16 FIXUPP whose target and frame are that EXTDEF (F2), and LINK writes the module's paragraph and an MZ relocation. `secondary_contribution._data_fixups` accepts this form only when the word is one of the far-data module's own reviewed `data-segment-word` placement anchors at exactly that site and address. The anchor is rechecked against the pinned `dw seg` declaration, and it must be the public at that offset (`data_only.far_data_segment_targets`, `_checked_far_anchor`). The CODE binder ignores an EXTDEF that only a data segment names. `asm012_141362` now owns `_DATA` [198144,198148): `_fontdefseg dw seg _fontdef_default` (relocated paragraph 0x2B1F of `fardata_11039`) and `_word_30602 dw 10`, both PUBLIC. The owner follows from link order: between the data of `asm012_141210` and `obj_seg027` the only module that can hold a segment word is this ASM module (C cannot initialise one), and its own code reads `fontdefseg`. The real link places the data and its relocation exactly.
+
+**DGROUP word-alignment fill.** `LINK_FILL` gains a second basis, `link-dgroup-word-alignment-v1` (`link_fill.checked_word_fill`). Such a fill is one zero byte at an odd initialised DGROUP address. It sits after a complete accepted DGROUP contribution with an odd end (the object's whole emitted segment) and before an accepted DGROUP contribution whose own SEGDEF is WORD aligned. It is re-derived from both neighbours on every build. A recipe claims it with `dgroup_word_fill: {segment, basis}`; `promote.attach_dgroup_word_fill` replaces exactly one raw byte and is idempotent on republication. `reallink` links nothing for it. The owned fills are:
+
+| Byte | Follows | Precedes |
+|---|---|---|
+| 190343 | `obj_seg004:_DATA` | seg005 |
+| 191519 | `obj_seg008:_DATA` | seg009 |
+| 196097 | `asm012_133660:_DATA` | 133840 |
+| 199481 | `obj_seg031:_DATA` | seg032 |
+
+The zero bytes at 191859, 199705 and 199993 also follow odd ends, but the next contribution is raw (runtime data or `_BSS`), so they stay raw.
+
+# First game BSS ownership, image-derived static order and CODE word fill (integ34)
+
+**seg000's complete static set.** `obj_seg000` now owns `_BSS` [199994,200006): six `static short` file-scope statics (L8-msstatic), the object's complete static set, so no partial set is published. The 20 high-score references are the object's own `_BSS` FIXUPPs at offsets 0..10; the code bytes, the 1,864 ordered FIXUPPs and the 691 relocations are unchanged. MSC 5.10 allocates file statics in an order that depends on the identifier spelling (a compiler symbol hash; declaration and first-use order do not matter for file statics, L8-msstatic fixtures), so the six readable names `hiscore_rank_prev`, `hiscore_old_entry`, `hiscore_opponent_earlier`, `hiscore_current_place`, `end_hiscore_random` and `hiscore_opponent_live` are **compiler-hash-constrained reconstruction names**, the same class as pressure- and link-hash-constrained names and never recovered originals. The recipe's `review_notes` and the registry rows (`object_declared: false`, module-private) record this; they supersede five integ33 readable names, whose now-unreferenced data-symbol clone aliases were removed. The synthetic raw BSS unit shrinks by 12 bytes to [200006,222352).
+
+**Image-derived static order (`image-code-segment-order-v1`).** A `link-module-order-v1` claim is now decided without the real link's processing order, which is oracle-derived. `bss_link.independent_static_order` uses two LINK facts: with `/DOSSEG` the CODE-class segments are laid out in the order in which LINK first sees their names while processing modules, and the `_BSS` contributions are concatenated in module processing order. It also uses one image fact: the load-image start of every code segment (the reviewed unit map, never the relocation table). The owner must be the only declarer of its one nonempty CODE segment. A module that is the only declarer of a CODE segment laid out earlier was processed before the owner. A module whose CODE SEGDEFs all lie later was processed after it. Any other module with a nonempty `_BSS` (no CODE SEGDEF, an unplaced or a shared earlier segment) is ambiguous and refuses the claim. The predicted start is `_edata` plus the aligned `_BSS` of the earlier modules, and it must equal the claimed start. This check is in addition to the linked operands, the MAP `_BSS` start and whole-image, relocation, header and packed equality. The trailing synthetic unit is linked after every module by construction and takes no part. For seg000 the owner introduces `S000_TEXT`, the first code segment of the image, and no other linked module has `_BSS`, so the start 199994 = `_edata` follows independently. Publication and `validate.py` run the same gate.
+
+**CODE word-alignment fill.** `LINK_FILL` gains a third basis, `link-code-word-alignment-v1` (`link_fill.checked_code_word_fill`). It is the code-segment analogue of the integ33 DGROUP rule: one zero byte at an odd code address. It follows a complete accepted code contribution (C, ASM or pinned runtime member; not a prefix) whose own emitted CODE SEGDEF is exactly its extent, and precedes a complete accepted code contribution whose own CODE SEGDEF is exactly its extent and WORD aligned. It is re-derived from both neighbours on every build: the recipe's verified object declarations, or the hash-pinned library member itself. Most such bytes lie between pinned runtime members, which have no recipe, so the rows are published through the manifest-row transaction of `promote_runtime.py` (a `LINK_FILL` candidate replaces exactly one raw byte). `reallink` links nothing for them; LINK recreates each byte from the follower's WORD alignment, and the real link stays byte-exact. The 14 owned fills are 123425, 123685, 123779, 123807, 123835, 123915, 124295, 124903, 124987, 125207, 125313 (between runtime members), 125447 (`uldiv` before `polarRadius3D`), 139609 (`asm012_137138` before `asm012_139610`) and 171213 (`obj_seg029` before `audio_make_filename`). The two runtime-internal fills at 118055 (after `dos\crt0.asm`) and 124475 (after `dos\raise.asm`) stay raw, because their runtime neighbours are raw.
+
+**DGROUP fills re-checked.** 191859 is still followed by raw runtime data (CRT0 `_DATA`). 199705 is still followed by the unexplained raw bytes [199706,199708) and then CRT0DAT `CDATA`. 199993 now precedes an accepted WORD-aligned `_BSS` (seg000), but its predecessor, `dos\nmsghdr.asm` EPAD [199992,199993), is still raw runtime secondary data. None of the three is provable yet.
+
+# Raw BSS placeholders, statics after raw predecessors and diagnostic hash models (integ35)
+
+**Raw BSS debt keeps its place.** The one trailing synthetic BSS unit is gone. Raw BSS debt is now placed like raw code. `layout/manifest.json` `bss_owners` partitions [199994,222352) into:
+- one `UNRESOLVED_RAW` row per object whose `_BSS` is not accepted (`raw_form: object-bss`, `object` = its `layout/link-objects.json` id), with the complete extent;
+- the one LINK word-fill byte 205383 after the odd 1,907-byte seg007 extent (`link-word-fill`, not linked: LINK re-creates it from the next WORD-aligned `_BSS`);
+- the raw communal unit [XOE,_end) = [207396,222352) (`communal-unit`, last).
+
+Each raw row must equal a row of `evidence/bss-partition.json` (the L8-bsspre address accounting of [_edata,XOB) = 7,401 contribution bytes plus one fill byte). An accepted `_BSS` row must replace exactly its own object's whole placeholder (`bss_link.check_partition`, `promote.attach_secondary`). No object has two rows, and no evidence row may be dropped. These extents are oracle-sized raw debt. They never size or place accepted storage.
+
+**Linking placeholders.** `reallink` links each placeholder as a raw `_BSS` SEGDEF (WORD aligned, no bytes) immediately after its object's unit (`place_bss_placeholders`), where the object's own `_BSS` would be. The communal unit is a raw `c_common` segment (class BSS), so it follows every `_BSS` contribution. The pinned `output.c` placeholder must equal that member's 38-byte `_BSS` SEGDEF. Its start must equal the address that all 164 of its own-`_BSS` FIXUPP operands in the image give, 207000 (`bss_link.grounded_member_bss`). Every placeholder that defines a public, and the c_common start, must link at its partition address, or the BSS gate refuses. The real link stays byte-exact (image, relocation set and bank order, header, packed file), with 0 alias shims and `_BSS` 7,402 bytes up to `c_common` at 207396.
+
+**Statics after raw predecessors.** `bss_link.independent_static_order` (image-code-segment-order-v1) gains two cases:
+- A placeholder module carries `host`, the last module of its object, and takes that module's processing position.
+- A pinned-runtime placeholder whose host position is undetermined carries `grounded`: its image-operand start (shared `_TEXT`). It counts as earlier or later than a claim by address, and it must fit exactly at its turn in the predicted concatenation.
+
+The predicted start is still `_edata` plus the aligned earlier contributions. Oracle sizes enter only through raw placeholders.
+
+**Published.** Six complete static sets (L9-bssS, s009bss), each placed by the staged real link and the independent order proof:
+
+| Object | `_BSS` range | Size | Contents |
+|---|---|---|---|
+| seg001 | [200006,200042) | 36 B | two `struct MATRIX` |
+| seg008 | [205384,205400) | 16 B | eight `int` |
+| seg009 | [205400,207000) | 1,600 B | six far-pointer objects |
+| seg027 | [207038,207086) | 48 B | two `unsigned char[24]` |
+| seg028 | [207086,207382) | 296 B | 260-byte buffer and three `struct AudioEvent` |
+| seg032 | [207382,207396) | 14 B | six `short` and one near `char *` |
+
+seg009 is the canonical source with only `extern` changed to `static` (codegen unchanged, msc510-codegen O13). The fitted spellings are compiler-hash-constrained reconstruction names (recipe `review_notes`; registry rows `object_declared: false`). The 15 superseded integ33 clone aliases were removed from `layout/data-symbols.json`. seg005 (class 2 name placement, plus a `loop_game` temporary home), seg006 and seg007 (ASM, code raw) remain raw placeholders. Accepted BSS is 2,022 bytes. Raw BSS is 5,341 bytes of game object placeholders, 38 of pinned runtime (`output.c`), 1 byte of fill and 14,956 bytes of communal debt. `validate.py` reports these per object.
+
+**Runtime startup group (diagnostic).** With the pre-XOB chain explicit, a real link in which the raw CRT0DAT unit carries the pinned member's zero-length DGROUP SEGDEFs in pinned order places XOB = XO = XOE = 207396. The MAP BSS class order is `_BSS`, XOB, XO, XOE, `c_common`, and image, relocations, header and packed file stay exact (`build/workers/integ35/xob_probe.py`). This supports the rule, but it is not acceptance. The group stays raw until four pieces exist:
+1. `reallink` links the pinned member OBJ itself. Today a member with DGROUP data is linked as raw bytes, so a runtime DGROUP segment model must carve its `_DATA`/CDATA out of raw DGROUP debt.
+2. A runtime storage anchor places a zero-length BSS-class section from the MAP of a staged real link, with the independent prediction above. `promote_runtime.py` runs no real link today.
+3. A runtime-owned `bss_owners` row takes `output.c`'s 38 bytes (anchored by its own operands).
+4. Binder handlers cover the `output.c` 22-word local table, the bounded 20-byte `__cfltcvt_tab`, and zero-fixup accepted providers (the L2-rt prototype). The L2-rt data-alias XOB anchor is not link-derived and stays rejected.
+
+**Diagnostic models.** `tools/communal_order.py` (LINK 3.65 communal walk, L9-lhashX) and `tools/msc_static_model.py` (MSC 5.10 file-static order, L9-mschash) are documented DIAGNOSTIC modules, and `bss_link` is their only importer (`communal_order`, `static_order`, `static_order_residual`). No gate calls them. Regression fixtures:
+- `tests/fixtures/link365_communal_fixtures.json`: five fresh real-LINK MAPs;
+- `tests/fixtures/msc510_static_order_fixtures.json`: 36 corpus fixtures, 8 held-out fixtures and one typed layout, compiled by the pinned MSC 5.10.
+
+# Pinned runtime startup group placed by the real link (integ36)
+
+**Accepted.** The 12 remaining startup members of the pinned `MLIBCR.LIB` are pinned runtime owners: `dos\crt0.asm`, `dos\crt0dat.asm`, `crt0fp.asm`, `dos\stdenvp.asm`, `dos\stdalloc.asm`, `chkstk.asm`, `write.asm`, `dos\raise.asm`, `abort.asm`, `output.c`, `printf.c` and `sprintf.c`. That is 3,702 code bytes with their complete ordered FIXUPPs and MZ relocations (L2-rt candidates). Every member's bytes are the hash-pinned member bound by `runtime_binding`, and every placement of its DGROUP storage is reproduced by one staged run of the pinned LINK 3.65. This supersedes the integ23 statement that CRT0DAT's BSS-class sections fail closed. It also supersedes the integ35 "runtime startup group (diagnostic)" list.
+
+**Runtime DGROUP model (`reallink.runtime_link_plan`).** The real link now links the hash-pinned member OBJ of every accepted runtime owner with DGROUP storage, not raw bytes. The member's initialized storage rows are carved out of the raw DGROUP units (`reallink.carve`), and LINK places those contributions itself. Two cases keep a member raw:
+- a BEGDATA segment: `chksum.asm` NULL would move the zero-length DSEG prelude off the DGROUP base;
+- a COMMON segment whose complete pinned overlay is not supplied by linked members. PAD [199973,199992) and EPAD [199992,199993) are the complete MSG COMMON; `abort.asm` supplies the 19-byte PAD.
+
+With the pinned CRT0 linked, its STACK SEGDEF is the stack (`/ST:8000`), its MODEND is the entry, and LINK defines `_edata`/`_end` itself. Raw MSG pieces follow the MSG address chain. The real link stays byte-exact: image, relocation set and bank order, header and packed file, with 0 alias shims. The MAP places CDATA at 199708, XIFB..XCFE and XP from 199722, HDR/MSG/PAD/EPAD from 199726, `_BSS` [199994,207396), XOB=XO=XOE=207396, `c_common` [207396,222352) and STACK at 222352.
+
+**Linked storage (`ownership: linked`).** A runtime storage row is either `proven-raw` (explicit raw debt, re-proven on every build) or `linked`. A linked row keeps its independent anchor (data alias with original operands, unique literal, CRT DGROUP order, or own operands) and is owned as pinned runtime data:
+- An initialized segment gets one `KNOWN_TOOLCHAIN_LIBRARY_DATA` owner row (`parent`, `segment`, extent, target identity), carved out of raw DGROUP. `build_exact` takes its payload from the member's bound `secondary_payloads`. `validate_layout` requires exactly one row per linked row. A linked row is a public DGROUP contribution, or the sole declaration of a COMMON segment (CRT0DAT CDATA). The multi-member MSG COMMON overlay and the stack stay `proven-raw`.
+- A member's own `_BSS` gets one `bss_owners` row of the same kind with placement `link-runtime-member-v1`. It replaces exactly its object's raw placeholder and is anchored by `member-operands-v1`. For `output.c` that is 38 B at 207000: all 164 own-`_BSS` FIXUPPs of the hash-pinned code, read from the image, give that one base (`bss_link.grounded_member_bss`).
+- A zero-length BSS-class section (CRT0DAT XOB, XO, XOE) takes only the anchor `real-link-v1`. Its independent prediction is the end of the complete `_BSS` class in the checked `bss_owners` partition, 207396. DOSSEG class order puts `_BSS` first, then CRT0DAT's BSS sections in pinned SEGDEF order, then `c_common`. A data alias at that address (the L2-rt `_unk_42A24` anchor) is refused for a zero-length section: it is not derived from the link.
+
+**Placement by the real link (`reallink.runtime_placement`).** For every linked row of every linked member, the real link must give at least one reading, and all readings must equal the row:
+- a MAP public of the member in that segment;
+- the linked value of every own-segment DGROUP offset FIXUPP in the member's linked code;
+- the only occurrence in the linked DGROUP of a fixup-free contribution's bytes;
+- the MAP segment, when the member is the only declarer (for a COMMON segment, its whole extent).
+
+`link-runtime-member-v1` rows are decided by `bss_link.check_runtime_bss`: the image-grounded start, the linked own-operand start and the MAP `_BSS` start at `_edata`. `bss_link.gate` refuses any runtime placement problem. `promote_runtime.py` runs this staged real link (`bss_link.runtime_gate`) for every member or storage candidate after the fresh hybrid build. `validate.py` re-runs it whenever the manifest holds linked runtime storage or accepted BSS.
+
+**Binder additions.**
+- Reviewed in-member dispatch tables (`code_tables`) replace the unused, unproven `code_table_fixup_offsets` list. The `JMP CS:[BX+table]` FIXUPP must address the table, and every table word must be an own-segment offset16 FIXUPP (frame `_TEXT`) naming the member's own code outside the table. The entry count is bounded by one of two forms:
+  - `unsigned-guard-v1`: `CMP AX,n-1; JBE` into `ADD AX,AX; XCHG BX,AX`. `output.c` has 22 words at +728, dispatched at +382 and guarded at +368.
+  - `member-prefix-v1`: the table fills the bytes before the member's first public. `dos\raise.asm` has 6 words at +0, dispatched at +82.
+- The bounded `__cfltcvt_tab` (`pinned-fptrap-table-v1`, L2-rt) covers the pinned reference span of five `dd __fptrap` labels, 20 bytes at the anchored 192388. Its five original relocated pointers name the accepted `__fptrap` entry, and only the element addends 0, 4, 8, 12 and 16 are allowed. The `cmiscdat.asm` member itself stays raw because its FIXUPPs lie over iterated LIDATA.
+- An accepted zero-fixup member without a binding (`strlen.asm`, `ultoa.asm`) provides its pinned publics to group binding only as the unchanged canonical row of a complete `_TEXT` member.
+
+**Published.**
+- The 12 members, with owned linked data: CRT0 `_DATA` [191860,191948), CRT0DAT `_DATA` [191948,192028) and CDATA [199708,199722), CHKSTK `_DATA` [192032,192038), OUTPUT `_DATA` [192346,192365) and `_BSS` [207000,207038), and CRT0FP/ABORT MSG [199864,199903)/[199940,199973).
+- The previously accepted members' proven-raw rows became linked through `RUNTIME_STORAGE` candidates, which change only the listed rows' ownership. These are CRT0MSG `_DATA`/MSG, STDARGV, DOSRET, NMALLOC, AMALLOC, RAND and SIGNAL `_DATA`, and NMSGHDR HDR: 498 B of owned runtime data in all.
+- Fills: code 118055 (crt0 before crt0dat) and 124475 (raise before rand). DGROUP word fills 191859 (seg009 `_DATA` before CRT0 `_DATA`) and 192365 (OUTPUT `_DATA` before NMALLOC `_DATA`) are published through the same manifest-row transaction, whose follower is owned runtime data.
+
+Raw initialized bytes went from 7,416 to 3,212, and the pinned-runtime raw BSS (38 B) is 0.
+
+**Still raw.** Game code is seg007 [93102,95408), 2,306 B. The rest:
+- the /DOSSEG `_TEXT` lead [117842,117858);
+- `chksum.asm` NULL [178032,178098) and MSG [199903,199940), kept raw by the BEGDATA rule;
+- seg007 `_DATA` [191244,191310) and the `asm012_131254` timer data [194664,194778);
+- the data-only members `_cflush.asm` (`_DATA` 2 B and XP [199722,199726)), `_file.c` (282 B with COMDEFs), `cmiscdat.asm` (26 B, iterated LIDATA FIXUPPs) and `ctype.asm` (257 B), which have no runtime data-only owner kind;
+- the MSG COMMON PAD/EPAD [199973,199993);
+- the unexplained [199484,199488) and [199706,199708);
+- the fills 192387, 192671, 199705 and 199993, whose neighbours are raw (the 199993 follower in `owners` is the 6 BSS bytes [199994,200000) inside the image).
+
+# Complete seg005/seg006 static sets, data-only runtime members and the linked DGROUP base (integ37)
+
+**Statics.** `obj_seg005` owns `_BSS` [200042,200332) (27 statics, 290 B, s005bss) and `obj_seg006` owns [200332,203476) (30 file-scope statics, 3,144 B, s006bss). Both are the canonical sources with only declaration lines changed; code bytes, FIXUPP sites and relocations are unchanged, and each object's `_BSS` FIXUPPs agree on its one base. The staged real link and the image-derived order proof place both. seg005 merges the former scalars at 200300/200301 into `camera_buttons_pressed[9]` (its loop clears nine bytes); their registry rows are retired as interior elements. seg006 declares two neutral unreferenced-storage statics (`poly_padding_bytes[6]`, `shape3d_unused[576]`), and seg005 one (`unused_40E73`), under the unreferenced-storage ruling. The 57 registry rows are module-private (`object_declared: false`) compiler-hash-constrained reconstruction names; 22 superseded clone aliases were removed from `layout/data-symbols.json`. Accepted game BSS is 5,456 B; raw object BSS is seg007's 1,907 B.
+
+**Static flush rule (diagnostic).** `msc_static_model.layout` (`bss_link.static_layout`) models the s005bss fact, msc510-codegen O14. Pending file-scope statics are emitted at each function definition in mod-256 bucket order. The function's block statics follow, block by block, by `sum(bytes) & 15`, with ties newest first. It reproduces ten compiled fixtures (`tests/fixtures/msc510_static_flush_fixtures.json`) and seg005's complete layout.
+
+**Data-only runtime members (`runtime-data-member-v1`).** A hash-pinned member with no code has no extent in the ownership partition. Its descriptor lives in manifest `runtime_data_members` (kind `KNOWN_TOOLCHAIN_LIBRARY`, `module_form: data-only`), and it owns bytes only through its `linked` storage rows. Each row is a `KNOWN_TOOLCHAIN_LIBRARY_DATA` owner carved out of raw DGROUP, bound from the member on every build (`library.bind_library` → `runtime_binding.bind_member`) and placed by the staged real link, which links the member OBJ. Anchors are original-operand data aliases:
+
+| Member | Rows | Anchor | Notes |
+|---|---|---|---|
+| `_cflush.asm` | `_DATA` [192062,192064), XP [199722,199726) | `_word_3EE3E`, `__flushallptr` | XP `dd _flushall`: one MZ relocation; MAP reading `map-segment-sole-contributor` (CRT0DAT declares XP empty) |
+| `_file.c` | `_DATA` [192064,192346) | `_byte_2EEE0`+160 | COMDEFs `__bufin/__bufout/__buferr` stay in the raw communal unit: `omf_policy.communals` reads them as externals (reader scope `communal`); the link input re-declares exactly that COMDEF record as an EXTDEF (`reallink.data_member_object`) |
+| `cmiscdat.asm` | `_DATA` [192388,192414) | `_off_3EF84` | `omf_policy.iterated_fixups`: the FIXUPP after LIDATA is applied to each of the 5 repetitions (5 far pointers to `__fptrap`, 5 relocations in order) |
+| `ctype.asm` | `_DATA` [192414,192671) | `_g_ascii_props`+1 | see name binding below |
+
+**LIDATA FIXUPPs and COMDEF in the OMF reader.** `OmfReader` now applies a FIXUPP that follows a LIDATA record to every expanded copy of the addressed literal content field. Before, it used the record offset as a data offset, which was wrong. `object_probe.read_object` still refuses such FIXUPPs unless `iterated_fixups` is set. COMDEF is read only with `OmfReader(communals=True)` / `read_object(communals=[names])`. The real link confirms LINK's semantics: image, relocation set and bank order are exact.
+
+**Name binding: `_ctype`.** Game code named the ctype table `g_ascii_props` (= `_ctype+1`). A linked `ctype.asm` would have needed an alias shim for it. obj_seg000, obj_seg008 and obj_seg031 now use the MSC 5.10 `<ctype.h>` macros (`isupper`, `islower`, `tolower` over `extern unsigned char _ctype[]`), which is the original idiom. Code bytes, fixup sites and relocations are unchanged; the FIXUPPs target `__ctype` with addend 1. `__ctype` is a data symbol with extent proof `pinned-member-public-v1`: it is grounded by the pinned member's public and fixup-free segment (257 B, equal to the image) and by the `_g_ascii_props` original-operand anchor at +1. The registry row 192414 `_ctype` records a recovered original runtime name.
+
+**Linked DGROUP base: chksum NULL.** BEGDATA is no longer unmodelled. /DOSSEG puts class BEGDATA first, so `chksum.asm`'s paragraph-aligned NULL [178032,178098) links at the DGROUP base, where it is in the image. The reconstruction's zero-length DSEG (the link prelude, and the DSEG of every ASM module through `adapt_asm`) is linked as class BEGDATA, first by appearance. It therefore stays at the DGROUP base, so MASM F0 DSEG frames are unchanged. With `_DATA` no longer at the base, two further reconstruction debts became visible and were resolved:
+- `font_draw_text` and `asm012_144064_late` read font-header fields at DS:0..14h (DS = `_fontdefseg`). They had bound these to DGROUP labels inside NULL; they now use numeric offsets, with identical bytes.
+- `asm012_133660`, `asm012_139968`, `asm012_132056` and `asm012_141210` declare `DGROUP group` and `assume ds:DGROUP` before `_DATA`. MASM 5.10 then emits their data PUBDEFs relative to DGROUP, as MSC does. Otherwise LINK gives F5/external-frame references a `_DATA` segment frame, which is off by 64 bytes in 14 sites. Only the PUBDEF group index and record indices change.
+
+chksum's NULL and MSG [199903,199940) are now `linked` (RUNTIME_STORAGE). Their readings are unique bytes plus the sole MAP segment for NULL.
+
+**MSG COMMON overlay.** PAD [199973,199992) and EPAD [199992,199993) are owned by the member whose contribution covers the complete COMMON and is the last contributor with bytes in code-address (link) order. PAD is owned by `abort.asm` and EPAD by `dos\nmsghdr.asm` (`runtime_binding.common_overlay_owner`). The other contributions stay `proven-raw` inside the owned row, and `verify_runtime_common` re-derives the ordered overlay. The real-link reading is `map-common-overlay`: one MAP segment of exactly that extent, with every declarer a linked accepted member.
+
+**Fills.**
+- `link-dosseg-text-lead-v1` owns the 16 zero bytes [117842,117858) that LINK /DOSSEG reserves at the start of `_TEXT`. The row requires a predecessor that is a complete code contribution of another segment ending there, a WORD-aligned pinned runtime `_TEXT` member following, and a lead inside the first paragraph of the grounded runtime `_TEXT` frame (117840).
+- DGROUP word fills 192387 (AMALLOC → CMISCDAT) and 192671 (CTYPE → RAND) are owned.
+- Still raw: 199705, whose follower [199706,199708) is unexplained; 199993, whose follower in `owners` is the 6 in-image BSS bytes [199994,200000); and the BSS fill 205383, whose predecessor is seg007's raw placeholder.
+
+**Result.** Raw initialized bytes went from 3,212 to 2,500. They are: seg007 code 2,306 and `_DATA` 66; `asm012_131254` timer data 114; unexplained [199484,199488) 4; 199705 + [199706,199708) 3; and 199993 + the in-image BSS [199994,200000) 7. Pinned runtime data is 1,192 B, LINK_FILL 52 B.
+
+# Module data of the timer and sub_35E08 modules, the in-image BSS prefix and FONTHDR (integ38)
+
+**Whole modules with their data.**
+- `asm012_131254` [131254,132056) is one module (L11-misc): ten entries from `polarRadius2D` to `sub_303BA`, and its own 114-B `_DATA` [194664,194778), which holds the `dseg.asm` timer labels `byte_3F868`..`timerintr` and the timer error string. Its `module_proof` is bounded by zero fill on both sides. `DGROUP` and `assume ds:DGROUP` come before `_DATA`, following the integ37 DGROUP-relative PUBDEF convention. It subsumes the eight earlier per-function owners.
+- **Alias shims.** The module itself, `timer_custom_delta`, `timer_get_counter` and `asm012_141210` named the high words of the module's dwords by the reference labels `_word_2F876`, `_word_2F87A` and `_word_2F892`. No object defines these labels, so once the data was owned the real link needed 3 alias shims. The references are now `_dword_3F874+2`, `_timerintr+2` and `_timer_callback_counter+2`. Bytes are identical, and only FIXUPP targets and addends and the EXTDEF lists change. `code_symbols.resolve_recipe_symbols` (mode `asm-external-dgroup-offset16-v1`) now gives a DGROUP-framed external with an addend its reviewed object width, and the binder keeps `0 <= addend < width`.
+- `asm012_154486` [154486,155464) is one module: `sub_35B76` (`draw_filled_rect`), `sub_35C4E` (`clear_rect`, with its CS-resident `_incnums` table), `sub_35DC8`, `sub_35DE6` and `sub_35E08`. It starts after the zero fill that follows the RETF at 154484 and ends with its own terminal zero fill. It owns the 2-byte `_DATA` `word_40C1A` at DGROUP `54AAh` [199706,199708).
+  - `sub_35E08` is the only code in the image that addresses that word. It reads and writes the word through `ss:[54AAh]` at 155381 and 155424, and its high byte through `ss:[54ABh]` at 155429 and 155445. The reconstruction had written these as numeric operands without a FIXUPP. They are now DGROUP-framed FIXUPPs to the module's own `_DATA`, under `assume ss:DGROUP` (SS = DGROUP in the medium model).
+  - Link order agrees. The word follows seg034's odd 93-byte `_DATA` after one word-alignment byte, and in the relocation table `asm012_150408` comes before seg034 while the later S012 modules come after it.
+- The DGROUP word fill 199705 (seg034 `_DATA` → `asm012_154486:_DATA`) is owned.
+
+**In-image BSS prefix (`BSS_IN_IMAGE`).** The load image ends at 200000, which is past `_edata` = 199994. The 6 bytes [199994,200000) are therefore the first 6 bytes of seg000's accepted 12-byte `_BSS`, so they are not raw.
+- One last `owners` row of kind `BSS_IN_IMAGE` (`obj_seg000:_BSS@image`) names that `bss_owners` row. `build_exact.checked_bss_in_image` requires three things: the row is the image prefix of the first accepted `_BSS` owner, it starts at `bss_start`, and it ends at the image end. Its bytes are that owner's zero extent, which `_finish` checks against the emitted `_BSS` and the oracle.
+- The row is counted as `bss_in_image_bytes`, separately from C, ASM, runtime, fill and raw bytes.
+- `promote_runtime.py` publishes the row with the candidate `{"kind": "BSS_IN_IMAGE", "bss_owner": ...}`, which splits the raw image tail.
+- A DGROUP word fill may now precede such a row: its follower is the named `_BSS` contribution (a WORD-aligned SEGDEF). The fill 199993 (nmsghdr EPAD → seg000 `_BSS`) is owned.
+
+**FONTHDR.** `font_draw_text` and `asm012_144064_late` declare a MASM `FONTHDR` STRUC for the font header at `DS = _fontdefseg`. Its fields are `fh_fgcolor` 00h, `fh_bgcolor` 02h, `fh_left` 04h, `fh_x` 08h, `fh_y` 0Ah, `fh_rowbytes` 0Ch, `fh_height` 0Eh, `fh_advance` 10h, `fh_lineheight` 12h and `fh_proportional` 14h, followed by the 256-word glyph offset table `fh_glyphs` at 16h. The accesses use these field names, and both objects are byte-identical, the OMF file included.
+
+**Still raw: [199484,199488) `03 00 00 00`.** No operand anywhere in the image contains 53CCh..53CFh, the DGROUP offsets of these bytes, so no code reference identifies an owner. The relocation order leaves several candidates: seg032's end-of-file data, one of the S012 modules in [144064,147552) linked after seg032 (`load_23816`, `file_load_shape2d_thunks`, `seg012_shape2d_extended_group` and their dataless neighbours), or the head of `asm012_144064_late`'s `_DATA`. seg033's accepted `_DATA` is empty, so seg033 is excluded. This is class 4 (binding and cut).
+
+**Result.** Raw initialized bytes went from 2,500 to 2,376: seg007 code 2,306 and `_DATA` 66, plus the 4 bytes above.
+
+# Communal acceptance infrastructure (integ39)
+
+**c_common paragraph fill.** LINK 3.65 makes its communal segment `c_common` PARAGRAPH aligned. The pinned-tool fixture `tests/fixtures/masm510_comm_near_fixture.json` shows it after an odd-ended `_BSS`, and the commfit staged link of the real program shows it at 207408. [207396,207408) is therefore LINK fill, not a communal. It is owned by one `bss_owners` row of kind `LINK_FILL`, basis `link-communal-paragraph-v1` (`communal_unit.checked_communal_fill`). The row is re-derived on every build:
+- it starts at the linked CRT0DAT XOE marker (`real-link-v1` storage row), which is also the end of the preceding row;
+- it ends at the next paragraph, 1 to 15 bytes later;
+- the communal unit starts at its end.
+
+`reallink` links the raw communal unit as a PARAGRAPH-aligned `c_common` and links nothing for the fill. The BSS gate requires the MAP `XOE` at the fill start and the MAP `c_common` at its end. The raw communal unit is now [207408,222352), 14,944 bytes (`evidence/bss-partition.json`). `runtime_binding.bss_class_end` (the XOE prediction) still reads 207396.
+
+**COMDEF form (fixture).** MASM 5.10 `COMM NEAR name:type:n` emits the same COMDEF as an MSC 5.10 tentative definition `T name;`: type index 0, data type 62h (near), byte length. LINK merges the two declarations into one allocation. Two encoding differences are recorded:
+- MASM always writes the length as an `81h` word leaf; MSC writes one byte below 80h.
+- MASM writes its COMDEF records in its symbol-table order, not in declaration order. This matters for the within-module first-sight position of ASM-only communals.
+
+A MASM reference to a communal carries an F2 frame (the communal EXTDEF itself); LINK resolves it to the DGROUP frame. Every linked operand in the fixture equals the MAP public.
+
+**Whole-unit acceptance (`tools/communal_unit.py`).** The communal order depends on every name in the program, so the unit [207408,_end) is accepted in one transaction or stays one raw unit. One `bss_owners` row of kind `LINK_COMMUNAL` (placement `link-communal-v1`, schema `communal-unit-v1`) replaces the raw unit exactly. It lists every communal: name, address, size, declaring owners and a size basis. The addresses must tile the unit by LINK's allocation rule (an even-sized communal starts even). The row is accepted only when all four conditions hold:
+- **(a) Declarers.** Each declaring unit is an accepted, exact owner: a C recipe whose `communal_declarations` list its COMDEF records in order (tentative definitions), an ASM module (`COMM NEAR`), or the pinned `_file.c` member. The row's declarers and sizes (the largest declared size) must equal the recipes' declarations. They are re-derived again from the linked objects' COMDEF records, and no object may declare a COMDEF outside the unit. Without an accepted unit, no recipe may declare any COMDEF. `probe_module` and the DOSBox-X crosscheck admit exactly the declared COMDEFs, and `object_probe.declared_externals` excludes an unreferenced tentative definition from the binders' use checks.
+- **(b) Placement.** One staged real link reproduces the image (the existing BSS gate) and places every communal:
+  - its MAP public;
+  - the MAP `c_common` segment;
+  - the linked operand of every FIXUPP that names it, in every linked accepted object (`communal_unit.linked_references`, `reallink.communal_placement`).
+- **(c) Names.** Each name is the `names-registry.json` name of its address, or the pinned member's own COMDEF name for `pinned-member` rows. Address-derived and solver-placeholder spellings are refused (`is_placeholder`).
+- **(d) Sizes grounded.** The size basis is one of four kinds:
+  - `declared-type`: the declaration text appears in a declaring source;
+  - `pinned-member`;
+  - `absorbed-gap`: the NOTES ruling. The gap is absorbed only into a runtime-indexed array whose element size divides the combined size, and each listed witness must be an original register-indexed instruction whose displacement is a linked reference of that array;
+  - `neutral-unreferenced`: no reference anywhere, with a review note.
+
+`build_exact` checks (a), (c) and (d) from the recipes on every build, and the real link decides (b), (a) and the link-dependent part of (d).
+
+**Promotion.** A batch line `COMMUNAL UNIT.json` makes `promote.py --batch` one atomic communal transaction (`batch_publish._stage_communal`):
+1. Every listed translation unit is verified individually; any failure refuses the whole batch, with no dropping and no bisection.
+2. The unit is composed after all candidates (`communal_unit.attach`).
+3. One union whole-image build runs.
+4. One staged real link (`bss_link.staged_gate(..., communal=row)`) must place the unit together with every BSS owner.
+
+`--verify-only` runs the same path without publishing.
+
+**Dry runs.** `communal_unit.py dry-run LINK_DIR --base-dir BASE` judges any reallink-style link directory. Declarers count as exact only when their object equals the canonical link input or the hash-pinned member.
+- On the commfit staged set (`build/workers/commfit/stage/sol_final`, and the same set rebuilt by the landed tools, `build/commfit/stage/landed`), (b) passes: MAP 311/311, 5,076/5,076 linked operands and image equality. (a) fails because all 311 communals are declared by the synthetic COMDEF module, not by accepted units. (c) fails with 269 placeholder spellings and 40 non-registry names. (d) fails because sizes are next-start extents.
+- `current` (today's spellings) also fails (b), since the image differs.
+- The promote-path dry run (seg033 republished with `mcgawndsprite` as a tentative definition, which is byte-exact through the strict probe, plus a unit of today's spellings) is refused atomically at (a).
+- The staged real link of the same composition reports (a) and (b) problems per communal.
+
+Nothing was published.
+
+**Landed diagnostics.** The commfit solver is `tools/commfit.py` (plus `linkorder.py`, `stage_link.py` and `maxkeep.py`, and `tests/test_commfit.py`). Its data lives under `build/commfit/`. It remains a design aid and never places or accepts storage.
+
+# The whole communal unit published (integ40)
+
+**Result.** The LINK c_common unit [207408,222352) is accepted as one `LINK_COMMUNAL` row. It holds 312 communals (14,908 bytes of objects plus 36 bytes of LINK word alignment), and the raw communal unit is gone. The row was published in one atomic `promote.py --batch` transaction with 16 republished units: 15 C translation units and the ASM module `obj_seg002`. Accepted game BSS is 5,456 B of statics plus 14,944 B of communals; the only raw BSS left is seg007's 1,907-byte placeholder and one fill byte.
+
+**Names and sizes.** Section A comes from `nameA208070/names_A_final.json`, section B from `nameBfix/names_B_final.json` and section C from `nameCfix/names_C_final.json` (merged variant). `__bufout`, `__bufin` and `__buferr` are the pinned `_file.c` COMDEFs. The rulings were applied as follows:
+- **Alignment bytes are not communals.** The 15 one-byte "neutral gap" rows of sections A and B each follow an odd-ending object and precede an even-sized one. LINK starts an even-sized communal on an even address, so those bytes are allocation alignment. They are neither storage nor names (`check_row_form` tiling; the staged link confirms every address).
+- **Absorbed gaps.** Two unreferenced tails belong to runtime-indexed arrays whose element size divides the combined size, so they are absorbed (`absorbed-gap`, with register-indexed original witnesses):
+  - `rcmapix` becomes `int[45]` (witness 40924);
+  - `sdgbmp_v` becomes `struct SHAPE2D far *[5]` (witnesses 49328, 49332 and 55570; seg003 also indexes it with the constants 3 and 4).
+  The TU's own externs carry the same bound.
+- **Neutral communals.** Nine other unreferenced tails follow scalars or fixed-bound arrays, so each is a separate `neutral-unreferenced` short array with a review note: after `td3`, `rate_frame`, `openvfile`, `rectclip` (240 B), `rclist` (whose extent is 124 B but 15 RECTANGLEs), `tdfrompathrow22`, `fntled_res`, `material_patlistptr_copy` and `g_cur_track_row`. Their names follow the fallback ruling (stem plus a short suffix placing them in the required LINK bucket). Their declaring units were chosen so that each one's first-sight encounter keeps the bucket order.
+- **Declared types.** `msregisterms` is 14 B: `seg017`'s `MouseRegs` lists all seven int86 WORDREGS words. `g_vid_flag6` at the odd address 219633 is the 1-byte `unsigned char` of seg031. Every other communal has the declared type of its declaring unit; unsized arrays are bounded by their extent.
+- **Names.** `word_45d94`, an address-derived name, became `replayrst` (bucket 180, at most 10 characters for the seg003 extern).
+
+**Interior labels are source-level accesses.** No OMF was patched.
+- seg005's `word_345CC`, `word_345CE` and `byte_349AA` are `core.game_frame_in_sec` (+312), `core.game_frames_per_sec` (+314) and `globalgamesettings.game_opponenttype` (+6). MSC bakes the member offset into the FIXUPP addend, and the object is otherwise identical.
+- The nameCfix merges (`trackrows[i - 1]` / `[i + 1]`, `word_46170[i + 1]`, `residbyte1[1]`, `[2]`, `+ 6`) bind through reviewed means:
+  - seg009's eight `lnoffsets[i - 1]` sites are `negative_folded_index_bindings`, each with a non-negative witness indexed by the same memory variable;
+  - `_resbuftext` and `_scrorder_idxs` are clones of labels without the narrower width proof, so their interior elements are `fields` anchored by original operands. `data_symbols` now admits width-1 fields (byte elements of a char buffer).
+- A clone of a reviewed extent is the same object: the overlap checks of `_state`, the audio ring buffer and similar labels skip their own clones.
+
+**Declaring units.** C tentative definitions `T x;` go in the referencing TU with the most references (the primary user), unless a type or size requires another TU. A data-only module is never a declarer. Every other TU keeps `extern`. `randomseeds` is referenced only from ASM, so it is `comm near _randomseeds:byte:6` in `obj_seg002`. Its FIXUPPs keep the DGROUP frame because the COMM stands in DGROUP's dseg. Three facts of the pinned MSC 5.10 shaped the sources:
+- **Pressure.** In seg001 and seg003, turning the file-scope externs into in-place definitions changes the generated code. The effect is cumulative C2 symbol-table pressure; bisection finds no single culprit. Both TUs therefore keep their externs and define their communals in one block after the last function, which leaves the code unchanged.
+- **Record order.** EXTDEF, COMDEF and PUBDEF record order is the compiler's symbol-table walk. It depends on the names and is not source order: a definition appended at the end can be emitted as the 38th record. The first-sight encounter of a neutral communal therefore depends on its declaring module and its spelling, and the staged real link decides.
+- **Block externs.** A block-scope `extern` followed later by a file-scope definition emits an EXTDEF and a COMDEF for the same name. seg008's three block-declared arrays use this form.
+
+**Verification.**
+- Every republished object has identical code bytes outside the FIXUPP fields, identical FIXUPP sites and kinds, the same linked address for every FIXUPP (target plus addend) and the same ordered relocations.
+- `promote.py --batch --verify-only` passes: the individual strict probes and DOSBox-X crosschecks, the union whole-image build with (a), (c) and (d), and one staged real link. That link places all 312 communals (MAP publics and every linked operand) and every BSS owner, and reproduces the image.
+- The publication then rebuilt the canonical image freshly, and `validate.py --image` stays byte-exact.
+- `names-registry.json` names all 309 game communal addresses (307 changed). 296 data-symbol clones bind the new spellings. Superseded clone aliases were retired.
+
+**Residuals.**
+- `total_game` .. `total_game_jump` [213832,213854) are one 22-byte struct in seg001 (`struct GAMESTATE_SNAPSHOT`, assigned by structure copy) but ten separate communals in seg000. The cut ruling would merge them into one communal with seg000 member accesses. They stay separate here: they were not among this pass's named interior aliases, and the merge needs a seg000 re-verification.
+- `globalgamesettings` stays longer than seg003's historical `gmcfg`; seg003 is exact and nameBfix documented this.

@@ -1,0 +1,694 @@
+{
+ "schema": "msc510-static-flush-fixtures-v1",
+ "source": "s005bss (e1-e8) and integ37 (e9-e10): pinned MSC 5.10 /AM /O /Gs compiles; `items` is the source order of file-scope statics and function definitions (block statics in declaration order); observed offsets come from the object's own _BSS FIXUPPs; seg005 is the published complete static set (src/obj_seg005.c, _BSS [200042,200332))",
+ "fixtures": [
+  {
+   "fixture": "e1",
+   "source": "static short fz;\nvoid f1(void){ static short aa, bb; aa=101; bb=102; fz=100;}\nvoid f2(void){ static short cc, dd; cc=103; dd=104;}\nstatic short fa;\nvoid f3(void){fa=105;}\n",
+   "items": [
+    {
+     "static": [
+      "fz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f1",
+     "block": {
+      "statics": [
+       [
+        "aa",
+        2,
+        "short"
+       ],
+       [
+        "bb",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": []
+     }
+    },
+    {
+     "function": "f2",
+     "block": {
+      "statics": [
+       [
+        "cc",
+        2,
+        "short"
+       ],
+       [
+        "dd",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": []
+     }
+    },
+    {
+     "static": [
+      "fa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f3",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "fz": 0,
+    "aa": 2,
+    "bb": 4,
+    "cc": 6,
+    "dd": 8,
+    "fa": 10
+   },
+   "bss_length": 12,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e2",
+   "source": "static short fz;\nstatic short fa;\nstatic short aa;\nvoid f1(void){ fz=100; fa=101; aa=102;}\n",
+   "items": [
+    {
+     "static": [
+      "fz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "static": [
+      "fa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "static": [
+      "aa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f1",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "fz": 4,
+    "fa": 2,
+    "aa": 0
+   },
+   "bss_length": 6,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e3",
+   "source": "static short fz;\nvoid f1(void){ static short bb; bb=103; fz=100; }\nstatic short fa;\nstatic short aa;\nvoid f2(void){ fa=101; aa=102;}\n",
+   "items": [
+    {
+     "static": [
+      "fz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f1",
+     "block": {
+      "statics": [
+       [
+        "bb",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": []
+     }
+    },
+    {
+     "static": [
+      "fa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "static": [
+      "aa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f2",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "fz": 0,
+    "fa": 6,
+    "aa": 4,
+    "bb": 2
+   },
+   "bss_length": 8,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e4",
+   "source": "void f1(void){ static short zz; static short bb; static short aa; zz=100; bb=101; aa=102; }\n",
+   "items": [
+    {
+     "function": "f1",
+     "block": {
+      "statics": [
+       [
+        "zz",
+        2,
+        "short"
+       ],
+       [
+        "bb",
+        2,
+        "short"
+       ],
+       [
+        "aa",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "zz": 4,
+    "bb": 2,
+    "aa": 0
+   },
+   "bss_length": 6,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e5",
+   "source": "static short zz;\nextern void g(void);\nstatic short aa;\nvoid f(void){ zz=100; aa=101; }\n",
+   "items": [
+    {
+     "static": [
+      "zz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "static": [
+      "aa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "zz": 2,
+    "aa": 0
+   },
+   "bss_length": 4,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e6",
+   "source": "static short zz;\nint initd = 5;\nstatic short aa;\nvoid f(void){ zz=100; aa=101; }\n",
+   "items": [
+    {
+     "static": [
+      "zz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "static": [
+      "aa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "zz": 2,
+    "aa": 0
+   },
+   "bss_length": 4,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e7",
+   "source": "static short zz;\nvoid f(void){ static short bb; bb=102; }\nstatic short aa;\nvoid h(void){ zz=100; aa=101; }\n",
+   "items": [
+    {
+     "static": [
+      "zz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f",
+     "block": {
+      "statics": [
+       [
+        "bb",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": []
+     }
+    },
+    {
+     "static": [
+      "aa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "h",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "zz": 0,
+    "aa": 4,
+    "bb": 2
+   },
+   "bss_length": 6,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e8",
+   "source": "void f(void){ static short zz; { static short aa; aa=101; } zz=100; }\n",
+   "items": [
+    {
+     "function": "f",
+     "block": {
+      "statics": [
+       [
+        "zz",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": [
+       {
+        "statics": [
+         [
+          "aa",
+          2,
+          "short"
+         ]
+        ],
+        "blocks": []
+       }
+      ]
+     }
+    }
+   ],
+   "observed_offsets": {
+    "zz": 0,
+    "aa": 2
+   },
+   "bss_length": 4,
+   "origin": "build/workers/s005bss"
+  },
+  {
+   "fixture": "e9",
+   "source": "static short zz;\nvoid f(void){ static short bb; bb=102; zz=100; }\nstatic short aa;\nstatic short mm;\nvoid h(void){ aa=101; mm=103; }\nstatic short qq;\n",
+   "items": [
+    {
+     "static": [
+      "zz",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "f",
+     "block": {
+      "statics": [
+       [
+        "bb",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": []
+     }
+    },
+    {
+     "static": [
+      "aa",
+      2,
+      "short"
+     ]
+    },
+    {
+     "static": [
+      "mm",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "h",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    },
+    {
+     "static": [
+      "qq",
+      2,
+      "short"
+     ]
+    }
+   ],
+   "observed_offsets": {
+    "zz": 0,
+    "aa": 4,
+    "bb": 2,
+    "mm": 6
+   },
+   "bss_length": 10,
+   "origin": "build/workers/integ37/sm"
+  },
+  {
+   "fixture": "e10",
+   "source": "void f(int k){ static short zz; if (k) { static short aa; static short ab; aa=101; ab=103; } else { static short bb; bb=102; } zz=100; }\nstatic short yy;\nvoid g(void){ yy=104; }\n",
+   "items": [
+    {
+     "function": "f",
+     "block": {
+      "statics": [
+       [
+        "zz",
+        2,
+        "short"
+       ]
+      ],
+      "blocks": [
+       {
+        "statics": [
+         [
+          "aa",
+          2,
+          "short"
+         ],
+         [
+          "ab",
+          2,
+          "short"
+         ]
+        ],
+        "blocks": []
+       },
+       {
+        "statics": [
+         [
+          "bb",
+          2,
+          "short"
+         ]
+        ],
+        "blocks": []
+       }
+      ]
+     }
+    },
+    {
+     "static": [
+      "yy",
+      2,
+      "short"
+     ]
+    },
+    {
+     "function": "g",
+     "block": {
+      "statics": [],
+      "blocks": []
+     }
+    }
+   ],
+   "observed_offsets": {
+    "zz": 0,
+    "aa": 2,
+    "bb": 6,
+    "ab": 4,
+    "yy": 8
+   },
+   "bss_length": 10,
+   "origin": "build/workers/integ37/sm"
+  }
+ ],
+ "seg005": {
+  "items": [
+   {
+    "static": [
+     "replay_control",
+     1,
+     "char"
+    ]
+   },
+   {
+    "function": "replay_unk2",
+    "block": {}
+   },
+   {
+    "function": "setup_car_shapes",
+    "block": {
+     "statics": [
+      [
+       "last_steering_step",
+       4,
+       "short[2]"
+      ],
+      [
+       "steering_zone",
+       2,
+       "char[2]"
+      ],
+      [
+       "meters_sprite",
+       4,
+       "far*"
+      ],
+      [
+       "gnob_sprite",
+       4,
+       "far*"
+      ],
+      [
+       "gear_base_sprite",
+       4,
+       "far*"
+      ],
+      [
+       "stdares",
+       4,
+       "far*"
+      ],
+      [
+       "stdbres",
+       4,
+       "far*"
+      ],
+      [
+       "wheel_shapes",
+       36,
+       "far*[9]"
+      ],
+      [
+       "gnobshapes",
+       24,
+       "far*[6]"
+      ],
+      [
+       "digshapes",
+       40,
+       "far*[10]"
+      ],
+      [
+       "gear_knob_visible_view",
+       2,
+       "char[2]"
+      ],
+      [
+       "steering_dot_x",
+       4,
+       "short[2]"
+      ],
+      [
+       "steering_dot_y",
+       4,
+       "short[2]"
+      ],
+      [
+       "last_speedo",
+       4,
+       "short[2]"
+      ],
+      [
+       "gear_knob_x_last",
+       4,
+       "short[2]"
+      ],
+      [
+       "gear_knob_y_last",
+       4,
+       "short[2]"
+      ],
+      [
+       "last_tacho",
+       4,
+       "short[2]"
+      ]
+     ]
+    }
+   },
+   {
+    "static": [
+     "view_camera_choice",
+     2,
+     "char[2]"
+    ]
+   },
+   {
+    "static": [
+     "camera_buttons_pressed",
+     9,
+     "char[9]"
+    ]
+   },
+   {
+    "static": [
+     "unused_40E73",
+     1,
+     "char"
+    ]
+   },
+   {
+    "static": [
+     "camera_mode_view",
+     2,
+     "char[2]"
+    ]
+   },
+   {
+    "static": [
+     "camera_buttons_state_per_view",
+     18,
+     "char[18]"
+    ]
+   },
+   {
+    "static": [
+     "camera_button_row",
+     4,
+     "int[2]"
+    ]
+   },
+   {
+    "static": [
+     "camera_button_tick",
+     4,
+     "int[2]"
+    ]
+   },
+   {
+    "static": [
+     "camera_button_col_cache",
+     4,
+     "int[2]"
+    ]
+   },
+   {
+    "static": [
+     "replayshapes",
+     92,
+     "far*[23]"
+    ]
+   },
+   {
+    "function": "loop_game",
+    "block": {}
+   }
+  ],
+  "observed_offsets": {
+   "replay_control": 0,
+   "last_tacho": 2,
+   "gear_knob_x_last": 6,
+   "gear_knob_y_last": 10,
+   "last_speedo": 14,
+   "stdares": 18,
+   "meters_sprite": 22,
+   "stdbres": 26,
+   "digshapes": 30,
+   "wheel_shapes": 70,
+   "gnobshapes": 106,
+   "gnob_sprite": 130,
+   "steering_zone": 134,
+   "steering_dot_x": 136,
+   "steering_dot_y": 140,
+   "gear_knob_visible_view": 144,
+   "gear_base_sprite": 146,
+   "last_steering_step": 150,
+   "camera_button_row": 154,
+   "view_camera_choice": 158,
+   "camera_button_tick": 160,
+   "replayshapes": 164,
+   "camera_buttons_pressed": 256,
+   "unused_40E73": 265,
+   "camera_mode_view": 266,
+   "camera_button_col_cache": 268,
+   "camera_buttons_state_per_view": 272
+  },
+  "bss_length": 290
+ }
+}

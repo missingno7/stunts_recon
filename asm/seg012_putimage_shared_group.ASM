@@ -4,7 +4,7 @@ S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _nopsub_33B98
 public _sprite_putimage_and_alt
-public _sprite_putimage
+public _sprputimage
 _nopsub_33B98 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -59,7 +59,7 @@ _sprite_putimage_and_alt proc far
     ; align 2
     db 144
 _sprite_putimage_and_alt endp
-_sprite_putimage proc far
+_sprputimage proc far
     var_E = word ptr -14
     var_bitmap = word ptr -12
     var_A = word ptr -10
@@ -212,6 +212,6 @@ loc_33D02:
     dec     dx
     jg      short loc_33D02
     jmp     loc_33C14
-_sprite_putimage endp
+_sprputimage endp
 S012_TEXT ends
 end

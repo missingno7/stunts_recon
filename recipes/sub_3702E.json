@@ -3,8 +3,8 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_sub_35B76",
-        "_sub_3702E"
+        "_draw_filled_rect",
+        "_draw_rect_outline"
       ],
       "groups": [
         {
@@ -24,7 +24,7 @@
       ],
       "publics": [
         {
-          "name": "_sub_3702E",
+          "name": "_draw_rect_outline",
           "offset": 0,
           "segment": "UNIT_TEXT"
         }
@@ -113,7 +113,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sub_35B76",
+      "frame": "_draw_filled_rect",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -121,7 +121,7 @@
       "offset": 128,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sub_35B76",
+      "target": "_draw_filled_rect",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -130,7 +130,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sub_35B76",
+      "frame": "_draw_filled_rect",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -138,7 +138,7 @@
       "offset": 106,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sub_35B76",
+      "target": "_draw_filled_rect",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -147,7 +147,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sub_35B76",
+      "frame": "_draw_filled_rect",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -155,7 +155,7 @@
       "offset": 74,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sub_35B76",
+      "target": "_draw_filled_rect",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -164,7 +164,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sub_35B76",
+      "frame": "_draw_filled_rect",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -172,7 +172,7 @@
       "offset": 50,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sub_35B76",
+      "target": "_draw_filled_rect",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -206,7 +206,7 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [],
   "profile": "msc510-medium",
-  "public": "_sub_3702E",
+  "public": "_draw_rect_outline",
   "source": "src/sub_3702E.c",
   "stable_id": "load_2702e",
   "start": 159790,

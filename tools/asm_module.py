@@ -32,13 +32,43 @@ def c_public(name):
     return ('_' + name)[:32]
 
 
+_registry_cache = {}
+
+
+def registry_publics(name):
+    """integ30: the program-wide registry spelling of inventory entry `name`.
+
+    Final-closure principle: one public name per address program-wide.  The
+    canonical registry (layout/names-registry.json) records it; a defining
+    object may spell the public of a code entry with that registry name.  The
+    registry row names the inventory entry and its load address (checked by
+    tests against the inventory), and the spelling has at most 30 identifier
+    characters so MASM 5.10 (31 significant) and MSC 5.10 (32) emit the same
+    public.  It remains a binding alias, not a recovered name."""
+    from common import ROOT
+    raw = (ROOT/'layout/names-registry.json').read_bytes()
+    key = sha(raw)
+    table = _registry_cache.get(key)
+    if table is None:
+        import json
+        table = {}
+        for row in json.loads(raw)['names'].values():
+            if row.get('kind') == 'code' and len(row['name']) <= 30:
+                table.setdefault(row['inventory_name'], set()).add('_' + row['name'])
+        _registry_cache.clear()
+        _registry_cache[key] = table
+    return set(table.get(name, ()))
+
+
 def expected_publics(name, kind):
     """Accepted spellings: the C underscore convention, or its MASM 5.10
-    (31 characters) or MSC 5.10 (32 characters) truncation."""
+    (31 characters) or MSC 5.10 (32 characters) truncation, or a reviewed
+    program-wide registry spelling of the same entry (integ30)."""
     full = '_' + name
+    registry = registry_publics(name)
     if kind == 'asm':
-        return {full, masm_public(name)} if len(full) > 31 else {full}
-    return {full, c_public(name)} if len(full) > 32 else {full}
+        return ({full, masm_public(name)} if len(full) > 31 else {full}) | registry
+    return ({full, c_public(name)} if len(full) > 32 else {full}) | registry
 
 
 def _ends_with_return(image, at):

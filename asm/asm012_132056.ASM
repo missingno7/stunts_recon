@@ -1,42 +1,46 @@
 .8086
-extrn _byte_2F9E0:byte
-DGROUP group DSEG
-DSEG segment byte public 'STUNTSD'
-assume ds:DSEG
-extrn _callbacks:byte
-extrn _callbackflags:byte
-extrn _callbackflags2:byte
-extrn word_3FB02:word
-extrn word_3FB04:word
-extrn byte_3FB06:byte
-extrn _kbscancodes:byte
+DGROUP group _DATA
+assume ds:DGROUP
+_DATA segment word public 'DATA'
+_callbackflags db 128 dup (0)
+_callbackflags2 db 134 dup (0)
+_byte_2F9E0 db 2 dup (0)
+_callbacks db 256 dup (0)
+word_2FAE2 dw 0, 04800h, 05000h, 0, 04D00h, 04900h, 05100h, 0
+    dw 04B00h, 04700h, 04F00h, 0, 0, 0, 0, 0
+word_3FB02 dw 0
+word_3FB04 dw 0
+byte_3FB06 db 2 dup (0)
+_kbscancodes db 039h, 01Ch, 047h, 048h, 049h, 04Dh, 051h, 050h, 04Fh, 04Bh
+_joyflag1 dw 0
+_joyflag2 dw 0
+_joybutton db 0
+_joyinput db 0
+_word_3FB18 dw 00050h
+_word_3FB1A dw 0
+_word_3FB1C dw 0
+_word_3FB1E dw 0
+_word_3FB20 dw 00014h
+_word_3FB22 dw 0
+_word_3FB24 dw 0
+_word_3FB26 dw 00050h
+_word_3FB28 dw 0
+_word_3FB2A dw 0
+_word_3FB2C dw 0
+_word_3FB2E dw 00014h
+_word_3FB30 dw 0
+_word_3FB32 dw 0
+_word_3FB34 dw 0
+_word_3FB36 dw 0
+_byte_3FB38 db 0, 1, 5, 0, 3, 2, 4, 3, 7, 8, 6, 7, 0, 1, 5, 0
 extrn _kbinput:byte
 extrn _byte_3FE00:byte
-extrn _joyinput:byte
-extrn _joybutton:byte
-extrn _joyflag1:word
-extrn _joyflag2:word
-extrn _word_3FB18:word
-extrn _word_3FB20:word
-extrn _word_3FB1A:word
-extrn _word_3FB1C:word
-extrn _word_3FB34:word
-extrn _word_3FB24:word
-extrn _word_3FB22:word
-extrn _word_3FB1E:word
-extrn _word_3FB26:word
-extrn _word_3FB2E:word
-extrn _word_3FB28:word
-extrn _word_3FB36:word
-extrn _word_3FB2A:word
-extrn _word_3FB32:word
-extrn _word_3FB30:word
-extrn _word_3FB2C:word
-extrn _byte_3FB38:byte
-DSEG ends
+_DATA ends
+assume ds:DGROUP
 extrn _video_clear_color:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
+public _callbackflags2
 public _set_bios_mode3
 public _kb_parse_key
 public _kb_reg_callback
@@ -46,9 +50,9 @@ public _kb_get_char
 public _get_kb_or_joy_flags
 public _nopsub_305C8
 public _get_joy_flags
-public _sub_307B4
-public _sub_307D2
-public _sub_307E3
+public _reset_joystick_selection
+public _joystick_flags_to_index
+public _replay_axis_value
 public _nopsub_307FA
 _set_bios_mode3 proc far
     xor     ax, ax
@@ -86,7 +90,7 @@ loc_20412:
     je loc_20441
     and bx, 7Fh
     mov word ptr [bp + 6], bx
-    mov bl, byte ptr [bx + 416Ah]
+    mov bl, byte ptr _callbackflags[bx]
 loc_20429:
     dec bx
     jl loc_20454
@@ -94,7 +98,7 @@ loc_20429:
     push di
     push si
     shl bx, 1
-    call dword ptr [bx + 4272h]
+    call dword ptr _callbacks[bx]
     pop si
     pop di
     xor ax, ax
@@ -108,7 +112,7 @@ loc_20441:
     jl loc_2044E
     mov bx, 84h
 loc_2044E:
-    mov bl, byte ptr [bx + 41EAh]
+    mov bl, byte ptr _callbackflags2[bx]
     jmp loc_20429
 loc_20454:
     mov ax, word ptr [bp + 6]
@@ -127,7 +131,7 @@ _kb_reg_callback proc far
     mov     bp, sp
     mov     ax, [bp+arg_2]
     mov     cx, 40h ; '@'
-    mov     bx, offset _callbacks
+    mov     bx, offset DGROUP:_callbacks
     mov     dx, [bp+arg_4]
 loc_3046D:
     cmp     [bx], ax
@@ -210,7 +214,7 @@ loc_304ED:
     and     bx, 0Fh
 
     shl     bx, 1
-    mov     ax, [bx+4372h]
+    mov     ax, word_2FAE2[bx]
 loc_304F6:
     cmp     ax, word_3FB02
     jnz     short loc_304FF
@@ -314,12 +318,12 @@ _nopsub_305C8 proc far
     xor     cx, cx
     xor     bx, bx
     mov     bl, _kbscancodes
-    cmp     byte ptr [bx+446Ah], 0
+    cmp     byte ptr _kbinput[bx], 0
     jz      short loc_305DA
     or      cl, 10h
 loc_305DA:
     mov     bl, _kbscancodes+1
-    cmp     byte ptr [bx+446Ah], 0
+    cmp     byte ptr _kbinput[bx], 0
     jz      short loc_305E8
     or      cl, 20h
 loc_305E8:
@@ -530,15 +534,15 @@ loc_307AD:
     jmp     short loc_3079A
 
 _get_joy_flags endp
-_sub_307B4 proc far
+_reset_joystick_selection proc far
     mov     _byte_3FE00, 1
     mov     _word_3FB18, 50h
     mov     _word_3FB1C, 0
     mov     _word_3FB26, 50h
     mov     _word_3FB2A, 0
     retf
-_sub_307B4 endp
-_sub_307D2 proc far
+_reset_joystick_selection endp
+_joystick_flags_to_index proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -553,8 +557,8 @@ _sub_307D2 proc far
     xor     ah, ah
     pop     bp
     retf
-_sub_307D2 endp
-_sub_307E3 proc far
+_joystick_flags_to_index endp
+_replay_axis_value proc far
 
     mov     ax, _joyflag1
     sub     ax, _word_3FB18
@@ -566,7 +570,7 @@ loc_307EE:
     mov     ah, dl
     sub     ax, 1Fh
     retf
-_sub_307E3 endp
+_replay_axis_value endp
 _nopsub_307FA proc far
     mov     ax, _joyflag2
     sub     ax, _word_3FB26

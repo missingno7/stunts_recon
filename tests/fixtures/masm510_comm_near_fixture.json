@@ -1,0 +1,338 @@
+{
+  "asm_source": "DGROUP GROUP _DATA, _BSS\nPUBLIC __acrtused\n__acrtused EQU 9876h\nCOMM NEAR _zeta_buf:BYTE:300\nCOMM NEAR _asm_comm:BYTE:6\nCOMM NEAR _shared_tab:WORD:4\nCOMM NEAR _one_byte:BYTE\nCOMM NEAR _mid_word:WORD\nA_TEXT SEGMENT BYTE PUBLIC 'CODE'\n ASSUME CS:A_TEXT, DS:DGROUP\nstart PROC FAR\n mov ax, word ptr _asm_comm\n mov ax, word ptr _shared_tab+2\n mov ax, word ptr _c_int\n mov al, _one_byte\n mov ax, _mid_word\n mov al, _zeta_buf+299\n ret\nstart ENDP\nA_TEXT ENDS\n_DATA SEGMENT WORD PUBLIC 'DATA'\n dw 1\n_DATA ENDS\n_BSS SEGMENT WORD PUBLIC 'BSS'\n db 5 dup(?)\n_BSS ENDS\nEXTRN _c_int:WORD\nSTACK SEGMENT PARA STACK 'STACK'\n db 64 dup(0)\nSTACK ENDS\nEND start\n",
+  "c_sources": {
+    "C1": "int c_int;\nchar c_arr[7];\nint shared_tab[4];\nint use1(void) { return c_int + c_arr[3] + shared_tab[1]; }\n",
+    "C2": "extern char asm_comm[];\nint c_int;\nlong c_long;\nint use2(void) { return asm_comm[1] + c_int + (int)c_long; }\n"
+  },
+  "comdef_records": {
+    "A": [
+      "095f61736d5f636f6d6d0062810600095f7a6574615f6275660062812c01095f6d69645f776f72640062810200095f6f6e655f6279746500628101000b5f7368617265645f7461620062810800"
+    ],
+    "C1": [
+      "065f635f696e74006202065f635f6172720062070b5f7368617265645f746162006208"
+    ],
+    "C2": [
+      "065f635f696e74006202075f635f6c6f6e67006204"
+    ]
+  },
+  "communals": {
+    "A": [
+      [
+        "_asm_comm",
+        "near",
+        6
+      ],
+      [
+        "_zeta_buf",
+        "near",
+        300
+      ],
+      [
+        "_mid_word",
+        "near",
+        2
+      ],
+      [
+        "_one_byte",
+        "near",
+        1
+      ],
+      [
+        "_shared_tab",
+        "near",
+        8
+      ]
+    ],
+    "C1": [
+      [
+        "_c_int",
+        "near",
+        2
+      ],
+      [
+        "_c_arr",
+        "near",
+        7
+      ],
+      [
+        "_shared_tab",
+        "near",
+        8
+      ]
+    ],
+    "C2": [
+      [
+        "_c_int",
+        "near",
+        2
+      ],
+      [
+        "_c_long",
+        "near",
+        4
+      ]
+    ]
+  },
+  "declared": {
+    "_asm_comm": [
+      [
+        "A",
+        6,
+        true
+      ]
+    ],
+    "_c_arr": [
+      [
+        "C1",
+        7,
+        true
+      ]
+    ],
+    "_c_int": [
+      [
+        "C1",
+        2,
+        true
+      ],
+      [
+        "C2",
+        2,
+        true
+      ]
+    ],
+    "_c_long": [
+      [
+        "C2",
+        4,
+        true
+      ]
+    ],
+    "_mid_word": [
+      [
+        "A",
+        2,
+        true
+      ]
+    ],
+    "_one_byte": [
+      [
+        "A",
+        1,
+        true
+      ]
+    ],
+    "_shared_tab": [
+      [
+        "A",
+        8,
+        true
+      ],
+      [
+        "C1",
+        8,
+        true
+      ]
+    ],
+    "_zeta_buf": [
+      [
+        "A",
+        300,
+        true
+      ]
+    ]
+  },
+  "dgroup_frame": 48,
+  "link_order": [
+    "A.OBJ",
+    "C1.OBJ",
+    "C2.OBJ"
+  ],
+  "publics": {
+    "__acrtused": 39030,
+    "_asm_comm": 386,
+    "_c_arr": 73,
+    "_c_int": 380,
+    "_c_long": 382,
+    "_mid_word": 392,
+    "_one_byte": 72,
+    "_shared_tab": 64,
+    "_use1": 20,
+    "_use2": 34,
+    "_zeta_buf": 80
+  },
+  "references": [
+    {
+      "addend": 0,
+      "linked": 386,
+      "loc": "offset16",
+      "name": "_asm_comm",
+      "object": "A",
+      "offset": 1,
+      "segment": "A_TEXT",
+      "site": 1
+    },
+    {
+      "addend": 2,
+      "linked": 64,
+      "loc": "offset16",
+      "name": "_shared_tab",
+      "object": "A",
+      "offset": 4,
+      "segment": "A_TEXT",
+      "site": 4
+    },
+    {
+      "addend": 0,
+      "linked": 380,
+      "loc": "offset16",
+      "name": "_c_int",
+      "object": "A",
+      "offset": 7,
+      "segment": "A_TEXT",
+      "site": 7
+    },
+    {
+      "addend": 0,
+      "linked": 72,
+      "loc": "offset16",
+      "name": "_one_byte",
+      "object": "A",
+      "offset": 10,
+      "segment": "A_TEXT",
+      "site": 10
+    },
+    {
+      "addend": 0,
+      "linked": 392,
+      "loc": "offset16",
+      "name": "_mid_word",
+      "object": "A",
+      "offset": 13,
+      "segment": "A_TEXT",
+      "site": 13
+    },
+    {
+      "addend": 299,
+      "linked": 80,
+      "loc": "offset16",
+      "name": "_zeta_buf",
+      "object": "A",
+      "offset": 16,
+      "segment": "A_TEXT",
+      "site": 16
+    },
+    {
+      "addend": 0,
+      "linked": 380,
+      "loc": "offset16",
+      "name": "_c_int",
+      "object": "C1",
+      "offset": 10,
+      "segment": "UNIT_TEXT",
+      "site": 30
+    },
+    {
+      "addend": 2,
+      "linked": 64,
+      "loc": "offset16",
+      "name": "_shared_tab",
+      "object": "C1",
+      "offset": 6,
+      "segment": "UNIT_TEXT",
+      "site": 26
+    },
+    {
+      "addend": 3,
+      "linked": 73,
+      "loc": "offset16",
+      "name": "_c_arr",
+      "object": "C1",
+      "offset": 1,
+      "segment": "UNIT_TEXT",
+      "site": 21
+    },
+    {
+      "addend": 0,
+      "linked": 380,
+      "loc": "offset16",
+      "name": "_c_int",
+      "object": "C2",
+      "offset": 13,
+      "segment": "UNIT_TEXT",
+      "site": 47
+    },
+    {
+      "addend": 0,
+      "linked": 382,
+      "loc": "offset16",
+      "name": "_c_long",
+      "object": "C2",
+      "offset": 7,
+      "segment": "UNIT_TEXT",
+      "site": 41
+    },
+    {
+      "addend": 1,
+      "linked": 386,
+      "loc": "offset16",
+      "name": "_asm_comm",
+      "object": "C2",
+      "offset": 1,
+      "segment": "UNIT_TEXT",
+      "site": 35
+    }
+  ],
+  "schema": "masm510-comm-near-fixture-v1",
+  "segments": [
+    {
+      "class": "CODE",
+      "length": 19,
+      "name": "A_TEXT",
+      "start": 0,
+      "stop": 18
+    },
+    {
+      "class": "CODE",
+      "length": 30,
+      "name": "UNIT_TEXT",
+      "start": 20,
+      "stop": 49
+    },
+    {
+      "class": "DATA",
+      "length": 2,
+      "name": "_DATA",
+      "start": 50,
+      "stop": 51
+    },
+    {
+      "class": "BSS",
+      "length": 6,
+      "name": "_BSS",
+      "start": 52,
+      "stop": 57
+    },
+    {
+      "class": "BSS",
+      "length": 330,
+      "name": "c_common",
+      "start": 64,
+      "stop": 393
+    },
+    {
+      "class": "STACK",
+      "length": 64,
+      "name": "STACK",
+      "start": 400,
+      "stop": 463
+    },
+    {
+      "class": "CONST",
+      "length": 0,
+      "name": "CONST",
+      "start": 464,
+      "stop": 464
+    }
+  ],
+  "source": "integ39: tools/communal_unit.comm_near_fixture(): pinned MASM 5.10 (/Mx /I.) COMM NEAR, pinned MSC 5.10 /AM /O /Gs tentative definitions, pinned LINK 3.65 /NOD /MAP; test input only, never image ownership"
+}

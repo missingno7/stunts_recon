@@ -19,12 +19,20 @@ SPRITE_LEFT2_OFFSET equ 26
 SPRITE_WIDTHSUM_OFFSET equ 28
 SPRITE_TOP_OFFSET equ 16
 SPRITE_HEIGHT_OFFSET equ 18
-DGROUP group DSEG
-DSEG segment byte public 'STUNTSD'
-assume ds:DSEG
-extrn _spritefunc:word
-extrn _imagefunc:dword
-DSEG ends
+_DATA segment word public 'DATA'
+public _word_4031E, _word_40320, _spritefunc, _imagefunc
+_word_4031E dw 0
+_word_40320 dw 0
+_spritefunc dw 0
+    dw seg S012_TEXT
+_imagefunc dw 0
+    dw seg S012_TEXT
+_DATA ends
+_BSS segment word public 'BSS'
+_BSS ends
+CONST segment word public 'CONST'
+CONST ends
+DGROUP group CONST,_BSS,_DATA
 extrn _sprite1:word
 extrn _draw_filled_lines:far
 extrn _preRender_line:far
@@ -37,7 +45,7 @@ preRender_line equ _preRender_line
 draw_line_related equ _draw_line_related
 draw_line_related_alt equ _draw_line_related_alt
 S012_TEXT segment word public 'CODE'
-assume cs:S012_TEXT, ds:DSEG
+assume cs:S012_TEXT, ds:DGROUP
 public _loc_3180A
 public _preRender_default, _preRender_default_alt, _skybox_op_helper, _preRender_wheel_helper4, _preRender_helper, _preRender_helper2, _preRender_helper3, _nopsub_31F39, _nopsub_31F55
 _preRender_default label far

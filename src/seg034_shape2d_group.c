@@ -1,5 +1,16 @@
-extern char *word_30BD6[];
-extern unsigned char palmap[];
+char shape_extensions[] = ".PVS\0.XVS\0.VSH\0.PES\0.ESH\0";
+char *shape2d_extension_suffixes[6] = {
+    shape_extensions,
+    shape_extensions + 5,
+    shape_extensions + 10,
+    shape_extensions + 15,
+    shape_extensions + 20,
+    shape_extensions + 25
+};
+unsigned char palmap[16] = {
+    0, 1, 2, 3, 4, 5, 6, 7,
+    8, 9, 10, 11, 12, 13, 14, 15
+};
 extern char *strcpy(char *, const char *);
 extern int stricmp(const char *, const char *);
 extern void fatal_error(const char *, ...);
@@ -46,9 +57,9 @@ void far* file_load_shape2d(char* shapename, int fatal) {
 	}
 
 	if (*extension_ptr == 0) {
-		for (ext_index = 0; *word_30BD6[ext_index]; ext_index++) {
+		for (ext_index = 0; *shape2d_extension_suffixes[ext_index]; ext_index++) {
 			old_suffix_ptr = extension_ptr;
-			strcpy(old_suffix_ptr, word_30BD6[ext_index]);
+			strcpy(old_suffix_ptr, shape2d_extension_suffixes[ext_index]);
 			if ((loaded_chunk = mmgr_get_chunk_by_name(file_buffer)) != 0)
 				return loaded_chunk;
 			if (file_find(file_buffer))

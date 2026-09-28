@@ -7,7 +7,8 @@ import struct
 from common import ROOT, read_json, require, sha, identity
 from data_symbols import resolve_symbols
 
-
+
+
 
 def _toolchain_path(logical):
     from compiler import toolchain_path
@@ -74,8 +75,14 @@ def group_public(name, manifest):
     from compiler import verify_toolchain
     from omf import OmfReader
     from object_probe import read_object
+    # integ36 (L2-rt): an ACCEPTED zero-fixup code member without a binding
+    # (e.g. strlen.asm, ultoa.asm) also provides its pinned publics; it must be
+    # the unchanged canonical row, a complete _TEXT member with no FIXUPP.
+    canonical = {o['id']:o for o in read_json(ROOT/'layout/manifest.json')['owners']}
     hits = [(o,p) for o in manifest['owners'] if o['kind']=='KNOWN_TOOLCHAIN_LIBRARY'
-            and o.get('binding',{}).get('mode') in ('runtime-member-v1','runtime-owner-group-v2')
+            and (o.get('binding',{}).get('mode') in ('runtime-member-v1','runtime-owner-group-v2') or
+                 (not o.get('binding') and o['id'] in canonical and not o.get('expected_fixups') and
+                  o.get('segment')=='_TEXT'))
             for p in o['publics'] if p['name']==name and p['segment']!='?0']
     require(len(hits)==1, 'Runtime group public missing/ambiguous: '+name)
     owner,public=hits[0]
@@ -89,10 +96,17 @@ def group_public(name, manifest):
     require(len(matches)==1, 'Group public module missing/ambiguous')
     obj=read_object(matches[0],ledata_policy=owner.get('ledata_policy'),
                     record_policy=owner.get('record_policy'),
-                    sparse_zero=owner['binding'].get('sparse_zero'))
-    require(owner['publics']==obj.publics and owner['expected_fixups']==obj.linker_fixups
-            and owner['binding']['declarations']==declarations(obj),
+                    sparse_zero=owner.get('binding',{}).get('sparse_zero'))
+    require(owner['publics']==obj.publics and owner.get('expected_fixups',[])==obj.linker_fixups,
             'Group public source declarations differ')
+    if not owner.get('binding'):
+        require(owner==canonical[owner['id']] and not obj.linker_fixups and
+                obj.segment_length('_TEXT')==owner['end']-owner['start'] and
+                all(n=='_TEXT' or not size for n,size in obj.segment_lengths.items()),
+                'Accepted zero-fixup group provider is not a complete code member')
+    else:
+        require(owner['binding']['declarations']==declarations(obj),
+                'Group public source declarations differ')
     segment=public['segment']
     if segment==owner['segment']:
         base=owner['start']
@@ -453,22 +467,155 @@ def dosseg_boundary(owner, obj, target, addend, placements, image, relocations):
     return address + signed
 
 
+# integ36: storage placed by the real link.  A storage row is either
+# 'proven-raw' (its bytes stay explicit raw debt, re-proven on every build) or
+# 'linked': the pinned member OBJ itself is linked by the real LINK
+# (tools/reallink.py runtime DGROUP model), which must place the contribution
+# exactly there (reallink.runtime_placement, gated by promote_runtime and
+# validate), and the bytes are owned as pinned runtime data:
+# * initialized: one KNOWN_TOOLCHAIN_LIBRARY_DATA owner row (parent, segment,
+#   extent) carved out of raw DGROUP debt;
+# * the member's own `_BSS`: one KNOWN_TOOLCHAIN_LIBRARY_DATA `bss_owners` row
+#   (placement link-runtime-member-v1), grounded by the image operands of every
+#   own-`_BSS` FIXUPP of the hash-pinned code (`member-operands-v1`);
+# * a zero-length BSS-class section (CRT0DAT XOB/XO/XOE): anchor `real-link-v1`
+#   only.  Its independent prediction is the end of the complete `_BSS` class
+#   (DOSSEG class order: `_BSS`, then CRT0DAT's BSS sections in pinned SEGDEF
+#   order, then c_common): the end of the last `_BSS` row of the checked
+#   bss_owners partition.  A data alias (for example the reference label at
+#   that address) is never a placement anchor for a zero-length section.
+STORAGE_OWNERSHIP = ('proven-raw', 'linked')
+RUNTIME_DATA = 'KNOWN_TOOLCHAIN_LIBRARY_DATA'
+RUNTIME_BSS_PLACEMENT = 'link-runtime-member-v1'
+REAL_LINK_ANCHOR = 'real-link-v1'
+MEMBER_OPERANDS_ANCHOR = 'member-operands-v1'
+
+
+def bss_class_end(manifest):
+    """End of the complete `_BSS` class in the checked bss_owners partition:
+    the last row that is a `_BSS` contribution (accepted row, raw object
+    placeholder or its word fill), before the communal unit and (integ39) the
+    c_common paragraph fill that LINK leaves after the BSS-class sections."""
+    import bss_link
+    rows = bss_link.load_partition(manifest)
+    ends = [r['end'] for r in rows if r['form'] not in (bss_link.COMMUNAL_UNIT, bss_link.COMMUNAL_FILL_BASIS)]
+    require(ends, 'BSS partition has no _BSS contribution')
+    return max(ends)
+
+
+# integ37: hash-pinned data-only runtime members (no code: _cflush.asm,
+# _file.c, cmiscdat.asm, ctype.asm).  Such a member has no code extent in the
+# ownership partition, so its descriptor lives in manifest `runtime_data_members`
+# (kind KNOWN_TOOLCHAIN_LIBRARY, module_form data-only, binding mode
+# runtime-data-member-v1).  Its bytes are owned only through its `linked`
+# storage rows (KNOWN_TOOLCHAIN_LIBRARY_DATA owners carved out of raw DGROUP),
+# bound from the pinned member on every build and placed by the real link.
+DATA_MEMBER_MODE = 'runtime-data-member-v1'
+DATA_MEMBER_KEYS = {'id', 'kind', 'module_form', 'classification', 'library', 'library_sha256', 'module',
+                    'module_sha256', 'name', 'profile', 'publics', 'externals', 'expected_fixups',
+                    'expected_relocations', 'binding', 'omf_policy'}
+
+
+def runtime_data_members(manifest):
+    return list(manifest.get('runtime_data_members', []))
+
+
+def runtime_owners(manifest):
+    """Every accepted pinned runtime member: code owners and data-only members."""
+    return [o for o in manifest['owners'] if o['kind'] == 'KNOWN_TOOLCHAIN_LIBRARY'] + runtime_data_members(manifest)
+
+
+def is_data_member(owner):
+    return owner.get('module_form') == 'data-only'
+
+
+def check_data_member_form(owner):
+    policy = owner.get('omf_policy', {})
+    require(set(owner) <= DATA_MEMBER_KEYS and owner.get('kind') == 'KNOWN_TOOLCHAIN_LIBRARY' and
+            is_data_member(owner) and owner.get('classification') == 'RUNTIME_LIBRARY' and
+            owner.get('binding', {}).get('mode') == DATA_MEMBER_MODE and
+            'segment' not in owner and 'start' not in owner and 'end' not in owner and
+            isinstance(policy, dict) and set(policy) <= {'iterated_fixups', 'communals'} and
+            policy.get('iterated_fixups', True) is True and
+            isinstance(policy.get('communals', []), list),
+            'Invalid data-only runtime member form')
+
+
+# integ37: the multi-member MSG COMMON overlay (PAD, EPAD) owned as pinned
+# runtime data.  LINK overlays the COMMON contributions of the members in link
+# order; the owned row belongs to the member whose contribution covers the
+# complete COMMON extent and that is the last contributor with bytes in link
+# (code-address) order, so its own bytes are the final overlay.  Every other
+# contributor must be an accepted pinned member whose storage row for that
+# COMMON stays `proven-raw` (overwritten, never owned), and the complete ordered
+# overlay is re-derived from all pinned sources (verify_runtime_common).
+COMMON_EXTENTS = {'PAD': (199973, 199992), 'EPAD': (199992, 199993)}
+
+
+def common_overlay_owner(owner, name, obj, manifest):
+    """Whether `owner`'s `name` COMMON row may be owned (linked) as the overlay."""
+    full = COMMON_EXTENTS.get(name)
+    if full is None or obj.segment_length(name) != full[1] - full[0]:
+        return False
+    rows = [(o, o['binding']['storage'][name]) for o in runtime_owners(manifest)
+            if name in o.get('binding', {}).get('storage', {})]
+    later = [o for o, r in rows if o['id'] != owner['id'] and r['end'] > r['start'] and
+             o.get('start', -1) > owner.get('start', -1)]
+    others_raw = all(r['ownership'] == 'proven-raw' and r['anchor']['kind'] == 'common-v1'
+                     for o, r in rows if o['id'] != owner['id'])
+    return not later and others_raw and owner.get('start') is not None
+
+
+def runtime_data_rows(manifest, owner_id):
+    return [o for o in manifest['owners'] if o['kind'] == RUNTIME_DATA and o.get('parent') == owner_id]
+
+
+def runtime_bss_rows(manifest, owner_id):
+    return [o for o in manifest.get('bss_owners', []) if o['kind'] == RUNTIME_DATA and o.get('parent') == owner_id]
+
+
 def storage_placements(owner, obj, image, relocations, manifest):
-    main = owner['segment']
-    placements = {main:{'start':owner['start'], 'end':owner['end'], 'ownership':'owned'}}
+    main = owner.get('segment')          # integ37: None for a data-only member
+    placements = {main:{'start':owner['start'], 'end':owner['end'], 'ownership':'owned'}} if main else {}
     extra = owner['binding'].get('storage', {})
-    require(set(extra) == {n for n,s in obj.segment_lengths.items() if n != main and s},
-            'Every nonzero runtime DATA/BSS/secondary segment must be accounted for')
+    nonzero = {n for n,s in obj.segment_lengths.items() if n != main and s}
+    require(nonzero <= set(extra), 'Every nonzero runtime DATA/BSS/secondary segment must be accounted for')
+    require(all(n in nonzero or (n in obj.segment_lengths and obj.segment_length(n) == 0 and
+                                 extra[n].get('ownership') == 'linked' and
+                                 extra[n].get('anchor', {}).get('kind') == REAL_LINK_ANCHOR)
+                for n in extra),
+            'Zero-length runtime section needs the real-link anchor')
     layout = read_json(ROOT/'layout/data-symbols.json')
     order = None
+    segdefs = {s['name']: s for s in obj.segment_defs}
+    dgroup = {g['name']: g for g in obj.groups}.get('DGROUP', {}).get('segments', [])
     for name, row in extra.items():
-        require(set(row) == {'start','end','ownership','anchor'} and row['ownership'] == 'proven-raw',
+        require(set(row) == {'start','end','ownership','anchor'} and row['ownership'] in STORAGE_OWNERSHIP,
                 'Unsupported runtime secondary storage policy')
+        require(name in segdefs, 'Runtime storage row names no SEGDEF')
         start,end = row['start'],row['end']
         require(type(start) is int and type(end) is int and end-start == obj.segment_length(name),
                 'Runtime secondary storage extent differs from complete SEGDEF')
         anchor = row['anchor']
-        if anchor['kind'] == 'data-alias':
+        seg = segdefs[name]
+        if anchor['kind'] == REAL_LINK_ANCHOR:
+            # Zero-length BSS-class section: placed by the staged real link's MAP.
+            require(set(anchor) == {'kind'} and row['ownership'] == 'linked' and start == end and
+                    seg['class'] == 'BSS' and seg['combine'] == 'public' and name in dgroup and
+                    name != '_BSS' and layout['bss_start'] <= start <= layout['bss_end'],
+                    'Real-link anchor is only for a zero-length DGROUP BSS-class section')
+            require(start == bss_class_end(manifest),
+                    'Zero-length BSS section does not follow the complete _BSS class')
+            placements[name] = row
+            continue
+        require(start < end, 'Zero-length runtime section needs the real-link anchor')
+        if anchor['kind'] == MEMBER_OPERANDS_ANCHOR:
+            from bss_link import grounded_member_bss
+            grounded, count = grounded_member_bss(obj, owner['start'], image, layout['frame_load_address'])
+            require(set(anchor) == {'kind'} and name == '_BSS' and seg['class'] == 'BSS' and
+                    row['ownership'] == 'linked' and count > 0 and grounded == start,
+                    'Runtime _BSS is not grounded by its own code operands')
+        elif anchor['kind'] == 'data-alias':
             require(set(anchor) == {'kind','symbol','offset'}, 'Invalid runtime storage alias anchor')
             symbol = resolve_symbols({anchor['symbol']}, image, relocations)[anchor['symbol']]
             require(type(anchor['offset']) is int and 0 <= anchor['offset'] < end-start and
@@ -521,53 +668,223 @@ def storage_placements(owner, obj, image, relocations, manifest):
                     'Runtime STACK does not fit original MZ reservation')
         else:
             raise ValueError('Unsupported runtime storage anchor')
-        seg = next(s for s in obj.segment_defs if s['name'] == name)
         require(seg['combine'] in ('public','private') or
                 (seg['combine']=='common' and anchor['kind'] in ('common-v1','dgroup-order-v1')) or
                 (seg['combine']=='stack' and anchor['kind']=='mz-stack-v1'),
                 'Runtime COMMON/STACK storage needs placement proof')
+        if row['ownership'] == 'linked':
+            # Owned pinned runtime data: a DGROUP contribution, never the stack
+            # nor the multi-member MSG COMMON overlay.  A COMMON segment only as
+            # its sole declared contribution (CRT0DAT CDATA); the real link must
+            # then show the whole MAP segment equal to the row.
+            require(name in dgroup and (seg['combine'] == 'public' or
+                    (seg['combine'] == 'common' and anchor['kind'] != 'common-v1' and
+                     not any(name in o.get('binding', {}).get('storage', {}) for o in runtime_owners(manifest)
+                             if o['id'] != owner['id'])) or
+                    (seg['combine'] == 'common' and anchor['kind'] == 'common-v1' and
+                     common_overlay_owner(owner, name, obj, manifest))),
+                    'Linked runtime storage must be a public or sole COMMON DGROUP contribution, '
+                    'or the complete final MSG COMMON overlay')
         if name in obj.segments:
-            require(0 <= start < end <= len(image) and
-                    any(o['kind'] == 'UNRESOLVED_RAW' and o['start'] <= start and end <= o['end']
-                        for o in manifest['owners']), 'Runtime secondary data no longer wholly raw-owned')
+            require(0 <= start < end <= len(image), 'Runtime secondary data outside the image')
+            if row['ownership'] == 'linked':
+                rows = [o for o in runtime_data_rows(manifest, owner['id']) if o.get('segment') == name]
+                require(len(rows) == 1 and (rows[0]['start'], rows[0]['end']) == (start, end),
+                        'Linked runtime data lacks exactly one owned data row')
+            elif anchor['kind'] == 'common-v1' and any(
+                    o['kind'] == RUNTIME_DATA and o.get('segment') == name and o['start'] <= start and end <= o['end']
+                    for o in manifest['owners']):
+                # integ37: an overwritten COMMON contribution inside the owned overlay.
+                pass
+            else:
+                require(any(o['kind'] == 'UNRESOLVED_RAW' and o['start'] <= start and end <= o['end']
+                            for o in manifest['owners']), 'Runtime secondary data no longer wholly raw-owned')
         else:
             require((seg['class'] == 'BSS' and layout['bss_start'] <= start < end <= layout['bss_end']) or
                     (anchor['kind']=='mz-stack-v1' and seg['class']=='STACK'),
                     'Uninitialized runtime storage outside independently verified BSS')
+            if row['ownership'] == 'linked':
+                rows = runtime_bss_rows(manifest, owner['id'])
+                require(anchor['kind'] == MEMBER_OPERANDS_ANCHOR,
+                        'Linked runtime _BSS must be grounded by its own code operands')
+                require(name == '_BSS' and len(rows) == 1 and rows[0].get('segment') == '_BSS' and
+                        (rows[0]['start'], rows[0]['end']) == (start, end) and
+                        rows[0].get('placement') == RUNTIME_BSS_PLACEMENT,
+                        'Linked runtime _BSS lacks exactly one owned BSS row')
             # The independently checked startup zero range supplies the storage contract.
             resolve_symbols(set(), image, relocations)
-        require(not (start < owner['end'] and owner['start'] < end), 'Runtime storage overlaps code')
+        require(main is None or not (start < owner['end'] and owner['start'] < end), 'Runtime storage overlaps code')
         placements[name] = row
+    linked = {n for n, r in extra.items() if r['ownership'] == 'linked' and r['start'] < r['end']}
+    require({o.get('segment') for o in runtime_data_rows(manifest, owner['id'])} == linked - {'_BSS'} and
+            len(runtime_data_rows(manifest, owner['id'])) == len(linked - {'_BSS'}) and
+            len(runtime_bss_rows(manifest, owner['id'])) == len(linked & {'_BSS'}),
+            'Owned runtime data rows differ from the linked storage rows')
     ranges = sorted((p['start'],p['end']) for n,p in placements.items()
-                    if p is placements[main] or p['anchor']['kind']!='common-v1')
+                    if (main and p is placements[main]) or (p['anchor']['kind']!='common-v1' and p['start'] < p['end']))
     require(all(a[1] <= b[0] for a,b in zip(ranges,ranges[1:])), 'Runtime storage contributions overlap')
-    for other in manifest['owners']:
-        if other['kind'] != 'KNOWN_TOOLCHAIN_LIBRARY' or other['id'] == owner['id']: continue
+    for other in runtime_owners(manifest):
+        if other['id'] == owner['id']: continue
         for a in extra.values():
             for b in other.get('binding',{}).get('storage',{}).values():
                 require(a['anchor']['kind']=='common-v1' and b['anchor']['kind']=='common-v1' or
+                        a['start'] == a['end'] or b['start'] == b['end'] or
                         not (a['start'] < b['end'] and b['start'] < a['end']),
                         'Distinct runtime members overlap secondary storage')
     return placements
 
 
+
+# integ36 (L2-rt): the bounded `__cfltcvt_tab` far-pointer table of cmiscdat.asm.
+# The pinned member's iterated LIDATA carries its FIXUPPs, so the table is not
+# bound as a member here: the reviewed reference label span (five `dd __fptrap`
+# declarations, next label `word_3EF98`), the independently anchored alias at
+# its placed start and the five original relocated pointers onto the accepted
+# `__fptrap` entry bound the object to 20 bytes; only element addends are allowed.
+FPTRAP_TABLE = {'kind':'pinned-fptrap-table-v1','start_label':'off_3EF84',
+                'end_label':'word_3EF98','entry_count':5,'entry_size':4,
+                'target':'__fptrap','allowed_addends':[0,4,8,12,16]}
+
+
+def fptrap_table_proof(owner, target, proof, data_map, data_symbols, image, relocations, manifest, text_frame):
+    import re
+    from data_symbols import _reference_label_offsets
+    require(owner.get('module') == 'output.c' and target == '__cfltcvt_tab' and
+            proof == FPTRAP_TABLE and data_map.get(target) == '_off_3EF84',
+            'Unreviewed runtime data-object proof')
+    source_path = 'src/restunts/asmorig/dseg.asm'
+    source = ROOT/'build/references/restunts'/source_path
+    refs = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
+    require(identity(source.read_bytes()) == refs[source_path], 'Pinned dseg source differs')
+    lines = source.read_text(encoding='latin1').splitlines()
+    offsets = _reference_label_offsets(lines)
+    expected_labels = {'off_3EF84':(14356,15367),'off_3EF88':(14360,15368),
+                       'off_3EF90':(14368,15370),'off_3EF94':(14372,15371),
+                       'word_3EF98':(14376,15372)}
+    require({k:offsets.get(k) for k in expected_labels} == expected_labels,
+            'Pinned __cfltcvt_tab label span differs')
+    start_offset, start_line = offsets['off_3EF84']
+    end_offset, end_line = offsets['word_3EF98']
+    require(all(not start_offset < pos < end_offset or name in ('off_3EF88','off_3EF90','off_3EF94')
+                for name, (pos, _) in offsets.items()), 'Unreviewed interior label in __cfltcvt_tab')
+    rows = [r'off_3EF84\s+dd\s+__fptrap', r'off_3EF88\s+dd\s+__fptrap', r'dd\s+__fptrap',
+            r'off_3EF90\s+dd\s+__fptrap', r'off_3EF94\s+dd\s+__fptrap']
+    require(all(re.fullmatch(pattern, lines[start_line-1+i].split(';')[0].strip(), re.I)
+                for i, pattern in enumerate(rows)) and
+            re.fullmatch(r'word_3EF98\s+dw\s+0', lines[end_line-1].split(';')[0].strip(), re.I),
+            'Pinned __cfltcvt_tab declarations differ')
+    frame = read_json(ROOT/'layout/data-symbols.json')['frame_load_address']
+    start, end = frame+start_offset, frame+end_offset
+    require(data_symbols['_off_3EF84']['load_address'] == start and (start, end) == (192388, 192408) and
+            end < read_json(ROOT/'layout/data-symbols.json')['bss_start'],
+            'Pinned __cfltcvt_tab placement differs')
+    fptrap = group_public('__fptrap', manifest)
+    require(fptrap['segment'] == '_TEXT' and fptrap['address'] == 118446, 'Pinned __fptrap target differs')
+    require([r['load_offset'] for r in relocations if start <= r['load_offset'] < end] ==
+            [start+4*i+2 for i in range(5)], 'Original __cfltcvt_tab ordered relocations differ')
+    for i in range(5):
+        at = start+4*i
+        require(int.from_bytes(image[at:at+2], 'little') + text_frame == fptrap['address'] and
+                int.from_bytes(image[at+2:at+4], 'little') == text_frame//16,
+                'Original __cfltcvt_tab entry does not name __fptrap')
+    return list(proof['allowed_addends'])
+
+
+# integ36: reviewed in-member near-dispatch tables.  A review names the
+# dispatch FIXUPP (the disp16 of `JMP CS:[BX+table]`), the table start and its
+# entry count, and a bound: `unsigned-guard-v1` (`CMP AX,n-1; JBE` straight
+# into `ADD AX,AX; XCHG BX,AX` and the dispatch) or `member-prefix-v1` (the
+# table fills the member's bytes before its first public entry).  Every table
+# word is an own-segment offset16 FIXUPP (frame _TEXT) naming a byte of the
+# member's own code outside the table.
+CODE_TABLE_KEYS = {'dispatch', 'table', 'entries', 'bound'}
+
+
+def code_table_proofs(owner, obj, code):
+    reviews = owner['binding'].get('code_tables', [])
+    require(isinstance(reviews, list) and (not reviews or owner['binding'].get('mode') == 'runtime-owner-group-v2'),
+            'Invalid runtime code-table review')
+    fixes = {f['offset']: f for f in obj.linker_fixups if f['segment'] == '_TEXT'}
+    size = obj.segment_length('_TEXT')
+    sites = set()
+    for review in reviews:
+        require(isinstance(review, dict) and set(review) == CODE_TABLE_KEYS and
+                all(type(review[k]) is int for k in ('dispatch', 'table', 'entries')) and
+                review['entries'] > 0, 'Invalid runtime code-table review')
+        d, t, n = review['dispatch'], review['table'], review['entries']
+        f = fixes.get(d)
+        require(f is not None and f['loc'] == 'offset16' and f['target_kind'] == 'segment' and
+                f['target'] == '_TEXT' and not f['self_relative'] and
+                f['frame_method'] in (0, 5) and d >= 3 and code[d-3:d] == bytes.fromhex('2effa7') and
+                int.from_bytes(bytes.fromhex(f['encoded_addend']), 'little') + f['displacement'] == t,
+                'Runtime code-table dispatch differs')
+        require(0 <= t and t + 2*n <= size and not (t <= d < t + 2*n), 'Runtime code table outside member')
+        for i in range(n):
+            e = fixes.get(t + 2*i)
+            target = None if e is None else int.from_bytes(bytes.fromhex(e['encoded_addend']), 'little') + e['displacement']
+            require(e is not None and e['loc'] == 'offset16' and e['target_kind'] == 'segment' and
+                    e['target'] == '_TEXT' and e['frame_method'] == 0 and e['frame'] == '_TEXT' and
+                    not e['self_relative'] and 0 <= target < size and not (t <= target < t + 2*n),
+                    'Runtime code-table entry is not an own code offset')
+            sites.add(t + 2*i)
+        bound = review['bound']
+        require(isinstance(bound, dict), 'Invalid runtime code-table bound')
+        if bound.get('kind') == 'unsigned-guard-v1':
+            g = bound.get('site')
+            require(set(bound) == {'kind', 'site'} and type(g) is int and 0 <= g and g + 5 <= d - 6 and
+                    code[g] == 0x3d and int.from_bytes(code[g+1:g+3], 'little') == n - 1 and
+                    code[g+3] == 0x76 and g + 5 + code[g+4] == d - 6 and
+                    code[d-6:d-3] == bytes.fromhex('03c093'),
+                    'Runtime code-table guard differs')
+        elif bound.get('kind') == 'member-prefix-v1':
+            entries = [p['offset'] for p in obj.publics if p['segment'] == '_TEXT']
+            require(set(bound) == {'kind'} and t == 0 and entries and min(entries) == 2*n,
+                    'Runtime code table is not the member prefix before its first entry')
+        else:
+            raise ValueError('Unsupported runtime code-table bound')
+        sites.add(d)
+    require(len(sites) == sum(r['entries'] + 1 for r in reviews), 'Overlapping runtime code-table reviews')
+    return sites
+
+
 def bind_member(owner, obj, image, relocations, manifest, trail):
     mode=owner['binding'].get('mode')
-    require(mode in ('runtime-member-v1','runtime-owner-group-v2'), 'Unknown runtime binding mode')
+    require(mode in ('runtime-member-v1','runtime-owner-group-v2',DATA_MEMBER_MODE), 'Unknown runtime binding mode')
+    require((mode == DATA_MEMBER_MODE) == is_data_member(owner), 'Data-only runtime member mode differs')
+    # integ37: a data-only member binds its linked DGROUP storage exactly as a
+    # code member binds its secondary segments; group-bound targets as v2.
+    group_mode = mode in ('runtime-owner-group-v2', DATA_MEMBER_MODE)
     require(owner['binding']['declarations'] == declarations(obj), 'Runtime declarations changed')
     require(owner['expected_fixups'] == obj.linker_fixups, 'Complete ordered runtime FIXUPP differs')
-    require(owner['segment'] == '_TEXT', 'Runtime primary segment must be complete _TEXT')
+    if mode == DATA_MEMBER_MODE:
+        check_data_member_form(owner)
+        require(all(s['length'] == 0 for s in obj.segment_defs if s['class'] == 'CODE'),
+                'Data-only runtime member declares code')
+        storage = owner['binding'].get('storage', {})
+        require(storage and all(r.get('ownership') == 'linked' for r in storage.values()),
+                'Data-only runtime member storage must be linked (owned) rows')
+        require(set(owner['binding']) <= {'mode', 'declarations', 'storage', 'data_bindings', 'raw_file_publics'},
+                'Unsupported data-only runtime member review')
+    else:
+        require(owner['segment'] == '_TEXT', 'Runtime primary segment must be complete _TEXT')
     placements = storage_placements(owner, obj, image, relocations, manifest)
-    require(obj.segment_length(owner['segment']) == owner['end']-owner['start'],
-            'Runtime primary complete SEGDEF length differs')
+    if mode != DATA_MEMBER_MODE:
+        require(obj.segment_length(owner['segment']) == owner['end']-owner['start'],
+                'Runtime primary complete SEGDEF length differs')
     payloads = {n:bytearray(obj.segment_bytes(n)) for n in placements if n in obj.segments}
     require(all(len(p) == obj.segment_length(n) for n,p in payloads.items()),
             'Incomplete initialized runtime segment')
     text_frame = runtime_frame(image, relocations, manifest)
     data_map = owner['binding'].get('data_bindings', {})
     data_symbols = resolve_symbols(set(data_map.values()), image, relocations) if data_map else {}
+    proofs = owner['binding'].get('data_object_proofs', {})
+    require(isinstance(proofs, dict) and set(proofs) <= set(data_map), 'Invalid runtime data-object proof map')
+    for target, proof in proofs.items():
+        data_symbols[data_map[target]]['allowed_addends'] = fptrap_table_proof(
+            owner, target, proof, data_map, data_symbols, image, relocations, manifest, text_frame)
+    tables = code_table_proofs(owner, obj, payloads[owner['segment']]) if mode != DATA_MEMBER_MODE else set()
     used_data = set(); used_raw_publics=set(); used_file_publics=set(); code_cache = {}; fix_receipts = []; sites = []
-    used_code_offsets = set(); used_boundaries = set(); used_aliases = set()
+    used_code_offsets = set(); used_boundaries = set(); used_aliases = set(); used_tables = set()
     code_aliases = owner['binding'].get('code_aliases', [])
     require(isinstance(code_aliases, list) and len(set(code_aliases)) == len(code_aliases) and
             (not code_aliases or mode == 'runtime-owner-group-v2'), 'Invalid runtime code-alias review')
@@ -583,6 +900,9 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
     # Zero-length sections have no storage row; only an order proof places them.
     order = crt_order_placements(owner, obj, image, relocations, manifest)
     zero_sections = {n:p for n,p in order.items() if obj.segment_length(n) == 0}
+    # integ36: zero-length BSS-class sections placed by the staged real link.
+    zero_sections.update({n:p for n,p in placements.items()
+                          if obj.segment_length(n) == 0 and p.get('anchor', {}).get('kind') == REAL_LINK_ANCHOR})
     segs = {s['name']:s for s in obj.segment_defs}
     groups = {g['name']:g for g in obj.groups}
     local = {p['name']:p for p in obj.publics if p['segment'] in placements}
@@ -619,7 +939,7 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
                 require(0<=addend<raw_public['extent'],
                         'Raw CRT data public addend outside object')
                 address=raw_public['address']+addend; target_frame=raw_public['frame']
-            elif mode=='runtime-owner-group-v2' and target in owner['binding'].get('raw_file_publics',[]):
+            elif group_mode and target in owner['binding'].get('raw_file_publics',[]):
                 used_file_publics.add(target)
                 raw_public=file_data_public(target,image,relocations)
                 require(0<=addend<raw_public['extent'],
@@ -651,7 +971,7 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
                 require(addend==0, 'CRT0 _main addend must name exact entry')
                 address=reviewed_main_entry(image,relocations,owner,fix)
                 target_segment='_TEXT'; target_frame=0
-            elif mode == 'runtime-owner-group-v2':
+            elif group_mode:
                 resolved=group_public(target,manifest)
                 target_segment=resolved['segment']
                 require(0 <= addend < resolved['extent'],
@@ -682,7 +1002,7 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
             require(0 <= addend < obj.segment_length(target) or boundary,
                     'Runtime internal addend outside complete SEGDEF')
             address = placements[target]['start'] + addend; target_segment = target
-        elif kind == 'group' and mode == 'runtime-owner-group-v2':
+        elif kind == 'group' and group_mode:
             require(target=='DGROUP' and fix['target_method']==1 and
                     fix['target_index']==groups['DGROUP']['index'] and addend==0,
                     'Unsupported runtime group target')
@@ -747,20 +1067,32 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
             elif frame==text_frame and mode=='runtime-owner-group-v2':
                 require(segment=='_TEXT' and target_segment=='_TEXT' and
                         kind=='segment' and target=='_TEXT' and
-                        (at in owner['binding'].get('code_table_fixup_offsets',[]) or
+                        (at in tables or
                          (at in owner['binding'].get('code_offset_fixups',[]) and
                           (payload[at-1] in (0xb8,0xba) or
                            payload[at-2:at]==bytes.fromhex('8d1e')))),
                         'Runtime absolute code offset needs explicit table proof')
+                if at in tables:
+                    used_tables.add(at)
             else:
                 require(frame == dgroup_frame, 'Runtime absolute code offset needs explicit pointer proof')
             require(0 <= address-frame <= 65535, 'Runtime absolute offset overflow')
             struct.pack_into('<H',payload,at,address-frame)
-        elif fix['loc'] == 'base16' and width == 2 and mode=='runtime-owner-group-v2':
+        elif fix['loc'] == 'base16' and width == 2 and group_mode:
             require(target_frame==frame and frame is not None and frame%16==0,
                     'Runtime base fixup frame differs')
             struct.pack_into('<H',payload,at,frame//16)
             sites.append(source_at)
+        elif (fix['loc'] == 'pointer32' and width == 4 and mode == DATA_MEMBER_MODE and
+              segment in groups.get('DGROUP', {}).get('segments', []) and segment in payloads):
+            # integ37: a far code pointer stored in a data-only member's DGROUP
+            # data (cmiscdat `dd __fptrap` table, _cflush XP `dd _flushall`):
+            # an exact accepted _TEXT public, one MZ relocation for its segment.
+            require(kind == 'external' and target_segment == '_TEXT' and encoded == bytes(4) and
+                    addend == 0 and frame == text_frame and 0 <= address-frame <= 65535,
+                    'Data far pointer must name an exact accepted _TEXT public')
+            struct.pack_into('<HH',payload,at,address-frame,frame//16)
+            sites.append(source_at+2)
         elif fix['loc'] == 'pointer32' and width == 4:
             require(segment == '_TEXT' and target_segment == '_TEXT' and at >= 1 and
                     payload[at-1] in (0x9a,0xea) and encoded == bytes(4) and
@@ -784,6 +1116,7 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
             'Unused runtime external code-offset review')
     require(used_boundaries == set(boundaries), 'Unused runtime DOSSEG boundary review')
     require(used_aliases == set(code_aliases), 'Unused runtime code-alias review')
+    require(used_tables == set(tables), 'Unused runtime code-table review')
     # EXEPACK emits relocation banks in address order while preserving within-bank order.
     sites = sorted(sites, key=lambda site:site//65536)
     expected = owner['expected_relocations']
@@ -805,5 +1138,9 @@ def bind_member(owner, obj, image, relocations, manifest, trail):
                         'ownership':p['ownership'], 'initialized':name in payloads})
     if any(p.get('anchor',{}).get('kind')=='common-v1' for p in placements.values()):
         verify_runtime_common(manifest,image)
-    return bytes(payloads[owner['segment']]), {'mode':mode, 'fixups':fix_receipts,
-            'generated_relocations':expected, 'storage':storage}
+    owned = {name: (bytes(payloads[name]) if name in payloads else bytes(p['end'] - p['start'])).hex()
+             for name, p in placements.items()
+             if name != owner.get('segment') and p.get('ownership') == 'linked' and p['start'] < p['end']}
+    primary = bytes(payloads[owner['segment']]) if mode != DATA_MEMBER_MODE else b''
+    return primary, {'mode':mode, 'fixups':fix_receipts,
+            'generated_relocations':expected, 'storage':storage, 'secondary_payloads':owned}

@@ -160,8 +160,10 @@ class OracleContext:
         require(len(rows) == 1, f'Candidate public {public} at load {address} is not one inventory entry')
         f = rows[0]
         require(self.verified(f), f'Inventory entry {f["name"]} is not verified')
+        from asm_module import registry_publics
         require((public == f['name'] and bool(f.get('local_symbol'))) if local else
-                (public == '_' + f['name'] and not f.get('local_symbol')),
+                ((public == '_' + f['name'] or public in registry_publics(f['name'])) and
+                 not f.get('local_symbol')),
                 f'Candidate public {public} differs from inventory entry {f["name"]}')
         return f
 
@@ -731,17 +733,25 @@ def bind_prefix(obj, recipe, image, relocations, ctx=None):
                      'generated_relocations': receipt['generated_relocations']}
 
 
-def compile_candidate(source, profile='msc510-medium', segment='UNIT_TEXT', flags='auto'):
+def compile_candidate(source, profile='msc510-medium', segment='UNIT_TEXT', flags='auto',
+                     communal_declarations=None):
     """Compile the whole candidate TU; registered object flags follow its start entry."""
     from compiler import compile_source, CompileFailure
     from object_flags import registered_objects
     from object_probe import msc_alignment_sparse_zero
+    communal_recipe = None
+    communal_names = None
+    if communal_declarations is not None:
+        from communal_unit import recipe_declarations, check_object_communals
+        communal_recipe = {'communal_declarations': communal_declarations}
+        declared = recipe_declarations(communal_recipe)
+        communal_names = [name for name, _ in declared]
 
     def compile_source(source, profile, flags=None, _compile=compile_source):
         # MSC word-alignment holes in the TU's _DATA/CONST are read with the
         # same reviewed policy shape a recipe carries (object_probe).
         try:
-            return _compile(source, profile, flags)
+            result = _compile(source, profile, flags, communals=communal_names)
         except CompileFailure as error:
             path = Path(error.receipt.get('work_directory') or '.') / 'UNIT.OBJ'
             if 'Holes' not in str(error) or not path.exists():
@@ -749,7 +759,11 @@ def compile_candidate(source, profile='msc510-medium', segment='UNIT_TEXT', flag
             policy = msc_alignment_sparse_zero(path.read_bytes())
             if policy is None:
                 raise
-            return _compile(source, profile, flags, sparse_zero=policy)
+            result = _compile(source, profile, flags, sparse_zero=policy,
+                              communals=communal_names)
+        if communal_recipe is not None:
+            check_object_communals(result[0], communal_recipe)
+        return result
     obj, receipt = compile_source(source, profile)
     chosen = register = None
     if flags == 'auto':
@@ -767,13 +781,15 @@ def compile_candidate(source, profile='msc510-medium', segment='UNIT_TEXT', flag
 
 
 def prove_source(source, *, profile='msc510-medium', segment='UNIT_TEXT', flags='auto',
-                 recipe_id=None, recipe_source=None, records=None):
+                 recipe_id=None, recipe_source=None, records=None,
+                 communal_declarations=None):
     """API for research tools (e.g. the diagnostic classifier): compile a whole
     candidate TU, derive its proof against the locked oracle, and return a
     JSON-serializable report. It never grants ownership."""
     from oracle import verify
     from mz import MZ
-    obj, receipt, chosen, register = compile_candidate(source, profile, segment, flags)
+    obj, receipt, chosen, register = compile_candidate(
+        source, profile, segment, flags, communal_declarations)
     oracle = verify(write=False)
     image = MZ.parse(oracle[1]).load_image(oracle[1])
     relocations = oracle[2]['unpacked_mz']['relocations']

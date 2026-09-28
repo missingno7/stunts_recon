@@ -38,58 +38,56 @@ struct GAMEINFO {
     unsigned short game_recordedframes;
 };
 
-extern struct TRACKOBJECT trkObjectList[];
-extern struct GAMEINFO gameconfig;
-extern unsigned char far *word_3283C[];
-extern struct SHAPE2D far *word_3282C[];
-extern struct SHAPE2D far *word_32888[];
-extern unsigned char far *word_32544[];
-extern unsigned char far *tracksmenushape2dunk[];
-extern unsigned char far *word_32540;
-extern struct SPRITE far *wndsprite;
-extern unsigned char far *td14_elem_map_main;
-extern unsigned char far *td15_terr_map_main;
-extern unsigned char far *td21_col_from_path;
-extern unsigned char far *td22_row_from_path;
-extern unsigned char far *mainresptr;
-extern int terrainrows[];
-extern int trackrows[];
-extern int word_45D3E[];
-extern int word_35D42[];
-extern char resID_byte1[];
-extern unsigned char byte_45D90;
-extern unsigned char byte_45E16;
-extern int video_flag1_is1;
+extern struct TRACKOBJECT trklst[];
+extern struct GAMEINFO globalgamesettings;
+static unsigned char far *terrain_tile_shapes[19];
+static struct SHAPE2D far *track_editor_cursors[4];
+static struct SHAPE2D far *road_tile_shapes[4];
+static unsigned char far *piece_mask_shapes[186];
+static unsigned char far *piece_fill_shapes[186];
+static unsigned char far *palette_piece_layout;
+extern struct SPRITE far *g_wndspr;
+unsigned char far *td14tb;
+unsigned char far *td15p_9;
+extern unsigned char far *g_column_of_trkdata21_pth;
+extern unsigned char far *tdfrompathrow22;
+extern unsigned char far *main_data_file_addr;
+int gterrtrk[30];
+int lnoffsets[30];
+extern char resbuftext[];
+unsigned char sampled_trk_column;
+extern unsigned char g_cur_track_row;
+extern int pixel_scales;
 extern int performGraphColor;
 extern int dialogarg2;
-extern int dialog_fnt_colour;
-extern int word_407EC, word_407EE, word_407F0;
-extern int word_407F2;
-extern int word_407F4, word_407F6, word_407F8;
-extern int track_pieces_counter;
-extern int mouse_xpos, mouse_ypos;
-extern unsigned char mouse_butstate;
-extern char g_path_buf[];
-extern char byte_3B80C[];
+extern int dlg_colour;
+extern int palette_window_line_color, palette_window_fill_color, palette_window_line_style;
+extern int text_cursor_outline_color;
+extern int menu_button_color_a, menu_button_color_b, menu_button_color_c;
+extern int g_trackpiecescounter;
+extern int msecoordx, pos_y_ms;
+extern unsigned char flagsdown;
+extern char buf_g_path[];
+extern char track_file[];
 extern unsigned char g_is_busy;
 
 extern unsigned char far * far file_load_shape2d_fatal_thunk(char *name);
 extern void far locate_many_resources(unsigned char far *data, char *names, char far **result);
-extern unsigned char far * far file_load_resfile(char *name);
+extern unsigned char far * far file_load_resource_file(char *name);
 extern unsigned char far * far locate_shape_alt(unsigned char far *data, char *name);
 extern unsigned char far * far locate_shape_fatal(unsigned char far *data, char *name);
-extern char far * far locate_text_res(unsigned char far *data, char *name);
-extern struct SPRITE far * far sprite_make_wnd(int width, int height, int flags);
+extern char far * far locate_text_resource(unsigned char far *data, char *name);
+extern struct SPRITE far * far sprite_make_window(int width, int height, int flags);
 extern void far sprite_copy_wnd_to_1_clear(void);
 extern void far draw_button();
-extern void far draw_lines_unk();
+extern void far draw_lines_unknown();
 extern void far sprite_copy_wnd_to_1(void);
-extern void far sprite_set_1_size(int left, int right, int top, int bottom);
-extern void far sprite_set_1_from_argptr(struct SPRITE far *sprite);
+extern void far sprset1size(int left, int right, int top, int bottom);
+extern void far sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
 extern int far mouse_track_op();
 extern void far sprite_blit_to_video(struct SPRITE far *sprite, int mode);
 extern void far preRender_line(int x1, int y1, int x2, int y2, int color);
-extern void far sprite_copy_2_to_1_2(void);
+extern void far sprcopy2to12(void);
 extern void far sprite_shape_to_1(void far *shape, int x, int y);
 extern void far sprite_clear_shape_alt(void far *shape, int x, int y);
 extern void far sprite_putimage_and_alt(void far *shape, int x, int y);
@@ -97,12 +95,12 @@ extern void far sprite_putimage_and(void far *shape, int x, int y);
 extern void far sprite_putimage_or(void far *shape, int x, int y);
 extern void far putpixel_iconMask(void far *shape, int x, int y);
 extern void far putpixel_iconFillings(void far *shape, int x, int y);
-extern void far mouse_draw_opaque_check(void);
-extern void far mouse_draw_transparent_check(void);
-extern void far font_set_unk(int colour, int mode);
+extern void far msdrawopaquechk(void);
+extern void far msdrawtransparentchk(void);
+extern void far font_setup_unknown(int colour, int mode);
 extern void far copy_string(char *destination, char far *source);
 extern int far font_op2(char *name);
-extern void far sub_345BC(char *text, int x, int y);
+extern void far draw_text_at(char *text, int x, int y);
 extern void far sprite_1_unk(int x, int y, int width, int height, int color);
 extern int far show_dialog();
 extern int far timer_get_delta_alt(void);
@@ -118,27 +116,29 @@ extern void far file_read_fatal(char *path, unsigned char far *buffer);
 extern int far file_write_fatal(char *path, unsigned char far *buffer, long size);
 extern int far file_find(char *query);
 extern void far highscore_write_a(int mode);
-extern void far sub_3702E(int x1, int y1, int x2, int y2, int color);
-extern void far sprite_free_wnd(struct SPRITE far *sprite);
+extern void far draw_rect_outline(int x1, int y1, int x2, int y2, int color);
+extern void far sprite_free_window(struct SPRITE far *sprite);
 extern void far unload_resource(unsigned char far *data);
 extern void far mmgr_free(unsigned char far *data);
-extern unsigned char far subst_hillroad_track(unsigned int terrain, unsigned int element);
+extern unsigned char far subst_hillroad(unsigned int terrain, unsigned int element);
 
-char sub_2C81C();
-void sub_2C9B4();
+char validate_track_elements();
+void clear_invalid_track_tiles();
 void preRender_icons();
 void draw_2DtrackMap();
 
-extern char aEokenseieemseedewwefuenpestej[];
-extern char aTer0[];
-extern unsigned int word_3ECBE[];
-extern int trackmenu2_buttons_x1[], trackmenu2_buttons_x2[];
-extern int trackmenu2_buttons_y1[], trackmenu2_buttons_y2[];
-extern unsigned char byte_3ECFE[];
-extern unsigned char byte_3ED00[];
-extern char aFlatlakelak1lak2lak3lak4highg[];
-extern char aCrs0crs1crs2crs3[];
-extern char aUcr0ucr1ucr2ucr3[];
+char aEokenseieemseedewwefuenpestej[] = "eokenseieemseedewwefuenpestejsejdeteewaefteat";
+char aTer0[] = "ter0";
+unsigned int function_key_scan_codes[12] = { 0x3b00, 0x3c00, 0x3d00, 0x3e00, 0x3f00, 0x4000, 0x4100, 0x4200, 0x4300, 0x4400, 0, 0 };
+int trackmenu2_buttons_x1[5] = { 9, 202, 220, 8, 220 };
+int trackmenu2_buttons_x2[5] = { 199, 206, 315, 199, 315 };
+int trackmenu2_buttons_y1[5] = { 181, 4, 132, 4, 36 };
+int trackmenu2_buttons_y2[5] = { 187, 179, 139, 179, 187 };
+unsigned char palette_column_limits[2] = { 30, 6 };
+unsigned char palette_row_limits[2] = { 29, 9 };
+char aFlatlakelak1lak2lak3lak4highg[] = "flatlakelak1lak2lak3lak4highgoungouwgousgouegou1gou2gou3gou4gou5gou6gou7gou8";
+char aCrs0crs1crs2crs3[] = "crs0crs1crs2crs3";
+char aUcr0ucr1ucr2ucr3[] = "ucr0ucr1ucr2ucr3";
 
 void load_tracks_menu_shapes(void)
 {
@@ -202,20 +202,20 @@ void load_tracks_menu_shapes(void)
 
 
     sdtBuffer = file_load_shape2d_fatal_thunk("sdtedit");
-    locate_many_resources(sdtBuffer, aFlatlakelak1lak2lak3lak4highg, word_3283C);
-    locate_many_resources(sdtBuffer, aCrs0crs1crs2crs3, (char far **)word_3282C);
-    locate_many_resources(sdtBuffer, aUcr0ucr1ucr2ucr3, (char far **)word_32888);
-    windows[0] = sprite_make_wnd(word_3282C[0]->s2d_width * video_flag1_is1,
-        word_3282C[0]->s2d_height, 15);
-    windows[1] = sprite_make_wnd(word_3282C[1]->s2d_width * video_flag1_is1,
-        word_3282C[1]->s2d_height, 15);
-    windows[2] = sprite_make_wnd(word_3282C[2]->s2d_width * video_flag1_is1,
-        word_3282C[2]->s2d_height, 15);
-    windows[3] = sprite_make_wnd(word_3282C[3]->s2d_width * video_flag1_is1,
-        word_3282C[3]->s2d_height, 15);
-    teditData = file_load_resfile("tedit");
-    wndsprite = sprite_make_wnd(320, 200, 15);
-    word_32540 = locate_shape_alt(teditData, "pbox");
+    locate_many_resources(sdtBuffer, aFlatlakelak1lak2lak3lak4highg, terrain_tile_shapes);
+    locate_many_resources(sdtBuffer, aCrs0crs1crs2crs3, (char far **)track_editor_cursors);
+    locate_many_resources(sdtBuffer, aUcr0ucr1ucr2ucr3, (char far **)road_tile_shapes);
+    windows[0] = sprite_make_window(track_editor_cursors[0]->s2d_width * pixel_scales,
+        track_editor_cursors[0]->s2d_height, 15);
+    windows[1] = sprite_make_window(track_editor_cursors[1]->s2d_width * pixel_scales,
+        track_editor_cursors[1]->s2d_height, 15);
+    windows[2] = sprite_make_window(track_editor_cursors[2]->s2d_width * pixel_scales,
+        track_editor_cursors[2]->s2d_height, 15);
+    windows[3] = sprite_make_window(track_editor_cursors[3]->s2d_width * pixel_scales,
+        track_editor_cursors[3]->s2d_height, 15);
+    teditData = file_load_resource_file("tedit");
+    g_wndspr = sprite_make_window(320, 200, 15);
+    palette_piece_layout = locate_shape_alt(teditData, "pbox");
     shortNames = locate_shape_alt(teditData, "snam");
     mediumTextData = locate_shape_alt(teditData, "mnam");
     pieceNames = locate_shape_alt(teditData, "tnam");
@@ -226,17 +226,17 @@ void load_tracks_menu_shapes(void)
     }
     for (j = 0; j < 186; ++j) {
         textPtr = shortNames + j * 4;
-        resID_byte1[0] = textPtr[0];
-        resID_byte1[1] = textPtr[1];
-        resID_byte1[2] = textPtr[2];
-        resID_byte1[3] = textPtr[3];
-        tracksmenushape2dunk[j] = locate_shape_fatal(sdtBuffer, resID_byte1);
+        resbuftext[0] = textPtr[0];
+        resbuftext[1] = textPtr[1];
+        resbuftext[2] = textPtr[2];
+        resbuftext[3] = textPtr[3];
+        piece_fill_shapes[j] = locate_shape_fatal(sdtBuffer, resbuftext);
         textPtr = mediumTextData + j * 4;
-        resID_byte1[0] = textPtr[0];
-        resID_byte1[1] = textPtr[1];
-        resID_byte1[2] = textPtr[2];
-        resID_byte1[3] = textPtr[3];
-        word_32544[j] = locate_shape_fatal(sdtBuffer, resID_byte1);
+        resbuftext[0] = textPtr[0];
+        resbuftext[1] = textPtr[1];
+        resbuftext[2] = textPtr[2];
+        resbuftext[3] = textPtr[3];
+        piece_mask_shapes[j] = locate_shape_fatal(sdtBuffer, resbuftext);
     }
 
     lastPutCol = -1;
@@ -257,25 +257,25 @@ void load_tracks_menu_shapes(void)
     viewTop = 0;
     lastHoverShape = 0;
     errorMsg = 0;
-    selectCol[0] = byte_45D90;
-    selRow[0] = byte_45E16;
+    selectCol[0] = sampled_trk_column;
+    selRow[0] = g_cur_track_row;
     selRow[1] = 7;
 
     sprite_copy_wnd_to_1_clear();
-    draw_button(locate_text_res(teditData, "bti"), 0xd9, 3, 0x66, 0x16,
-        word_407F4, word_407F6, word_407F8, 0);
-    draw_lines_unk(5, 0, 0xce, 0xbe, word_407EC, word_407EE, word_407F0);
-    draw_lines_unk(0xd9, 0x20, 0x66, 0x9e, word_407EC, word_407EE, word_407F0);
-    draw_button(locate_text_res(teditData, "bsc"), 0xdd, 0x8c, 0x5e, 0x0e,
-        word_407F4, word_407F6, word_407F8, 0);
-    draw_button(locate_text_res(teditData, "blo"), 0xdd, 0x9c, 0x2e, 0x0e,
-        word_407F4, word_407F6, word_407F8, 0);
-    draw_button(locate_text_res(teditData, "bsa"), 0xdd, 0xac, 0x2e, 0x0e,
-        word_407F4, word_407F6, word_407F8, 0);
-    draw_button(locate_text_res(teditData, "bcl"), 0x10d, 0x9c, 0x2e, 0x0e,
-        word_407F4, word_407F6, word_407F8, 0);
-    draw_button(locate_text_res(teditData, "bex"), 0x10d, 0xac, 0x2e, 0x0e,
-        word_407F4, word_407F6, word_407F8, 0);
+    draw_button(locate_text_resource(teditData, "bti"), 0xd9, 3, 0x66, 0x16,
+        menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+    draw_lines_unknown(5, 0, 0xce, 0xbe, palette_window_line_color, palette_window_fill_color, palette_window_line_style);
+    draw_lines_unknown(0xd9, 0x20, 0x66, 0x9e, palette_window_line_color, palette_window_fill_color, palette_window_line_style);
+    draw_button(locate_text_resource(teditData, "bsc"), 0xdd, 0x8c, 0x5e, 0x0e,
+        menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+    draw_button(locate_text_resource(teditData, "blo"), 0xdd, 0x9c, 0x2e, 0x0e,
+        menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+    draw_button(locate_text_resource(teditData, "bsa"), 0xdd, 0xac, 0x2e, 0x0e,
+        menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+    draw_button(locate_text_resource(teditData, "bcl"), 0x10d, 0x9c, 0x2e, 0x0e,
+        menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+    draw_button(locate_text_resource(teditData, "bex"), 0x10d, 0xac, 0x2e, 0x0e,
+        menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
 
     do {
 nextFrame:
@@ -284,7 +284,7 @@ nextFrame:
             objectHeight = 1;
             tileSize = 0;
             if (activeGroup != 0) {
-                switch (trkObjectList[selectedPiece].ss_multiTileFlag) {
+                switch (trklst[selectedPiece].ss_multiTileFlag) {
                 case 1:
                     objectHeight = 2;
                     tileSize = 1;
@@ -324,8 +324,8 @@ nextFrame:
         if (lastType != activeGroup) {
             paletteModified = 1;
             lastType = activeGroup;
-            while (word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
-                if (word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] == 0xff)
+            while (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
+                if (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] == 0xff)
                     --selectCol[1];
                 else
                     --selRow[1];
@@ -339,7 +339,7 @@ nextFrame:
         }
         if (pathFlag) {
             pathFlag = 0;
-            errorMsg = sub_2C81C();
+            errorMsg = validate_track_elements();
         }
         if (mapChanged || paletteModified) {
             sprite_copy_wnd_to_1();
@@ -350,48 +350,48 @@ nextFrame:
                     mouse_track_op(0, 9, 0xc0, 0xb5, 5, originX, 0x0c, 0x1e);
                     mouse_track_op(0, 0xca, 5, 4, 0xb0, viewTop, 0x0b, 0x1e);
                 }
-                sprite_set_1_size(8, 0xc8, 4, 0xb3);
+                sprset1size(8, 0xc8, 4, 0xb3);
                 draw_2DtrackMap(originX, viewTop, elementState, terrainCache);
-                sprite_set_1_size(0, 0x140, 0, 0xc8);
+                sprset1size(0, 0x140, 0, 0xc8);
             }
             if (paletteModified) {
                 paletteModified = 0;
-                sprite_set_1_from_argptr(windows[tileSize]);
+                sprite_setup1_from_arg_pointer(windows[tileSize]);
                 if (activeGroup == 0) {
-                    sprite_shape_to_1(word_3283C[selectedPiece], 0, 0);
+                    sprite_shape_to_1(terrain_tile_shapes[selectedPiece], 0, 0);
                     preRender_line(1, 0, 15, 0, performGraphColor);
                     preRender_line(1, 14, 15, 14, performGraphColor);
                     preRender_line(1, 0, 1, 14, performGraphColor);
                     preRender_line(15, 0, 15, 14, performGraphColor);
                 } else {
-                    sprite_shape_to_1(word_3282C[tileSize], 0, 0);
+                    sprite_shape_to_1(track_editor_cursors[tileSize], 0, 0);
                     if (selectedPiece != 0) {
-                        putpixel_iconMask(word_32544[selectedPiece], 0, 0);
-                        putpixel_iconFillings(tracksmenushape2dunk[selectedPiece], 0, 0);
+                        putpixel_iconMask(piece_mask_shapes[selectedPiece], 0, 0);
+                        putpixel_iconFillings(piece_fill_shapes[selectedPiece], 0, 0);
                     }
                 }
             }
-            sprite_blit_to_video(wndsprite, imageMode);
+            sprite_blit_to_video(g_wndspr, imageMode);
             imageMode = -2;
             lastHoverShape = 0xff;
         }
 
-        sprite_copy_2_to_1_2();
+        sprcopy2to12();
         if (!paletteArea) {
             cursorPixW = shapeWidth << 4;
             boxHeight = objectHeight << 4;
             cursorLeft = ((selectCol[0] - originX) << 4) + 8;
             screenPosY = ((selRow[0] - viewTop) << 4) + 4;
-            hovered = td14_elem_map_main[trackrows[selRow[0]] + selectCol[0]];
+            hovered = td14tb[lnoffsets[selRow[0]] + selectCol[0]];
             switch (hovered) {
             case 0xfd:
-                hovered = td14_elem_map_main[word_45D3E[selRow[0]] + selectCol[0] - 1];
+                hovered = td14tb[lnoffsets[selRow[0] - 1] + selectCol[0] - 1];
                 break;
             case 0xfe:
-                hovered = td14_elem_map_main[word_45D3E[selRow[0]] + selectCol[0]];
+                hovered = td14tb[lnoffsets[selRow[0] - 1] + selectCol[0]];
                 break;
             case 0xff:
-                hovered = td14_elem_map_main[trackrows[selRow[0]] + selectCol[0] - 1];
+                hovered = td14tb[lnoffsets[selRow[0]] + selectCol[0] - 1];
                 break;
             }
         } else {
@@ -420,12 +420,12 @@ nextFrame:
             } else {
                 cursorLeft = (selectCol[1] << 4) + 0xdc;
                 if (selRow[1] < 5 &&
-                        word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + 6] == 0xfe)
+                        palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + 6] == 0xfe)
                     boxHeight = 0x20;
                 if (selectCol[1] < 5 &&
-                        word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + 1] == 0xff)
+                        palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + 1] == 0xff)
                     cursorPixW = 0x20;
-                hovered = word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
+                hovered = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
                 if (hovered >= 0xfd)
                     hovered = 0;
             }
@@ -434,45 +434,45 @@ nextFrame:
         }
 
         if (hovered != lastHoverShape) {
-            mouse_draw_opaque_check();
-            font_set_unk(dialog_fnt_colour, 0);
+            msdrawopaquechk();
+            font_setup_unknown(dlg_colour, 0);
             textPtr = pieceNames + hovered * 3;
-            resID_byte1[0] = textPtr[0];
-            resID_byte1[1] = textPtr[1];
-            resID_byte1[2] = textPtr[2];
-            copy_string(resID_byte1, locate_text_res(teditData, resID_byte1));
-            j = font_op2(resID_byte1);
-            sub_345BC(resID_byte1, 8, 0xc0);
+            resbuftext[0] = textPtr[0];
+            resbuftext[1] = textPtr[1];
+            resbuftext[2] = textPtr[2];
+            copy_string(resbuftext, locate_text_resource(teditData, resbuftext));
+            j = font_op2(resbuftext);
+            draw_text_at(resbuftext, 8, 0xc0);
             if (lastTextWidth > j)
                 sprite_1_unk(j + 8, 0xc0, lastTextWidth - j, 8, 0);
-            mouse_draw_transparent_check();
+            msdrawtransparentchk();
             lastTextWidth = j;
             lastHoverShape = hovered;
         }
         if (errorMsg) {
-            show_dialog(1, 1, locate_text_res(teditData, aEokenseieemseedewwefuenpestej + errorMsg * 3),
+            show_dialog(1, 1, locate_text_resource(teditData, aEokenseieemseedewwefuenpestej + errorMsg * 3),
                 -1, -1, performGraphColor, 0, 0);
             errorMsg = 0;
         }
 
         animationCount = 99;
         blinkFlag = 0;
-        mouse_draw_opaque_check();
+        msdrawopaquechk();
         if ((drawnMode = paletteArea) == 0)
-            sprite_clear_shape_alt(word_32888[tileSize], cursorLeft, screenPosY);
+            sprite_clear_shape_alt(road_tile_shapes[tileSize], cursorLeft, screenPosY);
         do {
             if (animationCount > 15) {
-                mouse_draw_opaque_check();
+                msdrawopaquechk();
                 if (!paletteArea) {
                     if (blinkFlag)
-                        sprite_shape_to_1(word_32888[tileSize], cursorLeft, screenPosY);
+                        sprite_shape_to_1(road_tile_shapes[tileSize], cursorLeft, screenPosY);
                     else
                         sprite_shape_to_1(windows[tileSize]->sprite_bitmapptr, cursorLeft, screenPosY);
                 } else {
-                    sub_3702E(cursorLeft, screenPosY - 1, cursorLeft + cursorPixW,
-                        screenPosY + boxHeight - 1, word_407F2);
+                    draw_rect_outline(cursorLeft, screenPosY - 1, cursorLeft + cursorPixW,
+                        screenPosY + boxHeight - 1, text_cursor_outline_color);
                 }
-                mouse_draw_transparent_check();
+                msdrawtransparentchk();
                 blinkFlag ^= 1;
                 animationCount = 0;
             }
@@ -484,7 +484,7 @@ nextFrame:
             if (hitArea != -1) {
                 switch (hitArea) {
                 case 0:
-                    if (mouse_butstate & 3) {
+                    if (flagsdown & 3) {
                         paletteArea = 0;
                         value = mouse_track_op(1, 9, 0xc0, 0xb5, 5, originX, 0x0c, 0x1e);
                         selectCol[0] += value - originX;
@@ -493,7 +493,7 @@ nextFrame:
                     }
                     break;
                 case 1:
-                    if (mouse_butstate & 3) {
+                    if (flagsdown & 3) {
                         paletteArea = 0;
                         value = mouse_track_op(1, 0xca, 5, 4, 0xb0, viewTop, 0x0b, 0x1e);
                         selRow[0] += value - viewTop;
@@ -507,18 +507,18 @@ nextFrame:
                         selRow[1] = 6;
                         key = 1;
                     }
-                    if (mouse_butstate & 3) {
+                    if (flagsdown & 3) {
                         activeGroup = mouse_track_op(1, 0xdd, 0x5f, 0x85, 5, activeGroup - 1, 1, 10) + 1;
                         key = 1;
                     }
                     break;
                 case 3:
-                    destPosX = (mouse_xpos - 8) / 16;
-                    destPosY = (mouse_ypos - 4) / 16;
+                    destPosX = (msecoordx - 8) / 16;
+                    destPosY = (pos_y_ms - 4) / 16;
                     if (activeGroup != 0) {
-                        if (destPosY == 10 && (trkObjectList[selectedPiece].ss_multiTileFlag & 1))
+                        if (destPosY == 10 && (trklst[selectedPiece].ss_multiTileFlag & 1))
                             --destPosY;
-                        if (destPosX == 11 && (trkObjectList[selectedPiece].ss_multiTileFlag & 2))
+                        if (destPosX == 11 && (trklst[selectedPiece].ss_multiTileFlag & 2))
                             --destPosX;
                     }
                     destPosX += originX;
@@ -533,15 +533,15 @@ nextFrame:
                         key = 0x0d;
                     break;
                 case 4:
-                    destPosX = (mouse_xpos - 0xdc) / 16;
-                    destPosY = (mouse_ypos - 0x24) / 16;
+                    destPosX = (msecoordx - 0xdc) / 16;
+                    destPosY = (pos_y_ms - 0x24) / 16;
                     if (destPosY < 6) {
-                        if (word_32540[activeGroup * 36 + destPosY * 6 + destPosX] == 0xfe)
+                        if (palette_piece_layout[activeGroup * 36 + destPosY * 6 + destPosX] == 0xfe)
                             --destPosY;
-                        if (word_32540[activeGroup * 36 + destPosY * 6 + destPosX] == 0xff)
+                        if (palette_piece_layout[activeGroup * 36 + destPosY * 6 + destPosX] == 0xff)
                             --destPosX;
                     } else {
-                        destPosY = (mouse_ypos - 0x1c) / 16;
+                        destPosY = (pos_y_ms - 0x1c) / 16;
                         if (destPosY == 7) {
                             destPosX = 0;
                             goto paletteClick;
@@ -572,24 +572,24 @@ paletteClick:
         if (trackStep != 0)
             timer_get_counter_unk(10L);
         if (blinkFlag) {
-            mouse_draw_opaque_check();
+            msdrawopaquechk();
             if (!drawnMode)
-                sprite_shape_to_1(word_32888[tileSize], cursorLeft, screenPosY);
+                sprite_shape_to_1(road_tile_shapes[tileSize], cursorLeft, screenPosY);
             else
-                sub_3702E(cursorLeft, screenPosY - 1, cursorLeft + cursorPixW,
-                    screenPosY + boxHeight - 1, word_407F2);
-            mouse_draw_transparent_check();
+                draw_rect_outline(cursorLeft, screenPosY - 1, cursorLeft + cursorPixW,
+                    screenPosY + boxHeight - 1, text_cursor_outline_color);
+            msdrawtransparentchk();
         }
 
         if (trackStep != 0) {
             if (key != 1 || paletteArea)
-                trackStep = track_pieces_counter - 1;
-            selectCol[0] = td21_col_from_path[trackStep];
-            selRow[0] = td22_row_from_path[trackStep];
-            selectedPiece = td14_elem_map_main[trackrows[selRow[0]] + selectCol[0]];
+                trackStep = g_trackpiecescounter - 1;
+            selectCol[0] = g_column_of_trkdata21_pth[trackStep];
+            selRow[0] = tdfrompathrow22[trackStep];
+            selectedPiece = td14tb[lnoffsets[selRow[0]] + selectCol[0]];
             mapChanged = 1;
             paletteModified = 1;
-            if (++trackStep < track_pieces_counter)
+            if (++trackStep < g_trackpiecescounter)
                 goto nextFrame;
             selectedPiece = savedShape;
             trackStep = 0;
@@ -597,7 +597,7 @@ paletteClick:
         }
         trackStep = 0;
         for (j = 0; j < 10; ++j) {
-            if (word_3ECBE[j] == key) {
+            if (function_key_scan_codes[j] == key) {
                 activeGroup = j + 1;
                 key = 0;
                 break;
@@ -624,18 +624,18 @@ paletteClick:
         case 'c':
         case 'C':
             j = track_setup();
-            show_dialog(1, 1, locate_text_res(teditData, aEokenseieemseedewwefuenpestej + j * 3),
+            show_dialog(1, 1, locate_text_resource(teditData, aEokenseieemseedewwefuenpestej + j * 3),
                 -1, -1, performGraphColor, 0, 0);
             if (j > 1) {
                 paletteArea = 0;
-                if (track_pieces_counter == 0) {
-                    selectCol[0] = byte_45D90;
-                    selRow[0] = byte_45E16;
+                if (g_trackpiecescounter == 0) {
+                    selectCol[0] = sampled_trk_column;
+                    selRow[0] = g_cur_track_row;
                 } else {
-                    selectCol[0] = td21_col_from_path[0];
-                    selRow[0] = td22_row_from_path[0];
+                    selectCol[0] = g_column_of_trkdata21_pth[0];
+                    selRow[0] = tdfrompathrow22[0];
                     savedShape = selectedPiece;
-                    selectedPiece = td14_elem_map_main[trackrows[selRow[0]] + selectCol[0]];
+                    selectedPiece = td14tb[lnoffsets[selRow[0]] + selectCol[0]];
                     trackStep = 1;
                     paletteModified = 1;
                 }
@@ -645,12 +645,12 @@ paletteClick:
         case 0x0d:
             if (paletteArea) {
                 if (selRow[1] < 6) {
-                    selectedPiece = word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
+                    selectedPiece = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
                     if (activeGroup != 0) {
-                        if ((trkObjectList[selectedPiece].ss_multiTileFlag & 1) &&
+                        if ((trklst[selectedPiece].ss_multiTileFlag & 1) &&
                                 selRow[0] - viewTop == 10)
                             --selRow[0];
-                        if ((trkObjectList[selectedPiece].ss_multiTileFlag & 2) &&
+                        if ((trklst[selectedPiece].ss_multiTileFlag & 2) &&
                                 selectCol[0] - originX == 11)
                             --selectCol[0];
                     }
@@ -662,44 +662,44 @@ paletteClick:
                         if (++activeGroup > 10)
                             activeGroup = 1;
                     } else if (selRow[1] == 7) {
-                        answer = show_dialog(2, 1, locate_text_res(teditData, "mss"),
-                            -1, -1, dialogarg2, 0, td14_elem_map_main[0x384]);
+                        answer = show_dialog(2, 1, locate_text_resource(teditData, "mss"),
+                            -1, -1, dialogarg2, 0, td14tb[0x384]);
                         if (answer != -1 && answer != 5) {
-                            td14_elem_map_main[0x384] = answer;
+                            td14tb[0x384] = answer;
                             ++mapChanged;
                             mapDirty = 1;
                         }
                     } else if (selRow[1] == 8 && selectCol[1] != 0) {
-                        answer = show_dialog(2, 1, locate_text_res(teditData, "men"),
+                        answer = show_dialog(2, 1, locate_text_resource(teditData, "men"),
                             -1, -1, dialogarg2, 0, 0);
                         if (answer != -1 && answer != 5) {
                             for (j = 0; j < 0x384; ++j)
-                                td14_elem_map_main[j] = 0;
+                                td14tb[j] = 0;
                             aTer0[3] = answer + '0';
                             terrainTemplate = locate_shape_alt(teditData, aTer0);
                             for (j = 0; j < 0x385; ++j)
-                                td15_terr_map_main[j] = terrainTemplate[j];
-                            gameconfig.game_trackname[0] = 0;
+                                td15p_9[j] = terrainTemplate[j];
+                            globalgamesettings.game_trackname[0] = 0;
                             ++mapChanged;
                             mapDirty = 1;
                         }
                     } else if (selRow[1] == 8 && selectCol[1] == 0) {
-                        sprite_copy_2_to_1_2();
-                        if (mapDirty && (j = show_dialog(2, 1, locate_text_res(teditData, "chl"),
+                        sprcopy2to12();
+                        if (mapDirty && (j = show_dialog(2, 1, locate_text_resource(teditData, "chl"),
                                 -1, -1, performGraphColor, 0, 0)) == 0)
                             goto save;
                         j = 1;
                         g_is_busy = 1;
                         ++mapChanged;
-                        j = do_fileselect_dialog(byte_3B80C, gameconfig.game_trackname, ".trk",
-                            locate_text_res(mainresptr, "trk"));
-                        file_build_path(byte_3B80C, gameconfig.game_trackname, ".trk", g_path_buf);
+                        j = do_fileselect_dialog(track_file, globalgamesettings.game_trackname, ".trk",
+                            locate_text_resource(main_data_file_addr, "trk"));
+                        file_build_path(track_file, globalgamesettings.game_trackname, ".trk", buf_g_path);
                         if (j > 0) {
-                            file_read_fatal(g_path_buf, td14_elem_map_main);
+                            file_read_fatal(buf_g_path, td14tb);
                             track_setup();
                             paletteArea = 0;
-                            selRow[0] = byte_45E16;
-                            selectCol[0] = byte_45D90;
+                            selRow[0] = g_cur_track_row;
+                            selectCol[0] = sampled_trk_column;
                             mapDirty = 0;
                             ++mapChanged;
                         }
@@ -709,15 +709,15 @@ save:
                         saveOutcome = 0;
                         g_is_busy = 1;
                         while (saveOutcome == 0) {
-                            sprite_copy_2_to_1_2();
+                            sprcopy2to12();
                             ++mapChanged;
-                            if (do_savefile_dialog(byte_3B80C, gameconfig.game_trackname,
-                                    locate_text_res(mainresptr, "trk"))) {
-                                file_build_path(byte_3B80C, gameconfig.game_trackname, ".trk",
-                                    g_path_buf);
+                            if (do_savefile_dialog(track_file, globalgamesettings.game_trackname,
+                                    locate_text_resource(main_data_file_addr, "trk"))) {
+                                file_build_path(track_file, globalgamesettings.game_trackname, ".trk",
+                                    buf_g_path);
                                 saveOutcome = 1;
-                                if (file_find(g_path_buf)) {
-                                    j = show_dialog(2, 1, locate_text_res(mainresptr, "fex"),
+                                if (file_find(buf_g_path)) {
+                                    j = show_dialog(2, 1, locate_text_resource(main_data_file_addr, "fex"),
                                         -1, -1, performGraphColor, 0, 0);
                                     if (j == -1)
                                         saveOutcome = -1;
@@ -727,11 +727,11 @@ save:
                             } else
                                 saveOutcome = -1;
                             if (saveOutcome == 1) {
-                                j = file_write_fatal(g_path_buf, td14_elem_map_main, 0x70aL);
+                                j = file_write_fatal(buf_g_path, td14tb, 0x70aL);
                                 if (j == 0)
                                     highscore_write_a(1);
                                 if (j != 0) {
-                                    show_dialog(1, 1, locate_text_res(mainresptr, "ser"),
+                                    show_dialog(1, 1, locate_text_resource(main_data_file_addr, "ser"),
                                         -1, -1, performGraphColor, 0, 0);
                                     saveOutcome = 0;
                                 } else
@@ -740,7 +740,7 @@ save:
                         }
                         g_is_busy = 0;
                     } else {
-                        if (mapDirty && (j = show_dialog(2, 1, locate_text_res(teditData, "chx"),
+                        if (mapDirty && (j = show_dialog(2, 1, locate_text_resource(teditData, "chx"),
                                 -1, -1, performGraphColor, 0, 0)) == 0)
                             goto save;
                         inEditor = 0;
@@ -753,43 +753,43 @@ save:
                     oldCell = tmpShape;
                     ++paletteModified;
                 } else {
-                    oldCell = td15_terr_map_main[terrainrows[selRow[0]] + selectCol[0]];
+                    oldCell = td15p_9[gterrtrk[selRow[0]] + selectCol[0]];
                     lastPutCol = selectCol[0];
                     droppedPosY = selRow[0];
                 }
-                td15_terr_map_main[terrainrows[droppedPosY] + lastPutCol] = selectedPiece;
+                td15p_9[gterrtrk[droppedPosY] + lastPutCol] = selectedPiece;
                 mapDirty = 1;
                 pathFlag = 1;
                 ++mapChanged;
-            } else if (!((trkObjectList[selectedPiece].ss_multiTileFlag & 1) && selRow[0] > 28) &&
-                    !((trkObjectList[selectedPiece].ss_multiTileFlag & 2) && selectCol[0] > 28)) {
+            } else if (!((trklst[selectedPiece].ss_multiTileFlag & 1) && selRow[0] > 28) &&
+                    !((trklst[selectedPiece].ss_multiTileFlag & 2) && selectCol[0] > 28)) {
                 if (selectCol[0] == lastPutCol && selRow[0] == droppedPosY) {
                     tmpShape = selectedPiece;
                     selectedPiece = oldCell;
                     oldCell = tmpShape;
                     ++paletteModified;
                 } else {
-                    oldCell = td14_elem_map_main[trackrows[selRow[0]] + selectCol[0]];
+                    oldCell = td14tb[lnoffsets[selRow[0]] + selectCol[0]];
                     if (oldCell >= 0xfd)
                         oldCell = 0;
                     lastPutCol = selectCol[0];
                     droppedPosY = selRow[0];
                 }
-                td14_elem_map_main[trackrows[droppedPosY] + lastPutCol] = selectedPiece;
+                td14tb[lnoffsets[droppedPosY] + lastPutCol] = selectedPiece;
                 mapDirty = 1;
                 pathFlag = 1;
                 ++mapChanged;
-                switch (trkObjectList[selectedPiece].ss_multiTileFlag) {
+                switch (trklst[selectedPiece].ss_multiTileFlag) {
                 case 1:
-                    td14_elem_map_main[word_35D42[droppedPosY] + lastPutCol] = 0xfe;
+                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol] = 0xfe;
                     break;
                 case 2:
-                    td14_elem_map_main[trackrows[droppedPosY] + lastPutCol + 1] = 0xff;
+                    td14tb[lnoffsets[droppedPosY] + lastPutCol + 1] = 0xff;
                     break;
                 case 3:
-                    td14_elem_map_main[trackrows[droppedPosY] + lastPutCol + 1] = 0xff;
-                    td14_elem_map_main[word_35D42[droppedPosY] + lastPutCol] = 0xfe;
-                    td14_elem_map_main[word_35D42[droppedPosY] + lastPutCol + 1] = 0xfd;
+                    td14tb[lnoffsets[droppedPosY] + lastPutCol + 1] = 0xff;
+                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol] = 0xfe;
+                    td14tb[lnoffsets[droppedPosY + 1] + lastPutCol + 1] = 0xfd;
                     break;
                 }
             }
@@ -813,8 +813,8 @@ save:
                 lastPutCol = -1;
                 --selRow[paletteArea];
                 if (paletteArea && selRow[1] < 6) {
-                    while (word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
-                        boxMarker = word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
+                    while (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
+                        boxMarker = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
                         if (boxMarker == 0xff)
                             --selectCol[1];
                         else if (boxMarker == 0xfe)
@@ -824,11 +824,11 @@ save:
             }
             break;
         case 0x5000:
-            if (selRow[paletteArea] < byte_3ED00[paletteArea]) {
+            if (selRow[paletteArea] < palette_row_limits[paletteArea]) {
                 lastPutCol = -1;
                 ++selRow[paletteArea];
                 if (paletteArea && selRow[1] < 6) {
-                    boxMarker = word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
+                    boxMarker = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
                     if (boxMarker == 0xff)
                         --selectCol[1];
                     else if (boxMarker == 0xfe)
@@ -847,8 +847,8 @@ save:
                     if (selRow[1] > 5)
                         selectCol[1] = 0;
                     else
-                        while (word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
-                            boxMarker = word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
+                        while (palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]] >= 0xfe) {
+                            boxMarker = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1]];
                             if (boxMarker == 0xff)
                                 --selectCol[1];
                             else if (boxMarker == 0xfe)
@@ -867,16 +867,16 @@ save:
                     if (selRow[1] > 5)
                         boxMarker = 3;
                     else
-                        while (selectCol[paletteArea] + boxMarker < byte_3ECFE[paletteArea] &&
-                                word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + boxMarker] >= 0xfe) {
-                            value = word_32540[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + boxMarker];
+                        while (selectCol[paletteArea] + boxMarker < palette_column_limits[paletteArea] &&
+                                palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + boxMarker] >= 0xfe) {
+                            value = palette_piece_layout[selRow[1] * 6 + activeGroup * 36 + selectCol[1] + boxMarker];
                             if (value == 0xff)
                                 ++boxMarker;
                             else if (value == 0xfe)
                                 --selRow[1];
                         }
                 }
-                if (selectCol[paletteArea] + boxMarker < byte_3ECFE[paletteArea]) {
+                if (selectCol[paletteArea] + boxMarker < palette_column_limits[paletteArea]) {
                     lastPutCol = -1;
                     selectCol[paletteArea] += boxMarker;
                 }
@@ -885,11 +885,11 @@ save:
         }
     } while (inEditor);
 
-    sprite_free_wnd(wndsprite);
-    sprite_free_wnd(windows[3]);
-    sprite_free_wnd(windows[2]);
-    sprite_free_wnd(windows[1]);
-    sprite_free_wnd(windows[0]);
+    sprite_free_window(g_wndspr);
+    sprite_free_window(windows[3]);
+    sprite_free_window(windows[2]);
+    sprite_free_window(windows[1]);
+    sprite_free_window(windows[0]);
     unload_resource(teditData);
     mmgr_free(sdtBuffer);
 }
@@ -901,34 +901,34 @@ void preRender_icons(unsigned char mode)
     unsigned char stateId;
     for (iconIndex = 0; iconIndex < 6; ++iconIndex) {
         for (row = 0; row < 6; ++row) {
-            stateId = word_32540[mode * 36 + iconIndex * 6 + row];
+            stateId = palette_piece_layout[mode * 36 + iconIndex * 6 + row];
             if (mode == 0) {
-                sprite_shape_to_1(word_3283C[stateId], 220 + (row << 4),
+                sprite_shape_to_1(terrain_tile_shapes[stateId], 220 + (row << 4),
                     36 + (iconIndex << 4));
             } else if (stateId < 0xfd) {
-                sprite_shape_to_1(word_3283C[0], 220 + (row << 4),
+                sprite_shape_to_1(terrain_tile_shapes[0], 220 + (row << 4),
                     36 + (iconIndex << 4));
-                switch (trkObjectList[stateId].ss_multiTileFlag) {
+                switch (trklst[stateId].ss_multiTileFlag) {
                 case 1:
-                    sprite_shape_to_1(word_3283C[0], 220 + (row << 4),
+                    sprite_shape_to_1(terrain_tile_shapes[0], 220 + (row << 4),
                         52 + (iconIndex << 4));
                     break;
                 case 2:
-                    sprite_shape_to_1(word_3283C[0], 236 + (row << 4),
+                    sprite_shape_to_1(terrain_tile_shapes[0], 236 + (row << 4),
                         36 + (iconIndex << 4));
                     break;
                 case 3:
-                    sprite_shape_to_1(word_3283C[0], 236 + (row << 4),
+                    sprite_shape_to_1(terrain_tile_shapes[0], 236 + (row << 4),
                         36 + (iconIndex << 4));
-                    sprite_shape_to_1(word_3283C[0], 220 + (row << 4),
+                    sprite_shape_to_1(terrain_tile_shapes[0], 220 + (row << 4),
                         52 + (iconIndex << 4));
-                    sprite_shape_to_1(word_3283C[0], 236 + (row << 4),
+                    sprite_shape_to_1(terrain_tile_shapes[0], 236 + (row << 4),
                         52 + (iconIndex << 4));
                     break;
                 }
-                putpixel_iconMask(word_32544[stateId], 220 + (row << 4),
+                putpixel_iconMask(piece_mask_shapes[stateId], 220 + (row << 4),
                     36 + (iconIndex << 4));
-                putpixel_iconFillings(tracksmenushape2dunk[stateId],
+                putpixel_iconFillings(piece_fill_shapes[stateId],
                     220 + (row << 4), 36 + (iconIndex << 4));
             }
         }
@@ -947,41 +947,41 @@ void draw_2DtrackMap(unsigned char rowBase, unsigned char columnBase, unsigned c
     for (mapRow = 0; mapRow < 11; ++mapRow) {
         rowIndex = mapRow * 12;
         for (columnIndex = 0; columnIndex < 12; ++columnIndex) {
-            tileId = td14_elem_map_main[trackrows[columnBase + mapRow] + columnIndex + rowBase];
-            surface = td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase];
+            tileId = td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase];
+            surface = td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase];
             mapIndex = rowIndex + columnIndex;
 
             if (tileId >= 0xfd && (mapRow == 0 || columnIndex == 0)) {
                 lastElement[mapIndex] = 0xff;
                 if (tileId == 0xff && columnIndex == 0) {
-                    sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase]],
+                    sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
                         (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                    sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow + 1] + columnIndex + rowBase]],
+                    sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
                         (columnIndex << 4) + 8, (mapRow << 4) + 20);
-                    sprite_putimage_and(word_32544[td14_elem_map_main[trackrows[columnBase + mapRow] + columnIndex + rowBase - 1]],
+                    sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
                         (columnIndex << 4) - 8, (mapRow << 4) + 4);
-                    sprite_putimage_or(tracksmenushape2dunk[td14_elem_map_main[trackrows[columnBase + mapRow] + columnIndex + rowBase - 1]],
+                    sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
                         (columnIndex << 4) - 8, (mapRow << 4) + 4);
                 } else if (tileId == 0xfe && mapRow == 0) {
-                    sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase]],
+                    sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
                         (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                    sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase + 1]],
+                    sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
                         (columnIndex << 4) + 24, (mapRow << 4) + 4);
-                    sprite_putimage_and(word_32544[td14_elem_map_main[word_45D3E[columnBase + mapRow] + columnIndex + rowBase]],
+                    sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
                         (columnIndex << 4) + 8, (mapRow << 4) - 12);
-                    sprite_putimage_or(tracksmenushape2dunk[td14_elem_map_main[word_45D3E[columnBase + mapRow] + columnIndex + rowBase]],
+                    sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
                         (columnIndex << 4) + 8, (mapRow << 4) - 12);
                 } else if (tileId == 0xfd && mapRow == 0 && columnIndex == 0) {
-                    sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase]],
+                    sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
                         (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                    sprite_putimage_and(word_32544[td14_elem_map_main[word_45D3E[columnBase + mapRow] + columnIndex + rowBase - 1]],
+                    sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
                         (columnIndex << 4) - 8, (mapRow << 4) - 12);
-                    sprite_putimage_or(tracksmenushape2dunk[td14_elem_map_main[word_45D3E[columnBase + mapRow] + columnIndex + rowBase - 1]],
+                    sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
                         (columnIndex << 4) - 8, (mapRow << 4) - 12);
                 }
             } else if (tileId == 0) {
                 if (lastElement[mapIndex] != 0 || lastTerrain[mapIndex] != surface) {
-                    sprite_shape_to_1(word_3283C[surface], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << 4) + 8, (mapRow << 4) + 4);
                     lastElement[mapIndex] = 0;
                     lastTerrain[mapIndex] = surface;
                 }
@@ -989,33 +989,33 @@ void draw_2DtrackMap(unsigned char rowBase, unsigned char columnBase, unsigned c
                 if (lastElement[mapIndex] != tileId || lastTerrain[mapIndex] != surface) {
                     lastElement[mapIndex] = tileId;
                     lastTerrain[mapIndex] = surface;
-                    sprite_shape_to_1(word_3283C[surface], (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                    switch (trkObjectList[tileId].ss_multiTileFlag) {
+                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                    switch (trklst[tileId].ss_multiTileFlag) {
                     case 0:
-                        putpixel_iconMask(word_32544[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                        putpixel_iconFillings(tracksmenushape2dunk[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        putpixel_iconMask(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        putpixel_iconFillings(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
                         break;
                     case 1:
-                        sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow + 1] + columnIndex + rowBase]],
+                        sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
                             (columnIndex << 4) + 8, (mapRow << 4) + 20);
-                        sprite_putimage_and(word_32544[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                        sprite_putimage_or(tracksmenushape2dunk[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
                         break;
                     case 2:
-                        sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase + 1]],
+                        sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
                             (columnIndex << 4) + 24, (mapRow << 4) + 4);
-                        sprite_putimage_and(word_32544[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                        sprite_putimage_or(tracksmenushape2dunk[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
                         break;
                     case 3:
-                        sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow] + columnIndex + rowBase + 1]],
+                        sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
                             (columnIndex << 4) + 24, (mapRow << 4) + 4);
-                        sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow + 1] + columnIndex + rowBase]],
+                        sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
                             (columnIndex << 4) + 8, (mapRow << 4) + 20);
-                        sprite_putimage_and_alt(word_3283C[td15_terr_map_main[terrainrows[columnBase + mapRow + 1] + columnIndex + rowBase + 1]],
+                        sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase + 1]],
                             (columnIndex << 4) + 24, (mapRow << 4) + 20);
-                        sprite_putimage_and(word_32544[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
-                        sprite_putimage_or(tracksmenushape2dunk[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
+                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << 4) + 8, (mapRow << 4) + 4);
                         break;
                     }
                 }
@@ -1027,55 +1027,55 @@ void draw_2DtrackMap(unsigned char rowBase, unsigned char columnBase, unsigned c
     }
 }
 
-char sub_2C81C(void)
+char validate_track_elements(void)
 {
     unsigned char elem, colidx;
     unsigned char terrain, rowno;
     char error;
 
-    sub_2C9B4();
+    clear_invalid_track_tiles();
     error = 0;
     for (rowno = 0; rowno < 30; ++rowno) {
         for (colidx = 0; colidx < 30; ++colidx) {
-            terrain = td15_terr_map_main[terrainrows[rowno] + colidx];
-            elem = td14_elem_map_main[trackrows[rowno] + colidx];
+            terrain = td15p_9[gterrtrk[rowno] + colidx];
+            elem = td14tb[lnoffsets[rowno] + colidx];
             if (elem != 0 && terrain != 0 && terrain != 6) {
                 switch (terrain) {
                 case 1: case 2: case 3: case 4: case 5:
                     if (elem == 0xff)
-                        elem = td14_elem_map_main[trackrows[rowno] + colidx - 1];
+                        elem = td14tb[lnoffsets[rowno] + colidx - 1];
                     else if (elem == 0xfe)
-                        elem = td14_elem_map_main[word_45D3E[rowno] + colidx];
+                        elem = td14tb[lnoffsets[rowno - 1] + colidx];
                     else if (elem == 0xfd)
-                        elem = td14_elem_map_main[word_45D3E[rowno] + colidx - 1];
+                        elem = td14tb[lnoffsets[rowno - 1] + colidx - 1];
                     switch (elem) {
                     case 0x22: case 0x23:
                     case 0x67: case 0x68: case 0x69: case 0x6a: case 0x6b: case 0x6c:
                     case 0xab: case 0xac: case 0xad: case 0xae:
                         break;
                     default:
-                        td14_elem_map_main[trackrows[rowno] + colidx] = 0;
+                        td14tb[lnoffsets[rowno] + colidx] = 0;
                         error = 12;
                     }
                     break;
                 case 7: case 8: case 9: case 10:
-                    if (!subst_hillroad_track(terrain, elem)) {
-                        td14_elem_map_main[trackrows[rowno] + colidx] = 0;
+                    if (!subst_hillroad(terrain, elem)) {
+                        td14tb[lnoffsets[rowno] + colidx] = 0;
                         error = 13;
                     }
                     break;
                 default:
                     error = 14;
-                    td14_elem_map_main[trackrows[rowno] + colidx] = 0;
+                    td14tb[lnoffsets[rowno] + colidx] = 0;
                 }
             }
         }
     }
-    if (error != 0) sub_2C9B4();
+    if (error != 0) clear_invalid_track_tiles();
     return error;
 }
 
-void sub_2C9B4(void)
+void clear_invalid_track_tiles(void)
 {
     unsigned char used[900];
     unsigned char rowIdx;
@@ -1088,44 +1088,44 @@ void sub_2C9B4(void)
 
     for (rowIdx = 0; rowIdx < 30; ++rowIdx) {
         for (x = 0; x < 30; ++x) {
-            element = td14_elem_map_main[trackrows[rowIdx] + x];
+            element = td14tb[lnoffsets[rowIdx] + x];
             if (element != 0) {
                 if (element >= 0xfd) {
-                    if (used[trackrows[rowIdx] + x] == 0)
-                        td14_elem_map_main[trackrows[rowIdx] + x] = 0;
+                    if (used[lnoffsets[rowIdx] + x] == 0)
+                        td14tb[lnoffsets[rowIdx] + x] = 0;
                 } else {
-                    switch (trkObjectList[element].ss_multiTileFlag) {
+                    switch (trklst[element].ss_multiTileFlag) {
                     case 1:
-                        if (used[word_35D42[rowIdx] + x] != 0)
-                            td14_elem_map_main[trackrows[rowIdx] + x] = 0;
-                        else if (td14_elem_map_main[word_35D42[rowIdx] + x] != 0xfe)
-                            td14_elem_map_main[trackrows[rowIdx] + x] = 0;
+                        if (used[lnoffsets[rowIdx + 1] + x] != 0)
+                            td14tb[lnoffsets[rowIdx] + x] = 0;
+                        else if (td14tb[lnoffsets[rowIdx + 1] + x] != 0xfe)
+                            td14tb[lnoffsets[rowIdx] + x] = 0;
                         else
-                            used[word_35D42[rowIdx] + x] = 1;
+                            used[lnoffsets[rowIdx + 1] + x] = 1;
                         break;
                     case 2:
-                        if (used[trackrows[rowIdx] + x + 1] != 0) {
-                            td14_elem_map_main[trackrows[rowIdx] + x] = 0;
+                        if (used[lnoffsets[rowIdx] + x + 1] != 0) {
+                            td14tb[lnoffsets[rowIdx] + x] = 0;
                         } else {
-                            if (td14_elem_map_main[trackrows[rowIdx] + x + 1] != 0xff)
-                                td14_elem_map_main[trackrows[rowIdx] + x] = 0;
+                            if (td14tb[lnoffsets[rowIdx] + x + 1] != 0xff)
+                                td14tb[lnoffsets[rowIdx] + x] = 0;
                             else
-                                used[trackrows[rowIdx] + x + 1] = 1;
+                                used[lnoffsets[rowIdx] + x + 1] = 1;
                         }
                         break;
                     case 3:
-                        if (used[word_35D42[rowIdx] + x + 1] +
-                            used[trackrows[rowIdx] + x + 1] +
-                            used[word_35D42[rowIdx] + x] != 0) {
-                            td14_elem_map_main[trackrows[rowIdx] + x] = 0;
-                        } else if (td14_elem_map_main[trackrows[rowIdx] + x + 1] != 0xff ||
-                                   td14_elem_map_main[word_35D42[rowIdx] + x] != 0xfe ||
-                                   td14_elem_map_main[word_35D42[rowIdx] + x + 1] != 0xfd) {
-                            td14_elem_map_main[trackrows[rowIdx] + x] = 0;
+                        if (used[lnoffsets[rowIdx + 1] + x + 1] +
+                            used[lnoffsets[rowIdx] + x + 1] +
+                            used[lnoffsets[rowIdx + 1] + x] != 0) {
+                            td14tb[lnoffsets[rowIdx] + x] = 0;
+                        } else if (td14tb[lnoffsets[rowIdx] + x + 1] != 0xff ||
+                                   td14tb[lnoffsets[rowIdx + 1] + x] != 0xfe ||
+                                   td14tb[lnoffsets[rowIdx + 1] + x + 1] != 0xfd) {
+                            td14tb[lnoffsets[rowIdx] + x] = 0;
                         } else {
-                            used[trackrows[rowIdx] + x + 1] = 1;
-                            used[word_35D42[rowIdx] + x] = 1;
-                            used[word_35D42[rowIdx] + x + 1] = 1;
+                            used[lnoffsets[rowIdx] + x + 1] = 1;
+                            used[lnoffsets[rowIdx + 1] + x] = 1;
+                            used[lnoffsets[rowIdx + 1] + x + 1] = 1;
                         }
                         break;
                     }

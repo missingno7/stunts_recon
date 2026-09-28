@@ -1,18 +1,21 @@
 .8086
+DGROUP group CONST,_BSS,_DATA
+assume ds:DGROUP
 _DATA segment word public 'DATA'
+_kb_readchar_callback dw offset _kb_read_char
+_readchar_callback_seg dw seg _kb_read_char
+_byte_3FE00 db 0
 _DATA ends
 _BSS segment word public 'BSS'
 _BSS ends
 CONST segment word public 'CONST'
 CONST ends
-DGROUP group CONST,_BSS,_DATA
-extrn _kb_readchar_callback:word
-extrn _readchar_callback_seg:word
 extrn _timer_copy_unk:word
 extrn _word_305F8:word
 extrn _timer_get_counter:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
+public _byte_3FE00
 public _kb_call_readchar_callback
 public _kb_read_char
 public _kb_checking

@@ -5,7 +5,7 @@ reads desired operand bytes to choose a value, trims output, or patches an MZ.
 """
 import struct
 from common import require
-from object_probe import extract_no_fixups
+from object_probe import extract_no_fixups, declared_externals
 
 
 _FRAME_CALLBACK_OBJECT = bytes.fromhex(
@@ -134,7 +134,7 @@ def bind_data_offsets(obj, segment, public, length, expected_fixups, declaration
     if asm:
         used |= {fix['frame'] for fix in expected_fixups if fix['frame_method'] == 2}
     require(set(symbols) == used, 'Missing or unused external data binding')
-    require(set(obj.externals) <= used | {'__acrtused', public}, 'Unexpected external declaration')
+    require(declared_externals(obj) <= used | {'__acrtused', public}, 'Unexpected external declaration')
     dgroup, = [g for g in obj.groups if g['name'] == 'DGROUP']
     occupied = set()
     rows = []
@@ -306,7 +306,7 @@ def bind_far_calls(obj, segment, public, length, expected_fixups, declarations,
             'Complete far contribution length differs')
     require(all(n==segment or size==0 for n,size in obj.segment_lengths.items()), 'Unowned far-call data/BSS')
     used={f['target'] for f in expected_fixups}
-    require(set(symbols)==used and set(obj.externals)<=used|{'__acrtused',public}, 'Far external set differs')
+    require(set(symbols)==used and declared_externals(obj)<=used|{'__acrtused',public}, 'Far external set differs')
     payload=bytearray(obj.segment_bytes(segment)); obligations=[]; occupied=set()
     for fix in expected_fixups:
         require((fix['segment'],fix['loc'],fix['width'],fix['self_relative'],fix['target_kind'],fix['target_method'])
@@ -407,7 +407,7 @@ def bind_asm_external_near(obj, segment, public, length, expected_fixups,
             type(frame) is int and frame%16 == 0 and frame <= start < start+length <= frame+65536,
             'Near transfer complete extent, frame, or relocation differs')
     used = {f['target'] for f in expected_fixups}
-    require(set(symbols) == used and set(obj.externals) == used,
+    require(set(symbols) == used and declared_externals(obj) == used,
             'Near transfer external declarations differ')
     definition, = [d for d in obj.segment_defs if d['name'] == segment]
     payload = bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]
@@ -456,7 +456,7 @@ def bind_asm_far_self_base(obj, segment, public, length, expected_fixups,
             frame <= start and start + length <= frame + 65536,
             'ASM self-base frame/placement differs')
     used={f['target'] for f in expected_fixups if f['target_kind']=='external'}
-    require(set(symbols)==used and set(obj.externals)==used,
+    require(set(symbols)==used and declared_externals(obj)==used,
             'ASM self-base external set differs')
     payload=bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]; sites=[]
     for fix in expected_fixups:
@@ -542,7 +542,7 @@ def bind_asm_cs_data(obj, segment, public, length, expected_fixups, declarations
             all(name==segment or size==0 for name,size in obj.segment_lengths.items()),
             'ASM CS complete extent/public differs')
     used={f['target'] for f in expected_fixups}
-    require(set(symbols)==used and set(obj.externals)==used and
+    require(set(symbols)==used and declared_externals(obj)==used and
             expected_relocations==[], 'ASM CS external/relocation obligations differ')
     definition,=[d for d in obj.segment_defs if d['name']==segment]
     payload=bytearray(obj.segment_bytes(segment)); rows=[]; occupied=set()
@@ -599,7 +599,7 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
     require(len([g for g in obj.groups if g['name'] == 'DGROUP']) == 1,
             'Missing/ambiguous DGROUP')
     used = {fix['target'] for fix in expected_fixups}
-    require(set(symbols) == used and set(obj.externals) <= used | {'__acrtused', public},
+    require(set(symbols) == used and declared_externals(obj) <= used | {'__acrtused', public},
             'Missing or unused mixed external binding')
     payload = bytearray(obj.segment_bytes(segment))
     occupied = set()
@@ -826,7 +826,7 @@ def bind_composed(obj, recipe, symbols):
     frame_dseg={'DSEG'} if any(f['frame_method']==0 and f['frame']=='DSEG'
                                 for f in fixes) else set()
     require(set(symbols)==external|local|frame_dseg and
-            set(obj.externals)<=external|{'__acrtused',recipe['public']},
+            declared_externals(obj)<=external|{'__acrtused',recipe['public']},
             'Composed symbol set differs')
     groups=[g for g in obj.groups if g['name']=='DGROUP']
     payload=bytearray(obj.segment_bytes(segment)); occupied=set(); rows=[]; sites=[]
@@ -963,7 +963,11 @@ def bind_composed(obj, recipe, symbols):
                 require(-32768<=value<=32767,'Composed near displacement overflow')
                 struct.pack_into('<h',payload,at,value)
             elif fix['loc']=='pointer32':
-                require(width==4 and at>=1 and payload[at-1] in (0x9a,0xea) and
+                # A far CALL/JMP operand, or (integ30) an entry of a reviewed
+                # far-pointer table island naming this alias's mapped entry.
+                require(width==4 and at>=1 and
+                        (payload[at-1] in (0x9a,0xea) or
+                         start+at in target.get('table_sites',())) and
                         encoded==bytes(4) and fix['displacement']==0 and
                         target['kind']=='far-code' and
                         frame_tuple in ((5,'target',target_name,0),
@@ -1121,7 +1125,7 @@ def bind_cs_pointers(obj, segment, public, length, expected_fixups, declarations
             all(n==segment or z==0 for n,z in obj.segment_lengths.items()),
             'Incomplete CS pointer contribution or unowned data')
     used={f['target'] for f in expected_fixups}
-    require(set(symbols)==used and set(obj.externals)<=used|{'__acrtused',public},
+    require(set(symbols)==used and declared_externals(obj)<=used|{'__acrtused',public},
             'CS pointer external set differs')
     payload=bytearray(obj.segment_bytes(segment)); occupied=set();pairs={};sites=[];rows=[]
     for fix in expected_fixups:

@@ -2,10 +2,10 @@
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _sprite_1_unk2
+public _sprite1_unknown2
 public _sprite_1_unk
 public _sprite_1_unk3
-_sprite_1_unk2 proc far
+_sprite1_unknown2 proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 6
@@ -53,7 +53,7 @@ loc_335CF:
     jmp     short loc_33622
     ; align 2
     db 144
-_sprite_1_unk2 endp
+_sprite1_unknown2 endp
 _sprite_1_unk proc far
      s = byte ptr 0
      r = byte ptr 2

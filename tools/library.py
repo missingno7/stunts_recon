@@ -15,11 +15,26 @@ def bind_library(owner, image, relocations, *, manifest=None, trail=()):
     modules=OmfReader().split_library(data)
     matches=[blob for name,blob in modules if name==owner['module'] and sha(blob)==owner['module_sha256']]
     require(len(matches)==1,'Pinned library module missing/ambiguous')
+    policy=owner.get('omf_policy',{})
+    require(not policy or owner.get('module_form')=='data-only', 'OMF policy is only for data-only members')
     obj=read_object(matches[0], ledata_policy=owner.get('ledata_policy'),
                     record_policy=owner.get('record_policy'),
-                    sparse_zero=owner.get('binding',{}).get('sparse_zero'))
+                    sparse_zero=owner.get('binding',{}).get('sparse_zero'),
+                    iterated_fixups=bool(policy.get('iterated_fixups')),
+                    communals=policy.get('communals'))
     require(obj.publics==owner['publics'],'Library public layout changed')
     require(obj.externals==owner['externals'],'Library external declarations changed')
+    if owner.get('module_form')=='data-only':
+        # integ37: a hash-pinned data-only member (no code); its owned bytes
+        # are the `linked` storage rows bound from the member itself.
+        from runtime_binding import bind_member
+        manifest = manifest if manifest is not None else read_json(ROOT/'layout/manifest.json')
+        require(owner.get('binding') and owner['id'] not in trail, 'Data-only runtime member lacks its binding')
+        payload, proof = bind_member(owner, obj, image, relocations, manifest, (*trail,owner['id']))
+        require(payload==b'', 'Data-only runtime member emitted code')
+        return payload, {'library':owner['library'], 'module':owner['module'],
+                         'module_sha256':sha(matches[0]), 'segment':None,
+                         'payload':identity(payload), 'binding':proof, 'omf_policy':policy}
     if owner.get('binding'):
         from runtime_binding import bind_member
         manifest = manifest if manifest is not None else read_json(ROOT/'layout/manifest.json')

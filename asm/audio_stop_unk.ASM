@@ -6,8 +6,8 @@ extrn _dword_3F874:dword
 dseg ends
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:dseg
-public _audio_stop_unk
-_audio_stop_unk proc far
+public _audio_stop_unknown
+_audio_stop_unknown proc far
 
     xor     ax, ax
     mov     es, ax
@@ -45,6 +45,6 @@ loc_30281:
 
     out     61h, al         ; PC/XT PPI port B bits:
     retf
-_audio_stop_unk endp
+_audio_stop_unknown endp
 S012_TEXT ends
 end

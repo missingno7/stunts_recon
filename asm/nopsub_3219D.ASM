@@ -9,7 +9,7 @@ _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
 assume cs:S012_TEXT, ds:DGROUP
-extrn __sprintf:far
+extrn _sprintf:far
 extrn _nopsub_3215A:far
 extrn _nopsub_3216C:far
 extrn _byte_4032A:byte
@@ -28,7 +28,7 @@ _nopsub_3219D proc far
     mov word ptr _word_40334, ax
     mov ax, 4BC6h
     push ax
-    call far ptr __sprintf
+    call far ptr _sprintf
     add sp, 2
     mov byte ptr _byte_4032B, 1
     mov ax, word ptr _word_4032E
@@ -118,7 +118,7 @@ loc_32272:
     mov word ptr _word_40330, ax
     mov ax, 4BC6h
     push ax
-    call far ptr __sprintf
+    call far ptr _sprintf
     sub sp, 2
     mov byte ptr _byte_4032B, 0
     jmp loc_321BC

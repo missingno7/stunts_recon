@@ -201,16 +201,21 @@ class SecondaryContributionTests(unittest.TestCase):
             {'id':'raw_right','kind':'UNRESOLVED_RAW',
              'start':self.recipe['end'],'end':size},
         ]}
-        staged=attach_secondary(manifest,recipe,self.image)
-        validate_layout(staged,size)
-        self.assertEqual([o['kind'] for o in staged['bss_owners']],
-                         ['UNRESOLVED_RAW','MATCHING_C_DATA','UNRESOLVED_RAW'])
-        altered=copy.deepcopy(staged)
-        altered['bss_owners'][1]['end']+=1
-        with self.assertRaises(ValueError):validate_layout(altered,size)
-        altered=copy.deepcopy(staged)
-        next(o for o in altered['owners'] if o['id']=='code')['data_intervals'] *= 2
-        with self.assertRaises(ValueError):validate_layout(altered,size)
+        # integ35: raw BSS debt is one reviewed placeholder per object; a static
+        # claim must replace exactly its own object's whole placeholder.
+        with self.assertRaisesRegex(ValueError,'partition missing'):
+            attach_secondary(copy.deepcopy(manifest),recipe,self.image)
+        manifest['bss_owners']=[{'id':'raw_bss','kind':'UNRESOLVED_RAW',
+                                 'start':layout['bss_start'],'end':layout['bss_end']}]
+        with self.assertRaisesRegex(ValueError,'own object raw placeholder'):
+            attach_secondary(copy.deepcopy(manifest),recipe,self.image)
+        manifest['bss_owners']=[
+            {'id':'raw_a','kind':'UNRESOLVED_RAW','start':layout['bss_start'],'end':start},
+            {'id':'raw_bss_other','kind':'UNRESOLVED_RAW','start':start,'end':start+2,
+             'raw_form':'object-bss','object':'obj_seg999'},
+            {'id':'raw_b','kind':'UNRESOLVED_RAW','start':start+2,'end':layout['bss_end']}]
+        with self.assertRaisesRegex(ValueError,'own object raw placeholder'):
+            attach_secondary(copy.deepcopy(manifest),recipe,self.image)
 
 
 class CodePointerPairTests(unittest.TestCase):

@@ -57,7 +57,12 @@ def _debug_segment_indexes(data, policy):
 
 
 def read_object(data, *, ledata_policy=None, record_policy=None,
-                sparse_zero=None, research_local_symbols=False, debug_segments=None):
+                sparse_zero=None, research_local_symbols=False, debug_segments=None,
+                iterated_fixups=False, communals=None):
+    """integ37: `iterated_fixups` admits FIXUPPs over iterated LIDATA content
+    (expanded to every repetition, as LINK applies them); `communals` admits
+    COMDEF records only when they declare exactly these names (integ39: True
+    admits any, for pinned-tool fixtures and diagnostics only)."""
     debug_indexes = _debug_segment_indexes(data, debug_segments)
     if ledata_policy is not None:
         require(set(ledata_policy) == {'mode', 'module_sha256', 'records'}
@@ -80,8 +85,10 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
         require(at + 3 <= len(data), 'Truncated OMF record header')
         kind, length = data[at], struct.unpack_from('<H', data, at + 1)[0]
         end = at + 3 + length
-        require(kind != 0xB0,
+        require(kind != 0xB0 or communals is not None,
                 'COMDEF communal allocation is deferred: no reviewed linker allocation/ownership rule')
+        if kind == 0xB0:
+            allowed.add(0xB0)
         require(not ended and length >= 1 and end <= len(data) and kind in allowed,
                 f'Invalid/unsupported OMF record {kind:02x}')
         require(not first or kind == 0x80, 'Object must start with THEADR')
@@ -98,7 +105,7 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
                     length == record_policy['size'] and sha(data[at+3:end-1]) == record_policy['body_sha256'] and
                     data[end-1] == record_policy['checksum'], 'OMF checksum mismatch')
             exceptional_checksum_seen = True
-        require(kind != 0x9C or last_data_kind != 0xA2,
+        require(kind != 0x9C or last_data_kind != 0xA2 or iterated_fixups,
                 'FIXUPP over iterated LIDATA requires expanded relocation proof')
         if kind in (0xB4, 0xB6):
             local_symbol_records.append({'kind': 'LEXTDEF' if kind == 0xB4 else 'LPUBDEF',
@@ -151,7 +158,10 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
             'Unused exceptional OMF checksum policy')
     if ledata_policy is not None:
         require(had_overlap and writes == ledata_policy['records'], 'Ordered LEDATA trace differs from reviewed policy')
-    obj = OmfReader().read(data)
+    obj = OmfReader(communals=communals is not None).read(data)
+    require(communals is None or communals is True or [c['name'] for c in obj.communals] == list(communals),
+            'COMDEF names differ from the reviewed communal declarations')
+    obj.unreferenced_communals = unreferenced_communals(obj)
     obj.debug_segments = []
     if debug_indexes:
         debug_names = {s['name'] for s in obj.segment_defs if s['index'] in debug_indexes}
@@ -273,6 +283,23 @@ def read_object(data, *, ledata_policy=None, record_policy=None,
         require(fix['target_kind'] != 'absolute', 'Absolute/undefined target thread unsupported')
         require(not str(fix['target']).startswith('?'), 'Undefined OMF target')
     return obj
+
+def unreferenced_communals(obj):
+    """integ39: COMDEF names no FIXUPP of the object targets (a tentative
+    definition the object itself never uses)."""
+    used = {f['target'] for f in obj.linker_fixups if f['target_kind'] == 'external'}
+    used |= {f['frame'] for f in obj.linker_fixups if f.get('frame_kind') == 'external'}
+    return [c['name'] for c in getattr(obj, 'communals', []) if c['name'] not in used]
+
+
+def declared_externals(obj):
+    """External-index names subject to the binders' use checks.  integ39: an
+    unreferenced COMDEF is storage the object declares for the accepted
+    communal unit, not a binding; it is checked against the recipe's
+    `communal_declarations` and the unit (tools/communal_unit.py) instead."""
+    skip = set(getattr(obj, 'unreferenced_communals', None) or unreferenced_communals(obj))
+    return {n for n in obj.externals if n not in skip}
+
 
 def _data_record_spans(data):
     """(segment index, offset, length) of every LEDATA and bounded-expanded LIDATA record."""

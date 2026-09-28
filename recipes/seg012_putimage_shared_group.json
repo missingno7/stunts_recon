@@ -294,7 +294,7 @@
     {
       "end": 146700,
       "name": "sprite_putimage",
-      "public": "_sprite_putimage",
+      "public": "_sprputimage",
       "stable_id": "load_23bda",
       "start": 146394,
       "target": {
@@ -315,13 +315,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_putimage_and_alt",
-        "offset": 36,
+        "name": "_sprputimage",
+        "offset": 66,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_putimage",
-        "offset": 66,
+        "name": "_sprite_putimage_and_alt",
+        "offset": 36,
         "segment": "S012_TEXT"
       }
     ],

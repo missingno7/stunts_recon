@@ -324,8 +324,9 @@ def _check_name_buffer_extent(name, symbol, layout, image, relocations):
                     for r in relocations),
             'Name-buffer far CALL does not reach the verified consumer body')
     base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
+    clone_aliases = _validated_clone_names(layout)
     for other_name, other in layout['symbols'].items():
-        if other_name == name or other['storage'] == 'code_island':
+        if other_name == name or other_name in clone_aliases or other['storage'] == 'code_island':
             continue
         width = other.get('width')
         if width is None:
@@ -575,6 +576,50 @@ def _check_pair_extent(name, symbol, layout, image, relocations):
                 'Word-pair object partially overlaps another reviewed object')
 
 
+# integ37: a public of a hash-pinned runtime library member, bound by C name.
+# The MSC <ctype.h> macros reference `_ctype` (public `__ctype`, ctype.asm) with
+# addend 1; no original instruction addresses the table base itself.  The
+# symbol is grounded by: the pinned member's own public and complete fixup-free
+# segment (the symbol's width), the exact image bytes of that segment at the
+# symbol, and an independently resolved original-operand anchor inside it.
+PINNED_PUBLIC_KEYS = {'kind', 'library', 'library_sha256', 'module', 'module_sha256', 'segment', 'public', 'anchor'}
+
+
+def _check_pinned_member_public(name, symbol, layout, image, relocations):
+    from compiler import toolchain_path, verify_toolchain
+    from omf import OmfReader
+    from object_probe import read_object
+    proof = symbol.get('extent_proof', {})
+    require(set(proof) == PINNED_PUBLIC_KEYS and proof['kind'] == 'pinned-member-public-v1' and
+            proof['public'] == name and symbol['storage'] == 'initialized' and
+            isinstance(proof['anchor'], dict) and set(proof['anchor']) == {'symbol', 'offset'},
+            'Unreviewed pinned member public symbol')
+    config, _ = verify_toolchain('msc510-medium')
+    require(any(f['path'] == proof['library'] and f['sha256'] == proof['library_sha256'] for f in config['files']),
+            'Pinned member public library is not pinned')
+    archive = toolchain_path(proof['library']).read_bytes()
+    require(sha(archive) == proof['library_sha256'], 'Pinned member public library changed')
+    blobs = [b for n, b in OmfReader().split_library(archive) if n == proof['module'] and sha(b) == proof['module_sha256']]
+    require(len(blobs) == 1, 'Pinned member public module missing/ambiguous')
+    obj = read_object(blobs[0])
+    segment = proof['segment']
+    publics = [p for p in obj.publics if p['name'] == name]
+    require(len(publics) == 1 and publics[0]['segment'] == segment and
+            symbol['width'] == obj.segment_length(segment) - publics[0]['offset'] and
+            not any(f['segment'] == segment for f in obj.linker_fixups) and
+            any(g['name'] == 'DGROUP' and segment in g['segments'] for g in obj.groups),
+            'Pinned member public extent differs')
+    address = symbol['load_address']
+    require(bytes(obj.segment_bytes(segment))[publics[0]['offset']:] == image[address:address+symbol['width']],
+            'Pinned member public bytes differ from the image')
+    anchor = proof['anchor']
+    require(anchor['symbol'] != name and type(anchor['offset']) is int and 0 < anchor['offset'] < symbol['width'],
+            'Pinned member public anchor outside its extent')
+    resolved = resolve_symbols({anchor['symbol']}, image, relocations)[anchor['symbol']]
+    require(resolved['load_address'] == address + anchor['offset'],
+            'Pinned member public disagrees with its original-operand anchor')
+
+
 def _check_state_extent(name, symbol, layout):
     """Recount the pinned contiguous state declaration, including its endpoint."""
     from common import identity
@@ -612,8 +657,9 @@ def _check_state_extent(name, symbol, layout):
         span += size
     require(span == symbol['width'] == 1120, 'State reference extent differs')
     base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
+    clone_aliases = _validated_clone_names(layout)
     for other_name, other in layout['symbols'].items():
-        if other_name == name or other['storage'] == 'code_island':
+        if other_name == name or other_name in clone_aliases or other['storage'] == 'code_island':
             continue
         other_width = other.get('width')
         other_base = other['load_address']
@@ -695,8 +741,9 @@ def _check_folded_extent(name, symbol, layout, image, relocations):
                     (23-16)*76+field+2 <= symbol['width'],
                     'Folded-index bound does not remain inside reviewed object')
     base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
+    clone_aliases = _validated_clone_names(layout)
     for other_name, other in layout['symbols'].items():
-        if other_name == name or other['storage'] == 'code_island': continue
+        if other_name == name or other_name in clone_aliases or other['storage'] == 'code_island': continue
         other_width = other.get('width')
         if other_width is not None:
             other_base = other['load_address']
@@ -774,6 +821,11 @@ def clone_sources(symbols, names):
     return mapping
 
 
+def _validated_clone_names(layout):
+    """Clone aliases name the same object and cannot add extent conflicts."""
+    return set(clone_sources(layout['symbols'], layout['symbols']))
+
+
 def resolve_symbols(names, image, relocations):
     # Each name resolves independently of the other requested names; a
     # verification session reuses identical per-name results (tools/memo.py).
@@ -796,7 +848,8 @@ def _resolve_symbols(names, image, relocations):
     generated = None
     compact = {layout['symbols'][name]['load_address'] for name in names
                if name in layout['symbols'] and not layout['symbols'][name].get('references')
-               and layout['symbols'][name].get('extent_proof', {}).get('kind') != 'guarded-folded-index-v1'
+               and layout['symbols'][name].get('extent_proof', {}).get('kind') not in ('guarded-folded-index-v1',
+                                                                                       'pinned-member-public-v1')
                and layout['symbols'][name].get('generated_extent', {}).get('kind') != 'corroborated-ring-buffer-v1'}
     derived = _oracle_instruction_anchors(compact, image, relocations, frame) if compact else {}
     reference_cache = {}
@@ -818,11 +871,17 @@ def _resolve_symbols(names, image, relocations):
                     'Symbol outside initialized DGROUP')
         is_folded = symbol.get('extent_proof', {}).get('kind') == 'guarded-folded-index-v1'
         is_corroborated = symbol.get('generated_extent', {}).get('kind') == 'corroborated-ring-buffer-v1'
-        references = [] if is_folded or is_corroborated else symbol.get('references') or [derived[address]]
-        require(references or is_folded or is_corroborated,
+        is_pinned = symbol.get('extent_proof', {}).get('kind') == 'pinned-member-public-v1'
+        references = [] if is_folded or is_corroborated or is_pinned else symbol.get('references') or [derived[address]]
+        require(references or is_folded or is_corroborated or is_pinned,
                 'Data symbol needs original instruction evidence')
         for field in symbol.get('fields',[]):
-            require(type(field['offset']) is int and field['offset']>=0 and field['width']==2,
+            # Word fields, or (integ30) the 5-byte name elements of a string
+            # table whose element starts are each anchored by an original
+            # address operand (track constants `aCar0` names), or (integ40)
+            # byte elements of a runtime char buffer (a merged communal
+            # container whose interior labels are original byte operands).
+            require(type(field['offset']) is int and field['offset']>=0 and field['width'] in (1, 2, 5),
                     'Unsupported reviewed field layout')
             ref=field['reference'];at=ref['start'];raw=bytes.fromhex(ref['hex']);operand=ref['operand_offset']
             require(image[at:at+len(raw)]==raw and 0<=operand<=len(raw)-2 and
@@ -877,6 +936,8 @@ def _resolve_symbols(names, image, relocations):
                 _check_pair_extent(name,symbol,layout,image,relocations)
             elif symbol.get('extent_proof', {}).get('kind') == 'pointer-list-table-v1':
                 _check_list_table_extent(name,symbol,layout,image,relocations)
+            elif symbol.get('extent_proof', {}).get('kind') == 'pinned-member-public-v1':
+                _check_pinned_member_public(name,symbol,layout,image,relocations)
             elif 'extent_proof' in symbol:
                 _check_state_extent(name, symbol, layout)
             elif 'generated_extent' not in symbol:

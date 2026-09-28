@@ -69,6 +69,12 @@ def _run_dos(runner, work, tc, flags, asm, profile=None):
     return cmd,batch
 
 
+def recipe_declarations_names(r):
+    from communal_unit import recipe_declarations
+    declared=recipe_declarations(r)
+    return None if declared is None else [name for name,_ in declared]
+
+
 def independent_row(r, source, oracle, image, runner=None):
     """Independent DOSBox-X compile/assembly and complete binding of one recipe.
 
@@ -101,11 +107,16 @@ def independent_row(r, source, oracle, image, runner=None):
         cwork=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
         (cwork/'UNIT.C').write_bytes((work/'UNIT.C').read_bytes())
         _run_dos(runner,cwork,tc,control,False,r['profile'])
-        require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r)),
-                            read_object((work/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r))),
+        cd=recipe_declarations_names(r)
+        require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r),communals=cd),
+                            read_object((work/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r),communals=cd)),
                 'Independent object differs under its registered object flag set')
+    from communal_unit import recipe_declarations, check_object_communals
+    declared=recipe_declarations(r)
+    communals=None if declared is None else [name for name,_ in declared]
     obj=read_object((work/'UNIT.OBJ').read_bytes(),
-                    sparse_zero=None if asm else recipe_sparse_zero(r))
+                    sparse_zero=None if asm else recipe_sparse_zero(r), communals=communals)
+    check_object_communals(obj, r)
     if asm:
         require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),
                 'Independent ASM source changed during assembly')

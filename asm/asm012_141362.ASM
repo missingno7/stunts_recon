@@ -29,7 +29,11 @@ s2d_unk6 db ?
 SHAPE2D ends
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
+extrn _fontdef_default:byte
 _DATA segment word public 'DATA'
+public _fontdefseg, _word_30602
+_fontdefseg dw seg _fontdef_default
+_word_30602 dw 10
 _DATA ends
 CONST segment word public 'CONST'
 CONST ends
@@ -39,7 +43,6 @@ DGROUP group _DATA, CONST, _BSS
 dseg segment byte public 'STUNTSD'
 dseg ends
 assume cs:S012_TEXT, ds:DGROUP
-extrn _fontdefseg:word
 extrn _word_4031E:word
 extrn _spritefunc:word
 extrn _imagefunc:word
@@ -53,7 +56,7 @@ public _font_op2
 public _preRender_patterned
 public _nopsub_328C9
 public _nopsub_328DB
-public _mat_mul_vector
+public _mat_vec
 public _mat_multiply
 public _mat_invert
 public _file_unflip_shape2d
@@ -189,7 +192,7 @@ _nopsub_328DB proc far
     ; align 2
     db 0
 _nopsub_328DB endp
-_mat_mul_vector proc far
+_mat_vec proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_inpVector = word ptr 6
@@ -327,7 +330,7 @@ loc_329EE:
     pop     si
     pop     bp
     retf
-_mat_mul_vector endp
+_mat_vec endp
 _mat_multiply proc far
      s = byte ptr 0
      r = byte ptr 2

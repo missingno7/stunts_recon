@@ -1,16 +1,4 @@
 DSEG segment byte public 'STUNTSD'
-extrn _atantable:byte
-extrn _word_3F1C2:word
-extrn _word_3F1C4:word
-extrn _exitlistfuncs:word
-extrn _aExitListOverflow:byte
-extrn _aSFileError_1:byte
-extrn _foundfile:byte
-extrn _foundfileptr:word
-extrn _dtatransbuffer:byte
-extrn _foundfilepath:byte
-extrn _byte_3F85A:byte
-extrn _byte_3F85C:byte
 extrn _word_3F87C:word
 extrn _word_3F87E:word
 extrn _word_4031E:word
@@ -18,7 +6,7 @@ extrn _word_40320:word
 extrn _spritefunc:word
 extrn _imagefunc:word
 DSEG ends
-extrn _libsub_quit_to_dos_alt:far
+extrn _exit:far
 extrn _printf:far
 extrn _abort:far
 extrn _sprite_copy_2_to_1:far
@@ -28,17 +16,159 @@ extrn _sprite1:word
 extrn _draw_unknown_lines:far
 extrn _loc_3180A:near
 _DATA segment word public 'DATA'
+_atantable db 0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 00Ah
+    db 00Ah, 00Bh, 00Bh, 00Ch, 00Dh, 00Dh, 00Eh, 00Fh, 00Fh, 010h, 010h, 011h, 012h, 012h, 013h, 014h
+    db 014h, 015h, 016h, 016h, 017h, 017h, 018h, 019h, 019h, 01Ah, 01Bh, 01Bh, 01Ch, 01Ch, 01Dh, 01Eh
+    db 01Eh, 01Fh, 01Fh, 020h, 021h, 021h, 022h, 022h, 023h, 024h, 024h, 025h, 026h, 026h, 027h, 027h
+    db 028h, 029h, 029h, 02Ah, 02Ah, 02Bh, 02Ch, 02Ch, 02Dh, 02Dh, 02Eh, 02Eh, 02Fh, 030h, 030h, 031h
+    db 031h, 032h, 033h, 033h, 034h, 034h, 035h, 035h, 036h, 037h, 037h, 038h, 038h, 039h, 039h, 03Ah
+    db 03Ah, 03Bh, 03Ch, 03Ch, 03Dh, 03Dh, 03Eh, 03Eh, 03Fh, 03Fh, 040h, 041h, 041h, 042h, 042h, 043h
+    db 043h, 044h, 044h, 045h, 045h, 046h, 046h, 047h, 047h, 048h, 048h, 049h, 04Ah, 04Ah, 04Bh, 04Bh
+    db 04Ch, 04Ch, 04Dh, 04Dh, 04Eh, 04Eh, 04Fh, 04Fh, 050h, 050h, 051h, 051h, 052h, 052h, 053h, 053h
+    db 054h, 054h, 054h, 055h, 055h, 056h, 056h, 057h, 057h, 058h, 058h, 059h, 059h, 05Ah, 05Ah, 05Bh
+    db 05Bh, 05Bh, 05Ch, 05Ch, 05Dh, 05Dh, 05Eh, 05Eh, 05Fh, 05Fh, 060h, 060h, 060h, 061h, 061h, 062h
+    db 062h, 063h, 063h, 063h, 064h, 064h, 065h, 065h, 066h, 066h, 066h, 067h, 067h, 068h, 068h, 068h
+    db 069h, 069h, 06Ah, 06Ah, 06Ah, 06Bh, 06Bh, 06Ch, 06Ch, 06Ch, 06Dh, 06Dh, 06Eh, 06Eh, 06Eh, 06Fh
+    db 06Fh, 070h, 070h, 070h, 071h, 071h, 071h, 072h, 072h, 073h, 073h, 073h, 074h, 074h, 074h, 075h
+    db 075h, 076h, 076h, 076h, 077h, 077h, 077h, 078h, 078h, 078h, 079h, 079h, 079h, 07Ah, 07Ah, 07Ah
+    db 07Bh, 07Bh, 07Bh, 07Ch, 07Ch, 07Ch, 07Dh, 07Dh, 07Dh, 07Eh, 07Eh, 07Eh, 07Fh, 07Fh, 07Fh, 080h
+    db 080h, 0
+_word_3F1C2 dw 0
+_word_3F1C4 dw 0
+word_2F1C6 dw 0, 3, 0000Ch, 0000Fh, 00030h, 00033h, 0003Ch, 0003Fh
+    dw 000C0h, 000C3h, 000CCh, 000CFh, 000F0h, 000F3h, 000FCh, 000FFh
+    dw 00300h, 00303h, 0030Ch, 0030Fh, 00330h, 00333h, 0033Ch, 0033Fh
+    dw 003C0h, 003C3h, 003CCh, 003CFh, 003F0h, 003F3h, 003FCh, 003FFh
+    dw 00C00h, 00C03h, 00C0Ch, 00C0Fh, 00C30h, 00C33h, 00C3Ch, 00C3Fh
+    dw 00CC0h, 00CC3h, 00CCCh, 00CCFh, 00CF0h, 00CF3h, 00CFCh, 00CFFh
+    dw 00F00h, 00F03h, 00F0Ch, 00F0Fh, 00F30h, 00F33h, 00F3Ch, 00F3Fh
+    dw 00FC0h, 00FC3h, 00FCCh, 00FCFh, 00FF0h, 00FF3h, 00FFCh, 00FFFh
+    dw 03000h, 03003h, 0300Ch, 0300Fh, 03030h, 03033h, 0303Ch, 0303Fh
+    dw 030C0h, 030C3h, 030CCh, 030CFh, 030F0h, 030F3h, 030FCh, 030FFh
+    dw 03300h, 03303h, 0330Ch, 0330Fh, 03330h, 03333h, 0333Ch, 0333Fh
+    dw 033C0h, 033C3h, 033CCh, 033CFh, 033F0h, 033F3h, 033FCh, 033FFh
+    dw 03C00h, 03C03h, 03C0Ch, 03C0Fh, 03C30h, 03C33h, 03C3Ch, 03C3Fh
+    dw 03CC0h, 03CC3h, 03CCCh, 03CCFh, 03CF0h, 03CF3h, 03CFCh, 03CFFh
+    dw 03F00h, 03F03h, 03F0Ch, 03F0Fh, 03F30h, 03F33h, 03F3Ch, 03F3Fh
+    dw 03FC0h, 03FC3h, 03FCCh, 03FCFh, 03FF0h, 03FF3h, 03FFCh, 03FFFh
+    dw 0C000h, 0C003h, 0C00Ch, 0C00Fh, 0C030h, 0C033h, 0C03Ch, 0C03Fh
+    dw 0C0C0h, 0C0C3h, 0C0CCh, 0C0CFh, 0C0F0h, 0C0F3h, 0C0FCh, 0C0FFh
+    dw 0C300h, 0C303h, 0C30Ch, 0C30Fh, 0C330h, 0C333h, 0C33Ch, 0C33Fh
+    dw 0C3C0h, 0C3C3h, 0C3CCh, 0C3CFh, 0C3F0h, 0C3F3h, 0C3FCh, 0C3FFh
+    dw 0CC00h, 0CC03h, 0CC0Ch, 0CC0Fh, 0CC30h, 0CC33h, 0CC3Ch, 0CC3Fh
+    dw 0CCC0h, 0CCC3h, 0CCCCh, 0CCCFh, 0CCF0h, 0CCF3h, 0CCFCh, 0CCFFh
+    dw 0CF00h, 0CF03h, 0CF0Ch, 0CF0Fh, 0CF30h, 0CF33h, 0CF3Ch, 0CF3Fh
+    dw 0CFC0h, 0CFC3h, 0CFCCh, 0CFCFh, 0CFF0h, 0CFF3h, 0CFFCh, 0CFFFh
+    dw 0F000h, 0F003h, 0F00Ch, 0F00Fh, 0F030h, 0F033h, 0F03Ch, 0F03Fh
+    dw 0F0C0h, 0F0C3h, 0F0CCh, 0F0CFh, 0F0F0h, 0F0F3h, 0F0FCh, 0F0FFh
+    dw 0F300h, 0F303h, 0F30Ch, 0F30Fh, 0F330h, 0F333h, 0F33Ch, 0F33Fh
+    dw 0F3C0h, 0F3C3h, 0F3CCh, 0F3CFh, 0F3F0h, 0F3F3h, 0F3FCh, 0F3FFh
+    dw 0FC00h, 0FC03h, 0FC0Ch, 0FC0Fh, 0FC30h, 0FC33h, 0FC3Ch, 0FC3Fh
+    dw 0FCC0h, 0FCC3h, 0FCCCh, 0FCCFh, 0FCF0h, 0FCF3h, 0FCFCh, 0FCFFh
+    dw 0FF00h, 0FF03h, 0FF0Ch, 0FF0Fh, 0FF30h, 0FF33h, 0FF3Ch, 0FF3Fh
+    dw 0FFC0h, 0FFC3h, 0FFCCh, 0FFCFh, 0FFF0h, 0FFF3h, 0FFFCh, 0FFFFh
+_word_2F3C6 dw 00028h
+off_3F3C8 dw offset DGROUP:byte_3F418, offset DGROUP:byte_3F418, offset DGROUP:byte_3F419, offset DGROUP:byte_3F41B
+    dw offset DGROUP:byte_3F41E, offset DGROUP:byte_3F422, offset DGROUP:byte_3F427, offset DGROUP:byte_3F42D
+    dw offset DGROUP:byte_3F434, offset DGROUP:byte_3F43C, offset DGROUP:byte_3F445, offset DGROUP:byte_3F44F
+    dw offset DGROUP:byte_3F45A, offset DGROUP:byte_3F466, offset DGROUP:byte_3F473, offset DGROUP:byte_3F481
+    dw offset DGROUP:byte_3F490, offset DGROUP:byte_3F4A0, offset DGROUP:byte_3F4B1, offset DGROUP:byte_3F4C3
+    dw offset DGROUP:byte_3F4D6, offset DGROUP:byte_3F4EA, offset DGROUP:byte_3F4FF, offset DGROUP:byte_3F515
+    dw offset DGROUP:byte_3F52C, offset DGROUP:byte_3F544, offset DGROUP:byte_3F55D, offset DGROUP:byte_3F577
+    dw offset DGROUP:byte_3F592, offset DGROUP:byte_3F5AE, offset DGROUP:byte_3F5CB, offset DGROUP:byte_3F5E9
+    dw offset DGROUP:byte_3F608, offset DGROUP:byte_3F628, offset DGROUP:byte_3F649, offset DGROUP:byte_3F66B
+    dw offset DGROUP:byte_3F68E, offset DGROUP:byte_3F6B2, offset DGROUP:byte_3F6D7, offset DGROUP:byte_3F6FD
+byte_3F418 db 1
+byte_3F419 db 2, 3
+byte_3F41B db 3, 4, 4
+byte_3F41E db 3, 4, 5, 5
+byte_3F422 db 4, 5, 6, 6, 6
+byte_3F427 db 4, 6, 6, 7, 7, 8
+byte_3F42D db 5, 6, 7, 8, 8, 9, 9
+byte_3F434 db 5, 7, 8, 9, 9, 00Ah, 00Ah, 00Ah
+byte_3F43C db 5, 7, 8, 9, 00Ah, 00Bh, 00Bh, 00Bh, 00Bh
+byte_3F445 db 5, 8, 9, 00Ah, 00Bh, 00Bh, 00Ch, 00Ch, 00Ch, 00Dh
+byte_3F44F db 6, 8, 9, 00Bh, 00Ch, 00Ch, 00Dh, 00Dh, 00Eh, 00Eh, 00Eh
+byte_3F45A db 6, 8, 00Ah, 00Bh, 00Ch, 00Dh, 00Eh, 00Eh, 00Fh, 00Fh, 00Fh, 00Fh
+byte_3F466 db 6, 9, 00Ah, 00Ch, 00Dh, 00Eh, 00Eh, 00Fh, 00Fh, 010h, 010h, 010h, 010h
+byte_3F473 db 6, 9, 00Bh, 00Ch, 00Dh, 00Eh, 00Fh, 010h, 010h, 011h, 011h, 011h, 011h, 012h
+byte_3F481 db 7, 9, 00Bh, 00Dh, 00Eh, 00Fh, 010h, 011h, 011h, 012h, 012h, 012h, 013h, 013h, 013h
+byte_3F490 db 7, 00Ah, 00Ch, 00Dh, 00Fh, 010h, 011h, 011h, 012h, 013h, 013h, 013h, 014h, 014h, 014h, 014h
+byte_3F4A0 db 7, 00Ah, 00Ch, 00Eh, 00Fh, 010h, 011h, 012h, 013h, 013h, 014h, 014h, 015h, 015h, 015h, 015h
+    db 015h
+byte_3F4B1 db 7, 00Ah, 00Ch, 00Eh, 010h, 011h, 012h, 013h, 013h, 014h, 015h, 015h, 016h, 016h, 016h, 016h
+    db 016h, 017h
+byte_3F4C3 db 8, 00Bh, 00Dh, 00Fh, 010h, 011h, 012h, 013h, 014h, 015h, 016h, 016h, 017h, 017h, 017h, 017h
+    db 018h, 018h, 018h
+byte_3F4D6 db 8, 00Bh, 00Dh, 00Fh, 011h, 012h, 013h, 014h, 015h, 016h, 016h, 017h, 017h, 018h, 018h, 018h
+    db 019h, 019h, 019h, 019h
+byte_3F4EA db 8, 00Bh, 00Eh, 00Fh, 011h, 012h, 014h, 015h, 016h, 016h, 017h, 018h, 018h, 019h, 019h, 019h
+    db 01Ah, 01Ah, 01Ah, 01Ah, 01Ah
+byte_3F4FF db 8, 00Bh, 00Eh, 010h, 011h, 013h, 014h, 015h, 016h, 017h, 018h, 018h, 019h, 01Ah, 01Ah, 01Ah
+    db 01Bh, 01Bh, 01Bh, 01Bh, 01Bh, 01Ch
+byte_3F515 db 8, 00Ch, 00Eh, 010h, 012h, 013h, 015h, 016h, 017h, 018h, 019h, 019h, 01Ah, 01Ah, 01Bh, 01Bh
+    db 01Ch, 01Ch, 01Ch, 01Dh, 01Dh, 01Dh, 01Dh
+byte_3F52C db 9, 00Ch, 00Fh, 011h, 012h, 014h, 015h, 016h, 017h, 018h, 019h, 01Ah, 01Bh, 01Bh, 01Ch, 01Ch
+    db 01Dh, 01Dh, 01Dh, 01Eh, 01Eh, 01Eh, 01Eh, 01Eh
+byte_3F544 db 9, 00Ch, 00Fh, 011h, 013h, 014h, 016h, 017h, 018h, 019h, 01Ah, 01Bh, 01Bh, 01Ch, 01Dh, 01Dh
+    db 01Eh, 01Eh, 01Eh, 01Fh, 01Fh, 01Fh, 01Fh, 01Fh, 01Fh
+byte_3F55D db 9, 00Dh, 00Fh, 011h, 013h, 015h, 016h, 017h, 019h, 01Ah, 01Bh, 01Bh, 01Ch, 01Dh, 01Dh, 01Eh
+    db 01Eh, 01Fh, 01Fh, 020h, 020h, 020h, 020h, 020h, 020h, 021h
+byte_3F577 db 9, 00Dh, 00Fh, 012h, 014h, 015h, 017h, 018h, 019h, 01Ah, 01Bh, 01Ch, 01Dh, 01Eh, 01Eh, 01Fh
+    db 01Fh, 020h, 020h, 021h, 021h, 021h, 021h, 022h, 022h, 022h, 022h
+byte_3F592 db 9, 00Dh, 010h, 012h, 014h, 016h, 017h, 018h, 01Ah, 01Bh, 01Ch, 01Dh, 01Eh, 01Eh, 01Fh, 020h
+    db 020h, 021h, 021h, 022h, 022h, 022h, 022h, 023h, 023h, 023h, 023h, 023h
+byte_3F5AE db 9, 00Dh, 010h, 012h, 014h, 016h, 018h, 019h, 01Ah, 01Bh, 01Ch, 01Dh, 01Eh, 01Fh, 020h, 020h
+    db 021h, 022h, 022h, 022h, 023h, 023h, 023h, 024h, 024h, 024h, 024h, 024h, 024h
+byte_3F5CB db 00Ah, 00Dh, 010h, 013h, 015h, 017h, 018h, 019h, 01Bh, 01Ch, 01Dh, 01Eh, 01Fh, 020h, 020h, 021h
+    db 022h, 022h, 023h, 023h, 024h, 024h, 024h, 025h, 025h, 025h, 025h, 025h, 025h, 026h
+byte_3F5E9 db 00Ah, 00Eh, 011h, 013h, 015h, 017h, 019h, 01Ah, 01Bh, 01Dh, 01Eh, 01Fh, 020h, 020h, 021h, 022h
+    db 023h, 023h, 024h, 024h, 025h, 025h, 025h, 026h, 026h, 026h, 026h, 027h, 027h, 027h, 027h
+byte_3F608 db 00Ah, 00Eh, 011h, 013h, 015h, 017h, 019h, 01Ah, 01Ch, 01Dh, 01Eh, 01Fh, 020h, 021h, 022h, 023h
+    db 023h, 024h, 025h, 025h, 026h, 026h, 026h, 027h, 027h, 027h, 028h, 028h, 028h, 028h, 028h, 028h
+byte_3F628 db 00Ah, 00Eh, 011h, 014h, 016h, 018h, 019h, 01Bh, 01Ch, 01Eh, 01Fh, 020h, 021h, 022h, 023h, 023h
+    db 024h, 025h, 025h, 026h, 026h, 027h, 027h, 028h, 028h, 028h, 029h, 029h, 029h, 029h, 029h, 029h
+    db 029h
+byte_3F649 db 00Ah, 00Eh, 011h, 014h, 016h, 018h, 01Ah, 01Bh, 01Dh, 01Eh, 01Fh, 020h, 021h, 022h, 023h, 024h
+    db 025h, 026h, 026h, 027h, 027h, 028h, 028h, 029h, 029h, 029h, 02Ah, 02Ah, 02Ah, 02Ah, 02Ah, 02Ah
+    db 02Ah, 02Bh
+byte_3F66B db 00Ah, 00Fh, 012h, 014h, 017h, 018h, 01Ah, 01Ch, 01Dh, 01Fh, 020h, 021h, 022h, 023h, 024h, 025h
+    db 026h, 026h, 027h, 028h, 028h, 029h, 029h, 02Ah, 02Ah, 02Ah, 02Bh, 02Bh, 02Bh, 02Bh, 02Bh, 02Ch
+    db 02Ch, 02Ch, 02Ch
+byte_3F68E db 00Bh, 00Fh, 012h, 015h, 017h, 019h, 01Bh, 01Ch, 01Eh, 01Fh, 020h, 022h, 023h, 024h, 025h, 025h
+    db 026h, 027h, 028h, 028h, 029h, 029h, 02Ah, 02Ah, 02Bh, 02Bh, 02Ch, 02Ch, 02Ch, 02Ch, 02Dh, 02Dh
+    db 02Dh, 02Dh, 02Dh, 02Dh
+byte_3F6B2 db 00Bh, 00Fh, 012h, 015h, 017h, 019h, 01Bh, 01Dh, 01Eh, 020h, 021h, 022h, 023h, 024h, 025h, 026h
+    db 027h, 028h, 028h, 029h, 02Ah, 02Ah, 02Bh, 02Bh, 02Ch, 02Ch, 02Dh, 02Dh, 02Dh, 02Dh, 02Eh, 02Eh
+    db 02Eh, 02Eh, 02Eh, 02Eh, 02Eh
+byte_3F6D7 db 00Bh, 00Fh, 012h, 015h, 018h, 01Ah, 01Bh, 01Dh, 01Fh, 020h, 021h, 023h, 024h, 025h, 026h, 027h
+    db 028h, 028h, 029h, 02Ah, 02Ah, 02Bh, 02Ch, 02Ch, 02Dh, 02Dh, 02Dh, 02Eh, 02Eh, 02Eh, 02Fh, 02Fh
+    db 02Fh, 02Fh, 02Fh, 02Fh, 02Fh, 030h
+byte_3F6FD db 00Bh, 00Fh, 013h, 016h, 018h, 01Ah, 01Ch, 01Eh, 01Fh, 021h, 022h, 023h, 024h, 025h, 026h, 027h
+    db 028h, 029h, 02Ah, 02Bh, 02Bh, 02Ch, 02Ch, 02Dh, 02Eh, 02Eh, 02Eh, 02Fh, 02Fh, 02Fh, 030h, 030h
+    db 030h, 030h, 030h, 031h, 031h, 031h, 031h
+_exitlistfuncs db 44 dup (0)
+_aExitListOverflow db 'EXIT LIST OVERFLOW', 0Dh, 0Ah, 0, 0
+_aSFileError_1 db '%s FILE ERROR', 0
+_foundfile db 100 dup (0)
+_foundfileptr dw 0
+_dtatransbuffer db 30 dup (0)
+_foundfilepath db 98 dup (0)
+_byte_3F85A db 2 dup (0)
+_byte_3F85C db 035h, 028h, 02Ch, 7, 079h, 2, 064h, 06Eh, 2, 2, 0, 0
 _DATA ends
 DGROUP group _DATA,DSEG
 S012_TEXT segment byte public 'CODE'
+public _word_2F3C6
+public _byte_3F85A
 assume cs:S012_TEXT
-assume es:nothing, ss:nothing, ds:DSEG
+assume es:nothing, ss:nothing, ds:DGROUP
 public _fatal_error
-public _polarAngle
+public _polang
 public _sub_2EAD4
 public _set_add_value
-public _sub_2EB07
-public _sub_2EB1E
+public _poll_input_abort
+public _wait_for_input_delay
 public _draw_line_related_alt
 public _draw_line_related
 public _parse_shape2d_helper
@@ -60,7 +190,7 @@ public _file_decomp_paras_nofatal
 public _file_decomp_paras_fatal
 public _file_find
 public _file_find_next
-public _multiply_and_scale
+public _mulscl
 public _video_set_mode4
 _fatal_error proc near
     pop     ax
@@ -81,7 +211,7 @@ loc_2EA48:
     call    _abort
     db 0
 _fatal_error endp
-_polarAngle proc far
+_polang proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_z = word ptr 6
@@ -161,7 +291,7 @@ loc_2EAC8:
 loc_2EACF:
     sub     ah, 2
     jmp     short loc_2EAB0
-_polarAngle endp
+_polang endp
 _sub_2EAD4 proc far
     cli
     mov     ax, _word_3F87C
@@ -199,7 +329,7 @@ loc_2EAF5:
     jb      short loc_2EAF5
     retf
 _set_add_value endp
-_sub_2EB07 proc far
+_poll_input_abort proc far
     call    _sub_2EAD4
     xor     cx, cx
     cmp     dx, _word_3F1C4
@@ -210,8 +340,8 @@ _sub_2EB07 proc far
 loc_2EB1B:
     mov     ax, cx
     retf
-_sub_2EB07 endp
-_sub_2EB1E proc far
+_poll_input_abort endp
+_wait_for_input_delay proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -235,7 +365,7 @@ loc_2EB35:
     mov     sp, bp
     pop     bp
     retf
-_sub_2EB1E endp
+_wait_for_input_delay endp
 _draw_line_related_alt proc far
     var_4 = byte ptr -4
      s = byte ptr 0
@@ -2577,7 +2707,7 @@ _add_exit_handler proc far
     mov     bp, sp
     mov     ax, [bp+arg_0]
     mov     cx, 0Ah
-    mov     bx, offset _exitlistfuncs
+    mov     bx, offset DGROUP:_exitlistfuncs
     mov     dx, [bp+arg_2]
 loc_2FE2B:
     cmp     [bx], ax
@@ -2589,7 +2719,7 @@ loc_2FE34:
     jz      short loc_2FE48
     add     bx, 4
     loop    loc_2FE2B
-    mov     ax, offset _aExitListOverflow
+    mov     ax, offset DGROUP:_aExitListOverflow
     push    ax
     call    far ptr _fatal_error
 loc_2FE48:
@@ -2624,7 +2754,7 @@ _call_exitlist2 proc near
     call far ptr _call_exitlist
     xor     ax, ax
     push    ax
-    call    far ptr _libsub_quit_to_dos_alt
+    call    far ptr _exit
     db 0
 _call_exitlist2 endp
 _file_paras proc far
@@ -2694,7 +2824,7 @@ file_paras_body:
     pop     bp
     retf
 loc_2FECD:
-    mov     ax, offset _aSFileError_1
+    mov     ax, offset DGROUP:_aSFileError_1
     mov     bx, ss
     mov     ds, bx
     push    [bp+arg_filename]
@@ -2860,7 +2990,7 @@ loc_2FFB5:
     pop     bp
     retf
 loc_2FFC4:
-    mov     ax, offset _aSFileError_1
+    mov     ax, offset DGROUP:_aSFileError_1
     mov     bx, ss
     mov     ds, bx
     push    [bp+arg_filename]
@@ -2877,7 +3007,7 @@ _file_find proc far
     push    ds
     push    si
     push    di
-    mov     dx, offset _dtatransbuffer
+    mov     dx, offset DGROUP:_dtatransbuffer
     mov     ah, 1Ah
     int     21h
     mov     dx, [bp+arg_0]
@@ -2885,7 +3015,7 @@ _file_find proc far
     mov     ah, 4Eh
     int     21h
     jb      short _file_find_err
-    mov     di, offset _foundfile
+    mov     di, offset DGROUP:_foundfile
     mov     _foundfileptr, di
     mov     si, [bp+arg_0]
     mov     cx, 57h
@@ -2907,12 +3037,12 @@ loc_3000F:
 _file_find_ok:
     mov     ax, ds
     mov     es, ax
-    mov     si, offset _foundfilepath
+    mov     si, offset DGROUP:_foundfilepath
     mov     di, _foundfileptr
     mov     cx, 0Dh
     cld
     rep movsb
-    mov     ax, offset _foundfile
+    mov     ax, offset DGROUP:_foundfile
 loc_30025:
     pop     di
     pop     si
@@ -2931,7 +3061,7 @@ _file_find_next proc far
     push    ds
     push    si
     push    di
-    mov     dx, offset _dtatransbuffer
+    mov     dx, offset DGROUP:_dtatransbuffer
     mov     ah, 1Ah
     int     21h
     mov     ah, 4Fh
@@ -2940,7 +3070,7 @@ _file_find_next proc far
     jmp     short _file_find_ok
     db 0
 _file_find_next endp
-_multiply_and_scale proc far
+_mulscl proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -2958,7 +3088,7 @@ _multiply_and_scale proc far
     mov     ax, dx
     pop     bp
     retf
-_multiply_and_scale endp
+_mulscl endp
 _video_set_mode4 proc far
      r = byte ptr 0
     push    di

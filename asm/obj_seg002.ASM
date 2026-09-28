@@ -1,25 +1,28 @@
 .model medium
 
+_DATA segment word public 'DATA'
+_old_intr0_handler dd 0
+_word_3BE30 dw 0
+_word_3BE32 dw 0
+_DATA ends
 dseg segment byte public 'STUNTSD'
-    extrn _old_intr0_handler:dword
-    extrn _word_3BE30:word
-    extrn _word_3BE32:word
-    extrn _g_kevinrandom_seed:byte
+    comm near _randomseeds:byte:6
 dseg ends
+DGROUP group _DATA, dseg
 
 S002_TEXT segment byte public 'CODE'
     assume cs:S002_TEXT
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:DGROUP
     public _update_rpm_from_speed
     public _nopsub_19DE8
     public _nopsub_19DFF
     public _nopsub_19E09
     public _nopsub_19E13
-    public _init_kevinrandom
+    public _initialize_kevin_random
     public _get_kevinrandom_seed
     public _get_kevinrandom
     public _intr0_handler
-    public _init_div0
+    public _initialize_div0
     public _byte_19F07
 _update_rpm_from_speed proc far
      s = byte ptr 0
@@ -133,7 +136,7 @@ loc_19E1E:
     pop     bp
     retf
 _nopsub_19E13 endp
-_init_kevinrandom proc far
+_initialize_kevin_random proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -145,25 +148,25 @@ loc_19E24:
     mov     bx, [bp+arg_0]
     mov     al, [bx]
 loc_19E2A:
-    mov     _g_kevinrandom_seed, al
+    mov     _randomseeds, al
     mov     al, [bx+1]
 loc_19E30:
-    mov     _g_kevinrandom_seed+1, al
+    mov     _randomseeds+1, al
 loc_19E33:
     mov     al, [bx+2]
 loc_19E36:
-    mov     _g_kevinrandom_seed+2, al
+    mov     _randomseeds+2, al
     mov     al, [bx+3]
-    mov     _g_kevinrandom_seed+3, al
+    mov     _randomseeds+3, al
     mov     al, [bx+4]
-    mov     _g_kevinrandom_seed+4, al
+    mov     _randomseeds+4, al
     mov     al, [bx+5]
-    mov     _g_kevinrandom_seed+5, al
+    mov     _randomseeds+5, al
     pop     bp
 loc_19E4C:
     pop     bp
     retf
-_init_kevinrandom endp
+_initialize_kevin_random endp
 _get_kevinrandom_seed proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -173,18 +176,18 @@ _get_kevinrandom_seed proc far
     mov     bp, sp
     push    bp
     mov     bx, [bp+arg_0]
-    mov     al, _g_kevinrandom_seed
+    mov     al, _randomseeds
     mov     [bx], al
-    mov     al, _g_kevinrandom_seed+1
+    mov     al, _randomseeds+1
     mov     [bx+1], al
-    mov     al, _g_kevinrandom_seed+2
+    mov     al, _randomseeds+2
     mov     [bx+2], al
-    mov     al, _g_kevinrandom_seed+3
+    mov     al, _randomseeds+3
     mov     [bx+3], al
-    mov     al, _g_kevinrandom_seed+4
+    mov     al, _randomseeds+4
     mov     [bx+4], al
 loc_19E72:
-    mov     al, _g_kevinrandom_seed+5
+    mov     al, _randomseeds+5
     mov     [bx+5], al
     pop     bp
     pop     bp
@@ -192,37 +195,37 @@ loc_19E72:
 _get_kevinrandom_seed endp
 _get_kevinrandom proc far
 
-    mov     al, _g_kevinrandom_seed+5
+    mov     al, _randomseeds+5
 loc_19E7E:
-    add     al, _g_kevinrandom_seed+4
+    add     al, _randomseeds+4
 loc_19E82:
-    mov     _g_kevinrandom_seed+4, al
+    mov     _randomseeds+4, al
 loc_19E85:
-    add     al, _g_kevinrandom_seed+3
+    add     al, _randomseeds+3
 loc_19E89:
-    mov     _g_kevinrandom_seed+3, al
+    mov     _randomseeds+3, al
 loc_19E8C:
-    add     al, _g_kevinrandom_seed+2
+    add     al, _randomseeds+2
 loc_19E90:
-    mov     _g_kevinrandom_seed+2, al
-    add     al, _g_kevinrandom_seed+1
+    mov     _randomseeds+2, al
+    add     al, _randomseeds+1
 loc_19E97:
-    mov     _g_kevinrandom_seed+1, al
-    add     al, _g_kevinrandom_seed
-    mov     _g_kevinrandom_seed, al
-    inc     _g_kevinrandom_seed+5
+    mov     _randomseeds+1, al
+    add     al, _randomseeds
+    mov     _randomseeds, al
+    inc     _randomseeds+5
     jnz     short loc_19EC3
-    inc     _g_kevinrandom_seed+4
+    inc     _randomseeds+4
     jnz     short loc_19EC3
-    inc     _g_kevinrandom_seed+3
+    inc     _randomseeds+3
     jnz     short loc_19EC3
-    inc     _g_kevinrandom_seed+2
+    inc     _randomseeds+2
     jnz     short loc_19EC3
-    inc     _g_kevinrandom_seed+1
+    inc     _randomseeds+1
     jnz     short loc_19EC3
-    inc     _g_kevinrandom_seed
+    inc     _randomseeds
 loc_19EC3:
-    mov     al, _g_kevinrandom_seed
+    mov     al, _randomseeds
     xor     ah, ah
     retf
 _get_kevinrandom endp
@@ -254,7 +257,7 @@ loc_19EE3:
     pop     bp
     iret
 _intr0_handler endp
-_init_div0 proc far
+_initialize_div0 proc far
 
     push    ds
 loc_19EE9:
@@ -286,7 +289,7 @@ _byte_19F07     label byte
     mov     ah, 25h
     mov     al, 0
     int     21h
-_init_div0 endp
+_initialize_div0 endp
 tail_19F13:
     pop ds
     retf

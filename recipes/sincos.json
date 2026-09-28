@@ -101,10 +101,10 @@
       "offset": 34,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinetable",
-      "target_index": 1,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -118,10 +118,10 @@
       "offset": 47,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinetable",
-      "target_index": 1,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -135,10 +135,10 @@
       "offset": 57,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinetable",
-      "target_index": 1,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -152,16 +152,16 @@
       "offset": 72,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinetable",
-      "target_index": 1,
-      "target_kind": "external",
-      "target_method": 2,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     }
   ],
   "expected_relocations": [],
   "external_binding": {
-    "mode": "asm-external-dgroup-offset16-v1"
+    "mode": "asm-local-code-offset16-v1"
   },
   "id": "sincos",
   "include_closure": [],
@@ -170,7 +170,7 @@
     {
       "end": 141100,
       "name": "sin_fast",
-      "public": "_sin_fast",
+      "public": "_sinfast",
       "stable_id": "load_226de",
       "start": 141022,
       "target": {
@@ -181,7 +181,7 @@
     {
       "end": 141112,
       "name": "cos_fast",
-      "public": "_cos_fast",
+      "public": "_cosfast",
       "stable_id": null,
       "start": 141100,
       "target": {
@@ -191,9 +191,7 @@
     }
   ],
   "object_declarations": {
-    "externals": [
-      "_sinetable"
-    ],
+    "externals": [],
     "groups": [
       {
         "index": 1,
@@ -212,14 +210,19 @@
     ],
     "publics": [
       {
-        "name": "_cos_fast",
+        "name": "_cosfast",
         "offset": 78,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sin_fast",
+        "name": "_sinfast",
         "offset": 0,
         "segment": "S012_TEXT"
+      },
+      {
+        "name": "_sinetable",
+        "offset": 0,
+        "segment": "_DATA"
       }
     ],
     "segments": [
@@ -249,7 +252,7 @@
         "combine_code": 2,
         "frame": null,
         "index": 2,
-        "length": 0,
+        "length": 514,
         "name": "_DATA",
         "offset": null,
         "overlay_index": 1,
@@ -292,8 +295,18 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_sin_fast",
-  "secondary_dgroup_segments": {},
+  "public": "_sinfast",
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 19588,
+      "end": 198134,
+      "start": 197620,
+      "target": {
+        "sha256": "fc5f2210712a64118135be9f530c8b5305eb26c75569d00ba188911e105157cb",
+        "size": 514
+      }
+    }
+  },
   "source": "asm/sincos.ASM",
   "start": 141022,
   "target": {

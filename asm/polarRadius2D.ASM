@@ -1,18 +1,18 @@
 .8086
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-extrn _cos_fast:far
-extrn _polarAngle:far
-extrn _sin_fast:far
-public _polarRadius2D
-_polarRadius2D proc far
+extrn _cosfast:far
+extrn _polang:far
+extrn _sinfast:far
+public _polradius2d
+_polradius2d proc far
     arg_z = word ptr 6
     arg_y = word ptr 8
     push bp
     mov bp, sp
     push word ptr [bp+arg_y]
     push word ptr [bp+arg_z]
-    call far ptr _polarAngle
+    call far ptr _polang
     add sp, 4
     or ax, ax
     jge short loc_200CD
@@ -26,7 +26,7 @@ loc_200D7:
     cmp ax, 80h
     jg short loc_200FE
     push ax
-    call far ptr _cos_fast
+    call far ptr _cosfast
     add sp, 2
     mov bx, ax
     mov dx, word ptr [bp+arg_y]
@@ -44,7 +44,7 @@ loc_200F0:
     retf
 loc_200FE:
     push ax
-    call far ptr _sin_fast
+    call far ptr _sinfast
     add sp, 2
     mov bx, ax
     mov dx, word ptr [bp+arg_z]
@@ -60,6 +60,6 @@ loc_20112:
     div bx
     pop bp
     retf
-_polarRadius2D endp
+_polradius2d endp
 S012_TEXT ends
 end

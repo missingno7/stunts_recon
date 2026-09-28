@@ -18,7 +18,7 @@ public _nopsub_33006
 public _vector_op_unk
 public _preRender_sphere
 public _nopsub_3320E
-public _sprite_set_1_size
+public _sprset1size
 public _video_clear_color
 _nopsub_33006 proc far
      s = byte ptr 0
@@ -324,7 +324,7 @@ loc_3325D:
     pop     bp
     retf
 _nopsub_3320E endp
-_sprite_set_1_size proc far
+_sprset1size proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -346,7 +346,7 @@ _sprite_set_1_size proc far
     mov     cs:[_sprite1+18], ax
     pop     bp
     retf
-_sprite_set_1_size endp
+_sprset1size endp
 _video_clear_color proc far
     push bp
     mov bp,sp

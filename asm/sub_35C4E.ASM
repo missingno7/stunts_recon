@@ -18,10 +18,11 @@ sprite_width2 dw ?
 sprite_left2 dw ?
 sprite_widthsum dw ?
 SPRITE ends
-extrn sprite1:word
-extrn sprite2:word
-public _sub_35C4E
-_sub_35C4E proc far
+extrn _sprite1:word
+extrn _sprite2:word
+public _clear_rect
+public _incnums
+_clear_rect proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
     var_10 = word ptr -16
@@ -47,9 +48,9 @@ _sub_35C4E proc far
     push    di
     push    ds
     cld
-    mov     ax, word ptr cs:sprite1.sprite_bitmapptr+2
+    mov     ax, word ptr cs:_sprite1.sprite_bitmapptr+2
     mov     es, ax
-    mov     ax, word ptr cs:sprite2.sprite_bitmapptr+2
+    mov     ax, word ptr cs:_sprite2.sprite_bitmapptr+2
     mov     ds, ax
     mov     ax, [bp+arg_0]
     mov     [bp+var_2], ax
@@ -57,14 +58,14 @@ _sub_35C4E proc far
     mov     ax, [bp+arg_2]
     shl     ax, 1
     mov     cx, ax
-    add     ax, cs:sprite2.sprite_lineofs
+    add     ax, cs:_sprite2.sprite_lineofs
     mov     [bp+var_4], ax
-    add     cx, cs:sprite1.sprite_lineofs
+    add     cx, cs:_sprite1.sprite_lineofs
     mov     ax, [bp+arg_8]
     mov     bx, ax
     add     ax, [bp+arg_0]
     cwd
-    idiv    cs:sprite1.sprite_width2
+    idiv    cs:_sprite1.sprite_width2
     sub     dx, [bp+arg_0]
     shl     ax, 1
     add     cx, ax
@@ -90,7 +91,7 @@ loc_35C9F:
     mov     sp, bp
     pop     bp
     retf
-incnums     db 0
+_incnums    db 0
     db 1
     db 2
     db 3
@@ -346,6 +347,6 @@ incnums     db 0
     db 253
     db 254
     db 255
-_sub_35C4E endp
+_clear_rect endp
 S012_TEXT ends
 end

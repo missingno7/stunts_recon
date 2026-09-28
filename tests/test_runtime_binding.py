@@ -170,15 +170,23 @@ class RuntimeBindingTests(unittest.TestCase):
                  'anchor':{'kind':'data-alias','symbol':'_word_3F0A0','offset':0}}}
         owner,_=self.owner('rand.c','_rand',124476,124534,storage=storage)
         receipt=self.check(owner)
-        self.assertEqual(receipt['binding']['storage'][1]['ownership'],'proven-raw')
+        # integ36: rand.c's _DATA is owned linked runtime data (placed by the real link).
+        self.assertEqual(receipt['binding']['storage'][1]['ownership'],'linked')
         for mutate in [lambda o:o['binding']['storage'].clear(),
                        lambda o:o['binding']['storage']['_DATA'].update(end=192675),
                        lambda o:o['binding']['storage']['_DATA'].update(start=192673,end=192677)]:
             bad=copy.deepcopy(owner);mutate(bad)
             with self.assertRaises(ValueError):self.check(bad)
-        bad=copy.deepcopy(self.manifest)
-        next(o for o in bad['owners'] if o['start']<=192672<o['end'])['kind']='MATCHING_C'
-        with self.assertRaisesRegex(ValueError,'raw-owned'):self.check(owner,bad)
+        # A proven-raw row still needs its complete interval raw-owned.
+        raw=copy.deepcopy(self.manifest)
+        row=next(o for o in raw['owners'] if o['id']=='library_rand_124476:_DATA')
+        raw['owners'][raw['owners'].index(row)]={'id':'raw_rand_data','kind':'UNRESOLVED_RAW',
+                                                 'start':row['start'],'end':row['end']}
+        proven=copy.deepcopy(owner);proven['binding']['storage']['_DATA']['ownership']='proven-raw'
+        self.assertEqual(self.check(proven,raw)['binding']['storage'][1]['ownership'],'proven-raw')
+        bad=copy.deepcopy(raw)
+        next(o for o in bad['owners'] if o['id']=='raw_rand_data')['kind']='MATCHING_C'
+        with self.assertRaisesRegex(ValueError,'raw-owned'):self.check(proven,bad)
 
     def test_declared_bss_is_accounted_for_and_bounded(self):
         from runtime_binding import storage_placements
@@ -282,6 +290,7 @@ class RuntimePublicationTests(unittest.TestCase):
                  patch.object(promoter,'verify',return_value=(None,b'',None)),\
                  patch.object(promoter.MZ,'parse',return_value=SimpleNamespace(load_image=lambda x:bytes(10),relocations=[])),\
                  patch.object(promoter,'bind_library',return_value=(b'XX',{})),\
+                 patch.object(promoter,'runtime_gate',return_value={'status':'PLACED'}),\
                  patch.object(promoter,'build',side_effect=fake_build):
                 if fail:
                     with self.assertRaisesRegex(ValueError,'canonical failure'):promoter.promote_runtime(candidate)

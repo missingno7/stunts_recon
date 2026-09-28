@@ -6,12 +6,12 @@
   "binding": {
     "declarations": {
       "externals": [
-        "sprite1"
+        "_sprite1"
       ],
       "groups": [],
       "publics": [
         {
-          "name": "_sub_35B76",
+          "name": "_draw_filled_rect",
           "offset": 0,
           "segment": "S012_TEXT"
         }
@@ -57,7 +57,7 @@
       "offset": 8,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -74,7 +74,7 @@
       "offset": 34,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -91,7 +91,7 @@
       "offset": 45,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -108,7 +108,7 @@
       "offset": 59,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -125,7 +125,7 @@
       "offset": 73,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -142,7 +142,7 @@
       "offset": 111,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -159,7 +159,7 @@
       "offset": 132,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -176,7 +176,7 @@
       "offset": 143,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -189,12 +189,12 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "sprite1"
+      "_sprite1"
     ],
     "groups": [],
     "publics": [
       {
-        "name": "_sub_35B76",
+        "name": "_draw_filled_rect",
         "offset": 0,
         "segment": "S012_TEXT"
       }
@@ -221,7 +221,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_sub_35B76",
+  "public": "_draw_filled_rect",
   "source": "asm/sub_35B76.ASM",
   "stable_id": "asm_load_25b76",
   "start": 154486,

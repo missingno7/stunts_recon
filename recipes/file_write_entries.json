@@ -8,18 +8,18 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "aSFileError_0",
-      "frame_index": 2,
-      "frame_kind": "external",
-      "frame_method": 2,
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
       "loc": "offset16",
       "offset": 153,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "aSFileError_0",
+      "target": "_DATA",
       "target_index": 2,
-      "target_kind": "external",
-      "target_method": 2,
+      "target_kind": "segment",
+      "target_method": 0,
       "width": 2
     },
     {
@@ -79,8 +79,7 @@
   ],
   "object_declarations": {
     "externals": [
-      "_fatal_error",
-      "aSFileError_0"
+      "_fatal_error"
     ],
     "groups": [
       {
@@ -99,6 +98,11 @@
       }
     ],
     "publics": [
+      {
+        "name": "aSFileError_0",
+        "offset": 0,
+        "segment": "_DATA"
+      },
       {
         "name": "_file_write_nofatal",
         "offset": 0,
@@ -137,7 +141,7 @@
         "combine_code": 2,
         "frame": null,
         "index": 2,
-        "length": 0,
+        "length": 16,
         "name": "_DATA",
         "offset": null,
         "overlay_index": 1,
@@ -181,7 +185,17 @@
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_file_write_nofatal",
-  "secondary_dgroup_segments": {},
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 19570,
+      "end": 197618,
+      "start": 197602,
+      "target": {
+        "sha256": "e77a2a602ace2eee5fc9f3f47aad8cc7cb6952349a2564cf2d8061cd0263aec8",
+        "size": 16
+      }
+    }
+  },
   "source": "asm/file_write_entries.ASM",
   "start": 140538,
   "target": {

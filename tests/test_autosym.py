@@ -21,6 +21,11 @@ import data_symbols  # noqa: E402
 from common import ROOT, read_json  # noqa: E402
 
 OPENED = []
+INTEG36_RUNTIME_GROUP = {
+    'library_dos_crt0_117858', 'library_dos_crt0dat_118056', 'library_crt0fp_118446',
+    'library_dos_stdenvp_118928', 'library_dos_stdalloc_119124', 'library_chkstk_118452',
+    'library_write_122664', 'library_dos_raise_124318', 'library_abort_123846',
+    'library_output_120254', 'library_printf_119326', 'library_sprintf_124044'}
 
 
 def _audit(event, args):
@@ -65,6 +70,11 @@ def withheld_context():
     the context makes the derivation re-propose every one that raw code still
     references, from immutable facts only."""
     ctx = autosym.load_context()
+    # integ36: the pinned runtime startup group closed the last raw code that
+    # referenced the merged autosym code aliases; for this re-derivation its
+    # members' code counts as raw again, in memory only.
+    ctx['raw'] = sorted(ctx['raw'] + [(o['start'], o['end'], o['id']) for o in ctx['owners']
+                                      if o['id'] in INTEG36_RUNTIME_GROUP])
     code = ctx['code_layout']['symbols']
     data = ctx['data_layout']['symbols']
     ctx['withheld_code'] = {n: code.pop(n) for n in [n for n, r in code.items() if is_autosym_code(r)]}

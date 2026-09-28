@@ -326,8 +326,10 @@ class RealOraclePrefix(unittest.TestCase):
         cls.image = MZ.parse(oracle[1]).load_image(oracle[1])
         cls.relocations = oracle[2]['unpacked_mz']['relocations']
 
-    def derive_source(self, source, start):
-        obj = compile_source(source, 'msc510-medium')[0]
+    def derive_source(self, source, start, communal_declarations=None):
+        obj = prefix_proof.compile_candidate(
+            source, 'msc510-medium', flags=None,
+            communal_declarations=communal_declarations)[0]
         return derive(obj, prefix_proof.OracleContext(self.image, self.relocations, start))
 
     def test_seg031_object_is_one_closed_record_plus_open_record(self):
@@ -340,10 +342,15 @@ class RealOraclePrefix(unittest.TestCase):
                  (r['start'], r['end']) == (171540, 173238)]
         if whole:
             sources = [whole[0]['source']]
+            communal_declarations = whole[0].get('communal_declarations')
         else:
             self.assertEqual((owners[0]['start'], owners[-1]['end']), (171540, 173238))
             sources = [r['source'] for r in recipes]
-        proof, bound = self.derive_source(b''.join((ROOT / s).read_bytes() for s in sources), 171540)
+            communal_declarations = [declaration for recipe in recipes
+                                     for declaration in recipe.get('communal_declarations', [])]
+        proof, bound = self.derive_source(
+            b''.join((ROOT / s).read_bytes() for s in sources), 171540,
+            communal_declarations)
         self.assertEqual([r['state'] for r in proof['records']],
                          ['RECORD_CLOSED_EXACT', 'EXACT_OPEN_RECORD'])
         self.assertEqual(proof['prefix']['end_offset'], 944)

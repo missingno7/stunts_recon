@@ -5,21 +5,21 @@ struct SCREEN_RECT {
     short bottom;
 };
 
-extern char *off_42A1E;
-extern short word_42A16, word_42A18, word_42A1A;
-extern short word_42A1C, word_42A20, word_42A22;
-extern struct SCREEN_RECT far *word_405FE;
+static char *line_input_text_buffer;
+static short line_input_cursor_vertical, line_edit_x, line_edit_y;
+static short cursor_flash_state, line_text_max_width, line_input_cursor_slot;
+extern struct SCREEN_RECT far *line_input_screen_rect;
 
 extern int strlen(char *text);
 extern int far font_op(char *text, int count);
 extern int far font_op2(char *text);
-extern void far sub_35B76(int x, int y, int width, int height, int right);
-extern void far sub_345BC(char *text, int x, int y);
-extern void far sprite_1_unk2(int x, int y, int width, int height, int right);
+extern void far draw_filled_rect(int x, int y, int width, int height, int right);
+extern void far draw_text_at(char *text, int x, int y);
+extern void far sprite1_unknown2(int x, int y, int width, int height, int right);
 extern void far sprite_copy_2_to_1(void);
 extern void far read_line_helper(void);
 extern void far read_line_helper2(void);
-extern int far sub_2EB07(void);
+extern int far poll_input_abort(void);
 extern int far kb_call_readchar_callback(void);
 extern void far timer_copy_counter(int offset, int segment);
 extern void far set_add_value(long ticks);
@@ -35,24 +35,24 @@ int far read_line(char flags, char *buffer, int pendingKey, int bufferLimit,
   short cursorIndex;
   short insertMode;
   sprite_copy_2_to_1();
-  word_42A18 = x;
-  word_42A1A = y;
-  off_42A1E = buffer;
-  word_42A20 = maxWidth;
+  line_edit_x = x;
+  line_edit_y = y;
+  line_input_text_buffer = buffer;
+  line_text_max_width = maxWidth;
   buffer[bufferLimit] = 0;
   if (flags & 1)
     buffer[0] = 0;
   if (flags & 2)
-    word_42A22 = 0;
+    line_input_cursor_slot = 0;
   else
-    word_42A22 = strlen(buffer);
+    line_input_cursor_slot = strlen(buffer);
   cursorIndex = strlen(buffer);
   while (cursorIndex < bufferLimit)
     buffer[cursorIndex++] = ' ';
 
   read_line_helper2();
-  word_42A16 = 1;
-  word_42A1C = 1;
+  line_input_cursor_vertical = 1;
+  cursor_flash_state = 1;
   insertMode = 0;
   read_line_helper();
   timer_copy_counter(timerOffset, timerSegment);
@@ -68,23 +68,23 @@ int far read_line(char flags, char *buffer, int pendingKey, int bufferLimit,
     else
     {
       while ((inputKey = kb_call_readchar_callback()) == 0) {
-        if (sub_2EB07() != 0) { inputKey = 0; break; }
+        if (poll_input_abort() != 0) { inputKey = 0; break; }
         readCallback();
       }
     }
     if (inputKey == 0)
     {
       set_add_value(4L);
-      savedBlink = word_42A1C;
-      word_42A1C = 1;
+      savedBlink = cursor_flash_state;
+      cursor_flash_state = 1;
       read_line_helper();
       if (savedBlink != 0)
       {
-        word_42A1C = 0;
+        cursor_flash_state = 0;
       }
       else
       {
-        word_42A1C = 1;
+        cursor_flash_state = 1;
       }
       if ((timerOffset | timerSegment) != 0 && timer_compare_dx() != 0)
       {
@@ -100,27 +100,27 @@ done:
     if (inputKey == 0x4D00)
     {
       read_line_helper();
-      if (word_42A22 < bufferLimit)
-        ++word_42A22;
+      if (line_input_cursor_slot < bufferLimit)
+        ++line_input_cursor_slot;
     }
     else
       if (inputKey == 0x4B00)
     {
       read_line_helper();
-      if (word_42A22 != 0)
-        --word_42A22;
+      if (line_input_cursor_slot != 0)
+        --line_input_cursor_slot;
     }
     else
       if (inputKey == 0x4700)
     {
       read_line_helper();
-      word_42A22 = 0;
+      line_input_cursor_slot = 0;
     }
     else
       if (inputKey == 0x4F00)
     {
       read_line_helper();
-      word_42A22 = strlen(buffer);
+      line_input_cursor_slot = strlen(buffer);
     }
     else
       if (inputKey == 0x5200)
@@ -129,21 +129,21 @@ done:
       if (insertMode == 0)
       {
         insertMode = 1;
-        word_42A16 = 8;
+        line_input_cursor_vertical = 8;
       }
       else
       {
         insertMode = 0;
-        word_42A16 = 1;
+        line_input_cursor_vertical = 1;
       }
     }
     else
       if (inputKey == 0x5300)
     {
-      if (!(word_42A22 >= bufferLimit || 0 == buffer[word_42A22]))
+      if (!(line_input_cursor_slot >= bufferLimit || 0 == buffer[line_input_cursor_slot]))
       {
         read_line_helper();
-        cursorIndex = word_42A22;
+        cursorIndex = line_input_cursor_slot;
         while (cursorIndex < bufferLimit)
         {
           buffer[cursorIndex] = buffer[cursorIndex + 1];
@@ -162,14 +162,14 @@ done:
     else
       if (inputKey == 8)
     {
-      if (word_42A22 == 0)
+      if (line_input_cursor_slot == 0)
       {
         firstKey = 0;
         continue;
       }
       read_line_helper();
-      --word_42A22;
-      cursorIndex = word_42A22;
+      --line_input_cursor_slot;
+      cursorIndex = line_input_cursor_slot;
       while (cursorIndex < bufferLimit)
       {
         buffer[cursorIndex] = buffer[cursorIndex + 1];
@@ -182,7 +182,7 @@ done:
     else
       if (inputKey >= 0x20 && inputKey <= 0x7A)
     {
-      if (word_42A22 >= bufferLimit)
+      if (line_input_cursor_slot >= bufferLimit)
       {
         firstKey = 0;
         continue;
@@ -190,7 +190,7 @@ done:
       read_line_helper();
       if (firstKey != 0 && (!(flags & 4)))
       {
-        word_42A22 = 0;
+        line_input_cursor_slot = 0;
         cursorIndex = 0;
         while (cursorIndex < bufferLimit)
         {
@@ -199,21 +199,21 @@ done:
         }
 
       }
-      if (buffer[word_42A22] == 0)
-        buffer[word_42A22 + 1] = 0;
+      if (buffer[line_input_cursor_slot] == 0)
+        buffer[line_input_cursor_slot + 1] = 0;
       if (insertMode != 0)
       {
         cursorIndex = bufferLimit - 2;
-        while (cursorIndex >= word_42A22)
+        while (cursorIndex >= line_input_cursor_slot)
         {
           buffer[cursorIndex + 1] = buffer[cursorIndex];
           --cursorIndex;
         }
 
       }
-      buffer[word_42A22] = (char) inputKey;
-      if (word_42A22 < bufferLimit)
-        ++word_42A22;
+      buffer[line_input_cursor_slot] = (char) inputKey;
+      if (line_input_cursor_slot < bufferLimit)
+        ++line_input_cursor_slot;
       read_line_helper2();
     }
     else
@@ -233,19 +233,19 @@ void far read_line_helper(void)
     short x;
     short y;
 
-    if (word_42A1C == 0)
+    if (cursor_flash_state == 0)
         return;
 
-    if (strlen(off_42A1E) < word_42A22)
-        word_42A22 = strlen(off_42A1E);
+    if (strlen(line_input_text_buffer) < line_input_cursor_slot)
+        line_input_cursor_slot = strlen(line_input_text_buffer);
 
-    width = font_op(off_42A1E + word_42A22, 1);
+    width = font_op(line_input_text_buffer + line_input_cursor_slot, 1);
     if (width == 0)
         width = font_op2(" ");
 
-    x = font_op(off_42A1E, word_42A22) + word_42A18;
-    y = word_405FE->bottom + word_42A1A - word_42A16;
-    sub_35B76(x, y, width, word_42A16, word_405FE->width);
+    x = font_op(line_input_text_buffer, line_input_cursor_slot) + line_edit_x;
+    y = line_input_screen_rect->bottom + line_edit_y - line_input_cursor_vertical;
+    draw_filled_rect(x, y, width, line_input_cursor_vertical, line_input_screen_rect->width);
 }
 
 void far read_line_helper2(void)
@@ -254,26 +254,26 @@ void far read_line_helper2(void)
     short unusedWidth;
     short fontWidth;
 
-    if (word_42A20 != 0) {
+    if (line_text_max_width != 0) {
         for (;;) {
-            if (font_op2(off_42A1E) <= word_42A20)
+            if (font_op2(line_input_text_buffer) <= line_text_max_width)
                 break;
-            if (strlen(off_42A1E) == 0)
+            if (strlen(line_input_text_buffer) == 0)
                 break;
-            off_42A1E[strlen(off_42A1E) - 1] = 0;
+            line_input_text_buffer[strlen(line_input_text_buffer) - 1] = 0;
         }
     }
 
-    length = strlen(off_42A1E);
-    if (word_42A22 > length)
-        word_42A22 = length;
+    length = strlen(line_input_text_buffer);
+    if (line_input_cursor_slot > length)
+        line_input_cursor_slot = length;
 
-    sub_345BC(off_42A1E, word_42A18, word_42A1A);
-    if (word_42A20 != 0) {
-        fontWidth = font_op2(off_42A1E);
-        unusedWidth = word_42A20 - fontWidth;
+    draw_text_at(line_input_text_buffer, line_edit_x, line_edit_y);
+    if (line_text_max_width != 0) {
+        fontWidth = font_op2(line_input_text_buffer);
+        unusedWidth = line_text_max_width - fontWidth;
         if (unusedWidth > 0)
-            sprite_1_unk2(fontWidth + word_42A18, word_42A1A, unusedWidth,
-                          word_405FE->bottom, word_405FE->height);
+            sprite1_unknown2(fontWidth + line_edit_x, line_edit_y, unusedWidth,
+                          line_input_screen_rect->bottom, line_input_screen_rect->height);
     }
 }

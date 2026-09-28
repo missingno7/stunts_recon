@@ -3,49 +3,13 @@
     "/Mx",
     "/I."
   ],
-  "binding": {
-    "declarations": {
-      "externals": [
-        "sprite1",
-        "sprite2"
-      ],
-      "groups": [],
-      "publics": [
-        {
-          "name": "_sub_35C4E",
-          "offset": 0,
-          "segment": "S012_TEXT"
-        }
-      ],
-      "segments": [
-        {
-          "acbp": 72,
-          "alignment": "word",
-          "alignment_code": 2,
-          "big": false,
-          "class": "CODE",
-          "combine": "public",
-          "combine_code": 2,
-          "frame": null,
-          "index": 1,
-          "length": 378,
-          "name": "S012_TEXT",
-          "offset": null,
-          "overlay_index": 1,
-          "use_32bit_offset": false
-        }
-      ]
-    },
-    "mode": "asm-external-cs-offset16-v1"
-  },
+  "embedded_publics": [
+    {
+      "offset": 122,
+      "public": "_incnums"
+    }
+  ],
   "end": 155080,
-  "evidence": {
-    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-    "line_end": 18375,
-    "line_start": 18050,
-    "path": "src/restunts/asmorig/seg012.asm",
-    "repository": "restunts"
-  },
   "expected_fixups": [
     {
       "displacement": 2,
@@ -58,7 +22,7 @@
       "offset": 12,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -75,7 +39,7 @@
       "offset": 18,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite2",
+      "target": "_sprite2",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -92,7 +56,7 @@
       "offset": 41,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite2",
+      "target": "_sprite2",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -109,7 +73,7 @@
       "offset": 49,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -126,7 +90,7 @@
       "offset": 63,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "sprite1",
+      "target": "_sprite1",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -134,18 +98,39 @@
     }
   ],
   "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-cs-offset16-v1"
+  },
   "id": "sub_35C4E",
   "include_closure": [],
   "kind": "asm",
+  "members": [
+    {
+      "end": 155080,
+      "name": "sub_35C4E",
+      "public": "_clear_rect",
+      "stable_id": null,
+      "start": 154702,
+      "target": {
+        "sha256": "bd68c2379553309161c21b759582077a860c0438838e7cef6d4029e2f3f3fcd2",
+        "size": 378
+      }
+    }
+  ],
   "object_declarations": {
     "externals": [
-      "sprite1",
-      "sprite2"
+      "_sprite1",
+      "_sprite2"
     ],
     "groups": [],
     "publics": [
       {
-        "name": "_sub_35C4E",
+        "name": "_incnums",
+        "offset": 122,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_clear_rect",
         "offset": 0,
         "segment": "S012_TEXT"
       }
@@ -172,7 +157,9 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_sub_35C4E",
+  "review": [
+    "integ30: one-member ASM group declaring the CS island incnums (256-byte 0..255 table inside sub_35C4E after its RETF) PUBLIC as _incnums so the three consumers (asm012_144064_late, sub_35DC8, sub_35DE6) link to a real definition instead of an alias shim; bytes, FIXUPPs and relocations unchanged. Evidence: {\"commit\": \"5c38f258f482e7d28f1ccce73da8992dccbbee89\", \"line_end\": 18375, \"line_start\": 18050, \"path\": \"src/restunts/asmorig/seg012.asm\", \"repository\": \"restunts\"}"
+  ],
   "source": "asm/sub_35C4E.ASM",
   "stable_id": "load_25c4e",
   "start": 154702,

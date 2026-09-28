@@ -12,11 +12,20 @@ writes all sources, recipes and the manifest under one journal, then the
 canonical image is rebuilt freshly; any failure rolls the whole batch back.
 
 Batch file: one candidate per line, `NAME CANDIDATE [RECIPE]`; `#` comments.
+
+integ39 communal transaction: one line `COMMUNAL UNIT.json` adds the whole
+LINK c_common unit (tools/communal_unit.py; a LINK_COMMUNAL row replacing the
+raw communal unit).  Such a batch is ATOMIC: every affected translation unit is
+republished in it, nothing is dropped (any failing candidate refuses the whole
+batch), the unit is composed after all candidates, the union whole-image build
+checks conditions (a), (c) and (d) from the recipes, and one staged real LINK
+run must place every communal (b) together with all BSS owners.
 """
 import time
 from pathlib import Path
 from common import ROOT, identity, json_bytes, read_json, require, sha, write_json, atomic_bytes
 import promote as P
+import bss_link
 from transaction import (exclusive, ensure_consistent, prepare, apply, finish, rollback,
                          invalidate_receipts, lock_free_snapshot, publishing)
 
@@ -32,6 +41,11 @@ def read_batch(path):
         if not text:
             continue
         parts = text.split()
+        if parts[0] == 'COMMUNAL':
+            require(len(parts) == 2 and not any('communal' in e for e in entries),
+                    f'Batch line {number}: expected one COMMUNAL UNIT.json')
+            entries.append({'communal': parts[1]})
+            continue
         require(len(parts) in (2, 3), f'Batch line {number}: expected NAME CANDIDATE [RECIPE]')
         entries.append({'name': parts[0], 'candidate': parts[1],
                         'recipe': parts[2] if len(parts) == 3 else None})
@@ -85,8 +99,17 @@ def _check_inputs(before):
         raise SnapshotChanged('Canonical inputs changed during batch staging; nothing was accepted. Retry.')
 
 
-def stage_batch(entries, before, *, independent=True, log=None, builder=None, independent_check=None):
-    """All batch gates except publication; returns (survivors, manifest, staged, dropped)."""
+def _atomic_refusal(entries, dropped, reason, log):
+    dropped['@communal'] = {'stage': 'atomic', 'error': reason}
+    log(f"REFUSED communal transaction (atomic): {reason}")
+    return [], None, None, dropped
+
+
+def stage_batch(entries, before, *, independent=True, log=None, builder=None, independent_check=None,
+                communal=None):
+    """All batch gates except publication; returns (survivors, manifest, staged, dropped).
+
+    integ39: with `communal` (a LINK_COMMUNAL row) the batch is atomic."""
     import memo
     from oracle import verify
     from mz import MZ
@@ -115,6 +138,8 @@ def stage_batch(entries, before, *, independent=True, log=None, builder=None, in
                 dropped[entry['name']] = {'stage': 'individual', 'error': str(error)}
                 log(f"DROP {entry['name']} (individual verification): {error}")
     survivors = checked
+    if communal is not None:
+        return _stage_communal(entries, checked, dropped, manifest, oracle, image, before, builder, log, communal)
     while survivors:
         union, survivors = _union(manifest, survivors, oracle, image, dropped, log)
         if not survivors:
@@ -127,6 +152,22 @@ def stage_batch(entries, before, *, independent=True, log=None, builder=None, in
                 f"({time.time()-started:.1f} s)")
             require(P.inputs() == before and staged['inputs'] == before,
                     'Canonical inputs changed during batch acceptance')
+            claiming = [e for e in survivors if bss_link.claims(e['recipe'])]
+            if claiming:
+                # integ32: BSS storage is accepted only when one real LINK run of
+                # the composed batch places it (tools/bss_link.py).
+                try:
+                    started = time.time()
+                    bss_link.staged_gate([(e['name'], e['source'], e['recipe']) for e in survivors])
+                    _check_inputs(before)
+                    log(f"OK   BSS real-link gate for {len(claiming)} candidates ({time.time()-started:.1f} s)")
+                except Exception as error:
+                    _check_inputs(before)
+                    for e in claiming:
+                        dropped[e['name']] = {'stage': 'bss-real-link', 'error': str(error)}
+                        log(f"DROP {e['name']} (BSS real-link gate): {error}")
+                    survivors = [e for e in survivors if e not in claiming]
+                    continue
             return survivors, union, staged, dropped
         except Exception as error:
             # A concurrent canonical change is never a candidate failure.
@@ -168,27 +209,63 @@ def stage_batch(entries, before, *, independent=True, log=None, builder=None, in
     return [], manifest, None, dropped
 
 
+def _stage_communal(entries, checked, dropped, manifest, oracle, image, before, builder, log, communal):
+    """integ39: the atomic communal transaction (no dropping, no bisection)."""
+    import communal_unit
+    if dropped or len(checked) != len(entries):
+        return _atomic_refusal(entries, dropped, 'individual verification failed: %s' % sorted(dropped), log)
+    union, kept = _union(manifest, checked, oracle, image, dropped, log)
+    if len(kept) != len(checked):
+        return _atomic_refusal(entries, dropped, 'ownership composition failed', log)
+    try:
+        union = communal_unit.attach(union, communal)
+        recipes, sources = _overrides(kept)
+        started = time.time()
+        staged = builder(union, recipes, publish=False, source_overrides=sources)
+        log(f"OK   union staged whole-image build with the communal unit ({time.time()-started:.1f} s)")
+        require(P.inputs() == before and staged['inputs'] == before, 'Canonical inputs changed during batch acceptance')
+        started = time.time()
+        gate = bss_link.staged_gate([(e['name'], e['source'], e['recipe']) for e in kept], communal=communal)
+        _check_inputs(before)
+        log(f"OK   communal + BSS real-link gate ({time.time()-started:.1f} s)")
+    except Exception as error:
+        _check_inputs(before)
+        return _atomic_refusal(entries, dropped, str(error), log)
+    staged['communal_gate'] = gate
+    return kept, union, staged, dropped
+
+
 def publish_batch(batch_entries, *, verify_only=False, independent=True, log=None):
     log = log or _log
+    communal = [e['communal'] for e in batch_entries if 'communal' in e]
+    batch_entries = [e for e in batch_entries if 'communal' not in e]
+    communal_row = None
+    if communal:
+        import communal_unit
+        communal_row = communal_unit.load_candidate(communal[0])
     entries = _freeze(batch_entries)
     stamp = time.strftime('%Y%m%dT%H%M%S')
     summary = {'batch': stamp, 'verify_only': verify_only, 'independent': independent,
-               'candidates': [e['name'] for e in entries]}
+               'candidates': [e['name'] for e in entries],
+               'communal_unit': communal[0] if communal else None}
     started = time.time()
     if verify_only:
         def action(before):
-            survivors, _, staged, dropped = stage_batch(entries, before, independent=independent, log=log)
+            survivors, _, staged, dropped = stage_batch(entries, before, independent=independent, log=log,
+                                                        communal=communal_row)
             return survivors, staged, dropped, before
         survivors, staged, dropped, before = lock_free_snapshot(action, P.inputs)
         require(all(_unchanged(e) for e in entries), 'Candidate changed during batch verification')
-        summary.update(status='VERIFIED_ONLY', inputs=before)
+        summary.update(status='REFUSED' if communal_row is not None and staged is None else 'VERIFIED_ONLY',
+                       inputs=before)
     else:
         with exclusive():
             ensure_consistent()
             before = P.inputs()
-            survivors, union, staged, dropped = stage_batch(entries, before, independent=independent, log=log)
+            survivors, union, staged, dropped = stage_batch(entries, before, independent=independent, log=log,
+                                                            communal=communal_row)
             require(all(_unchanged(e) for e in entries), 'Candidate changed during batch acceptance')
-            if survivors:
+            if survivors or (communal_row is not None and staged is not None):
                 changes = {}
                 for e in survivors:
                     changes[e['destination']] = e['source']
@@ -222,7 +299,8 @@ def publish_batch(batch_entries, *, verify_only=False, independent=True, log=Non
                                matching_c_bytes=accepted['matching_c_bytes'],
                                matching_asm_bytes=accepted['matching_asm_bytes'],
                                raw_initialized_bytes=accepted['raw_initialized_bytes'])
-            summary.update(status='PROMOTED' if survivors else 'NOTHING_PUBLISHED')
+            summary.update(status='PROMOTED' if (survivors or (communal_row is not None and staged is not None))
+                           else 'NOTHING_PUBLISHED')
     summary.update(seconds=round(time.time()-started, 1),
                    published=[{'name': e['name'], 'bytes': len(e['payload']),
                                'source': identity(e['source']),
@@ -230,6 +308,8 @@ def publish_batch(batch_entries, *, verify_only=False, independent=True, log=Non
                    dropped=dropped)
     if staged is not None:
         summary['staged_whole_image'] = staged['executable']
+        if 'communal_gate' in staged:
+            summary['communal_gate'] = {k: v for k, v in staged['communal_gate'].items() if k != 'report'}
     for e in survivors:
         write_json(ROOT/'build/acceptance'/e['name']/'report.json',
                    {'status': 'VERIFIED_ONLY' if verify_only else 'PROMOTED', 'function': e['name'],

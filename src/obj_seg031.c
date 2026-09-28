@@ -1,5 +1,12 @@
-extern void far* file_load_shape2d_nofatal_thunk(char* shapename);
-void far* file_load_shape2d_nofatal2(char* shapename) { return file_load_shape2d_nofatal_thunk(shapename); }
+/* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
+#define _UPPER 0x1
+#define _LOWER 0x2
+#define isupper(c) ((_ctype+1)[c] & _UPPER)
+#define islower(c) ((_ctype+1)[c] & _LOWER)
+#define _tolower(c) ((c)-'A'+'a')
+#define tolower(c) (isupper(c) ? _tolower(c) : (c))
+extern void far* load_shape2d_nofatal_thunk(char* shapename);
+void far* file_load_shape2d_nofatal2(char* shapename) { return load_shape2d_nofatal_thunk(shapename); }
 extern void far file_build_path(char *dir, char *name, char *ext, char *dst);
 extern char * far file_find(char *query);
 char * far file_combine_and_find(char *dir, char *name, char *ext)
@@ -14,25 +21,29 @@ void nullsub_1(void) {}
 void nullsub_2(void) {}
 struct POINT2D { int px, py; };
 struct RECTANGLE { int left, right, top, bottom; };
-extern short word_34AE4, video_flag2_is1, video_flag3_isFFFF, word_361D0;
-extern unsigned char byte_36436, byte_359F1;
-extern char textresprefix;
+extern short pixel_scales, g_vid_flg2_set, vidflg3is_minus1, vidflg4_is1;
+extern unsigned char g_videoflg5;
+unsigned char g_vid_flag6;
+extern char textrespfxchr;
 char audiodriverstring[] = "pc15";
-extern const unsigned char g_ascii_props[256];
-extern unsigned short word_34CEA, framespersec2, data_349D0, word_34984;
-extern unsigned char detail_level;
-extern int *word_30B10, *word_30B0E, *word_30B0C, *word_30B0A;
+extern unsigned char _ctype[];
+unsigned short slow_video_mode_state;
+extern unsigned short frm_rate2;
+extern unsigned short rate_frame;
+extern unsigned short statemgmtcpy;
+extern unsigned char detail_lvl;
+extern int *material_pattern2_table_ptr, *material_pattern_table_pointer, *material_color_table_pointer, *material_clrlist_ptr;
 extern void far kb_init_interrupt(void);
 extern void far kb_shift_checking2(void);
 extern int far kb_call_readchar_callback(void);
 extern void far kb_reg_callback(int, void (far *)(void));
 extern void far show_graphic_levels_menu(void);
-extern void far do_joy_restext(void);
-extern void far do_key_restext(void);
-extern void far do_mof_restext(void);
+extern void far do_joystick_resource_text(void);
+extern void far do_key_resource_text(void);
+extern void far do_mof_resource_text(void);
 extern void far do_pau_restext(void);
-extern void far do_dos_restext(void);
-extern void far do_sonsof_restext(void);
+extern void far do_dos_resource_text(void);
+extern void far do_sonsof_resource_text(void);
 extern short far do_dea_textres(void);
 extern void far mmgr_alloc_a000(void);
 extern void far video_set_mode_13h(void);
@@ -41,17 +52,17 @@ extern void far timer_setup_interrupt(void);
 extern void far sprite_copy_2_to_1_clear(void);
 extern short far mouse_init(unsigned short, unsigned short);
 extern short far audio_load_driver(char*, short, short);
-extern void far audio_stop_unk(void);
-extern void far libsub_quit_to_dos_alt(short);
+extern void far audio_stop_unknown(void);
+extern void far exit(short);
 extern short far audio_toggle_flag2(void);
 extern short far audio_toggle_flag6(void);
 extern short far set_criterr_handler(short (far *)(void));
 void load_palandcursor(void);
 void random_wait(void);
 extern void far sprite_copy_2_to_1(void);
-extern void far sprite_set_1_size(unsigned short, unsigned short, unsigned short, unsigned short);
+extern void far sprset1size(unsigned short, unsigned short, unsigned short, unsigned short);
 extern int far timer_get_delta_alt(void);
-extern void far ported_sprite_clear_1_color_(unsigned char);
+extern void far sprite_clear_1_color(unsigned char);
 extern void far sprite_clear_1_color(unsigned char);
 extern void far rect_adjust_from_point(struct POINT2D*, struct RECTANGLE*);
 extern void far copy_material_list_pointers(void*, void*, void*, void*, unsigned short);
@@ -63,16 +74,16 @@ extern void far * far file_load_shape2d_fatal_thunk(char*);
 extern void far * far locate_shape_fatal(void far*, char*);
 extern void far video_set_palette(unsigned short, unsigned short, unsigned char*);
 extern void far mmgr_free(void far*);
-extern void far * far sprite_make_wnd(unsigned short, unsigned short, unsigned short);
-extern void far sprite_set_1_from_argptr(void far*);
+extern void far * far sprite_make_window(unsigned short, unsigned short, unsigned short);
+extern void far sprite_setup1_from_arg_pointer(void far*);
 extern void far sprite_shape_to_1(void far*, unsigned short, unsigned short);
-extern void far sprite_copy_2_to_1_2(void);
-extern void far *smouspriteptr;
-extern void far *mmouspriteptr;
-extern void far *mouseunkspriteptr;
+extern void far sprcopy2to12(void);
+void far *spritepointermini;
+void far *mouse_ptr_cursor;
+extern void far *mouse_unk_sprite_ptr;
 
 
-void init_main(int argc, char* argv[])
+void initialize_main(int argc, char* argv[])
 {
 	register int i, j;
 	unsigned char mode_4, nosound, unknown;
@@ -86,27 +97,27 @@ void init_main(int argc, char* argv[])
 	kb_call_readchar_callback();
 
 	kb_reg_callback(0x0007, &show_graphic_levels_menu);
-	kb_reg_callback(0x000A, &do_joy_restext);
-	kb_reg_callback(0x000B, &do_key_restext);
-	kb_reg_callback(0x3200, &do_mof_restext);
+	kb_reg_callback(0x000A, &do_joystick_resource_text);
+	kb_reg_callback(0x000B, &do_key_resource_text);
+	kb_reg_callback(0x3200, &do_mof_resource_text);
 	kb_reg_callback(0x0010, &do_pau_restext);
 	kb_reg_callback('p', &do_pau_restext);
-	kb_reg_callback(0x0011, &do_dos_restext);
-	kb_reg_callback(0x0013, &do_sonsof_restext);
-	kb_reg_callback(0x0018, &do_dos_restext);
+	kb_reg_callback(0x0011, &do_dos_resource_text);
+	kb_reg_callback(0x0013, &do_sonsof_resource_text);
+	kb_reg_callback(0x0018, &do_dos_resource_text);
 	
 	// Video
-	word_34AE4 = 1;
-	video_flag2_is1 = 1;
-	video_flag3_isFFFF = -1;
-	word_361D0 = 1;
+	pixel_scales = 1;
+	g_vid_flg2_set = 1;
+	vidflg3is_minus1 = -1;
+	vidflg4_is1 = 1;
 
 	mmgr_alloc_a000();
 	
-	byte_36436 = 0;
-	byte_359F1 = 1;
+	g_videoflg5 = 0;
+	g_vid_flag6 = 1;
 	
-	textresprefix = 'e';
+	textrespfxchr = 'e';
 	
 	// Parse arguments.
 	mode_4 = 0;
@@ -121,8 +132,7 @@ void init_main(int argc, char* argv[])
 					break;
 
 				case 's':
-                    if (((g_ascii_props[argv[i][2]] & 1) ? argv[i][2] + ' ' : argv[i][2]) == 's'
-                     && ((g_ascii_props[argv[i][3]] & 1) ? argv[i][3] + ' ' : argv[i][3]) == 'b') {
+                    if (tolower(argv[i][2]) == 's' && tolower(argv[i][3]) == 'b') {
                         audiodriverstring[0] = 'a';
                         audiodriverstring[1] = 'd';
                     }
@@ -161,8 +171,8 @@ void init_main(int argc, char* argv[])
 
 	// Audio driver.
 	if (audio_load_driver(audiodriverstring, 0, 0)) {
-		audio_stop_unk();
-		libsub_quit_to_dos_alt(1);
+		audio_stop_unknown();
+		exit(1);
 	}
 	
 	if (nosound) {
@@ -176,15 +186,15 @@ void init_main(int argc, char* argv[])
 	
 	// Timing measures.
 		sprite_copy_2_to_1();
-	sprite_set_1_size(0, 320, 0, 120);
+	sprset1size(0, 320, 0, 120);
 
 	timer_get_delta_alt();
 	for (i = 0; i < 15; ++i) {
-		ported_sprite_clear_1_color_(0); // the c impl is too slow/wrong and produces faulty timing values
+		sprite_clear_1_color(0); // the c impl is too slow/wrong and produces faulty timing values
 	}
 	timer1 = timer_get_delta_alt();
 	
-	sprite_set_1_size(0, 320, 0, 60);
+	sprset1size(0, 320, 0, 60);
 
 	for (i = 0; i < 15; ++i) {
 		limits.left = 0;
@@ -211,36 +221,36 @@ void init_main(int argc, char* argv[])
 	timerdelta3 = timer_get_delta_alt();
 	
 	if (middle_delta > timer1)
-		word_34CEA = 0;
+		slow_video_mode_state = 0;
 	else
-		word_34CEA = 1;
+		slow_video_mode_state = 1;
 	if (timerdelta3 < 75)
-		framespersec2 = 20;
+		frm_rate2 = 20;
 	else
-		framespersec2 = 10;
+		frm_rate2 = 10;
 
 	if (timerdelta3 < 35) {
-		detail_level = 0;
+		detail_lvl = 0;
 	}
 	else if (timerdelta3 < 55) {
-		detail_level = 1;
+		detail_lvl = 1;
 	}
 	else if (timerdelta3 < 75) {
-		detail_level = 2;
+		detail_lvl = 2;
 	}
-	else if (timerdelta3 < 100 || !word_34CEA) {
-		detail_level = 3;
+	else if (timerdelta3 < 100 || !slow_video_mode_state) {
+		detail_lvl = 3;
 	}
 	else {
-		detail_level = 4;
+		detail_lvl = 4;
 	}
 
-	data_349D0 = framespersec2;
-	word_34984 = word_34CEA;
+	rate_frame = frm_rate2;
+	statemgmtcpy = slow_video_mode_state;
 	
 	random_wait();
 	
-	copy_material_list_pointers(word_30B0A, word_30B0C, word_30B0E, word_30B10, 0);
+	copy_material_list_pointers(material_clrlist_ptr, material_color_table_pointer, material_pattern_table_pointer, material_pattern2_table_ptr, 0);
 }
 
 void random_wait(void)
@@ -275,20 +285,20 @@ void load_palandcursor(void)
     video_set_palette(0, 0x100, colors);
 
     shape_data = locate_shape_fatal(filedata, "smou");
-    cursor_width = ((short far *)shape_data)[0] * video_flag2_is1;
+    cursor_width = ((short far *)shape_data)[0] * g_vid_flg2_set;
     height = ((short far *)shape_data)[1];
     mmgr_free(filedata);
-    smouspriteptr = sprite_make_wnd(cursor_width, height, 0x0f);
-    mmouspriteptr = sprite_make_wnd(cursor_width, height, 0x0f);
-    mouseunkspriteptr = sprite_make_wnd(cursor_width + video_flag2_is1, height, 0x0f);
+    spritepointermini = sprite_make_window(cursor_width, height, 0x0f);
+    mouse_ptr_cursor = sprite_make_window(cursor_width, height, 0x0f);
+    mouse_unk_sprite_ptr = sprite_make_window(cursor_width + g_vid_flg2_set, height, 0x0f);
 
     filedata = file_load_shape2d_fatal_thunk("sdmain");
-    sprite_set_1_from_argptr(smouspriteptr);
+    sprite_setup1_from_arg_pointer(spritepointermini);
     sprite_shape_to_1(locate_shape_fatal(filedata, "smou"), 0, 0);
-    sprite_set_1_from_argptr(mmouspriteptr);
+    sprite_setup1_from_arg_pointer(mouse_ptr_cursor);
     sprite_shape_to_1(locate_shape_fatal(filedata, "mmou"), 0, 0);
     mmgr_free(filedata);
-    sprite_copy_2_to_1_2();
+    sprcopy2to12();
 }
 int get_0(void) { return 0; }
 extern void far *mmgr_alloc_pages(const char *name, unsigned short paras);

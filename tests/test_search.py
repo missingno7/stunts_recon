@@ -99,7 +99,8 @@ class SearchTests(unittest.TestCase):
                  patch('compiler.compile_source', return_value=(obj, receipt)) as compile_call:
                 before = candidate.read_bytes()
                 first = search.run(candidate)
-                compile_call.assert_called_once_with(before, 'msc510-medium')
+                compile_call.assert_called_once_with(before, 'msc510-medium', None,
+                                                     communals=None)
                 report_path = root / 'build/search' / first['run_id'] / 'report.json'
                 report = read_json(report_path)
                 self.assertEqual(report['compiler']['status'], 'COMPILED')

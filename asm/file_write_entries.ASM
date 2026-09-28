@@ -2,6 +2,23 @@
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'
+public aSFileError_0
+aSFileError_0     db 37
+    db 115
+    db 32
+    db 70
+    db 73
+    db 76
+    db 69
+    db 32
+    db 69
+    db 82
+    db 82
+    db 79
+    db 82
+    db 13
+    db 0
+    db 0
 _DATA ends
 CONST segment word public 'CONST'
 CONST ends
@@ -9,7 +26,6 @@ _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
 assume cs:S012_TEXT, ds:DGROUP
-extrn aSFileError_0:byte
 extrn _fatal_error:far
 S012_TEXT segment word public 'CODE'
 public _file_write_nofatal
@@ -98,7 +114,7 @@ loc_32570:
     jnz     short loc_325A7
     mov     ax, ss
     mov     ds, ax
-    mov     ax, offset aSFileError_0; "%s FILE ERROR\r"
+    mov     ax, offset DGROUP:aSFileError_0; "%s FILE ERROR\r"
     push    [bp+arg_filename]
     push    ax
     call    far ptr _fatal_error

@@ -6,7 +6,6 @@
   "binding": {
     "declarations": {
       "externals": [
-        "_word_2F87A",
         "_timer_callback_counter"
       ],
       "groups": [
@@ -122,13 +121,13 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_timer_callback_counter",
-      "target_index": 2,
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
     },
     {
-      "displacement": 0,
+      "displacement": 2,
       "encoded_addend": "0000",
       "frame": "DGROUP",
       "frame_index": 1,
@@ -138,7 +137,7 @@
       "offset": 6,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_2F87A",
+      "target": "_timer_callback_counter",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -151,7 +150,6 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "_word_2F87A",
       "_timer_callback_counter"
     ],
     "groups": [
@@ -247,6 +245,9 @@
   "object_segment": "S012_TEXT",
   "profile": "masm510-game",
   "public": "_timer_get_counter",
+  "review_notes": [
+    "integ38: the high word of the timer module's `_timer_callback_counter` dword is `_timer_callback_counter+2` (formerly the reference-label extern _word_2F87A, which no object defines once asm012_131254 owns its _DATA); bytes identical, only the FIXUPP target/addend and EXTDEF list change."
+  ],
   "source": "asm/timer_get_counter.ASM",
   "stable_id": "load_22778",
   "start": 141176,

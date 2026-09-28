@@ -475,12 +475,17 @@ def compile_summary(tu, text):
     from compiler import compile_source, CompileFailure
     from object_flags import recipe_flags
     from object_probe import recipe_sparse_zero
+    from communal_unit import recipe_declarations, check_object_communals
     r = tu['recipe']
     flags = recipe_flags(r)
+    declarations = recipe_declarations(r)
+    communals = None if declarations is None else [name for name, _ in declarations]
     # Diagnostic cache: keyed by the complete TU text, profile, flags, start and
     # the pinned toolchain lock (profile files, pass environment).
     toolchain = hashlib.sha256((ROOT / 'layout/toolchain.json').read_bytes()).hexdigest()
+    communal_key = json.dumps(r.get('communal_declarations'), sort_keys=True, separators=(',', ':'))
     key = hashlib.sha256((text + '|' + r['profile'] + '|' + ' '.join(flags or []) + '|' + str(r.get('start')) +
+                          '|' + communal_key +
                           '|' + toolchain).encode('latin-1', 'replace')).hexdigest()
     hit = CACHE.get(key)
     if hit is not None and 'fx_list' not in hit and 'error' not in hit:
@@ -490,7 +495,9 @@ def compile_summary(tu, text):
         return hit
     t0 = time.time()
     try:
-        obj, receipt = compile_source(text.encode('latin-1'), r['profile'], flags, sparse_zero=recipe_sparse_zero(r))
+        obj, receipt = compile_source(text.encode('latin-1'), r['profile'], flags,
+                                      sparse_zero=recipe_sparse_zero(r), communals=communals)
+        check_object_communals(obj, r)
     except CompileFailure as error:
         logp = Path(error.receipt.get('work_directory', '.')) / 'compiler.log'
         errs = [l.strip() for l in (logp.read_text(errors='replace').splitlines() if logp.exists() else []) if 'error' in l]

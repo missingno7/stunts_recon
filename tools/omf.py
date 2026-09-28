@@ -38,6 +38,7 @@ class ObjectModule:
         self.local_externals = []
         self.local_publics = []
         self.external_scopes = []
+        self.communals = []         # integ37: COMDEF allocations (OmfReader(communals=True))
 
     def segment_bytes(self, segment: str) -> bytes:
         if segment not in self.segments:
@@ -86,6 +87,12 @@ class OmfReader(ObjectReader):
     """
 
     name = "omf"
+
+    def __init__(self, communals: bool = False) -> None:
+        # integ37: COMDEF records are refused unless a caller asks for them;
+        # then each communal name takes its place in the external index space
+        # (scope 'communal') and `ObjectModule.communals` lists its allocation.
+        self.communals = communals
 
     THEADR, LHEADR = 0x80, 0x82
     COMENT = 0x88
@@ -165,8 +172,33 @@ class OmfReader(ObjectReader):
             unit.extend(nested)
         return bytes(unit) * repeat_count, at
 
+    def _expand_iterated_positions(self, body: bytes, at: int) -> tuple:
+        """`_expand_iterated_block` plus, for every expanded byte, the position
+        in `body` of the literal content byte it copies (integ37: a FIXUPP
+        after a LIDATA record addresses the record's content bytes; LINK
+        applies it to every repetition of that content)."""
+        repeat_count = struct.unpack_from("<H", body, at)[0]
+        at += 2
+        block_count = struct.unpack_from("<H", body, at)[0]
+        at += 2
+        if block_count == 0:
+            content_length = body[at]
+            at += 1
+            positions = list(range(at, at + content_length))
+            content = body[at:at + content_length]
+            at += content_length
+            return content * repeat_count, positions * repeat_count, at
+        unit, unit_positions = bytearray(), []
+        for _ in range(block_count):
+            nested, nested_positions, at = self._expand_iterated_positions(body, at)
+            unit.extend(nested)
+            unit_positions.extend(nested_positions)
+        return bytes(unit) * repeat_count, unit_positions * repeat_count, at
+
     def read(self, data: bytes, label: str = "") -> ObjectModule:
         lnames: list = []
+        communals: list = []
+        iterated = None            # (record data start, expanded positions) of the last LIDATA
         segment_names: list = []      # 1-based SEGDEF index -> name
         segment_lengths: list = []    # 1-based SEGDEF index -> declared length
         group_names: list = []
@@ -295,8 +327,31 @@ class OmfReader(ObjectReader):
                         local_publics.append({"name": name, "segment_index": segment_index,
                                               "offset": offset})
             elif kind == self.COMDEF:
-                raise MatchError('COMDEF communal allocation is deferred; ownership and'
-                                 ' linker allocation order are not yet independently proven')
+                if not self.communals:
+                    raise MatchError('COMDEF communal allocation is deferred; ownership and'
+                                     ' linker allocation order are not yet independently proven')
+                at = 0
+                while at < len(body):
+                    length = body[at]
+                    name = body[at + 1:at + 1 + length].decode("latin1")
+                    at += 1 + length
+                    type_index, at = self._index(body, at)
+                    data_type = body[at]
+                    at += 1
+                    if data_type == 0x62:            # near: communal length
+                        size, at = self._communal_value(body, at)
+                        communals.append({"name": name, "kind": "near", "type_index": type_index,
+                                          "length": size})
+                    elif data_type == 0x61:          # far: element count, element size
+                        count, at = self._communal_value(body, at)
+                        element, at = self._communal_value(body, at)
+                        communals.append({"name": name, "kind": "far", "type_index": type_index,
+                                          "count": count, "element_size": element,
+                                          "length": count * element})
+                    else:
+                        raise MatchError(f"Unsupported COMDEF data type 0x{data_type:02X}")
+                    externals.append(name)
+                    external_scopes.append('communal')
             elif kind == self.LEDATA16:
                 segment_index, at = self._index(body, 0)
                 offset = struct.unpack_from("<H", body, at)[0]
@@ -306,6 +361,7 @@ class OmfReader(ObjectReader):
                     store.extend(b"\x00" * (offset + len(payload) - len(store)))
                 store[offset:offset + len(payload)] = payload
                 last_segment, last_offset = segment_index, offset
+                iterated = None
             elif kind == self.LIDATA16:
                 # An Iterated Data record: one or more Iterated Data Blocks,
                 # each `(repeat count, block count, content)` -- a leaf
@@ -320,11 +376,15 @@ class OmfReader(ObjectReader):
                 segment_index, at = self._index(body, 0)
                 offset = struct.unpack_from("<H", body, at)[0]
                 at += 2
+                data_start = at
                 payload = bytearray()
+                positions: list = []
                 while at < len(body):
-                    chunk, at = self._expand_iterated_block(body, at)
+                    chunk, chunk_positions, at = self._expand_iterated_positions(body, at)
                     payload.extend(chunk)
+                    positions.extend(chunk_positions)
                 payload = bytes(payload)
+                iterated = (data_start, positions)
                 store = segment_data.setdefault(segment_index, bytearray())
                 if len(store) < offset + len(payload):
                     store.extend(b"\x00" * (offset + len(payload) - len(store)))
@@ -372,19 +432,36 @@ class OmfReader(ObjectReader):
                             raise MatchError(
                                 "a FIXUPP appears before any LEDATA: the "
                                 "position it patches cannot be located")
-                        fixups.append({
-                            "segment_index": last_segment,
-                            "offset": last_offset + offset,
-                            "loc": loc,
-                            "loc_name": self.LOC_NAME.get(loc, f"loc{loc}"),
-                            "width": self.LOC_WIDTH.get(loc, 2),
-                            "self_relative": bool(self_relative),
-                            "target_method": target_method,
-                            "target_index": target_index,
-                            "target_displacement": displacement,
-                            "frame_method": frame_method,
-                            "frame_index": frame_index,
-                        })
+                        width = self.LOC_WIDTH.get(loc, 2)
+                        if iterated is None:
+                            offsets = [last_offset + offset]
+                        else:
+                            # integ37: a FIXUPP after LIDATA addresses the
+                            # record's literal content; LINK applies it to
+                            # every repetition of that content field.
+                            data_start, positions = iterated
+                            first = data_start + offset
+                            hits = [i for i in range(len(positions)) if positions[i] == first]
+                            if not hits or not all(positions[i:i + width] == list(range(first, first + width))
+                                                   for i in hits):
+                                raise MatchError("a FIXUPP after LIDATA does not address one "
+                                                 "complete literal content field")
+                            offsets = [last_offset + i for i in hits]
+                        for fixup_offset in offsets:
+                            fixups.append({
+                                "segment_index": last_segment,
+                                "offset": fixup_offset,
+                                "loc": loc,
+                                "loc_name": self.LOC_NAME.get(loc, f"loc{loc}"),
+                                "width": width,
+                                "self_relative": bool(self_relative),
+                                "target_method": target_method,
+                                "target_index": target_index,
+                                "target_displacement": displacement,
+                                "frame_method": frame_method,
+                                "frame_index": frame_index,
+                                "iterated": iterated is not None,
+                            })
                     else:
                         thread = body[at]
                         at += 1
@@ -451,6 +528,7 @@ class OmfReader(ObjectReader):
                             segment_defs=segment_defs, groups=groups,
                             comments=comments)
         result.local_externals = local_externals
+        result.communals = communals
         result.local_publics = [{"name": p['name'], "segment": segment_name(p['segment_index']),
                                  "offset": p['offset']} for p in local_publics]
         result.external_scopes = external_scopes
@@ -475,6 +553,18 @@ class OmfReader(ObjectReader):
                 'encoded_addend': payload[at:at+width].hex()})
         return result
 
+
+    @staticmethod
+    def _communal_value(body: bytes, at: int) -> tuple:
+        """A COMDEF length field: one byte below 0x80, or a 0x81/0x84/0x88
+        prefix and a 2/3/4-byte little-endian value."""
+        first = body[at]
+        if first < 0x80:
+            return first, at + 1
+        width = {0x81: 2, 0x84: 3, 0x88: 4}.get(first)
+        if width is None:
+            raise MatchError(f"Invalid COMDEF length prefix 0x{first:02X}")
+        return int.from_bytes(body[at + 1:at + 1 + width], "little"), at + 1 + width
 
     def split_library(self, data: bytes) -> list:
         """An OMF library (0xF0) into its modules, in page order."""

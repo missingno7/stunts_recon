@@ -183,7 +183,7 @@
     {
       "end": 145490,
       "name": "file_load_shape2d_res_nofatal_thunk",
-      "public": "_file_load_shape2d_res_nofatal_",
+      "public": "_load_shape2d_res_nofatal_thunk",
       "stable_id": "load_2384d",
       "start": 145485,
       "target": {
@@ -227,7 +227,7 @@
     {
       "end": 145510,
       "name": "file_load_shape2d_nofatal_thunk",
-      "public": "_file_load_shape2d_nofatal_thun",
+      "public": "_load_shape2d_nofatal_thunk",
       "stable_id": "load_23861",
       "start": 145505,
       "target": {
@@ -270,23 +270,23 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_load_shape2d_nofatal_thun",
-        "offset": 25,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_file_load_shape2d_res_fatal_th",
         "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_load_shape2d_res_nofatal_",
+        "name": "_load_shape2d_res_nofatal_thunk",
         "offset": 5,
         "segment": "S012_TEXT"
       },
       {
         "name": "_parse_shape2d_thunk",
         "offset": 15,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_load_shape2d_nofatal_thunk",
+        "offset": 25,
         "segment": "S012_TEXT"
       },
       {

@@ -18,9 +18,9 @@ sprite_width2 dw ?
 sprite_left2 dw ?
 sprite_widthsum dw ?
 SPRITE ends
-extrn sprite1:word
-public _sub_35B76
-_sub_35B76 proc far
+extrn _sprite1:word
+public _draw_filled_rect
+_draw_filled_rect proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -33,7 +33,7 @@ _sub_35B76 proc far
     mov     bp, sp
     push    si
     push    di
-    mov     dx, cs:sprite1+SPRITE.sprite_left
+    mov     dx, cs:_sprite1+SPRITE.sprite_left
     mov     ax, dx
     sub     ax, [bp+arg_0]
     jle     short loc_35B8F
@@ -43,22 +43,22 @@ _sub_35B76 proc far
 loc_35B8F:
     mov     ax, [bp+arg_0]
     add     ax, [bp+arg_4]
-    sub     ax, cs:sprite1+SPRITE.sprite_right
+    sub     ax, cs:_sprite1+SPRITE.sprite_right
     jle     short loc_35BA1
     sub     [bp+arg_4], ax
     jle     short loc_35BCD
 loc_35BA1:
-    mov     ax, cs:sprite1+SPRITE.sprite_top
+    mov     ax, cs:_sprite1+SPRITE.sprite_top
     sub     ax, [bp+arg_2]
     jle     short loc_35BB6
     sub     [bp+arg_6], ax
     jle     short loc_35BCD
-    mov     ax, cs:sprite1+SPRITE.sprite_top
+    mov     ax, cs:_sprite1+SPRITE.sprite_top
     mov     [bp+arg_2], ax
 loc_35BB6:
     mov     ax, [bp+arg_2]
     add     ax, [bp+arg_6]
-    mov     bx, cs:sprite1+SPRITE.sprite_height
+    mov     bx, cs:_sprite1+SPRITE.sprite_height
     sub     ax, bx
     jle     short loc_35BD5
     sub     [bp+arg_6], ax
@@ -79,17 +79,17 @@ loc_35BD5:
     jle     short loc_35BCD
     cmp     [bp+arg_6], 0
     jle     short loc_35BCD
-    mov     es, word ptr cs:sprite1+SPRITE.sprite_bitmapptr+2
+    mov     es, word ptr cs:_sprite1+SPRITE.sprite_bitmapptr+2
     mov     al, [bp+arg_8]
     mov     ah, al
     mov     dx, [bp+arg_0]
     mov     si, [bp+arg_6]
     mov     bx, [bp+arg_2]
     shl     bx, 1
-    add     bx, cs:sprite1+SPRITE.sprite_lineofs
+    add     bx, cs:_sprite1+SPRITE.sprite_lineofs
     mov     di, cs:[bx]
     add     di, [bp+arg_0]
-    mov     dx, cs:sprite1+SPRITE.sprite_pitch
+    mov     dx, cs:_sprite1+SPRITE.sprite_pitch
     sub     dx, [bp+arg_4]
     mov     cx, [bp+arg_4]
 loc_35C0D:
@@ -138,6 +138,6 @@ loc_35C43:
     jmp     short loc_35C25
     ; align 2
     db 0
-_sub_35B76 endp
+_draw_filled_rect endp
 S012_TEXT ends
 end

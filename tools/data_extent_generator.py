@@ -11,7 +11,21 @@ import sys
 from common import ROOT, read_json, require
 
 
-def _audio_buffer_extent(image, layout, inventory):
+def _clone_alias_names(layout):
+    """Validate clone aliases and return their names.
+
+    Clones repeat a reviewed object's address and extent; they are alternate
+    binding names, not independent anchors or overlapping objects.
+    """
+    symbols = layout['symbols']
+    names = {name for name, symbol in symbols.items() if 'clone_of' in symbol}
+    if names:
+        from data_symbols import clone_sources
+        clone_sources(symbols, names)
+    return names
+
+
+def _audio_buffer_extent(image, layout, inventory, clone_aliases=None):
     """Corroborate the ring buffer from its complete index write set and source span."""
     from common import identity, sha
     import re
@@ -19,6 +33,8 @@ def _audio_buffer_extent(image, layout, inventory):
     symbol = layout['symbols'].get(name)
     if symbol is None:
         return None
+    clone_aliases = (_clone_alias_names(layout) if clone_aliases is None
+                     else clone_aliases)
     frame = layout['frame_load_address']; base = frame + 0x97dc
     require(symbol['load_address'] == base and symbol['storage'] == 'bss',
             'Audio buffer base differs')
@@ -73,7 +89,7 @@ def _audio_buffer_extent(image, layout, inventory):
             symbol.get('width') in (None, span) and base+span <= layout['bss_end'],
             'Audio buffer code and reference extents disagree')
     for other_name, other in layout['symbols'].items():
-        if other_name == name or other['storage'] == 'code_island':
+        if other_name == name or other_name in clone_aliases or other['storage'] == 'code_island':
             continue
         other_base = other['load_address']; other_end = other_base + other.get('width', 1)
         require(not (base < other_end and other_base < base+span),
@@ -276,6 +292,7 @@ def derive(image, relocations, layout=None, inventory=None):
     layout = layout or read_json(ROOT/'layout/data-symbols.json')
     inventory = inventory or read_json(ROOT/'evidence/functions.json')
     require(hashlib.sha256(image).hexdigest() == layout['oracle_sha256'], 'Extent oracle differs')
+    clone_aliases = _clone_alias_names(layout)
     decoder, capstone = _decoder()
     relocated = {r['load_offset'] for r in relocations}
     witnesses = []
@@ -313,7 +330,7 @@ def derive(image, relocations, layout=None, inventory=None):
         if first >= frame+65536:
             continue
         aliases = [(name, symbol) for name, symbol in layout['symbols'].items()
-                   if symbol['storage'] != 'code_island' and
+                   if name not in clone_aliases and symbol['storage'] != 'code_island' and
                    0 <= first-symbol['load_address'] < witness['stride']]
         if not aliases:
             continue
@@ -350,7 +367,8 @@ def derive(image, relocations, layout=None, inventory=None):
             continue
         # A reviewed container wholly holding the slice (the counted 24 x 76
         # audiochunks_unk table, integ26) is its enclosing object, not an anchor.
-        conflicts = [(n, s) for n, s in layout['symbols'].items() if n != name and s['storage'] != 'code_island' and
+        conflicts = [(n, s) for n, s in layout['symbols'].items()
+                     if n != name and n not in clone_aliases and s['storage'] != 'code_island' and
                      not (s.get('extent_proof', {}).get('kind') == 'counted-stride-loop-v1' and
                           s['load_address'] <= base and end <= s['load_address'] + s['width']) and
                      ((s.get('width') and base < s['load_address']+s['width'] and s['load_address'] < end) or
@@ -381,7 +399,7 @@ def derive(image, relocations, layout=None, inventory=None):
                                           'anchors': [{'function': w['function'], 'start': w['start'],
                                                        'access': w['access']} for w in rows]}}
     if '_unk_44F4C' in layout['symbols']:
-        derived['_unk_44F4C'] = _audio_buffer_extent(image, layout, inventory)
+        derived['_unk_44F4C'] = _audio_buffer_extent(image, layout, inventory, clone_aliases)
     return derived, rejected, witnesses
 
 

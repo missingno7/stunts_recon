@@ -4,22 +4,22 @@ struct SPRITE {
     unsigned short sprite_words[13];
 };
 extern struct SPRITE far sprite2;
-extern struct SPRITE far *mcgawndsprite;
-extern struct SPRITE far * far sprite_make_wnd(unsigned width, unsigned height, unsigned color);
-extern void far sprite_set_1_from_argptr(struct SPRITE far *argsprite);
-extern void far sprite_putimage(struct SHAPE2D far *shape);
+struct SPRITE far *mcgawnd_window_sprite;
+extern struct SPRITE far * far sprite_make_window(unsigned width, unsigned height, unsigned color);
+extern void far sprite_setup1_from_arg_pointer(struct SPRITE far *argsprite);
+extern void far sprputimage(struct SHAPE2D far *shape);
 
 void far setup_mcgawnd1(void)
 {
-    if (mcgawndsprite == 0)
-        mcgawndsprite = sprite_make_wnd(320, 200, 15);
-    sprite_set_1_from_argptr(&sprite2);
-    sprite_putimage(mcgawndsprite->sprite_bitmapptr);
+    if (mcgawnd_window_sprite == 0)
+        mcgawnd_window_sprite = sprite_make_window(320, 200, 15);
+    sprite_setup1_from_arg_pointer(&sprite2);
+    sprputimage(mcgawnd_window_sprite->sprite_bitmapptr);
 }
 
 void far setup_mcgawnd2(void)
 {
-    if (mcgawndsprite == 0)
-        mcgawndsprite = sprite_make_wnd(320, 200, 15);
-    sprite_set_1_from_argptr(mcgawndsprite);
+    if (mcgawnd_window_sprite == 0)
+        mcgawnd_window_sprite = sprite_make_window(320, 200, 15);
+    sprite_setup1_from_arg_pointer(mcgawnd_window_sprite);
 }

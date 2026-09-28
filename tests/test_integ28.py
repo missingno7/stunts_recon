@@ -152,12 +152,17 @@ class NegativeFoldedIndexTests(unittest.TestCase):
         from compiler import compile_source
         from object_flags import recipe_flags
         from object_probe import recipe_sparse_zero
+        from communal_unit import recipe_declarations, check_object_communals
         from oracle import verify
         from mz import MZ
         cls.recipe = read_json(ROOT / 'recipes/obj_seg004.json')
         source = (ROOT / cls.recipe['source']).read_bytes()
+        declarations = recipe_declarations(cls.recipe)
+        communals = None if declarations is None else [name for name, _ in declarations]
         cls.obj, _ = compile_source(source, cls.recipe['profile'], recipe_flags(cls.recipe),
-                                    sparse_zero=recipe_sparse_zero(cls.recipe))
+                                    sparse_zero=recipe_sparse_zero(cls.recipe),
+                                    communals=communals)
+        check_object_communals(cls.obj, cls.recipe)
         oracle = verify(write=False)
         cls.image = MZ.parse(oracle[1]).load_image(oracle[1])
         cls.relocations = oracle[2]['unpacked_mz']['relocations']

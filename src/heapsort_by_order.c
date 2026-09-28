@@ -1,4 +1,4 @@
-void heapsort_by_order(int n, int *heap, int *data)
+void heapsortorder(int n, int *heap, int *data)
 {
     int temp;
     int gap;

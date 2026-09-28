@@ -1,0 +1,462 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 135058,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_get_chunk_by_name",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 50,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_get_chunk_by_name",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 297,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 68,
+      "segment": "S012_TEXT",
+      "self_relative": true,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_decomp_paras",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 77,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_decomp_paras",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_alloc_pages",
+      "frame_index": 11,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 99,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_alloc_pages",
+      "target_index": 11,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_paras",
+      "frame_index": 10,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 119,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_paras",
+      "target_index": 10,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_read",
+      "frame_index": 6,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 149,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_read",
+      "target_index": 6,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 211,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "DSEG",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 286,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 220,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_copy_paras_reverse",
+      "frame_index": 4,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 272,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_copy_paras_reverse",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_decomp_rle",
+      "frame_index": 8,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 286,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_decomp_rle",
+      "target_index": 8,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_file_decomp_vle",
+      "frame_index": 9,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 290,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_file_decomp_vle",
+      "target_index": 9,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_aSInvalidPackTy",
+      "frame_index": 7,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 321,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_aSInvalidPackTy",
+      "target_index": 7,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_fatal_error",
+      "frame_index": 3,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 325,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_fatal_error",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_mmgr_resize_memory",
+      "frame_index": 5,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 343,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_mmgr_resize_memory",
+      "target_index": 5,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 33,
+      "encoded_addend": "00000000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 415,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 134682,
+      "offset": 3610,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134709,
+      "offset": 3637,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134731,
+      "offset": 3659,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134751,
+      "offset": 3679,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134781,
+      "offset": 3709,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134841,
+      "offset": 3769,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134904,
+      "offset": 3832,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134918,
+      "offset": 3846,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134922,
+      "offset": 3850,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134957,
+      "offset": 3885,
+      "segment": 8192
+    },
+    {
+      "load_offset": 134975,
+      "offset": 3903,
+      "segment": 8192
+    },
+    {
+      "load_offset": 135047,
+      "offset": 3975,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-code-pointer-dgroup-offset16-v1"
+  },
+  "id": "file_decomp_group",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 134647,
+      "name": "file_decomp",
+      "public": "_file_decomp",
+      "stable_id": "load_20de6",
+      "start": 134630,
+      "target": {
+        "sha256": "d2fcbc3be61fccaa84d602d115e222d38a706bf96df9738faf6060a47a1b50dc",
+        "size": 17
+      }
+    },
+    {
+      "end": 134663,
+      "name": "file_decomp_nofatal",
+      "public": "_file_decomp_nofatal",
+      "stable_id": "load_20df7",
+      "start": 134647,
+      "target": {
+        "sha256": "74fd8e535c88f50013fa3efaadb3f64b4a0a87ea828c02d8d1eac8f7cd8887bc",
+        "size": 16
+      }
+    },
+    {
+      "end": 135058,
+      "name": "file_decomp_fatal",
+      "public": "_file_decomp_fatal",
+      "stable_id": "load_20e07",
+      "start": 134663,
+      "target": {
+        "sha256": "0a0e24900967d24cf136aeb82bb5e3eacb615e269959ecefaa9fb9ebb8d77d8a",
+        "size": 395
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_mmgr_get_chunk_by_name",
+      "_file_decomp_paras",
+      "_fatal_error",
+      "_copy_paras_reverse",
+      "_mmgr_resize_memory",
+      "_file_read",
+      "_aSInvalidPackTy",
+      "_file_decomp_rle",
+      "_file_decomp_vle",
+      "_file_paras",
+      "_mmgr_alloc_pages"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_file_decomp",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_decomp_fatal",
+        "offset": 33,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_decomp_nofatal",
+        "offset": 17,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 428,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
+        "big": false,
+        "class": "STUNTSD",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "review": [
+    "integ30: file_decomp / file_decomp_nofatal / file_decomp_fatal as one seg012 module (from build/workers/L3-asm/asm012_133840), link-faithful S012_TEXT; the compression_type far-pointer table (dd file_decomp_rle, dd file_decomp_vle) binds through the reviewed function-evidence island and table-anchored code aliases; three unreferenced wrapper stubs after the fatal RETF stay inside the pinned file_decomp_fatal PROC..ENDP."
+  ],
+  "source": "asm/file_decomp_group.ASM",
+  "stable_id": "multi_file_decomp_group",
+  "start": 134630,
+  "subsumed_owners": [
+    "load_20de6",
+    "load_20df7"
+  ],
+  "target": {
+    "sha256": "fb45cb5bf5c9704208e52bd1df68287fbe47410af984a0a91412e9427821804c",
+    "size": 428
+  }
+}

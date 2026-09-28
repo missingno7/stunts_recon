@@ -1,3 +1,6 @@
+static unsigned char saved_music_chunk_volumes[24];
+static unsigned char saved_effect_chunk_volumes[24];
+
 /* obj_seg027 (audio): complete object [159954,165436), MSC 5.10 /AM /Ox /Gs (TUFLAG-Ox-seg027).
  * Externs use Restunts dseg/seg027 spellings.  Source/target notes:
  * - AUDIOCHUNK is one 24-entry table (audio_init_chunk indexes 0..23 from one base);
@@ -55,20 +58,32 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
     unsigned char unk2D;            /* 2D */
 };
 
-extern struct AUDIOCHUNK audiochunks_unk[24];
-extern struct AUDIOVOICE unk_45A26[16];
-extern unsigned char byte_428BE[], byte_428D6[], byte_44290, byte_44ACA[], byte_44D06[];
-extern unsigned char byte_45948, byte_45950, byte_459D2, byte_45D9A[];
-extern int word_44D48, word_454BA;
-extern char audiodriverstring2[];
-extern void far *basdres, far *snarres, far *tommres, far *rideres;
-extern void far *crshres, far *chhtres, far *ohhtres;
+struct AUDIOCHUNK audiochunktable[24];
+struct AUDIOVOICE snd_voices_tbl[16];
+extern unsigned char saved_music_chunk_volumes[];
+extern unsigned char saved_effect_chunk_volumes[];
+unsigned char block_audio_num;
+unsigned char audioblock[24];
+unsigned char g_audchnkvalue[24];
+unsigned char sfx_audio_vol;
+unsigned char g_musicvolumesetting;
+extern unsigned char g_audiodrvvoices_count;
+unsigned char audiochnk_actflags[24];
+extern int snd_sample_rate_phase, mus_samplelimit;
+char g_drvaudiocode[14];
+void far *kick_res;
+void far *g_snaresnd;
+void far *tommsampleresource;
+void far *ride_audio_sound_res;
+void far *audio_opp_res;
+void far *chhtsample;
+void far *resource_sound_hit;
 
 
 void far * far audioresource_find(void far *resource, char *name);
 void far audio_unk2(int index, unsigned char value);
 void far audio_driver_func1E(int first, int last);
-void far sub_39700(void);
+void far reset_audio_event_state(void);
 char * far audio_make_filename(char *name, char *ext, char *kind);
 void far * far file_load_binary_nofatal(char *name);
 void far * far file_decomp_nofatal(char *name);
@@ -96,9 +111,9 @@ unsigned int far audioresource_get_word(unsigned int far *p);
 void far audio_init_chunk(int first, int last, void far *res, int offset, unsigned char volume, unsigned char priority);
 int far audio_check_flag(void far *res, int chunk, unsigned char priority, unsigned int volume);
 void far audio_init_chunk2(int chunk);
-void far sub_3736A(void);
-void far sub_37868(int value);
-void far sub_38178(void);
+void far reset_audio_chunks(void);
+void far set_all_audio_chunk_volume(int value);
+void far reset_audio_driver_state(void);
 void far audiodrv_atexit(void);
 
 typedef void (far *DRVPROC)();
@@ -129,33 +144,33 @@ unsigned int audio_bit_masks[17] = {
     0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080,
     0x0100, 0x0200, 0x0400, 0x0800, 0x1000, 0x2000, 0x4000, 0x8000
 };
-unsigned char byte_40630 = 0;
+unsigned char audio_pause_in_progress = 0;
 unsigned char audioflag2 = 1;
-unsigned char byte_40632 = 0;
+unsigned char audio_song_ready = 0;
 unsigned char audioflag6 = 1;
-unsigned char byte_40634 = 0;
-unsigned char byte_40635 = 0;
-unsigned char unk_40636[4] = { 0x10, 0x00, 0x16, 0x00 };
-int word_4063A = 1;
-int word_4063C = 0;
+unsigned char audio_driver_mode = 0;
+unsigned char audio_driver_extension_mode = 0;
+unsigned char audio_driver_volume_command[4] = { 0x10, 0x00, 0x16, 0x00 };
+int audio_update_lock = 1;
+int audio_load_error_policy = 0;
 
 void far load_audio_finalize(void far *song)
 {
     int offset;
 
-    word_4063A = 1;
-    sub_3736A();
+    audio_update_lock = 1;
+    reset_audio_chunks();
     if (song == 0) return;
     if (((char far *)song)[4] != 0) return;
     if (((char far *)song)[5] != 1) return;
     ((DRVPROC)((char far *)audiodriverbinary + 0x18))();
-    word_44D48 = 0;
-    word_454BA = 0x80;
+    snd_sample_rate_phase = 0;
+    mus_samplelimit = 0x80;
     offset = (((unsigned char far *)song)[6] << 2) + 7;
-    byte_44290 = ((char far *)song)[offset++];
-    audio_init_chunk(0, byte_44290 - 1, song, offset, byte_45950, 0x20);
-    byte_40632 = 1;
-    word_4063A = 0;
+    block_audio_num = ((char far *)song)[offset++];
+    audio_init_chunk(0, block_audio_num - 1, song, offset, g_musicvolumesetting, 0x20);
+    audio_song_ready = 1;
+    audio_update_lock = 0;
 }
 
 void far audio_unk(void)
@@ -163,70 +178,70 @@ void far audio_unk(void)
     struct AUDIOVOICE *channel;
     int i;
 
-    byte_40630 = 1;
-    word_4063A = 1;
-    if (byte_40634 == 0) {
+    audio_pause_in_progress = 1;
+    audio_update_lock = 1;
+    if (audio_driver_mode == 0) {
         for (i = 0; i < 24; i++) {
             if (audioflag6 == 1 || i < 16) {
-                byte_428BE[i] = audiochunks_unk[i].volume;
+                saved_music_chunk_volumes[i] = audiochunktable[i].volume;
                 audio_unk2(i, 0);
             }
         }
     } else {
-        unk_40636[3] = 0;
-        ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)unk_40636);
+        audio_driver_volume_command[3] = 0;
+        ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
     }
-    if (byte_40634 == 0) {
+    if (audio_driver_mode == 0) {
         for (i = 0; i < 16; i++) {
-            channel = &unk_45A26[i];
+            channel = &snd_voices_tbl[i];
             ((DRVPROC)((char far *)audiodriverbinary + 0x27))(channel->unk2C, channel, channel->unk2A, channel->unk10);
         }
-        ((DRVPROC)((char far *)audiodriverbinary + 0x30))(unk_45A26);
+        ((DRVPROC)((char far *)audiodriverbinary + 0x30))(snd_voices_tbl);
     }
-    word_4063A = 0;
+    audio_update_lock = 0;
 }
 
-void far sub_372F4(void)
+void far restore_audio_volume(void)
 {
     int i;
 
-    byte_40630 = 1;
-    word_4063A = 1;
-    if (byte_40634 == 0) {
+    audio_pause_in_progress = 1;
+    audio_update_lock = 1;
+    if (audio_driver_mode == 0) {
         for (i = 0; i < 24; i++) {
             if (audioflag6 == 1 || i < 16)
-                audio_unk2(i, byte_428BE[i]);
+                audio_unk2(i, saved_music_chunk_volumes[i]);
         }
     } else {
-        unk_40636[3] = 100;
-        ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)unk_40636);
+        audio_driver_volume_command[3] = 100;
+        ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
     }
-    word_4063A = 0;
-    byte_40630 = 0;
+    audio_update_lock = 0;
+    audio_pause_in_progress = 0;
 }
 
-void far sub_3736A(void)
+void far reset_audio_chunks(void)
 {
-    word_4063A = 1;
-    byte_40632 = 0;
+    audio_update_lock = 1;
+    audio_song_ready = 0;
     audio_driver_func1E(0, 0x0f);
-    audio_init_chunk(0, 0x0f, 0, 0, byte_45950, 0);
-    byte_44290 = 0;
-    sub_39700();
-    word_4063A = 0;
+    audio_init_chunk(0, 0x0f, 0, 0, g_musicvolumesetting, 0);
+    block_audio_num = 0;
+    reset_audio_event_state();
+    audio_update_lock = 0;
 }
 
 void far audio_enable_flag2(void) { audioflag2 = 1; }
-void far audio_disable_flag2(void) { audioflag2 = 0; word_4063A = 1; if (byte_44290) { audio_driver_func1E(0, (unsigned int)byte_44290 - 1); } sub_39700(); word_4063A = 0; }
+void far audio_disable_flag2(void) { audioflag2 = 0; audio_update_lock = 1; if (block_audio_num) { audio_driver_func1E(0, (unsigned int)block_audio_num - 1); } reset_audio_event_state(); audio_update_lock = 0; }
 int far audio_toggle_flag2(void) { if (audioflag2 == 1) { audio_disable_flag2(); return 0; } audio_enable_flag2(); return 1; }
 
 int far nopsub_373FE(void)
 {
     int i;
-    if (byte_40630 == 1 || audioflag2 == 0)
+    if (audio_pause_in_progress == 1 || audioflag2 == 0)
         return 1;
-    for (i = 0; i < byte_44290; i++)
-        if (audiochunks_unk[i].data != 0)
+    for (i = 0; i < block_audio_num; i++)
+        if (audiochunktable[i].data != 0)
             return 0;
     return 1;
 }
@@ -237,39 +252,39 @@ int far nopsub_37456(void far *res)
     return audio_check_flag2(res, -1, 0x40);
 }
 
-int far sub_37470(int chunk, unsigned char priority)
+int far reserve_audio_chunk(int chunk, unsigned char priority)
 {
     int i;
     if (chunk == -1) {
         for (i = 16; i <= 23; i++) {
             if (chunk == -1) {
-                if (audiochunks_unk[i].data == 0 && byte_45D9A[i] == 0)
+                if (audiochunktable[i].data == 0 && audiochnk_actflags[i] == 0)
                     chunk = i;
             } else
                 break;
         }
         if (chunk != -1) {
-            byte_45D9A[chunk] = 1;
-            audiochunks_unk[chunk].priority = priority;
+            audiochnk_actflags[chunk] = 1;
+            audiochunktable[chunk].priority = priority;
         }
         return chunk;
     }
-    byte_45D9A[chunk] = 1;
-    audiochunks_unk[chunk].priority = priority;
+    audiochnk_actflags[chunk] = 1;
+    audiochunktable[chunk].priority = priority;
     return chunk;
 }
 
-void far sub_374DE(int chunk)
+void far release_audio_chunk(int chunk)
 {
     if (chunk > -1) {
-        byte_45D9A[chunk] = 0;
+        audiochnk_actflags[chunk] = 0;
         audio_init_chunk2(chunk);
     }
 }
 
 int far audio_check_flag2(void far *res, int chunk, unsigned char priority)
 {
-    return audio_check_flag(res, chunk, priority, byte_45948);
+    return audio_check_flag(res, chunk, priority, sfx_audio_vol);
 }
 
 int far audio_check_flag(void far *res, int chunk, unsigned char priority, unsigned int volume)
@@ -284,14 +299,14 @@ int far audio_check_flag(void far *res, int chunk, unsigned char priority, unsig
         return -1;
     if (((char far *)res)[5] != 1)
         return -1;
-    if (byte_45948 != 0)
-        volume = (volume << 7) / byte_45948 - 1;
+    if (sfx_audio_vol != 0)
+        volume = (volume << 7) / sfx_audio_vol - 1;
     else
         volume = 0;
     if (chunk == -1) {
         for (i = 16; i <= 23; i++) {
             if (chunk == -1) {
-                if (audiochunks_unk[i].data == 0 && byte_45D9A[i] == 0)
+                if (audiochunktable[i].data == 0 && audiochnk_actflags[i] == 0)
                     chunk = i;
             } else
                 break;
@@ -299,14 +314,14 @@ int far audio_check_flag(void far *res, int chunk, unsigned char priority, unsig
         if (chunk == -1) {
             best = 0xff;
             for (i = 16; i < 23; i++) {
-                if (audiochunks_unk[i].priority <= best && byte_45D9A == 0) {
-                    best = audiochunks_unk[i].priority;
+                if (audiochunktable[i].priority <= best && audiochnk_actflags == 0) {
+                    best = audiochunktable[i].priority;
                     chunk = i;
                 }
             }
-            if (chunk != -1 && audiochunks_unk[chunk].priority <= priority) {
-                if (byte_45D9A[chunk] != 0)
-                    byte_45D9A[chunk] = 0;
+            if (chunk != -1 && audiochunktable[chunk].priority <= priority) {
+                if (audiochnk_actflags[chunk] != 0)
+                    audiochnk_actflags[chunk] = 0;
                 audio_init_chunk2(chunk);
             }
         }
@@ -321,9 +336,9 @@ int far audio_check_flag(void far *res, int chunk, unsigned char priority, unsig
 void far audio_init_chunk2(int chunk)
 {
     if (chunk < 16 || chunk > 23) return;
-    audiochunks_unk[chunk].data = 0;
+    audiochunktable[chunk].data = 0;
     audio_driver_func1E(chunk, chunk);
-    audio_init_chunk(chunk, chunk, 0, 0, byte_45948, 0);
+    audio_init_chunk(chunk, chunk, 0, 0, sfx_audio_vol, 0);
 }
 
 void far audio_enable_flag6(void)
@@ -331,7 +346,7 @@ void far audio_enable_flag6(void)
     int i;
     if (audioflag6 != 1) {
         for (i = 16; i < 24; i++)
-            audio_unk2(i, byte_428D6[i]);
+            audio_unk2(i, saved_effect_chunk_volumes[i]);
         audioflag6 = 1;
     }
 }
@@ -341,7 +356,7 @@ void far audio_disable_flag6(void)
     int i;
     if (audioflag6 != 0) {
         for (i = 16; i < 24; i++) {
-            byte_428D6[i] = audiochunks_unk[i].volume;
+            saved_effect_chunk_volumes[i] = audiochunktable[i].volume;
             audio_unk2(i, 0);
         }
         audioflag6 = 0;
@@ -358,55 +373,55 @@ int far audio_toggle_flag6(void)
     return 1;
 }
 
-int far sub_3771E(int chunk)
+int far audio_chunk_is_unavailable(int chunk)
 {
     if (audioflag6 == 0) return 1;
     if (chunk < 16 || chunk > 23) return 1;
-    if (audiochunks_unk[chunk].data == 0) return 1;
+    if (audiochunktable[chunk].data == 0) return 1;
     return 0;
 }
 
 void far nopsub_37750(unsigned int chunk, long value)
 {
-    audiochunks_unk[chunk].unk48 = value;
+    audiochunktable[chunk].unk48 = value;
 }
 
 void far audio_driver_func3F(int ticks)
 {
     int counter;
 
-    if (byte_40634 == 0) {
-        for (counter = byte_45950; counter > 0; counter -= 2) {
-            word_4063A = 1;
-            sub_37868(counter);
-            word_4063A = 0;
+    if (audio_driver_mode == 0) {
+        for (counter = g_musicvolumesetting; counter > 0; counter -= 2) {
+            audio_update_lock = 1;
+            set_all_audio_chunk_volume(counter);
+            audio_update_lock = 0;
             timer_copy_counter((long)ticks);
             timer_wait_for_dx();
         }
     } else {
         for (counter = 100; counter > 0; counter -= 2) {
-            word_4063A = 1;
-            unk_40636[3] = (unsigned char)counter;
-            ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)unk_40636);
-            word_4063A = 0;
+            audio_update_lock = 1;
+            audio_driver_volume_command[3] = (unsigned char)counter;
+            ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
+            audio_update_lock = 0;
             timer_copy_counter((long)ticks);
             timer_wait_for_dx();
         }
     }
-    sub_3736A();
-    if (byte_40634 != 0) {
+    reset_audio_chunks();
+    if (audio_driver_mode != 0) {
         timer_copy_counter(50L);
         timer_wait_for_dx();
-        unk_40636[3] = 100;
-        ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)unk_40636);
+        audio_driver_volume_command[3] = 100;
+        ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
     }
 }
 
-void far sub_37868(int value)
+void far set_all_audio_chunk_volume(int value)
 {
     int index;
     index = 0;
-    while (index < byte_44290) {
+    while (index < block_audio_num) {
         audio_unk2(index, value);
         ++index;
     }
@@ -414,13 +429,13 @@ void far sub_37868(int value)
 
 void far nopsub_37898(int value)
 {
-    byte_45950 = value;
-    sub_37868(value);
+    g_musicvolumesetting = value;
+    set_all_audio_chunk_volume(value);
 }
 
-unsigned int far nopsub_378AE(int index) { return byte_44D06[index]; }
+unsigned int far nopsub_378AE(int index) { return g_audchnkvalue[index]; }
 
-unsigned int far nopsub_378BC(int index) { return byte_44ACA[index]; }
+unsigned int far nopsub_378BC(int index) { return audioblock[index]; }
 
 int far audio_load_driver(char *filename, int unused, int signature)
 {
@@ -429,7 +444,7 @@ int far audio_load_driver(char *filename, int unused, int signature)
     void far *patches;
 
     if (signature == 0x473a)
-        byte_40635 = 1;
+        audio_driver_extension_mode = 1;
     if (audiodriverbinary != 0)
         audiodrv_atexit();
     else
@@ -440,37 +455,37 @@ int far audio_load_driver(char *filename, int unused, int signature)
         len--;
     if (len != 0)
         len++;
-    audiodriverstring2[0] = filename[len];
-    audiodriverstring2[1] = filename[len + 1];
-    audiodriverstring2[2] = 0;
+    g_drvaudiocode[0] = filename[len];
+    g_drvaudiocode[1] = filename[len + 1];
+    g_drvaudiocode[2] = 0;
     path = audio_make_filename(filename, "drv", "");
     audiodriverbinary = file_load_binary_nofatal(path);
-    byte_45950 = 0x7f;
-    byte_45948 = 0x7f;
+    g_musicvolumesetting = 0x7f;
+    sfx_audio_vol = 0x7f;
     if (audiodriverbinary == 0)
         goto fail;
-    byte_459D2 = ((unsigned char (far *)(void))audiodriverbinary)();
-    if (byte_459D2 == 0 || byte_459D2 == 0xff)
+    g_audiodrvvoices_count = ((unsigned char (far *)(void))audiodriverbinary)();
+    if (g_audiodrvvoices_count == 0 || g_audiodrvvoices_count == 0xff)
         return 2;
-    if (byte_459D2 > 0x7f) {
-        byte_459D2 = 16;
-        byte_40634 = 1;
-        byte_40635 = 0;
+    if (g_audiodrvvoices_count > 0x7f) {
+        g_audiodrvvoices_count = 16;
+        audio_driver_mode = 1;
+        audio_driver_extension_mode = 0;
     }
-    sub_38178();
+    reset_audio_driver_state();
     timer_reg_callback(audiodriver_timer);
-    if (byte_40634 != 0) {
+    if (audio_driver_mode != 0) {
         patches = file_load_binary_nofatal("mt32.plb");
         if (patches != 0) {
             ((DRVPROC)((char far *)audiodriverbinary + 0x42))(patches);
             mmgr_release(patches);
-            unk_40636[3] = 100;
-            ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)unk_40636);
+            audio_driver_volume_command[3] = 100;
+            ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
         }
     }
-    byte_40630 = 0;
+    audio_pause_in_progress = 0;
     audioflag2 = 1;
-    byte_40632 = 0;
+    audio_song_ready = 0;
     audioflag6 = 1;
     return 0;
 fail:
@@ -479,23 +494,23 @@ fail:
 
 void far audiodrv_atexit(void)
 {
-    word_4063A = 1;
+    audio_update_lock = 1;
     if (audiodriverbinary != 0) {
         timer_remove_callback(audiodriver_timer);
         audioflag2 = 0;
         audioflag6 = 0;
-        if (byte_40634 != 0) {
-            unk_40636[3] = 100;
-            ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)unk_40636);
+        if (audio_driver_mode != 0) {
+            audio_driver_volume_command[3] = 100;
+            ((DRVPROC)((char far *)audiodriverbinary + 0x3f))(4, (void far *)audio_driver_volume_command);
         }
         ((DRVPROC)((char far *)audiodriverbinary + 6))();
         ((DRVPROC)((char far *)audiodriverbinary + 3))();
         mmgr_release(audiodriverbinary);
         audiodriverbinary = 0;
-        byte_40634 = 0;
-        byte_40635 = 0;
+        audio_driver_mode = 0;
+        audio_driver_extension_mode = 0;
     }
-    word_4063A = 0;
+    audio_update_lock = 0;
 }
 
 void far * far load_sfx_ge(char *filename, char *extension, char *kind)
@@ -531,9 +546,9 @@ void far * far load_sfx_ge(char *filename, char *extension, char *kind)
     return resource;
 }
 
-void far sub_37C38(int value)
+void far set_audio_load_error_policy(int value)
 {
-    word_4063C = value;
+    audio_load_error_policy = value;
 }
 
 void far * far load_sfx_file(char *filename)
@@ -541,11 +556,11 @@ void far * far load_sfx_file(char *filename)
     void far *result;
 
     result = 0;
-    if (byte_40635 != 0)
-        result = load_sfx_ge(filename, "dsf", audiodriverstring2);
+    if (audio_driver_extension_mode != 0)
+        result = load_sfx_ge(filename, "dsf", g_drvaudiocode);
     if (result == 0)
-        result = load_sfx_ge(filename, "sfx", audiodriverstring2);
-    if (result == 0 && word_4063C != 0)
+        result = load_sfx_ge(filename, "sfx", g_drvaudiocode);
+    if (result == 0 && audio_load_error_policy != 0)
         fatal_error("cannot load sfx file %s", filename);
     return result;
 }
@@ -555,8 +570,8 @@ void far * far load_song_file(char *filename)
     void far *result;
 
     result = 0;
-    result = load_sfx_ge(filename, "kms", audiodriverstring2);
-    if (result == 0 && word_4063C != 0)
+    result = load_sfx_ge(filename, "kms", g_drvaudiocode);
+    if (result == 0 && audio_load_error_policy != 0)
         fatal_error("cannot load song file %s", filename);
     return result;
 }
@@ -566,11 +581,11 @@ void far * far load_voice_file(char *filename)
     void far *result;
 
     result = 0;
-    if (byte_40635 != 0)
-        result = load_sfx_ge(filename, "dvc", audiodriverstring2);
+    if (audio_driver_extension_mode != 0)
+        result = load_sfx_ge(filename, "dvc", g_drvaudiocode);
     if (result == 0)
-        result = load_sfx_ge(filename, "vce", audiodriverstring2);
-    if (result == 0 && word_4063C != 0)
+        result = load_sfx_ge(filename, "vce", g_drvaudiocode);
+    if (result == 0 && audio_load_error_policy != 0)
         fatal_error("cannot load voice file %s", filename);
     return result;
 }
@@ -579,8 +594,8 @@ void far * far nopsub_37D7A(char *filename)
 {
     void far *result;
 
-    result = load_sfx_ge(filename, "slb", audiodriverstring2);
-    if (result == 0 && word_4063C != 0)
+    result = load_sfx_ge(filename, "slb", g_drvaudiocode);
+    if (result == 0 && audio_load_error_policy != 0)
         fatal_error("cannot load sample file %s", filename);
     return result;
 }
@@ -592,13 +607,13 @@ void far audio_init_chunk(int first, int last, void far *res, int offset, unsign
     char far *p;
 
     for (i = first; i <= last; i++) {
-        chunk = &audiochunks_unk[i];
+        chunk = &audiochunktable[i];
         chunk->unk48 = 0;
         chunk->unk22 = 0x7f;
         chunk->index = i;
         chunk->unk16 = 0x0f;
-        byte_44D06[i] = 0;
-        byte_44ACA[i] = 0;
+        g_audchnkvalue[i] = 0;
+        audioblock[i] = 0;
         chunk->unk32 = 0;
         chunk->unk04 = 0;
         chunk->priority = priority;
@@ -645,17 +660,17 @@ void far audio_map_song_instruments(void far *song, void far *voice)
             instres = audioresource_find(voice, name);
             audioresource_copy_4_bytes(dest, (unsigned char far *)&instres);
         }
-        basdres = audioresource_find(voice, "BASD");
-        snarres = audioresource_find(voice, "SNAR");
-        tommres = audioresource_find(voice, "TOMM");
-        rideres = audioresource_find(voice, "RIDE");
-        crshres = audioresource_find(voice, "CRSH");
-        chhtres = audioresource_find(voice, "CHHT");
-        ohhtres = audioresource_find(voice, "OHHT");
+        kick_res = audioresource_find(voice, "BASD");
+        g_snaresnd = audioresource_find(voice, "SNAR");
+        tommsampleresource = audioresource_find(voice, "TOMM");
+        ride_audio_sound_res = audioresource_find(voice, "RIDE");
+        audio_opp_res = audioresource_find(voice, "CRSH");
+        chhtsample = audioresource_find(voice, "CHHT");
+        resource_sound_hit = audioresource_find(voice, "OHHT");
     }
 }
 
-void far sub_3803C(unsigned char far *res, void far *shapes)
+void far link_audio_shape_resources(unsigned char far *res, void far *shapes)
 {
     char far *resptr;
     char name[5];
@@ -687,30 +702,30 @@ void far sub_3803C(unsigned char far *res, void far *shapes)
     }
 }
 
-void far sub_38156(int index)
+void far reset_audio_voice_length(int index)
 {
     struct AUDIOVOICE *voice;
-    voice = &unk_45A26[index];
+    voice = &snd_voices_tbl[index];
     voice->length = 1;
 }
 
-void far sub_38178(void)
+void far reset_audio_driver_state(void)
 {
     int i;
 
-    word_4063A = 1;
+    audio_update_lock = 1;
     audio_init_chunk(0, 0x17, 0, 0, 0x7f, 0);
-    for (i = 0; i < byte_459D2; i++) {
+    for (i = 0; i < g_audiodrvvoices_count; i++) {
         ((DRVPROC)((char far *)audiodriverbinary + 0x1e))(i);
-        unk_45A26[i].state = 0;
-        unk_45A26[i].unk00 = 0xff;
-        unk_45A26[i].unk02 = 0;
-        unk_45A26[i].unk10 = 0;
-        unk_45A26[i].unk2C = 0xff;
+        snd_voices_tbl[i].state = 0;
+        snd_voices_tbl[i].unk00 = 0xff;
+        snd_voices_tbl[i].unk02 = 0;
+        snd_voices_tbl[i].unk10 = 0;
+        snd_voices_tbl[i].unk2C = 0xff;
     }
     ((DRVPROC)((char far *)audiodriverbinary + 0x18))();
     ((DRVPROC)((char far *)audiodriverbinary + 6))();
-    word_4063A = 0;
+    audio_update_lock = 0;
 }
 
 void far audio_map_song_tracks(unsigned char far *song)
@@ -815,13 +830,13 @@ void far nopsub_38570(void)
     int i;
 
     nopsub_3219D("swPause = %d, swSong = %d, bSong = %d,swSFX = %d\n",
-                 byte_40630, audioflag2, byte_40632, audioflag6);
-    nopsub_3219D("ubMusicVolume = %d, ubSfxVolume = %d\n", byte_45950, byte_45948);
+                 audio_pause_in_progress, audioflag2, audio_song_ready, audioflag6);
+    nopsub_3219D("ubMusicVolume = %d, ubSfxVolume = %d\n", g_musicvolumesetting, sfx_audio_vol);
     for (i = 0; i < 24; i++)
-        nopsub_3219D("T%02x-ND=%lx,DL=%ld\n", i, audiochunks_unk[i].data, audiochunks_unk[i].unk18);
+        nopsub_3219D("T%02x-ND=%lx,DL=%ld\n", i, audiochunktable[i].data, audiochunktable[i].unk18);
     nopsub_3219D("Press a Key\n");
     flush_stdin();
     for (i = 0; i < 16; i++)
-        nopsub_3219D("H%02x - ST=%d,TP=%lx,TL=%lx\n", i, unk_45A26[i].state,
-                     unk_45A26[i].position, unk_45A26[i].length);
+        nopsub_3219D("H%02x - ST=%d,TP=%lx,TL=%lx\n", i, snd_voices_tbl[i].state,
+                     snd_voices_tbl[i].position, snd_voices_tbl[i].length);
 }

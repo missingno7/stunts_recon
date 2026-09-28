@@ -1,4 +1,4 @@
-extern short data_349D0;
+extern short rate_frame;
 
 
 struct RECTANGLE {
@@ -31,22 +31,22 @@ struct PLANE {
 };
 
 
-short sin_fast(unsigned short s);
-short cos_fast(unsigned short s);
+short sinfast(unsigned short s);
+short cosfast(unsigned short s);
 
-int polarAngle(int z, int y);
-int polarRadius2D(int z, int y);
+int polang(int z, int y);
+int polradius2d(int z, int y);
 int polarRadius3D(struct VECTOR* vec);
 
 unsigned rect_compare_point(struct POINT2D* pt);
 
-void mat_mul_vector(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
+void mat_vec(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
 void mat_multiply(struct MATRIX* rmat, struct MATRIX* lmat, struct MATRIX* outmat);
 void mat_invert(struct MATRIX* inmat, struct MATRIX* outmat);
 void mat_rot_x(struct MATRIX* outmat, int angle);
-void mat_rot_y(struct MATRIX* outmat, int angle);
+void matroty(struct MATRIX* outmat, int angle);
 void mat_rot_z(struct MATRIX* outmat, int angle);
-struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk);
+struct MATRIX* matrotzxy(int z, int x, int y, int unk);
 
 void rect_adjust_from_point(struct POINT2D* pt, struct RECTANGLE* rc);
 
@@ -54,10 +54,10 @@ int vector_op_unk2(struct VECTOR* vec);
 void vector_to_point(struct VECTOR* vec, struct POINT2D* outpt);
 void vector_op_unk(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, short i);
 
-short multiply_and_scale(short a1, short a2);
+short mulscl(short a1, short a2);
 
-void rect_union(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
-int rect_intersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
+void rcunion(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
+int rcintersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
 
 
 
@@ -253,78 +253,78 @@ struct TRACKOBJECT {
 };
 
 
-extern struct GAMEINFO gameconfig;
-extern struct GAMEINFO gameconfigcopy;
+extern struct GAMEINFO globalgamesettings;
+extern struct GAMEINFO gmconfigbackup;
 
-extern struct GAMESTATE state;
-extern struct SIMD simd_player;
-extern struct SIMD simd_opponent;
+extern struct GAMESTATE core;
+extern struct SIMD simdp7;
+extern struct SIMD ophys_7;
 
-extern short video_flag1_is1;
-extern short video_flag2_is1;
-extern short video_flag3_isFFFF;
-extern short video_flag4_is1;
-extern short video_flag5_is0;
-extern short video_flag6_is1;
+extern short pixel_scales;
+extern short g_vid_flg2_set;
+extern short vidflg3is_minus1;
+extern short vidflg4_is1;
+extern short g_videoflg5;
+extern short g_vid_flag6;
 
-extern unsigned char byte_44A8A;
-extern unsigned char byte_4552F;
-extern unsigned short elapsed_time1;
-extern unsigned short word_32D02;
-extern unsigned char byte_449DA;
-extern unsigned char byte_4393C;
-extern unsigned char game_replay_mode; 
-extern short word_44DCA;
+extern unsigned char timeraud;
+extern unsigned char slomodiv8;
+extern unsigned short elaptm1;
+extern unsigned short tmr2;
+extern unsigned char sigframe;
+extern unsigned char g_rpl_init;
+extern unsigned char gm_playmode; 
+extern short g_sgateopn;
 
 extern short word_45A24; 
-extern short word_45A00; 
-extern short word_4499C; 
-extern short track_angle;
-extern char *steerWhlRespTable_ptr;
+extern short g_cvxintvl; 
+extern short frmcs_time; 
+extern short st_hdg;
+extern char *table_lookup;
 extern char steerWhlRespTable_10fps[];
 extern char steerWhlRespTable_20fps[];
-extern char startcol2, startrow2;
-extern char hillFlag;
-extern short hillHeightConsts[];
+extern char idxtrk, tagtrk;
+extern char g_hillf;
+extern short hillconsts[];
 
-extern struct RECTANGLE rect_windshield;
-extern short word_449EA;
-extern int run_game_random;
+extern struct RECTANGLE boundglassrect;
+extern short bitmapdash;
+extern int runrndx;
 extern char replaybar_toggle;
-extern char is_in_replay;
-extern char cameramode;
-extern char byte_449E6;
-extern char game_replay_mode_copy;
-extern char byte_44346;
-extern char byte_46467;
-extern char dashb_toggle;
-extern char byte_4432A;
-extern char show_penalty_counter;
-extern int word_45D94;
-extern int word_45D3E;
+extern char inrepflg;
+extern char cammd;
+extern char g_rplmodui;
+extern char gm_saved_rpl_mode;
+extern char numid;
+extern char g_rplbfask;
+extern char on_off_dash;
+extern char cam_idg;
+extern char pen_flag_count;
+extern int replayrst;
+extern int popupact;
 extern char byte_3B8F2;
 extern char byte_3FE00;
-extern void far* gameresptr;
-extern void far* dasmshapeptr;
+extern void far* gamerptrs;
+extern void far* dasm_shp_7;
 extern int word_3F88E;
-extern char dashb_toggle_copy;
-extern char replaybar_toggle_copy;
-extern char is_in_replay_copy;
-extern char followOpponentFlag;
-extern char followOpponentFlag_copy;
-extern int roofbmpheight_copy;
-extern char byte_449E2;
-extern char replaybar_enabled;
-extern int dashbmp_y_copy;
-extern int height_above_replaybar;
-extern char byte_454A4;
-extern char byte_449D8[];
+extern char dashbtogglesaved;
+extern char g_replaybarcpytgl;
+extern char is_in_rplcopy;
+extern char follow_op;
+extern char opp_follow_flag_backup;
+extern int roofbmphgt_saved;
+extern char mode_flag;
+extern char g_rplybarenable;
+extern int dashbmpy_copy;
+extern int rplbarabovehgt;
+extern char g_simprect;
+extern char g_viewinx[];
 extern int dastseg;
-extern int dastbmp_y;
-extern int dastbmp_y2;
-extern int dashbmp_y;
-extern int roofbmpheight;
-extern struct RECTANGLE* rectptr_unk;
+extern int dasty;
+extern int g_dastbmpbuf;
+extern int dashbmy9;
+extern int rfy5;
+extern struct RECTANGLE* rectp;
 extern void setup_car_shapes(int);
 extern void update_frame(char, struct RECTANGLE*);
 extern void loop_game(int, int, int);
@@ -333,57 +333,57 @@ extern void mouse_minmax_position(int);
 extern int kb_get_char(void);
 extern void handle_ingame_kb_shortcuts(int);
 
-extern int mouse_butstate;
-extern int mouse_xpos;
-extern int mouse_ypos;
+extern int flagsdown;
+extern int msecoordx;
+extern int pos_y_ms;
 extern int performGraphColor;
-extern char resID_byte1;
-extern int waitflag;
+extern char resbuftext;
+extern int waitm_ms;
 
-extern void far* fontnptr;
-extern void far* fontdefptr;
-extern void far* mainresptr;
-extern struct GAMESTATE huge* cvxptr;
-extern int trackrows[];
-extern int terrainrows[];
-extern int trackpos[];
-extern int trackcenterpos[];
-extern int terrainpos[];
-extern int terraincenterpos[];
-extern int trackpos2[];
-extern int trackcenterpos2[];
-extern short far* td01_track_file_cpy; 
-extern short far* td02_penalty_related; 
-extern char far* trackdata3;
-extern short far* td04_aerotable_pl; 
-extern short far* td05_aerotable_op; 
-extern char far* trackdata6;
-extern char far* trackdata7;
-extern int far* td08_direction_related; 
-extern int far* trackdata9;
-extern struct VECTOR far* td10_track_check_rel;
-extern char far* td11_highscores; 
-extern char far* trackdata12;
-extern char far* td13_rpl_header; 
-extern unsigned char far* td14_elem_map_main; 
-extern unsigned char far* td15_terr_map_main; 
-extern char far* td16_rpl_buffer; 
-extern char far* td17_trk_elem_ordered; 
-extern char far* trackdata18;
-extern unsigned char far* trackdata19;
-extern char far* td20_trk_file_appnd; 
-extern char far* td21_col_from_path; 
-extern char far* td22_row_from_path; 
-extern unsigned char far* trackdata23; 
+extern void far* fntndat;
+extern void far* def_fntadr;
+extern void far* main_data_file_addr;
+extern struct GAMESTATE huge* cvxs_a;
+extern int lnoffsets[];
+extern int gterrtrk[];
+extern int r_zp[];
+extern int row_ctr_zs[];
+extern int postable[];
+extern int z_ctr_pos[];
+extern int xcols[];
+extern int trackctrpos2[];
+extern short far* g_td01_track_filecpy; 
+extern short far* trackdata_penalty_related; 
+extern char far* td3;
+extern short far* track04_plyraero; 
+extern short far* trackdata_05_opp_aerotbl; 
+extern char far* td6_ptr_b;
+extern char far* trackdat7;
+extern int far* g_td08d; 
+extern int far* trkptrpath;
+extern struct VECTOR far* td10checkptr;
+extern char far* hscore_trk11_ptr; 
+extern char far* savedptr_ms;
+extern char far* td13_replay_hdr; 
+extern unsigned char far* td14tb; 
+extern unsigned char far* td15p_9; 
+extern char far* g_tdreplay16buf; 
+extern char far* road_trk; 
+extern char far* td_18_ref;
+extern unsigned char far* td19hdl;
+extern char far* coursedataappend_address; 
+extern char far* g_column_of_trkdata21_pth; 
+extern char far* tdfrompathrow22; 
+extern unsigned char far* trkd23adr; 
 extern char kbormouse;
-extern char passed_security;
+extern char pass_check_flag;
 extern char g_is_busy;
-extern char g_path_buf[];
-extern char byte_3B80C[];
-extern char idle_expired;
+extern char buf_g_path[];
+extern char track_file[];
+extern char menutimeout;
 extern unsigned short dialogarg2;
-extern char byte_3B85E[];
-extern char byte_43966;
+extern char replay_file[];
+extern char endhsdemo;
 extern char aMain[];
 extern char aMisc_1[];
 extern char aFontdef_fnt[];
@@ -396,17 +396,15 @@ extern char aSlct[];
 extern char aSkidms_0[];
 extern char aSkidslct[];
 extern char aDos[];
-
-extern short data_349D0;
-extern unsigned short framespersec2;
-extern unsigned short slow_video_mgmt;
-extern unsigned short slow_video_mgmt_copy;
-extern unsigned char detail_level;
+extern unsigned short frm_rate2;
+extern unsigned short slow_video_mode_state;
+extern unsigned short statemgmtcpy;
+extern unsigned char detail_lvl;
 
 extern unsigned short pspofs;
 extern unsigned short pspseg;
-extern unsigned word_3FF82;
-extern unsigned word_3FF84;
+extern unsigned resmem_end_seg;
+extern unsigned resmem_base_seg;
 
 extern struct MEMCHUNK* resptr1;
 extern struct MEMCHUNK* resptr2;
@@ -418,7 +416,7 @@ extern unsigned long timer_callback_counter;
 extern unsigned long last_timer_callback_counter;
 extern unsigned long timer_copy_unk;
 
-extern unsigned char g_kevinrandom_seed[];
+extern unsigned char randomseeds[];
 extern const char aReservememoryO[];
 extern const char aReservememoryOutOfMemory[];
 extern const char aMemoryManagerB[];
@@ -432,25 +430,25 @@ extern const char aLocateshape4_4sShapeNotF[];
 extern const char aLocatesound4_4sSoundNotF[];
 extern char audiodriverstring[];
 
-extern struct GAMESTATE_SNAPSHOT gState_travDist;
+extern struct GAMESTATE_SNAPSHOT total_game;
 extern short is_audioloaded;
-extern void far* songfileptr;
-extern void far* voicefileptr;
-extern char textresprefix; 
+extern void far* musicfile;
+extern void far* openvfile;
+extern char textrespfxchr; 
 extern char* shapeexts[];
 extern unsigned char palmap[];
 
 extern int* material_clrlist_ptr;
-extern int* material_clrlist_ptr_cpy;
+extern int* mat_copy_clr_lst_ptr;
 extern int* material_clrlist2_ptr;
-extern int* material_clrlist2_ptr_cpy;
+extern int* g_mat_clrlist_copy_2_ptr;
 extern int* material_patlist_ptr;
-extern int* material_patlist_ptr_cpy;
+extern int* material_patlistptr_copy;
 extern int* material_patlist2_ptr;
-extern int* material_patlist2_ptr_cpy;
-extern unsigned short someZeroVideoConst;
-extern void font_set_fontdef(void);
-extern void init_polyinfo(void);
+extern int* matpatlistcopypointer2;
+extern unsigned short video_cnstval;
+extern void fontsetfontdef(void);
+extern void initialize_polyinfo(void);
 extern unsigned short run_intro_looped(void);
 extern unsigned short show_dialog(int unk1, int unk2, void far* textresptr, unsigned short unk3, unsigned short unk4, int arg, void* unk5, int unk6);
 extern char run_menu(void);
@@ -469,8 +467,8 @@ extern void ensure_file_exists(int unk);
 extern void far* load_song_file(const char* filename);
 extern void far* load_voice_file(const char* filename);
 extern void far* load_sfx_file(const char* filename);
-extern void far* file_load_shape2d_nofatal_thunk(const char* filename);
-extern void far* file_load_shape2d_res_nofatal_thunk(const char* filename);
+extern void far* load_shape2d_nofatal_thunk(const char* filename);
+extern void far* load_shape2d_res_nofatal_thunk(const char* filename);
 extern void far* file_load_shape2d_nofatal(char* shapename);
 extern void far* file_load_shape2d_nofatal2(char* shapename);
 extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const char* name);
@@ -479,26 +477,26 @@ extern short audio_load_driver(char* driver, short a2, short a3);
 extern void audio_unload(void);
 extern short audio_toggle_flag2(void);
 extern short audio_toggle_flag6(void);
-extern void audio_stop_unk(void);
+extern void audio_stop_unknown(void);
 extern void audiodrv_atexit(void);
 
 extern void check_input(void);
 extern int input_do_checking(int unk);
-extern void kb_exit_handler(void);
-extern void kb_shift_checking1(void);
+extern void keyboard_exit_handler(void);
+extern void keyboard_shift_checking1(void);
 extern void kb_shift_checking2(void);
 extern void kb_reg_callback(int code, void (far* callback)(void));
 extern void show_graphic_levels_menu(void);
-extern void do_joy_restext(void);
-extern void do_key_restext(void);
-extern void do_mof_restext(void);
+extern void do_joystick_resource_text(void);
+extern void do_key_resource_text(void);
+extern void do_mof_resource_text(void);
 extern void do_pau_restext(void);
-extern void do_dos_restext(void);
-extern void do_sonsof_restext(void);
+extern void do_dos_resource_text(void);
+extern void do_sonsof_resource_text(void);
 extern short get_kb_or_joy_flags(void);
 
 extern short mouse_init(short a1, short a2);
-extern void mouse_draw_opaque_check(void);
+extern void msdrawopaquechk(void);
 
 extern void video_set_mode4(void);
 extern void video_set_mode7(void);
@@ -507,7 +505,7 @@ extern void video_set_mode_13h(void);
 extern void shape3d_load_car_shapes(char* carid, char* oppcarid);
 
 extern void load_palandcursor(void);
-extern void sprite_set_1_size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
+extern void sprset1size(unsigned short left, unsigned short right, unsigned short top, unsigned short height);
 extern void sprite_clear_1_color(unsigned char);
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
@@ -517,7 +515,7 @@ extern void timer_setup_interrupt(void);
 extern unsigned long timer_get_delta_alt(void);
 
 extern short set_criterr_handler(short (far* callback)(void));
-extern void libsub_quit_to_dos_alt(short a1);
+extern void exit(short a1);
 extern void fatal_error(const char*, ...);
 extern short do_dea_textres(void);
 
@@ -538,7 +536,7 @@ extern void _srand(unsigned int);
 
 
 
-extern int penalty_time;
+extern int g_penaltytm;
 
 struct AUDIO_CAR_FRAME {
     char reserved[6];
@@ -553,98 +551,97 @@ struct TRACKRESULT {
     struct VECTOR edge_b;
     short has_opponent_link;
 };
-extern long pState_lvec1_x;
-extern long pState_lvec1_y;
-extern long pState_lvec1_z;
-extern int pState_minusRotate_z_1;
-extern int pState_minusRotate_z_2;
-extern int pState_minusRotate_y_1;
-extern int pState_minusRotate_y_2;
-extern int pState_minusRotate_x_1;
-extern int pState_minusRotate_x_2;
-extern struct MATRIX mat_unk;
-extern struct VECTOR vec_unk2;
-extern int planindex;
-extern int planindex_copy;
-extern int pState_f36Mminf40sar2;
-extern struct VECTOR vec_planerotopresult;
-extern char current_surf_type;
-extern int nextPosAndNormalIP;
-extern int wallindex;
-extern int elRdWallRelated;
-extern int wallHeight;
-extern int wallStartX;
-extern int wallStartZ;
-extern int wallOrientation;
-extern struct PLANE far* planptr;
-extern struct PLANE far* current_planptr;
-extern int elem_xCenter;
-extern int elem_zCenter;
-extern int terrainHeight;
-extern char byte_4392C;
-extern struct POINT2D unk_3BD62[2];
-extern struct POINT2D unk_3BD5A[2];
-extern struct POINT2D unk_3BD6A[2];
-extern int word_3BD72[4];
-extern int word_4408C;
-extern int word_43964;
+extern long centerpos;
+extern long veh_position;
+extern long veh_z;
+extern int anglerotate_car;
+extern int pln_rotate_z;
+extern int rotxvehicle;
+extern int car_rotate_xc;
+extern int yrotrotveh;
+extern int car_roty_pln;
+extern struct MATRIX matrix_transform_view;
+extern struct VECTOR tvec2;
+extern int pl_i;
+extern int g_planidx2;
+extern int frwhl_angadjusted;
+extern struct VECTOR pln_rot_output;
+extern char g_cursurfacekindvalue;
+extern int nextpos_normalip;
+extern int road_num;
+extern int element_min_wall;
+extern int wall_wallelement;
+extern int wallanchor_x;
+extern int wallanchor_z;
+extern int wall_facingang;
+extern struct PLANE far* g_planlist;
+extern struct PLANE far* plncurrptr;
+extern int x_course_part;
+extern int road_elem_ctrz;
+extern int hgthgt;
+extern char test_pln;
+extern struct POINT2D collision_point_set_b[2];
+extern struct POINT2D collision_point_set_a[2];
+extern struct POINT2D collision_point_set_c[2];
+extern int collision_rotation_offsets[4];
+extern int op_eng_sound_id;
+extern int g_player_sound_id;
 extern int bto_auxiliary1(int, int, struct VECTOR*);
-extern short track_pieces_counter;
+extern short g_trackpiecescounter;
 extern struct PLANE far plan_memres[];
-extern short word_35516;
-extern void init_unknown(void);
+extern void initialize_unknown(void);
 extern unsigned const char* g_ascii_props;
-extern struct SHAPE3D game3dshapes[];
-extern unsigned select_cliprect_rotate(int angX, int angY, int angZ, struct RECTANGLE* cliprect, int unk);
-extern void transformed_shape_op(struct TRANSFORMSHAPE3D* shape);
-extern void sub_29772(void);
+extern struct SHAPE3D g_shapes3d[];
+extern unsigned select_rot(int angX, int angY, int angZ, struct RECTANGLE* cliprect, int unk);
+extern void trans_op(struct TRANSFORMSHAPE3D* shape);
+extern void reset_idle_counters(void);
 extern void set_projection(int, int, int, int);
-extern struct SPRITE far* wndsprite;
-extern struct RECTANGLE cliprect_unk;
-extern int polyinfonumpolys;
+extern struct SPRITE far* g_wndspr;
+extern struct RECTANGLE clipunk;
+extern int polygonnumber;
 extern unsigned char far* polyinfoptrs[];
 extern unsigned int poly_linked_list_40ED6[];
 extern void preRender_default(int color, int vertlinecount, int* vertlines);
-extern unsigned char oppnentSped[];
-extern struct TRACKOBJECT trkObjectList[];
+extern unsigned char opponent_spd_tbl[];
+extern struct TRACKOBJECT trklst[];
 extern unsigned int update_rpm_from_speed(unsigned int, unsigned int, unsigned int, int, unsigned int);
 extern int abs(int);
-extern unsigned short word_2BDF8[5];
-extern char unk_44F4C[];
-extern char byte_459D8;
-extern char byte_42D26;
-extern char byte_42D2A;
-extern char byte_3BE02;
-extern short word_449E4;
-extern short word_44D1E;
-extern short word_44D20;
+extern unsigned short speed_recovery_divisors[5];
+extern char audio_frmarr[];
+extern char sndpendingstate;
+extern char g_plyr_snd_state;
+extern char audiooppflag;
+extern char replay_state_cache;
+extern short sndposrecord;
+extern short g_audio_frms_ix;
+extern short viewyshift;
 extern void audio_op_unk(short);
 extern void audio_op_unk5(short);
 extern void audio_op_unk6(short);
 extern void audio_op_unk7(short);
 extern void audio_function2(short);
-extern void sub_38178(void);
-extern int word_3BE04[];
-extern int word_3BE0C[];
+extern void reset_audio_driver_state(void);
+extern int collision_point_x_signs[];
+extern int collision_point_y_signs[];
 extern struct RECTANGLE select_rect_rc;
-extern struct MATRIX mat_z_rot;
-extern struct MATRIX mat_x_rot;
-extern struct MATRIX mat_y_rot;
-extern struct MATRIX mat_rot_temp;
+extern struct MATRIX g_rot_mat_z;
+extern struct MATRIX matrix_x_rotation;
+extern struct MATRIX g_matrix_yrot;
+extern struct MATRIX matrotation_tmp;
 extern unsigned mat_y_rot_angle;
 extern long sin80, cos80;
 extern unsigned char atantable[];
 extern int projectiondata5, projectiondata8, projectiondata9, projectiondata10;
-extern struct MATRIX mat_unk2;
-extern int word_3BE16;
-extern struct MATRIX mat_planetmp;
+static struct MATRIX fallback_rotation_cache;
+extern int last_track_rotation;
+static struct MATRIX plane_rotation_cache;
 extern int f36f40_whlData;
 void opponent_op(void);
 void mat_mul_vector2(struct VECTOR *invec, struct MATRIX far *mat, struct VECTOR *outvec);
 void update_player_state(struct CARSTATE* arg_pState, struct SIMD* arg_pSimd, struct CARSTATE* arg_oState, struct SIMD* arg_oSimd, char arg_MplayerFlag);
 void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
-    char transmission, long posX, long posY, long posZ, short track_angle);
-void init_game_state(short arg);
+    char transmission, long posX, long posY, long posZ, short trkang);
+void initialize_game_state(short arg);
 void restore_gamestate(int frame);
 void update_gamestate();
 void player_op(char arg_carInputByte);
@@ -656,8 +653,8 @@ int carState_rc_op(struct CARSTATE *car, int value, int wheel);
 void upd_statef20_from_steer_input(char input);
 void audio_carstate(void);
 void audio_unk3(char flags, short audioId);
-void sub_18D06(struct AUDIO_CAR_FRAME *record, short value);
-char sub_18D60(int trackIndex, struct TRACKRESULT *result, char side,
+void apply_audio_frame(struct AUDIO_CAR_FRAME *record, short value);
+char track_edge_points(int trackIndex, struct TRACKRESULT *result, char side,
               char *opponentSpeed);
 char car_car_coll_detect_maybe(struct POINT2D *pCollPoints,
                               struct VECTOR *pWorldCrds,
@@ -667,11 +664,35 @@ void init_plantrak(void);
 void do_opponent_op(void);
 
 void update_crash_state(int arg_someFlag, int arg_MplayerFlag);
-void plane_rotate_op(void);
-int plane_origin_op(int arg_planindex, int x, int y, int z);
+void plnrotop(void);
+int plnoriginop(int arg_planindex, int x, int y, int z);
 int vec_normalInnerProduct(int x, int y, int z, struct VECTOR far *normal);
 void state_op_unk(int mode, short angle, short speed);
-void sub_19BA0(void);
+void update_crash_debris(void);
+
+int collision_response_offsets[4] = { 10, 50, 10, 20 };
+struct POINT2D collision_point_set_a[2] = { { 5, 40 }, { 5, 10 } };
+struct POINT2D collision_point_set_b[2] = { { 6, 121 }, { 6, 9 } };
+struct POINT2D collision_point_set_c[2] = { { 1, 10 }, { 1, 10 } };
+int collision_rotation_offsets[4] = { 21, 21, 15, 15 };
+char steerWhlRespTable_20fps[64] = {
+    0, 8, -8, 0, 0, 7, -7, 0, 0, 6, -6, 0, 0, 5, -5, 0,
+    0, 4, -4, 0, 0, 4, -4, 0, 0, 3, -3, 0, 0, 3, -3, 0,
+    0, 2, -2, 0, 0, 2, -2, 0, 0, 2, -2, 0, 0, 1, -1, 0,
+    0, 1, -1, 0, 0, 1, -1, 0, 0, 1, -1, 0, 0, 1, -1, 0
+};
+char steerWhlRespTable_10fps[62] = {
+    0, 16, -16, 0, 0, 14, -14, 0, 0, 12, -12, 0, 0, 10, -10, 0,
+    0, 8, -8, 0, 0, 8, -8, 0, 0, 6, -6, 0, 0, 6, -6, 0,
+    0, 4, -4, 0, 0, 4, -4, 0, 0, 4, -4, 0, 0, 2, -2, 0,
+    0, 2, -2, 0, 0, 1, -1, 0, 0, 1, -1, 0, 0, 1
+};
+unsigned short speed_recovery_divisors[5] = { 255, 256, 192, 128, 64 };
+char replay_state_cache = -1;
+int collision_point_x_signs[4] = { 1, 0, 0, 1 };
+int collision_point_y_signs[4] = { 0, 0, 1, 1 };
+int f36f40_whlData = 9999;
+int last_track_rotation = 9999;
 
 void opponent_op(void)
 {
@@ -696,90 +717,90 @@ void opponent_op(void)
     int z1;
     int z2;
 
-    if (data_349D0 == 20) {
+    if (rate_frame == 20) {
         max = 8;
         brake = 1;
     } else {
         max = 16;
         brake = 2;
     }
-    if (state.opponentstate.car_36MwhlAngle != 0 || state.game_inputmode == 2)
+    if (core.opponentstate.car_36MwhlAngle != 0 || core.game_inputmode == 2)
         skip = 1;
     else
         skip = 0;
-    x1 = state.opponentstate.car_posWorld1.lx >> 6;
-    y1 = state.opponentstate.car_posWorld1.ly >> 6;
-    z1 = state.opponentstate.car_posWorld1.lz >> 6;
-    x2 = state.playerstate.car_posWorld1.lx >> 6;
-    y2 = state.playerstate.car_posWorld1.ly >> 6;
-    z2 = state.playerstate.car_posWorld1.lz >> 6;
-    state.opponentstate.field_CF = 0;
-    state.field_45E = 0;
-    tmat = mat_rot_zxy(state.opponentstate.car_rotate.z, state.opponentstate.car_rotate.y,
-                           state.opponentstate.car_rotate.x, 1);
-    state.opponentstate.field_CF = 1;
-    if (state.opponentstate.car_crashBmpFlag != 0) {
-        if (state.opponentstate.car_speed2 == 0)
-            state.opponentstate.field_CF = 0;
+    x1 = core.opponentstate.car_posWorld1.lx >> 6;
+    y1 = core.opponentstate.car_posWorld1.ly >> 6;
+    z1 = core.opponentstate.car_posWorld1.lz >> 6;
+    x2 = core.playerstate.car_posWorld1.lx >> 6;
+    y2 = core.playerstate.car_posWorld1.ly >> 6;
+    z2 = core.playerstate.car_posWorld1.lz >> 6;
+    core.opponentstate.field_CF = 0;
+    core.field_45E = 0;
+    tmat = matrotzxy(core.opponentstate.car_rotate.z, core.opponentstate.car_rotate.y,
+                           core.opponentstate.car_rotate.x, 1);
+    core.opponentstate.field_CF = 1;
+    if (core.opponentstate.car_crashBmpFlag != 0) {
+        if (core.opponentstate.car_speed2 == 0)
+            core.opponentstate.field_CF = 0;
     } else {
-        waypoint = state.opponentstate.car_vec_unk3;
+        waypoint = core.opponentstate.car_vec_unk3;
         if (waypoint.y != -1) {
             delta.x = waypoint.x - x1;
             delta.y = waypoint.y - y1;
             delta.z = waypoint.z - z1;
             temp = polarRadius3D(&delta);
         } else {
-            temp = polarRadius2D(waypoint.x - x1, waypoint.z - z1);
+            temp = polradius2d(waypoint.x - x1, waypoint.z - z1);
         }
         if (temp < 200) {
 next_waypoint:
-            if (sub_18D60(((short far *)trackdata3)[state.opponentstate.car_trackdata3_index],
-                          &state.opponentstate.car_vec_unk3, state.opponentstate.field_CE++,
-                          &state.field_3F9) != 0) {
-                state.opponentstate.car_trackdata3_index++;
-                if (((short far *)trackdata3)[state.opponentstate.car_trackdata3_index] == 0) {
-                    state.opponentstate.field_CD++;
-                    state.opponentstate.car_trackdata3_index = 0;
+            if (track_edge_points(((short far *)td3)[core.opponentstate.car_trackdata3_index],
+                          &core.opponentstate.car_vec_unk3, core.opponentstate.field_CE++,
+                          &core.field_3F9) != 0) {
+                core.opponentstate.car_trackdata3_index++;
+                if (((short far *)td3)[core.opponentstate.car_trackdata3_index] == 0) {
+                    core.opponentstate.field_CD++;
+                    core.opponentstate.car_trackdata3_index = 0;
                 }
-                state.opponentstate.field_CE = 0;
+                core.opponentstate.field_CE = 0;
             }
         }
-        if (state.game_inputmode == 2) {
+        if (core.game_inputmode == 2) {
 no_player:
-            goal = state.opponentstate.car_vec_unk3;
+            goal = core.opponentstate.car_vec_unk3;
         } else {
             diff.x = x2 - x1;
             diff.y = y2 - y1;
             diff.z = z2 - z1;
-            mat_mul_vector(&diff, tmat, &pv);
+            mat_vec(&diff, tmat, &pv);
             if (pv.y > 90 || (pv.x < 0 ? -pv.x : pv.x) > 180 ||
                 pv.z > 600 || pv.z < -180)
                 goto no_player;
-            diff.x = x2 - state.opponentstate.car_vec_unk3.x;
-            if (state.opponentstate.car_vec_unk3.y == -1)
+            diff.x = x2 - core.opponentstate.car_vec_unk3.x;
+            if (core.opponentstate.car_vec_unk3.y == -1)
                 diff.y = 0;
             else
-                diff.y = y2 - state.opponentstate.car_vec_unk3.y;
-            diff.z = z2 - state.opponentstate.car_vec_unk3.z;
-            mat_mul_vector(&diff, tmat, &rel);
+                diff.y = y2 - core.opponentstate.car_vec_unk3.y;
+            diff.z = z2 - core.opponentstate.car_vec_unk3.z;
+            mat_vec(&diff, tmat, &rel);
             if (rel.x < 0) {
-                goal.x = ((long)state.opponentstate.car_vec_unk3.x + state.opponentstate.car_vec_unk5.x) >> 1;
-                if (state.opponentstate.car_vec_unk3.y == -1)
+                goal.x = ((long)core.opponentstate.car_vec_unk3.x + core.opponentstate.car_vec_unk5.x) >> 1;
+                if (core.opponentstate.car_vec_unk3.y == -1)
                     goal.y = -1;
                 else
-                    goal.y = ((long)state.opponentstate.car_vec_unk3.y + state.opponentstate.car_vec_unk5.y) >> 1;
-                goal.z = ((long)state.opponentstate.car_vec_unk3.z + state.opponentstate.car_vec_unk5.z) >> 1;
-                if (pv.z > -78 && state.playerstate.car_crashBmpFlag == 0)
-                    state.field_45E = 2;
+                    goal.y = ((long)core.opponentstate.car_vec_unk3.y + core.opponentstate.car_vec_unk5.y) >> 1;
+                goal.z = ((long)core.opponentstate.car_vec_unk3.z + core.opponentstate.car_vec_unk5.z) >> 1;
+                if (pv.z > -78 && core.playerstate.car_crashBmpFlag == 0)
+                    core.field_45E = 2;
             } else {
-                goal.x = ((long)state.opponentstate.car_vec_unk3.x + state.opponentstate.car_vec_unk4.x) >> 1;
-                if (state.opponentstate.car_vec_unk3.y == -1)
+                goal.x = ((long)core.opponentstate.car_vec_unk3.x + core.opponentstate.car_vec_unk4.x) >> 1;
+                if (core.opponentstate.car_vec_unk3.y == -1)
                     goal.y = -1;
                 else
-                    goal.y = ((long)state.opponentstate.car_vec_unk3.y + state.opponentstate.car_vec_unk4.y) >> 1;
-                goal.z = ((long)state.opponentstate.car_vec_unk3.z + state.opponentstate.car_vec_unk4.z) >> 1;
-                if (pv.z > -78 && state.playerstate.car_crashBmpFlag == 0)
-                    state.field_45E = 1;
+                    goal.y = ((long)core.opponentstate.car_vec_unk3.y + core.opponentstate.car_vec_unk4.y) >> 1;
+                goal.z = ((long)core.opponentstate.car_vec_unk3.z + core.opponentstate.car_vec_unk4.z) >> 1;
+                if (pv.z > -78 && core.playerstate.car_crashBmpFlag == 0)
+                    core.field_45E = 1;
             }
             goto steer;
         }
@@ -791,19 +812,19 @@ steer:
         else
             diff.y -= y1;
         diff.z -= z1;
-        mat_mul_vector(&diff, tmat, &waypoint);
-        steerAngle = polarAngle(waypoint.x, waypoint.z);
-        if (state.opponentstate.car_slidingFlag == 0 &&
+        mat_vec(&diff, tmat, &waypoint);
+        steerAngle = polang(waypoint.x, waypoint.z);
+        if (core.opponentstate.car_slidingFlag == 0 &&
             (steerAngle < 0 ? -steerAngle : steerAngle) > 0x100) {
-            if (sub_18D60(((short far *)trackdata3)[state.opponentstate.car_trackdata3_index],
-                          &state.opponentstate.car_vec_unk3, state.opponentstate.field_CE++,
-                          &state.field_3F9) != 0) {
-                state.opponentstate.car_trackdata3_index++;
-                if (((short far *)trackdata3)[state.opponentstate.car_trackdata3_index] == 0) {
-                    state.opponentstate.field_CD++;
-                    state.opponentstate.car_trackdata3_index = 0;
+            if (track_edge_points(((short far *)td3)[core.opponentstate.car_trackdata3_index],
+                          &core.opponentstate.car_vec_unk3, core.opponentstate.field_CE++,
+                          &core.field_3F9) != 0) {
+                core.opponentstate.car_trackdata3_index++;
+                if (((short far *)td3)[core.opponentstate.car_trackdata3_index] == 0) {
+                    core.opponentstate.field_CD++;
+                    core.opponentstate.car_trackdata3_index = 0;
                 }
-                state.opponentstate.field_CE = 0;
+                core.opponentstate.field_CE = 0;
             }
         }
         if (steerAngle > 65) {
@@ -819,66 +840,66 @@ steer:
             }
             steerAngle = -65;
         }
-        if (state.opponentstate.car_sumSurfFrontWheels == 0)
+        if (core.opponentstate.car_sumSurfFrontWheels == 0)
             steerAngle = 0;
-        temp = steerAngle - state.opponentstate.car_steeringAngle;
+        temp = steerAngle - core.opponentstate.car_steeringAngle;
         if ((temp < 0 ? -temp : temp) > max) {
-            if (steerAngle < state.opponentstate.car_steeringAngle)
-                state.opponentstate.car_steeringAngle -= max;
+            if (steerAngle < core.opponentstate.car_steeringAngle)
+                core.opponentstate.car_steeringAngle -= max;
             else
-                state.opponentstate.car_steeringAngle += max;
+                core.opponentstate.car_steeringAngle += max;
         } else {
-            state.opponentstate.car_steeringAngle = steerAngle;
+            core.opponentstate.car_steeringAngle = steerAngle;
         }
     }
     mode = 0;
-    if (state.opponentstate.car_sumSurfRearWheels != 0) {
-        if (state.opponentstate.car_crashBmpFlag != 0) {
+    if (core.opponentstate.car_sumSurfRearWheels != 0) {
+        if (core.opponentstate.car_crashBmpFlag != 0) {
             mode = 2;
-        } else if (state.opponentstate.car_36MwhlAngle != 0) {
-            if ((brake << 9) > state.opponentstate.car_speed2) {
-                state.opponentstate.car_speed2 = 0;
-                state.opponentstate.car_36MwhlAngle = 0;
+        } else if (core.opponentstate.car_36MwhlAngle != 0) {
+            if ((brake << 9) > core.opponentstate.car_speed2) {
+                core.opponentstate.car_speed2 = 0;
+                core.opponentstate.car_36MwhlAngle = 0;
             } else {
-                state.opponentstate.car_speed2 -= brake << 9;
+                core.opponentstate.car_speed2 -= brake << 9;
             }
-        } else if (state.opponentstate.car_demandedGrip > state.opponentstate.car_surfacegrip_sum) {
+        } else if (core.opponentstate.car_demandedGrip > core.opponentstate.car_surfacegrip_sum) {
             mode = 2;
         } else {
-            if (state.game_inputmode == 2)
+            if (core.game_inputmode == 2)
                 spdLimit = 0x4000;
             else
-                spdLimit = state.field_3F9 << 8;
-            if (spdLimit - 0x100 > state.opponentstate.car_speed)
+                spdLimit = core.field_3F9 << 8;
+            if (spdLimit - 0x100 > core.opponentstate.car_speed)
                 mode = 1;
-            else if (spdLimit + 0x300 < state.opponentstate.car_speed)
+            else if (spdLimit + 0x300 < core.opponentstate.car_speed)
                 mode = 2;
         }
     }
-    update_car_speed(mode, 1, &state.opponentstate, &simd_opponent);
-    update_grip(&state.opponentstate, &simd_opponent, 0);
-    update_player_state(&state.opponentstate, &simd_opponent, &state.playerstate, &simd_player, 1);
-    if (state.opponentstate.car_crashBmpFlag == 0) {
-        diff = state.opponentstate.car_vec_unk3;
-        diff.x -= state.opponentstate.car_posWorld1.lx >> 6;
-        diff.y -= state.opponentstate.car_posWorld1.ly >> 6;
-        diff.z -= state.opponentstate.car_posWorld1.lz >> 6;
-        tmat = mat_rot_zxy(state.opponentstate.car_rotate.z, state.opponentstate.car_rotate.y,
-                               state.opponentstate.car_rotate.x, 1);
-        mat_mul_vector(&diff, tmat, &waypoint);
-        state.opponentstate.field_48 = polarAngle(-waypoint.x, waypoint.z) & 0x3FF;
+    update_car_speed(mode, 1, &core.opponentstate, &ophys_7);
+    update_grip(&core.opponentstate, &ophys_7, 0);
+    update_player_state(&core.opponentstate, &ophys_7, &core.playerstate, &simdp7, 1);
+    if (core.opponentstate.car_crashBmpFlag == 0) {
+        diff = core.opponentstate.car_vec_unk3;
+        diff.x -= core.opponentstate.car_posWorld1.lx >> 6;
+        diff.y -= core.opponentstate.car_posWorld1.ly >> 6;
+        diff.z -= core.opponentstate.car_posWorld1.lz >> 6;
+        tmat = matrotzxy(core.opponentstate.car_rotate.z, core.opponentstate.car_rotate.y,
+                               core.opponentstate.car_rotate.x, 1);
+        mat_vec(&diff, tmat, &waypoint);
+        core.opponentstate.field_48 = polang(-waypoint.x, waypoint.z) & 0x3FF;
     }
-    if (state.opponentstate.field_CD != 0) {
-        temp = multiply_and_scale(cos_fast(track_angle),
-            trackcenterpos[startrow2] - (int)(state.opponentstate.car_posWorld1.lz >> 6));
-        temp += multiply_and_scale(sin_fast(track_angle),
-            trackcenterpos2[startcol2] - (int)(state.opponentstate.car_posWorld1.lx >> 6));
+    if (core.opponentstate.field_CD != 0) {
+        temp = mulscl(cosfast(st_hdg),
+            row_ctr_zs[tagtrk] - (int)(core.opponentstate.car_posWorld1.lz >> 6));
+        temp += mulscl(sinfast(st_hdg),
+            trackctrpos2[idxtrk] - (int)(core.opponentstate.car_posWorld1.lx >> 6));
         if (temp < 0)
             update_crash_state(3, 1);
     }
 }
 
-void mat_mul_vector2(struct VECTOR *invec, struct MATRIX far *mat, struct VECTOR *outvec) { struct MATRIX tmpmat; tmpmat=*mat; mat_mul_vector(invec,&tmpmat,outvec); }
+void mat_mul_vector2(struct VECTOR *invec, struct MATRIX far *mat, struct VECTOR *outvec) { struct MATRIX tmpmat; tmpmat=*mat; mat_vec(invec,&tmpmat,outvec); }
 
 void update_player_state(struct CARSTATE* arg_pState, struct SIMD* arg_pSimd, struct CARSTATE* arg_oState, struct SIMD* arg_oSimd, char arg_MplayerFlag) {
 	int planIdx;
@@ -921,57 +942,57 @@ void update_player_state(struct CARSTATE* arg_pState, struct SIMD* arg_pSimd, st
 	struct VECTOR posDiffs[4];
 	struct VECTOR wheelCrd;
 
-	pState_lvec1_x = arg_pState->car_posWorld1.lx;
-	arg_pState->car_posWorld2.lx = pState_lvec1_x;
-	pState_lvec1_y = arg_pState->car_posWorld1.ly;
-	arg_pState->car_posWorld2.ly = pState_lvec1_y;
-	pState_lvec1_z = arg_pState->car_posWorld1.lz;
-	arg_pState->car_posWorld2.lz = pState_lvec1_z;
-	pState_minusRotate_z_2 = pState_minusRotate_z_1 = arg_pState->car_rotate.z;
-	pState_minusRotate_x_2 = pState_minusRotate_x_1 = arg_pState->car_rotate.y;
-	pState_minusRotate_y_2 = pState_minusRotate_y_1 = arg_pState->car_rotate.x;
+	centerpos = arg_pState->car_posWorld1.lx;
+	arg_pState->car_posWorld2.lx = centerpos;
+	veh_position = arg_pState->car_posWorld1.ly;
+	arg_pState->car_posWorld2.ly = veh_position;
+	veh_z = arg_pState->car_posWorld1.lz;
+	arg_pState->car_posWorld2.lz = veh_z;
+	pln_rotate_z = anglerotate_car = arg_pState->car_rotate.z;
+	car_roty_pln = yrotrotveh = arg_pState->car_rotate.y;
+	car_rotate_xc = rotxvehicle = arg_pState->car_rotate.x;
 	if (arg_pState->car_sumSurfAllWheels != 0)
 		frontSteer = arg_pState->car_40MfrontWhlAngle >> 2;
 	else
 		frontSteer = 0;
-	if (data_349D0 == 10)
+	if (rate_frame == 10)
 		spd = (long)arg_pState->car_speed2 * 0x580 / 0x1E00U;
 	else
 		spd = (long)arg_pState->car_speed2 * 0x580 / 0x3C00U;
-	mat_unk = *mat_rot_zxy(-pState_minusRotate_z_1, -pState_minusRotate_x_1, -pState_minusRotate_y_1, 0);
-	if (pState_minusRotate_x_1 != 0 || pState_minusRotate_z_1 != 0) {
+	matrix_transform_view = *matrotzxy(-anglerotate_car, -yrotrotveh, -rotxvehicle, 0);
+	if (yrotrotveh != 0 || anglerotate_car != 0) {
 		wheelCrd.x = 0;
 		wheelCrd.y = 0;
 		wheelCrd.z = 0x82;
-		mat_mul_vector(&wheelCrd, &mat_unk, &res);
+		mat_vec(&wheelCrd, &matrix_transform_view, &res);
 		arg_pState->car_pseudoGravity = -res.y;
 	} else {
 		arg_pState->car_pseudoGravity = 0;
 	}
 	if (arg_pState->car_angle_z & 0x3FF) {
 		tiltFlag = 1;
-		rotMatrix = *mat_rot_zxy(0, 0, -arg_pState->car_angle_z, 0);
+		rotMatrix = *matrotzxy(0, 0, -arg_pState->car_angle_z, 0);
 	} else {
 		tiltFlag = 0;
 	}
 	wheelCrd.x = 0;
 	wheelCrd.y = 30000;
 	wheelCrd.z = 0;
-	mat_mul_vector(&wheelCrd, &mat_unk, &res);
+	mat_vec(&wheelCrd, &matrix_transform_view, &res);
 	if (arg_pState->car_sumSurfAllWheels != 0 && res.y < 0) {
 		if (arg_pState->car_speed2 > 0x1E00) {
 			liftOfs = 0xC0;
 			wheelCrd.y = -0xC0;
-			mat_mul_vector(&wheelCrd, &mat_unk, &hopVec);
+			mat_vec(&wheelCrd, &matrix_transform_view, &hopVec);
 		} else {
 			liftOfs = -0xC0;
 		}
 	} else {
 		liftOfs = 0;
 	}
-	vec_unk2.x = 0;
-	vec_unk2.y = 0;
-	planindex_copy = -1;
+	tvec2.x = 0;
+	tvec2.y = 0;
+	g_planidx2 = -1;
 	curWhl = whlPos;
 	prev = oldWhls;
 	for (w = 0; w < 4; ++curWhl, ++prev, ++w) {
@@ -980,27 +1001,27 @@ void update_player_state(struct CARSTATE* arg_pState, struct SIMD* arg_pSimd, st
 		if (liftOfs < 0)
 			wheelCrd.y -= liftOfs;
 		if (tiltFlag != 0) {
-			mat_mul_vector(&wheelCrd, &rotMatrix, &res);
+			mat_vec(&wheelCrd, &rotMatrix, &res);
 			wheelCrd = res;
 		}
-		mat_mul_vector(&wheelCrd, &mat_unk, &res);
-		curWhl->lx = res.x + pState_lvec1_x;
-		curWhl->ly = res.y + pState_lvec1_y;
-		curWhl->lz = res.z + pState_lvec1_z;
+		mat_vec(&wheelCrd, &matrix_transform_view, &res);
+		curWhl->lx = res.x + centerpos;
+		curWhl->ly = res.y + veh_position;
+		curWhl->lz = res.z + veh_z;
 		prev->lx = curWhl->lx;
 		prev->ly = curWhl->ly;
 		prev->lz = curWhl->lz;
 		if (spd != 0) {
-			vec_unk2.z = spd;
+			tvec2.z = spd;
 			if (frontSteer != 0 && w < 2)
-				pState_f36Mminf40sar2 = arg_pState->car_36MwhlAngle - frontSteer;
+				frwhl_angadjusted = arg_pState->car_36MwhlAngle - frontSteer;
 			else
-				pState_f36Mminf40sar2 = arg_pState->car_36MwhlAngle;
-			wheelAngle[w] = pState_f36Mminf40sar2;
-			plane_rotate_op();
-			curWhl->lx += vec_planerotopresult.x;
-			curWhl->ly += vec_planerotopresult.y;
-			curWhl->lz += vec_planerotopresult.z;
+				frwhl_angadjusted = arg_pState->car_36MwhlAngle;
+			wheelAngle[w] = frwhl_angadjusted;
+			plnrotop();
+			curWhl->lx += pln_rot_output.x;
+			curWhl->ly += pln_rot_output.y;
+			curWhl->lz += pln_rot_output.z;
 		}
 	}
 
@@ -1017,32 +1038,32 @@ retry:
 		wheelCrd.x = curWhl->lx >> 6;
 		wheelCrd.y = curWhl->ly >> 6;
 		wheelCrd.z = curWhl->lz >> 6;
-		if (state.game_inputmode == 2) {
-			wallindex = -1;
-			current_surf_type = 1;
-			planindex = 0;
-			current_planptr = planptr;
+		if (core.game_inputmode == 2) {
+			road_num = -1;
+			g_cursurfacekindvalue = 1;
+			pl_i = 0;
+			plncurrptr = g_planlist;
 		} else {
-			build_track_object(&wheelCrd, &arg_pState->car_whlWorldCrds1[w]);
+			build_obj(&wheelCrd, &arg_pState->car_whlWorldCrds1[w]);
 		}
-		arg_pState->car_surfaceWhl[w] = current_surf_type;
+		arg_pState->car_surfaceWhl[w] = g_cursurfacekindvalue;
 		wheelCrd.x = curWhl->lx >> 6;
 		wheelCrd.y = curWhl->ly >> 6;
 		wheelCrd.z = curWhl->lz >> 6;
-		if (state.game_inputmode == 2)
-			nextPosAndNormalIP = wheelCrd.y;
+		if (core.game_inputmode == 2)
+			nextpos_normalip = wheelCrd.y;
 		else
-			nextPosAndNormalIP = plane_origin_op(planindex, wheelCrd.x, wheelCrd.y, wheelCrd.z);
-		if (wallindex != -1 && nextPosAndNormalIP > elRdWallRelated && nextPosAndNormalIP < wallHeight) {
-			oldVec.x = arg_pState->car_whlWorldCrds1[w].x - wallStartX;
+			nextpos_normalip = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+		if (road_num != -1 && nextpos_normalip > element_min_wall && nextpos_normalip < wall_wallelement) {
+			oldVec.x = arg_pState->car_whlWorldCrds1[w].x - wallanchor_x;
 			oldVec.y = 0;
-			oldVec.z = arg_pState->car_whlWorldCrds1[w].z - wallStartZ;
-			vec.x = (int)(curWhl->lx >> 6) - wallStartX;
+			oldVec.z = arg_pState->car_whlWorldCrds1[w].z - wallanchor_z;
+			vec.x = (int)(curWhl->lx >> 6) - wallanchor_x;
 			vec.y = 0;
-			vec.z = (int)(curWhl->lz >> 6) - wallStartZ;
-			mat_rot_y(&localPlane, -wallOrientation - 0x100);
-			mat_mul_vector(&oldVec, &localPlane, &p0);
-			mat_mul_vector(&vec, &localPlane, &p1);
+			vec.z = (int)(curWhl->lz >> 6) - wallanchor_z;
+			matroty(&localPlane, -wall_facingang - 0x100);
+			mat_vec(&oldVec, &localPlane, &p0);
+			mat_vec(&vec, &localPlane, &p1);
 			if ((p1.z <= 0 || p0.z <= 0) && (p1.z >= 0 || p0.z >= 0)) {
 				if (p1.z > p0.z) {
 					swap = 1;
@@ -1066,21 +1087,21 @@ retry:
 					distBefore = polarRadius3D(&tmpCrds);
 					remDist = spd - distBefore;
 				}
-				angle = (-pState_minusRotate_y_1 - wallOrientation) & 0x3FF;
+				angle = (-rotxvehicle - wall_facingang) & 0x3FF;
 				res.z = distBefore;
 				res.y = 0;
 				if (angle < 0x100 || angle > 0x300) {
-					angle = wallOrientation;
+					angle = wall_facingang;
 					res.x = 0x300;
 				} else {
-					angle = (wallOrientation + 0x200) & 0x3FF;
+					angle = (wall_facingang + 0x200) & 0x3FF;
 					res.x = -0x300;
 				}
 				if (swap != 0)
 					res.x = -res.x;
-				rotMat = mat_rot_zxy(-pState_minusRotate_z_1, -pState_minusRotate_x_1, angle, 0);
-				mat_mul_vector(&res, rotMat, &p1);
-				i = (-pState_minusRotate_y_1 - angle) & 0x3FF;
+				rotMat = matrotzxy(-anglerotate_car, -yrotrotveh, angle, 0);
+				mat_vec(&res, rotMat, &p1);
+				i = (-rotxvehicle - angle) & 0x3FF;
 				found = 0;
 				if (i > 0x100) {
 					i = 0x400 - i;
@@ -1112,29 +1133,29 @@ retry:
 			}
 		}
 check_height:
-		if (nextPosAndNormalIP > 0) {
-			if (liftOfs > 0 && nextPosAndNormalIP < 24) {
+		if (nextpos_normalip > 0) {
+			if (liftOfs > 0 && nextpos_normalip < 24) {
 				curWhl->lx += hopVec.x;
 				curWhl->ly += hopVec.y;
 				curWhl->lz += hopVec.z;
 			} else {
-				arg_pState->car_rc1[w] += word_3BD72[w];
+				arg_pState->car_rc1[w] += collision_rotation_offsets[w];
 				curWhl->ly -= arg_pState->car_rc1[w];
-				if (data_349D0 == 10) {
-					arg_pState->car_rc1[w] += word_3BD72[w];
+				if (rate_frame == 10) {
+					arg_pState->car_rc1[w] += collision_rotation_offsets[w];
 					curWhl->ly -= arg_pState->car_rc1[w];
 				}
 				wheelCrd.y = curWhl->ly >> 6;
-				if (state.game_inputmode == 2)
-					nextPosAndNormalIP = wheelCrd.y;
+				if (core.game_inputmode == 2)
+					nextpos_normalip = wheelCrd.y;
 				else
-					nextPosAndNormalIP = plane_origin_op(planindex, wheelCrd.x, wheelCrd.y, wheelCrd.z);
-				if (nextPosAndNormalIP > 12)
+					nextpos_normalip = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+				if (nextpos_normalip > 12)
 					arg_pState->car_surfaceWhl[w] = 0;
 			}
 		}
-		whlHgts[w] = nextPosAndNormalIP;
-		if (nextPosAndNormalIP == 0) {
+		whlHgts[w] = nextpos_normalip;
+		if (nextpos_normalip == 0) {
 			if (arg_pState->car_rc1[w] > 250)
 				arg_pState->field_CF |= 0x20;
 			if (arg_pState->car_rc1[w] > 23275)
@@ -1142,12 +1163,12 @@ check_height:
 			arg_pState->car_rc1[w] = 0;
 			goto next_wheel;
 		}
-		if (nextPosAndNormalIP >= 0)
+		if (nextpos_normalip >= 0)
 			goto next_wheel;
-		plane = &planptr[planindex];
-		base.x = plane->plane_origin.x + elem_xCenter;
-		base.y = plane->plane_origin.y + terrainHeight;
-		base.z = plane->plane_origin.z + elem_zCenter;
+		plane = &g_planlist[pl_i];
+		base.x = plane->plane_origin.x + x_course_part;
+		base.y = plane->plane_origin.y + hgthgt;
+		base.z = plane->plane_origin.z + road_elem_ctrz;
 		oldVec.x = (int)(prev->lx >> 6) - base.x;
 		oldVec.y = (int)(prev->ly >> 6) - base.y;
 		oldVec.z = (int)(prev->lz >> 6) - base.z;
@@ -1156,46 +1177,46 @@ check_height:
 		vec.z = (int)(curWhl->lz >> 6) - base.z;
 		localPlane = plane->plane_rotation;
 		mat_invert(&localPlane, &rotMatrix);
-		mat_mul_vector(&oldVec, &rotMatrix, &p0);
-		mat_mul_vector(&vec, &rotMatrix, &p1);
+		mat_vec(&oldVec, &rotMatrix, &p0);
+		mat_vec(&vec, &rotMatrix, &p1);
 		swap = 0;
-		if (byte_4392C == 0 && p0.y < -12 && p1.y < -12) {
+		if (test_pln == 0 && p0.y < -12 && p1.y < -12) {
 			if (p1.y > -24) {
 				update_crash_state(5, arg_MplayerFlag);
 				swap = 1;
 			} else {
-				planindex = 0;
-				current_planptr = planptr;
-				byte_4392C = 1;
+				pl_i = 0;
+				plncurrptr = g_planlist;
+				test_pln = 1;
 				wheelCrd.x = curWhl->lx >> 6;
 				wheelCrd.y = curWhl->ly >> 6;
 				wheelCrd.z = curWhl->lz >> 6;
-				nextPosAndNormalIP = plane_origin_op(0, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+				nextpos_normalip = plnoriginop(0, wheelCrd.x, wheelCrd.y, wheelCrd.z);
 				goto check_height;
 			}
 		}
 		if (p1.y == 0) {
-			vec_unk2.x = 0;
-			vec_unk2.y = 0;
-			vec_unk2.z = 0x40;
-			planindex_copy = planindex;
-			pState_f36Mminf40sar2 = wheelAngle[w];
-			plane_rotate_op();
-			curWhl->lx -= vec_planerotopresult.x;
-			curWhl->ly -= vec_planerotopresult.y;
-			curWhl->lz -= vec_planerotopresult.z;
+			tvec2.x = 0;
+			tvec2.y = 0;
+			tvec2.z = 0x40;
+			g_planidx2 = pl_i;
+			frwhl_angadjusted = wheelAngle[w];
+			plnrotop();
+			curWhl->lx -= pln_rot_output.x;
+			curWhl->ly -= pln_rot_output.y;
+			curWhl->lz -= pln_rot_output.z;
 			goto rc_check;
 		}
 		if (p0.y <= 0 || p1.y >= 0) {
-			vec_unk2.x = 0;
-			vec_unk2.y = 0;
-			vec_unk2.z = spd;
-			planindex_copy = planindex;
-			pState_f36Mminf40sar2 = wheelAngle[w];
-			plane_rotate_op();
-			curWhl->lx = prev->lx + vec_planerotopresult.x;
-			curWhl->ly = prev->ly + vec_planerotopresult.y;
-			curWhl->lz = prev->lz + vec_planerotopresult.z;
+			tvec2.x = 0;
+			tvec2.y = 0;
+			tvec2.z = spd;
+			g_planidx2 = pl_i;
+			frwhl_angadjusted = wheelAngle[w];
+			plnrotop();
+			curWhl->lx = prev->lx + pln_rot_output.x;
+			curWhl->ly = prev->ly + pln_rot_output.y;
+			curWhl->lz = prev->lz + pln_rot_output.z;
 		} else {
 			angle = p0.z;
 			p0.z = -p0.y;
@@ -1213,26 +1234,26 @@ check_height:
 			p0.x = (curWhl->lx - prev->lx) * distBefore / remDist;
 			p0.y = (curWhl->ly - prev->ly) * distBefore / remDist;
 			p0.z = (curWhl->lz - prev->lz) * distBefore / remDist;
-			vec_unk2.x = 0;
-			vec_unk2.y = 0;
-			vec_unk2.z = angle;
-			planindex_copy = planindex;
-			pState_f36Mminf40sar2 = wheelAngle[w];
-			plane_rotate_op();
-			curWhl->lx = prev->lx + p0.x + vec_planerotopresult.x;
-			curWhl->ly = prev->ly + p0.y + vec_planerotopresult.y;
-			curWhl->lz = prev->lz + p0.z + vec_planerotopresult.z;
+			tvec2.x = 0;
+			tvec2.y = 0;
+			tvec2.z = angle;
+			g_planidx2 = pl_i;
+			frwhl_angadjusted = wheelAngle[w];
+			plnrotop();
+			curWhl->lx = prev->lx + p0.x + pln_rot_output.x;
+			curWhl->ly = prev->ly + p0.y + pln_rot_output.y;
+			curWhl->lz = prev->lz + p0.z + pln_rot_output.z;
 		}
 		wheelCrd.x = curWhl->lx >> 6;
 		wheelCrd.y = curWhl->ly >> 6;
 		wheelCrd.z = curWhl->lz >> 6;
-		if ((nextPosAndNormalIP = plane_origin_op(planindex, wheelCrd.x, wheelCrd.y, wheelCrd.z)) < 0) {
+		if ((nextpos_normalip = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z)) < 0) {
 			if (swap != 0)
-				nextPosAndNormalIP = -nextPosAndNormalIP + 6;
+				nextpos_normalip = -nextpos_normalip + 6;
 			wheelCrd.z = 0;
 			wheelCrd.x = 0;
-			wheelCrd.y = -nextPosAndNormalIP << 6;
-			mat_mul_vector2(&wheelCrd, &planptr[planindex].plane_rotation, &res);
+			wheelCrd.y = -nextpos_normalip << 6;
+			mat_mul_vector2(&wheelCrd, &g_planlist[pl_i].plane_rotation, &res);
 			curWhl->lx += res.x;
 			curWhl->ly += res.y;
 			curWhl->lz += res.z;
@@ -1256,11 +1277,11 @@ wheels_done:
 		arg_pState->car_whlWorldCrds1[w].y = curWhl->ly >> 6;
 		arg_pState->car_whlWorldCrds1[w].z = curWhl->lz >> 6;
 		angle = carState_rc_op(arg_pState, whlHgts[w], w);
-		if (pState_minusRotate_z_1 != 0 || pState_minusRotate_x_1 != 0) {
+		if (anglerotate_car != 0 || yrotrotveh != 0) {
 			wheelCrd.z = 0;
 			wheelCrd.x = 0;
 			wheelCrd.y = angle + 0x180;
-			mat_mul_vector(&wheelCrd, &mat_unk, &oldVec);
+			mat_vec(&wheelCrd, &matrix_transform_view, &oldVec);
 			curWhl->lx += oldVec.x;
 			curWhl->ly += oldVec.y;
 			curWhl->lz += oldVec.z;
@@ -1269,89 +1290,89 @@ wheels_done:
 		}
 	}
 
-	pState_lvec1_x = (whlPos[0].lx + whlPos[1].lx + whlPos[2].lx + whlPos[3].lx) >> 2;
-	pState_lvec1_y = (whlPos[0].ly + whlPos[1].ly + whlPos[2].ly + whlPos[3].ly) >> 2;
-	pState_lvec1_z = (whlPos[0].lz + whlPos[1].lz + whlPos[2].lz + whlPos[3].lz) >> 2;
+	centerpos = (whlPos[0].lx + whlPos[1].lx + whlPos[2].lx + whlPos[3].lx) >> 2;
+	veh_position = (whlPos[0].ly + whlPos[1].ly + whlPos[2].ly + whlPos[3].ly) >> 2;
+	veh_z = (whlPos[0].lz + whlPos[1].lz + whlPos[2].lz + whlPos[3].lz) >> 2;
 	curWhl = whlPos;
 	for (w = 0; w < 4; ++curWhl, ++w) {
-		posDiffs[w].x = curWhl->lx - pState_lvec1_x;
-		posDiffs[w].y = curWhl->ly - pState_lvec1_y;
-		posDiffs[w].z = curWhl->lz - pState_lvec1_z;
+		posDiffs[w].x = curWhl->lx - centerpos;
+		posDiffs[w].y = curWhl->ly - veh_position;
+		posDiffs[w].z = curWhl->lz - veh_z;
 	}
-	if (pState_lvec1_y < 0)
-		pState_lvec1_y = 0;
-	if (pState_lvec1_x > 0x1DF100L)
-		pState_lvec1_x = 0x1DF0FFL;
-	else if (pState_lvec1_x < 0xF00L)
-		pState_lvec1_x = 0xF00L;
-	if (pState_lvec1_z > 0x1DF100L)
-		pState_lvec1_z = 0x1DF0FFL;
-	else if (pState_lvec1_z < 0xF00L)
-		pState_lvec1_z = 0xF00L;
+	if (veh_position < 0)
+		veh_position = 0;
+	if (centerpos > 0x1DF100L)
+		centerpos = 0x1DF0FFL;
+	else if (centerpos < 0xF00L)
+		centerpos = 0xF00L;
+	if (veh_z > 0x1DF100L)
+		veh_z = 0x1DF0FFL;
+	else if (veh_z < 0xF00L)
+		veh_z = 0xF00L;
 	angle = posDiffs[3].x + posDiffs[2].x - posDiffs[0].x - posDiffs[1].x;
 	distBefore = posDiffs[3].z + posDiffs[2].z - posDiffs[0].z - posDiffs[1].z;
-	pState_minusRotate_y_1 = polarAngle(angle, -distBefore) & 0x3FF;
-	mat_rot_y(&rotMatrix, pState_minusRotate_y_1);
+	rotxvehicle = polang(angle, -distBefore) & 0x3FF;
+	matroty(&rotMatrix, rotxvehicle);
 	for (w = 0; w < 4; w++) {
 		res = posDiffs[w];
-		mat_mul_vector(&res, &rotMatrix, &posDiffs[w]);
+		mat_vec(&res, &rotMatrix, &posDiffs[w]);
 	}
 	distBefore = posDiffs[3].z + posDiffs[2].z - posDiffs[0].z - posDiffs[1].z;
 	remDist = posDiffs[3].y + posDiffs[2].y - posDiffs[0].y - posDiffs[1].y;
 	if (remDist == 0 && distBefore < 0) {
-		pState_minusRotate_x_1 = 0;
+		yrotrotveh = 0;
 	} else {
-		pState_minusRotate_x_1 = polarAngle(-distBefore, remDist) - 0x100;
-		if ((pState_minusRotate_x_1 < 0 ? -pState_minusRotate_x_1 : pState_minusRotate_x_1) < 2)
-			pState_minusRotate_x_1 = 0;
+		yrotrotveh = polang(-distBefore, remDist) - 0x100;
+		if ((yrotrotveh < 0 ? -yrotrotveh : yrotrotveh) < 2)
+			yrotrotveh = 0;
 	}
-	if (pState_minusRotate_x_1 != 0) {
-		mat_rot_x(&rotMatrix, pState_minusRotate_x_1);
+	if (yrotrotveh != 0) {
+		mat_rot_x(&rotMatrix, yrotrotveh);
 		for (w = 0; w < 4; w++) {
 			res = posDiffs[w];
-			mat_mul_vector(&res, &rotMatrix, &posDiffs[w]);
+			mat_vec(&res, &rotMatrix, &posDiffs[w]);
 		}
 	}
 	distBefore = posDiffs[1].x + posDiffs[2].x - posDiffs[0].x - posDiffs[3].x;
 	remDist = posDiffs[1].y + posDiffs[2].y - posDiffs[0].y - posDiffs[3].y;
 	if (remDist == 0 && distBefore > 0) {
-		pState_minusRotate_z_1 = 0;
+		anglerotate_car = 0;
 	} else {
-		pState_minusRotate_z_1 = polarAngle(distBefore, remDist) - 0x100;
-		if ((pState_minusRotate_z_1 < 0 ? -pState_minusRotate_z_1 : pState_minusRotate_z_1) < 2)
-			pState_minusRotate_z_1 = 0;
+		anglerotate_car = polang(distBefore, remDist) - 0x100;
+		if ((anglerotate_car < 0 ? -anglerotate_car : anglerotate_car) < 2)
+			anglerotate_car = 0;
 	}
 	arg_pState->car_sumSurfFrontWheels = arg_pState->car_surfaceWhl[0] + arg_pState->car_surfaceWhl[1];
 	arg_pState->car_sumSurfRearWheels = arg_pState->car_surfaceWhl[2] + arg_pState->car_surfaceWhl[3];
-	if (state.game_inputmode == 2)
+	if (core.game_inputmode == 2)
 		goto store_state;
-	if (is_in_replay == 0) {
+	if (inrepflg == 0) {
 		if (arg_MplayerFlag != 0)
-			audio_unk3(arg_pState->field_CF, word_4408C);
+			audio_unk3(arg_pState->field_CF, op_eng_sound_id);
 		else
-			audio_unk3(arg_pState->field_CF, word_43964);
+			audio_unk3(arg_pState->field_CF, g_player_sound_id);
 	}
-	rotMat = mat_rot_zxy(-pState_minusRotate_z_1, -pState_minusRotate_x_1, -pState_minusRotate_y_1, 0);
+	rotMat = matrotzxy(-anglerotate_car, -yrotrotveh, -rotxvehicle, 0);
 	for (w = 0; w < 4; w++) {
 		wheelCrd = arg_pSimd->wheel_coords[w];
 		wheelCrd.y = arg_pSimd->collide_points[0].py << 6;
-		mat_mul_vector(&wheelCrd, rotMat, &res);
-		wheelCrd.x = (res.x + pState_lvec1_x) >> 6;
-		wheelCrd.y = (res.y + pState_lvec1_y) >> 6;
-		wheelCrd.z = (res.z + pState_lvec1_z) >> 6;
+		mat_vec(&wheelCrd, rotMat, &res);
+		wheelCrd.x = (res.x + centerpos) >> 6;
+		wheelCrd.y = (res.y + veh_position) >> 6;
+		wheelCrd.z = (res.z + veh_z) >> 6;
 		tmpCrds = wheelCrd;
-		build_track_object(&wheelCrd, &arg_pState->car_whlWorldCrds2[w]);
-		i = plane_origin_op(planindex, wheelCrd.x, wheelCrd.y, wheelCrd.z);
-		if (planindex < 4) {
+		build_obj(&wheelCrd, &arg_pState->car_whlWorldCrds2[w]);
+		i = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+		if (pl_i < 4) {
 			if (i <= 0)
 				goto crash_wheel;
 		} else {
-			planIdx = planindex;
+			planIdx = pl_i;
 			wheelCrd = arg_pState->car_whlWorldCrds2[w];
-			build_track_object(&wheelCrd, &tmpCrds);
-			if (planIdx == planindex) {
-				found = plane_origin_op(planindex, wheelCrd.x, wheelCrd.y, wheelCrd.z);
-				if (game_replay_mode != 1 && ((i < 0 && found > 0) || (i > 0 && found < 0))) {
+			build_obj(&wheelCrd, &tmpCrds);
+			if (planIdx == pl_i) {
+				found = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+				if (gm_playmode != 1 && ((i < 0 && found > 0) || (i > 0 && found < 0))) {
 crash_wheel:
 					update_crash_state(5, arg_MplayerFlag);
 				}
@@ -1361,15 +1382,15 @@ crash_wheel:
 	}
 	groundContact = arg_pState->car_sumSurfFrontWheels + arg_pState->car_sumSurfRearWheels;
 	if (arg_MplayerFlag == 0 && groundContact == 0 && arg_pState->car_sumSurfAllWheels != 0)
-		state.game_jumpCount++;
+		core.game_jumpCount++;
 	arg_pState->car_sumSurfAllWheels = groundContact;
-	self[0].x = pState_lvec1_x >> 6;
-	self[0].y = pState_lvec1_y >> 6;
-	self[0].z = pState_lvec1_z >> 6;
-	self[1].x = pState_minusRotate_z_1;
-	self[1].y = pState_minusRotate_x_1;
-	self[1].z = pState_minusRotate_y_1;
-	if (gameconfig.game_opponenttype != 0) {
+	self[0].x = centerpos >> 6;
+	self[0].y = veh_position >> 6;
+	self[0].z = veh_z >> 6;
+	self[1].x = anglerotate_car;
+	self[1].y = yrotrotveh;
+	self[1].z = rotxvehicle;
+	if (globalgamesettings.game_opponenttype != 0) {
 		objPos[0].x = arg_oState->car_posWorld1.lx >> 6;
 		objPos[0].y = arg_oState->car_posWorld1.ly >> 6;
 		objPos[0].z = arg_oState->car_posWorld1.lz >> 6;
@@ -1399,7 +1420,7 @@ crash_wheel:
 			objPos[0].x = objPts[i].x;
 			objPos[0].y = objPts[i].y;
 			objPos[0].z = objPts[i].z;
-			if (car_car_coll_detect_maybe(arg_pSimd->collide_points, self, unk_3BD6A, objPos)) {
+			if (car_car_coll_detect_maybe(arg_pSimd->collide_points, self, collision_point_set_c, objPos)) {
 				arg_pState->car_36MwhlAngle -= 0x200;
 crash_return:
 				update_crash_state(1, arg_MplayerFlag);
@@ -1407,40 +1428,40 @@ crash_return:
 			}
 		}
 	}
-	i = (char)trackdata19[trackrows[res.z] + res.x];
-	if (i != -1 && state.field_3FA[i] == 0) {
-		objPos[0].x = td10_track_check_rel[i].x;
-		objPos[0].y = td10_track_check_rel[i].y;
-		objPos[0].z = td10_track_check_rel[i].z;
-		if (car_car_coll_detect_maybe(arg_pSimd->collide_points, self, unk_3BD5A, objPos)) {
-			state.field_3FA[i] = 1;
+	i = (char)td19hdl[lnoffsets[res.z] + res.x];
+	if (i != -1 && core.field_3FA[i] == 0) {
+		objPos[0].x = td10checkptr[i].x;
+		objPos[0].y = td10checkptr[i].y;
+		objPos[0].z = td10checkptr[i].z;
+		if (car_car_coll_detect_maybe(arg_pSimd->collide_points, self, collision_point_set_a, objPos)) {
+			core.field_3FA[i] = 1;
 			state_op_unk(i + 2, -arg_pState->car_rotate.x, (long)arg_pState->car_speed2 * 0x580 / 0x3C00U);
 		}
 	}
-	if (res.x == startcol2 && res.z == startrow2) {
-		objPos[0].x = trackcenterpos2[startcol2] + multiply_and_scale(sin_fast(track_angle + 0x100), 126);
-		objPos[0].y = hillHeightConsts[hillFlag];
-		objPos[0].z = multiply_and_scale(cos_fast(track_angle + 0x100), 126) + trackcenterpos[startrow2];
-		if ((found = car_car_coll_detect_maybe(arg_pSimd->collide_points, self, unk_3BD62, objPos)) == 0) {
-			objPos[0].x = multiply_and_scale(sin_fast(track_angle + 0x300), 126) + trackcenterpos2[startcol2];
-			objPos[0].z = multiply_and_scale(cos_fast(track_angle + 0x300), 126) + trackcenterpos[startrow2];
-			found = car_car_coll_detect_maybe(arg_pSimd->collide_points, self, unk_3BD62, objPos);
+	if (res.x == idxtrk && res.z == tagtrk) {
+		objPos[0].x = trackctrpos2[idxtrk] + mulscl(sinfast(st_hdg + 0x100), 126);
+		objPos[0].y = hillconsts[g_hillf];
+		objPos[0].z = mulscl(cosfast(st_hdg + 0x100), 126) + row_ctr_zs[tagtrk];
+		if ((found = car_car_coll_detect_maybe(arg_pSimd->collide_points, self, collision_point_set_b, objPos)) == 0) {
+			objPos[0].x = mulscl(sinfast(st_hdg + 0x300), 126) + trackctrpos2[idxtrk];
+			objPos[0].z = mulscl(cosfast(st_hdg + 0x300), 126) + row_ctr_zs[tagtrk];
+			found = car_car_coll_detect_maybe(arg_pSimd->collide_points, self, collision_point_set_b, objPos);
 		}
 		if (found != 0)
 			goto crash_return;
 	}
 store_state:
-	arg_pState->car_posWorld1.lx = pState_lvec1_x;
-	arg_pState->car_posWorld1.ly = pState_lvec1_y;
-	arg_pState->car_posWorld1.lz = pState_lvec1_z;
-	arg_pState->car_rotate.z = pState_minusRotate_z_1;
-	arg_pState->car_rotate.y = pState_minusRotate_x_1;
-	arg_pState->car_rotate.x = pState_minusRotate_y_1;
+	arg_pState->car_posWorld1.lx = centerpos;
+	arg_pState->car_posWorld1.ly = veh_position;
+	arg_pState->car_posWorld1.lz = veh_z;
+	arg_pState->car_rotate.z = anglerotate_car;
+	arg_pState->car_rotate.y = yrotrotveh;
+	arg_pState->car_rotate.x = rotxvehicle;
 	arg_pState->field_C8 = 0;
 }
 
 void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
-    char transmission, long posX, long posY, long posZ, short track_angle)
+    char transmission, long posX, long posY, long posZ, short trkang)
 {
     register int zero = 0;
     register int i;
@@ -1451,7 +1472,7 @@ void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
     playerstate->car_posWorld2.ly = posY;
     playerstate->car_posWorld1.lz = posZ;
     playerstate->car_posWorld2.lz = posZ;
-    playerstate->car_rotate.x = track_angle;
+    playerstate->car_rotate.x = trkang;
     playerstate->car_rotate.y = zero;
     playerstate->car_rotate.z = zero;
     playerstate->car_36MwhlAngle = zero;
@@ -1507,143 +1528,143 @@ void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
     playerstate->field_CF = 1;
 }
 
-void init_game_state(short arg)
+void initialize_game_state(short arg)
 {
 	register int zeroValue = 0;
 	register int i;
 	int tmpcol, tmprow;
 
 	if (arg == -1) {
-		elapsed_time1 = zeroValue;
+		elaptm1 = zeroValue;
 
 		for (i = 0; i < 20; ++i) {
-			cvxptr[i].field_3F4 = zeroValue;
+			cvxs_a[i].field_3F4 = zeroValue;
 		}
 	}
 	
-	if (data_349D0 == 10) {
-		steerWhlRespTable_ptr = &steerWhlRespTable_10fps;
+	if (rate_frame == 10) {
+		table_lookup = &steerWhlRespTable_10fps;
 	}
 	else {
-		steerWhlRespTable_ptr = &steerWhlRespTable_20fps;
+		table_lookup = &steerWhlRespTable_20fps;
 	}
 	
-	word_45A00 = data_349D0 * 30;
-	word_4499C = 100 / data_349D0;
+	g_cvxintvl = rate_frame * 30;
+	frmcs_time = 100 / rate_frame;
 
 	if (arg != -3) {
-		init_unknown();
+		initialize_unknown();
 
-		state.field_3F4 = 1;
-		state.game_frames_per_sec = 1;
-		state.game_inputmode = zeroValue;
-		state.game_3F6autoLoadEvalFlag = zeroValue;
-		state.game_frame_in_sec = zeroValue;
-		state.field_2F4 = zeroValue;
-		state.field_3F7[0] = zeroValue;
-		state.field_3F7[1] = zeroValue;
+		core.field_3F4 = 1;
+		core.game_frames_per_sec = 1;
+		core.game_inputmode = zeroValue;
+		core.game_3F6autoLoadEvalFlag = zeroValue;
+		core.game_frame_in_sec = zeroValue;
+		core.field_2F4 = zeroValue;
+		core.field_3F7[0] = zeroValue;
+		core.field_3F7[1] = zeroValue;
 
 		for (i = zeroValue; i < 48; ++i) {
-			state.field_3FA[i] = zeroValue;
+			core.field_3FA[i] = zeroValue;
 		}
 				
 		for (i = zeroValue; i < 24; ++i) {
-			state.field_38E[i] = zeroValue;
+			core.field_38E[i] = zeroValue;
 		}
 
-		state.game_vec1[0].x =
-			  multiply_and_scale(sin_fast(word_35516 + 0x200), 4096)
-			+ multiply_and_scale(sin_fast(word_35516 + 0x300),  512)
-			+ ((short)startcol2 << 10);
+		core.game_vec1[0].x =
+			  mulscl(sinfast(st_hdg + 0x200), 4096)
+			+ mulscl(sinfast(st_hdg + 0x300),  512)
+			+ ((short)idxtrk << 10);
 
-		state.game_vec1[0].y = hillHeightConsts[hillFlag] + 960;
+		core.game_vec1[0].y = hillconsts[g_hillf] + 960;
 
-		state.game_vec1[0].z =
-			  multiply_and_scale(cos_fast(word_35516 + 0x200), 4096)
-			+ multiply_and_scale(cos_fast(word_35516 + 0x300),  512)
-			+ trackpos[startrow2];
+		core.game_vec1[0].z =
+			  mulscl(cosfast(st_hdg + 0x200), 4096)
+			+ mulscl(cosfast(st_hdg + 0x300),  512)
+			+ r_zp[tagtrk];
 
-		state.game_vec1[1] = state.game_vec1[0];
-		state.game_vec3[0] = state.game_vec1[0];
-		state.game_vec3[1] = state.game_vec1[0];
+		core.game_vec1[1] = core.game_vec1[0];
+		core.game_vec3[0] = core.game_vec1[0];
+		core.game_vec3[1] = core.game_vec1[0];
 		
-		state.game_travDist = 0L;
-		state.game_frame = zeroValue;
-		state.game_total_finish = zeroValue;
-		state.field_144 = zeroValue;
-		state.game_pEndFrame = zeroValue;
-		state.game_oEndFrame = zeroValue;
-		state.game_penalty = zeroValue;
-		state.game_impactSpeed = zeroValue;
-		state.game_topSpeed = zeroValue;
-		state.game_jumpCount = zeroValue;
+		core.game_travDist = 0L;
+		core.game_frame = zeroValue;
+		core.game_total_finish = zeroValue;
+		core.field_144 = zeroValue;
+		core.game_pEndFrame = zeroValue;
+		core.game_oEndFrame = zeroValue;
+		core.game_penalty = zeroValue;
+		core.game_impactSpeed = zeroValue;
+		core.game_topSpeed = zeroValue;
+		core.game_jumpCount = zeroValue;
 
 		
 		tmpcol =
-			  multiply_and_scale(sin_fast(word_35516 + 0x100),  36)
-			+ multiply_and_scale(sin_fast(word_35516 + 0x200), 210);
+			  mulscl(sinfast(st_hdg + 0x100),  36)
+			+ mulscl(sinfast(st_hdg + 0x200), 210);
 		
 		tmprow =
-			  multiply_and_scale(cos_fast(word_35516 + 0x100),  36)
-			+ multiply_and_scale(cos_fast(word_35516 + 0x200), 210);
+			  mulscl(cosfast(st_hdg + 0x100),  36)
+			+ mulscl(cosfast(st_hdg + 0x200), 210);
 
 		init_carstate_from_simd(
-			&state.playerstate,
-			&simd_player,
-			gameconfig.game_playertransmission,
-			(long)(trackcenterpos2[startcol2] + tmpcol) * 64L,
-			(long)hillHeightConsts[hillFlag] * 64L,
-			(long)(trackcenterpos[startrow2] + tmprow) * 64L,
-			-word_35516);
+			&core.playerstate,
+			&simdp7,
+			globalgamesettings.game_playertransmission,
+			(long)(trackctrpos2[idxtrk] + tmpcol) * 64L,
+			(long)hillconsts[g_hillf] * 64L,
+			(long)(row_ctr_zs[tagtrk] + tmprow) * 64L,
+			-st_hdg);
 
-		state.field_2F2 = zeroValue;
-		state.field_45D = zeroValue;
-		state.field_45E = zeroValue;
-		state.field_45B = zeroValue;
-		state.field_45C = zeroValue;
+		core.field_2F2 = zeroValue;
+		core.field_45D = zeroValue;
+		core.field_45E = zeroValue;
+		core.field_45B = zeroValue;
+		core.field_45C = zeroValue;
 		
-		state.game_startcol  = startcol2;
-		state.game_startcol2 = startcol2;
-		state.game_startrow  = startrow2;
-		state.game_startrow2 = startrow2;
+		core.game_startcol  = idxtrk;
+		core.game_startcol2 = idxtrk;
+		core.game_startrow  = tagtrk;
+		core.game_startrow2 = tagtrk;
 
 		if (arg != -2) {
-			sub_18D60(
-				state.playerstate.car_trackdata3_index,
-				&state.playerstate.car_vec_unk3,
-				state.playerstate.field_CE++,
+			track_edge_points(
+				core.playerstate.car_trackdata3_index,
+				&core.playerstate.car_vec_unk3,
+				core.playerstate.field_CE++,
 				0);
 			
 		}
 
 		
 		tmpcol =
-			  multiply_and_scale(sin_fast(word_35516 + 0x300),  36)
-			+ multiply_and_scale(sin_fast(word_35516 + 0x200), 210);
+			  mulscl(sinfast(st_hdg + 0x300),  36)
+			+ mulscl(sinfast(st_hdg + 0x200), 210);
 		
 		tmprow =
-			  multiply_and_scale(cos_fast(word_35516 + 0x300),  36)
-			+ multiply_and_scale(cos_fast(word_35516 + 0x200), 210);
+			  mulscl(cosfast(st_hdg + 0x300),  36)
+			+ mulscl(cosfast(st_hdg + 0x200), 210);
 
 		init_carstate_from_simd(
-			&state.opponentstate,
-			&simd_opponent,
+			&core.opponentstate,
+			&ophys_7,
 			1,
-			(long)(trackcenterpos2[startcol2] + tmpcol) * 64L,
-			(long)hillHeightConsts[hillFlag] * 64L,
-			(long)(trackcenterpos[startrow2] + tmprow) * 64L,
-			-word_35516);
+			(long)(trackctrpos2[idxtrk] + tmpcol) * 64L,
+			(long)hillconsts[g_hillf] * 64L,
+			(long)(row_ctr_zs[tagtrk] + tmprow) * 64L,
+			-st_hdg);
 
-		if (gameconfig.game_opponenttype && arg != -2) {
-			sub_18D60(
-				((short far *)trackdata3)[state.opponentstate.car_trackdata3_index], 
-				&state.opponentstate.car_vec_unk3,
-				state.opponentstate.field_CE++,
-				&state.field_3F9); 
+		if (globalgamesettings.game_opponenttype && arg != -2) {
+			track_edge_points(
+				((short far *)td3)[core.opponentstate.car_trackdata3_index], 
+				&core.opponentstate.car_vec_unk3,
+				core.opponentstate.field_CE++,
+				&core.field_3F9); 
 		
 		}
 
-		state.field_42A = zeroValue;
+		core.field_42A = zeroValue;
 	}
 }
 
@@ -1651,23 +1672,23 @@ void restore_gamestate(int frame)
 {
     register int curframe;
 
-    if (frame == 0 && elapsed_time1 == 0) {
-        init_game_state(0);
+    if (frame == 0 && elaptm1 == 0) {
+        initialize_game_state(0);
     }
 
-    curframe = frame / word_45A00;
+    curframe = frame / g_cvxintvl;
     if (curframe == 20) {
         --curframe;
     }
 
-    if (frame < state.game_frame)
+    if (frame < core.game_frame)
         goto restore;
-    while (word_45A00 * curframe > state.game_frame) {
-        if (cvxptr[curframe].field_3F4 != 0) {
+    while (g_cvxintvl * curframe > core.game_frame) {
+        if (cvxs_a[curframe].field_3F4 != 0) {
 restore:
-            state = cvxptr[curframe];
-            init_kevinrandom(state.kevinseed);
-            word_32D02 = state.game_frame;
+            core = cvxs_a[curframe];
+            initialize_kevin_random(core.kevinseed);
+            tmr2 = core.game_frame;
             return;
         }
         --curframe;
@@ -1678,72 +1699,72 @@ void update_gamestate() {
 	char var_carInputByte;
 	register int tmp;
 
-	var_carInputByte = td16_rpl_buffer[state.game_frame];
+	var_carInputByte = g_tdreplay16buf[core.game_frame];
 	if (var_carInputByte != 0) {
-		state.game_inputmode = 1;
+		core.game_inputmode = 1;
 	}
 	
-	if ((state.game_frame % word_45A00) == 0) {
-		tmp = state.game_frame / word_45A00;
-		get_kevinrandom_seed(state.kevinseed);
+	if ((core.game_frame % g_cvxintvl) == 0) {
+		tmp = core.game_frame / g_cvxintvl;
+		get_kevinrandom_seed(core.kevinseed);
 
-		cvxptr[tmp] = state;
+		cvxs_a[tmp] = core;
 	}
 
-	state.game_frame++;
-	if (state.game_3F6autoLoadEvalFlag != 0 && state.game_frame_in_sec < state.game_frames_per_sec) {
-		state.game_frame_in_sec++;
-		if (state.game_frame_in_sec == state.game_frames_per_sec && byte_449DA == 0) {
-			if (state.playerstate.car_crashBmpFlag == 1 && state.playerstate.car_speed2 != 0) {
-				state.game_frames_per_sec++;
-			} else if (game_replay_mode == 0) {
-				byte_449DA = 1;
+	core.game_frame++;
+	if (core.game_3F6autoLoadEvalFlag != 0 && core.game_frame_in_sec < core.game_frames_per_sec) {
+		core.game_frame_in_sec++;
+		if (core.game_frame_in_sec == core.game_frames_per_sec && sigframe == 0) {
+			if (core.playerstate.car_crashBmpFlag == 1 && core.playerstate.car_speed2 != 0) {
+				core.game_frames_per_sec++;
+			} else if (gm_playmode == 0) {
+				sigframe = 1;
 			}
 		}
 	}
 
-	if (state.game_inputmode != 0) {
+	if (core.game_inputmode != 0) {
 		
 		player_op(var_carInputByte);
 		
-		if (gameconfig.game_opponenttype != 0) {
+		if (globalgamesettings.game_opponenttype != 0) {
 			opponent_op();
 		}
 
-		sub_2298C();
-		if (state.field_42A != 0) {
-			sub_19BA0();
+		update_camera_target();
+		if (core.field_42A != 0) {
+			update_crash_debris();
 		}
 
 		audio_carstate();
 
-	} else if (game_replay_mode == 1) {
+	} else if (gm_playmode == 1) {
 		
 		audio_carstate();
-		if (byte_4393C != 0) {
-			if (word_44DCA < 0x1C2) {
-				word_44DCA += 8;
+		if (g_rpl_init != 0) {
+			if (g_sgateopn < 0x1C2) {
+				g_sgateopn += 8;
 			}
 
-			if (byte_4393C == 1 && word_44DCA > 0x180) {
-				byte_4393C++;
+			if (g_rpl_init == 1 && g_sgateopn > 0x180) {
+				g_rpl_init++;
 			}
 
-			if (byte_4393C == 2) {
+			if (g_rpl_init == 2) {
 				tmp =
-					multiply_and_scale(cos_fast(track_angle), trackcenterpos[startrow2] - (state.playerstate.car_posWorld1.lz >> 6))
-					+ multiply_and_scale(sin_fast(track_angle), trackcenterpos2[startcol2] - (state.playerstate.car_posWorld1.lx >> 6));
+					mulscl(cosfast(st_hdg), row_ctr_zs[tagtrk] - (core.playerstate.car_posWorld1.lz >> 6))
+					+ mulscl(sinfast(st_hdg), trackctrpos2[idxtrk] - (core.playerstate.car_posWorld1.lx >> 6));
 				if (tmp > 0xE4) {
-					if (state.playerstate.car_speed < 0x500) {
+					if (core.playerstate.car_speed < 0x500) {
 						player_op(1);
 					} else {
 						player_op(0);
 					}
 				} else {
-					if (state.playerstate.car_speed != 0) {
+					if (core.playerstate.car_speed != 0) {
 						player_op(2);
 					} else {
-						byte_4393C = 0;
+						g_rpl_init = 0;
 					}
 				}
 			}
@@ -1766,120 +1787,120 @@ void player_op(char arg_carInputByte) {
 	int tile_index;
 	register int height;
 
-	if (show_penalty_counter != 0)
-		show_penalty_counter--;
+	if (pen_flag_count != 0)
+		pen_flag_count--;
 
-	state.playerstate.field_CF = 1;
-	if (state.playerstate.car_crashBmpFlag != 0) {
-		state.field_45D = 0;
+	core.playerstate.field_CF = 1;
+	if (core.playerstate.car_crashBmpFlag != 0) {
+		core.field_45D = 0;
 		arg_carInputByte = 2;
-		if (state.playerstate.car_speed2 == 0) {
-			state.playerstate.field_CF = 0;
-			if (state.playerstate.car_speed == 0 && state.playerstate.car_rc1[0] == 0 &&
-			    state.playerstate.car_rc1[1] == 0 && state.playerstate.car_rc1[2] == 0 &&
-			    state.playerstate.car_rc1[3] == 0)
+		if (core.playerstate.car_speed2 == 0) {
+			core.playerstate.field_CF = 0;
+			if (core.playerstate.car_speed == 0 && core.playerstate.car_rc1[0] == 0 &&
+			    core.playerstate.car_rc1[1] == 0 && core.playerstate.car_rc1[2] == 0 &&
+			    core.playerstate.car_rc1[3] == 0)
 				return;
 		}
 	}
 
-	update_car_speed(arg_carInputByte, 0, &state.playerstate, &simd_player);
+	update_car_speed(arg_carInputByte, 0, &core.playerstate, &simdp7);
 	upd_statef20_from_steer_input((arg_carInputByte >> 2) & 3);
-	update_grip(&state.playerstate, &simd_player, 1);
-	update_player_state(&state.playerstate, &simd_player, &state.opponentstate, &simd_opponent, 0);
-	state.game_travDist += state.playerstate.car_speed2;
-	crash_mode = state.field_45B;
-	tile_index = state.field_2F2;
+	update_grip(&core.playerstate, &simdp7, 1);
+	update_player_state(&core.playerstate, &simdp7, &core.opponentstate, &ophys_7, 0);
+	core.game_travDist += core.playerstate.car_speed2;
+	crash_mode = core.field_45B;
+	tile_index = core.field_2F2;
 	height = detect_penalty(&tile_index, &penalty_ctr);
 	if (height != 0) {
 		if (penalty_ctr == -2) {
-			state.field_45B = 1;
-			state.field_45C = 0;
-		} else if (state.field_45B == 1) {
-			state.field_45B = 0;
-			state.field_45C = 0;
+			core.field_45B = 1;
+			core.field_45C = 0;
+		} else if (core.field_45B == 1) {
+			core.field_45B = 0;
+			core.field_45C = 0;
 		}
-		if (state.field_45B == 0) {
-			if (tile_index == 0 && state.field_2F4 != 0) {
-				state.playerstate.field_CD++;
+		if (core.field_45B == 0) {
+			if (tile_index == 0 && core.field_2F4 != 0) {
+				core.playerstate.field_CD++;
 				goto next_lap;
 			}
 			if (penalty_ctr >= 0 && penalty_ctr < 3) {
-				state.field_45C = 0;
-				state.field_2F2 = tile_index;
+				core.field_45C = 0;
+				core.field_2F2 = tile_index;
 			} else if (penalty_ctr == -1 || penalty_ctr > 3) {
-				if (td01_track_file_cpy[state.field_2F4] == tile_index ||
-				    td02_penalty_related[state.field_2F4] == tile_index) {
-					state.field_45C++;
+				if (g_td01_track_filecpy[core.field_2F4] == tile_index ||
+				    trackdata_penalty_related[core.field_2F4] == tile_index) {
+					core.field_45C++;
 				} else {
-					if (td01_track_file_cpy[tile_index] == state.field_2F4 ||
-					    td02_penalty_related[tile_index] == state.field_2F4)
-						state.field_45B = 2;
-					state.field_45C = 1;
+					if (g_td01_track_filecpy[tile_index] == core.field_2F4 ||
+					    trackdata_penalty_related[tile_index] == core.field_2F4)
+						core.field_45B = 2;
+					core.field_45C = 1;
 				}
-				if (state.field_45C >= 3) {
+				if (core.field_45C >= 3) {
 next_lap:
-					state.field_2F2 = tile_index;
-					state.field_45C = 0;
+					core.field_2F2 = tile_index;
+					core.field_45C = 0;
 					if (penalty_ctr > 0) {
-						penalty_time = penalty_ctr * data_349D0 * 3;
-						show_penalty_counter = data_349D0 << 2;
-						state.game_penalty += penalty_time;
+						g_penaltytm = penalty_ctr * rate_frame * 3;
+						pen_flag_count = rate_frame << 2;
+						core.game_penalty += g_penaltytm;
 					}
 				}
 			}
 		}
-		state.field_2F4 = tile_index;
+		core.field_2F4 = tile_index;
 	}
 
-	state.field_45D = 0;
-	if (state.field_45B == 1)
+	core.field_45D = 0;
+	if (core.field_45B == 1)
 		return;
-	planeMatrix = mat_rot_zxy(state.playerstate.car_rotate.z, state.playerstate.car_rotate.y,
-	                          state.playerstate.car_rotate.x, 1);
-	if (state.field_45B == 2) {
-		if (state.playerstate.car_crashBmpFlag == 0)
-			state.field_45D = 3;
-		tile_index = state.field_2F4;
+	planeMatrix = matrotzxy(core.playerstate.car_rotate.z, core.playerstate.car_rotate.y,
+	                          core.playerstate.car_rotate.x, 1);
+	if (core.field_45B == 2) {
+		if (core.playerstate.car_crashBmpFlag == 0)
+			core.field_45D = 3;
+		tile_index = core.field_2F4;
 		goto search;
 	}
-	if (state.playerstate.car_trackdata3_index == -1) {
+	if (core.playerstate.car_trackdata3_index == -1) {
 no_target:
 		height = 0;
 	} else {
-		if ((crash_mode != 0 && state.field_45B == 0) ||
-		    (state.playerstate.car_trackdata3_index != state.field_2F2 &&
-		     td01_track_file_cpy[state.field_2F2] != state.playerstate.car_trackdata3_index &&
-		     td02_penalty_related[state.field_2F2] != state.playerstate.car_trackdata3_index)) {
-			state.playerstate.car_trackdata3_index = -1;
+		if ((crash_mode != 0 && core.field_45B == 0) ||
+		    (core.playerstate.car_trackdata3_index != core.field_2F2 &&
+		     g_td01_track_filecpy[core.field_2F2] != core.playerstate.car_trackdata3_index &&
+		     trackdata_penalty_related[core.field_2F2] != core.playerstate.car_trackdata3_index)) {
+			core.playerstate.car_trackdata3_index = -1;
 			goto no_target;
 		}
-		playerRelative.x = state.playerstate.car_vec_unk3.x - (int)(state.playerstate.car_posWorld1.lx >> 6);
-		if (state.playerstate.car_vec_unk3.y != -1)
-			playerRelative.y = state.playerstate.car_vec_unk3.y - (int)(state.playerstate.car_posWorld1.ly >> 6);
+		playerRelative.x = core.playerstate.car_vec_unk3.x - (int)(core.playerstate.car_posWorld1.lx >> 6);
+		if (core.playerstate.car_vec_unk3.y != -1)
+			playerRelative.y = core.playerstate.car_vec_unk3.y - (int)(core.playerstate.car_posWorld1.ly >> 6);
 		else
 			playerRelative.y = 0;
-		playerRelative.z = state.playerstate.car_vec_unk3.z - (int)(state.playerstate.car_posWorld1.lz >> 6);
-		mat_mul_vector(&playerRelative, planeMatrix, &player_plane_vec);
+		playerRelative.z = core.playerstate.car_vec_unk3.z - (int)(core.playerstate.car_posWorld1.lz >> 6);
+		mat_vec(&playerRelative, planeMatrix, &player_plane_vec);
 		height = player_plane_vec.z;
 	}
 	if (height < 0x113) {
-		if (state.playerstate.car_trackdata3_index == -1) {
-			tile_index = state.field_2F2;
+		if (core.playerstate.car_trackdata3_index == -1) {
+			tile_index = core.field_2F2;
 search:
-			if (td02_penalty_related[tile_index] != -1)
+			if (trackdata_penalty_related[tile_index] != -1)
 				goto check_lap;
 			hasPenalty = 0;
 			track_side = 0;
 			do {
-				hasPenalty = sub_18D60(tile_index, &state.playerstate.car_vec_unk3, track_side, 0);
-				offset_vector = state.playerstate.car_vec_unk3;
-				offset_vector.x -= state.playerstate.car_posWorld1.lx >> 6;
+				hasPenalty = track_edge_points(tile_index, &core.playerstate.car_vec_unk3, track_side, 0);
+				offset_vector = core.playerstate.car_vec_unk3;
+				offset_vector.x -= core.playerstate.car_posWorld1.lx >> 6;
 				if (offset_vector.y == -1)
-					offset_vector.y = -(int)(state.playerstate.car_posWorld1.ly >> 6);
+					offset_vector.y = -(int)(core.playerstate.car_posWorld1.ly >> 6);
 				else
-					offset_vector.y -= state.playerstate.car_posWorld1.ly >> 6;
-				offset_vector.z -= state.playerstate.car_posWorld1.lz >> 6;
-				mat_mul_vector(&offset_vector, planeMatrix, &player_plane_vec);
+					offset_vector.y -= core.playerstate.car_posWorld1.ly >> 6;
+				offset_vector.z -= core.playerstate.car_posWorld1.lz >> 6;
+				mat_vec(&offset_vector, planeMatrix, &player_plane_vec);
 				if (track_side == 0 ||
 				    (player_plane_vec.z < playerRelative.z && player_plane_vec.z > 0)) {
 					trackSide = track_side;
@@ -1887,70 +1908,70 @@ search:
 				}
 				track_side++;
 			} while (hasPenalty == 0);
-			if (state.field_45B == 2) {
+			if (core.field_45B == 2) {
 				if (trackSide == 0) {
-					sub_18D60(tile_index, pathPoints, 0, 0);
-					sub_18D60(tile_index, playerEdges, 1, 0);
+					track_edge_points(tile_index, pathPoints, 0, 0);
+					track_edge_points(tile_index, playerEdges, 1, 0);
 				} else {
-					sub_18D60(tile_index, pathPoints, (char)(trackSide - 1), 0);
-					sub_18D60(tile_index, playerEdges, trackSide, 0);
+					track_edge_points(tile_index, pathPoints, (char)(trackSide - 1), 0);
+					track_edge_points(tile_index, playerEdges, trackSide, 0);
 				}
-				height = polarAngle(pathPoints[0].x - playerEdges[0].x, playerEdges[0].z - pathPoints[0].z) & 0x3FF;
-				height = (state.playerstate.car_rotate.x - height) & 0x3FF;
+				height = polang(pathPoints[0].x - playerEdges[0].x, playerEdges[0].z - pathPoints[0].z) & 0x3FF;
+				height = (core.playerstate.car_rotate.x - height) & 0x3FF;
 				if (height <= 0x380 && height >= 0x80)
 					goto advance;
-				state.field_45B = 0;
-				state.field_45C = 1;
-				state.playerstate.car_trackdata3_index = tile_index;
+				core.field_45B = 0;
+				core.field_45C = 1;
+				core.playerstate.car_trackdata3_index = tile_index;
 			} else {
-				state.playerstate.car_trackdata3_index = state.field_2F2;
+				core.playerstate.car_trackdata3_index = core.field_2F2;
 			}
-			state.playerstate.field_CE = trackSide;
+			core.playerstate.field_CE = trackSide;
 		}
 advance:
-		if (sub_18D60(state.playerstate.car_trackdata3_index, &state.playerstate.car_vec_unk3,
-		              state.playerstate.field_CE++, 0) != 0) {
-			if (td02_penalty_related[state.field_2F2] != -1)
-				state.playerstate.car_trackdata3_index = -1;
+		if (track_edge_points(core.playerstate.car_trackdata3_index, &core.playerstate.car_vec_unk3,
+		              core.playerstate.field_CE++, 0) != 0) {
+			if (trackdata_penalty_related[core.field_2F2] != -1)
+				core.playerstate.car_trackdata3_index = -1;
 			else
-				state.playerstate.car_trackdata3_index = td01_track_file_cpy[state.field_2F2];
-			state.playerstate.field_CE = 0;
+				core.playerstate.car_trackdata3_index = g_td01_track_filecpy[core.field_2F2];
+			core.playerstate.field_CE = 0;
 		}
 	}
-	offset_vector = state.playerstate.car_vec_unk3;
-	if (state.playerstate.car_trackdata3_index != -1 && state.field_45B == 0) {
-		offset_vector.x -= state.playerstate.car_posWorld1.lx >> 6;
+	offset_vector = core.playerstate.car_vec_unk3;
+	if (core.playerstate.car_trackdata3_index != -1 && core.field_45B == 0) {
+		offset_vector.x -= core.playerstate.car_posWorld1.lx >> 6;
 		if (offset_vector.y == -1)
 			offset_vector.y = 0;
 		else
-			offset_vector.y -= state.playerstate.car_posWorld1.ly >> 6;
-		offset_vector.z -= state.playerstate.car_posWorld1.lz >> 6;
-		planeMatrix = mat_rot_zxy(state.playerstate.car_rotate.z, state.playerstate.car_rotate.y,
-		                          state.playerstate.car_rotate.x, 1);
-		mat_mul_vector(&offset_vector, planeMatrix, &player_plane_vec);
-		state.playerstate.field_48 = polarAngle(-player_plane_vec.x, player_plane_vec.z) & 0x3FF;
-		if (state.playerstate.car_crashBmpFlag == 0) {
-			switch ((unsigned)((state.playerstate.field_48 + 0x80) & 0x3FF) >> 8) {
+			offset_vector.y -= core.playerstate.car_posWorld1.ly >> 6;
+		offset_vector.z -= core.playerstate.car_posWorld1.lz >> 6;
+		planeMatrix = matrotzxy(core.playerstate.car_rotate.z, core.playerstate.car_rotate.y,
+		                          core.playerstate.car_rotate.x, 1);
+		mat_vec(&offset_vector, planeMatrix, &player_plane_vec);
+		core.playerstate.field_48 = polang(-player_plane_vec.x, player_plane_vec.z) & 0x3FF;
+		if (core.playerstate.car_crashBmpFlag == 0) {
+			switch ((unsigned)((core.playerstate.field_48 + 0x80) & 0x3FF) >> 8) {
 			case 1:
-				state.field_45D = 1;
+				core.field_45D = 1;
 				break;
 			case 3:
-				if (state.playerstate.field_B6 == 0) {
-					state.field_45D = 2;
+				if (core.playerstate.field_B6 == 0) {
+					core.field_45D = 2;
 					break;
 				}
 			default:
-				state.field_45D = 0;
+				core.field_45D = 0;
 				break;
 			}
 		}
 	}
 check_lap:
-	if (state.playerstate.field_CD != 0) {
-		height = multiply_and_scale(cos_fast(track_angle),
-			trackcenterpos[startrow2] - (int)(state.playerstate.car_posWorld1.lz >> 6));
-		height += multiply_and_scale(sin_fast(track_angle),
-			trackcenterpos2[startcol2] - (int)(state.playerstate.car_posWorld1.lx >> 6));
+	if (core.playerstate.field_CD != 0) {
+		height = mulscl(cosfast(st_hdg),
+			row_ctr_zs[tagtrk] - (int)(core.playerstate.car_posWorld1.lz >> 6));
+		height += mulscl(sinfast(st_hdg),
+			trackctrpos2[idxtrk] - (int)(core.playerstate.car_posWorld1.lx >> 6));
 		if (height < 0)
 			update_crash_state(3, 0);
 	}
@@ -1976,10 +1997,10 @@ char detect_penalty(int *trackIndex, int *penaltyCounter)
     char multiCell;
     char right_col;
 
-    carCol = (char)(state.playerstate.car_posWorld1.lx >> 16);
-    playerRow = (char)(0x1D - (char)(state.playerstate.car_posWorld1.lz >> 16));
-    if ((carCol == state.game_startcol || carCol == state.game_startcol2) &&
-        (playerRow == state.game_startrow || playerRow == state.game_startrow2)) {
+    carCol = (char)(core.playerstate.car_posWorld1.lx >> 16);
+    playerRow = (char)(0x1D - (char)(core.playerstate.car_posWorld1.lz >> 16));
+    if ((carCol == core.game_startcol || carCol == core.game_startcol2) &&
+        (playerRow == core.game_startrow || playerRow == core.game_startrow2)) {
         *penaltyCounter = 0;
         return 0;
     }
@@ -1988,11 +2009,11 @@ char detect_penalty(int *trackIndex, int *penaltyCounter)
     leastDistance = 0;
     searchDepth = 0;
     distance = 0;
-    for (cur = 0; cur < track_pieces_counter; cur++)
+    for (cur = 0; cur < g_trackpiecescounter; cur++)
         mark[cur] = 0;
     cur = *trackIndex;
     for (;;) {
-        mapIdx = td01_track_file_cpy[cur];
+        mapIdx = g_td01_track_filecpy[cur];
         if (mark[mapIdx] != 0) {
             if (searchDepth != 0) {
                 searchDepth--;
@@ -2005,26 +2026,26 @@ char detect_penalty(int *trackIndex, int *penaltyCounter)
                 *penaltyCounter = leastDistance;
                 return 1;
             }
-            state.game_startcol2 = state.game_startcol = carCol;
-            state.game_startrow2 = state.game_startrow = playerRow;
+            core.game_startcol2 = core.game_startcol = carCol;
+            core.game_startrow2 = core.game_startrow = playerRow;
 invalid_coords:
             *penaltyCounter = -2;
             return 1;
         }
         mark[mapIdx] = 1;
-        row = td22_row_from_path[mapIdx];
-        multiCell = trkObjectList[(unsigned char)td17_trk_elem_ordered[mapIdx]].ss_multiTileFlag;
+        row = tdfrompathrow22[mapIdx];
+        multiCell = trklst[(unsigned char)road_trk[mapIdx]].ss_multiTileFlag;
         last_row = (multiCell & 1) ? row + 1 : row;
-        tileX = td21_col_from_path[mapIdx];
+        tileX = g_column_of_trkdata21_pth[mapIdx];
         right_col = (multiCell & 2) ? tileX + 1 : tileX;
         if ((tileX == carCol || right_col == carCol) &&
             (row == playerRow || last_row == playerRow)) {
-            if (td02_penalty_related[cur] != -1)
+            if (trackdata_penalty_related[cur] != -1)
                 mapIdx = cur;
-            state.game_startcol = tileX;
-            state.game_startcol2 = right_col;
-            state.game_startrow = row;
-            state.game_startrow2 = last_row;
+            core.game_startcol = tileX;
+            core.game_startcol2 = right_col;
+            core.game_startrow = row;
+            core.game_startrow2 = last_row;
             if (distance > 0) {
                 if (leastDistance == 0 || leastDistance > distance) {
                     minNode = mapIdx;
@@ -2036,7 +2057,7 @@ invalid_coords:
                 return 1;
             }
         }
-        nextPiece = td02_penalty_related[cur];
+        nextPiece = trackdata_penalty_related[cur];
         if (nextPiece != -1) {
             previousDistance[searchDepth] = distance;
             node_stack[searchDepth++] = nextPiece;
@@ -2057,7 +2078,7 @@ void update_car_speed(char arg_carInputByte, char arg_MplayerFlag, struct CARSTA
 	int speedDelta;
 	unsigned char currTorque;
 
-	if (data_349D0 == 20)
+	if (rate_frame == 20)
 		knobStep = 6;
 	else
 		knobStep = 12;
@@ -2087,7 +2108,7 @@ downshift:
 				arg_carState->car_current_gear--;
 shifted:
 				arg_carState->car_changing_gear = 1;
-				arg_carState->car_fpsmul2 = ((char)data_349D0 >> 1) + (char)data_349D0;
+				arg_carState->car_fpsmul2 = ((char)rate_frame >> 1) + (char)rate_frame;
 				arg_carState->car_knob_x2 = arg_simd->knob_points[arg_carState->car_current_gear].px;
 				arg_carState->car_knob_y2 = arg_simd->knob_points[arg_carState->car_current_gear].py;
 			}
@@ -2153,7 +2174,7 @@ brake:
 			arg_carState->car_is_accelerating = 1;
 			if (arg_carState->car_changing_gear != 0) {
 				arg_carState->car_engineLimiterTimer = 0;
-				if (data_349D0 == 10)
+				if (rate_frame == 10)
 					arg_carState->car_currpm -= 80;
 				else
 					arg_carState->car_currpm -= 40;
@@ -2170,7 +2191,7 @@ brake:
 				speedDelta += (arg_carState->car_gearratioshr8 * currTorque) >> 4;
 				speedDelta = (int)((long)speedDelta * 25 / arg_simd->car_mass) >> 1;
 				if (arg_MplayerFlag != 0) {
-					currTorque = -(oppnentSped[0] - 200) >> 1;
+					currTorque = -(opponent_spd_tbl[0] - 200) >> 1;
 					if (currTorque != 0)
 						speedDelta -= (long)currTorque * speedDelta / 200;
 				}
@@ -2180,7 +2201,7 @@ brake:
 			break;
 		}
 	}
-	if (data_349D0 == 10)
+	if (rate_frame == 10)
 		speedDelta += speedDelta;
 
 if (speedDelta >= 0) {
@@ -2221,8 +2242,8 @@ updatedSpeed += speedDelta;
 			arg_carState->car_speed2 -= 0x500;
 		}
 	}
-	if (arg_carState->car_speed2 > state.game_topSpeed)
-		state.game_topSpeed = arg_carState->car_speed2;
+	if (arg_carState->car_speed2 > core.game_topSpeed)
+		core.game_topSpeed = arg_carState->car_speed2;
 }
 
 void update_grip(struct CARSTATE *car, struct SIMD *simd, int isOpponent)
@@ -2253,7 +2274,7 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, int isOpponent)
         scratch++;
 
     if (scratch != 0) {
-        car->car_speed2 -= car->car_speed2 / word_2BDF8[scratch];
+        car->car_speed2 -= car->car_speed2 / speed_recovery_divisors[scratch];
         car->car_speed = car->car_speed2;
     }
 
@@ -2316,7 +2337,7 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, int isOpponent)
                 column = (unsigned char)((unsigned long)car->car_posWorld1.lx >> 16);
                 rowCoord = (unsigned char)((unsigned long)car->car_posWorld1.lz >> 16);
 
-                switch (td14_elem_map_main[terrainrows[rowCoord] + column]) {
+                switch (td14tb[gterrtrk[rowCoord] + column]) {
                 case 0xFD:
                     column--;
                     rowCoord++;
@@ -2329,7 +2350,7 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, int isOpponent)
                     break;
                 }
 
-                switch (td14_elem_map_main[terrainrows[rowCoord] + column]) {
+                switch (td14tb[gterrtrk[rowCoord] + column]) {
                 case 0x34:
                 case 0x35:
                 case 0x36:
@@ -2346,9 +2367,9 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, int isOpponent)
             car->car_angle_z += (limit - baseAngleValue) / 14;
             car->car_angle_z /= 2;
             if (car->car_angle_z == 0) {
-                car->car_speed2 = multiply_and_scale(
-                    cos_fast(car->car_36MwhlAngle), car->car_speed2);
-                if (cos_fast(car->car_36MwhlAngle) < 0)
+                car->car_speed2 = mulscl(
+                    cosfast(car->car_36MwhlAngle), car->car_speed2);
+                if (cosfast(car->car_36MwhlAngle) < 0)
                     car->car_speed2 = 0;
                 car->car_36MwhlAngle = 0;
             }
@@ -2414,11 +2435,11 @@ char car_car_speed_adjust_maybe(struct CARSTATE *player, struct CARSTATE *oppone
     opponentSpeed = opponent->car_speed2;
     pHeading = player->car_rotate.x;
     opponentHeading = opponent->car_rotate.x;
-    playerSin = multiply_and_scale(currentSpeed >> 8, sin_fast(pHeading));
-    opponentSin = multiply_and_scale(opponentSpeed >> 8, sin_fast(opponentHeading));
-    playerCosAngle = multiply_and_scale(currentSpeed >> 8, cos_fast(pHeading));
-    opponentCosAng = multiply_and_scale(opponentSpeed >> 8, cos_fast(opponentHeading));
-    distanceToCar = polarRadius2D(opponentSin - playerSin, opponentCosAng - playerCosAngle);
+    playerSin = mulscl(currentSpeed >> 8, sinfast(pHeading));
+    opponentSin = mulscl(opponentSpeed >> 8, sinfast(opponentHeading));
+    playerCosAngle = mulscl(currentSpeed >> 8, cosfast(pHeading));
+    opponentCosAng = mulscl(opponentSpeed >> 8, cosfast(opponentHeading));
+    distanceToCar = polradius2d(opponentSin - playerSin, opponentCosAng - playerCosAngle);
     if (distanceToCar < 10)
         distanceToCar = 10;
     turnDifference = (pHeading - opponentHeading) & 0x3FF;
@@ -2508,9 +2529,9 @@ void upd_statef20_from_steer_input(char input)
     char responseIndex;
     register int oldAngle;
 
-    oldAngle = state.playerstate.car_steeringAngle;
-    responseIndex = (char)(((unsigned short)state.playerstate.car_speed2 >> 10) & 0xFC);
-    response = steerWhlRespTable_ptr[(char)responseIndex + input];
+    oldAngle = core.playerstate.car_steeringAngle;
+    responseIndex = (char)(((unsigned short)core.playerstate.car_speed2 >> 10) & 0xFC);
+    response = table_lookup[(char)responseIndex + input];
 
     if (response > 0) {
         if (oldAngle < -1) response <<= 2;
@@ -2518,16 +2539,16 @@ void upd_statef20_from_steer_input(char input)
         response <<= 2;
     }
 
-    if (response == 0 && state.playerstate.car_speed2 != 0 && oldAngle != 0) {
-        response = steerWhlRespTable_ptr[(char)responseIndex + 1] * 2;
+    if (response == 0 && core.playerstate.car_speed2 != 0 && oldAngle != 0) {
+        response = table_lookup[(char)responseIndex + 1] * 2;
         if ((oldAngle < 0 ? -oldAngle : oldAngle) > response) {
             if (oldAngle > 0) response = -response;
         } else {
-            response = -state.playerstate.car_steeringAngle;
+            response = -core.playerstate.car_steeringAngle;
         }
     }
 
-    if (data_349D0 == 10) {
+    if (rate_frame == 10) {
         if (response > 160) response = 160;
         if (response < -160) response = -160;
     } else {
@@ -2538,10 +2559,10 @@ void upd_statef20_from_steer_input(char input)
     if (oldAngle > 240) oldAngle = 240;
     if (oldAngle < -240) oldAngle = -240;
 
-    if (steerWhlRespTable_ptr[(char)responseIndex + input] == 0 &&
+    if (table_lookup[(char)responseIndex + input] == 0 &&
         abs(oldAngle) < 8)
         oldAngle = 0;
-    state.playerstate.car_steeringAngle = oldAngle;
+    core.playerstate.car_steeringAngle = oldAngle;
 }
 
 void audio_carstate(void)
@@ -2559,48 +2580,48 @@ void audio_carstate(void)
     struct VECTOR targetPast;
     struct VECTOR opponentPrior;
 
-    if (is_in_replay != 0) {
-        if (byte_459D8 != 0) {
-            word_44D1E = word_449E4;
-            if ((byte_42D26 & 6) != 0)
-                audio_op_unk7(word_43964);
-            if ((byte_42D26 & 1) != 0)
-                audio_function2(word_43964);
-            if (gameconfig.game_opponenttype != 0) {
-                if ((byte_42D2A & 6) != 0)
-                    audio_op_unk7(word_4408C);
-                if ((byte_42D2A & 1) != 0)
-                    audio_function2(word_4408C);
+    if (inrepflg != 0) {
+        if (sndpendingstate != 0) {
+            g_audio_frms_ix = sndposrecord;
+            if ((g_plyr_snd_state & 6) != 0)
+                audio_op_unk7(g_player_sound_id);
+            if ((g_plyr_snd_state & 1) != 0)
+                audio_function2(g_player_sound_id);
+            if (globalgamesettings.game_opponenttype != 0) {
+                if ((audiooppflag & 6) != 0)
+                    audio_op_unk7(op_eng_sound_id);
+                if ((audiooppflag & 1) != 0)
+                    audio_function2(op_eng_sound_id);
             }
-            byte_459D8 = 0;
-            byte_42D26 = 0;
-            byte_42D2A = 0;
+            sndpendingstate = 0;
+            g_plyr_snd_state = 0;
+            audiooppflag = 0;
         }
-        if (is_in_replay == byte_3BE02)
+        if (inrepflg == replay_state_cache)
             goto audio_done;
-        sub_38178();
+        reset_audio_driver_state();
         goto audio_done;
     }
 
-    playerPosOld.x = (short)(state.playerstate.car_posWorld2.lx >> 6);
-    playerPosOld.y = (short)(state.playerstate.car_posWorld2.ly >> 6);
-    playerPosOld.z = (short)(state.playerstate.car_posWorld2.lz >> 6);
-    playerPosition.x = (short)(state.playerstate.car_posWorld1.lx >> 6);
-    playerPosition.y = (short)(state.playerstate.car_posWorld1.ly >> 6);
-    playerPosition.z = (short)(state.playerstate.car_posWorld1.lz >> 6);
-    if (gameconfig.game_opponenttype != 0) {
-        opponentPrior.x = (short)(state.opponentstate.car_posWorld2.lx >> 6);
-        opponentPrior.y = (short)(state.opponentstate.car_posWorld2.ly >> 6);
-        opponentPrior.z = (short)(state.opponentstate.car_posWorld2.lz >> 6);
-        opponentCurrent.x = (short)(state.opponentstate.car_posWorld1.lx >> 6);
-        opponentCurrent.y = (short)(state.opponentstate.car_posWorld1.ly >> 6);
-        opponentCurrent.z = (short)(state.opponentstate.car_posWorld1.lz >> 6);
+    playerPosOld.x = (short)(core.playerstate.car_posWorld2.lx >> 6);
+    playerPosOld.y = (short)(core.playerstate.car_posWorld2.ly >> 6);
+    playerPosOld.z = (short)(core.playerstate.car_posWorld2.lz >> 6);
+    playerPosition.x = (short)(core.playerstate.car_posWorld1.lx >> 6);
+    playerPosition.y = (short)(core.playerstate.car_posWorld1.ly >> 6);
+    playerPosition.z = (short)(core.playerstate.car_posWorld1.lz >> 6);
+    if (globalgamesettings.game_opponenttype != 0) {
+        opponentPrior.x = (short)(core.opponentstate.car_posWorld2.lx >> 6);
+        opponentPrior.y = (short)(core.opponentstate.car_posWorld2.ly >> 6);
+        opponentPrior.z = (short)(core.opponentstate.car_posWorld2.lz >> 6);
+        opponentCurrent.x = (short)(core.opponentstate.car_posWorld1.lx >> 6);
+        opponentCurrent.y = (short)(core.opponentstate.car_posWorld1.ly >> 6);
+        opponentCurrent.z = (short)(core.opponentstate.car_posWorld1.lz >> 6);
     }
 
-    switch (cameramode) {
+    switch (cammd) {
     case 0:
     case 2:
-        if (followOpponentFlag != 0) {
+        if (follow_op != 0) {
             targetNow = opponentCurrent;
             targetPast = opponentPrior;
         } else {
@@ -2609,34 +2630,34 @@ void audio_carstate(void)
         }
         break;
     case 1:
-        targetNow = state.game_vec1[followOpponentFlag];
-        targetPast = state.game_vec3[followOpponentFlag];
+        targetNow = core.game_vec1[follow_op];
+        targetPast = core.game_vec3[follow_op];
         break;
     case 3:
-        targetNow.x = ((struct VECTOR far *)trackdata9)[state.field_3F7[followOpponentFlag]].x;
-        targetNow.y = ((struct VECTOR far *)trackdata9)[state.field_3F7[followOpponentFlag]].y + word_44D20 + 90;
-        targetNow.z = ((struct VECTOR far *)trackdata9)[state.field_3F7[followOpponentFlag]].z;
+        targetNow.x = ((struct VECTOR far *)trkptrpath)[core.field_3F7[follow_op]].x;
+        targetNow.y = ((struct VECTOR far *)trkptrpath)[core.field_3F7[follow_op]].y + viewyshift + 90;
+        targetNow.z = ((struct VECTOR far *)trkptrpath)[core.field_3F7[follow_op]].z;
         targetPast = targetNow;
         break;
     }
 
-    audioRecord = &((struct AUDIO_CAR_FRAME *)unk_44F4C)[word_449E4];
+    audioRecord = &((struct AUDIO_CAR_FRAME *)audio_frmarr)[sndposrecord];
     audioRecord->player_offsets[0] = targetPast.x - playerPosOld.x;
     audioRecord->player_offsets[1] = targetPast.y - playerPosOld.y;
     audioRecord->player_offsets[2] = targetPast.z - playerPosOld.z;
     audioRecord->player_offsets[3] = targetNow.x - playerPosition.x;
     audioRecord->player_offsets[4] = targetNow.y - playerPosition.y;
     audioRecord->player_offsets[5] = targetNow.z - playerPosition.z;
-    audioRecord->player_rpm = state.playerstate.car_currpm;
+    audioRecord->player_rpm = core.playerstate.car_currpm;
 
-    if (gameconfig.game_opponenttype != 0) {
+    if (globalgamesettings.game_opponenttype != 0) {
         audioRecord->opponent_offsets[0] = targetPast.x - opponentPrior.x;
         audioRecord->opponent_offsets[1] = targetPast.y - opponentPrior.y;
         audioRecord->opponent_offsets[2] = targetPast.z - opponentPrior.z;
         audioRecord->opponent_offsets[3] = targetNow.x - opponentCurrent.x;
         audioRecord->opponent_offsets[4] = targetNow.y - opponentCurrent.y;
         audioRecord->opponent_offsets[5] = targetNow.z - opponentCurrent.z;
-        audioRecord->opponent_rpm = state.opponentstate.car_currpm;
+        audioRecord->opponent_rpm = core.opponentstate.car_currpm;
         carCount = 2;
     } else {
         carCount = 1;
@@ -2644,13 +2665,13 @@ void audio_carstate(void)
 
     for (carIndex = 0; carIndex < carCount; carIndex++) {
         if (carIndex != 0) {
-            selectedCar = &state.opponentstate;
-            audioId = word_4408C;
-            soundMode = byte_42D2A;
+            selectedCar = &core.opponentstate;
+            audioId = op_eng_sound_id;
+            soundMode = audiooppflag;
         } else {
-            selectedCar = &state.playerstate;
-            audioId = word_43964;
-            soundMode = byte_42D26;
+            selectedCar = &core.playerstate;
+            audioId = g_player_sound_id;
+            soundMode = g_plyr_snd_state;
         }
         if (selectedCar->field_CF & 1) {
             if (!(soundMode & 1)) {
@@ -2682,35 +2703,35 @@ stop_skid:
             audio_op_unk7(audioId);
         }
         if (carIndex != 0)
-            byte_42D2A = soundMode;
+            audiooppflag = soundMode;
         else
-            byte_42D26 = soundMode;
+            g_plyr_snd_state = soundMode;
     }
-    byte_459D8 = 1;
-    word_449E4++;
-    if (word_449E4 == 40)
-        word_449E4 = 0;
+    sndpendingstate = 1;
+    sndposrecord++;
+    if (sndposrecord == 40)
+        sndposrecord = 0;
 
 audio_done:
-    byte_3BE02 = is_in_replay;
+    replay_state_cache = inrepflg;
 }
 
-void audio_unk3(char flags, short audioId) { if (byte_459D8 != 0) { if (flags & 0x10) audio_op_unk4(audioId); if (flags & 0x20) audio_op_unk3(audioId); } }
+void audio_unk3(char flags, short audioId) { if (sndpendingstate != 0) { if (flags & 0x10) audio_op_unk4(audioId); if (flags & 0x20) audio_op_unk3(audioId); } }
 
-void sub_18D06(struct AUDIO_CAR_FRAME *record, short value)
+void apply_audio_frame(struct AUDIO_CAR_FRAME *record, short value)
 {
-    audio_op_unk2(word_43964, record->player_rpm,
+    audio_op_unk2(g_player_sound_id, record->player_rpm,
         record->player_offsets[0], record->player_offsets[1],
         record->player_offsets[2], record->player_offsets[3],
         record->player_offsets[4], record->player_offsets[5], value);
-    if (gameconfig.game_opponenttype != 0)
-        audio_op_unk2(word_4408C, record->opponent_rpm,
+    if (globalgamesettings.game_opponenttype != 0)
+        audio_op_unk2(op_eng_sound_id, record->opponent_rpm,
             record->opponent_offsets[0], record->opponent_offsets[1],
             record->opponent_offsets[2], record->opponent_offsets[3],
             record->opponent_offsets[4], record->opponent_offsets[5], value);
 }
 
-char sub_18D60(int trackIndex, struct TRACKRESULT *result, char side,
+char track_edge_points(int trackIndex, struct TRACKRESULT *result, char side,
               char *opponentSpeed)
 {
     unsigned char entry;
@@ -2730,10 +2751,10 @@ char sub_18D60(int trackIndex, struct TRACKRESULT *result, char side,
     struct VECTOR edgePoint;
     unsigned char objectIndex;
 
-    entry = (unsigned char)td17_trk_elem_ordered[trackIndex];
-    objectIndex = (unsigned char)trackdata18[trackIndex] & 0x0f;
-    isConnected = (unsigned char)trackdata18[trackIndex] & 0x10;
-    trackElemObject = &trkObjectList[entry];
+    entry = (unsigned char)road_trk[trackIndex];
+    objectIndex = (unsigned char)td_18_ref[trackIndex] & 0x0f;
+    isConnected = (unsigned char)td_18_ref[trackIndex] & 0x10;
+    trackElemObject = &trklst[entry];
     infoBase = (struct TRKOBJINFO far *)trackElemObject->ss_trkObjInfoPtr;
     objectInfo = infoBase + objectIndex;
     linkPresent = 0;
@@ -2747,7 +2768,7 @@ char sub_18D60(int trackIndex, struct TRACKRESULT *result, char side,
     if (opponentSpeed != 0) {
         scratch = (unsigned char)objectInfo->si_oppSpedCode;
         trackRow = (unsigned char)trackElemObject->ss_surfaceType;
-        *opponentSpeed = oppnentSped[trackRow + scratch];
+        *opponentSpeed = opponent_spd_tbl[trackRow + scratch];
     }
 
     if (objectInfo->link.dataPointer != 0)
@@ -2795,26 +2816,26 @@ forward:
         break;
     }
 
-    scratch = (unsigned char)td21_col_from_path[trackIndex];
-    trackRow = (unsigned char)td22_row_from_path[trackIndex];
-    if (vectorA.y != -1 && td15_terr_map_main[terrainrows[trackRow] + scratch] == 6) {
-        vectorA.y += hillHeightConsts[1];
-        edgePoint.y += hillHeightConsts[1];
+    scratch = (unsigned char)g_column_of_trkdata21_pth[trackIndex];
+    trackRow = (unsigned char)tdfrompathrow22[trackIndex];
+    if (vectorA.y != -1 && td15p_9[gterrtrk[trackRow] + scratch] == 6) {
+        vectorA.y += hillconsts[1];
+        edgePoint.y += hillconsts[1];
     }
 
     if ((trackElemObject->ss_multiTileFlag & 1) != 0) {
-        vectorA.z += trackpos[trackRow];
-        edgePoint.z += trackpos[trackRow];
+        vectorA.z += r_zp[trackRow];
+        edgePoint.z += r_zp[trackRow];
     } else {
-        vectorA.z += trackcenterpos[trackRow];
-        edgePoint.z += trackcenterpos[trackRow];
+        vectorA.z += row_ctr_zs[trackRow];
+        edgePoint.z += row_ctr_zs[trackRow];
     }
     if ((trackElemObject->ss_multiTileFlag & 2) != 0) {
-        vectorA.x += trackpos2[scratch + 1];
-        edgePoint.x += trackpos2[scratch + 1];
+        vectorA.x += xcols[scratch + 1];
+        edgePoint.x += xcols[scratch + 1];
     } else {
-        vectorA.x += trackcenterpos2[scratch];
-        edgePoint.x += trackcenterpos2[scratch];
+        vectorA.x += trackctrpos2[scratch];
+        edgePoint.x += trackctrpos2[scratch];
     }
 
     result->center.x = ((long)vectorA.x + edgePoint.x) >> 1;
@@ -2854,32 +2875,32 @@ char car_car_coll_detect_maybe(struct POINT2D *pCollPoints,
     if ((unsigned)polarRadius3D(&result) > (unsigned)reach)
         return 0;
 
-    matrix = mat_rot_zxy(-pWorldCrds[1].x, -pWorldCrds[1].y,
+    matrix = matrotzxy(-pWorldCrds[1].x, -pWorldCrds[1].y,
                          -pWorldCrds[1].z, 0);
     for (index = 0; index < 4; ++index) {
-        if (word_3BE04[index] == 0)
+        if (collision_point_x_signs[index] == 0)
             point.x = pCollPoints[0].px;
         else
             point.x = -pCollPoints[0].px;
         point.y = 0;
-        if (word_3BE0C[index] == 0)
+        if (collision_point_y_signs[index] == 0)
             point.z = pCollPoints[1].px;
         else
             point.z = -pCollPoints[1].px;
-        mat_mul_vector(&point, matrix, &result);
+        mat_vec(&point, matrix, &result);
         result.x += pWorldCrds[0].x;
         result.y += pWorldCrds[0].y;
         result.z += pWorldCrds[0].z;
         transform[index] = result;
     }
 
-    matrix = mat_rot_zxy(oWorldCrds[1].x, oWorldCrds[1].y,
+    matrix = matrotzxy(oWorldCrds[1].x, oWorldCrds[1].y,
                          oWorldCrds[1].z, 1);
     for (index = 0; index < 4; ++index) {
         point.x = oWorldCrds[0].x - transform[index].x;
         point.y = oWorldCrds[0].y - transform[index].y;
         point.z = oWorldCrds[0].z - transform[index].z;
-        mat_mul_vector(&point, matrix, &result);
+        mat_vec(&point, matrix, &result);
         if (!(result.y >= 0 && result.y <= oCollPoints[0].py &&
             result.x >= -oCollPoints[0].px && result.x <= oCollPoints[0].px &&
             result.z >= -oCollPoints[1].px && result.z <= oCollPoints[1].px))
@@ -2887,32 +2908,32 @@ char car_car_coll_detect_maybe(struct POINT2D *pCollPoints,
         return 1;
     }
 
-    matrix = mat_rot_zxy(-oWorldCrds[1].x, -oWorldCrds[1].y,
+    matrix = matrotzxy(-oWorldCrds[1].x, -oWorldCrds[1].y,
                          -oWorldCrds[1].z, 0);
     for (index = 0; index < 4; ++index) {
-        if (word_3BE04[index] == 0)
+        if (collision_point_x_signs[index] == 0)
             point.x = oCollPoints[0].px;
         else
             point.x = -oCollPoints[0].px;
         point.y = 0;
-        if (word_3BE0C[index] == 0)
+        if (collision_point_y_signs[index] == 0)
             point.z = oCollPoints[1].px;
         else
             point.z = -oCollPoints[1].px;
-        mat_mul_vector(&point, matrix, &result);
+        mat_vec(&point, matrix, &result);
         result.x += oWorldCrds[0].x;
         result.y += oWorldCrds[0].y;
         result.z += oWorldCrds[0].z;
         transform[index] = result;
     }
 
-    matrix = mat_rot_zxy(pWorldCrds[1].x, pWorldCrds[1].y,
+    matrix = matrotzxy(pWorldCrds[1].x, pWorldCrds[1].y,
                          pWorldCrds[1].z, 1);
     for (index = 0; index < 4; ++index) {
         point.x = pWorldCrds[0].x - transform[index].x;
         point.y = pWorldCrds[0].y - transform[index].y;
         point.z = pWorldCrds[0].z - transform[index].z;
-        mat_mul_vector(&point, matrix, &result);
+        mat_vec(&point, matrix, &result);
         if (!(result.y >= 0 && result.y <= pCollPoints[0].py &&
             result.x >= -pCollPoints[0].px && result.x <= pCollPoints[0].px &&
             result.z >= -pCollPoints[1].px && result.z <= pCollPoints[1].px))
@@ -2925,169 +2946,169 @@ char car_car_coll_detect_maybe(struct POINT2D *pCollPoints,
 void init_plantrak(void)
 {
     register short zeroValue;
-    init_game_state(-3);
+    initialize_game_state(-3);
     zeroValue = 0;
-    state.game_inputmode = 2;
-    planptr = plan_memres;
-    startcol2 = 1;
-    startrow2 = 28;
-    td17_trk_elem_ordered[0] = 7; td21_col_from_path[0] = 1; td22_row_from_path[0] = startrow2; trackdata18[0] = 0;
-    td17_trk_elem_ordered[1] = 6; td21_col_from_path[1] = 0; td22_row_from_path[1] = startrow2; trackdata18[1] = 0;
-    td17_trk_elem_ordered[2] = 8; td21_col_from_path[2] = 0; td22_row_from_path[2] = startrow2 + 1; trackdata18[2] = 0;
-    td17_trk_elem_ordered[3] = 9; td21_col_from_path[3] = 1; td22_row_from_path[3] = startrow2 + 1; trackdata18[3] = 0;
-    td17_trk_elem_ordered[4] = 7; td21_col_from_path[4] = 1; td22_row_from_path[4] = startrow2; trackdata18[4] = 0;
-    ((short far *)trackdata3)[0] = zeroValue;
-    ((short far *)trackdata3)[1] = 1; ((short far *)trackdata3)[2] = 2; ((short far *)trackdata3)[3] = 3; ((short far *)trackdata3)[4] = 4;
-    ((short far *)trackdata3)[5] = 1; ((short far *)trackdata3)[6] = 2; ((short far *)trackdata3)[7] = 3; ((short far *)trackdata3)[8] = 4;
-    ((short far *)trackdata3)[9] = 1; ((short far *)trackdata3)[10] = 2; ((short far *)trackdata3)[11] = 3; ((short far *)trackdata3)[12] = 4;
-    ((short far *)trackdata3)[13] = zeroValue; ((short far *)trackdata3)[14] = 1; ((short far *)trackdata3)[15] = 2; ((short far *)trackdata3)[16] = 3; ((short far *)trackdata3)[17] = zeroValue;
-    oppnentSped[0] = 0xC8;
-    init_carstate_from_simd(&state.opponentstate, &simd_opponent, 1,
-        0x17700L, 0L, ((long)(trackpos[28] + 0x12E)) << 6, 0);
-    sub_18D60(((short far *)trackdata3)[state.opponentstate.car_trackdata3_index],
-        &state.opponentstate.car_vec_unk3, state.opponentstate.field_CE++,
-        &state.field_3F9);
+    core.game_inputmode = 2;
+    g_planlist = plan_memres;
+    idxtrk = 1;
+    tagtrk = 28;
+    road_trk[0] = 7; g_column_of_trkdata21_pth[0] = 1; tdfrompathrow22[0] = tagtrk; td_18_ref[0] = 0;
+    road_trk[1] = 6; g_column_of_trkdata21_pth[1] = 0; tdfrompathrow22[1] = tagtrk; td_18_ref[1] = 0;
+    road_trk[2] = 8; g_column_of_trkdata21_pth[2] = 0; tdfrompathrow22[2] = tagtrk + 1; td_18_ref[2] = 0;
+    road_trk[3] = 9; g_column_of_trkdata21_pth[3] = 1; tdfrompathrow22[3] = tagtrk + 1; td_18_ref[3] = 0;
+    road_trk[4] = 7; g_column_of_trkdata21_pth[4] = 1; tdfrompathrow22[4] = tagtrk; td_18_ref[4] = 0;
+    ((short far *)td3)[0] = zeroValue;
+    ((short far *)td3)[1] = 1; ((short far *)td3)[2] = 2; ((short far *)td3)[3] = 3; ((short far *)td3)[4] = 4;
+    ((short far *)td3)[5] = 1; ((short far *)td3)[6] = 2; ((short far *)td3)[7] = 3; ((short far *)td3)[8] = 4;
+    ((short far *)td3)[9] = 1; ((short far *)td3)[10] = 2; ((short far *)td3)[11] = 3; ((short far *)td3)[12] = 4;
+    ((short far *)td3)[13] = zeroValue; ((short far *)td3)[14] = 1; ((short far *)td3)[15] = 2; ((short far *)td3)[16] = 3; ((short far *)td3)[17] = zeroValue;
+    opponent_spd_tbl[0] = 0xC8;
+    init_carstate_from_simd(&core.opponentstate, &ophys_7, 1,
+        0x17700L, 0L, ((long)(r_zp[28] + 0x12E)) << 6, 0);
+    track_edge_points(((short far *)td3)[core.opponentstate.car_trackdata3_index],
+        &core.opponentstate.car_vec_unk3, core.opponentstate.field_CE++,
+        &core.field_3F9);
 }
 
 void do_opponent_op(void) { opponent_op(); }
 
 void update_crash_state(int arg_someFlag, int arg_MplayerFlag) {
-	char var_2;
+	char suppress_car_speed;
 	struct CARSTATE* var_cState;
 
 	switch (arg_MplayerFlag) {
 	case 0:
-		var_cState = &state.playerstate;
+		var_cState = &core.playerstate;
 		break;
 	case 1:
-		var_cState = &state.opponentstate;
+		var_cState = &core.opponentstate;
 		break;
 	}
 	if (var_cState->car_crashBmpFlag != 0)
 		return;
 
-	var_2 = 0;
+	suppress_car_speed = 0;
 	switch (arg_someFlag) {
 	case 4:
-		state.game_frame_in_sec = 1;
-		state.game_frames_per_sec = 1;
+		core.game_frame_in_sec = 1;
+		core.game_frames_per_sec = 1;
 		break;
 	case 5:
 		arg_someFlag = 1;
-		var_2 = 1;
+		suppress_car_speed = 1;
 	case 1:
 		var_cState->car_crashBmpFlag = 1;
 		state_op_unk(arg_MplayerFlag, var_cState->car_rotate.x, 0);
 		if (arg_MplayerFlag == 0) {
-			state.game_impactSpeed = var_cState->car_speed2;
-			state.game_frames_per_sec = data_349D0 << 2;
+			core.game_impactSpeed = var_cState->car_speed2;
+			core.game_frames_per_sec = rate_frame << 2;
 		}
-		if (is_in_replay == 0 && byte_459D8 != 0) {
+		if (inrepflg == 0 && sndpendingstate != 0) {
 			if (arg_MplayerFlag == 0)
-				audio_function2_wrap(word_43964);
+				audio_function2_wrap(g_player_sound_id);
 			else
-				audio_function2_wrap(word_4408C);
+				audio_function2_wrap(op_eng_sound_id);
 		}
 		break;
 	case 2:
-		if (is_in_replay == 0 && byte_459D8 != 0) {
+		if (inrepflg == 0 && sndpendingstate != 0) {
 			if (arg_MplayerFlag == 0)
-				audio_function2_wrap(word_43964);
+				audio_function2_wrap(g_player_sound_id);
 			else
-				audio_function2_wrap(word_4408C);
+				audio_function2_wrap(op_eng_sound_id);
 		}
 		var_cState->car_crashBmpFlag = 2;
-		var_2 = 1;
+		suppress_car_speed = 1;
 		if (arg_MplayerFlag == 0) {
-			state.game_impactSpeed = var_cState->car_speed2;
-			state.game_frames_per_sec = data_349D0 << 2;
+			core.game_impactSpeed = var_cState->car_speed2;
+			core.game_frames_per_sec = rate_frame << 2;
 		}
 		break;
 	case 3:
 		var_cState->car_crashBmpFlag = 3;
 		if (arg_MplayerFlag == 0) {
-			state.game_total_finish = state.game_frame + state.game_penalty + elapsed_time1;
-			state.game_frames_per_sec = data_349D0;
+			core.game_total_finish = core.game_frame + core.game_penalty + elaptm1;
+			core.game_frames_per_sec = rate_frame;
 		} else {
-			state.field_144 = state.game_frame + elapsed_time1;
+			core.field_144 = core.game_frame + elaptm1;
 		}
 		break;
 	}
-	if (var_2 != 0) {
+	if (suppress_car_speed != 0) {
 		var_cState->car_speed2 = 0;
 		var_cState->car_speed = 0;
 	}
 	if (arg_MplayerFlag != 0)
-		state.game_oEndFrame = state.game_frame;
+		core.game_oEndFrame = core.game_frame;
 	else
-		state.game_pEndFrame = state.game_frame;
-	if (state.game_3F6autoLoadEvalFlag == 0 && arg_MplayerFlag == 0)
-		state.game_3F6autoLoadEvalFlag = arg_someFlag;
-	if ((byte_43966 & 4) == 0)
-		gState_travDist = *(struct GAMESTATE_SNAPSHOT *)&state.game_travDist;
+		core.game_pEndFrame = core.game_frame;
+	if (core.game_3F6autoLoadEvalFlag == 0 && arg_MplayerFlag == 0)
+		core.game_3F6autoLoadEvalFlag = arg_someFlag;
+	if ((endhsdemo & 4) == 0)
+		total_game = *(struct GAMESTATE_SNAPSHOT *)&core.game_travDist;
 }
 
-void plane_rotate_op(void) {
+void plnrotop(void) {
 	struct VECTOR rotatedVector;
 	struct MATRIX rotationMatrix;
 	struct MATRIX matrix;
 	struct VECTOR vector;
 	register int rotation;
 
-	if (planindex_copy != -1) {
-		if (planptr[planindex_copy].plane_xy == pState_minusRotate_x_2 &&
-		    planptr[planindex_copy].plane_yz == pState_minusRotate_z_2) {
-			rotation = pState_minusRotate_y_2;
+	if (g_planidx2 != -1) {
+		if (g_planlist[g_planidx2].plane_xy == car_roty_pln &&
+		    g_planlist[g_planidx2].plane_yz == pln_rotate_z) {
+			rotation = car_rotate_xc;
 		} else {
-			mat_mul_vector(&vec_unk2, &mat_unk, &vector);
-			matrix = planptr[planindex_copy].plane_rotation;
+			mat_vec(&tvec2, &matrix_transform_view, &vector);
+			matrix = g_planlist[g_planidx2].plane_rotation;
 			mat_invert(&matrix, &rotationMatrix);
-			mat_mul_vector(&vector, &rotationMatrix, &rotatedVector);
-			rotation = polarAngle(-rotatedVector.x, rotatedVector.z);
+			mat_vec(&vector, &rotationMatrix, &rotatedVector);
+			rotation = polang(-rotatedVector.x, rotatedVector.z);
 		}
-		if ((rotation += pState_f36Mminf40sar2) != 0) {
-			if (word_3BE16 != rotation) {
-				mat_rot_y(&mat_planetmp, -rotation);
-				word_3BE16 = rotation;
+		if ((rotation += frwhl_angadjusted) != 0) {
+			if (last_track_rotation != rotation) {
+				matroty(&plane_rotation_cache, -rotation);
+				last_track_rotation = rotation;
 			}
-			mat_mul_vector(&vec_unk2, &mat_planetmp, &rotatedVector);
-			mat_mul_vector2(&rotatedVector, &planptr[planindex_copy].plane_rotation, &vec_planerotopresult);
+			mat_vec(&tvec2, &plane_rotation_cache, &rotatedVector);
+			mat_mul_vector2(&rotatedVector, &g_planlist[g_planidx2].plane_rotation, &pln_rot_output);
 			return;
 		}
-		mat_mul_vector2(&vec_unk2, &planptr[planindex_copy].plane_rotation, &vec_planerotopresult);
+		mat_mul_vector2(&tvec2, &g_planlist[g_planidx2].plane_rotation, &pln_rot_output);
 		return;
 	}
-	if (pState_f36Mminf40sar2 != 0) {
-		if (pState_f36Mminf40sar2 != f36f40_whlData) {
-			mat_rot_y(&mat_unk2, -pState_f36Mminf40sar2);
-			f36f40_whlData = pState_f36Mminf40sar2;
+	if (frwhl_angadjusted != 0) {
+		if (frwhl_angadjusted != f36f40_whlData) {
+			matroty(&fallback_rotation_cache, -frwhl_angadjusted);
+			f36f40_whlData = frwhl_angadjusted;
 		}
-		mat_mul_vector(&vec_unk2, &mat_unk2, &rotatedVector);
-		mat_mul_vector(&rotatedVector, &mat_unk, &vec_planerotopresult);
+		mat_vec(&tvec2, &fallback_rotation_cache, &rotatedVector);
+		mat_vec(&rotatedVector, &matrix_transform_view, &pln_rot_output);
 		return;
 	}
-	mat_mul_vector(&vec_unk2, &mat_unk, &vec_planerotopresult);
+	mat_vec(&tvec2, &matrix_transform_view, &pln_rot_output);
 }
 
-int plane_origin_op(int arg_planindex, int x, int y, int z) {
+int plnoriginop(int arg_planindex, int x, int y, int z) {
 	struct PLANE far* pPlane;
 	struct VECTOR a;
 	struct VECTOR b;
 	
-	if (arg_planindex == planindex) {
-		pPlane = current_planptr;
+	if (arg_planindex == pl_i) {
+		pPlane = plncurrptr;
 	} else {
-		pPlane = &planptr[arg_planindex];
+		pPlane = &g_planlist[arg_planindex];
 	}
 
-	b.y = pPlane->plane_origin.y + terrainHeight;
+	b.y = pPlane->plane_origin.y + hgthgt;
 	a.y = y - b.y;
 	if (arg_planindex < 4) {
 		
 		return a.y;
 	}
-	b.x = pPlane->plane_origin.x + elem_xCenter;
-	b.z = pPlane->plane_origin.z + elem_zCenter;
+	b.x = pPlane->plane_origin.x + x_course_part;
+	b.z = pPlane->plane_origin.z + road_elem_ctrz;
 	a.x = x - b.x;
 	a.z = z - b.z;
 	return vec_normalInnerProduct(a.x, a.y, a.z, &pPlane->plane_normal);
@@ -3124,27 +3145,27 @@ void state_op_unk(int mode, short angle, short speed)
         phaseBase = 0;
         verticalStep = 1;
     }
-    state.field_42A = 1;
+    core.field_42A = 1;
     unusedCount = 0;
     for (debrisIndex = 0; debrisIndex < 24; ++debrisIndex)
-        if (state.field_38E[debrisIndex] == 0)
+        if (core.field_38E[debrisIndex] == 0)
             ++unusedCount;
     if (unusedCount > countLimit) unusedCount = countLimit;
 
     made = 0;
     for (debrisIndex = 0; debrisIndex < 24; ++debrisIndex) {
-        if (state.field_38E[debrisIndex] == 0) {
-            state.field_443[debrisIndex] = (char)mode;
-            state.field_42B[debrisIndex] = (char)((made & 3) + phaseBase);
-            state.game_longs1[debrisIndex] = 0;
-            state.game_longs2[debrisIndex] = 0;
-            state.game_longs3[debrisIndex] = 0;
-            state.field_2FE[debrisIndex] = (short)(get_kevinrandom() << 2);
-            state.field_32E[debrisIndex] = (short)(get_kevinrandom() << 2);
-            state.field_35E[debrisIndex] = (short)((((long)speedFactor * made) / unusedCount + startAngle) & 0x3FF);
+        if (core.field_38E[debrisIndex] == 0) {
+            core.field_443[debrisIndex] = (char)mode;
+            core.field_42B[debrisIndex] = (char)((made & 3) + phaseBase);
+            core.game_longs1[debrisIndex] = 0;
+            core.game_longs2[debrisIndex] = 0;
+            core.game_longs3[debrisIndex] = 0;
+            core.field_2FE[debrisIndex] = (short)(get_kevinrandom() << 2);
+            core.field_32E[debrisIndex] = (short)(get_kevinrandom() << 2);
+            core.field_35E[debrisIndex] = (short)((((long)speedFactor * made) / unusedCount + startAngle) & 0x3FF);
             verticalValue = (short)(((get_kevinrandom() * 6) >> 2) + speed + 0x180);
-            state.field_38E[debrisIndex] = verticalValue;
-            state.field_3BE[debrisIndex] = (short)((verticalStep * verticalValue) >> 2);
+            core.field_38E[debrisIndex] = verticalValue;
+            core.field_3BE[debrisIndex] = (short)((verticalStep * verticalValue) >> 2);
             if (++made == unusedCount)
                 break;
         } else
@@ -3152,63 +3173,119 @@ void state_op_unk(int mode, short angle, short speed)
     }
 }
 
-void sub_19BA0(void)
+void update_crash_debris(void)
 {
     struct MATRIX *matrixPointer;
     char keepAlive = 0;
     register int i;
     for (i = 0; i < 24; ++i) {
-        if (state.field_38E[i] != 0) {
+        if (core.field_38E[i] != 0) {
             struct VECTOR inputVector;
             struct VECTOR outputVector;
-            matrixPointer = mat_rot_zxy(0, 0, state.field_35E[i], 1);
+            matrixPointer = matrotzxy(0, 0, core.field_35E[i], 1);
             inputVector.x = 0;
             inputVector.y = 0;
-            inputVector.z = state.field_38E[i];
-            mat_mul_vector(&inputVector, matrixPointer, &outputVector);
-            state.game_longs1[i] += outputVector.x;
-            state.game_longs3[i] += outputVector.z;
-            state.field_3BE[i] -= 0x13;
-            state.game_longs2[i] += state.field_3BE[i];
-            if (data_349D0 == 10) {
-                state.field_3BE[i] -= 0x13;
-                state.game_longs2[i] += state.field_3BE[i];
+            inputVector.z = core.field_38E[i];
+            mat_vec(&inputVector, matrixPointer, &outputVector);
+            core.game_longs1[i] += outputVector.x;
+            core.game_longs3[i] += outputVector.z;
+            core.field_3BE[i] -= 0x13;
+            core.game_longs2[i] += core.field_3BE[i];
+            if (rate_frame == 10) {
+                core.field_3BE[i] -= 0x13;
+                core.game_longs2[i] += core.field_3BE[i];
             }
-            if (state.playerstate.car_posWorld1.ly + state.game_longs2[i] < 0) {
-                state.field_38E[i] = 0;
+            if (core.playerstate.car_posWorld1.ly + core.game_longs2[i] < 0) {
+                core.field_38E[i] = 0;
             } else {
                 keepAlive = 1;
-                state.field_2FE[i] += 0x10;
-                state.field_32E[i] += 0x10;
+                core.field_2FE[i] += 0x10;
+                core.field_32E[i] += 0x10;
             }
         }
     }
-    state.field_42A = keepAlive;
+    core.field_42A = keepAlive;
 }
 extern char far *locate_shape_alt(char far *data, char *name);
 extern void copy_string(char *destination, char far *source);
-extern char gnam_string[];
-extern char gsna_string[];
+extern char textstr[];
+extern char g_gsnashape_data[];
 
 void setup_aero_trackdata(void far *carresptr, int is_opponent)
 {
     register int i;
     if (is_opponent == 0) {
-        simd_player = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
-        simd_player.aerorestable = td04_aerotable_pl;
+        simdp7 = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
+        simdp7.aerorestable = track04_plyraero;
         for (i = 0; i < 0x40; i++) {
-            td04_aerotable_pl[i] = ((long)simd_player.aero_resistance * (long)i * (long)i) >> 9;
+            track04_plyraero[i] = ((long)simdp7.aero_resistance * (long)i * (long)i) >> 9;
         }
-        copy_string(gnam_string, locate_shape_alt(carresptr, "gnam"));
+        copy_string(textstr, locate_shape_alt(carresptr, "gnam"));
     } else {
-        simd_opponent = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
-        simd_opponent.aerorestable = td05_aerotable_op;
+        ophys_7 = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
+        ophys_7.aerorestable = trackdata_05_opp_aerotbl;
         for (i = 0; i < 0x40; i++) {
-            td05_aerotable_op[i] = ((long)simd_opponent.aero_resistance * (long)i * (long)i) >> 9;
+            trackdata_05_opp_aerotbl[i] = ((long)ophys_7.aero_resistance * (long)i * (long)i) >> 9;
         }
-        copy_string(gsna_string, locate_shape_alt(carresptr, "gsna"));
+        copy_string(g_gsnashape_data, locate_shape_alt(carresptr, "gsna"));
     }
 }
+
+/* Communals defined by this module (tentative definitions). */
+char g_plyr_snd_state;
+char audiooppflag;
+int wallanchor_z;
+short far* trackdata_penalty_related;
+int g_player_sound_id;
+int op_eng_sound_id;
+struct MATRIX matrix_transform_view;
+int rotxvehicle;
+struct GAMESTATE core;
+int yrotrotveh;
+int anglerotate_car;
+char idxtrk;
+char g_hillf;
+char tagtrk;
+char pen_flag_count;
+long centerpos;
+long veh_position;
+long veh_z;
+short rate_frame;
+char far* road_trk;
+short sndposrecord;
+char *table_lookup;
+short far* track04_plyraero;
+short far* trackdata_05_opp_aerotbl;
+unsigned char opponent_spd_tbl[16];
+struct PLANE far* plncurrptr;
+short g_sgateopn;
+struct VECTOR tvec2;
+struct VECTOR pln_rot_output;
+int pln_rotate_z;
+int car_roty_pln;
+int car_rotate_xc;
+int frwhl_angadjusted;
+int g_planidx2;
+char audio_frmarr[1360];
+struct PLANE far* g_planlist;
+char far* td_18_ref;
+short st_hdg;
+char far* g_column_of_trkdata21_pth;
+struct SIMD ophys_7;
+char sndpendingstate;
+char far* tdfrompathrow22;
+int nextpos_normalip;
+short g_cvxintvl;
+struct GAMESTATE huge* cvxs_a;
+int wall_facingang;
+int trackctrpos2[30];
+struct SIMD simdp7;
+int row_ctr_zs[30];
+int g_penaltytm;
+short framerate_pad_0;
+short extra_rclist4[2];
+short spare_td22_1;
+short fontled_free_4[2];
 
 
 
