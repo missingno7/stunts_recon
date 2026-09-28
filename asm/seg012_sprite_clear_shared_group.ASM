@@ -29,7 +29,7 @@ _nopsub_34736 proc far
     mov     ax, [bp+arg_6]
     sub     ax, [di+6]
     mov     [bp+var_4], ax
-    jmp     short loc_34799
+    jmp     short sprite_clear_shape_shared_exit
     ; align 2
     db 144
 _nopsub_34736 endp
@@ -57,7 +57,7 @@ _sprite_clear_shape_alt proc far
     mov     ax, [bp+arg_8]
     mov     [bp+var_4], ax
     mov     [di+0Ah], ax
-    jmp     short loc_34799
+    jmp     short sprite_clear_shape_shared_exit
     ; align 2
     db 144
 _sprite_clear_shape_alt endp
@@ -84,7 +84,7 @@ _sprite_clear_shape proc far
     mov     [bp+var_2], ax
     mov     ax, [di+0Ah]
     mov     [bp+var_4], ax
-loc_34799:
+sprite_clear_shape_shared_exit:
     mov     ax, [di]
     mov     [bp+var_8], ax
     mov     ax, [di+2]
@@ -98,7 +98,7 @@ loc_34799:
     add     di, 10h
     cld
     mov     dx, [bp+var_A]
-loc_347C0:
+sprite_clear_shape_copy_loop:
     mov     bx, [bp+var_6]
     mov     si, cs:[bx]
     add     si, [bp+var_2]
@@ -106,7 +106,7 @@ loc_347C0:
     rep movsb
     add     [bp+var_6], 2
     dec     dx
-    jg      short loc_347C0
+    jg      short sprite_clear_shape_copy_loop
     pop     di
     pop     si
     pop     ds

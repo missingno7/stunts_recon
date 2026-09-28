@@ -42,13 +42,13 @@ _sub_35E08 proc far
 
     push    bp
     mov     bp, sp
-loc_35E0B:
+sprite_continue_path:
     sub     sp, 16h
     push    ds
     push    si
     push    di
     mov     ds, [bp+arg_4]
-loc_35E14:
+sprite_load_source_value:
     mov     si, [bp+arg_2]
     mov     cx, [bp+arg_6]
     mov     ax, [si+4]
@@ -62,7 +62,7 @@ loc_35E14:
     sub     cl, ah
     sbb     ch, dl
     mov     [bp+var_4], cx
-    jmp     short loc_35E7A
+    jmp     short transparent_sprite_shared_exit
     ; align 2
     db 144
     push    bp
@@ -77,10 +77,10 @@ loc_35E14:
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_8]
     mov     [bp+var_4], ax
-    jmp     short loc_35E7A
+    jmp     short transparent_sprite_shared_exit
     ; align 2
     db 144
-loc_35E58:
+transparent_sprite_scan_loop:
     pop     di
     pop     si
     pop     ds
@@ -99,16 +99,16 @@ loc_35E58:
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
-loc_35E7A:
+transparent_sprite_shared_exit:
     cmp     [bp+arg_0], 2
-    jb      short loc_35E58
+    jb      short transparent_sprite_scan_loop
     cld
     mov     ax, [si+2]
     mul     [bp+arg_0]
     mov     al, ah
     mov     ah, dl
     or      ax, ax
-    jz      short loc_35E58
+    jz      short transparent_sprite_scan_loop
     mov     [bp+var_8], ax
     mov     ax, [si]
     mov     [bp+var_A], ax
@@ -116,7 +116,7 @@ loc_35E7A:
     mov     al, ah
     mov     ah, dl
     or      ax, ax
-    jz      short loc_35E58
+    jz      short transparent_sprite_scan_loop
     mov     [bp+var_6], ax
     mov     dx, cs:_sprite1.sprite_pitch
     sub     dx, ax
@@ -131,13 +131,13 @@ loc_35E7A:
     mov     al, ah
     xor     ah, ah
     shr     ax, 1
-    jz      short loc_35ED3
+    jz      short transparent_sprite_when_zero
     add     si, ax
     mov     cx, ax
-loc_35ECE:
+transparent_sprite_scan_loop_2:
     add     si, [bp+var_A]
-    loop    loc_35ECE
-loc_35ED3:
+    loop    transparent_sprite_scan_loop_2
+transparent_sprite_when_zero:
     mov     [bp+var_E], si
     mov     [bp+var_10], dx
     var_14 = word ptr -20
@@ -167,38 +167,38 @@ _loc_35ED9:
     mov     dx, [bp+var_10]
     mov     ax, [bp+var_12]
     mov     ss:54AAh, ax
-loc_35EF9:
+transparent_sprite_scan_loop_3:
     mov     cx, [bp+var_6]
     mov     bx, [bp+var_14]
-loc_35EFF:
+transparent_sprite_scan_loop_4:
     mov     al, [si]
     cmp     al, 0FFh
-    jz      short loc_35F08
+    jz      short transparent_sprite_when_zero_2
     mov     es:[di], al
-loc_35F08:
+transparent_sprite_when_zero_2:
     inc     di
     add     bx, dx
     mov     al, bh
     xor     ah, ah
     add     si, ax
     xor     bh, bh
-    loop    loc_35EFF
+    loop    transparent_sprite_scan_loop_4
     dec     [bp+var_8]
-    jle     short loc_35F40
+    jle     short sprite_return_if_less_or_equal
     add     di, [bp+var_C]
     mov     si, [bp+var_E]
     add     ss:54AAh, dx
     mov     cl, ss:54ABh
     or      cl, cl
-    jz      short loc_35EF9
+    jz      short transparent_sprite_scan_loop_3
     xor     ch, ch
-loc_35F30:
+transparent_sprite_scan_loop_5:
     add     si, [bp+var_A]
-    loop    loc_35F30
+    loop    transparent_sprite_scan_loop_5
     mov     byte ptr ss:54ABh, 0
     mov     [bp+var_E], si
-    jmp     short loc_35EF9
-loc_35F40:
+    jmp     short transparent_sprite_scan_loop_3
+sprite_return_if_less_or_equal:
     pop     di
     pop     si
     pop     ds

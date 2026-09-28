@@ -1,5 +1,6 @@
 """Complete module composition, local fixups, and ordered relocation controls."""
 import copy
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -13,6 +14,27 @@ from common import read_json
 from multi_contribution import bind_multi
 from mz import MZ
 from oracle import verify
+
+SYMBOL_ALIASES = {'_word_3F87C': '_timer_elapsed_ticks_low',
+                  '_word_3F87E': '_timer_elapsed_ticks_high',
+                  '_word_4031E': '_line_pattern_bits',
+                  '_word_40320': '_prerender_auxiliary_arg'}
+
+
+def _rename(value):
+    if isinstance(value, dict):
+        return {SYMBOL_ALIASES.get(key, key): _rename(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_rename(item) for item in value]
+    return SYMBOL_ALIASES.get(value, value) if isinstance(value, str) else value
+
+
+def _rename_source(source):
+    text = source.decode('latin-1')
+    for old, new in SYMBOL_ALIASES.items():
+        text = re.sub(r'(?<![A-Za-z0-9_$?@])' + re.escape(old) +
+                      r'(?![A-Za-z0-9_$?@])', new, text)
+    return text.encode('latin-1')
 
 
 class Integ18Tests(unittest.TestCase):
@@ -30,8 +52,23 @@ class Integ18Tests(unittest.TestCase):
             ('self_far','asm-a/sub_2EAD4_group.ASM','integ18/sub_2EAD4_group.recipe.json'),
             ('near_code','asm-a/preRender_unk_group.ASM','integ18/preRender_unk_group.recipe.json'),
         ):
-            recipe=read_json(ROOT/'build/workers'/recipe_path)
-            obj,_=assemble_source((ROOT/'build/workers'/source).read_bytes(),recipe['profile'])
+            recipe=_rename(read_json(ROOT/'build/workers'/recipe_path))
+            source_bytes=_rename_source((ROOT/'build/workers'/source).read_bytes())
+            obj,_=assemble_source(source_bytes,recipe['profile'])
+            expected=recipe['expected_fixups']
+            actual=obj.linker_fixups
+            sites=lambda row:(row['segment'],row['offset'],row['width'],row['loc'])
+            if len(expected)!=len(actual) or [sites(x) for x in expected]!=[sites(x) for x in actual]:
+                raise AssertionError('Renamed integration fixture changed ordered FIXUPP sites')
+            index_fields={'frame_index','target_index'}
+            for before,after in zip(expected,actual):
+                differences={k for k in set(before)|set(after)
+                             if before.get(k)!=after.get(k)}
+                if differences-index_fields:
+                    raise AssertionError('Renamed integration fixture changed non-index FIXUPP data')
+            recipe['expected_fixups']=actual
+            recipe['object_declarations']={'segments':obj.segment_defs,'groups':obj.groups,
+                'publics':obj.publics,'externals':obj.externals}
             cls.cases[name]=(obj,recipe)
 
     def bind(self,name,obj=None,recipe=None):

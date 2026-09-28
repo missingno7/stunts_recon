@@ -56,18 +56,23 @@ class NamesRegistryTests(unittest.TestCase):
 
     def test_accepted_objects_no_longer_use_superseded_spellings(self):
         declared = set()
+        declared_by_owner = {}
         for owner in read_json(ROOT / 'layout/manifest.json')['owners']:
             if not owner.get('recipe') or owner['kind'] not in ('MATCHING_C', 'MATCHING_ASM',
                                                                   'MATCHING_C_DATA', 'MATCHING_ASM_DATA'):
                 continue
             recipe = read_json(ROOT / owner['recipe'])
             decl = recipe.get('object_declarations') or recipe.get('binding', {}).get('declarations') or {}
-            declared |= {p['name'] for p in decl.get('publics', [])} | set(decl.get('externals', []))
+            names = {p['name'] for p in decl.get('publics', [])} | set(decl.get('externals', []))
+            names |= {row['name'] for row in recipe.get('communal_declarations', [])}
+            declared |= names
+            declared_by_owner[owner['id']] = names
             if recipe.get('public'):
                 declared.add(recipe['public'])
         aliases = {}
         for name, symbol in read_json(ROOT / 'layout/data-symbols.json')['symbols'].items():
             aliases.setdefault(symbol['load_address'], set()).add(name)
+        code_aliases = read_json(ROOT / 'layout/code-symbols.json')['symbols']
         for address, row in self.registry.items():
             if row.get('object_declared') is False:
                 # integ33: a module-private label (no PUBDEF/EXTDEF anywhere) keeps its
@@ -77,6 +82,18 @@ class NamesRegistryTests(unittest.TestCase):
             self.assertIn('_' + row['name'], declared, row)
             if row['kind'] == 'code' and row['inventory_name'] != row['name']:
                 old = '_' + row['inventory_name']
+                if old in code_aliases:
+                    # seg007 retains historical external spellings where the reviewed
+                    # anchored code-symbol binding maps them to the normalized owner.
+                    alias = code_aliases[old]
+                    self.assertEqual(alias['mapped_target']['start'], int(address), row)
+                    self.assertEqual(alias['mapped_target']['name'], row['inventory_name'], row)
+                    declaring_owners = {owner for owner, names in declared_by_owner.items() if old in names}
+                    if declaring_owners:
+                        self.assertEqual(declaring_owners, {'obj_seg007'}, row)
+                    else:
+                        self.assertNotIn(old, declared, row)
+                    continue
                 self.assertNotIn(old, declared, row)
                 self.assertNotIn(old[:31], declared - {'_' + row['name']}, row)
 

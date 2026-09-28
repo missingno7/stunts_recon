@@ -237,6 +237,19 @@ extern char aOlt[];
 extern char aOlt_0[];
 extern char aOver[];
 extern char aOwt[];
+struct GAMESTATE_SNAPSHOT {
+    long game_travDist;
+    unsigned short game_frame;
+    short game_total_finish;
+    short field_144;
+    short game_pEndFrame;
+    short game_oEndFrame;
+    unsigned short game_penalty;
+    unsigned short game_impactSpeed;
+    unsigned short game_topSpeed;
+    short game_jumpCount;
+};
+
 extern char aPpt[];
 extern char aSkidms_1[];
 extern char aSkidms_2[];
@@ -259,16 +272,7 @@ static short end_hiscore_random;
 extern unsigned int fontdefvalue;
 void far *fntndat;
 extern unsigned short rate_frame;
-short best_timeold;
-short idx_time_gm;
-short crash_velocityvalue;
-short total_game_jump;
-short countgend;
-short finish_count;
-short value_game_pen;
-short max_speed_value;
-short best_game_time;
-unsigned long total_game;
+struct GAMESTATE_SNAPSHOT race_stats;
 char buf_g_path[94];
 extern struct SHAPE3D g_shapes3d[125];
 struct GAMEINFO globalgamesettings;
@@ -1952,46 +1956,46 @@ char aOpp2lose[] = "opp2lose";
 char aOp01[] = "op01";
 char far end_hiscore(void)
 {
-  char newEval;
-  char lineBuffer[18];
+  char newEvaluation;
+  char formattedRaceTextBuffer[18];
   char opponent;
   struct SPRITE far *hiddenWindow;
   int animTime;
   int textLen;
   char glyph;
-  char fragment[32];
+  char currentWordText[32];
   void far *scoreResource;
   char resultMode;
-  char blitFlag;
+  char screenBlitFlag;
   int pixels;
   void far *textFile;
   char far *trackFile;
-  char far *frameList;
+  char far *animationFrameList;
   struct SHAPE2D far *shapePtr;
-  char prevFrame;
+  char previousAnimationFrame;
   char resChar;
   void far *enemyRes;
   int buttonsX1[4];
   int src;
-  char lastMenu;
-  register int key;
+  char priorMenuIndex;
+  register int inputKey;
   register int i;
-  int timeDelta;
+  int animationTimeDelta;
   int y;
   char newRecord;
   char far *menuText;
   int parts;
-  unsigned short scoreTime;
-  char far *textPtr;
+  unsigned short finalScoreTimeForRecord;
+  char far *textResourceCursor;
   char clickedButton;
   int wordLen;
   int wordWidth;
-  int animX;
-  int btnX2[4];
-  char selectedMenu;
-  int animY;
-  char currentFrame;
-  int xOffset;
+  int animationXPosition;
+  int buttonX2Positions[4];
+  char currentMenuSelection;
+  int animationYPosition;
+  char currentAnimationFrame;
+  int screenXOffset;
 
   ensure_file_exists(4);
   textFile = file_load_resource_file("misc");
@@ -2003,25 +2007,25 @@ char far end_hiscore(void)
   g_wndspr = sprite_make_window(0x140, 0xc8, 0x0f);
   if (g_videoflg5 != 0)
     hiddenWindow = sprite_make_window(0xc8, 0x64, 0x0f);
-  blitFlag = -1;
+  screenBlitFlag = -1;
   sprite_copy_wnd_to_1_clear();
   draw_button(0, 0, 0, 0x140, 0x64, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   draw_button(0, 0, 0x65, 0x140, 0x63, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   y = 0x6b;
   copy_string(resbuftext, locate_text_resource(textFile, "elt"));
-  if (best_game_time != 0)
+  if (race_stats.game_total_finish != 0)
   {
-    fmtframestr(lineBuffer, best_game_time - value_game_pen, 1);
-    strcat(resbuftext, lineBuffer);
+    fmtframestr(formattedRaceTextBuffer, race_stats.game_total_finish - race_stats.game_penalty, 1);
+    strcat(resbuftext, formattedRaceTextBuffer);
     if (endhsdemo & 2)
       copy_string(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "con"));
     hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
     y += 10;
-    if (value_game_pen != 0)
+    if (race_stats.game_penalty != 0)
     {
       copy_string(resbuftext, locate_text_resource(textFile, "ppt"));
-      fmtframestr(lineBuffer, value_game_pen, 1);
-      strcat(resbuftext, lineBuffer);
+      fmtframestr(formattedRaceTextBuffer, race_stats.game_penalty, 1);
+      strcat(resbuftext, formattedRaceTextBuffer);
       hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
       y += 10;
     }
@@ -2035,26 +2039,26 @@ char far end_hiscore(void)
   resultMode = 2;
   if (globalgamesettings.game_opponenttype != 0)
   {
-    if (best_timeold == 0)
+    if (race_stats.field_144 == 0)
     {
       copy_string(resbuftext, locate_text_resource(textFile, "olt"));
       copy_string(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "dnf"));
-      if (best_game_time != 0)
+      if (race_stats.game_total_finish != 0)
         resultMode = 0;
     }
-    else if (best_game_time == 0 || (unsigned short) best_timeold < (unsigned short) best_game_time)
+    else if (race_stats.game_total_finish == 0 || (unsigned short) race_stats.field_144 < (unsigned short) race_stats.game_total_finish)
     {
       copy_string(resbuftext, locate_text_resource(textFile, "owt"));
-      fmtframestr(lineBuffer, best_timeold, 1);
-      strcat(resbuftext, lineBuffer);
+      fmtframestr(formattedRaceTextBuffer, race_stats.field_144, 1);
+      strcat(resbuftext, formattedRaceTextBuffer);
       resultMode = 1;
     }
     else
     {
       copy_string(resbuftext, locate_text_resource(textFile, "olt"));
-      fmtframestr(lineBuffer, best_timeold, 1);
-      strcat(resbuftext, lineBuffer);
-      if (best_game_time != 0)
+      fmtframestr(formattedRaceTextBuffer, race_stats.field_144, 1);
+      strcat(resbuftext, formattedRaceTextBuffer);
+      if (race_stats.game_total_finish != 0)
         resultMode = 0;
     }
     hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
@@ -2066,36 +2070,36 @@ char far end_hiscore(void)
     file_load_audio_resource("skidover", "skidms", "OVER");
   opponent = globalgamesettings.game_opponenttype;
   if (resultMode == 2)
-    if (countgend != finish_count)
+    if (race_stats.game_oEndFrame != race_stats.game_pEndFrame)
     opponent = 0;
   copy_string(resbuftext, locate_text_resource(textFile, "avs"));
-  (finish_count + elaptm1) != 0 ?
-    (i = (int) ((total_game / (unsigned short) (finish_count + elaptm1)) >> 8)) : (i = 0);
-  print_int_as_string_maybe(lineBuffer, i, 0, 3);
-  strcat(resbuftext, lineBuffer);
+  (race_stats.game_pEndFrame + elaptm1) != 0 ?
+    (i = (int) ((race_stats.game_travDist / (unsigned short) (race_stats.game_pEndFrame + elaptm1)) >> 8)) : (i = 0);
+  print_int_as_string_maybe(formattedRaceTextBuffer, i, 0, 3);
+  strcat(resbuftext, formattedRaceTextBuffer);
   copy_string(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "mph"));
   hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
   y += 10;
-  if (crash_velocityvalue != 0)
+  if (race_stats.game_impactSpeed != 0)
   {
     copy_string(resbuftext, locate_text_resource(textFile, "imp"));
-    print_int_as_string_maybe(lineBuffer, (unsigned short) crash_velocityvalue >> 8, 0, 3);
-    strcat(resbuftext, lineBuffer);
+    print_int_as_string_maybe(formattedRaceTextBuffer, (unsigned short) race_stats.game_impactSpeed >> 8, 0, 3);
+    strcat(resbuftext, formattedRaceTextBuffer);
     copy_string(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "mph"));
     hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
     y += 10;
   }
   copy_string(resbuftext, locate_text_resource(textFile, "top"));
-  print_int_as_string_maybe(lineBuffer, (unsigned short) max_speed_value >> 8, 0, 3);
-  strcat(resbuftext, lineBuffer);
+  print_int_as_string_maybe(formattedRaceTextBuffer, (unsigned short) race_stats.game_topSpeed >> 8, 0, 3);
+  strcat(resbuftext, formattedRaceTextBuffer);
   copy_string(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "mph"));
   hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
   y += 10;
-  if (total_game_jump != 0)
+  if (race_stats.game_jumpCount != 0)
   {
     copy_string(resbuftext, locate_text_resource(textFile, "jum"));
-    print_int_as_string_maybe(lineBuffer, total_game_jump, 0, 3);
-    strcat(resbuftext, lineBuffer);
+    print_int_as_string_maybe(formattedRaceTextBuffer, race_stats.game_jumpCount, 0, 3);
+    strcat(resbuftext, formattedRaceTextBuffer);
     hiscore_draw_text(resbuftext, font_op2_alt(resbuftext), y, dlg_colour, 0);
   }
   if (opponent != 0)
@@ -2113,7 +2117,7 @@ char far end_hiscore(void)
         hiscore_opponent_live = hiscore_rank_remap[hiscore_opponent_live];
       if (resultMode == 1)
       {
-        if (best_game_time != 0)
+        if (race_stats.game_total_finish != 0)
           end_hiscore_random = get_super_random() % 2 + 2;
         else
           end_hiscore_random = get_super_random() % 2;
@@ -2127,17 +2131,17 @@ char far end_hiscore(void)
     {
       aOpp2win[3] = globalgamesettings.game_opponenttype + '0';
       scoreResource = file_load_resource(3, aOpp2win);
-      frameList = locate_shape_alt(enemyRes, "winn");
-      end_hiscore_random = best_game_time != 0 ?
-          ((get_kevinrandom() + idx_time_gm) & 1) + 2 : (get_kevinrandom() + idx_time_gm) & 1;
+      animationFrameList = locate_shape_alt(enemyRes, "winn");
+      end_hiscore_random = race_stats.game_total_finish != 0 ?
+          ((get_kevinrandom() + race_stats.game_frame) & 1) + 2 : (get_kevinrandom() + race_stats.game_frame) & 1;
       resChar = 'v';
     }
     else
     {
       aOpp2lose[3] = globalgamesettings.game_opponenttype + '0';
       scoreResource = file_load_resource(3, aOpp2lose);
-      frameList = locate_shape_alt(enemyRes, "lose");
-      end_hiscore_random = (get_kevinrandom() + idx_time_gm) & 3;
+      animationFrameList = locate_shape_alt(enemyRes, "lose");
+      end_hiscore_random = (get_kevinrandom() + race_stats.game_frame) & 3;
       resChar = 'd';
     }
   }
@@ -2170,16 +2174,16 @@ char far end_hiscore(void)
       newRecord = -1;
   }
   if (newRecord == 0)
-  if (best_game_time != 0)
+  if (race_stats.game_total_finish != 0)
   {
-    scoreTime = best_game_time;
+    finalScoreTimeForRecord = race_stats.game_total_finish;
     if ((endhsdemo & 6) == 0)
-      if (scoreTime != 0 && hscore_trk11_ptr[6].marker > scoreTime)
+      if (finalScoreTimeForRecord != 0 && hscore_trk11_ptr[6].marker > finalScoreTimeForRecord)
       newRecord = 1;
   }
-  currentFrame = 0;
+  currentAnimationFrame = 0;
   animTime = 30;
-  newEval = 1;
+  newEvaluation = 1;
 redraw:
   if (opponent != 0)
   if (newRecord == 2)
@@ -2187,8 +2191,8 @@ redraw:
     newRecord = 0;
     sprite_copy_wnd_to_1();
     highscore_text_unknown();
-    selectedMenu = 1;
-    newEval = 1;
+    currentMenuSelection = 1;
+    newEvaluation = 1;
     goto show_buttons;
   }
   if (opponent != 0)
@@ -2196,12 +2200,12 @@ redraw:
     aOp01[3] = '1';
     shapePtr = locate_shape_fatal(scoreResource, aOp01);
     y = shapePtr->width * pixel_scales;
-    animX = 0x138 - y;
-    animY = (0x63 - shapePtr->height) >> 1;
-    draw_lines_unknown(animX - 3, animY - 3, y + 5, shapePtr->height + 5, dlg_colour, 0, animation_outline_color);
-    aOp01[3] = frameList[currentFrame] + '0';
-    shape2d_op_unknown5(locate_shape_fatal(scoreResource, aOp01), animX, animY);
-    prevFrame = currentFrame;
+    animationXPosition = 0x138 - y;
+    animationYPosition = (0x63 - shapePtr->height) >> 1;
+    draw_lines_unknown(animationXPosition - 3, animationYPosition - 3, y + 5, shapePtr->height + 5, dlg_colour, 0, animation_outline_color);
+    aOp01[3] = animationFrameList[currentAnimationFrame] + '0';
+    shape2d_op_unknown5(locate_shape_fatal(scoreResource, aOp01), animationXPosition, animationYPosition);
+    previousAnimationFrame = currentAnimationFrame;
     font_setup_unknown(0, 0);
     y = 8;
     textLen = 0;
@@ -2217,26 +2221,26 @@ redraw:
       {
         case 0:
           if (resultMode == 2)
-            textPtr = locate_text_resource(enemyRes, "d4a");
+            textResourceCursor = locate_text_resource(enemyRes, "d4a");
           else
           {
-            lineBuffer[0] = resChar;
-            lineBuffer[1] = '1';
-            lineBuffer[2] = (char) hiscore_current_place + 'a';
-            textPtr = locate_text_resource(enemyRes, lineBuffer);
+            formattedRaceTextBuffer[0] = resChar;
+            formattedRaceTextBuffer[1] = '1';
+            formattedRaceTextBuffer[2] = (char) hiscore_current_place + 'a';
+            textResourceCursor = locate_text_resource(enemyRes, formattedRaceTextBuffer);
           }
           break;
         case 1:
-          lineBuffer[0] = resChar;
-          lineBuffer[1] = '2';
-          lineBuffer[2] = (char) end_hiscore_random + 'a';
-          textPtr = locate_text_resource(enemyRes, lineBuffer);
+          formattedRaceTextBuffer[0] = resChar;
+          formattedRaceTextBuffer[1] = '2';
+          formattedRaceTextBuffer[2] = (char) end_hiscore_random + 'a';
+          textResourceCursor = locate_text_resource(enemyRes, formattedRaceTextBuffer);
           break;
         case 2:
-          lineBuffer[0] = resChar;
-          lineBuffer[1] = '3';
-          lineBuffer[2] = (char) hiscore_opponent_live + 'a';
-          textPtr = locate_text_resource(enemyRes, lineBuffer);
+          formattedRaceTextBuffer[0] = resChar;
+          formattedRaceTextBuffer[1] = '3';
+          formattedRaceTextBuffer[2] = (char) hiscore_opponent_live + 'a';
+          textResourceCursor = locate_text_resource(enemyRes, formattedRaceTextBuffer);
           break;
         default:
           break;
@@ -2244,15 +2248,15 @@ redraw:
       fontsetfontdef2(fntndat);
       do
       {
-        glyph = *textPtr++;
+        glyph = *textResourceCursor++;
         if (glyph == ' ' || glyph == 0)
         {
-          fragment[wordLen] = 0;
-          wordWidth = font_op2(fragment);
-          if (wordWidth + pixels < animX - 16 && textLen + wordLen < 80)
+          currentWordText[wordLen] = 0;
+          wordWidth = font_op2(currentWordText);
+          if (wordWidth + pixels < animationXPosition - 16 && textLen + wordLen < 80)
           {
             for (src = 0; src < wordLen; ++src)
-              resbuftext[textLen++] = fragment[src];
+              resbuftext[textLen++] = currentWordText[src];
             pixels += wordWidth;
           }
           else
@@ -2260,20 +2264,20 @@ redraw:
             resbuftext[textLen] = 0;
             font_draw_text(resbuftext, 8, y);
             y += 8;
-            if (fragment[0] == ' ')
+            if (currentWordText[0] == ' ')
               src = 1;
             else
               src = 0;
             for (textLen = 0; src < wordLen; ++src)
-              resbuftext[textLen++] = fragment[src];
+              resbuftext[textLen++] = currentWordText[src];
             resbuftext[textLen] = 0;
             pixels = font_op2(resbuftext);
           }
           wordLen = 1;
-          fragment[0] = ' ';
+          currentWordText[0] = ' ';
         }
         else
-          fragment[wordLen++] = glyph;
+          currentWordText[wordLen++] = glyph;
       }
       while (glyph != 0);
       fontsetfontdef();
@@ -2285,33 +2289,33 @@ redraw:
       font_draw_text(resbuftext, 8, y);
       fontsetfontdef();
     }
-    newEval = 0;
+    newEvaluation = 0;
     if (newRecord <= 0)
       goto show_buttons;
     newRecord = 0;
-    newEval = 1;
+    newEvaluation = 1;
     draw_button(locate_text_resource(textFile, "bct"), 0x81, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-    sprite_blit_to_video(g_wndspr, blitFlag);
-    blitFlag = -2;
+    sprite_blit_to_video(g_wndspr, screenBlitFlag);
+    screenBlitFlag = -2;
     reset_idle_counters();
     check_input();
     y = 1;
     sprcopy2to12();
     do
     {
-      timeDelta = mouse_timer_sprite_unknown(4, hiscore_buttons_x1, hiscore_buttons_x2, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
-      animTime += timeDelta;
+      animationTimeDelta = mouse_timer_sprite_unknown(4, hiscore_buttons_x1, hiscore_buttons_x2, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
+      animTime += animationTimeDelta;
       if (animTime >= 30)
       {
         animTime -= 30;
-        ++currentFrame;
-        if (frameList[currentFrame] == 0)
-          currentFrame = 0;
+        ++currentAnimationFrame;
+        if (animationFrameList[currentAnimationFrame] == 0)
+          currentAnimationFrame = 0;
       }
-      if (currentFrame != prevFrame)
+      if (currentAnimationFrame != previousAnimationFrame)
       {
-        prevFrame = currentFrame;
-        aOp01[3] = frameList[currentFrame] + '0';
+        previousAnimationFrame = currentAnimationFrame;
+        aOp01[3] = animationFrameList[currentAnimationFrame] + '0';
         msdrawopaquechk();
         shapePtr = locate_shape_fatal(scoreResource, aOp01);
         if (g_videoflg5 != 0)
@@ -2319,16 +2323,16 @@ redraw:
           sprite_setup1_from_arg_pointer(hiddenWindow);
           shape2d_op_unknown5(shapePtr, 0, 0);
           sprcopy2to12();
-          sprset1size(animX, shapePtr->width * pixel_scales + animX, animY, shapePtr->height + animY);
-          sprite_putimage_and_alt(hiddenWindow->image, animX, animY);
+          sprset1size(animationXPosition, shapePtr->width * pixel_scales + animationXPosition, animationYPosition, shapePtr->height + animationYPosition);
+          sprite_putimage_and_alt(hiddenWindow->image, animationXPosition, animationYPosition);
           sprcopy2to12();
         }
         else
-          shape2d_op_unknown5(shapePtr, animX, animY);
+          shape2d_op_unknown5(shapePtr, animationXPosition, animationYPosition);
         msdrawtransparentchk();
       }
-      key = input_checking(i);
-      if (key == 13 || key == 32 || key == 27)
+      inputKey = input_checking(i);
+      if (inputKey == 13 || inputKey == 32 || inputKey == 27)
         y = 0;
     }
     while (y != 0);
@@ -2337,15 +2341,15 @@ redraw:
     sprset1size(8, 0x138, hiscore_buttons_y1[0], hiscore_buttons_y2[0] + 1);
     sprite_clear_1_color(menu_button_color_c);
     msdrawopaquechk();
-    enter_hiscore(scoreTime, locate_text_resource(textFile, "inh"), resultMode);
+    enter_hiscore(finalScoreTimeForRecord, locate_text_resource(textFile, "inh"), resultMode);
   }
   else if (newRecord > 0)
   {
     check_input();
     msdrawopaquechk();
-    enter_hiscore(scoreTime, locate_text_resource(textFile, "inh"), 0);
+    enter_hiscore(finalScoreTimeForRecord, locate_text_resource(textFile, "inh"), 0);
     newRecord = 0;
-    blitFlag = -2;
+    screenBlitFlag = -2;
   }
   else
   {
@@ -2359,42 +2363,42 @@ redraw:
       highscore_text_unknown();
   }
 show_buttons:
-  selectedMenu = 1;
-  lastMenu = 1;
+  currentMenuSelection = 1;
+  priorMenuIndex = 1;
   reset_idle_counters();
   sprite_copy_wnd_to_1();
   if (opponent == 0 || newRecord == -1)
-    xOffset = -36;
+    screenXOffset = -36;
   else
   {
-    xOffset = 0;
-    if (newEval != 0)
+    screenXOffset = 0;
+    if (newEvaluation != 0)
       menuText = locate_text_resource(textFile, "bev");
     else
       menuText = locate_text_resource(textFile, "bhi");
     draw_button(menuText, hiscore_buttons_x1[0] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   }
-  draw_button(locate_text_resource(textFile, "brp"), xOffset + hiscore_buttons_x1[1] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+  draw_button(locate_text_resource(textFile, "brp"), screenXOffset + hiscore_buttons_x1[1] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   if (opponent != 0)
     menuText = locate_text_resource(textFile, "bra");
   else
     menuText = locate_text_resource(textFile, "bdr");
-  draw_button(menuText, xOffset + hiscore_buttons_x1[2] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-  draw_button(locate_text_resource(textFile, "bmm"), xOffset + hiscore_buttons_x1[3] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+  draw_button(menuText, screenXOffset + hiscore_buttons_x1[2] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+  draw_button(locate_text_resource(textFile, "bmm"), screenXOffset + hiscore_buttons_x1[3] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   for (i = 0; i < 4; ++i)
   {
-    buttonsX1[i] = hiscore_buttons_x1[i] + xOffset;
-    btnX2[i] = hiscore_buttons_x2[i] + xOffset;
+    buttonsX1[i] = hiscore_buttons_x1[i] + screenXOffset;
+    buttonX2Positions[i] = hiscore_buttons_x2[i] + screenXOffset;
   }
   check_input();
-  sprite_blit_to_video(g_wndspr, blitFlag);
-  blitFlag = -2;
+  sprite_blit_to_video(g_wndspr, screenBlitFlag);
+  screenBlitFlag = -2;
   sprcopy2to12();
   for (;;)
   {
-    if (selectedMenu != lastMenu)
+    if (currentMenuSelection != priorMenuIndex)
     {
-      lastMenu = selectedMenu;
+      priorMenuIndex = currentMenuSelection;
       sprcopy2to12();
       sprset1size(0, 0x140, hiscore_buttons_y1[0], hiscore_buttons_y2[0] + 1);
       msdrawopaquechk();
@@ -2403,22 +2407,22 @@ show_buttons:
       timer_get_delta_alt();
       reset_idle_counters();
     }
-    timeDelta = mouse_timer_sprite_unknown(selectedMenu, buttonsX1, btnX2, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
-    if (newEval == 0)
+    animationTimeDelta = mouse_timer_sprite_unknown(currentMenuSelection, buttonsX1, buttonX2Positions, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
+    if (newEvaluation == 0)
     if (resultMode != 2)
     {
-      animTime += timeDelta;
+      animTime += animationTimeDelta;
       if (animTime >= 30)
       {
         animTime -= 30;
-        ++currentFrame;
-        if (frameList[currentFrame] == 0)
-          currentFrame = 0;
+        ++currentAnimationFrame;
+        if (animationFrameList[currentAnimationFrame] == 0)
+          currentAnimationFrame = 0;
       }
-      if (currentFrame != prevFrame)
+      if (currentAnimationFrame != previousAnimationFrame)
       {
-        prevFrame = currentFrame;
-        aOp01[3] = frameList[currentFrame] + '0';
+        previousAnimationFrame = currentAnimationFrame;
+        aOp01[3] = animationFrameList[currentAnimationFrame] + '0';
         msdrawopaquechk();
         shapePtr = locate_shape_fatal(scoreResource, aOp01);
         if (g_videoflg5 != 0)
@@ -2426,40 +2430,40 @@ show_buttons:
           sprite_setup1_from_arg_pointer(hiddenWindow);
           shape2d_op_unknown5(shapePtr, 0, 0);
           sprcopy2to12();
-          sprset1size(animX, shapePtr->width * pixel_scales + animX, animY, shapePtr->height + animY);
-          sprite_putimage_and_alt(hiddenWindow->image, animX, animY);
+          sprset1size(animationXPosition, shapePtr->width * pixel_scales + animationXPosition, animationYPosition, shapePtr->height + animationYPosition);
+          sprite_putimage_and_alt(hiddenWindow->image, animationXPosition, animationYPosition);
           sprcopy2to12();
         }
         else
-          shape2d_op_unknown5(shapePtr, animX, animY);
-        shape2d_op_unknown5(locate_shape_fatal(scoreResource, aOp01), animX, animY);
+          shape2d_op_unknown5(shapePtr, animationXPosition, animationYPosition);
+        shape2d_op_unknown5(locate_shape_fatal(scoreResource, aOp01), animationXPosition, animationYPosition);
         msdrawtransparentchk();
       }
     }
     if (opponent == 0 || newRecord == -1)
     {
-      clickedButton = mouse_multi_hittest(3, buttonsX1 + 1, btnX2 + 1, hiscore_buttons_y1 + 1, hiscore_buttons_y2 + 1);
+      clickedButton = mouse_multi_hittest(3, buttonsX1 + 1, buttonX2Positions + 1, hiscore_buttons_y1 + 1, hiscore_buttons_y2 + 1);
       if (clickedButton != -1)
-        selectedMenu = clickedButton + 1;
+        currentMenuSelection = clickedButton + 1;
     }
     else
     {
-      clickedButton = mouse_multi_hittest(4, buttonsX1, btnX2, hiscore_buttons_y1, hiscore_buttons_y2);
+      clickedButton = mouse_multi_hittest(4, buttonsX1, buttonX2Positions, hiscore_buttons_y1, hiscore_buttons_y2);
       if (clickedButton != -1)
-        selectedMenu = clickedButton;
+        currentMenuSelection = clickedButton;
     }
-    key = input_checking(timeDelta);
-    if (key == 0)
+    inputKey = input_checking(animationTimeDelta);
+    if (inputKey == 0)
       continue;
-    switch (key)
+    switch (inputKey)
     {
       case 13:
       case 32:
-        if (selectedMenu == 0)
+        if (currentMenuSelection == 0)
         {
           sprite_copy_wnd_to_1();
           draw_button(0, 0, 0, 0x140, 0x64, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-          if (newEval != 0)
+          if (newEvaluation != 0)
           {
             newRecord = 0;
             goto redraw;
@@ -2479,27 +2483,27 @@ show_buttons:
         if (globalgamesettings.game_opponenttype != 0)
           unload_resource(enemyRes);
         unload_resource(textFile);
-        return selectedMenu - 1;
+        return currentMenuSelection - 1;
       case 0x4b00:
         if (opponent == 0 || newRecord == -1)
         {
-          if (selectedMenu <= 1)
-            selectedMenu = 3;
+          if (currentMenuSelection <= 1)
+            currentMenuSelection = 3;
           else
-            --selectedMenu;
+            --currentMenuSelection;
         }
-        else if (selectedMenu != 0)
-          --selectedMenu;
+        else if (currentMenuSelection != 0)
+          --currentMenuSelection;
         else
-          selectedMenu = 3;
+          currentMenuSelection = 3;
         break;
       case 0x4d00:
-        if (selectedMenu < 3)
-          ++selectedMenu;
+        if (currentMenuSelection < 3)
+          ++currentMenuSelection;
         else if (opponent == 0 || newRecord == -1)
-          selectedMenu = 1;
+          currentMenuSelection = 1;
         else
-          selectedMenu = 0;
+          currentMenuSelection = 0;
         break;
       default:
         continue;

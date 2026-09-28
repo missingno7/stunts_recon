@@ -55,7 +55,19 @@ extern unsigned long far timer_get_delta_alt(void);
 extern unsigned long far timer_get_counter(void);
 extern int far rand(void);
 extern int far get_kevinrandom(void);
-extern unsigned short idx_time_gm;
+struct GAMESTATE_SNAPSHOT {
+    long game_travDist;
+    unsigned short game_frame;
+    short game_total_finish;
+    short field_144;
+    short game_pEndFrame;
+    short game_oEndFrame;
+    unsigned short game_penalty;
+    unsigned short game_impactSpeed;
+    unsigned short game_topSpeed;
+    short game_jumpCount;
+};
+extern struct GAMESTATE_SNAPSHOT race_stats;
 extern int far input_checking(int delta);
 extern int far input_do_checking(int delta);
 extern int far input_repeat_check(int timeout);
@@ -112,7 +124,7 @@ char *findfilenames[4] = { "setup.exe", "sdtitl.*", "tedit.*", "opp1.*" };
 unsigned int font_secondary_color = 0;
 
 /* target file_build_path @ 4370; candidate from build\workers\tuseg008\file_build_path_ch.c */
-/* merged owner s008-a member sub_274B0 */
+/* merged owner s008-a member point_in_rectangle */
 char far point_in_rectangle(int x1, int x2, int y1, int y2)
 {
     extern int pixel_scales;
@@ -149,7 +161,7 @@ int g_mouseyposstacktable[5];
 int g_mousesave_x_tbl[4];
 struct SPRITE far *mssprite_arrays[4];
 
-/* merged owner s008-a member sub_275C6 */
+/* merged owner s008-a member restore_mouse_sprite */
 void far restore_mouse_sprite(void)
 {
     extern unsigned char mouse_buffer_count;
@@ -1331,7 +1343,7 @@ int far sprite_blit_to_video(struct SPRITE far *sprite, int mode)
     return 0;
 }
 
-/* target sub_29772 @ 8898; accepted source src/sub_29772.c */
+/* target reset_idle_counters @ 8898; accepted source src/reset_idle_counters.c */
 /* merged owner s008-rest member show_waiting */
 void far show_waiting(void)
 {
@@ -1458,7 +1470,7 @@ void far fmtframestr(char *destination, unsigned int frame_count, int hundredths
 
 int get_super_random(void)
 {
-    register int val = (int)(timer_get_counter() + get_kevinrandom() + rand() + idx_time_gm);
+    register int val = (int)(timer_get_counter() + get_kevinrandom() + rand() + race_stats.game_frame);
     return val < 0 ? -val : val;
 }
 

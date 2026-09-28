@@ -21,16 +21,16 @@ DSEG_SOURCE = b""".model medium
 DGROUP group dseg
 dseg segment byte public 'STUNTSD'
 assume ds:dseg
-extrn _word_3F87C:word
-extrn _word_3F87E:word
+extrn _timer_elapsed_ticks_low:word
+extrn _timer_elapsed_ticks_high:word
 dseg ends
 _TEXT segment word public 'CODE'
 assume cs:_TEXT, ds:dseg
 public _sub_2EAD4
 _sub_2EAD4 proc far
  cli
- mov ax, _word_3F87C
- mov dx, _word_3F87E
+ mov ax, _timer_elapsed_ticks_low
+ mov dx, _timer_elapsed_ticks_high
  sti
  retf
 _sub_2EAD4 endp
@@ -156,7 +156,7 @@ class Integ17Tests(unittest.TestCase):
         payload,_=bind_contribution(self.dseg_obj,self.dseg,symbols)
         self.assertEqual(payload,self.image[125652:125662])
         wrong=copy.deepcopy(symbols)
-        wrong['_word_3F87C']['dseg_frame_load_address']+=16
+        wrong['_timer_elapsed_ticks_low']['dseg_frame_load_address']+=16
         with self.assertRaises(ValueError):
             bind_contribution(self.dseg_obj,self.dseg,wrong)
         obj=copy.deepcopy(self.dseg_obj);obj.groups[0]['segment_indices'].remove(3)

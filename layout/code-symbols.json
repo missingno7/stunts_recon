@@ -3145,6 +3145,30 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_cosfast"
     },
+    "_debug_printf_text": {
+      "anchors": [
+        {
+          "caller_task": "load_17220",
+          "hex": "9a7d37a21e",
+          "relocation": {
+            "load_offset": 94811,
+            "offset": 29275,
+            "segment": 4096
+          },
+          "site": 94808
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 139956,
+        "name": "nopsub_3219D",
+        "sha256": "89ec718a8557c9b63597da617f91fe1ff63e2736438e5d9874e2873ff18afb5c",
+        "stable_id": "load_2219d",
+        "start": 139677
+      },
+      "reviewed_alias": "_debug_printf_text"
+    },
     "_do_dea_textres": {
       "distinct_verified_callers": 1,
       "frame_load_address": 95408,
@@ -7577,7 +7601,7 @@
         "start": 141938
       },
       "module_entry": {
-        "owner": "asm012_141362"
+        "owner": "font_matrix_shape_decode"
       }
     },
     "_mat_mul_vector": {
@@ -8752,29 +8776,6 @@
         "sha256": "d73bc8e50aa0d428d5f9c817ec0aac837a4d3603a18d1e44ae45776f224d401a",
         "stable_id": "load_2216c",
         "start": 139628
-      }
-    },
-    "_nopsub_3219D": {
-      "anchors": [
-        {
-          "caller_task": "load_17220",
-          "hex": "9a7d37a21e",
-          "relocation": {
-            "load_offset": 94811,
-            "offset": 29275,
-            "segment": 4096
-          },
-          "site": 94808
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 139956,
-        "name": "nopsub_3219D",
-        "sha256": "89ec718a8557c9b63597da617f91fe1ff63e2736438e5d9874e2873ff18afb5c",
-        "stable_id": "load_2219d",
-        "start": 139677
       }
     },
     "_nopsub_36AF2": {

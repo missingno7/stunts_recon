@@ -1,5 +1,5 @@
 """integ33: reviewed L7 readable names adopted program-wide, the far-data `dw seg`
-binder (asm012_141362 owns fontdefseg + word_30602) and owned DGROUP word-alignment
+binder (font_matrix_shape_decode owns fontdefseg + word_30602) and owned DGROUP word-alignment
 fill (link_fill.WORD_BASIS)."""
 import copy
 import sys
@@ -64,7 +64,7 @@ class FarDataSegmentWordTests(unittest.TestCase):
     def setUpClass(cls):
         from assembler import assemble_source
         cls.image, cls.relocations = _oracle()
-        cls.recipe = read_json(ROOT / 'recipes/asm012_141362.json')
+        cls.recipe = read_json(ROOT / 'recipes/font_matrix_shape_decode.json')
         cls.obj, _ = assemble_source((ROOT / cls.recipe['source']).read_bytes(), cls.recipe['profile'])
 
     def bind(self, recipe=None, obj=None):
@@ -122,13 +122,14 @@ class DgroupWordFillTests(unittest.TestCase):
         from link_fill import checked_fill
         rows = self.rows()
         self.assertEqual([(o['start'], o['object']) for o in rows],
-                         [(190343, 'obj_seg004:_DATA'), (191519, 'obj_seg008:_DATA'),
-                          (191859, 'obj_seg009:_DATA'),        # integ36: before runtime CRT0 _DATA
+                         [(190343, 'obj_seg004:_DATA'), (191309, 'obj_seg007:_DATA'),
+                          (191519, 'obj_seg008:_DATA'),
+                           (191859, 'obj_seg009:_DATA'),        # integ36: before runtime CRT0 _DATA
                           (192365, 'library_output_120254:_DATA'),  # integ36: runtime OUTPUT -> NMALLOC
                           (192387, 'library_amalloc_123070:_DATA'),  # integ37: AMALLOC -> data-only CMISCDAT
                           (192671, 'library_ctype_192414:_DATA'),    # integ37: data-only CTYPE -> RAND
-                          (196097, 'asm012_133660:_DATA'), (199481, 'obj_seg031:_DATA'),
-                          (199705, 'seg034_shape2d_group:_DATA'),       # integ38: -> asm012_154486 _DATA
+                          (196097, 'keyboard_input_callbacks:_DATA'), (199481, 'obj_seg031:_DATA'),
+                          (199705, 'seg034_shape2d_group:_DATA'),       # integ38: -> sprite_rectangle_scaled_blitters _DATA
                           (199993, 'library_dos_nmsghdr_119038:EPAD')])  # integ38: -> seg000 _BSS
         for row in rows:
             receipt = checked_fill(row, self.manifest, self.image)

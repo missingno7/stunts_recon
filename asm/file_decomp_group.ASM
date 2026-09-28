@@ -77,15 +77,15 @@ decomp_body:
     mov     sp, bp
     pop     bp
     retf
-loc_30E29:
-    jmp     loc_30F0F
+decomp_fatal_decode_loop:
+    jmp     decomp_fatal_error_path_2
 fd_not_found:
     push    [bp+var_fatal]
     push    [bp+arg_filename]
     call    _file_decomp_paras
     add     sp, 4
     or      ax, ax
-    jz      short loc_30E29
+    jz      short decomp_fatal_decode_loop
     add     ax, 4
     mov     [bp+var_decomp_paras], ax
     push    ax
@@ -99,7 +99,7 @@ fd_not_found:
     call    _file_paras
     add     sp, 4
     or      ax, ax
-    jz      short loc_30E29
+    jz      short decomp_fatal_decode_loop
     mov     dx, [bp+var_decomp_paras]
     sub     dx, ax
     add     dx, [bp+var_dstseg]
@@ -110,7 +110,7 @@ fd_not_found:
     call    _file_read
     add     sp, 8
     or      dx, dx
-    jz      short loc_30E29
+    jz      short decomp_fatal_decode_loop
     mov     [bp+var_passes], 1
     mov     ds, dx
     mov     si, ax
@@ -127,9 +127,9 @@ decompress_subfile:
     push    ds
     mov     bl, [si]
     dec     bl
-    jl      short loc_30F0C
+    jl      short decomp_fatal_error_path
     cmp     bl, 2
-    jge     short loc_30F0C
+    jge     short decomp_fatal_error_path
     push    si
     xor     bh, bh
     shl     bx, 1
@@ -150,9 +150,9 @@ decompress_subfile:
     shr     dx, 1
     rcr     ax, 1
     test    si, 0Fh
-    jz      short loc_30EE5
+    jz      short decomp_fatal_when_zero
     inc     ax
-loc_30EE5:
+decomp_fatal_when_zero:
     push    ax
     mov     bx, [bp+var_decomp_paras]
     sub     bx, ax
@@ -167,11 +167,11 @@ loc_30EE5:
     jmp     short decompress_subfile
 compression_type     dd _file_decomp_rle
     dd _file_decomp_vle
-loc_30F0C:
+decomp_fatal_error_path:
     add     sp, 8
-loc_30F0F:
+decomp_fatal_error_path_2:
     cmp     [bp+var_fatal], 0
-    jnz     short loc_30F1F
+    jnz     short decomp_fatal_when_nonzero
     xor     ax, ax
     xor     dx, dx
     pop     di
@@ -179,7 +179,7 @@ loc_30F0F:
     mov     sp, bp
     pop     bp
     retf
-loc_30F1F:
+decomp_fatal_when_nonzero:
     mov     bx, ss
     mov     ds, bx
     push    [bp+arg_filename]
@@ -208,7 +208,7 @@ fd_done:
     push    di
     mov     ax, [bp+arg_6]
     mov     [bp+var_fatal], ax
-    jmp     short loc_30F7E
+    jmp     short decomp_fatal_error_path_3
     db 144
     push    bp
     mov     bp, sp
@@ -216,7 +216,7 @@ fd_done:
     push    si
     push    di
     mov     [bp+var_fatal], 0
-    jmp     short loc_30F7E
+    jmp     short decomp_fatal_error_path_3
     db 144
     push    bp
     mov     bp, sp
@@ -224,7 +224,7 @@ fd_done:
     push    si
     push    di
     mov     [bp+var_fatal], 1
-loc_30F7E:
+decomp_fatal_error_path_3:
     push    [bp+var_fatal]
     push    [bp+arg_filename]
     call    _file_decomp_fatal

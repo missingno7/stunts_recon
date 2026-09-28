@@ -76,6 +76,7 @@ class CommunalModelTests(unittest.TestCase):
 class _Obj:
     def __init__(self, bss, fixups, code='UNIT_TEXT'):
         self.segment_lengths = {code: 16, '_BSS': bss}
+        self.segment_defs = [{'name': code, 'class': 'CODE'}]
         self.linker_fixups = fixups
 
     def segment_length(self, name):
@@ -126,11 +127,12 @@ class StaticPlacementTests(unittest.TestCase):
                                     start=self.EDATA + 2)[0])
 
     def test_raw_bss_debt_is_per_object_placeholders(self):
-        # integ40 accepts c_common; only the seg007 placeholder and its
-        # LINK-recreated alignment byte remain raw.
+        # integ42 accepts seg007's complete BSS object and its LINK-recreated pad.
         rows = bss_link.load_partition()
         raw = [r for r in rows if r['kind'] == 'UNRESOLVED_RAW']
-        self.assertEqual(raw[-1]['form'], bss_link.WORD_FILL)
+        self.assertEqual(raw, [])
+        fill = next(r for r in rows if r['form'] == bss_link.BSS_WORD_FILL)
+        self.assertEqual((fill['object'], fill['start'], fill['end']), ('obj_seg007', 205383, 205384))
         self.assertEqual(rows[-1]['form'], bss_link.COMMUNAL_UNIT)
         self.assertEqual(rows[-1]['kind'], bss_link.COMMUNAL_KIND)
         self.assertTrue(all(r['object'] for r in raw if r['form'] == bss_link.OBJECT_BSS))
@@ -231,10 +233,10 @@ class PublishedDataTests(unittest.TestCase):
     def test_seg012_module_data_owners(self):
         manifest = read_json(ROOT / 'layout/manifest.json')
         data = {o['id']: (o['start'], o['end']) for o in manifest['owners'] if o['kind'] == 'MATCHING_ASM_DATA'}
-        self.assertEqual(data['asm012_137138:_DATA'], (197406, 197418))
-        self.assertEqual(data['asm012_135290:_DATA'], (196232, 197400))
+        self.assertEqual(data['prerender_wheel_raster:_DATA'], (197406, 197418))
+        self.assertEqual(data['resource_memory_manager:_DATA'], (196232, 197400))
         self.assertEqual(data['sincos:_DATA'], (197620, 198134))
-        publics = {p['name'] for p in read_json(ROOT / 'recipes/asm012_141210.json')
+        publics = {p['name'] for p in read_json(ROOT / 'recipes/timer_counter_deadline_helpers.json')
                    ['object_declarations']['publics']}
         self.assertIn('_line_input_screen_rect', publics)   # integ33 registry name of word_405FE
 

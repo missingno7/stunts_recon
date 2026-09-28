@@ -35,53 +35,53 @@ _timer_intr_callback proc far
     mov ds, ax
     sti
     dec word ptr _word_3F886
-    jg loc_2035C
+    jg timer_send_pic_eoi
     inc word ptr _word_3F87C
-    jne loc_20349
+    jne timer_reload_tick_counter
     inc word ptr _word_3F87E
-loc_20349:
+timer_reload_tick_counter:
     mov ax, word ptr _word_3F884
     mov word ptr _word_3F886, ax
     cmp byte ptr _byte_3F881, 0
-    je loc_2035C
-    call loc_203BA
-    jmp short loc_20360
+    je timer_send_pic_eoi
+    call timer_sound_countdown_entry
+    jmp short timer_check_callback_enable
     nop
-loc_2035C:
+timer_send_pic_eoi:
     mov al, 20h
     out 20h, al
-loc_20360:
+timer_check_callback_enable:
     cmp byte ptr _word_3F88E, 0
-    jne loc_203A5
+    jne timer_clear_reentry_state
     inc word ptr _timer_callback_counter
-    jne loc_20371
+    jne timer_advance_callback_clock
     inc word ptr _timer_callback_counter+2
-loc_20371:
+timer_advance_callback_clock:
     xor di, di
     cli
     cmp byte ptr _byte_3F88C, 0
-    jne loc_20392
+    jne timer_count_reentrant_tick
     mov byte ptr _byte_3F88C, 1
     sti
-loc_20381:
+timer_start_callback_scan:
     mov ax, word ptr _timerintr[di+2]
     or ax, ax
-    je loc_203A5
+    je timer_clear_reentry_state
     call dword ptr _timerintr[di]
     add di, 4
-    jmp loc_20381
-loc_20392:
+    jmp timer_start_callback_scan
+timer_count_reentrant_tick:
     inc word ptr _word_3F88A
     mov ax, word ptr _word_3F88A
     cmp word ptr _word_3F888, ax
-    jge loc_203B0
+    jge timer_restore_irq_frame
     mov word ptr _word_3F888, ax
-    jmp short loc_203B0
+    jmp short timer_restore_irq_frame
     nop
-loc_203A5:
+timer_clear_reentry_state:
     mov byte ptr _byte_3F88C, 0
     mov word ptr _word_3F88A, 0
-loc_203B0:
+timer_restore_irq_frame:
     pop bp
     pop di
     pop si
@@ -94,14 +94,14 @@ loc_203B0:
     iret
 _timer_intr_callback endp
 _sub_303BA proc near
-loc_203BA:
+timer_sound_countdown_entry:
     cmp byte ptr _byte_3F880, 0
-    je loc_203D1
+    je timer_chain_previous_timer_irq
     dec word ptr _word_3F882
-    jg loc_203D1
+    jg timer_chain_previous_timer_irq
     mov byte ptr _byte_3F880, 0
     mov byte ptr _byte_3F881, 0
-loc_203D1:
+timer_chain_previous_timer_irq:
     pushf
     call dword ptr _dword_3F874
     retn

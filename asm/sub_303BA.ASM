@@ -13,12 +13,12 @@ public _sub_303BA
 _sub_303BA proc near
 
     cmp     _byte_3F880, 0
-    jz      short loc_303D1
+    jz      short call_previous_timer_handler
     dec     _word_3F882
-    jg      short loc_303D1
+    jg      short call_previous_timer_handler
     mov     _byte_3F880, 0
     mov     _byte_3F881, 0
-loc_303D1:
+call_previous_timer_handler:
     pushf
     call    _dword_3F874
     retn

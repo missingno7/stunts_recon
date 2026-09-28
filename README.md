@@ -2,9 +2,13 @@
 
 This workspace replaces explicit raw regions of the original MCGA image with byte-exact historical compiler and runtime output. `HYBRID_EXACT` means the complete hybrid executable and ordered relocations match the immutable oracle. It does not mean the entire program has been recovered from source.
 
+## Current status
+
+The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes all 689 tests, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` reports zero raw-debt OMF objects; its separate library-order diagnostic still has a relocation-order residual.
+
 ## Setup
 
-Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json` and `evidence/msc510-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries.
+Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json`, `evidence/msc510-provenance.json`, and `evidence/msc600-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries.
 
 Install the diagnostic decoder with `python -m pip install --target build/python capstone==5.0.3`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; Restunts resides at `build/references/restunts`. Keep that checkout, its reference executable, and other ignored local inputs. They cannot be restored from this repository's Git history.
 

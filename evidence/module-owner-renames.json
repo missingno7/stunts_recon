@@ -1,0 +1,531 @@
+{
+  "migrations": [
+    {
+      "executable_after": {
+        "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+        "size": 210384
+      },
+      "executable_before": {
+        "sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+        "size": 210384
+      },
+      "link_object_ids_changed": [
+        [
+          "asm012_125482",
+          "graphics_resource_runtime"
+        ],
+        [
+          "asm012_131254",
+          "timer_video_interrupt_runtime"
+        ],
+        [
+          "asm012_132056",
+          "input_keyboard_joystick_services"
+        ],
+        [
+          "asm012_133138",
+          "keyboard_interrupt_runtime"
+        ],
+        [
+          "asm012_133660",
+          "keyboard_input_callbacks"
+        ],
+        [
+          "asm012_133840",
+          "resource_file_io_decompression"
+        ],
+        [
+          "asm012_135290",
+          "resource_memory_manager"
+        ],
+        [
+          "asm012_137138",
+          "prerender_wheel_raster"
+        ],
+        [
+          "asm012_139610",
+          "textmode_debug_console"
+        ],
+        [
+          "asm012_139968",
+          "projection_vector_window"
+        ],
+        [
+          "asm012_141362",
+          "font_matrix_shape_decode"
+        ],
+        [
+          "asm012_143366",
+          "vector_sphere_sprite_ops"
+        ],
+        [
+          "asm012_149180",
+          "line_sprite_shape_render"
+        ],
+        [
+          "asm012_150408",
+          "patterned_lines_windows"
+        ],
+        [
+          "asm012_154486",
+          "sprite_rectangle_scaled_blitters"
+        ]
+      ],
+      "mapping_sha256": "e7008f3dd1ccdf766753ad6b4e2c5602d19277f9e63f3de027bf8220b093d452",
+      "owners": [
+        {
+          "basis": "Object spans shape rendering, pre-render callbacks, file helpers, critical-error handling, and video setup.",
+          "extent": [
+            125482,
+            131254
+          ],
+          "new_owner": "graphics_resource_runtime",
+          "new_recipe": "recipes/graphics_resource_runtime.json",
+          "new_source": "asm/graphics_resource_runtime.ASM",
+          "object_after": {
+            "sha256": "52fbfa27a6e28d5648878f486b5d7180c4baab28bb8543cdfc3eb6c595f558c6",
+            "size": 10718
+          },
+          "object_before": {
+            "sha256": "52fbfa27a6e28d5648878f486b5d7180c4baab28bb8543cdfc3eb6c595f558c6",
+            "size": 10718
+          },
+          "old_owner": "asm012_125482",
+          "old_recipe": "recipes/asm012_125482.json",
+          "old_source": "asm/asm012_125482.ASM",
+          "source": {
+            "sha256": "585e88318b95964b7849b5d6238de11e152b927764a7c492dae5b0f1bff9e4fe",
+            "size": 74677
+          }
+        },
+        {
+          "basis": "Object groups timer setup/dispatch, timer callback state, and video-mode 7 handling.",
+          "extent": [
+            131254,
+            132056
+          ],
+          "new_owner": "timer_video_interrupt_runtime",
+          "new_recipe": "recipes/timer_video_interrupt_runtime.json",
+          "new_source": "asm/timer_video_interrupt_runtime.ASM",
+          "object_after": {
+            "sha256": "25d159e1ca7583578e59037c71624f08d517ecc09c77f12610fae8fea97150b6",
+            "size": 2274
+          },
+          "object_before": {
+            "sha256": "25d159e1ca7583578e59037c71624f08d517ecc09c77f12610fae8fea97150b6",
+            "size": 2274
+          },
+          "old_owner": "asm012_131254",
+          "old_recipe": "recipes/asm012_131254.json",
+          "old_source": "asm/asm012_131254.ASM",
+          "source": {
+            "sha256": "ad1ce28caeff5002806f33a6842c09b5d7361fd8831af51ad4e2d64de42f947c",
+            "size": 11467
+          }
+        },
+        {
+          "basis": "Object contains keyboard initialization/exit and interrupt handlers.",
+          "extent": [
+            133138,
+            133660
+          ],
+          "new_owner": "keyboard_interrupt_runtime",
+          "new_recipe": "recipes/keyboard_interrupt_runtime.json",
+          "new_source": "asm/keyboard_interrupt_runtime.ASM",
+          "object_after": {
+            "sha256": "f31709907300e0ece581d069e44a1c3b56ab772ca54952b719e72af42b0640a4",
+            "size": 1744
+          },
+          "object_before": {
+            "sha256": "f31709907300e0ece581d069e44a1c3b56ab772ca54952b719e72af42b0640a4",
+            "size": 1744
+          },
+          "old_owner": "asm012_133138",
+          "old_recipe": "recipes/asm012_133138.json",
+          "old_source": "asm/asm012_133138.ASM",
+          "source": {
+            "sha256": "355eb4f4c1547f710ecfc12676e7c11fad4391f7d8a68c75d5a9c610ce5d1932",
+            "size": 9207
+          }
+        },
+        {
+          "basis": "Object contains keyboard character input and callback polling/timeout helpers.",
+          "extent": [
+            133660,
+            133840
+          ],
+          "new_owner": "keyboard_input_callbacks",
+          "new_recipe": "recipes/keyboard_input_callbacks.json",
+          "new_source": "asm/keyboard_input_callbacks.ASM",
+          "object_after": {
+            "sha256": "29c3bdef9dc02ee739fb71a9abbe1a7fc7aba7242b1ffa507cfb2e88953a38a4",
+            "size": 706
+          },
+          "object_before": {
+            "sha256": "29c3bdef9dc02ee739fb71a9abbe1a7fc7aba7242b1ffa507cfb2e88953a38a4",
+            "size": 706
+          },
+          "old_owner": "asm012_133660",
+          "old_recipe": "recipes/asm012_133660.json",
+          "old_source": "asm/asm012_133660.ASM",
+          "source": {
+            "sha256": "082434c7c3fa9602dc2eb964475ff91ea85d256acb3b6efdadc0d033e3f5d7cb",
+            "size": 3676
+          }
+        },
+        {
+          "basis": "Pre-render wheel span setup, clipping, edge clears and slope rasterizers.",
+          "extent": [
+            137138,
+            139609
+          ],
+          "new_owner": "prerender_wheel_raster",
+          "new_recipe": "recipes/prerender_wheel_raster.json",
+          "new_source": "asm/prerender_wheel_raster.ASM",
+          "object_after": {
+            "sha256": "08571ba2141852ed9aad018d4f574df45579209b79770a794820fc6b11e2e49b",
+            "size": 3933
+          },
+          "object_before": {
+            "sha256": "08571ba2141852ed9aad018d4f574df45579209b79770a794820fc6b11e2e49b",
+            "size": 3933
+          },
+          "old_owner": "asm012_137138",
+          "old_recipe": "recipes/asm012_137138.json",
+          "old_source": "asm/asm012_137138.ASM",
+          "source": {
+            "sha256": "caf3bc9238331a260ee4e21d72d72cadd16b13f903cd2722dbdf8c766eaea10e",
+            "size": 37420
+          }
+        },
+        {
+          "basis": "DOS resource-memory allocation, chunk lookup, compaction and resizing.",
+          "extent": [
+            135290,
+            137138
+          ],
+          "new_owner": "resource_memory_manager",
+          "new_recipe": "recipes/resource_memory_manager.json",
+          "new_source": "asm/resource_memory_manager.ASM",
+          "object_after": {
+            "sha256": "b594ae9d94770e8b83ef0282b43869c9590b22d60de0ab95f4fca5e6123562c5",
+            "size": 4608
+          },
+          "object_before": {
+            "sha256": "b594ae9d94770e8b83ef0282b43869c9590b22d60de0ab95f4fca5e6123562c5",
+            "size": 4608
+          },
+          "old_owner": "asm012_135290",
+          "old_recipe": "recipes/asm012_135290.json",
+          "old_source": "asm/asm012_135290.ASM",
+          "source": {
+            "sha256": "3305b42939d3c950f5bd8dee8f991248a221913a46c3329faaec544389e03153",
+            "size": 37361
+          }
+        },
+        {
+          "basis": "Font operations, matrix routines, shape decompression and video status.",
+          "extent": [
+            141362,
+            143366
+          ],
+          "new_owner": "font_matrix_shape_decode",
+          "new_recipe": "recipes/font_matrix_shape_decode.json",
+          "new_source": "asm/font_matrix_shape_decode.ASM",
+          "object_after": {
+            "sha256": "c0c70eab3c6e6ad35c7539cbaec29ca6dd312860993c8330d92e03af0a554e6d",
+            "size": 2785
+          },
+          "object_before": {
+            "sha256": "c0c70eab3c6e6ad35c7539cbaec29ca6dd312860993c8330d92e03af0a554e6d",
+            "size": 2785
+          },
+          "old_owner": "asm012_141362",
+          "old_recipe": "recipes/asm012_141362.json",
+          "old_source": "asm/asm012_141362.ASM",
+          "source": {
+            "sha256": "93c207c1bbc1f2253f718146d7e4f0a26d578a4ff892e2ff55d9aa018893850b",
+            "size": 26675
+          }
+        },
+        {
+          "basis": "Sprite/image, shape-resource, text and palette operations.",
+          "extent": [
+            147552,
+            149180
+          ],
+          "new_owner": "sprite_shape_video_ops",
+          "new_recipe": "recipes/sprite_shape_video_ops.json",
+          "new_source": "asm/sprite_shape_video_ops.ASM",
+          "object_after": {
+            "sha256": "d7157c8782dd86b2a8cfa5567893031a0886e9e01074fa3f8d686553e189deeb",
+            "size": 2438
+          },
+          "object_before": {
+            "sha256": "d7157c8782dd86b2a8cfa5567893031a0886e9e01074fa3f8d686553e189deeb",
+            "size": 2438
+          },
+          "old_owner": "asm012_144064_late",
+          "old_recipe": "recipes/asm012_144064_late.json",
+          "old_source": "asm/asm012_144064_late.ASM",
+          "source": {
+            "sha256": "0a9accb7d48259e1e74da28ce03c89641df8650f0d149d3cec89f6ef87616abc",
+            "size": 24275
+          }
+        },
+        {
+          "basis": "Vector operations, sphere rendering and sprite geometry updates.",
+          "extent": [
+            143366,
+            144064
+          ],
+          "new_owner": "vector_sphere_sprite_ops",
+          "new_recipe": "recipes/vector_sphere_sprite_ops.json",
+          "new_source": "asm/vector_sphere_sprite_ops.ASM",
+          "object_after": {
+            "sha256": "3b706d6fcc9b4bae72870898ca873b23772414485665dd0d478cfe98786e64d7",
+            "size": 1255
+          },
+          "object_before": {
+            "sha256": "3b706d6fcc9b4bae72870898ca873b23772414485665dd0d478cfe98786e64d7",
+            "size": 1255
+          },
+          "old_owner": "asm012_143366",
+          "old_recipe": "recipes/asm012_143366.json",
+          "old_source": "asm/asm012_143366.ASM",
+          "source": {
+            "sha256": "76b21d19de0d7a1b4011e70b5b6c543b594f01c585ac1a329d5f0bcb10c0227e",
+            "size": 8492
+          }
+        },
+        {
+          "basis": "Filled lines, sprite clearing, shape explosion and font setup.",
+          "extent": [
+            149180,
+            150408
+          ],
+          "new_owner": "line_sprite_shape_render",
+          "new_recipe": "recipes/line_sprite_shape_render.json",
+          "new_source": "asm/line_sprite_shape_render.ASM",
+          "object_after": {
+            "sha256": "1dc466acb108af56fec8a212c05bdae444f301fe3d16101e7703373f150a21a1",
+            "size": 1697
+          },
+          "object_before": {
+            "sha256": "1dc466acb108af56fec8a212c05bdae444f301fe3d16101e7703373f150a21a1",
+            "size": 1697
+          },
+          "old_owner": "asm012_149180",
+          "old_recipe": "recipes/asm012_149180.json",
+          "old_source": "asm/asm012_149180.ASM",
+          "source": {
+            "sha256": "cea5667fd38e9d3aa31fabe3f065118df5c87a82d8fac94da696d54ff462c889",
+            "size": 14050
+          }
+        },
+        {
+          "basis": "Patterned line rendering, sprite window creation and sprite copying.",
+          "extent": [
+            150408,
+            154406
+          ],
+          "new_owner": "patterned_lines_windows",
+          "new_recipe": "recipes/patterned_lines_windows.json",
+          "new_source": "asm/patterned_lines_windows.ASM",
+          "object_after": {
+            "sha256": "4d9cc3ceac7d1d3db4500d5eb17672287844e437d7f6559bd24684f46cdb108f",
+            "size": 4539
+          },
+          "object_before": {
+            "sha256": "4d9cc3ceac7d1d3db4500d5eb17672287844e437d7f6559bd24684f46cdb108f",
+            "size": 4539
+          },
+          "old_owner": "asm012_150408",
+          "old_recipe": "recipes/asm012_150408.json",
+          "old_source": "asm/asm012_150408.ASM",
+          "source": {
+            "sha256": "b8b92e84d9a33b88243bd528acb79376593800eb30663b7d9dffc6a93ec69f93",
+            "size": 38956
+          }
+        },
+        {
+          "basis": "Projection state, vector-to-point conversion and window release.",
+          "extent": [
+            139968,
+            140538
+          ],
+          "new_owner": "projection_vector_window",
+          "new_recipe": "recipes/projection_vector_window.json",
+          "new_source": "asm/projection_vector_window.ASM",
+          "object_after": {
+            "sha256": "db51de1ed9ae2d924f1232031458bcad9a23289c224e91a836a64e2359182228",
+            "size": 1550
+          },
+          "object_before": {
+            "sha256": "db51de1ed9ae2d924f1232031458bcad9a23289c224e91a836a64e2359182228",
+            "size": 1550
+          },
+          "old_owner": "asm012_139968",
+          "old_recipe": "recipes/asm012_139968.json",
+          "old_source": "asm/asm012_139968.ASM",
+          "source": {
+            "sha256": "6a7625bb3d797ca48a9c55e3f9d9b5fc54e6bbf39a0a6f86b8483d5901abcceb",
+            "size": 8883
+          }
+        },
+        {
+          "basis": "VGA text-mode clear, scroll, printf and attribute control.",
+          "extent": [
+            139610,
+            139968
+          ],
+          "new_owner": "textmode_debug_console",
+          "new_recipe": "recipes/textmode_debug_console.json",
+          "new_source": "asm/textmode_debug_console.ASM",
+          "object_after": {
+            "sha256": "768886d42f5191dc758ff41d9caa30d569107cbaa252d44f90a64ff1ca13f775",
+            "size": 888
+          },
+          "object_before": {
+            "sha256": "768886d42f5191dc758ff41d9caa30d569107cbaa252d44f90a64ff1ca13f775",
+            "size": 888
+          },
+          "old_owner": "asm012_139610",
+          "old_recipe": "recipes/asm012_139610.json",
+          "old_source": "asm/asm012_139610.ASM",
+          "source": {
+            "sha256": "e533cc56bf1788a9eb3e741c5fff5196de52ad79a96280a484ce098abf099626",
+            "size": 5046
+          }
+        },
+        {
+          "basis": "File reads, RLE/VLE decompression and resource lookup/loading.",
+          "extent": [
+            133840,
+            135290
+          ],
+          "new_owner": "resource_file_io_decompression",
+          "new_recipe": "recipes/resource_file_io_decompression.json",
+          "new_source": "asm/resource_file_io_decompression.ASM",
+          "object_after": {
+            "sha256": "bd93900b50890ca6fbce64889d64e6bec3637bb6b1d675becf26236863bfea58",
+            "size": 2383
+          },
+          "object_before": {
+            "sha256": "bd93900b50890ca6fbce64889d64e6bec3637bb6b1d675becf26236863bfea58",
+            "size": 2383
+          },
+          "old_owner": "asm012_133840",
+          "old_recipe": "recipes/asm012_133840.json",
+          "old_source": "asm/asm012_133840.ASM",
+          "source": {
+            "sha256": "0a1488f0d02cb45dc694932c356a5c4944724dbbe581647878f0791fdac980b3",
+            "size": 19866
+          }
+        },
+        {
+          "basis": "Keyboard callbacks, keyboard and joystick input flags, joystick calibration and axis replay.",
+          "extent": [
+            132056,
+            133138
+          ],
+          "new_owner": "input_keyboard_joystick_services",
+          "new_recipe": "recipes/input_keyboard_joystick_services.json",
+          "new_source": "asm/input_keyboard_joystick_services.ASM",
+          "object_after": {
+            "sha256": "c7c7a9749105b298ed49ac910fdd1a523819fca0dc9914c0c9b4bbe51dbf2b21",
+            "size": 2563
+          },
+          "object_before": {
+            "sha256": "c7c7a9749105b298ed49ac910fdd1a523819fca0dc9914c0c9b4bbe51dbf2b21",
+            "size": 2563
+          },
+          "old_owner": "asm012_132056",
+          "old_recipe": "recipes/asm012_132056.json",
+          "old_source": "asm/asm012_132056.ASM",
+          "source": {
+            "sha256": "0ffa47338b5688023af7aeb823c1530f22d447c4202b55fb73de0159e3e71f76",
+            "size": 15500
+          }
+        },
+        {
+          "basis": "Captures/restores BIOS video mode and the saved video-control register on exit.",
+          "extent": [
+            140718,
+            140814
+          ],
+          "new_owner": "video_mode_restore_handlers",
+          "new_recipe": "recipes/video_mode_restore_handlers.json",
+          "new_source": "asm/video_mode_restore_handlers.ASM",
+          "object_after": {
+            "sha256": "804e809def85619cddc9a052bc604f8b0e18043058b564acd59bfa47fa5c1770",
+            "size": 391
+          },
+          "object_before": {
+            "sha256": "804e809def85619cddc9a052bc604f8b0e18043058b564acd59bfa47fa5c1770",
+            "size": 391
+          },
+          "old_owner": "asm012_140718",
+          "old_recipe": "recipes/asm012_140718.json",
+          "old_source": "asm/asm012_140718.ASM",
+          "source": {
+            "sha256": "3d53a580a13f9d4a7ef946b0941dfc54acb61d91473a9c1fe2fdbe36e26aedbc",
+            "size": 1601
+          }
+        },
+        {
+          "basis": "Reads timer counters, sets and checks deadlines, copies counters, and manages callback state.",
+          "extent": [
+            141210,
+            141362
+          ],
+          "new_owner": "timer_counter_deadline_helpers",
+          "new_recipe": "recipes/timer_counter_deadline_helpers.json",
+          "new_source": "asm/timer_counter_deadline_helpers.ASM",
+          "object_after": {
+            "sha256": "36e462fcdbf779aae28feaee6710c1b0d0bec9940252dca6d040f79876f0c0b8",
+            "size": 702
+          },
+          "object_before": {
+            "sha256": "36e462fcdbf779aae28feaee6710c1b0d0bec9940252dca6d040f79876f0c0b8",
+            "size": 702
+          },
+          "old_owner": "asm012_141210",
+          "old_recipe": "recipes/asm012_141210.json",
+          "old_source": "asm/asm012_141210.ASM",
+          "source": {
+            "sha256": "1ef992f1860de8f48ca8d12ffffd54535d7ac35bc85544d9da1ba089e2deff13",
+            "size": 2986
+          }
+        },
+        {
+          "basis": "Clips/fills rectangles, copies sprite rows, and draws scaled transparent sprites.",
+          "extent": [
+            154486,
+            155464
+          ],
+          "new_owner": "sprite_rectangle_scaled_blitters",
+          "new_recipe": "recipes/sprite_rectangle_scaled_blitters.json",
+          "new_source": "asm/sprite_rectangle_scaled_blitters.ASM",
+          "object_after": {
+            "sha256": "db7b0c04a9dda73d10c7b40a878329a5481d366a2fef91c5147f2ba522de6806",
+            "size": 1372
+          },
+          "object_before": {
+            "sha256": "db7b0c04a9dda73d10c7b40a878329a5481d366a2fef91c5147f2ba522de6806",
+            "size": 1372
+          },
+          "old_owner": "asm012_154486",
+          "old_recipe": "recipes/asm012_154486.json",
+          "old_source": "asm/asm012_154486.ASM",
+          "source": {
+            "sha256": "6fc7e68d1b35c3ecfceda091a2ed4233cc11862c25ad79b4cd056e6d58e831bc",
+            "size": 13772
+          }
+        }
+      ],
+      "relocation_count": 2588
+    }
+  ],
+  "schema": "module-owner-renames-v1"
+}

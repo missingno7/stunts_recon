@@ -9,7 +9,7 @@ _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
 assume cs:S012_TEXT, ds:DGROUP
-extrn _word_303BA:word
+extrn _projection_x_scale:word
 S012_TEXT segment word public 'CODE'
 public _nopsub_32746
 _nopsub_32746 proc far
@@ -19,7 +19,7 @@ _nopsub_32746 proc far
 
     push    bp
     mov     bp, sp
-    mov     ax, _word_303BA
+    mov     ax, _projection_x_scale
     mul     [bp+arg_0]
     pop     bp
     retf

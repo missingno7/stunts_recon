@@ -14,12 +14,10 @@ import reallink
 class HistoricalBuildPlanningTests(unittest.TestCase):
     def test_manifest_summary_keeps_initialized_and_bss_debt_separate(self):
         summary = histbuild.ownership_summary(read_json(ROOT / 'layout/manifest.json'))
-        self.assertEqual((summary['c_code_objects'], summary['asm_modules']), (34, 52))
-        self.assertEqual(summary['raw_initialized_bytes'], 2376)
-        self.assertEqual(
-            [(x['start'], x['end']) for x in summary['raw_initialized_ranges']],
-            [(93102, 95408), (191244, 191310), (199484, 199488)])
-        self.assertEqual(summary['raw_bss_by_form'], {'link-word-fill': 1, 'object-bss': 1907})
+        self.assertEqual((summary['c_code_objects'], summary['asm_modules']), (35, 52))
+        self.assertEqual(summary['raw_initialized_bytes'], 0)
+        self.assertEqual(summary['raw_initialized_ranges'], [])
+        self.assertEqual(summary['raw_bss_by_form'], {})
 
     def test_default_plan_uses_image_order_and_link_library_search(self):
         plan = histbuild.run_plan(reallink.LINK_OPTIONS)

@@ -35,19 +35,19 @@ _file_find proc far
     mov     cx, 57h ; 'W'
     mov     ax, ds
     mov     es, ax
-loc_2FFFD:
+file_find_fill_loop:
     lodsb
     stosb
     cmp     al, 0
     jz      short _file_find_ok
     cmp     al, 3Ah ; ':'
-    jz      short loc_3000B
+    jz      short file_find_when_zero
     cmp     al, 5Ch ; '\'
-    jnz     short loc_3000F
-loc_3000B:
+    jnz     short file_find_when_nonzero
+file_find_when_zero:
     mov     _foundfileptr, di
-loc_3000F:
-    loop    loc_2FFFD
+file_find_when_nonzero:
+    loop    file_find_fill_loop
 _file_find_ok:
     mov     ax, ds
     mov     es, ax
@@ -57,7 +57,7 @@ _file_find_ok:
     cld
     rep movsb
     mov     ax, offset _foundfile
-loc_30025:
+file_find_search_loop:
     pop     di
     pop     si
     pop     ds
@@ -65,7 +65,7 @@ loc_30025:
     retf
 _file_find_err:
     xor     ax, ax
-    jmp     short loc_30025
+    jmp     short file_find_search_loop
 
 _file_find endp
 _file_find_next proc far

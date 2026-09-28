@@ -6,20 +6,20 @@ public _kb_get_char
 _kb_get_char proc far
     mov     ah, 1
     int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
-    jnz     short loc_30522
+    jnz     short read_buffered_key_char
     xor     ax, ax
     retf
-loc_30522:
+read_buffered_key_char:
     mov     bx, ss
     mov     cx, ds
     cmp     bx, cx
-    jnz     short locret_30537
+    jnz     short return_keyboard_character
     mov     ah, 0
     int     16h             ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
     push    ax
     call far ptr kb_parse_key
     add     sp, 2
-locret_30537:
+return_keyboard_character:
     retf
 
 _kb_get_char endp

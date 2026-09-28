@@ -3,6 +3,7 @@ import argparse
 import copy
 import re
 from pathlib import Path
+from pathlib import PurePosixPath
 from common import ROOT, read_json, require, identity, sha, json_bytes, write_json, atomic_bytes
 from build_exact import build, inputs
 from probe_module import probe
@@ -511,6 +512,222 @@ def check_candidate(name, source, recipe_data, manifest, oracle, image):
     return recipe, destination, payload, fast, staged_manifest
 
 
+def _cosmetic_compile(recipe, source):
+    """Return the full pinned-tool OMF bytes for one accepted recipe/source.
+
+    Cosmetic republication deliberately compares the complete object file,
+    including declarations, record ordering, FIXUPPs, and checksums. It does
+    not use the bound CODE payload as a proxy for object identity.
+    """
+    from communal_unit import recipe_declarations
+    from object_probe import recipe_sparse_zero
+    from assembler import assemble_source
+    from compiler import compile_source
+    from object_flags import recipe_flags, object_control_flags, same_object
+
+    declared = recipe_declarations(recipe)
+    communals = None if declared is None else [name for name, _ in declared]
+    if recipe.get('kind', 'c') == 'asm':
+        from compiler import verify_toolchain
+        require(recipe.get('profile') == 'masm510-game', 'Cosmetic ASM profile differs')
+        require(recipe.get('assembler_flags') == verify_toolchain(recipe['profile'])[0]['flags'],
+                'Cosmetic ASM flags differ from pinned profile')
+        obj, receipt = assemble_source(source, recipe['profile'], communals=communals)
+        control = None
+    else:
+        sparse = recipe_sparse_zero(recipe)
+        flags = recipe_flags(recipe)
+        obj, receipt = compile_source(source, recipe['profile'], flags,
+                                     sparse_zero=sparse, communals=communals)
+        control = object_control_flags(recipe)
+        if control is not None:
+            controlled, controlled_receipt = compile_source(
+                source, recipe['profile'], control, sparse_zero=sparse, communals=communals)
+            require(same_object(controlled, obj),
+                    'Cosmetic object differs under its registered control flags')
+            # Keep the full object identity that the pinned production-profile
+            # compile emitted; retain the independent control receipt as proof.
+            receipt['object_flag_control'] = {'flags': control,
+                                              'object': controlled_receipt['object']}
+    from pathlib import Path
+    raw_path = Path(receipt['work_directory']) / 'UNIT.OBJ'
+    raw = raw_path.read_bytes()
+    require(identity(raw) == receipt['object'], 'Pinned-tool OBJ receipt identity differs')
+    return raw
+
+
+def _cosmetic_source_path(value):
+    """A canonical source path selects the module-source cosmetic form."""
+    if not isinstance(value, str) or ('/' not in value and '\\' not in value):
+        return None
+    path = PurePosixPath(value.replace('\\', '/'))
+    require(not path.is_absolute() and len(path.parts) == 2 and
+            path.parts[0] in ('asm', 'src') and
+            ((path.parts[0] == 'asm' and path.suffix == '.ASM') or
+             (path.parts[0] == 'src' and path.suffix == '.c')),
+            'Cosmetic source target must be one canonical asm/*.ASM or src/*.c path')
+    return path.as_posix()
+
+
+def check_cosmetic_source(source_path, candidate, source, before):
+    """Prove a complete source-file edit preserves every recipe object using it.
+
+    Grouped ASM owners have one active module recipe while their constituent
+    function recipes may be inactive. Checking by source path makes the complete
+    module the unit of comparison and records the active owners separately.
+    """
+    source_path = _cosmetic_source_path(source_path)
+    require(source_path is not None, 'Cosmetic source target is not a canonical source path')
+    candidate_path = Path(candidate).resolve()
+    current_path = (ROOT/source_path).resolve()
+    require(current_path.is_relative_to(ROOT.resolve()), 'Cosmetic source path escapes project')
+    require(current_path.is_file(), 'Accepted cosmetic source is missing')
+    current_source = current_path.read_bytes()
+    require(candidate_path.is_file(), 'Cosmetic candidate source is missing')
+    require(candidate_path.read_bytes() == source, 'Cosmetic candidate changed before comparison')
+
+    manifest = read_json(ROOT/'layout/manifest.json')
+    active_owners = {}
+    active_recipe_paths = set()
+    recipe_by_owner = {}
+    for owner in manifest['owners']:
+        recipe_path = owner.get('recipe')
+        if not recipe_path:
+            continue
+        recipe = read_json(ROOT/recipe_path)
+        if recipe.get('source') != source_path:
+            continue
+        active_recipe_paths.add(recipe_path)
+        active_owners.setdefault(recipe_path, []).append(owner['id'])
+        recipe_by_owner[owner['id']] = recipe_path
+    for owner in manifest['owners']:
+        if owner.get('kind') not in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA'):
+            continue
+        recipe_path = recipe_by_owner.get(owner.get('parent'))
+        if recipe_path is not None:
+            active_owners.setdefault(recipe_path, []).append(owner['id'])
+
+    # Include inactive fragment/group recipes too. Their OMF identities make
+    # this safe for checked source fragments that are not themselves owners.
+    recipes = {}
+    for recipe_file in sorted((ROOT/'recipes').rglob('*.json')):
+        recipe = read_json(recipe_file)
+        if recipe.get('source') == source_path:
+            relative = recipe_file.relative_to(ROOT).as_posix()
+            recipes[relative] = recipe
+    require(recipes, 'No canonical recipe describes this source file')
+    require(active_recipe_paths <= set(recipes),
+            'An active owner recipe is absent from the source-file recipe inventory')
+
+    comparisons = []
+    for recipe_path, recipe in recipes.items():
+        old_obj = _cosmetic_compile(recipe, current_source)
+        new_obj = _cosmetic_compile(recipe, source)
+        old_identity, new_identity = identity(old_obj), identity(new_obj)
+        require(new_identity == old_identity,
+                'Cosmetic source refused: full pinned-tool OBJ identity differs for '+recipe_path)
+        comparisons.append({'recipe': recipe_path,
+                            'active_owners': sorted(active_owners.get(recipe_path, [])),
+                            'object': old_identity})
+    require(inputs() == before, 'Canonical inputs changed during cosmetic comparison')
+    return {'function': 'source:'+source_path, 'destination': source_path,
+            'source_path': source_path, 'kind': Path(source_path).parts[0],
+            'profile': 'per-recipe-pinned', 'old_source': identity(current_source),
+            'new_source': identity(source), 'candidate': str(candidate_path),
+            'active_owners': sorted({name for names in active_owners.values() for name in names}),
+            'comparisons': comparisons,
+            'bytes': len(source)}
+
+
+def check_cosmetic(name, candidate, source, before):
+    """Prove a source-only edit recompiles to the current accepted full OBJ."""
+    source_path = _cosmetic_source_path(name)
+    if source_path is not None:
+        return check_cosmetic_source(source_path, candidate, source, before)
+    require(re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', name), 'Unsafe function name')
+    manifest = read_json(ROOT/'layout/manifest.json')
+    recipe_path = 'recipes/'+name+'.json'
+    recipe_file = ROOT/recipe_path
+    require(recipe_file.is_file(), 'Cosmetic republication requires the accepted recipe')
+    recipe = read_json(recipe_file)
+    owner_rows = [o for o in manifest['owners']
+                  if o.get('name') == name and o.get('recipe') == recipe_path and
+                  o['kind'] in ('MATCHING_C', 'MATCHING_ASM', 'MATCHING_C_DATA', 'MATCHING_ASM_DATA')]
+    require(len(owner_rows) == 1, 'Cosmetic target is not one active accepted owner')
+    owner = owner_rows[0]
+    require((owner['start'], owner['end']) == (recipe['start'], recipe['end']) and
+            owner['kind'] == contribution_kind(recipe),
+            'Cosmetic recipe no longer describes its accepted owner')
+    destination = recipe.get('source')
+    require(isinstance(destination, str) and
+            ((recipe.get('kind', 'c') == 'asm' and destination.startswith('asm/') and destination.endswith('.ASM')) or
+             (recipe.get('kind', 'c') == 'c' and destination.startswith('src/') and destination.endswith('.c'))),
+            'Cosmetic recipe source path differs from its contribution kind')
+    current_path = ROOT/destination
+    require(current_path.is_file(), 'Accepted cosmetic source is missing')
+    current_source = current_path.read_bytes()
+    candidate_path = Path(candidate).resolve()
+    require(candidate_path.is_file(), 'Cosmetic candidate source is missing')
+    require(candidate_path.read_bytes() == source, 'Cosmetic candidate changed before comparison')
+    old_obj = _cosmetic_compile(recipe, current_source)
+    new_obj = _cosmetic_compile(recipe, source)
+    old_identity, new_identity = identity(old_obj), identity(new_obj)
+    require(new_identity == old_identity,
+            'Cosmetic source refused: full pinned-tool OBJ identity differs from accepted source')
+    require(inputs() == before, 'Canonical inputs changed during cosmetic comparison')
+    return {'function': name, 'destination': destination, 'recipe': recipe_path,
+            'kind': recipe.get('kind', 'c'), 'profile': recipe['profile'],
+            'old_source': identity(current_source), 'new_source': identity(source),
+            'object': old_identity, 'candidate': str(candidate_path),
+            'bytes': len(old_obj)}
+
+
+def cosmetic_report_id(row):
+    """Safe deterministic filename for owner- or source-level reports."""
+    return re.sub(r'[^A-Za-z0-9_.-]+', '_', row['function'])
+
+
+def cosmetic_promote(name, candidate, verify_only=False):
+    """Publish only a source whose complete pinned-tool OMF OBJ is unchanged."""
+    candidate = Path(candidate).resolve()
+    source = candidate.read_bytes()
+    if verify_only:
+        result = lock_free_snapshot(
+            lambda before: check_cosmetic(name, candidate, source, before), inputs)
+        require(candidate.read_bytes() == source, 'Cosmetic candidate changed during verification')
+        result.update(status='COSMETIC_VERIFIED_ONLY', inputs=inputs())
+        write_json(ROOT/'build/acceptance/_cosmetic'/(cosmetic_report_id(result)+'.json'), result)
+        return result
+    with exclusive():
+        ensure_consistent()
+        before = inputs()
+        result = check_cosmetic(name, candidate, source, before)
+        require(candidate.read_bytes() == source, 'Cosmetic candidate changed before publication')
+        changes = {} if source == (ROOT/result['destination']).read_bytes() else {result['destination']: source}
+        if changes:
+            expected = {**before, **{path: sha(raw) for path, raw in changes.items()}}
+            with publishing():
+                rows = prepare(changes)
+                try:
+                    require(inputs() == before, 'Canonical inputs changed before cosmetic publication')
+                    invalidate_receipts()
+                    apply(rows)
+                    require(inputs() == expected, 'Unexpected edits during cosmetic publication')
+                    require(candidate.read_bytes() == source, 'Candidate changed during cosmetic publication')
+                    finish()
+                    require(inputs() == expected, 'Inputs changed before cosmetic provenance publication')
+                except BaseException:
+                    rollback()
+                    raise
+            result['inputs'] = expected
+            result['status'] = 'COSMETIC_PUBLISHED'
+        else:
+            result['inputs'] = before
+            result['status'] = 'COSMETIC_NOOP'
+        write_json(ROOT/'build/acceptance/_cosmetic'/(cosmetic_report_id(result)+'.json'), result)
+        return result
+
+
 CORRECTION_BASES = ('link-data-alignment', 'link-frame-reassignment',
                     'odd-start-asm-continuation', 'owner-identity-repair')
 
@@ -645,6 +862,8 @@ def apply_ownership(manifest, name, recipe, oracle, image):
                 manifest = attach_secondary(manifest, recipe, image)
         if 'dgroup_word_fill' in recipe:
             manifest = attach_dgroup_word_fill(manifest, recipe, image)
+        if 'bss_word_fill' in recipe:
+            manifest = attach_bss_word_fill(manifest, recipe)
         return manifest
     require(not (ROOT/destination).exists() and not (ROOT/'recipes'/(name+'.json')).exists(),
             'New publication would overwrite existing unowned files')
@@ -663,6 +882,8 @@ def _publish_ownership(manifest, name, recipe, oracle, image):
         staged_manifest = attach_link_fill(staged_manifest, recipe, image)
     if 'dgroup_word_fill' in recipe:
         staged_manifest = attach_dgroup_word_fill(staged_manifest, recipe, image)
+    if 'bss_word_fill' in recipe:
+        staged_manifest = attach_bss_word_fill(staged_manifest, recipe)
     return staged_manifest
 
 
@@ -694,15 +915,78 @@ def attach_dgroup_word_fill(manifest, recipe, image):
                 'DGROUP fill is not exactly one raw-owned byte')
         at = result['owners'].index(after[0])
         result['owners'][at] = fill
-    checked_fill(fill, result, image)
+    checked_fill(fill, result, image, {'recipes/'+recipe['id']+'.json':recipe})
+    return result
+
+
+def attach_bss_word_fill(manifest, recipe):
+    """Replace one reviewed raw BSS fill with its derived LINK alignment row."""
+    import bss_link
+    spec = recipe['bss_word_fill']
+    require(set(spec) == {'segment', 'basis'} and spec['segment'] == '_BSS' and
+            spec['basis'] == bss_link.BSS_WORD_FILL and
+            '_BSS' in recipe.get('secondary_dgroup_segments', {}),
+            'Unsupported recipe BSS WORD fill form')
+    result = copy.deepcopy(manifest)
+    parents = [o for o in result['owners'] if o.get('name') == recipe['id'] and
+               (o['start'], o['end']) == (recipe['start'], recipe['end']) and
+               o['kind'] in ('MATCHING_C', 'MATCHING_ASM')]
+    require(len(parents) == 1, 'BSS WORD fill lacks its complete object owner')
+    bss_rows = [o for o in result['bss_owners'] if o.get('parent') == parents[0]['id'] and
+                o.get('segment') == '_BSS']
+    require(len(bss_rows) == 1, 'BSS WORD fill lacks its owned _BSS segment')
+    start = bss_rows[0]['end']
+    candidates = [o for o in result['bss_owners'] if o['start'] == start]
+    objects = read_json(ROOT/'layout/link-objects.json')['objects']
+    hosts = [o['id'] for o in objects if o['start'] <= parents[0]['start'] < o['end']]
+    require(len(hosts) == 1, 'BSS WORD fill object host is ambiguous')
+    # An already accepted owner may be republished with a public-name-only
+    # source change. Preserve the existing derived row only if every field
+    # still describes the same one-byte fill and object host.
+    if len(candidates) == 1 and candidates[0].get('kind') == 'LINK_FILL':
+        expected = {'id': f'fill_{start:05x}_{start + 1:05x}', 'kind': 'LINK_FILL',
+                    'basis': bss_link.BSS_WORD_FILL, 'start': start, 'end': start + 1,
+                    'object': hosts[0]}
+        require(candidates[0] == expected,
+                'Existing BSS WORD fill link ownership differs')
+        bss_link.load_partition(result)
+        return result
+    require(len(candidates) == 1 and candidates[0]['kind'] == 'UNRESOLVED_RAW' and
+            candidates[0].get('raw_form') == bss_link.WORD_FILL and
+            candidates[0]['end'] == start + 1,
+            'BSS WORD fill is not exactly one reviewed raw byte')
+    row = {'id':f'fill_{start:05x}_{start + 1:05x}', 'kind':'LINK_FILL',
+           'basis':bss_link.BSS_WORD_FILL, 'start':start, 'end':start + 1,
+           'object':hosts[0]}
+    at = result['bss_owners'].index(candidates[0])
+    result['bss_owners'][at] = row
+    bss_link.load_partition(result)
     return result
 
 
 def attach_link_fill(manifest, recipe, image):
     """Own the LINK paragraph fill after a complete object (link_fill ruling)."""
-    from link_fill import BASIS, fill_row, checked_fill
+    from link_fill import BASIS, CODE_WORD_BASIS, fill_row, checked_fill
     result = copy.deepcopy(manifest)
     spec = recipe['link_fill']
+    if spec.get('basis') == CODE_WORD_BASIS:
+        require(set(spec) == {'end', 'basis'} and type(spec['end']) is int and
+                spec['end'] == recipe['end'] + 1,
+                'Unsupported recipe CODE WORD fill form')
+        parent = [o for o in result['owners'] if o.get('name') == recipe['id'] and
+                  (o['start'], o['end']) == (recipe['start'], recipe['end']) and
+                  o['kind'] in ('MATCHING_C', 'MATCHING_ASM')]
+        require(len(parent) == 1, 'CODE WORD fill lacks its complete object owner')
+        candidate = {'kind':'LINK_FILL', 'basis':CODE_WORD_BASIS,
+                     'start':recipe['end'], 'object':parent[0]['id']}
+        import promote_runtime
+        result = promote_runtime.replace_raw_code_fill(result, candidate)
+        row = [o for o in result['owners'] if o.get('kind') == 'LINK_FILL' and
+               o.get('start') == recipe['end']]
+        require(len(row) == 1, 'CODE WORD fill row missing')
+        checked_fill(row[0], result, image,
+                     {'recipes/'+recipe['id']+'.json':recipe})
+        return result
     require(set(spec) == {'end', 'basis'} and spec['basis'] == BASIS and type(spec['end']) is int,
             'Unsupported recipe LINK fill form')
     rows = [o for o in result['owners'] if o.get('recipe') == 'recipes/'+recipe['id']+'.json' and
@@ -804,6 +1088,8 @@ def main():
     p.add_argument('function', nargs='?'); p.add_argument('candidate', nargs='?', type=Path)
     p.add_argument('--recipe', type=Path, help='Explicit reviewed binding recipe; optional for no-fixup contributions')
     p.add_argument('--verify-only', action='store_true'); p.add_argument('--recover', action='store_true')
+    p.add_argument('--cosmetic', action='store_true',
+                   help='Republish an owner or canonical source path only when every full pinned-tool OMF OBJ matches')
     p.add_argument('--batch', type=Path, help='Batch file (NAME CANDIDATE [RECIPE] per line; integ39: one '
                    '`COMMUNAL UNIT.json` line makes it an atomic communal transaction): one journaled '
                    'publication; each candidate verified individually, one fresh union whole-image build')
@@ -811,12 +1097,19 @@ def main():
                    help='Batch research runs only: omit the per-candidate DOSBox-X check (never for publication)')
     a = p.parse_args()
     if a.recover:
-        if a.function or a.candidate or a.recipe or a.batch: p.error('--recover takes no candidate')
+        if a.function or a.candidate or a.recipe or a.batch or a.cosmetic or a.verify_only:
+            p.error('--recover takes no candidate or mode')
         recover(); print('Recovery complete; run python tools/validate.py'); return
     if a.batch:
         if a.function or a.candidate or a.recipe: p.error('--batch takes no single candidate')
         if a.no_independent and not a.verify_only: p.error('Batch publication requires the DOSBox-X check')
         from batch_publish import read_batch, publish_batch
+        if a.cosmetic:
+            if a.no_independent: p.error('--no-independent does not apply to --cosmetic')
+            from batch_publish import cosmetic_batch
+            summary = cosmetic_batch(read_batch(a.batch), verify_only=a.verify_only)
+            print(summary['status'], len(summary['candidates']), 'cosmetic sources; full OBJ hashes identical')
+            return
         summary = publish_batch(read_batch(a.batch), verify_only=a.verify_only,
                                 independent=not a.no_independent)
         print(summary['status'], len(summary['published']), 'candidates',
@@ -828,6 +1121,16 @@ def main():
                   summary['dropped'].get('@communal', {}).get('error', '')[:400])
         return
     if not a.function or not a.candidate: p.error('Supply FUNCTION CANDIDATE.c')
+    if a.cosmetic:
+        if a.recipe: p.error('--cosmetic uses the current accepted recipe; --recipe is not allowed')
+        report = cosmetic_promote(a.function, a.candidate, a.verify_only)
+        if report.get('source_path'):
+            print(report['status'], report['source_path'], len(report['comparisons']),
+                  'recipe OBJ identities; source hashes recorded')
+        else:
+            print(report['status'], report['function'], report['object']['size'],
+                  'OBJ bytes; source hashes recorded')
+        return
     report = promote(a.function, a.candidate, a.recipe, a.verify_only)
     print(report['status'], report['function'], report['bytes'], 'bytes; fresh HYBRID_EXACT and ordered relocations')
     prefix = report['fast'].get('binding', {}).get('prefix')

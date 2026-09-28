@@ -18,10 +18,10 @@ _timer_wait_for_dx proc far
     call    _timer_get_counter
     cmp     dx, word ptr _word_305F8
     jb      short near ptr _timer_wait_for_dx
-    ja      short locret_327EA
+    ja      short return_when_deadline_reached
     cmp     ax, word ptr _timer_copy_unk
     jb      short near ptr _timer_wait_for_dx
-locret_327EA:
+return_when_deadline_reached:
     retf
 _timer_wait_for_dx endp
 S012_TEXT ends

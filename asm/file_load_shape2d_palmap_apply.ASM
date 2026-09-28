@@ -24,16 +24,16 @@ _file_load_shape2d_palmap_apply proc far
     mov     [bp+var_shapecount], cx
     xor     ax, ax
     mov     [bp+shapecounter], ax
-loc_35F65:
+shape_palmap_wait_loop:
     mov     ax, [bp+shapecounter]
     cmp     ax, [bp+var_shapecount]
-    jl      short loc_35F73
+    jl      short shape_palmap_when_less
     pop     si
     pop     di
     mov     sp, bp
     pop     bp
     retf
-loc_35F73:
+shape_palmap_when_less:
     push    ax
     push    [bp+arg_memchunkseg]
     push    [bp+arg_memchunkoff]
@@ -46,13 +46,13 @@ loc_35F73:
     mov     cx, ax
     add     di, 10h
     xor     bx, bx
-loc_35F94:
+shape_palmap_fill_loop:
     mov     bl, es:[di]
     mov     al, [bx+si]
     stosb
-    loop    loc_35F94
+    loop    shape_palmap_fill_loop
     inc     [bp+shapecounter]
-    jmp     short loc_35F65
+    jmp     short shape_palmap_wait_loop
     ; align 2
     db 0
 _file_load_shape2d_palmap_apply endp

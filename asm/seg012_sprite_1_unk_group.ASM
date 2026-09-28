@@ -20,37 +20,37 @@ _sprite1_unknown2 proc far
     mov     dx, word ptr cs:[_sprite1+12]
     mov     ax, dx
     sub     ax, [bp+arg_2]
-    jle     short loc_33591
+    jle     short unknown2_when_less_or_equal
     mov     [bp+arg_2], dx
     sub     [bp+arg_6], ax
-    jle     short loc_335CF
-loc_33591:
+    jle     short sprite1_unknown2_draw_loop
+unknown2_when_less_or_equal:
     mov     ax, [bp+arg_2]
     add     ax, [bp+arg_6]
     sub     ax, word ptr cs:[_sprite1+14]
-    jle     short loc_335A3
+    jle     short unknown2_when_less_or_equal_2
     sub     [bp+arg_6], ax
-    jle     short loc_335CF
-loc_335A3:
+    jle     short sprite1_unknown2_draw_loop
+unknown2_when_less_or_equal_2:
     mov     ax, word ptr cs:[_sprite1+16]
     sub     ax, [bp+arg_4]
-    jle     short loc_335B8
+    jle     short unknown2_when_less_or_equal_3
     sub     [bp+arg_8], ax
-    jle     short loc_335CF
+    jle     short sprite1_unknown2_draw_loop
     mov     ax, word ptr cs:[_sprite1+16]
     mov     [bp+arg_4], ax
-loc_335B8:
+unknown2_when_less_or_equal_3:
     mov     ax, [bp+arg_4]
     add     ax, [bp+arg_8]
     mov     bx, word ptr cs:[_sprite1+18]
     sub     ax, bx
-    jle     short loc_335D7
+    jle     short sprite_1_unk_shared_path
     sub     [bp+arg_8], ax
-    jle     short loc_335CF
-    jmp     short loc_335D7
+    jle     short sprite1_unknown2_draw_loop
+    jmp     short sprite_1_unk_shared_path
     db 144
-loc_335CF:
-    jmp     short loc_33622
+sprite1_unknown2_draw_loop:
+    jmp     short sprite_1_unk_draw_loop
     ; align 2
     db 144
 _sprite1_unknown2 endp
@@ -67,12 +67,12 @@ _sprite_1_unk proc far
     mov     bp, sp
     push    si
     push    di
-loc_335D7:
+sprite_1_unk_shared_path:
     cld
     cmp     [bp+arg_4], 0
-    jle     short loc_335CF
+    jle     short sprite1_unknown2_draw_loop
     cmp     [bp+arg_6], 0
-    jle     short loc_335CF
+    jle     short sprite1_unknown2_draw_loop
     mov     es, word ptr word ptr cs:[_sprite1+2]
     mov     al, [bp+arg_8]
     mov     ah, al
@@ -88,42 +88,42 @@ loc_335D7:
     mov     cx, [bp+arg_4]
     sar     cx, 1
     mov     [bp+arg_4], cx
-    jb      short loc_33626
-    jle     short loc_33622
-loc_33618:
+    jb      short sprite_1_unk_when_below
+    jle     short sprite_1_unk_draw_loop
+sprite_1_unk_fill_loop:
     mov     cx, [bp+arg_4]
     rep stosw
     add     di, dx
     dec     si
-    jg      short loc_33618
-loc_33622:
+    jg      short sprite_1_unk_fill_loop
+sprite_1_unk_draw_loop:
     pop     di
     pop     si
     pop     bp
     retf
-loc_33626:
-    jz      short loc_3363A
-    jl      short loc_33622
+sprite_1_unk_when_below:
+    jz      short sprite_1_unk_when_zero
+    jl      short sprite_1_unk_draw_loop
     inc     dx
-loc_3362B:
+sprite_1_unk_fill_loop_2:
     mov     cx, [bp+arg_4]
     rep stosw
     mov     es:[di], al
     add     di, dx
     dec     si
-    jg      short loc_3362B
-    jmp     short loc_33622
-loc_3363A:
+    jg      short sprite_1_unk_fill_loop_2
+    jmp     short sprite_1_unk_draw_loop
+sprite_1_unk_when_zero:
     inc     dx
-loc_3363B:
+sprite_1_unk_draw_loop_2:
     mov     es:[di], al
     add     di, dx
     dec     si
-    jg      short loc_3363B
-    jmp     short loc_33622
+    jg      short sprite_1_unk_draw_loop_2
+    jmp     short sprite_1_unk_draw_loop
     ; align 2
     db 0
-byte_33646     db 11
+sprite_scale_pattern_by_row     db 11
     db 5
     db 8
     db 2
@@ -135,11 +135,11 @@ byte_33646     db 11
     db 3
     db 6
     db 0
-byte_33652     db 1
+sprite_run_pre_skip_by_phase     db 1
     db 3
     db 0
     db 2
-byte_33656     db 3
+sprite_run_post_skip_by_phase     db 3
     db 1
     db 4
     db 2
@@ -155,7 +155,7 @@ byte_33656     db 3
     mov     ax, [bp+0Ch]
     mov     [bp-2], ax
     mov     ax, [bp+0Eh]
-    jmp     short loc_33697
+    jmp     short sprite_1_unk3_when_condition
     ; align 2
     db 144
 _sprite_1_unk endp
@@ -189,7 +189,7 @@ _sprite_1_unk3 proc far
     mov     ax, [si+8]
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
-loc_33697:
+sprite_1_unk3_when_condition:
     shl     ax, 1
     add     ax, word ptr cs:[_sprite1+10]
     mov     [bp+var_4], ax
@@ -204,9 +204,9 @@ loc_33697:
     add     si, 10h
     mov     [bp+var_C], si
     mov     [bp+var_E], 0Bh
-loc_336C2:
+sprite_1_unk3_draw_loop:
     mov     di, [bp+var_E]
-    mov     cl, cs:byte_33646[di]
+    mov     cl, cs:sprite_scale_pattern_by_row[di]
     xor     ch, ch
     mov     ax, [bp+var_8]
     mul     cx
@@ -218,41 +218,41 @@ loc_336C2:
     add     si, [bp+var_10]
     mov     bx, [bp+arg_4]
     mov     [bp+var_16], bx
-loc_336E8:
+sprite_1_unk3_draw_loop_2:
     mov     di, [bp+var_12]
     cmp     di, [bp+var_6]
-    jnb     short loc_33733
+    jnb     short sprite_1_unk3_when_not_below
     mov     di, cs:[di]
     add     di, [bp+var_2]
     mov     cx, [bp+var_8]
     mov     [bp+var_14], si
     xor     ah, ah
     mov     bx, [bp+var_16]
-loc_33701:
+sprite_1_unk3_draw_loop_3:
     and     bx, 3
-    mov     al, cs:byte_33652[bx]
+    mov     al, cs:sprite_run_pre_skip_by_phase[bx]
     sub     cx, ax
-    jle     short loc_33724
+    jle     short unk3_when_less_or_equal
     add     si, ax
     add     di, ax
     mov     al, [si]
     mov     es:[di], al
-    mov     al, cs:byte_33656[bx]
+    mov     al, cs:sprite_run_post_skip_by_phase[bx]
     add     si, ax
     add     di, ax
     sub     cx, ax
     inc     bx
-    jmp     short loc_33701
-loc_33724:
+    jmp     short sprite_1_unk3_draw_loop_3
+unk3_when_less_or_equal:
     inc     [bp+var_16]
     add     [bp+var_12], 18h
     mov     si, [bp+var_14]
     add     si, [bp+var_A]
-    jmp     short loc_336E8
-loc_33733:
+    jmp     short sprite_1_unk3_draw_loop_2
+sprite_1_unk3_when_not_below:
     inc     [bp+arg_4]
     dec     [bp+var_E]
-    jge     short loc_336C2
+    jge     short sprite_1_unk3_draw_loop
     pop     di
     pop     si
     pop     ds

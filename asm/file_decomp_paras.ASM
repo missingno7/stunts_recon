@@ -73,8 +73,8 @@ decomp_paras_body:
     mov     ah, 3Dh ; '='
     xor     al, al
     int     21h             ; DOS - 2+ - OPEN DISK FILE WITH HANDLE
-    jnb     short loc_2FF68
-    jmp     short loc_2FFB5
+    jnb     short paras_fatal_when_not_below
+    jmp     short paras_fatal_error_path_2
     ; align 2
     db 144
     var_fatal = word ptr -8
@@ -85,7 +85,7 @@ decomp_paras_body:
      r = byte ptr 2
     arg_filename = word ptr 6
     arg_fatal = word ptr 8
-loc_2FF68:
+paras_fatal_when_not_below:
     mov     [bp+var_filehandle], ax
     mov     bx, [bp+var_filehandle]
     lea     dx, [bp+var_6]
@@ -93,7 +93,7 @@ loc_2FF68:
     mov     ah, 3Fh
     int     21h             ; DOS - 2+ - READ FROM FILE WITH HANDLE
     cmp     ax, cx
-    jnz     short loc_2FFAE
+    jnz     short paras_fatal_error_path
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
     int     21h             ; DOS - 2+ - CLOSE A FILE WITH HANDLE
@@ -102,9 +102,9 @@ loc_2FF68:
     xor     dh, dh
     xor     bx, bx
     test    ax, 0Fh
-    jz      short loc_2FF95
+    jz      short paras_fatal_when_zero
     mov     bx, 1
-loc_2FF95:
+paras_fatal_when_zero:
     shr     dx, 1
     rcr     ax, 1
     shr     dx, 1
@@ -120,13 +120,13 @@ loc_2FF95:
     mov     sp, bp
     pop     bp
     retf
-loc_2FFAE:
+paras_fatal_error_path:
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
     int     21h             ; DOS - 2+ - CLOSE A FILE WITH HANDLE
-loc_2FFB5:
+paras_fatal_error_path_2:
     cmp     [bp+var_fatal], 0
-    jnz     short loc_2FFC4
+    jnz     short paras_fatal_error_path_3
     xor     ax, ax
     pop     di
     pop     si
@@ -134,13 +134,13 @@ loc_2FFB5:
     mov     sp, bp
     pop     bp
     retf
-loc_2FFC4:
+paras_fatal_error_path_3:
     mov     ax, offset _aSFileError_1; "%s FILE ERROR"
     mov     bx, ss
     mov     ds, bx
     push    [bp+arg_filename]
     push    ax
-loc_2FFCF:
+paras_fatal_error_path_4:
     call    far ptr _fatal_error
 
 _file_decomp_paras_fatal endp

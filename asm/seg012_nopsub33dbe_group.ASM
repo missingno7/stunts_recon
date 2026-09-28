@@ -28,7 +28,7 @@ _nopsub_33DBE proc far
     mov     ax, [bp+arg_6]
     sub     ax, [si+6]
     mov     [bp+var_4], ax
-    jmp     short loc_33E1B
+    jmp     short shape_op_unk_shared_exit
     ; align 2
     db 144
 _nopsub_33DBE endp
@@ -54,7 +54,7 @@ _shape2d_op_unk5 proc far
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_8]
     mov     [bp+var_4], ax
-    jmp     short loc_33E1B ; goto shape2d_op_unk3
+    jmp     short shape_op_unk_shared_exit ; goto shape2d_op_unk3
     ; align 2
     db 144
 _shape2d_op_unk5 endp
@@ -81,13 +81,13 @@ _shape2d_op_unk proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
-loc_33E1B:
+shape_op_unk_shared_exit:
     cld
     lea     ax, [si+10h]
     mov     [bp+var_E], ax
     mov     ax, [si]
     mov     [bp+var_6], ax
-loc_33E27:
+shape_op_unk_load_source_value:
     mov     bx, [bp+var_4]
     shl     bx, 1
     add     bx, word ptr cs:[5F2Ah]
@@ -98,49 +98,49 @@ loc_33E27:
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_6]
-loc_33E46:
+shape_op_unk_read_loop:
     lodsb
     or      al, al
-    jg      short loc_33E54
-    jl      short loc_33E71
+    jg      short shape_op_unk_when_greater
+    jl      short shape_op_unk_when_less
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_33E54:
+shape_op_unk_when_greater:
     mov     cl, al
     xor     ch, ch
     lodsb
-loc_33E59:
+shape_op_unk_fill_loop:
     stosb
     dec     dx
-    jg      short loc_33E6D
+    jg      short shape_op_unk_when_greater_2
     add     [bp+var_10], 2
     mov     bx, [bp+var_10]
     mov     di, cs:[bx]
     add     di, [bp+var_2]
     mov     dx, [bp+var_6]
-loc_33E6D:
-    loop    loc_33E59
-    jmp     short loc_33E46
-loc_33E71:
+shape_op_unk_when_greater_2:
+    loop    shape_op_unk_fill_loop
+    jmp     short shape_op_unk_read_loop
+shape_op_unk_when_less:
     neg     al
     mov     cl, al
     xor     ch, ch
-loc_33E77:
+shape_op_unk_copy_loop:
     movsb
     dec     dx
-    jg      short loc_33E8B
+    jg      short shape_op_unk_when_greater_3
     add     [bp+var_10], 2
     mov     bx, [bp+var_10]
     mov     di, cs:[bx]
     add     di, [bp+var_2]
     mov     dx, [bp+var_6]
-loc_33E8B:
-    loop    loc_33E77
-    jmp     short loc_33E46
+shape_op_unk_when_greater_3:
+    loop    shape_op_unk_copy_loop
+    jmp     short shape_op_unk_read_loop
     ; align 2
     db 0
 _shape2d_op_unk endp

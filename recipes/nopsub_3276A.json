@@ -6,7 +6,7 @@
   "binding": {
     "declarations": {
       "externals": [
-        "_word_303BC"
+        "_projection_y_scale"
       ],
       "groups": [
         {
@@ -112,7 +112,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_word_303BC",
+      "frame": "_projection_y_scale",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -120,7 +120,7 @@
       "offset": 4,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_303BC",
+      "target": "_projection_y_scale",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -133,7 +133,7 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "_word_303BC"
+      "_projection_y_scale"
     ],
     "groups": [
       {

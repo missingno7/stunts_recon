@@ -1,5 +1,5 @@
-"""integ38: whole seg012 modules owning their DGROUP data (asm012_131254,
-asm012_154486), the in-image prefix of the first _BSS contribution
+"""integ38: whole seg012 modules owning their DGROUP data (timer_video_interrupt_runtime,
+sprite_rectangle_scaled_blitters), the in-image prefix of the first _BSS contribution
 (BSS_IN_IMAGE) with the word fill before it, DGROUP-framed external addends
 and the FONTHDR font-header STRUC."""
 import copy
@@ -37,11 +37,11 @@ class ModuleDataTests(unittest.TestCase):
 
     def test_timer_module_owns_its_data(self):
         rows = {o['id']: o for o in owners()}
-        module = rows['asm012_131254']
+        module = rows['timer_video_interrupt_runtime']
         self.assertEqual((module['start'], module['end'], module['kind']), (131254, 132056, 'MATCHING_ASM'))
-        data = rows['asm012_131254:_DATA']
+        data = rows['timer_video_interrupt_runtime:_DATA']
         self.assertEqual((data['start'], data['end'], data['kind']), (194664, 194778, 'MATCHING_ASM_DATA'))
-        recipe = read_json(ROOT / 'recipes/asm012_131254.json')
+        recipe = read_json(ROOT / 'recipes/timer_video_interrupt_runtime.json')
         self.assertEqual(recipe['module_proof']['kind'], 'asm-module-extent-v1')
         # no object references the reference-label aliases of the dword high words
         for owner in owners():
@@ -51,11 +51,11 @@ class ModuleDataTests(unittest.TestCase):
 
     def test_sub_35E08_module_owns_word_54AA(self):
         rows = {o['id']: o for o in owners()}
-        module = rows['asm012_154486']
+        module = rows['sprite_rectangle_scaled_blitters']
         self.assertEqual((module['start'], module['end']), (154486, 155464))
-        data = rows['asm012_154486:_DATA']
+        data = rows['sprite_rectangle_scaled_blitters:_DATA']
         self.assertEqual((data['start'], data['end']), (199706, 199708))
-        recipe = read_json(ROOT / 'recipes/asm012_154486.json')
+        recipe = read_json(ROOT / 'recipes/sprite_rectangle_scaled_blitters.json')
         # the four ss: operands of sub_35E08 are DGROUP-framed FIXUPPs to the own _DATA
         own = [f for f in recipe['expected_fixups'] if f['target'] == '_DATA']
         self.assertEqual([(f['offset'] + 154486, f['displacement'], f['frame']) for f in own],
@@ -78,8 +78,11 @@ class ModuleDataTests(unittest.TestCase):
         last = owners()[-1]
         self.assertEqual(last, {'id': 'obj_seg000:_BSS@image', 'kind': 'BSS_IN_IMAGE', 'start': 199994,
                                 'end': 200000, 'bss_owner': 'obj_seg000:_BSS'})
-        # [199484,199488) stays raw: no operand anywhere addresses DGROUP 53CCh..53CFh
-        self.assertEqual(rows[(199484, 199488)]['kind'], 'UNRESOLVED_RAW')
+        # integ42 assigns the unreferenced prefix to the module whose following data owns it.
+        tail = rows[(199484, 199564)]
+        self.assertEqual(tail['kind'], 'MATCHING_ASM_DATA')
+        self.assertEqual(tail['parent'], 'sprite_shape_video_ops')
+        self.assertEqual(tail['target']['size'], 80)
 
 
 class BssInImageTests(unittest.TestCase):
@@ -157,7 +160,7 @@ class DgroupAddendTests(unittest.TestCase):
 class FontHeaderTests(unittest.TestCase):
 
     def test_fonthdr_struc_names_the_header_fields(self):
-        for name in ('font_draw_text', 'asm012_144064_late'):
+        for name in ('font_draw_text', 'sprite_shape_video_ops'):
             text = (ROOT / ('asm/%s.ASM' % name)).read_text()
             self.assertIn('FONTHDR struc', text)
             self.assertRegex(text, r'fh_glyphs dw 256 dup \(\?\)')

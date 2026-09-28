@@ -15,9 +15,9 @@ _sub_2EAD4 proc far
     cli
     mov     ax, _word_3F87C
     mov     dx, _word_3F87E
-loc_2EADC:
+enable_counter_read:
     sti
-locret_2EADD:
+return_timer_counter:
     retf
 
 _sub_2EAD4 endp
@@ -28,26 +28,26 @@ _set_add_value proc far
     arg_2 = word ptr 8
 
     push    bp
-loc_2EADF:
+prepare_deadline_frame:
     mov     bp, sp
-loc_2EAE1:
+read_current_timer_counter:
     call    _sub_2EAD4
-loc_2EAE6:
+add_deadline_low_word:
     add     ax, [bp+arg_0]
-loc_2EAE9:
+add_deadline_high_word:
     adc     dx, [bp+arg_2]
-loc_2EAEC:
+store_deadline_low_word:
     mov     _word_3F1C2, ax
-loc_2EAEF:
+store_deadline_high_word:
     mov     _word_3F1C4, dx
     pop     bp
     retf
-loc_2EAF5:
+wait_for_timer_deadline:
     call    _sub_2EAD4
     cmp     dx, _word_3F1C4
-    jb      short loc_2EAF5
+    jb      short wait_for_timer_deadline
     cmp     ax, _word_3F1C2
-    jb      short loc_2EAF5
+    jb      short wait_for_timer_deadline
     retf
 
 _set_add_value endp
@@ -55,11 +55,11 @@ _sub_2EB07 proc far
     call    _sub_2EAD4
     xor     cx, cx
     cmp     dx, _word_3F1C4
-    jb      short loc_2EB1B
+    jb      short return_deadline_reached
     cmp     ax, _word_3F1C2
-    jb      short loc_2EB1B
+    jb      short return_deadline_reached
     inc     cx
-loc_2EB1B:
+return_deadline_reached:
     mov     ax, cx
     retf
 
@@ -80,12 +80,12 @@ _sub_2EB1E proc far
     adc     dx, [bp+arg_2]
     mov     [bp+var_4], ax
     mov     [bp+var_2], dx
-loc_2EB35:
+poll_until_timer_deadline:
     call    _sub_2EAD4
     cmp     dx, [bp+var_2]
-    jb      short loc_2EB35
+    jb      short poll_until_timer_deadline
     cmp     ax, [bp+var_4]
-    jb      short loc_2EB35
+    jb      short poll_until_timer_deadline
     mov     sp, bp
     pop     bp
     retf

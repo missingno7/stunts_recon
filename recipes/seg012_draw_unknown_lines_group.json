@@ -16,8 +16,8 @@
       "offset": 9,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_4031E",
-      "target_index": 3,
+      "target": "_line_pattern_bits",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -33,8 +33,8 @@
       "offset": 15,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_40320",
-      "target_index": 2,
+      "target": "_prerender_auxiliary_arg",
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -50,8 +50,8 @@
       "offset": 36,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_4031E",
-      "target_index": 3,
+      "target": "_line_pattern_bits",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -67,8 +67,8 @@
       "offset": 41,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_4031E",
-      "target_index": 3,
+      "target": "_line_pattern_bits",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -85,7 +85,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 1,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -102,7 +102,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 1,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -118,8 +118,8 @@
       "offset": 74,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_4031E",
-      "target_index": 3,
+      "target": "_line_pattern_bits",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -135,8 +135,8 @@
       "offset": 87,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_40320",
-      "target_index": 2,
+      "target": "_prerender_auxiliary_arg",
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -152,8 +152,8 @@
       "offset": 119,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_4031E",
-      "target_index": 3,
+      "target": "_line_pattern_bits",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -169,8 +169,8 @@
       "offset": 125,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_word_4031E",
-      "target_index": 3,
+      "target": "_line_pattern_bits",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -209,9 +209,9 @@
   ],
   "object_declarations": {
     "externals": [
-      "_sprite1",
-      "_word_40320",
-      "_word_4031E"
+      "_prerender_auxiliary_arg",
+      "_line_pattern_bits",
+      "_sprite1"
     ],
     "groups": [
       {

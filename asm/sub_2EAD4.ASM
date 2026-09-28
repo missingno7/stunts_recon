@@ -13,9 +13,9 @@ _sub_2EAD4 proc far
     cli
     mov     ax, _word_3F87C
     mov     dx, _word_3F87E
-loc_2EADC:
+timer_counter_atomic_finish:
     sti
-locret_2EADD:
+counter_atomic_early_return:
     retf
 _sub_2EAD4 endp
 _TEXT ends

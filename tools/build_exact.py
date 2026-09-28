@@ -156,9 +156,14 @@ def validate_layout(manifest, size):
                          'target':owner['target']} in parent.get('data_intervals',[]),
                         'Orphaned BSS owner')
             elif owner['kind']=='LINK_FILL':
-                # integ39: LINK's c_common paragraph fill, re-derived from its neighbours.
-                import communal_unit
-                communal_unit.checked_communal_fill(owner, manifest)
+                if owner.get('basis') == bss_link.BSS_WORD_FILL:
+                    # bss_link.load_partition above derives this one-byte gap
+                    # from the adjacent complete _BSS objects and evidence row.
+                    pass
+                else:
+                    # integ39: LINK's c_common paragraph fill, re-derived from its neighbours.
+                    import communal_unit
+                    communal_unit.checked_communal_fill(owner, manifest)
             elif owner['kind']=='LINK_COMMUNAL':
                 # integ39: the whole c_common unit (declarers checked after the fresh compile).
                 import communal_unit
@@ -226,7 +231,7 @@ def _build(manifest=None, recipe_overrides=None, publish=True, source_overrides=
         elif owner['kind']=='LINK_FILL':
             # LINK paragraph alignment fill, re-derived every build (link_fill).
             from link_fill import checked_fill
-            receipts.append({'link_fill': checked_fill(owner, manifest, original)})
+            receipts.append({'link_fill': checked_fill(owner, manifest, original, recipe_overrides)})
             chunks.append(original[start:end])
             fill+=end-start
         elif owner['kind']=='KNOWN_TOOLCHAIN_LIBRARY':

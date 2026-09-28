@@ -102,12 +102,12 @@ _file_decomp_rle_single proc near
     lea     di, [bp-11Ch]
     xor     ax, ax
     xor     bh, bh
-loc_30C1A:
+write_decoded_repeat_run:
     inc     ax
     mov     bl, [si]
     mov     [bx+di], al
     inc     si
-    loop    loc_30C1A
+    loop    write_decoded_repeat_run
     mov     ds, word ptr [bp+8]
     mov     si, [bp+6]
     mov     es, word ptr [bp+0Ch]
@@ -115,50 +115,50 @@ loc_30C1A:
     mov     dx, [bp-16h]
     mov     ax, [bp-14h]
     mov     [bp-1Ch], ax
-loc_30C36:
+check_compressed_input_wrap:
     cmp     si, 8000h
-    jbe     short loc_30C3F
-    jmp     short loc_30CB3
+    jbe     short check_output_buffer_wrap
+    jmp     short wrap_compressed_source
     db 144
-loc_30C3F:
+check_output_buffer_wrap:
     cmp     di, 8000h
-    jbe     short loc_30C48
-    jmp     short loc_30CC1
+    jbe     short read_rle_control_byte
+    jmp     short wrap_output_buffer
     ; align 2
     db 144
-loc_30C48:
+read_rle_control_byte:
     lodsb
     xor     ah, ah
     lea     bx, [bp-11Ch]
     add     bx, ax
     mov     cl, ss:[bx]
     test    cl, 0FFh
-    jnz     short loc_30C68
+    jnz     short decode_rle_run_length
     stosb
     dec     dx
-    jnz     short loc_30C36
+    jnz     short check_compressed_input_wrap
     cmp     word ptr [bp-1Ch], 0
-    jz      short loc_30C8A
+    jz      short advance_output_segment
     dec     word ptr [bp-1Ch]
-    jmp     short loc_30C36
-loc_30C68:
+    jmp     short check_compressed_input_wrap
+decode_rle_run_length:
     xor     ch, ch
     cmp     cl, 1
-    jz      short loc_30C9A
+    jz      short decode_rle_literal_run
     cmp     cl, 3
-    jz      short loc_30CA5
+    jz      short decode_rle_repeated_run
     dec     cx
     lodsb
     rep stosb
     sub     dx, 2
-loc_30C7B:
+adjust_source_segment:
     mov     ax, [bp-1Ch]
     sbb     ax, 0
     mov     [bp-1Ch], ax
     or      ax, dx
-    jz      short loc_30C8A
-    jmp     short loc_30C36
-loc_30C8A:
+    jz      short advance_output_segment
+    jmp     short check_compressed_input_wrap
+advance_output_segment:
     mov     dx, es
     sub     dx, [bp+0Ch]
     mov     ax, 10h
@@ -166,14 +166,14 @@ loc_30C8A:
     add     ax, di
     adc     dx, 0
     retn
-loc_30C9A:
+decode_rle_literal_run:
     lodsb
     mov     cl, al
     lodsb
     rep stosb
     sub     dx, 3
-    jmp     short loc_30C7B
-loc_30CA5:
+    jmp     short adjust_source_segment
+decode_rle_repeated_run:
     lodsb
     mov     cl, al
     lodsb
@@ -181,19 +181,19 @@ loc_30CA5:
     lodsb
     rep stosb
     sub     dx, 4
-    jmp     short loc_30C7B
-loc_30CB3:
+    jmp     short adjust_source_segment
+wrap_compressed_source:
     sub     si, 8000h
     mov     ax, ds
     add     ax, 800h
     mov     ds, ax
-    jmp     loc_30C3F
-loc_30CC1:
+    jmp     check_output_buffer_wrap
+wrap_output_buffer:
     sub     di, 8000h
     mov     ax, es
     add     ax, 800h
     mov     es, ax
-    jmp     loc_30C48
+    jmp     read_rle_control_byte
 
 _file_decomp_rle_single endp
 _file_decomp_rle_seq proc near
@@ -209,36 +209,36 @@ has_codes:
     mov     ax, [bp-14h]
     mov     [bp-1Ch], ax
     mov     ah, [bp-10h]
-loc_30CED:
+check_sequence_input_wrap:
     cmp     si, 8000h
-    ja      short loc_30D0D
-loc_30CF3:
+    ja      short wrap_sequence_input
+check_sequence_output_wrap:
     cmp     di, 8000h
-    ja      short loc_30D1B
-loc_30CF9:
+    ja      short wrap_sequence_output
+read_rle_sequence_byte:
     lodsb
     cmp     al, ah
-    jz      short loc_30D39
+    jz      short read_next_sequence_byte
     stosb
     dec     bx
-    jnz     short loc_30CED
+    jnz     short check_sequence_input_wrap
     cmp     word ptr [bp-1Ch], 0
-    jz      short loc_30D29
+    jz      short advance_output_segment_2
     dec     word ptr [bp-1Ch]
-    jmp     short loc_30CED
-loc_30D0D:
+    jmp     short check_sequence_input_wrap
+wrap_sequence_input:
     sub     si, 8000h
     mov     dx, ds
     add     dx, 800h
     mov     ds, dx
-    jmp     short loc_30CF3
-loc_30D1B:
+    jmp     short check_sequence_output_wrap
+wrap_sequence_output:
     sub     di, 8000h
     mov     dx, es
     add     dx, 800h
     mov     es, dx
-    jmp     short loc_30CF9
-loc_30D29:
+    jmp     short read_rle_sequence_byte
+advance_output_segment_2:
     mov     dx, es
     sub     dx, [bp+0Ch]
     mov     ax, 10h
@@ -246,18 +246,18 @@ loc_30D29:
     add     ax, di
     adc     dx, 0
     retn
-loc_30D39:
+read_next_sequence_byte:
     mov     dx, di
-loc_30D3B:
+compare_sequence_control_byte:
     lodsb
     cmp     al, ah
-    jz      short loc_30D49
+    jz      short read_sequence_repeat_count
     stosb
     dec     bx
-    jnz     short loc_30D3B
+    jnz     short compare_sequence_control_byte
     dec     word ptr [bp-1Ch]
-    jmp     short loc_30D3B
-loc_30D49:
+    jmp     short compare_sequence_control_byte
+read_sequence_repeat_count:
     lodsb
     push    si
     push    ds
@@ -268,7 +268,7 @@ loc_30D49:
     sub     cx, dx
     mov     dl, al
     dec     dl
-loc_30D5A:
+copy_sequence_repeat_run:
     push    cx
     push    si
     push    ds
@@ -277,15 +277,15 @@ loc_30D5A:
     pop     si
     pop     cx
     dec     dl
-    jnz     short loc_30D5A
+    jnz     short copy_sequence_repeat_run
     pop     ds
     pop     si
     sub     bx, 3
     sbb     word ptr [bp-1Ch], 0
     mov     dx, [bp-1Ch]
     or      dx, bx
-    jz      short loc_30D29
-    jmp     loc_30CED
+    jz      short advance_output_segment_2
+    jmp     check_sequence_input_wrap
 
 _file_decomp_rle_seq endp
 S012_TEXT ends

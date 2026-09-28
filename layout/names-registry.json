@@ -7,6 +7,162 @@
       "kind": "code",
       "name": "main"
     },
+    "5774": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "highscore_text_unk",
+      "kind": "code",
+      "name": "highscore_text_unknown"
+    },
+    "27394": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_game_state",
+      "kind": "code",
+      "name": "initialize_game_state"
+    },
+    "36102": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_18D06",
+      "kind": "code",
+      "name": "apply_audio_frame"
+    },
+    "36192": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'edge_state': uninformative (reads as a variable): the function computes a track tile's lane edge points and centre into a TRACKRESULT and returns whether the side is the last lane",
+      "inventory_name": "sub_18D60",
+      "kind": "code",
+      "name": "track_edge_points"
+    },
+    "38804": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "plane_rotate_op",
+      "kind": "code",
+      "name": "plnrotop"
+    },
+    "39206": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "plane_origin_op",
+      "kind": "code",
+      "name": "plnoriginop"
+    },
+    "39840": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_19BA0",
+      "kind": "code",
+      "name": "update_crash_debris"
+    },
+    "40481": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_kevinrandom",
+      "kind": "code",
+      "name": "initialize_kevin_random"
+    },
+    "40680": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_div0",
+      "kind": "code",
+      "name": "initialize_div0"
+    },
+    "40724": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_19F14",
+      "kind": "code",
+      "name": "draw_clip"
+    },
+    "57760": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "build_track_object",
+      "kind": "code",
+      "name": "build_obj"
+    },
+    "66734": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_204AE",
+      "kind": "code",
+      "name": "wheel_update"
+    },
+    "72282": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "subst_hillroad_track",
+      "kind": "code",
+      "name": "subst_hillroad"
+    },
+    "75058": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_unknown",
+      "kind": "code",
+      "name": "initialize_unknown"
+    },
+    "76172": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_2298C",
+      "kind": "code",
+      "name": "update_camera_target"
+    },
+    "85348": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_polyinfo",
+      "kind": "code",
+      "name": "initialize_polyinfo"
+    },
+    "85510": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "select_cliprect_rotate",
+      "kind": "code",
+      "name": "select_rot"
+    },
+    "85662": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "transformed_shape_op",
+      "kind": "code",
+      "name": "trans_op"
+    },
+    "90102": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "get_a_poly_info",
+      "kind": "code",
+      "name": "polyinfo"
+    },
+    "90618": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "mat_rot_zxy",
+      "kind": "code",
+      "name": "matrotzxy"
+    },
+    "91506": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rect_union",
+      "kind": "code",
+      "name": "rcunion"
+    },
+    "91628": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rect_intersect",
+      "kind": "code",
+      "name": "rcintersect"
+    },
+    "92754": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rectlist_add_rects",
+      "kind": "code",
+      "name": "rectlist_add"
+    },
+    "93002": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rect_array_sort_by_top",
+      "kind": "code",
+      "name": "rectsorttop"
+    },
+    "95408": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_274B0",
+      "kind": "code",
+      "name": "point_in_rectangle"
+    },
+    "95686": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_275C6",
+      "kind": "code",
+      "name": "restore_mouse_sprite"
+    },
     "100850": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "file_load_resfile",
@@ -210,6 +366,12 @@
       "inventory_name": "kb_exit_handler",
       "kind": "code",
       "name": "keyboard_exit_handler"
+    },
+    "139677": {
+      "basis": "integ44 L19-asmC: Proposal: formats variadic text to the VGA text buffer and interprets cursor controls; C call sites are updated in obj_seg007 and obj_seg027.",
+      "inventory_name": "nopsub_3219D",
+      "kind": "code",
+      "name": "debug_printf_text"
     },
     "140458": {
       "basis": "integ28 registry (plan C + readability)",
@@ -895,6 +1057,77 @@
       "kind": "data",
       "name": "_ctype"
     },
+    "193478": {
+      "basis": "L19-asmA accepted public proposal: 0x28 render-width bound",
+      "kind": "data",
+      "name": "prerender_max_line_width"
+    },
+    "193480": {
+      "kind": "data",
+      "name": "sphere_scanline_profiles",
+      "object_declared": false,
+      "basis": "integ43: reviewed L14 semantic name; The 40-entry sphere profile pointer table in graphics_resource_runtime; layout/data-symbols.json anchors _off_3F3C8 at this initialized address, and the pinned Restunts seg012 source uses it from preRender_sphere."
+    },
+    "194650": {
+      "basis": "integ44 L19-asmA: High-confidence proposal: set by mode-4 setup and checked by mode-7 setup.",
+      "kind": "data",
+      "name": "video_mode4_active"
+    },
+    "194676": {
+      "basis": "L19-asmA accepted public proposal: saved far timer vector",
+      "kind": "data",
+      "name": "previous_timer_irq_vector"
+    },
+    "194684": {
+      "basis": "L19-asmA accepted public proposal: low elapsed tick word",
+      "kind": "data",
+      "name": "timer_elapsed_ticks_low"
+    },
+    "194686": {
+      "basis": "L19-asmA accepted public proposal: high elapsed tick word",
+      "kind": "data",
+      "name": "timer_elapsed_ticks_high"
+    },
+    "194688": {
+      "basis": "L19-asmA accepted public proposal: active sound countdown flag",
+      "kind": "data",
+      "name": "timer_sound_countdown_active"
+    },
+    "194689": {
+      "basis": "L19-asmA accepted public proposal: countdown dispatch enable flag",
+      "kind": "data",
+      "name": "timer_sound_countdown_enabled"
+    },
+    "194690": {
+      "basis": "L19-asmA accepted public proposal: sound countdown ticks",
+      "kind": "data",
+      "name": "timer_sound_countdown_ticks"
+    },
+    "194692": {
+      "basis": "L19-asmA accepted public proposal: timer divisor reload",
+      "kind": "data",
+      "name": "timer_interrupt_reload_value"
+    },
+    "194694": {
+      "basis": "L19-asmA accepted public proposal: BIOS tick countdown",
+      "kind": "data",
+      "name": "bios_tick_countdown"
+    },
+    "194696": {
+      "basis": "L19-asmA accepted public proposal: callback reentry high water",
+      "kind": "data",
+      "name": "timer_callback_reentry_peak"
+    },
+    "194698": {
+      "basis": "L19-asmA accepted public proposal: callback reentry depth",
+      "kind": "data",
+      "name": "timer_callback_reentry_depth"
+    },
+    "194700": {
+      "basis": "L19-asmA accepted public proposal: callback dispatch guard",
+      "kind": "data",
+      "name": "timer_callback_busy"
+    },
     "194702": {
       "basis": "integ30 unification (existing spelling kept)",
       "kind": "data",
@@ -906,13 +1139,13 @@
       "name": "byte_3FE00"
     },
     "196482": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'state_a': uninformative: asm012_135290 mmgr_alloc_resmem stores the end paragraph of the DOS resource block (start + size) and tests it for 0 as the initialised flag; module-private label of asm012_135290 (DSEG/_DATA label without PUBLIC, only that module's code uses it; the C TUs only carry unused extern declarations, which MSC emits no EXTDEF for): no accepted object declares any spelling of this address",
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'state_a': uninformative: resource_memory_manager mmgr_alloc_resmem stores the end paragraph of the DOS resource block (start + size) and tests it for 0 as the initialised flag; module-private label of resource_memory_manager (DSEG/_DATA label without PUBLIC, only that module's code uses it; the C TUs only carry unused extern declarations, which MSC emits no EXTDEF for): no accepted object declares any spelling of this address",
       "kind": "data",
       "name": "resmem_end_seg",
       "object_declared": false
     },
     "196484": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'state_b': uninformative: asm012_135290 stores the DOS AH=48h allocated segment (resource memory base); module-private label of asm012_135290 (DSEG/_DATA label without PUBLIC, only that module's code uses it; the C TUs only carry unused extern declarations, which MSC emits no EXTDEF for): no accepted object declares any spelling of this address",
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'state_b': uninformative: resource_memory_manager stores the DOS AH=48h allocated segment (resource memory base); module-private label of resource_memory_manager (DSEG/_DATA label without PUBLIC, only that module's code uses it; the C TUs only carry unused extern declarations, which MSC emits no EXTDEF for): no accepted object declares any spelling of this address",
       "kind": "data",
       "name": "resmem_base_seg",
       "object_declared": false
@@ -922,10 +1155,85 @@
       "kind": "data",
       "name": "mouse_button_state_cache"
     },
+    "197406": {
+      "basis": "integ44 L19-asmB: Proposal: set by preRender wrappers and read/rotated by draw_patterned_lines as the stipple bit pattern.",
+      "kind": "data",
+      "name": "line_pattern_bits"
+    },
+    "197408": {
+      "basis": "L19-asmB accepted public proposal: third preRender_unk argument storage",
+      "kind": "data",
+      "name": "prerender_auxiliary_arg"
+    },
+    "197550": {
+      "basis": "L19-asmB accepted public proposal: projection horizontal half extent",
+      "kind": "data",
+      "name": "projection_half_width"
+    },
+    "197552": {
+      "basis": "L19-asmB accepted public proposal: projection vertical half extent",
+      "kind": "data",
+      "name": "projection_half_height"
+    },
+    "197554": {
+      "basis": "L19-asmB accepted public proposal: projection left origin",
+      "kind": "data",
+      "name": "projection_left_origin"
+    },
+    "197556": {
+      "basis": "L19-asmB accepted public proposal: projection top origin",
+      "kind": "data",
+      "name": "projection_top_origin"
+    },
+    "197558": {
+      "basis": "L19-asmB accepted public proposal: projection center x",
+      "kind": "data",
+      "name": "projection_center_x"
+    },
+    "197560": {
+      "basis": "L19-asmB accepted public proposal: projection center y",
+      "kind": "data",
+      "name": "projection_center_y"
+    },
+    "197562": {
+      "basis": "L19-asmB accepted public proposal: horizontal projection scale",
+      "kind": "data",
+      "name": "projection_x_scale"
+    },
+    "197564": {
+      "basis": "L19-asmB accepted public proposal: vertical projection scale",
+      "kind": "data",
+      "name": "projection_y_scale"
+    },
+    "197566": {
+      "basis": "L19-asmB accepted public proposal: horizontal projection angle",
+      "kind": "data",
+      "name": "projection_x_angle"
+    },
+    "197568": {
+      "basis": "L19-asmB accepted public proposal: vertical projection angle",
+      "kind": "data",
+      "name": "projection_y_angle"
+    },
+    "197570": {
+      "basis": "L19-asmB accepted public proposal: NUL-terminated fatal-error text",
+      "kind": "data",
+      "name": "window_release_order_error_msg"
+    },
+    "198136": {
+      "basis": "L19-asmC accepted public proposal: high word of timer copy target",
+      "kind": "data",
+      "name": "timer_copy_target_high"
+    },
     "198142": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
       "name": "line_input_screen_rect"
+    },
+    "198146": {
+      "basis": "L19-asmB accepted public proposal: default vector operation base z",
+      "kind": "data",
+      "name": "vector_op_base_z"
     },
     "198192": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -1438,16 +1746,18 @@
       "object_declared": false
     },
     "202836": {
-      "basis": "integ37: compiler-hash-constrained reconstruction name of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original (supersedes integ33 projected_point_table)",
       "kind": "data",
-      "name": "projected_point_ptr_table",
-      "object_declared": false
+      "name": "projected_point_table",
+      "object_declared": false,
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for the 22-byte polyvertpointptrtab object, anchored as _word_31854 at this BSS address; the accepted obj_seg006 source maps it in its reviewed symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'projected_point_ptr_table'.",
+      "source_identifier": "projected_point_ptr_table"
     },
     "202858": {
-      "basis": "integ37: compiler-hash-constrained reconstruction name of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original (supersedes integ33 transformed_primitive_cursor)",
       "kind": "data",
-      "name": "shape_prim_next",
-      "object_declared": false
+      "name": "transformed_primitive_cursor",
+      "object_declared": false,
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transshapeprimptr, anchored as _word_3186A at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'shape_prim_next'.",
+      "source_identifier": "shape_prim_next"
     },
     "202862": {
       "basis": "integ37: compiler-hash-constrained reconstruction name of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original",
@@ -1468,10 +1778,11 @@
       "object_declared": false
     },
     "202872": {
-      "basis": "integ37: compiler-hash-constrained reconstruction name of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original (supersedes integ33 transformed_shape_bounds)",
       "kind": "data",
-      "name": "current_rect",
-      "object_declared": false
+      "name": "transformed_shape_bounds",
+      "object_declared": false,
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transshaperectptr, anchored as _word_31878 at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'current_rect'.",
+      "source_identifier": "current_rect"
     },
     "202874": {
       "basis": "integ37: readable name (already satisfying the compiler static-order hash; compiler-hash-constrained class) of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original",
@@ -1492,10 +1803,11 @@
       "object_declared": false
     },
     "202882": {
-      "basis": "integ37: compiler-hash-constrained reconstruction name of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original (supersedes integ33 transformed_primitive_paint)",
       "kind": "data",
-      "name": "current_paintjob",
-      "object_declared": false
+      "name": "transformed_primitive_paint",
+      "object_declared": false,
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transprimitivepaintjob, anchored as _byte_31882 at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'current_paintjob'.",
+      "source_identifier": "current_paintjob"
     },
     "202884": {
       "basis": "integ37: compiler-hash-constrained reconstruction name of a module-private static of obj_seg006 (its complete static set, 30 file-scope statics incl. two neutral unreferenced-storage statics (s006bss), 3144-byte _BSS at 200332, link-module-order-v1). MSC 5.10 allocates statics in an order that depends on the identifier spelling (compiler symbol hash, L8-msstatic/L9-mschash/s005bss), so this readable semantic spelling is constrained by the target _BSS order; no PUBDEF/EXTDEF, never a recovered original (supersedes integ33 vector_angle_cosine_a)",
@@ -1960,54 +2272,9 @@
       "name": "numid"
     },
     "213832": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `unsigned long total_game;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original; supersedes g_State_trav_distance",
+      "basis": "L19-race: natural 22-byte GAMESTATE_SNAPSHOT aggregate, one c_common communal at [213832,213854), link-hash bucket 56 in commfit window [53,57]; C member accesses share one independently reference-spanned object",
       "kind": "data",
-      "name": "total_game"
-    },
-    "213836": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short idx_time_gm;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "idx_time_gm"
-    },
-    "213838": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short best_game_time;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "best_game_time"
-    },
-    "213840": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short best_timeold;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "best_timeold"
-    },
-    "213842": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short finish_count;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "finish_count"
-    },
-    "213844": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short countgend;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "countgend"
-    },
-    "213846": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short value_game_pen;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "value_game_pen"
-    },
-    "213848": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short crash_velocityvalue;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "crash_velocityvalue"
-    },
-    "213850": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short max_speed_value;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "max_speed_value"
-    },
-    "213852": {
-      "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `short total_game_jump;`; declared by obj_seg000). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
-      "kind": "data",
-      "name": "total_game_jump"
+      "name": "race_stats"
     },
     "213854": {
       "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `int rotxvehicle;`; declared by obj_seg001_complete). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
@@ -3233,162 +3500,6 @@
       "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `int g_mouseyposstacktable[5];`; declared by obj_seg008). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
       "kind": "data",
       "name": "g_mouseyposstacktable"
-    },
-    "27394": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_game_state",
-      "kind": "code",
-      "name": "initialize_game_state"
-    },
-    "36102": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_18D06",
-      "kind": "code",
-      "name": "apply_audio_frame"
-    },
-    "36192": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'edge_state': uninformative (reads as a variable): the function computes a track tile's lane edge points and centre into a TRACKRESULT and returns whether the side is the last lane",
-      "inventory_name": "sub_18D60",
-      "kind": "code",
-      "name": "track_edge_points"
-    },
-    "38804": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "plane_rotate_op",
-      "kind": "code",
-      "name": "plnrotop"
-    },
-    "39206": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "plane_origin_op",
-      "kind": "code",
-      "name": "plnoriginop"
-    },
-    "39840": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_19BA0",
-      "kind": "code",
-      "name": "update_crash_debris"
-    },
-    "40481": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_kevinrandom",
-      "kind": "code",
-      "name": "initialize_kevin_random"
-    },
-    "40680": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_div0",
-      "kind": "code",
-      "name": "initialize_div0"
-    },
-    "40724": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_19F14",
-      "kind": "code",
-      "name": "draw_clip"
-    },
-    "5774": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "highscore_text_unk",
-      "kind": "code",
-      "name": "highscore_text_unknown"
-    },
-    "57760": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "build_track_object",
-      "kind": "code",
-      "name": "build_obj"
-    },
-    "66734": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_204AE",
-      "kind": "code",
-      "name": "wheel_update"
-    },
-    "72282": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "subst_hillroad_track",
-      "kind": "code",
-      "name": "subst_hillroad"
-    },
-    "75058": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_unknown",
-      "kind": "code",
-      "name": "initialize_unknown"
-    },
-    "76172": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_2298C",
-      "kind": "code",
-      "name": "update_camera_target"
-    },
-    "85348": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_polyinfo",
-      "kind": "code",
-      "name": "initialize_polyinfo"
-    },
-    "85510": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "select_cliprect_rotate",
-      "kind": "code",
-      "name": "select_rot"
-    },
-    "85662": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "transformed_shape_op",
-      "kind": "code",
-      "name": "trans_op"
-    },
-    "90102": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "get_a_poly_info",
-      "kind": "code",
-      "name": "polyinfo"
-    },
-    "90618": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "mat_rot_zxy",
-      "kind": "code",
-      "name": "matrotzxy"
-    },
-    "91506": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rect_union",
-      "kind": "code",
-      "name": "rcunion"
-    },
-    "91628": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rect_intersect",
-      "kind": "code",
-      "name": "rcintersect"
-    },
-    "92754": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rectlist_add_rects",
-      "kind": "code",
-      "name": "rectlist_add"
-    },
-    "93002": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rect_array_sort_by_top",
-      "kind": "code",
-      "name": "rectsorttop"
-    },
-    "95408": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_274B0",
-      "kind": "code",
-      "name": "point_in_rectangle"
-    },
-    "95686": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_275C6",
-      "kind": "code",
-      "name": "restore_mouse_sprite"
     }
   },
   "schema": "names-registry-v1",
@@ -3401,6 +3512,7 @@
     "build/workers/nameA208070/names_A_final.json",
     "build/workers/nameBfix/names_B_final.json",
     "build/workers/nameCfix/names_C_final.json",
-    "build/workers/integ40/COMMUNAL_UNIT.json"
+    "build/workers/integ40/COMMUNAL_UNIT.json",
+    "build/workers/L14-read/registry_changes.json"
   ]
 }

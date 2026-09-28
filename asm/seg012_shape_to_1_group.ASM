@@ -29,7 +29,7 @@ _nopsub_33D0C proc far
     mov     ax, [bp+arg_6]
     sub     ax, [si+6]
     mov     [bp+var_4], ax
-    jmp     short loc_33D69
+    jmp     short sprite_shape_to_1_shared_exit
     ; align 2
     db 144
 _nopsub_33D0C endp
@@ -55,7 +55,7 @@ _sprite_shape_to_1 proc far
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_8]
     mov     [bp+var_4], ax
-    jmp     short loc_33D69
+    jmp     short sprite_shape_to_1_shared_exit
     ; align 2
     db 144
 _sprite_shape_to_1 endp
@@ -80,7 +80,7 @@ _sprite_shape_to_1_alt proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
-loc_33D69:
+sprite_shape_to_1_shared_exit:
     mov     bx, [bp+var_4]
     shl     bx, 1
     add     bx, word ptr cs:[_sprite1+10]
@@ -95,35 +95,35 @@ loc_33D69:
     add     si, 10h
     shr     ax, 1
     mov     [bp+var_6], ax
-    jnb     short loc_33DA9
-    jz      short loc_33DB5
-loc_33D97:
+    jnb     short sprite_shape_to_1_copy_loop_3
+    jz      short sprite_shape_to_1_copy_loop_4
+sprite_shape_to_1_copy_loop:
     mov     cx, [bp+var_6]
     rep movsw
     movsb
     add     di, bx
     dec     dx
-    jg      short loc_33D97
-loc_33DA2:
+    jg      short sprite_shape_to_1_copy_loop
+sprite_shape_to_1_copy_loop_2:
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_33DA9:
+sprite_shape_to_1_copy_loop_3:
     mov     cx, [bp+var_6]
     rep movsw
     add     di, bx
     dec     dx
-    jg      short loc_33DA9
-    jmp     short loc_33DA2
-loc_33DB5:
+    jg      short sprite_shape_to_1_copy_loop_3
+    jmp     short sprite_shape_to_1_copy_loop_2
+sprite_shape_to_1_copy_loop_4:
     movsb
     add     di, bx
     dec     dx
-    jg      short loc_33DB5
-    jmp     short loc_33DA2
+    jg      short sprite_shape_to_1_copy_loop_4
+    jmp     short sprite_shape_to_1_copy_loop_2
     ; align 2
     db 0
 _sprite_shape_to_1_alt endp

@@ -4,7 +4,7 @@
  * choices: MSC 5.10 C2's CSE capacity in update_frame depends on symbol-table memory (names of
  * referenced globals and of update_frame's locals).  They are not recovered names.
  * Data shapes: rect_unk[15] (15-iteration copy loop + rect_unk[si], labels at 8-byte stride),
- * unk_3C0A2[9][2] (pair table, see comment); fence pair lists by their pinned labels; plane state kept separate. */
+ * hill_offs[9][2] (pair table, see comment); fence pair lists by their pinned labels; plane state kept separate. */
 
 
 struct RECTANGLE {
@@ -286,7 +286,7 @@ extern unsigned char g_rpl_init;
 extern unsigned char gm_playmode; // 0 = playing, 1 = paused, 2 = replay
 extern short g_sgateopn;
 
-extern short word_45A24; // current frame?
+extern short elapsed_time1; // current frame?
 extern short g_cvxintvl; // fps * 30
 extern short frmcs_time; // 100 / fps
 extern short st_hdg;
@@ -624,9 +624,9 @@ extern char fence_off_4[];
 extern char fence_off_3[];
 extern int shape_rot[];
 extern int hill_offs[9][2];      /* hill (x,z) offsets: 1,2,2,4 pairs at pairs 0,1,3,5; exactly fills [0x3C0A2,0x3C0C6) */
-extern int unk_3C0A6[];
-extern int unk_3C0AE[];
-extern int unk_3C0B6[];
+extern int hill_offs_b[];
+extern int hill_offs_c[];
+extern int hill_offs_d[];
 extern struct TRACKOBJECT scene2[];
 extern struct TRACKOBJECT scene3[];
 extern struct SHAPE3D g_shapes3d[130];

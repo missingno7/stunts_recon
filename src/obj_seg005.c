@@ -280,7 +280,7 @@ unsigned char g_rpl_init;
 char gm_playmode; // 0 = playing, 1 = paused, 2 = replay
 extern short g_sgateopn;
 
-extern short word_45A24; // current frame?
+extern short elapsed_time1; // current frame?
 extern short g_cvxintvl; // fps * 30
 extern short frmcs_time; // 100 / fps
 extern short st_hdg;

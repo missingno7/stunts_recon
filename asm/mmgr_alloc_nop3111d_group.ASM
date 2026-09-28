@@ -41,14 +41,14 @@ _mmgr_alloc_resmem proc far
     int     21h
     mov     bx, cs
     cmp     al, 3
-    jl      short loc_3108E
+    jl      short resmem_alloc_branch_path_01
     mov     ah, 62h
     int     21h
-loc_3108E:
+resmem_alloc_branch_path_01:
     mov     _pspofs, bx
     mov     _pspseg, ds
     cmp     _word_3ff82, 0
-    jnz     short loc_310CD
+    jnz     short resmem_alloc_loop_head_01
     mov     bx, 64h
     mov     ah, 48h
     int     21h
@@ -67,18 +67,18 @@ loc_3108E:
     mov     si, _resendptr2
     mov     [si+MEMCHUNK.resofs], ax
     mov     _word_3ff82, ax
-loc_310CD:
+resmem_alloc_loop_head_01:
     mov     si, _resendptr2
     mov     _resendptr1, si
     mov     si, _resptr1
     mov     _resptr2, si
-loc_310DD:
+resmem_alloc_loop_head_02:
     add     si, 12h
     cmp     si, _resendptr2
-    jz      short loc_310ED
+    jz      short resmem_alloc_branch_path_02
     mov     [si+MEMCHUNK.resunk], 0
-    jmp     short loc_310DD
-loc_310ED:
+    jmp     short resmem_alloc_loop_head_02
+resmem_alloc_branch_path_02:
     pop     di
     pop     si
     pop     bp
@@ -122,14 +122,14 @@ _nopsub_3111D proc far
     mov     _pspofs, cs
     mov     _pspseg, ds
     cmp     _word_3FF82, 0
-    jnz     short loc_310CD
+    jnz     short resmem_alloc_loop_head_01
     mov     bx, [bp+arg_0]
     mov     ah, 48h
     int     21h             ; DOS - 2+ - ALLOCATE MEMORY
-    jnb     short loc_3113E
+    jnb     short noop_entry2_branch_path_01
     mov     ah, 48h
     int     21h             ; DOS - 2+ - ALLOCATE MEMORY
-loc_3113E:
+noop_entry2_branch_path_01:
     mov     si, _resptr1
     mov     [si+MEMCHUNK.resofs], ax
     mov     _word_3FF84, ax
@@ -137,7 +137,7 @@ loc_3113E:
     mov     si, _resendptr2
     mov     [si+MEMCHUNK.resofs], ax
     mov     _word_3FF82, ax
-    jmp     loc_310CD
+    jmp     resmem_alloc_loop_head_01
 _nopsub_3111D endp
 S012_TEXT ends
 end

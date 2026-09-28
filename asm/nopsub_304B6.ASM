@@ -14,54 +14,54 @@ public _nopsub_304B6
 _nopsub_304B6 proc far
     mov     ah, 1
     int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
-    jz      short loc_304DB
+    jz      short input_character_no_input_path
     mov     ah, 0
     int     16h             ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
     or      al, al
-    jz      short locret_304C6
+    jz      short input_character_early_return
     xor     ah, ah
-locret_304C6:
+input_character_early_return:
     retf
     mov     ah, 1
     int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
-    jz      short loc_304DB
+    jz      short input_character_no_input_path
     mov     ah, 0
     int     16h             ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
     push    ax
     call far ptr kb_parse_key
     add     sp, 2
     retf
-loc_304DB:
+input_character_no_input_path:
     call far ptr get_joy_flags
     mov     bx, ax
     test    ax, 30h
-    jz      short loc_304ED
+    jz      short character_no_input_path_2
     mov     ax, 0Dh
-    jmp     short loc_304F6
+    jmp     short character_return_if_condition
     db 144
-loc_304ED:
+character_no_input_path_2:
 
     and     bx, 0Fh
 
     shl     bx, 1
     mov     ax, [bx+4372h]
-loc_304F6:
+character_return_if_condition:
     cmp     ax, word_3FB02
-    jnz     short loc_304FF
-loc_304FC:
+    jnz     short character_return_if_nonzero
+read_input_character_scan_loop:
     xor     ax, ax
     retf
-loc_304FF:
+character_return_if_nonzero:
     cmp     ax, word_3FB04
-    jnz     short loc_3050F
+    jnz     short input_character_when_nonzero
     dec     byte_3FB06
-    jg      short loc_304FC
+    jg      short read_input_character_scan_loop
     mov     word_3FB02, ax
     retf
-loc_3050F:
+input_character_when_nonzero:
     mov     byte_3FB06, 3
     mov     word_3FB04, ax
-    jmp     short loc_304FC
+    jmp     short read_input_character_scan_loop
 
 _nopsub_304B6 endp
 _TEXT ends

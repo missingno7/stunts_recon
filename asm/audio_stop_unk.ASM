@@ -14,14 +14,14 @@ _audio_stop_unknown proc far
     mov     ax, es:22h
     mov     dx, cs
     cmp     ax, dx
-    jz      short loc_30277
+    jz      short stop_unknown_return_if_zero
     retf
-loc_30277:
+stop_unknown_return_if_zero:
     mov     ax, es:20h
     cmp     ax, 1909h
-    jz      short loc_30281
+    jz      short audio_stop_unknown_when_zero
     retf
-loc_30281:
+audio_stop_unknown_when_zero:
     in      al, 21h         ; Interrupt controller, 8259A.
     or      al, 3
     out     21h, al         ; Interrupt controller, 8259A.

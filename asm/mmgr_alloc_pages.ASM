@@ -41,8 +41,8 @@ _mmgr_alloc_pages proc far
     add     dx, [di+MEMCHUNK.ressize]
     add     di, 12h
     cmp     si, di
-    jbe     short loc_312A7
-loc_31262:
+    jbe     short alloc_advance_free_entry_slot
+alloc_create_chunk_record:
     mov     _resptr2, di
     push    [bp+arg_0]
     call    _mmgr_path_to_name
@@ -50,11 +50,11 @@ loc_31262:
     mov     si, ax
     xor     bx, bx
     mov     cx, 0Ch
-loc_31278:
+alloc_copy_resource_name_loop:
     mov     al, byte ptr [bx+si+MEMCHUNK.resname]
     mov     byte ptr [bx+di+MEMCHUNK.resname], al
     inc     bx
-    loop    loc_31278
+    loop    alloc_copy_resource_name_loop
     mov     si, _resendptr1
     mov     ax, [bp+arg_2]
     mov     [di+MEMCHUNK.resofs], dx
@@ -62,43 +62,43 @@ loc_31278:
     mov     [di+MEMCHUNK.resunk], 2
     add     ax, dx
     cmp     ax, _resmaxsize
-    jb      short loc_3129C
+    jb      short alloc_update_max_extent
     mov     _resmaxsize, ax
-loc_3129C:
+alloc_update_max_extent:
     cmp     ax, [si+MEMCHUNK.resofs]
-    ja      short loc_312C2
-loc_312A1:
+    ja      short alloc_scan_next_extent
+alloc_return_failure:
     xor     ax, ax
     pop     di
     pop     si
     pop     bp
     retf
-loc_312A7:
+alloc_advance_free_entry_slot:
     cmp     si, _resendptr2
-    jz      short loc_312B6
+    jz      short alloc_no_free_slots_error
     add     si, 12h
     mov     _resendptr1, si
-    jmp     short loc_31262
-loc_312B6:
+    jmp     short alloc_create_chunk_record
+alloc_no_free_slots_error:
     push    [bp+arg_0]
     mov     ax, offset _aReservememoryO; "reservememory - OUT OF MEMORY SLOTS RES"...
     push    ax
     call    far ptr _fatal_error
-loc_312C2:
+alloc_scan_next_extent:
     mov     si, _resendptr1
     mov     di, _resptr2
     mov     ax, [di+MEMCHUNK.resofs]
     add     ax, [di+MEMCHUNK.ressize]
-loc_312D0:
+alloc_skip_occupied_extents:
     cmp     ax, [si+MEMCHUNK.resofs]
-    jbe     short loc_312A1
+    jbe     short alloc_return_failure
     cmp     si, _resendptr2
-    jz      short loc_312E9
+    jz      short alloc_out_of_memory_error
     mov     [si+MEMCHUNK.resunk], 0
     add     si, 12h
     mov     _resendptr1, si
-    jmp     short loc_312D0
-loc_312E9:
+    jmp     short alloc_skip_occupied_extents
+alloc_out_of_memory_error:
     mov     bx, _resmaxsize
     push    bx
     push    [di+MEMCHUNK.ressize]

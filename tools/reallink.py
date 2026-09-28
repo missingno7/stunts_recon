@@ -32,13 +32,14 @@ import shutil
 import struct
 import subprocess
 import sys
+import uuid
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 
-from common import read_json  # noqa: E402
+from common import read_json, require  # noqa: E402
 from compiler import verify_toolchain, toolchain_path, check_inline_asm  # noqa: E402
 from preprocessor import prepare  # noqa: E402
 from object_flags import recipe_flags  # noqa: E402
@@ -61,7 +62,7 @@ LINK_STACK = 8000
 LINK_OPTIONS = ['/DOSSEG', '/NOI', '/NOD', '/MAP', '/CP:1', '/ST:%d' % LINK_STACK]
 CRT0_MEMBER = ('toolchain/msc510/MLIBCR.LIB', 'dos' + chr(92) + 'crt0.asm')
 # absolute runtime markers (pinned CRT sources; acceptance doc: __AHSHIFT = 12, __acrtused = 9876h)
-ABSOLUTES = {'__AHSHIFT': 12, '__acrtused': 0x9876}
+ABSOLUTES = {'__AHSHIFT': 12, '__AHINCR': 4096, '__acrtused': 0x9876}
 
 
 def sha(data):
@@ -1064,6 +1065,76 @@ def resolve_symbols(c, units):
     return defined, resolved, conflicts, unresolved, problems
 
 
+def _append_public_alias(blob, public, segment_index, offset):
+    """Add a link-only alias to an existing same-segment PUBDEF record.
+
+    LINK 3.65 ignores a new PUBDEF record appended to these MSC objects, but
+    resolves an additional entry in their existing PUBDEF record. No SEGDEF,
+    LEDATA, or FIXUPP is added or changed.
+    """
+    def take_index(body, at):
+        require(at < len(body), 'Truncated OMF index in PUBDEF')
+        first = body[at]
+        if first & 0x80:
+            require(at + 1 < len(body), 'Truncated OMF index in PUBDEF')
+            return ((first & 0x7f) << 8) | body[at + 1], at + 2
+        return first, at + 1
+
+    pos = 0
+    while pos < len(blob):
+        require(pos + 3 <= len(blob), 'Truncated link object record')
+        kind = blob[pos]
+        length = int.from_bytes(blob[pos + 1:pos + 3], 'little')
+        end = pos + 3 + length
+        require(end <= len(blob), 'Truncated link object payload')
+        if kind == 0x90:
+            body = blob[pos + 3:end - 1]
+            _group, at = take_index(body, 0)
+            segment, at = take_index(body, at)
+            if segment == segment_index and segment != 0:
+                while at < len(body):
+                    n = body[at]
+                    require(at + 1 + n + 3 <= len(body), 'Truncated PUBDEF entry')
+                    existing = body[at + 1:at + 1 + n].decode('ascii')
+                    at += 1 + n + 2
+                    _, at = take_index(body, at)
+                    require(existing != public, 'Duplicate link-only public alias')
+                require(0 <= offset <= 0xffff, 'PUBDEF alias offset is out of range')
+                entry = bytes([len(public)]) + public.encode('ascii') + struct.pack('<H', offset) + bytes([0])
+                return blob[:pos] + rec(kind, body + entry) + blob[end:]
+        pos = end
+    raise ValueError('Owner OBJ has no PUBDEF for alias segment %d' % segment_index)
+
+
+def _bind_accepted_code_aliases(units, resolved):
+    """Bind reviewed code-symbol aliases to their owning accepted OBJ PUBDEF."""
+    bindings = {}
+    for name, (kind, address, _frame, source) in sorted(resolved.items()):
+        if kind != 'code' or source not in ('code-symbols', 'code-symbols(anchor)'):
+            continue
+        matches = []
+        for unit in units:
+            if unit.kind not in ('c', 'asm') or not unit.accepted:
+                continue
+            for entry in unit.objs:
+                for segment in entry['obj'].segment_defs:
+                    if segment['class'] != 'CODE' or not segment['length']:
+                        continue
+                    start = entry['piece']['start']
+                    if start <= address < start + segment['length']:
+                        matches.append((unit, entry, segment, start))
+        if len(matches) != 1:
+            continue
+        unit, entry, segment, start = matches[0]
+        offset = address - start
+        entry['bytes'] = _append_public_alias(entry['bytes'], name, segment['index'], offset)
+        entry.setdefault('link_public_aliases', []).append(name)
+        bindings[name] = {'address': address, 'owner': unit.id, 'segment': segment['name'],
+                          'segment_index': segment['index'], 'offset': offset,
+                          'source': source, 'record': 'PUBDEF-in-owner-OBJ'}
+    return bindings
+
+
 def containing_unit(units, addr, kinds):
     best = None
     for u in units:
@@ -1669,7 +1740,7 @@ def bss_placement(c, units, img, segs, pubs):
     # integ39: the owned c_common paragraph fill is re-created by LINK: the BSS
     # sections end (XOE) at its start and c_common starts at its end.
     for w in c.manifest.get('bss_owners', []):
-        if w['kind'] != 'LINK_FILL':
+        if w['kind'] != 'LINK_FILL' or w.get('basis') != 'link-communal-paragraph-v1':
             continue
         cc = [s for s in segs if s['name'] == 'c_common']
         xoe = [s for s in segs if s['name'] == 'XOE']
@@ -1823,7 +1894,11 @@ def choose_anchors(c, units):
         anchors[frames[s]] = name
     rd = [u for u in units if u.kind == 'raw-data']
     anchors[DGROUP_BASE // 16] = '$$F_DGROUP'
-    placed.append((rd[0], '$$F_DGROUP', 0))
+    # Once every initialized DGROUP byte is reconstructed, no raw-data unit
+    # remains.  The zero-length prelude already owns a DGROUP declaration and
+    # can carry the same anchor without creating a synthetic contribution.
+    dgroup_host = rd[0] if rd else next(u for u in units if u.kind == 'prelude')
+    placed.append((dgroup_host, '$$F_DGROUP', 0))
     for u in units:
         if u.kind == 'far-data':
             e = u.objs[0]
@@ -2373,10 +2448,10 @@ def stage_inputs(c, stage):
     names = []
     for name, source, recipe in stage:
         recipe = copy.deepcopy(recipe)
-        path = work / (name + Path(recipe['source']).suffix)
-        path.write_bytes(source)
+        path = work / (name + '-' + uuid.uuid4().hex + Path(recipe['source']).suffix)
         recipe['source'] = path.relative_to(ROOT).as_posix()
         c.manifest = P.apply_ownership(c.manifest, name, recipe, oracle, image)
+        path.write_bytes(source)
         c.recipes['recipes/%s.json' % name] = recipe
         names.append(name)
     return names
@@ -2413,6 +2488,7 @@ def run(runtime='members', partial='raw', link_options=None, no_alias_shims=Fals
     log('%d accepted objects built' % len(rows))
     units = add_special_units(units, c, stack=not (order == 'library' and runtime == 'libraries'))
     defined, resolved, conflicts, unresolved, problems = resolve_symbols(c, units)
+    alias_bindings = _bind_accepted_code_aliases(units, resolved)
     anchors, anchor_pubs, frames = choose_anchors(c, units)
     issues = make_raw_objects(c, units, frames, anchors)
     for u, name, off in anchor_pubs:
@@ -2430,6 +2506,8 @@ def run(runtime='members', partial='raw', link_options=None, no_alias_shims=Fals
     for name, (kind, addr, frame, src) in sorted(resolved.items()):
         if kind == 'absolute':
             absolute_host.raw.absolutes.append((name, addr))
+            continue
+        if name in alias_bindings:
             continue
         u, seg, s = containing_unit(units, addr, kinds_raw)
         if u is None:
@@ -2480,6 +2558,7 @@ def run(runtime='members', partial='raw', link_options=None, no_alias_shims=Fals
               'symbols': {'needed_resolved': len(resolved), 'placed_in_raw': placed_syms,
                           'unplaceable': hidden, 'unresolved': unresolved,
                           'alias_shims': aliases,
+                          'alias_bindings': list(alias_bindings.values()),
                           'table_vs_operand_conflicts': conflicts},
               'odd_data_starts': odd,
               'dgroup_alignment_fill_bytes': fills,

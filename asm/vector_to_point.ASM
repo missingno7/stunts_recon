@@ -35,112 +35,112 @@ _vector_to_point proc far
     mov     di, [bp+arg_point2dout]
     mov     cx, [si+VECTOR.vz]
     or      cx, cx
-    jle     short loc_32431
+    jle     short to_point_when_less_or_equal
     mov     ax, [si+VECTOR.vx]
     or      ax, ax
-    jl      short loc_3240F
+    jl      short vector_to_point_when_less
     mul     _word_303BA
     mov     bx, dx
     shl     bx, 1
     or      ax, ax
-    jge     short loc_323FE
+    jge     short to_point_when_greater_or_equal
     inc     bx
-loc_323FE:
+to_point_when_greater_or_equal:
     cmp     cx, bx
-    jle     short loc_32440
+    jle     short to_point_when_less_or_equal_2
     div     cx
     add     ax, _word_303B6
-    jo      short loc_3243C
+    jo      short vector_to_point_when_overflow
     mov     [di], ax
-    jmp     short loc_3244D
+    jmp     short vector_to_point_shared_exit
     db 144
-loc_3240F:
+vector_to_point_when_less:
     neg     ax
     mul     _word_303BA
     mov     bx, dx
     shl     bx, 1
     or      ax, ax
-    jge     short loc_3241E
+    jge     short point_when_greater_or_equal_2
     inc     bx
-loc_3241E:
+point_when_greater_or_equal_2:
     cmp     cx, bx
-    jle     short loc_32448
+    jle     short to_point_when_less_or_equal_3
     div     cx
     neg     ax
     add     ax, _word_303B6
-    jo      short loc_3243C
+    jo      short vector_to_point_when_overflow
     mov     [di], ax
-    jmp     short loc_3244D
+    jmp     short vector_to_point_shared_exit
     db 144
-loc_32431:
+to_point_when_less_or_equal:
     mov     ax, 32768
     mov     [di], ax
     mov     [di+2], ax
-    jmp     short loc_32472
+    jmp     short vector_to_point_vector_loop
 
     db 144
-loc_3243C:
+vector_to_point_when_overflow:
     or      ax, ax
-    jge     short loc_32448
-loc_32440:
+    jge     short to_point_when_less_or_equal_3
+to_point_when_less_or_equal_2:
     mov     ax, 7D00h
     mov     [di], ax
-    jmp     short loc_3244D
+    jmp     short vector_to_point_shared_exit
 
     db 144
-loc_32448:
+to_point_when_less_or_equal_3:
     mov     ax, 8300h
     mov     [di], ax
-loc_3244D:
+vector_to_point_shared_exit:
     mov     ax, [si+VECTOR.vy]
     or      ax, ax
-    jl      short loc_32476
+    jl      short vector_to_point_when_less_2
     mul     _word_303BC
     mov     bx, dx
     shl     bx, 1
     or      ax, ax
-    jge     short loc_32461
+    jge     short point_when_greater_or_equal_3
     inc     bx
-loc_32461:
+point_when_greater_or_equal_3:
     cmp     cx, bx
-    jle     short loc_3249A
+    jle     short to_point_when_less_or_equal_4
     div     cx
     neg     ax
     add     ax, _word_303B8
-    jo      short loc_32496
+    jo      short to_point_when_overflow_2
     mov     [di+2], ax
-loc_32472:
+vector_to_point_vector_loop:
     pop     si
     pop     di
     pop     bp
     retf
-loc_32476:
+vector_to_point_when_less_2:
     neg     ax
     mul     _word_303BC
     mov     bx, dx
     shl     bx, 1
     or      ax, ax
-    jge     short loc_32485
+    jge     short point_when_greater_or_equal_4
     inc     bx
-loc_32485:
+point_when_greater_or_equal_4:
     cmp     cx, bx
-    jle     short loc_324A2
+    jle     short to_point_when_less_or_equal_5
     div     cx
     add     ax, _word_303B8
-    jo      short loc_32496
+    jo      short to_point_when_overflow_2
     mov     [di+2], ax
-    jmp     short loc_32472
-loc_32496:
+    jmp     short vector_to_point_vector_loop
+to_point_when_overflow_2:
     or      ax, ax
-    jl      short loc_324A2
-loc_3249A:
+    jl      short to_point_when_less_or_equal_5
+to_point_when_less_or_equal_4:
     mov     ax, -7D00h
     mov     [di+2], ax
-    jmp     short loc_32472
-loc_324A2:
+    jmp     short vector_to_point_vector_loop
+to_point_when_less_or_equal_5:
     mov     ax, 7D00h
     mov     [di+2], ax
-    jmp     short loc_32472
+    jmp     short vector_to_point_vector_loop
 _vector_to_point endp
 _TEXT ends
 end

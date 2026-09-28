@@ -17,51 +17,51 @@ _sprite_clear_1_color proc far
     mov     dx, cs:[_sprite1+18]
     mov     bx, cs:[_sprite1+16]
     sub     dx, bx
-    jle     short loc_3330D
+    jle     short sprite_clear_1_color_draw_loop
     shl     bx, 1
     add     bx, cs:[_sprite1+10]
     mov     di, cs:[bx]
     add     di, cs:[_sprite1+12]
     mov     bx, cs:[_sprite1+14]
     sub     bx, cs:[_sprite1+12]
-    jle     short loc_3330D
+    jle     short sprite_clear_1_color_draw_loop
     mov     si, cs:[_sprite1+20]
     sub     si, bx
     mov     al, [bp+arg_0]
     mov     ah, al
     shr     bx, 1
-    jb      short loc_33311
-loc_33304:
+    jb      short clear_1_color_when_below
+sprite_clear_1_color_fill_loop:
     mov     cx, bx
     rep stosw
     add     di, si
     dec     dx
-    jg      short loc_33304
-loc_3330D:
+    jg      short sprite_clear_1_color_fill_loop
+sprite_clear_1_color_draw_loop:
     pop     di
     pop     si
     pop     bp
     retf
-loc_33311:
-    jz      short loc_33324
-    jl      short loc_3330D
+clear_1_color_when_below:
+    jz      short sprite_clear_1_color_when_zero
+    jl      short sprite_clear_1_color_draw_loop
     inc     si
-loc_33316:
+clear_1_color_fill_loop_2:
     mov     cx, bx
     rep stosw
     mov     es:[di], al
     add     di, si
     dec     dx
-    jg      short loc_33316
-    jmp     short loc_3330D
-loc_33324:
+    jg      short clear_1_color_fill_loop_2
+    jmp     short sprite_clear_1_color_draw_loop
+sprite_clear_1_color_when_zero:
     inc     si
-loc_33325:
+clear_1_color_draw_loop_2:
     mov     es:[di], al
     add     di, si
     dec     dx
-    jg      short loc_33325
-    jmp     short loc_3330D
+    jg      short clear_1_color_draw_loop_2
+    jmp     short sprite_clear_1_color_draw_loop
     ; align 2
     db 0
 _sprite_clear_1_color endp

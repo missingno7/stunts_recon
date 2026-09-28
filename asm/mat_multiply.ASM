@@ -17,59 +17,59 @@ _mat_multiply proc far
     mov     bx, [bp+arg_leftMatrix]
     mov     di, [bp+arg_outputMatrix]
     mov     cx, 9
-loc_32A03:
+matrix_multiply_scan_loop:
     xor     dx, dx
     mov     ax, word ptr [si+0]
     or      ax, ax
-    jz      short loc_32A1A
+    jz      short matrix_multiply_when_zero
     cmp     word ptr [bx+0], 0
-    jz      short loc_32A1A
+    jz      short matrix_multiply_when_zero
     imul    word ptr [bx+0]
     shl     ax, 1
     rcl     dx, 1
     shl     ax, 1
     rcl     dx, 1
-loc_32A1A:
+matrix_multiply_when_zero:
     mov     word ptr [di+0], dx
     mov     ax, word ptr [si+2]
     or      ax, ax
-    jz      short loc_32A36
+    jz      short matrix_multiply_when_zero_2
     cmp     word ptr [bx+6], 0
-    jz      short loc_32A36
+    jz      short matrix_multiply_when_zero_2
     imul    word ptr [bx+6]
     shl     ax, 1
     rcl     dx, 1
     shl     ax, 1
     rcl     dx, 1
     add     word ptr [di+0], dx
-loc_32A36:
+matrix_multiply_when_zero_2:
     mov     ax, word ptr [si+4]
     or      ax, ax
-    jz      short loc_32A50
+    jz      short matrix_multiply_when_zero_3
     cmp     word ptr [bx+12], 0
-    jz      short loc_32A50
+    jz      short matrix_multiply_when_zero_3
     imul    word ptr [bx+12]
     shl     ax, 1
     rcl     dx, 1
     shl     ax, 1
     rcl     dx, 1
     add     word ptr [di+0], dx
-loc_32A50:
+matrix_multiply_when_zero_3:
     add     di, 2
     cmp     cx, 7
-    jz      short loc_32A66
+    jz      short matrix_multiply_return_if_zero
     cmp     cx, 4
-    jz      short loc_32A66
+    jz      short matrix_multiply_return_if_zero
     add     bx, 2
-    loop    loc_32A03
+    loop    matrix_multiply_scan_loop
     pop     di
     pop     si
     pop     bp
     retf
-loc_32A66:
+matrix_multiply_return_if_zero:
     sub     bx, 4
     add     si, 6
-    loop    loc_32A03
+    loop    matrix_multiply_scan_loop
     pop     di
     pop     si
     pop     bp

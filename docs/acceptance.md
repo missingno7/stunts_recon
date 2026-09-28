@@ -501,3 +501,74 @@ Nothing was published.
 **Residuals.**
 - `total_game` .. `total_game_jump` [213832,213854) are one 22-byte struct in seg001 (`struct GAMESTATE_SNAPSHOT`, assigned by structure copy) but ten separate communals in seg000. The cut ruling would merge them into one communal with seg000 member accesses. They stay separate here: they were not among this pass's named interior aliases, and the merge needs a seg000 re-verification.
 - `globalgamesettings` stays longer than seg003's historical `gmcfg`; seg003 is exact and nameBfix documented this.
+
+# Final seg007 object and the last raw intervals (integ42)
+
+**Result.** The complete seg007 C contribution and the final four initialized bytes are now accepted. The ownership manifest has no unresolved initialized ranges or raw BSS rows. `histbuild.py` confirms that no raw-debt OMF objects are needed; its independent library-order diagnostic still reports a relocation-order residual, while the canonical promotion and image acceptance remain exact.
+
+**seg007 profile and contribution.** `src/obj_seg007.c` with `recipes/obj_seg007.json` reconstructs the complete 18-member C object under pinned `msc600-medium-zi`: MSC 6.00 non-A, medium model, `/AM /Os /Oe /Og /Gs /Zi`, register-gated by `CC-MSC600-seg007`. The ten compiler/support file hashes and DOS pass provenance are recorded in `layout/toolchain.json` and `evidence/msc600-provenance.json`. CODE is `[93102,95407)` (2,305 B), `_DATA` is `[191244,191309)` (65 B), and `_BSS` is `[203476,205383)` (1,907 B); the object has 97 ordered OMF FIXUPPs and 44 ordered MZ relocations. The one-byte CODE fill at 95407 and `_DATA` word fill at 191309 are derived from LINK alignment. The three BSS objects remain complete semantic declarations (`audio_timer_table[25]`, `audio_timer_count`, `id_buffer[5]`) in the independently matching C6 bucket order.
+
+The old `CC-MSC600A-seg007` entry is retained as `DISFAVORED`: 6.00A matches 17 of 18 functions but leaves `audio_driver_timer` 8 bytes too long. `CC-MSC600-seg007` is `SUPPORTED`, and symptom S10 is `EXPLAINED`; this is a seg007-only profile result. `evidence/toolchain-hypotheses.json` records the controls and evidence.
+
+Eight external code aliases used by seg007 are now added as link-only PUBDEF entries in the existing accepted owner OBJ records: `_polarRadius2D` in `asm_asm012_131254`, four `_sub_*` labels in `obj_seg027`, and three `_sub_*` labels in `obj_seg028`. The record edit adds no SEGDEF, LEDATA, or FIXUPP. LINK 3.65 ignores a separate appended PUBDEF record for these MSC objects, so the aliases extend their existing same-segment PUBDEF record. The staged real-link BSS gate places every accepted BSS owner and reproduces the complete image without alias shims. The `__AHINCR` operand is independently bound to the pinned MLIBCR absolute public value `0x1000`.
+
+The seg007 `_BSS` ends on the odd address 205383. The next accepted `_BSS` contribution begins at 205384, so the intervening byte is now a derived `link-bss-word-alignment-v1` LINK_FILL. It consumes the reviewed raw-placeholder evidence row and is checked against both complete adjacent `_BSS` owners; it is not raw storage.
+
+**Final dword attribution.** `[199484,199488)` contains `03 00 00 00`. `asm/asm012_144064_late.ASM` and `recipes/asm012_144064_late.json` now own the dword at the head of the module whose following `_DATA` contains the copyright bytes. The accepted `_DATA` is `[199484,199564)`; the copyright remains at 199488, with its fixup addend adjusted by four so the linked reference is unchanged. The review ruling assigns unreferenced head words to the adjacent module owning the following copyright data and records that every admissible owner model yields identical bytes and final bindings.
+
+**Publication and validation.** One `promote.py --batch` transaction published both contributions after individual DOSBox-X checks, a two-candidate union build, and the staged BSS real-link gate: `PUBLISHED 2 candidates; canonical fresh HYBRID_EXACT (2588 ordered relocations)`. The seg007 verify-only report is `build/acceptance/obj_seg007/report.json`; the batch report is under `build/acceptance/_batches/`. The `histbuild.py --tag integ42` report shows zero raw initialized bytes, zero raw BSS bytes, and an empty `raw-debt-objects.json`. Its diagnostic library order matches 2,023 of 2,588 relocation positions with bank 0 exact; this is distinct from canonical exact acceptance. Focused tests are in `tests/test_integ42.py`. Full `python tools/validate.py` passes all 689 tests, 90 independent DOSBox-X contribution checks, fresh `HYBRID_EXACT`, the BSS real-link gate, and zero raw initialized/BSS ownership. `python tools/validate.py --image` exits successfully and reports `image_equal`, `relocation_set_equal`, `bank_order_equal`, and `packed_equal` all true, zero image mismatch bytes, and zero alias shims; it remains labeled diagnostic-only.
+
+
+# Readability rename publication (integ43)
+
+**Result.** One `promote.py --batch` transaction published all 17 L14-read verified-only candidates after rebasing their rename deltas onto the current canonical sources. Every candidate passed its strict individual check and DOSBox-X crosscheck; the 17-candidate union whole-image build and BSS real-link gate passed. Publication reported `PUBLISHED 17 candidates; canonical fresh HYBRID_EXACT (2588 ordered relocations)`. The candidates contribute 31,369 bytes. The per-candidate and batch records are under `build/acceptance/`; the rebase audit and isolated candidate inputs are in `build/workers/integ43/`.
+
+**Integ42 boundary.** The source changes from integ42 are `src/obj_seg007.c` and `asm/asm012_144064_late.ASM`; neither owner is in this rename batch. The source rebase audit records the current canonical source and candidate hashes. No race-stat aggregate contribution was published.
+
+**Address names.** `layout/names-registry.json` now uses one semantic data name at each reviewed address: `sphere_scanline_profiles` at 193480, `projected_point_table` at 202836, `transformed_primitive_cursor` at 202858, `transformed_shape_bounds` at 202872, and `transformed_primitive_paint` at 202882. Each row's basis records the L14 review and its independent source/address anchor. At the four private C statics, `source_identifier` preserves the exact hash-constrained spelling used by `src/obj_seg006.c`, while `name` holds the reviewed semantic alias. The prior registry values at the four existing rows were replaced, not retained as registry aliases. The semantic source comments and table labels supersede the old readability aliases. The original `_off_3F3C8`, `_word_31854`, `_word_3186A`, `_word_31878`, and `_byte_31882` data-symbol rows remain as independently grounded binding evidence; none is a `clone_of` alias.
+
+**Excluded proposals.** Registry proposals at 180390, 180398, and 180406 depend on the unverified obj_seg003 rename candidate. The 213832 `race_stats` communal merge remains blocked and was not published. No registry rows for these addresses were changed.
+
+**Validation.** The batch publication rebuilt the canonical image freshly and accepted exact ordered relocations. Complete validation and the independent `validate.py --image` result were run after the registry and documentation update; their reports are recorded under `build/` and in `build/workers/integ43/REPORT.md`.
+
+
+
+# Module owner and source migration (integ45)
+
+**Result.** The 18 source-backed ASM owner IDs, recipe paths, and source paths were migrated as one journaled transaction. The complete pinned-tool OMF object hash stayed identical for every row; the staged executable hash and ordered relocation count stayed identical to the pre-migration build.
+
+**Provenance.** `evidence/module-owner-renames.json` records each extent, original and migrated paths, source identity, full OMF identity, and whole executable identities. `tools/migrate_owner.py` performs the schema-aware rewrite under the acceptance writer lock and rolls back if the rebuilt image differs.
+
+| Previous owner | New owner | Previous source | New source | Basis |
+|---|---|---|---|---|
+| `asm012_125482` | `graphics_resource_runtime` | `asm/asm012_125482.ASM` | `asm/graphics_resource_runtime.ASM` | Object spans shape rendering, pre-render callbacks, file helpers, critical-error handling, and video setup. |
+| `asm012_131254` | `timer_video_interrupt_runtime` | `asm/asm012_131254.ASM` | `asm/timer_video_interrupt_runtime.ASM` | Object groups timer setup/dispatch, timer callback state, and video-mode 7 handling. |
+| `asm012_133138` | `keyboard_interrupt_runtime` | `asm/asm012_133138.ASM` | `asm/keyboard_interrupt_runtime.ASM` | Object contains keyboard initialization/exit and interrupt handlers. |
+| `asm012_133660` | `keyboard_input_callbacks` | `asm/asm012_133660.ASM` | `asm/keyboard_input_callbacks.ASM` | Object contains keyboard character input and callback polling/timeout helpers. |
+| `asm012_137138` | `prerender_wheel_raster` | `asm/asm012_137138.ASM` | `asm/prerender_wheel_raster.ASM` | Pre-render wheel span setup, clipping, edge clears and slope rasterizers. |
+| `asm012_135290` | `resource_memory_manager` | `asm/asm012_135290.ASM` | `asm/resource_memory_manager.ASM` | DOS resource-memory allocation, chunk lookup, compaction and resizing. |
+| `asm012_141362` | `font_matrix_shape_decode` | `asm/asm012_141362.ASM` | `asm/font_matrix_shape_decode.ASM` | Font operations, matrix routines, shape decompression and video status. |
+| `asm012_144064_late` | `sprite_shape_video_ops` | `asm/asm012_144064_late.ASM` | `asm/sprite_shape_video_ops.ASM` | Sprite/image, shape-resource, text and palette operations. |
+| `asm012_143366` | `vector_sphere_sprite_ops` | `asm/asm012_143366.ASM` | `asm/vector_sphere_sprite_ops.ASM` | Vector operations, sphere rendering and sprite geometry updates. |
+| `asm012_149180` | `line_sprite_shape_render` | `asm/asm012_149180.ASM` | `asm/line_sprite_shape_render.ASM` | Filled lines, sprite clearing, shape explosion and font setup. |
+| `asm012_150408` | `patterned_lines_windows` | `asm/asm012_150408.ASM` | `asm/patterned_lines_windows.ASM` | Patterned line rendering, sprite window creation and sprite copying. |
+| `asm012_139968` | `projection_vector_window` | `asm/asm012_139968.ASM` | `asm/projection_vector_window.ASM` | Projection state, vector-to-point conversion and window release. |
+| `asm012_139610` | `textmode_debug_console` | `asm/asm012_139610.ASM` | `asm/textmode_debug_console.ASM` | VGA text-mode clear, scroll, printf and attribute control. |
+| `asm012_133840` | `resource_file_io_decompression` | `asm/asm012_133840.ASM` | `asm/resource_file_io_decompression.ASM` | File reads, RLE/VLE decompression and resource lookup/loading. |
+| `asm012_132056` | `input_keyboard_joystick_services` | `asm/asm012_132056.ASM` | `asm/input_keyboard_joystick_services.ASM` | Keyboard callbacks, keyboard and joystick input flags, joystick calibration and axis replay. |
+| `asm012_140718` | `video_mode_restore_handlers` | `asm/asm012_140718.ASM` | `asm/video_mode_restore_handlers.ASM` | Captures/restores BIOS video mode and the saved video-control register on exit. |
+| `asm012_141210` | `timer_counter_deadline_helpers` | `asm/asm012_141210.ASM` | `asm/timer_counter_deadline_helpers.ASM` | Reads timer counters, sets and checks deadlines, copies counters, and manages callback state. |
+| `asm012_154486` | `sprite_rectangle_scaled_blitters` | `asm/asm012_154486.ASM` | `asm/sprite_rectangle_scaled_blitters.ASM` | Clips/fills rectangles, copies sprite rows, and draws scaled transparent sprites. |
+
+**Physical link-object IDs.** `layout/link-objects.json` IDs are changed only when they exactly identify one migrated owner; a physical object that begins before or ends after a migrated source owner retains its physical extent identity.
+
+
+# Address-label and semantic-name integration (integ45)
+
+**ASM private labels.** Rebased 63 ASM source files from the L19-asmA/B/C label maps onto current canonical contents. All 63 passed `promote.py --cosmetic` at source-file scope, comparing every recipe attached to each file and preserving complete pinned-tool OMF bytes. The final address-label audit reports zero private address-style definitions in `asm/`. This extends integ44's 35 previously published source files.
+
+**L19-rn batch.** The rebased 12-candidate batch passed individual strict probes, independent DOSBox-X checks, the union whole-image build, and the BSS real-link gate; publication preserved `HYBRID_EXACT` and 2,588 ordered relocations. Its machine-readable proposal status is in `build/workers/L19-rn/registry_changes.json`; stable member evidence names were retained, and the `hill_offs` interior rows and `word_2F7D8` ownership conflict remain unbound.
+
+**Semantic names.** The 42 meaning proposals (plus nine explicit holds) were evaluated as a 29-address namefit map. `namefit` reports 11 accepted C owners `EXACT`, 24 `UNTOUCHED`, and no changed-member residuals across 20 compiles. This establishes C code-generation compatibility, not global symbol binding. A full-OMF cosmetic probe of the `obj_seg000` spelling change was refused because its OMF identity changes; no names-registry aliases were therefore published from this diagnostic map. Existing `commfit` verification of the current proposed solution reports two exact, three untouched, and five compile failures; it does not justify communal registry changes. `elaptm1` remains the constrained communal spelling, `elapsed_time1` is only the unused external spelling in the strictly accepted L19-rn sources, and the blocked field/public/ownership cases remain in the worker report.
+
+**Validation.** `python tools/validate.py` passes 699 tests, all 90 independent DOSBox-X contribution checks, fresh `HYBRID_EXACT`, and the BSS real-link gate with zero raw initialized/BSS ownership. `python tools/validate.py --image` passes as diagnostic-only: `image_equal`, `relocation_set_equal`, `bank_order_equal`, and `packed_equal` are true; image mismatches and alias shims are zero.

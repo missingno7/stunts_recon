@@ -29,7 +29,7 @@ _nopsub_33AC0 proc far
     mov     ax, [bp+arg_6]
     sub     ax, [si+6]
     mov     [bp+var_4], ax
-    jmp     short loc_33B1D
+    jmp     short render_bmp_as_mask_shared_exit
     ; align 2
     db 144
 _nopsub_33AC0 endp
@@ -55,7 +55,7 @@ _nopsub_33AE4 proc far
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_6]
     mov     [bp+var_4], ax
-    jmp     short loc_33B1D
+    jmp     short render_bmp_as_mask_shared_exit
     ; align 2
     db 144
 _nopsub_33AE4 endp
@@ -82,7 +82,7 @@ _shape2d_render_bmp_as_mask proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
-loc_33B1D:
+render_bmp_as_mask_shared_exit:
     cld
     lea     ax, [si+10h]
     mov     [bp+var_E], ax
@@ -98,52 +98,52 @@ loc_33B1D:
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_6]
-loc_33B48:
+render_bmp_as_mask_read_loop:
     lodsb
     or      al, al
-    jg      short loc_33B56
-    jl      short loc_33B76
+    jg      short bmp_as_mask_when_greater
+    jl      short render_bmp_as_mask_when_less
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_33B56:
+bmp_as_mask_when_greater:
     mov     cl, al
     xor     ch, ch
     lodsb
-loc_33B5B:
+render_bmp_as_mask_scan_loop:
     and     es:[di], al
     inc     di
     dec     dx
-    jg      short loc_33B72
+    jg      short bmp_as_mask_when_greater_2
     add     [bp+var_10], 2
     mov     bx, [bp+var_10]
     mov     di, cs:[bx]
     add     di, [bp+var_2]
     mov     dx, [bp+var_6]
-loc_33B72:
-    loop    loc_33B5B
-    jmp     short loc_33B48
-loc_33B76:
+bmp_as_mask_when_greater_2:
+    loop    render_bmp_as_mask_scan_loop
+    jmp     short render_bmp_as_mask_read_loop
+render_bmp_as_mask_when_less:
     neg     al
     mov     cl, al
     xor     ch, ch
-loc_33B7C:
+render_bmp_as_mask_read_loop_2:
     lodsb
     and     es:[di], al
     inc     di
     dec     dx
-    jg      short loc_33B94
+    jg      short bmp_as_mask_when_greater_3
     add     [bp+var_10], 2
     mov     bx, [bp+var_10]
     mov     di, cs:[bx]
     add     di, [bp+var_2]
     mov     dx, [bp+var_6]
-loc_33B94:
-    loop    loc_33B7C
-    jmp     short loc_33B48
+bmp_as_mask_when_greater_3:
+    loop    render_bmp_as_mask_read_loop_2
+    jmp     short render_bmp_as_mask_read_loop
 _shape2d_render_bmp_as_mask endp
 S012_TEXT ends
 end

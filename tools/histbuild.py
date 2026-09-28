@@ -336,6 +336,11 @@ def build(tag: str | None = None, emit=print) -> dict:
     json_write(run_root / 'commands.json', commands)
     json_write(run_root / 'ownership.json', ownership)
     debt_objects = [o for o in object_manifest if o['object_kind'] == 'raw-debt']
+    raw_object_bytes = (ownership['raw_initialized_bytes'] +
+                        ownership['raw_bss_by_form'].get('object-bss', 0) +
+                        ownership['raw_bss_by_form'].get('communal-unit', 0))
+    if raw_object_bytes == 0 and debt_objects:
+        raise RuntimeError('raw-debt OMF objects exist with no raw-owned object bytes')
     json_write(run_root / 'raw-debt-objects.json', debt_objects)
     link_response = (link_dir / 'LINK.RSP').read_text(encoding='ascii')
     bundle = _stage_dos_bundle(run_root, link_dir, object_manifest, link_response)
@@ -404,7 +409,8 @@ def build(tag: str | None = None, emit=print) -> dict:
     report_log('raw initialized:', ownership['raw_initialized_bytes'],
                'raw BSS object:', ownership['raw_bss_by_form'].get('object-bss', 0),
                'raw BSS fill:', ownership['raw_bss_by_form'].get('link-word-fill', 0))
-    report_log('raw debt OMF objects:', ', '.join(o['file'] for o in debt_objects))
+    report_log('raw debt OMF objects:', len(debt_objects),
+               ', '.join(o['file'] for o in debt_objects) if debt_objects else '(none)')
     report_log('DOS bundle:', bundle['directory'], 'report:', relative(run_root / 'report.json'))
     log_path.write_text('\n'.join(logs) + '\n', encoding='utf-8')
     return report

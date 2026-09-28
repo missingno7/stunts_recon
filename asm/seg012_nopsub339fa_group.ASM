@@ -28,7 +28,7 @@ _nopsub_339FA proc far
     mov     ax, [bp+arg_6]
     sub     ax, [si+6]
     mov     [bp+var_4], ax
-    jmp     short loc_33A57
+    jmp     short putpixel_iconmask_shared_exit
     ; align 2
     db 144
 _nopsub_339FA endp
@@ -55,7 +55,7 @@ _putpixel_iconMask proc far
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_6]
     mov     [bp+var_4], ax
-    jmp     short loc_33A57
+    jmp     short putpixel_iconmask_shared_exit
     ; align 2
     db 144
     push    bp
@@ -70,7 +70,7 @@ _putpixel_iconMask proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
-loc_33A57:
+putpixel_iconmask_shared_exit:
     mov     bx, [bp+var_4]
     shl     bx, 1
     add     bx, word ptr cs:[_sprite1+10]
@@ -85,50 +85,50 @@ loc_33A57:
     add     si, 10h
     shr     ax, 1
     mov     [bp+var_6], ax
-    jnb     short loc_33AA1
-    jz      short loc_33AB3
+    jnb     short putpixel_iconmask_read_loop_3
+    jz      short putpixel_iconmask_when_zero
     inc     bx
-loc_33A86:
+putpixel_iconmask_read_loop:
     mov     cx, [bp+var_6]
-loc_33A89:
+putpixel_iconmask_read_loop_2:
     lodsw
     and     es:[di], ax
     inc     di
     inc     di
-    loop    loc_33A89
+    loop    putpixel_iconmask_read_loop_2
     lodsb
     and     es:[di], al
     add     di, bx
     dec     dx
-    jg      short loc_33A86
-loc_33A9A:
+    jg      short putpixel_iconmask_read_loop
+putpixel_iconmask_draw_loop:
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_33AA1:
+putpixel_iconmask_read_loop_3:
     mov     cx, [bp+var_6]
-loc_33AA4:
+putpixel_iconmask_read_loop_4:
     lodsw
     and     es:[di], ax
     inc     di
     inc     di
-    loop    loc_33AA4
+    loop    putpixel_iconmask_read_loop_4
     add     di, bx
     dec     dx
-    jg      short loc_33AA1
-    jmp     short loc_33A9A
-loc_33AB3:
+    jg      short putpixel_iconmask_read_loop_3
+    jmp     short putpixel_iconmask_draw_loop
+putpixel_iconmask_when_zero:
     inc     bx
-loc_33AB4:
+putpixel_iconmask_read_loop_5:
     lodsb
     and     es:[di], ax
     add     di, bx
     dec     dx
-    jg      short loc_33AB4
-    jmp     short loc_33A9A
+    jg      short putpixel_iconmask_read_loop_5
+    jmp     short putpixel_iconmask_draw_loop
     ; align 2
     db 0
 _putpixel_iconMask endp

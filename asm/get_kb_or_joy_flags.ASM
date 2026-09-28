@@ -34,58 +34,58 @@ _get_kb_or_joy_flags proc far
     xor     bx, bx
     mov     bl, _kbscancodes
     cmp     _kbinput[bx], 0
-    jz      short loc_30549
+    jz      short kb_scan_0_complete
     or      al, 10h
-loc_30549:
+kb_scan_0_complete:
     mov     bl, _kbscancodes+1
     cmp     _kbinput[bx], 0
-    jz      short loc_30556
+    jz      short kb_scan_1_complete
     or      al, 20h
-loc_30556:
+kb_scan_1_complete:
     mov     bl, _kbscancodes+2
     cmp     _kbinput[bx], 0
-    jz      short loc_30563
+    jz      short kb_scan_2_complete
     or      al, 9
-loc_30563:
+kb_scan_2_complete:
     mov     bl, _kbscancodes+3
     cmp     _kbinput[bx], 0
-    jz      short loc_30570
+    jz      short kb_scan_3_complete
     or      al, 1
-loc_30570:
+kb_scan_3_complete:
     mov     bl, _kbscancodes+4
     cmp     _kbinput[bx], 0
-    jz      short loc_3057D
+    jz      short kb_scan_4_complete
     or      al, 5
-loc_3057D:
+kb_scan_4_complete:
     mov     bl, _kbscancodes+5
     cmp     _kbinput[bx], 0
-    jz      short loc_3058A
+    jz      short kb_scan_5_complete
     or      al, 4
-loc_3058A:
+kb_scan_5_complete:
     mov     bl, _kbscancodes+6
     cmp     _kbinput[bx], 0
-    jz      short loc_30597
+    jz      short kb_scan_6_complete
     or      al, 6
-loc_30597:
+kb_scan_6_complete:
     mov     bl, _kbscancodes+7
     cmp     _kbinput[bx], 0
-    jz      short loc_305A4
+    jz      short kb_scan_7_complete
     or      al, 2
-loc_305A4:
+kb_scan_7_complete:
     mov     bl, _kbscancodes+8
     cmp     _kbinput[bx], 0
-    jz      short loc_305B1
+    jz      short kb_scan_8_complete
     or      al, 0Ah
-loc_305B1:
+kb_scan_8_complete:
     mov     bl, _kbscancodes+9
     cmp     _kbinput[bx], 0
-    jz      short loc_305BE
+    jz      short kb_scan_9_complete
     or      al, 8
-loc_305BE:
+kb_scan_9_complete:
     or      ax, ax
-    jnz     short locret_305C7
+    jnz     short kb_fallback_to_joystick
     call far ptr _get_joy_flags
-locret_305C7:
+kb_fallback_to_joystick:
     retf
 
 _get_kb_or_joy_flags endp
@@ -94,34 +94,34 @@ _nopsub_305C8 proc far
     xor     bx, bx
     mov     bl, _kbscancodes
     cmp     byte ptr [bx+446Ah], 0
-    jz      short loc_305DA
+    jz      short joy_keys_scan_0_complete
     or      cl, 10h
-loc_305DA:
+joy_keys_scan_0_complete:
     mov     bl, _kbscancodes+1
     cmp     byte ptr [bx+446Ah], 0
-    jz      short loc_305E8
+    jz      short joy_keys_scan_1_complete
     or      cl, 20h
-loc_305E8:
+joy_keys_scan_1_complete:
     xor     ax, ax
     mov     dx, 201h
     test    _byte_3FE00, 1
-    jz      short loc_305F9
+    jz      short joy_port_read_skip_disabled
     in      al, dx          ; Game I/O port
     not     al
 
     and     al, 30h
 
-loc_305F9:
+joy_port_read_skip_disabled:
     or      ax, cx
     retf
 
 _nopsub_305C8 endp
 _get_joy_flags proc far
     test    _byte_3FE00, 1
-    jnz     short loc_30606
+    jnz     short joy_return_when_disabled
     xor     ax, ax
     retf
-loc_30606:
+joy_return_when_disabled:
     mov     _joyinput, 0
     mov     dx, 201h
     in      al, dx          ; Game I/O port
@@ -132,63 +132,63 @@ loc_30606:
     cli
     out     dx, al          ; Game I/O port
     mov     cx, 14h
-loc_30625:
-    loop    loc_30625
+joy_axis_settle_delay_loop:
+    loop    joy_axis_settle_delay_loop
     mov     cx, 0
-loc_3062A:
+joy_axis_sample_timeout_loop:
     in      al, dx          ; Game I/O port
     and     al, bl
     xor     al, bl
-    jnz     short loc_3063B
+    jnz     short joy_sample_first_axis
     inc     cx
     cmp     cx, 0FA0h
-    jl      short loc_3062A
-    jmp     short loc_30658
+    jl      short joy_axis_sample_timeout_loop
+    jmp     short joy_process_axis_samples
     db 144
-loc_3063B:
+joy_sample_first_axis:
     test    al, 1
-    jnz     short loc_3064F
-loc_3063F:
+    jnz     short joy_capture_first_axis
+joy_sample_second_axis:
     test    al, 2
-    jz      short loc_3062A
+    jz      short joy_axis_sample_timeout_loop
     mov     _joyflag2, cx
 
     and     bl, 1
 
-    jnz     short loc_3062A
-    jmp     short loc_30658
+    jnz     short joy_axis_sample_timeout_loop
+    jmp     short joy_process_axis_samples
     db 144
-loc_3064F:
+joy_capture_first_axis:
     mov     _joyflag1, cx
 
     and     bl, 2
 
-    jnz     short loc_3063F
-loc_30658:
+    jnz     short joy_sample_second_axis
+joy_process_axis_samples:
     sti
     mov     ax, _joyflag1
     cmp     ax, _word_3FB18
-    jge     short loc_306B1
+    jge     short joy_process_second_axis
     dec     _word_3FB20
-    jle     short loc_30674
+    jle     short joy_reset_first_axis_range
     cmp     ax, _word_3FB1A
-    jl      short loc_306E5
+    jl      short joy_classify_first_axis
     mov     _word_3FB1A, ax
-    jmp     short loc_306E5
+    jmp     short joy_classify_first_axis
     ; align 2
     db 144
-loc_30674:
+joy_reset_first_axis_range:
     mov     bx, _word_3FB1A
     mov     _word_3FB18, bx
     mov     bx, _word_3FB1C
-loc_30680:
+joy_calculate_first_axis_scale:
     sub     bx, _word_3FB18
-    jle     short loc_30690
+    jle     short joy_store_first_axis_thresholds
     xor     dx, dx
     mov     ax, 4000h
     div     bx
     mov     _word_3FB34, ax
-loc_30690:
+joy_store_first_axis_thresholds:
     mov     ax, bx
     mov     dx, 201h
     shr     ax, 1
@@ -201,55 +201,55 @@ loc_30690:
     sub     ax, bx
     mov     _word_3FB22, ax
     mov     ax, _joyflag1
-    jmp     short loc_306D3
+    jmp     short joy_reset_axis2_thresholds
     db 144
-loc_306B1:
+joy_process_second_axis:
     cmp     ax, _word_3FB1C
-    jle     short loc_306D3
+    jle     short joy_reset_axis2_thresholds
     dec     _word_3FB20
-    jle     short loc_306C9
+    jle     short joy_reset_second_axis_range
     cmp     ax, _word_3FB1E
-    jge     short loc_306E5
+    jge     short joy_classify_first_axis
     mov     _word_3FB1E, ax
-    jmp     short loc_306E5
+    jmp     short joy_classify_first_axis
     db 144
-loc_306C9:
+joy_reset_second_axis_range:
     mov     bx, _word_3FB1E
     mov     _word_3FB1C, bx
-    jmp     short loc_30680
-loc_306D3:
+    jmp     short joy_calculate_first_axis_scale
+joy_reset_axis2_thresholds:
     mov     _word_3FB20, 14h
     mov     _word_3FB1E, 4E20h
     mov     _word_3FB1A, 0
-loc_306E5:
+joy_classify_first_axis:
     cmp     ax, _word_3FB22
-    jl      short loc_3074E
+    jl      short joy_compare_second_axis_bands
     cmp     ax, _word_3FB24
-    jl      short loc_306F6
+    jl      short joy_classify_first_axis_high
     or      _joyinput, 4
-loc_306F6:
+joy_classify_first_axis_high:
     mov     ax, _joyflag2
     cmp     ax, _word_3FB26
-    jnb     short loc_30755
+    jnb     short joy_second_axis_low_limit
     dec     _word_3FB2E
-    jle     short loc_30711
+    jle     short joy_reset_first_axis_low
     cmp     ax, _word_3FB28
-    jl      short loc_30789
+    jl      short joy_classify_second_axis
     mov     _word_3FB28, ax
-    jmp     short loc_30789
+    jmp     short joy_classify_second_axis
     db 144
-loc_30711:
+joy_reset_first_axis_low:
     mov     bx, _word_3FB28
     mov     _word_3FB26, bx
     mov     bx, _word_3FB2A
-loc_3071D:
+joy_calculate_second_axis_scale:
     sub     bx, _word_3FB26
-    jle     short loc_3072D
+    jle     short joy_store_axis2_thresholds
     xor     dx, dx
     mov     ax, 4000h
     div     bx
     mov     _word_3FB36, ax
-loc_3072D:
+joy_store_axis2_thresholds:
     mov     ax, bx
     mov     dx, 201h
     shr     ax, 1
@@ -262,38 +262,38 @@ loc_3072D:
     sub     ax, bx
     mov     _word_3FB30, ax
     mov     ax, _joyflag2
-    jmp     short loc_30777
+    jmp     short joy_reset_axis2_calibration
     ; align 2
     db 144
-loc_3074E:
+joy_compare_second_axis_bands:
     or      _joyinput, 8
-    jmp     short loc_306F6
-loc_30755:
+    jmp     short joy_classify_first_axis_high
+joy_second_axis_low_limit:
     cmp     ax, _word_3FB2A
-    jle     short loc_30777
+    jle     short joy_reset_axis2_calibration
     dec     _word_3FB2E
-    jz      short loc_3076D
-loc_30761:
+    jz      short joy_reset_second_axis_low
+joy_update_second_axis_low:
     cmp     ax, _word_3FB2C
-    jge     short loc_30789
+    jge     short joy_classify_second_axis
     mov     _word_3FB2C, ax
-    jmp     short loc_30789
+    jmp     short joy_classify_second_axis
     db 144
-loc_3076D:
+joy_reset_second_axis_low:
     mov     bx, _word_3FB2C
     mov     _word_3FB2A, bx
-    jmp     short loc_3071D
-loc_30777:
+    jmp     short joy_calculate_second_axis_scale
+joy_reset_axis2_calibration:
     mov     _word_3FB2E, 14h
     mov     _word_3FB2C, 4E20h
     mov     _word_3FB28, 0
-loc_30789:
+joy_classify_second_axis:
     cmp     ax, _word_3FB30
-    jb      short loc_307AD
+    jb      short joy_first_axis_low_limit
     cmp     ax, _word_3FB32
-    jb      short loc_3079A
+    jb      short joy_read_buttons
     or      _joyinput, 2
-loc_3079A:
+joy_read_buttons:
     in      al, dx          ; Game I/O port
     and     al, _joybutton
 
@@ -304,9 +304,9 @@ loc_3079A:
     mov     al, _joyinput
     xor     ah, ah
     retf
-loc_307AD:
+joy_first_axis_low_limit:
     or      _joyinput, 1
-    jmp     short loc_3079A
+    jmp     short joy_read_buttons
 
 _get_joy_flags endp
 _TEXT ends

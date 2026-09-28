@@ -37,26 +37,26 @@ _file_load_shape2d_expand proc far
     add     di, 4
     rep movsw
     xor     ax, ax
-loc_35FCC:
+expand_store_output_value:
     mov     [bp+var_shapecounter], ax
     mov     [bp+var_offsets], di
     mov     es:[di], ax
     mov     es:[di+2], ax
-loc_35FD9:
+shape_expand_wait_loop:
     mov     ax, [bp+var_shapecounter]
     cmp     ax, [bp+var_shapecount]
-    jl      short loc_35FE8
+    jl      short shape_expand_when_less
     pop     ds
     pop     si
     pop     di
     mov     sp, bp
     pop     bp
     retf
-loc_35FE8:
+shape_expand_when_less:
     push    ax
-loc_35FE9:
+shape_expand_continue_path:
     push    [bp+arg_memchunkseg]
-loc_35FEC:
+shape_expand_continue_path_2:
     push    [bp+arg_memchunkoff]
     mov     ax, ss
     mov     ds, ax
@@ -84,13 +84,13 @@ loc_35FEC:
     mov     bx, [bp+var_shapecounter]
     inc     bx
     cmp     bx, [bp+var_shapecount]
-    jge     short loc_36040
+    jge     short expand_when_greater_or_equal
     mov     es:[di], ax
     mov     es:[di+2], dx
-    jmp     short loc_3605B
+    jmp     short shape_expand_when_condition
     ; align 2
     db 144
-loc_36040:
+expand_when_greater_or_equal:
     mov     bx, [bp+var_shapecount]
     shl     bx, 1
     shl     bx, 1
@@ -101,16 +101,16 @@ loc_36040:
     mov     di, [bp+arg_mempagesoff]
     mov     es:[di], ax
     mov     es:[di+2], dx
-loc_3605B:
+shape_expand_when_condition:
     push    [bp+var_shapecounter]
     push    [bp+arg_mempagesseg]
     push    [bp+arg_mempagesoff]
     mov     ax, ss
     mov     ds, ax
     call    _file_get_shape2d
-loc_3606D:
+shape_expand_continue_path_3:
     add     sp, 6
-loc_36070:
+shape_expand_continue_path_4:
     mov     es, dx
     mov     di, ax
     mov     [bp+var_dstshapeoff], ax
@@ -118,7 +118,7 @@ loc_36070:
     mov     cx, 6
     rep movsw
     mov     si, [bp+var_srcshapeoff]
-loc_36082:
+shape_expand_load_source_value:
     mov     di, [bp+var_dstshapeoff]
     mov     ax, [si]
     shl     ax, 1
@@ -126,56 +126,56 @@ loc_36082:
     shl     ax, 1
     mov     es:[di], ax
     mov     al, [si+0Dh]
-loc_36093:
+shape_expand_shift_value:
     shr     al, 1
     shr     al, 1
     shr     al, 1
     shr     al, 1
     mov     ah, al
     add     di, 10h
-loc_360A0:
+expand_load_source_value_2:
     mov     cx, [bp+var_length]
     cmp     cx, 0
-    jle     short loc_360EF
+    jle     short expand_when_less_or_equal
     cmp     cx, 1F40h
-    jg      short loc_360EF
+    jg      short expand_when_less_or_equal
     shl     cx, 1
     shl     cx, 1
     rep stosw
-loc_360B4:
+expand_advance_source_pointer:
     add     si, 10h
     mov     [bp+var_srcdataoff], si
     xor     bx, bx
-loc_360BC:
+shape_expand_scan_loop:
     mov     si, [bp+var_srcshapeoff]
     mov     ah, [bx+si+0Ch]
     and     ah, 0Fh
-    jz      short loc_360EF
+    jz      short expand_when_less_or_equal
     mov     di, [bp+var_dstshapeoff]
     add     di, 10h
     mov     si, [bp+var_srcdataoff]
-loc_360D0:
+expand_load_source_value_3:
     mov     dx, [bp+var_length]
-loc_360D3:
+shape_expand_read_loop:
     lodsb
     mov     cx, 8
-loc_360D7:
+shape_expand_scan_loop_2:
     shl     al, 1
-    jnb     short loc_360DE
+    jnb     short shape_expand_when_not_below
     or      es:[di], ah
-loc_360DE:
+shape_expand_when_not_below:
     inc     di
-    loop    loc_360D7
+    loop    shape_expand_scan_loop_2
     dec     dx
-    jg      short loc_360D3
+    jg      short shape_expand_read_loop
     mov     [bp+var_srcdataoff], si
     shl     ah, 1
     inc     bx
     cmp     bx, 4
-    jl      short loc_360BC
-loc_360EF:
+    jl      short shape_expand_scan_loop
+expand_when_less_or_equal:
     inc     [bp+var_shapecounter]
-    jmp     loc_35FD9
+    jmp     shape_expand_wait_loop
     ; align 2
     db 0
 _file_load_shape2d_expand endp

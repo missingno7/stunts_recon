@@ -14,11 +14,11 @@ public _video_set_mode7
 _video_set_mode7 proc far
     push di
     cmp byte ptr ds:[_byte_3F85A], 0
-    jne loc_2012F
+    jne video_set_mode7_when_not_equal
     call far ptr _set_bios_mode3
     pop di
     retf
-loc_2012F:
+video_set_mode7_when_not_equal:
     mov ax, 40h
     mov es, ax
     mov ax, word ptr es:[10h]
@@ -34,7 +34,7 @@ loc_2012F:
     mov cx, 0Ch
     mov dx, 3B4h
     xor bx, bx
-loc_20156:
+video_set_mode7_scan_loop:
     mov al, bl
     out dx, al
     inc dx
@@ -42,7 +42,7 @@ loc_20156:
     out dx, al
     dec dx
     inc bx
-    loop loc_20156
+    loop video_set_mode7_scan_loop
     cld
     mov ax, 0B800h
     mov es, ax

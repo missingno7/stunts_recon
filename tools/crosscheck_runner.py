@@ -4,7 +4,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 from common import ROOT, read_json, write_json, require, identity
-from compiler import verify_toolchain
+from compiler import verify_toolchain, object_policy
 from preprocessor import prepare, check_recipe
 from object_probe import read_object, recipe_sparse_zero
 from binder import bind_contribution, require_relocations_from_fixups
@@ -84,6 +84,7 @@ def independent_row(r, source, oracle, image, runner=None):
     require(runner.is_file(),'Independent DOSBox-X backend unavailable')
     (ROOT/'build/crosschecks').mkdir(parents=True,exist_ok=True)
     config,_=verify_toolchain(r['profile'])
+    reader_policy=object_policy(config)
     work=Path(tempfile.mkdtemp(prefix='r',dir=ROOT/'build/crosschecks'))
     asm = r.get('kind') == 'asm'
     if asm:
@@ -108,14 +109,17 @@ def independent_row(r, source, oracle, image, runner=None):
         (cwork/'UNIT.C').write_bytes((work/'UNIT.C').read_bytes())
         _run_dos(runner,cwork,tc,control,False,r['profile'])
         cd=recipe_declarations_names(r)
-        require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r),communals=cd),
-                            read_object((work/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r),communals=cd)),
+        require(same_object(read_object((cwork/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r),communals=cd,
+                                        **reader_policy),
+                            read_object((work/'UNIT.OBJ').read_bytes(),sparse_zero=recipe_sparse_zero(r),communals=cd,
+                                        **reader_policy)),
                 'Independent object differs under its registered object flag set')
     from communal_unit import recipe_declarations, check_object_communals
     declared=recipe_declarations(r)
     communals=None if declared is None else [name for name,_ in declared]
     obj=read_object((work/'UNIT.OBJ').read_bytes(),
-                    sparse_zero=None if asm else recipe_sparse_zero(r), communals=communals)
+                    sparse_zero=None if asm else recipe_sparse_zero(r), communals=communals,
+                    **reader_policy)
     check_object_communals(obj, r)
     if asm:
         require(asm_source(source)==(work/'UNIT.ASM').read_bytes(),

@@ -28,39 +28,39 @@ _nopsub_31429 proc far
     call    _mmgr_path_to_name
     add     sp, 2
     mov     di, ax
-loc_3143F:
+is_in_resend_list_scan_loop:
     xor     bx, bx
     cmp     word ptr [si+10h], 0
-    jz      short loc_3146D
-loc_31447:
+    jz      short in_resend_list_return_if_zero
+is_in_resend_list_scan_loop_2:
     mov     al, [bx+di]
     or      al, al
-    jz      short loc_3145A
+    jz      short is_in_resend_list_when_zero
     cmp     al, [bx+si]
-    jnz     short loc_31464
+    jnz     short is_in_resend_list_when_nonzero
     inc     bx
     cmp     bx, 0Ch
-    jl      short loc_31447
-    jmp     short loc_31475
+    jl      short is_in_resend_list_scan_loop_2
+    jmp     short is_in_resend_list_shared_path
 
     db 144
-loc_3145A:
+is_in_resend_list_when_zero:
     cmp     byte ptr [bx+si], 2Eh
-    jz      short loc_31475
+    jz      short is_in_resend_list_shared_path
     cmp     byte ptr [bx+si], 0
-    jz      short loc_31475
-loc_31464:
+    jz      short is_in_resend_list_shared_path
+is_in_resend_list_when_nonzero:
     add     si, 12h
     cmp     si, _resendptr2
-    jb      short loc_3143F
-loc_3146D:
+    jb      short is_in_resend_list_scan_loop
+in_resend_list_return_if_zero:
     xor     dx, dx
     xor     ax, ax
     pop     di
     pop     si
     pop     bp
     retf
-loc_31475:
+is_in_resend_list_shared_path:
     mov     ax, 1
     pop     di
     pop     si

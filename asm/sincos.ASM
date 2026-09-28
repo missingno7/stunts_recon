@@ -283,32 +283,32 @@ code_sin_fast_main:
     xor     ah, ah
     and     bx, 3
     shl     bx, 1
-    jmp     cs:off_326F2[bx]
-off_326F2     dw offset loc_326FA
-    dw offset loc_32704
-    dw offset loc_32711
-    dw offset loc_3271D
-loc_326FA:
+    jmp     cs:sine_quadrant_dispatch[bx]
+sine_quadrant_dispatch     dw offset sinfast_finish
+    dw offset sinfast_finish_2
+    dw offset sinfast_finish_3
+    dw offset sinfast_finish_4
+sinfast_finish:
     mov     bx, ax
     shl     bx, 1
     mov     ax, _sinetable[bx]
     pop     bp
     retf
-loc_32704:
+sinfast_finish_2:
     mov     bx, 100h
     sub     bx, ax
     shl     bx, 1
     mov     ax, _sinetable[bx]
     pop     bp
     retf
-loc_32711:
+sinfast_finish_3:
     mov     bx, ax
     shl     bx, 1
     mov     ax, _sinetable[bx]
     neg     ax
     pop     bp
     retf
-loc_3271D:
+sinfast_finish_4:
     mov     bx, 100h
     sub     bx, ax
     shl     bx, 1

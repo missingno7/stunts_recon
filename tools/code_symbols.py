@@ -378,7 +378,7 @@ def resolve_recipe_symbols(recipe, image, relocations):
         data={f['target'] for f in fixes if f['target_kind']=='external' and
               f['loc']=='offset16' and not f['self_relative'] and
               f['target'] not in code_offsets}
-        absolute=(code|data)&{'__AHSHIFT'}
+        absolute=(code|data)&{'__AHSHIFT','__AHINCR'}
         code-=absolute; data-=absolute
         # Per-fixup composition: reviewed CS-resident data (code islands) binds
         # under the CS data rule, never as DGROUP data.
@@ -418,9 +418,12 @@ def resolve_recipe_symbols(recipe, image, relocations):
             # startup evidence and its ordered MZ relocation (checked_dgroup_layout).
             result['_DATA']={'kind':'local-dgroup-base','frame_load_address':
                              checked_dgroup_layout(image,relocations)['frame_load_address']}
-        if absolute:
+        if '__AHSHIFT' in absolute:
             from runtime_absolute import ahshift
             result['__AHSHIFT']=ahshift(image,relocations)
+        if '__AHINCR' in absolute:
+            from runtime_absolute import ahincr
+            result['__AHINCR']=ahincr(image,relocations)
         if any(f['target'] in data and f['displacement'] for f in fixes):
             layout=checked_dgroup_layout(image,relocations)
             for f in fixes:
@@ -508,7 +511,7 @@ def resolve_recipe_symbols(recipe, image, relocations):
         return resolve_cs_symbols(names,image,relocations)
     if mode in ('external-far-call-dgroup-offset16-v1',
                 'external-far-call-code-pointer-dgroup-offset16-v1'):
-        absolute=names & {'__AHSHIFT'}
+        absolute=names & {'__AHSHIFT','__AHINCR'}
         code={f['target'] for f in recipe['expected_fixups'] if f['loc']=='pointer32' or
               (mode.endswith('code-pointer-dgroup-offset16-v1') and
                f['loc'] in ('base16','loader-offset16'))} - absolute
@@ -518,9 +521,12 @@ def resolve_recipe_symbols(recipe, image, relocations):
         from data_symbols import resolve_symbols, check_folded_recipe
         result = {**resolve_code_symbols(code,image,relocations),
                   **resolve_symbols(data,image,relocations)}
-        if absolute:
+        if '__AHSHIFT' in absolute:
             from runtime_absolute import ahshift
             result['__AHSHIFT']=ahshift(image,relocations)
+        if '__AHINCR' in absolute:
+            from runtime_absolute import ahincr
+            result['__AHINCR']=ahincr(image,relocations)
         check_folded_recipe(recipe, result, image)
         return result
     if mode=='external-far-call-cs-pointer-v1':

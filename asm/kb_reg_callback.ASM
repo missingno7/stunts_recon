@@ -22,39 +22,39 @@ _kb_reg_callback proc far
     mov     cx, 40h ; '@'
     mov     bx, offset _callbacks
     mov     dx, [bp+arg_4]
-loc_3046D:
+callback_find_slot_loop:
     cmp     [bx], ax
-    jnz     short loc_30476
+    jnz     short callback_continue_slot_search
     cmp     [bx+2], dx
-    jz      short loc_30488
-loc_30476:
+    jz      short callback_derive_key_flag_index
+callback_continue_slot_search:
     cmp     word ptr [bx+2], 0
-    jz      short loc_30483
+    jz      short callback_install_empty_slot
     add     bx, 4
-    loop    loc_3046D
+    loop    callback_find_slot_loop
     pop     bp
     retf
-loc_30483:
+callback_install_empty_slot:
     mov     [bx], ax
     mov     [bx+2], dx
-loc_30488:
+callback_derive_key_flag_index:
     mov     ax, 41h ; 'A'
     sub     ax, cx
-loc_3048D:
+callback_store_normal_key_flag:
     mov     bx, [bp+arg_0]
     or      bl, bl
-    jz      short loc_3049F
+    jz      short callback_store_extended_flag
     cmp     bx, 7Fh ; ''
-    jg      short loc_3049D
+    jg      short callback_return_unmapped_key
     mov     _callbackflags[bx], al
-loc_3049D:
+callback_return_unmapped_key:
     pop     bp
     retf
-loc_3049F:
+callback_store_extended_flag:
     mov     bl, bh
     xor     bh, bh
     cmp     bx, 84h ; ''
-    jg      short loc_3049D
+    jg      short callback_return_unmapped_key
     mov     _callbackflags2[bx], al
     pop     bp
     retf
@@ -67,7 +67,7 @@ _nopsub_304AF proc far
     push    bp
     mov     bp, sp
     xor     ax, ax
-    jmp     short loc_3048D
+    jmp     short callback_store_normal_key_flag
 
 _nopsub_304AF endp
 _TEXT ends

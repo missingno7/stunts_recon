@@ -163,10 +163,10 @@ class OwnershipCorrectionTests(unittest.TestCase):
         for owner, basis in expected.items():
             if owner not in rows:
                 # integ30: set_fontdefseg's repaired owner is now subsumed by the whole
-                # seg012 module asm012_149180; integ32: load_2117b by asm012_135290.
+                # seg012 module line_sprite_shape_render; integ32: load_2117b by resource_memory_manager.
                 subsumers = [o for o in manifest['owners'] if o.get('recipe') and
                              owner in read_json(ROOT / o['recipe']).get('subsumed_owners', [])]
-                whole = {'asm_load_24b7c': 'asm012_149180', 'load_2117b': 'asm012_135290'}
+                whole = {'asm_load_24b7c': 'line_sprite_shape_render', 'load_2117b': 'resource_memory_manager'}
                 self.assertEqual([o['id'] for o in subsumers], [whole[owner]], owner)
                 self.assertEqual(rows[whole[owner]]['kind'], 'MATCHING_ASM')
                 continue

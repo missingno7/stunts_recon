@@ -7,22 +7,22 @@ _kb_parse_key proc far
     mov bp, sp
     cli
     cmp byte ptr ds:[4270h], 0
-    je loc_20412
+    je acquire_key_parser_lock
     sti
     pop bp
     retf
-loc_20412:
+acquire_key_parser_lock:
     mov byte ptr ds:[4270h], 1
     sti
     mov bx, word ptr [bp + 6]
     or bl, bl
-    je loc_20441
+    je select_keyboard_callback_table
     and bx, 7Fh
     mov word ptr [bp + 6], bx
     mov bl, byte ptr [bx + 416Ah]
-loc_20429:
+dispatch_key_callback:
     dec bx
-    jl loc_20454
+    jl return_without_callback
     shl bx, 1
     push di
     push si
@@ -34,16 +34,16 @@ loc_20429:
     mov byte ptr ds:[4270h], 0
     pop bp
     retf
-loc_20441:
+select_keyboard_callback_table:
     mov bl, bh
     xor bh, bh
     cmp bx, 84h
-    jl loc_2044E
+    jl dispatch_keyboard_callback
     mov bx, 84h
-loc_2044E:
+dispatch_keyboard_callback:
     mov bl, byte ptr [bx + 41EAh]
-    jmp loc_20429
-loc_20454:
+    jmp dispatch_key_callback
+return_without_callback:
     mov ax, word ptr [bp + 6]
     mov byte ptr ds:[4270h], 0
     pop bp

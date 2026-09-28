@@ -13,7 +13,7 @@ _kb_init_interrupt proc far
     mov es, bx
     mov bx, word ptr es:[24h]
     cmp bx, 1EA6h
-    je loc_20861
+    je keyboard_init_finish_setup
     mov word ptr ds:[43D8h], bx
     mov bx, word ptr es:[26h]
     mov word ptr ds:[43DAh], bx
@@ -25,7 +25,7 @@ _kb_init_interrupt proc far
     mov word ptr ds:[43DEh], bx
     mov word ptr es:[58h], 1F85h
     mov word ptr es:[5Ah], cs
-loc_20861:
+keyboard_init_finish_setup:
     mov al, ah
     out 21h, al
     mov ax, ds

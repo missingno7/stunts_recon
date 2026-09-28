@@ -47,6 +47,10 @@ REVIEWED_PROFILES = {
                           'flags': ['/AM', '/Os', '/Oe', '/Og', '/Gs', '/Zi'],
                           'segments': ('seg007',),
                           'ruling': 'USER DECISION 2026-09-27'},
+    'CC-MSC600-seg007': {'profile': 'msc600-medium-zi',
+                         'flags': ['/AM', '/Os', '/Oe', '/Og', '/Gs', '/Zi'],
+                         'segments': ('seg007',),
+                         'ruling': 'Microsoft C 6.00 non-A'},
 }
 
 
@@ -55,7 +59,7 @@ def gated_profile_names():
 
 
 def registered_profile_objects():
-    """segment -> (register id, profile, flags) for SUPPORTED profile entries."""
+    """segment -> [(register id, profile, flags), ...] for SUPPORTED entries."""
     register = _register()
     result = {}
     for key, reviewed in REVIEWED_PROFILES.items():
@@ -67,8 +71,7 @@ def registered_profile_objects():
                 all(segment in row.get('scope', '') for segment in reviewed['segments'])):
             continue
         for segment in reviewed['segments']:
-            require(segment not in result, 'Object has two registered compiler profiles')
-            result[segment] = (key, reviewed['profile'], list(reviewed['flags']))
+            result.setdefault(segment, []).append((key, reviewed['profile'], list(reviewed['flags'])))
     return result
 
 
@@ -80,11 +83,14 @@ def profile_gate(recipe):
     objects = registered_profile_objects()
     require(len(segments) == 1 and next(iter(segments)) in objects,
             'Compiler profile requires one object with a SUPPORTED register entry (CC-*)')
-    key, profile, flags = objects[next(iter(segments))]
-    require(recipe.get('profile') == profile and recipe.get('compiler_flags') == flags and
-            recipe.get('compiler_flags_register') == key,
+    key = recipe.get('compiler_flags_register')
+    matches = [(entry_key, profile, flags)
+               for entry_key, profile, flags in objects[next(iter(segments))]
+               if entry_key == key and recipe.get('profile') == profile and
+               recipe.get('compiler_flags') == flags]
+    require(len(matches) == 1,
             'Register-gated profile recipe differs from the ruled profile/flag set')
-    return list(flags)
+    return list(matches[0][2])
 
 
 def _register():

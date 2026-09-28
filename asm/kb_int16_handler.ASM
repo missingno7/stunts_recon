@@ -10,47 +10,47 @@ _kb_int16_handler proc far
     mov bx, seg dseg
     mov ds, bx
     cmp ah, 0
-    je loc_209C3
+    je keyboard_bios_read_waiting_key
     cmp ah, 1
-    je loc_209EF
+    je keyboard_bios_peek_key
     cmp ah, 2
-    je loc_20A04
-loc_209BB:
+    je kb_bios_read_modifier_flags
+keyboard_bios_unknown_function:
     xor ax, ax
-loc_209BD:
+keyboard_bios_return_common:
     sti
     pop ds
     pop bx
     retf 2
-loc_209C3:
+keyboard_bios_read_waiting_key:
     cli
     cmp word ptr ds:[4466h], 0
-    je loc_209BB
+    je keyboard_bios_unknown_function
     mov bx, word ptr ds:[4462h]
     mov ax, word ptr [bx + 43E0h]
     add bx, 2
     cmp bx, word ptr ds:[4464h]
-    jb loc_209DE
+    jb kb_bios_advance_read_index
     xor bx, bx
-loc_209DE:
+kb_bios_advance_read_index:
     mov word ptr ds:[4462h], bx
     mov bx, word ptr ds:[4466h]
     sub bx, 2
     mov word ptr ds:[4466h], bx
-    jmp loc_209BD
-loc_209EF:
+    jmp keyboard_bios_return_common
+keyboard_bios_peek_key:
     cmp word ptr ds:[4466h], 0
-    je loc_209BB
+    je keyboard_bios_unknown_function
     sti
     mov bx, word ptr ds:[4462h]
     mov ax, word ptr [bx + 43E0h]
     pop ds
     pop bx
     retf 2
-loc_20A04:
+kb_bios_read_modifier_flags:
     mov al, byte ptr ds:[4494h]
     or al, byte ptr ds:[44A0h]
-    jmp loc_209BD
+    jmp keyboard_bios_return_common
 _kb_int16_handler endp
 _TEXT ends
 end

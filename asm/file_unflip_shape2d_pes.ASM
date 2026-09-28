@@ -34,7 +34,7 @@ _file_unflip_shape2d_pes proc far
     mov     bx, [si+4]
     mov     [bp+var_shapecount], bx
     mov     [bp+var_shapecounter], 0
-loc_36114:
+shape_unflip_wait_loop:
     push    [bp+var_shapecounter]
     push    [bp+arg_memchunkseg]
     push    [bp+arg_memchunkoff]
@@ -47,9 +47,9 @@ loc_36114:
     mov     si, ax
     mov     ds, dx
     mov     al, [si+0Fh]
-loc_36137:
+shape_unflip_mask_value:
     and     al, 0F0h
-    jnz     short loc_3614E
+    jnz     short shape_unflip_wait_loop_2
     mov     bl, [si+0Eh]
     shr     bl, 1
     shr     bl, 1
@@ -57,78 +57,78 @@ loc_36137:
     shr     bl, 1
     and     bl, 0Fh
     mov     [bp+var_val], bl
-    jnz     short loc_3615D
-loc_3614E:
+    jnz     short shape_unflip_when_nonzero
+shape_unflip_wait_loop_2:
     inc     [bp+var_shapecounter]
     dec     [bp+var_shapecount]
-    jg      short loc_36114
+    jg      short shape_unflip_wait_loop
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_3615D:
+shape_unflip_when_nonzero:
     mov     ax, [si+0]
     mov     [bp+var_width], ax
-loc_36162:
+shape_unflip_load_source_value:
     mov     dx, [si+2]
     mov     [bp+var_height], dx
     mul     dx
     mov     [bp+var_length], ax
     add     si, 10h
-loc_36170:
+unflip_store_output_value:
     mov     [bp+var_dataptr], si
-loc_36173:
+unflip_store_output_value_2:
     mov     [bp+var_iterations], 4
-loc_36177:
+shape_unflip_scan_loop:
     shr     [bp+var_val], 1
-    jnb     short loc_361AF
-loc_3617C:
+    jnb     short shape_unflip_when_not_below
+unflip_load_source_value_2:
     mov     es, [bp+arg_mempagesseg]
     mov     di, [bp+arg_mempagesoff]
-loc_36182:
+unflip_load_source_value_3:
     mov     ds, [bp+var_shapeseg]
     xor     dx, dx
-loc_36187:
+unflip_load_source_value_4:
     mov     bx, [bp+var_height]
-loc_3618A:
+shape_unflip_fill_loop:
     mov     si, [bp+var_dataptr]
     add     si, dx
     mov     cx, [bp+var_width]
-loc_36192:
+shape_unflip_fill_loop_2:
     mov     al, [si]
     stosb
-loc_36195:
+unflip_advance_source_pointer:
     add     si, bx
-loc_36197:
-    loop    loc_36192
+shape_unflip_continue_path:
+    loop    shape_unflip_fill_loop_2
     inc     dx
-loc_3619A:
+shape_unflip_check_dx:
     cmp     dx, bx
-    jnz     short loc_3618A
-loc_3619E:
+    jnz     short shape_unflip_fill_loop
+unflip_load_source_value_5:
     mov     es, [bp+var_shapeseg]
-loc_361A1:
+unflip_load_source_value_6:
     mov     di, [bp+var_dataptr]
-loc_361A4:
+unflip_load_source_value_7:
     mov     ds, [bp+arg_mempagesseg]
-loc_361A7:
+unflip_load_source_value_8:
     mov     si, [bp+arg_mempagesoff]
-loc_361AA:
+unflip_load_source_value_9:
     mov     cx, [bp+var_length]
-loc_361AD:
+shape_unflip_copy_bytes:
     rep movsb
-loc_361AF:
+shape_unflip_when_not_below:
     mov     ax, [bp+var_length]
-loc_361B2:
+shape_unflip_continue_path_2:
     add     [bp+var_dataptr], ax
-loc_361B5:
+decrement_bp_var_iterations:
     dec     [bp+var_iterations]
-loc_361B8:
-    jnz     short loc_36177
-loc_361BA:
-    jmp     short loc_3614E
+shape_unflip_continue_path_3:
+    jnz     short shape_unflip_scan_loop
+shape_unflip_continue_path_4:
+    jmp     short shape_unflip_wait_loop_2
 _file_unflip_shape2d_pes endp
 S012_TEXT ends
 dseg segment byte public 'STUNTSD'

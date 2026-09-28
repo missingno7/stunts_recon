@@ -435,16 +435,26 @@ def load_candidate(path):
 
 
 def attach(manifest, row):
-    """The manifest with the raw communal unit replaced exactly by `row`."""
+    """Attach a complete communal inventory to its raw or same-extent owner."""
     import copy
     result = copy.deepcopy(manifest)
     check_row_form(row)
     rows = result['bss_owners']
     raw = [i for i, o in enumerate(rows) if o.get('raw_form') == 'communal-unit' and o['kind'] == 'UNRESOLVED_RAW']
-    require(len(raw) == 1 and raw[0] == len(rows) - 1 and
-            (rows[raw[0]]['start'], rows[raw[0]]['end']) == (row['start'], row['end']),
-            'Communal unit candidate does not replace the raw communal unit exactly')
-    rows[raw[0]] = copy.deepcopy(row)
+    if raw:
+        require(len(raw) == 1 and raw[0] == len(rows) - 1 and
+                (rows[raw[0]]['start'], rows[raw[0]]['end']) == (row['start'], row['end']),
+                'Communal unit candidate does not replace the raw communal unit exactly')
+        rows[raw[0]] = copy.deepcopy(row)
+        return result
+    accepted = [i for i, o in enumerate(rows) if o.get('kind') == KIND]
+    require(row['id'] == SEGMENT and len(accepted) == 1 and
+            (rows[accepted[0]]['id'], rows[accepted[0]]['start'], rows[accepted[0]]['end']) ==
+            (SEGMENT, row['start'], row['end']),
+            'Communal candidate does not match the accepted unit owner and extent')
+    # Retain the accepted owner id/kind/extent; only its complete communal
+    # inventory is under review. The batch still has to pass the real LINK gate.
+    rows[accepted[0]] = copy.deepcopy(row)
     return result
 
 

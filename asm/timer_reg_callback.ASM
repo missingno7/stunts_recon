@@ -19,15 +19,15 @@ _timer_reg_callback proc far
     mov     bp, sp
     mov     cx, 5
     mov     bx, offset _timerintr
-loc_302B3:
+timer_callback_find_free_slot:
     cmp     word ptr [bx+2], 0
-    jz      short loc_302C7
+    jz      short timer_callback_slot_available
     add     bx, 4
-    loop    loc_302B3
+    loop    timer_callback_find_free_slot
     mov     ax, offset _aNoRoomLeftOnTimerInterru; "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE"...
     push    ax
     call    far ptr _fatal_error
-loc_302C7:
+timer_callback_slot_available:
     mov     ax, [bp+arg_0]
     mov     [bx], ax
     mov     word ptr [bx+2], 0

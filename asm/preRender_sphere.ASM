@@ -20,29 +20,29 @@ _preRender_sphere proc far
     shr ax, 1
     add dx, ax
     or dx, dx
-    jg loc_23096
+    jg prerender_sphere_when_greater
     pop di
     pop si
     mov sp, bp
     pop bp
     retf
-loc_23096:
+prerender_sphere_when_greater:
     mov word ptr [bp - 6], dx
     mov bx, dx
     shr dx, 1
-    jne loc_230B6
+    jne sphere_when_not_equal
     push word ptr [bp + 0Ch]
     push word ptr [bp + 8]
     push word ptr [bp + 6]
     call far ptr _putpixel_single_maybe
     add sp, 6
-loc_230B0:
+prerender_sphere_scan_loop:
     pop di
     pop si
     mov sp, bp
     pop bp
     retf
-loc_230B6:
+sphere_when_not_equal:
     sub bx, dx
     mov ax, word ptr cs:[5F3Ah]
     mov word ptr [bp - 4], ax
@@ -53,11 +53,11 @@ loc_230B6:
     mov ax, cx
     sub ax, dx
     cmp ax, word ptr cs:[5F32h]
-    jge loc_230B0
+    jge prerender_sphere_scan_loop
     mov word ptr [bp - 14h], ax
     add cx, bx
     cmp cx, word ptr cs:[5F30h]
-    jle loc_230B0
+    jle prerender_sphere_scan_loop
     mov dx, bx
     mov ax, dx
     shr ax, 1
@@ -67,12 +67,12 @@ loc_230B6:
     mov ax, cx
     sub ax, dx
     cmp ax, word ptr [bp - 2]
-    jg loc_230B0
+    jg prerender_sphere_scan_loop
     add cx, dx
     cmp cx, word ptr [bp - 4]
-    jl loc_230B0
+    jl prerender_sphere_scan_loop
     cmp bx, word ptr ds:[3C56h]
-    jl loc_23148
+    jl prerender_sphere_when_less
     mov ax, word ptr [bp + 6]
     mov word ptr [bp - 12h], ax
     mov word ptr [bp - 0Eh], ax
@@ -100,7 +100,7 @@ loc_230B6:
     mov sp, bp
     pop bp
     retf
-loc_23148:
+prerender_sphere_when_less:
     shl bx, 1
     mov ax, word ptr [bx + 3C58h]
     mov word ptr [bp - 16h], ax
@@ -111,7 +111,7 @@ loc_23148:
     mov word ptr [bp - 18h], ax
     lea si, [bp - 3DAh]
     lea di, [bp - 79Ah]
-loc_23165:
+prerender_sphere_scan_loop_2:
     mov bx, word ptr [bp - 16h]
     mov dl, byte ptr [bx]
     inc word ptr [bp - 16h]
@@ -120,55 +120,55 @@ loc_23165:
     mov ax, word ptr [bp + 6]
     sub ax, dx
     cmp ax, word ptr [bp - 2]
-    jg loc_231AD
+    jg sphere_when_greater_2
     cmp ax, word ptr [bp - 4]
-    jge loc_23184
+    jge sphere_when_greater_or_equal
     mov ax, word ptr [bp - 4]
-loc_23184:
+sphere_when_greater_or_equal:
     mov word ptr [si], ax
     mov word ptr [bx + si], ax
     mov ax, word ptr [bp + 6]
     add ax, dx
     cmp ax, word ptr [bp - 4]
-    jl loc_231AD
+    jl sphere_when_greater_2
     cmp ax, word ptr [bp - 2]
-    jle loc_2319A
+    jle sphere_when_less_or_equal
     mov ax, word ptr [bp - 2]
-loc_2319A:
+sphere_when_less_or_equal:
     mov word ptr [di], ax
     mov word ptr [bx + di], ax
     add si, 2
     add di, 2
     sub word ptr [bp - 18h], 4
-    jge loc_23165
-    jmp loc_231C0
-loc_231AD:
+    jge prerender_sphere_scan_loop_2
+    jmp sphere_when_condition
+sphere_when_greater_2:
     inc word ptr [bp - 14h]
     sub word ptr [bp - 1Ah], 2
     sub word ptr [bp - 18h], 4
-    jge loc_23165
+    jge prerender_sphere_scan_loop_2
     pop di
     pop si
     mov sp, bp
     pop bp
     retf
-loc_231C0:
+sphere_when_condition:
     xor dx, dx
     mov ax, word ptr cs:[5F30h]
     sub ax, word ptr [bp - 14h]
-    jle loc_231D9
+    jle sphere_when_less_or_equal_2
     sub word ptr [bp - 1Ah], ax
     shl ax, 1
     mov dx, ax
     mov ax, word ptr cs:[5F30h]
     mov word ptr [bp - 14h], ax
-loc_231D9:
+sphere_when_less_or_equal_2:
     mov ax, word ptr [bp - 14h]
     add ax, word ptr [bp - 1Ah]
     sub ax, word ptr cs:[5F32h]
-    jle loc_231E9
+    jle sphere_when_less_or_equal_3
     sub word ptr [bp - 1Ah], ax
-loc_231E9:
+sphere_when_less_or_equal_3:
     push word ptr [bp + 0Ch]
     push word ptr [bp - 1Ah]
     push word ptr [bp - 14h]

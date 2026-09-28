@@ -6433,21 +6433,9 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:27513-27514"
     },
-    "_best_game_time": {
-      "clone_of": "_gState_total_finish_time",
-      "load_address": 213838,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33795-33796"
-    },
-    "_best_timeold": {
-      "clone_of": "_gState_144",
-      "load_address": 213840,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33796-33797"
+    "_bios_tick_countdown": {
+      "load_address": 194694,
+      "storage": "initialized"
     },
     "_bitmapdash": {
       "clone_of": "_word_449EA",
@@ -7518,10 +7506,6 @@
       "load_address": 192023,
       "storage": "initialized"
     },
-    "_byte_3F85A": {
-      "load_address": 194650,
-      "storage": "initialized"
-    },
     "_byte_3F85C": {
       "load_address": 194652,
       "reference_declaration_line": 17542,
@@ -7542,18 +7526,6 @@
     },
     "_byte_3F868": {
       "load_address": 194664,
-      "storage": "initialized"
-    },
-    "_byte_3F880": {
-      "load_address": 194688,
-      "storage": "initialized"
-    },
-    "_byte_3F881": {
-      "load_address": 194689,
-      "storage": "initialized"
-    },
-    "_byte_3F88C": {
-      "load_address": 194700,
       "storage": "initialized"
     },
     "_byte_3FB06": {
@@ -8459,14 +8431,6 @@
       ],
       "storage": "initialized"
     },
-    "_countgend": {
-      "clone_of": "_gState_oEndFrame",
-      "load_address": 213844,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33798-33799"
-    },
     "_coursedataappend_address": {
       "clone_of": "_td20_trk_file_appnd",
       "load_address": 214006,
@@ -8474,14 +8438,6 @@
       "storage": "bss",
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:33911-33912"
-    },
-    "_crash_velocityvalue": {
-      "clone_of": "_gState_impactSpeed",
-      "load_address": 213848,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33800-33801"
     },
     "_crshres": {
       "load_address": 213804,
@@ -8934,10 +8890,6 @@
       "load_address": 195042,
       "storage": "initialized"
     },
-    "_data_303C2": {
-      "load_address": 197570,
-      "storage": "initialized"
-    },
     "_data_31690": {
       "load_address": 202384,
       "storage": "bss"
@@ -9106,12 +9058,6 @@
       "storage": "initialized",
       "width": 24,
       "width_provenance": "reference-label-span: dseg.asm:15028-15049"
-    },
-    "_dword_3F874": {
-      "load_address": 194676,
-      "storage": "initialized",
-      "width": 4,
-      "width_provenance": "reference-label-span: dseg.asm:17566-17567"
     },
     "_dword_40C1E": {
       "load_address": 199710,
@@ -9288,14 +9234,6 @@
       "load_address": 180454,
       "name_provenance": "pressure-constrained reconstruction name (seg003 whole object, build/workers/s003d/extern_names.json); binding alias only, not a recovered original name",
       "storage": "initialized"
-    },
-    "_finish_count": {
-      "clone_of": "_gState_pEndFrame",
-      "load_address": 213842,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33797-33798"
     },
     "_flagsdown": {
       "clone_of": "_mouse_butstate",
@@ -10860,12 +10798,6 @@
       "width": 2,
       "width_provenance": "reference-label-span: dseg.asm:35599-35601"
     },
-    "_idx_time_gm": {
-      "clone_of": "_gState_frame",
-      "load_address": 213836,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss"
-    },
     "_idxtrk": {
       "clone_of": "_startcol2",
       "load_address": 215450,
@@ -11537,6 +11469,10 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized"
     },
+    "_line_pattern_bits": {
+      "load_address": 197406,
+      "storage": "initialized"
+    },
     "_lnoffsets": {
       "clone_of": "_trackrows",
       "load_address": 220480,
@@ -12186,14 +12122,6 @@
       "load_address": 222284,
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "storage": "bss"
-    },
-    "_max_speed_value": {
-      "clone_of": "_gState_topSpeed",
-      "load_address": 213850,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33801-33802"
     },
     "_maxscnh": {
       "clone_of": "_word_454CE",
@@ -13954,11 +13882,25 @@
       "width": 60,
       "width_provenance": "reference-label-span: dseg.asm:35545-35575"
     },
+    "_prerender_auxiliary_arg": {
+      "load_address": 197408,
+      "storage": "initialized"
+    },
+    "_prerender_max_line_width": {
+      "load_address": 193478,
+      "storage": "initialized"
+    },
     "_prevcamrot": {
       "clone_of": "_word_463D6",
       "load_address": 222166,
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
+    },
+    "_previous_timer_irq_vector": {
+      "load_address": 194676,
+      "storage": "initialized",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:17566-17567"
     },
     "_primidxcounttab": {
       "load_address": 191074,
@@ -13982,6 +13924,46 @@
       "clone_of": "_byte_2EA72",
       "load_address": 191090,
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
+    "_projection_center_x": {
+      "load_address": 197558,
+      "storage": "initialized"
+    },
+    "_projection_center_y": {
+      "load_address": 197560,
+      "storage": "initialized"
+    },
+    "_projection_half_height": {
+      "load_address": 197552,
+      "storage": "initialized"
+    },
+    "_projection_half_width": {
+      "load_address": 197550,
+      "storage": "initialized"
+    },
+    "_projection_left_origin": {
+      "load_address": 197554,
+      "storage": "initialized"
+    },
+    "_projection_top_origin": {
+      "load_address": 197556,
+      "storage": "initialized"
+    },
+    "_projection_x_angle": {
+      "load_address": 197566,
+      "storage": "initialized"
+    },
+    "_projection_x_scale": {
+      "load_address": 197562,
+      "storage": "initialized"
+    },
+    "_projection_y_angle": {
+      "load_address": 197568,
+      "storage": "initialized"
+    },
+    "_projection_y_scale": {
+      "load_address": 197564,
       "storage": "initialized"
     },
     "_pspofs": {
@@ -14039,6 +14021,113 @@
       "storage": "bss",
       "width": 60,
       "width_provenance": "reference-label-span: dseg.asm:31196-31226"
+    },
+    "_race_stats": {
+      "load_address": 213832,
+      "storage": "bss",
+      "width": 22,
+      "fields": [
+        {
+          "offset": 0,
+          "width": 2,
+          "reference": {
+            "start": 13653,
+            "hex": "ff36d88b",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 2,
+          "width": 2,
+          "reference": {
+            "start": 13649,
+            "hex": "ff36da8b",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 4,
+          "width": 2,
+          "reference": {
+            "start": 14483,
+            "hex": "0306dc8b",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 6,
+          "width": 2,
+          "reference": {
+            "start": 12919,
+            "hex": "833ede8b00",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 8,
+          "width": 2,
+          "reference": {
+            "start": 13237,
+            "hex": "833ee08b00",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 10,
+          "width": 2,
+          "reference": {
+            "start": 13584,
+            "hex": "a1e28b",
+            "operand_offset": 1
+          }
+        },
+        {
+          "offset": 12,
+          "width": 2,
+          "reference": {
+            "start": 13587,
+            "hex": "3906e48b",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 14,
+          "width": 2,
+          "reference": {
+            "start": 12936,
+            "hex": "2b06e68b",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 16,
+          "width": 2,
+          "reference": {
+            "start": 13795,
+            "hex": "833ee88b00",
+            "operand_offset": 2
+          }
+        },
+        {
+          "offset": 18,
+          "width": 2,
+          "reference": {
+            "start": 14002,
+            "hex": "a1ea8b",
+            "operand_offset": 1
+          }
+        },
+        {
+          "offset": 20,
+          "width": 2,
+          "reference": {
+            "start": 14121,
+            "hex": "833eec8b00",
+            "operand_offset": 2
+          }
+        }
+      ],
+      "name_provenance": "Scratch aggregate binding: 11 consecutive word starts, each tied to a decoded unrelocated original operand; full 22-byte extent also matches the GAMESTATE_SNAPSHOT tentative definition and communal unit."
     },
     "_randomseeds": {
       "clone_of": "_g_kevinrandom_seed",
@@ -16630,17 +16719,57 @@
       "name_provenance": "pressure-constrained reconstruction name (seg003 whole object, build/workers/s003d/extern_names.json); binding alias only, not a recovered original name",
       "storage": "initialized"
     },
+    "_timer_callback_busy": {
+      "load_address": 194700,
+      "storage": "initialized"
+    },
     "_timer_callback_counter": {
       "load_address": 194680,
       "storage": "initialized",
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:17567-17568"
     },
+    "_timer_callback_reentry_depth": {
+      "load_address": 194698,
+      "storage": "initialized"
+    },
+    "_timer_callback_reentry_peak": {
+      "load_address": 194696,
+      "storage": "initialized"
+    },
+    "_timer_copy_target_high": {
+      "load_address": 198136,
+      "storage": "initialized"
+    },
     "_timer_copy_unk": {
       "load_address": 198134,
       "storage": "initialized",
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:20623-20624"
+    },
+    "_timer_elapsed_ticks_high": {
+      "load_address": 194686,
+      "storage": "initialized"
+    },
+    "_timer_elapsed_ticks_low": {
+      "load_address": 194684,
+      "storage": "initialized"
+    },
+    "_timer_interrupt_reload_value": {
+      "load_address": 194692,
+      "storage": "initialized"
+    },
+    "_timer_sound_countdown_active": {
+      "load_address": 194688,
+      "storage": "initialized"
+    },
+    "_timer_sound_countdown_enabled": {
+      "load_address": 194689,
+      "storage": "initialized"
+    },
+    "_timer_sound_countdown_ticks": {
+      "load_address": 194690,
+      "storage": "initialized"
     },
     "_timeraud": {
       "clone_of": "_byte_44A8A",
@@ -16685,22 +16814,6 @@
       "storage": "bss",
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:31247-31248"
-    },
-    "_total_game": {
-      "clone_of": "_gState_travDist",
-      "load_address": 213832,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 4,
-      "width_provenance": "reference-label-span: dseg.asm:33793-33794"
-    },
-    "_total_game_jump": {
-      "clone_of": "_gState_jumpCount",
-      "load_address": 213852,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33802-33803"
     },
     "_tparr": {
       "clone_of": "_rect_unk",
@@ -18261,14 +18374,6 @@
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
-    "_value_game_pen": {
-      "clone_of": "_gState_penalty",
-      "load_address": 213846,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:33799-33800"
-    },
     "_var_6114": {
       "fields": [
         {
@@ -18386,6 +18491,10 @@
       "storage": "bss",
       "width": 36,
       "width_provenance": "reference-label-span: dseg.asm:35185-35221"
+    },
+    "_vector_op_base_z": {
+      "load_address": 198146,
+      "storage": "initialized"
     },
     "_veh_od": {
       "clone_of": "_data_34960",
@@ -18567,6 +18676,10 @@
     "_video_flag6_is1": {
       "load_address": 219633,
       "storage": "bss"
+    },
+    "_video_mode4_active": {
+      "load_address": 194650,
+      "storage": "initialized"
     },
     "_vidflag5": {
       "clone_of": "_video_flag5_is0",
@@ -18905,6 +19018,10 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:22126-22127"
     },
+    "_window_release_order_error_msg": {
+      "load_address": 197570,
+      "storage": "initialized"
+    },
     "_wkmatx": {
       "clone_of": "_mat_temp",
       "load_address": 222284,
@@ -19129,10 +19246,6 @@
       "load_address": 192040,
       "storage": "initialized"
     },
-    "_word_2F3C6": {
-      "load_address": 193478,
-      "storage": "initialized"
-    },
     "_word_2F448": {
       "island": "interpolation",
       "load_address": 128072,
@@ -19213,56 +19326,8 @@
       "load_address": 197414,
       "storage": "initialized"
     },
-    "_word_303AE": {
-      "load_address": 197550,
-      "storage": "initialized"
-    },
-    "_word_303B0": {
-      "load_address": 197552,
-      "storage": "initialized"
-    },
-    "_word_303B2": {
-      "load_address": 197554,
-      "storage": "initialized"
-    },
-    "_word_303B4": {
-      "load_address": 197556,
-      "storage": "initialized"
-    },
-    "_word_303B6": {
-      "load_address": 197558,
-      "storage": "initialized"
-    },
-    "_word_303B8": {
-      "load_address": 197560,
-      "storage": "initialized"
-    },
-    "_word_303BA": {
-      "load_address": 197562,
-      "storage": "initialized"
-    },
-    "_word_303BC": {
-      "load_address": 197564,
-      "storage": "initialized"
-    },
-    "_word_303BE": {
-      "load_address": 197566,
-      "storage": "initialized"
-    },
-    "_word_303C0": {
-      "load_address": 197568,
-      "storage": "initialized"
-    },
-    "_word_305F8": {
-      "load_address": 198136,
-      "storage": "initialized"
-    },
     "_word_305FC": {
       "load_address": 198140,
-      "storage": "initialized"
-    },
-    "_word_30602": {
-      "load_address": 198146,
       "storage": "initialized"
     },
     "_word_3060A": {
@@ -21372,34 +21437,6 @@
       "width": 516,
       "width_provenance": "reference-label-span: dseg.asm:15918-16433"
     },
-    "_word_3F87C": {
-      "load_address": 194684,
-      "storage": "initialized"
-    },
-    "_word_3F87E": {
-      "load_address": 194686,
-      "storage": "initialized"
-    },
-    "_word_3F882": {
-      "load_address": 194690,
-      "storage": "initialized"
-    },
-    "_word_3F884": {
-      "load_address": 194692,
-      "storage": "initialized"
-    },
-    "_word_3F886": {
-      "load_address": 194694,
-      "storage": "initialized"
-    },
-    "_word_3F888": {
-      "load_address": 194696,
-      "storage": "initialized"
-    },
-    "_word_3F88A": {
-      "load_address": 194698,
-      "storage": "initialized"
-    },
     "_word_3F88E": {
       "load_address": 194702,
       "storage": "initialized"
@@ -21512,14 +21549,6 @@
     },
     "_word_40318": {
       "load_address": 197400,
-      "storage": "initialized"
-    },
-    "_word_4031E": {
-      "load_address": 197406,
-      "storage": "initialized"
-    },
-    "_word_40320": {
-      "load_address": 197408,
       "storage": "initialized"
     },
     "_word_4032E": {

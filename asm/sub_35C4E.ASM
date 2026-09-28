@@ -72,7 +72,7 @@ _clear_rect proc far
     add     [bp+var_2], dx
     mov     [bp+var_6], cx
     mov     dx, [bp+arg_6]
-loc_35C9F:
+clear_rect_copy_loop:
     mov     cx, [bp+arg_4]
     mov     bx, [bp+var_4]
     mov     si, cs:[bx]
@@ -84,7 +84,7 @@ loc_35C9F:
     add     [bp+var_4], 2
     add     [bp+var_6], 2
     dec     dx
-    jg      short loc_35C9F
+    jg      short clear_rect_copy_loop
     pop     ds
     pop     di
     pop     si

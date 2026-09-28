@@ -82,7 +82,7 @@ _sprite_make_wnd proc far
     mov [bp+var_4], bx
     add ax, bx
     cmp ax, WND_DEFS_END
-    jnb short loc_34CD6
+    jnb short sprite_make_wnd_error_path
     mov cs:[NEXT_WND_DEF], ax
     mov word ptr cs:[bx+SPRITE.sprite_bitmapptr], 0
     mov ax, [bp+var_2]
@@ -102,11 +102,11 @@ _sprite_make_wnd proc far
     mov cs:[bx+SPRITE.sprite_widthsum], ax
     mov cx, [bp+arg_2]
     mov ax, size SHAPE2D
-loc_34CBE:
+sprite_make_wnd_draw_loop:
     mov cs:[bx+size SPRITE], ax
     add bx, 2
     add ax, [bp+var_8]
-    loop loc_34CBE
+    loop sprite_make_wnd_draw_loop
     mov dx, cs
     mov ax, [bp+var_4]
     pop di
@@ -115,7 +115,7 @@ loc_34CBE:
     mov sp, bp
     pop bp
     retf
-loc_34CD6:
+sprite_make_wnd_error_path:
     mov ax, ss
     mov ds, ax
     mov ax, WINDOW_SPACE_ERROR_TEXT

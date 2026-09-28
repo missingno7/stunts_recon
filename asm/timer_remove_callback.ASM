@@ -19,28 +19,28 @@ _timer_remove_callback proc far
     mov     bx, offset _timerintr
     mov     ax, [bp+arg_0]
     mov     dx, [bp+arg_2]
-loc_302ED:
+timer_remove_search_slot_loop:
     cmp     [bx], ax
-    jnz     short loc_302F6
+    jnz     short timer_remove_advance_slot
     cmp     [bx+2], dx
-    jz      short loc_302FD
-loc_302F6:
+    jz      short timer_remove_disable_interrupts
+timer_remove_advance_slot:
     add     bx, 4
-    loop    loc_302ED
+    loop    timer_remove_search_slot_loop
     pop     bp
     retf
-loc_302FD:
+timer_remove_disable_interrupts:
     cli
     dec     cx
-    jz      short loc_30311
-loc_30301:
+    jz      short timer_remove_clear_tail_slot
+timer_remove_shift_slots:
     mov     ax, [bx+4]
     mov     [bx], ax
     mov     ax, [bx+6]
     mov     [bx+2], ax
     add     bx, 4
-    loop    loc_30301
-loc_30311:
+    loop    timer_remove_shift_slots
+timer_remove_clear_tail_slot:
     mov     word ptr [bx], 0
     mov     word ptr [bx+2], 0
     sti

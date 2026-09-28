@@ -1,6 +1,6 @@
 """integ40: the whole LINK c_common communal unit published (LINK_COMMUNAL).
 
-* one accepted row owns [207408,222352): 312 communals, every declaring unit an
+* one accepted row owns [207408,222352): 303 communals, every declaring unit an
   accepted exact owner (C tentative definitions, one MASM COMM NEAR, the pinned
   `_file.c` buffers), registry names, grounded size bases;
 * interior labels are member/element accesses of their owning object (seg005
@@ -36,12 +36,12 @@ class UnitTests(unittest.TestCase):
         self.assertEqual((self.row['start'], self.row['end'], self.row['kind']), (207408, 222352, cu.KIND))
         self.assertFalse([o for o in self.manifest['bss_owners'] if o.get('raw_form') == 'communal-unit'])
         items = cu.check_row_form(self.row)
-        self.assertEqual(len(items), 312)
+        self.assertEqual(len(items), 303)
         kinds = {}
         for i in items:
             kinds[i['size_basis']['kind']] = kinds.get(i['size_basis']['kind'], 0) + 1
             self.assertFalse(cu.is_placeholder(i['name']), i['name'])
-        self.assertEqual(kinds, {'declared-type': 298, 'pinned-member': 3, 'absorbed-gap': 2,
+        self.assertEqual(kinds, {'declared-type': 289, 'pinned-member': 3, 'absorbed-gap': 2,
                                  'neutral-unreferenced': 9})
         rows = bss_link.load_partition(self.manifest)
         report = bss_link.ownership_report(rows)
@@ -49,7 +49,7 @@ class UnitTests(unittest.TestCase):
 
     def test_recipes_declare_exactly_the_unit(self):
         receipt = cu.check_manifest(self.manifest, _recipe_of)
-        self.assertEqual(receipt, {'communal_unit': 'c_common', 'communals': 312, 'bytes': 14944})
+        self.assertEqual(receipt, {'communal_unit': 'c_common', 'communals': 303, 'bytes': 14944})
         declared = cu.manifest_declarers(self.manifest, _recipe_of)
         self.assertEqual({n: [o for o, _, _ in d] for n, d in declared.items() if n.startswith('__buf')},
                          {'__bufin': ['library__file_192064'], '__bufout': ['library__file_192064'],

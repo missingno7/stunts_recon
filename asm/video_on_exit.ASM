@@ -26,12 +26,12 @@ _video_on_exit proc far
     mov byte ptr es:[10h], al
     and al, 30h
     cmp al, 30h
-    jne loc_22606
+    jne on_exit_return_if_not_equal
     xor ax, ax
     push ax
     call far ptr _video_clear_color
     add sp, 2
-loc_22606:
+on_exit_return_if_not_equal:
     mov ah, 0Bh
     mov bx, 0
     int 10h

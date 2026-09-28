@@ -124,7 +124,7 @@
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "review": [
-    "integ30: one-member ASM group declaring the interior label loc_35ED9 (pinned seg012.asm:18565, an original instruction boundary of sub_35E08) PUBLIC so asm012_149180 near-jumps to a real definition; bytes, FIXUPPs and relocations unchanged. Evidence: {\"commit\": \"5c38f258f482e7d28f1ccce73da8992dccbbee89\", \"line_end\": 18617, \"line_start\": 18431, \"path\": \"src/restunts/asmorig/seg012.asm\", \"repository\": \"restunts\"}"
+    "integ30: one-member ASM group declaring the interior label loc_35ED9 (pinned seg012.asm:18565, an original instruction boundary of sub_35E08) PUBLIC so line_sprite_shape_render near-jumps to a real definition; bytes, FIXUPPs and relocations unchanged. Evidence: {\"commit\": \"5c38f258f482e7d28f1ccce73da8992dccbbee89\", \"line_end\": 18617, \"line_start\": 18431, \"path\": \"src/restunts/asmorig/seg012.asm\", \"repository\": \"restunts\"}"
   ],
   "source": "asm/sub_35E08.ASM",
   "stable_id": "asm_load_25e08",

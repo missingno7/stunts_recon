@@ -14,7 +14,7 @@ extrn _add_exit_handler:far
 public _video_add_exithandler
 _video_add_exithandler proc far
     cmp byte ptr ds:[_currentvideomode], 0
-    jne loc_225D5
+    jne add_exithandler_early_return
     mov ah, 0Fh
     int 10h
     mov byte ptr ds:[_currentvideomode], al
@@ -27,7 +27,7 @@ _video_add_exithandler proc far
     push ax
     call far ptr _add_exit_handler
     add sp, 4
-loc_225D5:
+add_exithandler_early_return:
     retf
 _video_add_exithandler endp
 S012_TEXT ends

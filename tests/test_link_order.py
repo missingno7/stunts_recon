@@ -103,7 +103,7 @@ class AsmOrderExact(unittest.TestCase):
             bind_contribution(changed, bad, symbols)
 
     def test_group_asm_set_equal_but_reordered_fails(self):
-        recipe = recipe_of('asm012_125482')
+        recipe = recipe_of('graphics_resource_runtime')
         obj, _ = assemble_source((ROOT/recipe['source']).read_bytes(), recipe['profile'])
         payload, receipt = bind_multi(obj, recipe, self.image, self.relocations)
         self.assertEqual(payload, self.image[recipe['start']:recipe['end']])
@@ -121,7 +121,7 @@ class AsmOrderExact(unittest.TestCase):
     def test_group_stream_includes_same_module_far_transfers_in_order(self):
         # A synthetic group whose recipe lists the right sites in another order
         # is rejected by the whole candidate stream check, not a multiset.
-        recipe = recipe_of('asm012_125482')
+        recipe = recipe_of('graphics_resource_runtime')
         obj, _ = assemble_source((ROOT/recipe['source']).read_bytes(), recipe['profile'])
         stream = link_order_sites(fixup_relocation_sites(
             obj.linker_fixups, recipe['start'], recipe['object_segment']))

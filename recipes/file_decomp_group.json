@@ -446,7 +446,7 @@
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "review": [
-    "integ30: file_decomp / file_decomp_nofatal / file_decomp_fatal as one seg012 module (from build/workers/L3-asm/asm012_133840), link-faithful S012_TEXT; the compression_type far-pointer table (dd file_decomp_rle, dd file_decomp_vle) binds through the reviewed function-evidence island and table-anchored code aliases; three unreferenced wrapper stubs after the fatal RETF stay inside the pinned file_decomp_fatal PROC..ENDP."
+    "integ30: file_decomp / file_decomp_nofatal / file_decomp_fatal as one seg012 module (from build/workers/L3-asm/resource_file_io_decompression), link-faithful S012_TEXT; the compression_type far-pointer table (dd file_decomp_rle, dd file_decomp_vle) binds through the reviewed function-evidence island and table-anchored code aliases; three unreferenced wrapper stubs after the fatal RETF stay inside the pinned file_decomp_fatal PROC..ENDP."
   ],
   "source": "asm/file_decomp_group.ASM",
   "stable_id": "multi_file_decomp_group",

@@ -29,7 +29,7 @@ _preRender_unk proc far
     push    di
     mov     si, [bp+arg_8]
     mov     [bp+var_A], 1
-    jmp     short loc_2F3FD
+    jmp     short prerender_unknown_draw_loop
     db 144
     push    bp
     mov     bp, sp
@@ -38,7 +38,7 @@ _preRender_unk proc far
     push    di
     mov     si, [bp+arg_8]
     mov     [bp+var_A], 0
-loc_2F3FD:
+prerender_unknown_draw_loop:
     mov     ax, [bp+arg_2]
     mov     _word_4031E, ax
     mov     ax, [bp+0Ah]
@@ -67,7 +67,7 @@ _nopsub_2F424 proc far
     push    di
     lea     si, [bp+arg_8]
     mov     [bp+var_A], 0
-    jmp     short loc_2F3FD
+    jmp     short prerender_unknown_draw_loop
 
 _nopsub_2F424 endp
 _TEXT ends

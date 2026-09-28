@@ -14,7 +14,7 @@ import bss_link  # noqa: E402
 
 # integ36 adds the two runtime-internal fills 118055 (crt0 -> crt0dat) and
 # 124475 (raise -> rand) once their neighbours were accepted.
-CODE_FILLS = [118055, 123425, 123685, 123779, 123807, 123835, 123915, 124295, 124475, 124903, 124987,
+CODE_FILLS = [95407, 118055, 123425, 123685, 123779, 123807, 123835, 123915, 124295, 124475, 124903, 124987,
               125207, 125313, 125447, 139609, 171213]
 
 
@@ -70,6 +70,7 @@ class IndependentStaticOrderTests(unittest.TestCase):
 
         class Obj:
             segment_lengths = {'UNIT_TEXT': 16, '_BSS': 4}
+            segment_defs = [{'name': 'UNIT_TEXT', 'class': 'CODE'}]
             linker_fixups = [{'target_kind': 'segment', 'target': '_BSS', 'segment': 'UNIT_TEXT',
                               'loc': 'offset16', 'self_relative': False, 'offset': 4,
                               'encoded_addend': '0000', 'displacement': 0}]
@@ -143,7 +144,8 @@ class CodeWordFillTests(unittest.TestCase):
         import link_fill
         original = link_fill._code_segdef
         try:
-            link_fill._code_segdef = lambda r: {'name': 'X', 'class': 'CODE', 'alignment': 'paragraph'}
+            link_fill._code_segdef = lambda r, recipe_overrides=None: {
+                'name': 'X', 'class': 'CODE', 'alignment': 'paragraph'}
             with self.assertRaisesRegex(ValueError, 'WORD'):
                 checked_fill(row, self.manifest, self.image)
         finally:
@@ -159,7 +161,7 @@ class CodeWordFillTests(unittest.TestCase):
         manifest['owners'][at] = {'id': 'raw_22159_2215a', 'kind': 'UNRESOLVED_RAW',
                                   'classification': 'UNRESOLVED_MIXED', 'start': 139609, 'end': 139610}
         cand = {'kind': 'LINK_FILL', 'basis': 'link-code-word-alignment-v1', 'start': 139609,
-                'object': 'asm012_137138'}
+                'object': 'prerender_wheel_raster'}
         staged = promote_runtime.replace_raw_library(manifest, cand)
         self.assertEqual(staged['owners'][at], self.manifest['owners'][at])
         with self.assertRaises(ValueError):

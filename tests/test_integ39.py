@@ -230,8 +230,13 @@ class TransactionTests(unittest.TestCase):
         self.assertEqual(staged['bss_owners'][-1]['kind'], cu.KIND)
         rows = bss_link.load_partition(staged)
         self.assertEqual((rows[-1]['kind'], rows[-1]['start']), (cu.KIND, 207408))
-        with self.assertRaisesRegex(ValueError, 'replace the raw communal unit'):
-            cu.attach(staged, self._row())
+        refreshed = cu.attach(staged, self._row())
+        self.assertEqual(refreshed['bss_owners'][-1]['id'], 'c_common')
+        self.assertEqual(refreshed['bss_owners'][-1]['communals'], self._row()['communals'])
+        wrong_owner = self._row()
+        wrong_owner['id'] = 'other_communal_unit'
+        with self.assertRaisesRegex(ValueError, 'accepted unit owner and extent'):
+            cu.attach(staged, wrong_owner)
         bad = self._row()
         bad['start'] = 207396
         with self.assertRaises(ValueError):
@@ -240,7 +245,7 @@ class TransactionTests(unittest.TestCase):
     def test_declarations_need_the_whole_unit(self):
         recipe_of = lambda o: read_json(ROOT / o['recipe'])
         self.assertEqual(cu.check_manifest(self.manifest, recipe_of),
-                         {'communal_unit': 'c_common', 'communals': 312, 'bytes': 14944})
+                         {'communal_unit': 'c_common', 'communals': 303, 'bytes': 14944})
         without_unit = copy.deepcopy(self.manifest)
         without_unit['bss_owners'].pop()
         with self.assertRaisesRegex(ValueError, 'only with the whole communal unit'):

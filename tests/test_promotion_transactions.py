@@ -26,8 +26,10 @@ class PromotionTransactionTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         (self.root / 'build').mkdir(parents=True, exist_ok=True)
         (self.root / 'src').mkdir(parents=True)
+        (self.root / 'asm').mkdir()
         (self.root / 'recipes').mkdir()
         (self.root / 'layout').mkdir()
+        (self.root / 'evidence').mkdir()
 
     def tearDown(self):
         self.temp.cleanup()
@@ -304,6 +306,23 @@ class PromotionTransactionTests(unittest.TestCase):
             with transaction.exclusive(), transaction.publishing():
                 self.assertEqual(transaction.read_generation(), 7)
             self.assertEqual(transaction.read_generation(), 8)
+
+    def test_journaled_owner_rename_deletes_and_recovers_evidence_paths(self):
+        old_source = self.root/'asm/old.ASM'
+        new_source = self.root/'asm/new.ASM'
+        old_source.write_bytes(b'complete module')
+        changes = {'asm/old.ASM': None, 'asm/new.ASM': b'complete module',
+                   'evidence/owner-map.json': b'{"old":"new"}\n'}
+        with self.transaction_root():
+            rows = transaction.prepare(changes)
+            transaction.apply(rows)
+            self.assertFalse(old_source.exists())
+            self.assertEqual(new_source.read_bytes(), b'complete module')
+            self.assertTrue((self.root/'evidence/owner-map.json').is_file())
+            transaction.rollback()
+        self.assertEqual(old_source.read_bytes(), b'complete module')
+        self.assertFalse(new_source.exists())
+        self.assertFalse((self.root/'evidence/owner-map.json').exists())
 
     def test_atomic_replace_retries_a_transient_sharing_violation(self):
         import common

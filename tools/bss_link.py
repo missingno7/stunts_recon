@@ -34,6 +34,7 @@ decides whether every claimed address was reproduced.
 from common import require
 
 STATIC = 'link-module-order-v1'
+BSS_WORD_FILL = 'link-bss-word-alignment-v1'
 COMMUNAL = 'link-communal-v1'
 RUNTIME = 'link-runtime-member-v1'     # integ36: a pinned runtime member's own _BSS
 PLACEMENTS = (STATIC, COMMUNAL)
@@ -192,10 +193,31 @@ def check_partition(manifest, objects, evidence, bss_start, bss_end):
         position = row['end']
         obj = _row_object(row, objects, owners)
         if row['kind'] == 'LINK_FILL':
-            # integ39: the c_common paragraph fill; it is re-derived from its
-            # neighbours (communal_unit.checked_communal_fill), never from evidence.
             form = row.get('basis')
             nxt = rows[i + 1] if i + 1 < len(rows) else {}
+            if form == BSS_WORD_FILL:
+                previous = rows[i - 1] if i > 0 else {}
+                previous_object = _row_object(previous, objects, owners)
+                next_object = _row_object(nxt, objects, owners)
+                evidence_fill = [e for e in evidence['rows'] if e['raw_form'] == WORD_FILL and
+                                 (e['start'], e['end']) == (row['start'], row['end'])]
+                require(set(row) == {'id', 'kind', 'basis', 'start', 'end', 'object'} and
+                        row['id'] == f"fill_{row['start']:05x}_{row['end']:05x}" and
+                        row['end'] - row['start'] == 1 and row['start'] & 1 and not row['end'] & 1 and
+                        previous.get('kind') in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA') and
+                        previous.get('segment') == '_BSS' and previous['end'] == row['start'] and
+                        previous_object == row['object'] and
+                        nxt.get('kind') in ('MATCHING_C_DATA', 'MATCHING_ASM_DATA') and
+                        nxt.get('segment') == '_BSS' and nxt['start'] == row['end'] and
+                        next_object is not None and len(evidence_fill) == 1 and
+                        evidence_fill[0]['object'] is None,
+                        'BSS LINK fill is not the one-byte word gap between accepted _BSS objects: %s' % row['id'])
+                used.add(evidence_fill[0]['id'])
+                out.append({'id': row['id'], 'kind': row['kind'], 'form': form, 'object': row['object'],
+                            'start': row['start'], 'end': row['end']})
+                continue
+            # integ39: the c_common paragraph fill; it is re-derived from its
+            # neighbours (communal_unit.checked_communal_fill), never from evidence.
             require(form == COMMUNAL_FILL_BASIS and 0 < row['end'] - row['start'] < 16 and
                     row['end'] % 16 == 0 and row['end'] == -(-row['start'] // 16) * 16 and
                     nxt.get('start') == row['end'] and
@@ -297,12 +319,19 @@ def grounded_member_bss(obj, code_start, image, dgroup_base):
 
 
 def own_bss_addends(obj, code_segment):
-    """(code offset, addend) of every CODE FIXUPP naming the object's own _BSS."""
+    """(code offset, addend) of every CODE FIXUPP naming the object's own _BSS.
+
+    /Zi objects may also contain $$SYMBOLS fixups to _BSS.  They describe
+    debug records, not linked program code, so only the selected CODE SEGDEF
+    contributes placement evidence.
+    """
+    code = [s for s in obj.segment_defs if s['name'] == code_segment and s['class'] == 'CODE']
+    require(len(code) == 1, 'Selected _BSS reference segment is not one CODE SEGDEF')
     out = []
     for f in obj.linker_fixups:
-        if f['target_kind'] == 'segment' and f['target'] == '_BSS':
-            require(f['segment'] == code_segment and f['loc'] == 'offset16' and not f['self_relative'],
-                    'Unsupported own _BSS FIXUPP shape')
+        if f['target_kind'] == 'segment' and f['target'] == '_BSS' and f['segment'] == code_segment:
+            require(f['loc'] == 'offset16' and not f['self_relative'],
+                    'Unsupported own _BSS CODE FIXUPP shape: %r' % (f,))
             encoded = int.from_bytes(bytes.fromhex(f['encoded_addend']), 'little')
             displacement = f.get('displacement') or 0
             require(not (encoded and displacement), 'Ambiguous own _BSS addend')

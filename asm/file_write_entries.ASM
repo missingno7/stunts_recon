@@ -69,37 +69,37 @@ _file_write:
     xor     cx, cx
     mov     ah, 3Ch
     int     21h             ; DOS - 2+ - CREATE A FILE WITH HANDLE (CREAT)
-    jb      short loc_32570
+    jb      short write_file_fatal_when_below
     mov     [bp+var_filehandle], ax
-loc_32527:
+write_file_fatal_scan_loop:
     cmp     [bp+arg_lenl], 0
-    jnz     short loc_32533
+    jnz     short write_file_fatal_when_nonzero
     cmp     [bp+arg_lenh], 0
-    jz      short loc_3259E
-loc_32533:
+    jz      short write_file_fatal_when_zero
+write_file_fatal_when_nonzero:
     mov     cx, 4000h
     mov     ax, [bp+arg_lenl]
     sub     [bp+arg_lenl], cx
     sbb     [bp+arg_lenh], 0
-    jnb     short loc_32553
+    jnb     short file_fatal_when_not_below
     mov     cx, [bp+arg_lenl]
     mov     [bp+arg_lenl], 0
     mov     [bp+arg_lenh], 0
     add     cx, 4000h
-loc_32553:
+file_fatal_when_not_below:
     mov     ds, [bp+arg_srcseg]
     mov     dx, [bp+arg_srcoff]
     mov     bx, [bp+var_filehandle]
     mov     ah, 40h
     int     21h             ; DOS - 2+ - WRITE TO FILE WITH HANDLE
-    jb      short loc_32570
+    jb      short write_file_fatal_when_below
     cmp     ax, cx
-    jnz     short loc_3256D
+    jnz     short file_fatal_when_nonzero_2
     add     [bp+arg_srcseg], 400h
-    jmp     short loc_32527
-loc_3256D:
+    jmp     short write_file_fatal_scan_loop
+file_fatal_when_nonzero_2:
     mov     ax, 1
-loc_32570:
+write_file_fatal_when_below:
     mov     [bp+var_errno], ax
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
@@ -111,19 +111,19 @@ loc_32570:
     int     21h             ; DOS - 2+ - DELETE A FILE (UNLINK)
     mov     ax, [bp+var_errno]
     cmp     [bp+var_fatal], 0
-    jnz     short loc_325A7
+    jnz     short file_fatal_return_if_nonzero
     mov     ax, ss
     mov     ds, ax
     mov     ax, offset DGROUP:aSFileError_0; "%s FILE ERROR\r"
     push    [bp+arg_filename]
     push    ax
     call    far ptr _fatal_error
-loc_3259E:
+write_file_fatal_when_zero:
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
     int     21h             ; DOS - 2+ - CLOSE A FILE WITH HANDLE
     xor     ax, ax
-loc_325A7:
+file_fatal_return_if_nonzero:
     pop     di
     pop     si
     pop     ds

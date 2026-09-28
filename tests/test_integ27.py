@@ -1,5 +1,5 @@
 """integ27: pinned DOS pass environment (pass directory, TEMP, pass memory) on
-both hosts, the register-gated MSC 6.00A profile (readable `_asm`, optimize
+both hosts, the register-gated MSC 6.00 profile (readable `_asm`, optimize
 pragma regions, CodeView debug segments), and the numeric program-address lint."""
 import copy
 import json
@@ -18,7 +18,7 @@ from compiler import compile_source, CompileFailure, check_inline_asm, verify_to
 from object_probe import read_object, DEBUG_SEGMENT_POLICY
 from preprocessor import prepare
 
-C6 = 'msc600a-medium-zi'
+C6 = 'msc600-medium-zi'
 C6_FLAGS = ['/AM', '/Os', '/Oe', '/Og', '/Gs', '/Zi']
 FIXTURE = ROOT/'tests/fixtures/integ27/c6_zi_unit.c'
 
@@ -113,16 +113,16 @@ class RegisterGatedProfile(unittest.TestCase):
     def recipe(self, segment, **extra):
         row = self.seg_row(segment)
         recipe = {'id': row['name'], 'kind': 'c', 'profile': C6, 'start': row['start'], 'end': row['end'],
-                  'compiler_flags': list(C6_FLAGS), 'compiler_flags_register': 'CC-MSC600A-seg007'}
+                  'compiler_flags': list(C6_FLAGS), 'compiler_flags_register': 'CC-MSC600-seg007'}
         recipe.update(extra)
         return recipe
 
     def test_profile_is_pinned_and_gated(self):
         config, _ = verify_toolchain(C6)
         self.assertEqual(config['flags'], C6_FLAGS)
-        self.assertEqual(config['register_gated'], 'CC-MSC600A-*')
+        self.assertEqual(config['register_gated'], 'CC-MSC600-*')
         self.assertEqual(object_flags.registered_profile_objects()['seg007'],
-                         ('CC-MSC600A-seg007', C6, C6_FLAGS))
+                         [('CC-MSC600-seg007', C6, C6_FLAGS)])
 
     def test_seg007_recipe_uses_the_ruled_flags(self):
         self.assertEqual(object_flags.recipe_flags(self.recipe('seg007')), C6_FLAGS)
@@ -133,13 +133,13 @@ class RegisterGatedProfile(unittest.TestCase):
                                        if k != 'compiler_flags_register'})
 
     def test_profile_refused_without_register_entry(self):
-        # Another object has no CC-MSC600A entry.
+        # Another object has no CC-MSC600 entry.
         with self.assertRaisesRegex(ValueError, 'requires one object with a SUPPORTED register entry'):
             object_flags.recipe_flags(self.recipe('seg008'))
         # seg007 itself is refused once its entry is not SUPPORTED.
         register = read_json(ROOT/'evidence/toolchain-hypotheses.json')
         for row in register['hypotheses']:
-            if row['id'] == 'CC-MSC600A-seg007':
+            if row['id'] == 'CC-MSC600-seg007':
                 row['status'] = 'PLAUSIBLE'
         original = object_flags.read_json
 

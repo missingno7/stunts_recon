@@ -11,7 +11,7 @@ _kb_exit_handler proc far
     mov es, bx
     mov bx, word ptr ds:[43D8h]
     or bx, bx
-    je loc_208C1
+    je keyboard_exit_restore_flags
     mov word ptr es:[24h], bx
     mov bx, word ptr ds:[43DAh]
     mov word ptr es:[26h], bx
@@ -22,7 +22,7 @@ _kb_exit_handler proc far
     mov al, byte ptr es:[417h]
     and al, 0F0h
     mov byte ptr es:[417h], al
-loc_208C1:
+keyboard_exit_restore_flags:
     mov al, ah
     out 21h, al
     retf

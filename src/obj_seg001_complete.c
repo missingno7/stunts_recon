@@ -276,7 +276,7 @@ extern unsigned char g_rpl_init;
 extern unsigned char gm_playmode; 
 extern short g_sgateopn;
 
-extern short word_45A24; 
+extern short elapsed_time1; 
 extern short g_cvxintvl; 
 extern short frmcs_time; 
 extern short st_hdg;
@@ -430,7 +430,7 @@ extern const char aLocateshape4_4sShapeNotF[];
 extern const char aLocatesound4_4sSoundNotF[];
 extern char audiodriverstring[];
 
-extern struct GAMESTATE_SNAPSHOT total_game;
+extern struct GAMESTATE_SNAPSHOT race_stats;
 extern short is_audioloaded;
 extern void far* musicfile;
 extern void far* openvfile;
@@ -3045,7 +3045,7 @@ void update_crash_state(int arg_someFlag, int arg_MplayerFlag) {
 	if (core.game_3F6autoLoadEvalFlag == 0 && arg_MplayerFlag == 0)
 		core.game_3F6autoLoadEvalFlag = arg_someFlag;
 	if ((endhsdemo & 4) == 0)
-		total_game = *(struct GAMESTATE_SNAPSHOT *)&core.game_travDist;
+		race_stats = *(struct GAMESTATE_SNAPSHOT *)&core.game_travDist;
 }
 
 void plnrotop(void) {

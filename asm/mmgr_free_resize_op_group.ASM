@@ -45,33 +45,33 @@ _mmgr_free proc far
     push    di
     mov     ax, [bp+arg_2]
     mov     si, _resptr2
-loc_31488:
+free_search_entry_loop:
     cmp     si, _resptr1
-    jz      short loc_31498
+    jz      short free_not_found
     cmp     ax, [si+MEMCHUNK.resofs]
-    jz      short loc_314A4
+    jz      short free_mark_chunk_released
     sub     si, 12h
-    jmp     short loc_31488
-loc_31498:
+    jmp     short free_search_entry_loop
+free_not_found:
     push    [bp+arg_2]
     mov     ax, offset _aMemoryManagerB
     push    ax
     call    far ptr _fatal_error
-loc_314A4:
+free_mark_chunk_released:
     mov     [bp+arg_2], 0
     mov     [si+MEMCHUNK.resunk], 0
     cmp     si, _resptr2
-    jz      short loc_314CE
+    jz      short free_relocate_released_block
     mov     bx, _resptr2
     mov     di, _resendptr1
     cmp     si, di
-    jz      short loc_31508
+    jz      short free_after_optional_move
     mov     ax, [di+MEMCHUNK.resofs]
     sub     ax, [bx+MEMCHUNK.resofs]
     sub     ax, [bx+MEMCHUNK.ressize]
     cmp     ax, [si+MEMCHUNK.ressize]
-    jb      short loc_31508
-loc_314CE:
+    jb      short free_after_optional_move
+free_relocate_released_block:
     mov     bx, [si+MEMCHUNK.ressize]
     push    bx
     mov     di, _resendptr1
@@ -87,22 +87,22 @@ loc_314CE:
     mov     [di+MEMCHUNK.resunk], 1
     mov     cx, 0Ch
     xor     bx, bx
-loc_314F9:
+free_copy_name_loop:
     mov     al, byte ptr [bx+si+MEMCHUNK.resname]
     mov     byte ptr [bx+di+MEMCHUNK.resname], al
     inc     bx
-    loop    loc_314F9
+    loop    free_copy_name_loop
     call    far ptr _copy_paras_reverse
     add     sp, 6
-loc_31508:
+free_after_optional_move:
     cmp     si, _resptr2
-    jnz     short loc_3151B
-loc_3150E:
+    jnz     short free_update_end_pointer
+free_trim_free_tail_loop:
     sub     si, 12h
     cmp     [si+MEMCHUNK.resunk], 0
-    jz      short loc_3150E
+    jz      short free_trim_free_tail_loop
     mov     _resptr2, si
-loc_3151B:
+free_update_end_pointer:
     mov     ax, [bp+arg_0]
     mov     dx, [bp+arg_2]
     pop     di
@@ -125,51 +125,51 @@ _nopsub_31525 proc far
     push    di
     mov     ax, [bp+arg_2]
     mov     si, _resptr2
-loc_31534:
+compact_search_entry_loop:
     cmp     si, _resptr1
-    jz      short loc_31544
+    jz      short compact_reuse_free_failure
     cmp     ax, [si+0Eh]
-    jz      short loc_31547
+    jz      short compact_mark_chunk_released
     sub     si, 12h
-    jmp     short loc_31534
-loc_31544:
-    jmp     loc_31498
-loc_31547:
+    jmp     short compact_search_entry_loop
+compact_reuse_free_failure:
+    jmp     free_not_found
+compact_mark_chunk_released:
     mov     [bp+arg_2], 0
     mov     word ptr [si+10h], 0
     cmp     si, _resptr2
-    jz      short loc_31570
+    jz      short compact_check_space
     mov     bx, _resptr2
     mov     di, _resendptr2
     mov     ax, [di+0Eh]
     sub     ax, [bx+0Eh]
     sub     ax, [bx+0Ch]
     cmp     ax, [si+0Ch]
-    ja      short loc_31570
-    jmp     loc_31622
-loc_31570:
+    ja      short compact_check_space
+    jmp     compact_trim_free_tail
+compact_check_space:
     mov     di, _resptr2
     mov     ax, [di+0Eh]
     add     ax, [di+0Ch]
     mov     [bp+var_2], ax
     mov     [bp+var_4], 0
     mov     di, _resendptr1
-loc_31586:
+compact_scan_entries_to_shift:
     cmp     di, _resendptr2
-    jz      short loc_315E9
+    jz      short compact_finish_shift_scan
     mov     ax, [di+0Eh]
     sub     ax, [si+0Ch]
     cmp     [bp+var_2], ax
-    ja      short loc_315E4
+    ja      short compact_continue_entry_scan
     mov     bx, di
     sub     bx, 12h
     cmp     bx, _resptr2
-    jz      short loc_315E4
+    jz      short compact_continue_entry_scan
     cmp     [bp+var_4], 0
-    jnz     short loc_315B1
+    jnz     short compact_begin_shift
     mov     _resendptr1, bx
     mov     [bp+var_4], 1
-loc_315B1:
+compact_begin_shift:
     mov     ax, [di+10h]
     mov     [bx+10h], ax
     mov     ax, [di+0Ch]
@@ -181,26 +181,26 @@ loc_315B1:
     push    ax
     push    word ptr [di+0Eh]
     mov     cx, 0Ch
-loc_315CE:
+compact_copy_entry_name_loop:
     mov     al, [di]
     mov     [bx], al
     inc     bx
     inc     di
-    loop    loc_315CE
+    loop    compact_copy_entry_name_loop
     sub     di, 0Ch
     sub     bx, 0Ch
     call    far ptr _mmgr_copy_paras
     add     sp, 6
-loc_315E4:
+compact_continue_entry_scan:
     add     di, 12h
-    jmp     short loc_31586
-loc_315E9:
+    jmp     short compact_scan_entries_to_shift
+compact_finish_shift_scan:
     mov     ax, [di+0Eh]
     sub     di, 12h
     cmp     [bp+var_4], 0
-    jnz     short loc_315F9
+    jnz     short compact_create_free_entry
     mov     _resendptr1, di
-loc_315F9:
+compact_create_free_entry:
     mov     bx, [si+0Ch]
     mov     [di+0Ch], bx
     push    bx
@@ -211,22 +211,22 @@ loc_315F9:
     mov     word ptr [di+10h], 1
     mov     cx, 0Ch
     xor     bx, bx
-loc_31613:
+compact_copy_chunk_name_loop:
     mov     al, [bx+si]
     mov     [bx+di], al
     inc     bx
-    loop    loc_31613
+    loop    compact_copy_chunk_name_loop
     call    far ptr _copy_paras_reverse
     add     sp, 6
-loc_31622:
+compact_trim_free_tail:
     cmp     si, _resptr2
-    jnz     short loc_31635
-loc_31628:
+    jnz     short compact_update_end_pointer
+compact_trim_tail_loop:
     sub     si, 12h
     cmp     word ptr [si+10h], 0
-    jz      short loc_31628
+    jz      short compact_trim_tail_loop
     mov     _resptr2, si
-loc_31635:
+compact_update_end_pointer:
     mov     ax, [bp+arg_0]
     mov     dx, [bp+arg_2]
     pop     di
@@ -246,25 +246,25 @@ _mmgr_release proc far
     push    di
     mov     ax, [bp+arg_2]
     mov     si, _resptr2
-loc_3164D:
+release_search_entry_loop:
     cmp     si, _resptr1
-    jz      short loc_3165D
+    jz      short release_not_found
     cmp     ax, [si+MEMCHUNK.resofs]
-    jz      short loc_31660
+    jz      short release_mark_chunk_released
     sub     si, 12h
-    jmp     short loc_3164D
-loc_3165D:
-    jmp     loc_31498
-loc_31660:
+    jmp     short release_search_entry_loop
+release_not_found:
+    jmp     free_not_found
+release_mark_chunk_released:
     mov     [si+MEMCHUNK.resunk], 0
     cmp     si, _resptr2
-    jnz     short loc_31678
-loc_3166B:
+    jnz     short release_return
+release_trim_free_tail_loop:
     sub     si, 12h
     cmp     [si+MEMCHUNK.resunk], 0
-    jz      short loc_3166B
+    jz      short release_trim_free_tail_loop
     mov     _resptr2, si
-loc_31678:
+release_return:
     pop     di
     pop     si
     pop     bp
@@ -281,16 +281,16 @@ _mmgr_get_chunk_size proc far
     push    di
     mov     ax, [bp+arg_2]
     mov     si, _resptr2
-loc_31688:
+size_search_entry_loop:
     cmp     si, _resptr1
-    jz      short loc_31698
+    jz      short size_not_found
     cmp     ax, [si+MEMCHUNK.resofs]
-    jz      short loc_3169B
+    jz      short size_return_chunk_bytes
     sub     si, 12h
-    jmp     short loc_31688
-loc_31698:
-    jmp     loc_31498
-loc_3169B:
+    jmp     short size_search_entry_loop
+size_not_found:
+    jmp     free_not_found
+size_return_chunk_bytes:
     mov     ax, [si+MEMCHUNK.ressize]
     pop     di
     pop     si
@@ -310,61 +310,61 @@ _mmgr_resize_memory proc far
     push    di
     mov     ax, [bp+arg_2]
     mov     si, _resptr2
-loc_316AE:
+resize_search_entry_loop:
     cmp     si, _resptr1
-    jz      short loc_316BE
+    jz      short resize_not_found
     cmp     ax, [si+MEMCHUNK.resofs]
-    jz      short loc_316C1
+    jz      short resize_entry_found
     sub     si, 12h
-    jmp     short loc_316AE
-loc_316BE:
-    jmp     loc_31498
-loc_316C1:
+    jmp     short resize_search_entry_loop
+resize_not_found:
+    jmp     free_not_found
+resize_entry_found:
     mov     ax, [bp+arg_4]
     cmp     ax, [si+MEMCHUNK.ressize]
-    ja      short loc_316D0
+    ja      short resize_shrink_or_expand
     mov     [si+MEMCHUNK.ressize], ax
     pop     di
     pop     si
     pop     bp
     retf
-loc_316D0:
+resize_shrink_or_expand:
     cmp     si, _resptr2
-    jnz     short loc_316F4
+    jnz     short resize_return
     mov     [si+MEMCHUNK.ressize], ax
     mov     di, _resendptr1
     add     ax, [si+MEMCHUNK.resofs]
     cmp     ax, _resmaxsize
-    jb      short loc_316E9
+    jb      short resize_finish_shrink
     mov     _resmaxsize, ax
-loc_316E9:
+resize_finish_shrink:
     cmp     ax, [di+MEMCHUNK.resofs]
-    ja      short loc_316FD
-loc_316EE:
+    ja      short resize_no_adjacent_space_error
+resize_update_max_extent:
     xor     ax, ax
     pop     di
     pop     si
     pop     bp
     retf
-loc_316F4:
+resize_return:
     mov     ax, offset _aResizememoryCa; "resizememory - CANNOT EXPAND BLOCK NOT "...
     push    ax
     call    far ptr _fatal_error
-loc_316FD:
+resize_no_adjacent_space_error:
     mov     si, _resendptr1
     mov     di, _resptr2
     mov     ax, [di+MEMCHUNK.resofs]
     add     ax, [di+MEMCHUNK.ressize]
-loc_3170B:
+resize_scan_adjacent_free_space:
     cmp     ax, [si+MEMCHUNK.resofs]
-    jbe     short loc_316EE
+    jbe     short resize_update_max_extent
     cmp     si, _resendptr2
-    jz      short loc_31724
+    jz      short resize_out_of_memory_error
     mov     [si+MEMCHUNK.resunk], 0
     add     si, 12h
     mov     _resendptr1, si
-    jmp     short loc_3170B
-loc_31724:
+    jmp     short resize_scan_adjacent_free_space
+resize_out_of_memory_error:
     mov     bx, _resmaxsize
     push    bx
     mov     ax, offset _aResizememoryNo; "resizememory - NO MEMORY LEFT TO EXPAND"...
@@ -382,24 +382,24 @@ _mmgr_op_unk proc far
     push    di
     mov     ax, [bp+arg_2]
     mov     si, _resptr2
-loc_3173E:
+op_search_entry_loop:
     cmp     si, _resptr1
-    jz      short loc_3174E
+    jz      short op_not_found
     cmp     ax, [si+MEMCHUNK.resofs]
-    jz      short loc_31751
+    jz      short op_entry_found
     sub     si, 12h
-    jmp     short loc_3173E
-loc_3174E:
-    jmp     loc_31498
-loc_31751:
+    jmp     short op_search_entry_loop
+op_not_found:
+    jmp     free_not_found
+op_entry_found:
     mov     di, si
     sub     di, 12h
     cmp     [di+MEMCHUNK.resunk], 0
-    jnz     short loc_317AD
-loc_3175C:
+    jnz     short op_return_original_offset
+op_find_previous_allocated_loop:
     sub     di, 12h
     cmp     [di+MEMCHUNK.resunk], 0
-    jz      short loc_3175C
+    jz      short op_find_previous_allocated_loop
     mov     [si+MEMCHUNK.resunk], 0
     mov     bx, [si+MEMCHUNK.ressize]
     push    bx
@@ -409,31 +409,31 @@ loc_3175C:
     push    [si+MEMCHUNK.resofs]
     add     di, 12h
     cmp     si, _resptr2
-    jnz     short loc_31785
+    jnz     short op_update_free_entry_bounds
     mov     _resptr2, di
-loc_31785:
+op_update_free_entry_bounds:
     mov     [di+MEMCHUNK.resofs], ax
     mov     [di+MEMCHUNK.ressize], bx
     mov     [di+MEMCHUNK.resunk], 2
     mov     cx, 0Ch
     xor     bx, bx
-loc_31795:
+op_copy_name_loop:
     mov     al, byte ptr [bx+si+MEMCHUNK.resname]
     mov     byte ptr [bx+di+MEMCHUNK.resname], al
     inc     bx
-    loop    loc_31795
+    loop    op_copy_name_loop
     call    _mmgr_copy_paras
     add     sp, 6
-loc_317A4:
+op_return_new_offset:
     mov     dx, [di+MEMCHUNK.resofs]
     xor     ax, ax
     pop     di
     pop     si
     pop     bp
     retf
-loc_317AD:
+op_return_original_offset:
     mov     di, si
-    jmp     short loc_317A4
+    jmp     short op_return_new_offset
     ; align 2
     db 0
 _mmgr_op_unk endp

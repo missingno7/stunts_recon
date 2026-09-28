@@ -33,7 +33,7 @@ _nopsub_3219D proc far
     mov byte ptr _byte_4032B, 1
     mov ax, word ptr _word_4032E
     mov word ptr _word_40330, ax
-loc_321BC:
+begin_terminal_output:
     mov ax, word ptr _word_40334
     push ax
     mov ax, word ptr _word_40332
@@ -43,40 +43,40 @@ loc_321BC:
     mov es, ax
     mov si, 4BC6h
     mov dh, byte ptr _byte_4032C
-loc_321D1:
+read_next_terminal_character:
     mov dl, byte ptr [si]
     inc si
     or dl, dl
-    jz short loc_321FD
+    jz short finish_terminal_output
     cmp dl, 20h
-    jl short loc_3220C
+    jl short check_terminal_control_code
     mov bx, word ptr _word_40330
     cmp bx, 0FA0h
-    jl short loc_321F3
+    jl short write_terminal_character
     call far ptr _nopsub_3216C
     mov bx, 0F00h
     mov word ptr _word_40330, bx
-loc_321F3:
+write_terminal_character:
     mov word ptr es:[bx], dx
     add word ptr _word_40330, 2
-    jmp short loc_321D1
-loc_321FD:
+    jmp short read_next_terminal_character
+finish_terminal_output:
     cmp byte ptr _byte_4032B, 0
-    jz short loc_3220A
+    jz short restore_terminal_cursor
     mov ax, word ptr _word_40330
     mov word ptr _word_4032E, ax
-loc_3220A:
+restore_terminal_cursor:
     pop si
     retf
-loc_3220C:
+check_terminal_control_code:
     cmp dl, 0Ah
-    jnz short loc_3223A
+    jnz short check_terminal_backspace
     cmp word ptr _word_40330, 0F00h
-    jle short loc_32226
+    jle short advance_terminal_row
     call far ptr _nopsub_3216C
     mov word ptr _word_40330, 0F00h
-    jmp short loc_321D1
-loc_32226:
+    jmp short read_next_terminal_character
+advance_terminal_row:
     mov ax, word ptr _word_40330
     mov bx, 0A0h
     div bl
@@ -84,28 +84,28 @@ loc_32226:
     mul bl
     add ax, 0A0h
     mov word ptr _word_40330, ax
-    jmp short loc_321D1
-loc_3223A:
+    jmp short read_next_terminal_character
+check_terminal_backspace:
     cmp dl, 8
-    jnz short loc_3224D
+    jnz short check_terminal_clear_screen
     cmp word ptr _word_40330, 0
-    jz short loc_321D1
+    jz short read_next_terminal_character
     sub word ptr _word_40330, 2
-    jmp short loc_321D1
-loc_3224D:
+    jmp short read_next_terminal_character
+check_terminal_clear_screen:
     cmp dl, 0Ch
-    jnz short loc_32260
+    jnz short check_terminal_tab
     call far ptr _nopsub_3215A
     mov word ptr _word_40330, 0
-    jmp loc_321D1
-loc_32260:
+    jmp read_next_terminal_character
+check_terminal_tab:
     cmp dl, 9
-    jnz short loc_3226F
+    jnz short continue_terminal_output
     add word ptr _word_40330, 10h
     and word ptr _word_40330, 0FFF0h
-loc_3226F:
-    jmp loc_321D1
-loc_32272:
+continue_terminal_output:
+    jmp read_next_terminal_character
+restore_terminal_entry_state:
     pop ax
     mov word ptr _word_40332, ax
     pop ax
@@ -121,19 +121,19 @@ loc_32272:
     call far ptr _sprintf
     sub sp, 2
     mov byte ptr _byte_4032B, 0
-    jmp loc_321BC
-loc_3229A:
+    jmp begin_terminal_output
+set_terminal_row:
     push bp
     mov bp, sp
     mov ax, word ptr [bp+6]
     cmp ax, 0
-    jge short loc_322A7
+    jge short clamp_terminal_row_minimum
     xor ax, ax
-loc_322A7:
+clamp_terminal_row_minimum:
     cmp ax, 18h
-    jle short loc_322AF
+    jle short store_terminal_row
     mov ax, 18h
-loc_322AF:
+store_terminal_row:
     mov byte ptr _byte_4032A, al
     pop bp
     retf

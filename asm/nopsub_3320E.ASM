@@ -20,7 +20,7 @@ _nopsub_3320E proc far
     mov     si, [bp+arg_0]
     mov     ax, [si+2]
     cmp     word ptr cs:[5F22h], ax
-    jnz     short loc_3325D
+    jnz     short coordinates_when_nonzero
     mov     ax, [bp+arg_4]
     mov     [si+1Ah], ax
     mov     cs:[5F3Ah], ax
@@ -41,7 +41,7 @@ _nopsub_3320E proc far
     pop     ds
     pop     bp
     retf
-loc_3325D:
+coordinates_when_nonzero:
     mov     ax, [bp+arg_4]
     mov     [si+1Ah], ax
     mov     [si+0Ch], ax

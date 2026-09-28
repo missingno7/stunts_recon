@@ -52,6 +52,74 @@ def read_batch(path):
     return entries
 
 
+def cosmetic_batch(batch_entries, *, verify_only=False):
+    """Atomic source-only republication gated by complete OBJ byte identity."""
+    require(batch_entries and all('communal' not in e for e in batch_entries),
+            'Cosmetic batch accepts only NAME CANDIDATE rows')
+    require(all(e.get('recipe') is None for e in batch_entries),
+            'Cosmetic batch uses each accepted recipe; recipe overrides are refused')
+    entries, names = [], set()
+    for raw in batch_entries:
+        name = raw['name']
+        require(name not in names, 'Duplicate cosmetic batch candidate: '+name)
+        names.add(name)
+        candidate = Path(raw['candidate']).resolve()
+        entries.append({'name': name, 'candidate': candidate, 'source': candidate.read_bytes()})
+
+    def compare(before):
+        rows = [P.check_cosmetic(e['name'], e['candidate'], e['source'], before) for e in entries]
+        require(P.inputs() == before, 'Canonical inputs changed during cosmetic batch comparison')
+        return rows
+
+    stamp = time.strftime('%Y%m%dT%H%M%S')
+    if verify_only:
+        rows = lock_free_snapshot(lambda before: compare(before), P.inputs)
+        require(all(e['candidate'].read_bytes() == e['source'] for e in entries),
+                'Cosmetic batch candidate changed during verification')
+        before = P.inputs()
+        status = 'COSMETIC_VERIFIED_ONLY'
+    else:
+        with exclusive():
+            ensure_consistent()
+            before = P.inputs()
+            rows = compare(before)
+            require(all(e['candidate'].read_bytes() == e['source'] for e in entries),
+                    'Cosmetic batch candidate changed before publication')
+            changes = {row['destination']: entry['source']
+                       for row, entry in zip(rows, entries)
+                       if entry['source'] != (ROOT/row['destination']).read_bytes()}
+            if changes:
+                expected = {**before, **{path: sha(data) for path, data in changes.items()}}
+                with publishing():
+                    journal = prepare(changes)
+                    try:
+                        require(P.inputs() == before, 'Canonical inputs changed before cosmetic batch publication')
+                        invalidate_receipts()
+                        apply(journal)
+                        require(P.inputs() == expected, 'Unexpected edits during cosmetic batch publication')
+                        require(all(e['candidate'].read_bytes() == e['source'] for e in entries),
+                                'Cosmetic batch candidate changed during publication')
+                        finish()
+                        require(P.inputs() == expected, 'Inputs changed before cosmetic provenance publication')
+                    except BaseException:
+                        rollback()
+                        raise
+                before, status = expected, 'COSMETIC_PUBLISHED'
+            else:
+                status = 'COSMETIC_NOOP'
+
+    summary = {'status': status, 'batch': stamp, 'inputs': before,
+               'candidates': rows, 'source_count': len(rows),
+               'object_hashes_identical': True}
+    from common import write_json
+    out = ROOT/'build/acceptance/_cosmetic'
+    for row in rows:
+        write_json(out/(P.cosmetic_report_id(row)+'.json'), {**row, 'status': status, 'batch': stamp,
+                                                               'inputs': before})
+    write_json(out/('batch_'+stamp+'.json'), summary)
+    return summary
+
+
 def _freeze(entries):
     import re
     frozen, names = [], set()

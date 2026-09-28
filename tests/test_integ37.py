@@ -40,9 +40,14 @@ class StaticSetTests(unittest.TestCase):
         self.assertEqual(len(rows), 57)
         for address, row in rows.items():
             self.assertIs(row['object_declared'], False)
-            self.assertTrue(row['basis'].startswith('integ37'), row)
             obj = 'obj_seg005' if address < 200332 else 'obj_seg006'
-            self.assertRegex(texts[obj], r'\bstatic\b[^;\n]*\b%s\b' % row['name'])
+            source_identifier = row.get('source_identifier', row['name'])
+            if source_identifier != row['name']:
+                self.assertTrue(row['basis'].startswith('integ43'), row)
+                self.assertTrue(address >= 200332)
+            else:
+                self.assertTrue(row['basis'].startswith('integ37'), row)
+            self.assertRegex(texts[obj], r'\bstatic\b[^;\n]*\b%s\b' % source_identifier)
         # interior elements [2]/[3] of camera_buttons_pressed[9] have no row
         self.assertEqual(rows[200298]['name'], 'camera_buttons_pressed')
         self.assertNotIn(200300, rows)
@@ -58,6 +63,11 @@ class StaticSetTests(unittest.TestCase):
         # the grounded reference labels stay
         for label in ('_byte_40E6C', '_byte_40E6D', '_mat_y200', '_polyinfoptrs'):
             self.assertIn(label, self.symbols)
+        for label, address in (('_off_3F3C8', 193480), ('_word_31854', 202836),
+                               ('_word_3186A', 202858), ('_word_31878', 202872),
+                               ('_byte_31882', 202882)):
+            self.assertEqual(self.symbols[label]['load_address'], address)
+            self.assertNotIn('clone_of', self.symbols[label])
 
 
 class StaticFlushModelTests(unittest.TestCase):
@@ -261,8 +271,8 @@ class NameBindingTests(unittest.TestCase):
         from assembler import assemble_source
         from omf import OmfReader
         # the data publics that other objects reach with target/external frames
-        wanted = {'asm012_133660': {'_byte_3FE00'}, 'asm012_139968': {'_word_303BA', '_word_303BC'},
-                  'asm012_132056': {'_callbackflags2'}, 'asm012_141210': {'_line_input_screen_rect'}}
+        wanted = {'keyboard_input_callbacks': {'_byte_3FE00'}, 'projection_vector_window': {'_projection_x_scale', '_projection_y_scale'},
+                  'input_keyboard_joystick_services': {'_callbackflags2'}, 'timer_counter_deadline_helpers': {'_line_input_screen_rect'}}
         for name, publics in wanted.items():
             recipe = read_json(ROOT / ('recipes/%s.json' % name))
             obj, receipt = assemble_source((ROOT / recipe['source']).read_bytes(), recipe['profile'])

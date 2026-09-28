@@ -28,7 +28,7 @@ _sprite_putimage_and_alt2 proc far
     mov     ax, [bp+arg_8]
     sub     ax, [si+6]
     mov     [bp+var_4], ax
-    jmp     short loc_338C9
+    jmp     short putimage_and_shared_exit
     ; align 2
     db 144
 _sprite_putimage_and_alt2 endp
@@ -59,7 +59,7 @@ _sprite_putimage_and proc far
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_6]
     mov     [bp+var_4], ax
-    jmp     short loc_338C9
+    jmp     short putimage_and_shared_exit
     ; align 2
     db 144
     push    bp
@@ -74,30 +74,30 @@ _sprite_putimage_and proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
-loc_338C9:
+putimage_and_shared_exit:
     mov     bx, [bp+var_4]
     mov     cx, [si+2]
     lea     dx, [si+10h]
     mov     ax, bx
     cmp     ax, word ptr cs:[_sprite1+16]
-    jl      short loc_338EF
+    jl      short putimage_and_when_less
     add     ax, cx
     sub     ax, word ptr cs:[_sprite1+18]
-    jle     short loc_33916
+    jle     short and_when_less_or_equal
     sub     cx, ax
-    jg      short loc_33916
-loc_338E8:
+    jg      short and_when_less_or_equal
+putimage_and_draw_loop:
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_338EF:
+putimage_and_when_less:
     mov     bx, word ptr cs:[_sprite1+16]
     add     ax, cx
     sub     ax, bx
-    jle     short loc_338E8
+    jle     short putimage_and_draw_loop
     xchg    ax, cx
     sub     ax, cx
     mov     [bp+var_8], dx
@@ -107,10 +107,10 @@ loc_338EF:
     mov     ax, bx
     add     ax, cx
     sub     ax, word ptr cs:[_sprite1+18]
-    jle     short loc_33916
+    jle     short and_when_less_or_equal
     sub     cx, ax
-    jle     short loc_338E8
-loc_33916:
+    jle     short putimage_and_draw_loop
+and_when_less_or_equal:
     mov     [bp+var_C], dx
     mov     [bp+var_A], cx
     mov     [bp+var_4], bx
@@ -119,36 +119,36 @@ loc_33916:
     mov     bx, [bp+var_2]
     mov     ax, bx
     cmp     ax, word ptr cs:[_sprite1+12]
-    jl      short loc_33941
+    jl      short putimage_and_when_less_2
     add     ax, cx
     sub     ax, word ptr cs:[_sprite1+14]
-    jl      short loc_33968
+    jl      short putimage_and_shared_path
     sub     cx, ax
-    jle     short loc_338E8
+    jle     short putimage_and_draw_loop
     mov     dx, ax
-    jmp     short loc_33968
+    jmp     short putimage_and_shared_path
     db 144
-loc_33941:
+putimage_and_when_less_2:
     mov     bx, word ptr cs:[_sprite1+12]
     add     ax, cx
     sub     ax, bx
-    jle     short loc_338E8
+    jle     short putimage_and_draw_loop
     mov     si, cx
     sub     si, ax
     add     [bp+var_C], si
     mov     si, word ptr cs:[_sprite1+14]
     sub     si, bx
-    jle     short loc_338E8
+    jle     short putimage_and_draw_loop
     cmp     ax, si
-    jl      short loc_33962
+    jl      short putimage_and_when_less_3
     mov     ax, si
-loc_33962:
+putimage_and_when_less_3:
     xchg    cx, dx
     sub     dx, ax
     add     cx, ax
-loc_33968:
+putimage_and_shared_path:
     or      cx, cx
-    jle     short loc_339B1
+    jle     short and_when_less_or_equal_2
     mov     [bp+var_6], cx
     mov     [bp+var_8], dx
     mov     [bp+var_2], bx
@@ -164,63 +164,63 @@ loc_33968:
     mov     bx, word ptr cs:[_sprite1+20]
     sub     bx, [bp+var_6]
     cmp     [bp+var_8], 0
-    jz      short loc_339B4
-loc_3399F:
+    jz      short putimage_and_when_zero
+putimage_and_read_loop:
     mov     cx, [bp+var_6]
-loc_339A2:
+putimage_and_read_loop_2:
     lodsb
     and     es:[di], al
     inc     di
-    loop    loc_339A2
+    loop    putimage_and_read_loop_2
     add     si, [bp+var_8]
     add     di, bx
     dec     dx
-    jg      short loc_3399F
-loc_339B1:
-    jmp     loc_338E8
-loc_339B4:
+    jg      short putimage_and_read_loop
+and_when_less_or_equal_2:
+    jmp     putimage_and_draw_loop
+putimage_and_when_zero:
     mov     ax, [bp+var_6]
     shr     ax, 1
     mov     [bp+var_E], ax
-    jnb     short loc_339D8
-    jz      short loc_339EB
+    jnb     short putimage_and_read_loop_5
+    jz      short putimage_and_when_zero_2
     inc     bx
-loc_339C1:
+putimage_and_read_loop_3:
     mov     cx, [bp+var_E]
-loc_339C4:
+putimage_and_read_loop_4:
     lodsw
     and     es:[di], ax
     inc     di
     inc     di
-    loop    loc_339C4
+    loop    putimage_and_read_loop_4
     lodsb
     and     es:[di], al
     add     di, bx
     dec     dx
-    jg      short loc_339C1
-    jmp     loc_338E8
-loc_339D8:
+    jg      short putimage_and_read_loop_3
+    jmp     putimage_and_draw_loop
+putimage_and_read_loop_5:
     mov     cx, [bp+var_E]
-loc_339DB:
+putimage_and_read_loop_6:
     lodsw
     and     es:[di], ax
     inc     di
     inc     di
-    loop    loc_339DB
+    loop    putimage_and_read_loop_6
     add     di, bx
     dec     dx
-    jg      short loc_339D8
-    jmp     loc_338E8
-loc_339EB:
+    jg      short putimage_and_read_loop_5
+    jmp     putimage_and_draw_loop
+putimage_and_when_zero_2:
     inc     bx
-loc_339EC:
+putimage_and_read_loop_7:
     lodsb
     and     es:[di], al
     add     di, bx
     inc     bx
     dec     dx
-    jg      short loc_339EC
-    jmp     loc_338E8
+    jg      short putimage_and_read_loop_7
+    jmp     putimage_and_draw_loop
     ; align 2
     db 0
 _sprite_putimage_and endp

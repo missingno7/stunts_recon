@@ -66,64 +66,64 @@ _alt_locate_resource:
     mov     di, [bp+arg_4]
     mov     cx, 4
     mov     bx, 0
-loc_30FC7:
+locate_sound_search_loop:
     cmp     byte ptr es:[bx+di], 0
-    jz      short loc_31024
+    jz      short locate_sound_search_loop_5
     inc     bx
-    loop    loc_30FC7
-loc_30FD0:
+    loop    locate_sound_search_loop
+locate_sound_search_loop_2:
     mov     ax, [si+4]
     or      ax, ax
     jz      short _end_of_locate
     add     si, 6
     mov     bx, si
-loc_30FDC:
+locate_sound_search_loop_3:
     mov     si, bx
     mov     di, [bp+arg_4]
     mov     cx, 4
-loc_30FE4:
+locate_sound_search_loop_4:
     cmpsb
-    jnz     short loc_30FEC
-    loop    loc_30FE4
+    jnz     short locate_sound_when_nonzero
+    loop    locate_sound_search_loop_4
     jmp     short _found_resource
     ; align 2
     db 144
-loc_30FEC:
+locate_sound_when_nonzero:
     cmp     byte ptr [si-1], 0
-    jnz     short loc_30FF9
+    jnz     short locate_sound_when_nonzero_2
     cmp     byte ptr es:[di-1], 20h ; ' '
     jz      short _found_resource
-loc_30FF9:
+locate_sound_when_nonzero_2:
     add     bx, 4
     dec     ax
-    jge     short loc_30FDC
+    jge     short locate_sound_search_loop_3
 _end_of_locate:
     cmp     dx, 1
-    jl      short loc_3101F
-    jg      short loc_3100C
+    jl      short locate_sound_when_less
+    jg      short locate_sound_when_greater
     mov     dx, offset aLocateshape4_4sShapeNotF; "locateshape - %-4.4s SHAPE NOT FOUND\r\n"
-    jmp     short loc_3100F
+    jmp     short locate_sound_error_path
     ; align 2
     db 144
-loc_3100C:
+locate_sound_when_greater:
     mov     dx, offset aLocatesound4_4sSoundNotF; "locatesound - %-4.4s SOUND NOT FOUND\r\n"
-loc_3100F:
+locate_sound_error_path:
     mov     ax, seg dseg
     mov     ds, ax
     push    [bp+arg_4]
     push    dx
     call    far ptr _fatal_error
     int     20h             ; DOS - PROGRAM TERMINATION
-loc_3101F:
+locate_sound_when_less:
     xor     ax, ax
-    jmp     short loc_31075
+    jmp     short sound_return_if_condition
     ; align 2
     db 144
-loc_31024:
+locate_sound_search_loop_5:
     mov     byte ptr es:[bx+di], 20h ; ' '
     inc     bx
-    loop    loc_31024
-    jmp     short loc_30FD0
+    loop    locate_sound_search_loop_5
+    jmp     short locate_sound_search_loop_2
 _found_resource:
     mov     si, [bp+arg_0]
     mov     ax, [si+4]
@@ -160,7 +160,7 @@ _found_resource:
     rcr     ax, 1
     mov     dx, ax
     mov     ax, bx
-loc_31075:
+sound_return_if_condition:
     pop     di
     pop     si
     pop     ds

@@ -78,7 +78,7 @@ class OwnedDataTests(unittest.TestCase):
 
     def test_module_far_callback_in_its_own_data(self):
         from multi_contribution import bind_multi
-        recipe, obj = self._asm('asm012_133660')
+        recipe, obj = self._asm('keyboard_input_callbacks')
         payload, receipt = bind_multi(obj, recipe, self.image, self.relocations)
         self.assertEqual(payload, self.image[recipe['start']:recipe['end']])
         # The callback's segment word is an ordered data relocation obligation.
@@ -91,7 +91,7 @@ class OwnedDataTests(unittest.TestCase):
 
     def test_asm_module_data_publics_are_placed(self):
         from multi_contribution import bind_multi
-        recipe, obj = self._asm('asm012_133138')
+        recipe, obj = self._asm('keyboard_interrupt_runtime')
         payload, _ = bind_multi(obj, recipe, self.image, self.relocations)
         self.assertEqual(payload, self.image[recipe['start']:recipe['end']])
         self.assertIn({'name': '_kbinput', 'segment': '_DATA', 'offset': 0x2FBDA - 0x2FB48}, obj.publics)

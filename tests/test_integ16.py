@@ -1,5 +1,6 @@
 """Strict MASM frame, local-table, and self-base binding controls."""
 import copy
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -17,6 +18,25 @@ from oracle import verify
 from probe_module import probe
 from promote import _checked_prerender_table_boundary, checked_asm_function
 
+DATA_ALIASES = {'_word_303BA': '_projection_x_scale',
+                '_word_303BC': '_projection_y_scale'}
+
+
+def _rename(value):
+    if isinstance(value, dict):
+        return {DATA_ALIASES.get(key, key): _rename(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_rename(item) for item in value]
+    return DATA_ALIASES.get(value, value) if isinstance(value, str) else value
+
+
+def _rename_source(source):
+    text = source.decode('latin-1')
+    for old, new in DATA_ALIASES.items():
+        text = re.sub(r'(?<![A-Za-z0-9_$?@])' + re.escape(old) +
+                      r'(?![A-Za-z0-9_$?@])', new, text)
+    return text.encode('latin-1')
+
 
 class Integ16Tests(unittest.TestCase):
     @classmethod
@@ -29,8 +49,23 @@ class Integ16Tests(unittest.TestCase):
         for key in ('projectiondata9_f1','projectiondata9_f2','preRender_helper2',
                     'audio_add_driver_timer','audio_remove_driver_timer'):
             recipe=read_json(cls.work/(key+'.recipe.json'))
-            source=(ROOT/recipe['source']).read_bytes()
+            source=_rename_source((ROOT/recipe['source']).read_bytes())
+            recipe=_rename(recipe)
             obj,_=assemble_source(source,recipe['profile'])
+            expected=recipe['expected_fixups']
+            actual=obj.linker_fixups
+            sites=lambda row:(row['segment'],row['offset'],row['width'],row['loc'])
+            if len(expected)!=len(actual) or [sites(x) for x in expected]!=[sites(x) for x in actual]:
+                raise AssertionError('Renamed projection fixture changed ordered FIXUPP sites')
+            index_fields={'frame_index','target_index'}
+            for before,after in zip(expected,actual):
+                differences={k for k in set(before)|set(after)
+                             if before.get(k)!=after.get(k)}
+                if differences-index_fields:
+                    raise AssertionError('Renamed projection fixture changed non-index FIXUPP data')
+            recipe['expected_fixups']=actual
+            recipe['object_declarations']={'segments':obj.segment_defs,'groups':obj.groups,
+                'publics':obj.publics,'externals':obj.externals}
             cls.cases[key]=(obj,recipe)
 
     def bind(self,key,obj=None,recipe=None,symbols=None):
@@ -70,7 +105,7 @@ class Integ16Tests(unittest.TestCase):
         obj,recipe=self.cases['projectiondata9_f2']
         symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         bad=copy.deepcopy(symbols)
-        bad['_word_303BA']['group']='OTHER'
+        bad['_projection_x_scale']['group']='OTHER'
         with self.assertRaises(ValueError):
             self.bind('projectiondata9_f2',symbols=bad)
         wrong=copy.deepcopy(obj)
@@ -79,8 +114,8 @@ class Integ16Tests(unittest.TestCase):
         bad_recipe=copy.deepcopy(recipe)
         bad_recipe['expected_fixups']=wrong.linker_fixups
         bad_recipe['binding']['declarations']['externals']=wrong.externals
-        bad_symbols={**symbols,'_other_frame':{**symbols['_word_303BA'],
-                     'frame_load_address':symbols['_word_303BA']['frame_load_address']+16}}
+        bad_symbols={**symbols,'_other_frame':{**symbols['_projection_x_scale'],
+                     'frame_load_address':symbols['_projection_x_scale']['frame_load_address']+16}}
         with self.assertRaises(ValueError):
             self.bind('projectiondata9_f2',wrong,bad_recipe,bad_symbols)
 

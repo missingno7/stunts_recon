@@ -12,7 +12,7 @@ _video_set_palette proc far
     push    bp
     mov     bp, sp
     mov     ax, ds
-loc_346A8:
+set_palette_continue_path:
     mov     es, ax
     mov     bx, [bp+arg_0]
     mov     dx, [bp+arg_4]

@@ -29,28 +29,28 @@ _mmgr_find_free proc far
     mov     si, _resendptr2
     mov     di, si
     xor     dx, dx
-loc_31308:
+find_free_scan_entry:
     test    [si+MEMCHUNK.resunk], 1
-    jnz     short loc_31315
+    jnz     short find_free_start_new_extent
     add     dx, [si+MEMCHUNK.ressize]
-    jmp     short loc_3131C
+    jmp     short find_free_advance_entry
     db 144
-loc_31315:
+find_free_start_new_extent:
     or      dx, dx
-    jnz     short loc_31330
-loc_31319:
+    jnz     short find_free_extent_found
+find_free_rewind_last_entry:
     sub     di, 12h
-loc_3131C:
+find_free_advance_entry:
     sub     si, 12h
     cmp     si, _resendptr1
-    jnb     short loc_31308
+    jnb     short find_free_scan_entry
     add     di, 12h
     mov     _resendptr1, di
     pop     dx
     pop     di
     pop     si
     retf
-loc_31330:
+find_free_extent_found:
     mov     bx, [si+MEMCHUNK.ressize]
     push    bx
     add     di, 12h
@@ -66,14 +66,14 @@ loc_31330:
     mov     [di+MEMCHUNK.resunk], cx
     xor     bx, bx
     mov     cx, 0Ch
-loc_31359:
+find_free_copy_name_loop:
     mov     al, byte ptr [bx+si+MEMCHUNK.resname]
     mov     byte ptr [bx+di+MEMCHUNK.resname], al
     inc     bx
-    loop    loc_31359
+    loop    find_free_copy_name_loop
     call    _copy_paras_reverse
     add     sp, 6
-    jmp     short loc_31319
+    jmp     short find_free_rewind_last_entry
 _mmgr_find_free endp
 S012_TEXT ends
 end

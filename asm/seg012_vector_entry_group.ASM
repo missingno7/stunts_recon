@@ -13,7 +13,7 @@ _nopsub_33006 proc far
     push    si
     push    di
     mov     ax, ds:4E92h
-    jmp     short loc_3301F
+    jmp     short vector_op_unk_when_condition
     ; align 2
     db 144
 _nopsub_33006 endp
@@ -33,7 +33,7 @@ _vector_op_unk proc far
     push    si
     push    di
     mov     ax, [bp+arg_6]
-loc_3301F:
+vector_op_unk_when_condition:
     mov     si, [bp+arg_0]
     mov     bx, [bp+arg_2]
     mov     di, [bp+arg_4]
@@ -43,10 +43,10 @@ loc_3301F:
     mov     ax, word ptr [si+4]
     sub     ax, word ptr [bx+4]
     or      ax, ax
-    jge     short loc_33040
+    jge     short op_unk_when_greater_or_equal
     shr     [bp+var_4], 1
     shr     ax, 1
-loc_33040:
+op_unk_when_greater_or_equal:
     mov     [bp+var_2], ax
     mov     ax, word ptr [si+0]
     sub     ax, word ptr [bx+0]

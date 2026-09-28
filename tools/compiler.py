@@ -67,7 +67,7 @@ def _verify_toolchain(profile):
     return config, lock['runner']
 
 # Readable inline assembly is a reviewed extension of the register-gated MSC
-# 6.00A profile only (USER DECISION 2026-09-27, CC-MSC600A-*): each statement
+# 6.00 profiles only (seg007 is pinned C 6.00 non-A): each statement
 # is an 8086/80286 integer mnemonic with symbolic or numeric operands, or a
 # label.  Raw byte emission (`_emit`, `__emit`, data directives, bare
 # numbers) is refused under every profile.

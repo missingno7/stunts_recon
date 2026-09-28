@@ -1,0 +1,328 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 140814,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 2,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 12,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 24,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 40,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 4,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 28,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 4,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_add_exit_handler",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 32,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_add_exit_handler",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 1,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 46,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 55,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 1,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 65,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_video_clear_color",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 81,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_video_clear_color",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 140752,
+      "offset": 9680,
+      "segment": 8192
+    },
+    {
+      "load_offset": 140801,
+      "offset": 9729,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "video_mode_restore_handlers",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 140758,
+      "name": "video_add_exithandler",
+      "public": "_video_add_exithandler",
+      "stable_id": "load_225ae",
+      "start": 140718,
+      "target": {
+        "sha256": "2da28112debd092e3057902accaadb705206278d37d7b21609e6d5cf8deb0e67",
+        "size": 40
+      }
+    },
+    {
+      "end": 140814,
+      "name": "video_on_exit",
+      "public": "_video_on_exit",
+      "stable_id": "load_225d6",
+      "start": 140758,
+      "target": {
+        "sha256": "0f24cf05bb98c3c19450d6023edf7c4994687454898e3b833f9c6d234b2dcd4b",
+        "size": 56
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_video_clear_color",
+      "_add_exit_handler"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          2,
+          1
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_video_on_exit",
+        "offset": 40,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_video_add_exithandler",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 2,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 96,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 19586,
+      "end": 197620,
+      "start": 197618,
+      "target": {
+        "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+        "size": 2
+      }
+    }
+  },
+  "source": "asm/video_mode_restore_handlers.ASM",
+  "start": 140718,
+  "subsumed_owners": [
+    "load_225ae",
+    "load_225d6"
+  ],
+  "target": {
+    "sha256": "97b10186619c39e756862ae7b03d829d9dd3a6ce769d4b78af1010a1985410cd",
+    "size": 96
+  }
+}

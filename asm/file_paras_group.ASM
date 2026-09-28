@@ -70,9 +70,9 @@ paras_body:
     mov     ah, 3Dh ; '='
     xor     al, al
     int     21h             ; DOS - 2+ - OPEN DISK FILE WITH HANDLE
-    jnb     short loc_2FEDD
+    jnb     short paras_fatal_when_not_below
     cmp     [bp+var_fatal], 0
-    jnz     short loc_2FECD
+    jnz     short paras_fatal_error_path
     xor     ax, ax
     pop     di
     pop     si
@@ -80,14 +80,14 @@ paras_body:
     mov     sp, bp
     pop     bp
     retf
-loc_2FECD:
+paras_fatal_error_path:
     mov     ax, offset _aSFileError_1; "%s FILE ERROR"
     mov     bx, ss
     mov     ds, bx
     push    [bp+arg_filename]
     push    ax
     call    far ptr _fatal_error
-loc_2FEDD:
+paras_fatal_when_not_below:
     mov     [bp+var_filehandle], ax
     mov     bx, ax
     sub     cx, cx
@@ -103,9 +103,9 @@ loc_2FEDD:
     pop     dx
     xor     bx, bx
     test    ax, 0Fh
-    jz      short loc_2FF00
+    jz      short paras_fatal_when_zero
     mov     bx, 1
-loc_2FF00:
+paras_fatal_when_zero:
     shr     dx, 1
     rcr     ax, 1
     shr     dx, 1

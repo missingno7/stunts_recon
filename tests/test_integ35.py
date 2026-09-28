@@ -35,6 +35,12 @@ def _unaccepted(manifest, evidence, objects):
             row = {k: raw[k] for k in ('id', 'object', 'raw_form', 'start', 'end')}
             row['kind'] = 'UNRESOLVED_RAW'
         rows.append(row)
+    if 'obj_seg007' in objects:
+        fill = next(r for r in rows if r.get('basis') == bss_link.BSS_WORD_FILL)
+        raw = next(r for r in evidence['rows'] if r['raw_form'] == bss_link.WORD_FILL)
+        index = rows.index(fill)
+        rows[index] = {k: raw[k] for k in ('id', 'object', 'raw_form', 'start', 'end')}
+        rows[index]['kind'] = 'UNRESOLVED_RAW'
     manifest['bss_owners'] = rows
     return manifest
 
@@ -50,18 +56,20 @@ class PartitionTests(unittest.TestCase):
         rows = _partition(self.manifest)
         objects = [r['object'] for r in rows if r['object']]
         self.assertEqual(objects, ['obj_seg000', 'obj_seg001', 'obj_seg005', 'obj_seg006', 'obj_seg007',
+                                   'obj_seg007',
                                    'obj_seg008', 'obj_seg009', 'rt_output.c_120254', 'obj_seg027',
                                    'obj_seg028', 'obj_seg032'])
         accepted = {r['object']: (r['start'], r['end']) for r in rows
                     if r['object'] is not None and r['kind'] not in ('UNRESOLVED_RAW', 'LINK_FILL')}
         # integ36: output.c's 38 B are owned pinned runtime _BSS (link-runtime-member-v1).
-        # integ37: seg005's and seg006's complete static sets are accepted game _BSS.
+        # integ37: seg005/006 and integ42: seg007 are complete accepted game _BSS.
         self.assertEqual(accepted, {'obj_seg000': (199994, 200006), 'obj_seg001': (200006, 200042),
                                     'obj_seg005': (200042, 200332), 'obj_seg006': (200332, 203476),
+                                    'obj_seg007': (203476, 205383),
                                     'obj_seg008': (205384, 205400), 'obj_seg009': (205400, 207000),
                                     'rt_output.c_120254': (207000, 207038), 'obj_seg027': (207038, 207086),
                                     'obj_seg028': (207086, 207382), 'obj_seg032': (207382, 207396)})
-        fill = [r for r in rows if r['form'] == bss_link.WORD_FILL]
+        fill = [r for r in rows if r['form'] == bss_link.BSS_WORD_FILL]
         self.assertEqual([(r['start'], r['end']) for r in fill], [(205383, 205384)])
         # integ39: [207396,207408) is LINK's c_common paragraph fill (owned LINK_FILL).
         # integ40: the whole communal unit is accepted (LINK_COMMUNAL).
@@ -70,9 +78,9 @@ class PartitionTests(unittest.TestCase):
         self.assertEqual((rows[-2]['kind'], rows[-2]['form'], rows[-2]['start'], rows[-2]['end']),
                          ('LINK_FILL', bss_link.COMMUNAL_FILL_BASIS, 207396, 207408))
         report = bss_link.ownership_report(rows)
-        self.assertEqual(report['bytes'], {'accepted': 5456, 'accepted_runtime': 38, 'raw_objects': 1907,
-                                           'raw_runtime': 0, 'raw_fill': 1, 'raw_communal': 0,
-                                           'link_fill': 12, 'accepted_communal': 14944})
+        self.assertEqual(report['bytes'], {'accepted': 7363, 'accepted_runtime': 38, 'raw_objects': 0,
+                                           'raw_runtime': 0, 'raw_fill': 0, 'raw_communal': 0,
+                                           'link_fill': 13, 'accepted_communal': 14944})
         self.assertEqual(report['accepted_runtime'], [['rt_output.c_120254', 'library_output_120254:_BSS', 38]])
 
     def test_pre_xob_chain_accounts_for_the_whole_static_region(self):
@@ -84,7 +92,7 @@ class PartitionTests(unittest.TestCase):
 
     def refused(self, mutate, evidence=None, pattern=''):
         ev = copy.deepcopy(evidence or self.evidence)
-        manifest = _unaccepted(copy.deepcopy(self.manifest), ev, ('obj_seg005', 'obj_seg006'))
+        manifest = _unaccepted(copy.deepcopy(self.manifest), ev, ('obj_seg005', 'obj_seg006', 'obj_seg007'))
         mutate(manifest, ev)
         with self.assertRaisesRegex(ValueError, pattern):
             _partition(manifest, ev)
@@ -198,6 +206,7 @@ class PlacementAfterRawTests(unittest.TestCase):
 
     def test_grounded_member_bss_reads_own_fixup_operands(self):
         class Obj:
+            segment_defs = [{'name': '_TEXT', 'class': 'CODE'}]
             linker_fixups = [{'target_kind': 'segment', 'target': '_BSS', 'segment': '_TEXT', 'loc': 'offset16',
                               'self_relative': False, 'offset': o, 'encoded_addend': e, 'displacement': 0}
                              for o, e in ((2, '0000'), (6, '0400'))]

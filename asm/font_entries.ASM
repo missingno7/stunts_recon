@@ -24,9 +24,9 @@ _font_op proc far
     push    di
     mov     dx, [bp+font_op_arg_4]
     or      dx, dx
-    jnz     short loc_3284A
+    jnz     short font_op2_when_nonzero
     xor     ax, ax
-    jmp     short loc_32882
+    jmp     short font_op2_shared_path
     db 144
 _font_op endp
 _font_op2 proc far
@@ -39,33 +39,33 @@ _font_op2 proc far
     push    si
     push    di
     xor     dx, dx
-loc_3284A:
+font_op2_when_nonzero:
     mov     es, _fontdefseg
     mov     si, [bp+font_op2_arg_0]
     xor     ax, ax
     mov     cl, es:14h
     mov     di, es:10h
-loc_3285D:
+font_op2_draw_loop:
     mov     bl, [si]
     or      bl, bl
-    jz      short loc_32882
+    jz      short font_op2_shared_path
     inc     si
     xor     bh, bh
     shl     bx, 1
     mov     bx, es:[bx+16h]
     or      bx, bx
-    jz      short loc_3285D
+    jz      short font_op2_draw_loop
     or      cl, cl
-    jz      short loc_3287B
+    jz      short font_op2_when_zero
     mov     bl, es:[bx]
     xor     bh, bh
     mov     di, bx
-loc_3287B:
+font_op2_when_zero:
     add     ax, di
     dec     dx
-    jz      short loc_32882
-    jmp     short loc_3285D
-loc_32882:
+    jz      short font_op2_shared_path
+    jmp     short font_op2_draw_loop
+font_op2_shared_path:
     pop     di
     pop     si
     pop     bp

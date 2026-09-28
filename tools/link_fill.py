@@ -72,14 +72,17 @@ def word_fill_row(object_id, start):
             'end': start + 1, 'basis': WORD_BASIS, 'object': object_id}
 
 
-def _owner_recipe(row, manifest):
+def _owner_recipe(row, manifest, recipe_overrides=None):
     """The recipe and emitted segment name of an accepted DGROUP owner row."""
     if row.get('parent'):
         parents = [o for o in manifest['owners'] if o['id'] == row['parent'] and o.get('recipe')]
         require(len(parents) == 1, 'DGROUP fill neighbour lacks its object owner')
-        return read_json(ROOT/parents[0]['recipe']), row.get('segment')
+        path = parents[0]['recipe']
+        recipe = (recipe_overrides or {}).get(path) or read_json(ROOT/path)
+        return recipe, row.get('segment')
     require(row.get('recipe') is not None, 'DGROUP fill neighbour lacks a recipe')
-    recipe = read_json(ROOT/row['recipe'])
+    path = row['recipe']
+    recipe = (recipe_overrides or {}).get(path) or read_json(ROOT/path)
     require(recipe.get('data_only') is True, 'DGROUP fill neighbour is not a data contribution')
     return recipe, recipe.get('object_segment')
 
@@ -96,7 +99,7 @@ def _pinned_member(row):
     return OmfReader(communals=bool(row.get('omf_policy', {}).get('communals'))).read(blobs[0])
 
 
-def _dgroup_segdef(row, manifest):
+def _dgroup_segdef(row, manifest, recipe_overrides=None):
     if row.get('kind') == 'KNOWN_TOOLCHAIN_LIBRARY_DATA':
         from runtime_binding import runtime_owners
         parents = [o for o in runtime_owners(manifest) if o['id'] == row.get('parent')]
@@ -108,7 +111,7 @@ def _dgroup_segdef(row, manifest):
         require(len(rows) == 1 and len(groups) == 1 and segment in groups[0]['segments'],
                 'DGROUP fill neighbour segment is not a DGROUP SEGDEF')
         return segment, rows[0]
-    recipe, segment = _owner_recipe(row, manifest)
+    recipe, segment = _owner_recipe(row, manifest, recipe_overrides)
     rows = [s for s in recipe.get('object_declarations', {}).get('segments', []) if s.get('name') == segment]
     groups = [g for g in recipe.get('object_declarations', {}).get('groups', []) if g.get('name') == 'DGROUP']
     require(len(rows) == 1 and len(groups) == 1 and segment in groups[0].get('segments', []),
@@ -116,7 +119,7 @@ def _dgroup_segdef(row, manifest):
     return segment, rows[0]
 
 
-def checked_word_fill(owner, manifest, image):
+def checked_word_fill(owner, manifest, image, recipe_overrides=None):
     start, end = owner['start'], owner['end']
     require(set(owner) <= KEYS and owner.get('kind') == 'LINK_FILL' and owner.get('basis') == WORD_BASIS and
             owner.get('id') == f'fill_{start:05x}_{end:05x}', 'Unsupported DGROUP fill owner form')
@@ -137,12 +140,12 @@ def checked_word_fill(owner, manifest, image):
         after = rows[0]
     require(before['end'] == start and before['id'] == owner.get('object') and before['kind'] in _DATA_KINDS,
             'DGROUP fill does not follow the last byte of a complete accepted DGROUP contribution')
-    segment, prior = _dgroup_segdef(before, manifest)
+    segment, prior = _dgroup_segdef(before, manifest, recipe_overrides)
     require(prior.get('length') == before['end'] - before['start'],
             'DGROUP fill predecessor is not its complete emitted segment')
     require(after['start'] == end and after['kind'] in _DATA_KINDS,
             'DGROUP fill is not followed by an accepted DGROUP contribution')
-    next_segment, segdef = _dgroup_segdef(after, manifest)
+    next_segment, segdef = _dgroup_segdef(after, manifest, recipe_overrides)
     require(segdef.get('alignment') in ('word', 'paragraph', 'page'),
             'DGROUP fill follower is not WORD aligned')
     following = {'kind': 'accepted-segdef-alignment', 'owner': after['id'],
@@ -174,7 +177,7 @@ def code_word_fill_row(object_id, start):
             'end': start + 1, 'basis': CODE_WORD_BASIS, 'object': object_id}
 
 
-def _code_segdef(row):
+def _code_segdef(row, recipe_overrides=None):
     """The emitted CODE SEGDEF of one accepted code owner row (its recipe's
     verified object declarations, or the pinned runtime member itself)."""
     require(row.get('kind') in _CODE_KINDS and row.get('contribution_form') is None,
@@ -182,7 +185,7 @@ def _code_segdef(row):
     if row['kind'] == 'KNOWN_TOOLCHAIN_LIBRARY':
         rows = [s for s in _pinned_member(row).segment_defs if s['name'] == row['segment']]
     else:
-        recipe = read_json(ROOT/row['recipe'])
+        recipe = ((recipe_overrides or {}).get(row['recipe']) or read_json(ROOT/row['recipe']))
         require((recipe.get('start'), recipe.get('end')) == (row['start'], row['end']) and
                 recipe.get('contribution_form') is None and 'prefix_of_object' not in recipe,
                 'Code fill neighbour recipe is not its complete object')
@@ -194,7 +197,7 @@ def _code_segdef(row):
     return rows[0]
 
 
-def checked_code_word_fill(owner, manifest, image):
+def checked_code_word_fill(owner, manifest, image, recipe_overrides=None):
     start, end = owner['start'], owner['end']
     require(set(owner) <= KEYS and owner.get('kind') == 'LINK_FILL' and owner.get('basis') == CODE_WORD_BASIS and
             owner.get('id') == f'fill_{start:05x}_{end:05x}', 'Unsupported code fill owner form')
@@ -208,9 +211,9 @@ def checked_code_word_fill(owner, manifest, image):
     before, after = owners[at - 1], owners[at + 1]
     require(before['end'] == start and before['id'] == owner.get('object'),
             'Code fill does not follow the last byte of its named code contribution')
-    _code_segdef(before)
+    _code_segdef(before, recipe_overrides)
     require(after['start'] == end, 'Code fill is not followed by a code contribution')
-    segdef = _code_segdef(after)
+    segdef = _code_segdef(after, recipe_overrides)
     require(segdef.get('alignment') == 'word', 'Code fill follower is not WORD aligned')
     following = {'kind': 'accepted-segdef-alignment', 'owner': after['id'],
                  'segment': segdef['name'], 'alignment': segdef['alignment']}
@@ -275,14 +278,14 @@ def checked_dosseg_lead(owner, manifest, image):
             'text_frame': frame}
 
 
-def checked_fill(owner, manifest, image):
+def checked_fill(owner, manifest, image, recipe_overrides=None):
     """Re-derive one LINK_FILL owner; returns its evidence receipt."""
     if owner.get('basis') == DOSSEG_LEAD_BASIS:
         return checked_dosseg_lead(owner, manifest, image)
     if owner.get('basis') == WORD_BASIS:
-        return checked_word_fill(owner, manifest, image)
+        return checked_word_fill(owner, manifest, image, recipe_overrides)
     if owner.get('basis') == CODE_WORD_BASIS:
-        return checked_code_word_fill(owner, manifest, image)
+        return checked_code_word_fill(owner, manifest, image, recipe_overrides)
     start, end = owner['start'], owner['end']
     require(set(owner) <= KEYS and owner.get('kind') == 'LINK_FILL' and owner.get('basis') == BASIS and
             owner.get('id') == f'fill_{start:05x}_{end:05x}',

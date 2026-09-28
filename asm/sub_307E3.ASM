@@ -13,9 +13,9 @@ _sub_307E3 proc far
 
     mov     ax, _joyflag1
     sub     ax, _word_3FB18
-    jge     short loc_307EE
+    jge     short value_return_if_at_least
     xor     ax, ax
-loc_307EE:
+value_return_if_at_least:
     mul     _word_3FB34
     mov     al, ah
     mov     ah, dl

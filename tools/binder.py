@@ -629,6 +629,22 @@ def bind_mixed_far_data(obj, segment, public, length, expected_fixups, declarati
             struct.pack_into('<H',payload,at,12)
             fixup_rows.append({'kind':'absolute-runtime-word','offset':at,
                                'target':'__AHSHIFT','linked_value':12})
+        elif fix['target'] == '__AHINCR':
+            # Pinned diffhlp.asm absolute PUBDEF 0x1000: C6 adds it only
+            # to the far-pointer segment word on an offset carry.
+            modrm = payload[at-2] if at >= 3 else 0
+            require(target.get('kind') == 'absolute-runtime-word' and
+                    target.get('public') == '__AHINCR' and target.get('value') == 4096 and
+                    (fix['loc'],fix['width']) == ('loader-offset16',2) and
+                    at >= 3 and payload[at-3] == 0x81 and
+                    (modrm & 0x38) == 0 and (modrm >> 6) == 1 and (modrm & 7) == 6 and
+                    fix['encoded_addend'] == '0000' and payload[at:at+2] == bytes(2) and
+                    not occupied.intersection(range(at,at+2)),
+                    'Unsupported __AHINCR absolute runtime fixup')
+            occupied.update(range(at,at+2))
+            struct.pack_into('<H',payload,at,4096)
+            fixup_rows.append({'kind':'absolute-runtime-word','offset':at,
+                               'target':'__AHINCR','linked_value':4096})
         elif (fix['loc'], fix['width']) == ('pointer32', 4):
             require(1 <= at <= length - 4 and payload[at - 1] == 0x9a,
                     'Mixed far binding supports CALL operands only')
@@ -947,6 +963,21 @@ def bind_composed(obj, recipe, symbols):
                                         (2,'external',target_name,fix['target_index'])),
                         'Unsupported composed __AHSHIFT absolute runtime fixup')
                 value=12
+                struct.pack_into('<H',payload,at,value)
+            elif target_name=='__AHINCR':
+                # Pinned diffhlp.asm absolute PUBDEF 0x1000: C6 adds it only
+                # to the far-pointer segment word on an offset carry.
+                modrm=payload[at-2] if at>=3 else 0
+                require(target.get('kind')=='absolute-runtime-word' and
+                        target.get('public')=='__AHINCR' and target.get('value')==4096 and
+                        fix['loc']=='loader-offset16' and width==2 and
+                        not fix['self_relative'] and fix['displacement']==0 and
+                        encoded==bytes(2) and at>=3 and payload[at-3]==0x81 and
+                        (modrm & 0x38)==0 and (modrm >> 6)==1 and (modrm & 7)==6 and
+                        frame_tuple in ((5,'target',target_name,0),
+                                        (2,'external',target_name,fix['target_index'])),
+                        'Unsupported composed __AHINCR absolute runtime fixup')
+                value=4096
                 struct.pack_into('<H',payload,at,value)
             elif fix['self_relative']:
                 require(fix['loc']=='offset16' and width==2 and

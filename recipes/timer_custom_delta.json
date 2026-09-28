@@ -246,7 +246,7 @@
   "profile": "masm510-game",
   "public": "_timer_custom_delta",
   "review_notes": [
-    "integ38: the high word of the timer module's `_timer_callback_counter` dword is `_timer_callback_counter+2` (formerly the reference-label extern _word_2F87A, which no object defines once asm012_131254 owns its _DATA); bytes identical, only the FIXUPP target/addend and EXTDEF list change."
+    "integ38: the high word of the timer module's `_timer_callback_counter` dword is `_timer_callback_counter+2` (formerly the reference-label extern _word_2F87A, which no object defines once timer_video_interrupt_runtime owns its _DATA); bytes identical, only the FIXUPP target/addend and EXTDEF list change."
   ],
   "source": "asm/timer_custom_delta.ASM",
   "stable_id": "load_22782",

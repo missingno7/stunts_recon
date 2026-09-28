@@ -15,25 +15,25 @@ _polradius2d proc far
     call far ptr _polang
     add sp, 4
     or ax, ax
-    jge short loc_200CD
+    jge short when_greater_or_equal
     neg ax
-loc_200CD:
+when_greater_or_equal:
     cmp ax, 100h
-    jl short loc_200D7
+    jl short polradius2d_when_less
     sub ax, 200h
     neg ax
-loc_200D7:
+polradius2d_when_less:
     cmp ax, 80h
-    jg short loc_200FE
+    jg short polradius2d_when_greater
     push ax
     call far ptr _cosfast
     add sp, 2
     mov bx, ax
     mov dx, word ptr [bp+arg_y]
     or dx, dx
-    jge short loc_200F0
+    jge short polradius2d_return_if_at_least
     neg dx
-loc_200F0:
+polradius2d_return_if_at_least:
     xor ax, ax
     sar dx, 1
     rcr ax, 1
@@ -42,16 +42,16 @@ loc_200F0:
     div bx
     pop bp
     retf
-loc_200FE:
+polradius2d_when_greater:
     push ax
     call far ptr _sinfast
     add sp, 2
     mov bx, ax
     mov dx, word ptr [bp+arg_z]
     or dx, dx
-    jge short loc_20112
+    jge short return_if_at_least_2
     neg dx
-loc_20112:
+return_if_at_least_2:
     xor ax, ax
     sar dx, 1
     rcr ax, 1

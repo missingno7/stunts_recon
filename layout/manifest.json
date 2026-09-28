@@ -57,18 +57,25 @@
       }
     },
     {
+      "classification": "GAME_C",
       "end": 205383,
-      "id": "raw_bss_obj_seg007",
-      "kind": "UNRESOLVED_RAW",
-      "object": "obj_seg007",
-      "raw_form": "object-bss",
-      "start": 203476
+      "id": "obj_seg007:_BSS",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg007",
+      "placement": "link-module-order-v1",
+      "segment": "_BSS",
+      "start": 203476,
+      "target": {
+        "sha256": "11c7a38139f135665d604e219082df89553b94d72785d2722f5c4a08f74b188b",
+        "size": 1907
+      }
     },
     {
+      "basis": "link-bss-word-alignment-v1",
       "end": 205384,
-      "id": "raw_bss_fill_205383",
-      "kind": "UNRESOLVED_RAW",
-      "raw_form": "link-word-fill",
+      "id": "fill_32247_32248",
+      "kind": "LINK_FILL",
+      "object": "obj_seg007",
       "start": 205383
     },
     {
@@ -831,118 +838,10 @@
           "declarers": [
             "obj_seg000"
           ],
-          "name": "_total_game",
-          "size": 4,
+          "name": "_race_stats",
+          "size": 22,
           "size_basis": {
-            "declaration": "unsigned long total_game;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213836,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_idx_time_gm",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short idx_time_gm;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213838,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_best_game_time",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short best_game_time;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213840,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_best_timeold",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short best_timeold;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213842,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_finish_count",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short finish_count;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213844,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_countgend",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short countgend;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213846,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_value_game_pen",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short value_game_pen;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213848,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_crash_velocityvalue",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short crash_velocityvalue;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213850,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_max_speed_value",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short max_speed_value;",
-            "kind": "declared-type"
-          }
-        },
-        {
-          "address": 213852,
-          "declarers": [
-            "obj_seg000"
-          ],
-          "name": "_total_game_jump",
-          "size": 2,
-          "size_basis": {
-            "declaration": "short total_game_jump;",
+            "declaration": "struct GAMESTATE_SNAPSHOT race_stats;",
             "kind": "declared-type"
           }
         },
@@ -4148,11 +4047,41 @@
       "start": 85348
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 95408,
-      "id": "raw_16bae_174b0",
-      "kind": "UNRESOLVED_RAW",
+      "classification": "GAME_C",
+      "data_intervals": [
+        {
+          "end": 191309,
+          "segment": "_DATA",
+          "start": 191244,
+          "target": {
+            "sha256": "0c84f5ebe2dd37cc60c5a144fa12ce04c0f913ed698817bf1296029b718195cd",
+            "size": 65
+          }
+        },
+        {
+          "end": 205383,
+          "segment": "_BSS",
+          "start": 203476,
+          "target": {
+            "sha256": "11c7a38139f135665d604e219082df89553b94d72785d2722f5c4a08f74b188b",
+            "size": 1907
+          }
+        }
+      ],
+      "end": 95407,
+      "id": "obj_seg007",
+      "kind": "MATCHING_C",
+      "name": "obj_seg007",
+      "recipe": "recipes/obj_seg007.json",
       "start": 93102
+    },
+    {
+      "basis": "link-code-word-alignment-v1",
+      "end": 95408,
+      "id": "fill_174af_174b0",
+      "kind": "LINK_FILL",
+      "object": "obj_seg007",
+      "start": 95407
     },
     {
       "classification": "GAME_C",
@@ -20404,11 +20333,11 @@
         }
       ],
       "end": 131254,
-      "id": "asm012_125482",
+      "id": "graphics_resource_runtime",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_125482",
-      "recipe": "recipes/asm012_125482.json",
+      "name": "graphics_resource_runtime",
+      "recipe": "recipes/graphics_resource_runtime.json",
       "start": 125482
     },
     {
@@ -20425,11 +20354,11 @@
         }
       ],
       "end": 132056,
-      "id": "asm012_131254",
+      "id": "timer_video_interrupt_runtime",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_131254",
-      "recipe": "recipes/asm012_131254.json",
+      "name": "timer_video_interrupt_runtime",
+      "recipe": "recipes/timer_video_interrupt_runtime.json",
       "start": 131254
     },
     {
@@ -20446,11 +20375,11 @@
         }
       ],
       "end": 133138,
-      "id": "asm012_132056",
+      "id": "input_keyboard_joystick_services",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_132056",
-      "recipe": "recipes/asm012_132056.json",
+      "name": "input_keyboard_joystick_services",
+      "recipe": "recipes/input_keyboard_joystick_services.json",
       "reclassified_owners": [
         {
           "from": "MATCHING_C",
@@ -20476,10 +20405,10 @@
         }
       ],
       "end": 133660,
-      "id": "asm012_133138",
+      "id": "keyboard_interrupt_runtime",
       "kind": "MATCHING_ASM",
-      "name": "asm012_133138",
-      "recipe": "recipes/asm012_133138.json",
+      "name": "keyboard_interrupt_runtime",
+      "recipe": "recipes/keyboard_interrupt_runtime.json",
       "start": 133138
     },
     {
@@ -20496,11 +20425,11 @@
         }
       ],
       "end": 133840,
-      "id": "asm012_133660",
+      "id": "keyboard_input_callbacks",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_133660",
-      "recipe": "recipes/asm012_133660.json",
+      "name": "keyboard_input_callbacks",
+      "recipe": "recipes/keyboard_input_callbacks.json",
       "reclassified_owners": [
         {
           "from": "MATCHING_C",
@@ -20526,10 +20455,10 @@
         }
       ],
       "end": 135290,
-      "id": "asm012_133840",
+      "id": "resource_file_io_decompression",
       "kind": "MATCHING_ASM",
-      "name": "asm012_133840",
-      "recipe": "recipes/asm012_133840.json",
+      "name": "resource_file_io_decompression",
+      "recipe": "recipes/resource_file_io_decompression.json",
       "start": 133840
     },
     {
@@ -20546,10 +20475,10 @@
         }
       ],
       "end": 137138,
-      "id": "asm012_135290",
+      "id": "resource_memory_manager",
       "kind": "MATCHING_ASM",
-      "name": "asm012_135290",
-      "recipe": "recipes/asm012_135290.json",
+      "name": "resource_memory_manager",
+      "recipe": "recipes/resource_memory_manager.json",
       "start": 135290
     },
     {
@@ -20566,11 +20495,11 @@
         }
       ],
       "end": 139609,
-      "id": "asm012_137138",
+      "id": "prerender_wheel_raster",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_137138",
-      "recipe": "recipes/asm012_137138.json",
+      "name": "prerender_wheel_raster",
+      "recipe": "recipes/prerender_wheel_raster.json",
       "start": 137138
     },
     {
@@ -20578,7 +20507,7 @@
       "end": 139610,
       "id": "fill_22159_2215a",
       "kind": "LINK_FILL",
-      "object": "asm012_137138",
+      "object": "prerender_wheel_raster",
       "start": 139609
     },
     {
@@ -20595,10 +20524,10 @@
         }
       ],
       "end": 139968,
-      "id": "asm012_139610",
+      "id": "textmode_debug_console",
       "kind": "MATCHING_ASM",
-      "name": "asm012_139610",
-      "recipe": "recipes/asm012_139610.json",
+      "name": "textmode_debug_console",
+      "recipe": "recipes/textmode_debug_console.json",
       "start": 139610
     },
     {
@@ -20615,10 +20544,10 @@
         }
       ],
       "end": 140538,
-      "id": "asm012_139968",
+      "id": "projection_vector_window",
       "kind": "MATCHING_ASM",
-      "name": "asm012_139968",
-      "recipe": "recipes/asm012_139968.json",
+      "name": "projection_vector_window",
+      "recipe": "recipes/projection_vector_window.json",
       "start": 139968
     },
     {
@@ -20655,10 +20584,10 @@
         }
       ],
       "end": 140814,
-      "id": "asm012_140718",
+      "id": "video_mode_restore_handlers",
       "kind": "MATCHING_ASM",
-      "name": "asm012_140718",
-      "recipe": "recipes/asm012_140718.json",
+      "name": "video_mode_restore_handlers",
+      "recipe": "recipes/video_mode_restore_handlers.json",
       "start": 140718
     },
     {
@@ -20803,10 +20732,10 @@
         }
       ],
       "end": 141362,
-      "id": "asm012_141210",
+      "id": "timer_counter_deadline_helpers",
       "kind": "MATCHING_ASM",
-      "name": "asm012_141210",
-      "recipe": "recipes/asm012_141210.json",
+      "name": "timer_counter_deadline_helpers",
+      "recipe": "recipes/timer_counter_deadline_helpers.json",
       "start": 141210
     },
     {
@@ -20823,21 +20752,21 @@
         }
       ],
       "end": 143366,
-      "id": "asm012_141362",
+      "id": "font_matrix_shape_decode",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_141362",
-      "recipe": "recipes/asm012_141362.json",
+      "name": "font_matrix_shape_decode",
+      "recipe": "recipes/font_matrix_shape_decode.json",
       "start": 141362
     },
     {
       "classification": "GAME_ASM",
       "end": 144064,
-      "id": "asm012_143366",
+      "id": "vector_sphere_sprite_ops",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_143366",
-      "recipe": "recipes/asm012_143366.json",
+      "name": "vector_sphere_sprite_ops",
+      "recipe": "recipes/vector_sphere_sprite_ops.json",
       "start": 143366
     },
     {
@@ -20963,28 +20892,28 @@
         {
           "end": 199564,
           "segment": "_DATA",
-          "start": 199488,
+          "start": 199484,
           "target": {
-            "sha256": "4836da88db637c5baf9b997a74efe3bd63b05e3d911938647550544225f8f47c",
-            "size": 76
+            "sha256": "06b68c0c7adc454da625b4c5311d64a6c4861e74dc7297614f14caba1b376e38",
+            "size": 80
           }
         }
       ],
       "end": 149180,
-      "id": "asm012_144064_late",
+      "id": "sprite_shape_video_ops",
       "kind": "MATCHING_ASM",
-      "name": "asm012_144064_late",
-      "recipe": "recipes/asm012_144064_late.json",
+      "name": "sprite_shape_video_ops",
+      "recipe": "recipes/sprite_shape_video_ops.json",
       "start": 147552
     },
     {
       "classification": "GAME_ASM",
       "end": 150408,
-      "id": "asm012_149180",
+      "id": "line_sprite_shape_render",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_149180",
-      "recipe": "recipes/asm012_149180.json",
+      "name": "line_sprite_shape_render",
+      "recipe": "recipes/line_sprite_shape_render.json",
       "start": 149180
     },
     {
@@ -21001,11 +20930,11 @@
         }
       ],
       "end": 154406,
-      "id": "asm012_150408",
+      "id": "patterned_lines_windows",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_150408",
-      "recipe": "recipes/asm012_150408.json",
+      "name": "patterned_lines_windows",
+      "recipe": "recipes/patterned_lines_windows.json",
       "start": 150408
     },
     {
@@ -21031,11 +20960,11 @@
         }
       ],
       "end": 155464,
-      "id": "asm012_154486",
+      "id": "sprite_rectangle_scaled_blitters",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "asm012_154486",
-      "recipe": "recipes/asm012_154486.json",
+      "name": "sprite_rectangle_scaled_blitters",
+      "recipe": "recipes/sprite_rectangle_scaled_blitters.json",
       "start": 154486
     },
     {
@@ -21624,11 +21553,25 @@
       }
     },
     {
-      "classification": "UNRESOLVED_MIXED",
+      "classification": "GAME_C",
+      "end": 191309,
+      "id": "obj_seg007:_DATA",
+      "kind": "MATCHING_C_DATA",
+      "parent": "obj_seg007",
+      "segment": "_DATA",
+      "start": 191244,
+      "target": {
+        "sha256": "0c84f5ebe2dd37cc60c5a144fa12ce04c0f913ed698817bf1296029b718195cd",
+        "size": 65
+      }
+    },
+    {
+      "basis": "link-dgroup-word-alignment-v1",
       "end": 191310,
-      "id": "raw_2eb0c_2eb4e",
-      "kind": "UNRESOLVED_RAW",
-      "start": 191244
+      "id": "fill_2eb4d_2eb4e",
+      "kind": "LINK_FILL",
+      "object": "obj_seg007:_DATA",
+      "start": 191309
     },
     {
       "classification": "GAME_C",
@@ -21894,9 +21837,9 @@
     {
       "classification": "GAME_ASM",
       "end": 194664,
-      "id": "asm012_125482:_DATA",
+      "id": "graphics_resource_runtime:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_125482",
+      "parent": "graphics_resource_runtime",
       "segment": "_DATA",
       "start": 192704,
       "target": {
@@ -21907,9 +21850,9 @@
     {
       "classification": "GAME_ASM",
       "end": 194778,
-      "id": "asm012_131254:_DATA",
+      "id": "timer_video_interrupt_runtime:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_131254",
+      "parent": "timer_video_interrupt_runtime",
       "segment": "_DATA",
       "start": 194664,
       "target": {
@@ -21920,9 +21863,9 @@
     {
       "classification": "GAME_ASM",
       "end": 195400,
-      "id": "asm012_132056:_DATA",
+      "id": "input_keyboard_joystick_services:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_132056",
+      "parent": "input_keyboard_joystick_services",
       "segment": "_DATA",
       "start": 194778,
       "target": {
@@ -21933,9 +21876,9 @@
     {
       "classification": "GAME_ASM",
       "end": 196092,
-      "id": "asm012_133138:_DATA",
+      "id": "keyboard_interrupt_runtime:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_133138",
+      "parent": "keyboard_interrupt_runtime",
       "segment": "_DATA",
       "start": 195400,
       "target": {
@@ -21946,9 +21889,9 @@
     {
       "classification": "GAME_ASM",
       "end": 196097,
-      "id": "asm012_133660:_DATA",
+      "id": "keyboard_input_callbacks:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_133660",
+      "parent": "keyboard_input_callbacks",
       "segment": "_DATA",
       "start": 196092,
       "target": {
@@ -21961,15 +21904,15 @@
       "end": 196098,
       "id": "fill_2fe01_2fe02",
       "kind": "LINK_FILL",
-      "object": "asm012_133660:_DATA",
+      "object": "keyboard_input_callbacks:_DATA",
       "start": 196097
     },
     {
       "classification": "GAME_ASM",
       "end": 196232,
-      "id": "asm012_133840:_DATA",
+      "id": "resource_file_io_decompression:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_133840",
+      "parent": "resource_file_io_decompression",
       "segment": "_DATA",
       "start": 196098,
       "target": {
@@ -21980,9 +21923,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197400,
-      "id": "asm012_135290:_DATA",
+      "id": "resource_memory_manager:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_135290",
+      "parent": "resource_memory_manager",
       "segment": "_DATA",
       "start": 196232,
       "target": {
@@ -22006,9 +21949,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197418,
-      "id": "asm012_137138:_DATA",
+      "id": "prerender_wheel_raster:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_137138",
+      "parent": "prerender_wheel_raster",
       "segment": "_DATA",
       "start": 197406,
       "target": {
@@ -22019,9 +21962,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197550,
-      "id": "asm012_139610:_DATA",
+      "id": "textmode_debug_console:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_139610",
+      "parent": "textmode_debug_console",
       "segment": "_DATA",
       "start": 197418,
       "target": {
@@ -22032,9 +21975,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197602,
-      "id": "asm012_139968:_DATA",
+      "id": "projection_vector_window:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_139968",
+      "parent": "projection_vector_window",
       "segment": "_DATA",
       "start": 197550,
       "target": {
@@ -22058,9 +22001,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197620,
-      "id": "asm012_140718:_DATA",
+      "id": "video_mode_restore_handlers:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_140718",
+      "parent": "video_mode_restore_handlers",
       "segment": "_DATA",
       "start": 197618,
       "target": {
@@ -22084,9 +22027,9 @@
     {
       "classification": "GAME_ASM",
       "end": 198144,
-      "id": "asm012_141210:_DATA",
+      "id": "timer_counter_deadline_helpers:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_141210",
+      "parent": "timer_counter_deadline_helpers",
       "segment": "_DATA",
       "start": 198134,
       "target": {
@@ -22097,9 +22040,9 @@
     {
       "classification": "GAME_ASM",
       "end": 198148,
-      "id": "asm012_141362:_DATA",
+      "id": "font_matrix_shape_decode:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_141362",
+      "parent": "font_matrix_shape_decode",
       "segment": "_DATA",
       "start": 198144,
       "target": {
@@ -22181,31 +22124,24 @@
       }
     },
     {
-      "classification": "UNRESOLVED_MIXED",
-      "end": 199488,
-      "id": "raw_30b3c_30b40",
-      "kind": "UNRESOLVED_RAW",
-      "start": 199484
-    },
-    {
       "classification": "GAME_ASM",
       "end": 199564,
-      "id": "asm012_144064_late:_DATA",
+      "id": "sprite_shape_video_ops:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_144064_late",
+      "parent": "sprite_shape_video_ops",
       "segment": "_DATA",
-      "start": 199488,
+      "start": 199484,
       "target": {
-        "sha256": "4836da88db637c5baf9b997a74efe3bd63b05e3d911938647550544225f8f47c",
-        "size": 76
+        "sha256": "06b68c0c7adc454da625b4c5311d64a6c4861e74dc7297614f14caba1b376e38",
+        "size": 80
       }
     },
     {
       "classification": "GAME_ASM",
       "end": 199612,
-      "id": "asm012_150408:_DATA",
+      "id": "patterned_lines_windows:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_150408",
+      "parent": "patterned_lines_windows",
       "segment": "_DATA",
       "start": 199564,
       "target": {
@@ -22237,9 +22173,9 @@
     {
       "classification": "GAME_ASM",
       "end": 199708,
-      "id": "asm012_154486:_DATA",
+      "id": "sprite_rectangle_scaled_blitters:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "asm012_154486",
+      "parent": "sprite_rectangle_scaled_blitters",
       "segment": "_DATA",
       "start": 199706,
       "target": {

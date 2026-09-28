@@ -29,7 +29,7 @@ _nopsub_33B98 proc far
     mov     ax, [bp+arg_6]
     sub     ax, [si+6]
     mov     [bp+var_4], ax
-    jmp     short loc_33BF5
+    jmp     short sprputimage_shared_exit
     ; align 2
     db 144
 _nopsub_33B98 endp
@@ -55,7 +55,7 @@ _sprite_putimage_and_alt proc far
     mov     [bp+var_2], ax
     mov     ax, [bp+arg_8]
     mov     [bp+var_4], ax
-    jmp     short loc_33BF5
+    jmp     short sprputimage_shared_exit
     ; align 2
     db 144
 _sprite_putimage_and_alt endp
@@ -84,30 +84,30 @@ _sprputimage proc far
     mov     [bp+shapex], ax
     mov     ax, [si+0Ah]
     mov     [bp+shapey], ax
-loc_33BF5:
+sprputimage_shared_exit:
     mov     bx, [bp+shapey]
     mov     cx, [si+2]
     lea     dx, [si+10h]
     mov     ax, bx
     cmp     ax, word ptr cs:[_sprite1+16]
-    jl      short loc_33C1B
+    jl      short sprputimage_when_less
     add     ax, cx
     sub     ax, word ptr cs:[_sprite1+18]
-    jle     short loc_33C42
+    jle     short sprputimage_when_less_or_equal
     sub     cx, ax
-    jg      short loc_33C42
-loc_33C14:
+    jg      short sprputimage_when_less_or_equal
+sprputimage_draw_loop:
     pop     di
     pop     si
     pop     ds
     mov     sp, bp
     pop     bp
     retf
-loc_33C1B:
+sprputimage_when_less:
     mov     bx, word ptr cs:[_sprite1+16]
     add     ax, cx
     sub     ax, bx
-    jle     short loc_33C14
+    jle     short sprputimage_draw_loop
     xchg    ax, cx
     sub     ax, cx
     mov     [bp+var_8], dx
@@ -117,10 +117,10 @@ loc_33C1B:
     mov     ax, bx
     add     ax, cx
     sub     ax, word ptr cs:[_sprite1+18]
-    jle     short loc_33C42
+    jle     short sprputimage_when_less_or_equal
     sub     cx, ax
-    jle     short loc_33C14
-loc_33C42:
+    jle     short sprputimage_draw_loop
+sprputimage_when_less_or_equal:
     mov     [bp+var_bitmap], dx
     mov     [bp+var_A], cx
     mov     [bp+shapey], bx
@@ -129,36 +129,36 @@ loc_33C42:
     mov     bx, [bp+shapex]
     mov     ax, bx
     cmp     ax, word ptr cs:[_sprite1+12]
-    jl      short loc_33C6D
+    jl      short sprputimage_when_less_2
     add     ax, cx
     sub     ax, word ptr cs:[_sprite1+14]
-    jl      short loc_33C94
+    jl      short sprputimage_shared_path
     sub     cx, ax
-    jle     short loc_33C14
+    jle     short sprputimage_draw_loop
     mov     dx, ax
-    jmp     short loc_33C94
+    jmp     short sprputimage_shared_path
     db 144
-loc_33C6D:
+sprputimage_when_less_2:
     mov     bx, word ptr cs:[_sprite1+12]
     add     ax, cx
     sub     ax, bx
-    jle     short loc_33C14
+    jle     short sprputimage_draw_loop
     mov     si, cx
     sub     si, ax
     add     [bp+var_bitmap], si
     mov     si, word ptr cs:[_sprite1+14]
     sub     si, bx
-    jle     short loc_33C14
+    jle     short sprputimage_draw_loop
     cmp     ax, si
-    jl      short loc_33C8E
+    jl      short sprputimage_when_less_3
     mov     ax, si
-loc_33C8E:
+sprputimage_when_less_3:
     xchg    cx, dx
     sub     dx, ax
     add     cx, ax
-loc_33C94:
+sprputimage_shared_path:
     or      cx, cx
-    jle     short loc_33CD8
+    jle     short when_less_or_equal_2
     mov     [bp+var_6], cx
     mov     [bp+var_8], dx
     mov     [bp+shapex], bx
@@ -174,44 +174,44 @@ loc_33C94:
     mov     bx, word ptr cs:[_sprite1+20]
     sub     bx, [bp+var_6]
     cmp     [bp+var_8], 0
-    jz      short loc_33CDB
-loc_33CCB:
+    jz      short sprputimage_when_zero
+sprputimage_copy_loop:
     mov     cx, [bp+var_6]
     rep movsb
     add     si, [bp+var_8]
     add     di, bx
     dec     dx
-    jg      short loc_33CCB
-loc_33CD8:
-    jmp     loc_33C14
-loc_33CDB:
+    jg      short sprputimage_copy_loop
+when_less_or_equal_2:
+    jmp     sprputimage_draw_loop
+sprputimage_when_zero:
     mov     ax, [bp+var_6]
     shr     ax, 1
     mov     [bp+var_E], ax
-    jnb     short loc_33CF5
-    jz      short loc_33D02
-loc_33CE7:
+    jnb     short sprputimage_copy_loop_3
+    jz      short sprputimage_copy_loop_4
+sprputimage_copy_loop_2:
     mov     cx, [bp+var_E]
     rep movsw
     movsb
     add     di, bx
     dec     dx
-    jg      short loc_33CE7
-    jmp     loc_33C14
-loc_33CF5:
+    jg      short sprputimage_copy_loop_2
+    jmp     sprputimage_draw_loop
+sprputimage_copy_loop_3:
     mov     cx, [bp+var_E]
     rep movsw
     add     di, bx
     dec     dx
-    jg      short loc_33CF5
-    jmp     loc_33C14
-loc_33D02:
+    jg      short sprputimage_copy_loop_3
+    jmp     sprputimage_draw_loop
+sprputimage_copy_loop_4:
     movsb
     add     di, bx
     inc     bx
     dec     dx
-    jg      short loc_33D02
-    jmp     loc_33C14
+    jg      short sprputimage_copy_loop_4
+    jmp     sprputimage_draw_loop
 _sprputimage endp
 S012_TEXT ends
 end

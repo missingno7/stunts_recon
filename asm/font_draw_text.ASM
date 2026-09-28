@@ -62,7 +62,7 @@ _font_draw_text proc far
     mov ds:[fh_x], ax
     mov ax, [bp+arg_4]
     mov ds:[fh_y], ax
-    jmp short loc_3376B
+    jmp short font_text_when_condition
     db 90h
     push bp
     mov bp, sp
@@ -71,14 +71,14 @@ _font_draw_text proc far
     push si
     push di
     mov ds, ds:[_fontdefseg]
-loc_3376B:
+font_text_when_condition:
     cld
     mov es, word ptr cs:[_sprite1+SPRITE1.sprite_bitmapptr+2]
-loc_33771:
+font_text_draw_loop:
     mov si, [bp+arg_0]
     mov bl, ss:[si]
     cmp bl, 0
-    jz short loc_337A6
+    jz short font_text_return_if_zero
     mov al, bl
     inc [bp+arg_0]
     xor bh, bh
@@ -86,29 +86,29 @@ loc_33771:
     add bx, fh_glyphs
     mov si, [bx]
     cmp si, 0
-    jnz short loc_337AD
+    jnz short font_text_when_nonzero
     cmp al, 0Dh
-    jz short loc_33797
+    jz short font_text_when_zero
     cmp al, 0Ah
-    jnz short loc_33771
-loc_33797:
+    jnz short font_text_draw_loop
+font_text_when_zero:
     mov ax, ds:[fh_left]
     mov ds:[fh_x], ax
     mov ax, ds:[fh_lineheight]
     add ds:[fh_y], ax
-    jmp short loc_33771
-loc_337A6:
+    jmp short font_text_draw_loop
+font_text_return_if_zero:
     pop di
     pop si
     pop ds
     mov sp, bp
     pop bp
     retf
-loc_337AD:
+font_text_when_nonzero:
     mov ax, ds:[fh_x]
     mov [bp+var_2], ax
     cmp byte ptr ds:[fh_proportional], 0
-    jz short loc_337CE
+    jz short font_text_when_zero_2
     mov al, [si]
     xor ah, ah
     inc si
@@ -118,7 +118,7 @@ loc_337AD:
     shr ax, 1
     shr ax, 1
     mov byte ptr ds:[fh_rowbytes], al
-loc_337CE:
+font_text_when_zero_2:
     mov al, byte ptr ds:[fh_fgcolor]
     mov ah, byte ptr ds:[fh_bgcolor]
     mov cx, ds:[fh_height]
@@ -126,30 +126,30 @@ loc_337CE:
     mov bx, ds:[fh_y]
     shl bx, 1
     add bx, cs:[_sprite1+SPRITE1.sprite_lineofs]
-loc_337E7:
+font_text_draw_loop_2:
     mov di, cs:[bx]
     add di, [bp+var_2]
     mov dh, byte ptr ds:[fh_rowbytes]
-loc_337F1:
+font_text_draw_loop_3:
     mov cx, 8
     mov dl, [si]
-loc_337F6:
+font_text_draw_loop_4:
     shl dl, 1
-    jnb short loc_337FD
+    jnb short font_text_when_not_below
     mov es:[di], al
-loc_337FD:
+font_text_when_not_below:
     inc di
-    loop loc_337F6
+    loop font_text_draw_loop_4
     inc si
     dec dh
-    jg short loc_337F1
+    jg short font_text_draw_loop_3
     inc bx
     inc bx
     dec [bp+var_4]
-    jg short loc_337E7
+    jg short font_text_draw_loop_2
     mov ax, ds:[fh_advance]
     add ds:[fh_x], ax
-    jmp loc_33771
+    jmp font_text_draw_loop
 _font_draw_text endp
 S012_TEXT ends
 end

@@ -1,0 +1,600 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 141362,
+  "expected_fixups": [
+    {
+      "displacement": 4,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 2,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 6,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 6,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 10,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 14,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 4,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 18,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 6,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 22,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_timer_callback_counter",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 32,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "_timer_callback_counter",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 35,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_timer_get_counter",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 42,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_get_counter",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 53,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 57,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_timer_get_counter",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 62,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_get_counter",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 68,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 76,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_timer_get_counter",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 82,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_get_counter",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 88,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 96,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_timer_get_counter",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 114,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_get_counter",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_timer_get_counter",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "pointer32",
+      "offset": 131,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_get_counter",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 141254,
+      "offset": 10182,
+      "segment": 8192
+    },
+    {
+      "load_offset": 141274,
+      "offset": 10202,
+      "segment": 8192
+    },
+    {
+      "load_offset": 141294,
+      "offset": 10222,
+      "segment": 8192
+    },
+    {
+      "load_offset": 141326,
+      "offset": 10254,
+      "segment": 8192
+    },
+    {
+      "load_offset": 141343,
+      "offset": 10271,
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "timer_counter_deadline_helpers",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 141239,
+      "name": "timer_get_delta",
+      "public": "_timer_get_delta",
+      "stable_id": "load_2279a",
+      "start": 141210,
+      "target": {
+        "sha256": "76938b545fe2da07e03c21596a79373d802a601539e3bad54382b783e7ca043a",
+        "size": 29
+      }
+    },
+    {
+      "end": 141248,
+      "name": "timer_reset",
+      "public": "_timer_reset",
+      "stable_id": "load_227b7",
+      "start": 141239,
+      "target": {
+        "sha256": "630c9e1c5f7f504ddf7e70a4efa84a13a7c9234eac28415a7a4bbe45845ccac2",
+        "size": 9
+      }
+    },
+    {
+      "end": 141271,
+      "name": "timer_copy_counter",
+      "public": "_timer_copy_counter",
+      "stable_id": "load_227c0",
+      "start": 141248,
+      "target": {
+        "sha256": "31c1d715e81293911969817950265968096bd61bf7ac7cb2d126b5e9e25b14ea",
+        "size": 23
+      }
+    },
+    {
+      "end": 141291,
+      "name": "timer_wait_for_dx",
+      "public": "_timer_wait_for_dx",
+      "stable_id": "load_227d7",
+      "start": 141271,
+      "target": {
+        "sha256": "922c8b717a6bab5eacbbe2cd8af37c2827e6f459f13dba005b014aa5f1bd5247",
+        "size": 20
+      }
+    },
+    {
+      "end": 141317,
+      "name": "timer_compare_dx",
+      "public": "_timer_compare_dx",
+      "stable_id": "load_227eb",
+      "start": 141291,
+      "target": {
+        "sha256": "8c67da900e0c0b8f58756a9097bf24761abc472c366ad6232425e30c2a6a7f02",
+        "size": 26
+      }
+    },
+    {
+      "end": 141362,
+      "name": "timer_get_counter_unk",
+      "public": "_timer_get_counter_unk",
+      "stable_id": null,
+      "start": 141317,
+      "target": {
+        "sha256": "8637b71632a7ba9062c7e2ec1f0ef3dc38c27f1e7e402cee574a9b71cc35aded",
+        "size": 45
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_timer_get_counter",
+      "_timer_callback_counter"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          3,
+          2,
+          1
+        ],
+        "segments": [
+          "CONST",
+          "_BSS",
+          "_DATA"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_timer_copy_target_high",
+        "offset": 2,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_line_input_screen_rect",
+        "offset": 8,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_timer_reset",
+        "offset": 29,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_timer_wait_for_dx",
+        "offset": 61,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_timer_copy_counter",
+        "offset": 38,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_timer_copy_unk",
+        "offset": 0,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_timer_get_delta",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_timer_get_counter_unk",
+        "offset": 107,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_timer_compare_dx",
+        "offset": 81,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 10,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 152,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "review_notes": [
+    "integ37: DGROUP and assume ds:DGROUP are declared before the module's _DATA segment, so MASM 5.10 emits its data PUBDEFs relative to DGROUP, as an MSC public is. With chksum.asm's NULL linked at the DGROUP base (_DATA no longer starts there) LINK gives F5/external-frame references to these publics the DGROUP frame only in this form; the code, data, publics and FIXUPPs are otherwise unchanged.",
+    "integ38: the high word of the timer module's `_timer_callback_counter` dword is `_timer_callback_counter+2` (formerly the reference-label extern _word_2F87A, which no object defines once timer_video_interrupt_runtime owns its _DATA); bytes identical, only the FIXUPP target/addend and EXTDEF list change."
+  ],
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 20102,
+      "end": 198144,
+      "start": 198134,
+      "target": {
+        "sha256": "01d448afd928065458cf670b60f5a594d735af0172c8d67f22a81680132681ca",
+        "size": 10
+      }
+    }
+  },
+  "source": "asm/timer_counter_deadline_helpers.ASM",
+  "start": 141210,
+  "subsumed_owners": [
+    "load_2279a",
+    "load_227b7",
+    "load_227c0",
+    "load_227d7",
+    "load_227eb",
+    "asm_load_22805"
+  ],
+  "target": {
+    "sha256": "6a85684254058752526a5c6aabeebc77e44e3db42ca88a5746223763ce127a4a",
+    "size": 152
+  }
+}

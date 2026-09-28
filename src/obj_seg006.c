@@ -1,9 +1,9 @@
 /* obj_seg006: whole seg006 object (22 functions, file order = image order).
    Globals without a reviewed semantic alias use their bound data names:
-   data_31852 = transshapenumpaints, byte_3187A = transshapematerial,
-   word_31878 = transshaperectptr, word_3186A = transshapeprimptr,
-   byte_31882 = transprimitivepaintjob, byte_35514 = backlights_paint_override,
-   word_31854 = polyvertpointptrtab, byte_2EA72 = primtypetab, word_2EA82 = invpow2tbl. */
+   data_31852 = transshapenumpaints, transformed_shape_material = transshapematerial,
+   transformed_shape_bounds = transshaperectptr, transformed_primitive_cursor = transshapeprimptr,
+   transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
+   projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
 struct RECTANGLE { int left, right, top, bottom; };
 struct VECTOR { int x, y, z; };
 struct POINT2D { int x, y; };

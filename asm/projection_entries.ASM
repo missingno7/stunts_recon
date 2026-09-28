@@ -39,7 +39,7 @@ _nopsub_322DF proc far
     mov     _word_303BE, ax
     mov     ax, [bp+arg_2]
     mov     _word_303C0, ax
-    jmp     short loc_32334
+    jmp     short set_projection_when_condition
     db 144
 _nopsub_322DF endp
 _set_projection proc far
@@ -60,10 +60,10 @@ _set_projection proc far
     mov     ah, al
     xor     al, al
     mov     cx, 3
-loc_32306:
+set_projection_scan_loop:
     shl     ax, 1
     rcl     dx, 1
-    loop    loc_32306
+    loop    set_projection_scan_loop
     mov     cx, 168h
     div     cx
     shr     ax, 1
@@ -74,15 +74,15 @@ loc_32306:
     mov     ah, al
     xor     al, al
     mov     cx, 3
-loc_32324:
+set_projection_scan_loop_2:
     shl     ax, 1
     rcl     dx, 1
-    loop    loc_32324
+    loop    set_projection_scan_loop_2
     mov     cx, 168h
     div     cx
     shr     ax, 1
     mov     _word_303C0, ax
-loc_32334:
+set_projection_when_condition:
     mov     ax, [bp+arg_4]
     shr     ax, 1
     mov     _word_303AE, ax
@@ -109,7 +109,7 @@ loc_32334:
     mov     _word_303BA, ax
     mov     bx, _word_303C0
     or      bx, bx
-    jz      short loc_323B4
+    jz      short set_projection_when_zero
     push    _word_303C0
     call _cos_fast
     add     sp, 2
@@ -128,7 +128,7 @@ loc_32334:
     pop     si
     pop     bp
     retf
-loc_323B4:
+set_projection_when_zero:
     mov     bx, ax
     shr     bx, 1
     shr     bx, 1

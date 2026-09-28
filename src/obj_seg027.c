@@ -9,7 +9,7 @@ static unsigned char saved_effect_chunk_volumes[24];
  * - The initialized globals below init_audio_resources are TU-owned _DATA
  *   (literal "hdr1" precedes them in the image); audio_bit_masks is not referenced
  *   by this object but occupies DGROUP 0x4E9E..0x4EBF between them.
- * - sub_3803C: count is assigned and never read (target stores it to its home),
+ * - link_audio_shape_resources: count is assigned and never read (target stores it to its home),
  *   name[5] matches the target's 6-byte buffer home. */
 
 #pragma pack(1)
@@ -99,7 +99,7 @@ void far * far locate_shape_nofatal(void far *shapes, char *name);
 int far audioresource_get_chunk_index(int start, int count, char *name, char far *names);
 int far audioresource_compare_chunknames(int flag, char far *name1, char far *name2, int length);
 void far audioresource_copy_n_bytes(unsigned char far *src, unsigned char far *dst, int count);
-void far nopsub_3219D(char *format, ...);
+void far debug_printf_text(char *format, ...);
 void far flush_stdin(void);
 unsigned int strlen(const char *s);
 
@@ -829,14 +829,14 @@ void far nopsub_38570(void)
 {
     int i;
 
-    nopsub_3219D("swPause = %d, swSong = %d, bSong = %d,swSFX = %d\n",
+    debug_printf_text("swPause = %d, swSong = %d, bSong = %d,swSFX = %d\n",
                  audio_pause_in_progress, audioflag2, audio_song_ready, audioflag6);
-    nopsub_3219D("ubMusicVolume = %d, ubSfxVolume = %d\n", g_musicvolumesetting, sfx_audio_vol);
+    debug_printf_text("ubMusicVolume = %d, ubSfxVolume = %d\n", g_musicvolumesetting, sfx_audio_vol);
     for (i = 0; i < 24; i++)
-        nopsub_3219D("T%02x-ND=%lx,DL=%ld\n", i, audiochunktable[i].data, audiochunktable[i].unk18);
-    nopsub_3219D("Press a Key\n");
+        debug_printf_text("T%02x-ND=%lx,DL=%ld\n", i, audiochunktable[i].data, audiochunktable[i].unk18);
+    debug_printf_text("Press a Key\n");
     flush_stdin();
     for (i = 0; i < 16; i++)
-        nopsub_3219D("H%02x - ST=%d,TP=%lx,TL=%lx\n", i, snd_voices_tbl[i].state,
+        debug_printf_text("H%02x - ST=%d,TP=%lx,TL=%lx\n", i, snd_voices_tbl[i].state,
                      snd_voices_tbl[i].position, snd_voices_tbl[i].length);
 }

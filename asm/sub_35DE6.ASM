@@ -22,9 +22,9 @@ _sub_35DE6 proc far
     mov es, ax
     lea di, _incnums[si]
     mov si, [bp+arg_4]
-loc_35E00:
+to_increment_table_finish:
     cld
-loc_35E01:
+to_increment_table_finish_2:
     rep movsb
     pop di
     pop si

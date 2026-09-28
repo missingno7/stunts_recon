@@ -59,6 +59,14 @@ def _checked_object_tail(recipe, image, inventory, members):
     initialised prefix plus the declared zero bytes).  Returns the object end."""
     tail=recipe.get('object_tail')
     if tail is None:
+        fill=recipe.get('link_fill',{})
+        if (recipe.get('kind','c')=='c' and fill.get('basis')=='link-code-word-alignment-v1'):
+            from asm_module import _ends_with_return
+            require(set(fill)=={'end','basis'} and type(fill['end']) is int and
+                    recipe['end']+1==fill['end']==members[-1]['end'] and
+                    image[recipe['end']]==0 and _ends_with_return(image,recipe['end']),
+                    'Terminal C member is not clipped by a proven LINK CODE WORD fill')
+            return recipe['end']
         return members[-1]['end']
     from asm_module import _ends_with_return
     start,end=tail.get('start'),tail.get('end')

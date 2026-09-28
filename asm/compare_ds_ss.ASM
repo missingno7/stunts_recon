@@ -8,9 +8,9 @@ _compare_ds_ss proc far
     mov     bx, ss
     mov     dx, ds
     cmp     bx, dx
-    jnz     short locret_30328
+    jnz     short compare_ds_ss_early_return
     inc     ax
-locret_30328:
+compare_ds_ss_early_return:
     retf
 _compare_ds_ss endp
 S012_TEXT ends

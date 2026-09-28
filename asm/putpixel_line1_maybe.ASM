@@ -57,18 +57,18 @@ _putpixel_line1_maybe proc far
     mov     es, ax
     mov     bx, [si+12h]
     shl     bx, 1
-    jmp     cs:off_3340A[bx]
-off_3340A     dw offset loc_3341E
-    dw offset loc_3341E
-    dw offset loc_33458
-    dw offset loc_3347C
-    dw offset loc_334A1
-    dw offset loc_334C6
-    dw offset loc_334F3
-    dw offset loc_33520
-    dw offset loc_3354C
-    dw offset loc_3343C
-loc_3341E:
+    jmp     cs:sprite_line_draw_mode_dispatch[bx]
+sprite_line_draw_mode_dispatch     dw offset line_load_source_value
+    dw offset line_load_source_value
+    dw offset line_load_source_value_2
+    dw offset line_load_source_value_3
+    dw offset line_load_source_value_4
+    dw offset line_load_source_value_5
+    dw offset line_load_source_value_6
+    dw offset line_load_source_value_7
+    dw offset line_load_source_value_8
+    dw offset putpixel_line_load_source_byte
+line_load_source_value:
     mov     cx, [si+0Eh]
     mov     al, [bp+var_E]
     mov     di, [bp+var_8]
@@ -82,7 +82,7 @@ loc_3341E:
     mov     sp, bp
     pop     bp
     retf
-loc_3343C:
+putpixel_line_load_source_byte:
     mov     al, [bp+var_E]
     mov     di, [bp+var_8]
     shl     di, 1
@@ -95,60 +95,60 @@ loc_3343C:
     mov     sp, bp
     pop     bp
     retf
-loc_33458:
+line_load_source_value_2:
     mov     cx, [si+0Eh]
     mov     al, [bp+var_E]
     mov     bx, [bp+var_4]
     mov     si, [si+6]
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
-loc_3346B:
+putpixel_line_draw_loop:
     mov     di, cs:[si]
     mov     es:[bx+di], al
     add     si, 2
-    loop    loc_3346B
+    loop    putpixel_line_draw_loop
     pop     di
     pop     si
     mov     sp, bp
     pop     bp
     retf
-loc_3347C:
+line_load_source_value_3:
     mov     cx, [si+0Eh]
     mov     al, [bp+var_E]
     mov     si, [si+6]
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     bx, [bp+var_4]
-loc_3348F:
+putpixel_line_draw_loop_2:
     mov     di, cs:[si]
     mov     es:[bx+di], al
     dec     bx
     add     si, 2
-    loop    loc_3348F
+    loop    putpixel_line_draw_loop_2
     pop     di
     pop     si
     mov     sp, bp
     pop     bp
     retf
-loc_334A1:
+line_load_source_value_4:
     mov     cx, [si+0Eh]
     mov     al, [bp+var_E]
     mov     si, [si+6]
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     bx, [bp+var_4]
-loc_334B4:
+putpixel_line_draw_loop_3:
     mov     di, cs:[si]
     mov     es:[bx+di], al
     inc     bx
     add     si, 2
-    loop    loc_334B4
+    loop    putpixel_line_draw_loop_3
     pop     di
     pop     si
     mov     sp, bp
     pop     bp
     retf
-loc_334C6:
+line_load_source_value_5:
     mov     cx, [si+0Eh]
     mov     dx, [bp+var_A]
     mov     al, [bp+var_E]
@@ -156,19 +156,19 @@ loc_334C6:
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     bx, [bp+var_4]
-loc_334DC:
+putpixel_line_draw_loop_4:
     mov     di, cs:[si]
     mov     es:[bx+di], al
     add     si, 2
     sub     [bp+var_2], dx
     sbb     bx, 0
-    loop    loc_334DC
+    loop    putpixel_line_draw_loop_4
     pop     di
     pop     si
     mov     sp, bp
     pop     bp
     retf
-loc_334F3:
+line_load_source_value_6:
     mov     cx, [si+0Eh]
     mov     dx, [bp+var_A]
     mov     al, [bp+var_E]
@@ -176,24 +176,24 @@ loc_334F3:
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     bx, [bp+var_4]
-loc_33509:
+putpixel_line_draw_loop_5:
     mov     di, cs:[si]
     mov     es:[bx+di], al
     add     si, 2
     add     [bp+var_2], dx
     adc     bx, 0
-    loop    loc_33509
+    loop    putpixel_line_draw_loop_5
     pop     di
     pop     si
     mov     sp, bp
     pop     bp
     retf
-loc_33520:
+line_load_source_value_7:
     mov     cx, [si+0Eh]
     mov     dx, [bp+var_A]
     mov     al, [bp+var_E]
     mov     bx, [bp+var_4]
-loc_3352C:
+putpixel_line_draw_loop_6:
     mov     si, [bp+var_8]
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
@@ -202,18 +202,18 @@ loc_3352C:
     dec     bx
     add     [bp+var_6], dx
     adc     [bp+var_8], 0
-    loop    loc_3352C
+    loop    putpixel_line_draw_loop_6
     pop     di
     pop     si
     mov     sp, bp
     pop     bp
     retf
-loc_3354C:
+line_load_source_value_8:
     mov     cx, [si+0Eh]
     mov     dx, [bp+var_A]
     mov     al, [bp+var_E]
     mov     bx, [bp+var_4]
-loc_33558:
+putpixel_line_draw_loop_7:
     mov     si, [bp+var_8]
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
@@ -222,7 +222,7 @@ loc_33558:
     inc     bx
     add     [bp+var_6], dx
     adc     [bp+var_8], 0
-    loop    loc_33558
+    loop    putpixel_line_draw_loop_7
     pop     di
     pop     si
     mov     sp, bp

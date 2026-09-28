@@ -24,10 +24,10 @@ _parse_shape2d_helper2 proc far
     and     ax, 0Fh
     pop     bp
     retf
-word_2F354     dw 0
-word_2F356     dw 0
-word_2F358     dw 0
-word_2F35A     dw 0
+shape2d_helper2_state_value     dw 0
+shape2d_helper2_state_value_2     dw 0
+shape2d_helper2_state_value_3     dw 0
+shape2d_helper2_state_value_4     dw 0
 _parse_shape2d_helper2 endp
 _TEXT ends
 end
