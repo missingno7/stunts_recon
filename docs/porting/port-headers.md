@@ -17,13 +17,15 @@ python tools/porting/host_probe.py --mode strict-central
 
 `compat` writes host-only configs, source overlays, and compiler objects under `build/porting/host-probe/compat/`. It supplies the central header plus the local declarations, selected aggregate views, and adapters needed by the current recovered source. Integrated result: **38/38 syntax passes and 38/38 object passes** ([report](../../build/porting/host-probe/compat/report.md), [raw results](../../build/porting/host-probe/compat/results.json)).
 
-`strict-central` writes under `build/porting/host-probe/strict-central/` and removes local prototype/extern views. Integrated result: **24/38 syntax passes and 24/38 object passes**; the 14 remaining failures are Class 2 source declaration, target-width, signature, or aggregate-view disagreements listed below ([report](../../build/porting/host-probe/strict-central/report.md), [raw diagnostics](../../build/porting/host-probe/strict-central/results.json)). This audits source consistency and does not claim the current sources are ready to link against the central declarations. All modes are compile-only and produce host objects unrelated to accepted historical objects.
+`strict-central` writes under `build/porting/host-probe/strict-central/` and removes local prototype/extern views. With the `PORT_BUILD` source adapters, the current result is **38/38 syntax passes and 38/38 object passes** ([report](../../build/porting/host-probe/strict-central/report.md), [raw results](../../build/porting/host-probe/strict-central/results.json)). The earlier unadapted baseline was 24/38; the historical declaration/view differences are retained below. Strict-central is still a compile-only audit: it does not link or execute host code, and a pass does not resolve the semantic/runtime residuals listed below. Both probe modes produce host objects unrelated to accepted historical objects.
+
+The strict-central adapters are guarded by `PORT_BUILD` and `STUNTS_PROBE_STRICT_CENTRAL`; the probe writes transformed source only under `build/porting/host-probe/`. The declarations, adapters, and source rewrites are porting aids, not matching-source or historical-profile changes.
 
 `tests/test_port_header_layout.py` compiles `stunts_structs.h` when GCC is present. Including it evaluates the generated full schema `sizeof`/`offsetof` assertions; the test also pins representative GAMESTATE, SHAPE2D, and AUDIOCHUNK sizes and GAMESTATE member offsets. It skips when GCC is unavailable.
 
-## Remaining strict-central Class 2 differences
+## Pre-adapter strict-central Class 2 differences
 
-Each row groups the strict-central compiler errors by source TU and symbol/view. The exact locations and compiler messages are retained in the linked raw report. Function-call and global-view disagreements recorded in the Y2 notes remain source-porting work; the header set does not alter matching sources.
+This table records the 14-TU baseline that produced 24/38 passes before the strict-central overlays. Some rows are now syntax-adapted for host compilation; that does not repair the matching source declarations or establish runtime semantics. The [Y2 port notes](../../build/workers/Y2/PORT_NOTES.md) retain the caller/source evidence.
 
 | Translation unit | Remaining Class 2 symbols and views |
 |---|---|
@@ -43,6 +45,22 @@ Each row groups the strict-central compiler errors by source TU and symbol/view.
 | `seg017_mouse_whole.c` | `ms_buttons`, `cursorxposition`, `mouse_api_y` source declarations conflict with central target widths. |
 
 The remaining API-signature notes also include `call_read_line` (six-parameter definition versus five-argument callers), `audio_init_chunk` (six versus seven), and `locate_shape_fatal` (generic far-resource result versus a `SHAPE2D` member view), all Class 2. Full call-site/source evidence is in the [Y2 notes](../../build/workers/Y2/PORT_NOTES.md).
+
+## PORT_BUILD adapter evidence and remaining residuals
+
+Every adapter below is host-only and is excluded from the matching build. The machine anchors and parameter reads are recorded in the [Z1 API context digest](../../build/workers/Z1/api_context_digest.json) and summarized in the [Z1 report](../../build/workers/Z1/REPORT.md). The probe is a syntax/object-compile check only.
+
+| Blocker class | Adapter or unresolved behavior | Evidence and remaining work |
+|---|---|---|
+| 2 | `call_read_line` caller view | The target `load_190bc` in seg008 (`+0x1C0C`, 126 bytes) reads six parameter words at `BP+6..BP+0x10`; `obj_seg000.c:115` declares the five-argument caller view, call sites are at `:1328` and `:2774`, and `obj_seg008.c:1180` defines six word parameters. The wrapper splits the final `I32` into low/high words. Source migration and whole-object matching remain separate work. |
+| 2 | `timer_copy_counter` caller view | Target `load_227c0` in seg012 (`+0x3DA0`, 23 bytes) adds the words at `BP+6` and `BP+8` into `DX:AX`; `obj_seg032_group.c:34,78,123` declares/passes two words. The host view joins them into one `U32`; source migration remains open. |
+| 2 | `read_file_with_retry` and `send_audio_stop_event` | `obj_seg000.c:1150` calls `read_file_with_retry` with three arguments while `obj_seg008.c:1548` defines four; no evidence supplies the omitted value. `obj_seg007.c:158` consumes a result from a call to the `void` definition at `obj_seg028.c:489`; no target return-value evidence is available. Their dispatch hooks intentionally have no implementation. |
+| 2 | `locate_shape_fatal` result view; `nullsub_2` call view | `load_20f9d` in seg012 (`+0x257D`, 12 bytes) sets `DX=1` and jumps to a generic resource thunk, which does not establish a payload type. The `SHAPE2D` view follows uses at `obj_seg000.c:716,2412-2418,2531-2650`. `nullsub_2` is exactly `retf; nop` (`load_29e54`, seg031 `+0x44`, 2 bytes), with no parameter reads; caller form and canonical source migration remain separate. |
+| 4 | Host file/resource/audio dispatch | `stunts_port_read_file_with_retry_dispatch` and `stunts_port_send_audio_stop_event_dispatch` are declared only; a host integration must define policy and linkage. The probe does not link. |
+| 5 | `obj_seg005.c` camera-button arrays | Source initializers at lines 1915-1918 each contain nine words, while central target extents at `0x2EA08/0x2EA1A/0x2EA2C/0x2EA3E` are 8/8/7/7 words. The incomplete host extern views only permit compilation; resolve the complete owning object boundaries before assigning matching ownership. |
+| 6 | `audio_init_chunk` far pointer | Target `load_27dbc` in seg027 (`+0x0CEC`, 260 bytes) reads seven words, with the far pointer occupying `BP+0xA/+0xC`; `obj_seg028.c:96,203` exposes the seven source expressions and the observed call uses `0:0`. Define `stunts_port_resolve_far_data_pointer` for nonzero segmented addresses before host linking or execution. |
+
+Other PORT_BUILD type/aggregate views cite their basis beside the declarations: `track_object` aliases preserve same-offset members used by `obj_seg001_complete.c`, `obj_seg003.c`, `obj_seg004.c`, and `obj_seg009.c`; audio records use the source-selected fields at `obj_seg028.c:75-76`; `savedptr_ms`, `td10checkptr`, and the cursor globals retain their source-specific pointer views. The source-selected record layouts are mapped in [AGGREGATE_VIEW_MAP.md](../../tools/porting/port_include/AGGREGATE_VIEW_MAP.md), and machine-backed widths/bindings are in [declaration-evidence.json](../../tools/porting/port_include/declaration-evidence.json). These views do not settle the camera extents or implement host runtime services.
 
 ## Independently bound declarations
 

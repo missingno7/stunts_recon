@@ -1,5 +1,7 @@
 /* PORTING ONLY: NOT PART OF THE MATCHING BUILD. */
 /* Generated X2 SDL port API. Evidence is in declaration-evidence.json. */
+/* PORT_BUILD per-TU views and their source/machine evidence are mapped in
+   docs/porting/port-headers.md#port_build-adapter-evidence-and-remaining-residuals. */
 #ifndef STUNTS_DECLS_H
 #define STUNTS_DECLS_H
 #include "stunts_types.h"
@@ -428,7 +430,11 @@ extern unsigned char audioblock[24]; /* 0x34ACA; state-model; size=24 */
 extern unsigned char audiochnk_actflags[24]; /* 0x35D9A; state-model; size=24 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_audiochunktable
-extern struct AUDIOCHUNK audiochunktable[24]; /* 0x3396C; state-model; size=1824 */
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg028)
+extern struct AudioChunk audiochunktable[24]; /* PORT_BUILD source-field view; target extent remains the measured 24x76 schema. */
+#else
+extern struct AUDIOCHUNK audiochunktable[24];
+#endif /* 0x3396C; state-model; size=1824 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_audiodriverbinary
 extern void far *audiodriverbinary; /* 0x3060A; four-byte far pointer (dseg.asm:20635; src/obj_seg027.c:153); next 34 bytes are audio_bit_masks[17]. */
@@ -956,16 +962,32 @@ extern void * game2res_pointer; /* 0x363D2; state-model; size=4 */
 extern char game_camera_buttons_count[4]; /* 0x2EA04; typeinfer machine-access widths/extent; size=4 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_x1
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
+extern int16_t game_camera_buttons_x1[]; /* PORT_BUILD: src/obj_seg005.c:1915 has 9; target 0x2EA08 has 8 words. */
+#else
 extern int16_t game_camera_buttons_x1[8]; /* 0x2EA08; typeinfer machine-access widths/extent; size=16 */
 #endif
+#endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_x2
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
+extern int16_t game_camera_buttons_x2[]; /* PORT_BUILD: src/obj_seg005.c:1916 has 9; target 0x2EA1A has 8 words. */
+#else
 extern int16_t game_camera_buttons_x2[8]; /* 0x2EA1A; typeinfer machine-access widths/extent; size=16 */
 #endif
+#endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_y1
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
+extern int16_t game_camera_buttons_y1[]; /* PORT_BUILD: src/obj_seg005.c:1917 has 9; target 0x2EA2C has 7 words. */
+#else
 extern int16_t game_camera_buttons_y1[7]; /* 0x2EA2C; typeinfer machine-access widths/extent; size=14 */
 #endif
+#endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_y2
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
+extern int16_t game_camera_buttons_y2[]; /* PORT_BUILD: src/obj_seg005.c:1918 has 9; target 0x2EA3E has 7 words. */
+#else
 extern int16_t game_camera_buttons_y2[7]; /* 0x2EA3E; typeinfer machine-access widths/extent; size=14 */
+#endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_rect_txt_in
 extern struct RECTANGLE game_rect_txt_in; /* 0x3617E; state-model; size=8 */
@@ -1364,7 +1386,11 @@ extern int16_t mouse_oldx; /* 0x2EBB8; typeinfer machine-access widths/extent; s
 extern int16_t mouse_oldy; /* 0x2EBBA; typeinfer machine-access widths/extent; size=2 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_mouse_ptr_cursor
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg031)
+extern void far *mouse_ptr_cursor; /* PORT_BUILD: matches the native pointer definition at src/obj_seg031.c:130. */
+#else
 extern struct SPRITE far *mouse_ptr_cursor;
+#endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_mouse_transparent_mode
 extern char mouse_transparent_mode; /* 0x2B8F7; state-model; size=? */
@@ -1757,7 +1783,11 @@ extern unsigned char saved_effect_chunk_volumes[24]; /* 0x328D6; state-model; si
 extern unsigned char saved_music_chunk_volumes[24]; /* 0x328BE; state-model; size=? */
 #endif
 #ifndef STUNTS_LOCAL_DATA_savedptr_ms
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg000)
+extern char far *savedptr_ms; /* PORT_BUILD: obj_seg000.c:358 byte view; obj_seg008 save/restore indexes bytes. */
+#else
 extern struct SPRITE far *savedptr_ms; /* sprite-save table view from src/obj_seg008.c. */
+#endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_scene2
 extern struct scene_shape scene2[19]; /* 0x2E3CA; state-model; size=266 */
@@ -1913,7 +1943,11 @@ extern unsigned short snd_sample_rate_phase; /* 0x34D48; state-model; size=2 */
 extern int16_t snd_tick_clock; /* 0x343F4; state-model; size=2 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_snd_voices_tbl
-extern struct AUDIOVOICE snd_voices_tbl[16]; /* 0x35A26; state-model; size=736 */
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg028)
+extern struct AudioVoice snd_voices_tbl[16]; /* PORT_BUILD source-field view; shared extent/offsets are in AGGREGATE_VIEW_MAP.md. */
+#else
+extern struct AUDIOVOICE snd_voices_tbl[16];
+#endif /* 0x35A26; state-model; size=736 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_sndpendingstate
 extern char sndpendingstate; /* 0x359D8; state-model; size=1 */
@@ -1937,7 +1971,11 @@ extern st_near_data_offset sphere_scanline_profiles[40]; /* 0x2F3C8; state-model
 extern struct SPRITE sprite2; /* ?; accepted-TU declaration consensus; target evidence incomplete; size=? */
 #endif
 #ifndef STUNTS_LOCAL_DATA_spritepointermini
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg031)
+extern void far *spritepointermini; /* PORT_BUILD: matches the native pointer definition at src/obj_seg031.c:129. */
+#else
 extern struct SPRITE far *spritepointermini;
+#endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_st_hdg
 extern short st_hdg; /* 0x35516; state-model; size=2 */
@@ -1973,7 +2011,11 @@ extern char * table_lookup; /* 0x349E8; state-model; size=2 */
 extern char tagtrk; /* 0x3499E; state-model; size=1 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_td10checkptr
+#if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg003)
+extern I16 far *td10checkptr; /* PORT_BUILD: obj_seg003.c:401 and 1662-1681 index target words; other TUs use VECTOR. */
+#else
 extern struct VECTOR far *td10checkptr; /* checkpoints are x/y/z vector records (source: obj_seg001_complete.c and obj_seg004.c). */
+#endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_td13_replay_hdr
 extern char * td13_replay_hdr; /* 0x36162; state-model; size=4 */
@@ -2485,10 +2527,10 @@ extern void audio_enable_flag2(void); /* 0x273B2; target evidence: void far audi
 extern void audio_enable_flag6(void); /* 0x27696; target evidence: void far audio_enable_flag6(void); */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_function2
-extern void far audio_function2(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_function2(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_function2_wrap
-extern void far audio_function2_wrap(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_function2_wrap(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_init_chunk
 extern void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset, U8 volume, U8 priority); /* SOURCE: src/obj_seg027.c; machine ABI evidence: declaration-evidence.json */
@@ -2497,7 +2539,7 @@ extern void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset,
 extern void FAR audio_init_chunk2(I16 chunk); /* SOURCE: src/obj_seg027.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_init_engine
-extern int far audio_init_engine(int unused, u8 huge *blob, void far *lookup, void far *resource); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern I16 far audio_init_engine(I16 unused, u8 huge *blob, void far *lookup, void far *resource); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_load_driver
 extern I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature); /* SOURCE: src/obj_seg027.c; machine ABI evidence: declaration-evidence.json */
@@ -2512,25 +2554,25 @@ extern void FAR audio_map_song_instruments(void FAR *song, void FAR *voice); /* 
 extern void FAR audio_map_song_tracks(U8 FAR *song); /* SOURCE: src/obj_seg027.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk
-extern void far audio_op_unk(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk2
-extern void far audio_op_unk2(int index, u16 sample_word, int x2, int y2, int z2, int x, int y, int z, u16 speed); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk2(I16 index, u16 sample_word, I16 x2, I16 y2, I16 z2, I16 x, I16 y, I16 z, u16 speed); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk3
-extern void far audio_op_unk3(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk3(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk4
-extern void far audio_op_unk4(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk4(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk5
-extern void far audio_op_unk5(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk5(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk6
-extern void far audio_op_unk6(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk6(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_op_unk7
-extern void far audio_op_unk7(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far audio_op_unk7(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_audio_remove_driver_timer
 extern void audio_remove_driver_timer(void); /* 0x16BD5; target evidence: void far audio_remove_driver_timer(void); */
@@ -3029,7 +3071,7 @@ extern short get_super_random(void); /* 0x1998E; target evidence: int far get_su
 extern short getnum(short *, char *); /* 0x1DE06; target evidence: int far getnum(int *, char *); */
 #endif
 #ifndef STUNTS_LOCAL_FN_handle_ingame_kb_shortcuts
-extern I8 handle_ingame_kb_shortcuts(unsigned key); /* SOURCE: src/obj_seg005.c; machine ABI evidence: declaration-evidence.json */
+extern I8 handle_ingame_kb_shortcuts(U16 key); /* SOURCE: src/obj_seg005.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_heapsort_by_order
 extern short heapsort_by_order(short, short, short); /* 0x26BE8; target evidence: int far heapsort_by_order(int, int, int); */
@@ -3120,7 +3162,7 @@ extern void input_push_status(void); /* 0x19AEC; target evidence: void far input
 extern short input_repeat_check(short); /* 0x1913A; target evidence: int far input_repeat_check(int); */
 #endif
 #ifndef STUNTS_LOCAL_FN_insert_newest_poly_in_poly_linked_list_40ED6
-extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, unsigned search_sorted_position); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
+extern U16 insert_newest_poly_in_poly_linked_list_40ED6(U16 depth, U16 search_sorted_position); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_int86
 extern int16_t int86(uint16_t, struct MouseRegs *, struct MouseRegs *); /* source declaration */
@@ -3432,16 +3474,16 @@ extern void nopsub_19E13(short); /* 0x09E13; target evidence: void far nopsub_19
 extern I32 nopsub_26552(I32 value); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_nopsub_27220
-extern void far nopsub_27220(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far nopsub_27220(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_nopsub_2726C
-extern void far nopsub_2726C(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far nopsub_2726C(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_nopsub_272B0
-extern void far nopsub_272B0(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern void far nopsub_272B0(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_nopsub_27489
-extern int far nopsub_27489(int index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
+extern I16 far nopsub_27489(I16 index); /* SOURCE: src/obj_seg007.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_nopsub_28F26
 extern void nopsub_28F26(void); /* 0x18F26; target evidence: void far nopsub_28F26(void); */
@@ -3825,7 +3867,7 @@ extern void rect_adjust_from_point(struct POINT2D *pt, struct RECTANGLE *rc); /*
 extern void rect_array_sort_by_top(char, short, short *); /* 0x16B4A; target evidence: void far rect_array_sort_by_top(char, int, int *); */
 #endif
 #ifndef STUNTS_LOCAL_FN_rect_compare_point
-extern unsigned rect_compare_point(struct POINT2D *point); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
+extern U16 rect_compare_point(struct POINT2D *point); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_rect_intersect
 extern char rect_intersect(int); /* 0x165EC; target evidence: char far rect_intersect(long); */
@@ -3937,10 +3979,10 @@ extern I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk
 extern short select_cliprect_rotate(int, short, short *, short); /* 0x14E06; target evidence: int far select_cliprect_rotate(long, int, int *, int); */
 #endif
 #ifndef STUNTS_LOCAL_FN_select_rot
-extern unsigned select_rot(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
+extern U16 select_rot(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_send_audio_stop_event
-extern void far send_audio_stop_event(I16 first, I16 chunk_index); /* defining TU is void; obj_seg007.c consumes a value (PORT mismatch). */
+extern void far send_audio_stop_event(I16 first, I16 chunk_index); /* defining TU is void; obj_seg007 consumes a value (PORT mismatch). */
 #endif
 #ifndef STUNTS_LOCAL_FN_set_add_value
 extern void far set_add_value(I32 ticks);
@@ -4419,7 +4461,7 @@ extern char track_edge_points(int16_t, struct TRACKRESULT *, char, char *); /* s
 extern I16 track_setup(void); /* SOURCE: src/obj_seg004.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_trans_op
-extern unsigned trans_op(struct TRANSFORMEDSHAPE3D* ts); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
+extern U16 trans_op(struct TRANSFORMEDSHAPE3D* ts); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_transformed_shape_add_for_sort
 extern void transformed_shape_add_for_sort(short, char); /* 0x0CB80; target evidence: void far transformed_shape_add_for_sort(int, char); */
@@ -4528,5 +4570,7 @@ extern void wheel_update(struct VECTOR far *out, I16 angle,
               I16S *base, I16S *last_angle_and_y,
               struct VECTOR *source, I16S *origin); /* SOURCE: src/obj_seg004.c; machine ABI evidence: declaration-evidence.json */
 #endif
+
+#include "stunts_api_views.h"
 
 #endif /* STUNTS_DECLS_H */

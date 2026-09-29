@@ -164,6 +164,8 @@ def local_config(source: str, text: str, owner: str):
             fn_protos["locate_shape_fatal"] = "extern struct SHAPE2D *locate_shape_fatal();"
     lines = ["/* Generated per-TU PORT_BUILD declaration replacement. */",
              "#ifndef PORT_BUILD", "#define PORT_BUILD 1", "#endif"]
+    if STRICT_CENTRAL:
+        lines.append("#define STUNTS_PROBE_STRICT_CENTRAL 1")
     lines.append(f"#define STUNTS_TU_{Path(source).stem} 1")
     for name in sorted(fn_protos):
         lines.append(f"#define STUNTS_LOCAL_FN_{name} 1")
@@ -222,6 +224,57 @@ def aggregate_spans(text: str, shared_tags: set[str]):
     return sorted(set(spans))
 
 
+
+def legacy_target_widths(text: str):
+    """Use MSC target widths for old bare int/long spellings in the host-only overlay."""
+    out=[]; i=0; n=len(text); line_start=True
+    nl=chr(10); cr=chr(13); tab=chr(9); slash=chr(92)
+    while i<n:
+        if line_start:
+            j=i
+            while j<n and text[j] in (" ",tab,cr): j+=1
+            if j<n and text[j]=="#":
+                end=text.find(nl,j)
+                if end<0: out.append(text[i:]); break
+                out.append(text[i:end+1]); i=end+1; line_start=True; continue
+        c=text[i]
+        if c==nl: out.append(c); i+=1; line_start=True; continue
+        if c in (" ",tab,cr): out.append(c); i+=1; continue
+        line_start=False
+        if text.startswith("/*",i):
+            end=text.find("*/",i+2); end=n if end<0 else end+2
+            chunk=text[i:end]; out.append(chunk); line_start=chunk.endswith(nl); i=end; continue
+        if text.startswith("//",i):
+            end=text.find(nl,i+2); end=n if end<0 else end
+            out.append(text[i:end]); i=end; continue
+        if c==chr(34) or c=="'":
+            q=c; j=i+1
+            while j<n:
+                if text[j]==slash: j+=2; continue
+                if text[j]==q: j+=1; break
+                j+=1
+            out.append(text[i:j]); i=j; continue
+        if c.isalpha() or c=="_":
+            j=i+1
+            while j<n and (text[j].isalnum() or text[j]=="_"): j+=1
+            word=text[i:j]
+            if word in ("unsigned","signed"):
+                k=j
+                while k<n and text[k].isspace(): k+=1
+                if text.startswith("int",k) and (k+3==n or not (text[k+3].isalnum() or text[k+3]=="_")):
+                    out.append("U16" if word=="unsigned" else "I16"); i=k+3; continue
+                if text.startswith("long",k) and (k+4==n or not (text[k+4].isalnum() or text[k+4]=="_")):
+                    out.append("U32" if word=="unsigned" else "I32"); i=k+4; continue
+                if word=="unsigned" and not (text.startswith("char",k) or text.startswith("short",k)):
+                    out.append("U16"); i=j; continue
+                if word=="signed" and not (text.startswith("char",k) or text.startswith("short",k)):
+                    out.append("I16"); i=j; continue
+            if word=="int": word="I16"
+            elif word=="long": word="I32"
+            out.append(word); i=j; continue
+        out.append(c); i+=1
+    return "".join(out)
+
 def transformed_source(source: str, text: str, local_fns, local_data, shared_tags):
     code = mask_comments(text)
     removals = []
@@ -273,7 +326,8 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     if source == "src/obj_seg008.c":
         out = re.sub(r"\bU32\s+(?:far\s+)?timer_get_delta_alt\s*\(",
                      "I16 far timer_get_delta_alt(", out)
-        out = rewrite_calls(out, "call_read_line", "unprototyped")
+        mode = "rename:stunts_port_call_read_line_view" if STRICT_CENTRAL else "unprototyped"
+        out = rewrite_calls(out, "call_read_line", mode)
     # C does not permit an integer cast as an assignment lvalue. These legacy
     # spellings cast the value-width of globals whose declarations already carry it.
     out = re.sub(r"\(\(\s*((?:I8S|U8|I16S|U16S|I16|U16|I32|U32))\s*\)\s*([A-Za-z_]\w*)\s*\)\s*=(?!=)\s*([^;]+);",
@@ -284,10 +338,31 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     if source == "src/obj_seg000.c":
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
+        if STRICT_CENTRAL:
+            out = rewrite_calls(out, "read_file_with_retry", "rename:stunts_port_read_file_with_retry_view")
+            out = rewrite_calls(out, "call_read_line", "rename:stunts_port_call_read_line_view")
+            out = rewrite_calls(out, "locate_shape_fatal", "rename:stunts_port_locate_shape_fatal_shape_view")
     if source == "src/toupper.c":
         out = re.sub(r"\bI16\s+toupper\s*\(\s*I16\s+ch\s*\)",
                      "int toupper(int ch)", out, count=1)
+    if STRICT_CENTRAL:
+        if source == "src/obj_seg032_group.c":
+            out = rewrite_calls(out, "timer_copy_counter", "rename:stunts_port_timer_copy_counter_split_view")
+        if source == "src/obj_seg028.c":
+            out = rewrite_calls(out, "audio_init_chunk", "rename:stunts_port_audio_init_chunk_7_view")
+        if source == "src/obj_seg007.c":
+            out = rewrite_calls(out, "send_audio_stop_event", "rename:stunts_port_send_audio_stop_event_value_view")
+        if source == "src/obj_seg003.c":
+            out = re.sub(r"\bresbuftext\s*=\s*0\s*;", "resbuftext[0] = 0;", out, count=1)
     out = rewrite_calls(out, "nullsub_2", "pad2")
+    if STRICT_CENTRAL:
+        out = legacy_target_widths(out)
+    if source == "src/obj_seg000.c":
+        out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
+                     "int main(int argc, I8 *argv[])", out, count=1)
+    if source == "src/toupper.c":
+        out = re.sub(r"\bI16\s+toupper\s*\(\s*I16\s+ch\s*\)",
+                     "int toupper(int ch)", out, count=1)
     return out, len(set(removals))
 
 
@@ -361,6 +436,8 @@ def rewrite_calls(text: str, name: str, mode: str):
                 edits.append((i - 1, i - 1, ", 0" * (desired - arity)))
         elif mode == "unprototyped":
             edits.append((match.start(), open_at, f"((int16_t (*)()){name})"))
+        elif mode.startswith("rename:"):
+            edits.append((match.start(), open_at, mode.split(":", 1)[1]))
     for a, b, replacement in sorted(edits, reverse=True):
         text = text[:a] + replacement + text[b:]
     return text

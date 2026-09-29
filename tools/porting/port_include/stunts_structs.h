@@ -1,5 +1,7 @@
 /* PORTING ONLY: NOT PART OF THE MATCHING BUILD. */
 /* Shared public aggregate definitions selected for each accepted TU layout. */
+/* PORT_BUILD field aliases preserve these same-offset target members; their
+   source-selected basis is mapped in AGGREGATE_VIEW_MAP.md and port-headers.md. */
 #include "stunts_types.h"
 #include "stunts_structs_target.h" /* shared measured target-width schemas */
 
@@ -5933,10 +5935,21 @@ struct scene_shape {
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
-  unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
+  unsigned char overlay, surface, ignore_z_bias;
+  #ifdef PORT_BUILD
+  union { unsigned char multi_tile; unsigned char ss_multiTileFlag; unsigned char multiTile; };
+  union { unsigned char physical_model; unsigned char ss_physicalModel; unsigned char physicalModel; };
+  #else
+  unsigned char multi_tile, physical_model;
+  #endif
+  unsigned char unknown;
 };
 #pragma pack(pop)
 #endif
@@ -6691,10 +6704,21 @@ struct scene_shape {
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
-  unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
+  unsigned char overlay, surface, ignore_z_bias;
+  #ifdef PORT_BUILD
+  union { unsigned char multi_tile; unsigned char ss_multiTileFlag; unsigned char multiTile; };
+  union { unsigned char physical_model; unsigned char ss_physicalModel; unsigned char physicalModel; };
+  #else
+  unsigned char multi_tile, physical_model;
+  #endif
+  unsigned char unknown;
 };
 #pragma pack(pop)
 #endif
@@ -7291,10 +7315,21 @@ struct scene_shape {
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
-  unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
+  unsigned char overlay, surface, ignore_z_bias;
+  #ifdef PORT_BUILD
+  union { unsigned char multi_tile; unsigned char ss_multiTileFlag; unsigned char multiTile; };
+  union { unsigned char physical_model; unsigned char ss_physicalModel; unsigned char physicalModel; };
+  #else
+  unsigned char multi_tile, physical_model;
+  #endif
+  unsigned char unknown;
 };
 #pragma pack(pop)
 #endif
@@ -10673,10 +10708,21 @@ struct scene_shape {
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
-  unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
+  unsigned char overlay, surface, ignore_z_bias;
+  #ifdef PORT_BUILD
+  union { unsigned char multi_tile; unsigned char ss_multiTileFlag; unsigned char multiTile; };
+  union { unsigned char physical_model; unsigned char ss_physicalModel; unsigned char physicalModel; };
+  #else
+  unsigned char multi_tile, physical_model;
+  #endif
+  unsigned char unknown;
 };
 #pragma pack(pop)
 #endif
