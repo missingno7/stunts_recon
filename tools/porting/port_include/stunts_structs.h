@@ -1,6 +1,7 @@
 /* PORTING ONLY: NOT PART OF THE MATCHING BUILD. */
 /* Shared public aggregate definitions selected for each accepted TU layout. */
 #include "stunts_types.h"
+#include "stunts_structs_target.h" /* shared measured target-width schemas */
 
 /* INT 33h register packet: seven target words (14 bytes). */
 typedef struct MouseRegs { uint16_t ax, bx, cx, dx, si, di, cflag; } MouseRegs;
