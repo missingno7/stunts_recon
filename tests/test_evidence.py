@@ -22,15 +22,22 @@ from x86_16_encoding import (bare_string_opcode_matches_source,
 
 
 def emitted_run(path, label):
-    lines = path.read_text(encoding='latin1').splitlines()
+    from pinned_reference import check_reference_identity, reference_rows
+    check_reference_identity(path)
+    rows = reference_rows(path, 1, 2**31-1)
     pattern = re.compile(r'^\s*' + re.escape(label) + r'\s+(?:db|dw)\b', re.I)
-    start = next(i for i, line in enumerate(lines) if pattern.match(line.split(';', 1)[0]))
+    start = next(i for i, (_, line) in enumerate(rows)
+                 if pattern.match(line.split(';', 1)[0]))
     output = []
-    for line in lines[start:]:
+    previous = rows[start][0] - 1
+    for number, line in rows[start:]:
+        if number != previous + 1:
+            break
         payload = numeric_literal_bytes(line.split(';', 1)[0])
         if payload is None:
             break
         output.append(payload)
+        previous = number
     return b''.join(output)
 
 
@@ -111,7 +118,8 @@ class EvidenceTests(unittest.TestCase):
         for function_name, label, inside in examples:
             with self.subTest(label=label):
                 function = functions[function_name]
-                emitted = emitted_run(ROOT / function['source'], label)
+                source_path = function['provenance']['path']
+                emitted = emitted_run(source_path, label)
                 address = int(label.rsplit('_', 1)[1], 16) - 0x10000
                 self.assertEqual(emitted, self.image[address:address + len(emitted)])
                 self.assertGreater(len(emitted), 0)
