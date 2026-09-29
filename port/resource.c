@@ -565,15 +565,8 @@ void *locate_sound_fatal(uint8_t *archive, char *name)
 char *file_find(const char *name)
 {
     static char found[1024];
-    int handle;
-    size_t length;
-    if (name == NULL || (handle = port_fs_open_read(name)) < 0)
+    if (name == NULL || !port_fs_find(name, found, sizeof(found)))
         return NULL;
-    port_fs_close(handle);
-    length = strlen(name);
-    if (length >= sizeof(found))
-        return NULL;
-    memcpy(found, name, length + 1u);
     return found;
 }
 

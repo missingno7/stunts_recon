@@ -1,5 +1,7 @@
 #include "port_runtime.h"
 
+#include <SDL3/SDL.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -95,6 +97,117 @@ int port_fs_exists(const char *path)
     return 1;
 }
 
+static int dos_pattern_match(const char *pattern, const char *name)
+{
+    const char *star = NULL;
+    const char *retry = NULL;
+    while (*name != '\0') {
+        unsigned char p = (unsigned char)*pattern;
+        unsigned char n = (unsigned char)*name;
+        if (p == '?' || (p != '\0' && tolower(p) == tolower(n))) {
+            ++pattern;
+            ++name;
+        } else if (p == '*') {
+            star = ++pattern;
+            retry = name;
+        } else if (star != NULL) {
+            pattern = star;
+            name = ++retry;
+        } else {
+            return 0;
+        }
+    }
+    while (*pattern == '*')
+        ++pattern;
+    return *pattern == '\0';
+}
+
+typedef struct PortFindContext {
+    const char *pattern;
+    const char *relative_directory;
+    char *found;
+    size_t capacity;
+    int matched;
+} PortFindContext;
+
+static SDL_EnumerationResult SDLCALL find_directory_entry(
+    void *userdata, const char *dirname, const char *filename)
+{
+    PortFindContext *context = (PortFindContext *)userdata;
+    char candidate[PORT_PATH_BYTES * 2u];
+    SDL_PathInfo info;
+    int length;
+    if (!dos_pattern_match(context->pattern, filename))
+        return SDL_ENUM_CONTINUE;
+    length = snprintf(candidate, sizeof(candidate), "%s%s", dirname, filename);
+    if (length < 0 || (size_t)length >= sizeof(candidate) ||
+        !SDL_GetPathInfo(candidate, &info) || info.type != SDL_PATHTYPE_FILE)
+        return SDL_ENUM_CONTINUE;
+    if (context->relative_directory[0] != '\0')
+        length = snprintf(context->found, context->capacity, "%s/%s",
+                          context->relative_directory, filename);
+    else
+        length = snprintf(context->found, context->capacity, "%s", filename);
+    if (length < 0 || (size_t)length >= context->capacity)
+        return SDL_ENUM_FAILURE;
+    context->matched = 1;
+    return SDL_ENUM_SUCCESS;
+}
+
+int port_fs_find(const char *pattern, char *found, size_t capacity)
+{
+    char relative[PORT_PATH_BYTES];
+    char directory[PORT_PATH_BYTES];
+    char full_directory[PORT_PATH_BYTES * 2u];
+    char *basename;
+    char *slash;
+    int length;
+    PortFindContext context;
+    SDL_PathInfo info;
+    if (!safe_relative_path(pattern, relative, sizeof(relative)) ||
+        found == NULL || capacity == 0)
+        return 0;
+    if (strchr(relative, '*') == NULL && strchr(relative, '?') == NULL) {
+        int handle = port_fs_open_read(relative);
+        if (handle < 0)
+            return 0;
+        port_fs_close(handle);
+        length = snprintf(found, capacity, "%s", relative);
+        return length >= 0 && (size_t)length < capacity;
+    }
+    slash = strrchr(relative, '/');
+    if (slash != NULL) {
+        size_t directory_length = (size_t)(slash - relative);
+        if (directory_length >= sizeof(directory))
+            return 0;
+        memcpy(directory, relative, directory_length);
+        directory[directory_length] = '\0';
+        basename = slash + 1;
+    } else {
+        directory[0] = '\0';
+        basename = relative;
+    }
+    if (strcmp(basename, "*.*") == 0)
+        basename = "*";
+    if (strchr(directory, '*') != NULL || strchr(directory, '?') != NULL)
+        return 0;
+    if (directory[0] == '\0')
+        length = snprintf(full_directory, sizeof(full_directory), "%s", s_asset_root);
+    else
+        length = snprintf(full_directory, sizeof(full_directory), "%s/%s",
+                          s_asset_root, directory);
+    if (length < 0 || (size_t)length >= sizeof(full_directory) ||
+        !SDL_GetPathInfo(full_directory, &info) || info.type != SDL_PATHTYPE_DIRECTORY)
+        return 0;
+    context.pattern = basename;
+    context.relative_directory = directory;
+    context.found = found;
+    context.capacity = capacity;
+    context.matched = 0;
+    (void)SDL_EnumerateDirectory(full_directory, find_directory_entry, &context);
+    return context.matched;
+}
+
 static FILE *file_from_handle(int handle)
 {
     if (handle <= 0 || handle > (int)PORT_FILE_HANDLES)
@@ -131,6 +244,37 @@ void port_fs_close(int handle)
         fclose(file);
         s_files[(size_t)handle - 1u] = NULL;
     }
+}
+
+/* Translates asm/file_read.ASM:_file_read_fatal. DOS reads in 0x4000-byte
+   chunks, advancing the destination segment by 0x400 paragraphs each time.
+   The host pointer is already normalized by the port's far-memory model. */
+void file_read_fatal(const char *filename, uint8_t *destination)
+{
+    uint8_t chunk[0x4000];
+    size_t remaining;
+    size_t offset = 0;
+    int handle;
+    if (filename == NULL || destination == NULL ||
+        !port_memory_extent(destination, &remaining))
+        fatal_error("%s FILE ERROR", filename != NULL ? filename : "(null)");
+
+    handle = port_fs_open_read(filename);
+    if (handle < 0)
+        fatal_error("%s FILE ERROR", filename);
+
+    for (;;) {
+        int32_t got = port_fs_read(handle, chunk, (uint32_t)sizeof(chunk));
+        if (got < 0 || (size_t)got > remaining - offset) {
+            port_fs_close(handle);
+            fatal_error("%s FILE ERROR", filename);
+        }
+        memcpy(destination + offset, chunk, (size_t)got);
+        offset += (size_t)got;
+        if ((size_t)got != sizeof(chunk))
+            break;
+    }
+    port_fs_close(handle);
 }
 
 void *port_fs_load(const char *path, size_t *length_out,

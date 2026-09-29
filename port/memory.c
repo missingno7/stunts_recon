@@ -23,9 +23,53 @@ typedef struct PortAllocation {
 static uint8_t s_dos_memory[PORT_DOS_ADDRESS_BYTES];
 extern uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 static PortAllocation s_allocations[PORT_MAX_ALLOCS];
-static uint32_t s_next_linear = PORT_FIRST_HEAP_LINEAR;
 static uint32_t s_next_handle = PORT_HANDLE_BASE;
 static PortMemoryStats s_stats;
+
+static int find_real_span(size_t size, uint32_t *linear_out)
+{
+    uint32_t candidate = PORT_FIRST_HEAP_LINEAR;
+    if (size > PORT_CONVENTIONAL_END - PORT_FIRST_HEAP_LINEAR)
+        return 0;
+    for (;;) {
+        uint32_t next_candidate = candidate;
+        size_t i;
+        if (candidate > PORT_CONVENTIONAL_END ||
+            size > PORT_CONVENTIONAL_END - candidate)
+            return 0;
+        for (i = 0; i < PORT_MAX_ALLOCS; ++i) {
+            const PortAllocation *entry = &s_allocations[i];
+            uint32_t end;
+            if (!entry->live || entry->space != PORT_FAR_REAL)
+                continue;
+            end = entry->linear + (uint32_t)entry->padded_size;
+            if (candidate < end && candidate + size > entry->linear &&
+                end > next_candidate)
+                next_candidate = end;
+        }
+        if (next_candidate == candidate) {
+            *linear_out = candidate;
+            return 1;
+        }
+        candidate = (next_candidate + 15u) & ~15u;
+    }
+}
+
+static uint32_t real_heap_high_water(void)
+{
+    uint32_t high_water = PORT_FIRST_HEAP_LINEAR;
+    size_t i;
+    for (i = 0; i < PORT_MAX_ALLOCS; ++i) {
+        const PortAllocation *entry = &s_allocations[i];
+        uint32_t end;
+        if (!entry->live || entry->space != PORT_FAR_REAL)
+            continue;
+        end = entry->linear + (uint32_t)entry->padded_size;
+        if (end > high_water)
+            high_water = end;
+    }
+    return high_water;
+}
 
 static PortAllocation *find_allocation(const void *pointer)
 {
@@ -41,7 +85,6 @@ void port_memory_init(void)
 {
     memset(s_dos_memory, 0, sizeof(s_dos_memory));
     memset(s_allocations, 0, sizeof(s_allocations));
-    s_next_linear = PORT_FIRST_HEAP_LINEAR;
     s_next_handle = PORT_HANDLE_BASE;
     memset(&s_stats, 0, sizeof(s_stats));
 }
@@ -74,8 +117,7 @@ void *port_memory_alloc(size_t size, const char *owner, PortFarPtr *address_out)
     capacity = padded;
     if (capacity <= SIZE_MAX - 0x1000u && padded >= 0x4000u)
         capacity += 0x1000u;
-    use_handle = (padded > PORT_CONVENTIONAL_END - PORT_FIRST_HEAP_LINEAR ||
-                  s_next_linear + capacity > PORT_CONVENTIONAL_END);
+    use_handle = !find_real_span(capacity, &linear);
     if (use_handle) {
         /* Leave one paragraph window of stable growth room for the legacy
            resize API. The public extent remains the requested byte count. */
@@ -95,10 +137,8 @@ void *port_memory_alloc(size_t size, const char *owner, PortFarPtr *address_out)
         entry->handle_segment = (uint16_t)s_next_handle;
         s_next_handle += handle_segments;
     } else {
-        linear = (s_next_linear + 15u) & ~15u;
         host = &s_dos_memory[linear];
         memset(host, 0, size);
-        s_next_linear = linear + (uint32_t)capacity;
         entry->space = PORT_FAR_REAL;
         entry->handle_segment = 0;
     }
@@ -258,6 +298,13 @@ int port_far_from_host(const void *pointer, PortFarPtr *address_out,
 PortMemoryStats port_memory_stats(void)
 {
     return s_stats;
+}
+
+uint16_t mmgr_get_ofs_diff(void)
+{
+    uint32_t high_water = real_heap_high_water();
+    uint32_t paragraphs = (PORT_CONVENTIONAL_END - high_water) >> 4;
+    return paragraphs > 0xFFFFu ? 0xFFFFu : (uint16_t)paragraphs;
 }
 
 int port_memory_extent(const void *pointer, size_t *remaining_out)
