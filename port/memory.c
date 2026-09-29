@@ -1,5 +1,6 @@
 #include "port_runtime.h"
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -50,6 +51,7 @@ void *port_memory_alloc(size_t size, const char *owner, PortFarPtr *address_out)
     PortAllocation *entry = NULL;
     size_t i;
     size_t padded;
+    size_t capacity;
     uint8_t *host;
     uint32_t linear;
     uint32_t handle_segments;
@@ -69,15 +71,23 @@ void *port_memory_alloc(size_t size, const char *owner, PortFarPtr *address_out)
     if (entry == NULL)
         return NULL;
 
+    capacity = padded;
+    if (capacity <= SIZE_MAX - 0x1000u && padded >= 0x4000u)
+        capacity += 0x1000u;
     use_handle = (padded > PORT_CONVENTIONAL_END - PORT_FIRST_HEAP_LINEAR ||
-                  s_next_linear + padded > PORT_CONVENTIONAL_END);
+                  s_next_linear + capacity > PORT_CONVENTIONAL_END);
     if (use_handle) {
-        handle_segments = (uint32_t)(((uint64_t)padded + 0xFFFFu) >> 16);
+        /* Leave one paragraph window of stable growth room for the legacy
+           resize API. The public extent remains the requested byte count. */
+        capacity = padded;
+        if (capacity <= SIZE_MAX - 0x10000u)
+            capacity += 0x10000u;
+        handle_segments = (uint32_t)(((uint64_t)capacity + 0xFFFFu) >> 16);
         if (handle_segments == 0)
             handle_segments = 1;
         if (s_next_handle + handle_segments > 0x10000u)
             return NULL;
-        host = (uint8_t *)calloc(1, size);
+        host = (uint8_t *)calloc(1, capacity);
         if (host == NULL)
             return NULL;
         linear = 0;
@@ -88,13 +98,13 @@ void *port_memory_alloc(size_t size, const char *owner, PortFarPtr *address_out)
         linear = (s_next_linear + 15u) & ~15u;
         host = &s_dos_memory[linear];
         memset(host, 0, size);
-        s_next_linear = linear + (uint32_t)padded;
+        s_next_linear = linear + (uint32_t)capacity;
         entry->space = PORT_FAR_REAL;
         entry->handle_segment = 0;
     }
     entry->host = host;
     entry->size = size;
-    entry->padded_size = padded;
+    entry->padded_size = capacity;
     entry->linear = linear;
     entry->live = 1;
     if (owner != NULL) {
@@ -250,6 +260,55 @@ PortMemoryStats port_memory_stats(void)
     return s_stats;
 }
 
+int port_memory_extent(const void *pointer, size_t *remaining_out)
+{
+    size_t i;
+    uintptr_t p;
+    if (pointer == NULL)
+        return 0;
+    p = (uintptr_t)pointer;
+    for (i = 0; i < PORT_MAX_ALLOCS; ++i) {
+        PortAllocation *entry = &s_allocations[i];
+        uintptr_t base;
+        size_t offset;
+        if (!entry->live || entry->host == NULL)
+            continue;
+        base = (uintptr_t)entry->host;
+        if (p < base || p - base >= entry->size)
+            continue;
+        offset = (size_t)(p - base);
+        if (remaining_out != NULL)
+            *remaining_out = entry->size - offset;
+        return 1;
+    }
+    {
+        uintptr_t video = (uintptr_t)port_framebuffer;
+        if (p >= video && p - video < PORT_VIDEO_MEMORY_BYTES) {
+            if (remaining_out != NULL)
+                *remaining_out = PORT_VIDEO_MEMORY_BYTES - (size_t)(p - video);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int port_memory_resize(void *pointer, size_t size)
+{
+    PortAllocation *entry = find_allocation(pointer);
+    if (entry == NULL || size == 0 || size > entry->padded_size)
+        return 0;
+    if (size > entry->size)
+        memset(entry->host + entry->size, 0, size - entry->size);
+    else
+        s_stats.live_bytes -= (uint32_t)(entry->size - size);
+    if (size > entry->size)
+        s_stats.live_bytes += (uint32_t)(size - entry->size);
+    entry->size = size;
+    if (s_stats.live_bytes > s_stats.high_water_bytes)
+        s_stats.high_water_bytes = s_stats.live_bytes;
+    return 1;
+}
+
 void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
 {
     return port_memory_alloc((size_t)paragraphs * 16u, name, NULL);
@@ -273,4 +332,68 @@ void mmgr_free(void *pointer)
 void mmgr_release(void *pointer)
 {
     port_memory_free(pointer);
+}
+
+uint16_t mmgr_get_chunk_size(void *pointer)
+{
+    size_t extent;
+    size_t paragraphs;
+    if (!port_memory_extent(pointer, &extent))
+        return 0;
+    paragraphs = (extent + 15u) >> 4;
+    return paragraphs > 0xFFFFu ? 0xFFFFu : (uint16_t)paragraphs;
+}
+
+void mmgr_resize_memory(void *pointer, uint16_t paragraphs)
+{
+    if (!port_memory_resize(pointer, (size_t)paragraphs * 16u))
+        port_guest_unwind("memory block resize exceeded its reserved segment span");
+}
+
+void *mmgr_op_unk(void *pointer)
+{
+    return pointer;
+}
+
+static void normalized_name(const char *path, char *out, size_t capacity)
+{
+    const char *base = path != NULL ? path : "";
+    const char *p;
+    size_t n = 0;
+    for (p = path; p != NULL && *p != '\0'; ++p)
+        if (*p == '/' || *p == '\\')
+            base = p + 1;
+    for (p = base; *p != '\0' && n + 1u < capacity; ++p) {
+        unsigned char c = (unsigned char)*p;
+        out[n++] = (char)tolower(c);
+    }
+    out[n] = '\0';
+}
+
+char *mmgr_path_to_name(const char *path)
+{
+    const char *base = path;
+    const char *p;
+    if (path == NULL)
+        return NULL;
+    for (p = path; *p != '\0'; ++p)
+        if (*p == ':' || *p == '\\')
+            base = p + 1;
+    return (char *)base;
+}
+
+void *mmgr_get_chunk_by_name(const char *name)
+{
+    char wanted[32];
+    size_t i;
+    normalized_name(name, wanted, sizeof(wanted));
+    for (i = 0; i < PORT_MAX_ALLOCS; ++i) {
+        char owner[32];
+        if (!s_allocations[i].live)
+            continue;
+        normalized_name(s_allocations[i].owner, owner, sizeof(owner));
+        if (wanted[0] != '\0' && strcmp(wanted, owner) == 0)
+            return s_allocations[i].host;
+    }
+    return NULL;
 }

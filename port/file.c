@@ -86,6 +86,15 @@ int port_fs_open_read(const char *path)
     return -1;
 }
 
+int port_fs_exists(const char *path)
+{
+    int handle = port_fs_open_read(path);
+    if (handle < 0)
+        return 0;
+    port_fs_close(handle);
+    return 1;
+}
+
 static FILE *file_from_handle(int handle)
 {
     if (handle <= 0 || handle > (int)PORT_FILE_HANDLES)

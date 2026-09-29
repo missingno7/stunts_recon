@@ -58,6 +58,8 @@ void *port_far_resolve(PortFarPtr pointer, size_t extent);
 int port_far_from_host(const void *pointer, PortFarPtr *address_out,
                        size_t *remaining_out);
 PortMemoryStats port_memory_stats(void);
+int port_memory_extent(const void *pointer, size_t *remaining_out);
+int port_memory_resize(void *pointer, size_t size);
 
 int port_fs_open_read(const char *path);
 int32_t port_fs_read(int handle, void *buffer, uint32_t bytes);
@@ -65,6 +67,10 @@ int32_t port_fs_seek(int handle, int32_t offset, int origin);
 void port_fs_close(int handle);
 void *port_fs_load(const char *path, size_t *length_out,
                    PortFarPtr *address_out);
+int port_fs_exists(const char *path);
+
+int port_resource_decompress(const uint8_t *source, size_t source_size,
+                             uint8_t **output, size_t *output_size);
 
 uint8_t *port_video_pixels(void);
 int port_video_init(SDL_Renderer *renderer);
