@@ -1,0 +1,220 @@
+#include "port_runtime.h"
+
+#include <SDL3/SDL.h>
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+
+static SDL_Mutex *s_lock;
+static FILE *s_trace;
+static uint64_t s_trace_origin_ns;
+static uint64_t s_sim_step_id;
+static uint64_t s_video_frame_id;
+static uint64_t s_present_id;
+static uint64_t s_audio_publication_id;
+
+extern uint16_t port_game_frame_snapshot(void);
+
+static void json_string(FILE *out, const char *value)
+{
+    const unsigned char *p = (const unsigned char *)(value != NULL ? value : "");
+    fputc('"', out);
+    while (*p != 0) {
+        switch (*p) {
+        case '"': fputs("\\\"", out); break;
+        case '\\': fputs("\\\\", out); break;
+        case '\n': fputs("\\n", out); break;
+        case '\r': fputs("\\r", out); break;
+        case '\t': fputs("\\t", out); break;
+        default:
+            if (*p < 0x20)
+                fprintf(out, "\\u%04x", (unsigned)*p);
+            else
+                fputc(*p, out);
+            break;
+        }
+        ++p;
+    }
+    fputc('"', out);
+}
+
+static void trace_lock(void)
+{
+    if (s_lock != NULL)
+        SDL_LockMutex(s_lock);
+}
+
+static void trace_unlock(void)
+{
+    if (s_lock != NULL)
+        SDL_UnlockMutex(s_lock);
+}
+
+static uint64_t relative_ns(uint64_t absolute_ns)
+{
+    return absolute_ns >= s_trace_origin_ns ? absolute_ns - s_trace_origin_ns : 0;
+}
+
+void port_trace_open(const char *path, const char *asset_root)
+{
+    s_lock = SDL_CreateMutex();
+    s_trace = fopen(path != NULL ? path : "runtime-trace.jsonl", "wb");
+    s_trace_origin_ns = SDL_GetTicksNS();
+    s_sim_step_id = 0;
+    s_video_frame_id = 0;
+    s_present_id = 0;
+    s_audio_publication_id = 0;
+    if (s_trace == NULL) {
+        SDL_Log("Could not open trace file '%s': %s", path != NULL ? path : "runtime-trace.jsonl",
+                strerror(errno));
+        return;
+    }
+    fputs("{\"trace_schema\":\"stunts-runtime-trace-v1\",\"event_type\":\"header\","
+          "\"runtime_mode\":\"startup\",\"screen_width\":320,\"screen_height\":200,"
+          "\"indexed_palette_entries\":256,\"timer_target_hz\":99.99846,"
+          "\"timer_period_ns\":10000154,\"build_id\":\"portable-sdl3-M0\","
+          "\"asset_root\":", s_trace);
+    json_string(s_trace, asset_root);
+    fputs("}\n", s_trace);
+    fflush(s_trace);
+}
+
+void port_trace_close(void)
+{
+    if (s_trace != NULL) {
+        fflush(s_trace);
+        fclose(s_trace);
+        s_trace = NULL;
+    }
+    if (s_lock != NULL) {
+        SDL_DestroyMutex(s_lock);
+        s_lock = NULL;
+    }
+}
+
+void port_trace_timer_tick(uint64_t tick_id, uint64_t scheduled_ns,
+                           uint64_t observed_ns)
+{
+    uint64_t scheduled = relative_ns(scheduled_ns);
+    uint64_t observed = relative_ns(observed_ns);
+    trace_lock();
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"timer_tick\",\"tick_id\":%llu,"
+                "\"scheduled_tick\":%llu,\"observed_tick\":%llu,"
+                "\"machine_tick\":%llu,\"host_ns\":%llu,"
+                "\"timer_target_hz\":99.99846}\n",
+                (unsigned long long)tick_id,
+                (unsigned long long)scheduled,
+                (unsigned long long)observed,
+                (unsigned long long)observed,
+                (unsigned long long)observed_ns);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+void port_trace_sim_step(void)
+{
+    uint64_t now = SDL_GetTicksNS();
+    uint16_t game_frame = port_game_frame_snapshot();
+    trace_lock();
+    ++s_sim_step_id;
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"simulation_step\",\"sim_step_id\":%llu,"
+                "\"game_frame\":%u,\"machine_tick\":%llu,\"host_ns\":%llu,"
+                "\"runtime_mode\":\"unknown\",\"rate_target_hz\":null}\n",
+                (unsigned long long)s_sim_step_id,
+                (unsigned)game_frame,
+                (unsigned long long)relative_ns(now),
+                (unsigned long long)now);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+void port_trace_video_publication(const char *reason)
+{
+    uint64_t now = SDL_GetTicksNS();
+    uint16_t game_frame = port_game_frame_snapshot();
+    trace_lock();
+    ++s_video_frame_id;
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"video_publication\",\"frame_id\":%llu,"
+                "\"sim_step_id\":%llu,\"game_frame\":%u,"
+                "\"video_phase\":\"frame_start\",\"machine_tick\":%llu,"
+                "\"host_ns\":%llu,\"publication_reason\":",
+                (unsigned long long)s_video_frame_id,
+                (unsigned long long)s_sim_step_id,
+                (unsigned)game_frame,
+                (unsigned long long)relative_ns(now),
+                (unsigned long long)now);
+        json_string(s_trace, reason);
+        fputs("}\n", s_trace);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+void port_trace_host_present(uint64_t frame_id)
+{
+    uint64_t now = SDL_GetTicksNS();
+    trace_lock();
+    ++s_present_id;
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"host_present\",\"frame_id\":%llu,"
+                "\"present_id\":%llu,\"machine_tick\":%llu,\"host_ns\":%llu}\n",
+                (unsigned long long)frame_id,
+                (unsigned long long)s_present_id,
+                (unsigned long long)relative_ns(now),
+                (unsigned long long)now);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+void port_trace_audio_publication(uint32_t frame_count)
+{
+    uint64_t now = SDL_GetTicksNS();
+    trace_lock();
+    ++s_audio_publication_id;
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"audio_publication\","
+                "\"audio_publication_id\":%llu,\"audio_frame_count\":%u,"
+                "\"machine_tick\":%llu,\"host_ns\":%llu,"
+                "\"audio_backend\":\"silent\"}\n",
+                (unsigned long long)s_audio_publication_id,
+                (unsigned)frame_count,
+                (unsigned long long)relative_ns(now),
+                (unsigned long long)now);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+void port_trace_host_stop(const char *reason)
+{
+    uint64_t now = SDL_GetTicksNS();
+    trace_lock();
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"host_stop\",\"machine_tick\":%llu,"
+                "\"host_ns\":%llu,\"reason\":",
+                (unsigned long long)relative_ns(now),
+                (unsigned long long)now);
+        json_string(s_trace, reason);
+        fputs("}\n", s_trace);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
