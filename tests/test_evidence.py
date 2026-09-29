@@ -208,15 +208,27 @@ class EvidenceTests(unittest.TestCase):
                 resolve_symbols(names, self.image, self.relocations)
 
     def test_intro_data_aliases_have_reference_names_and_object_bounds(self):
+        removed_interiors = {'_rect_unk2', '_rect_unk6'}
         names = {'_bravshape', '_cliprect_unk', '_intro_cliprect',
                  '_intro_colorvalue', '_logo2shape', '_logoshape',
-                 '_mat_temp', '_rect_unk2', '_rect_unk3', '_rect_unk6'}
+                 '_mat_temp', '_rect_unk3'}
         resolved = resolve_symbols(names, self.image, self.relocations)
         self.assertEqual(set(resolved), names)
         self.assertEqual(len(resolved['_intro_cliprect']['allowed_addends']), 8)
         # integ26: the 15 x 8 rectangle table has a counted-stride extent.
-        self.assertEqual(len(resolve_symbols(['_rect_unk'], self.image,
-                         self.relocations)['_rect_unk']['allowed_addends']), 120)
+        table = resolve_symbols(['_rect_unk'], self.image, self.relocations)['_rect_unk']
+        self.assertEqual(len(table['allowed_addends']), 120)
+        layout = read_json(ROOT / 'layout/data-symbols.json')
+        field_map = read_json(ROOT / 'layout/aggregate-field-map.json')
+        fields = {entry['alias']: entry for entry in field_map['entries']}
+        for alias in removed_interiors:
+            with self.subTest(alias=alias):
+                self.assertNotIn(alias, layout['symbols'])
+                entry = fields[alias]
+                container = layout['symbols'][entry['container']]
+                self.assertEqual(container['load_address'], table['load_address'])
+                self.assertEqual(entry['address'], table['load_address'] + entry['offset'])
+                self.assertIn(entry['offset'], table['allowed_addends'])
         changed = read_json(ROOT/'layout/data-symbols.json')
         changed['symbols']['_logo2shape']['reference_declaration_line'] += 1
         with patch('data_symbols.read_json', side_effect=lambda path:

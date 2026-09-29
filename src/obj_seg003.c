@@ -718,6 +718,7 @@ void draw_track_preview(void);
 
 extern struct SHAPE3D intro_alt, logo_title, brav;
 extern I8 far *loadedresourceptr;
+/* Unused OMF-order declarations; the containing storage is tparr[15]. */
 extern I16 word_34A06, word_34A08, word_34A0A;
 extern I16 intro_colorvalue, intro_color_max;
 extern void far *file_load_3dres(I8 *);
@@ -738,6 +739,7 @@ extern void far clear_rect(I16, I16, I16, I16, I16);
 extern void far sprite_free_window(void far *);
 extern void far mmgr_free(void far *);
 
+/* Unused OMF-order alias declaration; accesses use rotpr[1]. */
 extern I16 word_449FE, frmexcess;
 extern int spdneedlegaugeclr;
 extern U8  skybox_loaded, scene_idx;

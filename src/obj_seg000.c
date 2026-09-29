@@ -212,7 +212,7 @@ extern I16 strlen(I8 *text);
 extern void far reset_idle_counters(void);
 extern void far * far read_file_with_retry(I16, I8 *, void far *);
 extern void far release_shape_resources(void far *);
-extern void far timer_get_delta_alt(void);
+extern I16 far timer_get_delta_alt(void);
 extern I8 far track_setup(void);
 extern U16  far trans_op(struct TRANSFORMEDSHAPE3D *);
 extern void far unload_resource(void far *resource);

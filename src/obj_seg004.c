@@ -90,7 +90,9 @@ char g_road_piece_id;
 char trk_sample_count;
 extern I8 far *mmgr_alloc_resbytes(I8 *,I32);
 extern void far mmgr_free(void far *),far mmgr_release(void far *);
+/* Unused OMF-order alias; accesses use g_shapes3d[127].shape3d_verts. */
 extern I8 far *word_338A8;
+/* Unused OMF-order alias; accesses use g_shapes3d[126].shape3d_verts. */
 extern I8 far *word_33892;
 extern I16 bto_auxiliary1(I16,I16,struct VECTOR *);
 extern void wheel_update(struct VECTOR far *,I16,I16S *,I16S *,struct VECTOR *,I16S *);

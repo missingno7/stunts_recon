@@ -595,7 +595,7 @@ extern void sprite_blit_to_video(struct SPRITE far* sprite);
 extern I16S intr0_handler(void);
 extern I16S (far* old_intr0_handler)(void);
 extern void timer_setup_interrupt(void);
-extern U32  timer_get_delta_alt(void);
+extern I16 timer_get_delta_alt(void);
 
 extern I16S set_criterr_handler(I16S (far* callback)(void));
 extern void exit(I16S a1);

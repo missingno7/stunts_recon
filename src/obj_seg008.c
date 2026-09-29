@@ -64,7 +64,7 @@ extern I8S  mouse_transparent_mode;
 signed char copy_mouse_modes[8];
 signed char input_device_modestack[8];
 extern U32  timer_get_delta(void);
-extern U32  far timer_get_delta_alt(void);
+extern I16 far timer_get_delta_alt(void);
 extern U32  far timer_get_counter(void);
 extern I16 far rand(void);
 extern I16 far get_kevinrandom(void);
@@ -213,7 +213,7 @@ I16 far show_dialog(I16 type, I16 check, I8 far *message, I16 x, I16 y,
     extern void far draw_text_at(I8 *, I16, I16);
     extern I16 far wait_for_input_delay(I32);
     extern I16 far mouse_multi_hittest(I16, I16 *, I16 *, I16 *, I16 *);
-    extern U32  far timer_get_delta_alt(void);
+    extern I16 far timer_get_delta_alt(void);
     I8 chr;
     I16 linehgt;
     I8 ret;
@@ -1866,7 +1866,7 @@ void far do_mer_restext(void)
 }
 
 /* target timer_get_delta_alt @ 11648; accepted source src/timer_get_delta_alt.c */
-U32  timer_get_delta_alt(void)
+I16  timer_get_delta_alt(void)
 { /* PURPOSE: Return the timer delta through the far entry point. Params: none. Returns: unsigned long. Globals: none. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */
     return timer_get_delta() /* PLATFORM(timer): read the elapsed timer delta. */;
 }

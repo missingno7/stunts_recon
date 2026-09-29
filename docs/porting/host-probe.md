@@ -1,6 +1,8 @@
 # Host compiler probe: porting hazard proposal
 
-Generated from the active accepted C source set by `tools/porting/host_probe.py`.
+The 38-source report below is the original `--mode legacy` shim survey. The current declaration audit also has two port-only modes: `python tools/porting/host_probe.py --mode compat` compiles 38/38 TUs with source-specific host views; `--mode strict-central` compiles 6/38 with only shared declarations. See [port-only headers and TU audit](port-headers.md) for the mechanism and per-TU residuals. These probes do not link or execute the game.
+
+Generated from the active accepted C source set by `tools/porting/host_probe.py --mode legacy`.
 The probe compiles each active `GAME_C` C recipe source with GCC for the current MinGW host, once with `-fsyntax-only` and once with `-c`, using warnings and the host compatibility shims. It does not link or run the game.
 
 Compiler: `C:\msys64\mingw64\bin\gcc.exe` (gcc.exe (Rev10, Built by MSYS2 project) 12.2.0); target `x86_64-w64-mingw32`
@@ -602,4 +604,4 @@ Accepted C sources: 38
 
 ## Reproduction
 
-Run `python tools/porting/host_probe.py` from the repository root. Detailed commands, raw diagnostics, and per-category evidence are in `build/porting/host-probe/host/results.json`.
+Run `python tools/porting/host_probe.py --mode legacy` from the repository root. Detailed commands, raw diagnostics, and per-category evidence are in `build/porting/host-probe/legacy/host/results.json`.

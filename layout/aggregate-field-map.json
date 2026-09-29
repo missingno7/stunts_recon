@@ -1,0 +1,362 @@
+{
+  "schema": "aggregate-interior-access-map-v2",
+  "authority": [
+    "layout/manifest.json c_common row",
+    "build/porting/state-model.json",
+    "docs/porting/state-model.md",
+    "accepted src declarations and accesses"
+  ],
+  "entries": [
+    {
+      "alias": "_byte_349A5",
+      "container": "_globalgamesettings",
+      "offset": 1,
+      "access": "globalgamesettings.game_playercarid[1]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215461,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349A6",
+      "container": "_globalgamesettings",
+      "offset": 2,
+      "access": "globalgamesettings.game_playercarid[2]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215462,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349A7",
+      "container": "_globalgamesettings",
+      "offset": 3,
+      "access": "globalgamesettings.game_playercarid[3]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215463,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349A8",
+      "container": "_globalgamesettings",
+      "offset": 4,
+      "access": "globalgamesettings.game_playermaterial",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215464,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349A9",
+      "container": "_globalgamesettings",
+      "offset": 5,
+      "access": "globalgamesettings.game_playertransmission",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215465,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349AA",
+      "container": "_globalgamesettings",
+      "offset": 6,
+      "access": "globalgamesettings.game_opponenttype",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215466,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349AB",
+      "container": "_globalgamesettings",
+      "offset": 7,
+      "access": "globalgamesettings.game_opponentcarid[0]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215467,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349AC",
+      "container": "_globalgamesettings",
+      "offset": 8,
+      "access": "globalgamesettings.game_opponentcarid[1]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215468,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349AD",
+      "container": "_globalgamesettings",
+      "offset": 9,
+      "access": "globalgamesettings.game_opponentcarid[2]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215469,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349AE",
+      "container": "_globalgamesettings",
+      "offset": 10,
+      "access": "globalgamesettings.game_opponentcarid[3]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215470,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349AF",
+      "container": "_globalgamesettings",
+      "offset": 11,
+      "access": "globalgamesettings.game_opponentmaterial",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215471,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349B0",
+      "container": "_globalgamesettings",
+      "offset": 12,
+      "access": "globalgamesettings.game_opponenttransmission",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215472,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349B1",
+      "container": "_globalgamesettings",
+      "offset": 13,
+      "access": "globalgamesettings.game_trackname[0]",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215473,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_349BA",
+      "container": "_globalgamesettings",
+      "offset": 22,
+      "access": "globalgamesettings.game_framespersec",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215482,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_349BC",
+      "container": "_globalgamesettings",
+      "offset": 24,
+      "access": "globalgamesettings.game_recordedframes",
+      "basis": "GAMEINFO field offsets in src/obj_seg000.c",
+      "address": 215484,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_33748",
+      "container": "_g_shapes3d",
+      "offset": 2444,
+      "access": "g_shapes3d[111].shape3d_verts",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 210760,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_3374A",
+      "container": "_g_shapes3d",
+      "offset": 2446,
+      "access": "g_shapes3d[111].shape3d_verts",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 210762,
+      "storage": "bss"
+    },
+    {
+      "alias": "_byte_3386C",
+      "container": "_g_shapes3d",
+      "offset": 2736,
+      "access": "g_shapes3d[124].numpaints",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 211052,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_33892",
+      "container": "_g_shapes3d",
+      "offset": 2774,
+      "access": "g_shapes3d[126].shape3d_verts",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 211090,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_33894",
+      "container": "_g_shapes3d",
+      "offset": 2776,
+      "access": "g_shapes3d[126].shape3d_verts",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 211092,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_338A8",
+      "container": "_g_shapes3d",
+      "offset": 2796,
+      "access": "g_shapes3d[127].shape3d_verts",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 211112,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_338AA",
+      "container": "_g_shapes3d",
+      "offset": 2798,
+      "access": "g_shapes3d[127].shape3d_verts",
+      "basis": "SHAPE3D is 22 bytes; fields declared in src/obj_seg004.c",
+      "address": 211114,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_449FE",
+      "container": "_rotpr",
+      "offset": 2,
+      "access": "rotpr[1]",
+      "basis": "int rotpr[2] in src/obj_seg003.c; access already present in draw_clip",
+      "address": 215550,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A06",
+      "container": "_tparr",
+      "offset": 2,
+      "access": "tparr[0].right",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215558,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A08",
+      "container": "_tparr",
+      "offset": 4,
+      "access": "tparr[0].top",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215560,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A0A",
+      "container": "_tparr",
+      "offset": 6,
+      "access": "tparr[0].bottom",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215562,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_unk2",
+      "container": "_tparr",
+      "offset": 8,
+      "access": "tparr[1]",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215564,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_unk6",
+      "container": "_tparr",
+      "offset": 16,
+      "access": "tparr[2]",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215572,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_unk12",
+      "container": "_tparr",
+      "offset": 24,
+      "access": "tparr[3]",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215580,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_unk15",
+      "container": "_tparr",
+      "offset": 32,
+      "access": "tparr[4]",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215588,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_skybox",
+      "container": "_tparr",
+      "offset": 40,
+      "access": "tparr[5]",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215596,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_unk11",
+      "container": "_tparr",
+      "offset": 48,
+      "access": "tparr[6]",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215604,
+      "storage": "bss"
+    },
+    {
+      "alias": "_rect_unk9",
+      "container": "_tparr",
+      "offset": 56,
+      "access": "&tparr[7] /* 8 rectangles through tparr[14] */",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215612,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A2C",
+      "container": "_tparr",
+      "offset": 40,
+      "access": "tparr[5].left",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215596,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A2E",
+      "container": "_tparr",
+      "offset": 42,
+      "access": "tparr[5].right",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215598,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A30",
+      "container": "_tparr",
+      "offset": 44,
+      "access": "tparr[5].top",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215600,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_34A32",
+      "container": "_tparr",
+      "offset": 46,
+      "access": "tparr[5].bottom",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/obj_seg003.c",
+      "address": 215602,
+      "storage": "bss"
+    },
+    {
+      "alias": "_poly_linked_list_40ED6",
+      "container": "_poly_link_list",
+      "offset": 0,
+      "access": "poly_link_list[0]",
+      "basis": "private static int poly_link_list[400] in src/obj_seg006.c; no cross-TU access",
+      "address": 200406,
+      "storage": "bss"
+    },
+    {
+      "alias": "_word_349A2",
+      "address": 215458,
+      "container": "_gamerptrs",
+      "offset": 2,
+      "access": null,
+      "basis": "void far* is four bytes, but there is no source use of the segment half; union access would require a reviewed type change.",
+      "status": "deferred"
+    }
+  ]
+}

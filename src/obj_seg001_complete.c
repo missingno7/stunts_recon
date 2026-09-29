@@ -639,6 +639,7 @@ extern struct SPRITE far* g_wndspr;
 extern struct RECTANGLE clipunk;
 extern I16 polygonnumber;
 extern U8  far* polyinfoptrs[];
+/* Unused OMF-order declaration: this address is private poly_link_list[0] in obj_seg006. */
 extern U16  poly_linked_list_40ED6[];
 extern void preRender_default(I16 color, I16 vertlinecount, I16* vertlines);
 extern U8  opponent_spd_tbl[];

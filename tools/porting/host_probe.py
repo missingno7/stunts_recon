@@ -306,7 +306,7 @@ def render_report(results: list[dict[str, object]], gcc: Path, gcc_version: str,
               "- **struct packing:** compare field widths, alignment, and serialized/on-disk/on-wire layouts; add explicit host-side conversion/layout only when required.",
               "- **other compiler diagnostic:** compiler warning/error did not match a porting category; inspect its exact location in the raw results.",
               "", "## Reproduction", "",
-              "Run `python tools/porting/host_probe.py` from the repository root. Detailed commands, raw diagnostics, and per-category evidence are in `build/porting/host-probe/host/results.json`.", ""]
+              "Run `python tools/porting/host_probe.py --mode legacy` from the repository root. Detailed commands, raw diagnostics, and per-category evidence are in `build/porting/host-probe/legacy/host/results.json`.", ""]
     return "\n".join(lines)
 
 
@@ -315,6 +315,8 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--gcc", type=Path, default=DEFAULT_GCC,
                         help="GCC executable path (default: C:/msys64/mingw64/bin/gcc.exe)")
+    parser.add_argument("--mode", choices=("compat", "strict-central", "legacy"), default="compat",
+                        help="compat uses per-TU host views; strict-central audits only the shared declarations; legacy runs the original shim probe")
     args = parser.parse_args()
     root = args.root.resolve()
     if args.gcc.is_file():
@@ -322,10 +324,16 @@ def main() -> int:
     else:
         located = shutil.which(str(args.gcc))
         gcc = Path(located).resolve() if located else args.gcc.resolve()
-    output_root = root / "build" / "porting" / "host-probe"
+    if not gcc.is_file():
+        raise SystemExit(f"GCC compiler not found: {gcc}")
+    if args.mode != "legacy":
+        sys.path.insert(0, str(PORTING_DIR))
+        from host_probe_modes import run_port_mode
+        return run_port_mode(root, gcc, args.mode)
+    output_root = root / "build" / "porting" / "host-probe" / "legacy"
     out_dir = output_root / "host/out"
-    include_dir = PORTING_DIR / "host/include"
-    compat = PORTING_DIR / "host/compat.h"
+    include_dir = root / "tools/porting/host/include"
+    compat = root / "tools/porting/host/compat.h"
     out_dir.mkdir(parents=True, exist_ok=True)
     (output_root / "host").mkdir(parents=True, exist_ok=True)
     sources = active_c_sources(root)
@@ -350,7 +358,7 @@ def main() -> int:
         item["recipes"] = info["recipes"]
         results.append(item)
         print(f"[{i}/{len(sources)}] {item['source']}: syntax={item['status']['syntax']} object={item['status']['object']} warnings={item['counts'].get('warnings',0)} errors={item['counts'].get('errors',0)}", flush=True)
-    (WORKER / "host").mkdir(exist_ok=True)
+    (output_root / "host").mkdir(parents=True, exist_ok=True)
     (output_root / "host/results.json").write_text(json.dumps({
         "compiler": str(gcc), "compiler_version": gcc_version, "target": gcc_target,
         "flags": COMPILER_FLAGS,

@@ -6885,10 +6885,6 @@
       "load_address": 208304,
       "storage": "bss"
     },
-    "_byte_3386C": {
-      "load_address": 211052,
-      "storage": "bss"
-    },
     "_byte_33950": {
       "load_address": 211280,
       "storage": "bss"
@@ -7059,62 +7055,6 @@
     },
     "_byte_348F2": {
       "load_address": 215282,
-      "storage": "bss"
-    },
-    "_byte_349A5": {
-      "load_address": 215461,
-      "storage": "bss"
-    },
-    "_byte_349A6": {
-      "load_address": 215462,
-      "storage": "bss"
-    },
-    "_byte_349A7": {
-      "load_address": 215463,
-      "storage": "bss"
-    },
-    "_byte_349A8": {
-      "load_address": 215464,
-      "storage": "bss"
-    },
-    "_byte_349A9": {
-      "load_address": 215465,
-      "storage": "bss"
-    },
-    "_byte_349AA": {
-      "load_address": 215466,
-      "storage": "bss"
-    },
-    "_byte_349AB": {
-      "load_address": 215467,
-      "storage": "bss"
-    },
-    "_byte_349AC": {
-      "load_address": 215468,
-      "storage": "bss"
-    },
-    "_byte_349AD": {
-      "load_address": 215469,
-      "storage": "bss"
-    },
-    "_byte_349AE": {
-      "load_address": 215470,
-      "storage": "bss"
-    },
-    "_byte_349AF": {
-      "load_address": 215471,
-      "storage": "bss"
-    },
-    "_byte_349B0": {
-      "load_address": 215472,
-      "storage": "bss"
-    },
-    "_byte_349B1": {
-      "load_address": 215473,
-      "storage": "bss"
-    },
-    "_byte_349BA": {
-      "load_address": 215482,
       "storage": "bss"
     },
     "_byte_34AE2": {
@@ -13707,10 +13647,6 @@
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
-    "_poly_linked_list_40ED6": {
-      "load_address": 200406,
-      "storage": "bss"
-    },
     "_poly_linklist_40ED6_iter1": {
       "all_candidate_addends_bounded_by_reference_span": true,
       "basis": "Exact dseg label span corroborated by matching unrelocated absolute DS displacements in instruction-verified original callers.",
@@ -14348,24 +14284,6 @@
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
-    "_rect_skybox": {
-      "load_address": 215596,
-      "reference_declaration_line": 35452,
-      "reference_label": "rect_skybox",
-      "reference_use_line": 4156,
-      "reference_use_path": "src/restunts/asmorig/seg003.asm",
-      "reference_use_proc": "skybox_op",
-      "references": [
-        {
-          "hex": "c706bc920000",
-          "operand_offset": 2,
-          "start": 50741
-        }
-      ],
-      "storage": "bss",
-      "width": 8,
-      "width_provenance": "reference-label-span: dseg.asm:35452-35460"
-    },
     "_rect_unk": {
       "extent_proof": {
         "count": 15,
@@ -14378,54 +14296,6 @@
       "load_address": 215556,
       "storage": "bss",
       "width": 120
-    },
-    "_rect_unk11": {
-      "load_address": 215604,
-      "reference_declaration_line": 35460,
-      "reference_label": "rect_unk11",
-      "reference_use_line": 3659,
-      "reference_use_path": "src/restunts/asmorig/seg003.asm",
-      "reference_use_proc": "update_frame",
-      "references": [
-        {
-          "hex": "b8c492",
-          "operand_offset": 1,
-          "start": 49672
-        }
-      ],
-      "storage": "bss"
-    },
-    "_rect_unk12": {
-      "load_address": 215580,
-      "reference_declaration_line": 35436,
-      "reference_label": "rect_unk12",
-      "reference_use_line": 2803,
-      "reference_use_path": "src/restunts/asmorig/seg003.asm",
-      "reference_use_proc": "update_frame",
-      "references": [
-        {
-          "hex": "c74708ac92",
-          "operand_offset": 3,
-          "start": 47445
-        }
-      ],
-      "storage": "bss"
-    },
-    "_rect_unk15": {
-      "load_address": 215588,
-      "reference_declaration_line": 35444,
-      "reference_label": "rect_unk15",
-      "reference_use_line": 3062,
-      "reference_use_path": "src/restunts/asmorig/seg003.asm",
-      "reference_use_proc": "update_frame",
-      "references": [
-        {
-          "hex": "c74708b492",
-          "operand_offset": 3,
-          "start": 48129
-        }
-      ],
-      "storage": "bss"
     },
     "_rect_unk16": {
       "load_address": 179030,
@@ -14444,20 +14314,6 @@
       "storage": "initialized",
       "width": 8,
       "width_provenance": "reference-label-span: dseg.asm:2435-2443"
-    },
-    "_rect_unk2": {
-      "load_address": 215564,
-      "reference_declaration_line": 35420,
-      "reference_label": "rect_unk2",
-      "reference_use_line": 6441,
-      "references": [
-        {
-          "hex": "bf9c92",
-          "operand_offset": 1,
-          "start": 55998
-        }
-      ],
-      "storage": "bss"
     },
     "_rect_unk3": {
       "load_address": 219474,
@@ -14488,38 +14344,6 @@
         }
       ],
       "storage": "initialized"
-    },
-    "_rect_unk6": {
-      "load_address": 215572,
-      "reference_declaration_line": 35428,
-      "reference_label": "rect_unk6",
-      "reference_use_line": 6723,
-      "references": [
-        {
-          "hex": "bfa492",
-          "operand_offset": 1,
-          "start": 56815
-        }
-      ],
-      "storage": "bss"
-    },
-    "_rect_unk9": {
-      "load_address": 215612,
-      "reference_declaration_line": 35468,
-      "reference_label": "rect_unk9",
-      "reference_use_line": 829,
-      "reference_use_path": "src/restunts/asmorig/seg003.asm",
-      "reference_use_proc": "update_frame",
-      "references": [
-        {
-          "hex": "c706d272cc92",
-          "operand_offset": 4,
-          "start": 42383
-        }
-      ],
-      "storage": "bss",
-      "width": 64,
-      "width_provenance": "reference-label-span: dseg.asm:35468-35532"
     },
     "_rect_windshield": {
       "load_address": 211252,
@@ -19860,30 +19684,6 @@
       "load_address": 208172,
       "storage": "bss"
     },
-    "_word_33748": {
-      "load_address": 210760,
-      "storage": "bss"
-    },
-    "_word_3374A": {
-      "load_address": 210762,
-      "storage": "bss"
-    },
-    "_word_33892": {
-      "load_address": 211090,
-      "storage": "bss"
-    },
-    "_word_33894": {
-      "load_address": 211092,
-      "storage": "bss"
-    },
-    "_word_338A8": {
-      "load_address": 211112,
-      "storage": "bss"
-    },
-    "_word_338AA": {
-      "load_address": 211114,
-      "storage": "bss"
-    },
     "_word_338E8": {
       "load_address": 211176,
       "storage": "bss",
@@ -20554,10 +20354,6 @@
       "load_address": 215458,
       "storage": "bss"
     },
-    "_word_349BC": {
-      "load_address": 215484,
-      "storage": "bss"
-    },
     "_word_349C0": {
       "load_address": 215488,
       "storage": "bss"
@@ -20592,34 +20388,6 @@
     },
     "_word_34A02": {
       "load_address": 215554,
-      "storage": "bss"
-    },
-    "_word_34A06": {
-      "load_address": 215558,
-      "storage": "bss"
-    },
-    "_word_34A08": {
-      "load_address": 215560,
-      "storage": "bss"
-    },
-    "_word_34A0A": {
-      "load_address": 215562,
-      "storage": "bss"
-    },
-    "_word_34A2C": {
-      "load_address": 215596,
-      "storage": "bss"
-    },
-    "_word_34A2E": {
-      "load_address": 215598,
-      "storage": "bss"
-    },
-    "_word_34A30": {
-      "load_address": 215600,
-      "storage": "bss"
-    },
-    "_word_34A32": {
-      "load_address": 215602,
       "storage": "bss"
     },
     "_word_34A7C": {
@@ -22126,10 +21894,6 @@
       "load_address": 215548,
       "storage": "bss",
       "width": 4
-    },
-    "_word_449FE": {
-      "load_address": 215550,
-      "storage": "bss"
     },
     "_word_44D1E": {
       "load_address": 216350,
