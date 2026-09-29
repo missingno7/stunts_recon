@@ -22,7 +22,7 @@ Key executable hashes and full profile file catalogs are recorded in [`layout/to
 
 ## Freeze validation
 
-`HYBRID_EXACT` means that the complete accepted hybrid image and its exact ordered MZ relocation obligations match the immutable oracle. The fresh `python tools/validate.py` gate passed 720 tests, all 90 independent DOSBox-X contribution checks, the whole-image comparison, all 2,588 ordered relocations, and the BSS/runtime placement gate. `python tools/validate.py --image` repeated that gate and added a real LINK 3.65 + EXEPACK diagnostic: zero image mismatch bytes, exact relocation set, exact bank order, exact packed image, and zero alias shims.
+`HYBRID_EXACT` means that the complete accepted hybrid image and its exact ordered MZ relocation obligations match the immutable oracle. The fresh `python tools/validate.py` gate passed 721 tests, all 90 independent DOSBox-X contribution checks, the whole-image comparison, all 2,588 ordered relocations, and the BSS/runtime placement gate. `python tools/validate.py --image` repeated that gate and added a real LINK 3.65 + EXEPACK diagnostic: zero image mismatch bytes, exact relocation set, exact bank order, exact packed image, and zero alias shims.
 
 The oracle-ordered image equality is distinct from the natural historical-link hypothesis. `python tools/histbuild.py` freshly compiled 38 C and 52 ASM contributions and linked/packed 147 units, with zero raw-debt OMF objects, but its combined-library module-order reconstruction places only 2,023 of 2,588 relocation positions in oracle order (bank 0 exact; banks 1–3 retain the residual). The combined-library arrangement is an explicit reconstruction assumption: `GAME.LIB` starts with pinned `MLIBCR.LIB`, reconstructed game modules follow image-derived order, and pinned `LIBH.LIB` is searched separately by LINK 3.65. This is not a recovered original LINK command. The exact command durations, hashes, ownership counts and test receipts are in [`freeze_gate_results.md`](evidence/freeze-campaign/integ55-freeze-gate-results.md).
 
@@ -83,13 +83,19 @@ The frozen checkout's test suite had hidden dependencies on ignored worker propo
 
 The tests now use small tracked historical fixtures or derive the expected contribution from the accepted manifest. Pinned Restunts facts used by the gate are available as compact, identity-checked excerpts; a full `build/references/restunts` checkout remains useful to optional research tools. Toolchain archive reads resolve through `layout/toolchain.json`. `validate.py` creates `build/` and writes the derived oracle image before the tests run. Test temporary directories no longer assume `build/` already exists.
 
-The clean-clone proof below copies only the original `assets/`, places the required Capstone 5.0.3 package in ignored `build/python/`, and resolves the pinned compiler/assembler/runners through `layout/toolchain.json`. No worker archive, candidate queue, ledger, reference checkout or prior oracle output is required by the test gate.
+The clean-clone proof below copies the original `assets/`, places the required Capstone 5.0.3 package in ignored `build/python/`, and resolves the pinned compiler/assembler/runners through `layout/toolchain.json`. GCC on `PATH` (or `C:\msys64\mingw64\bin\gcc.exe`) is also required so the test gate can run its host-port compile tests without skips. No worker archive, candidate queue, ledger, reference checkout or prior oracle output is required by the test gate.
+
+The path audit used `git grep` over `tests/` and `tools/`, then verified the test gate in a clone with neither `build/workers/` nor `build/references/restunts/`. The former worker inputs for integ14/15 are now JSON fixtures under `tests/fixtures/historical_proposals/`; integ16/18 source and recipes are under `tests/fixtures/historical_workers/`. Cosmetic-source tests build their candidates in a temporary directory. Port-header and trace-normalizer tests create their own scratch output directories. `validate.py` now creates `build/` and writes the derived oracle image before test discovery; the integ27 pass probe uses a local DOS filename so fresh clone path length cannot break `CL -Bn`.
+
+Other `build/` paths in tests are outputs or isolated temporary project roots, not inputs from an existing ignored tree. The only non-repository inputs required by the frozen test/validation gates are the four original game assets, Capstone 5.0.3 under `build/python/`, the hash-pinned tools at the paths in `layout/toolchain.json`, and host GCC. No test was skipped.
+
+The scan also found optional research commands that intentionally consume local archives: `tools/classifier_cases.py`, `tools/status_report.py`, `tools/classify.py`, `tools/namefit.py`, and `tools/typeinfer.py` use worker candidate material; `tools/commfit.py`, `tools/import_restunts.py`, `tools/memo.py`, and `tools/restunts_base.py` use the optional full Restunts checkout; `tools/context.py --history` reads generated search history. These are not part of `validate.py` or the frozen acceptance gates. Other oracle-driven tools read `build/oracle/` outputs generated by `tools/oracle.py` or `validate.py` before use.
 
 | Clean-clone command | Receipt |
 |---|---|
-| `python tools/validate.py --image` | Pending fresh-clone run |
-| `python tools/porting/host_probe.py --mode compat` | Pending fresh-clone run |
-| `python tools/porting/host_probe.py --mode strict-central` | Pending fresh-clone run |
+| `python tools/validate.py --image` | PASS at clone revision `24143f7`: 721 tests, 0 failures/skips; `HYBRID_EXACT`; 90/90 independent DOSBox-X checks; 2,588 ordered relocations; BSS `PLACED`; LINK 3.65 + EXEPACK reported 0 mismatch bytes, exact relocation set/bank order/packed image, 0 alias shims. Fresh unpacked executable SHA-256 matched the oracle. |
+| `python tools/porting/host_probe.py --mode compat` | PASS at `24143f7`: 38/38 syntax and object compiles; 0 failures. |
+| `python tools/porting/host_probe.py --mode strict-central` | PASS at `24143f7`: 38/38 syntax and object compiles; 0 failures. |
 
 ## Why ports start here
 

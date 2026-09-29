@@ -10,7 +10,7 @@ The freeze evidence and remaining scope are recorded in [the freeze draft](docs/
 
 ## Setup
 
-Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json`, `evidence/msc510-provenance.json`, and `evidence/msc600-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries.
+Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json`, `evidence/msc510-provenance.json`, and `evidence/msc600-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries. The no-skip validation gate also runs the host compile checks, which require GCC on `PATH` or at `C:\msys64\mingw64\bin\gcc.exe`.
 
 Install the diagnostic decoder with `python -m pip install --target build/python capstone==5.0.3`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; the full Restunts checkout at `build/references/restunts` is optional for research/indexing tools. The clean-clone test and validation gates use the tracked, identity-pinned excerpts under `tests/fixtures/references/`. Keep any full reference checkout and reference executable as local inputs; they are not stored in Git history.
 
@@ -27,6 +27,8 @@ python tools/porting/host_probe.py --mode strict-central
 ```
 
 `validate.py` creates the build directory and materializes the derived oracle image before running tests. It does not modify the oracle lock. Clean-clone receipts are recorded in [the freeze draft](docs/freeze.md#reproducibility-correction).
+
+The reproduction correction was verified from local clone revision `24143f7` with the original `assets/` copy, Capstone 5.0.3 in `build/python/`, the pinned toolchain paths, and host GCC available. `validate.py --image` passed 721 tests and produced `HYBRID_EXACT`; both host probes compiled all 38 sources in both modes.
 
 ## Historical build
 
