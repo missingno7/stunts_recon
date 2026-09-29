@@ -13,7 +13,7 @@ import migrate_owner
 
 class OwnerMigrationPlanTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(dir=ROOT/'build')
+        self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         for directory in ('asm', 'recipes', 'layout', 'evidence'):
             (self.root/directory).mkdir(parents=True, exist_ok=True)

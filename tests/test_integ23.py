@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools'))
 from common import read_json, sha
+from compiler import toolchain_path
 from omf import OmfReader
 from object_probe import read_object
 from oracle import verify
@@ -41,7 +42,7 @@ class Integ23StartupBinder(unittest.TestCase):
         exe = verify(write=False)[1]; mz = MZ.parse(exe)
         cls.image = mz.load_image(exe); cls.relocs = mz.relocations
         cls.manifest = read_json(ROOT/'layout/manifest.json')
-        archive = (ROOT/LIB).read_bytes()
+        archive = toolchain_path(LIB).read_bytes()
         cls.archive_sha = sha(archive)
         cls.modules = OmfReader().split_library(archive)
 

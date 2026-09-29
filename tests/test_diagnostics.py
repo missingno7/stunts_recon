@@ -105,7 +105,7 @@ class AlignmentTests(unittest.TestCase):
 
 class IntegrationTests(unittest.TestCase):
     def probe_fixture(self,target,candidate,diagnostic_broken=False):
-        with tempfile.TemporaryDirectory(dir=ROOT/'build') as d:
+        with tempfile.TemporaryDirectory(dir=ROOT) as d:
             path=Path(d);source=path/'source.c';source.write_text('fixture')
             recipe={'start':0,'end':len(target),'target':identity(target),'expected_relocations':[],
                     'source':str(source),'profile':'fixture','object_segment':'UNIT_TEXT'}

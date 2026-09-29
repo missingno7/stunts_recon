@@ -148,7 +148,7 @@ class OwnershipTests(unittest.TestCase):
     def test_failed_build_invalidates_previous_acceptance_receipt(self):
         import build_exact
         import transaction
-        with tempfile.TemporaryDirectory(dir=ROOT/'build') as directory:
+        with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);receipt=root/'build/exact/acceptance.json'
             receipt.parent.mkdir(parents=True);receipt.write_text('stale PASS')
             oracle={'load_image':{'sha256':'fixture'}}
@@ -185,7 +185,7 @@ class OwnershipTests(unittest.TestCase):
     def test_stale_inputs_during_build_are_rejected(self):
         import build_exact
         import transaction
-        with tempfile.TemporaryDirectory(dir=ROOT/'build') as directory:
+        with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
             oracle={'load_image':{'sha256':'fixture'}}
             raw={'oracle_sha256':'fixture','owners':[

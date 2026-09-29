@@ -500,9 +500,9 @@ class SwitchTableGroup(unittest.TestCase):
     def locate(self):
         manifest = read_json(ROOT/'layout/manifest.json')
         rows = [o for o in manifest['owners'] if o['id'] == 'obj_seg006']
-        if rows:
-            return read_json(ROOT/rows[0]['recipe'])
-        return read_json(ROOT/'build/workers/s006c/obj_seg006.recipe.json')
+        if not rows:
+            self.fail('obj_seg006 has no tracked accepted recipe')
+        return read_json(ROOT/rows[0]['recipe'])
 
     def test_c_group_switch_tables_bind_at_the_members_code_frame(self):
         from multi_contribution import bind_multi

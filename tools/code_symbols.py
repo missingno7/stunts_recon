@@ -62,10 +62,10 @@ def _reference_entry_target(name, target, proof, inventory, owners, image):
                   f['status']=='BOUNDARIES_AND_EMISSION_BYTES_VERIFIED']
     require(sha(image[predecessor['start']:predecessor['end']])==predecessor['sha256'],
             'Partial entry predecessor bytes differ')
-    reference=ROOT/'build/references/restunts'/proof['source_path']
+    from pinned_reference import check_reference_identity, reference_line
     pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][proof['source_path']]
-    require(identity(reference.read_bytes())==pinned and
-            reference.read_text(encoding='latin1').splitlines()[proof['source_line']-1].strip()==
+    require(check_reference_identity(proof['source_path'])==pinned and
+            reference_line(proof['source_path'],proof['source_line']).strip()==
             'sprite_make_wnd proc far',
             'Partial entry lacks pinned source label')
     raw=bytes.fromhex(proof['entry_hex'])
@@ -604,14 +604,13 @@ def resolve_near_code_symbols(names, recipe, image):
                         'Near semantic alias lacks its original address-label anchor')
             require(set(proof)=={'source_line'},'Near label proof shape differs')
             path='src/restunts/asmorig/seg012.asm'
-            reference=ROOT/'build/references/restunts'/path
             pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-            require(identity(reference.read_bytes())==pinned,
+            from pinned_reference import check_reference_identity, reference_line
+            require(check_reference_identity(path)==pinned,
                     'Near label reference source differs')
-            lines=reference.read_text(encoding='latin1').splitlines()
             line=proof['source_line']
-            require(type(line) is int and 1<=line<=len(lines) and
-                    lines[line-1].strip().lower()==(inventory_label+':').lower(),
+            require(type(line) is int and
+                    reference_line(path,line).strip().lower()==(inventory_label+':').lower(),
                     'Near label lacks pinned source declaration')
             # The containing extent may also be emission-verified with both
             # boundary evidences (as for entries above); the label must still be

@@ -30,18 +30,17 @@ def _checked_far_anchor(anchor, start, image, relocations):
         return {'kind': 'code-immediate', 'site': site, 'caller': callers[0]['name']}
     require(anchor.get('kind') == 'data-segment-word', 'Unknown far-data anchor')
     # A DGROUP word declared `dw seg X` in the pinned reference at the placed alias.
-    from data_symbols import _reference_label_offsets
+    from pinned_reference import check_reference_identity, reference_label_offsets, reference_line
     name = anchor['alias']
     symbol = resolve_symbols({name}, image, relocations)[name]
     path = 'src/restunts/asmorig/dseg.asm'
     pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    source = ROOT/'build/references/restunts'/path
-    require(identity(source.read_bytes()) == pinned, 'Far-data reference source differs')
-    lines = source.read_text(encoding='latin1').splitlines()
-    placed = _reference_label_offsets(lines).get(name[1:])
+    require(check_reference_identity(path) == pinned, 'Far-data reference source differs')
+    placed = reference_label_offsets(path).get(name[1:])
+    declaration = reference_line(path, placed[1]) if placed is not None else ''
     require(symbol['load_address'] == at and placed is not None and
             placed[0] == at - symbol['frame_load_address'] and
-            re.fullmatch(re.escape(name[1:]) + r'\s+dw\s+seg\s+\w+', lines[placed[1]-1].strip(), re.I),
+            re.fullmatch(re.escape(name[1:]) + r'\s+dw\s+seg\s+\w+', declaration.strip(), re.I),
             'Far-data segment word is not the pinned `dw seg` declaration')
     return {'kind': 'data-segment-word', 'alias': name}
 
@@ -167,10 +166,10 @@ def bind_data_only(obj, recipe, image, relocations):
             anchors.get('public_offsets') == publics and anchors.get('code_operands'),
             'Data-only module lacks independently checked code operand placement')
     reference = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
-    from common import identity as file_identity
+    from pinned_reference import check_reference_identity, reference_contains
     for path in anchors.get('reference_files', []):
         require(path in reference and
-                file_identity((ROOT/'build/references/restunts'/path).read_bytes()) == reference[path],
+                check_reference_identity(path) == reference[path],
                 'Data-only reference checkout differs')
     for label, row in anchors.get('observed_references', {}).items():
         require(row['oracle_load_address'] == recipe['start']+row['module_offset'] and
@@ -183,8 +182,7 @@ def bind_data_only(obj, recipe, image, relocations):
             path='src/restunts/asmorig/'+use['code_file']
             require(path in reference and path in anchors['reference_files'],
                     'Unpinned observed code reference')
-            source=(ROOT/'build/references/restunts'/path).read_text(encoding='latin1')
-            require(use['operand'].strip() in source and
+            require(reference_contains(path, use['operand'].strip()) and
                     label.lower() in use['operand'].lower(),
                     'Observed code reference differs')
     for row in anchors['code_operands']:

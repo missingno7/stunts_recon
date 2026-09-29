@@ -199,7 +199,7 @@ class BatchStageTests(unittest.TestCase):
 
 class BatchPublicationTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(dir=ROOT / 'build')
+        self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         for folder in ('build', 'src', 'recipes', 'layout'):
             (self.root / folder).mkdir(parents=True, exist_ok=True)

@@ -37,7 +37,7 @@ def make_environment(root):
 
 class ContextTests(unittest.TestCase):
     def test_reads_direct_inventory_manifest_recipe_and_search_history(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             row = {'name': 'fixture', 'stable_id': 'load_1234', 'start': 10, 'end': 12,
                    'size': 2, 'sha256': 'a' * 64, 'status': 'verified_instruction_boundaries',
@@ -63,7 +63,7 @@ class ContextTests(unittest.TestCase):
             self.assertFalse((root / 'recovery').exists())
 
     def test_context_history_is_bounded_without_dropping_total(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             write_json(root / 'evidence/functions.json', {'functions': [{'name': 'fixture', 'stable_id': 'x'}]})
             write_json(root / 'layout/manifest.json', {'owners': []})
@@ -78,7 +78,7 @@ class ContextTests(unittest.TestCase):
 
 class SearchTests(unittest.TestCase):
     def test_candidate_is_frozen_and_search_does_not_change_canonical_inputs(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             config, runner = make_environment(root)
             (root / 'recipes').mkdir()
@@ -113,7 +113,7 @@ class SearchTests(unittest.TestCase):
                 self.assertFalse((root / 'src').exists())
 
     def test_environment_identity_ignores_unrelated_search_history(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             config, runner = make_environment(root)
             with patch.object(search, 'ROOT', root), patch('compiler.ROOT', root), \
@@ -125,7 +125,7 @@ class SearchTests(unittest.TestCase):
 
     def test_compile_error_retains_actual_log_and_category(self):
         from compiler import CompileFailure
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             config, runner = make_environment(root)
             candidate = root / 'scratch.c'
@@ -145,7 +145,7 @@ class SearchTests(unittest.TestCase):
             self.assertTrue((root / report['compiler']['artifacts']['object_path']).is_file())
 
     def test_null_history_records_and_failed_cli_summary_do_not_crash(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             write_json(root / 'build/search/empty/report.json', {'run_id': 'empty', 'function': None,
                        'candidate': None, 'compiler': None, 'observed_output': None})
@@ -171,7 +171,7 @@ class SearchTests(unittest.TestCase):
         self.assertEqual(observed['comments'][0]['raw']['bytes_hex'], '0102')
 
     def test_unrelated_manifest_owner_does_not_change_selected_binding_context(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             (root / 'layout').mkdir()
             write_json(root / 'layout/manifest.json', {'owners': [{'id': 'load_selected', 'kind': 'MATCHING_C',
@@ -191,7 +191,7 @@ class SearchTests(unittest.TestCase):
 
     def test_unsupported_object_fallback_keeps_rejection_explicit(self):
         from compiler import CompileFailure
-        with tempfile.TemporaryDirectory(dir=ROOT / 'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             config, runner = make_environment(root)
             candidate = root / 'scratch.c'

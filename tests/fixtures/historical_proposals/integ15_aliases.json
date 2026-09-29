@@ -1,0 +1,55 @@
+{
+  "schema": "historical-aliasgap-test-fixture-v1",
+  "code_symbol_additions": {
+    "_sprite_1_unk": {
+      "mapped_target": {
+        "start": 144850
+      },
+      "anchors": [
+        {
+          "relocation": {
+            "load_offset": 101258
+          }
+        }
+      ]
+    },
+    "_mmgr_op_unk": {
+      "mapped_target": {
+        "start": 137010
+      },
+      "anchors": [
+        {
+          "relocation": {
+            "load_offset": 175507
+          }
+        }
+      ]
+    }
+  },
+  "data_symbol_additions": {
+    "_skybox_ptr1": {},
+    "_skybox_ptr2": {},
+    "_skybox_wat_color": {},
+    "_transformedshape_indices": {},
+    "_poly_linklist_40ED6_iter3": {},
+    "_mat_y0": {},
+    "_mat_y100": {},
+    "_mat_y200": {},
+    "_mat_y300": {},
+    "_select_rect_rc": {},
+    "_game1ptr": {},
+    "_game3dshapes": {},
+    "_sprite_ptrs": {},
+    "_unk_3E710": {},
+    "_carresptr": {},
+    "_car2resptr": {},
+    "_video_flag4_is1": {}
+  },
+  "data_symbol_extent_additions": {
+    "_curshapeptr": {},
+    "_game2ptr": {},
+    "_trackdata12": {},
+    "_byte_3B8FC": {},
+    "_word_4646A": {}
+  }
+}

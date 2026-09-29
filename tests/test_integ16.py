@@ -44,7 +44,7 @@ class Integ16Tests(unittest.TestCase):
         cls.oracle=verify(write=False)
         cls.image=MZ.parse(cls.oracle[1]).load_image(cls.oracle[1])
         cls.relocations=cls.oracle[2]['unpacked_mz']['relocations']
-        cls.work=ROOT/'build/workers/integ16'
+        cls.work=ROOT/'tests/fixtures/historical_workers/integ16'
         cls.cases={}
         for key in ('projectiondata9_f1','projectiondata9_f2','preRender_helper2',
                     'audio_add_driver_timer','audio_remove_driver_timer'):

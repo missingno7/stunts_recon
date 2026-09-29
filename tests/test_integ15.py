@@ -27,7 +27,7 @@ class Integration15(unittest.TestCase):
         cls.relocations = mz.relocations
 
     def test_aliasgap_reviewed_bindings(self):
-        proposal = read_json(ROOT/'build/workers/aliasgap3/proposal.json')
+        proposal = read_json(ROOT/'tests/fixtures/historical_proposals/integ15_aliases.json')
         data = set(proposal['data_symbol_additions']) | set(proposal['data_symbol_extent_additions'])
         bound = resolve_symbols(data, self.image, self.relocations)
         layout = read_json(ROOT/'layout/data-symbols.json')['symbols']

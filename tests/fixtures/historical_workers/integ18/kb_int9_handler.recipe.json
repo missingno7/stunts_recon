@@ -1,0 +1,198 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 133541,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 4524,
+    "line_start": 4413,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 7,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "DSEG",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 204,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 34,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 36,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 164,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 36,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 221,
+      "segment": "_TEXT",
+      "self_relative": true,
+      "target": "_TEXT",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 133325,
+      "offset": 2253,
+      "segment": 8192
+    }
+  ],
+  "id": "kb_int9_handler",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 223,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_kb_int9_handler",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "externals": []
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_kb_int9_handler",
+  "source": "tests/fixtures/historical_workers/integ18/kb_int9_handler.ASM",
+  "stable_id": "load_208c6",
+  "start": 133318,
+  "target": {
+    "sha256": "499a5c8effe03f1143ffb0ce98d1b9affeed2f29137d191a35117f113d9a072d",
+    "size": 223
+  },
+  "binding": {
+    "mode": "asm-external-dgroup-offset16-v1",
+    "declarations": {
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "DATA",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 0,
+          "name": "DSEG",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 223,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_kb_int9_handler",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "externals": []
+    }
+  },
+  "original_frame_load_address": 125472
+}

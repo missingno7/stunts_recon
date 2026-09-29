@@ -1,0 +1,141 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "mode": "asm-external-far-call-self-base16-v1",
+    "declarations": {
+      "externals": [
+        "_timer_reg_callback"
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_audio_add_driver_timer",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 39,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    }
+  },
+  "end": 93141,
+  "evidence": {
+    "repository": "restunts",
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "path": "src/restunts/asmorig/seg007.asm",
+    "line_start": 70,
+    "line_end": 99
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 27,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 32,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_timer_reg_callback",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 93136,
+      "offset": 27600,
+      "segment": 4096
+    },
+    {
+      "load_offset": 93129,
+      "offset": 27593,
+      "segment": 4096
+    }
+  ],
+  "id": "audio_add_driver_timer",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_timer_reg_callback"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_audio_add_driver_timer",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 39,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "original_frame_load_address": 93088,
+  "profile": "masm510-game",
+  "public": "_audio_add_driver_timer",
+  "source": "tests/fixtures/historical_workers/integ16/audio_add_driver_timer.ASM",
+  "stable_id": "load_16bae",
+  "start": 93102,
+  "target": {
+    "size": 39,
+    "sha256": "f3cd98f56d9d2582e338b5d2d47f8c8ab4d192282677e8b6a18390791dc7cb2d"
+  }
+}

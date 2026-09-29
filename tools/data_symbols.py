@@ -22,6 +22,12 @@ def _reference_label_offsets(lines):
                        lambda: _label_offsets(lines))
 
 
+def reference_label_offsets(path=_DSEG):
+    """Placed labels from the pinned source or its tracked compact index."""
+    from pinned_reference import reference_label_offsets as pinned_offsets
+    return pinned_offsets(path)
+
+
 def _label_offsets(lines):
     import re
     sizes = {'db': 1, 'dw': 2, 'dd': 4, 'dq': 8}
@@ -57,21 +63,15 @@ def _check_reference_alias(name, symbol, image=None, frame=None, cache=None):
     line applies."""
     if 'reference_declaration_line' not in symbol:
         return
-    from common import identity
+    from pinned_reference import check_reference_identity, reference_line, reference_label_offsets as pinned_offsets, reference_proc_span
     import re
     cache = {} if cache is None else cache
-    references = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
-    root = ROOT/'build/references/restunts'
     use_path = symbol.get('reference_use_path', _DEFAULT_USE)
     require(re.fullmatch(r'src/restunts/asmorig/seg\d{3}\.asm', use_path) is not None and
-            use_path in references, 'Reviewed data alias use file is not a pinned reference segment')
+            use_path in read_json(ROOT/'layout/references.json')['restunts']['evidence_files'],
+            'Reviewed data alias use file is not a pinned reference segment')
     for path in (_DSEG, use_path):
-        require(identity((root/path).read_bytes()) == references[path],
-                'Reviewed data alias reference source differs')
-    if _DSEG not in cache:
-        cache[_DSEG] = (root/_DSEG).read_text(encoding='latin1').splitlines()
-    declaration = cache[_DSEG]
-    use = (root/use_path).read_text(encoding='latin1').splitlines()
+        check_reference_identity(path)
     label = symbol['reference_label']
     first = symbol['reference_declaration_line']
     source_line = symbol['reference_use_line']
@@ -79,15 +79,16 @@ def _check_reference_alias(name, symbol, image=None, frame=None, cache=None):
     # names the same pinned label.
     truncated = (symbol.get('masm_truncated_public') is True and
                  len('_'+label) > 31 and name == ('_'+label)[:31])
-    require((name == '_'+label or truncated) and 1 <= first <= len(declaration) and
-            1 <= source_line <= len(use) and
+    declaration_line = reference_line(_DSEG, first)
+    use_line = reference_line(use_path, source_line)
+    require((name == '_'+label or truncated) and
             re.match(r'^'+re.escape(label)+r'\s+(?:db|dw|dd|dq)\b',
-                     declaration[first-1].strip(), re.I) and
-            re.search(r'\b'+re.escape(label)+r'\b', use[source_line-1].split(';')[0], re.I),
+                     declaration_line.strip(), re.I) and
+            re.search(r'\b'+re.escape(label)+r'\b', use_line.split(';')[0], re.I),
             'Reviewed data alias label/use differs')
     if frame is not None:
         if 'offsets' not in cache:
-            cache['offsets'] = _reference_label_offsets(declaration)
+            cache['offsets'] = pinned_offsets(_DSEG)
         placed = cache['offsets'].get(label)
         require(placed is not None and placed[1] == first and
                 placed[0] == symbol['load_address'] - frame,
@@ -97,11 +98,11 @@ def _check_reference_alias(name, symbol, image=None, frame=None, cache=None):
     proc = symbol.get('reference_use_proc')
     require(isinstance(proc, str) and 'reference_use_path' in symbol and image is not None,
             'Reviewed data alias use needs a pinned segment and procedure')
-    starts = [i+1 for i, line in enumerate(use)
-              if re.match(r'^'+re.escape(proc)+r'\s+proc\b', line.strip(), re.I)]
-    ends = [i+1 for i, line in enumerate(use)
-            if re.match(r'^'+re.escape(proc)+r'\s+endp\b', line.strip(), re.I)]
-    require(len(starts) == 1 and len(ends) == 1 and starts[0] < source_line < ends[0],
+    try:
+        start_line, end_line = reference_proc_span(use_path, proc)
+    except ValueError:
+        require(False, 'Reviewed data alias use lies outside its pinned procedure')
+    require(start_line < source_line < end_line,
             'Reviewed data alias use lies outside its pinned procedure')
     if 'inventory' not in cache:
         from function_evidence import current_inventory
@@ -199,37 +200,30 @@ def _check_reference_width(name, symbol, frame=None, cache=None):
     require(match is not None, 'Unknown data width provenance')
     first, second = map(int, match.groups())
     require(second > first, 'Reference label span is not forward')
-    lines = (ROOT/'build/references/restunts/src/restunts/asmorig/dseg.asm').read_text(
-        encoding='latin1').splitlines()
-    require(1 <= first and second <= len(lines), 'Reference label span missing')
-    label = re.fullmatch(r'([A-Za-z_]\w*)\s+(db|dw|dd|dq)\s+.*', lines[first-1].strip(), re.I)
+    from pinned_reference import reference_line, reference_span, reference_label_offsets
+    span = reference_span(_DSEG, first, second)
     following = re.fullmatch(r'[A-Za-z_]\w*\s+(db|dw|dd|dq)\s+.*',
-                             lines[second-1].strip(), re.I)
-    sizes = {'db': 1, 'dw': 2, 'dd': 4, 'dq': 8}
-    span = 0
-    for index, line in enumerate(lines[first-1:second-1]):
-        item = re.fullmatch(r'(?:([A-Za-z_]\w*)\s+)?(db|dw|dd|dq)\s+.*', line.strip(), re.I)
-        require(item is not None and (index == 0 or item.group(1) is None),
-                'Reference span contains an unsupported or intervening declaration')
-        span += sizes[item.group(2).lower()]
+                             reference_line(_DSEG, second).strip(), re.I)
+    label_name = span['first_label']
     # With a DGROUP frame, the span is tied to the alias address by the label's
     # checked placement below, so the alias spelling may differ from the label.
-    require(label is not None and following is not None and
+    require(span['declarations_only'] and following is not None and label_name is not None and
+            not span['interior_labels'] and
             (frame is not None or
-             name.lower() in (label.group(1).lower(), '_' + label.group(1).lower())) and
-            symbol['width'] == span,
+             name.lower() in (label_name.lower(), '_' + label_name.lower())) and
+            symbol['width'] == span['size'],
             'Reviewed reference label span differs')
     if frame is not None:
         cache = {} if cache is None else cache
         if 'offsets' not in cache:
-            cache['offsets'] = _reference_label_offsets(lines)
-        require(cache['offsets'].get(label.group(1)) == (symbol['load_address'] - frame, first),
+            cache['offsets'] = reference_label_offsets(_DSEG)
+        require(cache['offsets'].get(label_name) == (symbol['load_address'] - frame, first),
                 'Reviewed reference label span is not placed at the alias address')
 
 
 def _check_ascii_table_extent(name, symbol, layout, image):
     """The 256 indexed bytes precede one explicit alignment byte in dseg."""
-    from common import identity
+    from pinned_reference import check_reference_identity, reference_line, reference_span
     import re
     proof=symbol.get('extent_proof',{})
     require(name=='_g_ascii_props' and symbol['width']==256 and
@@ -239,22 +233,12 @@ def _check_ascii_table_extent(name, symbol, layout, image):
                     'next_label_line':15634},
             'Unreviewed ASCII table extent')
     path='src/restunts/asmorig/dseg.asm'
-    source=ROOT/'build/references/restunts'/path
-    pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    require(identity(source.read_bytes())==pinned,'ASCII table reference source differs')
-    lines=source.read_text(encoding='latin1').splitlines()
-    values=[]
-    for number in range(15377,15633):
-        line=lines[number-1].strip()
-        pattern=(r'g_ascii_props\s+db\s+(\d+)' if number==15377
-                 else r'db\s+(\d+)')
-        match=re.fullmatch(pattern,line,re.I)
-        require(match is not None,'ASCII table declaration differs')
-        value=int(match.group(1)); require(0<=value<=255,'ASCII table byte invalid')
-        values.append(value)
-    require(len(values)==256 and lines[15632].strip().lower()=='db 0' and
-            re.fullmatch(r'word_3F0A0\s+dw\s+1',lines[15633].strip(),re.I)
-            and image[symbol['load_address']:symbol['load_address']+256]==bytes(values),
+    check_reference_identity(path)
+    values=reference_span(path,15377,15633)
+    require(values['first_label']=='g_ascii_props' and values['size']==256 and
+            values['values_hex']==image[symbol['load_address']:symbol['load_address']+256].hex() and
+            reference_line(path,15633).strip().lower()=='db 0' and
+            re.fullmatch(r'word_3F0A0\s+dw\s+1',reference_line(path,15634).strip(),re.I),
             'ASCII table bytes/padding/endpoint differ')
 
 
@@ -410,13 +394,10 @@ def _check_counted_stride_extent(name, symbol, layout, image, relocations):
     require(spec['shape'](code) and
             not any(at <= r['load_offset'] < at + spec['relocation_free'] for r in relocations),
             'Counted-stride loop shape differs')
-    from common import identity
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
-    require(identity(source.read_bytes()) ==
-            read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path],
-            'Counted-stride reference source differs')
-    offsets = _reference_label_offsets(source.read_text(encoding='latin1').splitlines())
+    from pinned_reference import check_reference_identity, reference_label_offsets as pinned_offsets
+    check_reference_identity(path)
+    offsets = pinned_offsets(path)
     end_offset = spec['offset'] + spec['stride'] * spec['count']
     require(offsets.get(spec['label'], (None,))[0] == spec['offset'] and
             offsets.get(spec['end_label'], (None,))[0] == end_offset and
@@ -484,7 +465,6 @@ _LIST_TABLES = {
 def _check_list_table_extent(name, symbol, layout, image, relocations):
     """A reviewed table read as counted element lists through one pointer (integ26)."""
     from function_evidence import current_inventory
-    from common import identity
     spec = _LIST_TABLES.get(name)
     frame = layout['frame_load_address']
     proc, at, raw = spec['witness'] if spec else (None, 0, '')
@@ -514,11 +494,9 @@ def _check_list_table_extent(name, symbol, layout, image, relocations):
             windows[-1][1] == spec['offset'] + symbol['width'],
             'List-table windows do not tile the reviewed extent')
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
-    require(identity(source.read_bytes()) ==
-            read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path],
-            'List-table reference source differs')
-    offsets = _reference_label_offsets(source.read_text(encoding='latin1').splitlines())
+    from pinned_reference import check_reference_identity, reference_label_offsets as pinned_offsets
+    check_reference_identity(path)
+    offsets = pinned_offsets(path)
     end_offset = spec['offset'] + symbol['width']
     require(offsets.get(spec['label'], (None,))[0] == spec['offset'] and
             offsets.get(spec['end_label'], (None,))[0] == end_offset and
@@ -537,7 +515,6 @@ def _check_list_table_extent(name, symbol, layout, image, relocations):
 def _check_pair_extent(name, symbol, layout, image, relocations):
     """A reviewed 4-byte object made of two pinned word labels (integ26)."""
     from function_evidence import current_inventory
-    from common import identity
     spec = _PAIR_EXTENTS.get(name)
     frame = layout['frame_load_address']
     require(spec is not None and symbol['load_address'] == frame + spec['offset'] and
@@ -558,11 +535,9 @@ def _check_pair_extent(name, symbol, layout, image, relocations):
         require(any(r['load_offset'] == call + 3 for r in relocations),
                 'Word-pair far CALL lacks its MZ relocation')
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
-    require(identity(source.read_bytes()) ==
-            read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path],
-            'Word-pair reference source differs')
-    offsets = _reference_label_offsets(source.read_text(encoding='latin1').splitlines())
+    from pinned_reference import check_reference_identity, reference_label_offsets as pinned_offsets
+    check_reference_identity(path)
+    offsets = pinned_offsets(path)
     require(offsets.get(spec['label'], (None,))[0] == spec['offset'] and
             offsets.get(spec['interior'][0], (None,))[0] == spec['offset'] + 2 and
             offsets.get(spec['end_label'], (None,))[0] == spec['offset'] + 4,
@@ -622,8 +597,7 @@ def _check_pinned_member_public(name, symbol, layout, image, relocations):
 
 def _check_state_extent(name, symbol, layout):
     """Recount the pinned contiguous state declaration, including its endpoint."""
-    from common import identity
-    import re
+    from pinned_reference import check_reference_identity, reference_span, reference_label_offsets
 
     proof = symbol.get('extent_proof')
     require(name == '_state' and proof == {
@@ -631,31 +605,20 @@ def _check_state_extent(name, symbol, layout):
     } and symbol['load_address'] == layout['frame_load_address'] + 0x8d24,
             'Unreviewed state extent coordinates')
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
-    references = read_json(ROOT/'layout/references.json')['restunts']
-    require(path in references['evidence_files'] and
-            identity(source.read_bytes()) == references['evidence_files'][path],
-            'Data extent reference source differs from pinned checkout')
-    lines = source.read_text(encoding='latin1').splitlines()
-    sizes = {'db': 1, 'dw': 2, 'dd': 4, 'dq': 8}
-    def declaration(number):
-        require(1 <= number <= len(lines), 'Extent line missing')
-        match = re.fullmatch(r'(?:(\w+)\s+)?(db|dw|dd|dq)\s+.*', lines[number-1].strip(), re.I)
-        require(match is not None, 'Unsupported reference declaration')
-        return match.group(1), sizes[match.group(2).lower()]
-    require(declaration(34065)[0] == 'state' and
-            declaration(35185)[0] == 'oppcarshapevecs' and
-            declaration(35353)[0] == 'gameconfig' and
-            sum(declaration(n)[1] for n in range(34065, 35353)) == 0x510 and
+    check_reference_identity(path)
+    offsets = reference_label_offsets(path)
+    state = reference_span(path, 34065, 35185)
+    combined = reference_span(path, 34065, 35353)
+    require(offsets.get('state') == (0x8d24, 34065) and
+            offsets.get('oppcarshapevecs', (None, None))[1] == 35185 and
+            offsets.get('gameconfig', (None, None))[1] == 35353 and
+            combined['size'] == 0x510 and
             layout['symbols']['_gameconfig']['load_address'] ==
             layout['frame_load_address'] + 0x9234,
             'Reference DGROUP coordinate calibration differs')
-    span = 0
-    for number in range(34065, 35185):
-        label, size = declaration(number)
-        require(number == 34065 or label is None, 'Intervening state reference label')
-        span += size
-    require(span == symbol['width'] == 1120, 'State reference extent differs')
+    require(state['size'] == symbol['width'] == 1120 and
+            state['first_label'] == 'state' and state['interior_labels'] == [],
+            'State reference extent differs')
     base, end = symbol['load_address'], symbol['load_address'] + symbol['width']
     clone_aliases = _validated_clone_names(layout)
     for other_name, other in layout['symbols'].items():
@@ -669,7 +632,8 @@ def _check_state_extent(name, symbol, layout):
 
 def _check_folded_extent(name, symbol, layout, image, relocations):
     """Recheck the one reviewed 8 x 76 guarded table against the oracle."""
-    from common import identity, sha
+    from common import sha
+    from pinned_reference import check_reference_identity, reference_span, reference_line
     import re
     proof = symbol.get('extent_proof', {})
     require(name == '_audiochunks_unk2' and
@@ -680,14 +644,11 @@ def _check_folded_extent(name, symbol, layout, image, relocations):
             proof.get('stride') == 76 and proof.get('index_bound') == [16, 23],
             'Unreviewed folded-index extent')
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
-    pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    require(identity(source.read_bytes()) == pinned, 'Folded-index reference source differs')
-    lines = source.read_text(encoding='latin1').splitlines()
-    require(re.fullmatch(r'audiochunks_unk2\s+db\s+0', lines[32491].strip(), re.I) and
-            re.fullmatch(r'word_4408C\s+dw\s+0', lines[33099].strip(), re.I) and
-            all(re.fullmatch(r'(?:audiochunks_unk2\s+)?db\s+0', row.strip(), re.I)
-                for row in lines[32491:33099]) and
+    check_reference_identity(path)
+    span = reference_span(path, 32492, 33100)
+    require(reference_line(path, 32492).strip().lower() == 'audiochunks_unk2     db 0' and
+            reference_line(path, 33100).strip().lower() == 'word_4408c     dw 0' and
+            span['all_db0'] and span['size'] == 608 and span['first_label'] == 'audiochunks_unk2' and
             layout['symbols']['_word_4408C']['load_address'] ==
             symbol['load_address'] + symbol['width'],
             'Folded-index reference span or endpoint differs')
@@ -778,17 +739,14 @@ def checked_dgroup_layout(image, relocations):
 
 def checked_dseg_base(image, relocations):
     """Ground the reference DSEG start at the independently verified DGROUP base."""
-    from common import identity, sha
+    from common import sha
+    from pinned_reference import check_reference_identity, reference_line
     layout = checked_dgroup_layout(image, relocations)
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
-    pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    require(identity(source.read_bytes()) == pinned,
-            'DSEG base reference source differs')
-    lines = source.read_text(encoding='latin1').splitlines()
-    require(lines[45].strip().lower() == 'dgroup group dseg' and
-            lines[46].strip().lower() == "dseg segment byte public 'stuntsd' use16" and
-            lines[1499].strip().lower() == 'word_3b770     dw 0',
+    check_reference_identity(path)
+    require(reference_line(path, 46).strip().lower() == 'dgroup group dseg' and
+            reference_line(path, 47).strip().lower() == "dseg segment byte public 'stuntsd' use16" and
+            reference_line(path, 1500).strip().lower() == 'word_3b770     dw 0',
             'DSEG group/first declaration differs')
     base = layout['frame_load_address']
     require(layout['symbols']['_word_3B770']['load_address'] == base and
@@ -1162,19 +1120,19 @@ def _resolve_generic_cs_island(name, symbol, layout, image, relocations):
     or immediate operand in an instruction-verified procedure of the same code
     frame names the table offset without a relocation."""
     import re, sys
-    from common import identity, sha
+    from common import sha
+    from pinned_reference import check_reference_identity, reference_lines
     island=layout['code_islands'][symbol['island']]
     start,end,frame=island['start'],island['end'],island['frame_load_address']
     path=island['reference_path']
     pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    source=ROOT/'build/references/restunts'/path
     require(re.fullmatch(r'src/restunts/asmorig/seg\d{3}\.asm',path) is not None and
-            identity(source.read_bytes())==pinned and
+            check_reference_identity(path)==pinned and
             sha(image[start:end])==island['sha256'] and frame%16==0 and
             frame<=start<end<=frame+65536,
             'Generic CS island identity differs')
     first,last=island['reference_lines']
-    lines=source.read_text(encoding='latin1').splitlines()[first-1:last]
+    lines=reference_lines(path,first,last)
     values=[];labels={}
     for index,line in enumerate(lines):
         match=re.fullmatch(r'\s*(?:(\w+)\s+)?db\s+(\d+)\s*',line,re.I)
@@ -1217,7 +1175,7 @@ def _resolve_generic_cs_island(name, symbol, layout, image, relocations):
 def resolve_cs_symbols(names, image, relocations):
     """Resolve reviewed CS-resident data with pinned extents and operands."""
     import re
-    from common import identity, sha
+    from common import sha
     layout=read_json(ROOT/'layout/data-symbols.json')
     require(layout['oracle_sha256']==sha(image), 'CS data oracle identity differs')
     generic={n for n in names if layout['symbols'].get(n if n.startswith('_') else '_'+n,{})
@@ -1243,15 +1201,15 @@ def resolve_cs_symbols(names, image, relocations):
                 'Interpolation CS island identity differs')
         path=island['reference_path']
         pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-        source=ROOT/'build/references/restunts'/path
-        require(identity(source.read_bytes())==pinned,
+        from pinned_reference import check_reference_identity, reference_line, reference_lines
+        require(check_reference_identity(path)==pinned,
                 'Interpolation source differs from pinned listing')
-        lines=source.read_text(encoding='latin1').splitlines()
-        require(re.fullmatch(r'word_2F448\s+dw\s+50',lines[1662].strip(),re.I) and
-                re.fullmatch(r'off_2F44A\s+dw\s+offset\s+\w+',lines[1663].strip(),re.I) and
-                len(lines[1663:1713])==50,
+        table_lines=reference_lines(path,1664,1713)
+        require(re.fullmatch(r'word_2F448\s+dw\s+50',reference_line(path,1663).strip(),re.I) and
+                re.fullmatch(r'off_2F44A\s+dw\s+offset\s+\w+',table_lines[0].strip(),re.I) and
+                len(table_lines)==50,
                 'Interpolation count/table declarations differ')
-        for index,line in enumerate(lines[1663:1713]):
+        for index,line in enumerate(table_lines):
             match=re.fullmatch(r'(?:(?:off_2F44A|off_2F4AC)\s+)?dw\s+offset\s+(?:off|word)_([0-9A-Fa-f]+)',
                                line.strip(),re.I)
             require(match is not None and
@@ -1285,13 +1243,13 @@ def resolve_cs_symbols(names, image, relocations):
             'CS sprite island extent/hash differs')
     path=island['reference_path']
     references=read_json(ROOT/'layout/references.json')['restunts']
-    source=ROOT/'build/references/restunts'/path
+    from pinned_reference import check_reference_identity, reference_lines
     require(path in references['evidence_files'] and
-            identity(source.read_bytes())==references['evidence_files'][path],
+            check_reference_identity(path)==references['evidence_files'][path],
             'CS sprite source is not the pinned reference')
     first,last=island['reference_lines']
     require((first,last)==(13738,13798), 'CS sprite source span differs')
-    lines=source.read_text(encoding='latin1').split('\n')[first-1:last-1]
+    lines=reference_lines(path,first,last-1,mode='lf')
     require(len(lines)==60, 'CS sprite source length differs')
     source_bytes=[]
     for index,line in enumerate(lines):

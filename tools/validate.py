@@ -23,13 +23,16 @@ def compare_baseline(path):
 
 
 def validate(independent=True, baseline=None):
+    (ROOT/'build').mkdir(parents=True, exist_ok=True)
     destination = ROOT/'build/validation/report.json'
     destination.unlink(missing_ok=True)
     report = {'status':'RUNNING'}
     try:
         ensure_consistent()
         before = inputs()
-        original = verify(write=False)
+        # Tests and real-link helpers consume the derived load image from
+        # build/oracle. Materialize it before the test gate in a fresh clone.
+        original = verify(write=True)
         profiles = sorted(read_json(ROOT/'layout/toolchain.json')['profiles'])
         for profile in profiles: verify_toolchain(profile)
         out = ROOT/'build/validation'; out.mkdir(parents=True, exist_ok=True)

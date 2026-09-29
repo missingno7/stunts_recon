@@ -77,6 +77,20 @@ python tools/porting/host_probe.py --mode strict-central
 
 `validate.py --image` proves the real-link result only within its oracle-derived order; `histbuild.py` reports the separate natural-link assumption. Neither command changes the oracle lock.
 
+## Reproducibility correction
+
+The frozen checkout's test suite had hidden dependencies on ignored worker proposals, recipes and source files, an already-generated `build/oracle/load-image.bin`, and libraries addressed relative to the repository instead of the pinned toolchain paths. Those inputs could exist in a developer tree while being absent from a clean clone.
+
+The tests now use small tracked historical fixtures or derive the expected contribution from the accepted manifest. Pinned Restunts facts used by the gate are available as compact, identity-checked excerpts; a full `build/references/restunts` checkout remains useful to optional research tools. Toolchain archive reads resolve through `layout/toolchain.json`. `validate.py` creates `build/` and writes the derived oracle image before the tests run. Test temporary directories no longer assume `build/` already exists.
+
+The clean-clone proof below copies only the original `assets/`, places the required Capstone 5.0.3 package in ignored `build/python/`, and resolves the pinned compiler/assembler/runners through `layout/toolchain.json`. No worker archive, candidate queue, ledger, reference checkout or prior oracle output is required by the test gate.
+
+| Clean-clone command | Receipt |
+|---|---|
+| `python tools/validate.py --image` | Pending fresh-clone run |
+| `python tools/porting/host_probe.py --mode compat` | Pending fresh-clone run |
+| `python tools/porting/host_probe.py --mode strict-central` | Pending fresh-clone run |
+
 ## Why ports start here
 
 The historical tag is the immutable reference for future ports: it retains the original segmented ABI, integer widths, object/data extents, exact relocations, legacy rendering behavior and unknown bytes without normalizing them to host assumptions. A `portable-sdl3` branch should derive from the tag, keep host adapters separate, and compare its runtime traces against the documented observations while preserving the coverage limits in [unresolved.md](unresolved.md).

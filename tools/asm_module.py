@@ -195,7 +195,7 @@ def _checked_data_public(p, start, end, frame, rows, starts, image):
     outside every verified procedure.  It binds nothing; a spelling equal to a
     reviewed code/data alias must name that alias's own address."""
     import re
-    from common import ROOT, identity, read_json
+    from common import ROOT, read_json
     require(isinstance(p, dict) and set(p) == {'public', 'offset', 'reference_path', 'reference_line'} and
             type(p['offset']) is int and type(p['reference_line']) is int,
             'Module data-public proof shape differs')
@@ -207,13 +207,10 @@ def _checked_data_public(p, start, end, frame, rows, starts, image):
     pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
     require(re.fullmatch(r'src/restunts/asmorig/seg\d{3}\.asm', path) is not None and path in pinned,
             'Module data public listing is not pinned')
-    source = ROOT/'build/references/restunts'/path
-    require(identity(source.read_bytes()) == pinned[path], 'Module data public listing differs')
-    # Pinned listings contain latin1 bytes that str.splitlines would treat
-    # as separators; line numbers count LF only.
-    lines = [line.rstrip(chr(13)) for line in source.read_text(encoding='latin1').split(chr(10))]
-    require(1 <= p['reference_line'] <= len(lines), 'Module data public line missing')
-    match = re.match(r'^([A-Za-z_$?@][\w$?@]*)\s+(?:db|dw|dd)\b', lines[p['reference_line']-1].strip(), re.I)
+    from pinned_reference import check_reference_identity, reference_line
+    require(check_reference_identity(path) == pinned[path], 'Module data public listing differs')
+    line = reference_line(path, p['reference_line'], mode='lf')
+    match = re.match(r'^([A-Za-z_$?@][\w$?@]*)\s+(?:db|dw|dd)\b', line.strip(), re.I)
     require(match is not None and p['public'] in ('_' + match.group(1), masm_public(match.group(1))),
             'Module data public differs from its pinned label declaration')
     data = read_json(ROOT/'layout/data-symbols.json')['symbols'].get(p['public'])

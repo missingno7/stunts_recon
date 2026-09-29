@@ -748,16 +748,14 @@ FPTRAP_TABLE = {'kind':'pinned-fptrap-table-v1','start_label':'off_3EF84',
 
 def fptrap_table_proof(owner, target, proof, data_map, data_symbols, image, relocations, manifest, text_frame):
     import re
-    from data_symbols import _reference_label_offsets
+    from pinned_reference import check_reference_identity, reference_label_offsets, reference_lines
     require(owner.get('module') == 'output.c' and target == '__cfltcvt_tab' and
             proof == FPTRAP_TABLE and data_map.get(target) == '_off_3EF84',
             'Unreviewed runtime data-object proof')
     source_path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/source_path
     refs = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
-    require(identity(source.read_bytes()) == refs[source_path], 'Pinned dseg source differs')
-    lines = source.read_text(encoding='latin1').splitlines()
-    offsets = _reference_label_offsets(lines)
+    require(check_reference_identity(source_path) == refs[source_path], 'Pinned dseg source differs')
+    offsets = reference_label_offsets(source_path)
     expected_labels = {'off_3EF84':(14356,15367),'off_3EF88':(14360,15368),
                        'off_3EF90':(14368,15370),'off_3EF94':(14372,15371),
                        'word_3EF98':(14376,15372)}
@@ -769,9 +767,10 @@ def fptrap_table_proof(owner, target, proof, data_map, data_symbols, image, relo
                 for name, (pos, _) in offsets.items()), 'Unreviewed interior label in __cfltcvt_tab')
     rows = [r'off_3EF84\s+dd\s+__fptrap', r'off_3EF88\s+dd\s+__fptrap', r'dd\s+__fptrap',
             r'off_3EF90\s+dd\s+__fptrap', r'off_3EF94\s+dd\s+__fptrap']
-    require(all(re.fullmatch(pattern, lines[start_line-1+i].split(';')[0].strip(), re.I)
+    lines = reference_lines(source_path, start_line, end_line)
+    require(all(re.fullmatch(pattern, lines[i].split(';')[0].strip(), re.I)
                 for i, pattern in enumerate(rows)) and
-            re.fullmatch(r'word_3EF98\s+dw\s+0', lines[end_line-1].split(';')[0].strip(), re.I),
+            re.fullmatch(r'word_3EF98\s+dw\s+0', lines[-1].split(';')[0].strip(), re.I),
             'Pinned __cfltcvt_tab declarations differ')
     frame = read_json(ROOT/'layout/data-symbols.json')['frame_load_address']
     start, end = frame+start_offset, frame+end_offset
