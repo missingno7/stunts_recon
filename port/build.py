@@ -106,6 +106,21 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
                 transformed, count=1)
             if count != 1:
                 raise RuntimeError("Could not isolate the original 16-bit audio loader")
+            transformed = "extern int port_audio_is_silent(void);\n" + transformed
+            transformed, count = re.subn(
+                r"(?m)^(void\s+FAR\s+load_audio_finalize\s*\([^\n]*\)\s*\{)",
+                r"\1\n    /* The host adapter selects silence; retain loaded resources but do not "
+                "call the DOS driver image. */\n    if (port_audio_is_silent()) return;",
+                transformed, count=1)
+            if count != 1:
+                raise RuntimeError("Could not isolate the audio finalizer boundary")
+            transformed, count = re.subn(
+                r"(?m)^(void\s+FAR\s+audio_driver_func3F\s*\([^\n]*\)\s*\{)",
+                r"\1\n    /* The silent host adapter has no DOS driver entry points to dispatch. */\n"
+                "    if (port_audio_is_silent()) return;",
+                transformed, count=1)
+            if count != 1:
+                raise RuntimeError("Could not isolate the audio volume/cleanup boundary")
         elif source == "src/obj_seg006.c":
             transformed = transformed.replace(
                 "vector_op_unk2(struct VECTOR*);",
@@ -155,6 +170,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "sprite.c",
         "random.c",
         "font.c",
+        "sincos.c",
         "file.c", "resource.c", "audio.c", "platform.c", "trace.c", "trace_hooks.c",
     ]
     out_dir = BUILD / "port-obj"
@@ -385,8 +401,10 @@ def build(args) -> Path:
 def run(args) -> int:
     if not args.no_build:
         build(args)
+    Path(args.capture_dir).mkdir(parents=True, exist_ok=True)
     exe = BUILD / "stunts.exe"
-    command = [str(exe), f"--trace={args.trace}", f"--assets={args.assets}"]
+    command = [str(exe), f"--trace={args.trace}", f"--assets={args.assets}",
+               f"--capture-dir={args.capture_dir}"]
     if args.run_ms is not None:
         command.append(f"--run-ms={args.run_ms}")
     prepare_environment(args.gcc)
@@ -406,6 +424,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--assets-source", type=Path, default=DEFAULT_ASSETS)
     run_parser.add_argument("--assets", default="build/sdl3/runtime/assets")
     run_parser.add_argument("--trace", default="build/sdl3/runtime-trace.jsonl")
+    run_parser.add_argument("--capture-dir", default="build/sdl3/captures")
     run_parser.add_argument("--run-ms", type=int)
     run_parser.add_argument("--no-build", action="store_true")
     args = parser.parse_args(argv)

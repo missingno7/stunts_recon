@@ -1,6 +1,7 @@
 #include "port_runtime.h"
 
 #include <SDL3/SDL.h>
+#include <stdio.h>
 #include <string.h>
 
 uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
@@ -8,8 +9,63 @@ uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 static SDL_Renderer *s_renderer;
 static SDL_Texture *s_texture;
 static SDL_Palette *s_palette;
+static SDL_Mutex *s_frame_lock;
 static uint64_t s_frame_id;
 static SDL_Color s_colors[256];
+static uint8_t s_palette6[256u * 3u];
+static uint8_t s_published_frame[PORT_FRAMEBUFFER_BYTES];
+static char s_capture_dir[512];
+
+static void write_u16le(FILE *stream, uint16_t value)
+{
+    fputc((int)(value & 0xFFu), stream);
+    fputc((int)(value >> 8), stream);
+}
+
+static void write_u32le(FILE *stream, uint32_t value)
+{
+    write_u16le(stream, (uint16_t)value);
+    write_u16le(stream, (uint16_t)(value >> 16));
+}
+
+static void dump_frame(uint64_t frame_id, const char *reason,
+                       const uint8_t *pixels, const uint8_t *palette)
+{
+    char path[768];
+    FILE *stream;
+    int path_length;
+    if (s_capture_dir[0] == '\0')
+        return;
+    path_length = snprintf(path, sizeof(path), "%s/frame-%06llu.fbr", s_capture_dir,
+                           (unsigned long long)frame_id);
+    if (path_length < 0 || (size_t)path_length >= sizeof(path))
+        return;
+    stream = fopen(path, "wb");
+    if (stream == NULL)
+        return;
+    fwrite("STFBR1\0\0", 1, 8, stream);
+    write_u16le(stream, PORT_SCREEN_WIDTH);
+    write_u16le(stream, PORT_SCREEN_HEIGHT);
+    write_u16le(stream, sizeof(s_palette6));
+    write_u16le(stream, 0);
+    write_u32le(stream, (uint32_t)frame_id);
+    fwrite(pixels, 1, PORT_FRAMEBUFFER_BYTES, stream);
+    fwrite(palette, 1, 256u * 3u, stream);
+    fclose(stream);
+    path_length = snprintf(path, sizeof(path), "%s/frame-%06llu.json", s_capture_dir,
+                           (unsigned long long)frame_id);
+    if (path_length < 0 || (size_t)path_length >= sizeof(path))
+        return;
+    stream = fopen(path, "wb");
+    if (stream == NULL)
+        return;
+    fprintf(stream, "{\"frame_id\":%llu,\"reason\":\"%s\","
+                    "\"width\":%d,\"height\":%d,\"palette\":\"RGB6\"}\n",
+            (unsigned long long)frame_id,
+            reason != NULL ? reason : "unknown",
+            PORT_SCREEN_WIDTH, PORT_SCREEN_HEIGHT);
+    fclose(stream);
+}
 
 static uint8_t dac6_to_u8(uint8_t value)
 {
@@ -21,7 +77,12 @@ int port_video_init(SDL_Renderer *renderer)
 {
     size_t i;
     s_renderer = renderer;
+    s_frame_lock = SDL_CreateMutex();
+    if (s_frame_lock == NULL)
+        return 0;
     memset(port_framebuffer, 0, sizeof(port_framebuffer));
+    memset(s_published_frame, 0, sizeof(s_published_frame));
+    memset(s_palette6, 0, sizeof(s_palette6));
     port_sprite_init();
     for (i = 0; i < 256; ++i) {
         s_colors[i].r = 0;
@@ -59,21 +120,52 @@ void port_video_set_palette(uint16_t first, uint16_t count,
         return;
     if ((uint32_t)first + count > 256u)
         count = (uint16_t)(256u - first);
+    if (s_frame_lock != NULL)
+        SDL_LockMutex(s_frame_lock);
     for (i = 0; i < count; ++i) {
+        s_palette6[(first + i) * 3u + 0u] = (uint8_t)(rgb6[i * 3u + 0u] & 0x3Fu);
+        s_palette6[(first + i) * 3u + 1u] = (uint8_t)(rgb6[i * 3u + 1u] & 0x3Fu);
+        s_palette6[(first + i) * 3u + 2u] = (uint8_t)(rgb6[i * 3u + 2u] & 0x3Fu);
         s_colors[first + i].r = dac6_to_u8(rgb6[i * 3u + 0u]);
         s_colors[first + i].g = dac6_to_u8(rgb6[i * 3u + 1u]);
         s_colors[first + i].b = dac6_to_u8(rgb6[i * 3u + 2u]);
         s_colors[first + i].a = SDL_ALPHA_OPAQUE;
     }
-    if (s_palette != NULL)
-        SDL_SetPaletteColors(s_palette, s_colors, first, count);
+    if (s_frame_lock != NULL)
+        SDL_UnlockMutex(s_frame_lock);
+}
+
+void port_video_set_capture_dir(const char *path)
+{
+    SDL_PathInfo info;
+    s_capture_dir[0] = '\0';
+    if (path == NULL || path[0] == '\0')
+        return;
+    if (strlen(path) >= sizeof(s_capture_dir))
+        return;
+    strcpy(s_capture_dir, path);
+    if ((!SDL_GetPathInfo(s_capture_dir, &info) ||
+         info.type != SDL_PATHTYPE_DIRECTORY) &&
+        !SDL_CreateDirectory(s_capture_dir)) {
+        fprintf(stderr, "PORT frame capture disabled: %s\n", SDL_GetError());
+        s_capture_dir[0] = '\0';
+    }
 }
 
 void port_video_publish(const char *reason)
 {
-    ++s_frame_id;
-    if (s_texture != NULL)
-        SDL_UpdateTexture(s_texture, NULL, port_framebuffer, PORT_SCREEN_WIDTH);
+    uint8_t frame[PORT_FRAMEBUFFER_BYTES];
+    uint8_t palette[sizeof(s_palette6)];
+    uint64_t frame_id;
+    if (s_frame_lock != NULL)
+        SDL_LockMutex(s_frame_lock);
+    memcpy(frame, port_framebuffer, sizeof(frame));
+    memcpy(s_published_frame, frame, sizeof(s_published_frame));
+    memcpy(palette, s_palette6, sizeof(palette));
+    frame_id = ++s_frame_id;
+    if (s_frame_lock != NULL)
+        SDL_UnlockMutex(s_frame_lock);
+    dump_frame(frame_id, reason, frame, palette);
     port_trace_video_publication(reason);
 }
 
@@ -83,8 +175,22 @@ void port_video_present(void)
     int output_h = 0;
     int scale;
     SDL_FRect destination;
+    uint8_t frame[PORT_FRAMEBUFFER_BYTES];
+    SDL_Color colors[256];
+    uint64_t frame_id;
     if (s_renderer == NULL || s_texture == NULL)
         return;
+    if (s_frame_lock != NULL)
+        SDL_LockMutex(s_frame_lock);
+    memcpy(frame, s_published_frame, sizeof(frame));
+    memcpy(colors, s_colors, sizeof(colors));
+    frame_id = s_frame_id;
+    if (s_frame_lock != NULL)
+        SDL_UnlockMutex(s_frame_lock);
+    if (frame_id == 0)
+        return;
+    SDL_SetPaletteColors(s_palette, colors, 0, 256);
+    SDL_UpdateTexture(s_texture, NULL, frame, PORT_SCREEN_WIDTH);
     if (!SDL_GetRenderOutputSize(s_renderer, &output_w, &output_h))
         return;
     scale = output_w / PORT_SCREEN_WIDTH;
@@ -100,7 +206,7 @@ void port_video_present(void)
     SDL_RenderClear(s_renderer);
     SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
     if (SDL_RenderPresent(s_renderer))
-        port_trace_host_present(s_frame_id);
+        port_trace_host_present(frame_id);
 }
 
 void port_video_shutdown(void)
@@ -112,6 +218,10 @@ void port_video_shutdown(void)
     if (s_palette != NULL) {
         SDL_DestroyPalette(s_palette);
         s_palette = NULL;
+    }
+    if (s_frame_lock != NULL) {
+        SDL_DestroyMutex(s_frame_lock);
+        s_frame_lock = NULL;
     }
     s_renderer = NULL;
 }

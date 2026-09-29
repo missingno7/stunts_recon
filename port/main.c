@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 {
     const char *trace_path = "build/sdl3/runtime-trace.jsonl";
     const char *asset_root = NULL;
+    const char *capture_dir = "build/sdl3/captures";
     int run_ms = -1;
     int i;
     uint64_t start_ns;
@@ -82,6 +83,8 @@ int main(int argc, char **argv)
             trace_path = argv[i] + 8;
         else if (strncmp(argv[i], "--assets=", 9) == 0)
             asset_root = argv[i] + 9;
+        else if (strncmp(argv[i], "--capture-dir=", 14) == 0)
+            capture_dir = argv[i] + 14;
         else if (parse_run_ms(argv[i]) >= 0)
             run_ms = parse_run_ms(argv[i]);
     }
@@ -91,6 +94,7 @@ int main(int argc, char **argv)
         asset_root = "build/sdl3/runtime/assets";
     port_runtime_set_asset_root(asset_root);
     port_sdl_init("Stunts 1.1 - SDL3 faithful port");
+    port_video_set_capture_dir(capture_dir);
     port_trace_open(trace_path, port_runtime_asset_root());
     port_memory_init();
     port_input_init();

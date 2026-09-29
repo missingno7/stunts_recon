@@ -1,73 +1,77 @@
 # SDL3 port M1 progress
 
-## Resource and allocation boundary
+## Implemented startup path
 
-The first M1 slice implements the startup resource path in `port/resource.c`:
+The port now loads startup archive entries, parses the validated RLE/VLE
+resource formats, applies the shape transforms, and resolves the resulting
+far pointers through the segmented memory model. The decompressor follows
+`tools/porting/format_reference.py` (`decompress`, `decompress_rle`, and
+`decompress_vle`); archive lookup and file loading follow
+`asm/file_get_shape2d.ASM`, `asm/locate_entries.ASM`, and `asm/file_read.ASM`.
+`port/memory.c` now reuses freed real-mode spans, retains full allocation
+extents, handles paragraph allocations and normalized chunk names, and reports
+free paragraphs. Its call boundaries are documented in
+`asm/mmgr_alloc_call_group.ASM`, `asm/mmgr_alloc_pages.ASM`,
+`asm/mmgr_free_entries.ASM`, and `asm/mmgr_get_ofs_diff` within
+`asm/mmgr_get_ofs_diff.ASM`.
 
-- `file_decomp` translates the validated RLE/VLE wrapper, RLE sequence/run,
-  and canonical VLE logic from `tools/porting/format_reference.py` (`decompress`,
-  `decompress_rle`, and `decompress_vle`). It bounds inputs and decoded spans
-  to 32 MiB and retains each complete decoded allocation.
-- `file_get_shape2d` follows the indexed archive offset calculation in
-  `asm/file_get_shape2d.ASM`; `locate_shape_*` follows the four-byte entry scan
-  in `asm/locate_entries.ASM`. `file_unflip_shape2d` and
-  `file_unflip_shape2d_pes` use the validated transforms in
-  `tools/porting/format_reference.py` (`unflip_pvs` and `unflip_pes`).
-- The shape-load thunks forward to the existing `file_load_shape2d*` C
-  implementations. `port/memory.c` now resolves registered byte extents,
-  paragraph counts, normalized DOS chunk names, release, and in-place resize
-  within reserved segment spans. The existing `mmgr_alloc_resbytes` C routine
-  remains authoritative and retains its one-extra-paragraph behavior.
+The host palette and indexed 320x200 framebuffer are active. The palette path
+uses `asm/video_set_palette.ASM` and
+`asm/file_load_shape2d_palmap_apply.ASM`. Sprite-window setup, row offsets,
+clipping, opaque drawing, boolean blits, and font drawing have C implementations
+beside the SDL host; source references are
+`asm/patterned_lines_windows.ASM`, `asm/seg012_shape_to_1_group.ASM`,
+`asm/seg012_putimage_shared_group.ASM`, `asm/sprite_clear_1_color.ASM`,
+`asm/font_draw_text.ASM`, `asm/font_entries.ASM`, and
+`asm/line_sprite_shape_render.ASM`. The `sprite_1_unk3` row sampler is a
+semantic C translation of `asm/seg012_sprite_1_unk_group.ASM` lines 146 to 165
+and 191 to 291. Its evidence context has no strict recipe, so this translation is
+not claimed as historically accepted source.
 
-`python port/build.py build` passed all 38 game-object compiles and linked the
-strict i686 SDL3 executable with 95 function stubs and 4 data stubs, down from
-117 and 4 at the M0 baseline. A 4-second guest run loaded the startup resources
-and palette, then stopped at `sprite_make_window`; this confirms the first
-unsupported boundary in execution order, not a rendered-screen match.
+`port/timer.c` drives the game callback list from the 99.998 Hz host tick and
+uses the callback/counter rules in `asm/timer_reg_callback.ASM`,
+`asm/timer_remove_callback.ASM`, `asm/timer_get_delta.ASM`, and
+`asm/timer_get_counter.ASM`. The SDL keyboard adapter updates DOS scan state
+and BIOS-style key reads using the interfaces in
+`asm/keyboard_interrupt_runtime.ASM`, `asm/kb_read_char.ASM`, and
+`asm/input_keyboard_joystick_services.ASM`. An Enter key event was observed
+reaching the game and taking startup into the menu path. DOS audio driver
+images remain unloaded as executable code; the silent adapter keeps resource
+loading available without calling a DOS driver.
 
-The generated inventory is `build/sdl3/stub-inventory.json` and is refreshed by
-the port build. The startup trace reports `sprite_make_window` as the next
-service to implement.
+## Build and rendered frames
 
-## Sprite, timer, random, and font boundary
+`python port/build.py build` passes all 38 game C object compiles and links 16
+host objects. The generated inventory is **57 function stubs and 3 data
+stubs**, down from the M0 inventory of **117 function stubs and 4 data
+stubs**. The complete `tools/validate.py` suite was not run; this worktree is
+known to have six checks that depend on ignored `build/workers` files.
 
-The next port slice adds the host representations for DOS `sprite1`/`sprite2`
-and MCGA windows in `port/sprite.c`, retaining the 16-byte shape header, full
-pixel extent, row offsets, pitch, and clip bounds. Opaque shape drawing,
-sprite-window allocation/release, descriptor selection/copy, and active-buffer
-clear follow `asm/sprite_make_wnd.ASM`, `asm/patterned_lines_windows.ASM`,
-`asm/seg012_shape_to_1_group.ASM`, `asm/seg012_putimage_shared_group.ASM`, and
-`asm/sprite_clear_1_color.ASM`. Valid in-bounds operations retain the original
-indexed bytes; invalid spans unwind rather than crossing their registered
-allocation.
+The startup window can display the Broderbund frame, Stunts title art, and the
+main menu after Enter. Captures are kept under ignored `build/sdl3/` output.
+Comparisons against Port Forge originals show:
 
-`port/timer.c` now dispatches the game's five-slot callback list from the
-99.998 Hz host tick, preserves callback order, gates dispatch while the game
-marks input as pushed, and implements the 32-bit elapsed/counter reads from
-`asm/timer_get_delta.ASM` and `asm/timer_get_counter.ASM`. `port/random.c`
-translates the six-byte seed carry logic from `asm/obj_seg002.ASM`.
-`port/font.c` selects loaded font records and translates the legacy font
-header, glyph-width, and bitplane loops from `asm/font_draw_text.ASM`,
-`asm/font_entries.ASM`, and `asm/line_sprite_shape_render.ASM`; the static
-fallback remains the complete 1408-byte record in `src/fardata_11039.c`.
+| SDL capture | Port Forge reference | Indexed pixel differences | Palette differences |
+|---|---|---:|---:|
+| Frame 4 | `checkpoint_000000000300.pfidx` | 811 / 64,000 | 0 / 768 bytes |
+| Frame 8 | `checkpoint_000000000600.pfidx` | 3,439 / 64,000 | 0 / 768 bytes |
+| Menu frame 12 | `intro-oracle-menu.png` after RGB6 expansion | 12,424 / 64,000 RGB pixels | not applicable |
 
-The strict SDL3 build now links with 76 function stubs and 3 data stubs,
-compared with the M0 inventory of 117 functions and 4 data symbols. A five
-second run passes resource/palette loading, cursor-window setup, timer
-calibration, random wait, and font selection, then reaches the unresolved
-`cosfast` service. No original frame has been captured or compared yet, and no
-title/menu screen is claimed as rendered.
+No screen is pixel-exact yet, so no screen-equality regression has been added.
+The title-frame differences all fall at columns `x mod 5 = 4`; 12,049 of the
+menu's 12,424 differing RGB pixels fall at the same column phase. This follows
+the five-pixel source advance in the `sprite_1_unk3` skip tables, but the
+remaining background/state relationship to the fully drawn Port Forge frames
+is not yet established. The current captures therefore do not prove a final
+title or menu match.
 
-The diagnostic `search.py` run for the whole `asm/obj_seg002.ASM` module stopped
-at the documented unsupported `COMDEF` communal allocation rule before
-comparison (`build/search/5a7954d4-fa05-4237-a9a7-b7758d6dc81b/report.json`).
-This tooling obstacle does not affect the C translation path or alter the
-accepted ASM/source authority.
+With no key, the first unresolved execution boundary is the `set_projection`
+stub. Its assembly is `asm/projection_vector_window.ASM`; `context.py` reports
+verified instruction boundaries but no strict recipe or independently
+verified caller. Main-menu key input avoids that boundary in the observed
+Enter path, but additional menu actions and a pixel-exact menu remain open.
 
-## Screen oracle status
-
-No M1 framebuffer has been matched yet. The available
-`D:\Games\DOS\dos_recosystem\stunts_forged\pf_stunts_screen.ppm` capture is a
-race frame and cannot serve as the title or menu reference. The local
-Port-Forge capture executable and saved boot/replay artifacts remain available
-for producing named title and menu reference frames.
+The next acceptance steps are to establish the equivalent menu render state,
+resolve the fifth-column mismatch without changing the `sprite_1_unk3` ASM
+semantics, continue the startup path from `set_projection`, and add a pixel
+comparison regression for each screen once it matches exactly.

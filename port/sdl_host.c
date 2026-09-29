@@ -57,7 +57,8 @@ int port_sdl_poll(void)
         if (event.type == SDL_EVENT_QUIT) {
             s_quit = 1;
         } else if (event.type == SDL_EVENT_KEY_DOWN) {
-            port_input_handle_event(event.type, event.key.scancode, 1);
+            port_input_handle_event(event.type, event.key.scancode,
+                                    event.key.repeat ? 1 : 0);
         } else if (event.type == SDL_EVENT_KEY_UP) {
             port_input_handle_event(event.type, event.key.scancode, 0);
         } else if (event.type == SDL_EVENT_MOUSE_MOTION) {
