@@ -10,7 +10,6 @@ static SDL_Texture *s_texture;
 static SDL_Palette *s_palette;
 static uint64_t s_frame_id;
 static SDL_Color s_colors[256];
-static uint8_t s_sprite1_descriptor[30];
 
 static uint8_t dac6_to_u8(uint8_t value)
 {
@@ -23,6 +22,7 @@ int port_video_init(SDL_Renderer *renderer)
     size_t i;
     s_renderer = renderer;
     memset(port_framebuffer, 0, sizeof(port_framebuffer));
+    port_sprite_init();
     for (i = 0; i < 256; ++i) {
         s_colors[i].r = 0;
         s_colors[i].g = 0;
@@ -119,36 +119,6 @@ void port_video_shutdown(void)
 /* Implemented platform seams reached by initialize_main in M0. */
 void video_set_mode_13h(void) { }
 void video_set_mode4(void) { }
-
-/* Faithful descriptor copy from asm/patterned_lines_windows.ASM:3855-3879:
-   CLD; REP MOVSW with CX=0x0f copies 15 words (30 bytes) to _sprite1. */
-void sprite_setup1_from_arg_pointer(const void *sprite)
-{
-    if (sprite != NULL)
-        memcpy(s_sprite1_descriptor, sprite, sizeof(s_sprite1_descriptor));
-}
-
-extern uint8_t sprite2[];
-
-void sprite_copy_2_to_1(void)
-{
-    /* Faithful translation of asm/patterned_lines_windows.ASM:3889-3903:
-       copy the 15-word descriptor at _sprite2 into the active descriptor. */
-    sprite_setup1_from_arg_pointer(sprite2);
-}
-
-void sprite_clear_1_color(uint8_t color)
-{
-    memset(port_framebuffer, color, sizeof(port_framebuffer));
-}
-
-void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom)
-{
-    (void)left;
-    (void)right;
-    (void)top;
-    (void)bottom;
-}
 
 void video_set_palette(uint16_t first, uint16_t count, uint8_t *rgb6)
 {

@@ -29,6 +29,25 @@ typedef struct PortMemoryStats {
     uint32_t high_water_bytes;
 } PortMemoryStats;
 
+typedef struct PortShape2D {
+    uint16_t width;
+    uint16_t height;
+    uint16_t unknown1;
+    uint16_t unknown2;
+    uint16_t pos_x;
+    uint16_t pos_y;
+    uint8_t attributes[4];
+} PortShape2D;
+
+/* Natural i686 layout used by the PORT_BUILD overlays. Pointer-bearing fields
+   stay host pointers; legacy segment offsets are kept in lineofs[]. */
+typedef struct PortSprite {
+    PortShape2D *sprite_bitmapptr;
+    uint16_t words[3];
+    uint16_t *lineofs;
+    uint16_t words2[9];
+} PortSprite;
+
 extern uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 
 struct SDL_Renderer;
@@ -60,6 +79,10 @@ int port_far_from_host(const void *pointer, PortFarPtr *address_out,
 PortMemoryStats port_memory_stats(void);
 int port_memory_extent(const void *pointer, size_t *remaining_out);
 int port_memory_resize(void *pointer, size_t size);
+void *mmgr_alloc_pages(const char *name, uint16_t paragraphs);
+void *mmgr_alloc_farmem(uint32_t bytes);
+void mmgr_free(void *pointer);
+void mmgr_release(void *pointer);
 
 int port_fs_open_read(const char *path);
 int32_t port_fs_read(int handle, void *buffer, uint32_t bytes);
@@ -79,12 +102,42 @@ void port_video_set_palette(uint16_t first, uint16_t count,
 void port_video_publish(const char *reason);
 void port_video_present(void);
 void port_video_shutdown(void);
+void port_sprite_init(void);
+
+PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color);
+void sprite_free_window(void *window);
+void sprite_setup1_from_arg_pointer(const PortSprite *sprite);
+void sprite_set_1_from_argptr(const PortSprite *sprite);
+void sprite_copy_2_to_1(void);
+void sprite_copy_2_to_1_2(void);
+void sprite_copy_arg_to_both(const PortSprite *sprites);
+void sprite_copy_both_to_arg(PortSprite *sprites);
+void sprite_clear_1_color(uint8_t color);
+void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom);
+void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y);
+void sprite_shape_to_1_alt(const PortShape2D *shape);
+void sprputimage(const PortShape2D *shape);
+void sprite_blit_to_video(PortSprite *window, uint16_t mode);
+void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color);
+
+void set_fontdefseg(const void *font_data);
+void font_setup_unknown(uint16_t foreground, uint16_t background);
+void font_draw_text(const char *text, int16_t x, int16_t y);
+void draw_text_at(const char *text, int16_t x, int16_t y);
+int16_t font_op(const char *text, uint16_t count);
+int16_t font_op2(const char *text);
 
 void port_timer_start(void);
 void port_timer_stop(void);
 uint64_t port_timer_tick_count(void);
 int port_timer_game_enabled(void);
 void port_timer_mark_game_enabled(int enabled);
+void timer_setup_interrupt(void);
+void timer_reg_callback(void (*callback)(void));
+void timer_remove_callback(void (*callback)(void));
+uint32_t timer_get_delta(void);
+uint32_t timer_get_counter(void);
+void timer_get_counter_unk(uint32_t ticks);
 
 void port_input_init(void);
 void port_input_handle_event(int event_type, int scancode, int pressed);

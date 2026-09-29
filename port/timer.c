@@ -2,16 +2,43 @@
 
 #include <SDL3/SDL.h>
 
-#define PORT_TIMER_CALLBACK_CAP 64u
+#define PORT_TIMER_CALLBACK_CAP 5u
 
 static SDL_Thread *s_thread;
 static SDL_Mutex *s_callback_lock;
 static SDL_AtomicInt s_running;
 static SDL_AtomicInt s_game_enabled;
 static SDL_AtomicInt s_tick_count;
+static SDL_AtomicInt s_callback_counter;
 static void (*s_callbacks[PORT_TIMER_CALLBACK_CAP])(void);
 static unsigned s_callback_count;
 static uint64_t s_audio_wait_target;
+static uint32_t s_last_delta_counter;
+extern volatile uint16_t input_pushed;
+
+static void timer_dispatch_game_tick(void)
+{
+    void (*callbacks[PORT_TIMER_CALLBACK_CAP])(void);
+    unsigned count;
+    unsigned i;
+    uint32_t current;
+    if (!port_timer_game_enabled() || input_pushed != 0)
+        return;
+    current = (uint32_t)SDL_GetAtomicInt(&s_callback_counter) + 1u;
+    SDL_SetAtomicInt(&s_callback_counter, (int32_t)current);
+    if (s_callback_lock == NULL)
+        return;
+    SDL_LockMutex(s_callback_lock);
+    count = s_callback_count;
+    for (i = 0; i < count; ++i)
+        callbacks[i] = s_callbacks[i];
+    SDL_UnlockMutex(s_callback_lock);
+    /* The DOS timer ISR invokes callbacks in registration order and allows
+       callback code to register/remove services without holding its table. */
+    for (i = 0; i < count; ++i)
+        if (callbacks[i] != NULL)
+            callbacks[i]();
+}
 
 static int timer_thread(void *unused)
 {
@@ -29,6 +56,7 @@ static int timer_thread(void *unused)
             ++tick_id;
             SDL_SetAtomicInt(&s_tick_count, (int)tick_id);
             port_trace_timer_tick(tick_id, next, now);
+            timer_dispatch_game_tick();
             next = origin + (tick_id + 1u) * PORT_TIMER_PERIOD_NS;
         } while (now >= next && SDL_GetAtomicInt(&s_running));
     }
@@ -43,6 +71,8 @@ void port_timer_start(void)
     SDL_SetAtomicInt(&s_running, 1);
     SDL_SetAtomicInt(&s_game_enabled, 0);
     SDL_SetAtomicInt(&s_tick_count, 0);
+    SDL_SetAtomicInt(&s_callback_counter, 0);
+    s_last_delta_counter = 0;
     s_callback_count = 0;
     s_thread = SDL_CreateThread(timer_thread, "stunts-pit-clock", NULL);
     if (s_thread == NULL)
@@ -82,6 +112,8 @@ void port_timer_mark_game_enabled(int enabled)
    until its interrupt/reentry boundary is recovered. */
 void timer_setup_interrupt(void)
 {
+    SDL_SetAtomicInt(&s_callback_counter, 0);
+    s_last_delta_counter = 0;
     port_timer_mark_game_enabled(1);
 }
 
@@ -91,14 +123,12 @@ void timer_reg_callback(void (*callback)(void))
     if (callback == NULL || s_callback_lock == NULL)
         return;
     SDL_LockMutex(s_callback_lock);
-    for (i = 0; i < s_callback_count; ++i) {
-        if (s_callbacks[i] == callback) {
-            SDL_UnlockMutex(s_callback_lock);
-            return;
-        }
-    }
     if (s_callback_count < PORT_TIMER_CALLBACK_CAP)
         s_callbacks[s_callback_count++] = callback;
+    else {
+        SDL_UnlockMutex(s_callback_lock);
+        port_guest_unwind("No room left on timer interrupt routine list");
+    }
     SDL_UnlockMutex(s_callback_lock);
 }
 
@@ -110,11 +140,37 @@ void timer_remove_callback(void (*callback)(void))
     SDL_LockMutex(s_callback_lock);
     for (i = 0; i < s_callback_count; ++i) {
         if (s_callbacks[i] == callback) {
-            s_callbacks[i] = s_callbacks[--s_callback_count];
+            unsigned j;
+            for (j = i + 1u; j < s_callback_count; ++j)
+                s_callbacks[j - 1u] = s_callbacks[j];
+            s_callbacks[--s_callback_count] = NULL;
             break;
         }
     }
     SDL_UnlockMutex(s_callback_lock);
+}
+
+/* Faithful state update of asm/timer_get_delta.ASM. Its 32-bit read and
+   previous-value store occurred with IRQs masked; SDL atomics provide the
+   same indivisible counter sample for the host timer thread. */
+uint32_t timer_get_delta(void)
+{
+    uint32_t current = (uint32_t)SDL_GetAtomicInt(&s_callback_counter);
+    uint32_t delta = current - s_last_delta_counter;
+    s_last_delta_counter = current;
+    return delta;
+}
+
+uint32_t timer_get_counter(void)
+{
+    return (uint32_t)SDL_GetAtomicInt(&s_callback_counter);
+}
+
+void timer_get_counter_unk(uint32_t ticks)
+{
+    uint32_t target = timer_get_counter() + ticks;
+    while ((int32_t)(timer_get_counter() - target) < 0)
+        SDL_DelayNS(1000000u);
 }
 
 void timer_copy_counter(int32_t ticks)

@@ -152,6 +152,9 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "memory.c",
+        "sprite.c",
+        "random.c",
+        "font.c",
         "file.c", "resource.c", "audio.c", "platform.c", "trace.c", "trace_hooks.c",
     ]
     out_dir = BUILD / "port-obj"
