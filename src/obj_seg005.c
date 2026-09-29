@@ -348,11 +348,11 @@ char cam_idg;
 extern I8 pen_flag_count;
 int replayrst;
 char popupact;
-extern I8 byte_3B8F2;
-extern I8 byte_3FE00;
+extern I8 mouse_enabled;
+extern I8 joystick_enabled;
 extern void far* gamerptrs;
 void far* dasm_shp_7;
-extern I16 word_3F88E;
+extern I16 input_pushed;
 char dashbtogglesaved;
 char g_replaybarcpytgl;
 char is_in_rplcopy;
@@ -708,7 +708,7 @@ void run_game(void) {
 			replayrst = 0;
 			popupact = 0;
 			g_rpl_init = 1;
-			/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
+			/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
 			gm_playmode = 1;
 			core.playerstate.car_posWorld1.lx += (I32)mulscl(sinfast(st_hdg), -240) << 6;
 			core.playerstate.car_posWorld1.lz += (I32)mulscl(cosfast(st_hdg), -240) << 6;
@@ -732,7 +732,7 @@ void run_game(void) {
 
 		for (;;) {
 			while (core.game_frame != tmr2) {
-				if ((byte_3B8F2 != 0 || byte_3FE00 != 0) && gm_playmode == 0) {
+				if ((mouse_enabled != 0 || joystick_enabled != 0) && gm_playmode == 0) {
 					replay_unk();
 				}
 				update_gamestate();
@@ -765,7 +765,7 @@ void run_game(void) {
 				if (dialog_result == -1)
 					dialog_result = 0;
 				/* PLATFORM(audio): restore audio playback volume. */ restore_audio_volume();
-				word_3F88E = 0;
+				input_pushed = 0;
 				/* PLATFORM(input_kb): restore the active input source. */ /* PLATFORM(input_mouse): restore mouse input mode. */ /* PLATFORM(video): restore the opaque draw mode. */ input_pop_status();
 				if (dialog_result != 0) {
 					update_crash_state(4, 0);
@@ -1017,7 +1017,7 @@ I8 handle_ingame_kb_shortcuts(unsigned key)
     case KEY_ASCII_UPPER_M:
     case KEY_ASCII_LOWER_M:
         do_mou_resource_text();
-        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
+        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
         break;
     case KEY_ASCII_UPPER_D:
     case KEY_ASCII_LOWER_D:
@@ -1203,8 +1203,8 @@ replay_finished:
     }
     if (pass_check_flag == 0 && g_rpl_init == 0 && rate_frame * 4 < core.game_frame)
         update_crash_state(1, 0);
-    if (byte_3B8F2 != 0 || byte_3FE00 != 0) {
-        if (byte_3B8F2 != 0) {
+    if (mouse_enabled != 0 || joystick_enabled != 0) {
+        if (mouse_enabled != 0) {
             /* PLATFORM(input_mouse): read mouse buttons and coordinates. */ mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
             i = msecoordx - 0xA0;
             if (abs(i) < 0x12)
@@ -1922,6 +1922,7 @@ I16 gameunk_button_y1[1] = { 151 };
 I16 gameunk_button_y2[1] = { PLATFORM_SCREEN_HEIGHT_PIXELS };
 static I8 view_camera_choice[2];
 static I8 camera_buttons_pressed[9];
+/* One unreferenced target byte; semantic type/name are unrecoverable and its slot is hash-constrained. */
 static I8 unused_40E73;
 static I8 camera_mode_view[2];
 static I8 camera_buttons_state_per_view[18];
@@ -2273,7 +2274,7 @@ pause_menu:
                     g_rplmodui = 0;
                     loop_game(2, 3, 0);
                     inrepflg = 0;
-                    /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(byte_3B8F2);
+                    /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
                     /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
                     kbormouse = 0;
                     break;

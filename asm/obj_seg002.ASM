@@ -24,7 +24,7 @@ S002_TEXT segment byte public 'CODE'
     public _get_kevinrandom
     public _intr0_handler
     public _initialize_div0
-    public _byte_19F07
+    public _restore_div_zero_vector
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by update rpm from speed.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_currRpm (word ptr 6); arg_gearRatio (word ptr 10); arg_idleRpm (word ptr 14);
@@ -360,7 +360,7 @@ div0_select_int0_vector:
     pop     ds
 div0_return:
     retf
-_byte_19F07     label byte
+_restore_div_zero_vector     label byte
     push    ds
     lds     dx, _old_intr0_handler
     mov     ah, 25h

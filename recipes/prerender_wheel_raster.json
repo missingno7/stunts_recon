@@ -2191,7 +2191,7 @@
     "embedded_publics": [
       {
         "offset": 88,
-        "public": "_loc_3180A"
+        "public": "_prerender_shared_setup"
       }
     ],
     "end_boundary": {
@@ -2227,6 +2227,11 @@
       }
     ],
     "publics": [
+      {
+        "name": "_prerender_shared_setup",
+        "offset": 88,
+        "segment": "S012_TEXT"
+      },
       {
         "name": "_preRender_helper2",
         "offset": 693,
@@ -2271,11 +2276,6 @@
         "name": "_line_pattern_bits",
         "offset": 0,
         "segment": "_DATA"
-      },
-      {
-        "name": "_loc_3180A",
-        "offset": 88,
-        "segment": "S012_TEXT"
       },
       {
         "name": "_imagefunc",

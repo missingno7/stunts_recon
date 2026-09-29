@@ -1586,8 +1586,8 @@ void far input_pop_status(void)
 /* merged owner s008-rest member do_joy_restext */
 void far do_joystick_resource_text(void)
 { /* PURPOSE: Show joystick help, process selection, and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, font_secondary_color, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(input_joy): polls or updates joystick state. */
-    extern I16 word_3F88E;
-    extern I8 byte_3FE00, byte_3B8F2;
+    extern I16 input_pushed;
+    extern I8 joystick_enabled, mouse_enabled;
     extern I16 far audio_unk(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16 *, I16);
     extern void far reset_joystick_selection(void);
@@ -1609,13 +1609,13 @@ void far do_joystick_resource_text(void)
     I8 hit[9];
 
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    word_3F88E = 1;
+    input_pushed = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     if (show_dialog(3, 1, locate_text_resource(main_data_file_addr, "joy") /* PLATFORM(file): locate a named text entry in resource data. */,
                     -1, -1, dialogarg2, coords, 0) /* PLATFORM(video): present the interactive dialog renderer. */ > 0) {
         for (idx = 0; idx < 9; ++idx)
             hit[idx] = 0;
-        byte_3FE00 = 1;
+        joystick_enabled = 1;
         msdrawopaquechk() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
         sprite_1_unk(coords[2] - 4, coords[3], 1, coords[13] - coords[3] - 8, dialogarg2) /* PLATFORM(video): draw through the legacy sprite primitive interface. */;
         sprite_1_unk(coords[4] - 4, coords[5], 1, coords[13] - coords[3] - 8, dialogarg2) /* PLATFORM(video): draw through the legacy sprite primitive interface. */;
@@ -1647,38 +1647,38 @@ void far do_joystick_resource_text(void)
             hit[cur] = 1;
         }
         for (idx = 0; idx < 9; ++idx)
-            byte_3FE00 &= hit[idx];
+            joystick_enabled &= hit[idx];
         restore_mouse_sprite();
-        if (byte_3FE00 == 0)
+        if (joystick_enabled == 0)
             show_dialog(1, 1, locate_text_resource(main_data_file_addr, "jox") /* PLATFORM(file): locate a named text entry in resource data. */,
                         -1, -1, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     } else {
-        byte_3FE00 = 0;
+        joystick_enabled = 0;
     }
     kb_check() /* PLATFORM(input_kb): poll keyboard state. */;
-    byte_3B8F2 = 0;
+    mouse_enabled = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
-    word_3F88E = 0;
+    input_pushed = 0;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
 
 /* merged owner s008-rest member do_key_restext */
 void far do_key_resource_text(void)
 { /* PURPOSE: Show keyboard help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-    extern U16  word_3F88E;
-    extern U8  byte_3FE00, byte_3B8F2;
+    extern U16  input_pushed;
+    extern U8  joystick_enabled, mouse_enabled;
     extern I16 far audio_unk(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     extern void far restore_audio_volume(void);
 
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     show_dialog(4, 1, locate_text_resource(main_data_file_addr, "key") /* PLATFORM(file): locate a named text entry in resource data. */,
                 0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U8 )byte_3FE00) = 0;
-    ((U8 )byte_3B8F2) = 0;
-    ((U16 )word_3F88E) = 0;
+    ((U8 )joystick_enabled) = 0;
+    ((U8 )mouse_enabled) = 0;
+    ((U16 )input_pushed) = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1686,18 +1686,18 @@ void far do_key_resource_text(void)
 /* merged owner s008-rest member do_mou_restext */
 void far do_mou_resource_text(void)
 { /* PURPOSE: Show mouse help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-    extern U16  word_3F88E;
-    extern U8  byte_3B8F2;
+    extern U16  input_pushed;
+    extern U8  mouse_enabled;
     extern I16 far audio_unk(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     extern void far restore_audio_volume(void);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
-    ((U8 )byte_3B8F2) = 1;
+    ((U8 )mouse_enabled) = 1;
     show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mou") /* PLATFORM(file): locate a named text entry in resource data. */,
                 0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )word_3F88E) = 0;
+    ((U16 )input_pushed) = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1705,16 +1705,16 @@ void far do_mou_resource_text(void)
 /* merged owner s008-rest member do_pau_restext */
 void far do_pau_restext(void)
 { /* PURPOSE: Show pause help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-    extern U16  word_3F88E;
+    extern U16  input_pushed;
     extern I16 far audio_unk(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     extern void far restore_audio_volume(void);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     show_dialog(1, 1, locate_text_resource(main_data_file_addr, "pau") /* PLATFORM(file): locate a named text entry in resource data. */,
                 0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )word_3F88E) = 0;
+    ((U16 )input_pushed) = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1722,54 +1722,54 @@ void far do_pau_restext(void)
 /* merged owner s008-rest member do_mof_restext */
 void far do_mof_resource_text(void)
 { /* PURPOSE: Toggle music and effects options from their help page. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-    extern U16  word_3F88E;
+    extern U16  input_pushed;
     extern I16 far audio_toggle_flag2(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     if (audio_toggle_flag2() /* PLATFORM(audio): toggle the music/effects audio option. */)
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mon") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     else
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mof") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )word_3F88E) = 0;
+    ((U16 )input_pushed) = 0;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
 
 /* merged owner s008-rest member do_sonsof_restext */
 void far do_sonsof_resource_text(void)
 { /* PURPOSE: Toggle sound options from their help page. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-    extern U16  word_3F88E;
+    extern U16  input_pushed;
     extern I16 far audio_toggle_flag6(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     if (audio_toggle_flag6() /* PLATFORM(audio): toggle the sound audio option. */)
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "son") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     else
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "sof") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )word_3F88E) = 0;
+    ((U16 )input_pushed) = 0;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
 
 /* merged owner s008-rest member do_dos_restext */
 void far do_dos_resource_text(void)
 { /* PURPOSE: Show DOS options and run the exit-list action when selected. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(dos): uses the DOS exit-list service. */
-    extern U16  word_3F88E;
+    extern U16  input_pushed;
     extern I16 far audio_unk(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     extern void far call_exitlist2(void);
     extern void far restore_audio_volume(void);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     if (show_dialog(2, 1, locate_text_resource(main_data_file_addr, "dos") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */ == 1)
         call_exitlist2() /* PLATFORM(dos): run the DOS exit-list action. */;
-    ((U16 )word_3F88E) = 0;
+    ((U16 )input_pushed) = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1784,12 +1784,12 @@ void far show_graphic_levels_menu(void)
     register I16 selection_index;
     register I16 cursor;
     extern U8  detail_lvl;
-    extern U16  slow_video_mode_state, frm_rate2, word_3F88E; extern I16 performGraphColor;
+    extern U16  slow_video_mode_state, frm_rate2, input_pushed; extern I16 performGraphColor;
     extern I16 far audio_unk(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
 
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )word_3F88E) = 1;
+    ((U16 )input_pushed) = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     saved_rate = frm_rate2;
     rc = 0;
@@ -1822,7 +1822,7 @@ after_menu:
     if (saved_rate != frm_rate2)
         show_dialog(1, 1, locate_text_resource(main_data_file_addr, "mrs") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )word_3F88E) = 0;
+    ((U16 )input_pushed) = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }

@@ -231,6 +231,30 @@ class Integ17Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             resolve_recipe_symbols(wrong,self.image,self.relocations)
 
+        alias='_prerender_shared_setup'
+        alias_obj=copy.deepcopy(self.label_obj)
+        alias_recipe=copy.deepcopy(self.label_recipe)
+        alias_obj.externals=[alias if name=='_loc_3180A' else name
+                             for name in alias_obj.externals]
+        for fix in alias_obj.linker_fixups:
+            if fix.get('target')=='_loc_3180A':fix['target']=alias
+            if fix.get('frame')=='_loc_3180A':fix['frame']=alias
+        alias_recipe['expected_fixups']=copy.deepcopy(alias_obj.linker_fixups)
+        alias_recipe['binding']['declarations']={
+            'segments':copy.deepcopy(alias_obj.segment_defs),
+            'groups':copy.deepcopy(alias_obj.groups),
+            'publics':copy.deepcopy(alias_obj.publics),
+            'externals':copy.deepcopy(alias_obj.externals)}
+        alias_recipe['reviewed_near_targets']={alias:{'source_line':6552}}
+        alias_symbols=resolve_recipe_symbols(alias_recipe,self.image,self.relocations)
+        self.assertEqual(alias_symbols[alias]['load_address'],137226)
+        alias_payload,_=bind_contribution(alias_obj,alias_recipe,alias_symbols)
+        self.assertEqual(alias_payload,payload)
+        wrong=copy.deepcopy(alias_recipe)
+        wrong['reviewed_near_targets'][alias]['source_line']+=1
+        with self.assertRaises(ValueError):
+            resolve_recipe_symbols(wrong,self.image,self.relocations)
+
     def test_interior_near_labels_positive_and_negative(self):
         self.assertEqual(_checked_asm_near_labels(self.labels,self.image),
                          {221:'loc_30C3F',230:'loc_30C48',395:'loc_30CED'})

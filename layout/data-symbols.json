@@ -22487,6 +22487,18 @@
       "storage": "initialized",
       "width": 2,
       "width_provenance": "reference-label-span: dseg.asm:18204-18205"
+    },
+    "_mouse_enabled": {
+      "load_address": 178418,
+      "storage": "initialized"
+    },
+    "_joystick_enabled": {
+      "load_address": 196096,
+      "storage": "initialized"
+    },
+    "_input_pushed": {
+      "load_address": 194702,
+      "storage": "initialized"
     }
   }
 }

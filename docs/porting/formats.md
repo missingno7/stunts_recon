@@ -149,7 +149,9 @@ Total is `0x308` bytes. The C layout/size is corroborated by the fixed sample ch
 
 Exact file length is `0x70A` (1802) bytes: element plane `[0x000,0x385)` and terrain plane `[0x385,0x70A)`, each 901 bytes. Each plane contains a row-major 30×30 grid (900 bytes) plus one trailer byte. The editor read/write calls use exactly `0x70A` bytes (reference disassembly `asmorig/seg009.asm:2199-2205,2291-2300`); `c/restunts.c:262-335` allocates separate 0x385-byte element and terrain map areas. Element trailer `[0x384]` is passed to skybox loading (`c/restunts.c:801`); terrain trailer meaning is unknown.
 
-Grid cell `(x,y)` maps to `element[30*(29-y)+x]` for the main track element map and `terrain[30*y+x]` for terrain (`c/restunts.c:236-247`; element and terrain fetches in `asmorig/seg004.asm:4303-4338`). Thus the element plane's row direction is reversed in the gameplay map while terrain rows are forward. These are unsigned byte code planes, not packed bits.
+The file planes are row-major, with x as the fast index. For gameplay row y, the element plane uses element[30*(29-y)+x], while terrain uses terrain[30*y+x] (c/restunts.c:236-247, c/frame.c:357-381,657; element/terrain fetches in asmorig/seg004.asm:4303-4338). Thus element rows are reversed and terrain rows forward in the gameplay grid; these are unsigned byte codes, not packed bits. The simulation grid pitch is 1024 short-coordinate units per cell, with centers at +512 (accepted src/obj_seg000.c:466-474; see state-model.md). Treat file-row lookup and world-coordinate lookup as separate transforms.
+
+The accepted reconstruction source has a local access inconsistency to keep visible while porting: src/obj_seg004.c:171-202 indexes td15p_9 with reversed lnoffsets and td14tb with forward gterrtrk in build_obj, while track_setup and other map consumers use the expected terrain-forward/element-reversed pair (src/obj_seg004.c:1237-1271,1385-1386). The global file layout and reference-source row tables are established; check that one accepted-function access against its object/context before treating it as a semantic override.
 
 Terrain code is an index into four 20-byte edge-connection tables: E→W `(0,0,0,0,0,0,1,2,1,3,0,2,3,0,0,1,1,3,2,0)`; W→E `(0,0,0,0,0,0,1,2,0,3,1,0,0,3,2,2,3,1,1,0)`; N→S `(0,0,0,0,0,0,1,1,5,0,4,5,0,0,4,1,5,4,1,0)`; S→N `(0,0,0,0,0,0,1,0,5,1,4,0,5,4,0,5,1,1,4)`. The track checker requires adjoining edges to match; source tables and checker are `asmorig/dseg.asm:13506-13584` and `asmorig/seg004.asm:4077-4258`. Code 6 is explicitly called hilltop (`seg004.asm:4311-4316`). Other terrain names/physics meaning are not asserted. Across 41 originals, parser checks 71,340 internal horizontal/vertical adjacency pairs with zero mismatch; it does not claim edge-boundary sentinel checks.
 
@@ -174,7 +176,7 @@ A replay is `GAMEINFO[0x1A] + track-map[0x70A] + input[N]`, hence exact length `
 
 Fields/packed size are in `c/externs.h:11-24`. Then at `0x1A`, 901 element bytes plus 901 terrain bytes in `.TRK` plane order; at `0x724`, one input byte per recorded frame. The assembly writer adds `0x724` to `game_recordedframes` and writes that many bytes (`asmorig/seg005.asm:1967-1998`); the reader copies the first 13 words into `GAMEINFO` (`seg005.asm:1925-1965`). The sample is 12,474 bytes with 10,646 frame bytes. All map/event boundaries and `0x724+N` length are validated by the parser, and the sample round-trips byte-identically. The separate semantic C writer is not used as evidence for this layout because its implementation does not include the embedded map consistently.
 
-The input byte is the recorded digital control mask. Bit mapping supported by the control paths:
+The input byte is recorded and replayed as a raw digital-control byte. The current player path consumes these bits:
 
 | Bit | Meaning |
 |---:|---|
@@ -184,19 +186,30 @@ The input byte is the recorded digital control mask. Bit mapping supported by th
 | 3 | steer left |
 | 4 | shift up |
 | 5 | shift down |
-| 6–7 | no meaning established |
+| 6–7 | no use found in the audited player-control path; preserve if present |
 
-The low two bits are consumed as accelerator/brake states (`c/statecar.c:410-430`); bits 2–3 select steering (`c/state.c:47-49`); bits 4–5 trigger shifts (`c/statecar.c:80-88`). Keyboard/joystick masks are composed in `asmorig/seg012.asm:4010-4068`; A/Z also set bits 4/5 (`asmorig/seg005.asm:1365-1388`). This byte does not capture every mouse-mode analog steering side buffer; those are separately stored by the input path (`seg005.asm:1348-1367`).
+player_op reads the recorded byte at g_tdreplay16buf[core.game_frame]. It passes the byte to update_car_speed, which consumes input & 3 for accelerate/brake and tests 0x10/0x20 for shifts. Steering is (input >> 2) & 3. The keyboard/joystick path builds those six controls; A/Z set bits 4/5 (accepted src/obj_seg001_complete.c:1794-1823, player_op and update_car_speed; reference c/statecar.c:80-88,410-430, c/state.c:47-49, asmorig/seg012.asm:4010-4068 and asmorig/seg005.asm:1365-1388). The byte is written with the replay header/map as a raw frame sequence (accepted src/obj_seg005.c:1320-1338).
+
+In DEFAULT.RPL, all 10,646 frame bytes have bits 6 and 7 clear; the only observed values are combinations of bits 0–5. This sample fact does not make upper bits safe to clear in third-party replays. Mouse-mode analog steering has a side buffer and is not encoded by these six bits (asmorig/seg005.asm:1348-1367).
 
 ## High scores `.HIG`
 
-File length `0x16C` = seven records of `0x34` (52) bytes. The writer copies 26 words per record and writes exactly `0x16C` bytes (`asmorig/seg000.asm:2305-2326,2919-2965`). Original 41 files all parse and round-trip byte-identically. The source evidence establishes record count, stride, and raw bytes but not a reliable field-by-field schema. The 52 record bytes remain opaque; do not parse strings/numbers by visual sample patterns.
+File length 0x16C is seven 52-byte records. The accepted source establishes a partial record schema (src/obj_seg000.c:30,1137-1172,1240-1274,1284-1338,1349-1362):
+
+| Record offset | Width | Use established by writer/renderer |
+|---:|---:|---|
+| 0x00 | 16 | Player name C-string slot; the entry dialog reads at most 16 bytes. |
+| 0x10 | 1 | Uninterpreted byte. The row renderer skips it; inserted records do not initialize it. Preserve it. |
+| 0x11 | 24 | Second display C-string slot; the writer copies textstr here. |
+| 0x29 | 1 | Style byte; renderer wraps the following label in parentheses only when it equals 1. |
+| 0x2A | 8 | Opponent display label slot; writer composes opptext_label, slash, and g_gsnashape_data when an opponent exists, otherwise writes one space. |
+| 0x32 | 2 | Little-endian score/time marker; 0xFFFF marks an empty ranking row. |
+
+Rows are sorted by ascending marker, with lower values winning. When the run uses 10 frames/s the writer doubles the score; the display formatter temporarily uses 20 frames/s. The stored marker therefore counts 20-Hz display ticks (1/20 s per count), not arbitrary milliseconds. The parser should retain each full 52-byte record and report unterminated/opaque slots without reading beyond their fixed spans. Across the 41 supplied HIGs, structural parsing remains a byte-for-byte round trip (287 records); this does not guarantee every third-party record has well-formed strings.
 
 ## Fonts `.FNT`
 
-The reader uses a 16-bit height at `0x0E`, fixed glyph width at `0x10`, variable-width flag at `0x14`, and a 256-entry `u16 LE` relative offset table at `[0x16,0x216)`. Offset zero means absent glyph. Nonzero offsets point to glyph data in the same font segment. For variable width, glyph begins with a `u8 width`; fixed-width glyphs omit this byte and use `u16` width at `0x10`. Each glyph then stores `height * ceil(width/8)` bitmap bytes, one row at a time, MSB leftmost. These reads are visible in `asmorig/seg012.asm:8870-8902,11082-11190`; font height setup is at `asmorig/seg008.asm:4336-4354`. Header bytes not listed remain unknown.
-
-All three originals have height 8. `FONTDEF.FNT` and `FONTN.FNT` are variable width (111 and 101 nonzero pointers); `FONTLED.FNT` is fixed width 6 (17 glyph pointers). The parser verifies every nonzero pointer and bitmap extent for all three files.
+The reader uses a 16-bit height at 0x0E, fixed glyph width at 0x10, variable-width flag at 0x14, and a 256-entry u16 LE relative offset table at [0x16,0x216). An unsigned byte from the text string directly selects the table entry; zero offset means no glyph. The game does not translate the byte through Unicode or a separate glyph-ID map. For variable width, glyph data begins with a u8 width; fixed-width glyphs omit this byte and use u16 width at 0x10. The bitmap follows top-to-bottom, height * ceil(width/8) bytes, one row at a time. In each byte, bit 7 is the leftmost pixel and set bits draw pixels. These reads are visible in asm/font_draw_text.ASM and asmorig/seg012.asm:8870-8902,11082-11190; font height setup is at asmorig/seg008.asm:4336-4354. Preserve source text as legacy bytes until the port’s input boundary is selected; CP437/Unicode equivalence is not established by the font reader itself. All three originals have height 8: FONTDEF.FNT is variable width with codes 00 and 20-8D (111 pointers); FONTN.FNT is variable width with codes 20-7E, 80-84 and 86 (101 pointers); FONTLED.FNT is fixed width 6 with codes 20, 25, 2A, 2E, 30-3A, 5F and 86 (17 pointers). No sample font shares a glyph offset. The parser checks each nonzero pointer and bitmap extent.
 
 ## Audio resource containers and raw runtime payloads
 

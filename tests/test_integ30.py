@@ -3,6 +3,7 @@ every defining and referencing object), reviewed embedded publics of ASM groups,
 the reviewed far-pointer table island of file_decomp_fatal with table-anchored
 code aliases, string-table field anchors, and the pinned-library link helpers."""
 import copy
+import hashlib
 import json
 import sys
 import unittest
@@ -28,7 +29,7 @@ class NamesRegistryTests(unittest.TestCase):
         cls.image, cls.relocations = _oracle()
         cls.registry = read_json(ROOT / 'layout/names-registry.json')['names']
 
-    def test_one_name_per_address_and_code_rows_name_their_inventory_entry(self):
+    def test_one_name_per_address_and_code_rows_have_grounded_targets(self):
         from function_evidence import current_inventory
         names = [row['name'] for row in self.registry.values()]
         self.assertEqual(len(names), len(set(names)))
@@ -44,7 +45,56 @@ class NamesRegistryTests(unittest.TestCase):
             else:
                 targets = {s['mapped_target']['start'] for s in symbols.values()
                            if (s.get('mapped_target') or {}).get('name') == row['inventory_name']}
-                self.assertEqual(targets, {int(address)}, row)
+                if targets:
+                    self.assertEqual(targets, {int(address)}, row)
+                else:
+                    # A reviewed near-label alias can be an instruction entry
+                    # inside a larger verified inventory extent. Ground it in
+                    # the pinned label, exact owning extent, and decoder entry.
+                    from code_symbols import _complete_target_owner
+                    from common import identity
+                    refs = read_json(ROOT / 'layout/references.json')['restunts']['evidence_files']
+                    inventory = current_inventory(self.image)['functions']
+                    decoder_path = str(ROOT / 'build/python')
+                    if decoder_path not in sys.path:
+                        sys.path.insert(0, decoder_path)
+                    import capstone
+                    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
+                    alias = '_' + row['name']
+                    inventory_label = row['inventory_name']
+                    self.assertRegex(inventory_label, r'^loc_[0-9A-Fa-f]+$', row)
+                    label_address = int(inventory_label[4:], 16) - 0x10000
+                    self.assertEqual(label_address, int(address), row)
+                    proofs = set()
+                    for owner in read_json(ROOT / 'layout/manifest.json')['owners']:
+                        if not owner.get('recipe'):
+                            continue
+                        recipe = read_json(ROOT / owner['recipe'])
+                        if alias in recipe.get('reviewed_near_targets', {}):
+                            source_path = 'src/restunts/asmorig/seg012.asm'
+                            pinned = refs[source_path]
+                            reference = ROOT / 'build/references/restunts' / source_path
+                            self.assertEqual(identity(reference.read_bytes()), pinned, row)
+                            line = recipe['reviewed_near_targets'][alias]['source_line']
+                            source_lines = reference.read_text(encoding='latin1').splitlines()
+                            self.assertEqual(source_lines[line - 1].strip().lower(),
+                                             (inventory_label + ':').lower(), row)
+                            frame = recipe['original_frame_load_address']
+                            extents = [f for f in inventory if
+                                       f.get('start', 10**9) <= label_address < f.get('end', -1) and
+                                       f.get('segment_paragraph', -1) * 16 == frame and
+                                       f.get('status') in ('BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED',
+                                                           'BOUNDARIES_AND_EMISSION_BYTES_VERIFIED') and
+                                       hashlib.sha256(self.image[f['start']:f['end']]).hexdigest() == f.get('sha256') and
+                                       any(_complete_target_owner(candidate, f)
+                                           for candidate in read_json(ROOT / 'layout/manifest.json')['owners'])]
+                            self.assertEqual(len(extents), 1, row)
+                            extent = extents[0]
+                            boundaries = {ins.address for ins in decoder.disasm(
+                                self.image[extent['start']:extent['end']], extent['start'])}
+                            self.assertIn(label_address, boundaries, row)
+                            proofs.add(label_address)
+                    self.assertEqual(proofs, {int(address)}, row)
 
     def test_registry_spelling_is_an_accepted_member_public(self):
         from asm_module import expected_publics, registry_publics

@@ -48,7 +48,7 @@ draw_line_related equ _draw_line_related
 draw_line_related_alt equ _draw_line_related_alt
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
-public _loc_3180A
+public _prerender_shared_setup
 public _preRender_default
 public _preRender_default_alt
 public _skybox_op_helper
@@ -103,7 +103,7 @@ pre_default_alt_join_01:
     mov     ax, offset preRender_line
     mov word ptr imagefunc, ax
     mov     si, [bp+arg_6]
-    jmp     short _loc_3180A
+    jmp     short _prerender_shared_setup
 preRender_default_alt endp
 _skybox_op_helper label far
 ; -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ wheel_raster_join_01:
     mov     ax, offset preRender_line
     mov word ptr imagefunc, ax
     lea     si, [bp+arg_vertlines]
-_loc_3180A:
+_prerender_shared_setup:
     mov     [bp+var_vertlineptr], si
     mov     cx, [bp+arg_vertlinecount]
     mov     ax, cx

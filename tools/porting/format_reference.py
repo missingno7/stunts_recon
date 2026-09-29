@@ -252,21 +252,49 @@ def parse_track(b):
     if hbad or vbad: raise FormatError(f'terrain edge-connection mismatches: horizontal={len(hbad)}, vertical={len(vbad)}; first={(hbad or vbad)[0]}')
     return {'cell_count':900,'width':30,'height':30,'element_plane':elem,'terrain_plane':terr,
             'element_trailer':elem[900],'terrain_trailer':terr[900],
-            'element_values':Counter(elem[:900]),'terrain_values':Counter(terr[:900]),
-            'terrain_connections_checked':30*29+29*30,'terrain_connection_errors':0}
+            'element_values':Counter(elem[:900]),'terrain_values':Counter(t),
+            'terrain_connections_checked':30*29+29*30,'terrain_connection_errors':0,
+            'row_mapping':{'file_order':'row-major; x is the fast index',
+                           'element_game_index':'element[30*(29-y)+x]',
+                           'terrain_game_index':'terrain[30*y+x]',
+                           'source':'restunts init_row_tables and track-map fetches'}}
 
 def parse_replay(b):
     if len(b)<0x724: raise FormatError('RPL shorter than 0x724-byte prefix')
     h=b[:0x1a]; n=u16(h,24); want=0x724+n
     if len(b)!=want: raise FormatError(f'RPL length {len(b)} != 0x724+frame_count({n})={want}')
+    frames=b[0x724:]
+    bit_names=('accelerate','brake','steer_right','steer_left','shift_up','shift_down')
+    bit_counts={name:sum(bool(value & (1<<bit)) for value in frames)
+                for bit,name in enumerate(bit_names)}
     return {'header_len':26,'player_car':h[0:4],'player_material':h[4],'player_transmission':h[5],
             'opponent_type':h[6],'opponent_car':h[7:11],'opponent_material':h[11],
             'opponent_transmission':h[12],'track_name':h[13:22],'fps':u16(h,22),'frame_count':n,
-            'map_bytes':b[26:0x724],'input_bytes':b[0x724:], 'length':len(b)}
-
+            'map_bytes':b[26:0x724], 'input_bytes':frames, 'length':len(b),
+            'input_control_mask':0x3f, 'input_bit_set_counts':bit_counts,
+            'input_unmapped_upper_bit_set_counts':{'bit6':sum(bool(v&0x40) for v in frames),
+                                                   'bit7':sum(bool(v&0x80) for v in frames)}}
 def parse_highscores(b):
     if len(b)!=0x16c: raise FormatError(f'HIG size {len(b)} != 7*0x34')
-    return {'record_count':7,'record_size':0x34,'records':[b[i*0x34:(i+1)*0x34] for i in range(7)]}
+    raw_records=[b[i*0x34:(i+1)*0x34] for i in range(7)]
+    def c_slot(slot):
+        nul=slot.find(b'\0')
+        end=len(slot) if nul<0 else nul
+        return {'raw_slot_hex':slot.hex(),'content_hex':slot[:end].hex(),
+                'nul_terminated':nul>=0}
+    decoded=[]
+    for i,r in enumerate(raw_records):
+        marker=u16(r,50)
+        decoded.append({'index':i,'offset':i*0x34,
+                        'player_name':c_slot(r[0:16]),
+                        'opaque_byte_10':r[16],
+                        'vehicle_label':c_slot(r[17:41]),
+                        'style_byte_29':r[41],
+                        'opponent_label':c_slot(r[42:50]),
+                        'score_marker_u16':marker,'empty_marker':marker==0xffff,
+                        'raw_record_hex':r.hex()})
+    return {'record_count':7,'record_size':0x34,'records':raw_records,
+            'decoded_records':decoded}
 
 def serialize_track(elem,terr):
     if len(elem)!=0x385 or len(terr)!=0x385: raise FormatError('TRK serializer needs two 901-byte planes')
@@ -289,10 +317,16 @@ def parse_font(b):
         if off<0x216 or off>=len(b): raise FormatError(f'FNT glyph {code:#x} offset {off:#x} outside glyph area')
         width=b[off] if variable else fixed_width; prefix=1 if variable else 0
         if width==0: raise FormatError(f'FNT glyph {code:#x} zero width')
-        size=prefix+((width+7)//8)*height
+        row_bytes=(width+7)//8
+        size=prefix+row_bytes*height
         if off+size>len(b): raise FormatError(f'FNT glyph {code:#x} bitmap ends outside file')
-        glyphs.append({'code':code,'offset':off,'width':width,'height':height,'bitmap_bytes':size-prefix})
-    return {'size':len(b),'height':height,'fixed_width':fixed_width,'variable_width':variable,'offset_table':[0x16,0x216],'glyph_count':len(glyphs),'missing_glyphs':missing,'glyphs':glyphs}
+        glyphs.append({'code':code,'offset':off,'width':width,'height':height,
+                       'bytes_per_row':row_bytes,'bitmap_bytes':size-prefix})
+    return {'size':len(b),'height':height,'fixed_width':fixed_width,'variable_width':variable,
+            'offset_table':[0x16,0x216],
+            'character_indexing':'unsigned text byte directly indexes offset_table[byte]; zero offset means no glyph',
+            'bitmap_layout':'top-to-bottom rows; bit 7 is leftmost, set bits draw pixels',
+            'glyph_count':len(glyphs),'missing_glyphs':missing,'glyphs':glyphs}
 
 PRIM_INDEX_COUNTS=(0,1,2,3,4,5,6,7,8,9,10,2,6,3,0,0)
 PRIM_TYPE_MAP=(0,5,1,0,0,0,0,0,0,0,0,2,3,4,0,0)

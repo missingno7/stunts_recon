@@ -23263,7 +23263,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_byte_3FE00",
+      "frame": "_joystick_enabled",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -23271,7 +23271,7 @@
       "offset": 12382,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_byte_3FE00",
+      "target": "_joystick_enabled",
       "target_index": 101,
       "target_kind": "external",
       "target_method": 2,
@@ -35565,7 +35565,7 @@
       "_strcmp",
       "_mouse_timer_sprite_unknown",
       "_video_set_mode7",
-      "_byte_3FE00",
+      "_joystick_enabled",
       "_nullsub_1",
       "_set_default_car",
       "_nullsub_2",
@@ -35727,7 +35727,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_byte_3B8F2",
+        "name": "_mouse_enabled",
         "offset": 320,
         "segment": "_DATA"
       },

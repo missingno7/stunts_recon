@@ -449,7 +449,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_byte_3FE00",
+        "name": "_joystick_enabled",
         "offset": 4,
         "segment": "_DATA"
       }

@@ -798,7 +798,7 @@
       "offset": 535,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_byte_3FE00",
+      "target": "_joystick_enabled",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -815,7 +815,7 @@
       "offset": 550,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_byte_3FE00",
+      "target": "_joystick_enabled",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -1903,7 +1903,7 @@
       "offset": 990,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_byte_3FE00",
+      "target": "_joystick_enabled",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -2235,7 +2235,7 @@
     "externals": [
       "_video_clear_color",
       "_kbinput",
-      "_byte_3FE00"
+      "_joystick_enabled"
     ],
     "groups": [
       {

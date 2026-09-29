@@ -748,7 +748,7 @@
     "embedded_publics": [
       {
         "offset": 321,
-        "public": "_byte_19F07"
+        "public": "_restore_div_zero_vector"
       }
     ],
     "end_boundary": {
@@ -806,6 +806,11 @@
         "segment": "S002_TEXT"
       },
       {
+        "name": "_restore_div_zero_vector",
+        "offset": 321,
+        "segment": "S002_TEXT"
+      },
+      {
         "name": "_intr0_handler",
         "offset": 259,
         "segment": "S002_TEXT"
@@ -818,11 +823,6 @@
       {
         "name": "_initialize_div0",
         "offset": 290,
-        "segment": "S002_TEXT"
-      },
-      {
-        "name": "_byte_19F07",
-        "offset": 321,
         "segment": "S002_TEXT"
       },
       {

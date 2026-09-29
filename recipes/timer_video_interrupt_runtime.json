@@ -1194,6 +1194,11 @@
         "segment": "_DATA"
       },
       {
+        "name": "_input_pushed",
+        "offset": 38,
+        "segment": "_DATA"
+      },
+      {
         "name": "_audio_stop_unknown",
         "offset": 434,
         "segment": "S012_TEXT"
@@ -1251,11 +1256,6 @@
       {
         "name": "_timerintr",
         "offset": 40,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_word_3F88E",
-        "offset": 38,
         "segment": "_DATA"
       },
       {

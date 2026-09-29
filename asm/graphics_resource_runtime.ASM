@@ -15,7 +15,7 @@ extrn _flush_stdin:far
 extrn _putpixel_line1_maybe:far
 extrn _sprite1:word
 extrn _draw_unknown_lines:far
-extrn _loc_3180A:near
+extrn _prerender_shared_setup:near
 _DATA segment word public 'DATA'
 _atantable db 0, 1, 1, 2, 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 00Ah
     db 00Ah, 00Bh, 00Bh, 00Ch, 00Dh, 00Dh, 00Eh, 00Fh, 00Fh, 010h, 010h, 011h, 012h, 012h, 013h, 014h
@@ -1542,7 +1542,7 @@ prerender_setup_shared_core:
     mov     _spritefunc, ax
     mov     ax, offset _preRender_line
     mov     _imagefunc, ax
-    jmp     _loc_3180A
+    jmp     _prerender_shared_setup
 _preRender_unk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 2F424.

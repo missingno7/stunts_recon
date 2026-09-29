@@ -6,7 +6,7 @@ assume ds:DGROUP
 _DATA segment word public 'DATA'
 _kb_readchar_callback dw offset _kb_read_char
 _readchar_callback_seg dw seg _kb_read_char
-_byte_3FE00 db 0
+_joystick_enabled db 0
 _DATA ends
 _BSS segment word public 'BSS'
 _BSS ends
@@ -17,7 +17,7 @@ extrn _timer_copy_target_high:word
 extrn _timer_get_counter:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
-public _byte_3FE00
+public _joystick_enabled
 public _kb_call_readchar_callback
 public _kb_read_char
 public _kb_checking

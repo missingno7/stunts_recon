@@ -718,9 +718,10 @@
       "name": "custom_elev_angle"
     },
     "178418": {
-      "basis": "integ30 unification (existing spelling kept)",
+      "basis": "N1: semantic name from mouse_minmax_position and mouse_get_state; option selection distinguishes the mouse flag from joystick input (N1/REPORT.md).",
       "kind": "data",
-      "name": "byte_3B8F2"
+      "name": "mouse_enabled",
+      "inventory_name": "byte_3B8F2"
     },
     "178421": {
       "basis": "integ28 registry (plan C + readability)",
@@ -1129,14 +1130,16 @@
       "name": "timer_callback_busy"
     },
     "194702": {
-      "basis": "integ30 unification (existing spelling kept)",
+      "basis": "N1: input_push_status sets this flag and input_pop_status clears it; accepted timer callback code skips dispatch while nonzero (N1/REPORT.md; asm/timer_video_interrupt_runtime.ASM:505).",
       "kind": "data",
-      "name": "word_3F88E"
+      "name": "input_pushed",
+      "inventory_name": "word_3F88E"
     },
     "196096": {
-      "basis": "integ30 unification (existing spelling kept)",
+      "basis": "N2: src/obj_seg008.c:1618,1650-1652 and asm/keyboard_input_callbacks.ASM; selected consistently across accepted C and ASM users.",
       "kind": "data",
-      "name": "byte_3FE00"
+      "name": "joystick_enabled",
+      "inventory_name": "byte_3FE00"
     },
     "196482": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'state_a': uninformative: resource_memory_manager mmgr_alloc_resmem stores the end paragraph of the DOS resource block (start + size) and tests it for 0 as the initialised flag; module-private label of resource_memory_manager (DSEG/_DATA label without PUBLIC, only that module's code uses it; the C TUs only carry unused extern declarations, which MSC emits no EXTDEF for): no accepted object declares any spelling of this address",
@@ -3500,6 +3503,12 @@
       "basis": "integ40: link-hash-constrained reconstruction name of the communal at this address in the accepted LINK_COMMUNAL unit [207408,222352) (tentative definition `int g_mouseyposstacktable[5];`; declared by obj_seg008). LINK 3.65 allocates c_common in the order of an 8-bit hash of every communal spelling (tools/communal_order.py), so the name is constrained by the target address order; names from build/workers/nameA208070, nameBfix, nameCfix (supervisor rulings); binding alias only, never a recovered original",
       "kind": "data",
       "name": "g_mouseyposstacktable"
+    },
+    "137226": {
+      "name": "prerender_shared_setup",
+      "kind": "code",
+      "inventory_name": "loc_3180A",
+      "basis": "N2: asm/prerender_wheel_raster.ASM:103-107,143-170; shared prerender entry imported by graphics_resource_runtime."
     }
   },
   "schema": "names-registry-v1",

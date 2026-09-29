@@ -36,7 +36,7 @@ joystick_x_scale_factor dw 0
 joystick_y_scale_factor dw 0
 joystick_flags_to_axis_table db 0, 1, 5, 0, 3, 2, 4, 3, 7, 8, 6, 7, 0, 1, 5, 0
 extrn _kbinput:byte
-extrn _byte_3FE00:byte
+extrn _joystick_enabled:byte
 _DATA ends
 assume ds:DGROUP
 extrn _video_clear_color:far
@@ -374,7 +374,7 @@ _get_kb_or_joy_flags endp
 ; Purpose: Implement the legacy internal helper nopsub 305C8. Its internal flow uses check_second_keyboard_scancode, read_joystick_buttons.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
 ; Register ABI: touches AX, BX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
-; Globals read: _byte_3FE00, _kbinput, _kbscancodes.
+; Globals read: _joystick_enabled, _kbinput, _kbscancodes.
 ; Globals written: none identified.
 ; /* PLATFORM(input_joy): accesses the joystick game port. */
 ; -----------------------------------------------------------------------------
@@ -393,7 +393,7 @@ check_second_keyboard_scancode:
 read_joystick_buttons:
     xor     ax, ax
     mov     dx, R5HW_JOYSTICK_GAME_PORT
-    test    _byte_3FE00, 1
+    test    _joystick_enabled, 1
     jz      short return_combined_input_flags
     in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
     not     al
@@ -409,7 +409,7 @@ _nopsub_305C8 endp
 ; Purpose: Read and normalize the game-port joystick button and axis state.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
 ; Register ABI: touches AX, BX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
-; Globals read: _byte_3FE00, _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks, joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
+; Globals read: _joystick_enabled, _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks, joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
 ;   joystick_x_right_threshold, joystick_x_sample_maximum, joystick_x_sample_minimum, joystick_y_calibration_ticks, joystick_y_down_threshold, joystick_y_maximum,
 ;   joystick_y_minimum, joystick_y_sample_maximum, joystick_y_sample_minimum, joystick_y_up_threshold.
 ; Globals written: _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks, joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
@@ -419,7 +419,7 @@ _nopsub_305C8 endp
 ; /* PLATFORM(bios): changes the processor interrupt-enable state. */
 ; -----------------------------------------------------------------------------
 _get_joy_flags proc far
-    test    _byte_3FE00, 1
+    test    _joystick_enabled, 1
     jnz     short start_joystick_sampling
     xor     ax, ax
     retf
@@ -616,10 +616,10 @@ _get_joy_flags endp
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
 ; Register ABI: touches none; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
-; Globals written: _byte_3FE00, joystick_x_maximum, joystick_x_minimum, joystick_y_maximum, joystick_y_minimum.
+; Globals written: _joystick_enabled, joystick_x_maximum, joystick_x_minimum, joystick_y_maximum, joystick_y_minimum.
 ; -----------------------------------------------------------------------------
 _reset_joystick_selection proc far
-    mov     _byte_3FE00, 1
+    mov     _joystick_enabled, 1
     mov     joystick_x_minimum, 50h
     mov     joystick_x_maximum, 0
     mov     joystick_y_minimum, 50h

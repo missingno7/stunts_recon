@@ -52,7 +52,7 @@ extrn _callbackflags2:byte
 extrn _file_get_shape2d:far
 extrn _draw_patterned_lines:far
 extrn _preRender_line:far
-extrn _loc_3180A:near
+extrn _prerender_shared_setup:near
 public _font_op
 public _font_op2
 public _preRender_patterned
@@ -183,7 +183,7 @@ patterned_loop_head_01:
     mov     _spritefunc, ax
     mov     ax, offset _preRender_line
     mov     _imagefunc, ax
-    jmp     _loc_3180A
+    jmp     _prerender_shared_setup
 _preRender_patterned endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 328C9.

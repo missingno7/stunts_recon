@@ -42,18 +42,18 @@ extern unsigned char audio_driver_mode;
 extern int far compare_ds_ss(void);
 extern void far timer_reg_callback(void (far *callback)(void));
 extern void far timer_remove_callback(void (far *callback)(void));
-extern void far sub_374DE(int handle);
-extern void far sub_38156(int channel);
+extern void far release_audio_chunk(int handle);
+extern void far reset_audio_voice_length(int channel);
 extern u8 far * far locate_shape_fatal(void far *lookup, char *name);
 extern void far * far init_audio_resources(void far *resource, void far *lookup, char *name);
-extern int far sub_37470(int a, int b);
+extern int far reserve_audio_chunk(int a, int b);
 extern void far fatal_error(char *message);
-extern void far sub_38CF8(int handle, u8 far *shape);
-extern int far sub_39050(u16 rate, int handle);
+extern void far start_audio_voice_sample(int handle, u8 far *shape);
+extern int far send_audio_stop_event(u16 rate, int handle);
 extern void far audio_unk2(int handle, int value);
-extern void far sub_39088(int channel, int rate);
+extern void far set_audio_voice_value(int channel, int rate);
 extern void far audio_init_chunk2(int channel);
-extern int far sub_3771E(int channel);
+extern int far audio_chunk_is_unavailable(int channel);
 extern int far polarRadius2D(int x, int y);
 extern int far audio_check_flag(void far *resource, int a, int b, int c);
 extern void far debug_printf_text(char *format, int value);
@@ -76,7 +76,7 @@ void far audio_remove_driver_timer(void)
 
     for (timer = audio_timer_table; timer < audio_timer_table + 25; timer++) {
         if (timer->active == 1)
-            sub_374DE(timer->handle) /* PLATFORM(audio): stop an audio timer handle. */;
+            release_audio_chunk(timer->handle) /* PLATFORM(audio): stop an audio timer handle. */;
         timer->active = 0;
     }
     timer_remove_callback(audio_driver_timer) /* PLATFORM(timer): remove the audio update routine from the timer service. */;
@@ -126,7 +126,7 @@ int far audio_init_engine(int unused, u8 huge *blob, void far *lookup, void far 
             payload->resources[7] = init_audio_resources(resource, lookup, pad_id((u32 far *)payload->resources[7])) /* PLATFORM(audio): resolve song or voice resources for the audio engine. */;
             payload->resource_ready = 1;
         }
-        timer->handle = sub_37470(-1, 0x7f) /* PLATFORM(audio): allocate an audio timer handle. */;
+        timer->handle = reserve_audio_chunk(-1, 0x7f) /* PLATFORM(audio): allocate an audio timer handle. */;
         timer->state = 0;
         timer->pitch_avg = 0;
         timer->rate_avg = 0;
@@ -153,9 +153,9 @@ void far audio_op_unk(int index)
     timer = &audio_timer_table[index];
     if (timer->active == 1 && timer->state == 0) {
         payload = &timer->payload;
-        sub_38CF8(timer->handle, payload->shape) /* PLATFORM(audio): bind a sample shape to an audio handle. */;
+        start_audio_voice_sample(timer->handle, payload->shape) /* PLATFORM(audio): bind a sample shape to an audio handle. */;
         timer->rate = payload->sample_word / payload->shape[0x0e] + (payload->shape[0x0f] << 4);
-        timer->channels[1] = sub_39050(timer->rate, timer->handle) /* PLATFORM(audio): start a sample channel at the requested rate. */;
+        timer->channels[1] = send_audio_stop_event(timer->rate, timer->handle) /* PLATFORM(audio): start a sample channel at the requested rate. */;
         timer->dirty = timer->state = 1;
         audio_unk2(timer->handle, 0) /* PLATFORM(audio): update an audio handle parameter. */;
     }
@@ -167,7 +167,7 @@ void far audio_function2(int index)
 
     timer = &audio_timer_table[index];
     if (timer->active == 1 && timer->state == 1) {
-        sub_38156(timer->channels[1]) /* PLATFORM(audio): stop an audio channel. */;
+        reset_audio_voice_length(timer->channels[1]) /* PLATFORM(audio): stop an audio channel. */;
         timer->channels[1] = -1;
         timer->state = 0;
         timer->dirty = 1;
@@ -208,7 +208,7 @@ void far audio_driver_timer(void)
         timer->rate_avg = (timer->rate_avg * 7 + ((u32)timer->rate << 4)) >> 3;
         value = (int)(timer->rate_avg >> 4);
         if ((value != timer->channels[0] || timer->dirty) && timer->channels[1] != -1) {
-            sub_39088(timer->channels[1], value) /* PLATFORM(audio): update the playback rate for an audio channel. */;
+            set_audio_voice_value(timer->channels[1], value) /* PLATFORM(audio): update the playback rate for an audio channel. */;
             timer->channels[0] = value;
         }
         timer->dirty = 0;
@@ -216,7 +216,7 @@ void far audio_driver_timer(void)
             if (timer->state) {
                 audio_init_chunk2(timer->channels[2]) /* PLATFORM(audio): stop or reset an audio channel. */;
                 timer->retrigger = 0;
-            } else if (sub_3771E(timer->channels[2]) /* PLATFORM(audio): query whether an audio channel is still active. */) {
+            } else if (audio_chunk_is_unavailable(timer->channels[2]) /* PLATFORM(audio): query whether an audio channel is still active. */) {
                 audio_op_unk(i) /* PLATFORM(audio): start playback for the selected timer slot. */;
                 timer->retrigger = 0;
             }
@@ -376,6 +376,6 @@ int far nopsub_27489(int index)
 
     channel = audio_timer_table[index].channels[2];
     if (channel > -1)
-        return sub_3771E(channel) /* PLATFORM(audio): query whether an audio channel is still active. */;
+        return audio_chunk_is_unavailable(channel) /* PLATFORM(audio): query whether an audio channel is still active. */;
     return 1;
 }

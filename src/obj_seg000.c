@@ -269,7 +269,7 @@ extern I8 aVict[];
 extern I8 aWinn[];
 extern I8 a_trk_5[];
 extern U8  backlightovr8;
-extern I8 byte_3FE00;
+extern I8 joystick_enabled;
 extern U8  endhsdemo;
 unsigned char entry_score_index;
 char results_entryname[17];
@@ -418,7 +418,7 @@ I16 hillconsts[2] = { 0, 450 };
 I16 custom_dist = 210;
 I16 custom_azim_angle = 464;
 I16 custom_elev_angle = 80;
-I8 byte_3B8F2 = 0;
+I8 mouse_enabled = 0;
 I8 is_audioloaded = 0;
 I8 HKeyFlag = 0;
 I8 cammd = 0;
@@ -2038,7 +2038,7 @@ menu_opponent_mouse_redraw:
 /* Purpose: Presents and processes race options.
  * Parameters: none.
  * Returns: far.
- * Globals read: aDefault_1, byte_3B8F2, byte_3FE00, dialogarg2, dlg_colour, g_miscfile_ptr,
+ * Globals read: aDefault_1, mouse_enabled, joystick_enabled, dialogarg2, dlg_colour, g_miscfile_ptr,
  *            main_data_file_addr, menu_clear_color, performGraphColor, replay_file,
  *            resbuftext
  * Globals written: g_miscfile_ptr, waitm_ms
@@ -2072,9 +2072,9 @@ I8 far run_option_menu(void)
 
         switch (selection) {
         case 0:
-            if (byte_3B8F2 != 0) {
+            if (mouse_enabled != 0) {
                 color_or_file = 2;
-            } else if (byte_3FE00 != 0) {
+            } else if (joystick_enabled != 0) {
                 color_or_file = 1;
             } else {
                 color_or_file = 0;

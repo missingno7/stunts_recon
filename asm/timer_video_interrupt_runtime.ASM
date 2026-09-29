@@ -16,7 +16,7 @@ public _timer_interrupt_reload_value
 public _bios_tick_countdown
 public _timer_callback_reentry_peak
 public _timer_callback_reentry_depth
-public _timer_callback_busy, _word_3F88E, _timerintr, _aNoRoomLeftOnTimerInterru
+public _timer_callback_busy, _input_pushed, _timerintr, _aNoRoomLeftOnTimerInterru
 _byte_3F868 db 97, 80, 82, 15, 25, 6, 25, 25, 2, 13, 11, 12
 _previous_timer_irq_vector dd 0
 _timer_callback_counter dd 0
@@ -31,7 +31,7 @@ _timer_callback_reentry_peak dw 0
 _timer_callback_reentry_depth dw 0
 _timer_callback_busy db 0
 db 3
-_word_3F88E dw 0
+_input_pushed dw 0
 _timerintr dd 0
 db 24 dup (0)
 _aNoRoomLeftOnTimerInterru db "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE LIST", 13, 0
@@ -464,7 +464,7 @@ _compare_ds_ss endp
 ; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES; balanced explicit saves/restores observed: AX, BX, CX, DI, DS, DX, ES, SI; path-specific inputs and outputs follow
 ;   the listed operands.
 ; Globals read: _bios_tick_countdown, _timer_callback_busy, _timer_callback_counter, _timer_callback_reentry_depth, _timer_callback_reentry_peak, _timer_elapsed_ticks_high,
-;   _timer_elapsed_ticks_low, _timer_interrupt_reload_value, _timer_sound_countdown_enabled, _timerintr, _word_3F88E.
+;   _timer_elapsed_ticks_low, _timer_interrupt_reload_value, _timer_sound_countdown_enabled, _timerintr, _input_pushed.
 ; Globals written: _bios_tick_countdown, _timer_callback_busy, _timer_callback_counter, _timer_callback_reentry_depth, _timer_callback_reentry_peak, _timer_elapsed_ticks_high,
 ;   _timer_elapsed_ticks_low.
 ; /* PLATFORM(timer): masks or restores interrupts around timer state. */
@@ -502,7 +502,7 @@ timer_send_pic_eoi:
     mov al, 20h
     out R5HW_PIC_MASTER_COMMAND_PORT, al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
 timer_check_callback_enable:
-    cmp byte ptr _word_3F88E, 0
+    cmp byte ptr _input_pushed, 0
     jne timer_clear_reentry_state
     inc word ptr _timer_callback_counter
     jne timer_advance_callback_clock

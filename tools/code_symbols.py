@@ -583,9 +583,26 @@ def resolve_near_code_symbols(names, recipe, image):
                     'Near target lacks unique verified same-segment entry or reviewed label: '+name)
             proof=reviewed[name]
             label=re.fullmatch(r'_loc_([0-9A-Fa-f]+)',name)
-            require(label is not None and set(proof)=={'source_line'},
-                    'Near label proof shape differs')
-            address=int(label.group(1),16)-0x10000
+            inventory_label=None
+            if label is not None:
+                inventory_label=name[1:]
+                address=int(label.group(1),16)-0x10000
+            else:
+                # A semantic registry spelling may name the same independently
+                # reviewed interior label. Keep the original label as the
+                # evidence anchor and require the registry's address to agree
+                # with its encoded load offset.
+                registry=read_json(ROOT/'layout/names-registry.json')['names']
+                aliases=[(int(load_address),row) for load_address,row in registry.items()
+                         if row.get('kind')=='code' and row.get('name')==name[1:]]
+                require(len(aliases)==1,'Near semantic alias lacks a unique registry row')
+                address,row=aliases[0]
+                inventory_label=row.get('inventory_name','')
+                label=re.fullmatch(r'loc_([0-9A-Fa-f]+)',inventory_label)
+                require(label is not None and
+                        int(label.group(1),16)-0x10000==address,
+                        'Near semantic alias lacks its original address-label anchor')
+            require(set(proof)=={'source_line'},'Near label proof shape differs')
             path='src/restunts/asmorig/seg012.asm'
             reference=ROOT/'build/references/restunts'/path
             pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
@@ -594,7 +611,7 @@ def resolve_near_code_symbols(names, recipe, image):
             lines=reference.read_text(encoding='latin1').splitlines()
             line=proof['source_line']
             require(type(line) is int and 1<=line<=len(lines) and
-                    lines[line-1].strip().lower()==(name[1:]+':').lower(),
+                    lines[line-1].strip().lower()==(inventory_label+':').lower(),
                     'Near label lacks pinned source declaration')
             # The containing extent may also be emission-verified with both
             # boundary evidences (as for entries above); the label must still be

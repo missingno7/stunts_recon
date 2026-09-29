@@ -54,8 +54,34 @@ Keyboard, joystick, mouse, menu, timer/interrupt, audio-driver and render-worksp
 
 ## Unknowns and limits
 
-The full inventory classifies **102 globals as bit-exact replay state**, **434 as presentation or process-local state**, and leaves **11 globals with unknown replay roles**. Physical units remain unknown for **342 of 547 globals**. Three tags (`GAMEINFO`, `TRACKOBJECT`, `VECTOR`) have instance-dependent replay roles; 27 aggregate tags have no registered global or embedded instance. Offset-named fields and escaped-pointer accesses remain explicit unknowns. Empty reader/writer lists mean no direct access was found in accepted bodies, not proof that the object is unused.
+The full inventory classifies 102 globals as bit-exact replay state, 434 as presentation or process-local state, and leaves 11 globals with unknown replay roles. Physical units remain unknown for 342 of 547 globals. Three tags (GAMEINFO, TRACKOBJECT, VECTOR) have instance-dependent replay roles; 27 aggregate tags have no registered global or embedded instance. Offset-named fields and escaped-pointer accesses remain explicit unknowns. Empty reader/writer lists mean no direct access was found in accepted bodies, not proof that the object is unused.
 
-Use the full generated model for the exact rows, compiler evidence, alias views, readers/writers and `address_escapes`. Resolve an unknown only when a concrete port consumer needs it, using the accepted declarations and call/access evidence; keep it unclassified until that evidence exists.
+The 11 unknown-role rows have now been triaged against accepted access evidence:
+
+| Global | Finding |
+|---|---|
+| aDefault_1 | DEFAULT is the default replay filename used by the replay file selector/loader (src/obj_seg000.c:415,2101-2106); UI/path input, not recorded simulation state. |
+| postable[30] | Rebuilt as row z-edge positions row*1024; consumed by track geometry construction (src/obj_seg000.c:470, src/obj_seg004.c:210-231). |
+| z_ctr_pos[30] | Rebuilt as row-center z positions row*1024+512; used to form local track coordinates (src/obj_seg000.c:471, src/obj_seg004.c:170,789). |
+| g_corkscrew_type_flag | Only builder writes are visible in accepted C (src/obj_seg004.c:156,668,684); narrowed to track-object construction output, but leave its consumer/role unresolved. |
+| collision_response_offsets[4] | Static initializer, no accepted direct reader/writer found; retain as unknown. |
+| unused_40E73, track3_gap[2], framerate_pad_0, extra_rclist4[2], spare_td22_1, gap_trackrow_1 | No accepted direct access found; names are reconstruction aliases and do not prove padding or runtime meaning. Keep raw/unclassified. |
+
+postable and z_ctr_pos are deterministic lookup tables rebuilt from the 30-row index; they need not be serialized as replay checkpoint state. The remaining seven rows lack enough access evidence to classify.
+
+### High-value physical-unit follow-up order
+
+Of the 342 unit-unknown globals, 84 are assigned to or shared with simulation (63 are exclusively simulation-owned; 21 are shared with other subsystems). This is not one physical measurement list; several are pointers, flags, menu state, or aggregate records. Prioritize by simulation cadence and consequence:
+
+1. core.playerstate / core.opponentstate and remaining GAMESTATE fields: read/written by frame update and full checkpoint restore. Keep units field-specific; the aggregate has mixed dimensions. Existing evidence identifies speed as Q8 mph, long/short world-coordinate scale as 64:1, and angle turns as 0x400.
+2. simdp7 / ophys_7 (SIMD setup): passed into update_car_speed, update_grip, update_player_state and frame updates. Highest-value unresolved coefficients are mass, braking, torque curve, aero resistance, grip/sliding and per-surface grip (src/obj_seg001_complete.c:2182-2410; src/obj_seg001_complete.c:729-731).
+3. opponent_spd_tbl[16]: read by opponent speed adjustment and track-edge prediction, initialized at 200 and loaded from opponent data (src/obj_seg001_complete.c:2307,2919,3113; src/obj_seg004.c:1928). It is a physics/AI control table; its physical scale remains unknown.
+4. hillconsts, g_hillf, hgthgt: vertical terrain coordinate is consequential to initialization and collision. The accepted setup table is {0,450}, selected by the hill flag and multiplied by 64 at the long-world boundary (src/obj_seg000.c:417; src/obj_seg001_complete.c:1658-1694; src/obj_seg004.c:175,943). This resolves the two map-height levels; other dynamic hgthgt uses remain field-specific.
+5. Race timing and summary metrics: rate_frame is 10 or 20 frames/s. game_frame, player/opponent end frames, game_penalty, game_total_finish, field_144 and elapsed offsets are frame counts; fmtframestr converts them to minutes/seconds by dividing by rate_frame. game_penalty adds rate_frame*3*penalty_ctr frame ticks per penalty. game_travDist adds car_speed2 once per player frame, and the average-speed display divides by frame count then shifts Q8, so it is a Q8-mph-frame accumulator rather than spatial distance. game_impactSpeed and game_topSpeed copy car_speed2 and display as Q8 mph (src/obj_seg001_complete.c:1915,1950-1952,2358-2359,3161-3202; src/obj_seg000.c:2229-2238,2287-2288; src/obj_seg008.c:1461-1480).
+6. speed_recovery_divisors[5]: values {255,256,192,128,64} are divisors in a speed-recovery ratio, not a physical unit (src/obj_seg001_complete.c:729,2390).
+
+The row/column tables are grounded: lnoffsets[i]=30*(29-i) and gterrtrk[i]=30*i are row byte offsets; postable[i]=i*1024, z_ctr_pos[i]=i*1024+512, xcols[i]=i*1024, and trackctrpos2[i]=i*1024+512. idxtrk/tagtrk hold start column/row. st_hdg is a heading angle where 0x400 is one turn (src/obj_seg000.c:464-474; start markers in src/obj_seg004.c:1289-1324; sine/cosine use in src/obj_seg001_complete.c:1654-1734). Note the accepted build_obj table-use discrepancy recorded in formats.md; do not infer table direction from reconstructed alias names alone.
+
+Use the full generated model for the exact rows, compiler evidence, alias views, readers/writers and address_escapes. Resolve an unknown only when a concrete port consumer needs it, using the accepted declarations and call/access evidence; keep it unclassified until that evidence exists.
 
 Evidence: `src/obj_seg003.c:90-235`, `src/obj_seg001_complete.c:1671-1770`, `src/obj_seg001_complete.c:740-745,1692-1695`, `asm/sincos.ASM:6-262,273-332`, and `build/workers/P2b/REPORT.md`.

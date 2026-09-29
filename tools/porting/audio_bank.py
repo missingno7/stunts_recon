@@ -314,9 +314,28 @@ def parse_vce(buf: bytes, archive: Archive, label: str) -> dict[str, object]:
                 f"{chunk.end - chunk.start:#x}"
             )
         # These offsets are read in the game-side envelope/sample state machine.
+        def byte_at(offset: int) -> int | None:
+            return buf[chunk.start + offset] if offset < size else None
+        def word_at(offset: int) -> int | None:
+            return u16(buf, chunk.start + offset) if offset + 2 <= size else None
         fields = {
+            "sample_kind_byte_05": byte_at(0x05),
             "voice_mask": u16(buf, chunk.start + 0x0C),
             "event_note_bias": buf[chunk.start + 0x10],
+            "ad15_flag_0a": byte_at(0x0A),
+            "ad15_note_adjust_11": byte_at(0x11),
+            "mt15_state_byte_12": byte_at(0x12),
+            "mt15_td15_event_value_gate_15": byte_at(0x15),
+            "ad15_parameter_bytes_16_18_hex": buf[chunk.start + 0x16 : chunk.start + 0x19].hex(),
+            "sample_rate_seed_word_1c": word_at(0x1C),
+            "voice_state_seed_word_2a": word_at(0x2A),
+            "voice_state_seed_word_2c": word_at(0x2C),
+            "voice_state_seed_word_30": word_at(0x30),
+            "voice_state_seed_byte_34": byte_at(0x34),
+            "voice_state_seed_word_36": word_at(0x36),
+            "voice_state_seed_word_38": word_at(0x38),
+            "game_channel_override_43": byte_at(0x43),
+            "driver_bytes_44_46_hex": buf[chunk.start + 0x44 : chunk.start + min(0x47, size)].hex(),
             "level1e": struct.unpack_from("<h", buf, chunk.start + 0x1E)[0],
             "level20": struct.unpack_from("<h", buf, chunk.start + 0x20)[0],
             "level22": struct.unpack_from("<h", buf, chunk.start + 0x22)[0],
@@ -328,6 +347,7 @@ def parse_vce(buf: bytes, archive: Archive, label: str) -> dict[str, object]:
             "loop_flags": buf[chunk.start + 0x34],
             "pulse_present": buf[chunk.start + 0x35],
             "pulse_count": buf[chunk.start + 0x3A],
+            "pulse_table_hex": buf[chunk.start + 0x3B : chunk.start + 0x43].hex(),
         }
         records.append(
             {

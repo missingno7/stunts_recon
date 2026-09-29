@@ -24,7 +24,7 @@
 
 /* obj_seg003 whole-object candidate (s003d).  RECONSTRUCTION NOTE: original identifiers are not
  * recoverable.  Local/parameter names and the scoping of extern declarations (K&R-style
- * function-scope externs in sub_19F14/init_rect_arrays) are pressure-constrained reconstruction
+ * function-scope externs in draw_clip/init_rect_arrays) are pressure-constrained reconstruction
  * choices: MSC 5.10 C2's CSE capacity in update_frame depends on symbol-table memory (names of
  * referenced globals and of update_frame's locals).  They are not recovered names.
  * Data shapes: rect_unk[15] (15-iteration copy loop + rect_unk[si], labels at 8-byte stride),
@@ -336,11 +336,11 @@ extern I8 cam_idg;
 extern I8 pen_flag_count;
 extern I16 replayrst;
 extern I16 popupact;
-extern I8 byte_3B8F2;
-extern I8 byte_3FE00;
+extern I8 mouse_enabled;
+extern I8 joystick_enabled;
 extern void far* gamerptrs;
 extern void far* dasm_shp_7;
-extern I16 word_3F88E;
+extern I16 input_pushed;
 extern I8 dashbtogglesaved;
 extern I8 g_replaybarcpytgl;
 extern I8 is_in_rplcopy;
@@ -642,7 +642,7 @@ extern struct TRANSFORMEDSHAPE3D* g_curr_tsp;
 extern struct TRACKOBJECT trklst[215]; // 215 entries
 extern U8  fence_codes[];
 
-extern I8 fence_off_1[];         /* fence (dx,dz) pair lists: 1-,2-,3-,4-entry lists at the pinned labels unk_3C0EE/3C0F0/3C0F8/3C0F4 */
+extern I8 fence_off_1[];         /* Fence offset pairs are grouped by the 1-, 2-, 3-, and 4-entry extents. */
 extern I8 fence_off_2[];
 extern I8 fence_off_4[];
 extern I8 fence_off_3[];
