@@ -486,12 +486,12 @@ I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
     return voiceNum;
 }
 
-void FAR _loadds send_audio_stop_event(I16 first, I16 chunkIndex)
+I16 FAR _loadds send_audio_stop_event(U16 rate, I16 handle)
 {
     audio_event_send_buffer.command = 0xff;
-    audio_event_send_buffer.delta = (U16)first;
+    audio_event_send_buffer.delta = rate;
     audio_event_send_buffer.value = -32L;
-    process_audio_event(&audio_event_send_buffer, chunkIndex);
+    return process_audio_event(&audio_event_send_buffer, handle);
 }
 
 /* Send a value update for one selected audio voice.

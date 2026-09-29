@@ -6,8 +6,7 @@
 #if defined(PORT_BUILD) && defined(STUNTS_PROBE_STRICT_CENTRAL)
 
 #if defined(STUNTS_TU_obj_seg000)
-/* PORT_BUILD dispatch only: obj_seg000.c:1150 calls 3 args; obj_seg008.c:1548
-   defines 4. No evidence supplies the missing value; see the Class 2/4 row. */
+/* Port dispatch boundary. The machine contract is three source arguments over four stack words; see declaration-evidence.json. */
 extern void *stunts_port_read_file_with_retry_dispatch(I16 type, I8 *name, void *destination);
 static inline void *stunts_port_read_file_with_retry_view(I16 type, I8 *name, void *destination)
 {
@@ -15,9 +14,10 @@ static inline void *stunts_port_read_file_with_retry_view(I16 type, I8 *name, vo
 }
 static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 second, I16 third, I32 final_words)
 {
-    /* load_190bc reads six words at BP+6..+10; the final source I32 is two. */
-    U32 packed = (U32)final_words;
-    return call_read_line(buffer, first, second, third, (I16)(U16)packed, (I16)(U16)(packed >> 16));
+    /* The final I32 is low word then high word in the six-word target definition. */
+    U32 words = (U32)final_words;
+    return call_read_line(buffer, first, second, third, (I16)(U16)words,
+                          (I16)(U16)(words >> 16));
 }
 static inline struct SHAPE2D *stunts_port_locate_shape_fatal_shape_view(void *resource, I8 *name)
 {
@@ -29,9 +29,10 @@ static inline struct SHAPE2D *stunts_port_locate_shape_fatal_shape_view(void *re
 #if defined(STUNTS_TU_obj_seg008)
 static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 second, I16 third, I32 final_words)
 {
-    /* See the same machine-frame evidence and limitations in the port-header evidence table. */
-    U32 packed = (U32)final_words;
-    return call_read_line(buffer, first, second, third, (I16)(U16)packed, (I16)(U16)(packed >> 16));
+    /* Split the legacy caller's final I32 into the definition's last two words. */
+    U32 words = (U32)final_words;
+    return call_read_line(buffer, first, second, third, (I16)(U16)words,
+                          (I16)(U16)(words >> 16));
 }
 #endif
 
@@ -58,12 +59,12 @@ static inline void stunts_port_audio_init_chunk_7_view(I16 first, I16 last,
 #endif
 
 #if defined(STUNTS_TU_obj_seg007)
-/* PORT_BUILD dispatch only: obj_seg007.c:158 consumes a value, while the
-   obj_seg028.c:489 definition is void. No target result evidence is available. */
-extern I16 stunts_port_send_audio_stop_event_dispatch(I16 first, I16 chunk_index);
-static inline I16 stunts_port_send_audio_stop_event_value_view(I16 first, I16 chunk_index)
+/* PORT_BUILD host dispatch policy. The historical I16 result is proven and
+   consumed by obj_seg007; the host implementation remains an integration hook. */
+extern I16 stunts_port_send_audio_stop_event_dispatch(U16 rate, I16 chunk_index);
+static inline I16 stunts_port_send_audio_stop_event_value_view(U16 rate, I16 chunk_index)
 {
-    return stunts_port_send_audio_stop_event_dispatch(first, chunk_index);
+    return stunts_port_send_audio_stop_event_dispatch(rate, chunk_index);
 }
 #endif
 

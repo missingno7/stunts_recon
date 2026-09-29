@@ -397,7 +397,7 @@ extern unsigned char audio_driver_extension_mode; /* 0x30635; state-model; size=
 extern unsigned char audio_driver_mode; /* 0x30634; state-model; size=? */
 #endif
 #ifndef STUNTS_LOCAL_DATA_audio_driver_volume_command
-extern unsigned char audio_driver_volume_command[4]; /* 0x30636; state-model; size=? */
+extern unsigned char audio_driver_volume_command[4]; /* 0x30636; accepted four-byte target command. */
 #endif
 #ifndef STUNTS_LOCAL_DATA_audio_frmarr
 extern char audio_frmarr[1360]; /* 0x34F4C; state-model; size=1360 */
@@ -963,30 +963,30 @@ extern char game_camera_buttons_count[4]; /* 0x2EA04; typeinfer machine-access w
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_x1
 #if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
-extern int16_t game_camera_buttons_x1[]; /* PORT_BUILD: src/obj_seg005.c:1915 has 9; target 0x2EA08 has 8 words. */
+extern int16_t game_camera_buttons_x1[]; /* PORT_BUILD: src/obj_seg005.c:1915 has 9; target span is 9 words; word_3EA18 aliases element 8. */
 #else
-extern int16_t game_camera_buttons_x1[8]; /* 0x2EA08; typeinfer machine-access widths/extent; size=16 */
+extern int16_t game_camera_buttons_x1[9]; /* 0x2EA08; accepted obj_seg005 _DATA span; size=18 */
 #endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_x2
 #if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
-extern int16_t game_camera_buttons_x2[]; /* PORT_BUILD: src/obj_seg005.c:1916 has 9; target 0x2EA1A has 8 words. */
+extern int16_t game_camera_buttons_x2[]; /* PORT_BUILD: src/obj_seg005.c:1916 has 9; target span is 9 words; word_3EA2A aliases element 8. */
 #else
-extern int16_t game_camera_buttons_x2[8]; /* 0x2EA1A; typeinfer machine-access widths/extent; size=16 */
+extern int16_t game_camera_buttons_x2[9]; /* 0x2EA1A; accepted obj_seg005 _DATA span; size=18 */
 #endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_y1
 #if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
-extern int16_t game_camera_buttons_y1[]; /* PORT_BUILD: src/obj_seg005.c:1917 has 9; target 0x2EA2C has 7 words. */
+extern int16_t game_camera_buttons_y1[]; /* PORT_BUILD: src/obj_seg005.c:1917 has 9; target span is 9 words; word_3EA3A/C alias elements 7/8. */
 #else
-extern int16_t game_camera_buttons_y1[7]; /* 0x2EA2C; typeinfer machine-access widths/extent; size=14 */
+extern int16_t game_camera_buttons_y1[9]; /* 0x2EA2C; accepted obj_seg005 _DATA span; size=18 */
 #endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_camera_buttons_y2
 #if defined(PORT_BUILD) && defined(STUNTS_TU_obj_seg005)
-extern int16_t game_camera_buttons_y2[]; /* PORT_BUILD: src/obj_seg005.c:1918 has 9; target 0x2EA3E has 7 words. */
+extern int16_t game_camera_buttons_y2[]; /* PORT_BUILD: src/obj_seg005.c:1918 has 9; target span is 9 words; word_3EA4C/E alias elements 7/8. */
 #else
-extern int16_t game_camera_buttons_y2[7]; /* 0x2EA3E; typeinfer machine-access widths/extent; size=14 */
+extern int16_t game_camera_buttons_y2[9]; /* 0x2EA3E; accepted obj_seg005 _DATA span; size=18 */
 #endif
 #endif
 #ifndef STUNTS_LOCAL_DATA_game_rect_txt_in
@@ -2649,7 +2649,7 @@ extern void call_exitlist(void); /* 0x1FE59; target evidence: void far call_exit
 extern void call_exitlist2(void); /* 0x1FE74; target evidence: void near call_exitlist2(void); */
 #endif
 #ifndef STUNTS_LOCAL_FN_call_read_line
-extern I16 far call_read_line(I8 *buffer, I16 x, I16 y, I16 width, I16 limit, I16 flags); /* SOURCE: src/obj_seg008.c; machine ABI evidence: declaration-evidence.json */
+extern I16 far call_read_line(I8 *buffer, I16 x, I16 y, I16 width, I16 limit, I16 flags); /* Definition consumes six stack words; the caller's final I32 is split by its PORT_BUILD view. */
 #endif
 #ifndef STUNTS_LOCAL_FN_carState_rc_op
 extern I16 carState_rc_op(struct CARSTATE *car, I16 value, I16 wheel); /* SOURCE: src/obj_seg001_complete.c; machine ABI evidence: declaration-evidence.json */
@@ -3301,7 +3301,7 @@ extern void locate_many_resources(I8 FAR *data, I8 *names, I8 FAR **result); /* 
 extern I8 far *locate_shape_alt(I8 far *data, I8 *name); /* SOURCE: src/obj_seg008.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_locate_shape_fatal
-extern void far * far locate_shape_fatal(void far *data, I8 *name); /* returns the located resource; entry stub selects fatal behavior. */
+extern void far * far locate_shape_fatal(void far *data, I8 *name); /* Far pointer result in DX:AX; selector stub joins a shared search tail; miss is fatal. */
 #endif
 #ifndef STUNTS_LOCAL_FN_locate_shape_nofatal
 extern void far * far locate_shape_nofatal(void far *data, I8 *name); /* returns the located resource; entry stub selects fatal behavior. */
@@ -3663,7 +3663,7 @@ extern void nopsub_kb_set_readchar_callback(short, short); /* 0x20A44; target ev
 extern void nullsub_1(void); /* SOURCE: src/obj_seg031.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_nullsub_2
-extern void far nullsub_2(void far *resource, int16_t selector); /* callsites push a 4-byte far pointer and a 16-bit selector; stub body ignores both. */
+extern void far nullsub_2(void far *resource, I16 selector); /* Callers pass these values; the RETF stub reads no arguments and returns no value. Original spelling is record-order sensitive. */
 #endif
 #ifndef STUNTS_LOCAL_FN_opponent_op
 extern void opponent_op(void); /* SOURCE: src/obj_seg001_complete.c; machine ABI evidence: declaration-evidence.json */
@@ -3847,7 +3847,7 @@ extern void rcunion(struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *);
 extern void FAR _loadds read_audio_event(struct AudioEvent *event, U8 FAR *stream); /* SOURCE: src/obj_seg028.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_read_file_with_retry
-extern void far *read_file_with_retry(I16 type, U16  first, U16  second, U16  third); /* SOURCE: src/obj_seg008.c; machine ABI evidence: declaration-evidence.json */
+extern void far *read_file_with_retry(I16 type, U16 near_name_offset, U16 destination_offset, U16 destination_segment); /* Definition consumes four target words; callers retain a typed three-argument view through the PORT_BUILD dispatch adapter. */
 #endif
 #ifndef STUNTS_LOCAL_FN_read_line
 extern I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
@@ -3982,7 +3982,7 @@ extern short select_cliprect_rotate(int, short, short *, short); /* 0x14E06; tar
 extern U16 select_rot(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk); /* SOURCE: src/obj_seg006.c; machine ABI evidence: declaration-evidence.json */
 #endif
 #ifndef STUNTS_LOCAL_FN_send_audio_stop_event
-extern void far send_audio_stop_event(I16 first, I16 chunk_index); /* defining TU is void; obj_seg007 consumes a value (PORT mismatch). */
+extern I16 far send_audio_stop_event(U16 rate, I16 handle); /* U16 rate input; signed I16 voice/channel result is returned in AX and consumed by obj_seg007. */
 #endif
 #ifndef STUNTS_LOCAL_FN_set_add_value
 extern void far set_add_value(I32 ticks);

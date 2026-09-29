@@ -224,8 +224,15 @@
         6
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "int far call_read_line(int, int, long, long);",
-      "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
+      "machine_evidence": "Five source arguments occupy six stack words: near buffer, three 16-bit words, then one 32-bit argument occupying the final two words. The body consumes those final words as its fifth and sixth 16-bit values.",
+      "host_probe_action": "source-local calls/declarations need an explicit compatibility view",
+      "status": "machine contract proven; original declaration spelling unrecoverable (record-order sensitive)",
+      "evidence": [
+        "evidence/functions.json:load_190bc",
+        "recipes/obj_seg008.json",
+        "src/obj_seg000.c:115,1328,2774",
+        "src/obj_seg008.c:1180"
+      ]
     },
     "draw_button": {
       "prototype_arity": 7,
@@ -433,8 +440,15 @@
         2
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "void far * far locate_shape_fatal(int /*unused*/, int /*unused*/, int /*unused*/);",
-      "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
+      "machine_evidence": "Far resource pointer argument and near name pointer; successful result is returned in DX:AX. Selector entry joins a shared search tail; a miss invokes fatal_error.",
+      "host_probe_action": "source-local calls/declarations need an explicit compatibility view",
+      "status": "machine contract proven; original declaration spelling unrecoverable (record-order sensitive)",
+      "evidence": [
+        "evidence/functions.json:load_20f9d",
+        "recipes/obj_seg012.json",
+        "src/obj_seg000.c:716,2412-2418,2531-2650",
+        "src/obj_seg004.c:993,1026-1101"
+      ]
     },
     "mmgr_release": {
       "prototype_arity": 2,
@@ -702,8 +716,15 @@
         4
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": null,
-      "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
+      "machine_evidence": "Three source arguments occupy four stack words in order: signed 16-bit type, near name pointer, far destination pointer. Far result in DX:AX; caller removes eight bytes.",
+      "host_probe_action": "source-local calls/declarations need an explicit compatibility view",
+      "status": "machine contract proven; original declaration spelling unrecoverable (record-order sensitive)",
+      "evidence": [
+        "evidence/functions.json:load_19a86",
+        "recipes/obj_seg008.json",
+        "src/obj_seg000.c:1150",
+        "src/obj_seg008.c:1548"
+      ]
     },
     "debug_printf_text": {
       "prototype_arity": 2,
@@ -1157,8 +1178,15 @@
       "machine_prototype": "void near call_exitlist2(void);"
     },
     "call_read_line": {
-      "declaration": "extern short call_read_line(short, short, int, int);",
-      "machine_prototype": "int far call_read_line(int, int, long, long);"
+      "declaration": "extern I16 far call_read_line(I8 *buffer, I16 first, I16 second, I16 third, I32 final_words);",
+      "machine_prototype": "I16 far call_read_line(near char *, I16, I16, I16, I32);",
+      "machine_contract": "Five source arguments occupy six stack words: near buffer, three 16-bit words, then one 32-bit argument occupying the final two words. The body consumes those final words as its fifth and sixth 16-bit values.",
+      "evidence": [
+        "evidence/functions.json:load_190bc",
+        "recipes/obj_seg008.json",
+        "src/obj_seg000.c:115,1328,2774",
+        "src/obj_seg008.c:1180"
+      ]
     },
     "carState_rc_op": {
       "declaration": "extern short carState_rc_op(int, short);",
@@ -2013,8 +2041,15 @@
       "machine_prototype": "long far locate_shape_alt(long, int);"
     },
     "locate_shape_fatal": {
-      "declaration": "extern void *locate_shape_fatal(short, short, short);",
-      "machine_prototype": "void far * far locate_shape_fatal(int /*unused*/, int /*unused*/, int /*unused*/);"
+      "declaration": "extern void far * far locate_shape_fatal(void far *data, I8 *name);",
+      "machine_prototype": "void far * far locate_shape_fatal(void far *, near char *);",
+      "machine_contract": "Far resource pointer argument and near name pointer; successful result is returned in DX:AX. Selector entry joins a shared search tail; a miss invokes fatal_error.",
+      "evidence": [
+        "evidence/functions.json:load_20f9d",
+        "recipes/obj_seg012.json",
+        "src/obj_seg000.c:716,2412-2418,2531-2650",
+        "src/obj_seg004.c:993,1026-1101"
+      ]
     },
     "locate_shape_nofatal": {
       "declaration": "extern int locate_shape_nofatal(short, short, short);",
@@ -2505,8 +2540,14 @@
       "machine_prototype": "int far nullsub_1(void);"
     },
     "nullsub_2": {
-      "declaration": "extern void nullsub_2(void *resource, int16_t selector);",
-      "machine_prototype": "void far nullsub_2(int /*unused*/, int /*unused*/, int /*unused*/);"
+      "declaration": "extern void far nullsub_2(void far *resource, I16 selector);",
+      "machine_prototype": "void far nullsub_2(void);",
+      "machine_contract": "The body is RETF plus alignment and reads no argument or return value. Call sites pass a far resource pointer and a 16-bit selector; retain that caller view in the port declaration and ignore both values.",
+      "evidence": [
+        "evidence/functions.json:load_29e54",
+        "recipes/obj_seg031.json",
+        "src/obj_seg000.c:1514,1665,1885-1906"
+      ]
     },
     "opponent_op": {
       "declaration": "extern short opponent_op(void);",
@@ -2749,8 +2790,15 @@
       "machine_prototype": null
     },
     "read_file_with_retry": {
-      "declaration": "extern void *read_file_with_retry(int16_t, uint16_t, uint16_t, uint16_t);",
-      "machine_prototype": null
+      "declaration": "extern void far *read_file_with_retry(I16 type, I8 *near_name, void far *destination);",
+      "machine_prototype": "void far * far read_file_with_retry(I16 type, near char *, far void *);",
+      "machine_contract": "Three source arguments occupy four stack words in order: signed 16-bit type, near name pointer, far destination pointer. Far result in DX:AX; caller removes eight bytes.",
+      "evidence": [
+        "evidence/functions.json:load_19a86",
+        "recipes/obj_seg008.json",
+        "src/obj_seg000.c:1150",
+        "src/obj_seg008.c:1548"
+      ]
     },
     "read_line": {
       "declaration": "extern short read_line(char, char *, short, short, short, short, short, int, int);",
@@ -2925,8 +2973,15 @@
       "machine_prototype": null
     },
     "send_audio_stop_event": {
-      "declaration": "extern void send_audio_stop_event(int16_t, int16_t);",
-      "machine_prototype": null
+      "declaration": "extern I16 far send_audio_stop_event(I16 rate, I16 handle);",
+      "machine_prototype": "I16 far send_audio_stop_event(U16 rate, I16 handle);",
+      "machine_contract": "Returns the process_audio_event voice result in AX; obj_seg007 stores that result in the channel state.",
+      "evidence": [
+        "evidence/functions.json:load_29050",
+        "recipes/obj_seg028.json",
+        "src/obj_seg028.c:489",
+        "src/obj_seg007.c:52,158"
+      ]
     },
     "set_add_value": {
       "declaration": "extern void set_add_value(short, short);",
@@ -3725,7 +3780,7 @@
     },
     "nullsub_2": {
       "prototype": "void far nullsub_2(void far *resource, int16_t selector);",
-      "evidence": "build/workers/X2/typeinfer/decls.json; evidence/toolchain-hypotheses.json; accepted source definitions"
+      "evidence": "evidence/functions.json:load_29e54; recipes/obj_seg031.json; accepted call sites in src/obj_seg000.c"
     },
     "file_write_replay": {
       "prototype": "int16_t far file_write_replay(const char *filename);",

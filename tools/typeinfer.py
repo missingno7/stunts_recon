@@ -29,6 +29,9 @@ Outputs (build/namefit/):
     python tools/typeinfer.py --show NAME # evidence for one global/function
 
 Diagnostic only; does not touch canonical state.
+Storage evidence stays split: lookup spans and next-label gaps only help
+attribute operands; observed operand ends are lower bounds; numeric array
+dimensions require an independently cited object boundary.
 """
 import argparse
 import bisect
@@ -48,6 +51,7 @@ sys.path.insert(0, str(HERE))
 
 from capstone import Cs, CS_ARCH_X86, CS_MODE_16                      # noqa: E402
 from capstone.x86 import X86_OP_MEM, X86_OP_REG, X86_OP_IMM            # noqa: E402
+from porting.extent_evidence import array_dimension, minimum_observed_access_bytes  # noqa: E402
 
 SIGNED_J = {'jl', 'jge', 'jle', 'jg', 'jnge', 'jnl', 'jng', 'jnle'}
 UNSIGNED_J = {'jb', 'jae', 'jbe', 'ja', 'jnae', 'jnb', 'jna', 'jnbe', 'jc', 'jnc'}
@@ -111,12 +115,30 @@ class Program:
         self.sym_names = {a: [n for n, _ in v] for a, v in names.items()}
         self.sym_meta = {a: v for a, v in names.items()}
         self.addrs = sorted(names)
-        self.extent = {}
+        self.lookup_span_bytes = {}
+        self.lookup_span_basis = {}
+        self.next_label_gap_bytes = {}
         for i, a in enumerate(self.addrs):
-            nxt = self.addrs[i + 1] if i + 1 < len(self.addrs) else a + 2
-            gap = nxt - a
+            nxt = self.addrs[i + 1] if i + 1 < len(self.addrs) else None
+            gap = nxt - a if nxt is not None else None
             w = widths.get(a)
-            self.extent[a] = (w, 'layout') if w else (gap, 'gap')
+            self.next_label_gap_bytes[a] = gap
+            if w:
+                self.lookup_span_bytes[a] = w
+                self.lookup_span_basis[a] = 'data-symbols lookup width metadata'
+            elif gap is not None:
+                self.lookup_span_bytes[a] = gap
+                self.lookup_span_basis[a] = 'next distinct label gap'
+            else:
+                # Preserve the old terminal lookup window for attribution only;
+                # it is deliberately not reported as a size or label gap.
+                self.lookup_span_bytes[a] = 2
+                self.lookup_span_basis[a] = 'terminal lookup fallback'
+        extent_evidence_path = ROOT / 'tools/porting/object-extent-evidence.json'
+        extent_evidence = json.loads(extent_evidence_path.read_text(encoding='utf-8-sig'))
+        self.allocation_evidence = {
+            row['address']: row for row in extent_evidence.get('objects', [])
+        }
         self.name_to_addr = {}
         for a, ns in self.sym_names.items():
             for n in ns:
@@ -155,7 +177,7 @@ class Program:
         if i < 0:
             return None
         a = self.addrs[i]
-        w, _ = self.extent[a]
+        w = self.lookup_span_bytes[a]
         if la - a < max(w, 1):
             return a, la - a
         return None
@@ -763,7 +785,6 @@ def infer(prog, ev):
     for (a, off), cat in ev.g.items():
         per_sym[a][off] = cat
     for a, offs in sorted(per_sym.items()):
-        ext, src = prog.extent[a]
         leaves = {off: infer_leaf(cat) for off, cat in sorted(offs.items())}
         origins = collections.Counter()
         for cat in offs.values():
@@ -774,9 +795,16 @@ def infer(prog, ev):
                 if s not in ('None', '1'):
                     strides[s] += n
         name = prog.primary_name(a)
+        accesses = [(off, max((int(w) for w in lf.get('widths', {})), default=lf.get('width') or 1))
+                    for off, lf in leaves.items()]
+        min_observed = minimum_observed_access_bytes(accesses)
+        dynamic_indexed = any(bool(lf.get('indexed')) for lf in leaves.values())
+        gap = prog.next_label_gap_bytes[a]
+        allocation = prog.allocation_evidence.get(a)
+        allocated = allocation.get('allocated_extent_bytes') if allocation else None
         base_leaf = leaves.get(0)
         shape = 'scalar'
-        if len(leaves) > 1 or any(lf['indexed'] for lf in leaves.values()) or (ext and base_leaf and ext > (base_leaf['width'] or 1) and src == 'layout'):
+        if len(leaves) > 1 or any(lf['indexed'] for lf in leaves.values()):
             shape = 'aggregate'
         decl = None
         if shape == 'scalar' and base_leaf:
@@ -784,15 +812,28 @@ def infer(prog, ev):
         elif base_leaf or leaves:
             lf = base_leaf or next(iter(leaves.values()))
             ws = {x['width'] for x in leaves.values() if x['width']}
-            if len(ws) == 1 and lf['width']:
-                n_el = (ext // lf['width']) if ext else None
+            if len(leaves) == 1 and base_leaf and base_leaf['indexed'] and len(ws) == 1 and lf['width']:
+                n_el = array_dimension(allocated, lf['width'])
                 ct = lf['ctype']
                 decl = f"extern {ct} {name[1:]}[{n_el if n_el else ''}];"
             else:
-                decl = f"extern struct {{ /* {len(leaves)} leaves */ }} {name[1:]}; /* {ext} bytes */"
+                basis = f"allocated extent {allocated} bytes" if allocated is not None else "allocation unknown"
+                decl = (f"extern struct {{ /* {len(leaves)} leaves */ }} {name[1:]}; "
+                        f"/* {basis}; minimum observed access {min_observed} bytes; "
+                        f"next label gap {gap if gap is not None else 'unknown'} bytes */")
         globals_[name] = {
             'address': a, 'ds_offset': a - prog.frame, 'names': prog.sym_names.get(a, []),
-            'extent': ext, 'extent_source': src, 'ida_directive': prog.ida_globals.get(name[1:]),
+            'lookup_span_bytes': prog.lookup_span_bytes[a],
+            'lookup_span_basis': prog.lookup_span_basis[a],
+            'next_label_gap_bytes': gap,
+            'minimum_observed_access_bytes': min_observed,
+            'dynamic_indexed_access_seen': dynamic_indexed,
+            'allocated_extent_bytes': allocated,
+            'allocation_basis': allocation.get('allocation_basis') if allocation else None,
+            'allocation_evidence': ({k: allocation[k] for k in
+                                    ('source_view', 'evidence', 'target_payload_hex', 'target_values')
+                                    if k in allocation} if allocation else None),
+            'ida_directive': prog.ida_globals.get(name[1:]),
             'shape': shape, 'strides': dict(strides), 'leaves': {str(k): v for k, v in leaves.items()},
             'origins': dict(origins), 'functions': sorted(ev.gfuncs.get(a, ())),
             'n_functions': len(ev.gfuncs.get(a, ())), 'decl': decl}
@@ -1051,7 +1092,10 @@ def compare(prog, globals_, functions, ev):
             g = by_addr_g.get(addr)
             lf = (g or {}).get('leaves', {}).get('0') or {}
             evs = {'inferred': lf.get('ctype'), 'widths': lf.get('widths'), 'sign': lf.get('sign'),
-                   'shape': (g or {}).get('shape'), 'extent': (g or {}).get('extent')}
+                   'shape': (g or {}).get('shape'),
+                   'minimum_observed_access_bytes': (g or {}).get('minimum_observed_access_bytes'),
+                   'next_label_gap_bytes': (g or {}).get('next_label_gap_bytes'),
+                   'allocated_extent_bytes': (g or {}).get('allocated_extent_bytes')}
         else:
             f = fn_by_addr.get(addr, (None, {}))[1]
             evs = {'prototype': f.get('prototype'), 'argbytes': f.get('callsite_argbytes'),

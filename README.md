@@ -6,6 +6,8 @@ This workspace replaces explicit raw regions of the original MCGA image with byt
 
 The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes the complete test suite, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` reports zero raw-debt OMF objects; its separate library-order diagnostic still has a relocation-order residual.
 
+The freeze evidence and remaining scope are recorded in [the freeze draft](docs/freeze.md), [unresolved questions](docs/unresolved.md), and the [Port Forge runtime oracle](docs/porting/runtime-oracle.md). Runtime captures are a bounded SDL3 reference, separate from the byte-exact historical acceptance proof.
+
 ## Setup
 
 Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json`, `evidence/msc510-provenance.json`, and `evidence/msc600-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries.

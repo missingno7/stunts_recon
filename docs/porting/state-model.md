@@ -1,6 +1,6 @@
 # Deterministic state and data layouts
 
-This is the porting summary of the accepted global-state inventory. Names in `layout/names-registry.json` are reconstruction aliases constrained by address and bindings; they are not claimed to be original identifiers. The complete 547-symbol inventory and 52 accepted aggregate tags / 130 translation-unit layouts are generated under `build/porting/state-model.json` and `build/porting/state-model.md`. The size measurements use isolated probes with the canonical MSC 5.10 medium-model profile (`/AM /O /Gs`). See the P2b report at `build/workers/P2b/REPORT.md` for the source audit and probe method.
+This is the porting summary of the accepted global-state inventory. Names in `layout/names-registry.json` are reconstruction aliases constrained by address and bindings; they are not claimed to be original identifiers. The generated model covers 547 registered symbols and separately records four accepted-source camera arrays that have target addresses but no names-registry entries. The 52 accepted aggregate tags / 130 translation-unit layouts are generated under `build/porting/state-model.json` and `build/porting/state-model.md`. The size measurements use isolated probes with the canonical MSC 5.10 medium-model profile (`/AM /O /Gs`). See the P2b report at `build/workers/P2b/REPORT.md` for the source audit and probe method.
 
 ## Replay checkpoint: `GAMESTATE`
 
@@ -41,6 +41,20 @@ Fast trig uses `0x400` units per turn, `0x100` per quadrant and a table peak of 
 
 ## Replay-determinism boundary
 
+### Camera selector hitboxes
+
+`game_camera_buttons_x1`, `game_camera_buttons_x2`, `game_camera_buttons_y1`,
+and `game_camera_buttons_y2` are four 9-element `int16_t` arrays (18 bytes
+each) in `obj_seg005` `_DATA`, at load addresses `0x2EA08`, `0x2EA1A`,
+`0x2EA2C`, and `0x2EA3E` (DGROUP offsets `0x3298`, `0x32AA`, `0x32BC`,
+`0x32CE`). Their starts are 18 bytes apart with no padding.
+`loop_game` passes `game_camera_buttons_count[cammd] + 1` to
+`mouse_multi_hittest`; the count table reaches 8, so the hit-test covers
+indices 0 through 8. Direct drawing and camera-mode code also reads indices 7
+and 8. The old 8/8/7/7 dimensions came from interior word labels and are not
+allocation sizes. These arrays are presentation/menu state, outside the replay
+checkpoint.
+
 Preserve as the simulation/replay state set:
 
 - The **entire 0x460-byte `GAMESTATE`**, both embedded cars, opaque bytes and six-byte Kevin seed.
@@ -54,7 +68,9 @@ Keyboard, joystick, mouse, menu, timer/interrupt, audio-driver and render-worksp
 
 ## Unknowns and limits
 
-The full inventory classifies 102 globals as bit-exact replay state, 434 as presentation or process-local state, and leaves 11 globals with unknown replay roles. Physical units remain unknown for 342 of 547 globals. Three tags (GAMEINFO, TRACKOBJECT, VECTOR) have instance-dependent replay roles; 27 aggregate tags have no registered global or embedded instance. Offset-named fields and escaped-pointer accesses remain explicit unknowns. Empty reader/writer lists mean no direct access was found in accepted bodies, not proof that the object is unused.
+The full inventory classifies 102 globals as bit-exact replay state, 434 as presentation or process-local state, and leaves 11 globals with unknown replay roles. Physical units remain unknown for 341 of 547 registered globals. Three tags (GAMEINFO, TRACKOBJECT, VECTOR) have instance-dependent replay roles; 27 aggregate tags have no registered global or embedded instance. Offset-named fields and escaped-pointer accesses remain explicit unknowns. Empty reader/writer lists mean no direct access was found in accepted bodies, not proof that the object is unused.
+
+“Unit unknown” does not mean an active simulation value can be dropped or that its bytes have unknown layout. Preserve accepted fixed-width arithmetic and proven conversion boundaries; keep uncalibrated coefficients as raw typed values. The 16-byte opponent speed table is copied from the `sped` resource and is indexed by surface plus object speed code in track-edge and acceleration logic; its physical unit is not established.
 
 The 11 unknown-role rows have now been triaged against accepted access evidence:
 
@@ -67,11 +83,11 @@ The 11 unknown-role rows have now been triaged against accepted access evidence:
 | collision_response_offsets[4] | Static initializer, no accepted direct reader/writer found; retain as unknown. |
 | unused_40E73, track3_gap[2], framerate_pad_0, extra_rclist4[2], spare_td22_1, gap_trackrow_1 | No accepted direct access found; names are reconstruction aliases and do not prove padding or runtime meaning. Keep raw/unclassified. |
 
-postable and z_ctr_pos are deterministic lookup tables rebuilt from the 30-row index; they need not be serialized as replay checkpoint state. The remaining seven rows lack enough access evidence to classify.
+`postable` and `z_ctr_pos` are deterministic lookup tables rebuilt from the 30-row index; they need not be serialized as replay checkpoint state. Seven other globals (`collision_response_offsets`, `unused_40E73`, `track3_gap`, `framerate_pad_0`, `extra_rclist4`, `spare_td22_1`, and `gap_trackrow_1`) remain wholly unclassified. `g_corkscrew_type_flag` is a separate question: accepted C writes it during `build_obj`, but no accepted consumer has been identified.
 
 ### High-value physical-unit follow-up order
 
-Of the 342 unit-unknown globals, 84 are assigned to or shared with simulation (63 are exclusively simulation-owned; 21 are shared with other subsystems). This is not one physical measurement list; several are pointers, flags, menu state, or aggregate records. Prioritize by simulation cadence and consequence:
+Of the 341 unit-unknown globals, 84 are assigned to or shared with simulation (63 are exclusively simulation-owned; 21 are shared with other subsystems). This is not one physical measurement list; several are pointers, flags, menu state, or aggregate records. Prioritize by simulation cadence and consequence:
 
 1. core.playerstate / core.opponentstate and remaining GAMESTATE fields: read/written by frame update and full checkpoint restore. Keep units field-specific; the aggregate has mixed dimensions. Existing evidence identifies speed as Q8 mph, long/short world-coordinate scale as 64:1, and angle turns as 0x400.
 2. simdp7 / ophys_7 (SIMD setup): passed into update_car_speed, update_grip, update_player_state and frame updates. Highest-value unresolved coefficients are mass, braking, torque curve, aero resistance, grip/sliding and per-surface grip (src/obj_seg001_complete.c:2182-2410; src/obj_seg001_complete.c:729-731).

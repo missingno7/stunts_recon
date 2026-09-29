@@ -1,0 +1,165 @@
+{
+  "schema": "accepted-object-extent-evidence-v1",
+  "objects": [
+    {
+      "address": 190984,
+      "allocated_extent_bytes": 18,
+      "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
+      "evidence": [
+        "src/obj_seg005.c:1915",
+        "recipes/obj_seg005.json",
+        "layout/manifest.json owner obj_seg005 _DATA",
+        "layout/oracle.lock.json:locked obj_seg005 contribution"
+      ],
+      "source_view": "game_camera_buttons_x1[9]",
+      "target_payload_hex": "10 01 6d 00 12 01 e8 00 be 00 97 00 6c 00 42 00 0a 00",
+      "target_values": [
+        272,
+        109,
+        274,
+        232,
+        190,
+        151,
+        108,
+        66,
+        10
+      ]
+    },
+    {
+      "address": 191002,
+      "allocated_extent_bytes": 18,
+      "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
+      "evidence": [
+        "src/obj_seg005.c:1916",
+        "recipes/obj_seg005.json",
+        "layout/manifest.json owner obj_seg005 _DATA",
+        "layout/oracle.lock.json:locked obj_seg005 contribution"
+      ],
+      "source_view": "game_camera_buttons_x2[9]",
+      "target_payload_hex": "3a 01 97 00 3a 01 12 01 e8 00 be 00 97 00 5b 00 2f 00",
+      "target_values": [
+        314,
+        151,
+        314,
+        274,
+        232,
+        190,
+        151,
+        91,
+        47
+      ]
+    },
+    {
+      "address": 191020,
+      "allocated_extent_bytes": 18,
+      "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
+      "evidence": [
+        "src/obj_seg005.c:1917",
+        "recipes/obj_seg005.json",
+        "layout/manifest.json owner obj_seg005 _DATA",
+        "layout/oracle.lock.json:locked obj_seg005 contribution"
+      ],
+      "source_view": "game_camera_buttons_y1[9]",
+      "target_payload_hex": "b0 00 b0 00 9c 00 9c 00 9c 00 9c 00 9c 00 9c 00 9c 00",
+      "target_values": [
+        176,
+        176,
+        156,
+        156,
+        156,
+        156,
+        156,
+        156,
+        156
+      ]
+    },
+    {
+      "address": 191038,
+      "allocated_extent_bytes": 18,
+      "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
+      "evidence": [
+        "src/obj_seg005.c:1918",
+        "recipes/obj_seg005.json",
+        "layout/manifest.json owner obj_seg005 _DATA",
+        "layout/oracle.lock.json:locked obj_seg005 contribution"
+      ],
+      "source_view": "game_camera_buttons_y2[9]",
+      "target_payload_hex": "c1 00 c1 00 ad 00 ad 00 ad 00 ad 00 ad 00 c1 00 c1 00",
+      "target_values": [
+        193,
+        193,
+        173,
+        173,
+        173,
+        173,
+        173,
+        193,
+        193
+      ]
+    },
+    {
+      "address": 198198,
+      "allocated_extent_bytes": 4,
+      "allocation_basis": "accepted initialized C array definition paired with exact locked obj_seg027 contribution",
+      "evidence": [
+        "src/obj_seg027.c:audio_driver_volume_command[4]",
+        "recipes/obj_seg027.json",
+        "layout/manifest.json:obj_seg027 _DATA interval"
+      ],
+      "source_view": "audio_driver_volume_command[4]"
+    },
+    {
+      "address": 200298,
+      "allocated_extent_bytes": 9,
+      "allocation_basis": "accepted static C array definition paired with exact locked obj_seg005 contribution",
+      "evidence": [
+        "src/obj_seg005.c:1871",
+        "recipes/obj_seg005.json",
+        "layout/manifest.json:obj_seg005 contribution"
+      ],
+      "source_view": "camera_buttons_pressed[9]"
+    },
+    {
+      "address": 207370,
+      "allocated_extent_bytes": 12,
+      "allocation_basis": "accepted static C struct definition paired with exact locked obj_seg028 contribution and the accepted AUDIOEVENT layout",
+      "evidence": [
+        "src/obj_seg028.c:audio_event_send_buffer",
+        "recipes/obj_seg028.json",
+        "layout/manifest.json:obj_seg028 contribution",
+        "tools/porting/port_include/stunts_structs.h:AudioEvent size"
+      ],
+      "source_view": "audio_event_send_buffer (struct AudioEvent, 12 bytes)"
+    },
+    {
+      "address": 221552,
+      "allocated_extent_bytes": 14,
+      "allocation_basis": "LINK communal declaration names a seven-element short array; exact communal extent is independently recorded in layout/manifest.json",
+      "evidence": [
+        "layout/manifest.json:bss_owners c_common communal scrorder_idxs",
+        "src/obj_seg000.c:scrorder_idxs[7]"
+      ],
+      "source_view": "scrorder_idxs[7]"
+    },
+    {
+      "address": 222180,
+      "allocated_extent_bytes": 80,
+      "allocation_basis": "LINK communal declaration names an 80-byte char array; exact communal extent is independently recorded in layout/manifest.json",
+      "evidence": [
+        "layout/manifest.json:bss_owners c_common communal resbuftext",
+        "src/obj_seg000.c:resbuftext[80]"
+      ],
+      "source_view": "resbuftext[80]"
+    },
+    {
+      "address": 222342,
+      "allocated_extent_bytes": 10,
+      "allocation_basis": "LINK communal declaration names a five-element int array; exact communal extent is independently recorded in layout/manifest.json",
+      "evidence": [
+        "layout/manifest.json:bss_owners c_common communal g_mouseyposstacktable",
+        "src/obj_seg008.c:g_mouseyposstacktable[5]"
+      ],
+      "source_view": "g_mouseyposstacktable[5]"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Host compiler probe: porting hazard proposal
 
-The 38-source report below is the original `--mode legacy` shim survey. The current declaration audit also has two port-only modes: `python tools/porting/host_probe.py --mode compat` compiles 38/38 TUs with source-specific host views; `--mode strict-central` compiles 6/38 with only shared declarations. See [port-only headers and TU audit](port-headers.md) for the mechanism and per-TU residuals. These probes do not link or execute the game.
+The 38-source report below is the original `--mode legacy` shim survey. The declaration audit has two port-only modes. After the port-only declaration/adapter fix, both `python tools/porting/host_probe.py --mode compat` and `--mode strict-central` compile 38/38 TUs for syntax and object output. The integ55 freeze-gate receipt preserves the earlier strict-central count of 36/38. See [port-only headers and TU audit](port-headers.md) for the interface changes and remaining runtime residuals. These probes do not link or execute the game.
 
 Generated from the active accepted C source set by `tools/porting/host_probe.py --mode legacy`.
 The probe compiles each active `GAME_C` C recipe source with GCC for the current MinGW host, once with `-fsyntax-only` and once with `-c`, using warnings and the host compatibility shims. It does not link or run the game.

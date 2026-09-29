@@ -1,0 +1,304 @@
+{
+  "source_port_forge_commit": "a0e111bc0a49750115cd2963bcba4c0ea0ea0d4d",
+  "cpu_work_profile": "stunts-normalized-interactive-v7 / 9000000 wu/s",
+  "source_exact_input_capture": "active_pause_sample.pfcapture.inputs.json",
+  "source_base_snapshot": "active_pause_sample.pfcapture.base.pfsnapshot",
+  "exact_artifact": "active_pause_observed.pfexact.json",
+  "raw_log": "active_pause_observed_raw.log",
+  "event_jsonl": "active_pause_event_trace.jsonl",
+  "pause_overlay_visible_tick": 89321773555,
+  "resume_visible_tick": 94401225444,
+  "pause_overlay_visible_seconds": 89.321773555,
+  "resume_visible_seconds": 94.401225444,
+  "pause_key_events": [
+    {
+      "visible_tick": 89280000000,
+      "payload": [
+        25,
+        153
+      ]
+    },
+    {
+      "visible_tick": 94300000000,
+      "payload": [
+        25,
+        153
+      ]
+    }
+  ],
+  "event_counts": {
+    "audio_publication": 2400,
+    "timer_tick": 1200,
+    "video_publication": 841
+  },
+  "event_counts_by_window": {
+    "before_pause_overlay": {
+      "audio_publication": 262,
+      "timer_tick": 130,
+      "video_publication": 91
+    },
+    "pause_overlay_visible": {
+      "video_publication": 356,
+      "timer_tick": 508,
+      "audio_publication": 1016
+    },
+    "after_resume_visible": {
+      "video_publication": 394,
+      "timer_tick": 562,
+      "audio_publication": 1122
+    }
+  },
+  "game_frame_values_by_window": {
+    "before_pause_overlay": [
+      70,
+      71,
+      72,
+      73,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96
+    ],
+    "pause_overlay_visible": [
+      96,
+      97,
+      98
+    ],
+    "after_resume_visible": [
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210
+    ]
+  },
+  "game_mode_counts": {
+    "input1_replay2": 4441
+  },
+  "globalgamesettings_game_framespersec_values": {
+    "20": 4441
+  },
+  "timer_interval_histogram_ticks_by_window": {
+    "before_pause_overlay": {
+      "10000154": 84,
+      "10000153": 45
+    },
+    "pause_overlay_visible": {
+      "10000154": 330,
+      "10000153": 177
+    },
+    "after_resume_visible": {
+      "10000154": 366,
+      "10000153": 195
+    }
+  },
+  "timer_game_frame_delta_histogram_by_window": {
+    "before_pause_overlay": {
+      "0": 105,
+      "1": 22,
+      "2": 2
+    },
+    "pause_overlay_visible": {
+      "0": 505,
+      "1": 2
+    },
+    "after_resume_visible": {
+      "1": 108,
+      "0": 451,
+      "2": 2
+    }
+  },
+  "video_game_frame_delta_histogram_by_window": {
+    "before_pause_overlay": {
+      "0": 67,
+      "1": 20,
+      "2": 3
+    },
+    "pause_overlay_visible": {
+      "0": 353,
+      "1": 2
+    },
+    "after_resume_visible": {
+      "1": 106,
+      "0": 284,
+      "2": 3
+    }
+  },
+  "video_frame_advances_by_window": {
+    "before_pause_overlay": 26,
+    "pause_overlay_visible": 2,
+    "after_resume_visible": 112
+  },
+  "audio_render_batches_by_window": {
+    "before_pause_overlay": 262,
+    "pause_overlay_visible": 1016,
+    "after_resume_visible": 1122
+  },
+  "audio_sample_frames_by_window": {
+    "before_pause_overlay": 57570,
+    "pause_overlay_visible": 224028,
+    "after_resume_visible": 247401
+  },
+  "dgroup_anchor_counts": {
+    "True": 4441
+  },
+  "data_segments": {
+    "15239": 4441
+  },
+  "game_jumpCount_max": 0,
+  "player_CARSTATE_C9_raw_byte_values": {
+    "0": 4441
+  },
+  "visual_pause_evidence": [
+    {
+      "state": "paused_overlay_visible",
+      "machine_tick": 89321773555,
+      "video_generation": 92,
+      "frame": "active_pause_frames/000092-089321773555.ppm"
+    },
+    {
+      "state": "active_driving_visible_after_resume",
+      "machine_tick": 94401225444,
+      "video_generation": 448,
+      "frame": "active_pause_frames/000448-094401225444.ppm"
+    }
+  ],
+  "artifact_record_summary": {
+    "terminal": "requested-machine-time",
+    "terminal_tick": 100014750444,
+    "audio_publications": 2400,
+    "video_publications": 841,
+    "internal_observations": 4096,
+    "raw_complete": false
+  },
+  "caveats": [
+    "The explicit pause interval is bracketed by saved P input events and the existing frame-grounded pause/resume annotations.",
+    "CARSTATE C9 is raw; no complete crash or airborne label is asserted.",
+    "Audio publications are nonempty PortForge render batches, not host callbacks.",
+    "Offsets 0x4108, 0x8E5C, and 0x8E5E are retained as unvalidated raw fields."
+  ]
+}

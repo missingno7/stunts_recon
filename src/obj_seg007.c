@@ -49,7 +49,7 @@ extern void far * far init_audio_resources(void far *resource, void far *lookup,
 extern int far reserve_audio_chunk(int a, int b);
 extern void far fatal_error(char *message);
 extern void far start_audio_voice_sample(int handle, u8 far *shape);
-extern int far send_audio_stop_event(u16 rate, int handle);
+extern short far send_audio_stop_event(u16 rate, int handle);
 extern void far audio_unk2(int handle, int value);
 extern void far set_audio_voice_value(int channel, int rate);
 extern void far audio_init_chunk2(int channel);

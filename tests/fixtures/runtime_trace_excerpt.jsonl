@@ -1,0 +1,5 @@
+{"trace_schema":"stunts-runtime-trace-v1","event_type":"timer_tick","event_id":1,"observed_tick":1000,"game_frame":7,"game_inputmode":1,"game_replay_mode":0,"globalgamesettings_game_framespersec":20,"raw_player_tail_byte":173}
+{"trace_schema":"stunts-runtime-trace-v1","event_type":"timer_tick","event_id":2,"observed_tick":10001153,"game_frame":7,"game_inputmode":1,"game_replay_mode":0,"globalgamesettings_game_framespersec":20,"raw_player_tail_byte":173}
+{"trace_schema":"stunts-runtime-trace-v1","event_type":"video_publication","event_id":1,"actual_tick":10001154,"phase_code":0,"game_frame":7,"game_inputmode":1,"game_replay_mode":0,"globalgamesettings_game_framespersec":20,"raw_player_tail_byte":173}
+{"trace_schema":"stunts-runtime-trace-v1","event_type":"video_publication","event_id":2,"actual_tick":20001307,"phase_code":0,"game_frame":8,"game_inputmode":1,"game_replay_mode":0,"globalgamesettings_game_framespersec":20,"raw_player_tail_byte":173}
+{"trace_schema":"stunts-runtime-trace-v1","event_type":"audio_publication","event_id":1,"machine_tick":20050000,"audio_frame_count":321,"game_frame":8,"raw_player_tail_byte":173}

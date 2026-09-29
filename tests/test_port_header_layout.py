@@ -13,9 +13,24 @@ if not GCC and DEFAULT_GCC.is_file():
 
 
 class PortHeaderLayoutTests(unittest.TestCase):
+    def test_camera_button_arrays_are_nine_words_in_central_header(self):
+        header = (PORT_INCLUDE / "stunts_decls.h").read_text(encoding="utf-8")
+        for name in ("game_camera_buttons_x1", "game_camera_buttons_x2",
+                     "game_camera_buttons_y1", "game_camera_buttons_y2"):
+            with self.subTest(name=name):
+                self.assertRegex(header, rf"extern int16_t {name}\[9\];")
+
+    def test_f3_machine_contracts_are_present_in_central_header(self):
+        header = (PORT_INCLUDE / "stunts_decls.h").read_text(encoding="utf-8")
+        self.assertIn("extern I16 far send_audio_stop_event(U16 rate, I16 handle);", header)
+        self.assertIn("extern void far *read_file_with_retry(I16 type, U16 near_name_offset, U16 destination_offset, U16 destination_segment);", header)
+        self.assertIn("extern I16 far call_read_line(I8 *buffer, I16 x, I16 y, I16 width, I16 limit, I16 flags);", header)
+        self.assertIn("extern void far nullsub_2(void far *resource, I16 selector);", header)
+        self.assertIn("extern void far * far locate_shape_fatal(void far *data, I8 *name);", header)
+
     @unittest.skipUnless(GCC, "GCC is not installed; compile-time layout checks skipped")
     def test_target_aggregate_size_and_offset_assertions_compile(self):
-        worker = ROOT / "build" / "workers" / "integ52"
+        worker = ROOT / "build" / "workers" / "integ55"
         worker.mkdir(parents=True, exist_ok=True)
         source_text = """#include "stunts_structs.h"
 _Static_assert(sizeof(stunts_GAMESTATE_1014) == 1014, "GAMESTATE prefix size");

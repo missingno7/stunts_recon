@@ -1315,6 +1315,7 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
 def build_model(run_probes=True):
     (manifest, registry, data_symbols, communal_doc, owner_by_id, source_owner,
      active, symbol_storage, communal_by_address, intervals) = load_inputs()
+    extent_evidence = read_json(ROOT / "tools/porting/object-extent-evidence.json")
     sources = {}
     source_functions = {}
     c_funcs = {}
@@ -1888,6 +1889,25 @@ def build_model(run_probes=True):
         {"subsystem": "audio", "summary": "Audio driver, chunks, voices, timers, and derived car-frame audio records are presentation/resource state; simulation car position and RPM are sampled to drive sound.",
          "evidence": ["src/obj_seg027.c:16-80", "src/obj_seg007.c:7-49", "src/obj_seg001_complete.c:2661-2809"]}
     ]
+    supplemental_object_extents = []
+    for row in extent_evidence.get("objects", []):
+        source_view = row.get("source_view", "")
+        if not source_view.startswith("game_camera_buttons_"):
+            continue
+        name = source_view.split("[", 1)[0]
+        supplemental_object_extents.append({
+            "name": name,
+            "address": row["address"],
+            "address_hex": f"0x{row['address']:05X}",
+            "type": "int16_t[9]",
+            "size_bytes": row["allocated_extent_bytes"],
+            "size_basis": row["allocation_basis"],
+            "owner_object": "obj_seg005",
+            "replay_determinism": "presentation/menu state",
+            "evidence": row["evidence"],
+            "target_payload_hex": row.get("target_payload_hex"),
+            "target_values": row.get("target_values")
+        })
     model = {
         "schema": "stunts-global-state-model-v1",
         "generated_by": "tools/porting/state_model.py",
@@ -1908,13 +1928,17 @@ def build_model(run_probes=True):
                      "struct_types_with_global_or_embedded_addresses": sum(bool(r["instances"]) for r in type_rows),
                      "struct_types_with_instance_dependent_replay_class": sum(r["replay_determinism"]["preserve_bit_exactly"] is None for r in type_rows),
                      "struct_types_without_registered_instances": sum(not r["instances"] for r in type_rows),
-                     "active_source_files": len(sources)},
+                     "active_source_files": len(sources),
+                     "supplemental_target_object_extents": len(supplemental_object_extents)},
         "state_policy": {"replay_determinism": "Treat the accepted GAMESTATE/CARSTATE image, random seed, ordered replay input bytes, and simulation-affecting track state as authoritative. Presentation state may be regenerated unless exact playback appearance is an explicit product requirement. Unknown rows remain unknown.",
                          "reconstructed_names": "All registry spellings are binding aliases. Do not treat them as recovered historical identifiers.",
                          "process_pointers": "Near/far/huge pointer slots are process-local addresses and are not copied bit-exactly into a portable replay; preserve deterministic pointee contents separately where the pointee is replay input or a GAMESTATE checkpoint.",
                          "unknown_units": "A raw integer/byte with no proven fixed-point scale or coordinate frame is reported as unknown, not guessed.",
+                         "object_extents": "Lookup gaps and maximum observed accesses are diagnostics only. Supplemental object extents require accepted declarations paired with exact locked contributions or an exact LINK communal declaration.",
                          "scale_ledger": scale_ledger, "subsystem_notes": subsystem_notes},
         "data_symbols": data_rows,
+        "supplemental_target_object_extents": supplemental_object_extents,
+        "object_extent_evidence": extent_evidence,
         "struct_types": type_rows
     }
     return model
@@ -1932,8 +1956,9 @@ def validate_model(model):
         raise ValueError("unsupported global-state model schema")
     coverage = model.get("coverage", {})
     data_rows = model.get("data_symbols", [])
+    supplemental = model.get("supplemental_target_object_extents", [])
     type_rows = model.get("struct_types", [])
-    if not isinstance(data_rows, list) or not isinstance(type_rows, list):
+    if not isinstance(data_rows, list) or not isinstance(type_rows, list) or not isinstance(supplemental, list):
         raise ValueError("state model inventories must be arrays")
     addresses = [row.get("address") for row in data_rows]
     names = [row.get("name") for row in data_rows]
@@ -1955,10 +1980,13 @@ def validate_model(model):
         "struct_types_with_global_or_embedded_addresses": sum(bool(row.get("instances")) for row in type_rows),
         "struct_types_with_instance_dependent_replay_class": sum(row.get("replay_determinism", {}).get("preserve_bit_exactly") is None for row in type_rows),
         "struct_types_without_registered_instances": sum(not row.get("instances") for row in type_rows),
+        "supplemental_target_object_extents": len(supplemental),
     }
     for key, value in expected.items():
         if coverage.get(key) != value:
             raise ValueError(f"state model coverage mismatch for {key}: {coverage.get(key)!r} != {value!r}")
+    if any(not row.get("name") or not row.get("evidence") or row.get("size_bytes") is None for row in supplemental):
+        raise ValueError("supplemental object extents require a name, size, and evidence")
     return model
 
 
@@ -1979,6 +2007,15 @@ def write_markdown(model, output_dir=DOCS):
     ]
     for fact, effect, ev in keyfacts:
         out.append(f"| {fact} | {effect} | `{ev}` |")
+    supplemental = model.get("supplemental_target_object_extents", [])
+    if supplemental:
+        out += ["", "## Supplemental target object extents", "",
+                "These accepted source objects have locked contribution boundaries but no names-registry entries. They are supplemental extent facts, not recovered original identifiers.",
+                "", "| Name | Address | Type | Bytes | Owner | Evidence |", "|---|---:|---|---:|---|---|"]
+        for row in supplemental:
+            cites = row.get("evidence", [])
+            out.append("| " + " | ".join(map(md_cell, [row["name"], row["address_hex"], row["type"],
+                row["size_bytes"], row["owner_object"], cites])) + " |")
     out += ["", "## State by subsystem", "",
             "These summaries group state by its observed owner and use flow. The complete address-by-address inventory follows; shared rows keep a `shared/...` subsystem label.", "",
             "| Subsystem | State boundary | Evidence |", "|---|---|---|"]

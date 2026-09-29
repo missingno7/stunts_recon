@@ -31,6 +31,7 @@ def fixture_model():
             "struct_types_with_instance_dependent_replay_class": 0,
             "struct_types_without_registered_instances": 0,
             "active_source_files": 1,
+            "supplemental_target_object_extents": 0,
         },
         "state_policy": {
             "replay_determinism": "fixture policy",
@@ -49,6 +50,7 @@ def fixture_model():
             "readers": [], "writers": [], "evidence": [{"citation": "src/probe.c:1"}],
             "coverage": "complete",
         }],
+        "supplemental_target_object_extents": [],
         "struct_types": [{
             "tag": "TIMERPROBE", "variants": [{
                 "translation_unit": "timer_probe", "source": "src/probe.c", "line": 1,
@@ -68,7 +70,7 @@ def fixture_model():
 class StateModelSmokeTests(unittest.TestCase):
     def test_full_artifacts_emit_under_build(self):
         model = fixture_model()
-        output = ROOT / "build/workers/integ48/state-model-smoke"
+        output = ROOT / "build/workers/integ55/state-model-smoke"
         md_path, json_path = state_model.emit_model(model, output)
         self.assertEqual(json.loads(json_path.read_text(encoding="utf-8")), model)
         markdown = md_path.read_text(encoding="utf-8")

@@ -326,6 +326,8 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     if source == "src/obj_seg008.c":
         out = re.sub(r"\bU32\s+(?:far\s+)?timer_get_delta_alt\s*\(",
                      "I16 far timer_get_delta_alt(", out)
+        # Keep the six-word definition intact; strict mode redirects only its
+        # legacy five-argument callers to the API view that splits the final I32.
         mode = "rename:stunts_port_call_read_line_view" if STRICT_CENTRAL else "unprototyped"
         out = rewrite_calls(out, "call_read_line", mode)
     # C does not permit an integer cast as an assignment lvalue. These legacy
@@ -339,6 +341,8 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
         if STRICT_CENTRAL:
+            # These source callers keep typed port views while central declarations
+            # describe the proven target stack-word contracts.
             out = rewrite_calls(out, "read_file_with_retry", "rename:stunts_port_read_file_with_retry_view")
             out = rewrite_calls(out, "call_read_line", "rename:stunts_port_call_read_line_view")
             out = rewrite_calls(out, "locate_shape_fatal", "rename:stunts_port_locate_shape_fatal_shape_view")
