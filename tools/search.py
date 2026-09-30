@@ -114,7 +114,12 @@ def _environment(profile, recipe, recipe_path, function, closure=None):
     # The oracle inputs are part of the experiment identity even when the
     # standalone compile does not ask for a target comparison.
     oracle_names = ('MCGA.HDR', 'EGA.CMN', 'MCGA.DIF', 'MCGA.COD')
-    oracle['assets'] = _tool_identity([ROOT / 'assets' / name for name in oracle_names])
+    asset_root = Path(os.environ.get('STUNTS_ASSET_DIR', ROOT / 'assets'))
+    oracle['assets'] = {}
+    for name in oracle_names:
+        path = asset_root / name
+        require(path.is_file(), f'Required research tool/input is missing: {path.resolve()}')
+        oracle['assets'][f'assets/{name}'] = identity(path.read_bytes())
 
     function_data = None
     if function:

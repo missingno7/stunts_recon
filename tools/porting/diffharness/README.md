@@ -20,6 +20,8 @@ python -m tools.porting.diffharness --assets D:\Prog\stunts_recon\assets
 Set `STUNTS_ASSET_DIR` to make the repository's other oracle consumers,
 including `context.py` and `validate.py`, read from the same external
 read-only asset directory without creating a local `assets/` copy.
+The separate SDL sprite asset regression also accepts `STUNTS_ASSETS`; set it
+to the same directory when you want that test included in validation.
 
 The host test DLL and its intermediate build output go under ignored
 `build/porting/diffharness/`. A 64-bit Python cannot load an i686 DLL. In that
