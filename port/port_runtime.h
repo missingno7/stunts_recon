@@ -127,6 +127,7 @@ void port_video_set_palette(uint16_t first, uint16_t count,
 void port_video_set_capture_dir(const char *path);
 void port_video_publish(const char *reason);
 void port_video_present(void);
+uint8_t port_video_read_status_1(void);
 void port_video_shutdown(void);
 void port_sprite_init(void);
 
@@ -192,6 +193,7 @@ uint16_t update_rpm_from_speed(uint16_t current_rpm, uint16_t speed,
 void port_timer_start(void);
 void port_timer_stop(void);
 uint64_t port_timer_tick_count(void);
+uint64_t port_timer_machine_time_ns(void);
 int port_timer_game_enabled(void);
 void port_timer_mark_game_enabled(int enabled);
 void timer_setup_interrupt(void);

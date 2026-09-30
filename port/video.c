@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "vga_timing.h"
 
 #include <SDL3/SDL.h>
 #include <stdio.h>
@@ -253,9 +254,14 @@ void video_set_palette(uint16_t first, uint16_t count, uint8_t *rgb6)
     port_video_set_palette(first, count, rgb6);
 }
 
+uint8_t port_video_read_status_1(void)
+{
+    return port_vga_input_status_1(port_timer_machine_time_ns());
+}
+
 int16_t video_get_status(void)
 {
-    static int16_t phase;
-    phase ^= 8;
-    return phase;
+    /* This recovered routine returns only Input Status #1 bit 3. Preserve its
+       historical interface while the port-level 3DAh read exposes both bits. */
+    return (int16_t)(port_video_read_status_1() & 0x08u);
 }

@@ -16,6 +16,7 @@ static uint64_t s_audio_wait_target;
 static uint32_t s_copy_deadline;
 static uint32_t s_input_deadline;
 static uint32_t s_last_delta_counter;
+static uint64_t s_virtual_clock_origin_ns;
 extern volatile uint16_t input_pushed;
 
 static void timer_dispatch_game_tick(void)
@@ -44,7 +45,7 @@ static void timer_dispatch_game_tick(void)
 
 static int timer_thread(void *unused)
 {
-    uint64_t origin = SDL_GetTicksNS();
+    uint64_t origin = s_virtual_clock_origin_ns;
     uint64_t tick_id = 0;
     uint64_t next = origin + PORT_TIMER_PERIOD_NS;
     (void)unused;
@@ -69,6 +70,7 @@ void port_timer_start(void)
 {
     if (s_thread != NULL)
         return;
+    s_virtual_clock_origin_ns = SDL_GetTicksNS();
     s_callback_lock = SDL_CreateMutex();
     SDL_SetAtomicInt(&s_running, 1);
     SDL_SetAtomicInt(&s_game_enabled, 0);
@@ -98,6 +100,13 @@ uint64_t port_timer_tick_count(void)
 {
     int count = SDL_GetAtomicInt(&s_tick_count);
     return count < 0 ? 0 : (uint64_t)(unsigned)count;
+}
+
+uint64_t port_timer_machine_time_ns(void)
+{
+    uint64_t now = SDL_GetTicksNS();
+    return now >= s_virtual_clock_origin_ns
+        ? now - s_virtual_clock_origin_ns : 0;
 }
 
 int port_timer_game_enabled(void)

@@ -98,6 +98,26 @@ surface copy/update emits `video_publication`; a successful SDL render emits
 retrace wait is inserted because the accepted source only proves a startup
 status poll, not a render-loop retrace contract.
 
+## VGA Input Status #1 and the virtual machine clock
+
+The port's Input Status #1 read (`0x3DA`) derives status from raster phase; a
+read does not toggle or advance the raster. Mode 13h uses the VGA timing
+fixture's 25.175 MHz dot clock, 800 dots per line, and 449 lines per frame.
+Those values produce a 359,200-dot frame at 70.086... Hz. The modeled vertical
+retrace interval is lines 412–413 (about 63.6 microseconds). Display-enable
+status uses the 640-by-400 active raster; bit 0 is set during horizontal or
+vertical blanking, and bit 3 is set during vertical retrace. The original
+`video_get_status` helper still returns only bit 3, as its accepted routine
+does; `port_video_read_status_1` exposes both status bits.
+
+Raster phase and timer deadlines use one monotonic virtual-clock epoch. Timer
+deadlines occur at `origin + tick_id * 10,000,154 ns`, matching the measured
+99.998 Hz Port Forge profile. VGA phase advances continuously in that same
+nanosecond time domain between timer deadlines; host presentation refresh
+never advances it. This supplies realistic register transitions without
+claiming CPU-cycle timing: `random_wait` loop counts can differ from DOS when
+the host CPU speed or scheduling differs.
+
 ## Input mapping
 
 SDL keyboard scancodes map to the DOS set-1 make/break values consumed by the
