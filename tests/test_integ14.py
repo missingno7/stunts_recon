@@ -24,7 +24,7 @@ class Integ14Tests(unittest.TestCase):
 
     def test_ready_boundaries_and_conditional_holds(self):
         rows=reviewed_functions(self.image)
-        proposal=read_json(ROOT/'build/workers/bounds/proposal.json')
+        proposal=read_json(ROOT/'tests/fixtures/historical_proposals/integ14_boundaries.json')
         for row in proposal['function_evidence_overlay_additions']:
             self.assertEqual((rows[row['name']]['start'], rows[row['name']]['end']),
                              (row['start'],row['end']))

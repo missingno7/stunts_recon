@@ -11,6 +11,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 from common import sha, read_json, json_bytes
+from compiler import toolchain_path
 from omf import OmfReader
 from oracle import verify
 from mz import MZ
@@ -25,7 +26,7 @@ from test_pipeline import record
 
 def runtime_owner(module, public, start, end, archive='MLIBCR.LIB', data=None, storage=None):
     path = 'toolchain/msc510/'+archive
-    archive_bytes = (ROOT/path).read_bytes()
+    archive_bytes = toolchain_path(path).read_bytes()
     blobs = [b for n,b in OmfReader().split_library(archive_bytes) if n == module
              and public in [p['name'] for p in OmfReader().read(b).publics]
              and OmfReader().read(b).segment_length('_TEXT') == end-start]
@@ -259,7 +260,7 @@ class IteratedRuntimeTests(unittest.TestCase):
             read_object(self.fixture(good,length=7))
 
     def test_crt_absolute_marker_is_narrow_and_cannot_bind_storage(self):
-        archive=(ROOT/'toolchain/msc510/MLIBCR.LIB').read_bytes()
+        archive=toolchain_path('toolchain/msc510/MLIBCR.LIB').read_bytes()
         blob=next(b for n,b in OmfReader().split_library(archive) if n=='dos\\crt0msg.asm')
         obj=read_object(blob)
         marker=next(p for p in obj.publics if p['segment']=='?0')
@@ -275,7 +276,7 @@ class IteratedRuntimeTests(unittest.TestCase):
 
 class RuntimePublicationTests(unittest.TestCase):
     def exercise(self,fail=False):
-        with tempfile.TemporaryDirectory(dir=ROOT/'build') as temp:
+        with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);(root/'layout').mkdir();(root/'build').mkdir()
             manifest={'owners':[{'id':'r','kind':'UNRESOLVED_RAW','start':0,'end':10}]}
             path=root/'layout/manifest.json';path.write_bytes(json_bytes(manifest));original=path.read_bytes()

@@ -73,11 +73,10 @@ class NamesRegistryTests(unittest.TestCase):
                         if alias in recipe.get('reviewed_near_targets', {}):
                             source_path = 'src/restunts/asmorig/seg012.asm'
                             pinned = refs[source_path]
-                            reference = ROOT / 'build/references/restunts' / source_path
-                            self.assertEqual(identity(reference.read_bytes()), pinned, row)
+                            from pinned_reference import check_reference_identity, reference_line
+                            self.assertEqual(check_reference_identity(source_path), pinned, row)
                             line = recipe['reviewed_near_targets'][alias]['source_line']
-                            source_lines = reference.read_text(encoding='latin1').splitlines()
-                            self.assertEqual(source_lines[line - 1].strip().lower(),
+                            self.assertEqual(reference_line(source_path, line).strip().lower(),
                                              (inventory_label + ':').lower(), row)
                             frame = recipe['original_frame_load_address']
                             extents = [f for f in inventory if

@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 from common import read_json
+from compiler import toolchain_path
 from omf import OmfReader
 from object_probe import read_object
 from oracle import verify
@@ -46,7 +47,7 @@ class RuntimeGroupTests(unittest.TestCase):
                 continue
             # Some module publics are internal labels; select by the pinned
             # source's complete TEXT extent when the fixture public differs.
-            archive=(ROOT/'toolchain/msc510/MLIBCR.LIB').read_bytes()
+            archive=toolchain_path('toolchain/msc510/MLIBCR.LIB').read_bytes()
             blob=next(b for n,b in OmfReader().split_library(archive) if n==module)
             obj=read_object(blob)
             if public not in [p['name'] for p in obj.publics]:
@@ -89,7 +90,7 @@ class RuntimeGroupTests(unittest.TestCase):
             if o.get('module')=='dos\\nmsghdr.asm'),self.image,self.relocs,manifest=missing)
 
     def test_sparse_zero_requires_exact_tail(self):
-        archive=(ROOT/'toolchain/msc510/MLIBCR.LIB').read_bytes()
+        archive=toolchain_path('toolchain/msc510/MLIBCR.LIB').read_bytes()
         blob=next(b for n,b in OmfReader().split_library(archive)
                   if n=='dos\\crt0dat.asm')
         with self.assertRaisesRegex(ValueError,'Holes'):
@@ -100,7 +101,7 @@ class RuntimeGroupTests(unittest.TestCase):
             read_object(blob,sparse_zero={'CDATA':{'initialized_prefix':3,'declared_length':14}})
 
     def test_crt0_checksum_exception_keeps_exact_record_and_sparse_extent(self):
-        archive=(ROOT/'toolchain/msc510/MLIBCR.LIB').read_bytes()
+        archive=toolchain_path('toolchain/msc510/MLIBCR.LIB').read_bytes()
         blob=next(b for n,b in OmfReader().split_library(archive)
                   if n=='dos\\crt0.asm')
         policy={'mode':'crt0-comment-checksum-v1',

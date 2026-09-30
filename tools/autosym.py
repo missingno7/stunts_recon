@@ -92,13 +92,11 @@ def load_context():
     data_layout = read_json(ROOT / 'layout/data-symbols.json')
     code_layout = read_json(ROOT / 'layout/code-symbols.json')
     references = read_json(ROOT / 'layout/references.json')['restunts']['evidence_files']
-    dseg_source = ROOT / 'build/references/restunts' / DSEG_PATH
-    require(identity(dseg_source.read_bytes()) == references[DSEG_PATH],
-            'Pinned dseg.asm differs')
-    dseg_lines = dseg_source.read_text(encoding='latin1').splitlines()
-    from data_symbols import _reference_label_offsets, checked_dgroup_layout
+    from pinned_reference import check_reference_identity, reference_label_offsets, reference_segment_size
+    require(check_reference_identity(DSEG_PATH) == references[DSEG_PATH], 'Pinned dseg.asm differs')
+    from data_symbols import checked_dgroup_layout
     checked_dgroup_layout(image, relocations)
-    placed = _reference_label_offsets(dseg_lines)
+    placed = reference_label_offsets(DSEG_PATH)
     ctx = {
         'image': image, 'relocations': relocations, 'decoder': decoder,
         'capstone': capstone,
@@ -109,8 +107,7 @@ def load_context():
         'data_layout': data_layout, 'code_layout': code_layout,
         'frame': data_layout['frame_load_address'],
         'bss_start': data_layout['bss_start'], 'bss_end': data_layout['bss_end'],
-        'pinned_files': references, 'dseg_lines': dseg_lines, 'placed': placed,
-        'source_cache': {},
+        'pinned_files': references, 'placed': placed,
     }
     ctx['raw'] = sorted((o['start'], o['end'], o['id']) for o in ctx['owners']
                         if o['kind'] == 'UNRESOLVED_RAW')
@@ -120,26 +117,10 @@ def load_context():
         by_offset[offset].append((line, label))
     ctx['label_offsets'] = sorted(by_offset)
     ctx['labels_at'] = {o: sorted(v) for o, v in by_offset.items()}
-    ctx['dseg_end_offset'] = _dseg_total_size(dseg_lines)
+    ctx['dseg_end_offset'] = reference_segment_size(DSEG_PATH)
     ctx['code_frames'] = sorted({f['segment_paragraph'] * 16 for f in ctx['inventory']
                                  if isinstance(f.get('segment_paragraph'), int)})
     return ctx
-
-
-def _dseg_total_size(lines):
-    sizes = {'db': 1, 'dw': 2, 'dd': 4, 'dq': 8}
-    total, inside = 0, False
-    for line in lines:
-        text = line.split(';')[0].strip()
-        if not inside:
-            inside = text.lower().startswith('dseg segment')
-            continue
-        if text.lower().startswith('dseg ends'):
-            return total
-        item = re.fullmatch(r'(?:[A-Za-z_$?@][\w$?@]*\s+)?(db|dw|dd|dq)\s+.*', text, re.I)
-        if item:
-            total += sizes[item.group(1).lower()]
-    raise ValueError('dseg end missing')
 
 
 def in_raw(ctx, start, end=None):
@@ -518,30 +499,18 @@ def scan_function(ctx, f):
             'covered_relocations': covered, 'instructions': len(instructions)}
 
 
-def pinned_source(ctx, path):
-    if path not in ctx['source_cache']:
-        full = ROOT / 'build/references/restunts' / path
-        require(path in ctx['pinned_files'] and
-                identity(full.read_bytes()) == ctx['pinned_files'][path],
-                'Pinned reference source differs: ' + path)
-        ctx['source_cache'][path] = full.read_text(encoding='latin1').splitlines()
-    return ctx['source_cache'][path]
-
-
 def proc_span(ctx, f):
     """Pinned PROC/ENDP span of the inventory procedure (1-based lines)."""
     path = (f.get('provenance') or {}).get('path')
     if not path or not re.fullmatch(r'src/restunts/asmorig/seg\d{3}\.asm', path):
         return None
-    lines = pinned_source(ctx, path)
     name = f['name']
-    starts = [i + 1 for i, line in enumerate(lines)
-              if re.match(r'^' + re.escape(name) + r'\s+proc\b', line.strip(), re.I)]
-    ends = [i + 1 for i, line in enumerate(lines)
-            if re.match(r'^' + re.escape(name) + r'\s+endp\b', line.strip(), re.I)]
-    if len(starts) != 1 or len(ends) != 1 or not starts[0] < ends[0]:
+    from pinned_reference import reference_proc_span
+    try:
+        first, last = reference_proc_span(path, name)
+    except ValueError:
         return None
-    return path, starts[0], ends[0], lines
+    return path, first, last, None
 
 
 # ------------------------------------------------------------- data rules
@@ -790,9 +759,10 @@ def imm_use_lines(ctx, f, label):
     span = proc_span(ctx, f)
     if span is None:
         return None
-    path, first, last, lines = span
-    hits = [n for n in range(first + 1, last)
-            if re.search(r'\boffset\s+' + re.escape(label) + r'\b', lines[n - 1].split(';')[0], re.I)]
+    path, first, last, _ = span
+    from pinned_reference import reference_rows
+    hits = [n for n, line in reference_rows(path, first + 1, last - 1)
+            if re.search(r'\boffset\s+' + re.escape(label) + r'\b', line.split(';')[0], re.I)]
     return path, hits
 
 
@@ -973,10 +943,11 @@ def derive(ctx, spelling='neutral'):
         span = proc_span(ctx, f)
         if span is None:
             return None, []
-        path, first, last, lines = span
+        path, first, last, _ = span
         pattern = (r'\boffset\s+' if offset_only else r'\b') + re.escape(label) + r'\b'
-        return path, [n for n in range(first + 1, last)
-                      if re.search(pattern, lines[n - 1].split(';')[0], re.I)]
+        from pinned_reference import reference_rows
+        return path, [n for n, line in reference_rows(path, first + 1, last - 1)
+                      if re.search(pattern, line.split(';')[0], re.I)]
 
     def reviewed_candidate(dg, label, kind, field=0):
         """Anchor + pinned use line in the same verified procedure."""
@@ -1073,7 +1044,8 @@ def derive(ctx, spelling='neutral'):
             receipt['spelling_forced_by_resolver'] = spelling != 'neutral-all'
             receipt['anchors'] = [{**_anchor_receipt(anchor), 'field_offset': reviewed['field'],
                                    'use_line': reviewed['use_line'], 'use_path': reviewed['path'],
-                                   'use_text': pinned_source(ctx, reviewed['path'])[reviewed['use_line'] - 1].strip()}]
+                                    'use_text': __import__('pinned_reference').reference_line(
+                                        reviewed['path'], reviewed['use_line']).strip()}]
         if width is not None:
             entry['width'], entry['width_provenance'] = width
             receipt['extent'] = {'width': width[0], 'width_provenance': width[1],

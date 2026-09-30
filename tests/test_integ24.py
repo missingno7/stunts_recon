@@ -551,10 +551,8 @@ class DataRegistry(unittest.TestCase):
                                   '_old_intr0_handler':4, '_mcgawndsprite':4, '_atantable':258})
 
     def test_no_alias_name_is_placed_elsewhere(self):
-        from data_symbols import _reference_label_offsets
-        lines = (ROOT/'build/references/restunts/src/restunts/asmorig/dseg.asm').read_text(
-            encoding='latin1').splitlines()
-        offsets = _reference_label_offsets(lines)
+        from data_symbols import reference_label_offsets
+        offsets = reference_label_offsets()
         frame = self.layout['frame_load_address']
         for name, symbol in self.layout['symbols'].items():
             if symbol.get('storage') == 'code_island':

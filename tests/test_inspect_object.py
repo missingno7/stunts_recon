@@ -50,6 +50,10 @@ def research_fixture(include_b4=True, include_b6=True, include_fixup=True,
 
 
 class InspectObjectTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        (ROOT / "build/private").mkdir(parents=True, exist_ok=True)
+
     def test_unresolved_b4_is_rejected_but_research_evidence_is_preserved(self):
         raw, target = research_fixture()
         with self.assertRaisesRegex(ValueError, "Unresolved local OMF external"):

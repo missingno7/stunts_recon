@@ -89,16 +89,15 @@ def _checked_prerender_table_boundary(f, inventory, image):
             'commit':'5c38f258f482e7d28f1ccce73da8992dccbbee89',
             'path':path,'line_start':6840,'line_end':6968},
             'PreRender table provenance differs')
-    source=ROOT/'build/references/restunts'/path
     pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    require(identity(source.read_bytes()) == pinned,
+    from pinned_reference import check_reference_identity, reference_line, reference_rows
+    require(check_reference_identity(path) == pinned,
             'PreRender table reference source differs from pinned identity')
-    lines=source.read_text(encoding='latin1').splitlines()
-    require(lines[6839].strip()=='preRender_helper2 proc near' and
-            lines[6967].strip()=='preRender_helper2 endp' and
-            lines[6968].strip()=='preRender_helper3 proc near' and
-            not any(' proc ' in row.lower() or ' endp' in row.lower()
-                    for row in lines[6840:6967]),
+    interior = reference_rows(path,6841,6967)
+    require(reference_line(path,6840).strip()=='preRender_helper2 proc near' and
+            reference_line(path,6968).strip()=='preRender_helper2 endp' and
+            reference_line(path,6969).strip()=='preRender_helper3 proc near' and
+            not any(re.search(r'\b(?:proc|endp)\b', row, re.I) for _, row in interior),
             'PreRender table source procedure boundary differs')
     require(any(other.get('name')=='preRender_helper3' and
                 other.get('start')==f['end'] for other in inventory['functions']) and

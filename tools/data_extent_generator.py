@@ -27,7 +27,8 @@ def _clone_alias_names(layout):
 
 def _audio_buffer_extent(image, layout, inventory, clone_aliases=None):
     """Corroborate the ring buffer from its complete index write set and source span."""
-    from common import identity, sha
+    from common import sha
+    from pinned_reference import check_reference_identity, reference_span, reference_line
     import re
     name = '_unk_44F4C'
     symbol = layout['symbols'].get(name)
@@ -76,13 +77,13 @@ def _audio_buffer_extent(image, layout, inventory, clone_aliases=None):
             image[0x8cbf:0x8cc4] == bytes.fromhex('833e749228'),
             'Audio ring index has an unguarded write')
     path = 'src/restunts/asmorig/dseg.asm'
-    source = ROOT/'build/references/restunts'/path
     pinned = read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    require(identity(source.read_bytes()) == pinned, 'Audio buffer reference source differs')
-    lines = source.read_text(encoding='latin1').splitlines()
-    require(re.fullmatch(r'unk_44F4C\s+db\s+0', lines[36686].strip(), re.I) and
-            re.fullmatch(r'dastbmp_y2\s+dw\s+0', lines[38046].strip(), re.I) and
-            all(re.fullmatch(r'db\s+0', row.strip(), re.I) for row in lines[36687:38046]),
+    require(check_reference_identity(path) == pinned, 'Audio buffer reference source differs')
+    span_facts = reference_span(path, 36687, 38047)
+    require(re.fullmatch(r'unk_44F4C\s+db\s+0', reference_line(path, 36687).strip(), re.I) and
+            re.fullmatch(r'dastbmp_y2\s+dw\s+0', reference_line(path, 38047).strip(), re.I) and
+            span_facts['all_db0'] and span_facts['size'] == 1360 and
+            span_facts['first_label'] == 'unk_44F4C' and span_facts['last_label'] is None,
             'Audio buffer reference label span differs')
     span = 38047-36687
     require(0x22*0x28 == span == 1360 and

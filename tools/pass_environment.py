@@ -178,8 +178,12 @@ def measure_player(profile, probe):
     for index, name in enumerate(PASSES, 1):
         work = Path(tempfile.mkdtemp(prefix='mp', dir=ROOT/'build/pass-environment'))
         (work/'UNIT.C').write_bytes(b'int f(int a) { return a + 1; }\r\n')
+        # CL forwards its -Bn argument through a DOS command tail; an absolute
+        # host path under a freshly named clone can exceed the DOS runner's
+        # path limits. Keep the substituted pass alongside UNIT.C instead.
+        shutil.copyfile(probe, work/'MEMPROBE.EXE')
         _player_run(runner, tc, [str(tc/config['executable']), '/c', *config['flags'],
-                                 f'-B{index}', str(probe), 'UNIT.C'], work)
+                                 f'-B{index}', 'MEMPROBE.EXE', 'UNIT.C'], work)
         require((work/'MEMPROBE.TXT').is_file(), f'Probe did not run as {name}')
         result[name] = parse_probe((work/'MEMPROBE.TXT').read_text())
     return result

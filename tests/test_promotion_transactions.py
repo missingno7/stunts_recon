@@ -22,7 +22,7 @@ class InterruptedWrite(RuntimeError):
 
 class PromotionTransactionTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(dir=ROOT / 'build')
+        self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         (self.root / 'build').mkdir(parents=True, exist_ok=True)
         (self.root / 'src').mkdir(parents=True)

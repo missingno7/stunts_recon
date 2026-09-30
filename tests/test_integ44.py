@@ -145,7 +145,14 @@ class CosmeticPublicationTests(unittest.TestCase):
 
     def test_communal_inventory_can_refresh_only_same_accepted_owner_extent(self):
         manifest = copy.deepcopy(read_json(ROOT/'layout/manifest.json'))
-        candidate = communal_unit.load_candidate(ROOT/'build/workers/L19-race/communal_unit.json')
+        accepted = communal_unit.accepted_row(manifest)
+        self.assertIsNotNone(accepted)
+        with tempfile.TemporaryDirectory() as temporary:
+            candidate_path = Path(temporary)/'communal_candidate.json'
+            candidate_path.write_text(json.dumps({
+                'schema': accepted['schema'], 'start': accepted['start'],
+                'end': accepted['end'], 'communals': accepted['communals']}), encoding='utf-8')
+            candidate = communal_unit.load_candidate(candidate_path)
         # Model the previous complete inventory without changing canonical
         # state; this accepted owner has the same identity and extent.
         before_row = communal_unit.accepted_row(manifest)

@@ -11,7 +11,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from common import ROOT, identity, read_json, require, sha, write_json
-from compiler import compile_source, verify_toolchain
+from compiler import compile_source, toolchain_path, verify_toolchain
 from linker_probe import provider
 from mz import MZ
 from object_probe import read_object
@@ -74,7 +74,7 @@ def negative_controls(candidate):
 
 def padded_library_member():
     row = next(o for o in read_json(ROOT / 'layout/manifest.json')['owners'] if o['id']=='library_lmul')
-    archive = (ROOT / row['library']).read_bytes()
+    archive = toolchain_path(row['library']).read_bytes()
     require(sha(archive) == row['library_sha256'], 'Pinned padding library changed')
     matches = [body for name, body in OmfReader().split_library(archive)
                if name == row['module'] and sha(body) == row['module_sha256']]

@@ -62,19 +62,17 @@ def _checked_far_pointer_table(f, by, island_by, image):
                   target.get('start_evidence') and target.get('end_evidence'))),
                 'Far-pointer table entry does not name its verified target: ' + name)
     reference = read_json(ROOT/'layout/references.json')['restunts']['evidence_files']
-    source = ROOT/'build/references/restunts'/spec['source_path']
-    from common import identity
-    require(identity(source.read_bytes()) == reference[spec['source_path']],
+    from pinned_reference import check_reference_identity, reference_line
+    require(check_reference_identity(spec['source_path']) == reference[spec['source_path']],
             'Far-pointer table reference listing differs')
-    lines = source.read_text(encoding='latin1').splitlines()
     first, last = spec['proc_lines']
     words = lambda line: ' '.join(line.split()).lower()
-    require(words(lines[spec['source_line']-1]) ==
+    require(words(reference_line(spec['source_path'], spec['source_line'])) ==
             island.get('label', '').lower() + ' dd ' + spec['targets'][0] and
-            all(words(lines[spec['source_line']-1+i]) == 'dd ' + name
+            all(words(reference_line(spec['source_path'], spec['source_line']+i)) == 'dd ' + name
                 for i, name in enumerate(spec['targets']) if i) and
-            words(lines[first-1]) == f['name'].lower() + ' proc far' and
-            words(lines[last-1]) == f['name'].lower() + ' endp' and
+            words(reference_line(spec['source_path'], first)) == f['name'].lower() + ' proc far' and
+            words(reference_line(spec['source_path'], last)) == f['name'].lower() + ' endp' and
             first < spec['source_line'] < last,
             'Far-pointer table lacks its pinned declaration inside the procedure')
     # Unreferenced stub entries: standard frame prologue directly after an

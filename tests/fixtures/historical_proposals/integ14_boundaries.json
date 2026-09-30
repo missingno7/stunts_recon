@@ -1,0 +1,82 @@
+{
+  "schema": "historical-boundary-proposal-test-fixture-v1",
+  "function_evidence_overlay_additions": [
+    {
+      "name": "ported_stuntsmain_",
+      "start": 0,
+      "end": 1434
+    },
+    {
+      "name": "build_track_object",
+      "start": 57760,
+      "end": 64228
+    },
+    {
+      "name": "track_setup",
+      "start": 67284,
+      "end": 71626
+    },
+    {
+      "name": "replay_unk2",
+      "start": 75416,
+      "end": 76172
+    },
+    {
+      "name": "loop_game",
+      "start": 80716,
+      "end": 85348
+    },
+    {
+      "name": "_abs",
+      "start": 124296,
+      "end": 124318
+    },
+    {
+      "name": "draw_line_related",
+      "start": 125782,
+      "end": 127764
+    },
+    {
+      "name": "sub_38DE6",
+      "start": 167398,
+      "end": 168016
+    },
+    {
+      "name": "sub_3945A",
+      "start": 169050,
+      "end": 169532
+    },
+    {
+      "name": "audioresource_compare_chunknames",
+      "start": 170708,
+      "end": 170842
+    },
+    {
+      "name": "sprite_make_wnd",
+      "start": 150540,
+      "end": 150756
+    },
+    {
+      "name": "file_load_resource",
+      "start": 104906,
+      "end": 105094
+    }
+  ],
+  "conditional_row_proposals": [
+    {
+      "name": "sub_2D1BC",
+      "start": 119228,
+      "end": 119274
+    },
+    {
+      "name": "audio_map_song_tracks",
+      "start": 164436,
+      "end": 165114
+    },
+    {
+      "name": "sub_38702",
+      "start": 165634,
+      "end": 166568
+    }
+  ]
+}

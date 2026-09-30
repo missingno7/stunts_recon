@@ -1,0 +1,141 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 154406,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 17884,
+    "line_start": 17873,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 1,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 9,
+      "segment": "_TEXT",
+      "self_relative": false,
+      "target": "_sprite_set_1_from_argptr",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "segment": 8192,
+      "offset": 23317,
+      "load_offset": 154389
+    },
+    {
+      "segment": 8192,
+      "offset": 23327,
+      "load_offset": 154399
+    }
+  ],
+  "id": "sprite_copy_2_to_1",
+  "include_closure": [],
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_sprite_set_1_from_argptr"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_sprite_copy_2_to_1",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 18,
+        "name": "_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "_TEXT",
+  "profile": "masm510-game",
+  "public": "_sprite_copy_2_to_1",
+  "source": "tests/fixtures/historical_workers/integ18/sprite_copy_2_to_1.ASM",
+  "stable_id": "asm_load_25b14",
+  "start": 154388,
+  "target": {
+    "sha256": "9b204ea4763387d52609fd128b45dfcb10c03420a72821809634fd45a157e1b6",
+    "size": 18
+  },
+  "binding": {
+    "mode": "asm-external-far-call-self-base16-v1",
+    "declarations": {
+      "externals": [
+        "_sprite_set_1_from_argptr"
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_sprite_copy_2_to_1",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 18,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    }
+  },
+  "original_frame_load_address": 125472
+}

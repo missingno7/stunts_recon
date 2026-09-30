@@ -11,11 +11,10 @@ def _checked_asm_near_labels(recipe, image):
     if not labels:return {}
     require(recipe.get('kind')=='asm', 'Near labels require ASM contribution')
     path='src/restunts/asmorig/seg012.asm'
-    reference=ROOT/'build/references/restunts'/path
     pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-    require(identity(reference.read_bytes())==pinned,
+    from pinned_reference import check_reference_identity, reference_line
+    require(check_reference_identity(path)==pinned,
             'Reviewed near-label source differs')
-    lines=reference.read_text(encoding='latin1').splitlines()
     import re, sys
     decoder_path=str(ROOT/'build/python')
     if decoder_path not in sys.path:sys.path.insert(0,decoder_path)
@@ -42,8 +41,8 @@ def _checked_asm_near_labels(recipe, image):
                 set(proof)=={'label','source_line'}, 'Invalid near-label proof')
         at=recipe['start']+int(offset);label=proof['label'];line=proof['source_line']
         match=re.fullmatch(r'loc_([0-9A-Fa-f]+)',label)
-        require(match is not None and type(line) is int and 1<=line<=len(lines) and
-                lines[line-1].strip().lower()==(label+':').lower() and
+        require(match is not None and type(line) is int and
+                reference_line(path,line).strip().lower()==(label+':').lower() and
                 int(match.group(1),16)-0x10000==at and at in starts,
                 'Near label lacks pinned source and original instruction boundary')
         result[int(offset)]=label
@@ -184,12 +183,11 @@ def _checked_embedded_islands(recipe, image):
                 'Embedded label public does not name its load address')
         path='src/restunts/asmorig/seg012.asm'
         pinned=read_json(ROOT/'layout/references.json')['restunts']['evidence_files'][path]
-        source=ROOT/'build/references/restunts'/path
-        require(identity(source.read_bytes())==pinned,'Embedded label reference source differs')
-        lines=source.read_text(encoding='latin1').splitlines()
+        from pinned_reference import check_reference_identity, reference_line
+        require(check_reference_identity(path)==pinned,'Embedded label reference source differs')
         line=p['source_line']
-        require(type(line) is int and 1<=line<=len(lines) and
-                lines[line-1].strip().lower()==(p['public'][1:]+':').lower(),
+        require(type(line) is int and
+                reference_line(path,line).strip().lower()==(p['public'][1:]+':').lower(),
                 'Embedded label lacks pinned source declaration')
         from asm_module import _instruction_starts
         member=members[0]

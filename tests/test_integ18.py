@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
+FIXTURES=ROOT/'tests/fixtures/historical_workers/integ18'
 sys.path.insert(0,str(ROOT/'tools'))
 from assembler import assemble_source
 from binder import bind_contribution
@@ -45,15 +46,15 @@ class Integ18Tests(unittest.TestCase):
         cls.relocations=oracle[2]['unpacked_mz']['relocations']
         cls.cases={}
         for name,source,recipe_path in (
-            ('locate','asm-b/locate_entries.ASM','asm-b/locate_entries.recipe.json'),
-            ('sincos','asm-b/sincos.ASM','asm-b/sincos.recipe.json'),
-            ('font','asm-b/font_entries.ASM','integ18/font_entries.recipe.json'),
-            ('mmgr','asm-b/mmgr_free_entries.ASM','asm-b/mmgr_free_entries.recipe.json'),
-            ('self_far','asm-a/sub_2EAD4_group.ASM','integ18/sub_2EAD4_group.recipe.json'),
-            ('near_code','asm-a/preRender_unk_group.ASM','integ18/preRender_unk_group.recipe.json'),
+            ('locate','locate_entries.ASM','locate_entries.recipe.json'),
+            ('sincos','sincos.ASM','sincos.recipe.json'),
+            ('font','font_entries.ASM','font_entries.recipe.json'),
+            ('mmgr','mmgr_free_entries.ASM','mmgr_free_entries.recipe.json'),
+            ('self_far','sub_2EAD4_group.ASM','sub_2EAD4_group.recipe.json'),
+            ('near_code','preRender_unk_group.ASM','preRender_unk_group.recipe.json'),
         ):
-            recipe=_rename(read_json(ROOT/'build/workers'/recipe_path))
-            source_bytes=_rename_source((ROOT/'build/workers'/source).read_bytes())
+            recipe=_rename(read_json(FIXTURES/recipe_path))
+            source_bytes=_rename_source((ROOT/recipe['source']).read_bytes())
             obj,_=assemble_source(source_bytes,recipe['profile'])
             expected=recipe['expected_fixups']
             actual=obj.linker_fixups
@@ -121,7 +122,7 @@ class Integ18Tests(unittest.TestCase):
         with self.assertRaises(ValueError):self.bind('near_code',recipe=bad)
 
     def test_indexed_data_addend_stays_inside_declared_table(self):
-        recipe=read_json(ROOT/'build/workers/asm-a/get_kb_or_joy_flags.recipe.json')
+        recipe=read_json(FIXTURES/'get_kb_or_joy_flags.recipe.json')
         obj,_=assemble_source((ROOT/recipe['source']).read_bytes(),recipe['profile'])
         symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         payload,_=bind_contribution(obj,recipe,symbols)
@@ -135,7 +136,7 @@ class Integ18Tests(unittest.TestCase):
             bind_contribution(bad_obj,bad_recipe,symbols)
 
     def test_self_text_base_plus_external_far_call(self):
-        recipe=read_json(ROOT/'build/workers/asm-c/sprite_copy_2_to_1.recipe.json')
+        recipe=read_json(FIXTURES/'sprite_copy_2_to_1.recipe.json')
         obj,_=assemble_source((ROOT/recipe['source']).read_bytes(),recipe['profile'])
         symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         payload,receipt=bind_contribution(obj,recipe,symbols)
@@ -146,7 +147,7 @@ class Integ18Tests(unittest.TestCase):
         with self.assertRaises(ValueError):bind_contribution(obj,bad,symbols)
 
     def test_dseg_base_in_mov_bx(self):
-        recipe=read_json(ROOT/'build/workers/integ18/kb_int16_handler.recipe.json')
+        recipe=read_json(FIXTURES/'kb_int16_handler.recipe.json')
         obj,_=assemble_source((ROOT/recipe['source']).read_bytes(),recipe['profile'])
         symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         payload,receipt=bind_contribution(obj,recipe,symbols)
@@ -159,7 +160,7 @@ class Integ18Tests(unittest.TestCase):
         with self.assertRaises(ValueError):bind_contribution(bad,recipe,symbols)
 
     def test_dseg_base_with_local_relative_jumps(self):
-        recipe=read_json(ROOT/'build/workers/integ18/kb_int9_handler.recipe.json')
+        recipe=read_json(FIXTURES/'kb_int9_handler.recipe.json')
         obj,_=assemble_source((ROOT/recipe['source']).read_bytes(),recipe['profile'])
         symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         payload,receipt=bind_contribution(obj,recipe,symbols)
