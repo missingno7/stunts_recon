@@ -98,6 +98,18 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
                 "\n/* Port-only state observation at the accepted GAMESTATE view. */\n"
                 "uint16_t port_game_frame_snapshot(void) { "
                 "return (uint16_t)core.game_frame; }\n"
+                "size_t port_game_state_copy(void *output, size_t capacity) { "
+                "size_t i; if (output == NULL || capacity < sizeof(core)) "
+                "return 0; for (i = 0; i < sizeof(core); ++i) "
+                "((unsigned char *)output)[i] = ((const unsigned char *)&core)[i]; "
+                "return sizeof(core); }\n"
+                "uint8_t port_game_mode_snapshot(void) { return (uint8_t)gm_playmode; }\n"
+                "uint8_t port_game_inputmode_snapshot(void) { "
+                "return (uint8_t)core.game_inputmode; }\n"
+                "uint8_t port_game_replaymode_snapshot(void) { "
+                "return (uint8_t)inrepflg; }\n"
+                "uint16_t port_game_rate_snapshot(void) { "
+                "return (uint16_t)rate_frame; }\n"
             )
         elif source == "src/obj_seg027.c":
             transformed, count = re.subn(
@@ -155,6 +167,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
         "port_adapters": [
             "rename recovered main to stunts_game_main",
             "wrap update_gamestate for post-commit tracing",
+            "expose full GAMESTATE, frame, mode, and rate to port tracing",
             "rename DOS audio loader and route startup to silent port adapter",
             "type vector_op_unk2's host overlay declaration as I16",
         ],
@@ -175,7 +188,8 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "projection.c",
         "matrix.c",
         "vehicle.c",
-        "file.c", "resource.c", "audio.c", "platform.c", "trace.c", "trace_hooks.c",
+        "file.c", "resource.c", "audio.c", "platform.c", "input_script.c",
+        "trace.c", "trace_hooks.c",
     ]
     out_dir = BUILD / "port-obj"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -411,6 +425,10 @@ def run(args) -> int:
                f"--capture-dir={args.capture_dir}"]
     if args.run_ms is not None:
         command.append(f"--run-ms={args.run_ms}")
+    if args.input_script is not None:
+        command.append(f"--input-script={Path(args.input_script).resolve()}")
+    if args.stop_after_sim_steps is not None:
+        command.append(f"--stop-after-sim-steps={args.stop_after_sim_steps}")
     prepare_environment(args.gcc)
     return subprocess.run(command, cwd=ROOT, check=False).returncode
 
@@ -430,6 +448,8 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--trace", default="build/sdl3/runtime-trace.jsonl")
     run_parser.add_argument("--capture-dir", default="build/sdl3/captures")
     run_parser.add_argument("--run-ms", type=int)
+    run_parser.add_argument("--input-script", type=Path)
+    run_parser.add_argument("--stop-after-sim-steps", type=int)
     run_parser.add_argument("--no-build", action="store_true")
     args = parser.parse_args(argv)
     try:

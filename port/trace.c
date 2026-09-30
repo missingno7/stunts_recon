@@ -72,7 +72,7 @@ void port_trace_open(const char *path, const char *asset_root)
     fputs("{\"trace_schema\":\"stunts-runtime-trace-v1\",\"event_type\":\"header\","
           "\"runtime_mode\":\"startup\",\"screen_width\":320,\"screen_height\":200,"
           "\"indexed_palette_entries\":256,\"timer_target_hz\":99.99846,"
-          "\"timer_period_ns\":10000154,\"build_id\":\"portable-sdl3-M0\","
+          "\"timer_period_ns\":10000154,\"build_id\":\"portable-sdl3-M2\","
           "\"asset_root\":", s_trace);
     json_string(s_trace, asset_root);
     fputs("}\n", s_trace);
@@ -115,22 +115,95 @@ void port_trace_timer_tick(uint64_t tick_id, uint64_t scheduled_ns,
     trace_unlock();
 }
 
-void port_trace_sim_step(void)
+uint64_t port_trace_sim_step(const uint8_t *game_state, size_t state_size)
 {
     uint64_t now = SDL_GetTicksNS();
     uint16_t game_frame = port_game_frame_snapshot();
+    uint8_t game_mode = port_game_mode_snapshot();
+    uint8_t input_mode = port_game_inputmode_snapshot();
+    uint8_t replay_mode = port_game_replaymode_snapshot();
+    uint16_t rate = port_game_rate_snapshot();
+    uint64_t step_id;
+    size_t i;
+    static const char hex[] = "0123456789abcdef";
     trace_lock();
-    ++s_sim_step_id;
+    step_id = ++s_sim_step_id;
     if (s_trace != NULL) {
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"simulation_step\",\"sim_step_id\":%llu,"
                 "\"game_frame\":%u,\"machine_tick\":%llu,\"host_ns\":%llu,"
-                "\"runtime_mode\":\"unknown\",\"rate_target_hz\":null}\n",
-                (unsigned long long)s_sim_step_id,
+                "\"runtime_mode\":",
+                (unsigned long long)step_id,
                 (unsigned)game_frame,
                 (unsigned long long)relative_ns(now),
                 (unsigned long long)now);
+        json_string(s_trace, replay_mode != 0 ? "replay" :
+                    (game_mode == 0 ? "live" : "menu"));
+        fprintf(s_trace,
+                ",\"game_mode\":%u,\"game_inputmode\":%u,"
+                "\"game_replay_mode\":%u,\"rate_target_hz\":%u}\n",
+                (unsigned)game_mode, (unsigned)input_mode,
+                (unsigned)replay_mode, (unsigned)rate);
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"state_snapshot\",\"sim_step_id\":%llu,"
+                "\"state_type\":\"GAMESTATE\",\"state_size\":%u,"
+                "\"data_segment\":null,\"dgroup_anchor_ok\":false,"
+                "\"state_origin\":\"SDL3_GUEST_NATIVE\",\"bytes_hex\":\"",
+                (unsigned long long)step_id, (unsigned)state_size);
+        if (game_state != NULL) {
+            for (i = 0; i < state_size; ++i) {
+                fputc(hex[game_state[i] >> 4], s_trace);
+                fputc(hex[game_state[i] & 0x0Fu], s_trace);
+            }
+        }
+        fputs("\"}\n", s_trace);
+        fflush(s_trace);
+    }
+    trace_unlock();
+    return step_id;
+}
+
+void port_trace_input_keyboard(uint64_t sequence, uint64_t scheduled_ns,
+                               uint64_t actual_ns, const uint8_t *codes,
+                               size_t code_count)
+{
+    size_t i;
+    trace_lock();
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"input\",\"channel\":\"dos.keyboard.scancodes\","
+                "\"sequence\":%llu,\"scheduled_tick\":%llu,"
+                "\"machine_tick\":%llu,\"payload\":[",
+                (unsigned long long)sequence,
+                (unsigned long long)relative_ns(scheduled_ns),
+                (unsigned long long)relative_ns(actual_ns));
+        for (i = 0; i < code_count; ++i)
+            fprintf(s_trace, "%s%u", i == 0 ? "" : ",", (unsigned)codes[i]);
+        fputs("]}\n", s_trace);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
+                            uint64_t actual_ns, double u, double v,
+                            uint16_t buttons)
+{
+    trace_lock();
+    if (s_trace != NULL) {
+        fprintf(s_trace,
+                "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"input\",\"channel\":\"dos.mouse\","
+                "\"sequence\":%llu,\"scheduled_tick\":%llu,"
+                "\"machine_tick\":%llu,\"payload\":{"
+                "\"u\":%.9f,\"v\":%.9f,\"buttons\":%u}}\n",
+                (unsigned long long)sequence,
+                (unsigned long long)relative_ns(scheduled_ns),
+                (unsigned long long)relative_ns(actual_ns),
+                u, v, (unsigned)buttons);
         fflush(s_trace);
     }
     trace_unlock();
@@ -140,6 +213,10 @@ void port_trace_video_publication(const char *reason)
 {
     uint64_t now = SDL_GetTicksNS();
     uint16_t game_frame = port_game_frame_snapshot();
+    uint8_t game_mode = port_game_mode_snapshot();
+    uint8_t input_mode = port_game_inputmode_snapshot();
+    uint8_t replay_mode = port_game_replaymode_snapshot();
+    uint16_t rate = port_game_rate_snapshot();
     trace_lock();
     ++s_video_frame_id;
     if (s_trace != NULL) {
@@ -148,12 +225,16 @@ void port_trace_video_publication(const char *reason)
                 "\"event_type\":\"video_publication\",\"frame_id\":%llu,"
                 "\"sim_step_id\":%llu,\"game_frame\":%u,"
                 "\"video_phase\":\"frame_start\",\"machine_tick\":%llu,"
-                "\"host_ns\":%llu,\"publication_reason\":",
+                "\"host_ns\":%llu,\"game_mode\":%u,"
+                "\"game_inputmode\":%u,\"game_replay_mode\":%u,"
+                "\"rate_target_hz\":%u,\"publication_reason\":",
                 (unsigned long long)s_video_frame_id,
                 (unsigned long long)s_sim_step_id,
                 (unsigned)game_frame,
                 (unsigned long long)relative_ns(now),
-                (unsigned long long)now);
+                (unsigned long long)now,
+                (unsigned)game_mode, (unsigned)input_mode,
+                (unsigned)replay_mode, (unsigned)rate);
         json_string(s_trace, reason);
         fputs("}\n", s_trace);
         fflush(s_trace);

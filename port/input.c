@@ -17,6 +17,7 @@ static unsigned s_key_head;
 static unsigned s_key_tail;
 static unsigned s_key_count;
 static uint8_t s_caps_lock;
+static uint8_t s_extended_prefix;
 static int s_mouse_x;
 static int s_mouse_y;
 static uint8_t s_mouse_buttons;
@@ -204,6 +205,7 @@ void port_input_init(void)
     s_key_tail = 0;
     s_key_count = 0;
     s_caps_lock = 0;
+    s_extended_prefix = 0;
     s_callback_count = 0;
     s_mouse_x = 0;
     s_mouse_y = 0;
@@ -260,6 +262,52 @@ void port_input_handle_event(int event_type, int code, int value)
     }
 }
 
+/* Apply the raw Set-1 bytes used by Port Forge's exact DOS input channel.
+   E0-prefixed navigation keys stay distinct from keypad keys. */
+void port_input_apply_dos_scancode(uint8_t code)
+{
+    int extended;
+    int scan;
+    int down;
+    int was_down;
+    uint16_t key;
+
+    if (code == 0xE0u) {
+        s_extended_prefix = 1;
+        return;
+    }
+    if (code == 0xE1u) {
+        s_extended_prefix = 0;
+        return;
+    }
+    extended = s_extended_prefix != 0;
+    s_extended_prefix = 0;
+    scan = code & 0x7Fu;
+    down = (code & 0x80u) == 0;
+    if (scan == 0 || scan >= 128)
+        return;
+
+    input_lock();
+    if (extended) {
+        was_down = s_extended_down[scan] != 0;
+        s_extended_down[scan] = (uint8_t)down;
+        if (down && !was_down)
+            enqueue_bios_key((uint16_t)(scan << 8));
+    } else {
+        was_down = s_key_down[scan] != 0;
+        s_key_down[scan] = (uint8_t)down;
+        if (down && !was_down && scan == 0x3Au)
+            s_caps_lock ^= 1u;
+        if (down && !was_down) {
+            uint8_t ascii = ascii_for_scan(scan);
+            key = (uint16_t)(scan << 8) | ascii;
+            if (ascii != 0 || scan == 0x01u)
+                enqueue_bios_key(key);
+        }
+    }
+    input_unlock();
+}
+
 uint8_t port_input_key_state(uint16_t dos_scan)
 {
     uint8_t state = 0;
@@ -288,6 +336,13 @@ void port_input_mouse_set(int16_t x, int16_t y)
     s_mouse_y = y < s_mouse_min_y ? s_mouse_min_y : y;
     if (s_mouse_x > s_mouse_max_x) s_mouse_x = s_mouse_max_x;
     if (s_mouse_y > s_mouse_max_y) s_mouse_y = s_mouse_max_y;
+    input_unlock();
+}
+
+void port_input_mouse_set_buttons(uint16_t buttons)
+{
+    input_lock();
+    s_mouse_buttons = (uint8_t)(buttons & 7u);
     input_unlock();
 }
 
@@ -322,7 +377,12 @@ void kb_init_interrupt(void)
 }
 
 void kb_shift_checking2(void) { }
-void kb_call_readchar_callback(void) { }
+/* Port replacement for asm/keyboard_input_callbacks.ASM's lcall [0x468c].
+   The host's BIOS-key queue is the configured DOS reader callback target. */
+int16_t kb_call_readchar_callback(void)
+{
+    return kb_read_char();
+}
 
 void kb_reg_callback(uint16_t key, void (*callback)(void))
 {

@@ -170,6 +170,7 @@ void port_video_publish(const char *reason)
         SDL_UnlockMutex(s_frame_lock);
     dump_frame(frame_id, reason, frame, palette);
     port_trace_video_publication(reason);
+    port_guest_stop_after_publication();
 }
 
 void port_video_present(void)

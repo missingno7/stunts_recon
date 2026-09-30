@@ -13,6 +13,8 @@ static SDL_AtomicInt s_guest_done;
 static jmp_buf s_guest_escape;
 static int s_guest_escape_ready;
 static char s_guest_stop_reason[256];
+static uint64_t s_guest_step_limit;
+static SDL_AtomicInt s_guest_stop_pending;
 
 typedef struct GuestArgs {
     char program_name[16];
@@ -58,6 +60,24 @@ void port_stub_fail(const char *symbol)
     port_guest_unwind(symbol);
 }
 
+void port_guest_set_step_limit(uint64_t limit)
+{
+    s_guest_step_limit = limit;
+    SDL_SetAtomicInt(&s_guest_stop_pending, 0);
+}
+
+void port_guest_note_sim_step(uint64_t step_id)
+{
+    if (s_guest_step_limit != 0 && step_id >= s_guest_step_limit)
+        SDL_SetAtomicInt(&s_guest_stop_pending, 1);
+}
+
+void port_guest_stop_after_publication(void)
+{
+    if (SDL_GetAtomicInt(&s_guest_stop_pending))
+        port_guest_unwind("requested simulation-step capture boundary reached");
+}
+
 static int parse_run_ms(const char *argument)
 {
     const char *value = NULL;
@@ -73,7 +93,9 @@ int main(int argc, char **argv)
     const char *trace_path = "build/sdl3/runtime-trace.jsonl";
     const char *asset_root = NULL;
     const char *capture_dir = "build/sdl3/captures";
+    const char *input_script = NULL;
     int run_ms = -1;
+    uint64_t stop_after_sim_steps = 0;
     int i;
     uint64_t start_ns;
     uint64_t next_present_ns;
@@ -85,6 +107,18 @@ int main(int argc, char **argv)
             asset_root = argv[i] + 9;
         else if (strncmp(argv[i], "--capture-dir=", 14) == 0)
             capture_dir = argv[i] + 14;
+        else if (strncmp(argv[i], "--input-script=", 15) == 0)
+            input_script = argv[i] + 15;
+        else if (strncmp(argv[i], "--stop-after-sim-steps=", 23) == 0) {
+            char *end = NULL;
+            unsigned long long parsed = strtoull(argv[i] + 23, &end, 10);
+            if (end == argv[i] + 23 || *end != '\0' || parsed == 0) {
+                fprintf(stderr, "Invalid --stop-after-sim-steps value: %s\n",
+                        argv[i] + 23);
+                return 2;
+            }
+            stop_after_sim_steps = (uint64_t)parsed;
+        }
         else if (parse_run_ms(argv[i]) >= 0)
             run_ms = parse_run_ms(argv[i]);
     }
@@ -98,6 +132,13 @@ int main(int argc, char **argv)
     port_trace_open(trace_path, port_runtime_asset_root());
     port_memory_init();
     port_input_init();
+    if (!port_input_script_load(input_script)) {
+        port_trace_host_stop("invalid input script");
+        port_trace_close();
+        port_sdl_shutdown();
+        return 1;
+    }
+    port_guest_set_step_limit(stop_after_sim_steps);
     port_timer_start();
     SDL_SetAtomicInt(&s_guest_done, 0);
     s_guest_thread = SDL_CreateThread(guest_thread_main, "stunts-game", NULL);
@@ -108,8 +149,9 @@ int main(int argc, char **argv)
     }
     start_ns = SDL_GetTicksNS();
     next_present_ns = start_ns;
-    while (!should_quit) {
+    while (!should_quit && !SDL_GetAtomicInt(&s_guest_done)) {
         uint64_t now;
+        port_input_script_pump(SDL_GetTicksNS());
         if (port_sdl_poll())
             break;
         port_video_present();
@@ -119,6 +161,8 @@ int main(int argc, char **argv)
         if (run_ms >= 0 && now - start_ns >= (uint64_t)run_ms * 1000000u)
             break;
     }
+    if ((run_ms >= 0 || should_quit) && !SDL_GetAtomicInt(&s_guest_done))
+        SDL_SetAtomicInt(&s_guest_stop_pending, 1);
     if (s_guest_thread != NULL) {
         /* M0's startup entry stops at a logged service boundary. This join is
            normally immediate and keeps SDL teardown off an active guest. */

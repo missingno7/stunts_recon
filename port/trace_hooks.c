@@ -6,6 +6,11 @@ extern void stunts_update_gamestate(void);
 
 void update_gamestate(void)
 {
+    uint8_t state[PORT_GAMESTATE_BYTES];
+    size_t state_size;
+    uint64_t step_id;
     stunts_update_gamestate();
-    port_trace_sim_step();
+    state_size = port_game_state_copy(state, sizeof(state));
+    step_id = port_trace_sim_step(state, state_size);
+    port_guest_note_sim_step(step_id);
 }

@@ -9,6 +9,7 @@
 #define PORT_FRAMEBUFFER_BYTES (PORT_SCREEN_WIDTH * PORT_SCREEN_HEIGHT)
 #define PORT_VIDEO_MEMORY_BYTES 0x10000u
 #define PORT_DOS_ADDRESS_BYTES 0x100000u
+#define PORT_GAMESTATE_BYTES 0x460u
 #define PORT_TIMER_PERIOD_NS 10000154ull
 
 typedef enum PortFarSpace {
@@ -57,11 +58,28 @@ void port_trace_open(const char *path, const char *asset_root);
 void port_trace_close(void);
 void port_trace_timer_tick(uint64_t tick_id, uint64_t scheduled_ns,
                            uint64_t observed_ns);
-void port_trace_sim_step(void);
+uint64_t port_trace_sim_step(const uint8_t *game_state, size_t state_size);
+void port_trace_input_keyboard(uint64_t sequence, uint64_t scheduled_ns,
+                               uint64_t actual_ns, const uint8_t *codes,
+                               size_t code_count);
+void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
+                            uint64_t actual_ns, double u, double v,
+                            uint16_t buttons);
 void port_trace_video_publication(const char *reason);
 void port_trace_host_present(uint64_t frame_id);
 void port_trace_audio_publication(uint32_t frame_count);
 void port_trace_host_stop(const char *reason);
+
+/* Generated port-only readers over the accepted GAMESTATE declaration. */
+size_t port_game_state_copy(void *output, size_t capacity);
+uint16_t port_game_frame_snapshot(void);
+uint8_t port_game_mode_snapshot(void);
+uint8_t port_game_inputmode_snapshot(void);
+uint8_t port_game_replaymode_snapshot(void);
+uint16_t port_game_rate_snapshot(void);
+void port_guest_set_step_limit(uint64_t limit);
+void port_guest_note_sim_step(uint64_t step_id);
+void port_guest_stop_after_publication(void);
 
 void port_runtime_set_asset_root(const char *root);
 const char *port_runtime_asset_root(void);
@@ -187,11 +205,15 @@ uint8_t port_input_key_state(uint16_t dos_scan);
 int port_input_dos_scan(int sdl_scancode);
 void port_input_mouse_get(int16_t *x, int16_t *y, uint16_t *buttons);
 void port_input_mouse_set(int16_t x, int16_t y);
+void port_input_mouse_set_buttons(uint16_t buttons);
+void port_input_apply_dos_scancode(uint8_t code);
+int port_input_script_load(const char *path);
+void port_input_script_pump(uint64_t now_ns);
 void port_input_mouse_set_x_bounds(int16_t min_x, int16_t max_x);
 void port_input_mouse_set_y_bounds(int16_t min_y, int16_t max_y);
 void kb_init_interrupt(void);
 void kb_shift_checking2(void);
-void kb_call_readchar_callback(void);
+int16_t kb_call_readchar_callback(void);
 void kb_reg_callback(uint16_t key, void (*callback)(void));
 int16_t kb_get_char(void);
 int16_t kb_read_char(void);
