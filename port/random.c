@@ -1,9 +1,26 @@
 #include "port_runtime.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 /* Six-byte BSS state owned by obj_seg002.ASM in the original game. */
 uint8_t randomseeds[6];
+static uint32_t s_test_rand_state;
+static int s_test_rand_enabled;
+
+void port_random_test_set_state(uint32_t state)
+{
+    s_test_rand_state = state;
+    s_test_rand_enabled = 1;
+}
+
+int16_t port_random_test_rand(void)
+{
+    if (!s_test_rand_enabled)
+        return (int16_t)rand();
+    s_test_rand_state = s_test_rand_state * 0x000343fdu + 0x00269ec3u;
+    return (int16_t)((s_test_rand_state >> 16) & 0x7fffu);
+}
 
 void initialize_kevin_random(const uint8_t *seed)
 {

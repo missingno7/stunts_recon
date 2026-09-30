@@ -5,6 +5,23 @@
 #include <stdio.h>
 #include <string.h>
 
+/* Recovered seg012:6397 compares SS with DS and returns one only when equal.
+   The i686 Windows host uses a flat data/stack selector model, so observing
+   the real selectors preserves that adapter behavior without introducing a
+   game-specific success path. */
+int16_t compare_ds_ss(void)
+{
+#if defined(__i386__) && defined(__GNUC__)
+    uint16_t data_segment;
+    uint16_t stack_segment;
+    __asm__ volatile ("movw %%ds, %0" : "=r" (data_segment));
+    __asm__ volatile ("movw %%ss, %0" : "=r" (stack_segment));
+    return data_segment == stack_segment ? 1 : 0;
+#else
+    return 1;
+#endif
+}
+
 typedef struct PortIntRegisters {
     uint16_t ax, bx, cx, dx, si, di, cflag;
 } PortIntRegisters;

@@ -25,6 +25,8 @@ static int s_mouse_min_x;
 static int s_mouse_min_y;
 static int s_mouse_max_x = PORT_SCREEN_WIDTH - 1;
 static int s_mouse_max_y = PORT_SCREEN_HEIGHT - 1;
+static int s_test_auto_protection;
+static uint64_t s_test_text_sequence;
 
 static void input_lock(void)
 {
@@ -207,6 +209,8 @@ void port_input_init(void)
     s_caps_lock = 0;
     s_extended_prefix = 0;
     s_callback_count = 0;
+    s_test_auto_protection = 0;
+    s_test_text_sequence = 0;
     s_mouse_x = 0;
     s_mouse_y = 0;
     s_mouse_buttons = 0;
@@ -215,6 +219,70 @@ void port_input_init(void)
     s_mouse_max_x = PORT_SCREEN_WIDTH - 1;
     s_mouse_max_y = PORT_SCREEN_HEIGHT - 1;
     input_unlock();
+}
+
+void port_input_enable_test_auto_protection(int enabled)
+{
+    s_test_auto_protection = enabled != 0;
+}
+
+int port_input_test_auto_protection_enabled(void)
+{
+    return s_test_auto_protection;
+}
+
+static int test_text_scan(unsigned char character)
+{
+    if (character >= 'A' && character <= 'Z')
+        character = (unsigned char)(character - 'A' + 'a');
+    if (character >= 'a' && character <= 'z') {
+        static const uint8_t scans[26] = {
+            0x1e, 0x30, 0x2e, 0x20, 0x12, 0x21, 0x22, 0x23, 0x17,
+            0x24, 0x25, 0x26, 0x32, 0x31, 0x18, 0x19, 0x10, 0x13,
+            0x1f, 0x14, 0x16, 0x2f, 0x11, 0x2d, 0x15, 0x2c
+        };
+        return scans[character - 'a'];
+    }
+    if (character >= '1' && character <= '9')
+        return 0x02 + (character - '1');
+    if (character == '0') return 0x0b;
+    if (character == ' ') return 0x39;
+    if (character == '-') return 0x0c;
+    if (character == '.') return 0x34;
+    return 0;
+}
+
+/* Feed a manual answer through the same raw DOS keyboard path as a tester.
+   Only this explicit test option enables the helper, and the trace stores key
+   scans rather than the answer text. */
+int port_input_type_test_text(const char *text)
+{
+    uint8_t codes[48];
+    size_t count = 0;
+    size_t i;
+    uint64_t now;
+    if (!s_test_auto_protection || text == NULL)
+        return 0;
+    for (i = 0; text[i] != '\0'; ++i) {
+        int scan = test_text_scan((unsigned char)text[i]);
+        if (scan == 0 || count + 2u > sizeof(codes) - 2u) {
+            port_guest_unwind("test protection answer contains unsupported or excessive text");
+            return 0;
+        }
+        codes[count++] = (uint8_t)scan;
+        codes[count++] = (uint8_t)(scan | 0x80);
+    }
+    if (count + 2u > sizeof(codes)) {
+        port_guest_unwind("test protection answer is too long");
+        return 0;
+    }
+    codes[count++] = 0x1c;
+    codes[count++] = 0x9c;
+    for (i = 0; i < count; ++i)
+        port_input_apply_dos_scancode(codes[i]);
+    now = SDL_GetTicksNS();
+    port_trace_input_keyboard(s_test_text_sequence++, now, now, codes, count);
+    return 1;
 }
 
 void port_input_handle_event(int event_type, int code, int value)

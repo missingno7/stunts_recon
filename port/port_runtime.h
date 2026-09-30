@@ -40,14 +40,23 @@ typedef struct PortShape2D {
     uint8_t attributes[4];
 } PortShape2D;
 
-/* Natural i686 layout used by the PORT_BUILD overlays. Pointer-bearing fields
+/* Match the recovered game's -fpack-struct=2 layout. Pointer-bearing fields
    stay host pointers; legacy segment offsets are kept in lineofs[]. */
+#pragma pack(push, 2)
 typedef struct PortSprite {
     PortShape2D *sprite_bitmapptr;
     uint16_t words[3];
     uint16_t *lineofs;
     uint16_t words2[9];
 } PortSprite;
+#pragma pack(pop)
+#if UINTPTR_MAX == UINT32_MAX
+_Static_assert(sizeof(PortSprite) == 32u,
+               "PortSprite must match the game's two-byte-packed record");
+_Static_assert(offsetof(PortSprite, lineofs) == 10u &&
+               offsetof(PortSprite, words2) == 14u,
+               "PortSprite field offsets must match the game ABI");
+#endif
 
 extern uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 
@@ -128,6 +137,11 @@ void port_video_set_capture_dir(const char *path);
 void port_video_publish(const char *reason);
 void port_video_present(void);
 uint8_t port_video_read_status_1(void);
+int port_test_startup_seed_load(const char *path);
+void port_test_random_wait_begin(void);
+int port_test_random_wait_status(uint8_t *status_out);
+void port_test_random_wait_end(void);
+uint32_t port_test_random_wait_read_count(void);
 void port_video_shutdown(void);
 void port_sprite_init(void);
 
@@ -148,6 +162,10 @@ void draw_filled_rect(int16_t x, int16_t y, int16_t width,
 void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom);
 void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_shape_to_1_alt(const PortShape2D *shape);
+void shape2d_op_unk(const PortShape2D *shape);
+void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y);
+void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y);
+void shape2d_op_unk3(const PortShape2D *shape);
 void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y);
 void sprite_putimage_and(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_putimage_and_alt(const PortShape2D *shape, int16_t x, int16_t y);
@@ -159,6 +177,8 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase);
 void sprite_blit_to_video(PortSprite *window, uint16_t mode);
 void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color);
 void putpixel_single_maybe(int16_t x, int16_t y, int16_t color);
+void preRender_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2,
+                    int16_t color);
 void preRender_default(int16_t color, int16_t point_count,
                        const int16_t *points);
 void preRender_default_alt(int16_t color, int16_t point_count,
@@ -176,6 +196,7 @@ int16_t cosfast(uint16_t angle);
 int16_t mulscl(int16_t left, int16_t right);
 int16_t polang(int16_t z, int16_t x);
 uint16_t polradius2d(int16_t z, int16_t y);
+int polarRadius2D(int z, int y);
 void vector_to_point(const int16_t *vector, int16_t *point);
 void vector_op_unk(int16_t *first, int16_t *second, int16_t *output,
                    int16_t target_depth);
@@ -201,6 +222,7 @@ void timer_reg_callback(void (*callback)(void));
 void timer_remove_callback(void (*callback)(void));
 uint32_t timer_get_delta(void);
 uint32_t timer_get_counter(void);
+void port_timer_test_seed_counter(uint32_t counter);
 void timer_get_counter_unk(uint32_t ticks);
 void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high);
 int16_t timer_compare_dx(void);
@@ -218,6 +240,14 @@ void port_input_mouse_set_buttons(uint16_t buttons);
 void port_input_apply_dos_scancode(uint8_t code);
 int port_input_script_load(const char *path);
 void port_input_script_pump(uint64_t now_ns);
+void port_input_enable_test_auto_protection(int enabled);
+int port_input_test_auto_protection_enabled(void);
+int port_input_type_test_text(const char *text);
+void port_random_test_set_state(uint32_t state);
+int16_t port_random_test_rand(void);
+void initialize_kevin_random(const uint8_t *seed);
+void get_kevinrandom_seed(uint8_t *seed_out);
+int16_t get_kevinrandom(void);
 void port_input_mouse_set_x_bounds(int16_t min_x, int16_t max_x);
 void port_input_mouse_set_y_bounds(int16_t min_y, int16_t max_y);
 void kb_init_interrupt(void);

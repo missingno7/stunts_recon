@@ -256,6 +256,9 @@ void video_set_palette(uint16_t first, uint16_t count, uint8_t *rgb6)
 
 uint8_t port_video_read_status_1(void)
 {
+    uint8_t test_status;
+    if (port_test_random_wait_status(&test_status))
+        return test_status;
     return port_vga_input_status_1(port_timer_machine_time_ns());
 }
 

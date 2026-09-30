@@ -114,9 +114,11 @@ void *port_memory_alloc(size_t size, const char *owner, PortFarPtr *address_out)
     if (entry == NULL)
         return NULL;
 
+    /* A DOS page allocation owns only its requested paragraph extent. The
+       earlier blanket 4 KiB growth reserve made memory queries report less
+       conventional memory than the guest had actually consumed. Real blocks
+       can grow in place on an explicit resize below. */
     capacity = padded;
-    if (capacity <= SIZE_MAX - 0x1000u && padded >= 0x4000u)
-        capacity += 0x1000u;
     use_handle = !find_real_span(capacity, &linear);
     if (use_handle) {
         /* Leave one paragraph window of stable growth room for the legacy
@@ -342,8 +344,34 @@ int port_memory_extent(const void *pointer, size_t *remaining_out)
 int port_memory_resize(void *pointer, size_t size)
 {
     PortAllocation *entry = find_allocation(pointer);
-    if (entry == NULL || size == 0 || size > entry->padded_size)
+    size_t padded;
+    if (entry == NULL || size == 0 || size > SIZE_MAX - 15u)
         return 0;
+    padded = (size + 15u) & ~(size_t)15u;
+    if (padded > entry->padded_size) {
+        size_t i;
+        uint32_t end;
+        if (entry->space != PORT_FAR_REAL ||
+            padded > PORT_CONVENTIONAL_END - entry->linear)
+            return 0;
+        end = entry->linear + (uint32_t)padded;
+        for (i = 0; i < PORT_MAX_ALLOCS; ++i) {
+            const PortAllocation *other = &s_allocations[i];
+            uint32_t other_end;
+            if (other == entry || !other->live || other->space != PORT_FAR_REAL)
+                continue;
+            other_end = other->linear + (uint32_t)other->padded_size;
+            if (entry->linear < other_end && end > other->linear)
+                return 0;
+        }
+        memset(entry->host + entry->size, 0, size - entry->size);
+        s_stats.live_bytes += (uint32_t)(size - entry->size);
+        entry->padded_size = padded;
+        entry->size = size;
+        if (s_stats.live_bytes > s_stats.high_water_bytes)
+            s_stats.high_water_bytes = s_stats.live_bytes;
+        return 1;
+    }
     if (size > entry->size)
         memset(entry->host + entry->size, 0, size - entry->size);
     else
@@ -351,6 +379,7 @@ int port_memory_resize(void *pointer, size_t size)
     if (size > entry->size)
         s_stats.live_bytes += (uint32_t)(size - entry->size);
     entry->size = size;
+    entry->padded_size = padded;
     if (s_stats.live_bytes > s_stats.high_water_bytes)
         s_stats.high_water_bytes = s_stats.live_bytes;
     return 1;
