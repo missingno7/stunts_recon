@@ -434,11 +434,13 @@ int16_t kb_get_char(void)
 {
     int found;
     uint16_t key = pop_bios_key(&found);
+    uint8_t ascii;
     if (!found)
         return 0;
     if (dispatch_key_callback(key))
         return 0;
-    return (int16_t)key;
+    ascii = (uint8_t)key;
+    return ascii != 0 ? (int16_t)ascii : (int16_t)(key & 0xFF00u);
 }
 
 int16_t kb_read_char(void)
