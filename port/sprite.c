@@ -346,6 +346,92 @@ void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
     }
 }
 
+static int16_t signed_word(uint16_t bits)
+{
+    return bits <= INT16_MAX ? (int16_t)bits
+                             : (int16_t)((int32_t)bits - 65536);
+}
+
+static int16_t add_signed_words(int16_t left, int16_t right)
+{
+    return signed_word((uint16_t)((uint16_t)left + (uint16_t)right));
+}
+
+static int16_t sub_signed_words(int16_t left, int16_t right)
+{
+    return signed_word((uint16_t)((uint16_t)left - (uint16_t)right));
+}
+
+/* C translation of the accepted `_draw_filled_rect` body in
+   asm/sprite_rectangle_scaled_blitters.ASM:47-165 (see also the accepted
+   sub_35B76 migration entry, docs/porting/asm-migration.md:368). Preserve its
+   left/right/top/absolute-height clipping, row-table addressing and XOR
+   color operation; the DOS ES:DI window maps to the active host sprite. */
+void draw_filled_rect(int16_t x, int16_t y, int16_t width,
+                      int16_t height, int16_t color)
+{
+    size_t extent;
+    uint8_t *pixels = sprite_pixels(&s_sprite1, &extent);
+    int16_t left = signed_word(s_sprite1.words2[0]);
+    int16_t right = signed_word(s_sprite1.words2[1]);
+    int16_t top = signed_word(s_sprite1.words2[2]);
+    int16_t sprite_height = signed_word(s_sprite1.words2[3]);
+    int16_t pitch = signed_word(s_sprite1.words2[4]);
+    int16_t delta;
+    int16_t row;
+    int16_t col;
+
+    if (pixels == NULL || s_sprite1.lineofs == NULL || pitch <= 0)
+        return;
+
+    /* Each ADD/SUB and signed branch here follows the original 16-bit word
+       operation, including wrap at the register boundary. */
+    delta = sub_signed_words(left, x);
+    if (delta > 0) {
+        x = left;
+        width = sub_signed_words(width, delta);
+        if (width <= 0)
+            return;
+    }
+    delta = sub_signed_words(add_signed_words(x, width), right);
+    if (delta > 0) {
+        width = sub_signed_words(width, delta);
+        if (width <= 0)
+            return;
+    }
+    delta = sub_signed_words(top, y);
+    if (delta > 0) {
+        height = sub_signed_words(height, delta);
+        if (height <= 0)
+            return;
+        y = top;
+    }
+    delta = sub_signed_words(add_signed_words(y, height), sprite_height);
+    if (delta > 0) {
+        height = sub_signed_words(height, delta);
+        if (height <= 0)
+            return;
+    }
+    if (width <= 0 || height <= 0)
+        return;
+
+    if (x < 0 || y < 0 || x >= pitch || width > pitch - x ||
+        y >= s_sprite1.sprite_bitmapptr->height ||
+        height > s_sprite1.sprite_bitmapptr->height - y)
+        port_guest_unwind("filled rectangle outside active sprite bounds");
+
+    for (row = 0; row < height; ++row) {
+        size_t offset = (size_t)s_sprite1.lineofs[(uint16_t)(y + row)] +
+                        (uint16_t)x;
+        if (offset > extent || (size_t)width > extent - offset)
+            port_guest_unwind("filled rectangle exceeded active sprite extent");
+        for (col = 0; col < width; ++col)
+            pixels[offset + (uint16_t)col] ^= (uint8_t)color;
+    }
+    if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
+        port_video_publish("draw_filled_rect");
+}
+
 static void draw_opaque(const PortShape2D *shape, int x, int y)
 {
     size_t src_extent;

@@ -13,6 +13,8 @@ static SDL_AtomicInt s_callback_counter;
 static void (*s_callbacks[PORT_TIMER_CALLBACK_CAP])(void);
 static unsigned s_callback_count;
 static uint64_t s_audio_wait_target;
+static uint32_t s_copy_deadline;
+static uint32_t s_input_deadline;
 static uint32_t s_last_delta_counter;
 extern volatile uint16_t input_pushed;
 
@@ -177,6 +179,41 @@ void timer_copy_counter(int32_t ticks)
 {
     uint64_t now = port_timer_tick_count();
     s_audio_wait_target = now + (uint32_t)ticks;
+}
+
+/* C host view of asm/timer_counter_deadline_helpers.ASM:_timer_copy_counter
+   and _timer_compare_dx. These use the callback counter, while the separate
+   audio wait adapter above uses the continuously advancing host PIT tick. */
+void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high)
+{
+    uint32_t ticks = (uint32_t)ticks_low | ((uint32_t)ticks_high << 16);
+    s_copy_deadline = timer_get_counter() + ticks;
+}
+
+int16_t timer_compare_dx(void)
+{
+    return (int16_t)((int32_t)(timer_get_counter() - s_copy_deadline) >= 0);
+}
+
+/* C host translations of asm/graphics_resource_runtime.ASM:_set_add_value,
+   _poll_input_abort and _wait_for_input_delay (lines 364-442). The original
+   helpers share the uninterrupted 99.99846 Hz elapsed-tick counter; the SDL
+   timer thread supplies that same monotonically wrapping 32-bit tick domain. */
+void set_add_value(int32_t ticks)
+{
+    s_input_deadline = (uint32_t)port_timer_tick_count() + (uint32_t)ticks;
+}
+
+int16_t poll_input_abort(void)
+{
+    return (int16_t)((uint32_t)port_timer_tick_count() >= s_input_deadline);
+}
+
+void wait_for_input_delay(int32_t ticks)
+{
+    uint32_t deadline = (uint32_t)port_timer_tick_count() + (uint32_t)ticks;
+    while ((uint32_t)port_timer_tick_count() < deadline)
+        SDL_DelayNS(1000000u);
 }
 
 void timer_wait_for_dx(void)

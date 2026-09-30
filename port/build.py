@@ -140,6 +140,25 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             transformed = transformed.replace(
                 "vector_op_unk2(struct VECTOR* vec) {",
                 "I16 vector_op_unk2(struct VECTOR* vec) {")
+        elif source == "src/obj_seg032_group.c":
+            old = "timer_copy_counter(timerOffset, timerSegment);"
+            if transformed.count(old) != 2:
+                raise RuntimeError("Could not locate both line-editor timer deadline calls")
+            transformed = (
+                "extern void port_timer_copy_counter_words(U16 ticks_low, "
+                "U16 ticks_high);\n" + transformed)
+            transformed = transformed.replace(
+                old, "port_timer_copy_counter_words((U16)timerOffset, (U16)timerSegment);")
+        elif source == "src/obj_seg004.c":
+            old = "camData = (struct VECTOR *) blk[sub].cameraOverlay.cameraOffsetOverride;"
+            new = (
+                "camData = (struct VECTOR *) ((U8 *)blk[sub].cameraDataOffset + "
+                "sizeof(struct VECTOR) * 7u); /* PORT_BUILD: target DGROUP camera "
+                "override is cameraDataOffset + 0x2A. */"
+            )
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the track camera DGROUP-offset adapter")
+            transformed = transformed.replace(old, new, 1)
 
         overlay = work / "overlay" / source
         overlay.parent.mkdir(parents=True, exist_ok=True)
@@ -170,6 +189,9 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             "expose full GAMESTATE, frame, mode, and rate to port tracing",
             "rename DOS audio loader and route startup to silent port adapter",
             "type vector_op_unk2's host overlay declaration as I16",
+            "resolve static track camera override offsets relative to camera data",
+            "provide the legacy line editor screen rectangle as a host pointer view",
+            "adapt line-editor two-word timer deadlines to the callback counter",
         ],
         "sources": rows,
     }
@@ -180,7 +202,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "memory.c",
-        "sprite.c",
+        "sprite.c", "legacy_views.c",
         "random.c",
         "font.c",
         "sincos.c",

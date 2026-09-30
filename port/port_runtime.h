@@ -142,6 +142,8 @@ void sprite_clear_1_color(uint8_t color);
 void sprite_clear_shape(PortShape2D *shape);
 void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color);
+void draw_filled_rect(int16_t x, int16_t y, int16_t width,
+                      int16_t height, int16_t color);
 void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom);
 void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_shape_to_1_alt(const PortShape2D *shape);
@@ -198,6 +200,11 @@ void timer_remove_callback(void (*callback)(void));
 uint32_t timer_get_delta(void);
 uint32_t timer_get_counter(void);
 void timer_get_counter_unk(uint32_t ticks);
+void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high);
+int16_t timer_compare_dx(void);
+void set_add_value(int32_t ticks);
+int16_t poll_input_abort(void);
+void wait_for_input_delay(int32_t ticks);
 
 void port_input_init(void);
 void port_input_handle_event(int event_type, int scancode, int pressed);
