@@ -94,7 +94,9 @@ int main(int argc, char **argv)
     const char *asset_root = NULL;
     const char *capture_dir = "build/sdl3/captures";
     const char *input_script = NULL;
+    const char *test_startup_seed = NULL;
     int run_ms = -1;
+    int test_auto_protection = 0;
     uint64_t stop_after_sim_steps = 0;
     int i;
     uint64_t start_ns;
@@ -109,6 +111,10 @@ int main(int argc, char **argv)
             capture_dir = argv[i] + 14;
         else if (strncmp(argv[i], "--input-script=", 15) == 0)
             input_script = argv[i] + 15;
+        else if (strncmp(argv[i], "--test-startup-seed=", 20) == 0)
+            test_startup_seed = argv[i] + 20;
+        else if (strcmp(argv[i], "--test-auto-protection") == 0)
+            test_auto_protection = 1;
         else if (strncmp(argv[i], "--stop-after-sim-steps=", 23) == 0) {
             char *end = NULL;
             unsigned long long parsed = strtoull(argv[i] + 23, &end, 10);
@@ -126,12 +132,15 @@ int main(int argc, char **argv)
         asset_root = getenv("STUNTS_ASSET_ROOT");
     if (asset_root == NULL)
         asset_root = "build/sdl3/runtime/assets";
+    if (!port_test_startup_seed_load(test_startup_seed))
+        return 2;
     port_runtime_set_asset_root(asset_root);
     port_sdl_init("Stunts 1.1 - SDL3 faithful port");
     port_video_set_capture_dir(capture_dir);
     port_trace_open(trace_path, port_runtime_asset_root());
     port_memory_init();
     port_input_init();
+    port_input_enable_test_auto_protection(test_auto_protection);
     if (!port_input_script_load(input_script)) {
         port_trace_host_stop("invalid input script");
         port_trace_close();

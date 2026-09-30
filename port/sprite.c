@@ -556,6 +556,230 @@ void sprite_shape_to_1_alt(const PortShape2D *shape)
         draw_opaque(shape, shape->pos_x, shape->pos_y);
 }
 
+/* Translation of seg012:0x23E00..0x23E90. Each nonzero signed byte gives
+   the number of literal source pixels to copy; the sign selects equivalent
+   MOVSB versus LODSB/STOSB loops in the original routine. The stream carries
+   on across rows using the active sprite's line-offset table and ends at a
+   zero control byte. */
+static void shape2d_draw_literal_runs(const PortShape2D *shape,
+                                     uint16_t origin_x, uint16_t origin_y,
+                                     const char *publication_reason)
+{
+    size_t source_extent;
+    size_t destination_extent;
+    uint8_t *source = shape_pixels(shape, &source_extent);
+    uint8_t *destination = sprite_pixels(&s_sprite1, &destination_extent);
+    size_t source_index = 0;
+    uint16_t row;
+    uint16_t remaining_width;
+    uint16_t destination_offset;
+    uint16_t width;
+    uint16_t height;
+    if (shape == NULL || source == NULL || destination == NULL ||
+        s_sprite1.lineofs == NULL || s_sprite1.sprite_bitmapptr == NULL)
+        return;
+    width = shape->width;
+    height = s_sprite1.sprite_bitmapptr->height;
+    row = origin_y;
+    remaining_width = width;
+    if (row >= height)
+        port_guest_unwind("shape2d row started outside the active sprite");
+    destination_offset = (uint16_t)(s_sprite1.lineofs[row] + origin_x);
+
+    while (source_index < source_extent) {
+        int8_t control = (int8_t)source[source_index++];
+        unsigned run;
+        unsigned item;
+        if (control == 0)
+            break;
+        run = (unsigned)(control < 0 ? -(int)control : control);
+        for (item = 0; item < run; ++item) {
+            if (source_index >= source_extent)
+                port_guest_unwind("shape2d literal run exceeded its source extent");
+            if ((size_t)destination_offset >= destination_extent)
+                port_guest_unwind("shape2d destination exceeded its sprite extent");
+            destination[destination_offset] = source[source_index++];
+            --remaining_width;
+            if ((int16_t)remaining_width <= 0) {
+                ++row;
+                if (row >= height)
+                    port_guest_unwind("shape2d row advanced outside the active sprite");
+                destination_offset = (uint16_t)(s_sprite1.lineofs[row] +
+                                                origin_x);
+                remaining_width = width;
+            } else {
+                ++destination_offset;
+            }
+        }
+    }
+    if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
+        port_video_publish(publication_reason);
+}
+
+void shape2d_op_unk(const PortShape2D *shape)
+{
+    if (shape != NULL)
+        shape2d_draw_literal_runs(shape, shape->pos_x, shape->pos_y,
+                                  "shape2d_op_unk");
+}
+
+/* The 30-byte seg012:0x23DE2 entry loads explicit x/y arguments and jumps
+   into the shared literal-run tail at 0x23E1B. */
+void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y)
+{
+    if (shape != NULL)
+        shape2d_draw_literal_runs(shape, (uint16_t)x, (uint16_t)y,
+                                  "shape2d_op_unknown5");
+}
+
+/* Translation of the clipped alternate decoder at seg012:0x23ED2. Its
+   positive and negative packet paths both copy one literal byte per pixel
+   (LODSB/STOSB and MOVSB respectively); the sign selects the loop form. The
+   shape's declared width/height establish source coordinates, while DOS
+   clip bounds select destination writes. */
+void shape2d_op_unk3(const PortShape2D *shape)
+{
+    size_t source_extent;
+    size_t destination_extent;
+    uint8_t *source = shape_pixels(shape, &source_extent);
+    uint8_t *destination = sprite_pixels(&s_sprite1, &destination_extent);
+    size_t pixel_count;
+    size_t pixel_index = 0;
+    size_t source_index = 0;
+    int origin_x;
+    int origin_y;
+    int clip_left;
+    int clip_right;
+    int clip_top;
+    int clip_bottom;
+    if (shape == NULL || source == NULL || destination == NULL ||
+        s_sprite1.lineofs == NULL || s_sprite1.sprite_bitmapptr == NULL ||
+        shape->width == 0 || shape->height == 0)
+        return;
+    if ((size_t)shape->width > SIZE_MAX / (size_t)shape->height)
+        port_guest_unwind("shape2d image dimensions overflowed");
+    pixel_count = (size_t)shape->width * (size_t)shape->height;
+    origin_x = signed_word(shape->pos_x);
+    origin_y = signed_word(shape->pos_y);
+    clip_left = signed_word(s_sprite1.words2[0]);
+    clip_right = signed_word(s_sprite1.words2[1]);
+    clip_top = signed_word(s_sprite1.words2[2]);
+    clip_bottom = signed_word(s_sprite1.words2[3]);
+
+    while (pixel_index < pixel_count && source_index < source_extent) {
+        int8_t control = (int8_t)source[source_index++];
+        size_t run;
+        size_t count;
+        size_t item;
+        if (control == 0)
+            break;
+        run = (size_t)(control < 0 ? -(int)control : control);
+        count = run < pixel_count - pixel_index
+            ? run : pixel_count - pixel_index;
+        if (count > source_extent - source_index)
+            port_guest_unwind("shape2d literal packet exceeded its source extent");
+        for (item = 0; item < count; ++item, ++pixel_index) {
+            int target_x = origin_x + (int)(pixel_index % shape->width);
+            int target_y = origin_y + (int)(pixel_index / shape->width);
+            uint8_t color = source[source_index++];
+            if (target_x < clip_left || target_x >= clip_right ||
+                target_y < clip_top || target_y >= clip_bottom ||
+                target_x < 0 || target_y < 0 ||
+                target_x >= s_sprite1.sprite_bitmapptr->width ||
+                target_y >= s_sprite1.sprite_bitmapptr->height)
+                continue;
+            {
+                size_t offset = (size_t)s_sprite1.lineofs[target_y] +
+                                (size_t)target_x;
+                if (offset >= destination_extent)
+                    port_guest_unwind("shape2d pixel exceeded its sprite extent");
+                destination[offset] = color;
+            }
+        }
+    }
+    if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
+        port_video_publish("shape2d_op_unk3");
+}
+
+/* C translation of the shared clipped RLE draw path entered by the recovered
+   shape2d_op_unk2 prologue at seg012:0x5494 and continued at
+   shape2d_op_unk3 (seg012:0x54B2). Positive signed run counts repeat the
+   following colour byte; negative counts copy the following literal bytes.
+   Decode every source row even when clipping hides its left or right edge. */
+void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y)
+{
+    size_t source_extent;
+    size_t destination_extent;
+    uint8_t *source = shape_pixels(shape, &source_extent);
+    uint8_t *destination = sprite_pixels(&s_sprite1, &destination_extent);
+    int16_t clip_left = signed_word(s_sprite1.words2[0]);
+    int16_t clip_right = signed_word(s_sprite1.words2[1]);
+    int16_t clip_top = signed_word(s_sprite1.words2[2]);
+    int16_t clip_bottom = signed_word(s_sprite1.words2[3]);
+    size_t source_index = 0;
+    size_t pixel_index = 0;
+    size_t pixel_count;
+    if (shape == NULL || source == NULL || destination == NULL ||
+        s_sprite1.lineofs == NULL || s_sprite1.sprite_bitmapptr == NULL)
+        return;
+    if (shape->width == 0 || shape->height == 0)
+        return;
+    pixel_count = (size_t)shape->width * shape->height;
+    while (pixel_index < pixel_count) {
+        int8_t control;
+        size_t run;
+        size_t count;
+        size_t item;
+        if (source_index >= source_extent)
+            port_guest_unwind("shape2d RLE ended before the declared image extent");
+        control = (int8_t)source[source_index++];
+        if (control == 0)
+            return;
+        run = (size_t)(control > 0 ? control : -(int)control);
+        count = run < pixel_count - pixel_index ? run : pixel_count - pixel_index;
+        if (control > 0) {
+            uint8_t color;
+            if (source_index >= source_extent)
+                port_guest_unwind("shape2d RLE colour was outside the image extent");
+            color = source[source_index++];
+            for (item = 0; item < count; ++item, ++pixel_index) {
+                int target_x = (int)x + (int)(pixel_index % shape->width);
+                int target_y = (int)y + (int)(pixel_index / shape->width);
+                if (target_x >= clip_left && target_x < clip_right &&
+                    target_y >= clip_top && target_y < clip_bottom &&
+                    target_x >= 0 && target_y >= 0 &&
+                    target_x < s_sprite1.sprite_bitmapptr->width &&
+                    target_y < s_sprite1.sprite_bitmapptr->height) {
+                    size_t offset = (size_t)s_sprite1.lineofs[target_y] +
+                                    (size_t)target_x;
+                    if (offset >= destination_extent)
+                        port_guest_unwind("shape2d destination exceeded its sprite extent");
+                    destination[offset] = color;
+                }
+            }
+        } else {
+            if (count > source_extent - source_index)
+                port_guest_unwind("shape2d literal run was outside the image extent");
+            for (item = 0; item < count; ++item, ++pixel_index) {
+                int target_x = (int)x + (int)(pixel_index % shape->width);
+                int target_y = (int)y + (int)(pixel_index / shape->width);
+                uint8_t color = source[source_index++];
+                if (target_x >= clip_left && target_x < clip_right &&
+                    target_y >= clip_top && target_y < clip_bottom &&
+                    target_x >= 0 && target_y >= 0 &&
+                    target_x < s_sprite1.sprite_bitmapptr->width &&
+                    target_y < s_sprite1.sprite_bitmapptr->height) {
+                    size_t offset = (size_t)s_sprite1.lineofs[target_y] +
+                                    (size_t)target_x;
+                    if (offset >= destination_extent)
+                        port_guest_unwind("shape2d destination exceeded its sprite extent");
+                    destination[offset] = color;
+                }
+            }
+        }
+    }
+}
+
 void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y)
 {
     size_t source_extent;
@@ -755,6 +979,43 @@ void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color)
 void putpixel_single_maybe(int16_t x, int16_t y, int16_t color)
 {
     port_sprite_plot_active(x, y, (uint8_t)color);
+}
+
+/* Semantic host translation of the short preRender_line dispatcher at
+   seg012:0x1FDDE. It delegates endpoint clipping and pixel selection to the
+   DOS line helpers; the port plots the inclusive integer line through the
+   active sprite clip rectangle. This is not claimed as a strict ASM match. */
+void preRender_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2,
+                    int16_t color)
+{
+    int x = x1;
+    int y = y1;
+    int end_x = x2;
+    int end_y = y2;
+    int delta_x = end_x >= x ? end_x - x : x - end_x;
+    int step_x = x < end_x ? 1 : -1;
+    int delta_y = end_y >= y ? end_y - y : y - end_y;
+    int step_y = y < end_y ? 1 : -1;
+    int error = delta_x - delta_y;
+
+    for (;;) {
+        port_sprite_plot_active((int16_t)x, (int16_t)y, (uint8_t)color);
+        if (x == end_x && y == end_y)
+            break;
+        {
+            int doubled_error = error * 2;
+            if (doubled_error > -delta_y) {
+                error -= delta_y;
+                x += step_x;
+            }
+            if (doubled_error < delta_x) {
+                error += delta_x;
+                y += step_y;
+            }
+        }
+    }
+    if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
+        port_video_publish("preRender_line");
 }
 
 static void fill_active_span(int left, int y, int right_exclusive,

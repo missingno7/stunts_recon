@@ -81,12 +81,49 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
         transformed, removed = probe.transformed_source(
             source, text, local_fns, local_data, shared_tags)
         if source == "src/obj_seg000.c":
+            transformed = (
+                "extern int port_input_test_auto_protection_enabled(void);\n"
+                "extern int port_input_type_test_text(const char *text);\n"
+                "extern void port_test_random_wait_begin(void);\n"
+                "extern void port_test_random_wait_end(void);\n" + transformed)
+            random_wait_call = "          random_wait();\n          if (pass_check_flag == 0)"
+            if transformed.count(random_wait_call) != 1:
+                raise RuntimeError("Could not locate the startup random_wait boundary")
+            transformed = transformed.replace(
+                random_wait_call,
+                "          port_test_random_wait_begin();\n"
+                "          random_wait();\n"
+                "          port_test_random_wait_end();\n"
+                "          if (pass_check_flag == 0)", 1)
+            answer_read = (
+                "        if (port_input_test_auto_protection_enabled())\n"
+                "            port_input_type_test_text(resbuftext);\n"
+                "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);")
+            if transformed.count(
+                    "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);") != 1:
+                raise RuntimeError("Could not locate the original protection line-editor call")
+            transformed = transformed.replace(
+                "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);",
+                answer_read, 1)
             transformed, count = re.subn(
                 r"(?m)^(\s*)(?:int|I16)\s+main(?=\s*\()",
                 r"\1int stunts_game_main",
                 transformed, count=1)
             if count != 1:
                 raise RuntimeError("Could not generate the host main-entry adapter")
+        elif source == "src/obj_seg008.c":
+            transformed = "extern I16 port_random_test_rand(void);\n" + transformed
+            match = re.search(
+                r"(?ms)^I16\s+get_super_random\s*\(\s*void\s*\)\s*\{.*?^\}",
+                transformed)
+            if match is None:
+                raise RuntimeError("Could not locate get_super_random for the test-seed adapter")
+            body = match.group(0)
+            if body.count("rand()") != 1:
+                raise RuntimeError("Expected one rand call in get_super_random")
+            transformed = (transformed[:match.start()] +
+                           body.replace("rand()", "port_random_test_rand()", 1) +
+                           transformed[match.end():])
         elif source == "src/obj_seg001_complete.c":
             transformed, count = re.subn(
                 r"(?m)^void\s+update_gamestate\s*\(\s*\)\s*\{",
@@ -202,6 +239,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "memory.c",
+        "test_seed.c",
         "sprite.c", "legacy_views.c",
         "random.c",
         "font.c",
@@ -449,6 +487,10 @@ def run(args) -> int:
         command.append(f"--run-ms={args.run_ms}")
     if args.input_script is not None:
         command.append(f"--input-script={Path(args.input_script).resolve()}")
+    if args.test_auto_protection:
+        command.append("--test-auto-protection")
+    if args.test_startup_seed is not None:
+        command.append(f"--test-startup-seed={Path(args.test_startup_seed).resolve()}")
     if args.stop_after_sim_steps is not None:
         command.append(f"--stop-after-sim-steps={args.stop_after_sim_steps}")
     prepare_environment(args.gcc)
@@ -471,6 +513,10 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--capture-dir", default="build/sdl3/captures")
     run_parser.add_argument("--run-ms", type=int)
     run_parser.add_argument("--input-script", type=Path)
+    run_parser.add_argument("--test-auto-protection", action="store_true",
+                            help="test only: type the live protection answer through DOS keyboard input")
+    run_parser.add_argument("--test-startup-seed", type=Path,
+                            help="test only: replay a Port Forge random_wait/timer/PRNG capture")
     run_parser.add_argument("--stop-after-sim-steps", type=int)
     run_parser.add_argument("--no-build", action="store_true")
     args = parser.parse_args(argv)

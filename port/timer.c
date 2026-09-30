@@ -16,6 +16,8 @@ static uint64_t s_audio_wait_target;
 static uint32_t s_copy_deadline;
 static uint32_t s_input_deadline;
 static uint32_t s_last_delta_counter;
+static uint32_t s_test_counter_value;
+static int s_test_counter_pending;
 static uint64_t s_virtual_clock_origin_ns;
 extern volatile uint16_t input_pushed;
 
@@ -174,7 +176,17 @@ uint32_t timer_get_delta(void)
 
 uint32_t timer_get_counter(void)
 {
+    if (s_test_counter_pending) {
+        s_test_counter_pending = 0;
+        return s_test_counter_value;
+    }
     return (uint32_t)SDL_GetAtomicInt(&s_callback_counter);
+}
+
+void port_timer_test_set_next_counter(uint32_t counter)
+{
+    s_test_counter_value = counter;
+    s_test_counter_pending = 1;
 }
 
 void timer_get_counter_unk(uint32_t ticks)

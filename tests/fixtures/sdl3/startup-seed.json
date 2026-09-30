@@ -1,0 +1,25 @@
+{
+  "schema": "stunts-sdl3-startup-seed-v1",
+  "logical_point": "after_random_wait_before_get_super_random",
+  "timer_counter": 340,
+  "crt_rand_state": "5a5ab40a",
+  "kevin_random_state": "a36f847775bb",
+  "random_wait_status_reads": 6078,
+  "random_wait_initial_status": 0,
+  "random_wait_changed_status": 9,
+  "capture": {
+    "port_forge_commit": "a0e111bc0a49750115cd2963bcba4c0ea0ea0d4d",
+    "cpu_profile": "stunts-normalized-interactive-v7",
+    "cpu_work_units_per_second": 9000000,
+    "game_config_sha256": "45475B05F70DB3E9458FFBDBBCC60EE49CD6D28C1E71C27CF717E226BE91DB2F",
+    "boot_snapshot_sha256": "e8b8f6f0a330bc8ad1a00d4ddda4727fea6a32b9367ca12dbfcc870074d6afbc",
+    "random_wait_first_status_tick": 4718390222,
+    "random_wait_final_status_tick": 4726071666,
+    "random_wait_loop_iterations": 6076,
+    "random_wait_final_raw_status": 9,
+    "timer_snapshot_tick": 4800248333,
+    "timer_snapshot_counter": 343,
+    "selected_answer_key": "a00",
+    "selected_answer": "camera"
+  }
+}

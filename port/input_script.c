@@ -13,8 +13,12 @@
 typedef struct PortScriptEvent {
     uint64_t sequence;
     uint64_t due_ns;
+    int mouse;
     size_t code_count;
     uint8_t codes[SCRIPT_SCANCODE_CAP];
+    double mouse_u;
+    double mouse_v;
+    uint16_t mouse_buttons;
 } PortScriptEvent;
 
 static PortScriptEvent s_events[SCRIPT_EVENT_CAP];
@@ -71,6 +75,35 @@ static int json_read_u64(char *begin, char *limit, const char *key,
     if (errno != 0 || end == value || end > limit)
         return 0;
     *output = (uint64_t)parsed;
+    return 1;
+}
+
+static int json_read_double(char *begin, char *limit, const char *key,
+                            double *output)
+{
+    char *value = json_key_value(begin, limit, key);
+    char *end;
+    double parsed;
+    if (value == NULL)
+        return 0;
+    parsed = strtod(value, &end);
+    if (end == value || end > limit)
+        return 0;
+    *output = parsed;
+    return 1;
+}
+
+static int json_read_mouse(char *begin, char *limit, PortScriptEvent *event)
+{
+    uint64_t buttons;
+    if (!json_read_double(begin, limit, "\"u\"", &event->mouse_u) ||
+        !json_read_double(begin, limit, "\"v\"", &event->mouse_v) ||
+        !json_read_u64(begin, limit, "\"buttons\"", &buttons) ||
+        event->mouse_u < 0.0 || event->mouse_u > 1.0 ||
+        event->mouse_v < 0.0 || event->mouse_v > 1.0 || buttons > 7u)
+        return 0;
+    event->mouse_buttons = (uint16_t)buttons;
+    event->mouse = 1;
     return 1;
 }
 
@@ -176,10 +209,14 @@ static int parse_script(const char *path)
                     s_event_count);
             goto done;
         }
-        if (strcmp(channel, "dos.keyboard.scancodes") != 0 ||
-            !json_read_scancodes(visible, event_limit, &event)) {
+        if ((strcmp(channel, "dos.keyboard.scancodes") == 0 &&
+             !json_read_scancodes(visible, event_limit, &event)) ||
+            (strcmp(channel, "dos.mouse.normalized") == 0 &&
+             !json_read_mouse(visible, event_limit, &event)) ||
+            (strcmp(channel, "dos.keyboard.scancodes") != 0 &&
+             strcmp(channel, "dos.mouse.normalized") != 0)) {
             fprintf(stderr,
-                    "PORT input script: event %zu must be a keyboard scancode batch\n",
+                    "PORT input script: event %zu has an unsupported channel or payload\n",
                     s_event_count);
             goto done;
         }
@@ -229,13 +266,21 @@ void port_input_script_pump(uint64_t now_ns)
         uint64_t scheduled_ns = s_origin_ns + event->due_ns;
         if (elapsed_ns < event->due_ns)
             break;
-        {
+        if (event->mouse) {
+            int16_t x = (int16_t)(event->mouse_u * (PORT_SCREEN_WIDTH - 1));
+            int16_t y = (int16_t)(event->mouse_v * (PORT_SCREEN_HEIGHT - 1));
+            port_input_mouse_set(x, y);
+            port_input_mouse_set_buttons(event->mouse_buttons);
+            port_trace_input_mouse(event->sequence, scheduled_ns, now_ns,
+                                   event->mouse_u, event->mouse_v,
+                                   event->mouse_buttons);
+        } else {
             size_t i;
             for (i = 0; i < event->code_count; ++i)
                 port_input_apply_dos_scancode(event->codes[i]);
+            port_trace_input_keyboard(event->sequence, scheduled_ns, now_ns,
+                                      event->codes, event->code_count);
         }
-        port_trace_input_keyboard(event->sequence, scheduled_ns, now_ns,
-                                  event->codes, event->code_count);
         ++s_next_event;
     }
 }

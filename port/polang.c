@@ -129,3 +129,11 @@ uint16_t polradius2d(int16_t z_arg, int16_t y_arg)
     }
     return polradius2d_divide(component, scale);
 }
+
+/* The accepted PORT_BUILD objects refer to the original mixed-case C symbol.
+   Keep the lower-case host helper for existing adapters while presenting the
+   game's 32-bit host-int ABI and preserving its signed 16-bit AX result. */
+int polarRadius2D(int z_arg, int y_arg)
+{
+    return (int)(int16_t)polradius2d((int16_t)z_arg, (int16_t)y_arg);
+}
