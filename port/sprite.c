@@ -629,8 +629,8 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
                         port_guest_unwind("sprite_1_unk3 target address is unmapped");
                     *target_host = *source_host;
                 }
-                source_offset = (uint16_t)(source_offset + 1u);
-                target_offset = (uint16_t)(target_offset + 1u);
+                /* MOV AL,[SI] / MOV ES:[DI],AL advance neither register;
+                   both offsets advance only by the phase post-skip below. */
                 after = post_skip[slot];
                 source_offset = (uint16_t)(source_offset + after);
                 target_offset = (uint16_t)(target_offset + after);
