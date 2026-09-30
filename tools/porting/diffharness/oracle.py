@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import struct
 import sys
 from dataclasses import dataclass
@@ -23,6 +24,10 @@ class RoutineAddress:
     stable_id: str | None = None
 
     def far_at(self, load_segment: int) -> tuple[int, int]:
+        if self.code_base & 0x0F:
+            raise ValueError(f"code frame {self.code_base:#x} is not paragraph aligned")
+        if not 0 <= self.start - self.code_base <= 0xFFFF:
+            raise ValueError(f"entry {self.start:#x} is outside its 16-bit code frame")
         base = (load_segment + self.code_base // 16) & 0xFFFF
         return base, self.start - self.code_base
 
@@ -44,14 +49,14 @@ class OracleImage:
         import oracle as oracle_tool  # tools/oracle.py
         from mz import MZ
 
-        _, unpacked, report, _ = oracle_tool.verify(
-            write=False, asset_dir=asset_dir or DEFAULT_ASSETS)
+        source_assets = asset_dir or Path(os.environ.get("STUNTS_ASSET_DIR", DEFAULT_ASSETS))
+        _, unpacked, report, _ = oracle_tool.verify(write=False, asset_dir=source_assets)
         if report != json.loads((root / "layout/oracle.lock.json").read_text(
                 encoding="utf-8")):
             raise ValueError("oracle report differs from layout/oracle.lock.json")
         mz = MZ.parse(unpacked)
         return cls(mz.load_image(unpacked), mz.relocations,
-                   asset_dir=asset_dir or DEFAULT_ASSETS)
+                   asset_dir=source_assets)
 
     def relocated(self, load_segment: int = DEFAULT_LOAD_SEGMENT) -> bytes:
         """Return the MZ load bytes with every ordered segment fixup applied."""

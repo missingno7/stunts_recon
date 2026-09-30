@@ -32,6 +32,7 @@ class RoutineCase:
     compare: Sequence[MemoryRegion] = ()
     result_registers: Sequence[str] = ("ax", "dx")
     compare_flags: bool = False
+    flag_mask: int = 0xFFFF
     port_call: Callable | None = None
 
 

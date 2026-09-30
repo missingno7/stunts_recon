@@ -38,8 +38,12 @@ class RealModeRunner:
         self.symbols = SymbolMap()
 
     def call(self, case: RoutineCase) -> CallResult:
+        if case.call not in {"near", "far"}:
+            raise HarnessError(f"{case.name}: call must be 'near' or 'far'")
         address = self.symbols.resolve(case.routine)
         code_segment, entry_ip = address.far_at(self.load_segment)
+        if (self.load_segment << 4) + len(self.oracle.load_image) > 0x100000:
+            raise HarnessError("the load image exceeds the 20-bit real-mode address space")
         uc = Uc(UC_ARCH_X86, UC_MODE_16)
         uc.mem_map(0, 0x100000)
         relocated = self.oracle.relocated(self.load_segment)

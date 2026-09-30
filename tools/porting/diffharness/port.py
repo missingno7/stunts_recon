@@ -51,6 +51,8 @@ class PortLibrary:
         self.python32 = None
         self.dll = None
         if struct.calcsize("P") * 8 == 32:
+            if hasattr(os, "add_dll_directory"):
+                self._dll_directory = os.add_dll_directory(str(self.gcc.parent))
             self._load_local()
         else:
             self.python32 = self._find_python32()
@@ -60,7 +62,9 @@ class PortLibrary:
         output = BUILD / "diffharness_port.dll"
         sources = [PACKAGE / "host_adapter.c", PACKAGE / "host_shim.c",
                    PORT / "sprite.c", PORT / "memory.c", PORT / "sincos.c"]
-        newest_source = max(path.stat().st_mtime for path in sources)
+        dependencies = sources + [PORT / "port_runtime.h",
+                                  ROOT / "tools/porting/host/compat.h"]
+        newest_source = max(path.stat().st_mtime for path in dependencies)
         if output.exists() and output.stat().st_mtime >= newest_source and not force:
             return output
         command = [str(self.gcc), "-m32", "-std=gnu11", "-O2", "-DPORT_BUILD=1",

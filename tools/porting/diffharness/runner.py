@@ -15,8 +15,11 @@ def differences(case: RoutineCase, original: CallResult,
         after = port.registers.get(name.lower())
         if before != after:
             issues.append(f"{name.upper()}: original={before!r}, port={after!r}")
-    if case.compare_flags and original.flags != port.flags:
-        issues.append(f"FLAGS: original={original.flags:04X}, port={port.flags:04X}")
+    if case.compare_flags:
+        mask = case.flag_mask & 0xFFFF
+        before, after = original.flags & mask, port.flags & mask
+        if before != after:
+            issues.append(f"FLAGS&{mask:04X}: original={before:04X}, port={after:04X}")
     for region in case.compare:
         before = original.memory.get(region.name, b"")
         after = port.memory.get(region.name, b"")

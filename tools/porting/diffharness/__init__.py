@@ -2,8 +2,9 @@
 
 from .model import (CallResult, HarnessError, MemoryRegion, MemoryWrite,
                     MismatchError, RoutineCase, TrapError)
+from .emulator import RealModeRunner
 from .runner import DiffHarness, differences
 
 __all__ = ["CallResult", "DiffHarness", "HarnessError", "MemoryRegion",
            "MemoryWrite", "MismatchError", "RoutineCase", "TrapError",
-           "differences"]
+           "RealModeRunner", "differences"]

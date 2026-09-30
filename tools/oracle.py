@@ -1,7 +1,9 @@
 """Original assets -> DSI decoding -> DIF -> packed MZ -> pristine EXEPACK image."""
 import argparse
 import dataclasses
+import os
 import struct
+from pathlib import Path
 from common import ROOT, identity, read_json, write_json, require
 from dsi import decode
 from exepack import unpack
@@ -26,7 +28,8 @@ def apply_dif(common, patch):
         records.append({'decoded_dif_offset': at, 'packed_load_offset': target, 'length': count})
         at += count
 
-def construct(asset_dir=ROOT / 'assets'):
+def construct(asset_dir=None):
+    asset_dir = Path(asset_dir or os.environ.get('STUNTS_ASSET_DIR', ROOT / 'assets'))
     found = {}
     for path in asset_dir.iterdir():
         if path.is_file() and path.name.upper() in NAMES:
@@ -70,7 +73,7 @@ def _construct(found):
               'unpacked_header_policy': 'synthetic minimal paragraph-aligned header; preserved entry/stack and decoded relocation pairs/order; reconstructed sizes/minalloc/checksum/padding'}
     return packed, unpacked, report, {'dif': dif_records, 'exepack': exepack['commands']}
 
-def verify(write=True, asset_dir=ROOT / 'assets'):
+def verify(write=True, asset_dir=None):
     lock = read_json(ROOT / 'layout/oracle.lock.json')
     result = construct(asset_dir)
     require(result[2] == lock, 'Oracle identity/structure differs from immutable lock')

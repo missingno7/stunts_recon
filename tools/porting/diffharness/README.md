@@ -17,6 +17,10 @@ directory explicitly if this worktree has no local `assets/` directory:
 python -m tools.porting.diffharness --assets D:\Prog\stunts_recon\assets
 ```
 
+Set `STUNTS_ASSET_DIR` to make the repository's other oracle consumers,
+including `context.py` and `validate.py`, read from the same external
+read-only asset directory without creating a local `assets/` copy.
+
 The host test DLL and its intermediate build output go under ignored
 `build/porting/diffharness/`. A 64-bit Python cannot load an i686 DLL. In that
 case the package uses `C:\msys64\mingw32\bin\python.exe` as a small 32-bit
@@ -67,8 +71,9 @@ instruction budget defaults to one million instructions.
 INT instructions and unconfigured IN/OUT accesses stop the call and raise a
 `TrapError` with the vector or port and current CS:IP. `RealModeRunner` accepts
 an `io_ports={port: value}` map for simple IN reads. A `RoutineCase` can set
-`compare_flags=True` when flags are part of its contract; port adapters return
-their declared registers, flags, and region bytes in a `CallResult`.
+`compare_flags=True` when flags are part of its contract, then limit comparison
+to a mask such as `flag_mask=0x0001` for CF. Port adapters return their declared
+registers, flags, and region bytes in a `CallResult`.
 
 ## PORT_BUILD adapter
 
