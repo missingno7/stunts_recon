@@ -16,8 +16,6 @@ static uint64_t s_audio_wait_target;
 static uint32_t s_copy_deadline;
 static uint32_t s_input_deadline;
 static uint32_t s_last_delta_counter;
-static uint32_t s_test_counter_value;
-static int s_test_counter_pending;
 static uint64_t s_virtual_clock_origin_ns;
 extern volatile uint16_t input_pushed;
 
@@ -29,11 +27,14 @@ static void timer_dispatch_game_tick(void)
     uint32_t current;
     if (!port_timer_game_enabled() || input_pushed != 0)
         return;
+    if (s_callback_lock == NULL) {
+        current = (uint32_t)SDL_GetAtomicInt(&s_callback_counter) + 1u;
+        SDL_SetAtomicInt(&s_callback_counter, (int32_t)current);
+        return;
+    }
+    SDL_LockMutex(s_callback_lock);
     current = (uint32_t)SDL_GetAtomicInt(&s_callback_counter) + 1u;
     SDL_SetAtomicInt(&s_callback_counter, (int32_t)current);
-    if (s_callback_lock == NULL)
-        return;
-    SDL_LockMutex(s_callback_lock);
     count = s_callback_count;
     for (i = 0; i < count; ++i)
         callbacks[i] = s_callbacks[i];
@@ -176,17 +177,17 @@ uint32_t timer_get_delta(void)
 
 uint32_t timer_get_counter(void)
 {
-    if (s_test_counter_pending) {
-        s_test_counter_pending = 0;
-        return s_test_counter_value;
-    }
     return (uint32_t)SDL_GetAtomicInt(&s_callback_counter);
 }
 
-void port_timer_test_set_next_counter(uint32_t counter)
+void port_timer_test_seed_counter(uint32_t counter)
 {
-    s_test_counter_value = counter;
-    s_test_counter_pending = 1;
+    if (s_callback_lock != NULL)
+        SDL_LockMutex(s_callback_lock);
+    SDL_SetAtomicInt(&s_callback_counter, (int32_t)counter);
+    s_last_delta_counter = counter;
+    if (s_callback_lock != NULL)
+        SDL_UnlockMutex(s_callback_lock);
 }
 
 void timer_get_counter_unk(uint32_t ticks)

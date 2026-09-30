@@ -161,14 +161,18 @@ int main(int argc, char **argv)
     while (!should_quit && !SDL_GetAtomicInt(&s_guest_done)) {
         uint64_t now;
         port_input_script_pump(SDL_GetTicksNS());
-        if (port_sdl_poll())
+        if (port_sdl_poll()) {
+            port_trace_host_stop("SDL quit event");
             break;
+        }
         port_video_present();
         next_present_ns += 16666667u;
         port_sdl_sleep_until(next_present_ns);
         now = SDL_GetTicksNS();
-        if (run_ms >= 0 && now - start_ns >= (uint64_t)run_ms * 1000000u)
+        if (run_ms >= 0 && now - start_ns >= (uint64_t)run_ms * 1000000u) {
+            port_trace_host_stop("requested run duration reached");
             break;
+        }
     }
     if ((run_ms >= 0 || should_quit) && !SDL_GetAtomicInt(&s_guest_done))
         SDL_SetAtomicInt(&s_guest_stop_pending, 1);

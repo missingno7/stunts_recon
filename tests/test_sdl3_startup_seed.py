@@ -37,7 +37,7 @@ class StartupSeedTests(unittest.TestCase):
                 cwd=ROOT, capture_output=True, text=True, check=False,
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            self.assertIn("reads=6078 timer=340 rand=9479 Kevin=0x3d", result.stdout)
+            self.assertIn("reads=8016 timer=592 rand=6916 Kevin=0x23", result.stdout)
 
 
 if __name__ == "__main__":

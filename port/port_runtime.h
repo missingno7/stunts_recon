@@ -40,14 +40,23 @@ typedef struct PortShape2D {
     uint8_t attributes[4];
 } PortShape2D;
 
-/* Natural i686 layout used by the PORT_BUILD overlays. Pointer-bearing fields
+/* Match the recovered game's -fpack-struct=2 layout. Pointer-bearing fields
    stay host pointers; legacy segment offsets are kept in lineofs[]. */
+#pragma pack(push, 2)
 typedef struct PortSprite {
     PortShape2D *sprite_bitmapptr;
     uint16_t words[3];
     uint16_t *lineofs;
     uint16_t words2[9];
 } PortSprite;
+#pragma pack(pop)
+#if UINTPTR_MAX == UINT32_MAX
+_Static_assert(sizeof(PortSprite) == 32u,
+               "PortSprite must match the game's two-byte-packed record");
+_Static_assert(offsetof(PortSprite, lineofs) == 10u &&
+               offsetof(PortSprite, words2) == 14u,
+               "PortSprite field offsets must match the game ABI");
+#endif
 
 extern uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 
@@ -213,7 +222,7 @@ void timer_reg_callback(void (*callback)(void));
 void timer_remove_callback(void (*callback)(void));
 uint32_t timer_get_delta(void);
 uint32_t timer_get_counter(void);
-void port_timer_test_set_next_counter(uint32_t counter);
+void port_timer_test_seed_counter(uint32_t counter);
 void timer_get_counter_unk(uint32_t ticks);
 void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high);
 int16_t timer_compare_dx(void);

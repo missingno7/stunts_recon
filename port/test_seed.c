@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define PORT_TEST_SEED_JSON_BYTES 4096u
+#define PORT_TEST_SEED_JSON_BYTES 8192u
 
 static int s_seed_loaded;
 static int s_random_wait_active;
@@ -171,7 +171,7 @@ void port_test_random_wait_end(void)
     }
     initialize_kevin_random(s_kevin_state);
     port_random_test_set_state(s_rand_state);
-    port_timer_test_set_next_counter(s_timer_counter);
+    port_timer_test_seed_counter(s_timer_counter);
     s_seed_loaded = 0;
     fprintf(stderr,
             "PORT test startup seed applied after random_wait: "
