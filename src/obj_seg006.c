@@ -22,9 +22,9 @@ struct POINT2D { I16 x, y; };
 struct MATRIX { I16 vals[9]; };
 /* PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization. */
 struct SHAPE3D {
-    unsigned numverts;
+    U16 numverts;
     struct VECTOR far* verts;
-    unsigned numprimitives;
+    U16 numprimitives;
     I8 numpaints;
     I8 reserved;
     U8  far* primitives;

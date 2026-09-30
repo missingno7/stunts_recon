@@ -94,6 +94,9 @@ void *port_fs_load(const char *path, size_t *length_out,
 int port_fs_exists(const char *path);
 int port_fs_find(const char *pattern, char *found, size_t capacity);
 void file_read_fatal(const char *filename, uint8_t *destination);
+void file_load_shape2d_expand(uint8_t *archive, int8_t *output);
+void file_load_shape2d_palmap_apply(uint8_t *archive,
+                                    const uint8_t *palette_map);
 void fatal_error(const char *format, ...);
 
 int port_resource_decompress(const uint8_t *source, size_t source_size,
@@ -118,6 +121,7 @@ void sprite_copy_2_to_1_2(void);
 void sprite_copy_arg_to_both(const PortSprite *sprites);
 void sprite_copy_both_to_arg(PortSprite *sprites);
 void sprite_clear_1_color(uint8_t color);
+void sprite_clear_shape(PortShape2D *shape);
 void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color);
 void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom);
@@ -133,6 +137,12 @@ void sprputimage(const PortShape2D *shape);
 void sprite_1_unk3(const PortShape2D *shape, int16_t phase);
 void sprite_blit_to_video(PortSprite *window, uint16_t mode);
 void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color);
+void putpixel_single_maybe(int16_t x, int16_t y, int16_t color);
+void preRender_default(int16_t color, int16_t point_count,
+                       const int16_t *points);
+void preRender_default_alt(int16_t color, int16_t point_count,
+                           const int16_t *points);
+void preRender_wheel_helper4(int16_t color, int16_t point_count, ...);
 
 void set_fontdefseg(const void *font_data);
 void font_setup_unknown(uint16_t foreground, uint16_t background);
@@ -143,6 +153,21 @@ int16_t font_op2(const char *text);
 int16_t sinfast(uint16_t angle);
 int16_t cosfast(uint16_t angle);
 int16_t mulscl(int16_t left, int16_t right);
+int16_t polang(int16_t z, int16_t x);
+uint16_t polradius2d(int16_t z, int16_t y);
+void vector_to_point(const int16_t *vector, int16_t *point);
+void vector_op_unk(int16_t *first, int16_t *second, int16_t *output,
+                   int16_t target_depth);
+void mat_multiply(const int16_t *right_matrix, const int16_t *left_matrix,
+                  int16_t *output_matrix);
+void mat_invert(int16_t *input_matrix, int16_t *output_matrix);
+void set_projection(int16_t x_angle, int16_t y_angle,
+                    int16_t width, int16_t height);
+void mat_vec(const int16_t *input, const int16_t *matrix,
+             int16_t *output);
+uint16_t update_rpm_from_speed(uint16_t current_rpm, uint16_t speed,
+                               uint16_t gear_ratio, int16_t changing_gear,
+                               uint16_t idle_rpm);
 
 void port_timer_start(void);
 void port_timer_stop(void);

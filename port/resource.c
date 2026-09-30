@@ -516,6 +516,150 @@ static int shape_entry_span(uint8_t *archive, int index,
     return 1;
 }
 
+/* Translate asm/file_load_shape2d_expand.ASM's ESH directory and plane walk.
+   The packed record format and bit order are also specified by the validated
+   tools/porting/format_reference.py:expand_esh parser. */
+void file_load_shape2d_expand(uint8_t *archive, int8_t *output_pointer)
+{
+    uint8_t *output = (uint8_t *)output_pointer;
+    size_t source_extent;
+    size_t output_extent;
+    size_t payload;
+    size_t output_payload;
+    size_t relative = 0;
+    size_t total_size;
+    uint16_t count;
+    uint16_t index;
+
+    if (!archive_view(archive, &source_extent, &count, &payload) ||
+        output == NULL || !port_memory_extent(output, &output_extent))
+        port_guest_unwind("invalid ESH expansion buffers");
+    (void)source_extent;
+
+    output_payload = 6u + (size_t)count * 8u;
+    if (output_payload > output_extent)
+        port_guest_unwind("ESH output directory exceeds allocation");
+
+    /* The assembly copies count and names, reconstructs offsets, and clears
+       the input-size dword until the final record sets the expanded size. */
+    memset(output, 0, 4u);
+    memcpy(output + 4u, archive + 4u, 2u + (size_t)count * 4u);
+
+    for (index = 0; index < count; ++index) {
+        uint8_t *source_shape;
+        size_t source_shape_size;
+        uint8_t *destination_shape;
+        uint8_t *destination_pixels;
+        size_t pixels;
+        size_t shape_bytes;
+        uint16_t width;
+        uint16_t height;
+        uint8_t base_color;
+        unsigned plane;
+
+        if (!shape_entry_span(archive, index, &source_shape,
+                              &source_shape_size))
+            port_guest_unwind("ESH shape offset outside source archive");
+        width = read_u16(source_shape);
+        height = read_u16(source_shape + 2u);
+        pixels = (size_t)width * (size_t)height;
+        if (pixels > source_shape_size - 16u || pixels > (SIZE_MAX - 16u) / 8u)
+            port_guest_unwind("ESH packed bitmap extent is invalid");
+        shape_bytes = 16u + pixels * 8u;
+        if (relative > UINT32_MAX || shape_bytes > UINT32_MAX - relative ||
+            relative > output_extent - output_payload ||
+            shape_bytes > output_extent - output_payload - relative)
+            port_guest_unwind("expanded ESH exceeds output allocation");
+
+        destination_shape = output + output_payload + relative;
+        memcpy(destination_shape, source_shape, 16u);
+        destination_shape[0] = (uint8_t)((width * 8u) & 0xffu);
+        destination_shape[1] = (uint8_t)(((width * 8u) >> 8) & 0xffu);
+        destination_pixels = destination_shape + 16u;
+        base_color = (uint8_t)(source_shape[13] >> 4);
+        memset(destination_pixels, base_color, pixels * 8u);
+
+        for (plane = 0; plane < 4u; ++plane) {
+            uint8_t pattern = (uint8_t)(source_shape[12u + plane] & 0x0fu);
+            size_t byte_index;
+            const uint8_t *plane_source;
+            if (pattern == 0)
+                break;
+            if (pixels > (source_shape_size - 16u) / (plane + 1u))
+                port_guest_unwind("ESH color plane exceeds source record");
+            plane_source = source_shape + 16u + pixels * plane;
+            for (byte_index = 0; byte_index < pixels; ++byte_index) {
+                uint8_t packed = plane_source[byte_index];
+                unsigned bit;
+                for (bit = 0; bit < 8u; ++bit) {
+                    if ((packed & (uint8_t)(0x80u >> bit)) != 0)
+                        destination_pixels[byte_index * 8u + bit] |= pattern;
+                }
+            }
+        }
+
+        /* ESH offsets are relative to the expanded archive payload. */
+        {
+            size_t offset_at = 6u + (size_t)count * 4u + (size_t)index * 4u;
+            uint32_t stored_offset = (uint32_t)relative;
+            output[offset_at] = (uint8_t)(stored_offset & 0xffu);
+            output[offset_at + 1u] = (uint8_t)((stored_offset >> 8) & 0xffu);
+            output[offset_at + 2u] = (uint8_t)((stored_offset >> 16) & 0xffu);
+            output[offset_at + 3u] = (uint8_t)((stored_offset >> 24) & 0xffu);
+        }
+        relative += shape_bytes;
+    }
+
+    /* The zero-shape path returns after the assembly's initial size clear. */
+    total_size = count == 0 ? 0 : output_payload + relative;
+    output[0] = (uint8_t)(total_size & 0xffu);
+    output[1] = (uint8_t)((total_size >> 8) & 0xffu);
+    output[2] = (uint8_t)((total_size >> 16) & 0xffu);
+    output[3] = (uint8_t)((total_size >> 24) & 0xffu);
+}
+
+/* Translate asm/file_load_shape2d_palmap_apply.ASM. SHAPE2D colors produced
+   by ESH expansion are four-bit indices, matching seg034_shape2d_group.c's
+   16-entry palette map. */
+void file_load_shape2d_palmap_apply(uint8_t *archive,
+                                    const uint8_t *palette_map)
+{
+    size_t extent;
+    uint16_t count;
+    uint16_t index;
+
+    if (palette_map == NULL ||
+        !archive_view(archive, &extent, &count, NULL))
+        port_guest_unwind("invalid shape palette-map buffers");
+
+    for (index = 0; index < count; ++index) {
+        uint8_t *shape;
+        size_t shape_size;
+        size_t pixel_count;
+        size_t pixel;
+        uint16_t width;
+        uint16_t height;
+
+        if (!shape_entry_span(archive, index, &shape, &shape_size))
+            port_guest_unwind("shape palette-map offset outside archive");
+        width = read_u16(shape);
+        height = read_u16(shape + 2u);
+        pixel_count = (size_t)width * (size_t)height;
+        if (pixel_count > UINT16_MAX)
+            pixel_count = (uint16_t)pixel_count;
+        if (pixel_count > shape_size - 16u ||
+            (size_t)(shape - archive) + 16u + pixel_count > extent)
+            port_guest_unwind("shape palette-map pixels exceed archive");
+
+        for (pixel = 0; pixel < pixel_count; ++pixel) {
+            uint8_t color = shape[16u + pixel];
+            if (color >= 16u)
+                port_guest_unwind("ESH pixel exceeds palette-map range");
+            shape[16u + pixel] = palette_map[color];
+        }
+    }
+}
+
 static int shape_name_equal(const uint8_t *stored, const char *requested)
 {
     size_t i;
@@ -532,33 +676,74 @@ void *locate_shape_nofatal(uint8_t *archive, const char *name)
 {
     uint16_t count;
     uint16_t i;
+    uint16_t j;
     size_t extent;
     size_t payload;
     if (!archive_view(archive, &extent, &count, &payload))
         return NULL;
-    (void)extent;
     for (i = 0; i < count; ++i) {
         const uint8_t *stored = archive + 6u + (size_t)i * 4u;
-        if (shape_name_equal(stored, name))
-            return file_get_shape2d(archive, i);
+        if (shape_name_equal(stored, name)) {
+            uint32_t relative = read_u32(archive + 6u + (size_t)count * 4u +
+                                         (size_t)i * 4u);
+            size_t next = extent - payload;
+            if ((size_t)relative >= next)
+                return NULL;
+            for (j = 0; j < count; ++j) {
+                uint32_t other = read_u32(archive + 6u + (size_t)count * 4u +
+                                          (size_t)j * 4u);
+                if (other > relative && (size_t)other < next)
+                    next = (size_t)other;
+            }
+            if (next <= relative)
+                return NULL;
+            /* The locator returns a typed archive entry, not necessarily a
+               SHAPE2D bitmap: entries such as gnam/gsna are plain strings. */
+            return archive + payload + relative;
+        }
     }
-    (void)payload;
     return NULL;
 }
 
 void *locate_shape_fatal(uint8_t *archive, char *name)
 {
     void *shape = locate_shape_nofatal(archive, name);
-    if (shape == NULL)
-        port_guest_unwind("shape not found in resource archive");
+    if (shape == NULL) {
+        char requested[5] = { 0, 0, 0, 0, 0 };
+        char detail[96];
+        uint16_t count = 0;
+        unsigned i;
+        if (name != NULL)
+            memcpy(requested, name, 4u);
+        if (archive_view(archive, NULL, &count, NULL)) {
+            char entries[4][5] = { { 0 } };
+            unsigned shown = count < 4u ? count : 4u;
+            for (i = 0; i < shown; ++i)
+                memcpy(entries[i], archive + 6u + (size_t)i * 4u, 4u);
+            (void)snprintf(detail, sizeof(detail),
+                           "shape %.4s absent from archive [%.4s %.4s %.4s %.4s]",
+                           requested, entries[0], entries[1], entries[2], entries[3]);
+        } else {
+            (void)snprintf(detail, sizeof(detail),
+                           "shape %.4s lookup received invalid archive", requested);
+        }
+        port_guest_unwind(detail);
+    }
     return shape;
 }
 
 void *locate_sound_fatal(uint8_t *archive, char *name)
 {
     void *sound = locate_shape_nofatal(archive, name);
-    if (sound == NULL)
-        port_guest_unwind("sound not found in resource archive");
+    if (sound == NULL) {
+        char requested[5] = { 0, 0, 0, 0, 0 };
+        char detail[96];
+        if (name != NULL)
+            memcpy(requested, name, 4u);
+        (void)snprintf(detail, sizeof(detail),
+                       "sound %.4s not found in resource archive", requested);
+        port_guest_unwind(detail);
+    }
     return sound;
 }
 

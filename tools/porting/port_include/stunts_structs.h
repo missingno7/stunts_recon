@@ -8558,9 +8558,9 @@ struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
 /* src/obj_seg006.c:24; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
-    unsigned numverts;
+    U16 numverts;
     struct VECTOR far* verts;
-    unsigned numprimitives;
+    U16 numprimitives;
     I8 numpaints;
     I8 reserved;
     U8  far* primitives;

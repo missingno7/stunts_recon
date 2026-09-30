@@ -171,6 +171,10 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "random.c",
         "font.c",
         "sincos.c",
+        "polang.c",
+        "projection.c",
+        "matrix.c",
+        "vehicle.c",
         "file.c", "resource.c", "audio.c", "platform.c", "trace.c", "trace_hooks.c",
     ]
     out_dir = BUILD / "port-obj"

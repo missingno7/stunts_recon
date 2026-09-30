@@ -1,5 +1,7 @@
 #include "port_runtime.h"
 
+#include <limits.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -249,6 +251,53 @@ void sprite_clear_1_color(uint8_t color)
             port_guest_unwind("sprite clear exceeded backing extent");
         for (x = left; x < right; ++x)
             pixels[offset + x - left] = color;
+    }
+}
+
+/* Translate the 94-byte context `load_2477e` copy loop (instruction
+   boundaries verified; no strict recipe). It saves a rectangle from the
+   active sprite into a shape bitmap using the shape's DOS x/y origin. */
+void sprite_clear_shape(PortShape2D *shape)
+{
+    size_t source_extent;
+    size_t destination_extent;
+    size_t shape_pixels_count;
+    uint8_t *source = sprite_pixels(&s_sprite1, &source_extent);
+    uint8_t *destination = shape_pixels(shape, &destination_extent);
+    uint16_t width;
+    uint16_t height;
+    uint16_t source_x;
+    uint16_t source_y;
+    uint16_t row;
+    uint16_t pitch;
+    uint16_t active_height;
+
+    if (source == NULL || destination == NULL ||
+        s_sprite1.lineofs == NULL || s_sprite1.sprite_bitmapptr == NULL)
+        port_guest_unwind("invalid sprite save-under buffers");
+    width = shape->width;
+    height = shape->height;
+    source_x = shape->pos_x;
+    source_y = shape->pos_y;
+    pitch = s_sprite1.words2[4];
+    active_height = s_sprite1.sprite_bitmapptr->height;
+    shape_pixels_count = (size_t)width * height;
+    if ((size_t)width > destination_extent ||
+        shape_pixels_count > destination_extent || source_x > pitch ||
+        width > pitch - source_x || source_y > active_height ||
+        height > active_height - source_y)
+        port_guest_unwind("sprite save-under outside active bounds");
+
+    for (row = 0; row < height; ++row) {
+        size_t source_offset = (size_t)s_sprite1.lineofs[source_y + row] +
+                               source_x;
+        size_t destination_offset = (size_t)row * width;
+        if (source_offset > source_extent ||
+            (size_t)width > source_extent - source_offset ||
+            destination_offset > destination_extent ||
+            (size_t)width > destination_extent - destination_offset)
+            port_guest_unwind("sprite save-under exceeded backing extent");
+        memmove(destination + destination_offset, source + source_offset, width);
     }
 }
 
@@ -536,7 +585,6 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
     for (lane = 0; lane < 12; ++lane) {
         unsigned source_row = row_pattern[11u - lane];
         unsigned row_step = 0;
-        uint16_t row_phase = (uint16_t)(phase_word + lane);
 
         for (;;) {
             uint32_t row_index = source_row + 12u * row_step;
@@ -544,7 +592,7 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
             uint16_t source_offset;
             uint16_t target_offset;
             int remaining = width;
-            uint16_t xphase = row_phase;
+            uint16_t xphase = (uint16_t)(phase_word + lane + row_step);
             unsigned target_height = s_sprite1.sprite_bitmapptr->height;
 
             if (row_index >= height || target_row >= target_height)
@@ -590,7 +638,6 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
                 ++xphase;
             }
             ++row_step;
-            ++row_phase;
         }
     }
 
@@ -614,4 +661,117 @@ void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color)
     if (offset >= extent)
         port_guest_unwind("font pixel exceeded sprite backing extent");
     pixels[offset] = color;
+}
+
+/* Host-view adapter for asm/putpixel_single_maybe.ASM. Its four signed
+   half-open clip comparisons select the active sprite, then its lineofs[y]
+   plus x address and low color byte are reproduced by the common plotter. */
+void putpixel_single_maybe(int16_t x, int16_t y, int16_t color)
+{
+    port_sprite_plot_active(x, y, (uint8_t)color);
+}
+
+static void fill_active_span(int left, int y, int right_exclusive,
+                             uint8_t color)
+{
+    size_t extent;
+    uint8_t *pixels = sprite_pixels(&s_sprite1, &extent);
+    int clip_left = (int)s_sprite1.words2[0];
+    int clip_right = (int)s_sprite1.words2[1];
+    int clip_top = (int)s_sprite1.words2[2];
+    int clip_bottom = (int)s_sprite1.words2[3];
+    size_t offset;
+
+    if (pixels == NULL || s_sprite1.lineofs == NULL ||
+        y < clip_top || y >= clip_bottom)
+        return;
+    if (left < clip_left) left = clip_left;
+    if (right_exclusive > clip_right) right_exclusive = clip_right;
+    if (right_exclusive <= left)
+        return;
+    offset = (size_t)s_sprite1.lineofs[(uint16_t)y] + (size_t)left;
+    if (offset > extent ||
+        (size_t)(right_exclusive - left) > extent - offset)
+        port_guest_unwind("polygon span exceeded active sprite extent");
+    memset(pixels + offset, color, (size_t)(right_exclusive - left));
+}
+
+/* Host scan converter for the flat-color route selected by
+   asm/prerender_wheel_raster.ASM:_preRender_default. The matching assembly
+   entry is a 15-byte shared-code dispatcher (context.py preRender_default,
+   load_217b2); the checked Restunts shape3d.c::preRender_default_impl lead
+   describes the edge arrays but does not prove a strict source match. */
+void preRender_default(int16_t color, int16_t point_count,
+                       const int16_t *points)
+{
+    int min_y = INT16_MAX;
+    int max_y = INT16_MIN;
+    int point;
+
+    if (points == NULL || point_count <= 0)
+        return;
+    for (point = 0; point < point_count; ++point) {
+        int y = points[point * 2 + 1];
+        if (y < min_y) min_y = y;
+        if (y > max_y) max_y = y;
+    }
+
+    for (int y = min_y; y <= max_y; ++y) {
+        int left = INT_MAX;
+        int right = INT_MIN;
+
+        for (point = 0; point < point_count; ++point) {
+            int next = point + 1 == point_count ? 0 : point + 1;
+            int x0 = points[point * 2];
+            int y0 = points[point * 2 + 1];
+            int x1 = points[next * 2];
+            int y1 = points[next * 2 + 1];
+
+            if (y0 == y1) {
+                if (y == y0) {
+                    if (x0 < left) left = x0;
+                    if (x0 > right) right = x0;
+                    if (x1 < left) left = x1;
+                    if (x1 > right) right = x1;
+                }
+            } else if ((y >= y0 && y <= y1) ||
+                       (y >= y1 && y <= y0)) {
+                int64_t numerator = (int64_t)(x1 - x0) * (y - y0);
+                int x = x0 + (int)(numerator / (y1 - y0));
+                if (x < left) left = x;
+                if (x > right) right = x;
+            }
+        }
+        if (left <= right)
+            fill_active_span(left, y, right + 1, (uint8_t)color);
+    }
+}
+
+/* The alternate and wheel-face entries join the same shared scan converter
+   in asm/prerender_wheel_raster.ASM. This host bridge handles the flat-color
+   quadrilateral call shape emitted by src/preRender_wheel.c; patterned edge
+   records remain a separate reconstruction task. */
+void preRender_default_alt(int16_t color, int16_t point_count,
+                           const int16_t *points)
+{
+    preRender_default(color, point_count, points);
+}
+
+void preRender_wheel_helper4(int16_t color, int16_t point_count, ...)
+{
+    va_list args;
+    int16_t *points;
+    int point;
+
+    if (point_count <= 0 || point_count > 64)
+        return;
+    points = (int16_t *)malloc((size_t)point_count * 2u * sizeof(*points));
+    if (points == NULL)
+        port_guest_unwind("wheel face point allocation failed");
+    va_start(args, point_count);
+    for (point = 0; point < (int)point_count * 2; ++point)
+        points[point] = (int16_t)va_arg(args, int);
+    va_end(args);
+    preRender_default(color, point_count, points);
+    free(points);
 }
