@@ -1,0 +1,20 @@
+{
+  "checkpoint_ordinal": 300,
+  "compressed_bytes": 1616,
+  "compression": "zlib",
+  "fixture": "splash",
+  "format_version": 1,
+  "height": 200,
+  "indices_sha256": "e8859cc237915de335d3d3d62fafa59aaa52939ab9c9913f8a4da9d7b7926f8b",
+  "palette_rgb6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "payload": "splash.idxz",
+  "payload_sha256": "1890441854fa2848161902c352aebfb989cf4406baae43325ef2d3b20e3dab5b",
+  "portforge_frame_sha256": "34243bb80947ff9ce6a2bf794d29e854dc739f7ae430019cf51d20dc3f3dc9c6",
+  "program_sha256": "09fe56fc50bad3a28267e27acf46ba67a20eae0199764a5958e9892bf92be2c2",
+  "replay_fingerprint": "8f82ed91295f9abe7d3529b3426c1db1f0389a6bdcd91c192421e659d6d25da0",
+  "source_file_sha256": "c1d6c6709b561ba85965b348b352db751b2977245c719fbb936ccb2c8a6a50dc",
+  "source_pfidx": "checkpoint_000000000300.pfidx",
+  "uncompressed_bytes": 64768,
+  "video_mode": 19,
+  "width": 320
+}

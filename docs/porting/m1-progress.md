@@ -29,9 +29,14 @@ instruction boundaries but no strict recipe or established C owner. A worker
 candidate compiled to 148 bytes; `promote.py --verify-only` rejected it because
 the complete contribution length differs from the 94-byte target. The SDL
 implementation in `port/sprite.c` is therefore recorded as a semantic port,
-not a strict historical match. The interlaced `sprite_1_unk3` path follows the
-row, skip, and lane-local phase updates in
-`asm/seg012_sprite_1_unk_group.ASM`; it also has no strict recipe.
+not a strict historical match. `sprite_1_unk3` follows the row, skip, and
+lane-local phase updates in `asm/seg012_sprite_1_unk_group.ASM`; it also has no
+strict recipe. Its SDL port previously advanced SI and DI after each byte
+copied by `mov al,[si]` / `mov es:[di],al`. Those instructions do not advance
+either register; only the explicit skip/phase updates do. Removing the two
+extra increments restores the byte lanes and completes the title lettering.
+`tests/test_sdl3_sprite.py` exercises all four phases with the real `prod` and
+`titl` assets from SDTITL.PVS.
 
 The timer callback list is driven from the 99.998 Hz host tick, and SDL scan
 codes update DOS key-down state and the BIOS-style character queue. Enter was
@@ -51,28 +56,29 @@ against Port Forge indexed framebuffer and RGB6 palette dumps are:
 
 | SDL capture | Port Forge reference | Pixel differences | Palette differences |
 |---|---|---:|---:|
-| `m1-after-shape-fixcapture/frame-000004.fbr` | `checkpoint_000000000300.pfidx` | 811 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
-| `m1-after-shape-fixcapture/frame-000008.fbr` | `checkpoint_000000000600.pfidx` | 3,439 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
-| `m1-keyburst-capture/frame-000009.fbr` | `palette_cld1_audit/checkpoint_000000001200.pfidx` | 423 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
+| `m1b-title-check/frame-000004.fbr` | `checkpoint_000000000300.pfidx` (splash) | 0 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
+| `m1b-title-check/frame-000008.fbr` | `checkpoint_000000000600.pfidx` (title) | 0 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
+| `m1b-menu-aligned/frame-000016.fbr` | `checkpoint_000000001200.pfidx` (menu) | 0 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
 
-The title capture at frame 4 differs only at x mod 5 = 4 (811 pixels, all
-black in SDL where the reference contains logo colors). This is consistent
-with the four interlaced phases visible in `sprite_blit_to_video` leaving the
-fifth column phase unrefreshed in this transition capture. It is a diagnostic
-observation, not an established fix: the screen sequence advances after this
-capture, and no equivalent stable title checkpoint has yet been matched.
+The reported frame-4 (811 pixels) and frame-8 (3,439 pixels) `x mod 5 = 4`
+mismatches came from the extra SI/DI increments in `sprite_1_unk3`, not a
+missing pass in `sprite_blit_to_video`. Both captures now match their
+references exactly, including the complete title lettering.
 
-The menu frame 9 has exact palette equality and 423 differing indices, all in
-the small region x=105..215, y=119..198. The Port Forge raw framebuffer has a
-magenta rectangle and a white mouse cursor over the car there; the rest of the
-menu indices are identical. The SDL menu image also has an exact RGB match to
-Port Forge's `stunts_forged/build/source-game/intro-native-menu.png`, but that PNG is
-diagnostic evidence, not the strict indexed framebuffer-plus-palette oracle.
-Neither screen is pixel-exact against an equivalent Port Forge indexed state.
-A scan of the ignored `m1-*` captures found 823 unique SDL images; scanning
-Port Forge's indexed references found 82 unique images. There was no exact
-framebuffer-plus-palette pair among palette-compatible comparisons. No
-screen-equality regression has been added, and no mismatch is masked.
+The menu reference already contains its software cursor and magenta button
+outline. `run_menu` initializes button 0 ("Let's Drive"),
+`mouse_timer_sprite_unknown` draws its outline, and `input_checking` draws the
+cursor via `mouse_draw_transparent` after mouse coordinates change. The port
+needed the INT 33h X coordinate to honor `mousehorscale` at the DOS boundary;
+SDL events remain in logical pixels. With the pointer at logical (208,189),
+the `frame-000016.fbr` menu image and RGB6 palette match checkpoint 1200
+exactly. Fixtures under `tests/fixtures/sdl3/` store compressed indexed bytes
+plus RGB6 palette, source identities, and hashes. The documented
+`pack_sdl3_reference.py` script packs the Port Forge PFIDX files without
+conversion or tolerance, and `tests/test_sdl3_framebuffer.py` asserts exact
+bytes for all three screens. `port_video_present` snapshots direct framebuffer
+and palette changes at the host presentation boundary, so cursor and hover
+drawing written between explicit publication calls is visible and captured.
 
 ## Build, inventory, and next work
 
@@ -81,12 +87,35 @@ links 20 host objects. The generated `build/sdl3/stub-inventory.json` currently
 reports **41 function stubs and 3 data stubs**, down from the M0 inventory of
 **117 function stubs and 4 data stubs**. Port-host C changes remain separate
 from historical object ownership; no original asset, oracle, accepted ownership
-row, pinned-runtime row, or raw-byte ownership was changed. The full
-`tools/validate.py` suite was not run because this worktree is known to have six
-checks that depend on ignored `build/workers` files.
+row, pinned-runtime row, or raw-byte ownership was changed. The function
+stubs fail fast and the three data stubs remain zero-filled. Remaining groups
+include file/replay/input/audio and cleanup services, shape operations, and
+the 3D raster path (`preRender_line`, `preRender_patterned`,
+`preRender_sphere`, `preRender_unk`, `draw_line_related`, `skybox_op_helper`).
+They are listed in the generated `build/sdl3/stub-inventory.json`.
 
-The next visual blockers are to establish an equivalent title checkpoint for
-the interlaced capture and a menu reference with the same mouse cursor state as
-the SDL framebuffer. The current run reaches the interactive menu without
-logging a later unresolved host-service boundary; menu actions beyond the
-intro-to-menu path remain unverified.
+The clean `tools/validate.py` acceptance run passed: 725 tests (zero failed or
+skipped), independent DOSBox-X parity for 90 contributions, fresh
+`HYBRID_EXACT` whole-image equality with 2,588 relocations, and BSS real link
+status `PLACED`.
+
+Validated initialized-image ownership bytes:
+
+| Ownership class | Bytes |
+|---|---:|
+| Matching C code | 137,978 |
+| Matching C data | 16,640 |
+| Matching ASM code | 30,977 |
+| Matching ASM data | 5,575 |
+| Pinned runtime code | 7,576 |
+| Pinned runtime data | 1,192 |
+| Link fill | 56 |
+| BSS in image | 6 |
+| Unresolved raw bytes | 0 |
+
+The first-screen boundary is now exact. M1 does not implement gameplay. M2
+should first land one deterministic race-entry frame: load the chosen track,
+initialize the 3D renderer and car state, and enter simulation with the 20 Hz
+catch-up step. Keep loading, renderer, vehicle initialization, and tick
+advancement as separately traceable boundaries; verify the first frame before
+expanding to ongoing race input and frame pacing.

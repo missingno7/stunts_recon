@@ -14,6 +14,7 @@ static uint64_t s_frame_id;
 static SDL_Color s_colors[256];
 static uint8_t s_palette6[256u * 3u];
 static uint8_t s_published_frame[PORT_FRAMEBUFFER_BYTES];
+static uint8_t s_published_palette6[256u * 3u];
 static char s_capture_dir[512];
 
 static void write_u16le(FILE *stream, uint16_t value)
@@ -83,6 +84,7 @@ int port_video_init(SDL_Renderer *renderer)
     memset(port_framebuffer, 0, sizeof(port_framebuffer));
     memset(s_published_frame, 0, sizeof(s_published_frame));
     memset(s_palette6, 0, sizeof(s_palette6));
+    memset(s_published_palette6, 0, sizeof(s_published_palette6));
     port_sprite_init();
     for (i = 0; i < 256; ++i) {
         s_colors[i].r = 0;
@@ -162,6 +164,7 @@ void port_video_publish(const char *reason)
     memcpy(frame, port_framebuffer, sizeof(frame));
     memcpy(s_published_frame, frame, sizeof(s_published_frame));
     memcpy(palette, s_palette6, sizeof(palette));
+    memcpy(s_published_palette6, palette, sizeof(s_published_palette6));
     frame_id = ++s_frame_id;
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
@@ -176,19 +179,33 @@ void port_video_present(void)
     int scale;
     SDL_FRect destination;
     uint8_t frame[PORT_FRAMEBUFFER_BYTES];
+    uint8_t palette6[sizeof(s_palette6)];
     SDL_Color colors[256];
     uint64_t frame_id;
+    int published_live_changes = 0;
     if (s_renderer == NULL || s_texture == NULL)
         return;
     if (s_frame_lock != NULL)
         SDL_LockMutex(s_frame_lock);
+    if (memcmp(port_framebuffer, s_published_frame, sizeof(s_published_frame)) != 0 ||
+        memcmp(s_palette6, s_published_palette6, sizeof(s_published_palette6)) != 0) {
+        memcpy(s_published_frame, port_framebuffer, sizeof(s_published_frame));
+        memcpy(s_published_palette6, s_palette6, sizeof(s_published_palette6));
+        frame_id = ++s_frame_id;
+        published_live_changes = 1;
+    }
     memcpy(frame, s_published_frame, sizeof(frame));
     memcpy(colors, s_colors, sizeof(colors));
+    memcpy(palette6, s_published_palette6, sizeof(palette6));
     frame_id = s_frame_id;
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
     if (frame_id == 0)
         return;
+    if (published_live_changes) {
+        dump_frame(frame_id, "host_present", frame, palette6);
+        port_trace_video_publication("host_present");
+    }
     SDL_SetPaletteColors(s_palette, colors, 0, 256);
     SDL_UpdateTexture(s_texture, NULL, frame, PORT_SCREEN_WIDTH);
     if (!SDL_GetRenderOutputSize(s_renderer, &output_w, &output_h))

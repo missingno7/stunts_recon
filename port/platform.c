@@ -9,6 +9,8 @@ typedef struct PortIntRegisters {
     uint16_t ax, bx, cx, dx, si, di, cflag;
 } PortIntRegisters;
 
+extern uint16_t mousehorscale;
+
 int int86(int interrupt_number, void *input, void *output)
 {
     PortIntRegisters regs;
@@ -33,15 +35,21 @@ int int86(int interrupt_number, void *input, void *output)
             uint16_t buttons;
             port_input_mouse_get(&x, &y, &buttons);
             regs.bx = buttons;
-            regs.cx = (uint16_t)x;
+            /* Mode 13h exposes 640 DOS mouse columns for the game's 320-wide
+               logical screen when mousehorscale is set. SDL events stay in
+               logical pixels; convert only at the INT 33h boundary. */
+            regs.cx = (uint16_t)((uint16_t)x << mousehorscale);
             regs.dx = (uint16_t)y;
             break;
         }
         case 4:
-            port_input_mouse_set((int16_t)regs.cx, (int16_t)regs.dx);
+            port_input_mouse_set((int16_t)(regs.cx >> mousehorscale),
+                                 (int16_t)regs.dx);
             break;
         case 7:
-            port_input_mouse_set_x_bounds((int16_t)regs.cx, (int16_t)regs.dx);
+            port_input_mouse_set_x_bounds(
+                (int16_t)(regs.cx >> mousehorscale),
+                (int16_t)(regs.dx >> mousehorscale));
             break;
         case 8:
             port_input_mouse_set_y_bounds((int16_t)regs.cx, (int16_t)regs.dx);
