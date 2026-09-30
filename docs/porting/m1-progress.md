@@ -47,23 +47,32 @@ historical ownership.
 The SDL runtime displays the Broderbund splash, Stunts title, the transition
 art, and the main-menu scene. Enter advances the intro and reaches the menu.
 Captures and trace files are kept in ignored `build/sdl3/` output. Comparisons
-against the Port Forge references are:
+against Port Forge indexed framebuffer and RGB6 palette dumps are:
 
 | SDL capture | Port Forge reference | Pixel differences | Palette differences |
 |---|---|---:|---:|
-| `m1-palmap-capture/frame-000004.fbr` | `checkpoint_000000000300.pfidx` | 811 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
-| `m1-palmap-capture/frame-000008.fbr` | `checkpoint_000000000600.pfidx` | 3,439 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
-| `m1-phases2-capture/frame-000012.fbr` | `intro-oracle-menu.png` | 12,424 / 64,000 RGB pixels | not applicable |
-| `m1-keyforce-capture/frame-000013.fbr` | `intro-oracle-menu.png` | 12,984 / 64,000 RGB pixels | not applicable |
+| `m1-after-shape-fixcapture/frame-000004.fbr` | `checkpoint_000000000300.pfidx` | 811 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
+| `m1-after-shape-fixcapture/frame-000008.fbr` | `checkpoint_000000000600.pfidx` | 3,439 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
+| `m1-keyburst-capture/frame-000009.fbr` | `palette_cld1_audit/checkpoint_000000001200.pfidx` | 423 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
 
-The menu mismatch is dominated by the x mod 5 = 4 column phase (12,049 of
-12,424 pixels in the closer frame). The native `sprite_blit_to_video` source
-draws four sampled phases when no key is read and copies the full shape when a
-key is read during that loop. The targeted key capture recorded this full-copy
-branch, but its following menu frame still differs substantially. The
-remaining column pattern is consistent with an incomplete transition sample;
-that explanation remains unproven. No title or menu comparison is pixel-exact,
-so no screen-equality regression has been added.
+The title capture at frame 4 differs only at x mod 5 = 4 (811 pixels, all
+black in SDL where the reference contains logo colors). This is consistent
+with the four interlaced phases visible in `sprite_blit_to_video` leaving the
+fifth column phase unrefreshed in this transition capture. It is a diagnostic
+observation, not an established fix: the screen sequence advances after this
+capture, and no equivalent stable title checkpoint has yet been matched.
+
+The menu frame 9 has exact palette equality and 423 differing indices, all in
+the small region x=105..215, y=119..198. The Port Forge raw framebuffer has a
+magenta rectangle and a white mouse cursor over the car there; the rest of the
+menu indices are identical. The SDL menu image also has an exact RGB match to
+Port Forge's `stunts_forged/build/source-game/intro-native-menu.png`, but that PNG is
+diagnostic evidence, not the strict indexed framebuffer-plus-palette oracle.
+Neither screen is pixel-exact against an equivalent Port Forge indexed state.
+A scan of the ignored `m1-*` captures found 823 unique SDL images; scanning
+Port Forge's indexed references found 82 unique images. There was no exact
+framebuffer-plus-palette pair among palette-compatible comparisons. No
+screen-equality regression has been added, and no mismatch is masked.
 
 ## Build, inventory, and next work
 
@@ -76,8 +85,8 @@ row, pinned-runtime row, or raw-byte ownership was changed. The full
 `tools/validate.py` suite was not run because this worktree is known to have six
 checks that depend on ignored `build/workers` files.
 
-The next visual blocker is to establish and reproduce the complete title/menu
-transition state, then compare its framebuffer and RGB6 palette at the same
-Port Forge checkpoint. The current run reaches the interactive menu without
+The next visual blockers are to establish an equivalent title checkpoint for
+the interlaced capture and a menu reference with the same mouse cursor state as
+the SDL framebuffer. The current run reaches the interactive menu without
 logging a later unresolved host-service boundary; menu actions beyond the
 intro-to-menu path remain unverified.
