@@ -18,6 +18,8 @@ Full validation independently recompiles active C and reassembles active ASM und
 
 ## Clean-clone reproduction
 
+Provenance citations of the form `build/workers/<worker>/...` in `docs/`, `evidence/` and `layout/` record where a historical investigation ran. That scratch is not retained; the durable evidence is the tracked documentation under `docs/` (notably `docs/evidence/freeze-campaign/`), `evidence/`, and the accepted sources and recipes.
+
 The tests and byte-exact validation gate do not depend on ignored `build/workers/`, `build/references/`, or a pre-generated `build/oracle/` image. Copy the original assets to the clone's ignored `assets/`, install Capstone 5.0.3 into `build/python` as above, and provision the pinned tools at the paths in `layout/toolchain.json`. Then run:
 
 ```powershell
