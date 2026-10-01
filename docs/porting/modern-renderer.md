@@ -32,3 +32,20 @@ The existing framebuffer/F12 capture checks still exercise raw 320×200 pixels.
 
 Later milestone claims require executable evidence; this document does not
 confer renderer acceptance.
+
+## Ordered semantic boundary
+
+`port/render/legacy_adapter.py` instruments only the generated host view of
+`polyinfo()`. It copies each record immediately before the existing dispatch.
+The faithful calls and reset still run. Commands contain pool index, linked
+ordinal, signed depth, primitive type, material, ordered projected points,
+selection clip, both resolved colours, wheel colours, pattern class and word.
+A zero-word stipple still has a command, while the faithful renderer suppresses
+its draw. Sphere point 1 holds a radius. No pointers into game scratch survive.
+
+The exact shape-pipeline test now checks this stream against the independently
+executed locked DOS pool and draw chain for 1,124 fixtures: all 194 resources,
+the existing 736 wheel camera/object rotations, and 194 additional material
+fixtures covering solid, stipple, two-colour and zero-word suppression. Full
+64 KiB framebuffer, pool and chain equality still pass in those fixtures.
+The production semantic audit also passes after this instrumentation.

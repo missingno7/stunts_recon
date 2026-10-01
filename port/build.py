@@ -15,6 +15,7 @@ import zipfile
 
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
+from render.legacy_adapter import adapt_render_stream
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build" / "sdl3"
@@ -570,6 +571,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             # Host BSS order instead placed the pool pointer there. Give the
             # head its own element and alias the marker deliberately.
             transformed = adapt_polygon_storage(transformed)
+            transformed = adapt_render_stream(transformed)
             transformed += ("\nuint16_t port_game_y_rotation_snapshot(void) { "
                             "return (uint16_t)mat_y_rot_angle; }\n")
 
@@ -641,6 +643,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "sincos.c",
         "polang.c",
         "projection.c",
+        "render/renderer_scene.c",
         "matrix.c",
         "vehicle.c",
         "file.c", "resource.c", "audio.c", "audio_sdl.c", "pc_speaker.c", "cleanup.c", "platform.c", "input_script.c",

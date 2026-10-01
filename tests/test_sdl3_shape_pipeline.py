@@ -43,12 +43,17 @@ def _native_worker(dll_path: Path, spec_path: Path, output_path: Path) -> int:
                     [ctypes.c_uint8] * 2 + [ctypes.c_int16] * 8 +
                     [u8p, u8p, i16p, ctypes.POINTER(ctypes.c_uint16)])
     run.restype = ctypes.c_int
+    copy_commands = dll.renderer_commands_copy
+    copy_commands.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
+    copy_commands.restype = ctypes.c_size_t
+    pattern_variant = ctypes.c_int16.in_dll(dll, "renderer_pattern_variant")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     with output_path.open("wb") as stream:
         for case in spec["cases"]:
             chunk = Path(case["chunk_path"]).read_bytes()
             fixture = case["fixture"]
+            pattern_variant.value = int(fixture.get("pattern_variant", False))
             words = (fixture["camera"] + fixture["pos"] + fixture["rotation"] +
                      [fixture["unk"]] + fixture["projection"] + fixture["clip"])
             chunk_buf = (ctypes.c_uint8 * len(chunk)).from_buffer_copy(chunk)
@@ -61,7 +66,12 @@ def _native_worker(dll_path: Path, spec_path: Path, output_path: Path) -> int:
                      ctypes.byref(count))
             if ok != 1:
                 raise RuntimeError(f"native renderer rejected {case['key']}")
-            rows.append({"key": case["key"], "count": count.value})
+            commands = (ctypes.c_uint8 * (400 * 64))()
+            command_count = copy_commands(commands, 400)
+            if command_count != count.value:
+                raise RuntimeError("semantic command count differs from the faithful queue")
+            rows.append({"key": case["key"], "count": count.value,
+                         "commands_hex": bytes(commands)[:command_count * 64].hex()})
             stream.write(bytes(frame))
             stream.write(bytes(pool))
             stream.write(struct.pack("<401h", *links))
@@ -223,8 +233,9 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
     tables = (
         [index & 0xFF for index in range(256)],
         [(index + 1) & 0xFF for index in range(256)],
-        [0] * 256,
-        [0] * 256,
+        [index % 3 if fixture.get("pattern_variant") else 0 for index in range(256)],
+        [0x77dd if fixture.get("pattern_variant") and index % 4 else 0
+         for index in range(256)],
     )
     for offset, values in zip(color_offsets, tables):
         machine.write_ds(offset, struct.pack("<256h", *values))
@@ -272,6 +283,10 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
 
 
 NATIVE_DRIVER = r'''\
+__declspec(dllexport) I16 renderer_pattern_variant;
+__declspec(dllexport) size_t renderer_commands_copy(PortRenderCommand *out, size_t capacity)
+{ return port_render_stream_copy(out, capacity); }
+_Static_assert(sizeof(PortRenderCommand) == 64, "command probe schema");
 static I8 renderer_parity_pool[0x28A0];
 static I16 renderer_parity_colors[256], renderer_parity_color2[256];
 static I16 renderer_parity_patterns[256], renderer_parity_patterns2[256];
@@ -311,7 +326,8 @@ __declspec(dllexport) int renderer_parity_run(
     for (i = 0; i < 256; ++i) {
         renderer_parity_colors[i] = (I16)(i & 0xFFu);
         renderer_parity_color2[i] = (I16)((i + 1u) & 0xFFu);
-        renderer_parity_patterns[i] = renderer_parity_patterns2[i] = 0;
+        renderer_parity_patterns[i] = renderer_pattern_variant ? i % 3 : 0;
+        renderer_parity_patterns2[i] = renderer_pattern_variant && i % 4 ? 0x77dd : 0;
     }
     copy_material_list_pointers(renderer_parity_colors, renderer_parity_color2,
                                 renderer_parity_patterns, renderer_parity_patterns2, 0);
@@ -452,7 +468,8 @@ def _compile_native_dll(temporary: Path) -> Path:
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),
     ]
     support_objects = []
-    for source in ("matrix.c", "polang.c", "projection.c", "sincos.c", "sprite.c"):
+    for source in ("matrix.c", "polang.c", "projection.c", "sincos.c", "sprite.c",
+                   "render/renderer_scene.c"):
         obj = temporary / f"{Path(source).stem}.o"
         command = [*common, "-c", str(ROOT / "port" / source), "-o", str(obj)]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True,
@@ -554,7 +571,8 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
             for index, row in enumerate(resources):
                 chunk_path = chunks_dir / f"shape-{index:03}.bin"
                 chunk_path.write_bytes(row["chunk"])
-                fixtures = [("menu", MENU_FIXTURE)]
+                fixtures = [("menu", MENU_FIXTURE),
+                            ("patterned", dict(MENU_FIXTURE, pattern_variant=True))]
                 parsed = fmt.parse_shape3d_chunk(row["chunk"])
                 if any(record["type"] == 12 for record in parsed["primitive_records"]):
                     wheel_resources += 1
@@ -565,7 +583,7 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
                                   "fixture": _fixture_dict(fixture)})
                     oracle_cases.append((key, row["chunk"], fixture, label == "menu"))
             self.assertEqual(wheel_resources, 23)  # 22 car meshes plus GAME2's truck.
-            self.assertEqual(len(cases), 930)
+            self.assertEqual(len(cases), 1124)
             spec_path = temp / "native-spec.json"
             spec_path.write_text(json.dumps({"cases": cases}), encoding="utf-8")
             native_path = temp / "native-results.bin"
@@ -613,6 +631,31 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
                                                       key + " native")
                         self.assertEqual(oracle_chain, native_chain,
                                          "ordered polygon queue differs")
+                        # The second backend observes exactly the locked dispatch
+                        # records, in draw-chain order; no re-sorting is allowed.
+                        pool_records = []
+                        offset = 0
+                        for _ in range(native_count):
+                            depth, material, npoints, primitive, _reserved = struct.unpack_from(
+                                "<hBBBB", oracle["pool"], offset)
+                            points = struct.unpack_from("<" + "h" * (npoints * 2),
+                                                        oracle["pool"], offset + 6)
+                            pool_records.append((depth, material, npoints, primitive, points))
+                            offset += 6 + npoints * 4
+                        commands = bytes.fromhex(native_rows[index]["commands_hex"])
+                        self.assertEqual(len(commands), native_count * 64)
+                        for order, pool_index in enumerate(oracle_chain):
+                            command = struct.unpack_from("<HHhBBBBHBBBB4h20h", commands, order * 64)
+                            depth, material, npoints, primitive, points = pool_records[pool_index]
+                            self.assertEqual(command[:12], (
+                                order, pool_index, depth, primitive, material, npoints,
+                                material % 3 if fixture.get("pattern_variant") else 0,
+                                0x77dd if fixture.get("pattern_variant") and material % 4 else 0,
+                                material, (material + 1) & 255,
+                                (material + 1) & 255 if primitive == 3 else 0,
+                                (material + 2) & 255 if primitive == 3 else 0))
+                            self.assertEqual(command[12:16], fixture["clip"])
+                            self.assertEqual(command[16:16+npoints*2], points)
                         if oracle["frame"] != native_frame:
                             offsets = [i for i, (left, right) in enumerate(
                                 zip(oracle["frame"], native_frame)) if left != right]
