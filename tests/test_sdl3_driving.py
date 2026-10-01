@@ -96,7 +96,7 @@ def assert_build_ready() -> None:
     report = json.loads(BUILD_REPORT.read_text(encoding="utf-8"))
     if (report.get("target") != "i686-w64-mingw32" or
             report.get("game_c_objects") != 38 or
-            report.get("port_objects") != 37 or
+            report.get("port_objects") != 39 or
             report.get("compile", {}).get("object_passes") != 38):
         raise AssertionError(
             f"SDL3 build report is not the expected complete host build: {report}")

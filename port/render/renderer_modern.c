@@ -33,7 +33,9 @@ void port_modern_destroy(PortModernBackend *b)
     SDL_DestroyTexture(b->background);
     SDL_DestroyTexture(b->ui);
     SDL_DestroyTexture(b->pattern);
+    SDL_DestroyTexture(b->edges);
     free(b->mesh);
+    free(b->rgba);
     memset(b, 0, sizeof(*b));
 }
 
@@ -192,40 +194,36 @@ static void wheel_face(void *user, const ModernWheelPoint *points, size_t count,
                  draw->viewport,draw->width,draw->height)) draw->ok=0;
 }
 
-int port_modern_draw_projected(PortModernBackend *b, const PortRenderCommand *cmd,
-                              size_t count, const uint8_t *palette,
-                              int width, int height)
+static int draw_command(PortModernBackend *b, const PortRenderCommand *c,
+                        const PortTriPoint *xy, double radius, const uint8_t *palette,
+                        PortViewport v, int width, int height)
 {
-    PortViewport v = port_viewport_fit(width,height);
-    if (v.w <= 0 || v.h <= 0) return 1;
-    for (size_t i = 0; i < count; ++i) {
-        const PortRenderCommand *c = &cmd[i];
         if (c->primitive == PORT_RENDER_POLYGON) {
-            if (c->pattern_mode == PORT_RENDER_STIPPLE && !c->pattern) continue;
+            if (c->pattern_mode == PORT_RENDER_STIPPLE && !c->pattern) return 1;
             PortTriPoint points[10];
-            for (int j=0;j<c->point_count;++j) points[j]=(PortTriPoint){c->points[j].x,c->points[j].y};
+            for (int j=0;j<c->point_count;++j) points[j]=(PortTriPoint){xy[j].x,xy[j].y};
             if (!polygon(b,points,c->point_count,c,palette,v,width,height)) return 0;
         } else if (c->primitive == PORT_RENDER_LINE) {
-            double dx=c->points[1].x-c->points[0].x;
-            double dy=c->points[1].y-c->points[0].y;
+            double dx=xy[1].x-xy[0].x;
+            double dy=xy[1].y-xy[0].y;
             double length=hypot(dx,dy);
             double nx=length ? -dy*.5/length : .5;
             double ny=length ? dx*.5/length : 0;
             PortTriPoint points[4] = {
-                {c->points[0].x+nx,c->points[0].y+ny},
-                {c->points[1].x+nx,c->points[1].y+ny},
-                {c->points[1].x-nx,c->points[1].y-ny},
-                {c->points[0].x-nx,c->points[0].y-ny}
+                {xy[0].x+nx,xy[0].y+ny},
+                {xy[1].x+nx,xy[1].y+ny},
+                {xy[1].x-nx,xy[1].y-ny},
+                {xy[0].x-nx,xy[0].y-ny}
             };
             PortRenderCommand solid=*c; solid.pattern_mode=0;
             if (!polygon(b,points,4,&solid,palette,v,width,height)) return 0;
         } else if (c->primitive == PORT_RENDER_PIXEL) {
-            double x=c->points[0].x,y=c->points[0].y;
+            double x=xy[0].x,y=xy[0].y;
             PortTriPoint points[4]={{x,y},{x+1,y},{x+1,y+1},{x,y+1}};
             PortRenderCommand solid=*c; solid.pattern_mode=0;
             if (!polygon(b,points,4,&solid,palette,v,width,height)) return 0;
         } else if (c->primitive == PORT_RENDER_SPHERE) {
-            double x=c->points[0].x,y=c->points[0].y,r=c->points[1].x;
+            double x=xy[0].x,y=xy[0].y,r=radius;
             b->vertices=0;
             SDL_FColor color=rgb(palette,c->color);
             for (int j=0;j<64;++j) {
@@ -237,18 +235,58 @@ int port_modern_draw_projected(PortModernBackend *b, const PortRenderCommand *cm
             if (b->vertices && !SDL_RenderGeometry(b->renderer,NULL,b->mesh,(int)b->vertices,NULL,0)) return 0;
         } else if (c->primitive == PORT_RENDER_WHEEL) {
             ModernWheelPoint points[4];
-            for (int j=0;j<4;++j) points[j]=(ModernWheelPoint){c->points[j].x,c->points[j].y};
+            for (int j=0;j<4;++j) points[j]=(ModernWheelPoint){xy[j].x,xy[j].y};
             WheelDraw draw={b,*c,palette,v,width,height,1};
             if (!modern_wheel_emit(points,c->color,c->wheel_colors[0],c->wheel_colors[1],wheel_face,&draw) || !draw.ok) return 0;
         } else {
             SDL_SetError("Unsupported semantic primitive %u",c->primitive);
             return 0;
         }
+    return 1;
+}
+
+int port_modern_draw_projected(PortModernBackend *b, const PortRenderCommand *cmd,
+                              size_t count, const uint8_t *palette, int width, int height)
+{
+    PortViewport v=port_viewport_fit(width,height);
+    if (v.w<=0 || v.h<=0) return 1;
+    for (size_t i=0;i<count;++i) {
+        PortTriPoint xy[10]={{0,0}};
+        for (unsigned j=0;j<cmd[i].point_count;++j)
+            xy[j]=(PortTriPoint){cmd[i].points[j].x,cmd[i].points[j].y};
+        if (!draw_command(b,&cmd[i],xy,xy[1].x,palette,v,width,height)) return 0;
+    }
+    return 1;
+}
+
+int port_modern_draw_camera(PortModernBackend *b, const PortNativeCommand *commands,
+                           size_t count, const uint8_t *palette, int width,int height)
+{
+    PortViewport v=port_viewport_fit(width,height);
+    if (v.w<=0 || v.h<=0) return 1;
+    for (size_t i=0;i<count;++i) {
+        const PortNativeCommand *c=&commands[i];
+        PortTriPoint xy[10];
+        for (unsigned j=0;j<c->geometry.point_count;++j) {
+            PortCameraVec3d p=c->geometry.xyz[j];
+            xy[j]=(PortTriPoint){c->projection.center_x+p.x*c->projection.scale_x/p.z,
+                                 c->projection.center_y-p.y*c->projection.scale_y/p.z};
+        }
+        PortRenderCommand paint=c->paint;
+        paint.point_count=c->geometry.point_count;
+        /* UI covers the legacy selection box outside the windscreen. Render
+           behind it as well, so wide side areas contain world, never a
+           horizontally extended dashboard. Projection framing stays fixed. */
+        paint.clip[0]=-32768;paint.clip[1]=32767;
+        paint.clip[2]=0;paint.clip[3]=200;
+        double radius=c->geometry.radius*c->projection.scale_x/c->geometry.xyz[0].z;
+        if (!draw_command(b,&paint,xy,radius,palette,v,width,height)) return 0;
     }
     return 1;
 }
 
 int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size_t count,
+                        const PortNativeCommand *native, size_t native_count,
                         const PortRenderLayer *layer, const uint8_t *frame,
                         const uint8_t *palette, int width, int height)
 {
@@ -260,7 +298,9 @@ int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size
     SDL_SetTextureScaleMode(b->background,SDL_SCALEMODE_NEAREST);
     SDL_SetTextureScaleMode(b->ui,SDL_SCALEMODE_NEAREST);
     SDL_SetTextureBlendMode(b->ui,SDL_BLENDMODE_BLEND);
-    uint8_t background[64000*4], ui[64000*4];
+    if (!b->rgba) b->rgba=malloc(64000u*8u);
+    if (!b->rgba) return 0;
+    uint8_t *background=b->rgba, *ui=b->rgba+64000u*4u;
     for (unsigned i=0;i<64000;++i) {
         for (int channel=0;channel<3;++channel) {
             unsigned value=palette[layer->background[i]*3+channel];
@@ -275,8 +315,33 @@ int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size
         !SDL_UpdateTexture(b->ui,NULL,ui,320*4)) return 0;
     PortViewport v=port_viewport_fit(width,height);
     SDL_FRect destination={v.x,v.y,v.w,v.h};
+    if (port_render_mode()==2 && v.x>0) {
+        /* Only world background rows are extended. Dashboard pixels in the
+           pre-world buffer are UI and must never fill the wide side areas. */
+        if (!b->edges) b->edges=SDL_CreateTexture(b->renderer,SDL_PIXELFORMAT_RGBA32,
+                                                SDL_TEXTUREACCESS_STREAMING,2,200);
+        if (!b->edges) return 0;
+        SDL_SetTextureScaleMode(b->edges,SDL_SCALEMODE_NEAREST);
+        uint8_t edges[200*8];
+        for (int y=0;y<200;++y) {
+            int row=y;
+            if (row<layer->clip[2]) row=layer->clip[2];
+            if (row>=layer->clip[3]) row=layer->clip[3]-1;
+            if (row<0) row=0;
+            if (row>199) row=199;
+            memcpy(edges+y*8,background+row*320*4,4);
+            memcpy(edges+y*8+4,background+(row*320+319)*4,4);
+        }
+        if (!SDL_UpdateTexture(b->edges,NULL,edges,8)) return 0;
+        SDL_FRect edge={0,0,1,200}, left={0,v.y,v.x,v.h};
+        if (!SDL_RenderTexture(b->renderer,b->edges,&edge,&left)) return 0;
+        edge.x=1;
+        SDL_FRect right={v.x+v.w,v.y,v.x,v.h};
+        if (!SDL_RenderTexture(b->renderer,b->edges,&edge,&right)) return 0;
+    }
     if (!SDL_RenderTexture(b->renderer,b->background,NULL,&destination) ||
-        !port_modern_draw_projected(b,cmd,count,palette,width,height) ||
+        !(port_render_mode()==2 ? port_modern_draw_camera(b,native,native_count,palette,width,height) :
+                                 port_modern_draw_projected(b,cmd,count,palette,width,height)) ||
         !SDL_RenderTexture(b->renderer,b->ui,NULL,&destination)) return 0;
     return 1;
 }

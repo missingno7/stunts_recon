@@ -6,6 +6,11 @@
 
 static SDL_Window *s_window;
 static SDL_Renderer *s_renderer;
+static int s_initial_width=960, s_initial_height=720;
+static int s_hidden;
+void port_sdl_hidden_window(void) { s_hidden=1; }
+void port_sdl_initial_size(int width,int height)
+{ s_initial_width=width;s_initial_height=height; }
 static int s_quit;
 
 static void mouse_to_logical(float x, float y, int *logical_x, int *logical_y)
@@ -25,8 +30,9 @@ void port_sdl_init(const char *title)
     s_quit = 0;
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
-    s_window = SDL_CreateWindow(title, 960, 720,
-                              SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
+    s_window = SDL_CreateWindow(title, s_initial_width, s_initial_height,
+                              SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY |
+                              (s_hidden ? SDL_WINDOW_HIDDEN : 0));
     if (s_window == NULL) {
         SDL_Log("SDL_CreateWindow failed: %s", SDL_GetError());
         return;

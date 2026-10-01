@@ -46,6 +46,9 @@ def _native_worker(dll_path: Path, spec_path: Path, output_path: Path) -> int:
     copy_commands = dll.renderer_commands_copy
     copy_commands.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
     copy_commands.restype = ctypes.c_size_t
+    copy_native = dll.renderer_native_copy
+    copy_native.argtypes = [ctypes.c_void_p, ctypes.c_size_t]
+    copy_native.restype = ctypes.c_size_t
     pattern_variant = ctypes.c_int16.in_dll(dll, "renderer_pattern_variant")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -70,7 +73,12 @@ def _native_worker(dll_path: Path, spec_path: Path, output_path: Path) -> int:
             command_count = copy_commands(commands, 400)
             if command_count != count.value:
                 raise RuntimeError("semantic command count differs from the faithful queue")
-            rows.append({"key": case["key"], "count": count.value,
+            native = (ctypes.c_uint8 * (400 * 288))()
+            native_count = copy_native(native, 400)
+            if native_count != count.value:
+                raise RuntimeError(f"camera command count differs for {case['key']}: {native_count} != {count.value}")
+            rows.append({"native_hex": bytes(native)[:native_count*288].hex(),
+                         "key": case["key"], "count": count.value,
                          "commands_hex": bytes(commands)[:command_count * 64].hex()})
             stream.write(bytes(frame))
             stream.write(bytes(pool))
@@ -283,10 +291,33 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
 
 
 NATIVE_DRIVER = r'''\
+extern void *memset(void *, int, size_t);
+extern void *memcpy(void *, const void *, size_t);
 __declspec(dllexport) I16 renderer_pattern_variant;
 __declspec(dllexport) size_t renderer_commands_copy(PortRenderCommand *out, size_t capacity)
 { return port_render_stream_copy(out, capacity); }
 _Static_assert(sizeof(PortRenderCommand) == 64, "command probe schema");
+struct CameraProbeRecord {
+    uint16_t ordinal; int16_t depth;
+    uint8_t type,material,reference_count,count;
+    int16_t xy[20]; double xyz[30];
+};
+_Static_assert(sizeof(struct CameraProbeRecord)==288,"camera probe schema");
+__declspec(dllexport) size_t renderer_native_copy(struct CameraProbeRecord *out, size_t capacity)
+{
+    size_t count; const PortNativeCommand *commands=port_camera_scene(&count);
+    if (capacity<count) return count;
+    for (size_t i=0;i<count;++i) {
+        const PortCameraCommand *c=&commands[i].geometry;
+        memset(&out[i],0,sizeof out[i]);
+        out[i].ordinal=c->primitive_ordinal;out[i].depth=c->depth;
+        out[i].type=c->type;out[i].material=c->material;
+        out[i].reference_count=c->reference_point_count;out[i].count=c->point_count;
+        memcpy(out[i].xy,c->reference_xy,sizeof out[i].xy);
+        memcpy(out[i].xyz,c->xyz,sizeof out[i].xyz);
+    }
+    return count;
+}
 static I8 renderer_parity_pool[0x28A0];
 static I16 renderer_parity_colors[256], renderer_parity_color2[256];
 static I16 renderer_parity_patterns[256], renderer_parity_patterns2[256];
@@ -347,6 +378,9 @@ __declspec(dllexport) int renderer_parity_run(
     port_sprite_init();
     set_projection(proj_left, proj_top, proj_width, proj_height);
     (void)select_rot(z, x, y, &clip, (flags & 1u) != 0u);
+    port_render_set_mode("modern");
+    port_camera_scene_reference_only(1);
+    port_camera_scene_begin();
     (void)trans_op(&ts);
     *count_out = (U16)polygonnumber;
     for (j = 0; j < sizeof(renderer_parity_pool); ++j)
@@ -469,7 +503,8 @@ def _compile_native_dll(temporary: Path) -> Path:
     ]
     support_objects = []
     for source in ("matrix.c", "polang.c", "projection.c", "sincos.c", "sprite.c",
-                   "render/renderer_scene.c", "render/renderer_ui.c"):
+                   "render/renderer_scene.c", "render/renderer_ui.c",
+                   "render/renderer_camera.c", "render/renderer_camera_scene.c"):
         obj = temporary / f"{Path(source).stem}.o"
         command = [*common, "-c", str(ROOT / "port" / source), "-o", str(obj)]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True,
@@ -644,6 +679,8 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
                             offset += 6 + npoints * 4
                         commands = bytes.fromhex(native_rows[index]["commands_hex"])
                         self.assertEqual(len(commands), native_count * 64)
+                        native_commands=bytes.fromhex(native_rows[index]["native_hex"])
+                        self.assertEqual(len(native_commands),native_count*288)
                         for order, pool_index in enumerate(oracle_chain):
                             command = struct.unpack_from("<HHhBBBBHBBBB4h20h", commands, order * 64)
                             depth, material, npoints, primitive, points = pool_records[pool_index]
@@ -656,6 +693,13 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
                                 (material + 2) & 255 if primitive == 3 else 0))
                             self.assertEqual(command[12:16], fixture["clip"])
                             self.assertEqual(command[16:16+npoints*2], points)
+                            geometry=struct.unpack_from("<HhBBBB20h30d",native_commands,order*288)
+                            self.assertEqual(geometry[1:5],(depth,primitive,material,npoints),
+                                             "camera semantics differ from accepted oracle record")
+                            if primitive not in (2,):
+                                self.assertEqual(geometry[6:6+npoints*2],points,
+                                                 "camera reference projection differs from DOS")
+                            self.assertTrue(all(z>=12 for z in geometry[28:28+geometry[5]*3:3]))
                         if oracle["frame"] != native_frame:
                             offsets = [i for i, (left, right) in enumerate(
                                 zip(oracle["frame"], native_frame)) if left != right]

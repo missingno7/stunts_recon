@@ -32,10 +32,13 @@ class ModernRendererTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_native_patterns_materials_and_painter_order(self):
-        self.run_probe("modern_probe.c", ["renderer_modern.c", "triangulate2d.c", "modern_wheel.c"], True)
+        self.run_probe("modern_probe.c", ["renderer_modern.c", "triangulate2d.c", "modern_wheel.c", "renderer_scene.c"], True)
 
     def test_world_and_ui_write_provenance(self):
         self.run_probe("renderer_ui_probe.c", ["renderer_ui.c"])
 
     def test_concavity_winding_degeneracy_and_rejection(self):
         self.run_probe("triangulate_probe.c", ["triangulate2d.c"])
+
+    def test_camera_near_clip_reference_depth_and_painter_insertion(self):
+        self.run_probe("camera_probe.c", ["renderer_camera.c"])

@@ -154,6 +154,7 @@ int port_video_init(SDL_Renderer *renderer);
 void port_video_set_palette(uint16_t first, uint16_t count,
                             const uint8_t *rgb6);
 void port_video_set_capture_dir(const char *path);
+void port_video_set_render_capture_dir(const char *path);
 void port_video_set_debug_capture_dir(const char *path);
 int port_video_debug_capture_enabled(void);
 void port_video_debug_capture(void);
@@ -295,6 +296,8 @@ int port_audio_is_silent(void);
 void port_audio_shutdown(void);
 
 void port_sdl_init(const char *title);
+void port_sdl_initial_size(int width, int height);
+void port_sdl_hidden_window(void);
 int port_sdl_poll(void);
 void port_sdl_shutdown(void);
 void port_sdl_sleep_until(uint64_t deadline_ns);

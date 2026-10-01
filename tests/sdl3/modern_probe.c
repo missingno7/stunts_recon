@@ -1,6 +1,7 @@
 #include "renderer_modern.h"
 #include "pattern.h"
-#include <assert.h>
+#include <stdlib.h>
+#define assert(x) do { if (!(x)) { fprintf(stderr,"FAIL line %d: %s\n",__LINE__,#x); exit(1); } } while (0)
 #include <stdio.h>
 #include <string.h>
 
@@ -44,6 +45,63 @@ int main(void)
         SDL_DestroySurface(read);
         port_modern_destroy(&b);SDL_DestroyRenderer(r);SDL_DestroySurface(surface);
     }
+
+    /* Same camera snapshot, central composition and UI at three aspect ratios.
+       Side polygons were never quantized or admitted by a 320-wide viewport. */
+    assert(port_render_set_mode("modern"));
+    SDL_Surface *baseline=NULL;
+    const int widths[]={960,1280,1680};
+    PortNativeCommand native[2]={0};
+    for (int i=0;i<2;++i) {
+        native[i].projection=(PortCameraProjection){160,75,160,75,150,120};
+        native[i].geometry.type=PORT_CAMERA_FILLED_POLYGON;
+        native[i].geometry.point_count=4;
+        native[i].paint.primitive=PORT_RENDER_POLYGON;native[i].paint.color=1;
+        native[i].paint.clip[1]=320;native[i].paint.clip[3]=151;
+        double left=i?-380:-13;
+        native[i].geometry.xyz[0]=(PortCameraVec3d){left,40,300};
+        native[i].geometry.xyz[1]=(PortCameraVec3d){left+30,40,300};
+        native[i].geometry.xyz[2]=(PortCameraVec3d){left+30,-350,300};
+        native[i].geometry.xyz[3]=(PortCameraVec3d){left,-350,300};
+    }
+    PortRenderLayer *layer=SDL_calloc(1,sizeof *layer);
+    uint8_t *frame=SDL_malloc(64000);
+    assert(layer&&frame);
+    memset(frame,2,64000);memset(layer->background,3,64000);
+    layer->valid=1;layer->clip[1]=320;layer->clip[3]=151;
+    memset(layer->ui_mask+151*320,1,49*320);
+    for (unsigned size=0;size<3;++size) {
+        int w=widths[size];
+        SDL_Surface *surface=SDL_CreateSurface(w,720,SDL_PIXELFORMAT_RGBA32);
+        SDL_Renderer *r=SDL_CreateSoftwareRenderer(surface);
+        PortModernBackend b;assert(port_modern_init(&b,r));
+        assert(port_modern_compose(&b,NULL,0,native,2,layer,frame,palette,w,720));
+        SDL_Surface *read=SDL_RenderReadPixels(r,NULL);assert(read);
+        int margin=(w-960)/2;
+        if (!baseline) baseline=SDL_DuplicateSurface(read);
+        else {
+            assert(read->format==baseline->format);
+            for (int y=0;y<720;++y)
+                assert(!memcmp((uint8_t *)baseline->pixels+y*baseline->pitch,
+                               (uint8_t *)read->pixels+y*read->pitch+margin*4,960*4));
+        }
+        uint8_t red,green,blue,alpha;
+        /* Dashboard stays central; the extra area contains native world below
+           the old windscreen selection bottom rather than extended UI. */
+        if (margin) {
+            assert(SDL_ReadSurfacePixel(read,margin-75,600,&red,&green,&blue,&alpha));
+            assert(red==255&&green==0&&blue==0);
+            assert(SDL_ReadSurfacePixel(read,margin-10,600,&red,&green,&blue,&alpha));
+            if (!(red==0&&green==0&&blue==255)) fprintf(stderr,"side background %u %u %u at width%d\n",red,green,blue,w);
+            assert(red==0&&green==0&&blue==255);
+        }
+        /* Left boundary is x=153.5, giving a half-logical-pixel edge. */
+        assert(SDL_ReadSurfacePixel(read,margin+461,240,&red,&green,&blue,&alpha));
+        assert(red==255);
+        SDL_DestroySurface(read);port_modern_destroy(&b);
+        SDL_DestroyRenderer(r);SDL_DestroySurface(surface);
+    }
+    SDL_DestroySurface(baseline);SDL_free(layer);SDL_free(frame);
     puts("native triangles: ordered coverage, RGB6 and 8x2 screen phase pass");
     return 0;
 }

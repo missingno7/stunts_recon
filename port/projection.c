@@ -174,3 +174,11 @@ void vector_to_point(const int16_t *vector, int16_t *point)
     point[0] = projection_x_axis(vector[0], depth);
     point[1] = projection_y_axis(vector[1], depth);
 }
+
+/* Render-only snapshot; no host thread reads live projection words. */
+void port_projection_snapshot(int16_t *out)
+{
+    out[0]=projectiondata5;out[1]=projectiondata8;
+    out[2]=projection_half_width;out[3]=projection_half_height;
+    out[4]=projectiondata9;out[5]=projectiondata10;
+}

@@ -4,6 +4,9 @@
 #include "render/viewport.h"
 #ifdef PORT_RENDER_INSTRUMENT
 #include "render/renderer_modern.h"
+static PortNativeCommand s_published_native[PORT_NATIVE_MAX_COMMANDS];
+static PortNativeCommand s_present_native[PORT_NATIVE_MAX_COMMANDS];
+static size_t s_published_native_count,s_present_native_count;
 static PortModernBackend s_modern;
 static PortRenderLayer s_published_layer, s_present_layer;
 static PortRenderCommand s_published_commands[400], s_present_commands[400];
@@ -33,6 +36,16 @@ static uint8_t s_palette6[256u * 3u];
 static uint8_t s_published_frame[PORT_FRAMEBUFFER_BYTES];
 static uint8_t s_published_palette6[256u * 3u];
 static char s_capture_dir[512];
+static char s_render_capture_dir[512];
+static int s_render_captured;
+static unsigned s_world_presentations;
+
+void port_video_set_render_capture_dir(const char *path)
+{
+    s_render_capture_dir[0]=0;s_render_captured=0;s_world_presentations=0;
+    if (path && *path && strlen(path)<sizeof s_render_capture_dir && SDL_CreateDirectory(path))
+        strcpy(s_render_capture_dir,path);
+}
 static char s_debug_capture_dir[1100];
 static unsigned s_debug_capture_sequence;
 
@@ -173,6 +186,7 @@ int port_video_init(SDL_Renderer *renderer)
 #ifdef PORT_RENDER_INSTRUMENT
     port_render_world_clear();
     s_published_command_count=s_present_command_count=0;
+    s_published_native_count=s_present_native_count=0;
     memset(&s_published_layer,0,sizeof s_published_layer);
     s_modern_failed=0;
     if (port_render_mode() && !port_modern_init(&s_modern,renderer)) return 0;
@@ -246,6 +260,14 @@ void port_video_publish(const char *reason)
         changed |= memcmp(&layer,&s_published_layer,sizeof layer)!=0 ||
             count!=s_published_command_count ||
             memcmp(commands,s_published_commands,count*sizeof(*commands))!=0;
+        size_t native_count=0;
+        const PortNativeCommand *native=port_camera_scene(&native_count);
+        /* Camera scene is immutable throughout this publication. Every scene
+           change also updates the command/layer or the authoritative image. */
+        changed |= native_count!=s_published_native_count ||
+            memcmp(native,s_published_native,native_count*sizeof *native)!=0;
+        port_camera_scene_copy(s_published_native,PORT_NATIVE_MAX_COMMANDS);
+        s_published_native_count=native_count;
         s_published_layer=layer;
         memcpy(s_published_commands,commands,count*sizeof(*commands));
         s_published_command_count=count;
@@ -388,6 +410,8 @@ void port_video_present(void)
         memcpy(frame, s_published_frame, sizeof(frame));
         memcpy(palette6, s_published_palette6, sizeof(palette6));
 #ifdef PORT_RENDER_INSTRUMENT
+        s_present_native_count=s_published_native_count;
+        memcpy(s_present_native,s_published_native,s_present_native_count*sizeof *s_present_native);
         s_present_layer=s_published_layer;
         s_present_command_count=s_published_command_count;
         memcpy(s_present_commands,s_published_commands,s_present_command_count*sizeof(*s_present_commands));
@@ -418,6 +442,7 @@ void port_video_present(void)
 #ifdef PORT_RENDER_INSTRUMENT
     if (port_render_mode() && s_present_layer.valid) {
         modern_drawn=port_modern_compose(&s_modern,s_present_commands,s_present_command_count,
+            s_present_native,s_present_native_count,
             &s_present_layer,s_present_frame,s_present_palette,output_w,output_h);
         if (!modern_drawn && !s_modern_failed) {
             SDL_Log("Modern frame rejected; faithful presentation: %s",SDL_GetError());
@@ -426,6 +451,28 @@ void port_video_present(void)
     }
 #endif
     if (!modern_drawn) SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
+#ifdef PORT_RENDER_INSTRUMENT
+    if (modern_drawn) ++s_world_presentations;
+    if (modern_drawn && s_render_capture_dir[0] && !s_render_captured && s_world_presentations>=30) {
+        char path[1024];
+        SDL_Surface *surface=SDL_RenderReadPixels(s_renderer,NULL);
+        snprintf(path,sizeof path,"%s/output-%06llu.bmp",s_render_capture_dir,(unsigned long long)frame_id);
+        if (surface && SDL_SaveBMP(surface,path)) {
+            dump_frame_to_dir(s_render_capture_dir,frame_id,"native_compare",s_present_frame,s_present_palette);
+            snprintf(path,sizeof path,"%s/output-%06llu.json",s_render_capture_dir,(unsigned long long)frame_id);
+            FILE *f=fopen(path,"wb");
+            if (f) {
+                fprintf(f,"{\"frame_id\":%llu,\"width\":%d,\"height\":%d,\"camera_commands\":%u,\"projected_commands\":%u,\"backend\":\"%s\"}\n",
+                    (unsigned long long)frame_id,output_w,output_h,(unsigned)s_present_native_count,
+                    (unsigned)s_present_command_count,SDL_GetRendererName(s_renderer));
+                fclose(f);
+            }
+            s_render_captured=1;
+            SDL_Log("Native output and faithful comparison saved: %s",s_render_capture_dir);
+        }
+        SDL_DestroySurface(surface);
+    }
+#endif
     if (SDL_RenderPresent(s_renderer)) {
         s_presented_version = image_version;
         s_redraw_needed = 0;

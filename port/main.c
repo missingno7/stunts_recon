@@ -143,6 +143,7 @@ int main(int argc, char **argv)
     const char *diagnostics_root = NULL;
     const char *config_path = NULL;
     const char *renderer_name = NULL;
+    const char *render_capture_dir = "";
     char default_config_path[1024];
     int debug = 0;
     int run_ms = -1;
@@ -171,6 +172,18 @@ int main(int argc, char **argv)
             config_path = argv[i] + 9;
         else if (strncmp(argv[i], "--renderer=", 11) == 0)
             renderer_name = argv[i] + 11;
+        else if (strncmp(argv[i], "--render-capture-dir=", 21) == 0)
+            render_capture_dir = argv[i] + 21;
+        else if (strncmp(argv[i], "--window=", 9) == 0) {
+            int width,height; char trailing;
+            if (sscanf(argv[i]+9,"%dx%d%c",&width,&height,&trailing)!=2 ||
+                width<320 || height<200 || width>16384 || height>16384) {
+                fprintf(stderr,"Invalid --window size\n");return 2;
+            }
+            port_sdl_initial_size(width,height);
+        }
+        else if (strcmp(argv[i], "--hidden") == 0)
+            port_sdl_hidden_window();
         else if (strncmp(argv[i], "--test-startup-seed=", 20) == 0)
             test_startup_seed = argv[i] + 20;
         else if (strcmp(argv[i], "--test-auto-protection") == 0)
@@ -265,6 +278,7 @@ int main(int argc, char **argv)
     }
     port_sdl_init("Stunts 1.1 - SDL3 faithful port");
     port_video_set_capture_dir(capture_dir);
+    port_video_set_render_capture_dir(render_capture_dir);
     port_trace_open(trace_path, port_runtime_asset_root());
     port_video_set_debug_capture_dir(debug ? port_diagnostics_directory() : "");
     port_memory_init();

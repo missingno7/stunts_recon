@@ -82,3 +82,43 @@ input, publication cadence and replay code are unchanged.
 Focused probes check native stipple/dither coverage, painter order, RGB6,
 concavity, and explicit UI provenance. All 1,124 DOS shape differential fixtures
 remain exact with layer instrumentation present.
+
+## Camera-space projection
+
+The generated `trans_op` observer sits after selection of `mview`, fixed-word
+position and visibility masks, before the legacy rectangle rejects. It repeats
+`mat_vec` and word additions synchronously; its copied XYZ words cannot mutate
+simulation. Scene commands own the widened coordinates, projection and palette
+interpretation. The host never reads game globals. Semantic structs explicitly
+use pack 8 because the generated game's pack-2 ABI otherwise moves double fields.
+
+`set_projection(xangle,yangle,width,height)` takes half-angles in degrees,
+converted by integer floor(degrees*1024/360), and uses recovered fast sin/cos.
+The renderer captures the resulting centers (`projectiondata5/8`) and focal
+scales (`projectiondata9/10`). It evaluates `cx+X*fx/Z, cy-Y*fy/Z` in doubles.
+At 960×720, x scales by 3 and y by 3.6, preserving the intended 4:3 display.
+For wider windows at the same height, those scales stay constant; only the
+horizontal clip expands. Dashboard views use the original height-dependent
+half-angle and center (e.g. 35,151/6,320,151); they are not replaced with an
+estimated uniform field of view. Roof/dashboard assets occlude a full world
+layer in the central composition, so side areas show world behind that UI.
+
+The z=12 near plane and fixed-word intersections are retained initially.
+Separate integer reference projection reproduces clipped adjacent-point
+suppression and facing decisions. Captured accepted POLYINFO depth/count
+override computed reference values. Sorting is local to each original shape
+call; its forced insertion flags and scene call order are preserved. A global
+Z sort would be incorrect.
+
+The expanded 1,124-fixture differential now checks camera command type,
+material, depth, painter chain and independently projected reference points
+against the locked DOS records, alongside unchanged full frame/pool equality.
+Native probes prove fractional edge placement and identical central 4:3
+composition at 960×720, 1280×720 and 1680×720; UI does not extend sideways.
+`--window=WIDTHxHEIGHT --hidden --render-capture-dir=PATH` supports automated
+native capture. It writes a native BMP and exact indexed FBR for the same
+published frame, with output size and both command counts in a sidecar.
+
+Track candidate enumeration is still the recovered 23-tile footprint at this
+milestone. Horizontal clip expansion alone cannot add tiles never submitted;
+this is the next integration boundary, not a completed widescreen claim.
