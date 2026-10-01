@@ -1,5 +1,6 @@
 #include "port_runtime.h"
 #include "render/viewport.h"
+#include "render/renderer.h"
 
 #include <SDL3/SDL.h>
 
@@ -31,6 +32,14 @@ void port_sdl_init(const char *title)
         return;
     }
     s_renderer = SDL_CreateRenderer(s_window, "software");
+#ifdef PORT_RENDER_INSTRUMENT
+    if (port_render_mode()) {
+        SDL_DestroyRenderer(s_renderer);
+        s_renderer = SDL_CreateRenderer(s_window, "gpu");
+        if (!s_renderer) s_renderer = SDL_CreateRenderer(s_window, NULL);
+        if (s_renderer) SDL_Log("Modern renderer backend: %s",SDL_GetRendererName(s_renderer));
+    }
+#endif
     if (s_renderer == NULL) {
         SDL_Log("SDL_CreateRenderer failed: %s", SDL_GetError());
         return;

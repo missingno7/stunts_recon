@@ -7,6 +7,7 @@ def adapt_render_stream(source: str) -> str:
         source = source.replace(old, new, 1)
     replace("    link = POLYINFO_CAPACITY;\n    for (polyIndex",
             "    port_render_stream_begin((const int16_t *)&selection_rect);\n"
+            "    port_render_world_begin_active();\n"
             "    link = POLYINFO_CAPACITY;\n    for (polyIndex")
     replace("        fill = mat_copy_clr_lst_ptr[materialIndex];\n        switch (info->type)",
             "        fill = mat_copy_clr_lst_ptr[materialIndex];\n"
@@ -18,4 +19,19 @@ def adapt_render_stream(source: str) -> str:
             "            info->type == 3 ? mat_copy_clr_lst_ptr[materialIndex + 1] : 0,\n"
             "            info->type == 3 ? mat_copy_clr_lst_ptr[materialIndex + 2] : 0);\n"
             "        switch (info->type)")
-    return '#include "render/renderer.h"\n' + source
+    replace("    polyinfo_reset();\n}", "    port_render_world_end();\n    polyinfo_reset();\n}")
+    return '#include "render/renderer.h"\n#include "render/renderer_ui.h"\n' + source
+
+
+def adapt_render_layers(unit: str, source: str) -> str:
+    if unit == "src/obj_seg003.c":
+        anchor="void update_frame(I8 page, struct RECTANGLE* clip) {"
+        call="port_render_world_arm();"
+    elif unit == "src/obj_seg000.c":
+        anchor="run_menu(void)\n{"
+        call="port_render_world_clear();"
+    else:
+        return source
+    if source.count(anchor) != 1:
+        raise ValueError(f"Missing unique compositor boundary: {unit}")
+    return '#include "render/renderer_ui.h"\n'+source.replace(anchor,anchor+"\n    "+call,1)

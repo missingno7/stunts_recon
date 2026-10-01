@@ -2,6 +2,15 @@
 #include "vga_timing.h"
 #include "transition_work.h"
 #include "render/viewport.h"
+#ifdef PORT_RENDER_INSTRUMENT
+#include "render/renderer_modern.h"
+static PortModernBackend s_modern;
+static PortRenderLayer s_published_layer, s_present_layer;
+static PortRenderCommand s_published_commands[400], s_present_commands[400];
+static size_t s_published_command_count, s_present_command_count;
+static uint8_t s_present_frame[64000], s_present_palette[768];
+static int s_modern_failed;
+#endif
 
 #include <SDL3/SDL.h>
 #include <stdio.h>
@@ -161,6 +170,13 @@ int port_video_init(SDL_Renderer *renderer)
         return 0;
     if (!SDL_SetTextureScaleMode(s_texture, SDL_SCALEMODE_NEAREST))
         return 0;
+#ifdef PORT_RENDER_INSTRUMENT
+    port_render_world_clear();
+    s_published_command_count=s_present_command_count=0;
+    memset(&s_published_layer,0,sizeof s_published_layer);
+    s_modern_failed=0;
+    if (port_render_mode() && !port_modern_init(&s_modern,renderer)) return 0;
+#endif
     return 1;
 }
 
@@ -221,6 +237,20 @@ void port_video_publish(const char *reason)
     memcpy(frame, port_framebuffer, sizeof(frame));
     changed = memcmp(frame, s_published_frame, sizeof(frame)) != 0 ||
               memcmp(s_palette6, s_published_palette6, sizeof(s_palette6)) != 0;
+#ifdef PORT_RENDER_INSTRUMENT
+    if (port_render_mode()) {
+        PortRenderLayer layer;
+        PortRenderCommand commands[400];
+        port_render_layer_copy(&layer);
+        size_t count=port_render_stream_copy(commands,400);
+        changed |= memcmp(&layer,&s_published_layer,sizeof layer)!=0 ||
+            count!=s_published_command_count ||
+            memcmp(commands,s_published_commands,count*sizeof(*commands))!=0;
+        s_published_layer=layer;
+        memcpy(s_published_commands,commands,count*sizeof(*commands));
+        s_published_command_count=count;
+    }
+#endif
     if (changed) ++s_image_version;
     memcpy(s_published_frame, frame, sizeof(s_published_frame));
     memcpy(palette, s_palette6, sizeof(palette));
@@ -337,6 +367,12 @@ void port_video_present(void)
         SDL_DestroyTexture(s_texture);
         s_texture = replacement;
         s_recreate_texture = 0;
+#ifdef PORT_RENDER_INSTRUMENT
+        if (port_render_mode()) {
+            port_modern_destroy(&s_modern);
+            if (!port_modern_init(&s_modern,s_renderer)) return;
+        }
+#endif
     }
     if (s_texture == NULL) return;
     if (s_frame_lock != NULL)
@@ -351,6 +387,13 @@ void port_video_present(void)
     if (upload) {
         memcpy(frame, s_published_frame, sizeof(frame));
         memcpy(palette6, s_published_palette6, sizeof(palette6));
+#ifdef PORT_RENDER_INSTRUMENT
+        s_present_layer=s_published_layer;
+        s_present_command_count=s_published_command_count;
+        memcpy(s_present_commands,s_published_commands,s_present_command_count*sizeof(*s_present_commands));
+        memcpy(s_present_frame,frame,sizeof frame);
+        memcpy(s_present_palette,palette6,sizeof palette6);
+#endif
     }
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
@@ -371,7 +414,18 @@ void port_video_present(void)
     destination = (SDL_FRect){viewport.x, viewport.y, viewport.w, viewport.h};
     SDL_SetRenderDrawColor(s_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(s_renderer);
-    SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
+    int modern_drawn=0;
+#ifdef PORT_RENDER_INSTRUMENT
+    if (port_render_mode() && s_present_layer.valid) {
+        modern_drawn=port_modern_compose(&s_modern,s_present_commands,s_present_command_count,
+            &s_present_layer,s_present_frame,s_present_palette,output_w,output_h);
+        if (!modern_drawn && !s_modern_failed) {
+            SDL_Log("Modern frame rejected; faithful presentation: %s",SDL_GetError());
+            s_modern_failed=1;
+        }
+    }
+#endif
+    if (!modern_drawn) SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
     if (SDL_RenderPresent(s_renderer)) {
         s_presented_version = image_version;
         s_redraw_needed = 0;
@@ -392,6 +446,9 @@ void port_video_request_redraw(int reupload)
 
 void port_video_shutdown(void)
 {
+#ifdef PORT_RENDER_INSTRUMENT
+    port_modern_destroy(&s_modern);
+#endif
     if (s_texture != NULL) {
         SDL_DestroyTexture(s_texture);
         s_texture = NULL;

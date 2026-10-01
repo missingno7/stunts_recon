@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "render/renderer_ui_store.h"
 #include "transition_work.h"
 
 #include <limits.h>
@@ -318,7 +319,7 @@ void sprite_clear_1_color(uint8_t color)
         if (offset > extent || (size_t)(right - left) > extent - offset)
             port_guest_unwind("sprite clear exceeded backing extent");
         for (x = left; x < right; ++x)
-            pixels[offset + x - left] = color;
+            port_ui_store(pixels, offset + x - left, color);
     }
 }
 
@@ -410,7 +411,7 @@ void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
         size_t offset = (size_t)s_sprite1.lineofs[row] + (size_t)left;
         if (offset > extent || (size_t)draw_width > extent - offset)
             port_guest_unwind("rectangle fill exceeded backing extent");
-        memset(pixels + offset, (uint8_t)color, (size_t)draw_width);
+        port_ui_fill(pixels, offset, (uint8_t)color, (size_t)draw_width);
     }
 }
 
@@ -494,7 +495,7 @@ void draw_filled_rect(int16_t x, int16_t y, int16_t width,
         if (offset > extent || (size_t)width > extent - offset)
             port_guest_unwind("filled rectangle exceeded active sprite extent");
         for (col = 0; col < width; ++col)
-            pixels[offset + (uint16_t)col] ^= (uint8_t)color;
+            port_ui_xor(pixels, offset + (uint16_t)col, (uint8_t)color);
     }
     if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
         port_video_publish("draw_filled_rect");
@@ -534,7 +535,7 @@ static void draw_opaque(const PortShape2D *shape, int x, int y)
         if (src_offset > src_extent || count > src_extent - src_offset ||
             dst_offset > dst_extent || count > dst_extent - dst_offset)
             port_guest_unwind("sprite blit exceeded backing extent");
-        memcpy(dst + dst_offset, src + src_offset, count);
+        port_ui_blit(dst, dst_offset, src, src_offset, count);
     }
 }
 
@@ -575,9 +576,9 @@ static void compose_boolean(const PortShape2D *shape, int x, int y, int use_and)
             port_guest_unwind("boolean sprite blit exceeded backing extent");
         for (column = 0; column < count; ++column) {
             if (use_and)
-                dst[dst_offset + column] &= src[src_offset + column];
+                port_ui_and(dst, dst_offset + column, src[src_offset + column]);
             else
-                dst[dst_offset + column] |= src[src_offset + column];
+                port_ui_or(dst, dst_offset + column, src[src_offset + column]);
         }
     }
 }
@@ -682,8 +683,8 @@ static void shape2d_draw_runs(const PortShape2D *shape,
                 port_guest_unwind("shape2d row advanced outside the active sprite");
             if ((size_t)destination_offset >= destination_extent)
                 port_guest_unwind("shape2d destination exceeded its sprite extent");
-            destination[destination_offset] = control > 0
-                ? repeated : source[source_index++];
+            port_ui_store(destination, destination_offset, control > 0
+                ? repeated : source[source_index++]);
             --remaining_width;
             if ((int16_t)remaining_width <= 0) {
                 ++row;
@@ -784,7 +785,7 @@ void shape2d_op_unk3(const PortShape2D *shape)
                                     (size_t)target_x;
                     if (offset >= destination_extent)
                         port_guest_unwind("shape2d pixel exceeded its sprite extent");
-                    destination[offset] = color;
+                    port_ui_store(destination, offset, color);
                 }
             }
         }
@@ -846,7 +847,7 @@ void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y)
                                     (size_t)target_x;
                     if (offset >= destination_extent)
                         port_guest_unwind("shape2d destination exceeded its sprite extent");
-                    destination[offset] = color;
+                    port_ui_store(destination, offset, color);
                 }
             }
         } else {
@@ -865,7 +866,7 @@ void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y)
                                     (size_t)target_x;
                     if (offset >= destination_extent)
                         port_guest_unwind("shape2d destination exceeded its sprite extent");
-                    destination[offset] = color;
+                    port_ui_store(destination, offset, color);
                 }
             }
         }
@@ -1037,7 +1038,7 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
                         port_guest_unwind("sprite_1_unk3 source address is unmapped");
                     if (target_host == NULL)
                         port_guest_unwind("sprite_1_unk3 target address is unmapped");
-                    *target_host = *source_host;
+                    port_ui_store(target_host, 0, *source_host);
                 }
                 /* MOV AL,[SI] / MOV ES:[DI],AL advance neither register;
                    both offsets advance only by the phase post-skip below. */
@@ -1074,7 +1075,7 @@ void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color)
     offset = (size_t)s_sprite1.lineofs[(uint16_t)y] + (uint16_t)x;
     if (offset >= extent)
         port_guest_unwind("font pixel exceeded sprite backing extent");
-    pixels[offset] = color;
+    port_ui_store(pixels, offset, color);
 }
 
 /* The font entries access ES:DI directly and never inspect the sprite clip.
@@ -1091,7 +1092,7 @@ void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color)
     offset = (uint16_t)(s_sprite1.lineofs[(uint16_t)y] + (uint16_t)x);
     if (offset >= extent)
         port_guest_unwind("font pixel exceeded sprite backing extent");
-    pixels[offset] = color;
+    port_ui_store(pixels, offset, color);
 }
 
 /* Host-view adapter for asm/putpixel_single_maybe.ASM. Its four signed
@@ -1191,7 +1192,7 @@ static void fill_raster_span(int left, int y, int right_inclusive,
     if (offset > extent || (size_t)(right_inclusive - left + 1) > extent - offset)
         port_guest_unwind("polygon span exceeded active sprite extent");
     if (mode == RASTER_FILL_SOLID) {
-        memset(pixels + offset, color, (size_t)(right_inclusive - left + 1));
+        port_ui_fill(pixels, offset, color, (size_t)(right_inclusive - left + 1));
         return;
     }
 
@@ -1201,10 +1202,9 @@ static void fill_raster_span(int left, int y, int right_inclusive,
     for (x = left; x <= right_inclusive; ++x) {
         mask = rotate_pattern_pixel(mask);
         if ((mask & 1u) != 0)
-            pixels[offset + (size_t)(x - left)] =
-                mode == RASTER_FILL_AUXILIARY ? s_line_auxiliary_color : color;
+            port_ui_store(pixels, offset + (size_t)(x - left), mode == RASTER_FILL_AUXILIARY ? s_line_auxiliary_color : color);
         else if (mode == RASTER_FILL_AUXILIARY)
-            pixels[offset + (size_t)(x - left)] = color;
+            port_ui_store(pixels, offset + (size_t)(x - left), color);
     }
 }
 

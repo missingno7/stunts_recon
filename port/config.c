@@ -9,12 +9,15 @@
 
 #define CONFIG_FILE_LIMIT 65536u
 static int s_manual_word_check;
-static const char s_defaults[] = "{\n  \"manual_word_check\": false\n}\n";
+static int s_modern;
+static const char s_defaults[] = "{\n  \"manual_word_check\": false,\n  \"renderer\": \"faithful\"\n}\n";
 
 typedef struct ConfigJson {
     const char *next;
     int found_manual;
     int manual;
+    int found_renderer;
+    int modern;
 } ConfigJson;
 
 static void whitespace(ConfigJson *json)
@@ -86,7 +89,14 @@ static int json_container(ConfigJson *json, unsigned depth, int object)
             if (*json->next != ':') return 0;
             ++json->next;
         }
-        if (!json_value(json, depth + 1, &boolean)) return 0;
+        if (object && depth == 0 && strcmp(key,"renderer") == 0) {
+            char renderer[32];
+            whitespace(json);
+            if (json->found_renderer || !json_string(json,renderer,sizeof renderer)) return 0;
+            if (strcmp(renderer,"faithful") && strcmp(renderer,"modern")) return 0;
+            json->modern = !strcmp(renderer,"modern");
+            json->found_renderer = 1;
+        } else if (!json_value(json, depth + 1, &boolean)) return 0;
         if (object && depth == 0 && strcmp(key, "manual_word_check") == 0) {
             if (boolean < 0 || json->found_manual) return 0;
             json->manual = boolean;
@@ -173,6 +183,7 @@ int port_config_load(const char *path)
     ConfigJson json;
     int ok;
     s_manual_word_check = 0;
+    s_modern = 0;
     file = SDL_IOFromFile(path, "rb");
     if (!file && !SDL_GetPathInfo(path, &info)) {
         if (create_defaults(path)) fprintf(stderr, "PORT config created: %s\n", path);
@@ -193,17 +204,18 @@ int port_config_load(const char *path)
     ok = SDL_ReadIO(file, text, (size_t)size) == (size_t)size;
     if (!SDL_CloseIO(file)) ok = 0;
     text[size] = 0;
-    json = (ConfigJson){text, 0, 0};
+    json = (ConfigJson){.next=text};
     if (size >= 3 && memcmp(text, "\xef\xbb\xbf", 3) == 0) json.next += 3;
     whitespace(&json);
     ok = ok && !memchr(text, 0, (size_t)size) && *json.next == '{' &&
          json_container(&json, 0, 1);
     whitespace(&json);
     ok = ok && *json.next == 0;
-    if (ok) s_manual_word_check = json.manual;
+    if (ok) { s_manual_word_check = json.manual; s_modern=json.modern; }
     else fprintf(stderr, "PORT config invalid: %s; preserving file, using defaults\n", path);
     SDL_free(text);
     return ok;
 }
 
 int port_config_manual_word_check(void) { return s_manual_word_check; }
+const char *port_config_renderer(void) { return s_modern ? "modern" : "faithful"; }

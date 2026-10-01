@@ -47,9 +47,9 @@ class Sdl3ConfigTests(unittest.TestCase):
         return tuple(map(int, result.stdout.strip().split()))
 
     def test_missing_file_creates_defaults_beside_requested_path(self):
-        path = self.root / "First launch Žlutý config.json"
+        path = self.root / "First launch Ĺ˝lutĂ˝ config.json"
         self.assertEqual(self.probe_file(path), (1, 0))
-        self.assertEqual(json.loads(path.read_text()), {"manual_word_check": False})
+        self.assertEqual(json.loads(path.read_text()), {"manual_word_check": False, "renderer": "faithful"})
         saved = path.read_bytes()
         self.assertEqual(self.probe_file(path), (1, 0))
         self.assertEqual(path.read_bytes(), saved)
@@ -129,7 +129,8 @@ class Sdl3ConfigTests(unittest.TestCase):
                         self.assertTrue(live, "first-launch defaults must reach a live race")
                         self.assertGreater(max(state["frame"] for state in live), 20)
                     self.assertEqual(json.loads(config.read_text()),
-                                     {"manual_word_check": enabled})
+                                     ({"manual_word_check": True} if enabled else
+                                      {"manual_word_check": False, "renderer": "faithful"}))
 
 
 if __name__ == "__main__":

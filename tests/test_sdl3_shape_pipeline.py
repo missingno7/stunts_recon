@@ -469,7 +469,7 @@ def _compile_native_dll(temporary: Path) -> Path:
     ]
     support_objects = []
     for source in ("matrix.c", "polang.c", "projection.c", "sincos.c", "sprite.c",
-                   "render/renderer_scene.c"):
+                   "render/renderer_scene.c", "render/renderer_ui.c"):
         obj = temporary / f"{Path(source).stem}.o"
         command = [*common, "-c", str(ROOT / "port" / source), "-o", str(obj)]
         built = subprocess.run(command, cwd=ROOT, capture_output=True, text=True,

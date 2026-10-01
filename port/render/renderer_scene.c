@@ -5,6 +5,17 @@
 static PortRenderCommand s_stream[PORT_RENDER_MAX_COMMANDS];
 static size_t s_count;
 static int16_t s_clip[4];
+static int s_mode;
+
+int port_render_mode(void) { return s_mode; }
+int port_render_set_mode(const char *name)
+{
+    if (!strcmp(name,"faithful")) s_mode=0;
+    else if (!strcmp(name,"projected")) s_mode=1;
+    else if (!strcmp(name,"modern")) s_mode=2;
+    else return 0;
+    return 1;
+}
 
 void port_render_stream_begin(const int16_t *clip)
 { s_count = 0; memcpy(s_clip, clip, sizeof s_clip); }

@@ -37,4 +37,6 @@ void port_render_stream_emit(uint16_t pool_index, int16_t depth,
                             uint8_t wheel_a, uint8_t wheel_b);
 size_t port_render_stream_copy(PortRenderCommand *out, size_t capacity);
 const PortRenderCommand *port_render_stream(size_t *count);
+int port_render_set_mode(const char *name);
+int port_render_mode(void); /* 0 faithful, 1 projected proof, 2 modern */
 #endif

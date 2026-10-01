@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "render/renderer_ui_store.h"
 
 #include <stdint.h>
 
@@ -147,8 +148,7 @@ void clear_rect(int16_t x, int16_t y, int16_t width, int16_t height,
                 (uint16_t)(destination_at + (uint16_t)column);
             if (offset_fits(source_pixel, 1u, source.extent) &&
                 offset_fits(destination_pixel, 1u, destination.extent))
-                destination.pixels[destination_pixel] =
-                    source.pixels[source_pixel];
+                port_ui_store(destination.pixels, destination_pixel, source.pixels[source_pixel]);
         }
     }
     publish_screen_write("clear_rect", &destination);
@@ -182,7 +182,7 @@ void sprite_1_unk(int16_t x, int16_t y, int16_t width, int16_t height,
             break;
         for (column = 0; column < width; ++column) {
             if (offset_fits(pixel_offset, 1u, destination.extent)) {
-                destination.pixels[pixel_offset] = (uint8_t)color;
+                port_ui_store(destination.pixels, pixel_offset, (uint8_t)color);
                 wrote = 1;
             }
             pixel_offset = (uint16_t)(pixel_offset + 1u);
@@ -235,9 +235,9 @@ static void icon_combine(const PortShape2D *shape, int16_t x, int16_t y,
         for (column = 0; column < width; ++column) {
             if (offset_fits(destination_offset, 1u, destination.extent)) {
                 if (use_and)
-                    destination.pixels[destination_offset] &= source[0];
+                    port_ui_and(destination.pixels, destination_offset, source[0]);
                 else
-                    destination.pixels[destination_offset] |= source[0];
+                    port_ui_or(destination.pixels, destination_offset, source[0]);
                 wrote = 1;
             }
             /* The DOS width-one mask tail uses `and word ptr [di], ax` after
@@ -248,7 +248,7 @@ static void icon_combine(const PortShape2D *shape, int16_t x, int16_t y,
                 uint16_t adjacent =
                     (uint16_t)(destination_offset + 1u);
                 if (offset_fits(adjacent, 1u, destination.extent)) {
-                    destination.pixels[adjacent] = 0;
+                    port_ui_store(destination.pixels, adjacent, 0);
                     wrote = 1;
                 }
             }
@@ -343,9 +343,9 @@ static void shape2d_combine_runs(const PortShape2D *shape, int use_and,
                     (size_t)destination.sprite->lineofs[y] + (size_t)x;
                 if (offset_fits(offset, 1u, destination.extent)) {
                     if (use_and)
-                        destination.pixels[offset] &= mask;
+                        port_ui_and(destination.pixels, offset, mask);
                     else
-                        destination.pixels[offset] |= mask;
+                        port_ui_or(destination.pixels, offset, mask);
                 }
             }
         }

@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "render/renderer.h"
 
 #include <SDL3/SDL.h>
 #include <setjmp.h>
@@ -141,6 +142,7 @@ int main(int argc, char **argv)
     const char *audio_driver = "ad15";
     const char *diagnostics_root = NULL;
     const char *config_path = NULL;
+    const char *renderer_name = NULL;
     char default_config_path[1024];
     int debug = 0;
     int run_ms = -1;
@@ -167,6 +169,8 @@ int main(int argc, char **argv)
             diagnostics_root = argv[i] + 18;
         else if (strncmp(argv[i], "--config=", 9) == 0)
             config_path = argv[i] + 9;
+        else if (strncmp(argv[i], "--renderer=", 11) == 0)
+            renderer_name = argv[i] + 11;
         else if (strncmp(argv[i], "--test-startup-seed=", 20) == 0)
             test_startup_seed = argv[i] + 20;
         else if (strcmp(argv[i], "--test-auto-protection") == 0)
@@ -229,6 +233,11 @@ int main(int argc, char **argv)
         config_path = default_config_path;
     }
     port_config_load(config_path);
+    if (!port_render_set_mode(renderer_name ? renderer_name : port_config_renderer())) {
+        fprintf(stderr,"Invalid renderer (use faithful, modern or projected)\n");
+        port_diagnostics_close(2,"invalid renderer"); return 2;
+    }
+    port_diagnostics_note("renderer",renderer_name ? renderer_name : port_config_renderer());
     port_diagnostics_note("config_path", config_path);
     port_diagnostics_note("manual_word_check",
         port_config_manual_word_check() ? "true" : "false");

@@ -15,7 +15,7 @@ import zipfile
 
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
-from render.legacy_adapter import adapt_render_stream
+from render.legacy_adapter import adapt_render_stream, adapt_render_layers
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build" / "sdl3"
@@ -297,6 +297,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         transformed, removed = probe.transformed_source(
             source, text, local_fns, local_data, shared_tags)
         transformed = adapt_host_idle_waits(source, transformed)
+        transformed = adapt_render_layers(source, transformed)
         if source == "src/obj_seg000.c":
             transformed = (
                 "extern int port_input_test_auto_protection_enabled(void);\n"
@@ -644,6 +645,8 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "polang.c",
         "projection.c",
         "render/renderer_scene.c",
+        "render/renderer_modern.c", "render/renderer_ui.c",
+        "render/triangulate2d.c", "render/modern_wheel.c",
         "matrix.c",
         "vehicle.c",
         "file.c", "resource.c", "audio.c", "audio_sdl.c", "pc_speaker.c", "cleanup.c", "platform.c", "input_script.c",
@@ -666,6 +669,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     common = [
         str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
         "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
+        "-DPORT_RENDER_INSTRUMENT=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
