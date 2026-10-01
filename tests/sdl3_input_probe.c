@@ -23,6 +23,9 @@ static uint8_t s_last_codes[384];
 static size_t s_last_code_count;
 static double s_trace_u, s_trace_v;
 static uint16_t s_trace_buttons;
+static unsigned s_activity_wakes;
+
+void port_guest_notify_activity(void) { ++s_activity_wakes; }
 
 void port_guest_check_stop(void)
 {
@@ -107,6 +110,7 @@ int main(void)
     port_input_init();
 
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_UP, 0);
+    ok &= check(s_activity_wakes != 0, "physical input wakes an idle guest");
     ok &= check(s_last_code_count == 2 && s_last_codes[0] == 0xE0 &&
                 s_last_codes[1] == 0x48,
                 "physical arrow press is recorded as extended DOS scans");

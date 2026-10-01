@@ -422,6 +422,7 @@ void port_input_handle_event(int event_type, int code, int value)
     } else if (event_type == SDL_EVENT_WINDOW_FOCUS_LOST) {
         clear_pressed_input();
     }
+    port_guest_notify_activity();
 }
 
 /* Apply the raw Set-1 bytes used by Port Forge's exact DOS input channel.
@@ -477,6 +478,7 @@ void port_input_apply_dos_scancode(uint8_t code)
         }
     }
     input_unlock();
+    port_guest_notify_activity();
 }
 
 uint8_t port_input_key_state(uint16_t dos_scan)
@@ -508,6 +510,7 @@ void port_input_mouse_set(int16_t x, int16_t y)
     if (s_mouse_x > s_mouse_max_x) s_mouse_x = s_mouse_max_x;
     if (s_mouse_y > s_mouse_max_y) s_mouse_y = s_mouse_max_y;
     input_unlock();
+    port_guest_notify_activity();
 }
 
 void port_input_mouse_set_buttons(uint16_t buttons)
@@ -515,6 +518,7 @@ void port_input_mouse_set_buttons(uint16_t buttons)
     input_lock();
     s_mouse_buttons = (uint8_t)(buttons & 7u);
     input_unlock();
+    port_guest_notify_activity();
 }
 
 void port_input_mouse_set_x_bounds(int16_t min_x, int16_t max_x)

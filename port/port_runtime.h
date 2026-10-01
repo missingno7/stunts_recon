@@ -98,6 +98,9 @@ void port_guest_stop_after_publication(void);
 void port_guest_request_stop(const char *reason);
 void port_guest_check_stop(void);
 void port_timer_pump(void);
+uint32_t port_guest_activity_snapshot(void);
+void port_guest_notify_activity(void);
+void port_guest_wait_for_activity(uint32_t observed);
 void port_guest_exit(int status);
 void port_guest_set_exit_status(int status);
 

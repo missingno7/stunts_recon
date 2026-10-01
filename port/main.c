@@ -88,6 +88,7 @@ void port_guest_request_stop(const char *reason)
                  reason != NULL ? reason : "host requested shutdown");
         port_trace_host_stop(s_guest_requested_stop_reason);
         SDL_SetAtomicInt(&s_guest_stop_pending, 1);
+        port_guest_notify_activity();
     }
 }
 

@@ -24,6 +24,105 @@ DEFAULT_ASSETS = ROOT / "assets"
 DATA_STUB_BYTES = 65536
 
 
+def adapt_host_idle_waits(source: str, text: str) -> str:
+    """Yield at audited UI backedges, preserving the recovered input routine."""
+    changes: list[tuple[str, str]] = []
+    if source == "src/obj_seg000.c":
+        for variable, epoch in (("mouseDelta", "menu"), ("timerDiff", "track"),
+                                ("rotationDeltaY", "car"), ("timeDelta", "opponent")):
+            old = f"    {variable} = /* PLATFORM(input_mouse):"
+            changes.append((old, f"    uint32_t port_{epoch}_activity = "
+                            "port_guest_activity_snapshot();\n" + old))
+        changes.extend([
+            ("        if (keyCode == 0)\n            continue;",
+             "        if (keyCode == 0) {\n"
+             "            if (selection == oldSelection)\n"
+             "                port_guest_wait_for_activity(port_menu_activity);\n"
+             "            continue;\n        }"),
+            ("    if (keyCodePressed == 0)\n        goto menu_loop;",
+             "    if (keyCodePressed == 0) {\n"
+             "        if (trackSelection == lastSelection)\n"
+             "            port_guest_wait_for_activity(port_track_activity);\n"
+             "        goto menu_loop;\n    }"),
+            ("        if (key == 0)\n            continue;",
+             "        if (key == 0) {\n"
+             "            if (selectionIndex == lastSelection)\n"
+             "                port_guest_wait_for_activity(port_opponent_activity);\n"
+             "            continue;\n        }"),
+            ("    if (keyCode != 0)\n    {\n      switch (keyCode)",
+             "    if (keyCode == 0 && rotationDeltaY == 0 && "
+             "selectedButtonY == previousButton)\n"
+             "        port_guest_wait_for_activity(port_car_activity);\n"
+             "    if (keyCode != 0)\n    {\n      switch (keyCode)"),
+        ])
+    elif source == "src/obj_seg005.c":
+        changes.extend([
+            ("void loop_game(I16 mode, I16 frame_index, I16 frame_offset)\n{",
+             "void loop_game(I16 mode, I16 frame_index, I16 frame_offset)\n{\n"
+             "    uint32_t port_replay_activity;"),
+            ("        key_code = input_checking(timer_get_delta_alt());",
+             "        port_replay_activity = port_guest_activity_snapshot();\n"
+             "        key_code = input_checking(timer_get_delta_alt());"),
+            ("redraw_input:\n            loop_game(1, core.game_frame, core.game_frame);\n"
+             "            goto next_input;",
+             "redraw_input:\n            loop_game(1, core.game_frame, core.game_frame);\n"
+             "            if (key_code == 0 && inrepflg != 0 &&\n"
+             "                camera_buttons_pressed[2] == 0 && camera_buttons_pressed[3] == 0)\n"
+             "                port_guest_wait_for_activity(port_replay_activity);\n"
+             "            goto next_input;"),
+        ])
+    elif source == "src/obj_seg008.c":
+        changes.extend([
+            ("    case 1:\n        do {\n            key = input_checking",
+             "    case 1:\n        do {\n"
+             "            uint32_t port_activity = port_guest_activity_snapshot();\n"
+             "            key = input_checking"),
+            ("        } while (key == 0);",
+             "            if (key == 0) port_guest_wait_for_activity(port_activity);\n"
+             "        } while (key == 0);"),
+            ("        while (busy) {\n            if (ret != oldchoice)",
+             "        while (busy) {\n"
+             "            uint32_t port_activity = port_guest_activity_snapshot();\n"
+             "            if (ret != oldchoice)"),
+            ("            switch (key) {\n            case KEY_SCAN_UP:",
+             "            if (key == 0 && ret == oldchoice)\n"
+             "                port_guest_wait_for_activity(port_activity);\n"
+             "            switch (key) {\n            case KEY_SCAN_UP:"),
+        ])
+    elif source == "src/obj_seg009.c":
+        changes.extend([
+            ("            stepTime = timer_get_delta_alt()",
+             "            uint32_t port_activity = port_guest_activity_snapshot();\n"
+             "            stepTime = timer_get_delta_alt()"),
+            ("            if (key == 0 && trackStep != 0)\n"
+             "                key = 1;\n        } while (key == 0);",
+             "            if (key == 0 && trackStep != 0)\n"
+             "                key = 1;\n"
+             "            if (key == 0 && trackStep == 0 && animationCount <= 15)\n"
+             "                port_guest_wait_for_activity(port_activity);\n"
+             "        } while (key == 0);"),
+        ])
+    elif source == "src/obj_seg032_group.c":
+        changes.extend([
+            ("      while ((inputKey = kb_call_readchar_callback()) == 0) {",
+             "      for (;;) {\n"
+             "        uint32_t port_activity = port_guest_activity_snapshot();\n"
+             "        inputKey = kb_call_readchar_callback();\n"
+             "        if (inputKey != 0) break;"),
+            ("        readCallback();\n      }",
+             "        readCallback();\n"
+             "        port_guest_wait_for_activity(port_activity);\n      }"),
+        ])
+    if changes:
+        for old, new in changes:
+            if text.count(old) != 1:
+                raise RuntimeError(f"Could not locate unique idle boundary in {source}: {old}")
+            text = text.replace(old, new, 1)
+        text = ("extern uint32_t port_guest_activity_snapshot(void);\n"
+                "extern void port_guest_wait_for_activity(uint32_t);\n" + text)
+    return text
+
+
 def adapt_gameplay_word_arithmetic(source: str) -> str:
     """Keep two reachable 16-bit gameplay expressions exact in the host view."""
     include = '#include "stunts_types.h"\n'
@@ -186,6 +285,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             config.write_text(cfg, encoding="latin-1")
         transformed, removed = probe.transformed_source(
             source, text, local_fns, local_data, shared_tags)
+        transformed = adapt_host_idle_waits(source, transformed)
         if source == "src/obj_seg000.c":
             transformed = (
                 "extern int port_input_test_auto_protection_enabled(void);\n"
@@ -348,8 +448,14 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             original = "\t\tfor (;;) {\n\t\t\twhile (core.game_frame != tmr2) {"
             if transformed.count(original) != 1:
                 raise RuntimeError("Could not locate the race timer dispatch boundary")
-            transformed = "extern void port_guest_check_stop(void);\n" + transformed.replace(
+            transformed = ("extern void port_guest_check_stop(void);\n"
+                           "extern uint32_t port_guest_activity_snapshot(void);\n"
+                           "extern void port_guest_wait_for_activity(uint32_t);\n") + transformed.replace(
                 original, "\t\tfor (;;) {\n\t\t\tport_guest_check_stop();\n"
+                          "\t\t\tuint32_t port_activity = port_guest_activity_snapshot();\n"
+                          "\t\t\tif (core.game_frame == tmr2)\n"
+                          "\t\t\t\tport_guest_wait_for_activity(port_activity);\n"
+                          "\t\t\tport_guest_check_stop();\n"
                           "\t\t\twhile (core.game_frame != tmr2) {")
         elif source == "src/obj_seg004.c":
             for block in ("blk[sub]", "blk"):

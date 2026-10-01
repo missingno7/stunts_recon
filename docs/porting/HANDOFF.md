@@ -61,6 +61,39 @@ Forced termination and power loss cannot produce this crash report.
 After a failure, ZIP the newest session folder and provide it for analysis.
 For a handled game error, `session.log` records the nonzero exit and reason.
 
+## Idle CPU use
+
+The native guest previously retained the DOS polling loops at full host speed.
+Thread sampling found `run_menu -> input_checking -> get_kb_or_joy_flags`
+as the idle-menu hotspot; the race loop also spun after catching its timer
+position. Modern overlays now yield at stable UI backedges (main, track,
+car and opponent menus, modal dialogs, line entry and the track editor),
+paused replay controls and when the race is caught up. Selection changes still redraw immediately.
+
+A condition-variable epoch wakes the guest on each raw PIT tick, physical
+or scripted keyboard/mouse input, focus release and host shutdown. The
+predicate checks both the epoch and undelivered IRQs under the condition
+mutex, including events arriving before the wait. Waiting never reads a
+timer delta or runs a game callback; the original guest polls retain that
+ownership. The shared `input_checking`, VGA status/PRNG polling and frozen
+C/ASM remain intact. An 11 ms timeout bounds shutdown if the clock
+producer fails.
+
+On this development machine, a five-second steady idle-menu window with
+dummy SDL video/audio dropped from 98.4% to 0.3% of one core for the guest
+and from 117.2% to 21.2% for the whole process. Percentages sum CPU time
+across threads; they are not whole-machine Task Manager percentages. The
+remaining steady cost is mainly the software presentation loop. These are
+local measurements, not a performance guarantee for every machine.
+A traced driving window fell from 116.2% to 26.9% of one core for the
+whole process. Both baseline and candidate ran 100 simulation steps during
+the measured five seconds, and all 215 GAMESTATE snapshots in their
+15-second runs matched byte for byte. Paused replay had a separate inner
+polling loop; yielding at its stable no-key edge reduced its guest thread
+from 98.7% to 0.3% of one core. Replay advancement while its controls are
+held and pending track-editor cursor blinks skip the idle wait. A steady
+track-editor window reduced its guest from 97.8% to 0.6% of one core.
+
 ## Current implementation
 
 All 38 historical C units and 31 host objects link with zero generated function
@@ -274,7 +307,7 @@ exception stream to verify the faulting thread and exception code, compares
 the retained executable bytes, and checks normal/debug launches, fresh session
 folders, explicit trace overrides and unavailable-directory handling.
 
-The 2026-10-01 diagnostics run passed all 805 tests without skips, all 90 independent
+The 2026-10-01 idle-wait run passed all 806 tests without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;

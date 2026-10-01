@@ -422,7 +422,7 @@ def analyze(path):
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('root',nargs='?',default='assets'); ap.add_argument('--report',default='build/porting/asset-validation.json'); args=ap.parse_args()
-    files=sorted(Path(args.root).glob('*'))
+    files=sorted(p for p in Path(args.root).glob('*') if p.is_file())
     parsed=[]; errors=[]
     for p in files:
         if not p.is_file(): continue

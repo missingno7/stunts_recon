@@ -4,6 +4,7 @@ import io
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -13,6 +14,26 @@ sys.path.insert(0, str(ROOT/'tools'/'porting'))
 
 import audio_bank  # noqa: E402
 import format_reference  # noqa: E402
+
+
+class PortingAssetInventoryTests(unittest.TestCase):
+    def test_diagnostics_and_save_directories_are_not_counted_as_assets(self):
+        with tempfile.TemporaryDirectory(prefix='stunts-asset-inventory-') as temporary:
+            root = Path(temporary) / 'assets'
+            root.mkdir()
+            (root / 'NOTICE.TXT').write_bytes(b'opaque local installation note')
+            (root / 'diagnostics').mkdir()
+            (root / 'diagnostics' / 'trace.jsonl').write_bytes(b'{}\n')
+            (root / 'saves').mkdir()
+            report = Path(temporary) / 'report.json'
+            with patch('sys.argv', ['format_reference.py', str(root), '--report', str(report)]), \
+                 redirect_stdout(io.StringIO()):
+                self.assertEqual(format_reference.main(), 0)
+            result = json.loads(report.read_text(encoding='utf-8'))
+            self.assertEqual(result['asset_count'], 1)
+            self.assertEqual(result['catalogued_count'], 1)
+            self.assertEqual(result['extension_counts'], {'.TXT': 1})
+            self.assertEqual(result['error_count'], 0)
 
 
 @unittest.skipUnless((ROOT/'assets').is_dir(), 'original assets are not provisioned')

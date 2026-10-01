@@ -11,6 +11,9 @@ static SDL_AtomicInt s_tick_count;
 static SDL_AtomicInt s_elapsed_tick_count;
 static SDL_AtomicInt s_setup_generation;
 static SDL_AtomicInt s_callback_counter;
+static SDL_AtomicInt s_activity_generation;
+static SDL_Mutex *s_activity_lock;
+static SDL_Condition *s_activity_changed;
 static void (*s_callbacks[PORT_TIMER_CALLBACK_CAP])(void);
 static SDL_ThreadID s_guest_thread_id;
 static uint32_t s_dispatched_tick_count;
@@ -20,6 +23,44 @@ static uint32_t s_input_deadline;
 static uint32_t s_last_delta_counter;
 static uint64_t s_virtual_clock_origin_ns;
 extern volatile uint16_t input_pushed;
+
+uint32_t port_guest_activity_snapshot(void)
+{
+    return (uint32_t)SDL_GetAtomicInt(&s_activity_generation);
+}
+
+/* Publish after updating input, IRQ, or shutdown state. Pair the predicate
+   and condition under one mutex so an event between polling and sleeping
+   cannot be lost. No game callbacks execute on the producer threads. */
+void port_guest_notify_activity(void)
+{
+    if (s_activity_lock != NULL)
+        SDL_LockMutex(s_activity_lock);
+    SDL_AddAtomicInt(&s_activity_generation, 1);
+    if (s_activity_changed != NULL)
+        SDL_BroadcastCondition(s_activity_changed);
+    if (s_activity_lock != NULL)
+        SDL_UnlockMutex(s_activity_lock);
+}
+
+void port_guest_wait_for_activity(uint32_t observed)
+{
+    if (s_guest_thread_id == 0 ||
+        SDL_GetCurrentThreadID() != s_guest_thread_id || s_dispatching)
+        return;
+    if (s_activity_lock != NULL && s_activity_changed != NULL) {
+        SDL_LockMutex(s_activity_lock);
+        if (port_guest_activity_snapshot() == observed &&
+            s_dispatched_tick_count == (uint32_t)SDL_GetAtomicInt(&s_tick_count))
+            /* A bounded wait also keeps shutdown cooperative if the clock
+               producer fails. Spurious wakes simply resume the original poll. */
+            SDL_WaitConditionTimeout(s_activity_changed, s_activity_lock,
+                (int32_t)((PORT_TIMER_PERIOD_NS + 999999u) / 1000000u));
+        SDL_UnlockMutex(s_activity_lock);
+    }
+    /* The next original poll owns callback dispatch and timer-delta reads.
+       Returning on shutdown lets that poll reach its cooperative stop check. */
+}
 
 /* The SDL clock thread publishes raw PIT ticks only. DOS timer callbacks run
    in the guest's address space and touch unsynchronized game/audio globals, so
@@ -89,6 +130,7 @@ static int timer_thread(void *unused)
                 divider = 5;
             }
             port_trace_timer_tick(tick_id, next, now);
+            port_guest_notify_activity();
             next = origin + (tick_id + 1u) * PORT_TIMER_PERIOD_NS;
         } while (now >= next && SDL_GetAtomicInt(&s_running));
     }
@@ -100,6 +142,9 @@ void port_timer_start(void)
     if (s_thread != NULL)
         return;
     s_virtual_clock_origin_ns = SDL_GetTicksNS();
+    s_activity_lock = SDL_CreateMutex();
+    s_activity_changed = SDL_CreateCondition();
+    SDL_SetAtomicInt(&s_activity_generation, 0);
     SDL_SetAtomicInt(&s_running, 1);
     SDL_SetAtomicInt(&s_game_enabled, 0);
     SDL_SetAtomicInt(&s_tick_count, 0);
@@ -124,6 +169,10 @@ void port_timer_stop(void)
         s_thread = NULL;
     }
     s_guest_thread_id = 0;
+    SDL_DestroyCondition(s_activity_changed);
+    SDL_DestroyMutex(s_activity_lock);
+    s_activity_changed = NULL;
+    s_activity_lock = NULL;
 }
 
 uint64_t port_timer_tick_count(void)

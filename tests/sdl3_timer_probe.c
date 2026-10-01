@@ -11,6 +11,9 @@ static char s_events[128];
 static unsigned s_event_count;
 static jmp_buf s_full_table;
 static int s_expect_full_table;
+static SDL_Semaphore *s_wait_ready;
+static SDL_AtomicInt s_wait_finished;
+static uint32_t s_wait_observed;
 
 void port_trace_timer_tick(uint64_t id, uint64_t due, uint64_t observed)
 {
@@ -74,6 +77,67 @@ static int foreign_pump(void *unused)
 static void raw_irq(unsigned count)
 {
     SDL_AddAtomicInt(&s_tick_count, (int)count);
+}
+
+static int idle_guest(void *unused)
+{
+    (void)unused;
+    s_guest_thread_id = SDL_GetCurrentThreadID();
+    SDL_SignalSemaphore(s_wait_ready);
+    while (port_guest_activity_snapshot() == s_wait_observed)
+        port_guest_wait_for_activity(s_wait_observed);
+    port_timer_pump();
+    SDL_SetAtomicInt(&s_wait_finished, 1);
+    return 0;
+}
+
+static int check_idle_wakes(void)
+{
+    SDL_Thread *guest;
+    int ok = 1;
+    s_activity_lock = SDL_CreateMutex();
+    s_activity_changed = SDL_CreateCondition();
+    s_wait_ready = SDL_CreateSemaphore(0);
+    if (!s_activity_lock || !s_activity_changed || !s_wait_ready)
+        return 0;
+    for (unsigned event = 0; event < 3; ++event) {
+        s_wait_observed = port_guest_activity_snapshot();
+        SDL_SetAtomicInt(&s_wait_finished, 0);
+        guest = SDL_CreateThread(idle_guest, "idle-guest", NULL);
+        if (!guest) return 0;
+        SDL_WaitSemaphore(s_wait_ready);
+        SDL_DelayNS(25000000u);
+        ok &= check(!SDL_GetAtomicInt(&s_wait_finished),
+                    "idle guest waits until there is activity");
+        /* Input and stop publish only activity; IRQ publishes a tick too. */
+        if (event == 1) raw_irq(1);
+        port_guest_notify_activity();
+        SDL_WaitThread(guest, NULL);
+        ok &= check(SDL_GetAtomicInt(&s_wait_finished),
+                    "input, IRQ and shutdown activity wake the idle guest");
+    }
+    s_guest_thread_id = SDL_GetCurrentThreadID();
+    {
+        uint32_t observed = port_guest_activity_snapshot();
+        uint64_t start;
+        port_guest_notify_activity();
+        start = SDL_GetTicksNS();
+        port_guest_wait_for_activity(observed);
+        ok &= check(SDL_GetTicksNS() - start < 5000000u,
+                    "activity arriving before the wait cannot be lost");
+        raw_irq(1);
+        start = SDL_GetTicksNS();
+        port_guest_wait_for_activity(port_guest_activity_snapshot());
+        ok &= check(SDL_GetTicksNS() - start < 5000000u,
+                    "a pending IRQ prevents sleep even before its notification");
+        port_timer_pump();
+    }
+    SDL_DestroySemaphore(s_wait_ready);
+    SDL_DestroyCondition(s_activity_changed);
+    SDL_DestroyMutex(s_activity_lock);
+    s_activity_changed = NULL;
+    s_activity_lock = NULL;
+    return ok;
 }
 
 int main(void)
@@ -170,6 +234,8 @@ int main(void)
     SDL_SetAtomicInt(&s_elapsed_tick_count, 0x00030100);
     ok &= check(poll_input_abort() == 1,
                 "input deadline completes when both words reach target");
+
+    ok &= check_idle_wakes();
 
     /* Check the real clock thread's divider and dispatch boundary. Freeze its
        producer before comparing counters so there is no scheduling race. */
