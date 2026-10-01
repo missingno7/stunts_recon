@@ -82,6 +82,22 @@ Forced termination and power loss cannot produce this crash report.
 After a failure, ZIP the newest session folder and provide it for analysis.
 For a handled game error, `session.log` records the nonzero exit and reason.
 
+## Capturing visual bugs
+
+Run with `--debug` and press **F12** when the issue is visible. Each press saves
+a `capture-NNNN` directory inside that session with `screenshot.bmp`, the exact
+indexed framebuffer and RGB6 palette (`.fbr`), and frame metadata. A trace marker
+links the image to its guest publication, simulation step and renderer rotation.
+F12 is reserved for capture only in debug mode; normal launches retain its
+original keyboard behavior. Captures use completed publications, never a guest
+framebuffer being drawn. Repeated held-key events do not create extra captures.
+
+For a driving issue, also save the game's `.RPL` and the `.TRK` used, and note
+the car, camera/view and replay frame. Pause the replay at the problematic frame
+before capturing if possible. ZIP these with the diagnostics session. The input
+trace alone is not a complete deterministic machine snapshot; the in-game replay
+provides the recorded simulation states, while the capture identifies the view.
+
 ## Idle CPU use
 
 The native guest previously retained the DOS polling loops at full host speed.
@@ -114,6 +130,16 @@ polling loop; yielding at its stable no-key edge reduced its guest thread
 from 98.7% to 0.3% of one core. Replay advancement while its controls are
 held and pending track-editor cursor blinks skip the idle wait. A steady
 track-editor window reduced its guest from 97.8% to 0.6% of one core.
+
+The presentation loop now keeps the uploaded indexed texture when both pixels
+and palette are unchanged. It redraws on image changes, expose/resize/restore
+events and renderer resets. The host still polls input at its previous cadence;
+guest publications, PIT delivery, game simulation and audio remain independent.
+In a separate untraced five-second sample, this reduced whole-process menu CPU
+from 19.54% to 3.97% of one core, and driving from 21.99% to 8.54%. All 215
+GAMESTATE snapshots, simulation-step sequences and 12 input events in the
+identical 15-second seeded drive matched the prior build. The native video probe
+also checks palette-only changes, identical publications and window invalidation.
 
 ## Current implementation
 
@@ -158,6 +184,14 @@ anchors and current synthesis limits.
   outer loop now pumps them on the guest thread.
 - The presenter read live pixels during drawing. Completed framebuffer and
   palette snapshots are now published together.
+- `wheel_update` treated four separate six-vector globals as 24 contiguous
+  vectors, and two separate centers as six contiguous words. The locked DOS
+  layout has 36-byte array strides and six-byte center strides; GCC's native
+  layout has padding between these globals. The second front wheel and rear
+  height updates consequently consumed padding or the wrong coordinates.
+  The modern function boundary now gathers the named groups explicitly for
+  both player and opponent. Its 16-bit height division also retains MSC's
+  minimum-word absolute-value wrap before the arithmetic shift.
 - Sprite repeat runs, clipping, projection arithmetic, callback scheduling,
   keyboard state, file services and teardown follow their original contracts.
 - `mat_vec` read the frozen column-major matrix as rows. That moved the car
@@ -176,6 +210,11 @@ anchors and current synthesis limits.
 - The rasterizer discarded polygons with every vertex on one scanline. The
   original shared setup sends those faces to a solid, inclusive line callback,
   including when the usual polygon fill is patterned.
+- The same setup also sends all-vertical faces to that solid line callback.
+  The alternate reverse edge helper's positive x-major right boundary has a
+  conditional terminal-row write: its fractional carry can place the endpoint
+  below its geometric row. A geometric edge interval omitted those wheel pixels.
+  The port now retains the exact slope/carry rule and selected-boundary behavior.
 - The host gathered all polygon intersections into even/odd pairs. The DOS
   renderer walks two ordered edge chains: forward edges replace each row's
   bounds and reverse edges merge into them. Skipped horizontal links still
@@ -316,11 +355,56 @@ calls can address stack-local vectors through near pointers.
 `tests/test_sdl3_shape_pipeline.py` independently executes all 194 stock shape
 resources through the locked renderer and freshly compiled production overlays.
 It compares primitive counts, the complete 0x28A0-byte polygon pool, ordered
-draw chains and full 64 KiB framebuffers. Its one selection-camera pose renders
-161 resources and deliberately culls 33; this is explicit pose coverage rather
-than an exhaustive camera or gameplay proof. `test_sdl3_polygon_raster.py`
+draw chains and full 64 KiB framebuffers. In addition to the selection pose,
+the 22 wheel-bearing car resources and the track truck each get 16 object
+rotations and 16 level camera orbits: 930 cases in total. The baseline still renders 161 resources and
+deliberately culls 33. This is bounded pose coverage, not an exhaustive camera
+or gameplay proof. `test_sdl3_polygon_raster.py`
 adds original wheel faces and a crossing polygon that distinguishes the two
 reverse-chain callbacks.
+
+`test_sdl3_polygon_raster.py` also sweeps 528 interior triangles/quads and 736
+border cases through both edge-helper modes, both windings and shallow slopes
+with major lengths 2..12. The translated polygon path now consumes the frozen
+line initializer's clipped descriptors. Alternate x-major edges preserve the
+distinct case13/case14 carry branches and initial/terminal stores; clip
+postambles update only the specified row-bound array. The previous geometric
+interval approximation lost those state transitions. These cases reject
+unconditional endpoint extension as well as dropped terminal writes.
+`test_sdl3_wheel_update.py` compiles the current production word/storage
+adapters and compares the live updater with frozen `sub_204AE`: all 24 output
+vectors and five cache words in 40 cases. Its player/opponent globals deliberately
+have native padding; the unadapted routine fails every case. Steering signs,
+angle-cache hits, division boundaries and the minimum signed word are covered.
+The minimum-word height is an arithmetic regression input; runtime suspension
+values are clamped to a smaller range.
+
+A nearby division audit checked the locked steering `/8` window at
+`0x131A1..0x131B0` and the dialog `/2` windows at `0x1777F..0x177A2`.
+Steering has the same minimum-word quirk but valid player/opponent inputs are
+clamped to ±240/±65. Dialog centering uses a different CWD/SUB/SAR sequence;
+it agrees with signed truncation throughout the word range. These findings
+do not justify changing those callers or applying a global division rewrite.
+
+Porting checks must cover the storage and arithmetic contract of a routine's
+callers as well as its body. A correct transform of a static car model did not
+exercise the live wheel updater's split-global input. For new pointer/array
+boundaries, inspect the largest read/write span in the locked instructions and
+map it to complete native objects; never depend on link order or global padding.
+Use deliberate separation in focused probes, compile-time size/field checks,
+cache-hit and signed-boundary inputs, and angle/clip sweeps through the shared
+renderer. Compare intermediate records and full buffers with the locked image
+so a failure identifies the stage before a new manual replay is needed.
+
+The [semantic audit](semantic-audit.md) implements this as a normal validation
+layer. It prepares the same production overlays as the builder, scans all
+historical C units and native providers, maps all 622 frozen function rows,
+compiles scalar/layout/extent/prototype invariants, and publishes bounded
+behavioral evidence separately from compile-only and unresolved coverage.
+Its machine-readable report is `build/porting/semantic-audit/report.json`;
+maintained contracts live in `port/semantic-contracts.json` and
+`port/semantic-spans.json`. Negative tests reject the old split-global wheel
+representation, missing polygon sentinel storage and altered signedness.
 
 `tests/test_sdl3_diagnostics.py` induces main-thread and SDL game-thread
 access violations and CRT aborts in child processes. It parses the minidump's
@@ -333,7 +417,8 @@ settings, Unicode paths, malformed/truncated files, unavailable locations,
 and live races with the check disabled versus the original prompt enabled.
 The package test also verifies config creation and upgrade preservation.
 
-The 2026-10-01 configuration run passed all 811 tests without skips, all 90 independent
+The 2026-10-01 semantic-audit, wheel and presentation run passed all 819 tests
+without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;

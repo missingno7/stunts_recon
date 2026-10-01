@@ -58,8 +58,24 @@ int port_sdl_poll(void)
         if (event.type == SDL_EVENT_QUIT ||
             event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) {
             s_quit = 1;
+        } else if (event.type == SDL_EVENT_WINDOW_EXPOSED ||
+                   event.type == SDL_EVENT_WINDOW_RESIZED ||
+                   event.type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED ||
+                   event.type == SDL_EVENT_WINDOW_RESTORED ||
+                   event.type == SDL_EVENT_WINDOW_SHOWN ||
+                   event.type == SDL_EVENT_WINDOW_MAXIMIZED ||
+                   event.type == SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED) {
+            port_video_request_redraw(0);
+        } else if (event.type == SDL_EVENT_RENDER_TARGETS_RESET ||
+                   event.type == SDL_EVENT_RENDER_DEVICE_RESET) {
+            port_video_request_redraw(1);
         } else if (event.type == SDL_EVENT_WINDOW_FOCUS_LOST) {
             port_input_handle_event(event.type, 0, 0);
+        } else if ((event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP) &&
+                   event.key.scancode == SDL_SCANCODE_F12 &&
+                   port_video_debug_capture_enabled()) {
+            if (event.type == SDL_EVENT_KEY_DOWN && !event.key.repeat)
+                port_video_debug_capture();
         } else if (event.type == SDL_EVENT_KEY_DOWN) {
             port_input_handle_event(event.type, event.key.scancode,
                                     event.key.repeat ? 1 : 0);

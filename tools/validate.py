@@ -43,6 +43,13 @@ def validate(independent=True, baseline=None):
                            'failed':len(result.errors)+len(result.failures), 'skipped':len(result.skipped),
                            'log':'build/validation/tests.log'}
         require(result.wasSuccessful() and not result.skipped, 'Tests failed/skipped; see build/validation/tests.log')
+        semantic = read_json(ROOT/'build/porting/semantic-audit/report.json')
+        require(semantic['status'] == 'PASS', 'SDL3 semantic contracts failed')
+        report['port_semantic_audit'] = {
+            'status': semantic['status'], 'summary': semantic['summary'],
+            'report': 'build/porting/semantic-audit/report.json',
+            'evidence_execution': 'Referenced tests passed in this no-skip suite; claims remain bounded to their registered observables/cases',
+        }
         # Tests exercise locks themselves; serialize fresh production proof afterwards.
         with exclusive():
             ensure_consistent()

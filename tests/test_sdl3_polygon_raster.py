@@ -83,7 +83,61 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
             ("preRender_default_alt", "alt", (39,), "alt 39", (
                 100, 20, 90, 23, 110, 27, 100, 30,
             )),
+            # Countach car0, object yaw 0x100: frozen wheel callbacks 46/48.
+            # An x-major reverse edge writes its terminal row past the endpoint.
+            ("preRender_wheel_helper4", "wheel", (38,), "wheel 38", (
+                207, 55, 211, 54, 209, 53, 205, 54,
+            )),
+            ("preRender_wheel_helper4", "wheel", (38,), "wheel 38", (
+                213, 54, 215, 53, 213, 52, 211, 53,
+            )),
+            ("preRender_default_alt", "alt", (38,), "alt 38", (
+                207, 55, 211, 54, 209, 53, 205, 54,
+            )),
+            ("preRender_patterned", "pattern", (0x0000, 197),
+             "pattern 0x0000 197", (100, 20, 100, 22, 100, 30, 100, 25)),
+            ("preRender_unk", "unknown", (0xAA55, 29, 31),
+             "unknown 0xaa55 29 31", (100, 20, 100, 22, 100, 30, 100, 25)),
+            # Clipped Audi/LM002 overlays isolated from the stock pose sweep.
+            ("preRender_default", "default", (64,), "default 64", (
+                -12, 46, -12, 43, 1, 38, -2, 46,
+            )),
+            ("preRender_default", "default", (14,), "default 14", (
+                319, 26, 320, 20, 323, 19, 323, 25,
+            )),
+            ("preRender_default", "default", (44,), "default 44", (
+                -20, 18, -18, 3, -4, 7, 2, 22,
+            )),
         )
+        # Distinguish fractional terminal carries from blanket endpoint extension.
+        # Cover both windings, triangles/quads, and both shared edge-helper modes.
+        sweep = []
+        for topology in (3, 4):
+            for dx in range(2, 13):
+                for dy in range(1, dx):
+                    for sign in (-1, 1):
+                        points = (160, 64 + 2 * dy, 160 + sign * dx, 64 + dy, 160, 64)
+                        if topology == 4:
+                            points += (160 - sign * dx, 64 + dy)
+                        for entry, operation in (("preRender_default", "default"),
+                                                 ("preRender_default_alt", "alt")):
+                            sweep.append((entry, operation, (38,), f"{operation} 38", points))
+        self.assertEqual(len(sweep), 528)
+        borders = []
+        for cx, cy in ((0, 64), (319, 64), (160, -1), (160, 198)):
+            for topology in (3, 4):
+                for dx in (2, 3, 4, 7, 12):
+                    for dy in range(1, dx):
+                        for sign in (-1, 1):
+                            points = (cx, cy + 2 * dy, cx + sign * dx, cy + dy, cx, cy)
+                            if topology == 4:
+                                points += (cx - sign * dx, cy + dy)
+                            for entry, operation in (("preRender_default", "default"),
+                                                     ("preRender_default_alt", "alt")):
+                                borders.append((entry, operation, (38,), f"{operation} 38", points))
+        self.assertEqual(len(borders), 736)
+        cases += tuple(sweep)
+        cases += tuple(borders)
         with tempfile.TemporaryDirectory(prefix="sdl3-flat-polygon-") as temporary:
             temp = Path(temporary)
             executable = temp / "raster_harness.exe"
@@ -109,7 +163,7 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
             dgroup = 0x3B77
 
             for mode, operation, attributes, host_prefix, points in cases:
-                with self.subTest(mode=mode):
+                with self.subTest(mode=mode, points=points):
                     routine = symbols.resolve(mode)
                     code_segment, _ = routine.far_at(0x1000)
                     sprite_offset = (data_symbols["_sprite1"]["load_address"] -
@@ -120,7 +174,9 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
                     sprite_words[6:11] = [0, 320, 0, 200, 320]
                     sprite_words[12:15] = [320, 0, 320]
                     point_offset, stack_offset = 0xD000, 0xF000
-                    if mode == "preRender_default":
+                    if operation == "wheel":
+                        call_args = [attributes[0], len(points) // 2, *points]
+                    elif mode == "preRender_default":
                         call_args = [attributes[0], len(points) // 2, point_offset]
                     elif mode == "preRender_patterned":
                         call_args = [*attributes, len(points) // 2, point_offset]

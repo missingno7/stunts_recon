@@ -267,6 +267,23 @@ void port_trace_host_present(uint64_t frame_id)
     trace_unlock();
 }
 
+void port_trace_debug_capture(uint64_t frame_id, const char *directory)
+{
+    uint64_t now = SDL_GetTicksNS();
+    trace_lock();
+    if (s_trace != NULL) {
+        fprintf(s_trace, "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                        "\"event_type\":\"debug_capture\",\"frame_id\":%llu,"
+                        "\"machine_tick\":%llu,\"directory\":",
+                (unsigned long long)frame_id,
+                (unsigned long long)relative_ns(now));
+        json_string(s_trace, directory);
+        fputs("}\n", s_trace);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
 void port_trace_audio_publication(uint32_t frame_count)
 {
     uint64_t now = SDL_GetTicksNS();

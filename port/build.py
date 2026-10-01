@@ -13,7 +13,7 @@ import subprocess
 import sys
 import zipfile
 
-from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels
+from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -201,21 +201,28 @@ def prepare_environment(gcc: Path) -> None:
     os.environ["PATH"] = mingw_bin + os.pathsep + os.environ.get("PATH", "")
 
 
-def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
+def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
+                       prepare_only: bool = False) -> tuple[list[Path], dict[str, object]]:
+    """Prepare the production views; optionally compile them.
+
+    The semantic audit uses this same path in its own output directory. Its
+    conclusions must describe the executable's adapters, not the older probe.
+    """
     sys.path.insert(0, str(ROOT / "tools" / "porting"))
     import host_probe_declarations as declarations
     import host_probe_modes as probe
 
     probe.ROOT = ROOT
     original_port_include = ROOT / "tools" / "porting" / "port_include"
-    executable_include = BUILD / "host-build" / "include"
+    work_dir = work_dir or BUILD / "host-build"
+    executable_include = work_dir / "include"
     shutil.copytree(original_port_include, executable_include, dirs_exist_ok=True)
     aggregate_header = executable_include / "stunts_structs.h"
     aggregate_header.write_text(adapt_aggregate_views(probe.legacy_target_widths(
         aggregate_header.read_text(encoding="latin-1"))), encoding="latin-1")
     probe.PORT = executable_include
     probe.HOST = ROOT / "tools" / "porting" / "host"
-    probe.WORK = BUILD / "host-build"
+    probe.WORK = work_dir
     probe.GCC = gcc.resolve()
     probe.STRICT_CENTRAL = False
     declarations.ROOT = ROOT
@@ -223,6 +230,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
     # the host int typedef used by the diagnostic-only declaration survey.
     declarations.ALIASES.update(I32="long", U32="unsigned long")
     declarations.HOST_OVERRIDES.update({
+        "vector_op_unk2": "extern I16 vector_op_unk2(struct VECTOR *);",
         "file_load_shape2d_fatal_thunk": "extern void *file_load_shape2d_fatal_thunk(char *);",
         "mmgr_get_chunk_size": "extern uint16_t mmgr_get_chunk_size(void *);",
         "locate_shape_nofatal": "extern void *locate_shape_nofatal(void *, const char *);",
@@ -253,7 +261,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
         central = re.sub(r"(?m)^extern [^;]*\b" + re.escape(name) + r"\([^;]*;",
                          lambda _: prototype, central)
     central_header.write_text(central, encoding="latin-1")
-    probe.FLAGS = list(probe.FLAGS) + [
+    executable_flags = [
         # Preserve legacy diagnostics, but reject pointer/integer conversion
         # mistakes at the first compilation rather than a runtime screen.
         "-g", "-I", str(ROOT / "port"),
@@ -262,6 +270,8 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
         "-Werror=type-limits",
         "-Wno-error=incompatible-pointer-types",
     ]
+    if "-Werror=int-conversion" not in probe.FLAGS:
+        probe.FLAGS = list(probe.FLAGS) + executable_flags
     work = probe.WORK
     (work / "overlay" / "src").mkdir(parents=True, exist_ok=True)
     (work / "config").mkdir(parents=True, exist_ok=True)
@@ -492,6 +502,8 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 
         if source == "src/obj_seg003.c":
             transformed = adapt_preview_word_arithmetic(transformed)
+        if source == "src/obj_seg004.c":
+            transformed = adapt_wheel_update_inputs(transformed)
 
         transformed = adapt_word_sentinels(transformed, Path(source).name)
 
@@ -576,6 +588,11 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
         overlay = work / "overlay" / source
         overlay.parent.mkdir(parents=True, exist_ok=True)
         overlay.write_text(transformed, encoding="latin-1")
+        if prepare_only:
+            rows.append({"source": source, "owner": owner,
+                         "overlay": str(overlay), "config": str(config),
+                         "removed_declarations": removed})
+            continue
         result = probe.run_one(source, overlay, config, index)
         row = {"source": source, "owner": owner,
                "syntax": result["status"]["syntax"],
@@ -592,10 +609,11 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 
     report = {
         "compiler": str(gcc.resolve()),
-        "compiler_target": checked_run([str(gcc), "-dumpmachine"]).stdout.strip(),
+        "compiler_target": ("not-run" if prepare_only else
+                            checked_run([str(gcc), "-dumpmachine"]).stdout.strip()),
         "source_count": len(rows),
-        "syntax_passes": sum(row["syntax"] == "ok" for row in rows),
-        "object_passes": sum(row["object"] == "ok" for row in rows),
+        "syntax_passes": sum(row.get("syntax") == "ok" for row in rows),
+        "object_passes": sum(row.get("object") == "ok" for row in rows),
         "port_adapters": [
             "rename recovered main to stunts_game_main",
             "wrap update_gamestate for post-commit tracing",
@@ -951,6 +969,9 @@ def package(args) -> Path:
         "Upgrades preserve your existing config.json.\n\n"
         "Crash diagnostics are saved in diagnostics beside this executable.\n"
         "For detailed recording, run: stunts-sdl3.exe --debug\n"
+        "For a visual bug, press F12 to save an indexed screenshot and palette.\n"
+        "Save the in-game replay and track too; note the camera and replay frame.\n"
+        "ZIP that diagnostics session together with the replay and track.\n"
         "After a crash, ZIP the newest diagnostics/stunts-* folder and send it.\n"
         "A hard-crash report also preserves the executable for source locations.\n"
         "If this folder is not writable, diagnostics use the Stunts/SDL3\n"

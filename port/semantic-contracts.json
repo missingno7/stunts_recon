@@ -1,0 +1,837 @@
+{
+  "schema": "stunts-port-semantic-contracts-v1",
+  "policy": {
+    "overall_program_equivalence": false,
+    "family_or_translation_unit_inheritance": false,
+    "unlisted_routine_default": "unverified",
+    "rules": [
+      "A composite path is evidence only for the listed call path and cases; it does not independently prove each member routine.",
+      "Expression or instruction-window evidence is not whole-function evidence.",
+      "Compile-only, layout, and source-string checks are not semantic differentials.",
+      "Replay/frame goldens are end-to-end observations and do not attribute correctness to individual routines.",
+      "Keep the immutable locked image, source hypotheses, tooling limitations, and acceptance requirements distinct."
+    ]
+  },
+  "contracts": [
+    {
+      "id": "matrix-mat-vec",
+      "status": "differential-oracle",
+      "routines": [
+        "mat_vec"
+      ],
+      "tests": [
+        "tests/test_matrix_machine_semantics.py::test_vector_and_matrix_memory_effects_match_locked_machine"
+      ],
+      "subject_type": "routine",
+      "scope": "29 deterministic cases: 5 targeted plus 24 seeded vectors; tests include output/input aliasing, zero coefficients, and compare all 64 surrounding words after the far call.",
+      "observables": [
+        "complete 64-word memory region"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Proves these call cases and memory effects only; does not prove all matrices, mat_invert, or the renderer as a whole.",
+      "historical_route": [
+        "asm/font_matrix_shape_decode.ASM::_mat_vec"
+      ],
+      "portable_route": [
+        "port/matrix.c:mat_vec"
+      ],
+      "source_scope": [
+        "port/matrix.c"
+      ],
+      "evidence_scope": "direct-routine-cases"
+    },
+    {
+      "id": "matrix-multiply",
+      "status": "differential-oracle",
+      "routines": [
+        "mat_multiply"
+      ],
+      "tests": [
+        "tests/test_matrix_machine_semantics.py::test_vector_and_matrix_memory_effects_match_locked_machine"
+      ],
+      "subject_type": "routine",
+      "scope": "7 targeted alias/write-order cases; compare all 64 surrounding words after the far call.",
+      "observables": [
+        "complete 64-word memory region"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Proves only the listed operands and alias patterns.",
+      "historical_route": [
+        "asm/mat_multiply.ASM::_mat_multiply"
+      ],
+      "portable_route": [
+        "port/matrix.c:mat_multiply"
+      ],
+      "source_scope": [
+        "port/matrix.c"
+      ],
+      "evidence_scope": "direct-routine-cases"
+    },
+    {
+      "id": "matrix-invert-gap",
+      "status": "unverified/high-risk",
+      "routines": [
+        "mat_invert"
+      ],
+      "tests": [
+        "tests/test_matrix_machine_semantics.py"
+      ],
+      "subject_type": "routine",
+      "scope": "No locked routine differential found.",
+      "observables": [
+        "no verified observable"
+      ],
+      "authority": "none",
+      "claim_limit": "C implementation exists, but the test itself says it is not oracle evidence.",
+      "historical_route": [
+        "symbol-map extent is not verified; semantic lead is from Restunts math.c"
+      ],
+      "portable_route": [
+        "port/matrix.c:mat_invert"
+      ],
+      "source_scope": [
+        "port/matrix.c"
+      ],
+      "evidence_scope": "direct-routine-cases"
+    },
+    {
+      "id": "shape-render-pipeline",
+      "status": "differential-oracle",
+      "routines": [
+        "copy_material_list_pointers",
+        "initialize_polyinfo",
+        "set_projection",
+        "select_rot",
+        "trans_op",
+        "polyinfo"
+      ],
+      "tests": [
+        "tests/test_sdl3_shape_pipeline.py::test_all_stock_models_match_frozen_transforms_queues_and_full_frames"
+      ],
+      "subject_type": "composite_path",
+      "scope": "930 fixtures: 194 stock shapes plus 23 wheel-bearing resources at 16 object yaw and 16 camera yaw poses each. Full pool, ordered queue and full framebuffer are compared.",
+      "observables": [
+        "polygon count",
+        "complete polygon pool",
+        "ordered queue",
+        "complete 64-KiB framebuffer"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "This is joint path evidence; routines are not isolated and untested shape data, flags, rotations, culling states, and unrelated renderer entries remain uncovered.",
+      "historical_route": [
+        "src/obj_seg006.c and the mapped renderer ASM entries called by the fixture"
+      ],
+      "portable_route": [
+        "fresh PORT_BUILD overlay of src/obj_seg006.c",
+        "port/matrix.c",
+        "port/polang.c",
+        "port/projection.c",
+        "port/sincos.c",
+        "port/sprite.c",
+        "renderer support objects listed in tests/test_sdl3_shape_pipeline.py"
+      ],
+      "source_scope": [
+        "port/matrix.c",
+        "port/polang.c",
+        "port/projection.c",
+        "port/sincos.c",
+        "port/sprite.c",
+        "src/obj_seg006.c"
+      ],
+      "evidence_scope": "composite-path-only"
+    },
+    {
+      "id": "renderer-cull-word-expression",
+      "status": "differential-oracle",
+      "routines": [
+        "trans_op"
+      ],
+      "tests": [
+        "tests/test_sdl3_renderer_arithmetic.py::test_generated_helper_and_signed_compare_match_locked_shl_cmp"
+      ],
+      "subject_type": "expression",
+      "scope": "12 signed boundary values crossed with six comparison values plus 96 seeded pairs; compares wrapped signed result and signed-greater condition.",
+      "observables": [
+        "low-word doubled value",
+        "signed comparison result"
+      ],
+      "authority": "locked_image_instruction_bytes",
+      "claim_limit": "Expression/helper only; does not prove all of trans_op. The shape pipeline separately supplies composite evidence for selected stock shapes.",
+      "historical_route": [
+        "src/obj_seg006.c:trans_op",
+        "locked bytes at image offsets 86103 and 86126: SHL CX,1; CMP CX,AX"
+      ],
+      "portable_route": [
+        "port/game_abi.py:adapt_renderer_word_arithmetic",
+        "PORT_BUILD overlay of src/obj_seg006.c"
+      ],
+      "source_scope": [
+        "src/obj_seg006.c"
+      ],
+      "evidence_scope": "expression-window-only"
+    },
+    {
+      "id": "polygon-raster-entries",
+      "status": "differential-oracle",
+      "routines": [
+        "preRender_default",
+        "preRender_default_alt",
+        "preRender_patterned",
+        "preRender_unk",
+        "preRender_wheel_helper4"
+      ],
+      "tests": [
+        "tests/test_sdl3_polygon_raster.py::test_polygon_edge_cases_match_locked_raster_callbacks"
+      ],
+      "subject_type": "routine_set",
+      "scope": "19 explicit edge/endpoint cases plus 528 topology/winding/fractional-carry cases and 736 boundary cases; each compares 64,000 visible pixels. The same-line flat cases verify inclusive solid-line fallback under three pattern masks.",
+      "observables": [
+        "complete 320x200 visible pixel region"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Covers listed callbacks and test geometries; not every slope, clipping state, line helper or renderer call path.",
+      "historical_route": [
+        "mapped locked raster entrypoints resolved by SymbolMap"
+      ],
+      "portable_route": [
+        "port/sprite.c and support routines included by tests/sdl3/raster_harness.c"
+      ],
+      "source_scope": [
+        "port/sprite.c"
+      ],
+      "evidence_scope": "listed-routine-cases"
+    },
+    {
+      "id": "sprite-boolean-blits",
+      "status": "differential-oracle",
+      "routines": [
+        "sprite_putimage_and",
+        "sprite_putimage_and_alt",
+        "sprite_putimage_and_alt2",
+        "sprite_putimage_or_alt"
+      ],
+      "tests": [
+        "tests/test_sdl3_sprite_boolean_semantics.py::test_all_entries_match_locked_machine_on_random_clips_and_word_boundaries"
+      ],
+      "subject_type": "routine_set",
+      "scope": "Generated randomized clipping and word-boundary cases; every case compares the complete 64-KiB destination. Separate byte-anchor test distinguishes AND/OR bodies from REP MOVSB copy behavior.",
+      "observables": [
+        "complete 64-KiB destination",
+        "locked instruction anchors"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Only the four Boolean entries and generated fixtures; transparent, opaque, and all other sprite paths are outside this record.",
+      "historical_route": [
+        "locked entry byte offsets 0x23890, 0x23BBC, 0x2386C, 0x24060"
+      ],
+      "portable_route": [
+        "port/sprite.c"
+      ],
+      "source_scope": [
+        "port/sprite.c"
+      ],
+      "evidence_scope": "listed-routine-cases"
+    },
+    {
+      "id": "wheel-update",
+      "status": "differential-oracle",
+      "routines": [
+        "wheel_update"
+      ],
+      "tests": [
+        "tests/test_sdl3_wheel_update.py::test_split_globals_and_packed_inputs_match_frozen_wheels"
+      ],
+      "subject_type": "routine",
+      "scope": "40 cases spanning player/opponent, five angle choices, two boundary base sets, and cached/noncached angle; intentionally breaks host adjacency between globals. Compares all computed outputs from both gathered globals and packed input path.",
+      "observables": [
+        "24 output VECTORs",
+        "five cache words",
+        "gathered-global and packed-input paths"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Proves the tested routine inputs and layouts; does not establish all vehicle simulation behavior.",
+      "historical_route": [
+        "src/obj_seg004.c:wheel_update; locked entry alias sub_204AE"
+      ],
+      "portable_route": [
+        "PORT_BUILD overlay of src/obj_seg004.c",
+        "port/game_abi.py:adapt_wheel_update_inputs"
+      ],
+      "source_scope": [
+        "src/obj_seg004.c"
+      ],
+      "evidence_scope": "direct-routine-cases"
+    },
+    {
+      "id": "font-render-and-measure",
+      "status": "differential-oracle",
+      "routines": [
+        "font_draw_text",
+        "draw_text_at",
+        "font_op",
+        "font_op2",
+        "font_set_unk"
+      ],
+      "tests": [
+        "tests/test_sdl3_font_oracle.py::test_both_render_entries_match_locked_frames_for_original_font_records",
+        "tests/test_sdl3_font_oracle.py::test_setup_measurement_and_proportional_header_outputs_match",
+        "tests/test_sdl3_font_oracle.py::test_short_and_space_overwrites_ignore_stale_text_tail"
+      ],
+      "subject_type": "routine_set",
+      "scope": "Both draw entries, setup, counted and uncounted measurement across built-in FONTDEF and shipped FONTDEF/FONTN/FONTLED; includes clipping outside descriptor bounds, missing glyphs, color and proportional header mutation, and stale text tail. Compares 64-KiB video, full modified font record, and AX where applicable.",
+      "observables": [
+        "complete 64-KiB framebuffer",
+        "complete font record",
+        "AX return word"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Entry fixtures and tested fonts only; does not prove every font resource or all caller timing/layout behavior.",
+      "historical_route": [
+        "asm/font_draw_text.ASM",
+        "asm/font_entries.ASM",
+        "asm/line_sprite_shape_render.ASM"
+      ],
+      "portable_route": [
+        "port/font.c",
+        "port/sprite.c",
+        "src/fardata_11039.c built-in font data"
+      ],
+      "source_scope": [
+        "port/font.c",
+        "port/sprite.c",
+        "src/fardata_11039.c"
+      ],
+      "evidence_scope": "listed-routine-cases"
+    },
+    {
+      "id": "line-input-helpers",
+      "status": "differential-oracle",
+      "routines": [
+        "read_line_helper",
+        "read_line_helper2",
+        "set_fontdefseg",
+        "font_set_unk",
+        "font_draw_text"
+      ],
+      "tests": [
+        "tests/test_sdl3_line_input_oracle.py::test_cursor_font_switching_and_helper2_match_full_locked_state",
+        "tests/test_sdl3_line_input_oracle.py::test_initial_font_alias_and_dialog_color_match_locked_data"
+      ],
+      "subject_type": "composite_path",
+      "scope": "Seven sequential states cover builtin and three external font records, runtime color/height changes, tail clearing, and double cursor toggle. Each step compares the full video, active font record, text buffer, and cursor slot; initial far-pointer alias and dialog color are checked against locked data.",
+      "observables": [
+        "complete 64-KiB framebuffer",
+        "complete active font record",
+        "complete editor text buffer",
+        "cursor slot",
+        "locked font-pointer bytes"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Composite helper path and these seven states only; it deliberately aborts if the full interactive read_line loop is entered.",
+      "historical_route": [
+        "src/obj_seg032_group.c:read_line_helper/read_line_helper2",
+        "locked font entrypoints resolved from the image"
+      ],
+      "portable_route": [
+        "fresh transformed src/obj_seg032_group.c",
+        "port/font.c",
+        "port/sprite.c",
+        "src/fardata_11039.c"
+      ],
+      "source_scope": [
+        "port/font.c",
+        "port/sprite.c",
+        "src/fardata_11039.c",
+        "src/obj_seg032_group.c"
+      ],
+      "evidence_scope": "composite-path-only"
+    },
+    {
+      "id": "preview-coordinate-arithmetic",
+      "status": "differential-oracle",
+      "routines": [
+        "draw_track_preview"
+      ],
+      "tests": [
+        "tests/test_sdl3_preview_arithmetic.py::test_generated_helper_matches_locked_sub_ax_sar_ax"
+      ],
+      "subject_type": "expression",
+      "scope": "6 explicit boundary pairs plus 192 seeded pairs; expected results are generated by executing the locked six instruction bytes for each case. Separate source-string test proves only nine assignments are rewritten.",
+      "observables": [
+        "signed 16-bit wrapped subtraction then arithmetic shift result"
+      ],
+      "authority": "locked_image_instruction_bytes_live_execution",
+      "claim_limit": "Expression/helper only; no full draw_track_preview output differential.",
+      "historical_route": [
+        "src/obj_seg003.c:draw_track_preview",
+        "locked SUB AX,[camera_pos_z]; SAR AX,1 at image offset 0xCDA4"
+      ],
+      "portable_route": [
+        "port/game_abi.py:adapt_preview_word_arithmetic",
+        "PORT_BUILD overlay helper port_preview_coord_half"
+      ],
+      "source_scope": [
+        "src/obj_seg003.c"
+      ],
+      "evidence_scope": "expression-window-only"
+    },
+    {
+      "id": "gameplay-arithmetic-expressions",
+      "status": "differential-oracle",
+      "routines": [
+        "update_player_state",
+        "car_car_speed_adjust_maybe"
+      ],
+      "tests": [
+        "tests/test_sdl3_word_arithmetic.py::test_overlay_reproduces_locked_threshold_and_collision_windows"
+      ],
+      "subject_type": "expression_set",
+      "scope": "Six wall-threshold inputs and three collision windows; host collision function is exercised with controlled trigonometric stubs and compared on player speed2. Frozen bytes are executed in Unicorn.",
+      "observables": [
+        "threshold word",
+        "unsigned hit result",
+        "updated player speed2"
+      ],
+      "authority": "locked_image_instruction_bytes_live_execution",
+      "claim_limit": "Proves selected arithmetic and collision outcomes only, not either full simulation routine or the full vehicle model.",
+      "historical_route": [
+        "src/obj_seg001_complete.c:update_player_state",
+        "src/obj_seg001_complete.c:car_car_speed_adjust_maybe",
+        "locked instruction windows at load offsets 21706 and 34129"
+      ],
+      "portable_route": [
+        "port/build.py:adapt_gameplay_word_arithmetic",
+        "PORT_BUILD overlay of src/obj_seg001_complete.c"
+      ],
+      "source_scope": [
+        "src/obj_seg001_complete.c"
+      ],
+      "evidence_scope": "expression-window-only"
+    },
+    {
+      "id": "projection-math-fixed-vectors",
+      "status": "indirect-invariant",
+      "routines": [
+        "polang",
+        "projectiondata9_times_ratio"
+      ],
+      "tests": [
+        "tests/test_sdl3_projection_math.py::test_port_math_matches_locked_machine_word_vectors"
+      ],
+      "subject_type": "routine_set",
+      "scope": "24 polar quadrant/axis/ratio vectors, five scale-ratio vectors, and divide/overflow trap cases; the test compiles and runs the host harness against fixed expected words.",
+      "observables": [
+        "returned word",
+        "named arithmetic trap"
+      ],
+      "authority": "fixed_values_derived_from_locked_machine",
+      "claim_limit": "The test does not execute the locked machine oracle at runtime; fixed expected values cover only listed vectors.",
+      "historical_route": [
+        "locked routines identified as load_1ea4e and load_2275c in test fixture comments"
+      ],
+      "portable_route": [
+        "port/polang.c",
+        "port/projection.c",
+        "port/sincos.c"
+      ],
+      "source_scope": [
+        "port/polang.c",
+        "port/projection.c",
+        "port/sincos.c"
+      ],
+      "evidence_scope": "listed-routine-cases"
+    },
+    {
+      "id": "sentinel-equality-expressions",
+      "status": "static/layout",
+      "routines": [
+        "setup_intro",
+        "track_setup"
+      ],
+      "tests": [
+        "tests/test_sdl3_word_sentinels.py::test_frozen_comparisons_match_three_verified_cmp_and_branch_anchors",
+        "tests/test_sdl3_word_sentinels.py::test_compiled_adapted_expressions_follow_dos_word_equality"
+      ],
+      "subject_type": "expression_set",
+      "scope": "Checks three immutable byte anchors, exact replacement counts/restoration, and compiled host equality behavior for -1 versus other words.",
+      "observables": [
+        "locked instruction bytes",
+        "compiled boolean result"
+      ],
+      "authority": "locked_image_instruction_bytes_live_execution",
+      "claim_limit": "No locked routine execution or intro/track_setup behavioral differential; source anchor and standalone expression only.",
+      "historical_route": [
+        "src/obj_seg003.c:setup_intro",
+        "src/obj_seg004.c:track_setup",
+        "locked CMP-immediate/branch bytes at offsets 0xDC7D, 0x10CED, 0x10FC6"
+      ],
+      "portable_route": [
+        "port/game_abi.py:adapt_word_sentinels",
+        "PORT_BUILD overlays of obj_seg003.c and obj_seg004.c"
+      ],
+      "source_scope": [
+        "src/obj_seg003.c",
+        "src/obj_seg004.c"
+      ],
+      "evidence_scope": "expression-window-only"
+    },
+    {
+      "id": "resource-unflip-parser-and-dashboard",
+      "status": "differential-oracle",
+      "routines": [
+        "file_unflip_shape2d",
+        "parse_shape2d",
+        "shape2d_op_unk",
+        "shape2d_op_unk3",
+        "shape2d_op_unk4",
+        "shape2d_render_bmp_as_mask"
+      ],
+      "tests": [
+        "tests/test_sdl3_dashboard_assets.py::test_frozen_mode3_dashboard_loader_and_mainclip_match_locked_dos"
+      ],
+      "subject_type": "composite_path",
+      "scope": "All eleven frozen STDA archives; test executes machine unflip and parse, then compares the native production loader/draw routes for dashboard, wheel, roof, gear-window, instrument-window and gauge resources across clipping variants.",
+      "observables": [
+        "decoded archive bytes",
+        "parsed shapes",
+        "complete relevant framebuffer/surface outputs"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Specific dashboard asset families and listed operation modes; not all resource loaders, malformed files, game assets, or resource ownership paths.",
+      "historical_route": [
+        "locked resource and shape routines resolved by SymbolMap; game callers in src/obj_seg035_group.c"
+      ],
+      "portable_route": [
+        "port/resource.c",
+        "port/sprite.c",
+        "generated production overlays of src/obj_seg035_group.c and dashboard loader sources"
+      ],
+      "source_scope": [
+        "port/resource.c",
+        "port/sprite.c",
+        "src/obj_seg035_group.c"
+      ],
+      "evidence_scope": "composite-path-only"
+    },
+    {
+      "id": "resource-unit-invariants-and-format-reference",
+      "status": "static/layout",
+      "routines": [
+        "validate_shape3d_archive",
+        "sprite_putimage_transparent",
+        "release_shape_resources",
+        "sub_35DC8",
+        "sub_35DE6",
+        "file_decomp"
+      ],
+      "tests": [
+        "tests/test_sdl3_resource.py::test_blitters_spans_and_allocation_lifetimes",
+        "tests/test_sdl3_resource.py::test_bundled_pvs_and_pes_transforms_match_reference"
+      ],
+      "subject_type": "routine_set",
+      "scope": "Synthetic bounds, clipping, map mutation, ownership/free-count, and allocation-lifetime checks. PVS/PES transform tests compare against tools/porting/format_reference.py; a separate synthetic-PVS test live-calls locked file_unflip_shape2d.",
+      "observables": [
+        "selected pixel locations",
+        "archive span acceptance",
+        "allocation/free counters",
+        "transformed bytes"
+      ],
+      "authority": "source_or_layout_assertion",
+      "claim_limit": "Do not treat independent Python format output or synthetic invariants as full locked-machine parity; only the separately listed file_unflip_shape2d cases are live machine comparisons.",
+      "historical_route": [
+        "resource and sprite helper routines in locked source/image"
+      ],
+      "portable_route": [
+        "port/resource.c",
+        "port/sprite.c"
+      ],
+      "source_scope": [
+        "port/resource.c",
+        "port/sprite.c"
+      ],
+      "evidence_scope": "listed-routine-cases"
+    },
+    {
+      "id": "timer-callback-invariants",
+      "status": "static/layout",
+      "routines": [
+        "port_timer_pump",
+        "timer_get_counter",
+        "timer_reg_callback",
+        "timer_remove_callback",
+        "timer_compare_dx",
+        "poll_input_abort",
+        "port_guest_wait_for_activity"
+      ],
+      "tests": [
+        "tests/test_sdl3_timer.py::test_irq_dispatch_and_deadlines"
+      ],
+      "subject_type": "routine_set",
+      "scope": "Synthetic IRQ injection checks callback order/removal, foreign-thread dispatch exclusion, wraparound, deadline comparisons, nested ticks, and activity wake behavior.",
+      "observables": [
+        "callback sequence",
+        "counter words",
+        "wait/wakeup state",
+        "deadline boolean"
+      ],
+      "authority": "source_or_layout_assertion",
+      "claim_limit": "No direct original DOS timer routine comparison; test does not establish absolute PIT frequency or timing phase.",
+      "historical_route": [
+        "host timer boundary replacing DOS timer/IRQ owners; source contracts include asm/timer_setup_interrupt.ASM and src/obj_seg032_group.c deadline calls"
+      ],
+      "portable_route": [
+        "port/timer.c",
+        "port/port_runtime.h"
+      ],
+      "source_scope": [
+        "port/port_runtime.h",
+        "port/timer.c"
+      ],
+      "evidence_scope": "listed-routine-cases"
+    },
+    {
+      "id": "ad15-register-traces",
+      "status": "indirect-invariant",
+      "routines": [
+        "ad15_driver_00",
+        "ad15_driver_09",
+        "ad15_driver_12",
+        "ad15_driver_15",
+        "ad15_driver_21",
+        "ad15_driver_1e"
+      ],
+      "tests": [
+        "tests/test_sdl3_audio.py::test_ad15_driver_matches_locked_machine_register_traces"
+      ],
+      "subject_type": "driver_entry_set",
+      "scope": "Initialization, ELPI/SNAR instrument bind, notes/slot mapping, volume, reset, parameter selectors and pitch bend compare ordered OPL register writes and selected voice state against captured Unicorn cases.",
+      "observables": [
+        "ordered register/value writes",
+        "selected voice bytes"
+      ],
+      "authority": "fixed_values_derived_from_locked_machine",
+      "claim_limit": "Expected traces are fixed fixtures from the scratch Unicorn oracle, not an oracle execution inside this test. AD15 channel-zero sample playback is explicitly unsupported.",
+      "historical_route": [
+        "immutable assets/AD15.DRV far-call entries"
+      ],
+      "portable_route": [
+        "port/ad15_driver.c"
+      ],
+      "source_scope": [
+        "port/ad15_driver.c"
+      ],
+      "evidence_scope": "fixed-driver-trace-only"
+    },
+    {
+      "id": "pc15-sample-trace",
+      "status": "indirect-invariant",
+      "routines": [],
+      "tests": [
+        "tests/test_sdl3_audio.py::test_pc15_sample_isr_and_pit2_modes_one_and_three"
+      ],
+      "subject_type": "driver_entry_set",
+      "scope": "Synthetic 64-byte sample trace checks fixed IRQ count, reload count/hash and selected return state; speaker unit checks cover PIT2 modes 1 and 3 and live engine reload changes.",
+      "observables": [
+        "IRQ count",
+        "sample byte count",
+        "reload sequence hash",
+        "speaker level/audio polarity"
+      ],
+      "authority": "fixed_values_derived_from_locked_machine",
+      "claim_limit": "Trace was derived by an isolated original-machine probe documented in audio-drivers.md; this test does not execute locked driver bytes. Bundled PC VCE channel-zero samples remain unsupported.",
+      "historical_route": [
+        "immutable assets/PC15.DRV entry routines"
+      ],
+      "portable_route": [
+        "port/audio.c",
+        "port/pc_speaker.c",
+        "port/ad15_driver.c"
+      ],
+      "source_scope": [
+        "port/ad15_driver.c",
+        "port/audio.c",
+        "port/pc_speaker.c"
+      ],
+      "evidence_scope": "fixed-driver-trace-only"
+    },
+    {
+      "id": "audio-opl-wrapper",
+      "status": "indirect-invariant",
+      "routines": [
+        "port_opl3_reset",
+        "port_opl3_write",
+        "port_opl3_render_s16"
+      ],
+      "tests": [
+        "tests/test_sdl3_audio.py::test_nuked_opl3_wrapper_matches_reference_pcm"
+      ],
+      "subject_type": "host_dependency_wrapper",
+      "scope": "Wrapper PCM is compared with an independently initialized instance of the same pinned OPL core.",
+      "observables": [
+        "PCM samples"
+      ],
+      "authority": "independent_format_reference",
+      "claim_limit": "Validates wrapper consistency with the dependency; does not establish historical sound equivalence.",
+      "historical_route": [
+        "Not a direct historical routine mapping; pinned Nuked OPL3 dependency"
+      ],
+      "portable_route": [
+        "port/port_opl3.c",
+        "pinned Nuked OPL3 source"
+      ],
+      "source_scope": [
+        "port/port_opl3.c"
+      ],
+      "evidence_scope": "dependency-consistency-only"
+    },
+    {
+      "id": "transition-work-formula",
+      "status": "differential-oracle",
+      "routines": [
+        "sprite_1_unk3",
+        "port_transition_row_work"
+      ],
+      "tests": [
+        "tests/test_sdl3_transition_work.py::test_production_header_work_matches_frozen_oracle_across_dimensions_and_phases"
+      ],
+      "subject_type": "routine_expression",
+      "scope": "28 width/height/phase combinations: seven dimensions crossed with four phases; compares predicted retired instruction count with the locked routine's executed instruction count.",
+      "observables": [
+        "retired instruction count"
+      ],
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Validates this primitive's work-count model, not whole-game cycle timing, physical CPU frequency, or every transition path.",
+      "historical_route": [
+        "locked sprite_1_unk3 entry executed by RealModeRunner"
+      ],
+      "portable_route": [
+        "port/transition_work.h:port_transition_row_work",
+        "build/sdl3/host-build/overlay/src/obj_seg000.c transition integration"
+      ],
+      "source_scope": [
+        "port/sprite.c",
+        "port/transition_work.h"
+      ],
+      "evidence_scope": "work-count-only"
+    },
+    {
+      "id": "vga-raster-status-model",
+      "status": "static/layout",
+      "routines": [
+        "port_vga_input_status_1"
+      ],
+      "tests": [
+        "tests/test_sdl3_vga_timing.py::test_status_bits_follow_raster_phase_without_read_side_effects"
+      ],
+      "subject_type": "host_platform_model",
+      "scope": "Synthetic times for active display, horizontal blank, vertical blank, retrace start/end, frame rollover, and repeated same-time reads.",
+      "observables": [
+        "modeled status byte"
+      ],
+      "authority": "source_or_layout_assertion",
+      "claim_limit": "This is a host model contract, not a direct comparison with original VGA hardware, a DOS port-read routine, or a locked image execution.",
+      "historical_route": [
+        "VGA/Mode 13h status-port behavior; no locked routine oracle in this test"
+      ],
+      "portable_route": [
+        "port/vga_timing.h"
+      ],
+      "source_scope": [
+        "port/vga_timing.h"
+      ],
+      "evidence_scope": "host-model-invariant-only"
+    },
+    {
+      "id": "missing-audio-instrument-boundary",
+      "status": "static/layout",
+      "routines": [
+        "process_audio_event"
+      ],
+      "tests": [
+        "tests/test_sdl3_audio.py::test_missing_skid_over_instrument_is_rejected_without_voice_mutation"
+      ],
+      "subject_type": "host_boundary_invariant",
+      "scope": "Uses the shipped SKIDOVER.KMS KEYS reference paired with PCSKIDMS.VCE lacking a KEYS chunk; checks safe rejection and no voice mutation.",
+      "observables": [
+        "event result",
+        "voice-state bytes"
+      ],
+      "authority": "source_or_layout_assertion",
+      "claim_limit": "Validates the explicit host safety boundary only; it is not a differential for DOS invalid-pointer behavior or general audio-event handling.",
+      "historical_route": [
+        "generated host view of src/obj_seg028.c:process_audio_event; DOS null far-pointer physical-memory behavior is intentionally not reproduced"
+      ],
+      "portable_route": [
+        "port/build.py generated obj_seg028.c overlay",
+        "port/audio.c host audio boundary"
+      ],
+      "source_scope": [
+        "src/obj_seg028.c"
+      ],
+      "evidence_scope": "boundary-invariant-only"
+    },
+    {
+      "id": "original-replay-goldens",
+      "status": "end-to-end",
+      "routines": [],
+      "tests": [
+        "tests/test_sdl3_framebuffer.py",
+        "tests/test_sdl3_selection_frames.py",
+        "tests/test_sdl3_replay_playback.py",
+        "tests/test_sdl3_driving.py"
+      ],
+      "subject_type": "end_to_end_observation",
+      "scope": "Specific named replay checkpoints, frames, palettes, inputs and selected GAMESTATE observations.",
+      "observables": [
+        "indexed framebuffer",
+        "palette",
+        "input sequence",
+        "selected GAMESTATE snapshots"
+      ],
+      "authority": "original_run_frame_or_trace",
+      "claim_limit": "These wall-paced end-to-end fixtures do not prove identical semantic-boundary timing, DOS directory ordering, every gameplay state, or whole-program equivalence.",
+      "historical_route": [
+        "captured original DOS replay/frame fixtures under tests/fixtures/sdl3/original_replay"
+      ],
+      "portable_route": [
+        "SDL3 executable and runtime"
+      ],
+      "source_scope": [],
+      "evidence_scope": "end-to-end-only"
+    },
+    {
+      "id": "high-risk-uncovered-driver-and-timer",
+      "status": "unverified/high-risk",
+      "routines": [],
+      "tests": [],
+      "subject_type": "behavior_gap",
+      "scope": "Known explicit gap: MT15 and TD15 are unsupported. Existing timer tests exercise synthetic callback policy, not target physical frequency.",
+      "observables": [
+        "no verified observable"
+      ],
+      "authority": "none",
+      "claim_limit": "All unlisted historical routines also remain unverified by this draft, even where replay or host compile tests transitively execute them.",
+      "historical_route": [
+        "assets/MT15.DRV",
+        "assets/TD15.DRV",
+        "asm/timer_setup_interrupt.ASM"
+      ],
+      "portable_route": [
+        "no MT15/TD15 host output backend; port/timer.c substitutes host scheduling"
+      ],
+      "source_scope": [
+        "port/timer.c"
+      ],
+      "evidence_scope": "unverified"
+    }
+  ],
+  "renames": {
+    "main": "stunts_game_main",
+    "update_gamestate": "stunts_update_gamestate",
+    "audio_load_driver": "stunts_audio_load_driver_legacy",
+    "mouse_draw_transparent": "stunts_mouse_draw_transparent",
+    "mouse_draw_opaque": "stunts_mouse_draw_opaque",
+    "font_set_unk": "font_setup_unknown",
+    "font_set_fontdef2": "fontsetfontdef2"
+  }
+}

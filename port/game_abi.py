@@ -154,6 +154,68 @@ def adapt_polygon_storage(source: str) -> str:
         marker, "#define polyinfo_reset_marker poly_link_list[POLYINFO_CAPACITY]")
 
 
+def adapt_wheel_update_inputs(source: str) -> str:
+    """Replace reads spanning separate DOS globals with explicit native input.
+
+    wheel_update consumes 24 VECTORs and six origin words. The DOS caller
+    passes the first of four adjacent six-VECTOR globals and the first of
+    two adjacent VECTOR origins. Native global allocation has no such order
+    or adjacency contract (and the current GCC adds padding to both groups).
+    """
+    signature = ("void wheel_update(struct VECTOR far *out, I16 angle,\n"
+                 "              I16S *base, I16S *last_angle_and_y,\n"
+                 "              struct VECTOR *source, I16S *origin)\n{")
+    if source.count(signature) != 1:
+        raise ValueError("Could not locate the wheel-update input boundary")
+    division = "y = base[j] / 64;"
+    if source.count(division) != 1:
+        raise ValueError("Could not locate the wheel-height word division")
+    source = source.replace(division, "y = port_wheel_height_div64(base[j]);", 1)
+    helper = '''/* Locked 67226..67238: CWD/XOR/SUB/SAR/XOR/SUB. MSC's word
+   absolute value wraps for -32768, so that input yields +512, not -512. */
+static I16S port_wheel_height_div64(I16S value)
+{
+    U16 sign = value < 0 ? 0xffffu : 0u;
+    U16 magnitude = (U16)(((U16)value ^ sign) - sign);
+    U16 shifted = (U16)((magnitude >> 6) |
+                         ((magnitude & 0x8000u) ? 0xfc00u : 0u));
+    return (I16S)((shifted ^ sign) - sign);
+}
+
+'''
+    staged = '''
+    /* PORT_BUILD: locked source spans pts_set..car_dvecs / veco..veh_od;
+       origin spans pos_pt..ancv2 / ctrmesh..g_op_carvector2. */
+    struct VECTOR port_wheel_source[24];
+    I16S port_wheel_origin[6];
+    if (source == pts_set || source == veco) {
+        struct VECTOR *groups[4];
+        int player = source == pts_set;
+        groups[0] = source;
+        groups[1] = player ? secondveccar : secondoveh;
+        groups[2] = player ? veccar : opponent_pointc;
+        groups[3] = player ? car_dvecs : veh_od;
+        for (int group = 0; group < 4; ++group)
+            for (int vertex = 0; vertex < 6; ++vertex)
+                port_wheel_source[group * 6 + vertex] = groups[group][vertex];
+        source = port_wheel_source;
+    }
+    if (origin == (I16S *)&pos_pt || origin == (I16S *)&ctrmesh) {
+        int player = origin == (I16S *)&pos_pt;
+        struct VECTOR first = player ? pos_pt : ctrmesh;
+        struct VECTOR second = player ? ancv2 : g_op_carvector2;
+        port_wheel_origin[0] = first.x;
+        port_wheel_origin[1] = first.y;
+        port_wheel_origin[2] = first.z;
+        port_wheel_origin[3] = second.x;
+        port_wheel_origin[4] = second.y;
+        port_wheel_origin[5] = second.z;
+        origin = port_wheel_origin;
+    }
+'''
+    return source.replace(signature, helper + signature + staged, 1)
+
+
 def host_view_contracts(source: str) -> str:
     """Compile the established i686 shared-layout contracts in their owners.
 
@@ -184,6 +246,8 @@ def host_view_contracts(source: str) -> str:
                       ("track_object_info", 16, {"camera_data": 8, "opponent1": 12})))
     if unit == "obj_seg001_complete.c":
         views.append(("TRKOBJINFO", 16, {"si_cameraDataOffset": 8, "link": 12}))
+    if unit == "obj_seg004.c":
+        views.append(("VECTOR", 6, {"x": 0, "y": 2, "z": 4}))
     if unit == "obj_seg027.c":
         views.extend((("AUDIOCHUNK", 76, {"unk1E": 30, "unk48": 72}),
                       ("AUDIOVOICE", 48, {"unk10": 16, "unk2A": 42, "unk2C": 46})))

@@ -13,11 +13,18 @@ static SDL_Texture *s_texture;
 static SDL_Palette *s_palette;
 static SDL_Mutex *s_frame_lock;
 static uint64_t s_frame_id;
+static uint64_t s_image_version;
+static uint64_t s_uploaded_version;
+static uint64_t s_presented_version;
+static int s_redraw_needed;
+static int s_recreate_texture;
 static SDL_Color s_colors[256];
 static uint8_t s_palette6[256u * 3u];
 static uint8_t s_published_frame[PORT_FRAMEBUFFER_BYTES];
 static uint8_t s_published_palette6[256u * 3u];
 static char s_capture_dir[512];
+static char s_debug_capture_dir[1100];
+static unsigned s_debug_capture_sequence;
 
 static void write_u16le(FILE *stream, uint16_t value)
 {
@@ -31,21 +38,21 @@ static void write_u32le(FILE *stream, uint32_t value)
     write_u16le(stream, (uint16_t)(value >> 16));
 }
 
-static void dump_frame(uint64_t frame_id, const char *reason,
+static int dump_frame_to_dir(const char *directory, uint64_t frame_id, const char *reason,
                        const uint8_t *pixels, const uint8_t *palette)
 {
-    char path[768];
+    char path[1400];
     FILE *stream;
     int path_length;
-    if (s_capture_dir[0] == '\0')
-        return;
-    path_length = snprintf(path, sizeof(path), "%s/frame-%06llu.fbr", s_capture_dir,
+    if (directory[0] == '\0')
+        return 0;
+    path_length = snprintf(path, sizeof(path), "%s/frame-%06llu.fbr", directory,
                            (unsigned long long)frame_id);
     if (path_length < 0 || (size_t)path_length >= sizeof(path))
-        return;
+        return 0;
     stream = fopen(path, "wb");
     if (stream == NULL)
-        return;
+        return 0;
     fwrite("STFBR1\0\0", 1, 8, stream);
     write_u16le(stream, PORT_SCREEN_WIDTH);
     write_u16le(stream, PORT_SCREEN_HEIGHT);
@@ -54,20 +61,58 @@ static void dump_frame(uint64_t frame_id, const char *reason,
     write_u32le(stream, (uint32_t)frame_id);
     fwrite(pixels, 1, PORT_FRAMEBUFFER_BYTES, stream);
     fwrite(palette, 1, 256u * 3u, stream);
-    fclose(stream);
-    path_length = snprintf(path, sizeof(path), "%s/frame-%06llu.json", s_capture_dir,
+    int ok = !ferror(stream);
+    if (fclose(stream) != 0 || !ok) return 0;
+    path_length = snprintf(path, sizeof(path), "%s/frame-%06llu.json", directory,
                            (unsigned long long)frame_id);
     if (path_length < 0 || (size_t)path_length >= sizeof(path))
-        return;
+        return 0;
     stream = fopen(path, "wb");
     if (stream == NULL)
-        return;
+        return 0;
     fprintf(stream, "{\"frame_id\":%llu,\"reason\":\"%s\","
                     "\"width\":%d,\"height\":%d,\"palette\":\"RGB6\"}\n",
             (unsigned long long)frame_id,
             reason != NULL ? reason : "unknown",
             PORT_SCREEN_WIDTH, PORT_SCREEN_HEIGHT);
-    fclose(stream);
+    ok = !ferror(stream);
+    return fclose(stream) == 0 && ok;
+}
+
+/* A simple uncompressed indexed BMP retains the exact screenshot colours. */
+static int dump_bmp(const char *directory, const uint8_t *pixels, const uint8_t *palette)
+{
+    char path[1400];
+    int length = snprintf(path, sizeof(path), "%s/screenshot.bmp", directory);
+    if (length < 0 || (size_t)length >= sizeof(path)) return 0;
+    FILE *stream = fopen(path, "wb");
+    if (!stream) return 0;
+    fwrite("BM", 1, 2, stream);
+    write_u32le(stream, 14u + 40u + 1024u + PORT_FRAMEBUFFER_BYTES);
+    write_u32le(stream, 0);
+    write_u32le(stream, 14u + 40u + 1024u);
+    write_u32le(stream, 40);
+    write_u32le(stream, PORT_SCREEN_WIDTH);
+    write_u32le(stream, PORT_SCREEN_HEIGHT);
+    write_u16le(stream, 1);
+    write_u16le(stream, 8);
+    write_u32le(stream, 0);
+    write_u32le(stream, PORT_FRAMEBUFFER_BYTES);
+    write_u32le(stream, 0);
+    write_u32le(stream, 0);
+    write_u32le(stream, 256);
+    write_u32le(stream, 256);
+    for (unsigned i = 0; i < 256; ++i) {
+        for (int channel = 2; channel >= 0; --channel) {
+            unsigned value = palette[i * 3 + channel] & 63u;
+            fputc((int)((value << 2) | (value >> 4)), stream);
+        }
+        fputc(0, stream);
+    }
+    for (int row = PORT_SCREEN_HEIGHT - 1; row >= 0; --row)
+        fwrite(pixels + row * PORT_SCREEN_WIDTH, 1, PORT_SCREEN_WIDTH, stream);
+    int ok = !ferror(stream);
+    return fclose(stream) == 0 && ok;
 }
 
 static uint8_t dac6_to_u8(uint8_t value)
@@ -80,6 +125,13 @@ int port_video_init(SDL_Renderer *renderer)
 {
     size_t i;
     s_renderer = renderer;
+    s_frame_id = 0;
+    s_image_version = 0;
+    s_uploaded_version = s_presented_version = UINT64_MAX;
+    s_redraw_needed = 1;
+    s_recreate_texture = 0;
+    s_debug_capture_sequence = 0;
+    s_debug_capture_dir[0] = '\0';
     s_frame_lock = SDL_CreateMutex();
     if (s_frame_lock == NULL)
         return 0;
@@ -168,6 +220,7 @@ void port_video_publish(const char *reason)
     memcpy(frame, port_framebuffer, sizeof(frame));
     changed = memcmp(frame, s_published_frame, sizeof(frame)) != 0 ||
               memcmp(s_palette6, s_published_palette6, sizeof(s_palette6)) != 0;
+    if (changed) ++s_image_version;
     memcpy(s_published_frame, frame, sizeof(s_published_frame));
     memcpy(palette, s_palette6, sizeof(palette));
     memcpy(s_published_palette6, palette, sizeof(s_published_palette6));
@@ -177,9 +230,46 @@ void port_video_publish(const char *reason)
     /* Busy-wait redraws still have their own trace boundary. Persist only
        changed indexed images so captures cannot fill the disk with duplicates. */
     if (changed)
-        dump_frame(frame_id, reason, frame, palette);
+        dump_frame_to_dir(s_capture_dir, frame_id, reason, frame, palette);
     port_trace_video_publication(reason);
     port_guest_stop_after_publication();
+}
+
+void port_video_set_debug_capture_dir(const char *path)
+{
+    s_debug_capture_dir[0] = '\0';
+    if (!path || !*path || strlen(path) >= sizeof(s_debug_capture_dir)) return;
+    strcpy(s_debug_capture_dir, path);
+}
+
+int port_video_debug_capture_enabled(void) { return s_debug_capture_dir[0] != '\0'; }
+
+void port_video_debug_capture(void)
+{
+    char directory[1200];
+    uint8_t frame[PORT_FRAMEBUFFER_BYTES], palette[sizeof(s_palette6)];
+    uint64_t frame_id;
+    if (!port_video_debug_capture_enabled()) return;
+    /* Do not read mutable guest state from the presentation thread. The frame
+       ID links this immutable image to its guest publication in trace.jsonl. */
+    SDL_LockMutex(s_frame_lock);
+    frame_id = s_frame_id;
+    memcpy(frame, s_published_frame, sizeof(frame));
+    memcpy(palette, s_published_palette6, sizeof(palette));
+    SDL_UnlockMutex(s_frame_lock);
+    if (frame_id == 0) return;
+    int length = snprintf(directory, sizeof(directory), "%s/capture-%04u",
+                          s_debug_capture_dir, ++s_debug_capture_sequence);
+    if (length < 0 || (size_t)length >= sizeof(directory) ||
+        !SDL_CreateDirectory(directory) ||
+        !dump_frame_to_dir(directory, frame_id, "debug_capture", frame, palette) ||
+        !dump_bmp(directory, frame, palette)) {
+        SDL_Log("Debug capture could not be saved");
+        return;
+    }
+    port_trace_debug_capture(frame_id, directory);
+    port_diagnostics_note("debug_capture", directory);
+    SDL_Log("Debug capture saved: %s", directory);
 }
 
 void port_video_transition_begin(PortVideoTransition *transition)
@@ -228,25 +318,53 @@ void port_video_present(void)
     uint8_t palette6[sizeof(s_palette6)];
     SDL_Color colors[256];
     uint64_t frame_id;
-    if (s_renderer == NULL || s_texture == NULL)
+    uint64_t image_version;
+    int upload;
+    if (s_renderer == NULL)
         return;
+    if (s_recreate_texture) {
+        /* SDL_EVENT_RENDER_DEVICE_RESET invalidates every texture. Uploading
+           into the old object does not satisfy SDL's recovery contract. */
+        SDL_Texture *replacement = SDL_CreateTexture(s_renderer,
+            SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING,
+            PORT_SCREEN_WIDTH, PORT_SCREEN_HEIGHT);
+        if (replacement == NULL) return;
+        if (!SDL_SetTexturePalette(replacement, s_palette) ||
+            !SDL_SetTextureScaleMode(replacement, SDL_SCALEMODE_NEAREST)) {
+            SDL_DestroyTexture(replacement);
+            return;
+        }
+        SDL_DestroyTexture(s_texture);
+        s_texture = replacement;
+        s_recreate_texture = 0;
+    }
+    if (s_texture == NULL) return;
     if (s_frame_lock != NULL)
         SDL_LockMutex(s_frame_lock);
-    memcpy(frame, s_published_frame, sizeof(frame));
-    memcpy(palette6, s_published_palette6, sizeof(palette6));
     frame_id = s_frame_id;
+    image_version = s_image_version;
+    if (frame_id == 0 || (!s_redraw_needed && image_version == s_presented_version)) {
+        if (s_frame_lock != NULL) SDL_UnlockMutex(s_frame_lock);
+        return;
+    }
+    upload = image_version != s_uploaded_version;
+    if (upload) {
+        memcpy(frame, s_published_frame, sizeof(frame));
+        memcpy(palette6, s_published_palette6, sizeof(palette6));
+    }
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
-    if (frame_id == 0)
-        return;
-    for (unsigned i = 0; i < 256; ++i) {
-        colors[i].r = dac6_to_u8(palette6[i * 3]);
-        colors[i].g = dac6_to_u8(palette6[i * 3 + 1]);
-        colors[i].b = dac6_to_u8(palette6[i * 3 + 2]);
-        colors[i].a = SDL_ALPHA_OPAQUE;
+    if (upload) {
+        for (unsigned i = 0; i < 256; ++i) {
+            colors[i].r = dac6_to_u8(palette6[i * 3]);
+            colors[i].g = dac6_to_u8(palette6[i * 3 + 1]);
+            colors[i].b = dac6_to_u8(palette6[i * 3 + 2]);
+            colors[i].a = SDL_ALPHA_OPAQUE;
+        }
+        if (!SDL_SetPaletteColors(s_palette, colors, 0, 256) ||
+            !SDL_UpdateTexture(s_texture, NULL, frame, PORT_SCREEN_WIDTH)) return;
+        s_uploaded_version = image_version;
     }
-    SDL_SetPaletteColors(s_palette, colors, 0, 256);
-    SDL_UpdateTexture(s_texture, NULL, frame, PORT_SCREEN_WIDTH);
     if (!SDL_GetRenderOutputSize(s_renderer, &output_w, &output_h))
         return;
     scale = output_w / PORT_SCREEN_WIDTH;
@@ -261,8 +379,22 @@ void port_video_present(void)
     SDL_SetRenderDrawColor(s_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(s_renderer);
     SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
-    if (SDL_RenderPresent(s_renderer))
+    if (SDL_RenderPresent(s_renderer)) {
+        s_presented_version = image_version;
+        s_redraw_needed = 0;
         port_trace_host_present(frame_id);
+    }
+}
+
+/* The presentation thread owns redraw state. Guest publications only advance
+   the image generation under the frame lock; PIT and guest pacing stay intact. */
+void port_video_request_redraw(int reupload)
+{
+    s_redraw_needed = 1;
+    if (reupload) {
+        s_uploaded_version = UINT64_MAX;
+        s_recreate_texture = 1;
+    }
 }
 
 void port_video_shutdown(void)

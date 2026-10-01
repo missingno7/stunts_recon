@@ -24,6 +24,11 @@ original manual-word prompt. Upgrades preserve your existing config.
 Crash reports go into the executable's `diagnostics` directory. Launch with
 `stunts-sdl3.exe --debug` to also record detailed logs and gameplay/input traces;
 ZIP the newest diagnostics session after a failure. See the SDL3 handoff for details.
+For a visual bug, run with `--debug`, press **F12** at the problem, and provide
+that diagnostics session with the saved replay, track, camera and replay frame.
+Run `python tools/porting/semantic_audit.py` for the production layout/ABI checks
+and function-level risk/coverage map. See the [semantic audit](docs/porting/semantic-audit.md)
+for its bounded claims and unresolved coverage; normal validation includes it.
 The build provisions the hash-pinned Nuked OPL source into ignored
 `build/dependencies/nuked-opl3`. For an offline build, set `NUKED_OPL3_ROOT`
 to a copy containing the pinned `opl3.c`, `opl3.h` and `LICENSE` files.

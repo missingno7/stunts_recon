@@ -257,6 +257,7 @@ int main(int argc, char **argv)
     port_sdl_init("Stunts 1.1 - SDL3 faithful port");
     port_video_set_capture_dir(capture_dir);
     port_trace_open(trace_path, port_runtime_asset_root());
+    port_video_set_debug_capture_dir(debug ? port_diagnostics_directory() : "");
     port_memory_init();
     port_input_enable_test_auto_protection(test_auto_protection);
     if (!port_input_script_load(input_script)) {

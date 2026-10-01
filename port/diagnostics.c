@@ -248,6 +248,7 @@ unavailable:
 }
 
 const char *port_diagnostics_trace_path(void) { return s_trace_path; }
+const char *port_diagnostics_directory(void) { return s_directory; }
 
 void port_diagnostics_note(const char *label, const char *value)
 {
@@ -281,6 +282,7 @@ void port_diagnostics_close(int status, const char *reason)
 #else
 void port_diagnostics_init(int debug, const char *root) { (void)debug; (void)root; }
 const char *port_diagnostics_trace_path(void) { return ""; }
+const char *port_diagnostics_directory(void) { return ""; }
 void port_diagnostics_note(const char *label, const char *value) { (void)label; (void)value; }
 void port_diagnostics_close(int status, const char *reason) { (void)status; (void)reason; }
 #endif

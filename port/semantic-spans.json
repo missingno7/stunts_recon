@@ -1,0 +1,57 @@
+{
+  "schema": "stunts-semantic-invariant-contracts-v1",
+  "contracts": [
+    {
+      "id": "wheel_update.cross_global_inputs",
+      "kind": "cross_global_pointer_span",
+      "source": "src/obj_seg004.c",
+      "function": "wheel_update",
+      "argument_bindings": {
+        "source": {"parameter_index": 4, "elements_read": 24, "element_bytes": 6},
+        "origin": {"parameter_index": 5, "elements_read": 6, "element_bytes": 2}
+      },
+      "target_groups": [
+        ["pts_set", "secondveccar", "veccar", "car_dvecs"],
+        ["veco", "secondoveh", "opponent_pointc", "veh_od"]
+      ],
+      "target_origin_pairs": [["pos_pt", "ancv2"], ["ctrmesh", "g_op_carvector2"]],
+      "target_vector_bytes": 6,
+      "target_word_bytes": 2,
+      "required_target_contiguous": true,
+      "adapter": "port/game_abi.py::adapt_wheel_update_inputs",
+      "behavioral_test": "tests/test_sdl3_wheel_update.py::Sdl3WheelUpdateTests.test_split_globals_and_packed_inputs_match_frozen_wheels",
+      "evidence": [
+        "src/obj_seg004.c:73-84",
+        "src/obj_seg004.c:1112-1115",
+        "src/obj_seg004.c:1120-1170",
+        "layout/data-symbols.json: symbols named by target_groups/target_origin_pairs",
+        "tools/porting/port_include/stunts_structs_target.h: struct stunts_VECTOR"
+      ],
+      "interpretation": "Pointer span crosses separately declared target globals; names are symbol bindings, and recorded load addresses/widths are the frozen layout facts."
+    },
+    {
+      "id": "polyinfo.one_past_queue_head",
+      "kind": "global_one_past_sentinel",
+      "source": "src/obj_seg006.c",
+      "function": "polyinfo",
+      "global": "poly_link_list",
+      "capacity_macro": "POLYINFO_CAPACITY",
+      "declared_elements": 400,
+      "sentinel_index": 400,
+      "marker_global": "polyinfo_reset_marker",
+      "host_elements": 401,
+      "target_adjacent_byte_offset": 800,
+      "adapter": "port/game_abi.py::adapt_polygon_storage",
+      "behavioral_test": "tests/test_sdl3_polygon_storage.py::Sdl3PolygonStorageTests.test_list_head_and_polygon_pool_have_separate_storage",
+      "evidence": [
+        "src/obj_seg006.c:97-105",
+        "src/obj_seg006.c:155-161",
+        "src/obj_seg006.c:649-652",
+        "tests/test_sdl3_polygon_storage.py::Sdl3PolygonStorageTests.test_historical_head_is_the_word_after_400_links",
+        "layout/data-symbols.json: _polyinfo_reset_marker",
+        "layout/names-registry.json: poly_link_list binding"
+      ],
+      "interpretation": "The target reads the word at index 400 as the linked-list head. The translated host storage explicitly owns element 400 and aliases the marker to that element."
+    }
+  ]
+}

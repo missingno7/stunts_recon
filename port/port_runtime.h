@@ -76,11 +76,13 @@ void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
                             uint16_t buttons);
 void port_trace_video_publication(const char *reason);
 void port_trace_host_present(uint64_t frame_id);
+void port_trace_debug_capture(uint64_t frame_id, const char *directory);
 void port_trace_audio_publication(uint32_t frame_count);
 void port_trace_host_stop(const char *reason);
 
 void port_diagnostics_init(int debug, const char *root_override);
 const char *port_diagnostics_trace_path(void);
+const char *port_diagnostics_directory(void);
 const char *port_diagnostics_build_id(void);
 void port_diagnostics_note(const char *label, const char *value);
 void port_diagnostics_close(int status, const char *reason);
@@ -151,8 +153,12 @@ int port_video_init(SDL_Renderer *renderer);
 void port_video_set_palette(uint16_t first, uint16_t count,
                             const uint8_t *rgb6);
 void port_video_set_capture_dir(const char *path);
+void port_video_set_debug_capture_dir(const char *path);
+int port_video_debug_capture_enabled(void);
+void port_video_debug_capture(void);
 void port_video_publish(const char *reason);
 void port_video_present(void);
+void port_video_request_redraw(int reupload);
 uint8_t port_video_read_status_1(void);
 int port_test_startup_seed_load(const char *path);
 void port_test_random_wait_begin(void);

@@ -29,6 +29,7 @@ REQUIRED_FIELDS = {
                           "audio_frame_count", "machine_tick", "audio_backend"),
     "host_present": ("trace_schema", "event_type", "frame_id", "present_id",
                      "machine_tick"),
+    "debug_capture": ("trace_schema", "event_type", "frame_id", "machine_tick", "directory"),
     "host_stop": ("trace_schema", "event_type", "machine_tick", "reason"),
 }
 

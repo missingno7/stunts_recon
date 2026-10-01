@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import ctypes
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -520,6 +521,19 @@ def _fixture_dict(fixture: dict[str, object]) -> dict[str, object]:
             for key, value in fixture.items()}
 
 
+def _wheel_angle_fixtures():
+    """Exercise both chains and face visibility through a full camera/object turn."""
+    for angle in range(0, 1024, 64):
+        fixture = dict(MENU_FIXTURE, rotation=(0, 0, angle))
+        yield f"object-yaw-{angle:04x}", fixture
+    for angle in range(0, 1024, 64):
+        radians = 2 * math.pi * angle / 1024
+        fixture = dict(MENU_FIXTURE, camera=(0, 0, angle),
+                       pos=(round(2880 * math.sin(radians)), 0,
+                            round(2880 * math.cos(radians))))
+        yield f"camera-yaw-{angle:04x}", fixture
+
+
 class Sdl3ShapePipelineTests(unittest.TestCase):
     def test_all_stock_models_match_frozen_transforms_queues_and_full_frames(self):
         if not ASSETS.is_dir():
@@ -535,11 +549,23 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
             chunks_dir = temp / "chunks"
             chunks_dir.mkdir()
             cases = []
+            oracle_cases = []
+            wheel_resources = 0
             for index, row in enumerate(resources):
                 chunk_path = chunks_dir / f"shape-{index:03}.bin"
                 chunk_path.write_bytes(row["chunk"])
-                cases.append({"key": row["key"], "chunk_path": str(chunk_path),
-                              "fixture": _fixture_dict(MENU_FIXTURE)})
+                fixtures = [("menu", MENU_FIXTURE)]
+                parsed = fmt.parse_shape3d_chunk(row["chunk"])
+                if any(record["type"] == 12 for record in parsed["primitive_records"]):
+                    wheel_resources += 1
+                    fixtures.extend(_wheel_angle_fixtures())
+                for label, fixture in fixtures:
+                    key = f"{row['key']}__{label}"
+                    cases.append({"key": key, "chunk_path": str(chunk_path),
+                                  "fixture": _fixture_dict(fixture)})
+                    oracle_cases.append((key, row["chunk"], fixture, label == "menu"))
+            self.assertEqual(wheel_resources, 23)  # 22 car meshes plus GAME2's truck.
+            self.assertEqual(len(cases), 930)
             spec_path = temp / "native-spec.json"
             spec_path.write_text(json.dumps({"cases": cases}), encoding="utf-8")
             native_path = temp / "native-results.bin"
@@ -563,39 +589,40 @@ class Sdl3ShapePipelineTests(unittest.TestCase):
             frame_mismatches = []
             native_rows = json.loads(native_path.with_suffix(".json").read_text(
                 encoding="utf-8"))
-            self.assertEqual(len(native_rows), len(resources))
+            self.assertEqual(len(native_rows), len(oracle_cases))
             record_bytes = FRAME_BYTES + POOL_BYTES + LINK_COUNT * 2
             with native_path.open("rb") as stream:
-                for index, row in enumerate(resources):
-                    with self.subTest(shape=row["key"]):
+                for index, (key, chunk, fixture, baseline) in enumerate(oracle_cases):
+                    with self.subTest(shape=key):
                         native_blob = stream.read(record_bytes)
                         self.assertEqual(len(native_blob), record_bytes)
                         native_frame = native_blob[:FRAME_BYTES]
                         native_pool = native_blob[FRAME_BYTES:FRAME_BYTES + POOL_BYTES]
                         native_links = struct.unpack(
                             "<401h", native_blob[FRAME_BYTES + POOL_BYTES:])
-                        oracle = _oracle_render(image, symbols, row["chunk"], MENU_FIXTURE)
+                        oracle = _oracle_render(image, symbols, chunk, fixture)
                         native_count = native_rows[index]["count"]
-                        self.assertEqual(native_rows[index]["key"], row["key"])
+                        self.assertEqual(native_rows[index]["key"], key)
                         self.assertEqual(oracle["count"], native_count,
                                          "polygon count differs")
                         self.assertEqual(oracle["pool"], native_pool,
                                          "full 0x28A0-byte polygon pool differs")
                         oracle_chain = _ordered_chain(oracle["links"], oracle["count"],
-                                                      row["key"] + " oracle")
+                                                      key + " oracle")
                         native_chain = _ordered_chain(native_links, native_count,
-                                                      row["key"] + " native")
+                                                      key + " native")
                         self.assertEqual(oracle_chain, native_chain,
                                          "ordered polygon queue differs")
                         if oracle["frame"] != native_frame:
                             offsets = [i for i, (left, right) in enumerate(
                                 zip(oracle["frame"], native_frame)) if left != right]
                             frame_mismatches.append({
-                                "shape": row["key"], "bytes": len(offsets),
+                                "shape": key, "bytes": len(offsets),
                                 "first": [(offset, oracle["frame"][offset],
                                            native_frame[offset]) for offset in offsets[:8]],
                             })
-                        oracle_counts.append(oracle["count"])
+                        if baseline:
+                            oracle_counts.append(oracle["count"])
                 self.assertEqual(stream.read(1), b"", "native worker produced extra records")
             self.assertEqual(sum(count > 0 for count in oracle_counts), 161,
                              "the menu fixture must exercise 161 nonculled resources")

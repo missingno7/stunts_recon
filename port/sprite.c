@@ -1235,8 +1235,48 @@ static int64_t raster_ceil_div(int64_t numerator, int64_t denominator)
    boundary interval; using only the geometric intersection drops those DOS
    pixels (for example, the row starts at x=10 and ends at x=11 for a 4:1
    edge). */
+/* helper3 mode8's right-side loop has a final store after LOOP expires.
+   Its carry phase can place the endpoint on the row below the geometric end;
+   helper2 and the left-side loop have different terminal stores. See
+   slope_raster_loop_head_29/30 and branch_path_30 in the locked ASM. */
+static int raster_has_terminal_spill(int dx, int dy)
+{
+    if (dx <= 0 || dy <= 0 || dx <= dy)
+        return 0;
+    uint32_t slope = raster_line_slope((unsigned)dy, (unsigned)dx);
+    uint64_t final_y = 0x8000u + (uint64_t)((unsigned)dx + 1u) * slope;
+    return (final_y >> 16) > (unsigned)dy;
+}
+
+typedef struct RasterLineRecord {
+    uint16_t x_fraction_low;
+    int16_t start_x;
+    uint16_t y_fraction_low;
+    int16_t start_y;
+    int16_t end_x;
+    int16_t end_y;
+    uint16_t slope;
+    uint16_t step_count;
+    uint16_t color;
+    uint8_t mode;
+    uint8_t clip_flags;
+    uint16_t top_clipped_rows;
+    uint16_t bottom_clipped_rows;
+    uint16_t left_clipped_rows;
+    uint16_t right_clipped_rows;
+} RasterLineRecord;
+
+_Static_assert(sizeof(RasterLineRecord) == 28u,
+               "line descriptor must match the 14-word DOS record");
+
+static unsigned draw_line_record(unsigned x0_raw, unsigned y0_raw,
+                                 unsigned x1_raw, unsigned y1_raw,
+                                 void *record_pointer,
+                                 int clipping_enabled);
+
 static int raster_edge_interval(const RasterPoint *first,
                                 const RasterPoint *second, int y,
+                                int terminal_sample,
                                 RasterInterval *interval)
 {
     const RasterPoint *top = first;
@@ -1259,11 +1299,18 @@ static int raster_edge_interval(const RasterPoint *first,
     start_y = top->y;
     dy = (unsigned)((int)bottom->y - start_y);
     delta_y = y - start_y;
-    if (dy == 0u || delta_y < 0 || (unsigned)delta_y > dy)
+    if (dy == 0u || delta_y < 0)
         return 0;
     dx = (int)bottom->x - start_x;
     direction = dx < 0 ? -1 : 1;
     abs_dx = (unsigned)(dx < 0 ? -dx : dx);
+    if ((unsigned)delta_y > dy) {
+        if (terminal_sample && (unsigned)delta_y == dy + 1u) {
+            interval->left = interval->right = bottom->x;
+            return 1;
+        }
+        return 0;
+    }
     if (dy >= abs_dx) {
         if (abs_dx == 0u) {
             interval->left = start_x;
@@ -1303,126 +1350,570 @@ static int raster_edge_interval(const RasterPoint *first,
     return 1;
 }
 
+static int raster_floor_fixed(int64_t value)
+{
+    if (value >= 0)
+        return (int)(value >> 16);
+    return -(int)(((-value) + 0xffff) >> 16);
+}
+
+/* Consume the exact descriptor that the frozen line initializer produces.
+   The helper advances y-major modes by rows and x-major modes by columns. */
+static int raster_record_interval(const RasterLineRecord *record, int y,
+                                  RasterInterval *interval)
+{
+    unsigned mode = record->mode;
+    if (record->step_count == 0u || mode < 2u || mode > 8u)
+        return 0;
+    if (mode <= 6u) {
+        int delta = y - record->start_y;
+        int x;
+        int64_t fixed;
+        if (delta < 0 || (unsigned)delta >= record->step_count)
+            return 0;
+        switch (mode) {
+        case 2u: x = record->start_x; break;
+        case 3u: x = record->start_x - delta; break;
+        case 4u: x = record->start_x + delta; break;
+        case 5u:
+            fixed = (int64_t)record->x_fraction_low + 0x8000 -
+                    (int64_t)(unsigned)delta * record->slope;
+            x = record->start_x + raster_floor_fixed(fixed);
+            break;
+        case 6u:
+            fixed = (int64_t)record->x_fraction_low + 0x8000 +
+                    (int64_t)(unsigned)delta * record->slope;
+            x = record->start_x + (int)(fixed >> 16);
+            break;
+        default: return 0;
+        }
+        interval->left = interval->right = x;
+        return 1;
+    }
+
+    {
+        int64_t phase = (int64_t)record->y_fraction_low + 0x8000;
+        int64_t low = (int64_t)(y - record->start_y) * 65536 - phase;
+        int64_t high = low + 65536;
+        int64_t first_step;
+        int64_t last_step;
+        if (record->slope == 0u) {
+            if (low > 0 || high <= 0) return 0;
+            first_step = 0;
+            last_step = record->step_count - 1u;
+        } else {
+            first_step = raster_ceil_div(low, record->slope);
+            last_step = raster_ceil_div(high, record->slope) - 1;
+            if (first_step < 0) first_step = 0;
+            if (last_step >= record->step_count)
+                last_step = record->step_count - 1u;
+            if (last_step < first_step) return 0;
+        }
+        if (mode == 7u) {
+            interval->left = record->start_x - (int)last_step;
+            interval->right = record->start_x - (int)first_step;
+        } else {
+            interval->left = record->start_x + (int)first_step;
+            interval->right = record->start_x + (int)last_step;
+        }
+    }
+    return 1;
+}
+
+static int raster_record_prefill(const RasterLineRecord *record, int y,
+                                 int clip_left, int clip_right,
+                                 RasterInterval *interval)
+{
+    int rounded_start = record->start_y +
+                        (record->y_fraction_low >= 0x8000u);
+    int row;
+    if (record->top_clipped_rows != 0u) {
+        row = rounded_start - (int)record->top_clipped_rows;
+        if (y >= row && y < rounded_start) {
+            interval->left = clip_left;
+            interval->right = clip_left - 1;
+            return 1;
+        }
+    }
+    if (record->left_clipped_rows != 0u) {
+        row = rounded_start - (int)record->left_clipped_rows;
+        if (y >= row && y < rounded_start) {
+            interval->left = clip_right;
+            interval->right = clip_right - 1;
+            return 1;
+        }
+    }
+    if (record->bottom_clipped_rows != 0u) {
+        row = (int)record->end_y + 1;
+        if (y >= row && y < row + (int)record->bottom_clipped_rows) {
+            interval->left = clip_left;
+            interval->right = clip_left - 1;
+            return 1;
+        }
+    }
+    if (record->right_clipped_rows != 0u) {
+        row = (int)record->end_y + 1;
+        if (y >= row && y < row + (int)record->right_clipped_rows) {
+            interval->left = clip_right;
+            interval->right = clip_right - 1;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+static int raster_record_postfill(const RasterLineRecord *record, int y,
+                                  int clip_left, int clip_right,
+                                  int *left, int *right, int *seeded)
+{
+    int rounded_start = record->start_y +
+                        (record->y_fraction_low >= 0x8000u);
+    int row;
+    int changed = 0;
+    if (record->top_clipped_rows != 0u) {
+        row = rounded_start - (int)record->top_clipped_rows;
+        if (y >= row && y < rounded_start) {
+            /* helper3's clip postamble writes only the left array here. */
+            *left = clip_left;
+            *seeded = 1;
+            changed = 1;
+        }
+    }
+    if (record->left_clipped_rows != 0u) {
+        row = rounded_start - (int)record->left_clipped_rows;
+        if (y >= row && y < rounded_start) {
+            /* The left-clip postamble writes only the right array. */
+            *right = clip_right - 1;
+            *seeded = 1;
+            changed = 1;
+        }
+    }
+    if (record->bottom_clipped_rows != 0u) {
+        row = (int)record->end_y + 1;
+        if (y >= row && y < row + (int)record->bottom_clipped_rows) {
+            /* Bottom-clipped rows receive the same left-array assignment. */
+            *left = clip_left;
+            *seeded = 1;
+            changed = 1;
+        }
+    }
+    if (record->right_clipped_rows != 0u) {
+        row = (int)record->end_y + 1;
+        if (y >= row && y < row + (int)record->right_clipped_rows) {
+            /* Right-clipped rows receive the right-array assignment only. */
+            *right = clip_right - 1;
+            *seeded = 1;
+            changed = 1;
+        }
+    }
+    return changed;
+}
+
+enum { RASTER_BOUND_ROWS = 480 };
+
+/* Translate helper3's alternate-polygon mode-7 loop (case13).  In this
+   descriptor mode AX walks left while DX carries advance the row pointer.
+   The branch order matters: the opposite boundary is checked before DX is
+   advanced, and the terminal no-carry branch does not store AX. */
+static void raster_mode13_alt(const RasterLineRecord *record,
+                              RasterInterval *rows,
+                              unsigned char *seeded)
+{
+    unsigned cx = record->step_count;
+    int ax = record->start_x;
+    int y = record->start_y;
+    uint32_t initial = (uint32_t)record->y_fraction_low + 0x8000u;
+    uint16_t dx = (uint16_t)initial;
+
+    if ((initial >> 16) != 0u)
+        ++y;
+    while (cx != 0u) {
+        uint32_t sum;
+        int carry;
+
+        if (y >= 0 && y < RASTER_BOUND_ROWS && rows[y].right < ax) {
+            /* branch_path_24: DI switches to the right array; STOSW writes
+               and advances DI to the following row. */
+            if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                rows[y].right = ax;
+                seeded[y] = 1u;
+            }
+            ++y;
+            for (;;) {
+                --ax;
+                sum = (uint32_t)dx + record->slope;
+                carry = (int)(sum >> 16);
+                dx = (uint16_t)sum;
+                --cx;
+                if (cx == 0u)
+                    return;
+                if (carry) {
+                    /* Carry falls through to LOOP loop_head_25, whose
+                       STOSW stores this sample before the next update. */
+                    if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                        rows[y].right = ax;
+                        seeded[y] = 1u;
+                    }
+                    ++y;
+                }
+                /* JNB on no-carry follows branch_path_25 back to
+                   loop_head_26 and intentionally skips a store. */
+            }
+        }
+
+        sum = (uint32_t)dx + record->slope;
+        carry = (int)(sum >> 16);
+        dx = (uint16_t)sum;
+        if (!carry) {
+            --ax;
+            --cx;
+            continue;
+        }
+
+        if (y >= 0 && y < RASTER_BOUND_ROWS && rows[y].left > ax) {
+            /* branch_path_26 starts STOSW on the left array. */
+            rows[y].left = ax;
+            seeded[y] = 1u;
+            ++y;
+            --ax;
+            --cx;
+            while (cx != 0u) {
+                sum = (uint32_t)dx + record->slope;
+                carry = (int)(sum >> 16);
+                dx = (uint16_t)sum;
+                if (carry) {
+                    if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                        rows[y].left = ax;
+                        seeded[y] = 1u;
+                    }
+                    ++y;
+                    --ax;
+                    --cx;
+                } else {
+                    --ax;
+                    --cx;
+                    if (cx == 0u) {
+                        /* branch_path_27's terminal INC AX / MOV [DI],AX. */
+                        ++ax;
+                        if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                            rows[y].left = ax;
+                            seeded[y] = 1u;
+                        }
+                    }
+                }
+            }
+            return;
+        }
+
+        /* branch_path_23: the carry advanced DI by one row; its terminal
+           LOOP exit has no store. */
+        ++y;
+        --ax;
+        --cx;
+    }
+}
+
+/* Symmetric alternate-polygon mode-8 path (case14).  It walks AX rightward;
+   the first-side comparison and its carry-controlled post-loop stores differ
+   from case13, so it remains a separate transcription. */
+static void raster_mode14_alt(const RasterLineRecord *record,
+                              RasterInterval *rows,
+                              unsigned char *seeded)
+{
+    unsigned cx = record->step_count;
+    int ax = record->start_x;
+    int y = record->start_y;
+    uint32_t initial = (uint32_t)record->y_fraction_low + 0x8000u;
+    uint16_t dx = (uint16_t)initial;
+
+    if ((initial >> 16) != 0u)
+        ++y;
+    while (cx != 0u) {
+        uint32_t sum;
+        int carry;
+
+        if (y >= 0 && y < RASTER_BOUND_ROWS && rows[y].left > ax) {
+            /* The first cmp jumps directly to branch_path_31/STOSW. */
+            rows[y].left = ax;
+            seeded[y] = 1u;
+            ++y;
+            ++ax;
+            --cx;
+            while (cx != 0u) {
+                sum = (uint32_t)dx + record->slope;
+                carry = (int)(sum >> 16);
+                dx = (uint16_t)sum;
+                if (carry) {
+                    if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                        rows[y].left = ax;
+                        seeded[y] = 1u;
+                    }
+                    ++y;
+                }
+                ++ax;
+                --cx;
+            }
+            return;
+        }
+
+        sum = (uint32_t)dx + record->slope;
+        carry = (int)(sum >> 16);
+        dx = (uint16_t)sum;
+        if (!carry) {
+            ++ax;
+            --cx;
+            continue;
+        }
+        if (y >= 0 && y < RASTER_BOUND_ROWS && rows[y].right < ax) {
+            /* branch_path_29: switch to right array and MOV [DI],AX. */
+            rows[y].right = ax;
+            seeded[y] = 1u;
+            while (cx != 0u) {
+                ++ax;
+                sum = (uint32_t)dx + record->slope;
+                carry = (int)(sum >> 16);
+                dx = (uint16_t)sum;
+                if (carry) {
+                    ++y;
+                    --cx;
+                    if (cx != 0u) {
+                        if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                            rows[y].right = ax;
+                            seeded[y] = 1u;
+                        }
+                    } else {
+                        --ax;
+                        if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                            rows[y].right = ax;
+                            seeded[y] = 1u;
+                        }
+                    }
+                } else {
+                    --cx;
+                    if (cx == 0u) {
+                        ++y;
+                        --ax;
+                        if (y >= 0 && y < RASTER_BOUND_ROWS) {
+                            rows[y].right = ax;
+                            seeded[y] = 1u;
+                        }
+                    }
+                }
+            }
+            return;
+        }
+        ++y;
+        ++ax;
+        --cx;
+    }
+}
+
 static void raster_polygon(int16_t color, int16_t point_count,
                            const int16_t *points, RasterFillMode mode,
                            int merge_each_row)
 {
     RasterPoint vertices[256];
+    struct RasterPolyEdge {
+        int vertex;
+        int next;
+        RasterLineRecord record;
+    } edges[256];
+    int edge_list[2][256];
+    int edge_count = 0;
+    int chain_count[2] = {0, 0};
+    RasterInterval row_bounds[RASTER_BOUND_ROWS] = {{0, 0}};
+    unsigned char row_seeded[RASTER_BOUND_ROWS] = {0};
     int8_t reverse_side[256] = {0};
-    int min_y = INT_MAX;
-    int max_y = INT_MIN;
-    int min_vertex = 0;
-    int max_vertex = 0;
-    int clip_left;
-    int clip_right;
-    int clip_top;
-    int clip_bottom;
+    int min_y = INT_MAX, max_y = INT_MIN;
+    int min_x = INT_MAX, max_x = INT_MIN;
+    int min_vertex = 0, max_vertex = 0;
+    int clip_left, clip_right, clip_top, clip_bottom;
+    int clipped;
     int16_t index;
     uint16_t pattern = s_line_pattern_bits;
     int drew = 0;
 
     if (points == NULL || point_count <= 0 || point_count > 256 ||
-        !sprite_raster_bounds(&clip_left, &clip_right, &clip_top,
-                              &clip_bottom))
+        !sprite_raster_bounds(&clip_left, &clip_right, &clip_top, &clip_bottom))
         return;
     for (index = 0; index < point_count; ++index) {
         vertices[index].x = points[(size_t)index * 2u];
         vertices[index].y = points[(size_t)index * 2u + 1u];
-        /* Shared DOS setup chooses the last minimum and first maximum. */
-        if (vertices[index].y <= min_y) {
-            min_y = vertices[index].y;
-            min_vertex = index;
-        }
-        if (vertices[index].y > max_y) {
-            max_y = vertices[index].y;
-            max_vertex = index;
-        }
+        if (vertices[index].x < min_x) min_x = vertices[index].x;
+        if (vertices[index].x > max_x) max_x = vertices[index].x;
+        if (vertices[index].y <= min_y) { min_y = vertices[index].y; min_vertex = index; }
+        if (vertices[index].y > max_y) { max_y = vertices[index].y; max_vertex = index; }
     }
     if (point_count == 1) {
-        preRender_line(vertices[0].x, vertices[0].y,
-                       vertices[0].x, vertices[0].y, color);
+        preRender_line(vertices[0].x, vertices[0].y, vertices[0].x,
+                       vertices[0].y, color);
         return;
-    } else if (point_count == 2) {
-        /* The shared image callback handles degenerate faces as a line. */
+    }
+    if (point_count == 2) {
         preRender_line((int16_t)vertices[0].x, (int16_t)vertices[0].y,
-                       (int16_t)vertices[1].x, (int16_t)vertices[1].y,
-                       color);
+                       (int16_t)vertices[1].x, (int16_t)vertices[1].y, color);
         return;
-    } else {
+    }
+
+    /* Shared setup culls against rightmost-1, then selects clipped line
+       descriptors globally when any input vertex exceeds that box. */
+    if (max_x < clip_left || min_x >= clip_right - 1 ||
+        max_y < clip_top || min_y >= clip_bottom)
+        return;
+    clipped = (max_x > clip_right - 1 || min_x < clip_left ||
+               max_y >= clip_bottom || min_y < clip_top);
+    {
         int first_y = min_y > clip_top ? min_y : clip_top;
         int last_y = max_y < clip_bottom - 1 ? max_y : clip_bottom - 1;
         int y;
-        if (first_y > last_y)
-            return;
-        if (min_y == max_y) {
-            int min_x = vertices[0].x;
-            int max_x = vertices[0].x;
-            /* The frozen shared setup dispatches an all-horizontal face
-               through its solid line callback, even for patterned fills. */
-            for (index = 1; index < point_count; ++index) {
-                if (vertices[index].x < min_x) min_x = vertices[index].x;
-                if (vertices[index].x > max_x) max_x = vertices[index].x;
-            }
+        int chain;
+        if (first_y > last_y) return;
+        if (min_y == max_y || min_x == max_x) {
             preRender_line((int16_t)min_x, (int16_t)min_y,
                            (int16_t)max_x, (int16_t)max_y, color);
             return;
         }
-        /* Both patterned DOS callbacks select the low pattern byte after
-           swapping bytes when their first scanline has an even y. */
+
+        /* The DOS helper builds one descriptor per ascending edge, then
+           processes every forward edge before entering the reverse helper. */
+        for (chain = 0; chain < 2; ++chain) {
+            int vertex = min_vertex;
+            while (vertex != max_vertex) {
+                int next = chain == 0 ? vertex + 1 : vertex - 1;
+                if (next == point_count) next = 0;
+                if (next < 0) next = point_count - 1;
+                if (vertices[next].y > vertices[vertex].y) {
+                    struct RasterPolyEdge *edge = &edges[edge_count];
+                    edge->vertex = vertex;
+                    edge->next = next;
+                    memset(&edge->record, 0, sizeof(edge->record));
+                    edge->record.color = (uint16_t)color;
+                    (void)draw_line_record((uint16_t)vertices[vertex].x,
+                                           (uint16_t)vertices[vertex].y,
+                                           (uint16_t)vertices[next].x,
+                                           (uint16_t)vertices[next].y,
+                                           &edge->record, clipped);
+                    edge_list[chain][chain_count[chain]++] = edge_count++;
+                }
+                vertex = next;
+            }
+        }
+
         if (mode != RASTER_FILL_SOLID && (first_y & 1) == 0)
             pattern = rotate_pattern_rows(pattern);
+
+        /* helper2: collect the forward boundary for every scan row first. */
         for (y = first_y; y <= last_y; ++y) {
-            RasterInterval bounds = {0, -1};
-            int seeded = 0;
-            int chain;
-            /* The original fills two ordered chains, not even/odd pairs.
-               Forward helper2 replaces both bounds on a shared row; reverse
-               helper3 expands them. Horizontal/decreasing edges are skipped,
-               but their vertices still advance the traversal. */
-            for (chain = 0; chain < 2; ++chain) {
-                int vertex = min_vertex;
-                while (vertex != max_vertex) {
-                    int next = chain == 0 ? vertex + 1 : vertex - 1;
-                    RasterInterval edge;
-                    if (next == point_count) next = 0;
-                    if (next < 0) next = point_count - 1;
-                    if (vertices[next].y > vertices[vertex].y &&
-                        raster_edge_interval(&vertices[vertex], &vertices[next],
-                                             y, &edge)) {
-                        if (chain == 0 || !seeded) {
-                            bounds = edge;
-                            seeded = 1;
-                        } else if (merge_each_row) {
-                            if (edge.left < bounds.left) bounds.left = edge.left;
-                            if (edge.right > bounds.right) bounds.right = edge.right;
-                        } else {
-                            /* Alternate callbacks choose one boundary on the
-                               first outside sample, then write that same side
-                               for the remainder of this reverse edge. Mode7
-                               tests the right sample first; modes2..6 and8
-                               test the left sample first (helper3 dispatch). */
-                            int dx = vertices[next].x - vertices[vertex].x;
-                            int dy = vertices[next].y - vertices[vertex].y;
-                            int right_first = dx < -dy;
-                            int side = reverse_side[vertex];
-                            if (side == 0) {
-                                if (right_first && edge.right > bounds.right)
-                                    side = 1;
-                                else if (edge.left < bounds.left)
-                                    side = -1;
-                                else if (edge.right > bounds.right)
-                                    side = 1;
-                                reverse_side[vertex] = (int8_t)side;
-                            }
-                            if (side < 0) bounds.left = edge.left;
-                            if (side > 0) bounds.right = edge.right;
-                        }
-                    }
-                    vertex = next;
+            int i;
+            for (i = 0; i < chain_count[0]; ++i) {
+                struct RasterPolyEdge *item = &edges[edge_list[0][i]];
+                RasterInterval edge;
+                int has_edge;
+                int vertex = item->vertex;
+                int next = item->next;
+                if (clipped) {
+                    has_edge = raster_record_interval(&item->record, y, &edge);
+                    if (!has_edge)
+                        has_edge = raster_record_prefill(&item->record, y,
+                                          clip_left, clip_right, &edge);
+                } else {
+                    has_edge = raster_edge_interval(&vertices[vertex],
+                                      &vertices[next], y, 0, &edge);
+                }
+                if (has_edge) {
+                    row_bounds[y] = edge;
+                    row_seeded[y] = 1u;
                 }
             }
-            if (seeded) {
-                fill_raster_span(bounds.left, y, bounds.right, (uint8_t)color,
+        }
+
+        /* helper3: process reverse edges after all helper2 bounds exist.
+           Alternate x-major modes use the original case13/case14 state
+           machines, including their distinct initial and terminal stores. */
+        for (chain = 0; chain < chain_count[1]; ++chain) {
+            struct RasterPolyEdge *item = &edges[edge_list[1][chain]];
+            RasterLineRecord *record = &item->record;
+            int vertex = item->vertex;
+            int next = item->next;
+            if (!merge_each_row &&
+                (record->mode == 7u || record->mode == 8u)) {
+                if (record->mode == 7u)
+                    raster_mode13_alt(record, row_bounds, row_seeded);
+                else
+                    raster_mode14_alt(record, row_bounds, row_seeded);
+                if (clipped) {
+                    for (y = first_y; y <= last_y; ++y) {
+                        int seeded = row_seeded[y] != 0u;
+                        (void)raster_record_postfill(record, y,
+                            clip_left, clip_right, &row_bounds[y].left,
+                            &row_bounds[y].right, &seeded);
+                        row_seeded[y] = (unsigned char)seeded;
+                    }
+                }
+                continue;
+            }
+            for (y = first_y; y <= last_y; ++y) {
+                RasterInterval edge;
+                int has_edge;
+                if (clipped) {
+                    has_edge = raster_record_interval(record, y, &edge);
+                    if (!has_edge && !merge_each_row) {
+                        int dx = vertices[next].x - vertices[vertex].x;
+                        int dy = vertices[next].y - vertices[vertex].y;
+                        if (record->mode == 8u && dx > dy &&
+                            vertices[next].y < clip_bottom &&
+                            raster_has_terminal_spill(dx, dy) &&
+                            y == (int)record->end_y + 1) {
+                            edge.left = edge.right = record->end_x;
+                            has_edge = 1;
+                        }
+                    }
+                } else {
+                    int dx = vertices[next].x - vertices[vertex].x;
+                    int dy = vertices[next].y - vertices[vertex].y;
+                    has_edge = raster_edge_interval(&vertices[vertex],
+                        &vertices[next], y,
+                        !merge_each_row && reverse_side[vertex] > 0 &&
+                        raster_has_terminal_spill(dx, dy), &edge);
+                }
+                if (has_edge) {
+                    if (!row_seeded[y]) {
+                        row_bounds[y] = edge;
+                        row_seeded[y] = 1u;
+                    } else if (merge_each_row) {
+                        if (edge.left < row_bounds[y].left)
+                            row_bounds[y].left = edge.left;
+                        if (edge.right > row_bounds[y].right)
+                            row_bounds[y].right = edge.right;
+                    } else {
+                        int dx = vertices[next].x - vertices[vertex].x;
+                        int dy = vertices[next].y - vertices[vertex].y;
+                        int right_first = dx < -dy;
+                        int side = reverse_side[vertex];
+                        if (side == 0) {
+                            if (right_first && edge.right > row_bounds[y].right) side = 1;
+                            else if (edge.left < row_bounds[y].left) side = -1;
+                            else if (edge.right > row_bounds[y].right) side = 1;
+                            reverse_side[vertex] = (int8_t)side;
+                        }
+                        if (side < 0) row_bounds[y].left = edge.left;
+                        if (side > 0) row_bounds[y].right = edge.right;
+                    }
+                }
+                if (clipped) {
+                    int seeded = row_seeded[y] != 0u;
+                    (void)raster_record_postfill(record, y, clip_left,
+                        clip_right, &row_bounds[y].left,
+                        &row_bounds[y].right, &seeded);
+                    row_seeded[y] = (unsigned char)seeded;
+                }
+            }
+        }
+
+        for (y = first_y; y <= last_y; ++y) {
+            if (row_seeded[y]) {
+                fill_raster_span(row_bounds[y].left, y,
+                                 row_bounds[y].right, (uint8_t)color,
                                  mode, &pattern);
                 drew = 1;
             }
@@ -1607,26 +2098,7 @@ void preRender_sphere(int16_t center_x, int16_t center_y, int16_t size,
         port_video_publish("preRender_sphere");
 }
 
-typedef struct RasterLineRecord {
-    uint16_t x_fraction_low;
-    int16_t start_x;
-    uint16_t y_fraction_low;
-    int16_t start_y;
-    int16_t end_x;
-    int16_t end_y;
-    uint16_t slope;
-    uint16_t step_count;
-    uint16_t color;
-    uint8_t mode;
-    uint8_t clip_flags;
-    uint16_t top_clipped_rows;
-    uint16_t bottom_clipped_rows;
-    uint16_t left_clipped_rows;
-    uint16_t right_clipped_rows;
-} RasterLineRecord;
 
-_Static_assert(sizeof(RasterLineRecord) == 28u,
-               "line descriptor must match the 14-word DOS record");
 
 static uint32_t raster_line_fixed(int16_t whole, uint16_t fraction)
 {
