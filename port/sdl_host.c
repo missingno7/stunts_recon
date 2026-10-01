@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "render/viewport.h"
 
 #include <SDL3/SDL.h>
 
@@ -10,24 +11,12 @@ static void mouse_to_logical(float x, float y, int *logical_x, int *logical_y)
 {
     int window_w = 0;
     int window_h = 0;
-    int scale_x;
-    int scale_y;
-    int scale;
-    int viewport_x;
-    int viewport_y;
+    int output_w = 0;
+    int output_h = 0;
     SDL_GetWindowSize(s_window, &window_w, &window_h);
-    scale_x = window_w / PORT_SCREEN_WIDTH;
-    scale_y = window_h / PORT_SCREEN_HEIGHT;
-    scale = scale_x < scale_y ? scale_x : scale_y;
-    if (scale < 1) scale = 1;
-    viewport_x = (window_w - PORT_SCREEN_WIDTH * scale) / 2;
-    viewport_y = (window_h - PORT_SCREEN_HEIGHT * scale) / 2;
-    *logical_x = ((int)x - viewport_x) / scale;
-    *logical_y = ((int)y - viewport_y) / scale;
-    if (*logical_x < 0) *logical_x = 0;
-    if (*logical_y < 0) *logical_y = 0;
-    if (*logical_x >= PORT_SCREEN_WIDTH) *logical_x = PORT_SCREEN_WIDTH - 1;
-    if (*logical_y >= PORT_SCREEN_HEIGHT) *logical_y = PORT_SCREEN_HEIGHT - 1;
+    SDL_GetRenderOutputSize(s_renderer, &output_w, &output_h);
+    port_viewport_mouse(window_w, window_h, output_w, output_h,
+                        x, y, logical_x, logical_y);
 }
 
 void port_sdl_init(const char *title)
@@ -35,7 +24,8 @@ void port_sdl_init(const char *title)
     s_quit = 0;
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
-    s_window = SDL_CreateWindow(title, 960, 600, SDL_WINDOW_RESIZABLE);
+    s_window = SDL_CreateWindow(title, 960, 720,
+                              SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
     if (s_window == NULL) {
         SDL_Log("SDL_CreateWindow failed: %s", SDL_GetError());
         return;

@@ -1,6 +1,7 @@
 #include "port_runtime.h"
 #include "vga_timing.h"
 #include "transition_work.h"
+#include "render/viewport.h"
 
 #include <SDL3/SDL.h>
 #include <stdio.h>
@@ -312,7 +313,6 @@ void port_video_present(void)
 {
     int output_w = 0;
     int output_h = 0;
-    int scale;
     SDL_FRect destination;
     uint8_t frame[PORT_FRAMEBUFFER_BYTES];
     uint8_t palette6[sizeof(s_palette6)];
@@ -367,15 +367,8 @@ void port_video_present(void)
     }
     if (!SDL_GetRenderOutputSize(s_renderer, &output_w, &output_h))
         return;
-    scale = output_w / PORT_SCREEN_WIDTH;
-    if (output_h / PORT_SCREEN_HEIGHT < scale)
-        scale = output_h / PORT_SCREEN_HEIGHT;
-    if (scale < 1)
-        scale = 1;
-    destination.w = (float)(PORT_SCREEN_WIDTH * scale);
-    destination.h = (float)(PORT_SCREEN_HEIGHT * scale);
-    destination.x = (float)(output_w - (int)destination.w) / 2.0f;
-    destination.y = (float)(output_h - (int)destination.h) / 2.0f;
+    PortViewport viewport = port_viewport_fit(output_w, output_h);
+    destination = (SDL_FRect){viewport.x, viewport.y, viewport.w, viewport.h};
     SDL_SetRenderDrawColor(s_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(s_renderer);
     SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
