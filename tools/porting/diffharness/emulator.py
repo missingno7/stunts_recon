@@ -53,8 +53,14 @@ class RealModeRunner:
         for write in case.memory:
             uc.mem_write(linear(write.segment, write.offset), bytes(write.data))
 
-        # Put a far sentinel in a private conventional-memory stack segment.
-        stack_segment, initial_sp = 0x8F00, 0xF000
+        # Small-model C passes stack locals as DGROUP near pointers. The
+        # original game runs with SS == DS; a separate default stack silently
+        # breaks nested calls to matrix/vector helpers. Honor explicit stack
+        # registers when a case intentionally exercises a different ABI.
+        dgroup = dgroup_segment(self.load_segment)
+        registers = {name.lower(): value for name, value in case.registers.items()}
+        stack_segment = int(registers.get("ss", dgroup)) & 0xFFFF
+        initial_sp = int(registers.get("sp", 0xF000)) & 0xFFFF
         sentinel_cs, sentinel_ip = ((code_segment, 0xFFFE) if case.call == "near"
                                     else (0x7000, 0x0000))
         stack_words = [sentinel_ip]
@@ -65,12 +71,11 @@ class RealModeRunner:
                          for word in stack_words)
         uc.mem_write(linear(stack_segment, initial_sp), stack)
 
-        dgroup = dgroup_segment(self.load_segment)
         defaults = {"cs": code_segment, "ip": entry_ip, "ds": dgroup,
                     "es": 0xA000, "ss": stack_segment, "sp": initial_sp,
                     "bp": 0, "ax": 0, "bx": 0, "cx": 0, "dx": 0,
                     "si": 0, "di": 0}
-        defaults.update({name.lower(): value for name, value in case.registers.items()})
+        defaults.update(registers)
         for name, value in defaults.items():
             uc.reg_write(REGS[name], int(value) & 0xFFFF)
         uc.reg_write(UC_X86_REG_EFLAGS, 0x0202)

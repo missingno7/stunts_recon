@@ -10,13 +10,76 @@ import re
 import shutil
 import subprocess
 import sys
+import zipfile
+
+from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic
+from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build" / "sdl3"
 DEFAULT_GCC = Path(r"C:\msys64\mingw32\bin\gcc.exe")
 DEFAULT_SDL = Path(r"C:\tools\sdl3-3.4.16-i686")
-DEFAULT_ASSETS = Path(r"D:\Prog\stunts_recon\assets")
+DEFAULT_ASSETS = ROOT / "assets"
 DATA_STUB_BYTES = 65536
+
+
+def adapt_gameplay_word_arithmetic(source: str) -> str:
+    """Keep two reachable 16-bit gameplay expressions exact in the host view."""
+    include = '#include "stunts_types.h"\n'
+    if source.count(include) != 1:
+        raise RuntimeError("Could not locate the gameplay scalar type include")
+    helpers = r'''/* PORT_BUILD: preserve locked 16-bit gameplay arithmetic. */
+static int16_t port_game_s16_from_u16(uint16_t bits)
+{
+    int32_t value = (int32_t)bits;
+    if (value >= 0x8000)
+        value -= 0x10000;
+    return (int16_t)value;
+}
+
+static int16_t port_game_mul_sar16(int16_t left, int16_t right, unsigned shift)
+{
+    int32_t product = (int32_t)left * (int32_t)right;
+    uint16_t low_word = (uint16_t)(uint32_t)product;
+    int32_t signed_word = low_word < 0x8000u
+        ? (int32_t)low_word : (int32_t)low_word - 0x10000;
+    uint32_t divisor = (uint32_t)1u << shift;
+    if (signed_word >= 0)
+        return (int16_t)(signed_word / (int32_t)divisor);
+    return (int16_t)(-((-signed_word + (int32_t)divisor - 1) /
+                       (int32_t)divisor));
+}
+
+static int16_t port_game_wall_hit_threshold(int16_t angle)
+{
+    int16_t scaled = port_game_mul_sar16(70, angle, 8);
+    uint16_t base = (uint16_t)(uint32_t)(100 - (int32_t)scaled);
+    return port_game_s16_from_u16((uint16_t)(base << 8));
+}
+
+'''
+    transformed = source.replace(include, include + helpers, 1)
+    replacements = (
+        ("threshold = (100 - ((70 * i) >> 8)) << Q8_FRACTION_BITS; "
+         "/* PORT: Q8 value is converted at the legacy boundary. */",
+         "threshold = port_game_wall_hit_threshold(i); "
+         "/* PORT_BUILD: locked IMUL/SAR and unsigned speed comparison. */"),
+        ("if (activeCarState->car_speed2 > threshold) {",
+         "if ((U16S)activeCarState->car_speed2 > (U16S)threshold) {"),
+        ("speedPenalty = (0x300 * distanceToCar) >> 2;",
+         "speedPenalty = port_game_mul_sar16(0x300, distanceToCar, 2); "
+         "/* PORT_BUILD: locked IMUL/SAR word result. */"),
+        ("if (player->car_speed2 < speedPenalty)",
+         "if ((U16S)player->car_speed2 < (U16S)speedPenalty)"),
+        ("player->car_speed2 -= speedPenalty;",
+         "player->car_speed2 = (U16S)((U16S)player->car_speed2 - "
+         "(U16S)speedPenalty);"),
+    )
+    for old, new in replacements:
+        if transformed.count(old) != 1:
+            raise RuntimeError(f"Could not locate one gameplay arithmetic anchor: {old}")
+        transformed = transformed.replace(old, new, 1)
+    return transformed
 
 
 def checked_run(command: list[str], *, cwd: Path = ROOT,
@@ -44,17 +107,58 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
     import host_probe_modes as probe
 
     probe.ROOT = ROOT
-    probe.PORT = ROOT / "tools" / "porting" / "port_include"
+    original_port_include = ROOT / "tools" / "porting" / "port_include"
+    executable_include = BUILD / "host-build" / "include"
+    shutil.copytree(original_port_include, executable_include, dirs_exist_ok=True)
+    aggregate_header = executable_include / "stunts_structs.h"
+    aggregate_header.write_text(adapt_aggregate_views(probe.legacy_target_widths(
+        aggregate_header.read_text(encoding="latin-1"))), encoding="latin-1")
+    probe.PORT = executable_include
     probe.HOST = ROOT / "tools" / "porting" / "host"
     probe.WORK = BUILD / "host-build"
     probe.GCC = gcc.resolve()
     probe.STRICT_CENTRAL = False
     declarations.ROOT = ROOT
+    # Executable views describe the DOS width, rather than resolving I32 via
+    # the host int typedef used by the diagnostic-only declaration survey.
+    declarations.ALIASES.update(I32="long", U32="unsigned long")
+    declarations.HOST_OVERRIDES.update({
+        "file_load_shape2d_fatal_thunk": "extern void *file_load_shape2d_fatal_thunk(char *);",
+        "mmgr_get_chunk_size": "extern uint16_t mmgr_get_chunk_size(void *);",
+        "locate_shape_nofatal": "extern void *locate_shape_nofatal(void *, const char *);",
+        "file_load_3dres": "extern void *file_load_3dres(char *);",
+        "file_load_resource": "extern void *file_load_resource(I16, const char *);",
+        "file_find": "extern char *file_find(const char *);",
+        "locate_shape_alt": "extern char *locate_shape_alt(char *, char *);",
+        "file_load_binary_nofatal": "extern void *file_load_binary_nofatal(const char *);",
+        "mmgr_op_unk": "extern void *mmgr_op_unk(void *);",
+        "parse_shape2d_helper": "extern int32_t parse_shape2d_helper(uint8_t *);",
+        "file_read_nofatal": "extern void *file_read_nofatal(const char *, void *);",
+        "file_read_fatal": "extern void *file_read_fatal(const char *, void *);",
+        "read_file_with_retry": "extern void *read_file_with_retry(I16, char *, void *);",
+        "sub_35DC8": "extern void sub_35DC8(const uint8_t *);",
+        "sub_35DE6": "extern void sub_35DE6(uint16_t, uint16_t, const uint8_t *);",
+        "file_combine_and_find": "extern char *file_combine_and_find(char *, char *, char *);",
+        "font_op2": "extern I16 font_op2(const char *);",
+        "shape2d_op_unk4": "extern void shape2d_op_unk4(const struct SHAPE2D *);",
+        "shape2d_render_bmp_as_mask": "extern void shape2d_render_bmp_as_mask(const struct SHAPE2D *);",
+        "nopsub_37750": "extern void nopsub_37750(U16, void (*)(I16));",
+        "do_fileselect_dialog": "extern I16 do_fileselect_dialog(char *, char *, char *, char *);",
+    })
+    # Local declaration surveys may omit a service entirely. Apply the same
+    # executable ABI to the derived central header as well as each TU config.
+    central_header = executable_include / "stunts_decls.h"
+    central = central_header.read_text(encoding="latin-1")
+    for name, prototype in declarations.HOST_OVERRIDES.items():
+        central = re.sub(r"(?m)^extern [^;]*\b" + re.escape(name) + r"\([^;]*;",
+                         lambda _: prototype, central)
+    central_header.write_text(central, encoding="latin-1")
     probe.FLAGS = list(probe.FLAGS) + [
-        # GCC 16 diagnoses legacy source-only ABI views as hard errors by
-        # default. They remain visible as warnings in the build report.
+        # Preserve legacy diagnostics, but reject pointer/integer conversion
+        # mistakes at the first compilation rather than a runtime screen.
+        "-g", "-I", str(ROOT / "port"),
         "-Wno-error=implicit-int",
-        "-Wno-error=int-conversion",
+        "-Werror=int-conversion",
         "-Wno-error=incompatible-pointer-types",
     ]
     work = probe.WORK
@@ -112,7 +216,35 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             if count != 1:
                 raise RuntimeError("Could not generate the host main-entry adapter")
         elif source == "src/obj_seg008.c":
+            # The historical near-pointer extension occupied one word. Keep
+            # that parameter as a native pointer in the host view, consistently
+            # with the .trk/.rpl callers and file_combine_and_find's callee.
+            old = "I16 far do_fileselect_dialog(I8 *path, I8 *selected_name, I16 attributes,"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the file-dialog extension pointer")
+            transformed = transformed.replace(
+                old, "I16 far do_fileselect_dialog(I8 *path, I8 *selected_name, I8 *attributes,")
+            transformed = transformed.replace(
+                "extern I8 *file_combine_and_find(I8 *, I8 *, I16);",
+                "extern I8 *file_combine_and_find(I8 *, I8 *, I8 *);")
+            # Native directories can exceed the signed-byte list capacity.
+            # Stop before its count wraps and becomes a negative array index.
+            file_row = "        parse_filepath_separators(names[files_found], found);"
+            if transformed.count(file_row) != 1:
+                raise RuntimeError("Could not locate the bounded file-dialog list")
+            transformed = transformed.replace(
+                file_row, "        if (files_found >= 127) break; /* Host list bound. */\n" + file_row)
             transformed = "extern I16 port_random_test_rand(void);\n" + transformed
+            transformed = "extern void port_video_publish(const char *reason);\n" + transformed
+            for cursor_draw in ("mouse_draw_transparent", "mouse_draw_opaque"):
+                transformed, count = re.subn(
+                    r"(?m)^void\s+far\s+" + cursor_draw + r"\(void\)",
+                    "void far stunts_" + cursor_draw + "(void)", transformed, count=1)
+                if count != 1:
+                    raise RuntimeError(f"Could not locate cursor publication boundary {cursor_draw}")
+                transformed += ("\nvoid " + cursor_draw + "(void) { stunts_" + cursor_draw +
+                                "(); port_video_publish(\"" + cursor_draw + "\"); }\n")
+
             match = re.search(
                 r"(?ms)^I16\s+get_super_random\s*\(\s*void\s*\)\s*\{.*?^\}",
                 transformed)
@@ -155,17 +287,22 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
                 transformed, count=1)
             if count != 1:
                 raise RuntimeError("Could not isolate the original 16-bit audio loader")
-            transformed = "extern int port_audio_is_silent(void);\n" + transformed
+            transformed = "extern int32_t port_audio_is_silent(void);\nextern void port_audio_shutdown(void);\n" + transformed
+            transformed, count = re.subn(
+                r"(?m)^(void\s+FAR\s+audiodrv_atexit\s*\([^\n]*\)\s*\{)",
+                r"\1\n    port_audio_shutdown(); return;", transformed, count=1)
+            if count != 1:
+                raise RuntimeError("Could not locate host audio teardown ownership boundary")
             transformed, count = re.subn(
                 r"(?m)^(void\s+FAR\s+load_audio_finalize\s*\([^\n]*\)\s*\{)",
-                r"\1\n    /* The host adapter selects silence; retain loaded resources but do not "
+                r"\1\n    /* An unavailable host backend retains resources without dispatch; do not "
                 "call the DOS driver image. */\n    if (port_audio_is_silent()) return;",
                 transformed, count=1)
             if count != 1:
                 raise RuntimeError("Could not isolate the audio finalizer boundary")
             transformed, count = re.subn(
                 r"(?m)^(void\s+FAR\s+audio_driver_func3F\s*\([^\n]*\)\s*\{)",
-                r"\1\n    /* The silent host adapter has no DOS driver entry points to dispatch. */\n"
+                r"\1\n    /* Dispatch only after the host backend has initialized. */\n"
                 "    if (port_audio_is_silent()) return;",
                 transformed, count=1)
             if count != 1:
@@ -186,16 +323,130 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
                 "U16 ticks_high);\n" + transformed)
             transformed = transformed.replace(
                 old, "port_timer_copy_counter_words((U16)timerOffset, (U16)timerSegment);")
-        elif source == "src/obj_seg004.c":
-            old = "camData = (struct VECTOR *) blk[sub].cameraOverlay.cameraOffsetOverride;"
-            new = (
-                "camData = (struct VECTOR *) ((U8 *)blk[sub].cameraDataOffset + "
-                "sizeof(struct VECTOR) * 7u); /* PORT_BUILD: target DGROUP camera "
-                "override is cameraDataOffset + 0x2A. */"
-            )
+        elif source == "src/obj_seg035_group.c":
+            # The DOS FAR scanner wraps its 16-bit offset and can examine
+            # unrelated allocator bytes beyond the image. Native pointers
+            # must stay within the unconsumed pixels, including zero at the
+            # final pending-literal flush.
+            old = "repeat = parse_shape2d_helper3((I8 FAR *)src);"
             if transformed.count(old) != 1:
-                raise RuntimeError("Could not locate the track camera DGROUP-offset adapter")
-            transformed = transformed.replace(old, new, 1)
+                raise RuntimeError("Could not locate the bounded shape run scanner")
+            transformed = (
+                "extern int16_t port_parse_shape2d_helper3(const uint8_t *, uint16_t);\n"
+                + transformed.replace(old,
+                    "repeat = port_parse_shape2d_helper3((const uint8_t *)src, "
+                    "(uint16_t)(page_remaining - literal_cnt));", 1))
+        elif source == "src/obj_seg005.c":
+            original = "\t\tfor (;;) {\n\t\t\twhile (core.game_frame != tmr2) {"
+            if transformed.count(original) != 1:
+                raise RuntimeError("Could not locate the race timer dispatch boundary")
+            transformed = "extern void port_guest_check_stop(void);\n" + transformed.replace(
+                original, "\t\tfor (;;) {\n\t\t\tport_guest_check_stop();\n"
+                          "\t\t\twhile (core.game_frame != tmr2) {")
+        elif source == "src/obj_seg004.c":
+            for block in ("blk[sub]", "blk"):
+                field = block + ("." if block.endswith("]") else "->")
+                old = "camData = (struct VECTOR *) " + field + "cameraOverlay.cameraOffsetOverride;"
+                new = (
+                    "camData = (struct VECTOR *) ((U8 *)" + field + "cameraDataOffset + "
+                    "sizeof(struct VECTOR) * 7u); /* PORT_BUILD: target DGROUP camera "
+                    "override is cameraDataOffset + 0x2A. */"
+                )
+                if transformed.count(old) != 1:
+                    raise RuntimeError("Could not locate the track camera DGROUP-offset adapter")
+                transformed = transformed.replace(old, new, 1)
+
+        if source == "src/obj_seg001_complete.c":
+            old = "trackData = (struct VECTOR far *)objectInfo->link.dataPointer;"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the track-edge DOS near-offset adapter")
+            # All six nonzero frozen links point 42 bytes beyond their camera
+            # data (DS:1972 and DS:191E in shapeinfos[104..109]).
+            transformed = transformed.replace(old,
+                "trackData = (struct VECTOR far *)((uint8_t *)"
+                "objectInfo->si_cameraDataOffset + sizeof(struct VECTOR) * 7u);", 1)
+            transformed = adapt_gameplay_word_arithmetic(transformed)
+
+        if source == "src/obj_seg003.c":
+            transformed = adapt_preview_word_arithmetic(transformed)
+
+        if source == "src/obj_seg006.c":
+            transformed = adapt_renderer_word_arithmetic(transformed)
+
+        if source == "src/obj_seg031.c":
+            if transformed.count("exit(1);") != 1:
+                raise RuntimeError("Could not locate guest audio-failure exit")
+            transformed = "extern void port_guest_exit(int status);\n" + transformed.replace("exit(1);", "port_guest_exit(1);")
+
+        if source in {"src/obj_seg027.c", "src/obj_seg028.c"}:
+            transformed = '#include "audio_backend.h"\n' + route_audio_vectors(transformed)
+        if source == "src/obj_seg027.c":
+            old = "void FAR nopsub_37750(U16 chunk, I32 value)"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the audio callback setter signature")
+            transformed = transformed.replace(old,
+                "void FAR nopsub_37750(U16 chunk, void (*value)(I16))", 1)
+        if source == "src/obj_seg028.c":
+            # SKIDOVER's KEYS instrument is absent from the PC speaker bank.
+            # DOS reads 0000:0005 before rejecting the null far pointer; a
+            # native process cannot perform that read. Preserve its rejection
+            # before accessing the instrument record.
+            old = "    sample = resource->data;\n    if (sample[5] == 5) {"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the nullable music instrument boundary")
+            transformed = transformed.replace(old,
+                "    sample = resource->data;\n    if (sample == 0) return -1;\n"
+                "    if (sample[5] == 5) {", 1)
+        if source in {"src/obj_seg007.c", "src/obj_seg028.c"}:
+            transformed = "extern int32_t port_audio_is_active(void);\n" + transformed
+            boundaries = ({"audio_op_unk": "return;", "audio_driver_timer": "return;"}
+                          if source.endswith("007.c") else {"process_audio_event": "return -1;"})
+            for name, stop in boundaries.items():
+                pattern = r"(?m)^([^;\n]*\b" + name + r"\([^;\n]*\)\s*\{)"
+                transformed, count = re.subn(pattern, lambda m: m.group(1) +
+                    "\n    if (!port_audio_is_active()) " + stop, transformed, count=1)
+                if count != 1:
+                    raise RuntimeError(f"Could not locate inactive audio boundary {name}")
+
+        # Compatibility views retain source-local aggregate names, but DOS
+        # int/unsigned/long storage still needs its original scalar width.
+        # This also covers private tables which central declarations cannot fix.
+        transformed = adapt_aggregate_views(probe.legacy_target_widths(transformed))
+        if source == "src/toupper.c":
+            transformed = transformed.replace("I16 toupper(I16 ch)", "int toupper(int ch)")
+        host_config = probe.legacy_target_widths(config.read_text(encoding="latin-1"))
+        if source == "src/obj_seg001_complete.c":
+            for name in ("centerpos", "veh_position", "veh_z"):
+                host_config = host_config.replace(f"extern I16 {name};", f"extern I32 {name};")
+        if source == "src/obj_seg006.c":
+            host_config = host_config.replace("extern I16 inverse_power_of_two_table[32];",
+                                               "extern I32 inverse_power_of_two_table[32];")
+        if source == "src/toupper.c":
+            host_config = host_config.replace("I16 toupper(I16", "int toupper(int")
+        for name, prototype in declarations.HOST_OVERRIDES.items():
+            host_config = re.sub(r"(?m)^extern [^\n;]*\b" + re.escape(name) +
+                                 r"\([^\n]*;", lambda _: prototype, host_config)
+        config.write_text(host_config, encoding="latin-1")
+
+        if source == "src/obj_seg006.c":
+            # DOS links index 400 to the adjacent reset marker at DS:5A86.
+            # Host BSS order instead placed the pool pointer there. Give the
+            # head its own element and alias the marker deliberately.
+            transformed = adapt_polygon_storage(transformed)
+            transformed += ("\nuint16_t port_game_y_rotation_snapshot(void) { "
+                            "return (uint16_t)mat_y_rot_angle; }\n")
+
+        if source == "src/obj_seg008.c":
+            old = "read_file_with_retry(I16 type, U16  first, U16  second, U16  third)"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate split-word file read ABI")
+            transformed = transformed.replace(old, "read_file_with_retry(I16 type, char *first, void *second)")
+            transformed = transformed.replace("file_read_nofatal(first, second, third)",
+                                              "file_read_nofatal(first, second)")
+        transformed = transformed.replace("((int16_t (*)())call_read_line)", "port_call_read_line")
+        transformed = probe.rewrite_calls(transformed, "call_read_line", "rename:port_call_read_line")
+        transformed = "extern int16_t port_call_read_line(char *, int16_t, int16_t, int16_t, int32_t);\n" + transformed
+        transformed += host_view_contracts(source)
 
         overlay = work / "overlay" / source
         overlay.parent.mkdir(parents=True, exist_ok=True)
@@ -224,7 +475,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             "rename recovered main to stunts_game_main",
             "wrap update_gamestate for post-commit tracing",
             "expose full GAMESTATE, frame, mode, and rate to port tracing",
-            "rename DOS audio loader and route startup to silent port adapter",
+            "rename DOS audio loader and route its vectors to typed native driver entries",
             "type vector_op_unk2's host overlay declaration as I16",
             "resolve static track camera override offsets relative to camera data",
             "provide the legacy line editor screen rectangle as a host pointer view",
@@ -237,10 +488,11 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 
 
 def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
+    opl_source = nuked_opl3_root()
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "memory.c",
         "test_seed.c",
-        "sprite.c", "legacy_views.c",
+        "sprite.c", "sprite_aux.c", "legacy_views.c",
         "random.c",
         "font.c",
         "sincos.c",
@@ -248,19 +500,21 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "projection.c",
         "matrix.c",
         "vehicle.c",
-        "file.c", "resource.c", "audio.c", "platform.c", "input_script.c",
+        "file.c", "resource.c", "audio.c", "audio_sdl.c", "pc_speaker.c", "cleanup.c", "platform.c", "input_script.c",
+        "ad15_driver.c", "port_opl3.c",
         "trace.c", "trace_hooks.c",
     ]
     out_dir = BUILD / "port-obj"
     out_dir.mkdir(parents=True, exist_ok=True)
     common = [
-        str(gcc), "-std=gnu11", "-O0", "-Wall", "-Wextra", "-Wpedantic",
-        "-Wno-unused-parameter", "-DPORT_BUILD=1",
+        str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
+        "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),
         "-I", str(sdl_root / "include"),
+        "-I", str(opl_source),
     ]
     objects = []
     for source in port_sources:
@@ -274,6 +528,13 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
             if warnings:
                 print(f"{source}: {len(warnings)} compiler warning(s)")
         objects.append(obj)
+    # Keep the upstream implementation separate from historical compatibility
+    # headers and compile the chip's audio-rate inner loop with optimization.
+    opl_object = out_dir / "nuked_opl3.o"
+    checked_run([str(gcc), "-std=gnu11", "-O2", "-g", "-I", str(opl_source),
+                 "-c", str(opl_source / "opl3.c"), "-o", str(opl_object)])
+    objects.append(opl_object)
+    shutil.copy2(opl_source / "LICENSE", BUILD / "Nuked-OPL3-LICENSE.txt")
     return objects
 
 
@@ -450,6 +711,11 @@ def build(args) -> Path:
     game_objects, compile_report = build_game_objects(gcc)
     port_objects = compile_port_sources(gcc, sdl_root)
     stubs = generate_link_stubs(gcc, sdl_root, game_objects, port_objects)
+    if stubs:
+        raise RuntimeError(
+            f"SDL3 build has {len(stubs)} unresolved services/data bindings; "
+            "implement their original contracts before accepting the executable "
+            "(see build/sdl3/stub-inventory.json)")
     dll = sdl_root / "bin" / "SDL3.dll"
     if dll.is_file():
         shutil.copy2(dll, BUILD / "SDL3.dll")
@@ -460,6 +726,7 @@ def build(args) -> Path:
         "sdl3_root": str(sdl_root),
         "game_c_objects": len(game_objects),
         "port_objects": len(port_objects),
+        "nuked_opl3": {"commit": NUKED_OPL3_COMMIT, "sha256": NUKED_OPL3_FILES},
         "function_stub_count": sum(row["kind"] == "function" for row in stubs),
         "data_stub_count": sum(row["kind"] == "data" for row in stubs),
         "compile": {"syntax_passes": compile_report["syntax_passes"],
@@ -479,7 +746,8 @@ def build(args) -> Path:
 def run(args) -> int:
     if not args.no_build:
         build(args)
-    Path(args.capture_dir).mkdir(parents=True, exist_ok=True)
+    if args.capture_dir:
+        Path(args.capture_dir).mkdir(parents=True, exist_ok=True)
     exe = BUILD / "stunts.exe"
     command = [str(exe), f"--trace={args.trace}", f"--assets={args.assets}",
                f"--capture-dir={args.capture_dir}"]
@@ -493,8 +761,56 @@ def run(args) -> int:
         command.append(f"--test-startup-seed={Path(args.test_startup_seed).resolve()}")
     if args.stop_after_sim_steps is not None:
         command.append(f"--stop-after-sim-steps={args.stop_after_sim_steps}")
+    command.append(f"--audio={args.audio}")
     prepare_environment(args.gcc)
     return subprocess.run(command, cwd=ROOT, check=False).returncode
+
+
+def package(args) -> Path:
+    """Create the files to extract beside an existing game's original assets."""
+    if not args.no_build:
+        build(args)
+    report = json.loads((BUILD / "build-report.json").read_text(encoding="utf-8"))
+    if (report.get("target") != "i686-w64-mingw32" or
+            report.get("function_stub_count") != 0 or report.get("data_stub_count") != 0):
+        raise RuntimeError("Package requires a complete i686 SDL3 build")
+    inputs = [Path(__file__), ROOT / "port" / "game_abi.py", ROOT / "port" / "dependencies.py"]
+    for directory in (ROOT / "port", ROOT / "src", ROOT / "include",
+                      ROOT / "tools" / "porting" / "host",
+                      ROOT / "tools" / "porting" / "port_include"):
+        inputs.extend(path for path in directory.rglob("*")
+                      if path.is_file() and path.suffix.lower() in {".c", ".h"})
+    newest = max(path.stat().st_mtime_ns for path in inputs)
+    if min((BUILD / "stunts.exe").stat().st_mtime_ns,
+           (BUILD / "build-report.json").stat().st_mtime_ns) < newest:
+        raise RuntimeError("SDL3 build is stale; rebuild before packaging")
+    destination = BUILD / "drop-in"
+    destination.mkdir(parents=True, exist_ok=True)
+    files = {
+        "stunts-sdl3.exe": BUILD / "stunts.exe",
+        "SDL3.dll": BUILD / "SDL3.dll",
+        "Nuked-OPL3-LICENSE.txt": BUILD / "Nuked-OPL3-LICENSE.txt",
+        "SDL3-LICENSE.txt": args.sdl_root / "share" / "licenses" / "SDL3" / "LICENSE.txt",
+    }
+    for name, source in files.items():
+        shutil.copy2(source, destination / name)
+    readme = destination / "README-SDL3.txt"
+    readme.write_text(
+        "Stunts SDL3 build for Windows (32-bit)\n\n"
+        "Extract these files into your existing Stunts 1.1 game folder.\n"
+        "Keep all the original game data files there.\n"
+        "Double-click stunts-sdl3.exe to play.\n"
+        "No Python, compiler, installer, or launcher is needed.\n\n"
+        "New tracks, replays, and high scores go into the saves subfolder.\n"
+        "Original game data remains in the game folder.\n"
+        "AdLib/Sound Blaster FM audio is the default.\n",
+        encoding="utf-8")
+    archive = BUILD / "stunts-sdl3-win32.zip"
+    with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as bundle:
+        for name in [*files, readme.name]:
+            bundle.write(destination / name, arcname=name)
+    print(f"Drop-in package: {archive}")
+    return archive
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -504,13 +820,18 @@ def main(argv: list[str] | None = None) -> int:
     build_parser.add_argument("--gcc", type=Path, default=DEFAULT_GCC)
     build_parser.add_argument("--sdl-root", type=Path, default=DEFAULT_SDL)
     build_parser.add_argument("--assets-source", type=Path, default=DEFAULT_ASSETS)
+    package_parser = sub.add_parser("package", help="build a ZIP to extract into an existing game folder")
+    package_parser.add_argument("--gcc", type=Path, default=DEFAULT_GCC)
+    package_parser.add_argument("--sdl-root", type=Path, default=DEFAULT_SDL)
+    package_parser.add_argument("--assets-source", type=Path, default=DEFAULT_ASSETS)
+    package_parser.add_argument("--no-build", action="store_true")
     run_parser = sub.add_parser("run", help="build and launch the SDL3 startup host")
     run_parser.add_argument("--gcc", type=Path, default=DEFAULT_GCC)
     run_parser.add_argument("--sdl-root", type=Path, default=DEFAULT_SDL)
     run_parser.add_argument("--assets-source", type=Path, default=DEFAULT_ASSETS)
     run_parser.add_argument("--assets", default="build/sdl3/runtime/assets")
-    run_parser.add_argument("--trace", default="build/sdl3/runtime-trace.jsonl")
-    run_parser.add_argument("--capture-dir", default="build/sdl3/captures")
+    run_parser.add_argument("--trace", default="")
+    run_parser.add_argument("--capture-dir", default="")
     run_parser.add_argument("--run-ms", type=int)
     run_parser.add_argument("--input-script", type=Path)
     run_parser.add_argument("--test-auto-protection", action="store_true",
@@ -518,11 +839,15 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--test-startup-seed", type=Path,
                             help="test only: replay a Port Forge random_wait/timer/PRNG capture")
     run_parser.add_argument("--stop-after-sim-steps", type=int)
+    run_parser.add_argument("--audio", choices=("ad15", "pc15", "none"), default="ad15")
     run_parser.add_argument("--no-build", action="store_true")
     args = parser.parse_args(argv)
     try:
         if args.command == "build":
             build(args)
+            return 0
+        if args.command == "package":
+            package(args)
             return 0
         return run(args)
     except (OSError, RuntimeError, subprocess.SubprocessError) as exc:

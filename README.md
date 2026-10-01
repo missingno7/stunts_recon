@@ -10,9 +10,21 @@ The freeze evidence and remaining scope are recorded in [the freeze draft](docs/
 
 ## Setup
 
+The native SDL3 game is developed separately on `portable-sdl3`. Build with
+`python port/build.py build`, then launch `build/sdl3/stunts.exe` or run
+`python port/build.py run --no-build`. The executable finds its copied assets
+next to itself. See the [SDL3 handoff](docs/porting/HANDOFF.md) for toolchain,
+runtime coverage and validation details.
+To install beside existing game files, run `python port/build.py package`,
+extract `build/sdl3/stunts-sdl3-win32.zip` into the game folder, and launch
+`stunts-sdl3.exe`. The ZIP includes the required SDL DLL.
+The build provisions the hash-pinned Nuked OPL source into ignored
+`build/dependencies/nuked-opl3`. For an offline build, set `NUKED_OPL3_ROOT`
+to a copy containing the pinned `opl3.c`, `opl3.h` and `LICENSE` files.
+
 Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json`, `evidence/msc510-provenance.json`, and `evidence/msc600-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries. The no-skip validation gate also runs the host compile checks, which require GCC on `PATH` or at `C:\msys64\mingw64\bin\gcc.exe`.
 
-Install the diagnostic decoder with `python -m pip install --target build/python capstone==5.0.3`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; the full Restunts checkout at `build/references/restunts` is optional for research/indexing tools. The clean-clone test and validation gates use the tracked, identity-pinned excerpts under `tests/fixtures/references/`. Keep any full reference checkout and reference executable as local inputs; they are not stored in Git history.
+Install the diagnostic decoder and the original-machine routine runner with `python -m pip install --target build/python capstone==5.0.3 unicorn==2.1.4`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; the full Restunts checkout at `build/references/restunts` is optional for research/indexing tools. The clean-clone test and validation gates use the tracked, identity-pinned excerpts under `tests/fixtures/references/`. Keep any full reference checkout and reference executable as local inputs; they are not stored in Git history.
 
 Full validation independently recompiles active C and reassembles active ASM under DOSBox-X at `C:/tools/dosbox-x/dosbox-x.exe` (hash-identical copy of `C:/DOSBox-X`); all compiles run under MS-DOS Player at `C:/tools/nmlgcdos/msdos.exe`. Configure local runner paths explicitly when moving machines, preserving pinned tool identities. The pinned MASM 5.10 ASM profile is a reproduction choice, not an attribution of the original assembler. No verification command updates the byte oracle.
 

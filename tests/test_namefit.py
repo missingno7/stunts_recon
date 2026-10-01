@@ -4,6 +4,7 @@ import subprocess
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
@@ -52,6 +53,22 @@ class NamefitCheckTests(unittest.TestCase):
         name, address = refs[0]
         rows, summary = namefit.run_check(tus, sym, {address: name + 'x'}, [], jobs=1)
         self.assertEqual(rows[0]['result'], 'EXACT', rows[0])
+
+
+class NamefitCacheTests(unittest.TestCase):
+    def test_failed_diagnostic_cache_is_retried_and_not_written(self):
+        from compiler import CompileFailure
+        tu = next(t for t in namefit.load_tus('accepted') if t['id'] == 'obj_seg031')
+        text = (ROOT / tu['source']).read_text(encoding='latin-1')
+        stale = {'error': 'old preprocessor permission failure'}
+        failure = CompileFailure('current compiler unavailable', {}, 'compiler_error')
+        with patch.object(namefit.CACHE, 'get', return_value=stale), \
+             patch.object(namefit.CACHE, 'put') as store, \
+             patch('compiler.compile_source', side_effect=failure) as compile_call:
+            result = namefit.compile_summary(tu, text)
+        compile_call.assert_called_once()
+        store.assert_not_called()
+        self.assertEqual(result['error'], 'current compiler unavailable')
 
 
 class TypeinferTests(unittest.TestCase):

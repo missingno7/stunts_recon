@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "audio_backend.h"
 
 #include <SDL3/SDL.h>
 #include <errno.h>
@@ -14,6 +15,7 @@ static uint64_t s_present_id;
 static uint64_t s_audio_publication_id;
 
 extern uint16_t port_game_frame_snapshot(void);
+extern uint16_t port_game_y_rotation_snapshot(void);
 
 static void json_string(FILE *out, const char *value)
 {
@@ -58,12 +60,14 @@ static uint64_t relative_ns(uint64_t absolute_ns)
 void port_trace_open(const char *path, const char *asset_root)
 {
     s_lock = SDL_CreateMutex();
-    s_trace = fopen(path != NULL ? path : "runtime-trace.jsonl", "wb");
     s_trace_origin_ns = SDL_GetTicksNS();
     s_sim_step_id = 0;
     s_video_frame_id = 0;
     s_present_id = 0;
     s_audio_publication_id = 0;
+    if (path == NULL || path[0] == '\0')
+        return;
+    s_trace = fopen(path, "wb");
     if (s_trace == NULL) {
         SDL_Log("Could not open trace file '%s': %s", path != NULL ? path : "runtime-trace.jsonl",
                 strerror(errno));
@@ -217,6 +221,7 @@ void port_trace_video_publication(const char *reason)
     uint8_t input_mode = port_game_inputmode_snapshot();
     uint8_t replay_mode = port_game_replaymode_snapshot();
     uint16_t rate = port_game_rate_snapshot();
+    uint16_t y_rotation = port_game_y_rotation_snapshot();
     trace_lock();
     ++s_video_frame_id;
     if (s_trace != NULL) {
@@ -227,14 +232,14 @@ void port_trace_video_publication(const char *reason)
                 "\"video_phase\":\"frame_start\",\"machine_tick\":%llu,"
                 "\"host_ns\":%llu,\"game_mode\":%u,"
                 "\"game_inputmode\":%u,\"game_replay_mode\":%u,"
-                "\"rate_target_hz\":%u,\"publication_reason\":",
+                "\"rate_target_hz\":%u,\"renderer_y_rotation\":%u,\"publication_reason\":",
                 (unsigned long long)s_video_frame_id,
                 (unsigned long long)s_sim_step_id,
                 (unsigned)game_frame,
                 (unsigned long long)relative_ns(now),
                 (unsigned long long)now,
                 (unsigned)game_mode, (unsigned)input_mode,
-                (unsigned)replay_mode, (unsigned)rate);
+                (unsigned)replay_mode, (unsigned)rate, (unsigned)y_rotation);
         json_string(s_trace, reason);
         fputs("}\n", s_trace);
         fflush(s_trace);
@@ -272,11 +277,11 @@ void port_trace_audio_publication(uint32_t frame_count)
                 "\"event_type\":\"audio_publication\","
                 "\"audio_publication_id\":%llu,\"audio_frame_count\":%u,"
                 "\"machine_tick\":%llu,\"host_ns\":%llu,"
-                "\"audio_backend\":\"silent\"}\n",
+                "\"audio_backend\":\"%s\"}\n",
                 (unsigned long long)s_audio_publication_id,
                 (unsigned)frame_count,
                 (unsigned long long)relative_ns(now),
-                (unsigned long long)now);
+                (unsigned long long)now, port_audio_backend_name());
         fflush(s_trace);
     }
     trace_unlock();

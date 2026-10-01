@@ -32,6 +32,7 @@ static void mouse_to_logical(float x, float y, int *logical_x, int *logical_y)
 
 void port_sdl_init(const char *title)
 {
+    s_quit = 0;
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
     s_window = SDL_CreateWindow(title, 960, 600, SDL_WINDOW_RESIZABLE);
@@ -54,8 +55,11 @@ int port_sdl_poll(void)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_EVENT_QUIT) {
+        if (event.type == SDL_EVENT_QUIT ||
+            event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) {
             s_quit = 1;
+        } else if (event.type == SDL_EVENT_WINDOW_FOCUS_LOST) {
+            port_input_handle_event(event.type, 0, 0);
         } else if (event.type == SDL_EVENT_KEY_DOWN) {
             port_input_handle_event(event.type, event.key.scancode,
                                     event.key.repeat ? 1 : 0);
@@ -82,6 +86,7 @@ int port_sdl_poll(void)
 void port_sdl_shutdown(void)
 {
     port_video_shutdown();
+    port_input_shutdown();
     if (s_renderer != NULL) {
         SDL_DestroyRenderer(s_renderer);
         s_renderer = NULL;

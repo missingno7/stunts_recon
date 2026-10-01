@@ -89,8 +89,14 @@ uint16_t port_game_rate_snapshot(void);
 void port_guest_set_step_limit(uint64_t limit);
 void port_guest_note_sim_step(uint64_t step_id);
 void port_guest_stop_after_publication(void);
+void port_guest_request_stop(const char *reason);
+void port_guest_check_stop(void);
+void port_timer_pump(void);
+void port_guest_exit(int status);
+void port_guest_set_exit_status(int status);
 
 void port_runtime_set_asset_root(const char *root);
+int port_runtime_set_save_root(const char *root);
 const char *port_runtime_asset_root(void);
 void port_stub_fail(const char *symbol);
 void port_guest_unwind(const char *symbol);
@@ -120,7 +126,7 @@ void *port_fs_load(const char *path, size_t *length_out,
                    PortFarPtr *address_out);
 int port_fs_exists(const char *path);
 int port_fs_find(const char *pattern, char *found, size_t capacity);
-void file_read_fatal(const char *filename, uint8_t *destination);
+void *file_read_fatal(const char *filename, void *destination);
 void file_load_shape2d_expand(uint8_t *archive, int8_t *output);
 void file_load_shape2d_palmap_apply(uint8_t *archive,
                                     const uint8_t *palette_map);
@@ -164,6 +170,7 @@ void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_shape_to_1_alt(const PortShape2D *shape);
 void shape2d_op_unk(const PortShape2D *shape);
 void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y);
+int16_t port_parse_shape2d_helper3(const uint8_t *source, uint16_t max_pixels);
 void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y);
 void shape2d_op_unk3(const PortShape2D *shape);
 void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y);
@@ -205,6 +212,7 @@ void mat_multiply(const int16_t *right_matrix, const int16_t *left_matrix,
 void mat_invert(int16_t *input_matrix, int16_t *output_matrix);
 void set_projection(int16_t x_angle, int16_t y_angle,
                     int16_t width, int16_t height);
+int16_t projectiondata9_times_ratio(int16_t factor, int16_t divisor);
 void mat_vec(const int16_t *input, const int16_t *matrix,
              int16_t *output);
 uint16_t update_rpm_from_speed(uint16_t current_rpm, uint16_t speed,
@@ -231,6 +239,8 @@ int16_t poll_input_abort(void);
 void wait_for_input_delay(int32_t ticks);
 
 void port_input_init(void);
+void port_input_shutdown(void);
+int port_sprite_active_view(uint8_t **pixels, size_t *extent, PortSprite **sprite);
 void port_input_handle_event(int event_type, int scancode, int pressed);
 uint8_t port_input_key_state(uint16_t dos_scan);
 int port_input_dos_scan(int sdl_scancode);
@@ -268,5 +278,15 @@ void port_sdl_init(const char *title);
 int port_sdl_poll(void);
 void port_sdl_shutdown(void);
 void port_sdl_sleep_until(uint64_t deadline_ns);
+
+void clear_rect(int16_t, int16_t, int16_t, int16_t, int16_t);
+void sprite_1_unk(int16_t, int16_t, int16_t, int16_t, int16_t);
+void putpixel_iconFillings(const PortShape2D *, int16_t, int16_t);
+void putpixel_iconMask(const PortShape2D *, int16_t, int16_t);
+void shape2d_op_unk4(const PortShape2D *);
+void shape2d_render_bmp_as_mask(const PortShape2D *);
+
+void sub_35DC8(const uint8_t *source);
+void sub_35DE6(uint16_t start, uint16_t count, const uint8_t *source);
 
 #endif

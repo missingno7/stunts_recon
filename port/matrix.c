@@ -53,12 +53,16 @@ static int16_t matrix_product_word(int16_t coefficient, int16_t component)
 static void matrix_row(const int16_t *input, const int16_t *matrix,
                        int16_t *output)
 {
-    uint16_t sum = (uint16_t)matrix_product_word(matrix[0], input[0]);
-    sum = (uint16_t)(sum +
-                     (uint16_t)matrix_product_word(matrix[1], input[1]));
-    sum = (uint16_t)(sum +
-                     (uint16_t)matrix_product_word(matrix[2], input[2]));
-    *output = (int16_t)sum;
+    /* MATRIX is column-major: _11,_21,_31,_12,... . The assembly
+       stores the first product before reading the next input component;
+       retain that order when the input and output vectors alias. */
+    *output = matrix_product_word(matrix[0], input[0]);
+    if (matrix[3] != 0 && input[1] != 0)
+        *output = (int16_t)((uint16_t)*output +
+                           (uint16_t)matrix_product_word(matrix[3], input[1]));
+    if (matrix[6] != 0 && input[2] != 0)
+        *output = (int16_t)((uint16_t)*output +
+                           (uint16_t)matrix_product_word(matrix[6], input[2]));
 }
 
 /* Semantic C translation of asm/mat_multiply.ASM::_mat_multiply. The
@@ -68,18 +72,27 @@ void mat_multiply(const int16_t *right_matrix, const int16_t *left_matrix,
 {
     unsigned row;
     unsigned column;
-    unsigned inner;
 
     for (row = 0; row < 3u; ++row) {
         for (column = 0; column < 3u; ++column) {
-            uint16_t sum = 0;
-            for (inner = 0; inner < 3u; ++inner) {
-                unsigned right_index = row * 3u + inner;
-                unsigned left_index = inner * 3u + column;
-                sum = (uint16_t)(sum + (uint16_t)matrix_product_word(
-                    right_matrix[right_index], left_matrix[left_index]));
-            }
-            output_matrix[row * 3u + column] = (int16_t)sum;
+            unsigned right_index = row * 3u;
+            unsigned destination = row * 3u + column;
+            /* The original writes each partial product immediately. An
+               output cell may overlap an operand of this or a later cell. */
+            output_matrix[destination] = matrix_product_word(
+                right_matrix[right_index], left_matrix[column]);
+            if (right_matrix[right_index + 1u] != 0 &&
+                left_matrix[3u + column] != 0)
+                output_matrix[destination] = (int16_t)(
+                    (uint16_t)output_matrix[destination] +
+                    (uint16_t)matrix_product_word(
+                        right_matrix[right_index + 1u], left_matrix[3u + column]));
+            if (right_matrix[right_index + 2u] != 0 &&
+                left_matrix[6u + column] != 0)
+                output_matrix[destination] = (int16_t)(
+                    (uint16_t)output_matrix[destination] +
+                    (uint16_t)matrix_product_word(
+                        right_matrix[right_index + 2u], left_matrix[6u + column]));
         }
     }
 }
@@ -123,6 +136,6 @@ void mat_vec(const int16_t *input, const int16_t *matrix,
     if (input == NULL || matrix == NULL || output == NULL)
         return;
     matrix_row(input, matrix, output);
-    matrix_row(input, matrix + 3, output + 1);
-    matrix_row(input, matrix + 6, output + 2);
+    matrix_row(input, matrix + 1, output + 1);
+    matrix_row(input, matrix + 2, output + 2);
 }

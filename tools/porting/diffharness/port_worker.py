@@ -30,7 +30,8 @@ def main():
 
     op = request["operation"]
     response = {"ok": True}
-    if op in {"reset", "draw_case", "sprite_case"}:
+    if op in {"reset", "draw_case", "sprite_case", "sprite_1_unk_case",
+              "icon_case", "runs_case", "clear_rect_case"}:
         reset_frame(request["initial"])
     if op == "frame":
         response["frame"] = frame()
@@ -58,6 +59,49 @@ def main():
                                      request["x"], request["y"], request["phase"]))
         if op == "sprite_case":
             response["frame"] = frame()
+    elif op == "sprite_1_unk_case":
+        fn = dll.dh_call_sprite_1_unk
+        fn.argtypes = [ctypes.c_int16] * 5
+        fn.restype = ctypes.c_int
+        if not fn(*request["args"]):
+            raise RuntimeError("port sprite_1_unk call failed")
+        response["frame"] = frame()
+    elif op == "icon_case":
+        fn = dll.dh_call_icon_combine
+        fn.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint16,
+                       ctypes.c_uint16, ctypes.c_int16, ctypes.c_int16,
+                       ctypes.c_int]
+        fn.restype = ctypes.c_int
+        pixels = base64.b64decode(request["pixels"])
+        storage = (ctypes.c_uint8 * len(pixels)).from_buffer_copy(pixels)
+        if not fn(storage, request["width"], request["height"], request["x"],
+                  request["y"], int(request["use_and"])):
+            raise RuntimeError("port icon combine call failed")
+        response["frame"] = frame()
+    elif op == "runs_case":
+        fn = dll.dh_call_shape2d_runs
+        fn.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint32,
+                       ctypes.c_uint16, ctypes.c_uint16, ctypes.c_uint16,
+                       ctypes.c_uint16, ctypes.c_int]
+        fn.restype = ctypes.c_int
+        encoded = base64.b64decode(request["encoded"])
+        storage = (ctypes.c_uint8 * len(encoded)).from_buffer_copy(encoded)
+        if not fn(storage, len(encoded), request["width"], request["height"],
+                  request["x"], request["y"], int(request["use_and"])):
+            raise RuntimeError("port shape RLE call failed")
+        response["frame"] = frame()
+    elif op == "clear_rect_case":
+        fn = dll.dh_call_clear_rect
+        fn.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint16,
+                       ctypes.c_uint16, ctypes.c_int16, ctypes.c_int16,
+                       ctypes.c_int16, ctypes.c_int16, ctypes.c_int16]
+        fn.restype = ctypes.c_int
+        pixels = base64.b64decode(request["source_pixels"])
+        storage = (ctypes.c_uint8 * len(pixels)).from_buffer_copy(pixels)
+        if not fn(storage, request["source_width"], request["source_height"],
+                  *request["args"]):
+            raise RuntimeError("port clear_rect call failed")
+        response["frame"] = frame()
     print(json.dumps(response, separators=(",", ":")))
 
 

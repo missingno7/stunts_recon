@@ -488,8 +488,10 @@ def compile_summary(tu, text):
                           '|' + communal_key +
                           '|' + toolchain).encode('latin-1', 'replace')).hexdigest()
     hit = CACHE.get(key)
-    if hit is not None and 'fx_list' not in hit and 'error' not in hit:
-        hit = None                      # older cache entry: recompile for the fixup mask
+    if hit is not None and ('error' in hit or 'fx_list' not in hit):
+        # Failures can depend on transient tools/permissions rather than the
+        # source. Retry old failed entries; cache only complete object results.
+        hit = None
     if hit is not None:
         STATS['cache'] += 1
         return hit
@@ -502,7 +504,6 @@ def compile_summary(tu, text):
         logp = Path(error.receipt.get('work_directory', '.')) / 'compiler.log'
         errs = [l.strip() for l in (logp.read_text(errors='replace').splitlines() if logp.exists() else []) if 'error' in l]
         out = {'error': str(error)[:200], 'compiler_errors': errs[:5]}
-        CACHE.put(key, out)
         return out
     STATS['compiles'] += 1
     STATS['compile_seconds'] += time.time() - t0

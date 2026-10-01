@@ -66,6 +66,7 @@ class SpriteUnk3AssetTests(unittest.TestCase):
             compiler, "-std=c11", "-O2", "-ffunction-sections",
             "-fdata-sections", "-Wno-unused-function", "-Wno-unused-variable",
             str(ROOT / "tests" / "sdl3" / "sprite_unk3_harness.c"),
+            str(ROOT / "port" / "sincos.c"),
             "-Wl,--gc-sections", "-o", str(cls.exe),
         ]
         environment = os.environ.copy()

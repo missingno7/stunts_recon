@@ -25,6 +25,52 @@ static PortShape2D s_screen_shape;
 static uint16_t s_screen_lines[PORT_SCREEN_HEIGHT];
 static PortSprite s_sprite1;
 static uint8_t s_sprite_ready;
+static uint16_t s_line_pattern_bits;
+static uint8_t s_line_auxiliary_color;
+
+/* Exact byte profiles from graphics_resource_runtime.ASM's
+   sphere_scanline_profile_00..38; profile N is stored as N+1 bytes. */
+static const uint8_t s_sphere_scanline_profiles[] = {
+    0x01, 0x02, 0x03, 0x03, 0x04, 0x04, 0x03, 0x04, 0x05, 0x05, 0x04, 0x05, 0x06, 0x06, 0x06, 0x04, 0x06, 0x06, 0x07, 0x07,
+    0x08, 0x05, 0x06, 0x07, 0x08, 0x08, 0x09, 0x09, 0x05, 0x07, 0x08, 0x09, 0x09, 0x0a, 0x0a, 0x0a, 0x05, 0x07, 0x08, 0x09,
+    0x0a, 0x0b, 0x0b, 0x0b, 0x0b, 0x05, 0x08, 0x09, 0x0a, 0x0b, 0x0b, 0x0c, 0x0c, 0x0c, 0x0d, 0x06, 0x08, 0x09, 0x0b, 0x0c,
+    0x0c, 0x0d, 0x0d, 0x0e, 0x0e, 0x0e, 0x06, 0x08, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0e, 0x0f, 0x0f, 0x0f, 0x0f, 0x06, 0x09,
+    0x0a, 0x0c, 0x0d, 0x0e, 0x0e, 0x0f, 0x0f, 0x10, 0x10, 0x10, 0x10, 0x06, 0x09, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x10,
+    0x11, 0x11, 0x11, 0x11, 0x12, 0x07, 0x09, 0x0b, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x11, 0x12, 0x12, 0x12, 0x13, 0x13, 0x13,
+    0x07, 0x0a, 0x0c, 0x0d, 0x0f, 0x10, 0x11, 0x11, 0x12, 0x13, 0x13, 0x13, 0x14, 0x14, 0x14, 0x14, 0x07, 0x0a, 0x0c, 0x0e,
+    0x0f, 0x10, 0x11, 0x12, 0x13, 0x13, 0x14, 0x14, 0x15, 0x15, 0x15, 0x15, 0x15, 0x07, 0x0a, 0x0c, 0x0e, 0x10, 0x11, 0x12,
+    0x13, 0x13, 0x14, 0x15, 0x15, 0x16, 0x16, 0x16, 0x16, 0x16, 0x17, 0x08, 0x0b, 0x0d, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14,
+    0x15, 0x16, 0x16, 0x17, 0x17, 0x17, 0x17, 0x18, 0x18, 0x18, 0x08, 0x0b, 0x0d, 0x0f, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
+    0x16, 0x17, 0x17, 0x18, 0x18, 0x18, 0x19, 0x19, 0x19, 0x19, 0x08, 0x0b, 0x0e, 0x0f, 0x11, 0x12, 0x14, 0x15, 0x16, 0x16,
+    0x17, 0x18, 0x18, 0x19, 0x19, 0x19, 0x1a, 0x1a, 0x1a, 0x1a, 0x1a, 0x08, 0x0b, 0x0e, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16,
+    0x17, 0x18, 0x18, 0x19, 0x1a, 0x1a, 0x1a, 0x1b, 0x1b, 0x1b, 0x1b, 0x1b, 0x1c, 0x08, 0x0c, 0x0e, 0x10, 0x12, 0x13, 0x15,
+    0x16, 0x17, 0x18, 0x19, 0x19, 0x1a, 0x1a, 0x1b, 0x1b, 0x1c, 0x1c, 0x1c, 0x1d, 0x1d, 0x1d, 0x1d, 0x09, 0x0c, 0x0f, 0x11,
+    0x12, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1b, 0x1c, 0x1c, 0x1d, 0x1d, 0x1d, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e,
+    0x09, 0x0c, 0x0f, 0x11, 0x13, 0x14, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1b, 0x1c, 0x1d, 0x1d, 0x1e, 0x1e, 0x1e, 0x1f,
+    0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x09, 0x0d, 0x0f, 0x11, 0x13, 0x15, 0x16, 0x17, 0x19, 0x1a, 0x1b, 0x1b, 0x1c, 0x1d, 0x1d,
+    0x1e, 0x1e, 0x1f, 0x1f, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x21, 0x09, 0x0d, 0x0f, 0x12, 0x14, 0x15, 0x17, 0x18, 0x19,
+    0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1e, 0x1f, 0x1f, 0x20, 0x20, 0x21, 0x21, 0x21, 0x21, 0x22, 0x22, 0x22, 0x22, 0x09, 0x0d,
+    0x10, 0x12, 0x14, 0x16, 0x17, 0x18, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1e, 0x1f, 0x20, 0x20, 0x21, 0x21, 0x22, 0x22, 0x22,
+    0x22, 0x23, 0x23, 0x23, 0x23, 0x23, 0x09, 0x0d, 0x10, 0x12, 0x14, 0x16, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
+    0x20, 0x20, 0x21, 0x22, 0x22, 0x22, 0x23, 0x23, 0x23, 0x24, 0x24, 0x24, 0x24, 0x24, 0x24, 0x0a, 0x0d, 0x10, 0x13, 0x15,
+    0x17, 0x18, 0x19, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x20, 0x21, 0x22, 0x22, 0x23, 0x23, 0x24, 0x24, 0x24, 0x25, 0x25,
+    0x25, 0x25, 0x25, 0x25, 0x26, 0x0a, 0x0e, 0x11, 0x13, 0x15, 0x17, 0x19, 0x1a, 0x1b, 0x1d, 0x1e, 0x1f, 0x20, 0x20, 0x21,
+    0x22, 0x23, 0x23, 0x24, 0x24, 0x25, 0x25, 0x25, 0x26, 0x26, 0x26, 0x26, 0x27, 0x27, 0x27, 0x27, 0x0a, 0x0e, 0x11, 0x13,
+    0x15, 0x17, 0x19, 0x1a, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x23, 0x24, 0x25, 0x25, 0x26, 0x26, 0x26, 0x27,
+    0x27, 0x27, 0x28, 0x28, 0x28, 0x28, 0x28, 0x28, 0x0a, 0x0e, 0x11, 0x14, 0x16, 0x18, 0x19, 0x1b, 0x1c, 0x1e, 0x1f, 0x20,
+    0x21, 0x22, 0x23, 0x23, 0x24, 0x25, 0x25, 0x26, 0x26, 0x27, 0x27, 0x28, 0x28, 0x28, 0x29, 0x29, 0x29, 0x29, 0x29, 0x29,
+    0x29, 0x0a, 0x0e, 0x11, 0x14, 0x16, 0x18, 0x1a, 0x1b, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x26,
+    0x27, 0x27, 0x28, 0x28, 0x29, 0x29, 0x29, 0x2a, 0x2a, 0x2a, 0x2a, 0x2a, 0x2a, 0x2a, 0x2b, 0x0a, 0x0f, 0x12, 0x14, 0x17,
+    0x18, 0x1a, 0x1c, 0x1d, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x26, 0x27, 0x28, 0x28, 0x29, 0x29, 0x2a, 0x2a,
+    0x2a, 0x2b, 0x2b, 0x2b, 0x2b, 0x2b, 0x2c, 0x2c, 0x2c, 0x2c, 0x0b, 0x0f, 0x12, 0x15, 0x17, 0x19, 0x1b, 0x1c, 0x1e, 0x1f,
+    0x20, 0x22, 0x23, 0x24, 0x25, 0x25, 0x26, 0x27, 0x28, 0x28, 0x29, 0x29, 0x2a, 0x2a, 0x2b, 0x2b, 0x2c, 0x2c, 0x2c, 0x2c,
+    0x2d, 0x2d, 0x2d, 0x2d, 0x2d, 0x2d, 0x0b, 0x0f, 0x12, 0x15, 0x17, 0x19, 0x1b, 0x1d, 0x1e, 0x20, 0x21, 0x22, 0x23, 0x24,
+    0x25, 0x26, 0x27, 0x28, 0x28, 0x29, 0x2a, 0x2a, 0x2b, 0x2b, 0x2c, 0x2c, 0x2d, 0x2d, 0x2d, 0x2d, 0x2e, 0x2e, 0x2e, 0x2e,
+    0x2e, 0x2e, 0x2e, 0x0b, 0x0f, 0x12, 0x15, 0x18, 0x1a, 0x1b, 0x1d, 0x1f, 0x20, 0x21, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28,
+    0x28, 0x29, 0x2a, 0x2a, 0x2b, 0x2c, 0x2c, 0x2d, 0x2d, 0x2d, 0x2e, 0x2e, 0x2e, 0x2f, 0x2f, 0x2f, 0x2f, 0x2f, 0x2f, 0x2f,
+    0x30, 0x0b, 0x0f, 0x13, 0x16, 0x18, 0x1a, 0x1c, 0x1e, 0x1f, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a,
+    0x2b, 0x2b, 0x2c, 0x2c, 0x2d, 0x2e, 0x2e, 0x2e, 0x2f, 0x2f, 0x2f, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x31, 0x31, 0x31,
+};
 
 /* obj_seg008.c's PORT_BUILD descriptor widens the DOS lineofs word to a host
    pointer, preserving the backing shape and the remaining nine clip words. */
@@ -97,6 +143,27 @@ static uint8_t *sprite_pixels(const PortSprite *sprite, size_t *extent_out)
     if (extent_out != NULL)
         *extent_out = extent;
     return (uint8_t *)sprite->sprite_bitmapptr;
+}
+
+/* Give resource adapters the same active bitmap, bound, and row-table view
+   that the renderer uses without exposing the file-local descriptor. */
+int port_sprite_active_view(uint8_t **pixels_out, size_t *extent_out,
+                            PortSprite **sprite_out)
+{
+    size_t extent;
+    uint8_t *pixels;
+
+    port_sprite_init();
+    pixels = sprite_pixels(&s_sprite1, &extent);
+    if (pixels == NULL)
+        return 0;
+    if (pixels_out != NULL)
+        *pixels_out = pixels;
+    if (extent_out != NULL)
+        *extent_out = extent;
+    if (sprite_out != NULL)
+        *sprite_out = &s_sprite1;
+    return 1;
 }
 
 static uint8_t *shape_pixels(const PortShape2D *shape, size_t *extent_out)
@@ -522,14 +589,23 @@ void sprite_putimage_and(const PortShape2D *shape, int16_t x, int16_t y)
 
 void sprite_putimage_and_alt(const PortShape2D *shape, int16_t x, int16_t y)
 {
-    sprite_putimage_and(shape, x, y);
+    /* Despite its recovered name, load_23BBC enters the opaque copy core
+       (REP MOVSB/MOVSW), not the AND loop used by the other two entries. */
+    draw_opaque(shape, x, y);
+}
+
+static int16_t sprite_header_relative(int16_t coordinate, uint16_t origin)
+{
+    /* These entrypoints SUB AX,[SI+4/6] before signed clipping. */
+    uint16_t bits = (uint16_t)((uint16_t)coordinate - origin);
+    return (int16_t)(bits < 0x8000u ? (int32_t)bits : (int32_t)bits - 0x10000);
 }
 
 void sprite_putimage_and_alt2(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
-        compose_boolean(shape, x - (int16_t)shape->unknown1,
-                        y - (int16_t)shape->unknown2, 1);
+        compose_boolean(shape, sprite_header_relative(x, shape->unknown1),
+                        sprite_header_relative(y, shape->unknown2), 1);
 }
 
 void sprite_putimage_or(const PortShape2D *shape, int16_t x, int16_t y)
@@ -541,8 +617,8 @@ void sprite_putimage_or(const PortShape2D *shape, int16_t x, int16_t y)
 void sprite_putimage_or_alt(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
-        compose_boolean(shape, x - (int16_t)shape->unknown1,
-                        y - (int16_t)shape->unknown2, 0);
+        compose_boolean(shape, sprite_header_relative(x, shape->unknown1),
+                        sprite_header_relative(y, shape->unknown2), 0);
 }
 
 void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y)
@@ -556,12 +632,11 @@ void sprite_shape_to_1_alt(const PortShape2D *shape)
         draw_opaque(shape, shape->pos_x, shape->pos_y);
 }
 
-/* Translation of seg012:0x23E00..0x23E90. Each nonzero signed byte gives
-   the number of literal source pixels to copy; the sign selects equivalent
-   MOVSB versus LODSB/STOSB loops in the original routine. The stream carries
-   on across rows using the active sprite's line-offset table and ends at a
-   zero control byte. */
-static void shape2d_draw_literal_runs(const PortShape2D *shape,
+/* Translation of seg012:0x23E00..0x23E90. Positive signed controls consume
+   one color and repeat it with STOSB; negative controls copy literals with
+   MOVSB. Runs continue across rows through the active line-offset table and
+   terminate at a zero control byte. */
+static void shape2d_draw_runs(const PortShape2D *shape,
                                      uint16_t origin_x, uint16_t origin_y,
                                      const char *publication_reason)
 {
@@ -590,22 +665,33 @@ static void shape2d_draw_literal_runs(const PortShape2D *shape,
         int8_t control = (int8_t)source[source_index++];
         unsigned run;
         unsigned item;
+        uint8_t repeated = 0;
         if (control == 0)
             break;
         run = (unsigned)(control < 0 ? -(int)control : control);
-        for (item = 0; item < run; ++item) {
+        if (control > 0) {
             if (source_index >= source_extent)
-                port_guest_unwind("shape2d literal run exceeded its source extent");
+                port_guest_unwind("shape2d repeat packet exceeded its source extent");
+            repeated = source[source_index++];
+        } else if (run > source_extent - source_index) {
+            port_guest_unwind("shape2d literal run exceeded its source extent");
+        }
+        for (item = 0; item < run; ++item) {
+            if (row >= height)
+                port_guest_unwind("shape2d row advanced outside the active sprite");
             if ((size_t)destination_offset >= destination_extent)
                 port_guest_unwind("shape2d destination exceeded its sprite extent");
-            destination[destination_offset] = source[source_index++];
+            destination[destination_offset] = control > 0
+                ? repeated : source[source_index++];
             --remaining_width;
             if ((int16_t)remaining_width <= 0) {
                 ++row;
-                if (row >= height)
-                    port_guest_unwind("shape2d row advanced outside the active sprite");
-                destination_offset = (uint16_t)(s_sprite1.lineofs[row] +
-                                                origin_x);
+                /* The DOS loop resolves the next row after the final pixel,
+                   before reading its zero terminator. Avoid reading beyond
+                   the host row table when that next row is never drawn. */
+                if (row < height)
+                    destination_offset = (uint16_t)(s_sprite1.lineofs[row] +
+                                                    origin_x);
                 remaining_width = width;
             } else {
                 ++destination_offset;
@@ -619,22 +705,22 @@ static void shape2d_draw_literal_runs(const PortShape2D *shape,
 void shape2d_op_unk(const PortShape2D *shape)
 {
     if (shape != NULL)
-        shape2d_draw_literal_runs(shape, shape->pos_x, shape->pos_y,
+        shape2d_draw_runs(shape, shape->pos_x, shape->pos_y,
                                   "shape2d_op_unk");
 }
 
 /* The 30-byte seg012:0x23DE2 entry loads explicit x/y arguments and jumps
-   into the shared literal-run tail at 0x23E1B. */
+   into the shared run decoder at 0x23E1B. */
 void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
-        shape2d_draw_literal_runs(shape, (uint16_t)x, (uint16_t)y,
+        shape2d_draw_runs(shape, (uint16_t)x, (uint16_t)y,
                                   "shape2d_op_unknown5");
 }
 
 /* Translation of the clipped alternate decoder at seg012:0x23ED2. Its
-   positive and negative packet paths both copy one literal byte per pixel
-   (LODSB/STOSB and MOVSB respectively); the sign selects the loop form. The
+   positive controls consume and repeat one colour; negative controls copy
+   literal bytes. The sign selects the loop form. The
    shape's declared width/height establish source coordinates, while DOS
    clip bounds select destination writes. */
 void shape2d_op_unk3(const PortShape2D *shape)
@@ -673,27 +759,32 @@ void shape2d_op_unk3(const PortShape2D *shape)
         size_t item;
         if (control == 0)
             break;
-        run = (size_t)(control < 0 ? -(int)control : control);
+        run = (size_t)(control > 0 ? control : -(int)control);
         count = run < pixel_count - pixel_index
             ? run : pixel_count - pixel_index;
-        if (count > source_extent - source_index)
+        if (control > 0 && source_index >= source_extent)
+            port_guest_unwind("shape2d repeat packet exceeded its source extent");
+        if (control < 0 && count > source_extent - source_index)
             port_guest_unwind("shape2d literal packet exceeded its source extent");
-        for (item = 0; item < count; ++item, ++pixel_index) {
-            int target_x = origin_x + (int)(pixel_index % shape->width);
-            int target_y = origin_y + (int)(pixel_index / shape->width);
-            uint8_t color = source[source_index++];
-            if (target_x < clip_left || target_x >= clip_right ||
-                target_y < clip_top || target_y >= clip_bottom ||
-                target_x < 0 || target_y < 0 ||
-                target_x >= s_sprite1.sprite_bitmapptr->width ||
-                target_y >= s_sprite1.sprite_bitmapptr->height)
-                continue;
-            {
-                size_t offset = (size_t)s_sprite1.lineofs[target_y] +
-                                (size_t)target_x;
-                if (offset >= destination_extent)
-                    port_guest_unwind("shape2d pixel exceeded its sprite extent");
-                destination[offset] = color;
+        {
+            uint8_t repeated = control > 0 ? source[source_index++] : 0;
+            for (item = 0; item < count; ++item, ++pixel_index) {
+                int target_x = origin_x + (int)(pixel_index % shape->width);
+                int target_y = origin_y + (int)(pixel_index / shape->width);
+                uint8_t color = control > 0 ? repeated : source[source_index++];
+                if (target_x < clip_left || target_x >= clip_right ||
+                    target_y < clip_top || target_y >= clip_bottom ||
+                    target_x < 0 || target_y < 0 ||
+                    target_x >= s_sprite1.sprite_bitmapptr->width ||
+                    target_y >= s_sprite1.sprite_bitmapptr->height)
+                    continue;
+                {
+                    size_t offset = (size_t)s_sprite1.lineofs[target_y] +
+                                    (size_t)target_x;
+                    if (offset >= destination_extent)
+                        port_guest_unwind("shape2d pixel exceeded its sprite extent");
+                    destination[offset] = color;
+                }
             }
         }
     }
@@ -981,144 +1072,1360 @@ void putpixel_single_maybe(int16_t x, int16_t y, int16_t color)
     port_sprite_plot_active(x, y, (uint8_t)color);
 }
 
+static uint32_t raster_line_slope(unsigned minor, unsigned major);
+static void raster_line_draw_clipped(int16_t x1, int16_t y1,
+                                     int16_t x2, int16_t y2,
+                                     int16_t color);
+
 /* Semantic host translation of the short preRender_line dispatcher at
-   seg012:0x1FDDE. It delegates endpoint clipping and pixel selection to the
-   DOS line helpers; the port plots the inclusive integer line through the
-   active sprite clip rectangle. This is not claimed as a strict ASM match. */
+   seg012:0x1FDDE plus putpixel_line1_maybe. The major-axis fixed-point walk
+   follows the descriptor's half-pixel phase, and active-sprite clipping is
+   applied to the resulting samples. */
 void preRender_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2,
                     int16_t color)
 {
-    int x = x1;
-    int y = y1;
-    int end_x = x2;
-    int end_y = y2;
-    int delta_x = end_x >= x ? end_x - x : x - end_x;
-    int step_x = x < end_x ? 1 : -1;
-    int delta_y = end_y >= y ? end_y - y : y - end_y;
-    int step_y = y < end_y ? 1 : -1;
-    int error = delta_x - delta_y;
-
-    for (;;) {
-        port_sprite_plot_active((int16_t)x, (int16_t)y, (uint8_t)color);
-        if (x == end_x && y == end_y)
-            break;
-        {
-            int doubled_error = error * 2;
-            if (doubled_error > -delta_y) {
-                error -= delta_y;
-                x += step_x;
-            }
-            if (doubled_error < delta_x) {
-                error += delta_x;
-                y += step_y;
-            }
-        }
-    }
+    raster_line_draw_clipped(x1, y1, x2, y2, color);
     if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
         port_video_publish("preRender_line");
 }
 
-static void fill_active_span(int left, int y, int right_exclusive,
-                             uint8_t color)
-{
-    size_t extent;
-    uint8_t *pixels = sprite_pixels(&s_sprite1, &extent);
-    int clip_left = (int)s_sprite1.words2[0];
-    int clip_right = (int)s_sprite1.words2[1];
-    int clip_top = (int)s_sprite1.words2[2];
-    int clip_bottom = (int)s_sprite1.words2[3];
-    size_t offset;
+typedef enum RasterFillMode {
+    RASTER_FILL_SOLID,
+    RASTER_FILL_PATTERN,
+    RASTER_FILL_AUXILIARY
+} RasterFillMode;
 
-    if (pixels == NULL || s_sprite1.lineofs == NULL ||
-        y < clip_top || y >= clip_bottom)
-        return;
-    if (left < clip_left) left = clip_left;
-    if (right_exclusive > clip_right) right_exclusive = clip_right;
-    if (right_exclusive <= left)
-        return;
-    offset = (size_t)s_sprite1.lineofs[(uint16_t)y] + (size_t)left;
-    if (offset > extent ||
-        (size_t)(right_exclusive - left) > extent - offset)
-        port_guest_unwind("polygon span exceeded active sprite extent");
-    memset(pixels + offset, color, (size_t)(right_exclusive - left));
+typedef struct RasterPoint {
+    int16_t x;
+    int16_t y;
+} RasterPoint;
+
+static uint16_t rotate_pattern_rows(uint16_t pattern)
+{
+    return (uint16_t)((pattern << 8) | (pattern >> 8));
 }
 
-/* Host scan converter for the flat-color route selected by
-   asm/prerender_wheel_raster.ASM:_preRender_default. The matching assembly
-   entry is a 15-byte shared-code dispatcher (context.py preRender_default,
-   load_217b2); the checked Restunts shape3d.c::preRender_default_impl lead
-   describes the edge arrays but does not prove a strict source match. */
+static uint8_t rotate_pattern_pixel(uint8_t pattern)
+{
+    return (uint8_t)((pattern << 1) | (pattern >> 7));
+}
+
+static int sprite_raster_bounds(int *left, int *right, int *top, int *bottom)
+{
+    int width;
+    int height;
+    if (s_sprite1.sprite_bitmapptr == NULL || s_sprite1.lineofs == NULL)
+        return 0;
+    width = s_sprite1.sprite_bitmapptr->width;
+    height = s_sprite1.sprite_bitmapptr->height;
+    *left = s_sprite1.words2[0];
+    *right = s_sprite1.words2[1];
+    *top = s_sprite1.words2[2];
+    *bottom = s_sprite1.words2[3];
+    if (*left < 0) *left = 0;
+    if (*top < 0) *top = 0;
+    if (*right > width) *right = width;
+    if (*bottom > height) *bottom = height;
+    return *right > *left && *bottom > *top;
+}
+
+/* draw_patterned_lines rotates its 16-bit row pattern on every scanline,
+   aligns the low byte to the left edge, then rotates once per destination
+   pixel. The byte swap is intentionally retained between calls because the
+   DOS routine mutates _line_pattern_bits in DGROUP. */
+static void fill_raster_span(int left, int y, int right_inclusive,
+                             uint8_t color, RasterFillMode mode,
+                             uint16_t *pattern)
+{
+    int clip_left;
+    int clip_right;
+    int clip_top;
+    int clip_bottom;
+    size_t extent;
+    uint8_t *pixels;
+    uint8_t mask;
+    size_t offset;
+    int x;
+
+    if (!sprite_raster_bounds(&clip_left, &clip_right, &clip_top,
+                              &clip_bottom) || y < clip_top || y >= clip_bottom)
+        return;
+    if (left < clip_left) left = clip_left;
+    if (right_inclusive >= clip_right) right_inclusive = clip_right - 1;
+    if (right_inclusive < left)
+        return;
+    pixels = sprite_pixels(&s_sprite1, &extent);
+    if (pixels == NULL)
+        return;
+    offset = (size_t)s_sprite1.lineofs[(uint16_t)y] + (size_t)left;
+    if (offset > extent || (size_t)(right_inclusive - left + 1) > extent - offset)
+        port_guest_unwind("polygon span exceeded active sprite extent");
+    if (mode == RASTER_FILL_SOLID) {
+        memset(pixels + offset, color, (size_t)(right_inclusive - left + 1));
+        return;
+    }
+
+    mask = (uint8_t)*pattern;
+    for (x = 0; x < (left & 7); ++x)
+        mask = rotate_pattern_pixel(mask);
+    for (x = left; x <= right_inclusive; ++x) {
+        mask = rotate_pattern_pixel(mask);
+        if ((mask & 1u) != 0)
+            pixels[offset + (size_t)(x - left)] =
+                mode == RASTER_FILL_AUXILIARY ? s_line_auxiliary_color : color;
+        else if (mode == RASTER_FILL_AUXILIARY)
+            pixels[offset + (size_t)(x - left)] = color;
+    }
+}
+
+typedef struct RasterInterval {
+    int left;
+    int right;
+} RasterInterval;
+
+static uint32_t raster_line_slope(unsigned minor, unsigned major)
+{
+    uint64_t fixed = (uint64_t)minor << 16;
+    uint32_t slope = (uint32_t)(fixed / major);
+    if (major >= 50u && fixed % major > major / 2u)
+        ++slope;
+    return slope;
+}
+
+static int64_t raster_ceil_div(int64_t numerator, int64_t denominator)
+{
+    if (numerator >= 0)
+        return (numerator + denominator - 1) / denominator;
+    /* C integer division truncates toward zero, which is ceil for negatives. */
+    return numerator / denominator;
+}
+
+/* The polygon helpers rasterize each edge with the line record's major-axis
+   DDA. For an x-major edge, all x samples that land on one scan row form a
+   boundary interval; using only the geometric intersection drops those DOS
+   pixels (for example, the row starts at x=10 and ends at x=11 for a 4:1
+   edge). */
+static int raster_edge_interval(const RasterPoint *first,
+                                const RasterPoint *second, int y,
+                                RasterInterval *interval)
+{
+    const RasterPoint *top = first;
+    const RasterPoint *bottom = second;
+    int start_x;
+    int start_y;
+    int delta_y;
+    int dx;
+    unsigned abs_dx;
+    unsigned dy;
+    uint32_t slope;
+    uint64_t advance;
+    int direction;
+
+    if (top->y > bottom->y) {
+        top = second;
+        bottom = first;
+    }
+    start_x = top->x;
+    start_y = top->y;
+    dy = (unsigned)((int)bottom->y - start_y);
+    delta_y = y - start_y;
+    if (dy == 0u || delta_y < 0 || (unsigned)delta_y > dy)
+        return 0;
+    dx = (int)bottom->x - start_x;
+    direction = dx < 0 ? -1 : 1;
+    abs_dx = (unsigned)(dx < 0 ? -dx : dx);
+    if (dy >= abs_dx) {
+        if (abs_dx == 0u) {
+            interval->left = start_x;
+            interval->right = start_x;
+            return 1;
+        }
+        slope = raster_line_slope(abs_dx, dy);
+        advance = (uint64_t)(unsigned)delta_y * slope;
+        advance += direction > 0 ? 0x8000u : 0x7fffu;
+        advance >>= 16;
+        interval->left = start_x + direction * (int)advance;
+        interval->right = interval->left;
+        return 1;
+    }
+
+    slope = raster_line_slope(dy, abs_dx);
+    if (slope == 0u)
+        return 0;
+    {
+        int64_t low = (int64_t)delta_y * 65536 - 0x8000;
+        int64_t high = (int64_t)(delta_y + 1) * 65536 - 0x8000;
+        int64_t first_step = raster_ceil_div(low, slope);
+        int64_t last_step = raster_ceil_div(high, slope) - 1;
+        int first_x;
+        int last_x;
+        if (first_step < 0)
+            first_step = 0;
+        if (last_step > (int64_t)abs_dx)
+            last_step = abs_dx;
+        if (first_step > last_step)
+            return 0;
+        first_x = start_x + direction * (int)first_step;
+        last_x = start_x + direction * (int)last_step;
+        interval->left = first_x < last_x ? first_x : last_x;
+        interval->right = first_x > last_x ? first_x : last_x;
+    }
+    return 1;
+}
+
+static void raster_polygon(int16_t color, int16_t point_count,
+                           const int16_t *points, RasterFillMode mode,
+                           int merge_each_row)
+{
+    RasterPoint vertices[256];
+    int8_t reverse_side[256] = {0};
+    int min_y = INT_MAX;
+    int max_y = INT_MIN;
+    int min_vertex = 0;
+    int max_vertex = 0;
+    int clip_left;
+    int clip_right;
+    int clip_top;
+    int clip_bottom;
+    int16_t index;
+    uint16_t pattern = s_line_pattern_bits;
+    int drew = 0;
+
+    if (points == NULL || point_count <= 0 || point_count > 256 ||
+        !sprite_raster_bounds(&clip_left, &clip_right, &clip_top,
+                              &clip_bottom))
+        return;
+    for (index = 0; index < point_count; ++index) {
+        vertices[index].x = points[(size_t)index * 2u];
+        vertices[index].y = points[(size_t)index * 2u + 1u];
+        /* Shared DOS setup chooses the last minimum and first maximum. */
+        if (vertices[index].y <= min_y) {
+            min_y = vertices[index].y;
+            min_vertex = index;
+        }
+        if (vertices[index].y > max_y) {
+            max_y = vertices[index].y;
+            max_vertex = index;
+        }
+    }
+    if (point_count == 1) {
+        preRender_line(vertices[0].x, vertices[0].y,
+                       vertices[0].x, vertices[0].y, color);
+        return;
+    } else if (point_count == 2) {
+        /* The shared image callback handles degenerate faces as a line. */
+        preRender_line((int16_t)vertices[0].x, (int16_t)vertices[0].y,
+                       (int16_t)vertices[1].x, (int16_t)vertices[1].y,
+                       color);
+        return;
+    } else {
+        int first_y = min_y > clip_top ? min_y : clip_top;
+        int last_y = max_y < clip_bottom - 1 ? max_y : clip_bottom - 1;
+        int y;
+        if (first_y > last_y)
+            return;
+        if (min_y == max_y) {
+            int min_x = vertices[0].x;
+            int max_x = vertices[0].x;
+            /* The frozen shared setup dispatches an all-horizontal face
+               through its solid line callback, even for patterned fills. */
+            for (index = 1; index < point_count; ++index) {
+                if (vertices[index].x < min_x) min_x = vertices[index].x;
+                if (vertices[index].x > max_x) max_x = vertices[index].x;
+            }
+            preRender_line((int16_t)min_x, (int16_t)min_y,
+                           (int16_t)max_x, (int16_t)max_y, color);
+            return;
+        }
+        /* Both patterned DOS callbacks select the low pattern byte after
+           swapping bytes when their first scanline has an even y. */
+        if (mode != RASTER_FILL_SOLID && (first_y & 1) == 0)
+            pattern = rotate_pattern_rows(pattern);
+        for (y = first_y; y <= last_y; ++y) {
+            RasterInterval bounds = {0, -1};
+            int seeded = 0;
+            int chain;
+            /* The original fills two ordered chains, not even/odd pairs.
+               Forward helper2 replaces both bounds on a shared row; reverse
+               helper3 expands them. Horizontal/decreasing edges are skipped,
+               but their vertices still advance the traversal. */
+            for (chain = 0; chain < 2; ++chain) {
+                int vertex = min_vertex;
+                while (vertex != max_vertex) {
+                    int next = chain == 0 ? vertex + 1 : vertex - 1;
+                    RasterInterval edge;
+                    if (next == point_count) next = 0;
+                    if (next < 0) next = point_count - 1;
+                    if (vertices[next].y > vertices[vertex].y &&
+                        raster_edge_interval(&vertices[vertex], &vertices[next],
+                                             y, &edge)) {
+                        if (chain == 0 || !seeded) {
+                            bounds = edge;
+                            seeded = 1;
+                        } else if (merge_each_row) {
+                            if (edge.left < bounds.left) bounds.left = edge.left;
+                            if (edge.right > bounds.right) bounds.right = edge.right;
+                        } else {
+                            /* Alternate callbacks choose one boundary on the
+                               first outside sample, then write that same side
+                               for the remainder of this reverse edge. Mode7
+                               tests the right sample first; modes2..6 and8
+                               test the left sample first (helper3 dispatch). */
+                            int dx = vertices[next].x - vertices[vertex].x;
+                            int dy = vertices[next].y - vertices[vertex].y;
+                            int right_first = dx < -dy;
+                            int side = reverse_side[vertex];
+                            if (side == 0) {
+                                if (right_first && edge.right > bounds.right)
+                                    side = 1;
+                                else if (edge.left < bounds.left)
+                                    side = -1;
+                                else if (edge.right > bounds.right)
+                                    side = 1;
+                                reverse_side[vertex] = (int8_t)side;
+                            }
+                            if (side < 0) bounds.left = edge.left;
+                            if (side > 0) bounds.right = edge.right;
+                        }
+                    }
+                    vertex = next;
+                }
+            }
+            if (seeded) {
+                fill_raster_span(bounds.left, y, bounds.right, (uint8_t)color,
+                                 mode, &pattern);
+                drew = 1;
+            }
+            if (mode != RASTER_FILL_SOLID)
+                pattern = rotate_pattern_rows(pattern);
+        }
+    }
+    s_line_pattern_bits = pattern;
+    if (drew && s_sprite1.sprite_bitmapptr == &s_screen_shape)
+        port_video_publish("preRender_polygon");
+}
+
+/* _preRender_default (seg012:217B2) and its alternate share
+   _prerender_shared_setup; both select the filled-line callback and the
+   clipped line callback. */
 void preRender_default(int16_t color, int16_t point_count,
                        const int16_t *points)
 {
-    int min_y = INT16_MAX;
-    int max_y = INT16_MIN;
-    int point;
-
-    if (points == NULL || point_count <= 0)
-        return;
-    for (point = 0; point < point_count; ++point) {
-        int y = points[point * 2 + 1];
-        if (y < min_y) min_y = y;
-        if (y > max_y) max_y = y;
-    }
-
-    for (int y = min_y; y <= max_y; ++y) {
-        int left = INT_MAX;
-        int right = INT_MIN;
-
-        for (point = 0; point < point_count; ++point) {
-            int next = point + 1 == point_count ? 0 : point + 1;
-            int x0 = points[point * 2];
-            int y0 = points[point * 2 + 1];
-            int x1 = points[next * 2];
-            int y1 = points[next * 2 + 1];
-
-            if (y0 == y1) {
-                if (y == y0) {
-                    if (x0 < left) left = x0;
-                    if (x0 > right) right = x0;
-                    if (x1 < left) left = x1;
-                    if (x1 > right) right = x1;
-                }
-            } else if ((y >= y0 && y <= y1) ||
-                       (y >= y1 && y <= y0)) {
-                int64_t numerator = (int64_t)(x1 - x0) * (y - y0);
-                int x = x0 + (int)(numerator / (y1 - y0));
-                if (x < left) left = x;
-                if (x > right) right = x;
-            }
-        }
-        if (left <= right)
-            fill_active_span(left, y, right + 1, (uint8_t)color);
-    }
+    raster_polygon(color, point_count, points, RASTER_FILL_SOLID, 1);
 }
 
-/* The alternate and wheel-face entries join the same shared scan converter
-   in asm/prerender_wheel_raster.ASM. This host bridge handles the flat-color
-   quadrilateral call shape emitted by src/preRender_wheel.c; patterned edge
-   records remain a separate reconstruction task. */
 void preRender_default_alt(int16_t color, int16_t point_count,
                            const int16_t *points)
 {
-    preRender_default(color, point_count, points);
+    raster_polygon(color, point_count, points, RASTER_FILL_SOLID, 0);
+}
+
+void preRender_patterned(int16_t pattern_bits, int16_t color,
+                         int16_t point_count, const int16_t *points)
+{
+    s_line_pattern_bits = (uint16_t)pattern_bits;
+    raster_polygon(color, point_count, points, RASTER_FILL_PATTERN, 1);
+}
+
+void preRender_unk(int16_t pattern_bits, int16_t background_color,
+                   int16_t foreground_color, int16_t point_count,
+                   const int16_t *points)
+{
+    s_line_pattern_bits = (uint16_t)pattern_bits;
+    s_line_auxiliary_color = (uint8_t)foreground_color;
+    raster_polygon(background_color, point_count, points,
+                   RASTER_FILL_AUXILIARY, 1);
+}
+
+static int16_t raster_shift_right_signed(int16_t value, unsigned count)
+{
+    int divisor = 1 << count;
+    int integer = value;
+    if (integer >= 0)
+        return (int16_t)(integer / divisor);
+    return (int16_t)(-((-integer + divisor - 1) / divisor));
+}
+
+static void sphere_build_ring(const int16_t source[6], int16_t output[64])
+{
+    int16_t start_x = (int16_t)(source[2] - source[0]);
+    int16_t start_y = (int16_t)(source[3] - source[1]);
+    int16_t end_x = (int16_t)(source[4] - source[0]);
+    int16_t end_y = (int16_t)(source[5] - source[1]);
+    int16_t start_half_x = raster_shift_right_signed(start_x, 1);
+    int16_t start_half_y = raster_shift_right_signed(start_y, 1);
+    int16_t start_quarter_x = raster_shift_right_signed(start_half_x, 1);
+    int16_t start_quarter_y = raster_shift_right_signed(start_half_y, 1);
+    int16_t start_three_quarters_x =
+        (int16_t)(start_half_x + start_quarter_x);
+    int16_t start_three_quarters_y =
+        (int16_t)(start_half_y + start_quarter_y);
+    int16_t end_half_x = raster_shift_right_signed(end_x, 1);
+    int16_t end_half_y = raster_shift_right_signed(end_y, 1);
+    int16_t end_quarter_x = raster_shift_right_signed(end_half_x, 1);
+    int16_t end_quarter_y = raster_shift_right_signed(end_half_y, 1);
+    int16_t end_three_quarters_x = (int16_t)(end_half_x + end_quarter_x);
+    int16_t end_three_quarters_y = (int16_t)(end_half_y + end_quarter_y);
+    int index;
+
+#define SPHERE_STORE_POINT(i, px, py) do { \
+        output[(i) * 2] = (px); output[(i) * 2 + 1] = (py); \
+    } while (0)
+    SPHERE_STORE_POINT(0, start_x, start_y);
+    SPHERE_STORE_POINT(8, end_x, end_y);
+    SPHERE_STORE_POINT(4, mulscl((int16_t)(start_x + end_x), 0x2d41),
+                       mulscl((int16_t)(start_y + end_y), 0x2d41));
+    SPHERE_STORE_POINT(2, mulscl((int16_t)(start_x + end_half_x), 0x393e),
+                       mulscl((int16_t)(start_y + end_half_y), 0x393e));
+    SPHERE_STORE_POINT(6, mulscl((int16_t)(end_x + start_half_x), 0x393e),
+                       mulscl((int16_t)(end_y + start_half_y), 0x393e));
+    SPHERE_STORE_POINT(1, mulscl((int16_t)(start_x + end_quarter_x), 0x3e17),
+                       mulscl((int16_t)(start_y + end_quarter_y), 0x3e17));
+    SPHERE_STORE_POINT(7, mulscl((int16_t)(end_x + start_quarter_x), 0x3e17),
+                       mulscl((int16_t)(end_y + start_quarter_y), 0x3e17));
+    SPHERE_STORE_POINT(3, mulscl((int16_t)(start_x + end_three_quarters_x), 0x3333),
+                       mulscl((int16_t)(start_y + end_three_quarters_y), 0x3333));
+    SPHERE_STORE_POINT(5, mulscl((int16_t)(end_x + start_three_quarters_x), 0x3333),
+                       mulscl((int16_t)(end_y + start_three_quarters_y), 0x3333));
+    SPHERE_STORE_POINT(12, mulscl((int16_t)(end_x - start_x), 0x2d41),
+                        mulscl((int16_t)(end_y - start_y), 0x2d41));
+    SPHERE_STORE_POINT(14, mulscl((int16_t)(end_half_x - start_x), 0x393e),
+                        mulscl((int16_t)(end_half_y - start_y), 0x393e));
+    SPHERE_STORE_POINT(10, mulscl((int16_t)(end_x - start_half_x), 0x393e),
+                        mulscl((int16_t)(end_y - start_half_y), 0x393e));
+    SPHERE_STORE_POINT(15, mulscl((int16_t)(end_quarter_x - start_x), 0x3e17),
+                        mulscl((int16_t)(end_quarter_y - start_y), 0x3e17));
+    SPHERE_STORE_POINT(9, mulscl((int16_t)(end_x - start_quarter_x), 0x3e17),
+                       mulscl((int16_t)(end_y - start_quarter_y), 0x3e17));
+    SPHERE_STORE_POINT(13, mulscl((int16_t)(end_three_quarters_x - start_x), 0x3333),
+                        mulscl((int16_t)(end_three_quarters_y - start_y), 0x3333));
+    SPHERE_STORE_POINT(11, mulscl((int16_t)(end_x - start_three_quarters_x), 0x3333),
+                        mulscl((int16_t)(end_y - start_three_quarters_y), 0x3333));
+
+    for (index = 0; index < 16; ++index) {
+        output[(index + 16) * 2] = (int16_t)(source[0] - output[index * 2]);
+        output[(index + 16) * 2 + 1] =
+            (int16_t)(source[1] - output[index * 2 + 1]);
+        output[index * 2] = (int16_t)(source[0] + output[index * 2]);
+        output[index * 2 + 1] = (int16_t)(source[1] + output[index * 2 + 1]);
+    }
+#undef SPHERE_STORE_POINT
+}
+
+/* Port of asm/vector_sphere_sprite_ops.ASM:_preRender_sphere. The 39 small
+   sphere profiles and the large-sphere 32-point fallback are anchored by the
+   corresponding DATA table and preRender_sphere_helper2 C translation. */
+void preRender_sphere(int16_t center_x, int16_t center_y, int16_t size,
+                      int16_t color)
+{
+    uint16_t raw_size = (uint16_t)size;
+    uint16_t quarter = raw_size >> 2;
+    uint16_t diameter = (uint16_t)(raw_size - quarter + (quarter >> 2));
+    int signed_diameter = (int16_t)diameter;
+    unsigned radius;
+    int clip_left;
+    int clip_right;
+    int clip_top;
+    int clip_bottom;
+    int drew = 0;
+
+    if (signed_diameter <= 0 ||
+        !sprite_raster_bounds(&clip_left, &clip_right, &clip_top,
+                              &clip_bottom))
+        return;
+    if (signed_diameter == 1) {
+        port_sprite_plot_active(center_x, center_y, (uint8_t)color);
+        if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
+            port_video_publish("preRender_sphere");
+        return;
+    }
+    radius = (unsigned)diameter - (unsigned)(diameter >> 1);
+    if (radius < 40u) {
+        size_t profile_offset = (size_t)(radius - 1u) * radius / 2u;
+        unsigned row_count = radius;
+        int top_y = (int)center_y - (int)(diameter >> 1);
+        unsigned row;
+        if (profile_offset + row_count > sizeof(s_sphere_scanline_profiles))
+            port_guest_unwind("sphere scanline profile exceeded its table");
+        for (row = 0; row < row_count; ++row) {
+            int x_radius = s_sphere_scanline_profiles[profile_offset + row];
+            int left = (int)center_x - x_radius;
+            int right = (int)center_x + x_radius;
+            int upper_y = top_y + (int)row;
+            int lower_y = top_y + (signed_diameter - 1 - (int)row);
+            fill_raster_span(left, upper_y, right, (uint8_t)color,
+                             RASTER_FILL_SOLID, &s_line_pattern_bits);
+            if (lower_y != upper_y)
+                fill_raster_span(left, lower_y, right, (uint8_t)color,
+                                 RASTER_FILL_SOLID, &s_line_pattern_bits);
+            drew = 1;
+        }
+    } else {
+        int16_t source[6];
+        int16_t points[64];
+        source[0] = center_x;
+        source[1] = center_y;
+        source[2] = center_x;
+        source[3] = (int16_t)(center_y + (signed_diameter >> 1));
+        source[4] = (int16_t)(center_x + (int)(raw_size >> 1));
+        source[5] = center_y;
+        sphere_build_ring(source, points);
+        raster_polygon(color, 32, points, RASTER_FILL_SOLID, 1);
+        return;
+    }
+    if (drew && s_sprite1.sprite_bitmapptr == &s_screen_shape)
+        port_video_publish("preRender_sphere");
+}
+
+typedef struct RasterLineRecord {
+    uint16_t x_fraction_low;
+    int16_t start_x;
+    uint16_t y_fraction_low;
+    int16_t start_y;
+    int16_t end_x;
+    int16_t end_y;
+    uint16_t slope;
+    uint16_t step_count;
+    uint16_t color;
+    uint8_t mode;
+    uint8_t clip_flags;
+    uint16_t top_clipped_rows;
+    uint16_t bottom_clipped_rows;
+    uint16_t left_clipped_rows;
+    uint16_t right_clipped_rows;
+} RasterLineRecord;
+
+_Static_assert(sizeof(RasterLineRecord) == 28u,
+               "line descriptor must match the 14-word DOS record");
+
+static uint32_t raster_line_fixed(int16_t whole, uint16_t fraction)
+{
+    return ((uint32_t)(uint16_t)whole << 16) | fraction;
+}
+
+static void raster_line_store_fixed(int16_t *whole, uint16_t *fraction,
+                                    uint32_t fixed)
+{
+    *fraction = (uint16_t)fixed;
+    *whole = (int16_t)(uint16_t)(fixed >> 16);
+}
+
+static int16_t raster_line_round_fixed(int16_t whole, uint16_t fraction)
+{
+    return (int16_t)(uint16_t)(whole + (fraction >= 0x8000u));
+}
+
+static uint32_t raster_line_div_round(uint32_t numerator, uint16_t slope)
+{
+    uint32_t quotient;
+    uint32_t remainder;
+    if (slope == 0u)
+        return 0u;
+    quotient = numerator / slope;
+    remainder = numerator % slope;
+    if (remainder > (uint32_t)(slope >> 1))
+        ++quotient;
+    return quotient;
+}
+
+static unsigned draw_line_record(unsigned x0_raw, unsigned y0_raw,
+                                 unsigned x1_raw, unsigned y1_raw,
+                                 void *record_pointer,
+                                 int clipping_enabled)
+{
+    RasterLineRecord *record = (RasterLineRecord *)record_pointer;
+    int left;
+    int right;
+    int top;
+    int bottom;
+    int start_x = (int16_t)(uint16_t)x0_raw;
+    int start_y = (int16_t)(uint16_t)y0_raw;
+    int end_x = (int16_t)(uint16_t)x1_raw;
+    int end_y = (int16_t)(uint16_t)y1_raw;
+    int dx;
+    int dy;
+    unsigned mode;
+    unsigned major;
+    unsigned minor;
+    uint32_t slope;
+    unsigned flags;
+    unsigned start_code;
+    unsigned end_code;
+
+    if (record == NULL || !sprite_raster_bounds(&left, &right, &top, &bottom))
+        return 1u;
+    /* _preRender_line stores its color at descriptor offset 16 before it
+       calls this routine; the DOS clipper deliberately preserves that word. */
+    record->x_fraction_low = 0;
+    record->y_fraction_low = 0;
+    record->slope = 0;
+    record->step_count = 0;
+    record->top_clipped_rows = 0;
+    record->bottom_clipped_rows = 0;
+    record->left_clipped_rows = 0;
+    record->right_clipped_rows = 0;
+    record->mode = 0xffu;
+    if (start_y > end_y) {
+        int swap = start_x; start_x = end_x; end_x = swap;
+        swap = start_y; start_y = end_y; end_y = swap;
+    }
+    record->start_x = (int16_t)start_x;
+    record->start_y = (int16_t)start_y;
+    record->end_x = (int16_t)end_x;
+    record->end_y = (int16_t)end_y;
+    dx = end_x - start_x;
+    dy = end_y - start_y;
+
+    /* The assembly rejects a common outcode before measuring the slope. In
+       particular this leaves mode 0xff and the step word zero. */
+    if (dy != 0 && clipping_enabled) {
+        unsigned first = 0u;
+        unsigned last = 0u;
+        unsigned common;
+        if (start_y < top) first |= 4u;
+        else if (start_y >= bottom) {
+            record->clip_flags = 8u;
+            record->start_y = (int16_t)bottom;
+            record->x_fraction_low = 0;
+            return 8u;
+        }
+        if (end_y < top) last |= 4u;
+        else if (end_y >= bottom) last |= 8u;
+        if (start_x < left) first |= 2u;
+        else if (start_x >= right) first |= 1u;
+        if (end_x < left) last |= 2u;
+        else if (end_x >= right) last |= 1u;
+        common = first & last;
+        if (common != 0u) {
+            record->clip_flags = (uint8_t)common;
+            if (common & 4u) {
+                record->start_y = (int16_t)top;
+                record->x_fraction_low = 0;
+                record->end_y = (int16_t)(top - 1);
+                return common;
+            }
+            if (common & 8u) {
+                record->start_y = (int16_t)bottom;
+                record->x_fraction_low = 0;
+                return common;
+            }
+            {
+                int clipped_end = end_y >= bottom ? bottom - 1 : end_y;
+                int rounded_start = start_y +
+                    (record->y_fraction_low >= 0x8000u);
+                int count;
+                if (rounded_start < top) rounded_start = top;
+                record->start_y = (int16_t)rounded_start;
+                record->x_fraction_low = 0;
+                record->end_y = (int16_t)(rounded_start - 1);
+                count = clipped_end - rounded_start + 1;
+                if (common & 2u)
+                    record->bottom_clipped_rows = (uint16_t)count;
+                else
+                    record->right_clipped_rows = (uint16_t)count;
+                return common;
+            }
+        }
+    }
+    if (dy == 0) {
+        if (dx < 0) {
+            int16_t swap = record->start_x;
+            record->start_x = record->end_x;
+            record->end_x = swap;
+            dx = -dx;
+            mode = 0u;
+        } else {
+            mode = dx == 0 ? 9u : 1u;
+        }
+        major = (unsigned)dx;
+        minor = 0;
+    } else {
+        int abs_dx = dx < 0 ? -dx : dx;
+        unsigned abs_dy = (unsigned)dy;
+        if (dx == 0) {
+            mode = 2u;
+            major = abs_dy;
+            minor = 0;
+        } else if (dx > 0) {
+            if ((unsigned)abs_dx < abs_dy) {
+                mode = 6u;
+                major = abs_dy;
+                minor = (unsigned)abs_dx;
+            } else if ((unsigned)abs_dx == abs_dy) {
+                mode = 4u;
+                major = abs_dy;
+                minor = 0;
+            } else {
+                mode = 8u;
+                major = (unsigned)abs_dx;
+                minor = abs_dy;
+            }
+        } else if ((unsigned)abs_dx < abs_dy) {
+            mode = 5u;
+            major = abs_dy;
+            minor = (unsigned)abs_dx;
+        } else if ((unsigned)abs_dx == abs_dy) {
+            mode = 3u;
+            major = abs_dy;
+            minor = 0;
+        } else {
+            mode = 7u;
+            major = (unsigned)abs_dx;
+            minor = abs_dy;
+        }
+    }
+    record->mode = (uint8_t)mode;
+    record->step_count = (uint16_t)(major + 1u);
+    if (major != 0u && minor != 0u) {
+        uint64_t fixed = (uint64_t)minor << 16;
+        slope = (uint32_t)(fixed / major);
+        if (major >= 50u && fixed % major > major / 2u)
+            ++slope;
+        record->slope = (uint16_t)slope;
+    }
+    if (!clipping_enabled)
+        return 0u;
+
+    /* The DOS clipper uses endpoint outcodes, then adjusts the descriptor in
+       fixed point. Keep its half-open bounds and path-specific counters here;
+       drawing consumes this record, so geometric host clipping loses samples. */
+    start_code = end_code = 0u;
+    if (start_y < top) start_code |= 4u;
+    else if (start_y >= bottom) start_code |= 8u;
+    if (end_y < top) end_code |= 4u;
+    else if (end_y >= bottom) end_code |= 8u;
+    if (start_x < left) start_code |= 2u;
+    else if (start_x >= right) start_code |= 1u;
+    if (end_x < left) end_code |= 2u;
+    else if (end_x >= right) end_code |= 1u;
+    flags = start_code | end_code;
+
+    if (dy == 0) {
+        int sx = record->start_x;
+        int ex = record->end_x;
+        int count = ex - sx + 1;
+        if (start_y < top) {
+            record->start_y = (int16_t)top;
+            record->end_y = (int16_t)top;
+            record->step_count = 0;
+            record->clip_flags = 4u;
+            return 4u;
+        }
+        if (start_y >= bottom) {
+            record->start_y = (int16_t)bottom;
+            record->end_y = (int16_t)bottom;
+            record->step_count = 0;
+            record->clip_flags = 8u;
+            return 8u;
+        }
+        record->step_count = (uint16_t)count;
+        if (ex < left) {
+            record->end_y = (int16_t)(record->end_y - 1);
+            record->bottom_clipped_rows = 1u;
+            record->clip_flags = 2u;
+            return 2u;
+        }
+        if (sx >= right) {
+            record->end_y = (int16_t)(record->end_y - 1);
+            record->right_clipped_rows = 1u;
+            record->clip_flags = 1u;
+            return 1u;
+        }
+        if (sx < left) {
+            int amount = left - sx;
+            record->start_x = (int16_t)left;
+            record->step_count = (uint16_t)(record->step_count - amount);
+        }
+        if (ex >= right) {
+            int amount = ex - (right - 1);
+            record->end_x = (int16_t)(right - 1);
+            record->step_count = (uint16_t)(record->step_count - amount);
+        }
+        return 0u;
+    }
+
+    /* A shared outcode is the ASM reject path. The caller receives the
+       surviving clip flag and a degenerate edge descriptor. */
+    if ((start_code & end_code) != 0u) {
+        unsigned clip = start_code & end_code;
+        record->clip_flags = (uint8_t)clip;
+        record->step_count = 0;
+        if (clip & 4u) {
+            record->start_y = (int16_t)top;
+            record->x_fraction_low = 0;
+            record->end_y = (int16_t)(top - 1);
+        } else if (clip & 8u) {
+            record->start_y = (int16_t)bottom;
+            record->x_fraction_low = 0;
+        } else {
+            int end_row = record->end_y;
+            int start_row = record->start_y;
+            int rounded_start = start_row +
+                ((record->y_fraction_low + 0x8000u) > 0xffffu);
+            if (end_row >= bottom) end_row = bottom - 1;
+            if (rounded_start < top) rounded_start = top;
+            record->start_y = (int16_t)rounded_start;
+            record->x_fraction_low = 0;
+            record->end_y = (int16_t)(rounded_start - 1);
+            record->step_count = (uint16_t)(end_row - rounded_start);
+            if (clip & 2u) record->bottom_clipped_rows += record->step_count;
+            else record->right_clipped_rows += record->step_count;
+        }
+        return clip;
+    }
+    if (flags == 0u)
+        return 0u;
+
+    {
+        int old_start_y = record->start_y;
+        int old_end_y = record->end_y;
+        uint32_t fixed;
+        uint32_t amount;
+        uint32_t next;
+
+        /* Top edge (table entries 4..7 and 12..15). */
+        if ((flags & 4u) != 0u) {
+            amount = (uint32_t)(top - record->start_y);
+            record->start_y = (int16_t)top;
+            switch (mode) {
+            case 2u:
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 3u:
+                record->start_x = (int16_t)(record->start_x - (int)amount);
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 4u:
+                record->start_x = (int16_t)(record->start_x + (int)amount);
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 5u:
+            case 6u:
+                fixed = raster_line_fixed(record->start_x,
+                                          record->x_fraction_low);
+                next = (uint32_t)((uint64_t)record->slope * amount);
+                fixed = mode == 5u ? fixed - next : fixed + next;
+                raster_line_store_fixed(&record->start_x,
+                                        &record->x_fraction_low, fixed);
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 7u:
+            case 8u:
+                amount = raster_line_div_round(amount << 16,
+                                                record->slope);
+                record->start_x = (int16_t)(record->start_x +
+                    (mode == 7u ? -(int)amount : (int)amount));
+                record->step_count = (uint16_t)(record->step_count - amount);
+                if (record->step_count == 0u ||
+                    (int16_t)record->step_count < 0) {
+                    record->step_count = 1u;
+                    record->start_y = (int16_t)top;
+                    record->start_x = record->end_x;
+                } else {
+                    fixed = raster_line_fixed((int16_t)old_start_y,
+                                              record->y_fraction_low);
+                    next = (uint32_t)((uint64_t)record->slope * amount);
+                    fixed += next;
+                    raster_line_store_fixed(&record->start_y,
+                                            &record->y_fraction_low, fixed);
+                }
+                break;
+            default:
+                break;
+            }
+
+            /* Original path continues into the bottom handler if both y
+               endpoints were outside, otherwise it rechecks only y. */
+            if ((flags & 8u) != 0u) {
+                flags = 8u;
+                goto line_clip_bottom;
+            }
+        }
+
+        /* Bottom edge (table entries 8..11). */
+        if ((flags & 8u) != 0u) {
+line_clip_bottom:
+            amount = (uint32_t)(record->end_y - (bottom - 1));
+            record->end_y = (int16_t)(bottom - 1);
+            switch (mode) {
+            case 2u:
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 3u:
+                record->end_x = (int16_t)(record->end_x + (int)amount);
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 4u:
+                record->end_x = (int16_t)(record->end_x - (int)amount);
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            case 5u:
+            case 6u:
+                record->step_count = (uint16_t)(record->step_count - amount);
+                fixed = raster_line_fixed(record->start_x,
+                                          record->x_fraction_low);
+                next = (uint32_t)((uint64_t)record->slope *
+                                  (record->step_count - 1u));
+                fixed = mode == 5u ? fixed - next : fixed + next;
+                record->end_x = raster_line_round_fixed(
+                    (int16_t)(fixed >> 16), (uint16_t)fixed);
+                break;
+            case 7u:
+            case 8u:
+                fixed = raster_line_fixed(record->start_y,
+                                          record->y_fraction_low);
+                next = ((uint32_t)(uint16_t)(bottom - 1) << 16) - fixed;
+                amount = raster_line_div_round(next, record->slope);
+                record->end_x = (int16_t)(record->start_x +
+                    (mode == 7u ? -(int)amount : (int)amount));
+                record->step_count = (uint16_t)(amount + 1u);
+                break;
+            default:
+                break;
+            }
+        }
+
+        old_end_y = record->end_y;
+
+        /* After top/bottom adjustment the original routine recomputes both
+           X outcodes from the fixed-point start and integer end, then loops
+           through the X clip dispatch. */
+        if (((start_code | end_code) & 12u) != 0u) {
+            unsigned first_x = 0u;
+            unsigned last_x = 0u;
+            unsigned common_x;
+            int rounded_start_x = record->start_x +
+                (record->x_fraction_low >= 0x8000u);
+            if (record->start_x < left) first_x |= 2u;
+            if (rounded_start_x >= right) first_x |= 1u;
+            if (record->end_x < left) last_x |= 2u;
+            else if (record->end_x >= right) last_x |= 1u;
+            common_x = first_x & last_x;
+            if (common_x != 0u) {
+                int start_row = record->start_y +
+                    (record->y_fraction_low >= 0x8000u);
+                int end_row = record->end_y;
+                int count;
+                record->clip_flags = (uint8_t)common_x;
+                record->step_count = 0;
+                if (end_row >= bottom) end_row = bottom - 1;
+                if (start_row < top) start_row = top;
+                record->start_y = (int16_t)start_row;
+                record->y_fraction_low = 0;
+                record->end_y = (int16_t)(start_row - 1);
+                count = end_row - start_row + 1;
+                if (common_x & 2u)
+                    record->bottom_clipped_rows = (uint16_t)count;
+                else
+                    record->right_clipped_rows = (uint16_t)count;
+                return common_x;
+            }
+            flags = first_x | last_x;
+            if (flags == 0u)
+                return 0u;
+        }
+
+        /* Left edge. This is reached for outcode 2 or 3; mode 2 falls back
+           to the same degenerate descriptor as the DOS clip initializer. */
+        if ((flags & 2u) != 0u && (flags & 4u) == 0u &&
+            (flags & 8u) == 0u) {
+            int edge = left;
+            switch (mode) {
+            case 2u:
+                record->clip_flags = 2u;
+                record->step_count = 0;
+                record->start_y = (int16_t)top;
+                record->y_fraction_low = 0;
+                record->end_y = (int16_t)(top - 1);
+                return 2u;
+            case 3u: {
+                int delta = edge - record->end_x;
+                record->end_x = (int16_t)edge;
+                record->bottom_clipped_rows =
+                    (uint16_t)(record->bottom_clipped_rows + delta);
+                record->step_count = (uint16_t)(record->step_count - delta);
+                record->end_y = (int16_t)(record->end_y - delta);
+                break;
+            }
+            case 4u: {
+                int delta = edge - record->start_x;
+                record->start_x = (int16_t)edge;
+                record->top_clipped_rows =
+                    (uint16_t)(record->top_clipped_rows + delta);
+                record->start_y = (int16_t)(record->start_y + delta);
+                record->step_count = (uint16_t)(record->step_count - delta);
+                break;
+            }
+            case 5u: {
+                fixed = raster_line_fixed(record->start_x,
+                                          record->x_fraction_low) -
+                        ((uint32_t)(uint16_t)edge << 16);
+                amount = raster_line_div_round(fixed, record->slope);
+                record->end_x = (int16_t)edge;
+                record->bottom_clipped_rows = (uint16_t)(
+                    record->bottom_clipped_rows +
+                    record->step_count - (amount + 1u));
+                record->step_count = (uint16_t)(amount + 1u);
+                record->end_y = (int16_t)(record->start_y + amount);
+                break;
+            }
+            case 6u: {
+                uint32_t xfixed = raster_line_fixed(
+                    record->start_x, record->x_fraction_low);
+                uint32_t distance = ((uint32_t)(uint16_t)edge << 16) - xfixed;
+                amount = raster_line_div_round(distance, record->slope);
+                fixed = xfixed + (uint32_t)((uint64_t)record->slope * amount);
+                raster_line_store_fixed(&record->start_x,
+                                        &record->x_fraction_low, fixed);
+                record->start_y = (int16_t)(record->start_y + amount);
+                record->top_clipped_rows = (uint16_t)(
+                    record->top_clipped_rows + amount);
+                record->step_count = (uint16_t)(record->step_count - amount);
+                break;
+            }
+            case 7u: {
+                int delta = record->start_x - edge;
+                int previous_end = record->end_y;
+                fixed = raster_line_fixed(record->start_y,
+                                          record->y_fraction_low) +
+                        (uint32_t)((uint64_t)record->slope * delta);
+                record->end_x = (int16_t)edge;
+                record->end_y = raster_line_round_fixed(
+                    (int16_t)(fixed >> 16), (uint16_t)fixed);
+                record->bottom_clipped_rows = (uint16_t)(
+                    record->bottom_clipped_rows +
+                    previous_end - record->end_y);
+                record->step_count = (uint16_t)(delta + 1);
+                break;
+            }
+            case 8u: {
+                int delta = edge - record->start_x;
+                int16_t old_rounded = raster_line_round_fixed(
+                    record->start_y, record->y_fraction_low);
+                fixed = raster_line_fixed(record->start_y,
+                                          record->y_fraction_low) +
+                        (uint32_t)((uint64_t)record->slope * delta);
+                raster_line_store_fixed(&record->start_y,
+                                        &record->y_fraction_low, fixed);
+                record->start_x = (int16_t)edge;
+                record->top_clipped_rows = (uint16_t)(
+                    record->top_clipped_rows +
+                    raster_line_round_fixed(record->start_y,
+                                            record->y_fraction_low) - old_rounded);
+                record->step_count = (uint16_t)(record->step_count - delta);
+                break;
+            }
+            default:
+                break;
+            }
+            if ((flags & 1u) != 0u) {
+                flags = 1u;
+                goto line_clip_right;
+            }
+            return 0u;
+        }
+
+        /* Right edge (outcode 1). */
+        if ((flags & 1u) != 0u && (flags & (4u | 8u)) == 0u) {
+line_clip_right:
+            {
+                int edge = right - 1;
+                switch (mode) {
+                case 2u:
+                    record->clip_flags = 1u;
+                    record->step_count = 0;
+                    record->start_y = (int16_t)top;
+                    record->y_fraction_low = 0;
+                    record->end_y = (int16_t)(top - 1);
+                    return 1u;
+                case 3u: {
+                    int delta = record->start_x - edge;
+                    record->start_x = (int16_t)edge;
+                    record->start_y = (int16_t)(record->start_y + delta);
+                    record->left_clipped_rows = (uint16_t)(
+                        record->left_clipped_rows + delta);
+                    record->step_count = (uint16_t)(record->step_count - delta);
+                    break;
+                }
+                case 4u: {
+                    int delta = record->end_x - edge;
+                    record->end_x = (int16_t)edge;
+                    record->right_clipped_rows = (uint16_t)(
+                        record->right_clipped_rows + delta);
+                    record->step_count = (uint16_t)(record->step_count - delta);
+                    record->end_y = (int16_t)(record->end_y - delta);
+                    break;
+                }
+                case 5u: {
+                    fixed = raster_line_fixed(record->start_x,
+                                              record->x_fraction_low) -
+                            ((uint32_t)(uint16_t)edge << 16);
+                    amount = raster_line_div_round(fixed, record->slope);
+                    if (amount >= record->step_count) {
+                        record->clip_flags = 1u;
+                        record->step_count = 0;
+                        record->start_y = (int16_t)top;
+                        record->y_fraction_low = 0;
+                        record->end_y = (int16_t)(top - 1);
+                        return 1u;
+                    }
+                    fixed = raster_line_fixed(record->start_x,
+                                              record->x_fraction_low) -
+                            (uint32_t)((uint64_t)record->slope * amount);
+                    raster_line_store_fixed(&record->start_x,
+                                            &record->x_fraction_low, fixed);
+                    record->start_y = (int16_t)(record->start_y + amount);
+                    record->left_clipped_rows = (uint16_t)(
+                        record->left_clipped_rows + amount);
+                    record->step_count = (uint16_t)(record->step_count - amount);
+                    break;
+                }
+                case 6u: {
+                    fixed = raster_line_fixed(record->start_x,
+                                              record->x_fraction_low);
+                    amount = (uint32_t)(edge -
+                        raster_line_round_fixed(record->start_x,
+                                                record->x_fraction_low));
+                    if (fixed > ((uint32_t)(uint16_t)edge << 16)) {
+                        record->clip_flags = 1u;
+                        record->step_count = 0;
+                        record->start_y = (int16_t)top;
+                        record->y_fraction_low = 0;
+                        record->end_y = (int16_t)(top - 1);
+                        return 1u;
+                    }
+                    amount = raster_line_div_round(
+                        ((uint32_t)(uint16_t)edge << 16) - fixed,
+                        record->slope);
+                    if (amount >= record->step_count) {
+                        record->clip_flags = 1u;
+                        record->step_count = 0;
+                        record->start_y = (int16_t)top;
+                        record->y_fraction_low = 0;
+                        record->end_y = (int16_t)(top - 1);
+                        return 1u;
+                    }
+                    record->end_x = (int16_t)edge;
+                    record->end_y = (int16_t)(record->start_y + amount);
+                    record->right_clipped_rows = (uint16_t)(
+                        record->right_clipped_rows + old_end_y - record->end_y);
+                    record->step_count = (uint16_t)(amount + 1u);
+                    break;
+                }
+                case 7u: {
+                    int delta = record->start_x - edge;
+                    int16_t old_rounded = raster_line_round_fixed(
+                        record->start_y, record->y_fraction_low);
+                    fixed = raster_line_fixed(record->start_y,
+                                              record->y_fraction_low) +
+                            (uint32_t)((uint64_t)record->slope * delta);
+                    raster_line_store_fixed(&record->start_y,
+                                            &record->y_fraction_low, fixed);
+                    record->start_x = (int16_t)edge;
+                    record->left_clipped_rows = (uint16_t)(
+                        record->left_clipped_rows +
+                        raster_line_round_fixed(record->start_y,
+                                                record->y_fraction_low) - old_rounded);
+                    record->step_count = (uint16_t)(record->step_count - delta);
+                    break;
+                }
+                case 8u: {
+                    int delta = edge + 1 - record->start_x;
+                    fixed = raster_line_fixed(record->start_y,
+                                              record->y_fraction_low) +
+                            (uint32_t)((uint64_t)record->slope *
+                                       (delta - 1));
+                    record->end_x = (int16_t)edge;
+                    record->end_y = raster_line_round_fixed(
+                        (int16_t)(fixed >> 16), (uint16_t)fixed);
+                    record->right_clipped_rows = (uint16_t)(
+                        record->right_clipped_rows + old_end_y - record->end_y);
+                    record->step_count = (uint16_t)delta;
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
+            return 0u;
+        }
+
+        /* Vertical reclip after a corner crossing. Preserve the integer and
+           half-word phases just as the assembly recomputation does. */
+        {
+            int sy = raster_line_round_fixed(record->start_y,
+                                             record->y_fraction_low);
+            unsigned start_v = sy < top ? 2u : sy >= bottom ? 1u : 0u;
+            unsigned end_v = record->end_y < top ? 2u :
+                             record->end_y >= bottom ? 1u : 0u;
+            if ((start_v & end_v) != 0u) {
+                unsigned clip = start_v & end_v;
+                record->clip_flags = (uint8_t)(clip == 2u ? 4u : 8u);
+                record->step_count = 0;
+                if (clip == 2u) {
+                    record->start_y = (int16_t)top;
+                    record->x_fraction_low = 0;
+                    record->end_y = (int16_t)(top - 1);
+                    return 4u;
+                }
+                record->start_y = (int16_t)bottom;
+                record->x_fraction_low = 0;
+                return 8u;
+            }
+            if (start_v != 0u || end_v != 0u) {
+                unsigned vertical_flags =
+                    (start_v == 2u || end_v == 2u ? 4u : 0u) |
+                    (start_v == 1u || end_v == 1u ? 8u : 0u);
+                if ((vertical_flags & 4u) != 0u) {
+                    amount = (uint32_t)(top - record->start_y);
+                    record->start_y = (int16_t)top;
+                    if (mode == 2u || mode == 3u || mode == 4u ||
+                        mode == 5u || mode == 6u)
+                        record->step_count = (uint16_t)(record->step_count - amount);
+                } else {
+                    flags = vertical_flags;
+                    goto line_clip_bottom;
+                }
+            }
+        }
+        return 0u;
+    }
+}
+
+/* Source callers pass 16-bit coordinates in the DOS ABI. Host `unsigned`
+   arguments are 32-bit, so only the low word is interpreted as a coordinate. */
+unsigned draw_line_related(unsigned x0, unsigned y0, unsigned x1,
+                           unsigned y1, int *record)
+{
+    return draw_line_record(x0, y0, x1, y1, record, 1);
+}
+
+unsigned draw_line_related_alt(unsigned x0, unsigned y0, unsigned x1,
+                               unsigned y1, int *record)
+{
+    return draw_line_record(x0, y0, x1, y1, record, 0);
+}
+
+static void raster_line_draw_clipped(int16_t x1, int16_t y1,
+                                     int16_t x2, int16_t y2,
+                                     int16_t color)
+{
+    RasterLineRecord record;
+    uint32_t xround;
+    uint32_t yround;
+    uint16_t xfrac;
+    uint16_t yfrac;
+    int x;
+    int y;
+    unsigned count;
+    unsigned step;
+    if (sprite_pixels(&s_sprite1, NULL) == NULL || s_sprite1.lineofs == NULL)
+        return;
+    memset(&record, 0, sizeof(record));
+    record.color = (uint16_t)color;
+    if (draw_line_record((uint16_t)x1, (uint16_t)y1,
+                         (uint16_t)x2, (uint16_t)y2, &record, 1) != 0u ||
+        record.step_count == 0u)
+        return;
+
+    xround = (uint32_t)record.x_fraction_low + 0x8000u;
+    yround = (uint32_t)record.y_fraction_low + 0x8000u;
+    x = record.start_x + (int)(xround >> 16);
+    y = record.start_y + (int)(yround >> 16);
+    xfrac = (uint16_t)xround;
+    yfrac = (uint16_t)yround;
+    count = record.step_count;
+
+    switch (record.mode) {
+    case 0u:
+    case 1u:
+        for (step = 0; step < count; ++step)
+            port_sprite_plot_active((int16_t)(x + (int)step), (int16_t)y,
+                                    (uint8_t)record.color);
+        break;
+    case 2u:
+        for (step = 0; step < count; ++step)
+            port_sprite_plot_active((int16_t)x,
+                                    (int16_t)(y + (int)step),
+                                    (uint8_t)record.color);
+        break;
+    case 3u:
+    case 4u:
+        for (step = 0; step < count; ++step) {
+            port_sprite_plot_active((int16_t)x, (int16_t)(y + (int)step),
+                                    (uint8_t)record.color);
+            x += record.mode == 3u ? -1 : 1;
+        }
+        break;
+    case 5u:
+    case 6u:
+        for (step = 0; step < count; ++step) {
+            port_sprite_plot_active((int16_t)x, (int16_t)(y + (int)step),
+                                    (uint8_t)record.color);
+            if (record.mode == 5u) {
+                if (xfrac < record.slope)
+                    --x;
+                xfrac = (uint16_t)(xfrac - record.slope);
+            } else {
+                uint32_t sum = (uint32_t)xfrac + record.slope;
+                if (sum > UINT16_MAX)
+                    ++x;
+                xfrac = (uint16_t)sum;
+            }
+        }
+        break;
+    case 7u:
+    case 8u:
+        for (step = 0; step < count; ++step) {
+            port_sprite_plot_active((int16_t)x, (int16_t)y,
+                                    (uint8_t)record.color);
+            x += record.mode == 7u ? -1 : 1;
+            {
+                uint32_t sum = (uint32_t)yfrac + record.slope;
+                if (sum > UINT16_MAX)
+                    ++y;
+                yfrac = (uint16_t)sum;
+            }
+        }
+        break;
+    case 9u:
+        port_sprite_plot_active((int16_t)x, (int16_t)y,
+                                (uint8_t)record.color);
+        break;
+    default:
+        break;
+    }
+}
+
+void skybox_op_helper(uint16_t color, uint16_t point_count,
+                      struct RasterPoint p0, struct RasterPoint p1,
+                      struct RasterPoint p2, struct RasterPoint p3)
+{
+    const int16_t points[8] = {
+        (int16_t)p0.x, (int16_t)p0.y, (int16_t)p1.x, (int16_t)p1.y,
+        (int16_t)p2.x, (int16_t)p2.y, (int16_t)p3.x, (int16_t)p3.y
+    };
+    raster_polygon((int16_t)color, (int16_t)point_count, points,
+                   RASTER_FILL_SOLID, 1);
 }
 
 void preRender_wheel_helper4(int16_t color, int16_t point_count, ...)
 {
     va_list args;
-    int16_t *points;
-    int point;
-
+    int16_t points[8];
+    unsigned i;
     if (point_count <= 0 || point_count > 64)
         return;
-    points = (int16_t *)malloc((size_t)point_count * 2u * sizeof(*points));
-    if (points == NULL)
-        port_guest_unwind("wheel face point allocation failed");
     va_start(args, point_count);
-    for (point = 0; point < (int)point_count * 2; ++point)
-        points[point] = (int16_t)va_arg(args, int);
+    /* preRender_wheel.c supplies promoted I16 x/y scalars. In the original
+       16-bit ABI the assembly views those stack words in place; host default
+       argument promotion makes each scalar an int and needs explicit decode. */
+    if (point_count != 4) {
+        va_end(args);
+        return;
+    }
+    for (i = 0; i < 8u; ++i)
+        points[i] = (int16_t)va_arg(args, int);
     va_end(args);
-    preRender_default(color, point_count, points);
-    free(points);
+    raster_polygon(color, point_count, points, RASTER_FILL_SOLID, 0);
 }

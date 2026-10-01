@@ -1,0 +1,81 @@
+{
+  "boundary_exclusive": 7000,
+  "canonical_comparisons": 12,
+  "compressed_bytes": 10827,
+  "compression": "zlib",
+  "dac6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "description": "main menu with Drive, Car, Track, Opponent, and Option",
+  "height": 200,
+  "idxdac6_sha256": "de7a335c186a1cf7aad15eb1c448b97d8b9f85cc7110e6dd7cb30f10b643ee5d",
+  "indices_sha256": "5e58c2758c428e08a0bc2549ed4c84e512987d32688a142c93fe12ac851a357d",
+  "interpreter_file_sha256": "88f02a2658abd0f597d82a7634d122368fa4749911fb621bd75564e8c611fb5c",
+  "label": "main-menu",
+  "last_recorded_checkpoint": {
+    "at": {
+      "occurrence": 3299,
+      "phase": "after",
+      "point": "stunts.global.task"
+    },
+    "boundary_ordinal": 6599,
+    "canonical_schema": "pf-canonical-rm-v13",
+    "canonical_sha256": "61409ff6582f6c4c8675161328d13cb0a5ae7605f0735c69d7fa0e9f3c5cb18d",
+    "claim": "observable-interval-equivalence",
+    "event_cursor": 514,
+    "expectations": {
+      "next_audio_sequence": 9797,
+      "next_effect_sequence": 0,
+      "next_video_sequence": 2288,
+      "rolling_effect_sha256": "30c320113be368849854335654f7a8f2a4e40ad4fbbfc5f216eaa070794d94fb",
+      "rolling_output_sha256": "f4576a1a5f5aefecad86b3f8964d901fddc42aa3a04bb3e3f91f77756ed114ee"
+    },
+    "schema": "pf-replay-checkpoint-v2",
+    "sequence": 11
+  },
+  "last_stamp": {
+    "evidence": {
+      "cs": 14451,
+      "frame_boundary": "semantic-point",
+      "frame_driver_ordinal": 3500,
+      "guest_instructions": 326013613,
+      "ip": 88,
+      "platform": "dos-rm",
+      "semantic_point_key": 947060824
+    },
+    "global_ordinal": 6999,
+    "machine_time": {
+      "domain": "dos.machine-nanosecond",
+      "units_per_second_den": 1,
+      "units_per_second_num": 1000000000,
+      "value": 36223734777
+    },
+    "outcome": "reached",
+    "schema": "pf-boundary-stamp-v1",
+    "selector": {
+      "occurrence": 3499,
+      "phase": "after",
+      "point": "stunts.global.task"
+    }
+  },
+  "palette_rgb6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "parent_corpus_replay": null,
+  "payload": "main-menu.idxz",
+  "payload_sha256": "de7a335c186a1cf7aad15eb1c448b97d8b9f85cc7110e6dd7cb30f10b643ee5d",
+  "provenance_kind": "unmodified-corpus",
+  "snapshot_cpu": {
+    "cs": 14451,
+    "ds": 15239,
+    "ip": 88,
+    "ss": 15239
+  },
+  "snapshot_guest_instructions": 326013613,
+  "snapshot_memory_sha256": "c45ee212e42746a5907f9e235ebebd7e7c62bf8b4ff6c1b84d9a3e2f3c312525",
+  "source_base_snapshot_file": "rec_20260813_035233.pfreplay.json.base.pfsnapshot",
+  "source_base_snapshot_sha256": "25e93ab9274388b10785ff844ad6199bc063cf5de2ab1fec25ad3444199620ef",
+  "source_canonical_schema": "pf-canonical-rm-v13",
+  "source_file_sha256": "7207ee9c9cd5c5520d1c86c07cd9281c66759ac9c16628d9523badcd71d2d1bb",
+  "source_program_sha256": "09fe56fc50bad3a28267e27acf46ba67a20eae0199764a5958e9892bf92be2c2",
+  "source_replay": "rec_20260813_035233.pfreplay.json",
+  "sparse_mismatches": 0,
+  "uncompressed_bytes": 64768,
+  "width": 320
+}

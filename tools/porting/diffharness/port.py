@@ -61,7 +61,8 @@ class PortLibrary:
         BUILD.mkdir(parents=True, exist_ok=True)
         output = BUILD / "diffharness_port.dll"
         sources = [PACKAGE / "host_adapter.c", PACKAGE / "host_shim.c",
-                   PORT / "sprite.c", PORT / "memory.c", PORT / "sincos.c"]
+                   PORT / "sprite.c", PORT / "sprite_aux.c",
+                   PORT / "memory.c", PORT / "sincos.c"]
         dependencies = sources + [PORT / "port_runtime.h",
                                   ROOT / "tools/porting/host/compat.h"]
         newest_source = max(path.stat().st_mtime for path in dependencies)
@@ -98,6 +99,24 @@ class PortLibrary:
         self._rect = self.dll.dh_call_draw_filled_rect
         self._rect.argtypes = [ctypes.c_int16] * 5
         self._rect.restype = None
+        self._fill = self.dll.dh_call_sprite_1_unk
+        self._fill.argtypes = [ctypes.c_int16] * 5
+        self._fill.restype = ctypes.c_int
+        self._icon = self.dll.dh_call_icon_combine
+        self._icon.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint16,
+                               ctypes.c_uint16, ctypes.c_int16, ctypes.c_int16,
+                               ctypes.c_int]
+        self._icon.restype = ctypes.c_int
+        self._runs = self.dll.dh_call_shape2d_runs
+        self._runs.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint32,
+                               ctypes.c_uint16, ctypes.c_uint16, ctypes.c_uint16,
+                               ctypes.c_uint16, ctypes.c_int]
+        self._runs.restype = ctypes.c_int
+        self._clear = self.dll.dh_call_clear_rect
+        self._clear.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint16,
+                                ctypes.c_uint16, ctypes.c_int16, ctypes.c_int16,
+                                ctypes.c_int16, ctypes.c_int16, ctypes.c_int16]
+        self._clear.restype = ctypes.c_int
         self._mulscl = self.dll.dh_call_mulscl
         self._mulscl.argtypes = [ctypes.c_int16, ctypes.c_int16]
         self._mulscl.restype = ctypes.c_int16
@@ -210,5 +229,74 @@ class PortLibrary:
         else:
             self.reset_frame(initial)
             self.call_sprite_1_unk3(pixels, width, height, x, y, phase)
+            frame = self.frame()
+        return CallResult({}, 0, {"vram": frame}, 0, "cdecl")
+
+    def run_sprite_1_unk(self, initial: bytes,
+                         args: tuple[int, int, int, int, int]) -> CallResult:
+        if self.dll is None:
+            response = self._worker_call(
+                "sprite_1_unk_case", args=list(args),
+                initial=base64.b64encode(initial).decode("ascii"))
+            frame = base64.b64decode(response["frame"])
+        else:
+            self.reset_frame(initial)
+            if not self._fill(*args):
+                raise HarnessError("port sprite_1_unk call failed")
+            frame = self.frame()
+        return CallResult({}, 0, {"vram": frame}, 0, "cdecl")
+
+    def run_icon_combine(self, initial: bytes, pixels: bytes, width: int,
+                         height: int, x: int, y: int,
+                         use_and: bool) -> CallResult:
+        if self.dll is None:
+            response = self._worker_call(
+                "icon_case", initial=base64.b64encode(initial).decode("ascii"),
+                pixels=base64.b64encode(pixels).decode("ascii"), width=width,
+                height=height, x=x, y=y, use_and=use_and)
+            frame = base64.b64decode(response["frame"])
+        else:
+            self.reset_frame(initial)
+            data = (ctypes.c_uint8 * len(pixels)).from_buffer_copy(pixels)
+            if not self._icon(data, width, height, x, y, int(use_and)):
+                raise HarnessError("port icon combine call failed")
+            frame = self.frame()
+        return CallResult({}, 0, {"vram": frame}, 0, "cdecl")
+
+    def run_shape2d_runs(self, initial: bytes, encoded: bytes, width: int,
+                         height: int, x: int, y: int,
+                         use_and: bool) -> CallResult:
+        if self.dll is None:
+            response = self._worker_call(
+                "runs_case", initial=base64.b64encode(initial).decode("ascii"),
+                encoded=base64.b64encode(encoded).decode("ascii"), width=width,
+                height=height, x=x, y=y, use_and=use_and)
+            frame = base64.b64decode(response["frame"])
+        else:
+            self.reset_frame(initial)
+            data = (ctypes.c_uint8 * len(encoded)).from_buffer_copy(encoded)
+            if not self._runs(data, len(encoded), width, height, x, y,
+                              int(use_and)):
+                raise HarnessError("port shape RLE call failed")
+            frame = self.frame()
+        return CallResult({}, 0, {"vram": frame}, 0, "cdecl")
+
+    def run_clear_rect(self, initial: bytes, source_pixels: bytes,
+                       source_width: int, source_height: int,
+                       args: tuple[int, int, int, int, int]) -> CallResult:
+        if self.dll is None:
+            response = self._worker_call(
+                "clear_rect_case",
+                initial=base64.b64encode(initial).decode("ascii"),
+                source_pixels=base64.b64encode(source_pixels).decode("ascii"),
+                source_width=source_width, source_height=source_height,
+                args=list(args))
+            frame = base64.b64decode(response["frame"])
+        else:
+            self.reset_frame(initial)
+            data = (ctypes.c_uint8 * len(source_pixels)).from_buffer_copy(
+                source_pixels)
+            if not self._clear(data, source_width, source_height, *args):
+                raise HarnessError("port clear_rect call failed")
             frame = self.frame()
         return CallResult({}, 0, {"vram": frame}, 0, "cdecl")

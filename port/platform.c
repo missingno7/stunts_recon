@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "audio_backend.h"
 
 #include <stdarg.h>
 #include <stdint.h>
@@ -105,10 +106,77 @@ void initialize_div0(void)
 
 void port_audio_dispatch(uint8_t entry_offset, const void *packet, size_t bytes)
 {
-    (void)entry_offset;
-    (void)packet;
-    (void)bytes;
-    /* M0's contract-only audio adapter intentionally produces no sound. */
+    const PortAudioDispatchPacket *call =
+        (const PortAudioDispatchPacket *)packet;
+    if (packet == NULL || bytes != sizeof(*call)) {
+        port_stub_fail("invalid host audio dispatch packet");
+        return;
+    }
+    switch (entry_offset) {
+    case 0x03:
+        port_audio_driver_03();
+        break;
+    case 0x06:
+        port_audio_driver_06();
+        break;
+    case 0x09:
+        port_audio_driver_09(call->words[0], call->pointers[0],
+                             call->pointers[1], call->words[1],
+                             call->words[2], call->pointers[2]);
+        break;
+    case 0x0c:
+        port_audio_driver_0c(call->words[0], call->pointers[0]);
+        break;
+    case 0x0f:
+        port_audio_driver_0f(call->words[0], call->pointers[0]);
+        break;
+    case 0x12:
+        port_audio_driver_12(call->words[0], call->pointers[0],
+                             call->words[1]);
+        break;
+    case 0x15:
+        port_audio_driver_15(call->words[0], call->pointers[0],
+                             call->words[1], call->words[2]);
+        break;
+    case 0x18:
+        port_audio_driver_18();
+        break;
+    case 0x1b:
+        port_audio_driver_1b(call->pointers[0], call->words[0],
+                             call->words[1]);
+        break;
+    case 0x1e:
+        port_audio_driver_1e(call->words[0]);
+        break;
+    case 0x21:
+        port_audio_driver_21(call->words[0], call->pointers[0],
+                             call->pointers[1], call->pointers[2]);
+        break;
+    case 0x24:
+        port_audio_driver_24(call->words[0], call->pointers[0],
+                             call->unsigned_word);
+        break;
+    case 0x27:
+        port_audio_driver_27(call->unsigned_word, call->pointers[0],
+                             call->pointers[1], call->pointers[2]);
+        break;
+    case 0x30:
+        port_audio_driver_30(call->pointers[0]);
+        break;
+    case 0x39:
+        port_audio_driver_39(call->words[0],
+                             (const uint8_t *)call->pointers[0]);
+        break;
+    case 0x3f:
+        port_audio_driver_3f(call->words[0], call->pointers[0]);
+        break;
+    case 0x42:
+        port_audio_driver_42(call->pointers[0]);
+        break;
+    default:
+        port_stub_fail("unsupported PC15 driver entry offset");
+        break;
+    }
 }
 
 void fatal_error(const char *format, ...)

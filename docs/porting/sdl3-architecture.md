@@ -1,5 +1,8 @@
 # SDL3 portable runtime architecture (M0)
 
+This document records the initial boundary design. See [HANDOFF.md](HANDOFF.md)
+for the current implementation and verified runtime coverage.
+
 ## Purpose and boundaries
 
 The port keeps the accepted `src/*.c` gameplay and simulation as the primary
@@ -60,7 +63,8 @@ the address representation, bounded resolver, and allocator catalog; it does
 not claim that all source-level pointer fields have been migrated to tagged
 values yet.
 
-The original `0x3B87` DGROUP anchor is evidence about the DOS image, not a host
+The original DGROUP paragraph is `0x2B77` relative to the image load segment
+(`DS=0x3B77` when loaded at `0x1000`). That anchor is evidence about the DOS image, not a host
 pointer base. Host globals remain native i686 objects. A later state adapter
 must register a DGROUP offset and complete extent before exposing it as a far
 value; it must not derive target addresses by truncating a process pointer.

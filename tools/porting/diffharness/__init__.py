@@ -2,8 +2,16 @@
 
 from .model import (CallResult, HarnessError, MemoryRegion, MemoryWrite,
                     MismatchError, RoutineCase, TrapError)
-from .emulator import RealModeRunner
-from .runner import DiffHarness, differences
+
+def __getattr__(name):
+    # Oracle metadata and address checks do not require the optional emulator.
+    if name == "RealModeRunner":
+        from .emulator import RealModeRunner
+        return RealModeRunner
+    if name in {"DiffHarness", "differences"}:
+        from .runner import DiffHarness, differences
+        return {"DiffHarness": DiffHarness, "differences": differences}[name]
+    raise AttributeError(name)
 
 __all__ = ["CallResult", "DiffHarness", "HarnessError", "MemoryRegion",
            "MemoryWrite", "MismatchError", "RoutineCase", "TrapError",

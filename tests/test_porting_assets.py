@@ -26,7 +26,7 @@ class PortingAssetParserTests(unittest.TestCase):
             self.assertEqual(format_reference.main(), 0)
         result = json.loads(report.read_text(encoding='utf-8'))
         self.assertEqual(result['error_count'], 0)
-        self.assertEqual(result['asset_count'], 212)
+        self.assertEqual(result['asset_count'], len(before))
         self.assertTrue(result['roundtrip_checks']['all_identical'])
         after = sorted((p.name, p.stat().st_size, p.stat().st_mtime_ns)
                        for p in (ROOT/'assets').iterdir() if p.is_file())

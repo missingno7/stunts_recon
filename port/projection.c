@@ -143,6 +143,24 @@ void set_projection(int16_t x_angle, int16_t y_angle,
     projection_y_angle = polang(projection_half_height, projection_y_scale);
 }
 
+/* Semantic translation of the 14-byte accepted
+   asm/projectiondata9_times_ratio.ASM helper. MUL and DIV both consume
+   unsigned 16-bit words even though the original C declarations are signed. */
+int16_t projectiondata9_times_ratio(int16_t factor_arg, int16_t divisor_arg)
+{
+    uint16_t divisor = (uint16_t)divisor_arg;
+    uint32_t product = (uint32_t)(uint16_t)projection_x_scale *
+                       (uint16_t)factor_arg;
+    uint32_t quotient;
+
+    if (divisor == 0)
+        port_guest_unwind("projectiondata9_times_ratio divide by zero");
+    quotient = product / divisor;
+    if (quotient > UINT16_MAX)
+        port_guest_unwind("projectiondata9_times_ratio unsigned divide overflow");
+    return (int16_t)(uint16_t)quotient;
+}
+
 /* Semantic C translation of vector_to_point (load_223d9), whose context.py
    assembly has verified instruction boundaries but no strict acceptance recipe. */
 void vector_to_point(const int16_t *vector, int16_t *point)

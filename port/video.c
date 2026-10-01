@@ -136,6 +136,7 @@ void port_video_set_palette(uint16_t first, uint16_t count,
     }
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
+    port_video_publish("palette");
 }
 
 void port_video_set_capture_dir(const char *path)
@@ -160,16 +161,22 @@ void port_video_publish(const char *reason)
     uint8_t frame[PORT_FRAMEBUFFER_BYTES];
     uint8_t palette[sizeof(s_palette6)];
     uint64_t frame_id;
+    int changed;
     if (s_frame_lock != NULL)
         SDL_LockMutex(s_frame_lock);
     memcpy(frame, port_framebuffer, sizeof(frame));
+    changed = memcmp(frame, s_published_frame, sizeof(frame)) != 0 ||
+              memcmp(s_palette6, s_published_palette6, sizeof(s_palette6)) != 0;
     memcpy(s_published_frame, frame, sizeof(s_published_frame));
     memcpy(palette, s_palette6, sizeof(palette));
     memcpy(s_published_palette6, palette, sizeof(s_published_palette6));
     frame_id = ++s_frame_id;
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
-    dump_frame(frame_id, reason, frame, palette);
+    /* Busy-wait redraws still have their own trace boundary. Persist only
+       changed indexed images so captures cannot fill the disk with duplicates. */
+    if (changed)
+        dump_frame(frame_id, reason, frame, palette);
     port_trace_video_publication(reason);
     port_guest_stop_after_publication();
 }
@@ -184,29 +191,22 @@ void port_video_present(void)
     uint8_t palette6[sizeof(s_palette6)];
     SDL_Color colors[256];
     uint64_t frame_id;
-    int published_live_changes = 0;
     if (s_renderer == NULL || s_texture == NULL)
         return;
     if (s_frame_lock != NULL)
         SDL_LockMutex(s_frame_lock);
-    if (memcmp(port_framebuffer, s_published_frame, sizeof(s_published_frame)) != 0 ||
-        memcmp(s_palette6, s_published_palette6, sizeof(s_published_palette6)) != 0) {
-        memcpy(s_published_frame, port_framebuffer, sizeof(s_published_frame));
-        memcpy(s_published_palette6, s_palette6, sizeof(s_published_palette6));
-        frame_id = ++s_frame_id;
-        published_live_changes = 1;
-    }
     memcpy(frame, s_published_frame, sizeof(frame));
-    memcpy(colors, s_colors, sizeof(colors));
     memcpy(palette6, s_published_palette6, sizeof(palette6));
     frame_id = s_frame_id;
     if (s_frame_lock != NULL)
         SDL_UnlockMutex(s_frame_lock);
     if (frame_id == 0)
         return;
-    if (published_live_changes) {
-        dump_frame(frame_id, "host_present", frame, palette6);
-        port_trace_video_publication("host_present");
+    for (unsigned i = 0; i < 256; ++i) {
+        colors[i].r = dac6_to_u8(palette6[i * 3]);
+        colors[i].g = dac6_to_u8(palette6[i * 3 + 1]);
+        colors[i].b = dac6_to_u8(palette6[i * 3 + 2]);
+        colors[i].a = SDL_ALPHA_OPAQUE;
     }
     SDL_SetPaletteColors(s_palette, colors, 0, 256);
     SDL_UpdateTexture(s_texture, NULL, frame, PORT_SCREEN_WIDTH);
@@ -256,6 +256,7 @@ void video_set_palette(uint16_t first, uint16_t count, uint8_t *rgb6)
 
 uint8_t port_video_read_status_1(void)
 {
+    port_guest_check_stop();
     uint8_t test_status;
     if (port_test_random_wait_status(&test_status))
         return test_status;
@@ -268,3 +269,6 @@ int16_t video_get_status(void)
        historical interface while the port-level 3DAh read exposes both bits. */
     return (int16_t)(port_video_read_status_1() & 0x08u);
 }
+
+/* DOS text-mode restoration is owned by the SDL window at host shutdown. */
+void video_set_mode7(void) {}

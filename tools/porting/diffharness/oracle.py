@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_ASSETS = ROOT / "assets"
 DEFAULT_LOAD_SEGMENT = 0x1000
-DGROUP_PARAGRAPH = 0x2B87  # locked image's documented 0x3B87 anchor at load 1000h
+DGROUP_PARAGRAPH = 0x2B77  # startup relocation at 0x1CC6D; DS:4BB6 -> load 0x30326
 
 
 @dataclass(frozen=True)

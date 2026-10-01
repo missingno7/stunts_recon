@@ -1,0 +1,82 @@
+{
+  "boundary_exclusive": 800,
+  "canonical_comparisons": 1,
+  "compressed_bytes": 10649,
+  "compression": "zlib",
+  "dac6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "description": "yellow Lancia selection",
+  "height": 200,
+  "idxdac6_sha256": "b1a2cf628a74b21e8e0ce4e832108fed84dbc667d095822f7dd960d77d76614c",
+  "indices_sha256": "c2507299360806b0648ff661dfad8aac5e90709831ffbb131cf2fa40fa966c9b",
+  "interpreter_file_sha256": "82b87fc070569a03ee21196aa9782ae09baabce814e1e7813f9696bcc7951ebd",
+  "label": "car-lancia",
+  "last_recorded_checkpoint": {
+    "at": {
+      "occurrence": 299,
+      "phase": "after",
+      "point": "stunts.global.task"
+    },
+    "boundary_ordinal": 599,
+    "canonical_schema": "pf-canonical-rm-v14",
+    "canonical_sha256": "e7188a920cd29552d7991a0278217405cb998d7d0a9eba7265f11fdcf7a9255a",
+    "claim": "observable-interval-equivalence",
+    "event_cursor": 338,
+    "expectations": {
+      "next_audio_sequence": 892,
+      "next_effect_sequence": 0,
+      "next_video_sequence": 209,
+      "rolling_effect_sha256": "94de05e27ee6dade552506633cbbd66f808488518cee407363911c41d8fa20fd",
+      "rolling_output_sha256": "b012d9dbf06ca25cf44b4720185b33ecf53b36c1f101edfbf562abf454ca3095",
+      "video_presentation_schema": "pf-dos-rm-vga-frame-presentation-v1"
+    },
+    "schema": "pf-replay-checkpoint-v2",
+    "sequence": 0
+  },
+  "last_stamp": {
+    "evidence": {
+      "cs": 14451,
+      "frame_boundary": "semantic-point",
+      "frame_driver_ordinal": 400,
+      "guest_instructions": 50430426,
+      "ip": 88,
+      "platform": "dos-rm",
+      "semantic_point_key": 947060824
+    },
+    "global_ordinal": 799,
+    "machine_time": {
+      "domain": "dos.machine-nanosecond",
+      "units_per_second_den": 1,
+      "units_per_second_num": 1000000000,
+      "value": 5603380666
+    },
+    "outcome": "reached",
+    "schema": "pf-boundary-stamp-v1",
+    "selector": {
+      "occurrence": 399,
+      "phase": "after",
+      "point": "stunts.global.task"
+    }
+  },
+  "palette_rgb6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "parent_corpus_replay": null,
+  "payload": "car-lancia.idxz",
+  "payload_sha256": "b1a2cf628a74b21e8e0ce4e832108fed84dbc667d095822f7dd960d77d76614c",
+  "provenance_kind": "unmodified-corpus",
+  "snapshot_cpu": {
+    "cs": 14451,
+    "ds": 15239,
+    "ip": 88,
+    "ss": 15239
+  },
+  "snapshot_guest_instructions": 50430426,
+  "snapshot_memory_sha256": "0ccbbdbbf68e023c81699ad71c03f7de402429fc905df660f1733e01022ff909",
+  "source_base_snapshot_file": "rec_20260827_013957.pfreplay.json.base.pfsnapshot",
+  "source_base_snapshot_sha256": "f7ceebda6fec3d85f3ea3ed676d941bfa8dd87093743ba27c712d79d8a96dea3",
+  "source_canonical_schema": "pf-canonical-rm-v14",
+  "source_file_sha256": "ab864c0e38aaa6c23f214bc9cd47385499d69b95f1398df199bf6d66c19722dd",
+  "source_program_sha256": "09fe56fc50bad3a28267e27acf46ba67a20eae0199764a5958e9892bf92be2c2",
+  "source_replay": "rec_20260827_013957.pfreplay.json",
+  "sparse_mismatches": 0,
+  "uncompressed_bytes": 64768,
+  "width": 320
+}

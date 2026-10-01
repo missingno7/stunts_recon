@@ -1,0 +1,81 @@
+{
+  "boundary_exclusive": 9000,
+  "canonical_comparisons": 16,
+  "compressed_bytes": 3102,
+  "compression": "zlib",
+  "dac6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "description": "race results and replay controls",
+  "height": 200,
+  "idxdac6_sha256": "6f753ed5c1f8d87f2699d1afa140781a58ced5d513f91e5002cd5b2e878d29c3",
+  "indices_sha256": "5dc4206dd33fa769ef5c087cd0fb21b08759ff42c29a164b6687815288ed4472",
+  "interpreter_file_sha256": "88f02a2658abd0f597d82a7634d122368fa4749911fb621bd75564e8c611fb5c",
+  "label": "race-result",
+  "last_recorded_checkpoint": {
+    "at": {
+      "occurrence": 4499,
+      "phase": "after",
+      "point": "stunts.global.task"
+    },
+    "boundary_ordinal": 8999,
+    "canonical_schema": "pf-canonical-rm-v13",
+    "canonical_sha256": "a4016ad1340c3b671086946a371105ae661ffd7b9087ecc9f978680149fee470",
+    "claim": "observable-interval-equivalence",
+    "event_cursor": 550,
+    "expectations": {
+      "next_audio_sequence": 13295,
+      "next_effect_sequence": 0,
+      "next_video_sequence": 3103,
+      "rolling_effect_sha256": "c9a54b2708b5f89826a246bbd823bfeafce49658868fa0263fcf3fb075d6f883",
+      "rolling_output_sha256": "892697513e34d187ba7b6dde553dc42b2551df88e710567369a128f6408a296c"
+    },
+    "schema": "pf-replay-checkpoint-v2",
+    "sequence": 15
+  },
+  "last_stamp": {
+    "evidence": {
+      "cs": 14451,
+      "frame_boundary": "semantic-point",
+      "frame_driver_ordinal": 4500,
+      "guest_instructions": 413135337,
+      "ip": 88,
+      "platform": "dos-rm",
+      "semantic_point_key": 947060824
+    },
+    "global_ordinal": 8999,
+    "machine_time": {
+      "domain": "dos.machine-nanosecond",
+      "units_per_second_den": 1,
+      "units_per_second_num": 1000000000,
+      "value": 45903926333
+    },
+    "outcome": "reached",
+    "schema": "pf-boundary-stamp-v1",
+    "selector": {
+      "occurrence": 4499,
+      "phase": "after",
+      "point": "stunts.global.task"
+    }
+  },
+  "palette_rgb6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "parent_corpus_replay": null,
+  "payload": "race-result.idxz",
+  "payload_sha256": "6f753ed5c1f8d87f2699d1afa140781a58ced5d513f91e5002cd5b2e878d29c3",
+  "provenance_kind": "unmodified-corpus",
+  "snapshot_cpu": {
+    "cs": 14451,
+    "ds": 15239,
+    "ip": 88,
+    "ss": 15239
+  },
+  "snapshot_guest_instructions": 413135337,
+  "snapshot_memory_sha256": "d7959e3870e37624ee525b28a9655750149e3c279b67b79d0b55bb3d42764bfa",
+  "source_base_snapshot_file": "rec_20260813_035233.pfreplay.json.base.pfsnapshot",
+  "source_base_snapshot_sha256": "25e93ab9274388b10785ff844ad6199bc063cf5de2ab1fec25ad3444199620ef",
+  "source_canonical_schema": "pf-canonical-rm-v13",
+  "source_file_sha256": "7207ee9c9cd5c5520d1c86c07cd9281c66759ac9c16628d9523badcd71d2d1bb",
+  "source_program_sha256": "09fe56fc50bad3a28267e27acf46ba67a20eae0199764a5958e9892bf92be2c2",
+  "source_replay": "rec_20260813_035233.pfreplay.json",
+  "sparse_mismatches": 0,
+  "uncompressed_bytes": 64768,
+  "width": 320
+}

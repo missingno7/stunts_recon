@@ -1,0 +1,81 @@
+{
+  "boundary_exclusive": 800,
+  "canonical_comparisons": 1,
+  "compressed_bytes": 10930,
+  "compression": "zlib",
+  "dac6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "description": "blue Countach selection",
+  "height": 200,
+  "idxdac6_sha256": "b05a9fe6474b3358f31e0a21678bf741063a4e416bcf1e292787df09a5e87d34",
+  "indices_sha256": "85729656973c3ef435c63ade69e0300fcb90809972f400acb88c471684100b69",
+  "interpreter_file_sha256": "88f02a2658abd0f597d82a7634d122368fa4749911fb621bd75564e8c611fb5c",
+  "label": "car-countach",
+  "last_recorded_checkpoint": {
+    "at": {
+      "occurrence": 299,
+      "phase": "after",
+      "point": "stunts.global.task"
+    },
+    "boundary_ordinal": 599,
+    "canonical_schema": "pf-canonical-rm-v13",
+    "canonical_sha256": "c6e3ebb9f3d2013e0ac2a16b4b28456c728ee9542c18565af2f84d104bfc0141",
+    "claim": "observable-interval-equivalence",
+    "event_cursor": 198,
+    "expectations": {
+      "next_audio_sequence": 898,
+      "next_effect_sequence": 0,
+      "next_video_sequence": 210,
+      "rolling_effect_sha256": "ab9b8b07b86b6ef7f8aa66faedf5307d1937a390cecc56deb5f58d087b0ce240",
+      "rolling_output_sha256": "1fb2dc125c2a58986351efd9949344fbca2e8c2bf78eeb2626ad3e27171e44c5"
+    },
+    "schema": "pf-replay-checkpoint-v2",
+    "sequence": 0
+  },
+  "last_stamp": {
+    "evidence": {
+      "cs": 14451,
+      "frame_boundary": "semantic-point",
+      "frame_driver_ordinal": 400,
+      "guest_instructions": 50610434,
+      "ip": 88,
+      "platform": "dos-rm",
+      "semantic_point_key": 947060824
+    },
+    "global_ordinal": 799,
+    "machine_time": {
+      "domain": "dos.machine-nanosecond",
+      "units_per_second_den": 1,
+      "units_per_second_num": 1000000000,
+      "value": 5623381555
+    },
+    "outcome": "reached",
+    "schema": "pf-boundary-stamp-v1",
+    "selector": {
+      "occurrence": 399,
+      "phase": "after",
+      "point": "stunts.global.task"
+    }
+  },
+  "palette_rgb6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
+  "parent_corpus_replay": null,
+  "payload": "car-countach.idxz",
+  "payload_sha256": "b05a9fe6474b3358f31e0a21678bf741063a4e416bcf1e292787df09a5e87d34",
+  "provenance_kind": "unmodified-corpus",
+  "snapshot_cpu": {
+    "cs": 14451,
+    "ds": 15239,
+    "ip": 88,
+    "ss": 15239
+  },
+  "snapshot_guest_instructions": 50610434,
+  "snapshot_memory_sha256": "5ceb707426f04bb689cf4bbd87589a35e97f490a4cc9f05cd10e8dde8f960b26",
+  "source_base_snapshot_file": "rec_20260820_204801.pfreplay.json.base.pfsnapshot",
+  "source_base_snapshot_sha256": "25e93ab9274388b10785ff844ad6199bc063cf5de2ab1fec25ad3444199620ef",
+  "source_canonical_schema": "pf-canonical-rm-v13",
+  "source_file_sha256": "83e64b4dc9435895f0c26da42c77382179c5884a74ae8663bd10ff920394cc65",
+  "source_program_sha256": "09fe56fc50bad3a28267e27acf46ba67a20eae0199764a5958e9892bf92be2c2",
+  "source_replay": "rec_20260820_204801.pfreplay.json",
+  "sparse_mismatches": 0,
+  "uncompressed_bytes": 64768,
+  "width": 320
+}

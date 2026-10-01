@@ -7,6 +7,48 @@
 #include <string.h>
 
 #define RESOURCE_DECODE_LIMIT (32u * 1024u * 1024u)
+#define RESOURCE_ARCHIVE_ENTRY_LIMIT 4096u
+
+static const uint8_t shape3d_index_counts[16] = {
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 6, 3, 0, 0
+};
+
+/* Locked MCGA image data at load [154824, 155080): the game begins with
+   identity color mapping, while sub_35DC8/sub_35DE6 mutate this table. */
+static uint8_t s_incnums[256] = {
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
+    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+    0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
+    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
+    0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f,
+    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
+    0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f,
+    0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47,
+    0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f,
+    0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57,
+    0x58, 0x59, 0x5a, 0x5b, 0x5c, 0x5d, 0x5e, 0x5f,
+    0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67,
+    0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f,
+    0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77,
+    0x78, 0x79, 0x7a, 0x7b, 0x7c, 0x7d, 0x7e, 0x7f,
+    0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
+    0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f,
+    0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97,
+    0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
+    0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7,
+    0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf,
+    0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7,
+    0xb8, 0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf,
+    0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7,
+    0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf,
+    0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0xd6, 0xd7,
+    0xd8, 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0xdf,
+    0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xe7,
+    0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef,
+    0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7,
+    0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff
+};
 
 static uint16_t read_u16(const uint8_t *p)
 {
@@ -22,6 +64,110 @@ static uint32_t read_u32(const uint8_t *p)
 {
     return (uint32_t)p[0] | ((uint32_t)p[1] << 8) |
            ((uint32_t)p[2] << 16) | ((uint32_t)p[3] << 24);
+}
+
+static int has_extension(const char *name, const char *extension)
+{
+    size_t name_length;
+    size_t extension_length;
+    size_t i;
+    if (name == NULL || extension == NULL)
+        return 0;
+    name_length = strlen(name);
+    extension_length = strlen(extension);
+    if (extension_length == 0u || name_length < extension_length)
+        return 0;
+    for (i = 0; i < extension_length; ++i) {
+        unsigned char actual = (unsigned char)name[name_length - extension_length + i];
+        unsigned char expected = (unsigned char)extension[i];
+        if (tolower(actual) != tolower(expected))
+            return 0;
+    }
+    return 1;
+}
+
+/* P3S/3SH chunks are consumed as several independent tables by shape3d_init_shape
+   and the renderer. Keep the full archive span available here so malformed counts
+   cannot turn a valid leading header into pointers/read spans in the next chunk. */
+static int validate_shape3d_chunk(const uint8_t *chunk, size_t chunk_size)
+{
+    size_t vertex_end;
+    size_t primitive_pos;
+    uint8_t vertex_count;
+    uint8_t primitive_count;
+    uint8_t paint_count;
+    uint8_t primitive;
+
+    if (chunk == NULL || chunk_size < 4u)
+        return 0;
+    vertex_count = chunk[0];
+    primitive_count = chunk[1];
+    paint_count = chunk[2];
+    vertex_end = 4u + (size_t)vertex_count * 6u;
+    primitive_pos = vertex_end + (size_t)primitive_count * 8u;
+    if (primitive_pos > chunk_size)
+        return 0;
+
+    for (primitive = 0; primitive < primitive_count; ++primitive) {
+        uint8_t type;
+        size_t index_count;
+        size_t index;
+        size_t record_header = 2u + (size_t)paint_count;
+        if (record_header > chunk_size - primitive_pos)
+            return 0;
+        type = chunk[primitive_pos];
+        if (type >= sizeof(shape3d_index_counts) /
+                    sizeof(shape3d_index_counts[0]))
+            return 0;
+        index_count = shape3d_index_counts[type];
+        primitive_pos += record_header;
+        if (index_count > chunk_size - primitive_pos)
+            return 0;
+        for (index = 0; index < index_count; ++index)
+            if (chunk[primitive_pos + index] >= vertex_count)
+                return 0;
+        primitive_pos += index_count;
+    }
+    return 1;
+}
+
+static int validate_shape3d_archive(const uint8_t *archive, size_t extent)
+{
+    uint16_t count;
+    size_t payload;
+    size_t payload_extent;
+    uint16_t index;
+
+    if (archive == NULL || extent < 6u)
+        return 0;
+    count = read_u16(archive + 4u);
+    if (count > RESOURCE_ARCHIVE_ENTRY_LIMIT)
+        return 0;
+    payload = 6u + (size_t)count * 8u;
+    if (payload > extent)
+        return 0;
+    payload_extent = extent - payload;
+
+    for (index = 0; index < count; ++index) {
+        size_t offset_table = 6u + (size_t)count * 4u;
+        size_t relative = read_u32(archive + offset_table +
+                                   (size_t)index * 4u);
+        size_t next = payload_extent;
+        uint16_t other_index;
+        if (relative > payload_extent)
+            return 0;
+        for (other_index = 0; other_index < count; ++other_index) {
+            size_t other = read_u32(archive + offset_table +
+                                    (size_t)other_index * 4u);
+            if (other > relative && other < next)
+                next = other;
+        }
+        if (next < relative ||
+            !validate_shape3d_chunk(archive + payload + relative,
+                                    next - relative))
+            return 0;
+    }
+    return 1;
 }
 
 static int grow_bytes(uint8_t **data, size_t *capacity, size_t required)
@@ -360,14 +506,28 @@ static void *read_whole_file(const char *name, size_t *size_out, int fatal)
     return data;
 }
 
+static void *read_binary_resource(const char *name, int fatal)
+{
+    size_t size = 0;
+    void *data = read_whole_file(name, &size, fatal);
+    if (data != NULL && has_extension(name, ".3sh") &&
+        !validate_shape3d_archive((const uint8_t *)data, size)) {
+        port_memory_free(data);
+        if (fatal)
+            port_guest_unwind("malformed raw 3D shape archive");
+        return NULL;
+    }
+    return data;
+}
+
 void *file_load_binary_nofatal(const char *name)
 {
-    return read_whole_file(name, NULL, 0);
+    return read_binary_resource(name, 0);
 }
 
 void *file_load_binary(const char *name, int fatal)
 {
-    return read_whole_file(name, NULL, fatal != 0);
+    return read_binary_resource(name, fatal != 0);
 }
 
 void *file_load_binary_nofatal_thunk(const char *name)
@@ -389,6 +549,14 @@ void *file_decomp(const char *name, int fatal)
         port_memory_free(source_data);
         if (fatal)
             port_guest_unwind("unsupported or malformed compressed resource");
+        return NULL;
+    }
+    if (has_extension(name, ".p3s") &&
+        !validate_shape3d_archive(decoded, decoded_size)) {
+        free(decoded);
+        port_memory_free(source_data);
+        if (fatal)
+            port_guest_unwind("malformed compressed 3D shape archive");
         return NULL;
     }
     managed = port_memory_alloc(decoded_size, name, NULL);
@@ -514,6 +682,303 @@ static int shape_entry_span(uint8_t *archive, int index,
     *shape_out = archive + payload + relative;
     *length_out = next - relative;
     return 1;
+}
+
+static int shape2d_blit_view(uint8_t *shape, size_t *shape_extent_out,
+                            uint8_t **destination_out,
+                            size_t *destination_extent_out,
+                            PortSprite **sprite_out)
+{
+    size_t shape_extent;
+    size_t destination_extent;
+    uint8_t *destination;
+    PortSprite *sprite;
+    size_t source_pixels;
+
+    if (shape == NULL || !port_memory_extent(shape, &shape_extent) ||
+        shape_extent < 16u ||
+        !port_sprite_active_view(&destination, &destination_extent, &sprite) ||
+        sprite == NULL || sprite->sprite_bitmapptr == NULL ||
+        sprite->lineofs == NULL || sprite->words2[4] == 0u)
+        return 0;
+
+    source_pixels = (size_t)read_u16(shape) * (size_t)read_u16(shape + 2u);
+    if (source_pixels > shape_extent - 16u)
+        return 0;
+    if (shape_extent_out != NULL)
+        *shape_extent_out = shape_extent;
+    if (destination_out != NULL)
+        *destination_out = destination;
+    if (destination_extent_out != NULL)
+        *destination_extent_out = destination_extent;
+    if (sprite_out != NULL)
+        *sprite_out = sprite;
+    return 1;
+}
+
+static int32_t signed_hotspot_offset(uint16_t hotspot, int16_t scale)
+{
+    int32_t product = (int32_t)(int16_t)hotspot * (int32_t)scale;
+    /* IMUL's AH:DL byte pair yields the signed 8.8 offset, floor(product/256). */
+    if (product >= 0)
+        return product / 256;
+    return -(((-product) + 255) / 256);
+}
+
+static void publish_transparent_blit(uint8_t *destination,
+                                     const char *publication_reason)
+{
+    if (destination == port_video_pixels())
+        port_video_publish(publication_reason);
+}
+
+/* SHAPE2D putimage and release operations use the game's 16-byte byte layout,
+   then map source pixels through incnums; a mapped 0xff stays transparent. */
+static void putimage_transparent_at(uint8_t *shape, int16_t x, int16_t y,
+                                    const char *publication_reason)
+{
+    size_t destination_extent;
+    uint8_t *destination;
+    PortSprite *sprite;
+    uint16_t width;
+    uint16_t height;
+    int32_t left;
+    int32_t right;
+    int32_t top;
+    int32_t bottom;
+    int32_t x0;
+    int32_t x1;
+    int32_t y0;
+    int32_t y1;
+    int32_t draw_y;
+
+    if (!shape2d_blit_view(shape, NULL, &destination,
+                           &destination_extent, &sprite))
+        return;
+    width = read_u16(shape);
+    height = read_u16(shape + 2u);
+    if (width == 0u || height == 0u)
+        return;
+
+    left = sprite->words2[0];
+    right = sprite->words2[1];
+    top = sprite->words2[2];
+    bottom = sprite->words2[3];
+    if (right > sprite->words2[4])
+        right = sprite->words2[4];
+    if (bottom > sprite->sprite_bitmapptr->height)
+        bottom = sprite->sprite_bitmapptr->height;
+    if (left < 0 || top < 0 || left >= right || top >= bottom)
+        return;
+
+    x0 = x;
+    y0 = y;
+    x1 = x0 + width;
+    y1 = y0 + height;
+    if (x0 < left) x0 = left;
+    if (x1 > right) x1 = right;
+    if (y0 < top) y0 = top;
+    if (y1 > bottom) y1 = bottom;
+    if (x0 >= x1 || y0 >= y1)
+        return;
+
+    for (draw_y = y0; draw_y < y1; ++draw_y) {
+        size_t source_at = 16u + (size_t)(draw_y - y) * width +
+                           (size_t)(x0 - x);
+        size_t destination_at = (size_t)sprite->lineofs[draw_y] +
+                                (size_t)x0;
+        int32_t draw_x;
+        if (destination_at > destination_extent ||
+            (size_t)(x1 - x0) > destination_extent - destination_at)
+            continue;
+        for (draw_x = x0; draw_x < x1; ++draw_x) {
+            uint8_t color = s_incnums[shape[source_at++]];
+            if (color != 0xffu)
+                destination[destination_at] = color;
+            ++destination_at;
+        }
+    }
+    publish_transparent_blit(destination, publication_reason);
+}
+
+void sub_35DC8(const uint8_t *mapping)
+{
+    size_t i;
+    if (mapping == NULL)
+        port_guest_unwind("missing full incnums mapping source");
+    /* Preserve the original forward REP MOVSB behavior, including overlap. */
+    for (i = 0; i < sizeof(s_incnums); ++i)
+        s_incnums[i] = mapping[i];
+}
+
+void sub_35DE6(uint16_t start, uint16_t count, const uint8_t *mapping)
+{
+    size_t i;
+    if (((size_t)count != 0u && mapping == NULL) ||
+        (size_t)start > sizeof(s_incnums) ||
+        (size_t)count > sizeof(s_incnums) - (size_t)start)
+        port_guest_unwind("incnums partial mapping exceeds its 256-byte span");
+    /* The historical helper copies exactly CX bytes from DS:SI to
+       CS:_incnums+start, without clamping or touching adjacent storage. */
+    for (i = 0; i < (size_t)count; ++i)
+        s_incnums[(size_t)start + i] = mapping[i];
+}
+
+void sprite_putimage_transparent(void *shape_pointer, int16_t x, int16_t y)
+{
+    putimage_transparent_at((uint8_t *)shape_pointer, x, y,
+                            "sprite_putimage_transparent");
+}
+
+void release_shape_resources(void *shape_pointer)
+{
+    uint8_t *shape = (uint8_t *)shape_pointer;
+    size_t source_extent;
+    size_t destination_extent;
+    uint8_t *destination;
+    PortSprite *sprite;
+    uint16_t width;
+    uint16_t height;
+    int32_t x;
+    int32_t y;
+    int32_t draw_y;
+
+    if (!shape2d_blit_view(shape, &source_extent, &destination,
+                           &destination_extent, &sprite))
+        return;
+    width = read_u16(shape);
+    height = read_u16(shape + 2u);
+    if (width == 0u || height == 0u)
+        return;
+    x = read_u16(shape + 8u);
+    y = read_u16(shape + 10u);
+
+    /* The original release entry uses the embedded position and writes each
+       complete row; unlike the other putimage entry it does not honor the
+       sprite viewport rectangle. Bound writes by the host surface and pitch. */
+    for (draw_y = 0; draw_y < height; ++draw_y) {
+        int32_t screen_y = y + draw_y;
+        size_t source_at = 16u + (size_t)draw_y * width;
+        int32_t draw_x;
+        if (screen_y < 0 ||
+            screen_y >= sprite->sprite_bitmapptr->height)
+            continue;
+        if (source_at > source_extent ||
+            (size_t)width > source_extent - source_at)
+            return;
+        for (draw_x = 0; draw_x < width; ++draw_x) {
+            int32_t screen_x = x + draw_x;
+            size_t destination_at;
+            uint8_t color;
+            if (screen_x < 0 || screen_x >= sprite->words2[4])
+                continue;
+            destination_at = (size_t)sprite->lineofs[screen_y] +
+                             (size_t)screen_x;
+            if (destination_at >= destination_extent)
+                continue;
+            color = s_incnums[shape[source_at + (size_t)draw_x]];
+            if (color != 0xffu)
+                destination[destination_at] = color;
+        }
+    }
+    publish_transparent_blit(destination, "release_shape_resources");
+}
+
+void shapeexpl(int16_t scale, void *shape_pointer, int16_t x, int16_t y)
+{
+    uint8_t *shape = (uint8_t *)shape_pointer;
+    size_t source_extent;
+    size_t destination_extent;
+    uint8_t *destination;
+    PortSprite *sprite;
+    uint16_t source_width;
+    uint16_t source_height;
+    uint16_t output_width;
+    uint16_t output_height;
+    uint16_t source_step;
+    uint16_t initial_source;
+    uint16_t scale_word = (uint16_t)scale;
+    int32_t origin_x;
+    int32_t origin_y;
+    int32_t clip_left;
+    int32_t clip_right;
+    int32_t clip_top;
+    int32_t clip_bottom;
+    int32_t draw_x0;
+    int32_t draw_x1;
+    int32_t draw_y0;
+    int32_t draw_y1;
+    int32_t draw_y;
+
+    if (scale_word < 2u ||
+        !shape2d_blit_view(shape, &source_extent, &destination,
+                           &destination_extent, &sprite))
+        return;
+    source_width = read_u16(shape);
+    source_height = read_u16(shape + 2u);
+    if (source_width == 0u || source_height == 0u)
+        return;
+    output_width = (uint16_t)(((uint32_t)source_width *
+                               scale_word) >> 8);
+    output_height = (uint16_t)(((uint32_t)source_height *
+                                scale_word) >> 8);
+    if (output_width == 0u || output_height == 0u)
+        return;
+
+    origin_x = (int16_t)((uint16_t)x -
+                         (uint16_t)signed_hotspot_offset(read_u16(shape + 4u), scale));
+    origin_y = (int16_t)((uint16_t)y -
+                         (uint16_t)signed_hotspot_offset(read_u16(shape + 6u), scale));
+    source_step = (uint16_t)(65536u / scale_word);
+    initial_source = (uint16_t)((source_step >> 8) >> 1);
+
+    clip_left = sprite->words2[7];
+    clip_right = sprite->words2[8];
+    clip_top = sprite->words2[2];
+    clip_bottom = sprite->words2[3];
+    if (clip_right > sprite->words2[4])
+        clip_right = sprite->words2[4];
+    if (clip_bottom > sprite->sprite_bitmapptr->height)
+        clip_bottom = sprite->sprite_bitmapptr->height;
+    if (clip_left < 0 || clip_top < 0 || clip_left >= clip_right ||
+        clip_top >= clip_bottom)
+        return;
+
+    draw_x0 = origin_x;
+    draw_y0 = origin_y;
+    draw_x1 = draw_x0 + output_width;
+    draw_y1 = draw_y0 + output_height;
+    if (draw_x0 < clip_left) draw_x0 = clip_left;
+    if (draw_x1 > clip_right) draw_x1 = clip_right;
+    if (draw_y0 < clip_top) draw_y0 = clip_top;
+    if (draw_y1 > clip_bottom) draw_y1 = clip_bottom;
+    if (draw_x0 >= draw_x1 || draw_y0 >= draw_y1)
+        return;
+
+    for (draw_y = draw_y0; draw_y < draw_y1; ++draw_y) {
+        uint32_t output_row = (uint32_t)(draw_y - origin_y);
+        uint32_t source_y = initial_source +
+                            ((uint32_t)source_step * output_row) / 256u;
+        size_t destination_at = (size_t)sprite->lineofs[draw_y] +
+                                (size_t)draw_x0;
+        int32_t out_x;
+        if (destination_at > destination_extent ||
+            (size_t)(draw_x1 - draw_x0) > destination_extent - destination_at)
+            continue;
+        for (out_x = draw_x0; out_x < draw_x1; ++out_x) {
+            uint32_t output_column = (uint32_t)(out_x - origin_x);
+            uint32_t source_x = initial_source +
+                                ((uint32_t)source_step * output_column) / 256u;
+            size_t source_at;
+            if (source_x < source_width && source_y < source_height) {
+                source_at = 16u + (size_t)source_y * source_width + source_x;
+                if (source_at < source_extent && shape[source_at] != 0xffu)
+                    destination[destination_at] = shape[source_at];
+            }
+            ++destination_at;
+        }
+    }
+    publish_transparent_blit(destination, "shapeexpl");
 }
 
 /* Translate asm/file_load_shape2d_expand.ASM's ESH directory and plane walk.
@@ -781,9 +1246,14 @@ void file_unflip_shape2d(uint8_t *archive, uint8_t *scratch)
         height = read_u16(shape + 2);
         pixels = (size_t)width * height;
         flip = (uint8_t)(shape[14] >> 4);
-        if ((shape[15] & 0xF0u) != 0u || flip == 0u || flip >= 4u)
+        if ((shape[15] & 0xF0u) != 0u || flip == 0u)
             continue;
-        if (flip == 3u || pixels > shape_size - 16u ||
+        /* The original dispatcher returns immediately with AX=1 on an
+           unsupported type. In particular, it does not transform any later
+           entries after encountering a flag >= 4. */
+        if (flip >= 4u)
+            return;
+        if (pixels > shape_size - 16u ||
             pixels > RESOURCE_DECODE_LIMIT || pixels > scratch_size)
             port_guest_unwind("unsupported PVS shape transform");
         temp = scratch;
@@ -793,7 +1263,7 @@ void file_unflip_shape2d(uint8_t *archive, uint8_t *scratch)
                 for (x = 0; x < width; ++x)
                     shape[16u + (size_t)y * width + x] =
                         temp[(size_t)x * height + y];
-        } else {
+        } else if (flip == 2u) {
             for (y = 0; y < height; y = (uint16_t)(y + 2u)) {
                 for (x = 0; x < width; ++x) {
                     shape[16u + (size_t)y * width + x] =
@@ -803,6 +1273,24 @@ void file_unflip_shape2d(uint8_t *archive, uint8_t *scratch)
                             temp[(size_t)((height + y + 1u) / 2u) +
                                  (size_t)x * height];
                 }
+            }
+        } else {
+            size_t even_plane_step = ((size_t)height + 1u) / 2u;
+            size_t odd_plane_step = (size_t)height / 2u;
+            for (y = 0; y < height; ++y) {
+                size_t source_start;
+                size_t source_step;
+                if ((y & 1u) == 0u) {
+                    source_start = (size_t)(y / 2u);
+                    source_step = even_plane_step;
+                } else {
+                    source_start = (size_t)width * even_plane_step +
+                                   (size_t)(y / 2u);
+                    source_step = odd_plane_step;
+                }
+                for (x = 0; x < width; ++x)
+                    shape[16u + (size_t)y * width + x] =
+                        temp[source_start + (size_t)x * source_step];
             }
         }
     }

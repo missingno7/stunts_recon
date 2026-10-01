@@ -5,6 +5,11 @@
 
 #define PORT_KEY_QUEUE_CAP 32u
 
+/* These replace the original assembly-owned globals. The source image uses a
+   word for input_pushed and a byte for joystick_enabled. */
+volatile uint16_t input_pushed;
+uint8_t joystick_enabled;
+
 static uint8_t s_key_down[128];
 static uint8_t s_extended_down[128];
 #define PORT_KEY_CALLBACK_CAP 64u
@@ -17,6 +22,8 @@ static unsigned s_key_head;
 static unsigned s_key_tail;
 static unsigned s_key_count;
 static uint8_t s_caps_lock;
+static uint8_t s_num_lock;
+static uint8_t s_scroll_lock;
 static uint8_t s_extended_prefix;
 static int s_mouse_x;
 static int s_mouse_y;
@@ -57,8 +64,9 @@ static int shifted(void)
 static uint8_t ascii_for_scan(int scan)
 {
     int shift = shifted();
-    int control = s_key_down[0x1Du];
+    int control = s_key_down[0x1Du] || s_extended_down[0x1Du];
     int caps = s_caps_lock != 0;
+    int keypad_numeric = (s_num_lock != 0) != shift;
     char lower = 0;
     switch (scan) {
     case 0x02: return (uint8_t)(shift ? '!' : '1');
@@ -92,17 +100,17 @@ static uint8_t ascii_for_scan(int scan)
     }
     if (scan == 0x0E) return '\b';
     if (scan == 0x01) return 0x1Bu;
-    if (scan == 0x47) return '7';
-    if (scan == 0x48) return '8';
-    if (scan == 0x49) return '9';
-    if (scan == 0x4B) return '4';
-    if (scan == 0x4C) return '5';
-    if (scan == 0x4D) return '6';
-    if (scan == 0x4F) return '1';
-    if (scan == 0x50) return '2';
-    if (scan == 0x51) return '3';
-    if (scan == 0x52) return '0';
-    if (scan == 0x53) return '.';
+    if (scan == 0x47) return (uint8_t)(keypad_numeric ? '7' : 0);
+    if (scan == 0x48) return (uint8_t)(keypad_numeric ? '8' : 0);
+    if (scan == 0x49) return (uint8_t)(keypad_numeric ? '9' : 0);
+    if (scan == 0x4B) return (uint8_t)(keypad_numeric ? '4' : 0);
+    if (scan == 0x4C) return (uint8_t)(keypad_numeric ? '5' : 0);
+    if (scan == 0x4D) return (uint8_t)(keypad_numeric ? '6' : 0);
+    if (scan == 0x4F) return (uint8_t)(keypad_numeric ? '1' : 0);
+    if (scan == 0x50) return (uint8_t)(keypad_numeric ? '2' : 0);
+    if (scan == 0x51) return (uint8_t)(keypad_numeric ? '3' : 0);
+    if (scan == 0x52) return (uint8_t)(keypad_numeric ? '0' : 0);
+    if (scan == 0x53) return (uint8_t)(keypad_numeric ? '.' : 0);
     switch (scan) {
     case 0x10: lower = 'q'; break; case 0x11: lower = 'w'; break;
     case 0x12: lower = 'e'; break; case 0x13: lower = 'r'; break;
@@ -186,6 +194,14 @@ int port_input_dos_scan(int scancode)
     case SDL_SCANCODE_KP_2: return 0x50; case SDL_SCANCODE_KP_3: return 0x51;
     case SDL_SCANCODE_KP_0: return 0x52; case SDL_SCANCODE_KP_PERIOD: return 0x53;
     case SDL_SCANCODE_F11: return 0x57; case SDL_SCANCODE_F12: return 0x58;
+    case SDL_SCANCODE_KP_ENTER: return 0xE01C;
+    case SDL_SCANCODE_KP_DIVIDE: return 0xE035;
+    case SDL_SCANCODE_RCTRL: return 0xE01D;
+    case SDL_SCANCODE_RALT: return 0xE038;
+    case SDL_SCANCODE_PRINTSCREEN: return 0xE037;
+    case SDL_SCANCODE_LGUI: return 0xE05B;
+    case SDL_SCANCODE_RGUI: return 0xE05C;
+    case SDL_SCANCODE_APPLICATION: return 0xE05D;
     case SDL_SCANCODE_UP: return 0xE048; case SDL_SCANCODE_LEFT: return 0xE04B;
     case SDL_SCANCODE_RIGHT: return 0xE04D; case SDL_SCANCODE_DOWN: return 0xE050;
     case SDL_SCANCODE_HOME: return 0xE047; case SDL_SCANCODE_END: return 0xE04F;
@@ -197,8 +213,10 @@ int port_input_dos_scan(int scancode)
 
 void port_input_init(void)
 {
+    SDL_Keymod modifiers;
     if (s_input_lock == NULL)
         s_input_lock = SDL_CreateMutex();
+    modifiers = SDL_GetModState();
     input_lock();
     memset(s_key_down, 0, sizeof(s_key_down));
     memset(s_extended_down, 0, sizeof(s_extended_down));
@@ -206,7 +224,9 @@ void port_input_init(void)
     s_key_head = 0;
     s_key_tail = 0;
     s_key_count = 0;
-    s_caps_lock = 0;
+    s_caps_lock = (modifiers & SDL_KMOD_CAPS) != 0;
+    s_num_lock = (modifiers & SDL_KMOD_NUM) != 0;
+    s_scroll_lock = 0;
     s_extended_prefix = 0;
     s_callback_count = 0;
     s_test_auto_protection = 0;
@@ -250,6 +270,26 @@ static int test_text_scan(unsigned char character)
     if (character == '-') return 0x0c;
     if (character == '.') return 0x34;
     return 0;
+}
+
+static int is_lock_or_modifier_scan(int scan, int extended)
+{
+    if (extended)
+        return scan == 0x1Du || scan == 0x38u ||
+               scan == 0x5Bu || scan == 0x5Cu || scan == 0x5Du;
+    return scan == 0x2Au || scan == 0x36u || scan == 0x1Du ||
+           scan == 0x38u || scan == 0x3Au || scan == 0x45u ||
+           scan == 0x46u;
+}
+
+static void clear_pressed_input(void)
+{
+    input_lock();
+    memset(s_key_down, 0, sizeof(s_key_down));
+    memset(s_extended_down, 0, sizeof(s_extended_down));
+    s_extended_prefix = 0;
+    s_mouse_buttons = 0;
+    input_unlock();
 }
 
 /* Feed a manual answer through the same raw DOS keyboard path as a tester.
@@ -297,16 +337,24 @@ void port_input_handle_event(int event_type, int code, int value)
             s_extended_down[dos_code & 0x7Fu] = (uint8_t)down;
             if (scan > 0 && scan < 128)
                 s_key_down[scan] = (uint8_t)down;
-            if (down && (!was_down || value != 0))
-                enqueue_bios_key((uint16_t)(scan << 8));
+            if (down && (!was_down || value != 0) &&
+                !is_lock_or_modifier_scan(scan, 1)) {
+                uint8_t ascii = scan == 0x1Cu ? '\r' :
+                                scan == 0x35u ? '/' : 0;
+                enqueue_bios_key((uint16_t)((scan << 8) | ascii));
+            }
         } else if (dos_code > 0 && dos_code < 128) {
             int was_down = s_key_down[dos_code] != 0;
             s_key_down[dos_code] = (uint8_t)down;
             if (down && !was_down && dos_code == 0x3A)
                 s_caps_lock ^= 1u;
+            if (down && !was_down && dos_code == 0x45)
+                s_num_lock ^= 1u;
+            if (down && !was_down && dos_code == 0x46)
+                s_scroll_lock ^= 1u;
             if (down && (!was_down || value != 0)) {
                 uint8_t ascii = ascii_for_scan(dos_code);
-                if (ascii != 0)
+                if (!is_lock_or_modifier_scan(dos_code, 0))
                     enqueue_bios_key((uint16_t)((dos_code << 8) | ascii));
             }
         }
@@ -327,6 +375,8 @@ void port_input_handle_event(int event_type, int code, int value)
         else
             s_mouse_buttons &= (uint8_t)~bit;
         input_unlock();
+    } else if (event_type == SDL_EVENT_WINDOW_FOCUS_LOST) {
+        clear_pressed_input();
     }
 }
 
@@ -359,17 +409,26 @@ void port_input_apply_dos_scancode(uint8_t code)
     if (extended) {
         was_down = s_extended_down[scan] != 0;
         s_extended_down[scan] = (uint8_t)down;
-        if (down && !was_down)
-            enqueue_bios_key((uint16_t)(scan << 8));
+        if (scan < 128)
+            s_key_down[scan] = (uint8_t)down;
+        if (down && !was_down && !is_lock_or_modifier_scan(scan, 1)) {
+            uint8_t ascii = scan == 0x1Cu ? '\r' :
+                            scan == 0x35u ? '/' : 0;
+            enqueue_bios_key((uint16_t)((scan << 8) | ascii));
+        }
     } else {
         was_down = s_key_down[scan] != 0;
         s_key_down[scan] = (uint8_t)down;
         if (down && !was_down && scan == 0x3Au)
             s_caps_lock ^= 1u;
+        if (down && !was_down && scan == 0x45u)
+            s_num_lock ^= 1u;
+        if (down && !was_down && scan == 0x46u)
+            s_scroll_lock ^= 1u;
         if (down && !was_down) {
             uint8_t ascii = ascii_for_scan(scan);
             key = (uint16_t)(scan << 8) | ascii;
-            if (ascii != 0 || scan == 0x01u)
+            if (scan != 0 && !is_lock_or_modifier_scan(scan, 0))
                 enqueue_bios_key(key);
         }
     }
@@ -439,17 +498,36 @@ void kb_init_interrupt(void)
     input_lock();
     memset(s_key_down, 0, sizeof(s_key_down));
     memset(s_extended_down, 0, sizeof(s_extended_down));
+    s_extended_prefix = 0;
     s_key_head = s_key_tail = s_key_count = 0;
-    s_caps_lock = 0;
     input_unlock();
 }
 
-void kb_shift_checking2(void) { }
+void port_input_shutdown(void)
+{
+    clear_pressed_input();
+    if (s_input_lock != NULL) {
+        SDL_DestroyMutex(s_input_lock);
+        s_input_lock = NULL;
+    }
+}
+
 /* Port replacement for asm/keyboard_input_callbacks.ASM's lcall [0x468c].
    The host's BIOS-key queue is the configured DOS reader callback target. */
 int16_t kb_call_readchar_callback(void)
 {
     return kb_read_char();
+}
+
+/* The legacy service peeks at the BIOS queue, waits until a key is available,
+   and consumes that one key. Keep waiting cooperatively so host shutdown can
+   stop the guest instead of stranding SDL teardown in SDL_WaitThread. */
+void flush_stdin(void)
+{
+    while (kb_call_readchar_callback() == 0) {
+        port_guest_check_stop();
+        SDL_DelayNS(1000000u);
+    }
 }
 
 void kb_reg_callback(uint16_t key, void (*callback)(void))
@@ -501,6 +579,7 @@ static int dispatch_key_callback(uint16_t bios_key)
 int16_t kb_get_char(void)
 {
     int found;
+    port_guest_check_stop();
     uint16_t key = pop_bios_key(&found);
     uint8_t ascii;
     if (!found)
@@ -514,6 +593,7 @@ int16_t kb_get_char(void)
 int16_t kb_read_char(void)
 {
     int found;
+    port_guest_check_stop();
     uint16_t key = pop_bios_key(&found);
     uint8_t ascii;
     if (!found)
@@ -524,6 +604,7 @@ int16_t kb_read_char(void)
 
 int16_t kb_check(void)
 {
+    port_guest_check_stop();
     input_lock();
     s_key_head = s_key_tail;
     s_key_count = 0;
@@ -533,6 +614,7 @@ int16_t kb_check(void)
 
 int16_t kb_get_key_state(int16_t scan_code)
 {
+    port_guest_check_stop();
     return (int16_t)port_input_key_state((uint16_t)scan_code);
 }
 
@@ -540,6 +622,73 @@ int16_t get_joy_flags(void)
 {
     /* No joystick device is enabled in the M1 keyboard-only input adapter. */
     return 0;
+}
+
+int16_t joystick_flags_to_index(int16_t flags)
+{
+    /* Exact 16-entry conversion table from
+       asm/input_keyboard_joystick_services.ASM. */
+    static const uint8_t axis_index[16] = {
+        0, 1, 5, 0, 3, 2, 4, 3, 7, 8, 6, 7, 0, 1, 5, 0
+    };
+    return (int16_t)axis_index[(uint16_t)flags & 0x0fu];
+}
+
+void reset_joystick_selection(void)
+{
+    /* The legacy routine enabled its gameport unconditionally. SDL3 has no
+       joystick backend yet, so reset to the only valid host selection. */
+    joystick_enabled = 0;
+}
+
+int8_t replay_axis_value(void)
+{
+    int left;
+    int right;
+
+    /* Keyboard movement uses the same keypad scans as get_kb_or_joy_flags:
+       7/4/1 steer left and 9/6/3 steer right. A keyboard has no analog
+       travel, so map its held direction to the original axis endpoints
+       (-31 at minimum, +33 at maximum); opposing keys cancel. */
+    left = port_input_key_state(0x47u) || port_input_key_state(0x4bu) ||
+           port_input_key_state(0x4fu);
+    right = port_input_key_state(0x49u) || port_input_key_state(0x4du) ||
+            port_input_key_state(0x51u);
+    if (left == right)
+        return 0;
+    return left ? (int8_t)-31 : (int8_t)33;
+}
+
+static void set_num_lock(int enabled)
+{
+    input_lock();
+    s_num_lock = enabled != 0;
+    input_unlock();
+}
+
+static int16_t peek_keyboard_char(void)
+{
+    int found;
+    uint16_t key;
+    input_lock();
+    found = s_key_count != 0;
+    key = found ? s_key_queue[s_key_head] : 0;
+    input_unlock();
+    if (!found)
+        return 0;
+    return (uint8_t)key != 0 ? (int16_t)(uint8_t)key
+                             : (int16_t)(key & 0xFF00u);
+}
+
+void keyboard_shift_checking1(void)
+{
+    set_num_lock(1);
+    (void)peek_keyboard_char();
+}
+
+void kb_shift_checking1(void)
+{
+    keyboard_shift_checking1();
 }
 
 int16_t get_kb_or_joy_flags(void)
@@ -558,4 +707,17 @@ int16_t get_kb_or_joy_flags(void)
         if (port_input_key_state(scans[i]))
             result |= flags[i];
     return result != 0 ? result : get_joy_flags();
+}
+
+void kb_shift_checking2(void)
+{
+    set_num_lock(0);
+    (void)peek_keyboard_char();
+}
+
+void keyboard_exit_handler(void)
+{
+    /* The DOS handler restores its vectors and clears only the held modifier
+       bits; BIOS lock-toggle state survives the restore. */
+    kb_init_interrupt();
 }

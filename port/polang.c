@@ -36,6 +36,7 @@ int16_t polang(int16_t z_arg, int16_t x_arg)
     uint16_t ax = 0;
     uint16_t index;
     uint32_t dividend;
+    uint32_t full_quotient;
     uint16_t quotient;
 
     if ((int16_t)z < 0) { di |= 8; z = negate_word(z); }
@@ -50,9 +51,13 @@ int16_t polang(int16_t z_arg, int16_t x_arg)
     }
     /* For (0, 0), the DOS routine dispatches its incoming AX unchanged.
        AX is not an ABI result there, so this port chooses deterministic zero. */
-    if (x == 0) goto quadrant_dispatch;
+    if (x == 0)
+        port_guest_unwind("polarAngle divide by zero");
     dividend = (uint32_t)z << 16;
-    quotient = (uint16_t)(dividend / x);
+    full_quotient = dividend / x;
+    if (full_quotient > UINT16_MAX)
+        port_guest_unwind("polarAngle unsigned divide overflow");
+    quotient = (uint16_t)full_quotient;
     index = (uint16_t)(quotient >> 8);
     if ((quotient & 0xffu) >= 0x80u) ++index;
     ax = atantable[index];
@@ -62,11 +67,12 @@ quadrant_dispatch:
     switch (di) {
     case 0: break;
     case 2: ax = (uint16_t)(negate_word(ax) + 0x100u); break;
-    case 4: ax = negate_word(ax); break;
+    case 4: ax = (uint16_t)(negate_word(ax) + 0x200u); break;
     case 6: ax = (uint16_t)(ax + 0x100u); break;
-    case 8: ax = (uint16_t)(negate_word(ax) + 0x200u); break;
-    case 10: ax = negate_word(ax); break;
-    case 12: ax = (uint16_t)(ax - 0x100u); break;
+    case 8: ax = negate_word(ax); break;
+    case 10: ax = (uint16_t)(ax - 0x100u); break;
+    /* polar_quadrant_6 subtracts two units from AH (0x200), not one. */
+    case 12: ax = (uint16_t)(ax - 0x200u); break;
     case 14: ax = negate_word((uint16_t)(ax + 0x100u)); break;
     default: break;
     }
