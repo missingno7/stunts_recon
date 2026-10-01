@@ -233,7 +233,7 @@ class Sdl3DiagnosticsTests(unittest.TestCase):
         report = json.loads(BUILD_REPORT.read_text(encoding="utf-8"))
         self.assertEqual(report.get("target"), "i686-w64-mingw32")
         self.assertEqual(report.get("game_c_objects"), 38)
-        self.assertEqual(report.get("port_objects"), 31)
+        self.assertEqual(report.get("port_objects"), 32)
         self.assertEqual(report.get("function_stub_count"), 0)
         self.assertEqual(report.get("data_stub_count"), 0)
         inputs = [PORT / "diagnostics.c", PORT / "port_runtime.h",

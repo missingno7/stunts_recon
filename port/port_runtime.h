@@ -84,6 +84,8 @@ const char *port_diagnostics_trace_path(void);
 const char *port_diagnostics_build_id(void);
 void port_diagnostics_note(const char *label, const char *value);
 void port_diagnostics_close(int status, const char *reason);
+int port_config_load(const char *path);
+int port_config_manual_word_check(void);
 
 /* Generated port-only readers over the accepted GAMESTATE declaration. */
 size_t port_game_state_copy(void *output, size_t capacity);

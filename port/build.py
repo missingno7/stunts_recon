@@ -290,6 +290,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             transformed = (
                 "extern int port_input_test_auto_protection_enabled(void);\n"
                 "extern int port_input_type_test_text(const char *text);\n"
+                "extern int port_config_manual_word_check(void);\n"
                 "extern void port_test_random_wait_begin(void);\n"
                 "extern void port_test_random_wait_end(void);\n" + transformed)
             random_wait_call = "          random_wait();\n          if (pass_check_flag == 0)"
@@ -305,6 +306,14 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
                 "        if (port_input_test_auto_protection_enabled())\n"
                 "            port_input_type_test_text(resbuftext);\n"
                 "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);")
+            original = "void far security_check(I16 selection)\n{"
+            if transformed.count(original) != 1:
+                raise RuntimeError("Could not locate the manual-word config boundary")
+            transformed = transformed.replace(original, original +
+                "\n    /* The caller still consumes its original question RNG draw. */\n"
+                "    if (!port_config_manual_word_check() &&\n"
+                "        !port_input_test_auto_protection_enabled()) {\n"
+                "        pass_check_flag = 1; return;\n    }", 1)
             if transformed.count(
                     "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);") != 1:
                 raise RuntimeError("Could not locate the original protection line-editor call")
@@ -618,7 +627,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "vehicle.c",
         "file.c", "resource.c", "audio.c", "audio_sdl.c", "pc_speaker.c", "cleanup.c", "platform.c", "input_script.c",
         "ad15_driver.c", "port_opl3.c",
-        "trace.c", "trace_hooks.c", "diagnostics.c",
+        "trace.c", "trace_hooks.c", "diagnostics.c", "config.c",
     ]
     out_dir = BUILD / "port-obj"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -885,6 +894,8 @@ def run(args) -> int:
         command.append(f"--input-script={Path(args.input_script).resolve()}")
     if args.debug:
         command.append("--debug")
+    if args.config is not None:
+        command.append(f"--config={Path(args.config).resolve()}")
     if args.test_auto_protection:
         command.append("--test-auto-protection")
     if args.test_startup_seed is not None:
@@ -934,6 +945,10 @@ def package(args) -> Path:
         "New tracks, replays, and high scores go into the saves subfolder.\n"
         "Original game data remains in the game folder.\n"
         "AdLib/Sound Blaster FM audio is the default.\n\n"
+        "First launch creates config.json beside this executable.\n"
+        "The manual-word check is disabled by default. To restore it, set\n"
+        "\"manual_word_check\": true in config.json and restart the game.\n"
+        "Upgrades preserve your existing config.json.\n\n"
         "Crash diagnostics are saved in diagnostics beside this executable.\n"
         "For detailed recording, run: stunts-sdl3.exe --debug\n"
         "After a crash, ZIP the newest diagnostics/stunts-* folder and send it.\n"
@@ -968,6 +983,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--assets", default="build/sdl3/runtime/assets")
     run_parser.add_argument("--trace", default="")
     run_parser.add_argument("--debug", action="store_true")
+    run_parser.add_argument("--config", type=Path, help="override the config.json path")
     run_parser.add_argument("--capture-dir", default="")
     run_parser.add_argument("--run-ms", type=int)
     run_parser.add_argument("--input-script", type=Path)

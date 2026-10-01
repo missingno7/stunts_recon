@@ -63,6 +63,9 @@ class Sdl3PackageTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("AD15 OPL2 output opened through SDL3", result.stderr)
             self.assertNotIn("FILE ERROR", result.stderr)
+            config = game_folder / "config.json"
+            self.assertEqual(json.loads(config.read_text()), {"manual_word_check": False})
+            self.assertFalse((other_cwd / "config.json").exists())
             self.assertEqual((game_folder / "saves" / "zzztest.trk").stat().st_size, 0x70A)
             self.assertEqual((game_folder / "saves" / "zzztest.hig").stat().st_size, 0x16C)
             self.assertFalse((run_dir / "saves").exists(), "saves escaped the game folder")
@@ -76,6 +79,16 @@ class Sdl3PackageTests(unittest.TestCase):
                      if row.get("event_type") == "host_stop"]
             self.assertEqual(len(stops), 1)
             self.assertEqual(stops[0]["reason"], "requested run duration reached")
+            # An upgrade must never ship defaults over the user's settings.
+            custom = b'{"manual_word_check":true,"future_setting":"preserved"}\r\n'
+            config.write_bytes(custom)
+            with zipfile.ZipFile(archive) as bundle:
+                bundle.extractall(game_folder)
+            result = subprocess.run([
+                str(game_folder / "stunts-sdl3.exe"), "--run-ms=250", "--audio=none",
+            ], cwd=other_cwd, env=environment, capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(config.read_bytes(), custom)
 
 
 if __name__ == "__main__":

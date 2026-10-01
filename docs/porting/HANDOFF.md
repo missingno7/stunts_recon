@@ -29,6 +29,27 @@ layout automatically finds adjacent game files and writes into the folder's
 `saves` subdirectory. It also launches from shortcuts with an unrelated working
 directory and requires no Python or MinGW installation.
 
+## Runtime configuration
+
+First launch creates `config.json` beside the executable, independently of
+the working directory. Its default is:
+
+```json
+{
+  "manual_word_check": false
+}
+```
+
+Set `manual_word_check` to `true` and restart to restore the original manual
+question and answer dialog. The modern `security_check` entry bypass sets the
+original success flag while retaining the caller's question RNG draw. Frozen
+sources and the historical oracle are unchanged. Existing files, including
+unknown fields, are preserved byte for byte; malformed or unavailable files
+use defaults and leave any existing file intact. `--config=PATH` selects another
+file. The ZIP omits `config.json`, preserving settings during upgrades.
+`--test-auto-protection` still runs the original prompt and enters its answer,
+even with the default config, for the existing oracle comparison fixtures.
+
 ## Crash diagnostics
 
 Every Windows launch creates a unique `diagnostics/stunts-*` session folder
@@ -96,7 +117,7 @@ track-editor window reduced its guest from 97.8% to 0.6% of one core.
 
 ## Current implementation
 
-All 38 historical C units and 31 host objects link with zero generated function
+All 38 historical C units and 32 host objects link with zero generated function
 or data stubs. Host overlays preserve 16-bit scalar fields while translating
 pointer-bearing runtime views. Frozen C and ASM are not rewritten for SDL3.
 
@@ -307,7 +328,12 @@ exception stream to verify the faulting thread and exception code, compares
 the retained executable bytes, and checks normal/debug launches, fresh session
 folders, explicit trace overrides and unavailable-directory handling.
 
-The 2026-10-01 idle-wait run passed all 806 tests without skips, all 90 independent
+`tests/test_sdl3_config.py` checks first-launch creation, preserved unknown
+settings, Unicode paths, malformed/truncated files, unavailable locations,
+and live races with the check disabled versus the original prompt enabled.
+The package test also verifies config creation and upgrade preservation.
+
+The 2026-10-01 configuration run passed all 811 tests without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;

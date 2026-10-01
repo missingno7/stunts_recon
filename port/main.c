@@ -140,6 +140,8 @@ int main(int argc, char **argv)
     const char *test_startup_seed = NULL;
     const char *audio_driver = "ad15";
     const char *diagnostics_root = NULL;
+    const char *config_path = NULL;
+    char default_config_path[1024];
     int debug = 0;
     int run_ms = -1;
     int test_auto_protection = 0;
@@ -163,6 +165,8 @@ int main(int argc, char **argv)
             debug = 1;
         else if (strncmp(argv[i], "--diagnostics-dir=", 18) == 0)
             diagnostics_root = argv[i] + 18;
+        else if (strncmp(argv[i], "--config=", 9) == 0)
+            config_path = argv[i] + 9;
         else if (strncmp(argv[i], "--test-startup-seed=", 20) == 0)
             test_startup_seed = argv[i] + 20;
         else if (strcmp(argv[i], "--test-auto-protection") == 0)
@@ -214,6 +218,20 @@ int main(int argc, char **argv)
         asset_root = default_asset_root;
     }
     port_diagnostics_init(debug, diagnostics_root);
+    if (config_path == NULL) {
+        const char *base = SDL_GetBasePath();
+        int length = base == NULL ? -1 : snprintf(default_config_path,
+            sizeof(default_config_path), "%sconfig.json", base);
+        if (length < 0 || (size_t)length >= sizeof(default_config_path)) {
+            port_diagnostics_close(2, "config path unavailable");
+            return 2;
+        }
+        config_path = default_config_path;
+    }
+    port_config_load(config_path);
+    port_diagnostics_note("config_path", config_path);
+    port_diagnostics_note("manual_word_check",
+        port_config_manual_word_check() ? "true" : "false");
     if (debug && trace_path[0] == '\0')
         trace_path = port_diagnostics_trace_path();
     port_diagnostics_note("asset_root", asset_root);

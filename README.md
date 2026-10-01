@@ -18,6 +18,9 @@ runtime coverage and validation details.
 To install beside existing game files, run `python port/build.py package`,
 extract `build/sdl3/stunts-sdl3-win32.zip` into the game folder, and launch
 `stunts-sdl3.exe`. The ZIP includes the required SDL DLL.
+First launch creates `config.json` beside the executable with
+`"manual_word_check": false`. Set it to `true` and restart to restore the
+original manual-word prompt. Upgrades preserve your existing config.
 Crash reports go into the executable's `diagnostics` directory. Launch with
 `stunts-sdl3.exe --debug` to also record detailed logs and gameplay/input traces;
 ZIP the newest diagnostics session after a failure. See the SDL3 handoff for details.
