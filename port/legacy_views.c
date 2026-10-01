@@ -1,8 +1,10 @@
 #include "port_runtime.h"
 
-/* The game stores this SCREEN_RECT behind the far pointer at word_405FE.
-   The pointer targets load-image offset 0x2B1F0. These fields preserve the
-   target's 20-byte SCREEN_RECT view consumed by read_line_helper*. */
+/* The recovered SCREEN_RECT is a view of the selected font header. The DOS
+   far pointer at word_405FE consists of offset zero followed by fontdefseg;
+   selecting a font therefore changes both text rendering and this view.
+   Its width/height/bottom names actually address foreground/background/
+   line height. Keep the alias live instead of copying the default values. */
 typedef struct PortLegacyScreenRect {
     int16_t width;
     int16_t height;
@@ -10,12 +12,19 @@ typedef struct PortLegacyScreenRect {
     int16_t bottom;
 } PortLegacyScreenRect;
 
-static PortLegacyScreenRect s_line_input_screen_rect = {
-    3, 0, {0, 0, 0, 1, 8, 8, 8}, 8
-};
+_Static_assert(sizeof(PortLegacyScreenRect) == 20, "DOS line-editor font view");
+_Static_assert(offsetof(PortLegacyScreenRect, width) == 0, "font foreground");
+_Static_assert(offsetof(PortLegacyScreenRect, height) == 2, "font background");
+_Static_assert(offsetof(PortLegacyScreenRect, bottom) == 18, "font line height");
 
-/* This typed host view replaces the zero-filled unresolved data placeholder. */
-PortLegacyScreenRect *line_input_screen_rect = &s_line_input_screen_rect;
+extern uint8_t fontdef_default[1408];
+PortLegacyScreenRect *line_input_screen_rect =
+    (PortLegacyScreenRect *)fontdef_default;
+
+void port_line_input_select_font(const void *font_data)
+{
+    line_input_screen_rect = (PortLegacyScreenRect *)font_data;
+}
 
 /* Medium-model callers pass the final 32-bit timeout as two stack words.
    Native cdecl needs six arguments explicitly rather than relying on adjacent

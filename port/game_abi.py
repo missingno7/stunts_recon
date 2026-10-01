@@ -190,6 +190,8 @@ def host_view_contracts(source: str) -> str:
     if unit == "obj_seg028.c":
         views.extend((("AudioChunk", 76, {"data": 30, "callback": 72}),
                       ("AudioVoice", 48, {"data": 16, "resource": 42, "channelNumber": 46})))
+    if unit == "obj_seg032_group.c":
+        views.append(("SCREEN_RECT", 20, {"width": 0, "height": 2, "bottom": 18}))
     if unit == "obj_seg007.c":
         views.extend((("AudioPayload", 48, {"shape": 8}),
                       ("AudioTimer", 76, {"payload": 28})))

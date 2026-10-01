@@ -194,6 +194,7 @@ void preRender_default_alt(int16_t color, int16_t point_count,
 void preRender_wheel_helper4(int16_t color, int16_t point_count, ...);
 
 void set_fontdefseg(const void *font_data);
+void port_line_input_select_font(const void *font_data);
 void font_setup_unknown(uint16_t foreground, uint16_t background);
 void font_draw_text(const char *text, int16_t x, int16_t y);
 void draw_text_at(const char *text, int16_t x, int16_t y);

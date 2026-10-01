@@ -10,8 +10,9 @@
 #define PORT_FONT_GLYPH_TABLE_BYTES (256u * 2u)
 
 extern uint8_t fontdef_default[1408];
-static const uint8_t *s_font_data;
-static size_t s_font_extent;
+/* The locked image initially selects this built-in font segment. */
+static const uint8_t *s_font_data = fontdef_default;
+static size_t s_font_extent = sizeof(fontdef_default);
 
 static uint16_t read_u16(const uint8_t *p)
 {
@@ -65,6 +66,7 @@ void set_fontdefseg(const void *font)
     }
     if (s_font_extent < PORT_FONT_HEADER_BYTES + PORT_FONT_GLYPH_TABLE_BYTES)
         port_guest_unwind("font definition is shorter than its header");
+    port_line_input_select_font(s_font_data);
 }
 
 void font_setup_unknown(uint16_t foreground, uint16_t background)

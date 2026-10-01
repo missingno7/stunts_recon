@@ -487,7 +487,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
             "rename DOS audio loader and route its vectors to typed native driver entries",
             "type vector_op_unk2's host overlay declaration as I16",
             "resolve static track camera override offsets relative to camera data",
-            "provide the legacy line editor screen rectangle as a host pointer view",
+            "alias the line editor header view to the selected native font",
             "adapt line-editor two-word timer deadlines to the callback counter",
         ],
         "sources": rows,

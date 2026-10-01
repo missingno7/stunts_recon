@@ -10,6 +10,7 @@
 #endif
 
 #include "../../src/fardata_11039.c"
+#include "../../port/legacy_views.c"
 #include "../../port/sprite.c"
 #include "../../port/font.c"
 #include "../../port/transition_work.h"
@@ -30,6 +31,15 @@ void port_guest_unwind(const char *symbol)
 {
     fprintf(stderr, "unexpected font harness unwind: %s\n", symbol);
     exit(20);
+}
+
+int16_t call_read_line(char *buffer, int16_t length, int16_t x, int16_t y,
+                       int16_t timeout_low, int16_t timeout_high)
+{
+    (void)buffer; (void)length; (void)x; (void)y;
+    (void)timeout_low; (void)timeout_high;
+    port_guest_unwind("font probe unexpectedly entered the line editor");
+    return 0;
 }
 
 int port_memory_extent(const void *pointer, size_t *remaining_out)

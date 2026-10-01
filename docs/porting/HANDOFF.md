@@ -169,6 +169,32 @@ uppercase results for literal, wildcard, saved and asset searches.
 The later chooser checkpoint lands one row farther down in the wall-paced
 native replay; identical whole-game input consumption timing is not established.
 
+The manual-entry cursor exposed another shared-state translation error.
+The recovered `SCREEN_RECT` used by the line editor is actually a view of
+the active font header: foreground at +0, background at +2 and line height
+at +18. Its frozen far pointer at load offset `0x305FE` shares its segment
+word with `fontdefseg` at `0x30600`. The port had replaced it with a detached
+copy of the initial font values, leaving the cursor's XOR mask at 3 even
+after the dialog selected foreground 15. The native view now follows every
+font selection and reads color changes from the same storage as rendering.
+This also restores background and line-height changes when clearing an
+editable line. Both views initially select the locked image's built-in font.
+
+`tests/test_sdl3_line_input_oracle.py` regenerates the production C overlay
+and compares both line-input helpers with the locked machine code. Seven
+successive states cover the built-in font and all three shipped font records,
+runtime foreground/background changes, nondefault line heights, trailing-line
+clearing and two cursor toggles. Each comparison includes the full 64 KiB video
+buffer, the active font record, the editable text buffer and cursor slot.
+The initial alias and dialog foreground are independently checked against
+locked image data.
+
+A seeded manual-entry run confirms that every visible blink changes only
+the nine cursor pixels from index 3 to index 15, with identical surrounding
+pixels and palette. The XOR blitter itself matches the frozen implementation;
+no cursor color constant was introduced. The related font and sprite paths
+were checked for another detached header copy; none was found in that audit.
+
 Two adaptations are explicit host boundaries. A missing music instrument is
 rejected before dereferencing its null pointer; DOS performed a physical-memory
 read first. The mode-3 compressor bounds scans to the remaining image pixels;
@@ -210,7 +236,7 @@ than an exhaustive camera or gameplay proof. `test_sdl3_polygon_raster.py`
 adds original wheel faces and a crossing polygon that distinguishes the two
 reverse-chain callbacks.
 
-The 2026-10-01 text-fix run passed all 797 tests without skips, all 90 independent
+The 2026-10-01 cursor-alias fix run passed all 799 tests without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;
