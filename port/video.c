@@ -1,5 +1,6 @@
 #include "port_runtime.h"
 #include "vga_timing.h"
+#include "transition_work.h"
 
 #include <SDL3/SDL.h>
 #include <stdio.h>
@@ -179,6 +180,42 @@ void port_video_publish(const char *reason)
         dump_frame(frame_id, reason, frame, palette);
     port_trace_video_publication(reason);
     port_guest_stop_after_publication();
+}
+
+void port_video_transition_begin(PortVideoTransition *transition)
+{
+    transition->origin_ns = SDL_GetTicksNS();
+    transition->work_units = PORT_TRANSITION_FIXED_WORK;
+    transition->next_publication_ns = transition->origin_ns +
+        PORT_VGA_FRAME_DOTS * 1000000000ull / PORT_VGA_DOT_CLOCK_HZ;
+}
+
+void port_video_transition_advance(PortVideoTransition *transition,
+                                   uint32_t work_units)
+{
+    uint64_t deadline;
+    transition->work_units += work_units;
+    deadline = transition->origin_ns +
+        transition->work_units * 1000000000ull / PORT_DOS_WORK_PER_SECOND;
+    for (;;) {
+        uint64_t now;
+        port_guest_check_stop();
+        now = SDL_GetTicksNS();
+        if (now >= deadline)
+            break;
+        SDL_DelayNS(deadline - now);
+    }
+    /* The DOS loop wrote directly to VRAM throughout its CPU work. Publish
+       the same row progression at VGA refresh intervals, rather than letting
+       the host overwrite all four completed phases before its next present.
+       Absolute deadlines account for native work and avoid per-row drift. */
+    if (deadline >= transition->next_publication_ns) {
+        port_video_publish("sprite_1_unk3_progress");
+        do {
+            transition->next_publication_ns +=
+                PORT_VGA_FRAME_DOTS * 1000000000ull / PORT_VGA_DOT_CLOCK_HZ;
+        } while (deadline >= transition->next_publication_ns);
+    }
 }
 
 void port_video_present(void)

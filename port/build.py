@@ -12,7 +12,7 @@ import subprocess
 import sys
 import zipfile
 
-from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic
+from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -159,6 +159,7 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
         "-g", "-I", str(ROOT / "port"),
         "-Wno-error=implicit-int",
         "-Werror=int-conversion",
+        "-Werror=type-limits",
         "-Wno-error=incompatible-pointer-types",
     ]
     work = probe.WORK
@@ -234,6 +235,12 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
                 raise RuntimeError("Could not locate the bounded file-dialog list")
             transformed = transformed.replace(
                 file_row, "        if (files_found >= 127) break; /* Host list bound. */\n" + file_row)
+            # This legacy test is unreachable after the existing host bound.
+            # Remove it rather than exempting the TU from range diagnostics.
+            old = "        if (files_found == 0x80)\n            break;"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the superseded file-list bound")
+            transformed = transformed.replace(old, "", 1)
             transformed = "extern I16 port_random_test_rand(void);\n" + transformed
             transformed = "extern void port_video_publish(const char *reason);\n" + transformed
             for cursor_draw in ("mouse_draw_transparent", "mouse_draw_opaque"):
@@ -369,6 +376,8 @@ def build_game_objects(gcc: Path) -> tuple[list[Path], dict[str, object]]:
 
         if source == "src/obj_seg003.c":
             transformed = adapt_preview_word_arithmetic(transformed)
+
+        transformed = adapt_word_sentinels(transformed, Path(source).name)
 
         if source == "src/obj_seg006.c":
             transformed = adapt_renderer_word_arithmetic(transformed)

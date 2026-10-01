@@ -2,6 +2,25 @@
 import re
 
 
+def adapt_word_sentinels(source: str, unit: str) -> str:
+    """Retain equality with the DOS unsigned-int literal 0xffff.
+
+    MSC's 16-bit unsigned literal compares the word bits. A signed short
+    instead promotes to signed int32 on the host, where -1 != 65535.
+    """
+    anchors = {
+        "obj_seg003.c": ("carHeadingData == 0xffff", 1),
+        "obj_seg004.c": ("g_td01_track_filecpy[prev_path] == 0xffff", 2),
+    }
+    if unit not in anchors:
+        return source
+    expression, count = anchors[unit]
+    if source.count(expression) != count:
+        raise ValueError(f"Expected {count} DOS word sentinel comparisons in {unit}")
+    left, right = expression.split(" == ")
+    return source.replace(expression, f"(uint16_t){left} == {right}u")
+
+
 def adapt_renderer_word_arithmetic(source: str) -> str:
     """Keep the renderer's signed comparison after SHL CX,1 at 86103/86126."""
     definition = re.search(r"(?:unsigned|U16) trans_op\([^\n]*\)\s*\{", source)

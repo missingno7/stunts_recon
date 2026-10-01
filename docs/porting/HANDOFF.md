@@ -110,6 +110,35 @@ head-on 100 mph case, the target reduces speed to 78 mph; the unadapted host
 expression instead wraps it upward to 206 mph. New arithmetic adaptations
 must establish intermediate widths and signedness from the original code.
 
+The unattended intro exposed another promotion difference: MSC compares a
+signed word with the unsigned 16-bit literal `0xffff` by its word bits. GCC
+promotes that word to signed 32-bit `int`, making `-1 == 65535` false. The
+port adapter retains the frozen comparisons at load offsets `0xDC7D`,
+`0x10CED`, and `0x10FC6`. These restore the intro camera's six-second turn
+and two track predecessor assignments. `test_sdl3_word_sentinels.py` checks
+the frozen instructions and compiled host expressions. The executable build
+rejects `-Wtype-limits` diagnostics across all 38 game translation units.
+
+The interlaced transition also depended on CPU work rather than a delay call.
+Its native four-phase copy previously completed in about 3 ms, so the 60 Hz
+presenter skipped most phases. `transition_work.h` accounts for the frozen
+routine's retired instructions: 32 fixed, 19 per lane, and 18 plus 14 per
+copied pixel in each active row. The reference Stunts machine profile uses
+one normalized work unit per instruction at 9,000,000 units/s; this is not a
+physical CPU frequency claim. A full-screen phase is 227,860 units, or
+25.318 ms. Visible transitions now advance on absolute work deadlines and
+publish their row progression at VGA refresh intervals. Offscreen copies
+retain their unpaced pixel behavior. `test_sdl3_transition_work.py` compares
+the compiled production helper with 28 frozen-machine calls.
+
+An unattended native run through the main menu confirms the red car, rotating
+and receding DSI logo, credits, and intermediate transition images. The new
+original replay `sdltst_20261001_103119` independently shows that sequence;
+its first click follows the completed menu. This checks startup content and
+the transition primitive's timing model, not whole-game cycle timing. The
+original CPU calibration selects full-frame drawing, while the native
+calibration selects incremental drawing; both paths must preserve the scene.
+
 Two adaptations are explicit host boundaries. A missing music instrument is
 rejected before dereferencing its null pointer; DOS performed a physical-memory
 read first. The mode-3 compressor bounds scans to the remaining image pixels;
@@ -151,7 +180,7 @@ than an exhaustive camera or gameplay proof. `test_sdl3_polygon_raster.py`
 adds original wheel faces and a crossing polygon that distinguishes the two
 reverse-chain callbacks.
 
-The 2026-10-01 run passed all 787 tests without skips, all 90 independent
+The 2026-10-01 startup-fix run passed all 792 tests without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;

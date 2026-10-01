@@ -75,6 +75,16 @@ void port_video_publish(const char *reason)
     (void)reason;
 }
 
+void port_video_transition_begin(PortVideoTransition *transition)
+{
+    transition->work_units = PORT_TRANSITION_FIXED_WORK;
+}
+
+void port_video_transition_advance(PortVideoTransition *transition, uint32_t work)
+{
+    transition->work_units += work;
+}
+
 void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
 {
     (void)name;

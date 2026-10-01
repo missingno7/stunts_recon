@@ -343,6 +343,7 @@ __declspec(dllexport) int renderer_parity_run(
 
 
 NATIVE_SHIM = r'''#include "port_runtime.h"
+#include "transition_work.h"
 #include <stdlib.h>
 #include <stdio.h>
 struct RendererMatrix { int16_t vals[9]; };
@@ -351,6 +352,10 @@ int8_t backlightovr8;
 uint8_t renderer_parity_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 uint8_t *port_video_pixels(void) { return renderer_parity_framebuffer; }
 void port_video_publish(const char *reason) { (void)reason; }
+void port_video_transition_begin(PortVideoTransition *transition)
+{ transition->work_units = PORT_TRANSITION_FIXED_WORK; }
+void port_video_transition_advance(PortVideoTransition *transition, uint32_t work)
+{ transition->work_units += work; }
 void port_guest_unwind(const char *reason)
 {
     fprintf(stderr, "renderer parity abort: %s\\n", reason ? reason : "unknown");

@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "transition_work.h"
 
 #include <limits.h>
 #include <stdarg.h>
@@ -962,6 +963,8 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
     uint16_t base_x;
     uint16_t base_y;
     uint16_t phase_word = (uint16_t)phase;
+    PortVideoTransition transition;
+    int visible;
     unsigned lane;
 
     if (shape == NULL || s_sprite1.sprite_bitmapptr == NULL ||
@@ -980,12 +983,18 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
         port_guest_unwind("sprite_1_unk3 source exceeded backing extent");
     base_x = shape->pos_x;
     base_y = shape->pos_y;
+    visible = s_sprite1.sprite_bitmapptr == &s_screen_shape;
+    if (visible)
+        port_video_transition_begin(&transition);
 
     /* Assembly visits the row pattern from index 11 down to 0. The actual
        row offset is pattern[index] + 12*k, bounded by the shape's height. */
     for (lane = 0; lane < 12; ++lane) {
         unsigned source_row = row_pattern[11u - lane];
         unsigned row_step = 0;
+
+        if (visible)
+            port_video_transition_advance(&transition, PORT_TRANSITION_LANE_WORK);
 
         for (;;) {
             uint32_t row_index = source_row + 12u * row_step;
@@ -1038,11 +1047,15 @@ void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
                 remaining -= (int)after;
                 ++xphase;
             }
+            if (visible)
+                port_video_transition_advance(&transition,
+                    port_transition_row_work(width,
+                        (uint16_t)(phase_word + lane + row_step)));
             ++row_step;
         }
     }
 
-    if (s_sprite1.sprite_bitmapptr == &s_screen_shape)
+    if (visible)
         port_video_publish("sprite_1_unk3");
 }
 
