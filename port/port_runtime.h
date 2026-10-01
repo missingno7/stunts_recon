@@ -79,6 +79,12 @@ void port_trace_host_present(uint64_t frame_id);
 void port_trace_audio_publication(uint32_t frame_count);
 void port_trace_host_stop(const char *reason);
 
+void port_diagnostics_init(int debug, const char *root_override);
+const char *port_diagnostics_trace_path(void);
+const char *port_diagnostics_build_id(void);
+void port_diagnostics_note(const char *label, const char *value);
+void port_diagnostics_close(int status, const char *reason);
+
 /* Generated port-only readers over the accepted GAMESTATE declaration. */
 size_t port_game_state_copy(void *output, size_t capacity);
 uint16_t port_game_frame_snapshot(void);

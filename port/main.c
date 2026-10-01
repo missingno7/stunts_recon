@@ -138,6 +138,8 @@ int main(int argc, char **argv)
     const char *input_script = NULL;
     const char *test_startup_seed = NULL;
     const char *audio_driver = "ad15";
+    const char *diagnostics_root = NULL;
+    int debug = 0;
     int run_ms = -1;
     int test_auto_protection = 0;
     uint64_t stop_after_sim_steps = 0;
@@ -156,6 +158,10 @@ int main(int argc, char **argv)
             input_script = argv[i] + 15;
         else if (strncmp(argv[i], "--audio=", 8) == 0)
             audio_driver = argv[i] + 8;
+        else if (strcmp(argv[i], "--debug") == 0)
+            debug = 1;
+        else if (strncmp(argv[i], "--diagnostics-dir=", 18) == 0)
+            diagnostics_root = argv[i] + 18;
         else if (strncmp(argv[i], "--test-startup-seed=", 20) == 0)
             test_startup_seed = argv[i] + 20;
         else if (strcmp(argv[i], "--test-auto-protection") == 0)
@@ -206,8 +212,18 @@ int main(int argc, char **argv)
         }
         asset_root = default_asset_root;
     }
-    if (!port_test_startup_seed_load(test_startup_seed))
+    port_diagnostics_init(debug, diagnostics_root);
+    if (debug && trace_path[0] == '\0')
+        trace_path = port_diagnostics_trace_path();
+    port_diagnostics_note("asset_root", asset_root);
+    port_diagnostics_note("audio_driver", audio_driver);
+    port_diagnostics_note("trace_path", trace_path);
+    port_diagnostics_note("input_script", input_script);
+    port_diagnostics_note("startup_seed", test_startup_seed);
+    if (!port_test_startup_seed_load(test_startup_seed)) {
+        port_diagnostics_close(2, "invalid test startup seed");
         return 2;
+    }
     port_runtime_set_asset_root(asset_root);
     if (use_game_folder) {
         int length = snprintf(default_save_root, sizeof(default_save_root),
@@ -215,6 +231,7 @@ int main(int argc, char **argv)
         if (length < 0 || (size_t)length >= sizeof(default_save_root) ||
             !port_runtime_set_save_root(default_save_root)) {
             fprintf(stderr, "Could not locate game-folder saves\n");
+            port_diagnostics_close(1, "could not locate game-folder saves");
             return 1;
         }
     }
@@ -227,6 +244,7 @@ int main(int argc, char **argv)
         port_trace_host_stop("invalid input script");
         port_trace_close();
         port_sdl_shutdown();
+        port_diagnostics_close(1, "invalid input script");
         return 1;
     }
     port_guest_set_step_limit(stop_after_sim_steps);
@@ -266,5 +284,6 @@ int main(int argc, char **argv)
     port_audio_shutdown();
     port_trace_close();
     port_sdl_shutdown();
+    port_diagnostics_close(SDL_GetAtomicInt(&s_guest_exit_status), s_guest_stop_reason);
     return SDL_GetAtomicInt(&s_guest_exit_status);
 }

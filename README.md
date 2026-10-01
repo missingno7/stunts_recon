@@ -18,6 +18,9 @@ runtime coverage and validation details.
 To install beside existing game files, run `python port/build.py package`,
 extract `build/sdl3/stunts-sdl3-win32.zip` into the game folder, and launch
 `stunts-sdl3.exe`. The ZIP includes the required SDL DLL.
+Crash reports go into the executable's `diagnostics` directory. Launch with
+`stunts-sdl3.exe --debug` to also record detailed logs and gameplay/input traces;
+ZIP the newest diagnostics session after a failure. See the SDL3 handoff for details.
 The build provisions the hash-pinned Nuked OPL source into ignored
 `build/dependencies/nuked-opl3`. For an offline build, set `NUKED_OPL3_ROOT`
 to a copy containing the pinned `opl3.c`, `opl3.h` and `LICENSE` files.

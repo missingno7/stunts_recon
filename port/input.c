@@ -33,6 +33,7 @@ static int s_mouse_min_y;
 static int s_mouse_max_x = PORT_SCREEN_WIDTH - 1;
 static int s_mouse_max_y = PORT_SCREEN_HEIGHT - 1;
 static int s_test_auto_protection;
+static uint64_t s_live_input_sequence;
 static uint64_t s_test_text_sequence;
 
 static void input_lock(void)
@@ -230,6 +231,7 @@ void port_input_init(void)
     s_extended_prefix = 0;
     s_callback_count = 0;
     s_test_auto_protection = 0;
+    s_live_input_sequence = 0;
     s_test_text_sequence = 0;
     s_mouse_x = 0;
     s_mouse_y = 0;
@@ -282,14 +284,45 @@ static int is_lock_or_modifier_scan(int scan, int extended)
            scan == 0x46u;
 }
 
+static void trace_live_mouse(void)
+{
+    int x, y;
+    uint16_t buttons;
+    uint64_t now = SDL_GetTicksNS();
+    input_lock();
+    x = s_mouse_x;
+    y = s_mouse_y;
+    buttons = s_mouse_buttons;
+    input_unlock();
+    port_trace_input_mouse(s_live_input_sequence++, now, now,
+                          (double)x / PORT_SCREEN_WIDTH,
+                          (double)y / PORT_SCREEN_HEIGHT, buttons);
+}
+
 static void clear_pressed_input(void)
 {
+    uint8_t releases[128u * 3u];
+    size_t count = 0;
+    unsigned scan;
+    uint64_t now;
     input_lock();
+    for (scan = 1; scan < 128; ++scan) {
+        if (s_key_down[scan])
+            releases[count++] = (uint8_t)(scan | 0x80u);
+        if (s_extended_down[scan]) {
+            releases[count++] = 0xE0;
+            releases[count++] = (uint8_t)(scan | 0x80u);
+        }
+    }
     memset(s_key_down, 0, sizeof(s_key_down));
     memset(s_extended_down, 0, sizeof(s_extended_down));
     s_extended_prefix = 0;
     s_mouse_buttons = 0;
     input_unlock();
+    now = SDL_GetTicksNS();
+    if (count != 0)
+        port_trace_input_keyboard(s_live_input_sequence++, now, now, releases, count);
+    trace_live_mouse();
 }
 
 /* Feed a manual answer through the same raw DOS keyboard path as a tester.
@@ -359,6 +392,15 @@ void port_input_handle_event(int event_type, int code, int value)
             }
         }
         input_unlock();
+        if (dos_code > 0) {
+            uint8_t codes[2];
+            size_t count = 0;
+            uint64_t now = SDL_GetTicksNS();
+            if (dos_code >= 0xE000)
+                codes[count++] = 0xE0;
+            codes[count++] = (uint8_t)((dos_code & 0xFF) | (down ? 0 : 0x80));
+            port_trace_input_keyboard(s_live_input_sequence++, now, now, codes, count);
+        }
     } else if (event_type == SDL_EVENT_MOUSE_MOTION) {
         input_lock();
         s_mouse_x = code < s_mouse_min_x ? s_mouse_min_x : code;
@@ -366,6 +408,7 @@ void port_input_handle_event(int event_type, int code, int value)
         if (s_mouse_x > s_mouse_max_x) s_mouse_x = s_mouse_max_x;
         if (s_mouse_y > s_mouse_max_y) s_mouse_y = s_mouse_max_y;
         input_unlock();
+        trace_live_mouse();
     } else if (event_type == SDL_EVENT_MOUSE_BUTTON_DOWN ||
                event_type == SDL_EVENT_MOUSE_BUTTON_UP) {
         uint8_t bit = code == 1 ? 1u : code == 2 ? 4u : code == 3 ? 2u : 0u;
@@ -375,6 +418,7 @@ void port_input_handle_event(int event_type, int code, int value)
         else
             s_mouse_buttons &= (uint8_t)~bit;
         input_unlock();
+        trace_live_mouse();
     } else if (event_type == SDL_EVENT_WINDOW_FOCUS_LOST) {
         clear_pressed_input();
     }

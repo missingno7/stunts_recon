@@ -29,9 +29,41 @@ layout automatically finds adjacent game files and writes into the folder's
 `saves` subdirectory. It also launches from shortcuts with an unrelated working
 directory and requires no Python or MinGW installation.
 
+## Crash diagnostics
+
+Every Windows launch creates a unique `diagnostics/stunts-*` session folder
+beside the executable and records build identity, paths and the exit reason
+in `session.log`. An unwritable installation falls back to the local
+application-data directory returned by `SDL_GetPrefPath("Stunts", "SDL3")`.
+`--diagnostics-dir=PATH` selects another destination.
+
+For detailed recording while playing, run from the game folder:
+
+```powershell
+.\stunts-sdl3.exe --debug
+```
+
+This also saves console/SDL output and the existing flushed input/GAMESTATE
+trace as `trace.jsonl`. Real keyboard and mouse events, including focus-loss
+releases, use the same DOS input channels as scripted runs. An explicit
+`--trace=PATH` takes precedence over the default debug trace location.
+Detailed traces grow while playing; normal launches keep the smaller log.
+
+For an unhandled Windows exception or CRT abort, the report contains
+`crash.txt`, a best-effort `crash.dmp`, and `stunts-crashed.exe` preserving
+the exact binary and its debug information. A prestarted dedicated thread
+writes the dump; the fault handler copies exception/context records and
+signals it without entering SDL, trace locks or guest cleanup. DbgHelp is
+loaded from the Windows system directory before gameplay. The process
+terminates after reporting; this does not attempt to recover a damaged game.
+Forced termination and power loss cannot produce this crash report.
+
+After a failure, ZIP the newest session folder and provide it for analysis.
+For a handled game error, `session.log` records the nonzero exit and reason.
+
 ## Current implementation
 
-All 38 historical C units and 30 host objects link with zero generated function
+All 38 historical C units and 31 host objects link with zero generated function
 or data stubs. Host overlays preserve 16-bit scalar fields while translating
 pointer-bearing runtime views. Frozen C and ASM are not rewritten for SDL3.
 
@@ -104,8 +136,8 @@ live screen exposes them. Frozen DOS layouts and native pointer views remain
 distinct: matching host strides does not mean forcing DOS sizes onto pointers.
 
 Scalar storage width alone does not preserve DOS expression evaluation. The
-physics regression executes locked load-image windows at 21706–21735 and
-34129–34166, then compares the generated helper and collision function. In a
+physics regression executes locked load-image windows at 21706Ă˘â‚¬â€ś21735 and
+34129Ă˘â‚¬â€ś34166, then compares the generated helper and collision function. In a
 head-on 100 mph case, the target reduces speed to 78 mph; the unadapted host
 expression instead wraps it upward to 206 mph. New arithmetic adaptations
 must establish intermediate widths and signedness from the original code.
@@ -236,7 +268,13 @@ than an exhaustive camera or gameplay proof. `test_sdl3_polygon_raster.py`
 adds original wheel faces and a crossing polygon that distinguishes the two
 reverse-chain callbacks.
 
-The 2026-10-01 cursor-alias fix run passed all 799 tests without skips, all 90 independent
+`tests/test_sdl3_diagnostics.py` induces main-thread and SDL game-thread
+access violations and CRT aborts in child processes. It parses the minidump's
+exception stream to verify the faulting thread and exception code, compares
+the retained executable bytes, and checks normal/debug launches, fresh session
+folders, explicit trace overrides and unavailable-directory handling.
+
+The 2026-10-01 diagnostics run passed all 805 tests without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;

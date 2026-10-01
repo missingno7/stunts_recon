@@ -96,7 +96,7 @@ def assert_build_ready() -> None:
     report = json.loads(BUILD_REPORT.read_text(encoding="utf-8"))
     if (report.get("target") != "i686-w64-mingw32" or
             report.get("game_c_objects") != 38 or
-            report.get("port_objects") != 30 or
+            report.get("port_objects") != 31 or
             report.get("compile", {}).get("object_passes") != 38):
         raise AssertionError(
             f"SDL3 build report is not the expected complete host build: {report}")
@@ -110,6 +110,7 @@ def assert_build_ready() -> None:
         ROOT / "src" / "obj_seg005.c",
         ROOT / "src" / "obj_seg001_complete.c",
         ROOT / "port" / "main.c",
+        ROOT / "port" / "diagnostics.c",
         ROOT / "port" / "game_abi.py",
         ROOT / "port" / "sprite.c",
         ROOT / "port" / "sprite_aux.c",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -511,10 +512,21 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "vehicle.c",
         "file.c", "resource.c", "audio.c", "audio_sdl.c", "pc_speaker.c", "cleanup.c", "platform.c", "input_script.c",
         "ad15_driver.c", "port_opl3.c",
-        "trace.c", "trace_hooks.c",
+        "trace.c", "trace_hooks.c", "diagnostics.c",
     ]
     out_dir = BUILD / "port-obj"
     out_dir.mkdir(parents=True, exist_ok=True)
+    identity = hashlib.sha256()
+    for directory in (ROOT / "port", ROOT / "src", ROOT / "include",
+                      ROOT / "tools" / "porting" / "host",
+                      ROOT / "tools" / "porting" / "port_include"):
+        for path in sorted(directory.rglob("*")):
+            if path.is_file() and path.suffix in {".c", ".h", ".py"}:
+                identity.update(path.relative_to(ROOT).as_posix().encode())
+                identity.update(b"\0")
+                identity.update(path.read_bytes())
+                identity.update(b"\0")
+    build_id = "sdl3-" + identity.hexdigest()
     common = [
         str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
         "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
@@ -529,7 +541,8 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     for source in port_sources:
         src = ROOT / "port" / source
         obj = out_dir / f"{src.stem}.o"
-        result = checked_run([*common, "-c", str(src), "-o", str(obj)], quiet=True)
+        flags = [f'-DSTUNTS_BUILD_ID="{build_id}"'] if source == "diagnostics.c" else []
+        result = checked_run([*common, *flags, "-c", str(src), "-o", str(obj)], quiet=True)
         if result.returncode != 0:
             raise RuntimeError(f"Port source compile failed: {source}")
         if result.stderr:
@@ -764,6 +777,8 @@ def run(args) -> int:
         command.append(f"--run-ms={args.run_ms}")
     if args.input_script is not None:
         command.append(f"--input-script={Path(args.input_script).resolve()}")
+    if args.debug:
+        command.append("--debug")
     if args.test_auto_protection:
         command.append("--test-auto-protection")
     if args.test_startup_seed is not None:
@@ -812,7 +827,13 @@ def package(args) -> Path:
         "No Python, compiler, installer, or launcher is needed.\n\n"
         "New tracks, replays, and high scores go into the saves subfolder.\n"
         "Original game data remains in the game folder.\n"
-        "AdLib/Sound Blaster FM audio is the default.\n",
+        "AdLib/Sound Blaster FM audio is the default.\n\n"
+        "Crash diagnostics are saved in diagnostics beside this executable.\n"
+        "For detailed recording, run: stunts-sdl3.exe --debug\n"
+        "After a crash, ZIP the newest diagnostics/stunts-* folder and send it.\n"
+        "A hard-crash report also preserves the executable for source locations.\n"
+        "If this folder is not writable, diagnostics use the Stunts/SDL3\n"
+        "folder in your local application data instead.\n",
         encoding="utf-8")
     archive = BUILD / "stunts-sdl3-win32.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as bundle:
@@ -840,6 +861,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--assets-source", type=Path, default=DEFAULT_ASSETS)
     run_parser.add_argument("--assets", default="build/sdl3/runtime/assets")
     run_parser.add_argument("--trace", default="")
+    run_parser.add_argument("--debug", action="store_true")
     run_parser.add_argument("--capture-dir", default="")
     run_parser.add_argument("--run-ms", type=int)
     run_parser.add_argument("--input-script", type=Path)

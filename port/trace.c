@@ -76,8 +76,9 @@ void port_trace_open(const char *path, const char *asset_root)
     fputs("{\"trace_schema\":\"stunts-runtime-trace-v1\",\"event_type\":\"header\","
           "\"runtime_mode\":\"startup\",\"screen_width\":320,\"screen_height\":200,"
           "\"indexed_palette_entries\":256,\"timer_target_hz\":99.99846,"
-          "\"timer_period_ns\":10000154,\"build_id\":\"portable-sdl3-M2\","
-          "\"asset_root\":", s_trace);
+          "\"timer_period_ns\":10000154,\"build_id\":", s_trace);
+    json_string(s_trace, port_diagnostics_build_id());
+    fputs(",\"asset_root\":", s_trace);
     json_string(s_trace, asset_root);
     fputs("}\n", s_trace);
     fflush(s_trace);

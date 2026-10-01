@@ -4,6 +4,7 @@
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern void flush_stdin(void);
 extern void keyboard_shift_checking1(void);
@@ -18,6 +19,10 @@ static unsigned s_stop_checks;
 static SDL_AtomicInt s_cancel_requested;
 static jmp_buf s_cancel_boundary;
 static int s_cancel_armed;
+static uint8_t s_last_codes[384];
+static size_t s_last_code_count;
+static double s_trace_u, s_trace_v;
+static uint16_t s_trace_buttons;
 
 void port_guest_check_stop(void)
 {
@@ -39,8 +44,17 @@ void port_trace_input_keyboard(uint64_t sequence, uint64_t scheduled_ns,
     (void)sequence;
     (void)scheduled_ns;
     (void)actual_ns;
-    (void)codes;
-    (void)code_count;
+    s_last_code_count = code_count;
+    if (code_count <= sizeof(s_last_codes))
+        memcpy(s_last_codes, codes, code_count);
+}
+
+void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
+                            uint64_t actual_ns, double u, double v,
+                            uint16_t buttons)
+{
+    (void)sequence; (void)scheduled_ns; (void)actual_ns;
+    s_trace_u = u; s_trace_v = v; s_trace_buttons = buttons;
 }
 
 static void count_callback(void)
@@ -90,6 +104,24 @@ int main(void)
         fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
         return 2;
     }
+    port_input_init();
+
+    port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_UP, 0);
+    ok &= check(s_last_code_count == 2 && s_last_codes[0] == 0xE0 &&
+                s_last_codes[1] == 0x48,
+                "physical arrow press is recorded as extended DOS scans");
+    port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_UP, 0);
+    ok &= check(s_last_code_count == 2 && s_last_codes[1] == 0xC8,
+                "physical arrow release is retained in diagnostics");
+    port_input_handle_event(SDL_EVENT_MOUSE_MOTION, 160, 100);
+    port_input_handle_event(SDL_EVENT_MOUSE_BUTTON_DOWN, 1, 0);
+    ok &= check(s_trace_u == 0.5 && s_trace_v == 0.5 && s_trace_buttons == 1,
+                "physical mouse records replay-compatible coordinates and buttons");
+    port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_A, 0);
+    port_input_handle_event(SDL_EVENT_WINDOW_FOCUS_LOST, 0, 0);
+    ok &= check(s_last_code_count == 1 && s_last_codes[0] == 0x9E &&
+                s_trace_buttons == 0,
+                "focus loss records releases instead of leaving replay keys held");
     port_input_init();
 
     {
