@@ -89,21 +89,6 @@ static int check(int condition, const char *message)
     return condition;
 }
 
-static int equal_case(const char *left, const char *right)
-{
-    while (*left != '\0' && *right != '\0') {
-        char a = *left >= 'A' && *left <= 'Z' ?
-                 (char)(*left + ('a' - 'A')) : *left;
-        char b = *right >= 'A' && *right <= 'Z' ?
-                 (char)(*right + ('a' - 'A')) : *right;
-        if (a != b)
-            return 0;
-        ++left;
-        ++right;
-    }
-    return *left == '\0' && *right == '\0';
-}
-
 int main(int argc, char **argv)
 {
     static const uint8_t asset_data[] = "immutable asset";
@@ -179,8 +164,11 @@ int main(int argc, char **argv)
     ok &= check(port_fs_exists("longtrack.trk") && port_fs_exists("short.track"),
                 "literal opens still reach explicit native long filenames");
     ok &= check(port_fs_find("*.TRK", first, sizeof(first)) &&
-                equal_case(first, "Track01.trk") && file_find_next() == NULL,
+                strcmp(first, "TRACK01.TRK") == 0 && file_find_next() == NULL,
                 "wildcard results fit the DOS 8.3 filename buffer");
+    ok &= check(port_fs_find("track01.trk", first, sizeof(first)) &&
+                strcmp(first, "TRACK01.TRK") == 0,
+                "literal search returns uppercase DOS DTA spelling");
 
     for (index = 0; index < sizeof(large_data); ++index)
         large_data[index] = (uint8_t)(index * 37u + 11u);
@@ -231,9 +219,9 @@ int main(int argc, char **argv)
         int saw_duplicate = 0;
         int saw_unique = 0;
         for (index = 0; index < (size_t)count; ++index) {
-            if (equal_case(listed[index], "dup.hig"))
+            if (strcmp(listed[index], "DUP.HIG") == 0)
                 saw_duplicate = 1;
-            if (equal_case(listed[index], "unique.hig"))
+            if (strcmp(listed[index], "UNIQUE.HIG") == 0)
                 saw_unique = 1;
         }
         ok &= check(saw_duplicate && saw_unique,

@@ -139,6 +139,36 @@ the transition primitive's timing model, not whole-game cycle timing. The
 original CPU calibration selects full-frame drawing, while the native
 calibration selects incremental drawing; both paths must preserve the scene.
 
+The track chooser and Options dialog exposed a separate text translation
+error. `draw_text_at` had been aliased to the transparent `font_draw_text`.
+The frozen former routine writes both foreground and background pixels;
+the latter preserves pixels under clear glyph bits. Retaining both paths
+restores erased letters and inverted selections. The same family now preserves
+whole-word color setup, proportional-font header updates, and the original
+counted-width rule that skips missing glyphs. Text uses the frozen line-table
+addressing without the general pixel helper's clip rectangle.
+
+`test_sdl3_font_oracle.py` executes both locked machine entries against the
+production font and sprite code. It compares the full 64 KiB framebuffer and
+the complete modified font record for the built-in font and original FONTDEF,
+FONTN and FONTLED resources, including restrictive clipping, swapped colors,
+and a longer string overwritten by a space and terminator. The original
+`sdltst2_20261001_114721` replay also reproduces the old chooser ghosting.
+After correction, its chooser and Options frames match the full original
+indexed images and DAC palette, including their cursors. Native scripts accept up to
+4,096 events so this recording's 3,039 inputs need no path simplification.
+Native scripts use wall-clock scheduling, so this is UI reproduction rather
+than a claim of identical semantic-boundary timing or DOS directory ordering.
+The recording also exposed two replay/file-service differences: normalized
+mouse coordinates now use the original inclusive device bounds 0..320 and
+0..200, and find results use uppercase DOS DTA spelling. Preserving host
+filename casing previously changed the guest's case-sensitive track sort.
+The input regression checks the recorded Options cursor at (102,130) and
+preserves every event in a 3,039-observation stream; the file probe checks
+uppercase results for literal, wildcard, saved and asset searches.
+The later chooser checkpoint lands one row farther down in the wall-paced
+native replay; identical whole-game input consumption timing is not established.
+
 Two adaptations are explicit host boundaries. A missing music instrument is
 rejected before dereferencing its null pointer; DOS performed a physical-memory
 read first. The mode-3 compressor bounds scans to the remaining image pixels;
@@ -180,7 +210,7 @@ than an exhaustive camera or gameplay proof. `test_sdl3_polygon_raster.py`
 adds original wheel faces and a crossing polygon that distinguishes the two
 reverse-chain callbacks.
 
-The 2026-10-01 startup-fix run passed all 792 tests without skips, all 90 independent
+The 2026-10-01 text-fix run passed all 797 tests without skips, all 90 independent
 DOSBox-X contribution checks, fresh `HYBRID_EXACT` image equality with 2,588
 ordered relocations, and the BSS/runtime real-link gate. Initialized ownership
 is C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and raw zero;

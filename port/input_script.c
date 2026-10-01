@@ -7,7 +7,9 @@
 #include <string.h>
 
 #define SCRIPT_FILE_LIMIT (1024u * 1024u)
-#define SCRIPT_EVENT_CAP 512u
+/* Recorded UI sessions include frequent mouse observations. Keep their full
+   input stream rather than requiring lossy path simplification. */
+#define SCRIPT_EVENT_CAP 4096u
 #define SCRIPT_SCANCODE_CAP 64u
 
 typedef struct PortScriptEvent {
@@ -267,8 +269,11 @@ void port_input_script_pump(uint64_t now_ns)
         if (elapsed_ns < event->due_ns)
             break;
         if (event->mouse) {
-            int16_t x = (int16_t)(event->mouse_u * (PORT_SCREEN_WIDTH - 1));
-            int16_t y = (int16_t)(event->mouse_v * (PORT_SCREEN_HEIGHT - 1));
+            /* PortForge normalizes the DOS mouse device's inclusive bounds
+               0..320 and 0..200, not the last visible pixel coordinates.
+               The game's mouse bounds handle the endpoint clamp. */
+            int16_t x = (int16_t)(event->mouse_u * PORT_SCREEN_WIDTH);
+            int16_t y = (int16_t)(event->mouse_v * PORT_SCREEN_HEIGHT);
             port_input_mouse_set(x, y);
             port_input_mouse_set_buttons(event->mouse_buttons);
             port_trace_input_mouse(event->sequence, scheduled_ns, now_ns,

@@ -1077,6 +1077,23 @@ void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color)
     pixels[offset] = color;
 }
 
+/* The font entries access ES:DI directly and never inspect the sprite clip.
+   Preserve their 16-bit row-table-plus-X address, including horizontal wrap. */
+void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color)
+{
+    size_t extent;
+    uint8_t *pixels = sprite_pixels(&s_sprite1, &extent);
+    uint16_t offset;
+    if (pixels == NULL || s_sprite1.lineofs == NULL)
+        return;
+    if ((uint16_t)y >= s_sprite1.sprite_bitmapptr->height)
+        port_guest_unwind("font row outside active sprite line table");
+    offset = (uint16_t)(s_sprite1.lineofs[(uint16_t)y] + (uint16_t)x);
+    if (offset >= extent)
+        port_guest_unwind("font pixel exceeded sprite backing extent");
+    pixels[offset] = color;
+}
+
 /* Host-view adapter for asm/putpixel_single_maybe.ASM. Its four signed
    half-open clip comparisons select the active sprite, then its lineofs[y]
    plus x address and low color byte are reproduced by the common plotter. */

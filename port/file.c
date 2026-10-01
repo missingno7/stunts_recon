@@ -54,6 +54,16 @@ static int dos_case_equal(const char *left, const char *right)
     return *left == '\0' && *right == '\0';
 }
 
+/* DOS DTA names are uppercase even when a host directory preserves case.
+   The guest sorts these names with strcmp, so expose the DOS spelling. */
+static void dos_filename_uppercase(char *name)
+{
+    for (; *name != '\0'; ++name) {
+        if (*name >= 'a' && *name <= 'z')
+            *name = (char)(*name - 'a' + 'A');
+    }
+}
+
 static int safe_relative_path(const char *path, char *out, size_t capacity)
 {
     size_t i;
@@ -434,6 +444,7 @@ static SDL_EnumerationResult SDLCALL enumerate_matching_entry(
         return SDL_ENUM_FAILURE;
     }
     memcpy(run->found, relative, (size_t)length + 1u);
+    dos_filename_uppercase(run->found);
     run->matched = 1;
     return SDL_ENUM_SUCCESS;
 }
@@ -504,6 +515,7 @@ int port_fs_find(const char *pattern, char *found, size_t capacity)
         if (relative_length + 1u > capacity)
             return 0;
         memcpy(found, relative, relative_length + 1u);
+        dos_filename_uppercase(found);
         return 1;
     }
     slash = strrchr(relative, '/');

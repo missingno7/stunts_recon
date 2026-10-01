@@ -183,6 +183,7 @@ void sprputimage(const PortShape2D *shape);
 void sprite_1_unk3(const PortShape2D *shape, int16_t phase);
 void sprite_blit_to_video(PortSprite *window, uint16_t mode);
 void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color);
+void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color);
 void putpixel_single_maybe(int16_t x, int16_t y, int16_t color);
 void preRender_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2,
                     int16_t color);
