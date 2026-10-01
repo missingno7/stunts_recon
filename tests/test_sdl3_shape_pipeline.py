@@ -306,17 +306,22 @@ _Static_assert(sizeof(struct CameraProbeRecord)==288,"camera probe schema");
 __declspec(dllexport) size_t renderer_native_copy(struct CameraProbeRecord *out, size_t capacity)
 {
     size_t count; const PortNativeCommand *commands=port_camera_scene(&count);
-    if (capacity<count) return count;
+    size_t accepted=0;
+    for (size_t i=0;i<count;++i) accepted+=commands[i].geometry.reference_accepted!=0;
+    if (capacity<accepted) return accepted;
+    size_t j=0;
     for (size_t i=0;i<count;++i) {
         const PortCameraCommand *c=&commands[i].geometry;
-        memset(&out[i],0,sizeof out[i]);
-        out[i].ordinal=c->primitive_ordinal;out[i].depth=c->depth;
-        out[i].type=c->type;out[i].material=c->material;
-        out[i].reference_count=c->reference_point_count;out[i].count=c->point_count;
-        memcpy(out[i].xy,c->reference_xy,sizeof out[i].xy);
-        memcpy(out[i].xyz,c->xyz,sizeof out[i].xyz);
+        if (!c->reference_accepted) continue;
+        memset(&out[j],0,sizeof out[j]);
+        out[j].ordinal=c->primitive_ordinal;out[j].depth=c->depth;
+        out[j].type=c->type;out[j].material=c->material;
+        out[j].reference_count=c->reference_point_count;out[j].count=c->point_count;
+        memcpy(out[j].xy,c->reference_xy,sizeof out[j].xy);
+        memcpy(out[j].xyz,c->xyz,sizeof out[j].xyz);
+        ++j;
     }
-    return count;
+    return accepted;
 }
 static I8 renderer_parity_pool[0x28A0];
 static I16 renderer_parity_colors[256], renderer_parity_color2[256];
@@ -379,7 +384,7 @@ __declspec(dllexport) int renderer_parity_run(
     set_projection(proj_left, proj_top, proj_width, proj_height);
     (void)select_rot(z, x, y, &clip, (flags & 1u) != 0u);
     port_render_set_mode("modern");
-    port_camera_scene_reference_only(1);
+    port_camera_scene_reference_only(0);
     port_camera_scene_begin();
     (void)trans_op(&ts);
     *count_out = (U16)polygonnumber;

@@ -13,6 +13,7 @@ static PortRenderCommand s_published_commands[400], s_present_commands[400];
 static size_t s_published_command_count, s_present_command_count;
 static uint8_t s_present_frame[64000], s_present_palette[768];
 static int s_modern_failed;
+static char s_debug_native_dir[1200];
 #endif
 
 #include <SDL3/SDL.h>
@@ -189,6 +190,7 @@ int port_video_init(SDL_Renderer *renderer)
     s_published_native_count=s_present_native_count=0;
     memset(&s_published_layer,0,sizeof s_published_layer);
     s_modern_failed=0;
+    s_debug_native_dir[0]=0;
     if (port_render_mode() && !port_modern_init(&s_modern,renderer)) return 0;
 #endif
     return 1;
@@ -256,6 +258,7 @@ void port_video_publish(const char *reason)
         PortRenderLayer layer;
         PortRenderCommand commands[400];
         port_render_layer_copy(&layer);
+        if (port_render_mode()==2 && !port_camera_scene_valid()) layer.valid=0;
         size_t count=port_render_stream_copy(commands,400);
         changed |= memcmp(&layer,&s_published_layer,sizeof layer)!=0 ||
             count!=s_published_command_count ||
@@ -322,6 +325,12 @@ void port_video_debug_capture(void)
     }
     port_trace_debug_capture(frame_id, directory);
     port_diagnostics_note("debug_capture", directory);
+#ifdef PORT_RENDER_INSTRUMENT
+    if (port_render_mode()) {
+        strcpy(s_debug_native_dir,directory);
+        port_video_request_redraw(0);
+    }
+#endif
     SDL_Log("Debug capture saved: %s", directory);
 }
 
@@ -453,13 +462,16 @@ void port_video_present(void)
     if (!modern_drawn) SDL_RenderTexture(s_renderer, s_texture, NULL, &destination);
 #ifdef PORT_RENDER_INSTRUMENT
     if (modern_drawn) ++s_world_presentations;
-    if (modern_drawn && s_render_capture_dir[0] && !s_render_captured && s_world_presentations>=30) {
-        char path[1024];
+    const char *native_capture=s_debug_native_dir[0]?s_debug_native_dir:
+        (modern_drawn && s_render_capture_dir[0] && !s_render_captured && s_world_presentations>=30?
+         s_render_capture_dir:NULL);
+    if (native_capture) {
+        char path[1400];
         SDL_Surface *surface=SDL_RenderReadPixels(s_renderer,NULL);
-        snprintf(path,sizeof path,"%s/output-%06llu.bmp",s_render_capture_dir,(unsigned long long)frame_id);
+        snprintf(path,sizeof path,"%s/output-%06llu.bmp",native_capture,(unsigned long long)frame_id);
         if (surface && SDL_SaveBMP(surface,path)) {
-            dump_frame_to_dir(s_render_capture_dir,frame_id,"native_compare",s_present_frame,s_present_palette);
-            snprintf(path,sizeof path,"%s/output-%06llu.json",s_render_capture_dir,(unsigned long long)frame_id);
+            dump_frame_to_dir(native_capture,frame_id,"native_compare",s_present_frame,s_present_palette);
+            snprintf(path,sizeof path,"%s/output-%06llu.json",native_capture,(unsigned long long)frame_id);
             FILE *f=fopen(path,"wb");
             if (f) {
                 fprintf(f,"{\"frame_id\":%llu,\"width\":%d,\"height\":%d,\"camera_commands\":%u,\"projected_commands\":%u,\"backend\":\"%s\"}\n",
@@ -467,10 +479,11 @@ void port_video_present(void)
                     (unsigned)s_present_command_count,SDL_GetRendererName(s_renderer));
                 fclose(f);
             }
-            s_render_captured=1;
-            SDL_Log("Native output and faithful comparison saved: %s",s_render_capture_dir);
+            if (native_capture==s_render_capture_dir) s_render_captured=1;
+            SDL_Log("Native output and faithful comparison saved: %s",native_capture);
         }
         SDL_DestroySurface(surface);
+        s_debug_native_dir[0]=0;
     }
 #endif
     if (SDL_RenderPresent(s_renderer)) {

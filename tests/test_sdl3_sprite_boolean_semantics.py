@@ -223,6 +223,7 @@ def compiled_harness(functions: str) -> str:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "render/renderer_ui_store.h"
 #ifdef _WIN32
 #include <fcntl.h>
 #include <io.h>
@@ -443,6 +444,7 @@ class Sdl3SpriteBooleanSemanticsTests(unittest.TestCase):
                                + environment.get("PATH", ""))
         result = subprocess.run(
             [cls.compiler, "-std=c11", "-O0", "-Wall", "-Wextra", "-Werror",
+             "-I", str(ROOT / "port"),
              str(harness_path), "-o", str(cls.executable)],
             cwd=ROOT, capture_output=True, text=True, check=False,
             timeout=30, env=environment,

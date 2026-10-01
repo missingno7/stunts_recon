@@ -15,6 +15,7 @@ import zipfile
 
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
+from render.tile_adapter import adapt_update_frame, adapt_trans_op
 from render.camera_adapter import inject as adapt_camera_capture
 from render.legacy_adapter import adapt_render_stream, adapt_render_layers
 
@@ -575,6 +576,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = adapt_polygon_storage(transformed)
             transformed = adapt_render_stream(transformed)
             transformed = adapt_camera_capture(transformed)
+            transformed = adapt_trans_op(transformed)
             transformed += ("\nuint16_t port_game_y_rotation_snapshot(void) { "
                             "return (uint16_t)mat_y_rot_angle; }\n")
 
@@ -586,6 +588,8 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = transformed.replace("file_read_nofatal(first, second, third)",
                                               "file_read_nofatal(first, second)")
         transformed = transformed.replace("((int16_t (*)())call_read_line)", "port_call_read_line")
+        if source == "src/obj_seg003.c":
+            transformed = adapt_update_frame(transformed)
         transformed = probe.rewrite_calls(transformed, "call_read_line", "rename:port_call_read_line")
         transformed = "extern int16_t port_call_read_line(char *, int16_t, int16_t, int16_t, int32_t);\n" + transformed
         transformed += host_view_contracts(source)
@@ -649,6 +653,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "render/renderer_scene.c", "render/renderer_camera.c", "render/renderer_camera_scene.c",
         "render/renderer_modern.c", "render/renderer_ui.c",
         "render/triangulate2d.c", "render/modern_wheel.c",
+        "render/edge_chain_tessellator.c", "render/tile_expansion.c",
         "matrix.c",
         "vehicle.c",
         "file.c", "resource.c", "audio.c", "audio_sdl.c", "pc_speaker.c", "cleanup.c", "platform.c", "input_script.c",
@@ -976,9 +981,15 @@ def package(args) -> Path:
         "The manual-word check is disabled by default. To restore it, set\n"
         "\"manual_word_check\": true in config.json and restart the game.\n"
         "Upgrades preserve your existing config.json.\n\n"
+        "The default resizable window is 960x720 (the intended 4:3 display).\n"
+        "Use --renderer=modern for native-resolution world polygons and\n"
+        "horizontal widescreen extension around the original dashboard.\n"
+        "Use --renderer=faithful for the exact indexed visual reference.\n"
+        "You can also set \"renderer\": \"modern\" in config.json.\n\n"
         "Crash diagnostics are saved in diagnostics beside this executable.\n"
         "For detailed recording, run: stunts-sdl3.exe --debug\n"
         "For a visual bug, press F12 to save an indexed screenshot and palette.\n"
+        "Modern rendering also saves its native output and matching reference.\n"
         "Save the in-game replay and track too; note the camera and replay frame.\n"
         "ZIP that diagnostics session together with the replay and track.\n"
         "After a crash, ZIP the newest diagnostics/stunts-* folder and send it.\n"

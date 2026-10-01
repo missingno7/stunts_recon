@@ -2,6 +2,7 @@
 #include "pattern.h"
 #include "triangulate2d.h"
 #include "modern_wheel.h"
+#include "edge_chain_tessellator.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -153,19 +154,37 @@ static int polygon(PortModernBackend *b, const PortTriPoint *p, int count,
                    const PortRenderCommand *c, const uint8_t *palette,
                    PortViewport v, int width, int height)
 {
-    unsigned indices[3 * 64];
-    int triangles = port_triangulate(p, count, indices, 3 * 64);
-    if (triangles < 0) {
-        SDL_SetError("Primitive triangulation failed: %d (material %u)",triangles,c->material);
-        return 0;
-    }
     b->vertices = 0;
     double minx = -v.x * 320 / v.w, maxx = (width - v.x) * 320 / v.w;
     double miny = -v.y * 200 / v.h, maxy = (height - v.y) * 200 / v.h;
     minx = fmax(minx,c->clip[0]); maxx = fmin(maxx,c->clip[1]);
     miny = fmax(miny,c->clip[2]); maxy = fmin(maxy,c->clip[3]);
+    double left=p[0].x,right=left,top=p[0].y,bottom=top;
+    for (int i=1;i<count;++i) {
+        left=fmin(left,p[i].x);right=fmax(right,p[i].x);
+        top=fmin(top,p[i].y);bottom=fmax(bottom,p[i].y);
+    }
+    if (right+1<minx || left-1>maxx || bottom+1<miny || top-1>maxy) return 1;
+    unsigned indices[3 * 64];
+    int triangles = port_triangulate(p, count, indices, 3 * 64);
     SDL_FColor color = rgb(palette, c->color);
-    for (int i = 0; i < triangles; ++i) {
+    if (triangles<=0) {
+        EdgeChainPoint contour[20];
+        EdgeChainSpan spans[EDGE_CHAIN_MAX_SPANS];
+        for (int i=0;i<count;++i) contour[i]=(EdgeChainPoint){p[i].x,p[i].y};
+        int n=edge_chain_tessellate(contour,(size_t)count,spans,EDGE_CHAIN_MAX_SPANS);
+        if (n<0) { SDL_SetError("Edge-chain contract failure %d",n);return 0; }
+        for (int i=0;i<n;++i) {
+            PortTriPoint points[4]={{spans[i].top_left.x,spans[i].top_left.y},
+                {spans[i].top_right.x,spans[i].top_right.y},
+                {spans[i].bottom_right.x,spans[i].bottom_right.y},
+                {spans[i].bottom_left.x,spans[i].bottom_left.y}};
+            PortTriPoint a[3]={points[0],points[1],points[2]};
+            PortTriPoint d[3]={points[0],points[2],points[3]};
+            if (!triangle(b,a,v,color,c->pattern_mode!=0,minx,maxx,miny,maxy) ||
+                !triangle(b,d,v,color,c->pattern_mode!=0,minx,maxx,miny,maxy)) return 0;
+        }
+    } else for (int i = 0; i < triangles; ++i) {
         PortTriPoint points[3] = {p[indices[i*3]],p[indices[i*3+1]],p[indices[i*3+2]]};
         if (!triangle(b, points, v, color, c->pattern_mode != 0, minx,maxx,miny,maxy)) return 0;
     }

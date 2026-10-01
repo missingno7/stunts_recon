@@ -1,7 +1,7 @@
-"""Scratch-only generator for an observational camera-space capture hook.
+"""Audited camera-space observation in generated host overlays only.
 
-It edits only a generated host overlay supplied on the command line. The
-canonical recovered source and port build recipe remain untouched.
+The native build uses this transformation without editing historical source.
+The command-line form is also available for isolated instrumentation probes.
 """
 
 from __future__ import annotations
@@ -85,4 +85,3 @@ def inject(source: str) -> str:
     if source.count(anchor) != 1:
         raise ValueError("Missing unique reference depth anchor")
     return source.replace(anchor,anchor+"\n            port_renderer_reference_primitive((unsigned)(cullwords - ts->shapeptr->cull1 - 1), i, (uint8_t)transformed_vert_count);",1)
-

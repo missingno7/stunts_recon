@@ -46,6 +46,49 @@ int main(void)
         port_modern_destroy(&b);SDL_DestroyRenderer(r);SDL_DestroySurface(surface);
     }
 
+    /* Every semantic special primitive reaches the native triangle backend. */
+    {
+        SDL_Surface *surface=SDL_CreateSurface(960,720,SDL_PIXELFORMAT_RGBA32);
+        SDL_Renderer *r=SDL_CreateSoftwareRenderer(surface);
+        PortModernBackend b;assert(r&&port_modern_init(&b,r));
+        PortRenderCommand commands[4]={0};
+        for (int i=0;i<4;++i) {
+            commands[i].color=1;commands[i].clip[1]=320;commands[i].clip[3]=200;
+        }
+        commands[0].primitive=PORT_RENDER_SPHERE;commands[0].point_count=2;
+        commands[0].points[0]=(PortRenderPoint){50,50};
+        commands[0].points[1]=(PortRenderPoint){12,0};
+        commands[1].primitive=PORT_RENDER_LINE;commands[1].point_count=2;
+        commands[1].points[0]=(PortRenderPoint){100,50};
+        commands[1].points[1]=(PortRenderPoint){140,50};
+        commands[2].primitive=PORT_RENDER_PIXEL;commands[2].point_count=1;
+        commands[2].points[0]=(PortRenderPoint){180,100};
+        commands[3].primitive=PORT_RENDER_WHEEL;commands[3].point_count=4;
+        commands[3].points[0]=(PortRenderPoint){240,80};
+        commands[3].points[1]=(PortRenderPoint){252,80};
+        commands[3].points[2]=(PortRenderPoint){240,90};
+        commands[3].points[3]=(PortRenderPoint){260,80};
+        commands[3].wheel_colors[0]=2;commands[3].wheel_colors[1]=3;
+        SDL_SetRenderDrawColor(r,0,0,0,255);SDL_RenderClear(r);
+        assert(port_modern_draw_projected(&b,commands,4,palette,960,720));
+        SDL_Surface *read=SDL_RenderReadPixels(r,NULL);assert(read);
+        const int samples[][2]={{150,180},{360,180},{541,362}};
+        for (unsigned i=0;i<3;++i) {
+            uint8_t red,green,blue,alpha;
+            assert(SDL_ReadSurfacePixel(read,samples[i][0],samples[i][1],&red,&green,&blue,&alpha));
+            assert(red==255&&green==0&&blue==0);
+        }
+        unsigned wheel_pixels=0;
+        for (int y=240;y<330;++y) for (int x=680;x<830;++x) {
+            uint8_t red,green,blue,alpha;
+            assert(SDL_ReadSurfacePixel(read,x,y,&red,&green,&blue,&alpha));
+            wheel_pixels+=red||green||blue;
+        }
+        assert(wheel_pixels>500);
+        SDL_DestroySurface(read);port_modern_destroy(&b);
+        SDL_DestroyRenderer(r);SDL_DestroySurface(surface);
+    }
+
     /* Same camera snapshot, central composition and UI at three aspect ratios.
        Side polygons were never quantized or admitted by a 320-wide viewport. */
     assert(port_render_set_mode("modern"));

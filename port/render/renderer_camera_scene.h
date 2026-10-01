@@ -4,13 +4,20 @@
 #include "renderer.h"
 /* Semantic snapshot ABI is independent of the historical packed game ABI. */
 #pragma pack(push, 8)
-#define PORT_NATIVE_MAX_COMMANDS 8192
+#define PORT_NATIVE_MAX_COMMANDS 65536
 typedef struct PortNativeCommand {
     PortCameraCommand geometry;
     PortCameraProjection projection;
     PortRenderCommand paint;
 } PortNativeCommand;
+int port_camera_scene_wide_requested(void);
+unsigned port_camera_scene_wide_extra_tiles(void);
+void port_camera_scene_wide_begin(void);
+void port_camera_scene_wide_end(void);
+int port_renderer_capture_only(void);
 void port_camera_scene_begin(void);
+int port_camera_scene_valid(void);
+void port_camera_scene_reject(const char *reason);
 /* Diagnostic: compare only faces independently accepted by the oracle. */
 void port_camera_scene_reference_only(int enabled);
 void port_camera_scene_end(const int16_t *modes, const int16_t *patterns,

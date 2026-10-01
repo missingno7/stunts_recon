@@ -15,6 +15,12 @@ The native SDL3 game is developed separately on `portable-sdl3`. Build with
 `python port/build.py run --no-build`. The executable finds its copied assets
 next to itself. See the [SDL3 handoff](docs/porting/HANDOFF.md) for toolchain,
 runtime coverage and validation details.
+The resizable window defaults to 960×720: the original 320×200 grid is presented
+at its intended 4:3 display aspect. Run with `--renderer=modern` for native world
+polygons and additional horizontal visibility in widescreen, or
+`--renderer=faithful` for the exact indexed reference (the default). The JSON
+`renderer` setting accepts these same names. See the
+[renderer contract and evidence](docs/porting/modern-renderer.md).
 To install beside existing game files, run `python port/build.py package`,
 extract `build/sdl3/stunts-sdl3-win32.zip` into the game folder, and launch
 `stunts-sdl3.exe`. The ZIP includes the required SDL DLL.
