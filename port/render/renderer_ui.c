@@ -96,16 +96,14 @@ void port_render_ui_copy(uint8_t *dst, size_t dofs, const uint8_t *src,
                          size_t sofs, size_t count)
 {
     if (s_drawing || !s_layer.valid) return;
-    /* A full opaque MCGA window publication transfers its compositing mask.
-       Production frame copies are row-wise; identify the first complete row
-       and move the tracked backing view by the same linear displacement. */
+    /* Recovered dirty-rectangle publications copy any subset of the world
+       window into the same MCGA coordinates. They transfer provenance, not
+       an opaque UI sprite. Width 320 is not a reliable discriminator. */
     int row, x;
-    if (count == 320 && row_offset(src, sofs, &row, &x) && x == 0) {
-        uintptr_t dest_row = (uintptr_t)dst + dofs;
-        s_alias_pixels = dest_row - (uintptr_t)row*320u;
-        /* Keep source valid throughout the row-wise copy; layer publication
-           reads the final screen mask separately. UI drawing still targets
-           the source window until the next recovered world pass. */
+    if (dst == port_video_pixels() && count > 0 &&
+        row_offset(src, sofs, &row, &x) && count <= (size_t)(320-x) &&
+        dofs == (size_t)row*320u+(size_t)x) {
+        s_alias_pixels = (uintptr_t)dst;
         return;
     }
     port_render_ui_write(dst,dofs,count);

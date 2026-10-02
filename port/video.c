@@ -258,7 +258,14 @@ void port_video_publish(const char *reason)
         PortRenderLayer layer;
         PortRenderCommand commands[400];
         port_render_layer_copy(&layer);
-        if (port_render_mode()==2 && !port_camera_scene_valid()) layer.valid=0;
+        if (port_render_mode()==2) port_sky_copy(&layer.sky);
+        if (port_render_mode()==2 && !port_camera_scene_valid()) {
+            if (s_frame_lock != NULL) SDL_UnlockMutex(s_frame_lock);
+            port_guest_set_exit_status(1);
+            port_guest_request_stop("modern scene capture failed");
+            port_guest_check_stop();
+            return;
+        }
         size_t count=port_render_stream_copy(commands,400);
         changed |= memcmp(&layer,&s_published_layer,sizeof layer)!=0 ||
             count!=s_published_command_count ||
@@ -454,8 +461,13 @@ void port_video_present(void)
             s_present_native,s_present_native_count,
             &s_present_layer,s_present_frame,s_present_palette,output_w,output_h);
         if (!modern_drawn && !s_modern_failed) {
-            SDL_Log("Modern frame rejected; faithful presentation: %s",SDL_GetError());
+            SDL_Log("Modern renderer failed: %s",SDL_GetError());
             s_modern_failed=1;
+        }
+        if (!modern_drawn) {
+            port_guest_set_exit_status(1);
+            port_guest_request_stop("modern GPU frame failed");
+            return;
         }
     }
 #endif
@@ -471,6 +483,15 @@ void port_video_present(void)
         snprintf(path,sizeof path,"%s/output-%06llu.bmp",native_capture,(unsigned long long)frame_id);
         if (surface && SDL_SaveBMP(surface,path)) {
             dump_frame_to_dir(native_capture,frame_id,"native_compare",s_present_frame,s_present_palette);
+            SDL_Surface *mask=SDL_CreateSurface(320,200,SDL_PIXELFORMAT_RGBA32);
+            if (mask) {
+                for (int y=0;y<200;++y) for (int x=0;x<320;++x) {
+                    uint8_t value=s_present_layer.ui_mask[y*320+x]?255:0;
+                    SDL_WriteSurfacePixel(mask,x,y,value,value,value,255);
+                }
+                snprintf(path,sizeof path,"%s/ui-mask-%06llu.bmp",native_capture,(unsigned long long)frame_id);
+                SDL_SaveBMP(mask,path);SDL_DestroySurface(mask);
+            }
             snprintf(path,sizeof path,"%s/output-%06llu.json",native_capture,(unsigned long long)frame_id);
             FILE *f=fopen(path,"wb");
             if (f) {

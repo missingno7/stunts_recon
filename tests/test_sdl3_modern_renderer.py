@@ -35,6 +35,27 @@ class ModernRendererTests(unittest.TestCase):
     def test_native_patterns_materials_and_painter_order(self):
         self.run_probe("modern_probe.c", ["renderer_modern.c", "triangulate2d.c", "modern_wheel.c", "renderer_scene.c", "edge_chain_tessellator.c"], True)
 
+    def test_native_panorama_yaw_roll_pitch_and_horizontal_extension(self):
+        self.run_probe("sky_probe.c", ["renderer_modern.c", "triangulate2d.c", "modern_wheel.c", "renderer_scene.c", "edge_chain_tessellator.c"], True)
+
+    def test_modern_scene_and_gpu_failure_never_present_faithful_world(self):
+        compiler = compiler_path()
+        self.assertIsNotNone(compiler)
+        environment = make_test_environment(compiler)
+        with tempfile.TemporaryDirectory(prefix="stunts-render-failure-") as directory:
+            exe = Path(directory) / "probe.exe"
+            result = subprocess.run([compiler, "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror",
+                "-DPORT_RENDER_INSTRUMENT", "-I", str(ROOT / "port"),
+                "-I", str(SDL_ROOT / "include"), str(ROOT / "tests/sdl3/video_failure_probe.c"),
+                str(ROOT / "port/video.c"), "-L", str(SDL_ROOT / "lib"), "-lSDL3", "-o", str(exe)],
+                env=environment, capture_output=True, text=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            result = subprocess.run([str(exe)], env=environment, capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_reference_material_override_is_authoritative_after_geometry_binding(self):
+        self.run_probe("scene_material_probe.c", ["renderer_camera_scene.c", "renderer_camera.c", "renderer_scene.c"])
+
     def test_world_and_ui_write_provenance(self):
         self.run_probe("renderer_ui_probe.c", ["renderer_ui.c"])
 

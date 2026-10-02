@@ -16,6 +16,8 @@ void port_camera_scene_wide_begin(void);
 void port_camera_scene_wide_end(void);
 int port_renderer_capture_only(void);
 void port_camera_scene_begin(void);
+/* Native cloud translation; reference vertices remain exact for binding. */
+void port_camera_scene_cloud_offset(const int16_t *delta);
 int port_camera_scene_valid(void);
 void port_camera_scene_reject(const char *reason);
 /* Diagnostic: compare only faces independently accepted by the oracle. */

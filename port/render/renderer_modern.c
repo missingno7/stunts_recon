@@ -34,9 +34,10 @@ void port_modern_destroy(PortModernBackend *b)
     SDL_DestroyTexture(b->background);
     SDL_DestroyTexture(b->ui);
     SDL_DestroyTexture(b->pattern);
-    SDL_DestroyTexture(b->edges);
+    SDL_DestroyTexture(b->panorama);
     free(b->mesh);
     free(b->rgba);
+    free(b->sky_rgba);
     memset(b, 0, sizeof(*b));
 }
 
@@ -304,17 +305,133 @@ int port_modern_draw_camera(PortModernBackend *b, const PortNativeCommand *comma
     return 1;
 }
 
+typedef struct SkyVertex { double x,y,z,u,v; } SkyVertex;
+static SkyVertex sky_lerp(SkyVertex a,SkyVertex c,double t)
+{
+    return (SkyVertex){a.x+t*(c.x-a.x),a.y+t*(c.y-a.y),a.z+t*(c.z-a.z),
+                       a.u+t*(c.u-a.u),a.v+t*(c.v-a.v)};
+}
+static double sky_plane(SkyVertex p,int plane,const PortSkyView *s,
+                        double left,double right,double top,double bottom)
+{
+    switch (plane) {
+    case 0:return p.z-.001;
+    case 1:return (s->projection.center_x-left)*p.z+s->projection.scale_x*p.x;
+    case 2:return (right-s->projection.center_x)*p.z-s->projection.scale_x*p.x;
+    case 3:return (s->projection.center_y-top)*p.z-s->projection.scale_y*p.y;
+    default:return (bottom-s->projection.center_y)*p.z+s->projection.scale_y*p.y;
+    }
+}
+static int sky_clip(SkyVertex *points,int n,const PortSkyView *s,
+                     double left,double right,double top,double bottom)
+{
+    SkyVertex temp[16];
+    for (int plane=0;plane<5&&n;++plane) {
+        int count=0;
+        for (int i=0;i<n;++i) {
+            SkyVertex a=points[(i+n-1)%n],c=points[i];
+            double da=sky_plane(a,plane,s,left,right,top,bottom);
+            double dc=sky_plane(c,plane,s,left,right,top,bottom);
+            if ((da>=0)!=(dc>=0)) temp[count++]=sky_lerp(a,c,da/(da-dc));
+            if (dc>=0) temp[count++]=c;
+        }
+        n=count;memcpy(points,temp,(size_t)n*sizeof *points);
+    }
+    return n;
+}
+static SkyVertex sky_point(const PortSkyView *s,double u,double v)
+{
+    /* Original panorama wraps at 1024 yaw units. The original forward center
+       samples center_x+512-yaw; turn that angular atlas into a real cylinder. */
+    double theta=(u*1024-s->projection.center_x-512+s->yaw)*6.283185307179586/1024;
+    double p[3]={sin(theta),(s->height-v*s->height)/(double)s->projection.scale_y-
+                              s->camera_height/15000.0,cos(theta)};
+    SkyVertex out={0,0,0,u,v};
+    out.x=(s->rotation[0]*p[0]+s->rotation[3]*p[1]+s->rotation[6]*p[2])/16384.0;
+    out.y=(s->rotation[1]*p[0]+s->rotation[4]*p[1]+s->rotation[7]*p[2])/16384.0;
+    out.z=(s->rotation[2]*p[0]+s->rotation[5]*p[1]+s->rotation[8]*p[2])/16384.0;
+    return out;
+}
+static int draw_native_sky(PortModernBackend *b,const PortSkyView *s,
+                           const uint8_t *palette,int width,int height)
+{
+    if (!s->valid || s->height>PORT_SKY_HEIGHT || !s->height ||
+        s->projection.scale_x<=0 || s->projection.scale_y<=0)
+        return SDL_SetError("missing or invalid native sky snapshot");
+    PortViewport v=port_viewport_fit(width,height);
+    SDL_FColor sky=rgb(palette,s->sky_color),ground=rgb(palette,s->ground_color);
+    if (!SDL_SetRenderDrawColorFloat(b->renderer,sky.r,sky.g,sky.b,1) ||
+        !SDL_RenderFillRect(b->renderer,NULL)) return 0;
+    double left=-v.x*320/v.w,right=(width-v.x)*320/v.w;
+    double top=-v.y*200/v.h,bottom=(height-v.y)*200/v.h;
+    /* Clip the ground hemisphere against the camera's world-up halfplane.
+       Pitch and roll come from the original Q14 matrix; no raster horizon. */
+    PortTriPoint rect[4]={{left,top},{right,top},{right,bottom},{left,bottom}},poly[8];
+    int n=0;
+    for (int i=0;i<4;++i) {
+        PortTriPoint a=rect[(i+3)%4],c=rect[i];
+        double da=s->rotation[3]*(a.x-s->projection.center_x)/s->projection.scale_x-
+                  s->rotation[4]*(a.y-s->projection.center_y)/s->projection.scale_y+s->rotation[5];
+        double dc=s->rotation[3]*(c.x-s->projection.center_x)/s->projection.scale_x-
+                  s->rotation[4]*(c.y-s->projection.center_y)/s->projection.scale_y+s->rotation[5];
+        if ((da<=0)!=(dc<=0)) {
+            double t=da/(da-dc);poly[n++]=(PortTriPoint){a.x+t*(c.x-a.x),a.y+t*(c.y-a.y)};
+        }
+        if (dc<=0) poly[n++]=c;
+    }
+    b->vertices=0;
+    for (int i=1;i+1<n;++i) {
+        int ids[3]={0,i,i+1};
+        for (int k=0;k<3;++k) if (!vertex(b,poly[ids[k]].x,poly[ids[k]].y,0,0,v,ground)) return 0;
+    }
+    if (b->vertices && !SDL_RenderGeometry(b->renderer,NULL,b->mesh,(int)b->vertices,NULL,0)) return 0;
+    if (!b->panorama) b->panorama=SDL_CreateTexture(b->renderer,SDL_PIXELFORMAT_RGBA32,
+        SDL_TEXTUREACCESS_STREAMING,PORT_SKY_WIDTH,PORT_SKY_HEIGHT);
+    if (!b->sky_rgba) b->sky_rgba=malloc(PORT_SKY_WIDTH*PORT_SKY_HEIGHT*4u);
+    if (!b->panorama || !b->sky_rgba) return 0;
+    for (unsigned i=0;i<PORT_SKY_WIDTH*PORT_SKY_HEIGHT;++i) {
+        for (unsigned channel=0;channel<3;++channel) {
+            unsigned value=palette[s->pixels[i]*3+channel];
+            b->sky_rgba[i*4+channel]=(uint8_t)((value<<2)|(value>>4));
+        }
+        b->sky_rgba[i*4+3]=255;
+    }
+    if (!SDL_SetTextureScaleMode(b->panorama,SDL_SCALEMODE_LINEAR) ||
+        !SDL_UpdateTexture(b->panorama,NULL,b->sky_rgba,PORT_SKY_WIDTH*4)) return 0;
+    b->vertices=0;
+    SDL_FColor white={1,1,1,1};
+    /* Small angular/vertical cells bound affine interpolation error in SDL's
+       triangle API. Geometry and frustum clipping are native resolution. */
+    for (int x=0;x<256;++x) for (int y=0;y<8;++y) {
+        SkyVertex p[16]={sky_point(s,x/256.0,y/8.0),sky_point(s,(x+1)/256.0,y/8.0),
+                        sky_point(s,(x+1)/256.0,(y+1)/8.0),sky_point(s,x/256.0,(y+1)/8.0)};
+        int count=sky_clip(p,4,s,left,right,top,bottom);
+        for (int i=1;i+1<count;++i) {
+            int ids[3]={0,i,i+1};
+            for (int k=0;k<3;++k) {
+                SkyVertex a=p[ids[k]];
+                double px=s->projection.center_x+s->projection.scale_x*a.x/a.z;
+                double py=s->projection.center_y-s->projection.scale_y*a.y/a.z;
+                /* Texture storage has fixed height; visible asset is top aligned. */
+                if (!vertex(b,px,py,a.u,a.v*s->height/PORT_SKY_HEIGHT,v,white)) return 0;
+            }
+        }
+    }
+    return !b->vertices || SDL_RenderGeometry(b->renderer,b->panorama,b->mesh,(int)b->vertices,NULL,0);
+}
+
 int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size_t count,
                         const PortNativeCommand *native, size_t native_count,
                         const PortRenderLayer *layer, const uint8_t *frame,
                         const uint8_t *palette, int width, int height)
 {
-    if (!b->background) b->background=SDL_CreateTexture(b->renderer,SDL_PIXELFORMAT_RGBA32,
+    int native_mode=port_render_mode()==2;
+    if (!native_mode && !b->background) b->background=SDL_CreateTexture(b->renderer,SDL_PIXELFORMAT_RGBA32,
                                                        SDL_TEXTUREACCESS_STREAMING,320,200);
     if (!b->ui) b->ui=SDL_CreateTexture(b->renderer,SDL_PIXELFORMAT_RGBA32,
                                        SDL_TEXTUREACCESS_STREAMING,320,200);
-    if (!b->background || !b->ui) return 0;
-    SDL_SetTextureScaleMode(b->background,SDL_SCALEMODE_NEAREST);
+    if ((!native_mode && !b->background) || !b->ui) return 0;
+    if (!native_mode) SDL_SetTextureScaleMode(b->background,SDL_SCALEMODE_NEAREST);
     SDL_SetTextureScaleMode(b->ui,SDL_SCALEMODE_NEAREST);
     SDL_SetTextureBlendMode(b->ui,SDL_BLENDMODE_BLEND);
     if (!b->rgba) b->rgba=malloc(64000u*8u);
@@ -322,45 +439,26 @@ int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size
     uint8_t *background=b->rgba, *ui=b->rgba+64000u*4u;
     for (unsigned i=0;i<64000;++i) {
         for (int channel=0;channel<3;++channel) {
-            unsigned value=palette[layer->background[i]*3+channel];
-            background[i*4+channel]=(uint8_t)((value<<2)|(value>>4));
+            unsigned value;
+            if (!native_mode) {
+                value=palette[layer->background[i]*3+channel];
+                background[i*4+channel]=(uint8_t)((value<<2)|(value>>4));
+            }
             value=palette[frame[i]*3+channel];
             ui[i*4+channel]=(uint8_t)((value<<2)|(value>>4));
         }
         background[i*4+3]=255;
         ui[i*4+3]=layer->ui_mask[i]?255:0;
     }
-    if (!SDL_UpdateTexture(b->background,NULL,background,320*4) ||
+    if ((!native_mode && !SDL_UpdateTexture(b->background,NULL,background,320*4)) ||
         !SDL_UpdateTexture(b->ui,NULL,ui,320*4)) return 0;
     PortViewport v=port_viewport_fit(width,height);
     SDL_FRect destination={v.x,v.y,v.w,v.h};
-    if (port_render_mode()==2 && v.x>0) {
-        /* Only world background rows are extended. Dashboard pixels in the
-           pre-world buffer are UI and must never fill the wide side areas. */
-        if (!b->edges) b->edges=SDL_CreateTexture(b->renderer,SDL_PIXELFORMAT_RGBA32,
-                                                SDL_TEXTUREACCESS_STREAMING,2,200);
-        if (!b->edges) return 0;
-        SDL_SetTextureScaleMode(b->edges,SDL_SCALEMODE_NEAREST);
-        uint8_t edges[200*8];
-        for (int y=0;y<200;++y) {
-            int row=y;
-            if (row<layer->clip[2]) row=layer->clip[2];
-            if (row>=layer->clip[3]) row=layer->clip[3]-1;
-            if (row<0) row=0;
-            if (row>199) row=199;
-            memcpy(edges+y*8,background+row*320*4,4);
-            memcpy(edges+y*8+4,background+(row*320+319)*4,4);
-        }
-        if (!SDL_UpdateTexture(b->edges,NULL,edges,8)) return 0;
-        SDL_FRect edge={0,0,1,200}, left={0,v.y,v.x,v.h};
-        if (!SDL_RenderTexture(b->renderer,b->edges,&edge,&left)) return 0;
-        edge.x=1;
-        SDL_FRect right={v.x+v.w,v.y,v.x,v.h};
-        if (!SDL_RenderTexture(b->renderer,b->edges,&edge,&right)) return 0;
-    }
-    if (!SDL_RenderTexture(b->renderer,b->background,NULL,&destination) ||
-        !(port_render_mode()==2 ? port_modern_draw_camera(b,native,native_count,palette,width,height) :
-                                 port_modern_draw_projected(b,cmd,count,palette,width,height)) ||
-        !SDL_RenderTexture(b->renderer,b->ui,NULL,&destination)) return 0;
+    if (port_render_mode()==2) {
+        if (!draw_native_sky(b,&layer->sky,palette,width,height) ||
+            !port_modern_draw_camera(b,native,native_count,palette,width,height)) return 0;
+    } else if (!SDL_RenderTexture(b->renderer,b->background,NULL,&destination) ||
+        !port_modern_draw_projected(b,cmd,count,palette,width,height)) return 0;
+    if (!SDL_RenderTexture(b->renderer,b->ui,NULL,&destination)) return 0;
     return 1;
 }

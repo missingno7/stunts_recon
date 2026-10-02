@@ -112,6 +112,11 @@ int main(void)
     assert(layer&&frame);
     memset(frame,2,64000);memset(layer->background,3,64000);
     layer->valid=1;layer->clip[1]=320;layer->clip[3]=151;
+    layer->sky.valid=1;layer->sky.height=1;
+    layer->sky.sky_color=layer->sky.ground_color=3;
+    layer->sky.rotation[0]=layer->sky.rotation[4]=layer->sky.rotation[8]=16384;
+    layer->sky.projection=native[0].projection;
+    memset(layer->sky.pixels,3,sizeof layer->sky.pixels);
     memset(layer->ui_mask+151*320,1,49*320);
     for (unsigned size=0;size<3;++size) {
         int w=widths[size];

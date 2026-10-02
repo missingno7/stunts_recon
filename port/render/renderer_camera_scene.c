@@ -7,7 +7,8 @@
    only until the world pass ends; published commands contain no such pointers. */
 typedef struct Capture {
     PortCameraShapeCapture shape;
-    int16_t xyz[255*3];
+    int16_t xyz[255*3], native_xyz[255*3];
+    int cloud;
     int16_t reference_depth[512];
     uint8_t reference_valid[512], reference_count[512];
     int16_t clip[4];
@@ -18,11 +19,14 @@ static Capture s_shapes[8192];
 static size_t s_shapes_count, s_count;
 static int s_collecting, s_reference_only, s_capture_only, s_binding;
 static size_t s_reference_target;
-static int s_failed;
+static int s_failed, s_cloud;
+static int16_t s_cloud_delta[3];
+void port_camera_scene_cloud_offset(const int16_t *delta)
+{ s_cloud=delta!=NULL; if (delta) memcpy(s_cloud_delta,delta,sizeof s_cloud_delta); }
 int port_camera_scene_valid(void) { return !s_failed; }
 void port_camera_scene_reject(const char *reason)
 {
-    if (!s_failed) fprintf(stderr,"Modern scene rejected; faithful presentation: %s\n",reason);
+    if (!s_failed) fprintf(stderr,"Modern scene capture failed: %s\n",reason);
     s_failed=1;s_count=0;
 }
 void port_camera_scene_reference_only(int enabled) { s_reference_only=enabled; }
@@ -33,7 +37,7 @@ unsigned port_camera_scene_wide_extra_tiles(void) { return 12; }
 int port_renderer_capture_only(void) { return s_capture_only; }
 void port_camera_scene_wide_begin(void)
 {
-    s_binding=0;s_capture_only=1;s_shapes_count=s_count=0;s_collecting=1;s_failed=0;
+    s_cloud=0;s_binding=0;s_capture_only=1;s_shapes_count=s_count=0;s_collecting=1;s_failed=0;
 }
 void port_camera_scene_wide_end(void) { s_capture_only=0;s_binding=1; }
 void port_camera_scene_begin(void)
@@ -59,15 +63,34 @@ void port_renderer_capture_shape(const void *identity, const int16_t *xyz, uint1
         Capture *c=&s_shapes[i];
         if (!c->matched && c->hash==hash && c->shape.shape_identity==(uintptr_t)identity &&
             c->shape.vertex_count==vertices && c->shape.selected_paint==paint &&
-            c->shape.object_flags==flags && c->shape.backlight_override==backlight &&
+            c->shape.object_flags==flags &&
             c->shape.projection.center_x==cx && c->shape.projection.center_y==cy &&
             c->shape.projection.half_width==hw && c->shape.projection.half_height==hh &&
             c->shape.projection.scale_x==fx && c->shape.projection.scale_y==fy &&
             !memcmp(c->xyz,xyz,vertices*6u)) {
+            /* Geometry identity is independent of this inherited colour
+               latch. The faithful trans_op call supplies authoritative
+               material state, even if expanded object ordering differs. */
+            c->shape.backlight_override=backlight;
             c->matched=1;s_reference_target=i;return;
         }
     }
     if (s_binding) {
+        const Capture *closest=NULL; unsigned best=~0u;
+        for (size_t i=0;i<s_shapes_count;++i) {
+            const Capture *c=&s_shapes[i];
+            if (c->shape.shape_identity!=(uintptr_t)identity || c->shape.vertex_count!=vertices) continue;
+            unsigned score=0;
+            for (unsigned k=0;k<vertices*3u;++k) score+=c->xyz[k]!=xyz[k];
+            if (score<best) { best=score;closest=c; }
+        }
+        fprintf(stderr,"Capture mismatch: id=%p vertices=%u paint=%u flags=%u backlight=%d projection=%d,%d,%d,%d shapes=%u\n",
+            identity,vertices,paint,flags,backlight,cx,cy,fx,fy,(unsigned)s_shapes_count);
+        if (closest) fprintf(stderr,"Closest: matched=%d paint=%u flags=%u backlight=%d projection=%d,%d,%d,%d xyz_diff=%u first=%d,%d,%d/%d,%d,%d\n",
+            closest->matched,closest->shape.selected_paint,closest->shape.object_flags,
+            closest->shape.backlight_override,closest->shape.projection.center_x,
+            closest->shape.projection.center_y,closest->shape.projection.scale_x,
+            closest->shape.projection.scale_y,best,closest->xyz[0],closest->xyz[1],closest->xyz[2],xyz[0],xyz[1],xyz[2]);
         port_camera_scene_reject("reference shape has no exact camera-space capture");return;
     }
     if (s_shapes_count>=8192 || vertices>255 || count>512) {
@@ -78,6 +101,11 @@ void port_renderer_capture_shape(const void *identity, const int16_t *xyz, uint1
     memset(c,0,sizeof *c);
     c->hash=hash;c->matched=s_binding;
     memcpy(c->xyz,xyz,vertices*6u);
+    c->cloud=s_cloud;
+    for (unsigned k=0;k<vertices*3u;++k) {
+        uint16_t word=(uint16_t)((uint16_t)xyz[k]+(s_cloud?(uint16_t)s_cloud_delta[k%3]:0u));
+        c->native_xyz[k]=(int16_t)(word<0x8000u?(int32_t)word:(int32_t)word-0x10000);
+    }
     c->shape=(PortCameraShapeCapture){
         .shape_identity=(uintptr_t)identity,.camera_xyz=c->xyz,.vertex_count=vertices,
         .primitive_stream=primitives,.primitive_count=count,.paint_count=paints,
@@ -104,10 +132,10 @@ void port_camera_scene_end(const int16_t *modes, const int16_t *patterns,
     if (s_failed) return;
     for (size_t j=0;j<s_shapes_count;++j) {
         Capture *capture=&s_shapes[j];
-        capture->shape.camera_xyz=capture->xyz;
-        capture->shape.reference_depth=capture->reference_depth;
-        capture->shape.reference_point_count=capture->reference_count;
-        capture->shape.reference_accepted=capture->reference_valid;
+        capture->shape.camera_xyz=capture->cloud?capture->native_xyz:capture->xyz;
+        capture->shape.reference_depth=capture->cloud?NULL:capture->reference_depth;
+        capture->shape.reference_point_count=capture->cloud?NULL:capture->reference_count;
+        capture->shape.reference_accepted=capture->cloud?NULL:capture->reference_valid;
         capture->shape.accepted_only=(uint8_t)s_reference_only;
         PortCameraCommand commands[400];
         PortCameraUnsupported unsupported[512];

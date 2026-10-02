@@ -9,9 +9,9 @@
 /* Main-thread-only GPU resources; semantic commands remain API-independent. */
 typedef struct PortModernBackend {
     SDL_Renderer *renderer;
-    SDL_Texture *background, *ui, *pattern, *edges;
+    SDL_Texture *background, *ui, *pattern, *panorama;
     SDL_Vertex *mesh;
-    uint8_t *rgba;
+    uint8_t *rgba, *sky_rgba;
     size_t vertices, capacity;
     uint16_t cached_pattern;
     uint8_t cached_mode, cached_color, cached_secondary;

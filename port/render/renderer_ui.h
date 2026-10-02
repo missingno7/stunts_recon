@@ -2,11 +2,13 @@
 #define PORT_RENDER_UI_H
 #include <stddef.h>
 #include <stdint.h>
+#include "renderer_sky.h"
 
 /* Guest-owned until video publishes a complete copy under its frame lock. */
 typedef struct PortRenderLayer {
     int valid;
     int16_t clip[4]; /* left,right,top,bottom in the reference grid */
+    PortSkyView sky;
     uint8_t background[64000];
     uint8_t ui_mask[64000];
 } PortRenderLayer;

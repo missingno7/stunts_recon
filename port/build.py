@@ -651,7 +651,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "polang.c",
         "projection.c",
         "render/renderer_scene.c", "render/renderer_camera.c", "render/renderer_camera_scene.c",
-        "render/renderer_modern.c", "render/renderer_ui.c",
+        "render/renderer_modern.c", "render/renderer_ui.c", "render/renderer_sky.c",
         "render/triangulate2d.c", "render/modern_wheel.c",
         "render/edge_chain_tessellator.c", "render/tile_expansion.c",
         "matrix.c",
