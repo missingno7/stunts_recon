@@ -64,9 +64,22 @@ def _run_dos(runner, work, tc, flags, asm, profile=None):
            'if errorlevel 1 goto failed','echo 0 > RESULT.TXT','goto done',':failed','echo 1 > RESULT.TXT',':done','exit']
     (work/'RUN.BAT').write_bytes(('\r\n'.join(batch)+'\r\n').encode('ascii'))
     conf = PE.dosbox_conf(work, mounts, commands+['RUN.BAT'], independent)
-    cmd, result = PE.run_dosbox(work, conf)
+    cmd = PE.dosbox_command(conf)
+    unit = 'UNIT.ASM' if asm else 'UNIT.C'
+    import toolcache
+    returncode, _ = toolcache.run('dosbox-x', work, {unit: (work/unit).read_bytes()},
+                                  {'batch': batch, 'conf': conf.read_text().replace(str(work), '<WORK>').replace(str(ROOT), '<ROOT>'),
+                                   'runner': independent, 'profile': profile,
+                                   'config': None if asm else config, 'asm_tools': str(tc) if asm else None,
+                                   'masm': _masm_identity(tc) if asm else None},
+                                  lambda: (lambda r: (r.returncode, r.stdout))(PE.run_dosbox(work, conf)[1]))
+    result = type('Result', (), {'returncode': returncode})
     require(result.returncode==0 and (work/'RESULT.TXT').is_file() and (work/'RESULT.TXT').read_text().strip()=='0','Independent DOS compilation failed')
     return cmd,batch
+
+
+def _masm_identity(tc):
+    return identity((Path(tc)/'MASM.EXE').read_bytes())
 
 
 def recipe_declarations_names(r):
@@ -165,9 +178,22 @@ def main():
     active=[ROOT/o['recipe'] for o in read_json(ROOT/'layout/manifest.json')['owners']
             if o['kind'] in ('MATCHING_C','MATCHING_ASM','MATCHING_C_DATA','MATCHING_ASM_DATA')
             and 'recipe' in o]
-    for path in active:
-        r=read_json(path)
-        rows.append(independent_row(r,(ROOT/r['source']).read_bytes(),oracle,image,runner))
+    recipes=[read_json(path) for path in active]
+    # Each row compiles in its own work directory; the shared pass-directory
+    # mirrors are prepared before the rows run concurrently.
+    import pass_environment as PE
+    for profile in sorted({r['profile'] for r in recipes if r.get('kind') != 'asm'}):
+        PE.mirror(profile, verify_toolchain(profile)[0])
+    def row(r):
+        return independent_row(r,(ROOT/r['source']).read_bytes(),oracle,image,runner)
+    from build_exact import workers
+    count=min(workers(),max(1,len(recipes)))
+    if count==1:
+        rows=[row(r) for r in recipes]
+    else:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=count) as pool:
+            rows=list(pool.map(row,recipes))
     require(inputs()==before,'Inputs changed during independent compilation')
     require(verify(write=False)[2]==oracle[2],'Oracle changed during independent compilation')
     for profile in {read_json(path)['profile'] for path in active}:

@@ -129,6 +129,9 @@ python tools/promote.py --batch build/workers/NAME/batch.txt [--verify-only]
 python tools/validate.py
 # Exactness proof alone (image, relocations, independent compiles, BSS link); the fast check after a source change:
 python tools/validate.py --proof-only
+# Unchanged units reuse their earlier compiler and assembler runs (build/toolcache); the complete gate
+# and --fresh run every tool again:
+python tools/validate.py --proof-only --fresh
 # One test group with or without the proof: tools (reconstruction tooling) or port (SDL3 port):
 python tools/validate.py --tests tools
 python tools/validate.py --tests port --no-proof

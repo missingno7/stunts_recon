@@ -1252,6 +1252,7 @@ def run(args):
     env = dict(os.environ, STUNTS_BUILD_WORKERS='1', STUNTS_ASSET_DIR=str(ROOT / 'assets'),
                NUKED_OPL3_ROOT=os.environ.get('NUKED_OPL3_ROOT', str(ROOT / 'build/dependencies/nuked-opl3')),
                GIT_DIR=str(ROOT / '.git'), GIT_WORK_TREE=str(stage),
+               STUNTS_TOOLCACHE=os.environ.get('STUNTS_TOOLCACHE', str(ROOT / 'build/toolcache')),
                PYTHONPATH=os.pathsep.join([str(ROOT / 'build/python'), os.environ.get('PYTHONPATH', '')]))
     output = work / 'worker.json'
     request = work / 'request.json'

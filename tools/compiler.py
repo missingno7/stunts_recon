@@ -158,9 +158,17 @@ def compile_source(source, profile, flags=None, *, research_local_symbols=False,
     argv += flags if flags is not None else config['flags']
     argv += ['UNIT.C']
     env = {'PATH': str(tc), 'MSDOS_PATH': str(tc), 'TEMP': '.', 'TMP': '.', 'MSDOS_TEMP': '.'}
-    result = subprocess.run(argv, cwd=work, env=env, stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT, timeout=60,
-                            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    def execute():
+        done = subprocess.run(argv, cwd=work, env=env, stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT, timeout=60,
+                              creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        return done.returncode, done.stdout
+    import toolcache
+    from types import SimpleNamespace
+    returncode, stdout = toolcache.run('player-cl', work, {'UNIT.C': staged},
+                                       {'argv': argv[1:3] + argv[4:], 'profile': profile,
+                                        'config': config, 'runner': runner}, execute)
+    result = SimpleNamespace(returncode=returncode, stdout=stdout)
     (work / 'compiler.log').write_bytes(result.stdout)
     obj_path = work / 'UNIT.OBJ'
     data = obj_path.read_bytes() if obj_path.exists() else None

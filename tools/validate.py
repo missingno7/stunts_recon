@@ -1,5 +1,6 @@
 """The acceptance gate: exactness proof (whole image, relocations, independent compiles, BSS link)
 plus the tool and port test groups.  Each part is reported on its own."""
+import os
 import argparse
 import unittest
 from common import ROOT, read_json, write_json, require, identity
@@ -180,8 +181,14 @@ def main():
     p.add_argument('--image', action='store_true',
                    help='Diagnostic only (not a gate): after validation, rebuild the executable with one real '
                         'LINK 3.65 run + EXEPACK (tools/reallink.py) and report the divergence summary')
+    p.add_argument('--fresh', action='store_true',
+                   help='Run every compiler and assembler again instead of reusing identical earlier runs '
+                        '(tools/toolcache.py); always the case for the complete gate')
     a = p.parse_args()
     require(not (a.proof_only and a.no_proof), '--proof-only and --no-proof exclude each other')
+    complete_scope = not (a.proof_only or a.no_proof or a.no_independent) and a.tests == 'all'
+    if a.fresh or complete_scope:
+        os.environ['STUNTS_FRESH'] = '1'
     report = validate(not a.no_independent, a.baseline, 'none' if a.proof_only else a.tests, not a.no_proof)
     proved = report.get('proof', {}).get('status') == 'PASS'
     if a.image and proved:

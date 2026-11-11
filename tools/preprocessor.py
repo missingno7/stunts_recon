@@ -3,7 +3,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from common import ROOT, identity, read_json, require
+from common import ROOT, git_tracked, identity, read_json, require
 
 _DIRECTIVE = re.compile(r'^\s*#\s*([A-Za-z_]+)\b(.*)$')
 _INCLUDE = re.compile(r'^\s*([<"])([^>"]+)[>"]\s*(?:/\*.*\*/\s*)?$')
@@ -105,9 +105,7 @@ def prepare(source, profile):
                 require(path.is_relative_to(project_root) and path.suffix.lower() == '.h' and path.is_file(),
                         'Quoted include must resolve to a project header under include/')
                 relative = path.relative_to(ROOT).as_posix()
-                tracked = subprocess.run(['git', 'ls-files', '--error-unmatch', '--', relative],
-                                         cwd=ROOT, capture_output=True, text=True)
-                require(tracked.returncode == 0, f'Project header is not tracked: {relative}')
+                require(git_tracked(relative), f'Project header is not tracked: {relative}')
                 entry = None
             data = path.read_bytes()
             # Pinned headers keep their logical profile path in the closure.

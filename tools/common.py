@@ -14,8 +14,40 @@ def sha(data):
 def identity(data):
     return {'size': len(data), 'sha256': sha(data)}
 
+_json_cache = {}
+_tracked_cache = {}
+
 def read_json(path):
-    return json.loads(Path(path).read_text(encoding='utf-8'))
+    # The same layout files are read thousands of times per run.  A parse is
+    # reused only while the file's size and modification time are unchanged,
+    # and every caller gets its own copy.
+    import pickle
+    path = Path(path)
+    stat = path.stat()
+    stamp = (stat.st_size, stat.st_mtime_ns)
+    found = _json_cache.get(str(path))
+    if found is not None and found[0] == stamp:
+        return pickle.loads(found[1])
+    value = json.loads(path.read_text(encoding='utf-8'))
+    after = path.stat()
+    if (after.st_size, after.st_mtime_ns) == stamp:
+        _json_cache[str(path)] = (stamp, pickle.dumps(value, pickle.HIGHEST_PROTOCOL))
+    return value
+
+
+def git_tracked(relative):
+    """True when `relative` (POSIX path from the root) is in the git index.
+
+    The index listing is read once and again whenever the index file changes."""
+    import subprocess
+    index = Path(os.environ.get('GIT_DIR') or ROOT/'.git')/'index'
+    stamp = (index.stat().st_size, index.stat().st_mtime_ns) if index.is_file() else None
+    if _tracked_cache.get('stamp') != stamp or stamp is None:
+        listed = subprocess.run(['git', 'ls-files', '-z'], cwd=ROOT, capture_output=True)
+        if listed.returncode:
+            return False
+        _tracked_cache.update(stamp=stamp, names=frozenset(listed.stdout.decode('utf-8', 'surrogateescape').split('\0')))
+    return relative in _tracked_cache['names']
 
 def json_bytes(value):
     return (json.dumps(value, indent=2, sort_keys=True) + '\n').encode('utf-8')

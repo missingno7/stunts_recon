@@ -3,7 +3,7 @@ import re
 import subprocess
 import tempfile
 from pathlib import Path
-from common import ROOT, identity, require, sha, write_json
+from common import ROOT, git_tracked, identity, require, sha, write_json
 from compiler import CompileFailure, verify_toolchain
 from object_probe import read_object
 
@@ -42,9 +42,7 @@ def prepare_asm(source):
             require(path.is_relative_to(include_root) and path.is_file(),
                     'ASM INCLUDE must resolve to a file under include/')
             relative = path.relative_to(ROOT).as_posix()
-            tracked = subprocess.run(['git', 'ls-files', '--error-unmatch', '--', relative],
-                                     cwd=ROOT, capture_output=True, text=True)
-            require(tracked.returncode == 0, f'ASM include is not tracked: {relative}')
+            require(git_tracked(relative), f'ASM include is not tracked: {relative}')
             data = path.read_bytes()
             value = {'path': relative, **identity(data)}
             previous = closure.setdefault(relative, value)
@@ -90,9 +88,17 @@ def assemble_source(source, profile, communals=None):
     args = [str(runner['path']), '-e', '-v5.00', str(executable),
             *config['flags'], 'UNIT,UNIT.OBJ,UNIT.LST;']
     env = {'PATH':str(tc), 'MSDOS_PATH':str(tc), 'TEMP':'.', 'TMP':'.', 'MSDOS_TEMP':'.'}
-    result = subprocess.run(args, cwd=work, env=env, stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT, timeout=90,
-                            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    def execute():
+        done = subprocess.run(args, cwd=work, env=env, stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT, timeout=90,
+                              creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        return done.returncode, done.stdout
+    import toolcache
+    from types import SimpleNamespace
+    returncode, stdout = toolcache.run('player-masm', work, {'UNIT.ASM': staged},
+                                       {'argv': args[1:3] + args[4:], 'profile': profile,
+                                        'config': config, 'runner': runner}, execute)
+    result = SimpleNamespace(returncode=returncode, stdout=stdout)
     (work/'assembler.log').write_bytes(result.stdout)
     path = work/'UNIT.OBJ'
     data = path.read_bytes() if path.exists() else None

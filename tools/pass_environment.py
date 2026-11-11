@@ -107,11 +107,15 @@ def dosbox_conf(work, mounts, commands, runner):
     return work/'dosbox.conf'
 
 
+def dosbox_command(conf):
+    return [lock()['independent_runner']['path'], '-conf', str(conf), '-fastlaunch', '-exit']
+
+
 def run_dosbox(work, conf, timeout=45):
     env = os.environ.copy(); env.update(SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER='dummy')
     startup = subprocess.STARTUPINFO(); startup.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     startup.wShowWindow = 0
-    cmd = [lock()['independent_runner']['path'], '-conf', str(conf), '-fastlaunch', '-exit']
+    cmd = dosbox_command(conf)
     result = subprocess.run(cmd, cwd=work, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                             timeout=timeout, creationflags=subprocess.CREATE_NO_WINDOW, startupinfo=startup)
     return cmd, result

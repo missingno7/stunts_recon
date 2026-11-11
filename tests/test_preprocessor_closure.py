@@ -89,11 +89,11 @@ class PreprocessorTests(unittest.TestCase):
                     preprocessor.check_recipe({'preprocessor_closure':[]}, closure)
                 with self.assertRaisesRegex(ValueError, 'allowed root'):
                     preprocessor.prepare(b'#include "../outside.h"\n', 'msc510-medium')
-                with patch('preprocessor.subprocess.run') as git:
-                    git.return_value.returncode = 0
+                with patch('preprocessor.git_tracked') as git:
+                    git.return_value = True
                     _, local_closure = preprocessor.prepare(b'#include "local.h"\n', 'msc510-medium')
                     self.assertEqual(local_closure[0]['path'], 'include/local.h')
-                    git.return_value.returncode = 1
+                    git.return_value = False
                     with self.assertRaisesRegex(ValueError, 'not tracked'):
                         preprocessor.prepare(b'#include "local.h"\n', 'msc510-medium')
                 with self.assertRaisesRegex(ValueError, 'hash mismatch'):
