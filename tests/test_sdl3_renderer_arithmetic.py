@@ -11,6 +11,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "port"))
 sys.path.insert(0, str(ROOT / "build/python"))
+sys.path.insert(0, str(ROOT))
 from game_abi import adapt_renderer_word_arithmetic
 from tools.porting.diffharness.oracle import OracleImage
 from unicorn import Uc, UC_ARCH_X86, UC_MODE_16

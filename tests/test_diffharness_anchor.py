@@ -2,11 +2,14 @@
 import json
 from pathlib import Path
 import struct
+import sys
 import unittest
 
-from tools.porting.diffharness.oracle import OracleImage, dgroup_segment
-
 ROOT = Path(__file__).resolve().parents[1]
+# Discovery sorts this module before any other that adds the repository root.
+sys.path.insert(0, str(ROOT))
+
+from tools.porting.diffharness.oracle import OracleImage, dgroup_segment  # noqa: E402
 
 
 class DiffHarnessAnchorTests(unittest.TestCase):

@@ -1,17 +1,37 @@
-# Historical matching work
+# Stunts 1.1 reconstruction and port
 
-Read README.md. Use `context.py FUNCTION`, an isolated directory under `build/workers/NAME/`, `search.py`, and `promote.py`. Run complete `validate.py` at meaningful acceptance/tooling boundaries, not for every hypothesis.
+Read README.md. This tree rebuilds the original MCGA executable byte for byte from C, assembly and the pinned Microsoft runtime, and builds a native SDL3 port from the same sources.
 
-Use GPT-6 Luna with extra-high reasoning (`gpt-6-luna`, `xhigh`) for independent function/family investigations. Each worker owns its hypotheses and scratch workspace. Use GPT-6 Sol/high selectively for shared technical obstacles or cross-function synthesis. The migration smoke test explicitly uses Luna/high. Keep handoffs to the result, concrete obstacle, and smallest useful evidence references.
+## The invariant
 
-Workers may investigate types, signedness, declarations, register/local allocation, control flow, ABI, callers/callees, compiler behavior, and plausible TU context. Choose individual experiments or useful batches; inspect actual compiler feedback and adapt. No fixed attempt counts, quotas, batch sizes, supervisor checkpoints, research permissions, or reopening ceremonies apply.
+The original assets and `layout/oracle.lock.json` are immutable. Everything else may change (sources, recipes, names, tools, docs) as long as `python tools/validate.py` still reports the exact image with its ordered relocations. A change to `src/`, `asm/`, `recipes/` or `layout/` is proven by the gate, never assumed neutral: local identifier names affect MSC stack-slot order and communal names affect link placement.
 
-Continue while finding a useful next investigation. Progress includes strict matches, narrowed mismatches, distinguished explanations, and useful compiler/context facts. New source/output hashes alone do not prove progress; repeated output may answer a deliberate question. Reassess or stop at a solution, concrete missing dependency, or no useful next investigation. Respect explicit user budgets, cancellation, and platform limits.
+Never trim objects, mask acceptance mismatches, ignore inconvenient OMF records, embed original machine code as C, patch final binaries, or regenerate expected bytes from candidates. Preserve complete object extents and declarations, every supported fixup, exact ordered relocations, independently grounded bindings and accepted ownership.
 
-Keep original facts, source/context hypotheses, tooling limitations, and strict acceptance requirements distinct. Use compact diagnosis before expanding full disassembly. Preserve exact anchors as evidence, inspect meaningful changes, and state a machine-level prediction and falsifier when useful. Similarity and normalization are diagnostic only; unresolved operands and unsupported records must remain explicit.
+## Stages
 
-Investigations may run concurrently. Canonical source, recipe, ownership and acceptance-tool changes have one writer. Submit exact candidates through `promote.py`; technical acceptance requires no additional permission ceremony. Shared proof changes need focused tests and single-writer integration.
+Work proceeds in this order; do not start a later stage while an earlier one is open unless asked.
 
-The original assets and `layout/oracle.lock.json` are immutable authority. Preserve complete object extents/declarations, every supported fixup, exact ordered relocations, independently grounded bindings, previously accepted ownership, and fresh whole-image equality. Never trim objects, mask acceptance mismatches, ignore inconvenient OMF records, embed original machine code as C, patch final binaries, or regenerate expected bytes from candidates. Keep modern builds separate.
+1. **Source side.** Settle remaining origin and attribution questions (ASM versus compiled C, compiler versions, natural link order) with one bounded investigation each, then document what stays unknown. Replace placeholder names. Prune superseded sources, recipes, campaign-era tools, tests and docs.
+2. **Faithful port.** The SDL3 port reproduces original behaviour; the indexed 320x200 renderer is its visual oracle.
+3. **Enhanced side.** Native rendering grows from understanding the game's scene and renderer, not from further interception of the DOS pipeline.
 
-Raw ownership remains explicit reconstruction debt. Report C, ASM, pinned runtime and raw bytes separately. Preserve ignored assets, pinned tools, reference checkouts, and local-only inputs; never run blanket `git clean -fdx`. Do not commit binaries or generated objects. Context and validation must work without cards, queues, ledgers, or old research archives. Keep new durable source fragments small and detailed generated data under ignored build output.
+## Changing sources
+
+Use `tools/context.py FUNCTION`, an isolated directory under `build/workers/NAME/`, `tools/search.py`, and `tools/promote.py` (`--batch` for many candidates). Canonical source, recipe, ownership and acceptance-tool changes have one writer at a time. Run the complete `tools/validate.py` at acceptance and tooling boundaries, not for every hypothesis; it needs Capstone 5.0.3 and Unicorn 2.1.4 in `build/python` (see README).
+
+Keep original facts, source hypotheses, tooling limits and acceptance requirements distinct. Similarity and normalization are diagnostic only. Report C, ASM, pinned runtime and raw bytes separately; raw is currently zero and must stay zero.
+
+## Port
+
+Port code lives in `port/` and its tests in `tests/test_sdl3_*`. Establish a routine's widths, signedness, spans and aliases from the locked machine code before choosing a host representation, and compare against the original with `tools/porting/diffharness`. The faithful renderer stays available and exact when the enhanced renderer changes.
+
+## Workers
+
+Use GPT 6.1 Sol (`gpt-6.1-sol`, `high`) for investigations, shared technical obstacles, cross-function synthesis and integration. Use GPT-6 Luna (`gpt-6-luna`, `xhigh`) for mechanical or tightly bounded tasks. The supervising session takes the hardest blockers itself instead of re-delegating them. Each worker owns its hypotheses and scratch workspace under `build/workers/NAME/`. Keep handoffs to the result, the concrete obstacle and the smallest useful evidence references.
+
+Continue while there is a useful next investigation; stop at a solution, a concrete missing dependency, or when none remains. New hashes alone are not progress. Respect explicit user budgets, cancellation and platform limits.
+
+## Repository
+
+Work lands on `portable-sdl3`; commit verified steps, push only when asked. Do not commit binaries or generated objects. Preserve ignored assets, pinned tools, reference checkouts and local-only inputs; never run blanket `git clean -fdx`. Keep durable source fragments small and generated data under ignored `build/`.

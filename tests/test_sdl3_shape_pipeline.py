@@ -95,6 +95,7 @@ if __name__ == "__main__" and len(sys.argv) == 5 and sys.argv[1] == "--native-wo
 
 sys.path.insert(0, str(ROOT / "build" / "python"))
 sys.path.insert(0, str(ROOT / "tools" / "porting"))
+sys.path.insert(0, str(ROOT))
 
 import format_reference as fmt  # noqa: E402
 from tools.porting.diffharness.oracle import (  # noqa: E402
