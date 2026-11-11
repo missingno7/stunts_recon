@@ -2255,6 +2255,10 @@ def library_link(c, ordered, args):
             return (3, u.start if host is not None else 1 << 30)
         return (rank.get(u.kind, 1), u.start if u.kind != 'raw-data' else 0)
     explicit.sort(key=explicit_key)
+    if historical:
+        # The zero-length prelude only anchored raw DGROUP debt; with none left the
+        # link is exact without it (checked by a real link, 2026-11-11).
+        explicit = [(u, b) for u, b in explicit if u.kind != 'prelude']
     if data_modules:
         # Its DGROUP contribution lies between those of seg003 and seg004.
         at = 1 + max(i for i, (u, _) in enumerate(explicit) if u.segment == 'S003_TEXT')

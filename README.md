@@ -104,9 +104,8 @@ What this configuration still assumes, and cannot recover from the executable:
   Microsoft members (`__ldiv`, `__lmul`, `__lshr`, `__uldiv` thunks and `strrchr`) sit after every
   other runtime member.
 - Some original object declared the four old helper names; their thunks are in the image and nothing
-  calls them. A ten-symbol reference object stands in for that declaration and for six assembly
-  fragments that are unreferenced on their own (`tools/reallink.py`, `HISTORICAL_*`).
-- A zero-length prelude object.
+  calls them. A four-symbol reference object stands in for that declaration (`tools/reallink.py`,
+  `HISTORICAL_OLD_HELPER_NAMES`).
 
 `python tools/validate.py --image` remains the separate diagnostic that links every accepted unit in
 the oracle-derived order.
