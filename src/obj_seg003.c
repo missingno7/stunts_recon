@@ -1102,7 +1102,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 					cur_shps->shapeptr = fence_shapes[nfences];
 					cur_shps->rotvec.z = -view_rot_x;
 					result = trans_op(&cur_shps[0]);
-					(void) result; // we cannot be out of memory as we are just starting to process
+					/* We cannot be out of memory as we are just starting to process. */
 				}
 			}
 		}
@@ -1312,7 +1312,6 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 
 	ovl_pending = 0;
-	si = 0;
 	
 	// With the information collected by the previus tile-scan algorithm,
 	// proceed to draw the shapes in each tile. Start from the farthest
@@ -1923,7 +1922,7 @@ draw_done:
 			}
 
 			j2 = (core.game_frame >> 2) % 3 ;
-			nfences = ((I32)j << 8) / (I32)exwd[j2];
+			nfences = ((I32)j << 8) / exwd[j2];
 			shapeexpl(nfences, sdgbmp_v[j2], offset_v.x, offset_v.y);
 		}
 	}
@@ -2321,9 +2320,9 @@ void transformed_shape_add_for_sort(I16 zadjust, I8 sort_group_id) {
 
 	shapepos = g_curr_tsp->pos;
 	mat_vec(&shapepos, &wkmatx, &transformedpos);
-	g_tdist[(I16)g_ts_num] = transformedpos.z + zadjust;
-	tshapearrarg2[(I16)g_ts_num] = sort_group_id;
-	tsix[(I16)g_ts_num] = (I16)g_ts_num;
+	g_tdist[g_ts_num] = transformedpos.z + zadjust;
+	tshapearrarg2[g_ts_num] = sort_group_id;
+	tsix[g_ts_num] = g_ts_num;
 	g_ts_num++;
 	g_curr_tsp++;
 }
@@ -2555,7 +2554,7 @@ struct RECTANGLE *draw_ingame_text(void)
                 introtext(&resbuftext, font_op2_alt(&resbuftext), 0x69, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (follow_op == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
-            switch ((I16)core.field_45D) {
+            switch (core.field_45D) {
             /* PLATFORM(video): blit a transparent shape. */ case 1:
                 sprite_putimage_transparent(sdgbmp_v[3], 0x94, 0x5D);
                 rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
@@ -2573,7 +2572,7 @@ struct RECTANGLE *draw_ingame_text(void)
             }
 
             resbuftext = 0;
-            switch ((I16)core.field_45E) {
+            switch (core.field_45E) {
             /* PLATFORM(video): blit a transparent shape. */ case 1:
                 sprite_putimage_transparent(sdgbmp_v[3], 0x44, 0x71);
                 rcunion(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
@@ -2622,7 +2621,7 @@ struct RECTANGLE *do_sinking(I16 frame, I16 top, I16 height)
     if (frame > (I16)rate_frame * 4)
         frame = (I16)rate_frame * 4;
 
-    offset = (I16)(((I32)height * frame) / (I32)((I16)rate_frame * 4));
+    offset = ((I32)height * frame) / ((I16)rate_frame * 4);
 
     game_rect_txt_in.left = 0;
     game_rect_txt_in.right = PLATFORM_SCREEN_WIDTH_PIXELS;
@@ -2637,14 +2636,14 @@ struct RECTANGLE *do_sinking(I16 frame, I16 top, I16 height)
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 I16 fence_offsets[8] = { 30, 200, 320, 400, 530, 700, 880, 960 };
 struct SHAPE3D *fence_shapes[8] = {
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x420),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x40A),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x3F4),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x420),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x40A),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x3F4),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x420),
-    (struct SHAPE3D *)((I8 *)&g_shapes3d[0].shape3d_numverts + 0x40A),
+    &g_shapes3d[48],
+    &g_shapes3d[47],
+    &g_shapes3d[46],
+    &g_shapes3d[48],
+    &g_shapes3d[47],
+    &g_shapes3d[46],
+    &g_shapes3d[48],
+    &g_shapes3d[47],
 };
 
 static struct LOOKAHEAD_TILE lookahead_heading0[23] = {
@@ -2916,8 +2915,8 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
     struct POINT2D start_point, crack_end, adjust_point;
     register I16 crackIndex;
 
-    /* PORT: crash-shape data uses a segmented FAR resource pointer. */ /* PLATFORM(file): resolve crash-line data inside the loaded bundle. */ crak_shape = (struct CRACK_LINE far *)locate_shape_alt(gamerptrs, init_crak_resource_names[0]);
-    /* PORT: animation metadata uses a segmented FAR resource pointer. */ /* PLATFORM(file): resolve crash-animation data inside the loaded bundle. */ cinf_shape = (I16 far *)locate_shape_alt(gamerptrs, init_crak_resource_names[1]);
+    /* PORT: crash-shape data uses a segmented FAR resource pointer. */ /* PLATFORM(file): resolve crash-line data inside the loaded bundle. */ crak_shape = locate_shape_alt(gamerptrs, init_crak_resource_names[0]);
+    /* PORT: animation metadata uses a segmented FAR resource pointer. */ /* PLATFORM(file): resolve crash-animation data inside the loaded bundle. */ cinf_shape = locate_shape_alt(gamerptrs, init_crak_resource_names[1]);
 
     animation_counter = frame / ((I16)rate_frame / 7);
     if (animation_counter >= cinf_shape[0])
@@ -2929,8 +2928,8 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
             start_point = crak_shape[crackIndex].start;
             crack_end = crak_shape[crackIndex].end;
 
-        start_point.py = (I16)(((I32)start_point.py * height) / 200);
-        crack_end.py = (I16)(((I32)crack_end.py * height) / 200);
+        start_point.py = ((I32)start_point.py * height) / 200;
+        crack_end.py = ((I32)crack_end.py * height) / 200;
 
         /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top - 1,
                        crack_end.px, crack_end.py + top - 1, 0);
@@ -3105,7 +3104,7 @@ I8 far setup_intro(void)
     /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta();
     pointTotalB = 0;
     activePointCountA = 0;
-    ((I16)statemgmtcpy) = ((I16)slow_video_mode_state);
+    statemgmtcpy = slow_video_mode_state;
     tparr[0].left = 0;
     tparr[0].right = PLATFORM_SCREEN_WIDTH_PIXELS;
     tparr[0].top = 0;
@@ -3144,82 +3143,82 @@ I8 far setup_intro(void)
                     ++savedGoalZ;
             }
         }
-        if (!frameReady)
-            goto check_input;
-        frameReady = 0;
-        if (g_videoflg5 != 0)
-            setup_mcgawnd2();
-        /* PLATFORM(video): copy the window sprite to the display page. */ else
-            sprite_copy_wnd_to_1();
+        if (frameReady) {
+            frameReady = 0;
+            if (g_videoflg5 != 0)
+                setup_mcgawnd2();
+            /* PLATFORM(video): copy the window sprite to the display page. */ else
+                sprite_copy_wnd_to_1();
 
-        carHeadingData = 0xffff;
-        oldDrawOpponent = 1;
-        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ opponentXPosition = (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
-        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ lastOpponentY = (I16)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
-        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ savedOpponentZ = (I16)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT);
-        if (6 * ((I16)rate_frame) > lastElapsedFrames) {
-            oldDrawOpponent = 0;
-            carHeadingData = core.opponentstate.car_rotate.x & 0x03ff;
-            introCloudTilt = 0;
-            oldCameraX = opponentXPosition;
-            cameraYIdle = lastOpponentY + 20;
-            cameraZPrevious = savedOpponentZ;
-        } else if (11 * ((I16)rate_frame) > lastElapsedFrames) {
-            oldCameraX = 0x400;
-            cameraZPrevious = 0x400;
-            cameraYIdle = 0x5a;
-            goalXPosition = opponentXPosition;
-            lastGoalY = lastOpponentY;
-            savedGoalZ = savedOpponentZ;
-        }
-        if (carHeadingData == 0xffff) {
-            carHeadingData = (-polang(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious)) & 0x03ff;
-            oldCarDistance = polradius2d(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious);
-            introCloudTilt = polang(lastGoalY - cameraYIdle, oldCarDistance) & 0x03ff;
-        }
-
-        if (((I16)statemgmtcpy) != 0) {
-            if (savedRectangleIndex == 0) {
-                currentPoints = (I16 *)gamePointBufferB;
-                drawSelectedCount = &pointTotalB;
-            } else {
-                currentPoints = (I16 *)basePointBufferA;
-                drawSelectedCount = &activePointCountA;
+            carHeadingData = 0xffff;
+            oldDrawOpponent = 1;
+            /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ opponentXPosition = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
+            /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ lastOpponentY = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
+            /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ savedOpponentZ = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT);
+            if (6 * ((I16)rate_frame) > lastElapsedFrames) {
+                oldDrawOpponent = 0;
+                carHeadingData = core.opponentstate.car_rotate.x & 0x03ff;
+                introCloudTilt = 0;
+                oldCameraX = opponentXPosition;
+                cameraYIdle = lastOpponentY + 20;
+                cameraZPrevious = savedOpponentZ;
+            } else if (11 * ((I16)rate_frame) > lastElapsedFrames) {
+                oldCameraX = 0x400;
+                cameraZPrevious = 0x400;
+                cameraYIdle = 0x5a;
+                goalXPosition = opponentXPosition;
+                lastGoalY = lastOpponentY;
+                savedGoalZ = savedOpponentZ;
             }
-        }
-        intro_op(oldCameraX, cameraYIdle, cameraZPrevious, carHeadingData, introCloudTilt,
-                 oldDrawOpponent, oldPhase, cloudPointsList,
-                 (struct POINT2D *)currentPoints, drawSelectedCount,
-                 tparr[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
+            if (carHeadingData == 0xffff) {
+                carHeadingData = (-polang(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious)) & 0x03ff;
+                oldCarDistance = polradius2d(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious);
+                introCloudTilt = polang(lastGoalY - cameraYIdle, oldCarDistance) & 0x03ff;
+            }
 
-        if (g_videoflg5 != 0) {
-            /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
-            setup_mcgawnd1();
-            /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
-            if (((I16)statemgmtcpy) != 0)
-                tparr[savedRectangleIndex] = gameRestoredRect;
-            savedRectangleIndex ^= 1;
-        } else {
-            /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
-            if (((I16)statemgmtcpy) != 0) {
-                rcunion(&lastDrawRect, &tparr[2], &oldSavedRect);
-                if (rcintersect(&oldSavedRect, &rc0_cpy) == 0) {
-                    /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(oldSavedRect.left, oldSavedRect.right,
-                                      oldSavedRect.top, oldSavedRect.bottom);
+            if (statemgmtcpy != 0) {
+                if (savedRectangleIndex == 0) {
+                    currentPoints = (I16 *)gamePointBufferB;
+                    drawSelectedCount = &pointTotalB;
+                } else {
+                    currentPoints = (I16 *)basePointBufferA;
+                    drawSelectedCount = &activePointCountA;
+                }
+            }
+            intro_op(oldCameraX, cameraYIdle, cameraZPrevious, carHeadingData, introCloudTilt,
+                     oldDrawOpponent, oldPhase, cloudPointsList,
+                     (struct POINT2D *)currentPoints, drawSelectedCount,
+                     tparr[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
+
+            if (g_videoflg5 != 0) {
+                /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+                setup_mcgawnd1();
+                /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
+                if (statemgmtcpy != 0)
+                    tparr[savedRectangleIndex] = gameRestoredRect;
+                savedRectangleIndex ^= 1;
+            } else {
+                /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
+                if (statemgmtcpy != 0) {
+                    rcunion(&lastDrawRect, &tparr[2], &oldSavedRect);
+                    if (rcintersect(&oldSavedRect, &rc0_cpy) == 0) {
+                        /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(oldSavedRect.left, oldSavedRect.right,
+                                          oldSavedRect.top, oldSavedRect.bottom);
+                        /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
+                        /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
+                        /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
+                        tparr[0] = gameRestoredRect;
+                        tparr[2] = lastDrawRect;
+                    }
+                } else {
                     /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
                     /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
                     /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
-                    tparr[0] = gameRestoredRect;
-                    tparr[2] = lastDrawRect;
                 }
-            } else {
-                /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
-                /* PLATFORM(video): blit the saved sprite image. */ sprputimage(g_wndspr->image);
-                /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
             }
-        }
 
-/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ check_input:
+        }
+/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ check_input: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         if (input_do_checking(baseFrameDelta)) {
             operationResult = 1;
             break;
@@ -3238,7 +3237,7 @@ I8 far setup_intro(void)
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(g_wndspr);
     }
     /* PLATFORM(memory): release resource memory. */ mmgr_free(title3dresValue);
-    return (I8)operationResult;
+    return operationResult;
 }
 
 /* Draws the introduction scene. Params: camera, projection and clip data from the signature. Returns: none. State: reads intro-scene and sprite state. */
@@ -3268,7 +3267,7 @@ void far intro_op(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
     modelShape.pos.x = 0x400 - camX;
     modelShape.pos.y = -camY;
     modelShape.pos.z = 0x400 - camZ;
-    if (((I16)statemgmtcpy) != 0) {
+    if (statemgmtcpy != 0) {
         modelShape.rect = &initialClip;
         modelShape.flags = 0x0c;
     } else {
@@ -3280,27 +3279,26 @@ void far intro_op(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
     modelShape.scale = 0x400;
     modelShape.material = 0;
     trans_op(&modelShape);
-    if (!showOpponent)
-        goto logo_complete;
-    /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.x = (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - camX;
-    /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.y = (I16)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - camY;
-    /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.z = (I16)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - camZ;
-    modelShape.shape = &brav;
-    if (((I16)statemgmtcpy) != 0) {
-        modelShape.rect = &initialClip;
-        modelShape.flags = 0x0c;
-    } else {
-        modelShape.flags = 4;
+    if (showOpponent) {
+        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.x = (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - camX;
+        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.y = (I16)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - camY;
+        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.z = (I16)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - camZ;
+        modelShape.shape = &brav;
+        if (statemgmtcpy != 0) {
+            modelShape.rect = &initialClip;
+            modelShape.flags = 0x0c;
+        } else {
+            modelShape.flags = 4;
+        }
+        modelShape.rotation.x = 0;
+        modelShape.rotation.y = 0;
+        modelShape.rotation.z = -core.opponentstate.car_rotate.x;
+        modelShape.scale = 0x400;
+        modelShape.material = 0;
+        trans_op(&modelShape);
     }
-    modelShape.rotation.x = 0;
-    modelShape.rotation.y = 0;
-    modelShape.rotation.z = -core.opponentstate.car_rotate.x;
-    modelShape.scale = 0x400;
-    modelShape.material = 0;
-    trans_op(&modelShape);
-
-logo_complete:
-    if (((I16)statemgmtcpy) == 0)
+logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
+    if (statemgmtcpy == 0)
         goto no_incremental;
     if (*oldPointCount != 0) {
         index = 0;
@@ -3337,7 +3335,7 @@ logo_complete:
             vector_to_point(&relativeVector, &projectedPoint);
             /* PLATFORM(video): draw a display pixel. */ putpixel_single_maybe(projectedPoint.px, projectedPoint.py,
                                   intro_colorvalue);
-            if (((I16)statemgmtcpy) != 0) {
+            if (statemgmtcpy != 0) {
                 oldPoints[count++] = projectedPoint;
                 rect_adjust_from_point(&projectedPoint, &previousClip);
             }
@@ -3347,10 +3345,10 @@ logo_complete:
         }
         ++index;
     } while (index < 100);
-    if (((I16)statemgmtcpy) != 0)
+    if (statemgmtcpy != 0)
         *oldPointCount = count;
     polyinfo();
-    if (((I16)statemgmtcpy) != 0) {
+    if (statemgmtcpy != 0) {
         *oldClip = initialClip;
         *oldUnion = previousClip;
     }

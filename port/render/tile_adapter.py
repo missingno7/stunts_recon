@@ -156,7 +156,7 @@ def adapt_update_frame(source: str) -> str:
     clone = _replace_once(clone, "if (cur_shps->pos.z > PLATFORM_SCREEN_HEIGHT_PIXELS)",
         "if (1)", "cloud legacy depth reject")
     cloud_call = "result = trans_op(&cur_shps[0]);"
-    cloud_end = "\n\t\t\t\t\t(void) result; // we cannot be out of memory as we are just starting to process"
+    cloud_end = "\n\t\t\t\t\t/* We cannot be out of memory as we are just starting to process. */"
     clone = _replace_once(clone, cloud_call + cloud_end,
         "port_cloud_delta.x = (I16)((U16)port_cloud_native_pos.x - (U16)cur_shps->pos.x);\n"
         "\t\t\t\t\tport_cloud_delta.y = (I16)((U16)port_cloud_native_pos.y - (U16)cur_shps->pos.y);\n"
