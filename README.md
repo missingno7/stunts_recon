@@ -56,7 +56,7 @@ to a copy containing the pinned `opl3.c`, `opl3.h` and `LICENSE` files.
 
 Use Python 3.10+ on Windows. Keep original `MCGA.HDR`, `EGA.CMN`, `MCGA.DIF`, and `MCGA.COD` under ignored `assets/`. The hash-pinned Microsoft C distributions and MS-DOS Player paths are in `layout/toolchain.json`; provisioning provenance is in `evidence/msc500-provenance.json`, `evidence/msc510-provenance.json`, and `evidence/msc600-provenance.json`. The local extraction helper is `toolchain/extract_pcjs.py`. Do not commit game or compiler binaries. The no-skip validation gate also runs the host compile checks, which require GCC on `PATH` or at `C:\msys64\mingw64\bin\gcc.exe`.
 
-Install the diagnostic decoder and the original-machine routine runner with `python -m pip install --target build/python capstone==5.0.3 unicorn==2.1.4`. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; the full Restunts checkout at `build/references/restunts` is optional for research/indexing tools. The clean-clone test and validation gates use the tracked, identity-pinned excerpts under `tests/fixtures/references/`. Keep any full reference checkout and reference executable as local inputs; they are not stored in Git history.
+Install the diagnostic decoder and the original-machine routine runner with `python -m pip install --no-user --target build/python -r requirements-build.txt` (Capstone 5.0.3, Unicorn 2.1.4). `python tools/preflight.py` lists every missing local prerequisite; the gate runs it first. Evidence checkouts and commit/file identities are recorded in `layout/references.json`; the full Restunts checkout at `build/references/restunts` is optional for research/indexing tools. The clean-clone test and validation gates use the tracked, identity-pinned excerpts under `tests/fixtures/references/`. Keep any full reference checkout and reference executable as local inputs; they are not stored in Git history.
 
 Full validation independently recompiles active C and reassembles active ASM under DOSBox-X at `C:/tools/dosbox-x/dosbox-x.exe` (hash-identical copy of `C:/DOSBox-X`); all compiles run under MS-DOS Player at `C:/tools/nmlgcdos/msdos.exe`. Configure local runner paths explicitly when moving machines, preserving pinned tool identities. The pinned MASM 5.10 ASM profile is a reproduction choice, not an attribution of the original assembler. No verification command updates the byte oracle.
 
@@ -130,6 +130,11 @@ python tools/promote.py FUNCTION build/workers/NAME/candidate.c
 # Several candidates, one transaction (each verified alone, one union whole-image build):
 python tools/promote.py --batch build/workers/NAME/batch.txt [--verify-only]
 python tools/validate.py
+# Exactness proof alone (image, relocations, independent compiles, BSS link); the fast check after a source change:
+python tools/validate.py --proof-only
+# One test group with or without the proof: tools (reconstruction tooling) or port (SDL3 port):
+python tools/validate.py --tests tools
+python tools/validate.py --tests port --no-proof
 # Diagnostic real LINK 3.65 + EXEPACK rebuild (not a gate):
 python tools/validate.py --image
 # Library-search experiment against the pinned MLIBCR.LIB/LIBH.LIB (diagnostic):
