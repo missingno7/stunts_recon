@@ -1,4 +1,5 @@
 #include "platform_hw.h"
+/* Explicit register declarations below are required by the matching MSC 5.10 build. */
 #define DIALOG_TEXT_WIDTH_ALIGNMENT_MASK 0xfff8
 #define SHAPE3D_RESOURCE_HEADER_BYTES 4
 #define SHAPE3D_RESOURCE_VERTEX_BYTES 6
@@ -382,7 +383,7 @@ end_button:
     case 0:
         return 0;
     case 3:
-        return (I8)(markers / 2);
+        return markers / 2;
     case 2:
         ret = initial;
         oldchoice = -1;
@@ -810,12 +811,12 @@ I16 input_checking(I16 delta)
             input_framecount3 = input_framecount;
             kbormouse = 0;
         }
-        goto mouse_poll;
     } else {
         if (joy != 0 && input_framecount3 + 20 < input_framecount)
             goto joy_decode;
     }
 
+/* MSC 5.10: removing this unused label changes the complete object. */
 mouse_poll:
     mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms) /* PLATFORM(input_mouse): read mouse buttons and coordinates. */;
     if (mouse_oldx != msecoordx || mouse_oldy != pos_y_ms ||
@@ -854,6 +855,7 @@ mouse_button_code:
         }
     }
 
+/* MSC 5.10: removing this unused label changes the complete object. */
 repeat_joy:
     if (key == 0) {
         if (joyinputcode != 0) {
@@ -981,9 +983,10 @@ I16 far mouse_track_op(I16 op, I16 x, I16 width, I16 top, I16 height,
     else
         pointer = pos_y_ms - top;
 
-    if (pointer < low || pointer > end_position) {        do {
+    if (pointer < low || pointer > end_position) {
+        do {
             input_checking(timer_get_delta_alt() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */) /* PLATFORM(input_kb): poll the configured input devices. */;
-        } while ((*(U8  *)&flagsdown & 3) != 0);
+        } while ((flagsdown & 3) != 0);
         if (pointer < low) {
             if (value != 0) --value;
         } else if (value < divisions - 1) {
@@ -1014,7 +1017,7 @@ I16 far mouse_track_op(I16 op, I16 x, I16 width, I16 top, I16 height,
                     sprite_1_unk(x, top + thumb, width, range_length, dlg_colour) /* PLATFORM(video): draw through the legacy sprite primitive interface. */;
                 msdrawtransparentchk() /* PLATFORM(video): redraw the pointer in transparent mode when needed. */;
             }
-        } while ((*(U8  *)&flagsdown & 3) != 0);
+        } while ((flagsdown & 3) != 0);
 
     }
 
@@ -1144,7 +1147,7 @@ I16 * introtext(I8 *str, I16 x, I16 y, I16 color, I16 shadow)
     extern void far font_draw_text(I8 *text, I16 x, I16 y);
 
     text_bounds_upper = y;
-    txt_bounds_bottom = y + ((I16)fontdefvalue) + 1;
+    txt_bounds_bottom = y + fontdefvalue + 1;
     textboundsleft = x;
     text_bounds_right = x + font_op2(str) /* PLATFORM(video): load or select a named font. */ + 1;
     font_setup_unknown(shadow, 0) /* PLATFORM(video): select the font and color mode. */;
@@ -1163,7 +1166,7 @@ I16 * hiscore_draw_text(I8 *str, I16 x, I16 y, I16 color, I16 shadow)
     extern void far font_draw_text(I8 *text, I16 x, I16 y);
 
     txt_outline_top = y - 1;
-    text_outline_bottom = y + ((I16)fontdefvalue) + 1;
+    text_outline_bottom = y + fontdefvalue + 1;
     textoutlineleft = x - 1;
     text_outline_right = x + font_op2(str) /* PLATFORM(video): load or select a named font. */ + 1;
     font_setup_unknown(shadow, 0) /* PLATFORM(video): select the font and color mode. */;
@@ -1375,8 +1378,9 @@ void far print_int_as_string_maybe(I8 *buffer, I16 value, I16 zero_fill, I16 wid
 
     itoa(value, buffer, 10);
     if (width != 0) {
-        for (length = 0; buffer[length] != 0; ++length)
-            ;
+        for (length = 0; buffer[length] != 0; ++length) {
+            /* Find the terminating byte before adjusting the field width. */
+        }
         while (width != length) {
             if (width < length) {
                 for (index = 0; index < length; ++index)
@@ -1411,7 +1415,7 @@ I16 far mouse_timer_sprite_unknown(I16 index, I16 *a, I16 *b, I16 *c, I16 *d,
     register I16 delta;
     register I16 selected;
     extern void far sprite_1_unk4(I16, I16, I16, I16, I16);
-    delta = (I16)timer_get_delta_alt() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */;
+    delta = timer_get_delta_alt() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */;
     g_animphase += delta;
     while (g_animphase > 60)
         g_animphase -= 60;
@@ -1496,7 +1500,7 @@ void far* file_load_resource(I16 type, const I8* filename) { /* PURPOSE: Dispatc
 			case 0:
 				// try load the file, if it fails, show a dialog, and retry
 				result = file_load_binary_nofatal(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
-				goto check_result;
+				break;
 
 			case 1:
 				return file_load_binary_nofatal(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
@@ -1508,36 +1512,37 @@ void far* file_load_resource(I16 type, const I8* filename) { /* PURPOSE: Dispatc
 			case 2:
 				// try load a 2d shape and retry if it failed
 				result = load_shape2d_nofatal_thunk(filename) /* PLATFORM(file): load a 2D shape without terminating on failure. */;
-				goto check_result;
+				break;
 
 			case 3:
 				// try load a 2d shape and retry if it failed
 				result = load_shape2d_res_nofatal_thunk(filename) /* PLATFORM(file): load a 2D shape from resource data. */;
-				goto check_result;
+				break;
 
 			case 4:
 				// try load a song file and retry if it failed
 				result = load_song_file(filename) /* PLATFORM(file): load song data. */;
-				goto check_result;
+				break;
 
 			case 5:
 				// try load a voice file and retry if it failed
 				result = load_voice_file(filename) /* PLATFORM(file): load voice data. */;
-				goto check_result;
+				break;
 
 			case 6:
 				// try load an sfx file and retry if it failed
 				result = load_sfx_file(filename) /* PLATFORM(file): load sound-effect data. */;
-				goto check_result;
+				break;
 
 			case 8:
 				// try load a 2d shape and retry if it failed
 				result = file_load_shape2d_nofatal2(filename) /* PLATFORM(file): load a 2D shape without terminating on failure. */;
-				goto check_result;
+				break;
 			default:
 				break;
 		}
 
+/* MSC 5.10: removing this unused label changes the complete object. */
 check_result:
         if (result != 0) return result;
         if (do_dea_textres() == 2) return 0;
@@ -1672,13 +1677,13 @@ void far do_key_resource_text(void)
     extern void far restore_audio_volume(void);
 
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     show_dialog(4, 1, locate_text_resource(main_data_file_addr, "key") /* PLATFORM(file): locate a named text entry in resource data. */,
                 0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U8 )joystick_enabled) = 0;
-    ((U8 )mouse_enabled) = 0;
-    ((U16 )input_pushed) = 0;
+    joystick_enabled = 0;
+    mouse_enabled = 0;
+    input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1692,12 +1697,12 @@ void far do_mou_resource_text(void)
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     extern void far restore_audio_volume(void);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
-    ((U8 )mouse_enabled) = 1;
+    mouse_enabled = 1;
     show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mou") /* PLATFORM(file): locate a named text entry in resource data. */,
                 0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )input_pushed) = 0;
+    input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1710,11 +1715,11 @@ void far do_pau_restext(void)
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     extern void far restore_audio_volume(void);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     show_dialog(1, 1, locate_text_resource(main_data_file_addr, "pau") /* PLATFORM(file): locate a named text entry in resource data. */,
                 0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )input_pushed) = 0;
+    input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1726,14 +1731,14 @@ void far do_mof_resource_text(void)
     extern I16 far audio_toggle_flag2(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     if (audio_toggle_flag2() /* PLATFORM(audio): toggle the music/effects audio option. */)
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mon") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     else
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "mof") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )input_pushed) = 0;
+    input_pushed = 0;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
 
@@ -1744,14 +1749,14 @@ void far do_sonsof_resource_text(void)
     extern I16 far audio_toggle_flag6(void);
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     if (audio_toggle_flag6() /* PLATFORM(audio): toggle the sound audio option. */)
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "son") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     else
         show_dialog(4, 1, locate_text_resource(main_data_file_addr, "sof") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )input_pushed) = 0;
+    input_pushed = 0;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
 
@@ -1764,12 +1769,12 @@ void far do_dos_resource_text(void)
     extern void far call_exitlist2(void);
     extern void far restore_audio_volume(void);
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     if (show_dialog(2, 1, locate_text_resource(main_data_file_addr, "dos") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */ == 1)
         call_exitlist2() /* PLATFORM(dos): run the DOS exit-list action. */;
-    ((U16 )input_pushed) = 0;
+    input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1789,7 +1794,7 @@ void far show_graphic_levels_menu(void)
     extern I16 far show_dialog(I16, I16, I8 far *, I16, I16, I16, I16, I16);
 
     input_push_status() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
-    ((U16 )input_pushed) = 1;
+    input_pushed = 1;
     audio_unk() /* PLATFORM(audio): read audio option state. */;
     saved_rate = frm_rate2;
     rc = 0;
@@ -1806,23 +1811,25 @@ void far show_graphic_levels_menu(void)
             if (active[selection_index]) menu[cursor + 1] = '*';
             ++cursor;
         }
-        rc = show_dialog(2, 1, (I8 far *)menu,
+        rc = show_dialog(2, 1, menu,
                          0xffff, 0xffff, performGraphColor, 0, rc) /* PLATFORM(video): present the interactive dialog renderer. */;
         switch (rc) {
-        case -1: goto after_menu;
+        case -1: break;
         case 5: slow_video_mode_state = 0; continue;
         case 6: slow_video_mode_state = 1; continue;
         case 7: frm_rate2 = 10; continue;
         case 8: frm_rate2 = 20; continue;
-        case 9: goto after_menu;
+        case 9: break;
         default: detail_lvl = rc; continue;
         }
+        break;
     }
+/* MSC 5.10: removing this unused label changes the complete object. */
 after_menu:
     if (saved_rate != frm_rate2)
         show_dialog(1, 1, locate_text_resource(main_data_file_addr, "mrs") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialogarg2, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-    ((U16 )input_pushed) = 0;
+    input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pop_status() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
