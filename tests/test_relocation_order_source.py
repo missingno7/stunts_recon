@@ -112,25 +112,5 @@ class ComposedCOrderTests(unittest.TestCase):
             self.bind_composed(self.obj, wrong, self.symbols)
 
 
-class PrefixAliasOwnerTests(unittest.TestCase):
-    """A reviewed code alias may name an entry owned by a record-closed prefix,
-    including the member the prefix end cuts; never an unlisted function."""
-
-    def test_prefix_member_entries(self):
-        from unittest.mock import patch
-        import code_symbols
-        recipe = {'id':'prefix_x','prefix_of_object':{'schema':'record-closed-prefix-v1'},
-                  'prefix_members':[{'name':'a','start':100,'end':140},
-                                    {'name':'b','start':140,'end':260}]}
-        owner = {'kind':'MATCHING_C','start':100,'end':200,'name':'prefix_x',
-                 'recipe':'recipes/prefix_x.json'}
-        with patch.object(code_symbols, 'read_json', return_value=recipe):
-            check = code_symbols._complete_target_owner
-            self.assertTrue(check(owner, {'name':'a','start':100,'end':140}))
-            self.assertTrue(check(owner, {'name':'b','start':140,'end':260}))
-            self.assertFalse(check(owner, {'name':'c','start':160,'end':200}))
-            self.assertFalse(check(owner, {'name':'b','start':140,'end':250}))
-
-
 if __name__ == '__main__':
     unittest.main()

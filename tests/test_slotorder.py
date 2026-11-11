@@ -32,13 +32,13 @@ class SlotOrderTests(unittest.TestCase):
         self.assertNotEqual(homes['outer'], homes['first'])
 
     def test_source_cli_parser_and_names(self):
-        rows = locals_from_source((ROOT/'src/copy_string.c').read_text(), 'copy_string')
+        rows = locals_from_source((ROOT/'tests/fixtures/c_source_parsing/copy_string.c').read_text(), 'copy_string')
         self.assertEqual([(r['name'], r['type']) for r in rows],
                          [('destination', 'char *'), ('source', 'char far *'),
                           ('current', 'char far *')])
         self.assertEqual(next(r['bp_offset'] for r in predict(rows)['locals']
                               if r['name']=='current'), -4)
-        facing = locals_from_source((ROOT/'src/is_facing_camera.c').read_text(), 'is_facing_camera')
+        facing = locals_from_source((ROOT/'tests/fixtures/slotorder/is_facing_camera.c').read_text(), 'is_facing_camera')
         self.assertEqual({r['name']:r['bp_offset'] for r in predict(facing)['locals']
                           if r['storage']!='parameter'},
                          {'dx0':-4, 'dx1':-12, 'dy0':-8, 'dy1':-16})

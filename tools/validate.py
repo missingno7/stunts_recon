@@ -12,7 +12,7 @@ import preflight
 # Port tests need the i686 toolchain and SDL3; everything else exercises the reconstruction tools.
 PORT_TESTS = ('test_sdl3_', 'test_port_', 'test_porting_', 'test_diffharness_', 'test_host_probe',
               'test_matrix_machine_semantics', 'test_asm_migration_completeness',
-              'test_replay_oracle_probe', 'test_runtime_trace_normalizer')
+              'test_replay_oracle_probe', 'test_runtime_trace_normalizer', 'test_extent_evidence')
 TEST_GROUPS = ('all', 'tools', 'port', 'none')
 
 

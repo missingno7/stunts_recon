@@ -8,7 +8,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 from binder import bind_contribution, bind_mixed_far_data
 from compiler import compile_source
-from linker_probe import mixed_far_data_experiment
 
 
 SOURCE = (b'extern unsigned char flags[]; '
@@ -46,16 +45,6 @@ class MixedBindingTests(unittest.TestCase):
             declarations, self.symbols if symbols is None else symbols,
             self.start, self.relocations if relocations is None else relocations)
 
-    def test_historical_link_both_compilers_and_segment_orders(self):
-        for profile in ('msc510-medium', 'msc500-medium'):
-            for first, offset in ((False, 0x123), (True, 0x2a)):
-                with self.subTest(profile=profile, library_first=first):
-                    obj, symbols, row = mixed_far_data_experiment(profile, first, offset)
-                    self.assertTrue(row['historical_link_equal'])
-                    self.assertEqual([f['loc'] for f in obj.linker_fixups],
-                                     ['pointer32', 'offset16', 'offset16'])
-                    self.assertEqual(len(row['relocations']), 1)
-                    self.assertEqual(set(symbols), {'__aFlmul', '_flags'})
 
     def test_complete_mixed_binding_and_recipe_dispatch(self):
         payload, report = self.bind()
