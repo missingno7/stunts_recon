@@ -17,6 +17,8 @@
 #define LOW_GEAR_RPM_LIMIT 0xA28
 #define ENGINE_RPM_5000 5000
 #define ENGINE_RPM_DELTA_LIMIT 2000
+/* Exact-object requirement: write back the wheel response even when unchanged. */
+#define WRITE_BACK(value) ((value) = (value))
 #include "stunts_types.h"
 extern short rate_frame;
 
@@ -940,9 +942,9 @@ steer:
     }
     if (core.opponentstate.field_CD != 0) {
         temp = mulscl(cosfast(st_hdg),
-            row_ctr_zs[tagtrk] - (I16)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+            row_ctr_zs[tagtrk] - (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
         temp += mulscl(sinfast(st_hdg),
-            trackctrpos2[idxtrk] - (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+            trackctrpos2[idxtrk] - (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
         if (temp < 0)
             update_crash_state(3, 1);
     }
@@ -1127,9 +1129,9 @@ retry:
 			oldVec.x = activeCarState->car_whlWorldCrds1[w].x - wallanchor_x;
 			oldVec.y = 0;
 			oldVec.z = activeCarState->car_whlWorldCrds1[w].z - wallanchor_z;
-			vec.x = (I16)(curWhl->lx >> WORLD_COORDINATE_SCALE_SHIFT) - wallanchor_x; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			vec.x = (curWhl->lx >> WORLD_COORDINATE_SCALE_SHIFT) - wallanchor_x; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 			vec.y = 0;
-			vec.z = (I16)(curWhl->lz >> WORLD_COORDINATE_SCALE_SHIFT) - wallanchor_z; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			vec.z = (curWhl->lz >> WORLD_COORDINATE_SCALE_SHIFT) - wallanchor_z; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 			matroty(&localPlane, -wall_facingang - ANGLE_QUARTER_TURN);
 			mat_vec(&oldVec, &localPlane, &p0);
 			mat_vec(&vec, &localPlane, &p1);
@@ -1238,12 +1240,12 @@ check_height:
 		base.x = plane->plane_origin.x + x_course_part;
 		base.y = plane->plane_origin.y + hgthgt;
 		base.z = plane->plane_origin.z + road_elem_ctrz;
-		oldVec.x = (I16)(prev->lx >> WORLD_COORDINATE_SCALE_SHIFT) - base.x; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		oldVec.y = (I16)(prev->ly >> WORLD_COORDINATE_SCALE_SHIFT) - base.y; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		oldVec.z = (I16)(prev->lz >> WORLD_COORDINATE_SCALE_SHIFT) - base.z; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		vec.x = (I16)(curWhl->lx >> WORLD_COORDINATE_SCALE_SHIFT) - base.x; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		vec.y = (I16)(curWhl->ly >> WORLD_COORDINATE_SCALE_SHIFT) - base.y; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		vec.z = (I16)(curWhl->lz >> WORLD_COORDINATE_SCALE_SHIFT) - base.z; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		oldVec.x = (prev->lx >> WORLD_COORDINATE_SCALE_SHIFT) - base.x; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		oldVec.y = (prev->ly >> WORLD_COORDINATE_SCALE_SHIFT) - base.y; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		oldVec.z = (prev->lz >> WORLD_COORDINATE_SCALE_SHIFT) - base.z; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		vec.x = (curWhl->lx >> WORLD_COORDINATE_SCALE_SHIFT) - base.x; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		vec.y = (curWhl->ly >> WORLD_COORDINATE_SCALE_SHIFT) - base.y; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		vec.z = (curWhl->lz >> WORLD_COORDINATE_SCALE_SHIFT) - base.z; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		localPlane = plane->plane_rotation;
 		mat_invert(&localPlane, &rotMatrix);
 		mat_vec(&oldVec, &rotMatrix, &p0);
@@ -1274,60 +1276,59 @@ check_height:
 			curWhl->lx -= pln_rot_output.x;
 			curWhl->ly -= pln_rot_output.y;
 			curWhl->lz -= pln_rot_output.z;
-			goto rc_check;
-		}
-		if (p0.y <= 0 || p1.y >= 0) {
-			tvec2.x = 0;
-			tvec2.y = 0;
-			tvec2.z = spd;
-			g_planidx2 = pl_i;
-			frwhl_angadjusted = wheelAngle[w];
-			plnrotop();
-			curWhl->lx = prev->lx + pln_rot_output.x;
-			curWhl->ly = prev->ly + pln_rot_output.y;
-			curWhl->lz = prev->lz + pln_rot_output.z;
 		} else {
-			angle = p0.z;
-			p0.z = -p0.y;
-			p0.y = angle;
-			angle = p1.z;
-			p1.z = -p1.y;
-			p1.y = angle;
-			vector_op_unk(&p1, &p0, &res, 0);
-			tmpCrds.x = (p1.x - res.x) << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
-			tmpCrds.y = (p1.y - res.y) << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
-			tmpCrds.z = (p1.z - res.z) << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
-			angle = polarRadius3D(&tmpCrds);
-			remDist = activeCarState->car_rc1[w] + spd;
-			distBefore = remDist - angle;
-			p0.x = (curWhl->lx - prev->lx) * distBefore / remDist;
-			p0.y = (curWhl->ly - prev->ly) * distBefore / remDist;
-			p0.z = (curWhl->lz - prev->lz) * distBefore / remDist;
-			tvec2.x = 0;
-			tvec2.y = 0;
-			tvec2.z = angle;
-			g_planidx2 = pl_i;
-			frwhl_angadjusted = wheelAngle[w];
-			plnrotop();
-			curWhl->lx = prev->lx + p0.x + pln_rot_output.x;
-			curWhl->ly = prev->ly + p0.y + pln_rot_output.y;
-			curWhl->lz = prev->lz + p0.z + pln_rot_output.z;
+			if (p0.y <= 0 || p1.y >= 0) {
+				tvec2.x = 0;
+				tvec2.y = 0;
+				tvec2.z = spd;
+				g_planidx2 = pl_i;
+				frwhl_angadjusted = wheelAngle[w];
+				plnrotop();
+				curWhl->lx = prev->lx + pln_rot_output.x;
+				curWhl->ly = prev->ly + pln_rot_output.y;
+				curWhl->lz = prev->lz + pln_rot_output.z;
+			} else {
+				angle = p0.z;
+				p0.z = -p0.y;
+				p0.y = angle;
+				angle = p1.z;
+				p1.z = -p1.y;
+				p1.y = angle;
+				vector_op_unk(&p1, &p0, &res, 0);
+				tmpCrds.x = (p1.x - res.x) << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
+				tmpCrds.y = (p1.y - res.y) << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
+				tmpCrds.z = (p1.z - res.z) << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
+				angle = polarRadius3D(&tmpCrds);
+				remDist = activeCarState->car_rc1[w] + spd;
+				distBefore = remDist - angle;
+				p0.x = (curWhl->lx - prev->lx) * distBefore / remDist;
+				p0.y = (curWhl->ly - prev->ly) * distBefore / remDist;
+				p0.z = (curWhl->lz - prev->lz) * distBefore / remDist;
+				tvec2.x = 0;
+				tvec2.y = 0;
+				tvec2.z = angle;
+				g_planidx2 = pl_i;
+				frwhl_angadjusted = wheelAngle[w];
+				plnrotop();
+				curWhl->lx = prev->lx + p0.x + pln_rot_output.x;
+				curWhl->ly = prev->ly + p0.y + pln_rot_output.y;
+				curWhl->lz = prev->lz + p0.z + pln_rot_output.z;
+			}
+			wheelCrd.x = curWhl->lx >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			wheelCrd.y = curWhl->ly >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			wheelCrd.z = curWhl->lz >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			if ((nextpos_normalip = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z)) < 0) {
+				if (swap != 0)
+					nextpos_normalip = -nextpos_normalip + 6;
+				wheelCrd.z = 0;
+				wheelCrd.x = 0;
+				wheelCrd.y = -nextpos_normalip << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
+				mat_mul_vector2(&wheelCrd, &g_planlist[pl_i].plane_rotation, &res);
+				curWhl->lx += res.x;
+				curWhl->ly += res.y;
+				curWhl->lz += res.z;
+			}
 		}
-		wheelCrd.x = curWhl->lx >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		wheelCrd.y = curWhl->ly >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		wheelCrd.z = curWhl->lz >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		if ((nextpos_normalip = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z)) < 0) {
-			if (swap != 0)
-				nextpos_normalip = -nextpos_normalip + 6;
-			wheelCrd.z = 0;
-			wheelCrd.x = 0;
-			wheelCrd.y = -nextpos_normalip << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
-			mat_mul_vector2(&wheelCrd, &g_planlist[pl_i].plane_rotation, &res);
-			curWhl->lx += res.x;
-			curWhl->ly += res.y;
-			curWhl->lz += res.z;
-		}
-rc_check:
 		if (activeCarState->car_rc1[w] > 250)
 			activeCarState->field_CF |= 0x20;
 		if (activeCarState->car_rc1[w] > 23275)
@@ -1413,111 +1414,116 @@ wheels_done:
 	}
 	activeCarState->car_sumSurfFrontWheels = activeCarState->car_surfaceWhl[0] + activeCarState->car_surfaceWhl[1];
 	activeCarState->car_sumSurfRearWheels = activeCarState->car_surfaceWhl[2] + activeCarState->car_surfaceWhl[3];
-	if (core.game_inputmode == 2)
-		goto store_state;
-	if (inrepflg == 0) {
-		if (isOpponent != 0)
-			/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unk3(activeCarState->field_CF, op_eng_sound_id);
-		else
-			/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unk3(activeCarState->field_CF, g_player_sound_id);
-	}
-	rotMat = matrotzxy(-anglerotate_car, -yrotrotveh, -rotxvehicle, 0);
-	for (w = 0; w < 4; w++) {
-		wheelCrd = activeCarSetup->wheel_coords[w];
-		wheelCrd.y = activeCarSetup->collide_points[0].py << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
-		mat_vec(&wheelCrd, rotMat, &res);
-		wheelCrd.x = (res.x + centerpos) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		wheelCrd.y = (res.y + veh_position) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		wheelCrd.z = (res.z + veh_z) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		tmpCrds = wheelCrd;
-		build_obj(&wheelCrd, &activeCarState->car_whlWorldCrds2[w]);
-		i = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
-		if (pl_i < 4) {
-			if (i <= 0)
-				goto crash_wheel;
-		} else {
-			planIdx = pl_i;
-			wheelCrd = activeCarState->car_whlWorldCrds2[w];
-			build_obj(&wheelCrd, &tmpCrds);
-			if (planIdx == pl_i) {
-				found = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
-				if (gm_playmode != 1 && ((i < 0 && found > 0) || (i > 0 && found < 0))) {
-crash_wheel:
+	if (core.game_inputmode != 2) {
+		if (inrepflg == 0) {
+			if (isOpponent != 0)
+				/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unk3(activeCarState->field_CF, op_eng_sound_id);
+			else
+				/* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unk3(activeCarState->field_CF, g_player_sound_id);
+		}
+		rotMat = matrotzxy(-anglerotate_car, -yrotrotveh, -rotxvehicle, 0);
+		for (w = 0; w < 4; w++) {
+			wheelCrd = activeCarSetup->wheel_coords[w];
+			wheelCrd.y = activeCarSetup->collide_points[0].py << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
+			mat_vec(&wheelCrd, rotMat, &res);
+			wheelCrd.x = (res.x + centerpos) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			wheelCrd.y = (res.y + veh_position) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			wheelCrd.z = (res.z + veh_z) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			tmpCrds = wheelCrd;
+			build_obj(&wheelCrd, &activeCarState->car_whlWorldCrds2[w]);
+			i = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+			if (pl_i < 4) {
+				if (i <= 0)
 					update_crash_state(5, isOpponent);
+			} else {
+				planIdx = pl_i;
+				wheelCrd = activeCarState->car_whlWorldCrds2[w];
+				build_obj(&wheelCrd, &tmpCrds);
+				if (planIdx == pl_i) {
+					found = plnoriginop(pl_i, wheelCrd.x, wheelCrd.y, wheelCrd.z);
+					if (gm_playmode != 1 && ((i < 0 && found > 0) || (i > 0 && found < 0))) {
+/* Unused label retained: deleting it changes MSC COMDEF ordering. */
+crash_wheel:
+						update_crash_state(5, isOpponent);
+					}
+				}
+			}
+			activeCarState->car_whlWorldCrds2[w] = tmpCrds;
+		}
+		groundContact = activeCarState->car_sumSurfFrontWheels + activeCarState->car_sumSurfRearWheels;
+		if (isOpponent == 0 && groundContact == 0 && activeCarState->car_sumSurfAllWheels != 0)
+			core.game_jumpCount++;
+		activeCarState->car_sumSurfAllWheels = groundContact;
+		self[0].x = centerpos >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		self[0].y = veh_position >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		self[0].z = veh_z >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		self[1].x = anglerotate_car;
+		self[1].y = yrotrotveh;
+		self[1].z = rotxvehicle;
+		if (globalgamesettings.game_opponenttype != 0) {
+			objPos[0].x = otherCarState->car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			objPos[0].y = otherCarState->car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			objPos[0].z = otherCarState->car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			objPos[1].x = otherCarState->car_rotate.z;
+			objPos[1].y = otherCarState->car_rotate.y;
+			objPos[1].z = otherCarState->car_rotate.x;
+			if (car_car_coll_detect_maybe(activeCarSetup->collide_points, self, otherCarSetup->collide_points, objPos)) {
+				if (activeCarState->field_C8 != 0)
+					return;
+				if (car_car_speed_adjust_maybe(activeCarState, otherCarState) == 0)
+					return;
+				update_crash_state(1, isOpponent);
+				update_crash_state(1, isOpponent ^ 1);
+				return;
+			}
+		}
+		res.x = self[0].x >> 10;
+		res.z = 29 - (self[0].z >> 10);
+		objPos[1].x = 0;
+		objPos[1].y = 0;
+		objPos[1].z = 0;
+		if (res.x < 0 || res.x >= 30 || res.z < 0 || res.z >= 30)
+			goto store_state;
+		tiltFlag = bto_auxiliary1(res.x, res.z, objPts);
+		if (tiltFlag != 0) {
+			/* The otherwise-unused nextVec increment is required by the exact object. */
+			for (i = 0; i < tiltFlag; nextVec++, i++) {
+				objPos[0].x = objPts[i].x;
+				objPos[0].y = objPts[i].y;
+				objPos[0].z = objPts[i].z;
+				if (car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_c, objPos)) {
+					activeCarState->car_36MwhlAngle -= ANGLE_HALF_TURN;
+/* Unused label retained: deleting it changes MSC COMDEF ordering. */
+crash_return:
+					update_crash_state(1, isOpponent);
+					return;
 				}
 			}
 		}
-		activeCarState->car_whlWorldCrds2[w] = tmpCrds;
-	}
-	groundContact = activeCarState->car_sumSurfFrontWheels + activeCarState->car_sumSurfRearWheels;
-	if (isOpponent == 0 && groundContact == 0 && activeCarState->car_sumSurfAllWheels != 0)
-		core.game_jumpCount++;
-	activeCarState->car_sumSurfAllWheels = groundContact;
-	self[0].x = centerpos >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-	self[0].y = veh_position >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-	self[0].z = veh_z >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-	self[1].x = anglerotate_car;
-	self[1].y = yrotrotveh;
-	self[1].z = rotxvehicle;
-	if (globalgamesettings.game_opponenttype != 0) {
-		objPos[0].x = otherCarState->car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		objPos[0].y = otherCarState->car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		objPos[0].z = otherCarState->car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		objPos[1].x = otherCarState->car_rotate.z;
-		objPos[1].y = otherCarState->car_rotate.y;
-		objPos[1].z = otherCarState->car_rotate.x;
-		if (car_car_coll_detect_maybe(activeCarSetup->collide_points, self, otherCarSetup->collide_points, objPos)) {
-			if (activeCarState->field_C8 != 0)
-				return;
-			if (car_car_speed_adjust_maybe(activeCarState, otherCarState) == 0)
-				return;
-			update_crash_state(1, isOpponent);
-			update_crash_state(1, isOpponent ^ 1);
-			return;
+		i = (I8)td19hdl[lnoffsets[res.z] + res.x];
+		if (i != -1 && core.field_3FA[i] == 0) {
+			objPos[0].x = td10checkptr[i].x;
+			objPos[0].y = td10checkptr[i].y;
+			objPos[0].z = td10checkptr[i].z;
+			if (car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_a, objPos)) {
+				core.field_3FA[i] = 1;
+				state_op_unk(i + 2, -activeCarState->car_rotate.x, (I32)activeCarState->car_speed2 * 0x580 / 0x3C00U);
+			}
 		}
-	}
-	res.x = self[0].x >> 10;
-	res.z = 29 - (self[0].z >> 10);
-	objPos[1].x = 0;
-	objPos[1].y = 0;
-	objPos[1].z = 0;
-	if (res.x < 0 || res.x >= 30 || res.z < 0 || res.z >= 30)
-		goto store_state;
-	tiltFlag = bto_auxiliary1(res.x, res.z, objPts);
-	if (tiltFlag != 0) {
-		for (i = 0; i < tiltFlag; nextVec++, i++) {
-			objPos[0].x = objPts[i].x;
-			objPos[0].y = objPts[i].y;
-			objPos[0].z = objPts[i].z;
-			if (car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_c, objPos)) {
-				activeCarState->car_36MwhlAngle -= ANGLE_HALF_TURN;
-crash_return:
+		if (res.x == idxtrk && res.z == tagtrk) {
+			objPos[0].x = trackctrpos2[idxtrk] + mulscl(sinfast(st_hdg + ANGLE_QUARTER_TURN), 126);
+			objPos[0].y = hillconsts[g_hillf];
+			objPos[0].z = mulscl(cosfast(st_hdg + ANGLE_QUARTER_TURN), 126) + row_ctr_zs[tagtrk];
+			if ((found = car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_b, objPos)) == 0) {
+				objPos[0].x = mulscl(sinfast(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + trackctrpos2[idxtrk];
+				objPos[0].z = mulscl(cosfast(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + row_ctr_zs[tagtrk];
+				found = car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_b, objPos);
+			}
+			if (found != 0) {
 				update_crash_state(1, isOpponent);
 				return;
 			}
 		}
-	}
-	i = (I8)td19hdl[lnoffsets[res.z] + res.x];
-	if (i != -1 && core.field_3FA[i] == 0) {
-		objPos[0].x = td10checkptr[i].x;
-		objPos[0].y = td10checkptr[i].y;
-		objPos[0].z = td10checkptr[i].z;
-		if (car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_a, objPos)) {
-			core.field_3FA[i] = 1;
-			state_op_unk(i + 2, -activeCarState->car_rotate.x, (I32)activeCarState->car_speed2 * 0x580 / 0x3C00U);
-		}
-	}
-	if (res.x == idxtrk && res.z == tagtrk) {
-		objPos[0].x = trackctrpos2[idxtrk] + mulscl(sinfast(st_hdg + ANGLE_QUARTER_TURN), 126);
-		objPos[0].y = hillconsts[g_hillf];
-		objPos[0].z = mulscl(cosfast(st_hdg + ANGLE_QUARTER_TURN), 126) + row_ctr_zs[tagtrk];
-		if ((found = car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_b, objPos)) == 0) {
-			objPos[0].x = mulscl(sinfast(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + trackctrpos2[idxtrk];
-			objPos[0].z = mulscl(cosfast(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + row_ctr_zs[tagtrk];
-			found = car_car_coll_detect_maybe(activeCarSetup->collide_points, self, collision_point_set_b, objPos);
-		}
-		if (found != 0)
-			goto crash_return;
 	}
 store_state:
 	activeCarState->car_posWorld1.lx = centerpos;
@@ -1654,7 +1660,7 @@ void initialize_game_state(I16S arg)
 		core.game_vec1[0].x =
 			  mulscl(sinfast(st_hdg + ANGLE_HALF_TURN), 4096)
 			+ mulscl(sinfast(st_hdg + ANGLE_THREE_QUARTERS_TURN),  512)
-			+ ((I16S)idxtrk << 10);
+			+ (idxtrk << 10);
 
 		core.game_vec1[0].y = hillconsts[g_hillf] + 960;
 
@@ -1691,9 +1697,9 @@ void initialize_game_state(I16S arg)
 			&core.playerstate,
 			&simdp7,
 			globalgamesettings.game_playertransmission,
-			(I32)(trackctrpos2[idxtrk] + tmpcol) * 64L,
-			(I32)hillconsts[g_hillf] * 64L,
-			(I32)(row_ctr_zs[tagtrk] + tmprow) * 64L,
+			(trackctrpos2[idxtrk] + tmpcol) * 64L,
+			hillconsts[g_hillf] * 64L,
+			(row_ctr_zs[tagtrk] + tmprow) * 64L,
 			-st_hdg);
 
 		core.field_2F2 = zeroValue;
@@ -1729,9 +1735,9 @@ void initialize_game_state(I16S arg)
 			&core.opponentstate,
 			&ophys_7,
 			1,
-			(I32)(trackctrpos2[idxtrk] + tmpcol) * 64L,
-			(I32)hillconsts[g_hillf] * 64L,
-			(I32)(row_ctr_zs[tagtrk] + tmprow) * 64L,
+			(trackctrpos2[idxtrk] + tmpcol) * 64L,
+			hillconsts[g_hillf] * 64L,
+			(row_ctr_zs[tagtrk] + tmprow) * 64L,
 			-st_hdg);
 
 		if (globalgamesettings.game_opponenttype && arg != -2) {
@@ -1980,12 +1986,12 @@ no_target:
 			core.playerstate.car_trackdata3_index = -1;
 			goto no_target;
 		}
-		playerRelative.x = core.playerstate.car_vec_unk3.x - (I16)(core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		playerRelative.x = core.playerstate.car_vec_unk3.x - (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		if (core.playerstate.car_vec_unk3.y != -1)
-			playerRelative.y = core.playerstate.car_vec_unk3.y - (I16)(core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			playerRelative.y = core.playerstate.car_vec_unk3.y - (core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		else
 			playerRelative.y = 0;
-		playerRelative.z = core.playerstate.car_vec_unk3.z - (I16)(core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+		playerRelative.z = core.playerstate.car_vec_unk3.z - (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		mat_vec(&playerRelative, planeMatrix, &player_plane_vec);
 		height = player_plane_vec.z;
 	}
@@ -2057,7 +2063,7 @@ advance:
 		mat_vec(&offset_vector, planeMatrix, &player_plane_vec);
 		core.playerstate.field_48 = polang(-player_plane_vec.x, player_plane_vec.z) & ANGLE_TURN_MASK;
 		if (core.playerstate.car_crashBmpFlag == 0) {
-			switch ((unsigned)((core.playerstate.field_48 + ANGLE_EIGHTH_TURN) & ANGLE_TURN_MASK) >> 8) {
+			switch (((core.playerstate.field_48 + ANGLE_EIGHTH_TURN) & ANGLE_TURN_MASK) >> 8) {
 			case 1:
 				core.field_45D = 1;
 				break;
@@ -2075,9 +2081,9 @@ advance:
 check_lap:
 	if (core.playerstate.field_CD != 0) {
 		height = mulscl(cosfast(st_hdg),
-			row_ctr_zs[tagtrk] - (I16)(core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			row_ctr_zs[tagtrk] - (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		height += mulscl(sinfast(st_hdg),
-			trackctrpos2[idxtrk] - (I16)(core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+			trackctrpos2[idxtrk] - (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		if (height < 0)
 			update_crash_state(3, 0);
 	}
@@ -2214,15 +2220,19 @@ void update_car_speed(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, st
 upshift:
 			if (carState->car_current_gear != carSetup->num_gears) {
 				carState->car_current_gear++;
-				goto shifted;
+				carState->car_changing_gear = 1;
+				carState->car_fpsmul2 = ((I8)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame >> 1) + /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
+				carState->car_knob_x2 = carSetup->knob_points[carState->car_current_gear].px;
+				carState->car_knob_y2 = carSetup->knob_points[carState->car_current_gear].py;
 			}
 		} else if (carState->car_currpm < carSetup->downshift_rpm) {
 downshift:
 			if (carState->car_current_gear > 1) {
 				carState->car_current_gear--;
+/* Unused label retained: deleting it changes MSC COMDEF ordering. */
 shifted:
 				carState->car_changing_gear = 1;
-				carState->car_fpsmul2 = ((I8)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame >> 1) + (I8)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
+				carState->car_fpsmul2 = ((I8)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame >> 1) + /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
 				carState->car_knob_x2 = carSetup->knob_points[carState->car_current_gear].px;
 				carState->car_knob_y2 = carSetup->knob_points[carState->car_current_gear].py;
 			}
@@ -2318,20 +2328,19 @@ brake:
 	if (/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame == 10)
 		speedDelta += speedDelta;
 
-if (speedDelta >= 0) {
-if (updatedSpeed < CAR_SPEED_Q8_MAX_128_MPH) {
-updatedSpeed += speedDelta;
-} else {
-updatedSpeed += speedDelta;
-if (updatedSpeed < CAR_SPEED_Q8_MAX_128_MPH || updatedSpeed > CAR_SPEED_Q8_MAX_245_MPH)
-updatedSpeed = CAR_SPEED_Q8_MAX_245_MPH;
-}
-} else {
-if (-speedDelta > updatedSpeed)
-updatedSpeed = 0;
-else
-updatedSpeed += speedDelta;
-}
+	if (speedDelta >= 0) {
+		if (updatedSpeed < CAR_SPEED_Q8_MAX_128_MPH) {
+			updatedSpeed += speedDelta;
+		} else {
+			updatedSpeed += speedDelta;
+			if (updatedSpeed < CAR_SPEED_Q8_MAX_128_MPH || updatedSpeed > CAR_SPEED_Q8_MAX_245_MPH)
+				updatedSpeed = CAR_SPEED_Q8_MAX_245_MPH;
+		}
+	} else if (-speedDelta > updatedSpeed) {
+		updatedSpeed = 0;
+	} else {
+		updatedSpeed += speedDelta;
+	}
 	if (carState->car_sumSurfRearWheels != 0) {
 		if (((offset = carState->car_speed2 - updatedSpeed) < 0 ? -offset : offset) > CAR_SPEED_Q8_TWENTY_MPH) {
 			carState->car_speed = ((I32)carState->car_speed + carState->car_speed2) >> 1;
@@ -2398,9 +2407,9 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, I16 isOpponent)
 
     scratch = (limit < 0 ? -limit : limit) >> 3;
 
-    demandedGrip = (((U16 )speed * (U16 )speed) >> 6) * (U16 )scratch; /* PORT: The MSC unsigned-int product wraps at 16 bits before scaling. */
+    demandedGrip = (((U16 )speed * speed) >> 6) * scratch; /* PORT: The MSC unsigned-int product wraps at 16 bits before scaling. */
     totalGrip = simd->grip * 2;
-    totalGrip = (I16)(((I32)(simd->sliding[car->car_surfaceWhl[0]] +
+    totalGrip = (((I32)(simd->sliding[car->car_surfaceWhl[0]] +
                                 simd->sliding[car->car_surfaceWhl[1]] +
                                 simd->sliding[car->car_surfaceWhl[2]] +
                                 simd->sliding[car->car_surfaceWhl[3]]) *
@@ -2426,7 +2435,7 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, I16 isOpponent)
 
         if (totalGrip < (I16)demandedGrip) {
             car->car_slidingFlag = 1;
-            limit = (I16)(((I32)totalGrip << 8) /
+            limit = (((I32)totalGrip << 8) /
                                   ((I32)speed * speed));
             if (baseAngleValue < 0)
                 limit = -1 * limit;
@@ -2448,8 +2457,8 @@ void update_grip(struct CARSTATE *car, struct SIMD *simd, I16 isOpponent)
 
         if (car->car_rotate.z != 0 &&
             (car->car_rotate.z < 0 ? -car->car_rotate.z : car->car_rotate.z) > 4) {
-                column = (U8 )((U32 )car->car_posWorld1.lx >> 16);
-                rowCoord = (U8 )((U32 )car->car_posWorld1.lz >> 16);
+                column = ((U32 )car->car_posWorld1.lx >> 16);
+                rowCoord = ((U32 )car->car_posWorld1.lz >> 16);
 
                 switch (td14tb[gterrtrk[rowCoord] + column]) {
                 case 0xFD:
@@ -2601,7 +2610,7 @@ I16 carState_rc_op(struct CARSTATE *car, I16 value, I16 wheel)
                 car->car_rc5[wheel] = adjustment;
         }
     }
-    car->car_rc5[wheel] = car->car_rc5[wheel];
+    WRITE_BACK(car->car_rc5[wheel]);
 
     if (value < 0 && car->car_rc2[wheel] > -value)
         value = 0;
@@ -2652,8 +2661,8 @@ void upd_statef20_from_steer_input(I8 input)
     register I16 oldAngle;
 
     oldAngle = core.playerstate.car_steeringAngle;
-    responseIndex = (I8)(((U16S )core.playerstate.car_speed2 >> 10) & 0xFC);
-    response = table_lookup[(I8)responseIndex + input];
+    responseIndex = ((core.playerstate.car_speed2 >> 10) & 0xFC);
+    response = table_lookup[responseIndex + input];
 
     if (response > 0) {
         if (oldAngle < -1) response <<= 2;
@@ -2662,7 +2671,7 @@ void upd_statef20_from_steer_input(I8 input)
     }
 
     if (response == 0 && core.playerstate.car_speed2 != 0 && oldAngle != 0) {
-        response = table_lookup[(I8)responseIndex + 1] * 2;
+        response = table_lookup[responseIndex + 1] * 2;
         if ((oldAngle < 0 ? -oldAngle : oldAngle) > response) {
             if (oldAngle > 0) response = -response;
         } else {
@@ -2681,7 +2690,7 @@ void upd_statef20_from_steer_input(I8 input)
     if (oldAngle > 240) oldAngle = 240;
     if (oldAngle < -240) oldAngle = -240;
 
-    if (table_lookup[(I8)responseIndex + input] == 0 &&
+    if (table_lookup[responseIndex + input] == 0 &&
         abs(oldAngle) < 8)
         oldAngle = 0;
     core.playerstate.car_steeringAngle = oldAngle;
@@ -2730,25 +2739,25 @@ void audio_carstate(void)
             g_plyr_snd_state = 0;
             audiooppflag = 0;
         }
-        if (inrepflg == replay_state_cache)
-            goto audio_done;
-        reset_audio_driver_state();
-        goto audio_done;
+        if (inrepflg != replay_state_cache)
+            reset_audio_driver_state();
+        replay_state_cache = inrepflg;
+        return;
     }
 
-    playerPosOld.x = (I16S)(core.playerstate.car_posWorld2.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-    playerPosOld.y = (I16S)(core.playerstate.car_posWorld2.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-    playerPosOld.z = (I16S)(core.playerstate.car_posWorld2.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-    playerPosition.x = (I16S)(core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-    playerPosition.y = (I16S)(core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-    playerPosition.z = (I16S)(core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+    playerPosOld.x = (core.playerstate.car_posWorld2.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+    playerPosOld.y = (core.playerstate.car_posWorld2.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+    playerPosOld.z = (core.playerstate.car_posWorld2.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+    playerPosition.x = (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+    playerPosition.y = (core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+    playerPosition.z = (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
     if (globalgamesettings.game_opponenttype != 0) {
-        opponentPrior.x = (I16S)(core.opponentstate.car_posWorld2.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-        opponentPrior.y = (I16S)(core.opponentstate.car_posWorld2.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-        opponentPrior.z = (I16S)(core.opponentstate.car_posWorld2.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-        opponentCurrent.x = (I16S)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-        opponentCurrent.y = (I16S)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-        opponentCurrent.z = (I16S)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+        opponentPrior.x = (core.opponentstate.car_posWorld2.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+        opponentPrior.y = (core.opponentstate.car_posWorld2.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+        opponentPrior.z = (core.opponentstate.car_posWorld2.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+        opponentCurrent.x = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+        opponentCurrent.y = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+        opponentCurrent.z = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
     }
 
     switch (cammd) {
@@ -2845,6 +2854,7 @@ stop_skid:
     if (sndposrecord == 40)
         sndposrecord = 0;
 
+/* Unused label retained: deleting it changes MSC COMDEF ordering. */
 audio_done:
     replay_state_cache = inrepflg;
 }
@@ -2900,23 +2910,23 @@ I8 track_edge_points(I16 trackIndex, struct TRACKRESULT *result, I8 side,
     struct VECTOR edgePoint;
     U8  objectIndex;
 
-    entry = (U8 )road_trk[trackIndex];
-    objectIndex = (U8 )td_18_ref[trackIndex] & 0x0f;
-    isConnected = (U8 )td_18_ref[trackIndex] & 0x10;
+    entry = road_trk[trackIndex];
+    objectIndex = td_18_ref[trackIndex] & 0x0f;
+    isConnected = td_18_ref[trackIndex] & 0x10;
     trackElemObject = &trklst[entry];
     infoBase = (struct TRKOBJINFO far *)trackElemObject->ss_trkObjInfoPtr;
     objectInfo = infoBase + objectIndex;
     linkPresent = 0;
-    arrow = (U8 )objectInfo->si_arrowType;
+    arrow = objectInfo->si_arrowType;
 
     if (isConnected == 0)
-        edge = (U8 )(side * 2);
+        edge = (side * 2);
     else
-        edge = (U8 )((arrow - side) * 2 - 2);
+        edge = ((arrow - side) * 2 - 2);
 
     if (opponentSpeed != 0) {
-        scratch = (U8 )objectInfo->si_oppSpedCode;
-        trackRow = (U8 )trackElemObject->ss_surfaceType;
+        scratch = objectInfo->si_oppSpedCode;
+        trackRow = trackElemObject->ss_surfaceType;
         *opponentSpeed = opponent_spd_tbl[trackRow + scratch];
     }
 
@@ -2965,8 +2975,8 @@ forward:
         break;
     }
 
-    scratch = (U8 )g_column_of_trkdata21_pth[trackIndex];
-    trackRow = (U8 )tdfrompathrow22[trackIndex];
+    scratch = g_column_of_trkdata21_pth[trackIndex];
+    trackRow = tdfrompathrow22[trackIndex];
     if (vectorA.y != -1 && td15p_9[gterrtrk[trackRow] + scratch] == 6) {
         vectorA.y += hillconsts[1];
         edgePoint.y += hillconsts[1];
@@ -2995,9 +3005,9 @@ forward:
     result->center.z = ((I32)vectorA.z + edgePoint.z) >> 1;
     result->edge_a = vectorA;
     result->edge_b = edgePoint;
-    result->has_opponent_link = (I16S)linkPresent;
+    result->has_opponent_link = linkPresent;
 
-    return (I16)(arrow - 1) == side;
+    return (arrow - 1) == side;
 }
 
 I8 car_car_coll_detect_maybe(struct POINT2D *pCollPoints,
@@ -3314,17 +3324,17 @@ void state_op_unk(I16 mode, I16S angle, I16S speed)
     made = 0;
     for (debrisIndex = 0; debrisIndex < 24; ++debrisIndex) {
         if (core.field_38E[debrisIndex] == 0) {
-            core.field_443[debrisIndex] = (I8)mode;
-            core.field_42B[debrisIndex] = (I8)((made & 3) + phaseBase);
+            core.field_443[debrisIndex] = mode;
+            core.field_42B[debrisIndex] = ((made & 3) + phaseBase);
             core.game_longs1[debrisIndex] = 0;
             core.game_longs2[debrisIndex] = 0;
             core.game_longs3[debrisIndex] = 0;
-            core.field_2FE[debrisIndex] = (I16S)(get_kevinrandom() << 2);
-            core.field_32E[debrisIndex] = (I16S)(get_kevinrandom() << 2);
-            core.field_35E[debrisIndex] = (I16S)((((I32)speedFactor * made) / unusedCount + startAngle) & ANGLE_TURN_MASK);
-            verticalValue = (I16S)(((get_kevinrandom() * 6) >> 2) + speed + 0x180);
+            core.field_2FE[debrisIndex] = (get_kevinrandom() << 2);
+            core.field_32E[debrisIndex] = (get_kevinrandom() << 2);
+            core.field_35E[debrisIndex] = ((((I32)speedFactor * made) / unusedCount + startAngle) & ANGLE_TURN_MASK);
+            verticalValue = (((get_kevinrandom() * 6) >> 2) + speed + 0x180);
             core.field_38E[debrisIndex] = verticalValue;
-            core.field_3BE[debrisIndex] = (I16S)((verticalStep * verticalValue) >> 2);
+            core.field_3BE[debrisIndex] = ((verticalStep * verticalValue) >> 2);
             if (++made == unusedCount)
                 break;
         } else
@@ -3385,14 +3395,14 @@ void setup_aero_trackdata(void far *carresptr, I16 is_opponent)
         simdp7 = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
         simdp7.aerorestable = track04_plyraero;
         for (i = 0; i < 0x40; i++) {
-            track04_plyraero[i] = ((I32)simdp7.aero_resistance * (I32)i * (I32)i) >> 9;
+            track04_plyraero[i] = ((I32)simdp7.aero_resistance * i * i) >> 9;
         }
         copy_string(textstr, locate_shape_alt(carresptr, "gnam"));
     } else {
         ophys_7 = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
         ophys_7.aerorestable = trackdata_05_opp_aerotbl;
         for (i = 0; i < 0x40; i++) {
-            trackdata_05_opp_aerotbl[i] = ((I32)ophys_7.aero_resistance * (I32)i * (I32)i) >> 9;
+            trackdata_05_opp_aerotbl[i] = ((I32)ophys_7.aero_resistance * i * i) >> 9;
         }
         copy_string(g_gsnashape_data, locate_shape_alt(carresptr, "gsna"));
     }
