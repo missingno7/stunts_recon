@@ -10,7 +10,7 @@ The freeze evidence and remaining scope are recorded in [the freeze draft](docs/
 
 ## Setup
 
-The native SDL3 game is developed separately on `portable-sdl3`. Build with
+The native SDL3 game lives in `port/`. Build with
 `python port/build.py build`, then launch `build/sdl3/stunts.exe` or run
 `python port/build.py run --no-build`. The executable finds its copied assets
 next to itself. See the [SDL3 handoff](docs/porting/HANDOFF.md) for toolchain,

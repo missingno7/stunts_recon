@@ -34,4 +34,4 @@ Continue while there is a useful next investigation; stop at a solution, a concr
 
 ## Repository
 
-Work lands on `portable-sdl3`; commit verified steps, push only when asked. Do not commit binaries or generated objects. Preserve ignored assets, pinned tools, reference checkouts and local-only inputs; never run blanket `git clean -fdx`. Keep durable source fragments small and generated data under ignored `build/`.
+Work lands on `main`; commit verified steps and push them. Do not commit binaries or generated objects. Preserve ignored assets, pinned tools, reference checkouts and local-only inputs; never run blanket `git clean -fdx`. Keep durable source fragments small and generated data under ignored `build/`.

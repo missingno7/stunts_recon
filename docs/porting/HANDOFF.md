@@ -1,6 +1,6 @@
 # portable-sdl3 handoff (2026-10-01)
 
-The SDL3 port is on the local `portable-sdl3` branch in `D:\Prog\stunts_recon`.
+The SDL3 port is in `port/` on `main` (the `portable-sdl3` branch was merged on 2026-11-12).
 Historical sources, recipes, assets and the locked oracle stay separate from
 modern adapters and generated host overlays.
 
