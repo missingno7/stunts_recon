@@ -1831,9 +1831,9 @@
       ]
     },
     {
-      "owner_id": "load_2260e",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/sprite_copy_both_to_arg.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 140814,
         "end": 140846,
@@ -1852,17 +1852,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_2260e [0x2260e,0x2262e)",
-        "recipes/sprite_copy_both_to_arg.json",
-        "asm/sprite_copy_both_to_arg.ASM",
+        "layout/manifest.json:math_resource_helpers [0x2260e,0x2262e)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "sprite_copy_both_to_arg",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_2262e",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/sprite_copy_arg_to_both.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 140846,
         "end": 140874,
@@ -1881,17 +1881,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_2262e [0x2262e,0x2264a)",
-        "recipes/sprite_copy_arg_to_both.json",
-        "asm/sprite_copy_arg_to_both.ASM",
+        "layout/manifest.json:math_resource_helpers [0x2262e,0x2264a)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "sprite_copy_arg_to_both",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_2264a",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_get_res_shape_count.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 140874,
         "end": 140891,
@@ -1910,16 +1910,16 @@
       "confidence": "high.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_2264a [0x2264a,0x2265b)",
-        "recipes/file_get_res_shape_count.json",
-        "asm/file_get_res_shape_count.ASM",
-        "asm/file_get_res_shape_count.ASM module-level inventory"
+        "layout/manifest.json:math_resource_helpers [0x2264a,0x2265b)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM module-level inventory"
       ]
     },
     {
-      "owner_id": "load_2265b",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_get_shape2d.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 140891,
         "end": 140986,
@@ -1938,16 +1938,16 @@
       "confidence": "high for arithmetic; source result type has open legacy pointer semantics.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_2265b [0x2265b,0x226ba)",
-        "recipes/file_get_shape2d.json",
-        "asm/file_get_shape2d.ASM",
-        "asm/file_get_shape2d.ASM module-level inventory"
+        "layout/manifest.json:math_resource_helpers [0x2265b,0x226ba)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM module-level inventory"
       ]
     },
     {
-      "owner_id": "load_226ba",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/nopsub_326BA.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 140986,
         "end": 141022,
@@ -1966,18 +1966,18 @@
       "confidence": "high for observed indexed address arithmetic; caller-level resource kind is unclear.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_226ba [0x226ba,0x226de)",
-        "recipes/nopsub_326BA.json",
-        "asm/nopsub_326BA.ASM",
-        "asm/nopsub_326BA.ASM module-level inventory",
+        "layout/manifest.json:math_resource_helpers [0x226ba,0x226de)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM module-level inventory",
         "nopsub_326BA",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "sincos",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/sincos.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141022,
         "end": 141112,
@@ -1996,18 +1996,18 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 2,
       "evidence": [
-        "layout/manifest.json:sincos [0x226de,0x22738)",
-        "recipes/sincos.json",
-        "layout/manifest.json:sincos _DATA [0x303f4,0x305f6)",
-        "asm/sincos.ASM",
-        "sincos",
+        "layout/manifest.json:math_resource_helpers [0x226de,0x22738)",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers _DATA [0x303f4,0x305f6)",
+        "asm/math_resource_helpers.ASM",
+        "math_resource_helpers",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_22738",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/nopsub_32738.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141112,
         "end": 141126,
@@ -2026,17 +2026,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_22738 [0x22738,0x22746)",
-        "recipes/nopsub_32738.json",
-        "asm/nopsub_32738.ASM",
+        "layout/manifest.json:math_resource_helpers [0x22738,0x22746)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "nopsub_32738",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_22746",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/nopsub_32746.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141126,
         "end": 141137,
@@ -2055,17 +2055,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_22746 [0x22746,0x22751)",
-        "recipes/nopsub_32746.json",
-        "asm/nopsub_32746.ASM",
+        "layout/manifest.json:math_resource_helpers [0x22746,0x22751)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "nopsub_32746",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_22751",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/nopsub_32751.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141137,
         "end": 141148,
@@ -2084,17 +2084,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_22751 [0x22751,0x2275c)",
-        "recipes/nopsub_32751.json",
-        "asm/nopsub_32751.ASM",
+        "layout/manifest.json:math_resource_helpers [0x22751,0x2275c)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "nopsub_32751",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_2275c",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/projectiondata9_times_ratio.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141148,
         "end": 141162,
@@ -2113,17 +2113,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_2275c [0x2275c,0x2276a)",
-        "recipes/projectiondata9_times_ratio.json",
-        "asm/projectiondata9_times_ratio.ASM",
+        "layout/manifest.json:math_resource_helpers [0x2275c,0x2276a)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "projectiondata9_times_ratio",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_2276a",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/nopsub_3276A.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141162,
         "end": 141176,
@@ -2142,17 +2142,17 @@
       "confidence": "High for manifest extent and indexed entries; semantics follow routine evidence.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_2276a [0x2276a,0x22778)",
-        "recipes/nopsub_3276A.json",
-        "asm/nopsub_3276A.ASM",
+        "layout/manifest.json:math_resource_helpers [0x2276a,0x22778)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
         "nopsub_3276A",
         "mixed-family summary from renderer inventory"
       ]
     },
     {
-      "owner_id": "load_22778",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/timer_get_counter.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141176,
         "end": 141186,
@@ -2171,16 +2171,16 @@
       "confidence": "high.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_22778 [0x22778,0x22782)",
-        "recipes/timer_get_counter.json",
-        "asm/timer_get_counter.ASM",
-        "asm/timer_get_counter.ASM module-level inventory"
+        "layout/manifest.json:math_resource_helpers [0x22778,0x22782)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM module-level inventory"
       ]
     },
     {
-      "owner_id": "load_22782",
+      "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/timer_custom_delta.ASM",
+      "module": "asm/math_resource_helpers.ASM",
       "target_extent": {
         "start": 141186,
         "end": 141210,
@@ -2199,10 +2199,10 @@
       "confidence": "medium.",
       "public_routine_count": 1,
       "evidence": [
-        "layout/manifest.json:load_22782 [0x22782,0x2279a)",
-        "recipes/timer_custom_delta.json",
-        "asm/timer_custom_delta.ASM",
-        "asm/timer_custom_delta.ASM module-level inventory"
+        "layout/manifest.json:math_resource_helpers [0x22782,0x2279a)",
+        "recipes/math_resource_helpers.json",
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM module-level inventory"
       ]
     },
     {
@@ -3572,10 +3572,10 @@
       ]
     },
     {
-      "owner_id": "sincos:_DATA",
+      "owner_id": "math_resource_helpers:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
-      "parent_owner": "sincos",
-      "module": "asm/sincos.ASM",
+      "parent_owner": "math_resource_helpers",
+      "module": "asm/math_resource_helpers.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197620,
@@ -3596,9 +3596,9 @@
         "_sinetable"
       ],
       "evidence": [
-        "asm/sincos.ASM",
-        "layout/manifest.json:sincos:_DATA",
-        "recipes/sincos.json"
+        "asm/math_resource_helpers.ASM",
+        "layout/manifest.json:math_resource_helpers:_DATA",
+        "recipes/math_resource_helpers.json"
       ]
     },
     {
@@ -7224,7 +7224,7 @@
       ]
     },
     {
-      "owner_id": "load_2264a",
+      "owner_id": "math_resource_helpers",
       "routine": "file_get_res_shape_count",
       "public_symbol": "_file_get_res_shape_count",
       "category": "PLATFORM",
@@ -7241,17 +7241,17 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_get_res_shape_count.ASM",
-        "asm/file_get_res_shape_count.ASM:14",
-        "recipes/file_get_res_shape_count.json",
-        "layout/manifest.json:load_2264a [0x2264a,0x2265b)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:354",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x2264a,0x2265b)"
       ],
       "source_inventory_notes": [
         "Read the shape count from a resource record."
       ]
     },
     {
-      "owner_id": "load_2265b",
+      "owner_id": "math_resource_helpers",
       "routine": "file_get_shape2d",
       "public_symbol": "_file_get_shape2d",
       "category": "PLATFORM",
@@ -7268,17 +7268,17 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_get_shape2d.ASM",
-        "asm/file_get_shape2d.ASM:14",
-        "recipes/file_get_shape2d.json",
-        "layout/manifest.json:load_2265b [0x2265b,0x226ba)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:377",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x2265b,0x226ba)"
       ],
       "source_inventory_notes": [
         "Resolve a shape index to the corresponding 2D shape data."
       ]
     },
     {
-      "owner_id": "load_22778",
+      "owner_id": "math_resource_helpers",
       "routine": "timer_get_counter",
       "public_symbol": "_timer_get_counter",
       "category": "PLATFORM",
@@ -7295,17 +7295,17 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_get_counter.ASM",
-        "asm/timer_get_counter.ASM:21",
-        "recipes/timer_get_counter.json",
-        "layout/manifest.json:load_22778 [0x22778,0x22782)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:650",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x22778,0x22782)"
       ],
       "source_inventory_notes": [
         "Read the 32-bit timer counter while interrupts are masked."
       ]
     },
     {
-      "owner_id": "load_22782",
+      "owner_id": "math_resource_helpers",
       "routine": "timer_custom_delta",
       "public_symbol": "_timer_custom_delta",
       "category": "PLATFORM",
@@ -7322,10 +7322,10 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/timer_custom_delta.ASM",
-        "asm/timer_custom_delta.ASM:22",
-        "recipes/timer_custom_delta.json",
-        "layout/manifest.json:load_22782 [0x22782,0x2279a)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:669",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x22782,0x2279a)"
       ],
       "source_inventory_notes": [
         "Implement the timer service identified by timer custom delta."
@@ -9590,7 +9590,7 @@
       ]
     },
     {
-      "owner_id": "load_2260e",
+      "owner_id": "math_resource_helpers",
       "routine": "sprite_copy_both_to_arg",
       "public_symbol": "_sprite_copy_both_to_arg",
       "category": "LEGACY_SOFTWARE_RENDERER",
@@ -9607,17 +9607,17 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_copy_both_to_arg.ASM",
-        "asm/sprite_copy_both_to_arg.ASM:15",
-        "recipes/sprite_copy_both_to_arg.json",
-        "layout/manifest.json:load_2260e [0x2260e,0x2262e)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:289",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x2260e,0x2262e)"
       ],
       "source_inventory_notes": [
         "Copy the two sprite buffers into the supplied destination."
       ]
     },
     {
-      "owner_id": "load_2262e",
+      "owner_id": "math_resource_helpers",
       "routine": "sprite_copy_arg_to_both",
       "public_symbol": "_sprite_copy_arg_to_both",
       "category": "LEGACY_SOFTWARE_RENDERER",
@@ -9634,10 +9634,10 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_copy_arg_to_both.ASM",
-        "asm/sprite_copy_arg_to_both.ASM:15",
-        "recipes/sprite_copy_arg_to_both.json",
-        "layout/manifest.json:load_2262e [0x2262e,0x2264a)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:323",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x2262e,0x2264a)"
       ],
       "source_inventory_notes": [
         "Copy the supplied sprite image into both sprite buffers."
@@ -11290,7 +11290,7 @@
       ]
     },
     {
-      "owner_id": "load_226ba",
+      "owner_id": "math_resource_helpers",
       "routine": "nopsub_326BA",
       "public_symbol": "_nopsub_326BA",
       "category": "PORTABLE_ALGORITHM",
@@ -11307,10 +11307,10 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium-low",
       "evidence": [
-        "asm/nopsub_326BA.ASM",
-        "asm/nopsub_326BA.ASM:13",
-        "recipes/nopsub_326BA.json",
-        "layout/manifest.json:load_226ba [0x226ba,0x226de)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:434",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x226ba,0x226de)"
       ],
       "source_inventory_notes": [
         "Read the far-pointer pair at byte offset 6 + 4*selector in an ES:SI record table and store the pair to the caller’s output buffer.",
@@ -11318,7 +11318,7 @@
       ]
     },
     {
-      "owner_id": "load_22738",
+      "owner_id": "math_resource_helpers",
       "routine": "nopsub_32738",
       "public_symbol": "_nopsub_32738",
       "category": "PORTABLE_ALGORITHM",
@@ -11335,17 +11335,17 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/nopsub_32738.ASM",
-        "asm/nopsub_32738.ASM:13",
-        "recipes/nopsub_32738.json",
-        "layout/manifest.json:load_22738 [0x22738,0x22746)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:542",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x22738,0x22746)"
       ],
       "source_inventory_notes": [
         "Implement the legacy internal helper nopsub 32738."
       ]
     },
     {
-      "owner_id": "load_22746",
+      "owner_id": "math_resource_helpers",
       "routine": "nopsub_32746",
       "public_symbol": "_nopsub_32746",
       "category": "PORTABLE_ALGORITHM",
@@ -11362,17 +11362,17 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/nopsub_32746.ASM",
-        "asm/nopsub_32746.ASM:23",
-        "recipes/nopsub_32746.json",
-        "layout/manifest.json:load_22746 [0x22746,0x22751)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:561",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x22746,0x22751)"
       ],
       "source_inventory_notes": [
         "Implement the legacy internal helper nopsub 32746."
       ]
     },
     {
-      "owner_id": "load_22751",
+      "owner_id": "math_resource_helpers",
       "routine": "nopsub_32751",
       "public_symbol": "_nopsub_32751",
       "category": "PORTABLE_ALGORITHM",
@@ -11389,17 +11389,17 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/nopsub_32751.ASM",
-        "asm/nopsub_32751.ASM:23",
-        "recipes/nopsub_32751.json",
-        "layout/manifest.json:load_22751 [0x22751,0x2275c)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:583",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x22751,0x2275c)"
       ],
       "source_inventory_notes": [
         "Implement the legacy internal helper nopsub 32751."
       ]
     },
     {
-      "owner_id": "load_2275c",
+      "owner_id": "math_resource_helpers",
       "routine": "projectiondata9_times_ratio",
       "public_symbol": "_projectiondata9_times_ratio",
       "category": "PORTABLE_ALGORITHM",
@@ -11416,17 +11416,17 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/projectiondata9_times_ratio.ASM",
-        "asm/projectiondata9_times_ratio.ASM:23",
-        "recipes/projectiondata9_times_ratio.json",
-        "layout/manifest.json:load_2275c [0x2275c,0x2276a)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:605",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x2275c,0x2276a)"
       ],
       "source_inventory_notes": [
         "Implement the graphics or geometry helper identified by projectiondata9 times ratio."
       ]
     },
     {
-      "owner_id": "load_2276a",
+      "owner_id": "math_resource_helpers",
       "routine": "nopsub_3276A",
       "public_symbol": "_nopsub_3276A",
       "category": "PORTABLE_ALGORITHM",
@@ -11443,10 +11443,10 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/nopsub_3276A.ASM",
-        "asm/nopsub_3276A.ASM:23",
-        "recipes/nopsub_3276A.json",
-        "layout/manifest.json:load_2276a [0x2276a,0x22778)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:624",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x2276a,0x22778)"
       ],
       "source_inventory_notes": [
         "Implement the legacy internal helper nopsub 3276A."
@@ -11957,7 +11957,7 @@
       ]
     },
     {
-      "owner_id": "sincos",
+      "owner_id": "math_resource_helpers",
       "routine": "cos_fast",
       "public_symbol": "_cosfast",
       "category": "PORTABLE_ALGORITHM",
@@ -11974,18 +11974,18 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sincos.ASM",
-        "asm/sincos.ASM:335",
-        "recipes/sincos.json",
-        "layout/manifest.json:sincos [0x226de,0x22738)",
-        "layout/manifest.json:sincos _DATA [0x303f4,0x305f6)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:518",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x226de,0x22738)",
+        "layout/manifest.json:math_resource_helpers _DATA [0x303f4,0x305f6)"
       ],
       "source_inventory_notes": [
         "Return the fast fixed-point cosine approximation."
       ]
     },
     {
-      "owner_id": "sincos",
+      "owner_id": "math_resource_helpers",
       "routine": "sin_fast",
       "public_symbol": "_sinfast",
       "category": "PORTABLE_ALGORITHM",
@@ -12002,11 +12002,11 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sincos.ASM",
-        "asm/sincos.ASM:281",
-        "recipes/sincos.json",
-        "layout/manifest.json:sincos [0x226de,0x22738)",
-        "layout/manifest.json:sincos _DATA [0x303f4,0x305f6)"
+        "asm/math_resource_helpers.ASM",
+        "asm/math_resource_helpers.ASM:464",
+        "recipes/math_resource_helpers.json",
+        "layout/manifest.json:math_resource_helpers [0x226de,0x22738)",
+        "layout/manifest.json:math_resource_helpers _DATA [0x303f4,0x305f6)"
       ],
       "source_inventory_notes": [
         "Return the fast fixed-point sine approximation."

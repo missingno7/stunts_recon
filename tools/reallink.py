@@ -2112,10 +2112,10 @@ HISTORICAL_ABSENT_PUBLICS = ('_toupper',)
 # Old helper names that some original object declared; their thunks are in the
 # image and nothing calls them.  ASSUMPTION: the declaring object is unknown.
 HISTORICAL_OLD_HELPER_NAMES = ('__ldiv', '__lmul', '__lshr', '__uldiv')
-# Assembly units that are in the image but unreferenced: they belonged to one
-# original object with their referenced neighbours (load_2260e .. load_22782).
-HISTORICAL_UNREFERENCED_UNITS = ('load_226ba', 'load_22738', 'load_22746', 'load_22751',
-                                 'load_2276a', 'load_22782')
+# Extra references for assembly fragments that cannot yet be included through
+# their original module. Empty now that math_resource_helpers combines the
+# formerly unreferenced helpers with their referenced neighbours.
+HISTORICAL_UNREFERENCED_UNITS = ()
 
 
 def historical_runtime_members(work):

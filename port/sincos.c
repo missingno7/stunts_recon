@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 /* The complete 257-word fixed-point table and quadrant rules are translated
-   from asm/sincos.ASM. mulscl follows asm/graphics_resource_runtime.ASM. */
+   from asm/math_resource_helpers.ASM. mulscl follows asm/graphics_resource_runtime.ASM. */
 static const int16_t s_sine_table[257] = {
     0, 101, 201, 302, 402, 503, 603, 704,
     804, 904, 1005, 1105, 1205, 1306, 1406, 1506,

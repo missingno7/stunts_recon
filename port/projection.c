@@ -144,7 +144,7 @@ void set_projection(int16_t x_angle, int16_t y_angle,
 }
 
 /* Semantic translation of the 14-byte accepted
-   asm/projectiondata9_times_ratio.ASM helper. MUL and DIV both consume
+   asm/math_resource_helpers.ASM helper. MUL and DIV both consume
    unsigned 16-bit words even though the original C declarations are signed. */
 int16_t projectiondata9_times_ratio(int16_t factor_arg, int16_t divisor_arg)
 {

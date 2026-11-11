@@ -20592,51 +20592,6 @@
     },
     {
       "classification": "GAME_ASM",
-      "end": 140846,
-      "id": "load_2260e",
-      "kind": "MATCHING_ASM",
-      "name": "sprite_copy_both_to_arg",
-      "recipe": "recipes/sprite_copy_both_to_arg.json",
-      "start": 140814
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 140874,
-      "id": "load_2262e",
-      "kind": "MATCHING_ASM",
-      "name": "sprite_copy_arg_to_both",
-      "recipe": "recipes/sprite_copy_arg_to_both.json",
-      "start": 140846
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 140891,
-      "id": "load_2264a",
-      "kind": "MATCHING_ASM",
-      "name": "file_get_res_shape_count",
-      "recipe": "recipes/file_get_res_shape_count.json",
-      "start": 140874
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 140986,
-      "id": "load_2265b",
-      "kind": "MATCHING_ASM",
-      "name": "file_get_shape2d",
-      "recipe": "recipes/file_get_shape2d.json",
-      "start": 140891
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141022,
-      "id": "load_226ba",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_326BA",
-      "recipe": "recipes/nopsub_326BA.json",
-      "start": 140986
-    },
-    {
-      "classification": "GAME_ASM",
       "data_intervals": [
         {
           "end": 198134,
@@ -20648,75 +20603,12 @@
           }
         }
       ],
-      "end": 141112,
-      "id": "sincos",
-      "kind": "MATCHING_ASM",
-      "name": "sincos",
-      "recipe": "recipes/sincos.json",
-      "start": 141022
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141126,
-      "id": "load_22738",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_32738",
-      "recipe": "recipes/nopsub_32738.json",
-      "start": 141112
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141137,
-      "id": "load_22746",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_32746",
-      "recipe": "recipes/nopsub_32746.json",
-      "start": 141126
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141148,
-      "id": "load_22751",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_32751",
-      "recipe": "recipes/nopsub_32751.json",
-      "start": 141137
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141162,
-      "id": "load_2275c",
-      "kind": "MATCHING_ASM",
-      "name": "projectiondata9_times_ratio",
-      "recipe": "recipes/projectiondata9_times_ratio.json",
-      "start": 141148
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141176,
-      "id": "load_2276a",
-      "kind": "MATCHING_ASM",
-      "name": "nopsub_3276A",
-      "recipe": "recipes/nopsub_3276A.json",
-      "start": 141162
-    },
-    {
-      "classification": "GAME_ASM",
-      "end": 141186,
-      "id": "load_22778",
-      "kind": "MATCHING_ASM",
-      "name": "timer_get_counter",
-      "recipe": "recipes/timer_get_counter.json",
-      "start": 141176
-    },
-    {
-      "classification": "GAME_ASM",
       "end": 141210,
-      "id": "load_22782",
+      "id": "math_resource_helpers",
       "kind": "MATCHING_ASM",
-      "name": "timer_custom_delta",
-      "recipe": "recipes/timer_custom_delta.json",
-      "start": 141186
+      "name": "math_resource_helpers",
+      "recipe": "recipes/math_resource_helpers.json",
+      "start": 140814
     },
     {
       "classification": "GAME_ASM",
@@ -22014,9 +21906,9 @@
     {
       "classification": "GAME_ASM",
       "end": 198134,
-      "id": "sincos:_DATA",
+      "id": "math_resource_helpers:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "sincos",
+      "parent": "math_resource_helpers",
       "segment": "_DATA",
       "start": 197620,
       "target": {

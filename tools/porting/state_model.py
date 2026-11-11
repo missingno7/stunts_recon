@@ -1164,7 +1164,7 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
         unit_basis = [{"citation": "asm/projection_vector_window.ASM:11-27"}]
     elif any(k in n for k in ("projection_x_angle", "projection_y_angle")):
         unit = "projection angle parameter; source uses turn-based trig, but scale for this stored value is not established"
-        unit_basis = [{"citation": "asm/projection_vector_window.ASM:11-27"}, {"citation": "asm/sincos.ASM:273-332"}]
+        unit_basis = [{"citation": "asm/projection_vector_window.ASM:11-27"}, {"citation": "asm/math_resource_helpers.ASM:456-515"}]
     elif any(k in n for k in ("projection_x_scale", "projection_y_scale")):
         unit = "projection scale coefficient; fixed-point denominator not established"
         unit_basis = [{"citation": "asm/projection_vector_window.ASM:11-27"}]
@@ -1177,7 +1177,7 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
         unit_basis = [{"citation": "src/seg017_mouse_whole.c:40-68"}]
     elif "angle" in n or "rot" in n:
         unit = "integer angle/rotation parameter; where passed to fast trig, a turn is 0x400 units; field-specific scale not established"
-        unit_basis = [{"citation": "asm/sincos.ASM:273-332"}]
+        unit_basis = [{"citation": "asm/math_resource_helpers.ASM:456-515"}]
     elif any(k in n for k in ("tick", "timer", "clock", "countdown")):
         unit = "timer/tick count or control flag; tick duration must be taken from timer source"
         unit_basis = [{"citation": "asm/timer_counter_deadline_helpers.ASM:57-84"}]
@@ -1793,7 +1793,7 @@ def build_model(run_probes=True):
                 {"field": "car_speed2", "unit": "unsigned Q8 mph", "meaning": "actual translational speed; can diverge from car_speed during jumps", "evidence": [{"citation": "src/obj_seg003.c:101-107"}]},
                 {"field": "car_posWorld1", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "car world position", "evidence": [{"citation": "src/obj_seg001_complete.c:740-745"}, {"citation": "src/obj_seg001_complete.c:1692-1695"}]},
                 {"field": "car_posWorld2", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "prior/secondary car position used in simulation", "evidence": [{"citation": "src/obj_seg001_complete.c:2699-2711"}]},
-                {"field": "car_36MwhlAngle", "unit": "integer angle consumed by 0x400-turn fast-trig convention", "meaning": "normalized heading difference used as the car's angular skid/impact vector; also passed to cosfast", "evidence": [{"citation": "src/obj_seg001_complete.c:2444-2460"}, {"citation": "src/obj_seg001_complete.c:2527-2537"}, {"citation": "asm/sincos.ASM:273-332"}]}
+                {"field": "car_36MwhlAngle", "unit": "integer angle consumed by 0x400-turn fast-trig convention", "meaning": "normalized heading difference used as the car's angular skid/impact vector; also passed to cosfast", "evidence": [{"citation": "src/obj_seg001_complete.c:2444-2460"}, {"citation": "src/obj_seg001_complete.c:2527-2537"}, {"citation": "asm/math_resource_helpers.ASM:456-515"}]}
             ]
         elif tag == "GAMESTATE":
             field_semantics = [
@@ -1865,7 +1865,7 @@ def build_model(run_probes=True):
     # Global data declarations with exact semantic scales grounded in accepted source comments/code.
     scale_ledger = [
         {"fact": "sinfast selects one of four quadrants from the high byte, indexes the 256-entry quarter-wave table from the low byte, and cosfast adds 0x100; one complete turn is 0x400 units. Table peak 16384 is Q14 amplitude.",
-         "evidence": ["asm/sincos.ASM:273-332", "asm/sincos.ASM:6-262", "asm/graphics_resource_runtime.ASM:3103-3121"]},
+         "evidence": ["asm/math_resource_helpers.ASM:456-515", "asm/math_resource_helpers.ASM:7-263", "asm/graphics_resource_runtime.ASM:3103-3121"]},
         {"fact": "CARSTATE.car_speed and car_speed2 are unsigned Q8 mph (raw value = mph * 256); car_speed is rev-coupled and car_speed2 is actual translational speed, so they diverge during jumps.",
          "evidence": ["src/obj_seg003.c:101-107", "src/obj_seg003.c:101-107"]},
         {"fact": "CARSTATE car_posWorld1/car_posWorld2 coordinates are 64 times short VECTOR/map coordinates at conversions that shift by six or shift short deltas left by six.",
@@ -2001,7 +2001,7 @@ def write_markdown(model, output_dir=DOCS):
         ("`GAMESTATE` has 0x460 bytes: three 24-element long arrays, timing/frame fields, two embedded `CARSTATE`s, seed bytes, replay flags and opaque spans.", "Keep the whole aggregate in checkpoints, including currently unexplained fields.", "src/obj_seg003.c:155-202; src/obj_seg001_complete.c:1758-1770"),
         ("Each embedded `CARSTATE` has 0xD0 bytes with two long world-position vectors, wheel-result arrays, RPM/speed/gearing and flags.", "Keep player and opponent state as separate complete records.", "src/obj_seg003.c:90-153; compiler-sized `struct CARSTATE` probe in `struct_types`"),
         ("`car_speed`/`car_speed2` are Q8 mph; `speed2` is actual movement speed and can diverge during jumps.", "Keep the unsigned 16-bit raw values and convert only at API boundaries.", "src/obj_seg003.c:101-107"),
-        ("Fast trig uses 0x400 input units per turn, 0x100 per quadrant and a peak table value of 16384 (Q14).", "Keep angle and multiply-scale conventions at the legacy boundary.", "asm/sincos.ASM:273-332; asm/sincos.ASM:6-262; asm/graphics_resource_runtime.ASM:3103-3121"),
+        ("Fast trig uses 0x400 input units per turn, 0x100 per quadrant and a peak table value of 16384 (Q14).", "Keep angle and multiply-scale conventions at the legacy boundary.", "asm/math_resource_helpers.ASM:456-515; asm/math_resource_helpers.ASM:7-263; asm/graphics_resource_runtime.ASM:3103-3121"),
         ("Car world-position longs are converted to short vectors with shifts by six.", "Apply the proven x64 conversion when entering short map/vector coordinates.", "src/obj_seg001_complete.c:740-745; src/obj_seg001_complete.c:1692-1695"),
         ("`SIMD` stores per-car setup values including ratios, RPM thresholds, grip, wheel locations and dashboard-point data.", "Treat loaded tuning as deterministic race configuration; do not conflate with mutable `CARSTATE`.", "src/obj_seg003.c:204-235; src/obj_seg005.c:200-231"),
     ]
