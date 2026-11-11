@@ -1091,7 +1091,7 @@ extern void far timer_remove_callback(callback_t callback);
 /* PLATFORM(timer): reads timer state or registers a callback. */
 void far remove_frame_callback(void)
 {
-    /* PLATFORM(timer): read the timer counter. */ (void)timer_get_counter_unk(10L);
+    /* PLATFORM(timer): read the timer counter. */ timer_get_counter_unk(10L);
     /* PLATFORM(timer): remove the timer callback. */ timer_remove_callback(frame_callback);
 }
 
@@ -1139,7 +1139,7 @@ void far frame_callback(void)
 
     timeraud--;
     if (timeraud == 0) {
-        timeraud = (I8)frmcs_time;
+        timeraud = frmcs_time;
         g_clocks++;
         if (gm_playmode == 2) {
             switch (g_rplmodui) {
@@ -1296,11 +1296,11 @@ void far update_camera_target(void)
             selected_car_state = &core.opponentstate;
 
         /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */
-        car_position.y = (I16S)(selected_car_state->car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
+        car_position.y = selected_car_state->car_posWorld1.ly >> WORLD_COORDINATE_SHIFT;
         /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */
-        car_position.x = (I16S)(selected_car_state->car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
+        car_position.x = selected_car_state->car_posWorld1.lx >> WORLD_COORDINATE_SHIFT;
         /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */
-        car_position.z = (I16S)(selected_car_state->car_posWorld1.lz >> WORLD_COORDINATE_SHIFT);
+        car_position.z = selected_car_state->car_posWorld1.lz >> WORLD_COORDINATE_SHIFT;
         focus = selected_car_state->car_vec_unk3;
         facing = selected_car_state->field_48;
 
@@ -1345,9 +1345,9 @@ void far update_camera_target(void)
                 dz = (I32)trkptrpath[track_segment].z - car_position.z;
                 if ((dx < 0 ? -dx : dx) < nearest_range &&
                     (dz < 0 ? -dz : dz) < nearest_range) {
-                    point_range = polradius2d((I16)dx, (I16)dz);
+                    point_range = polradius2d(dx, dz);
                     if (point_range < nearest_range) {
-                        core.field_3F7[index] = (I8)track_segment;
+                        core.field_3F7[index] = track_segment;
                         nearest_range = point_range;
                     }
                 }
@@ -1710,8 +1710,8 @@ void far setup_car_shapes(I16 mode)
         sprite_free_window(gear_base_sprite);
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(gnob_sprite);
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(meters_sprite);
-        /* PLATFORM(memory): release resource memory. */ mmgr_free((I8 far *)stdbres);
-        /* PLATFORM(memory): release resource memory. */ mmgr_free((I8 far *)stdares);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free(stdbres);
+        /* PLATFORM(memory): release resource memory. */ mmgr_free(stdares);
         return;
     }
 }
@@ -1880,8 +1880,8 @@ void far replay_unk(void)
         return;
 
     steering = array_rpl[frame_index];
-    speed_index = (I8)((core.playerstate.car_speed2 >> 10) & 0xFC);
-    response = ((I8*)table_lookup)[(I16)speed_index + 1];
+    speed_index = (core.playerstate.car_speed2 >> 10) & 0xFC;
+    response = ((I8*)table_lookup)[speed_index + 1];
 
     if (core.playerstate.car_steeringAngle < steering) {
         if (core.playerstate.car_steeringAngle < -1)
@@ -2084,453 +2084,458 @@ void loop_game(I16 mode, I16 frame_index, I16 frame_offset)
         /* PLATFORM(video): copy the working sprite page. */ sprite_copy_2_to_1();
         if (g_videoflg5 != 0)
             cam_idg = numid ^ 1;
-/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ /* PLATFORM(timer): read the elapsed timer interval. */ next_input:
-        key_code = input_checking(timer_get_delta_alt());
-        /* PLATFORM(input_mouse): test the current pointer against UI buttons. */ button = mouse_multi_hittest(game_camera_buttons_count[cammd] + 1, game_camera_buttons_x1,
-                                     game_camera_buttons_x2, game_camera_buttons_y1, game_camera_buttons_y2);
-        if (button != -1) {
-            if (button != camera_button_index && key_code == 0)
-                key_code = 1;
-            camera_button_index = button;
-            if ((key_code == ' ' || key_code == '\r') && camera_button_index >= 7) {
-                if (camera_button_index == 7) {
-                    if ((game_camera_buttons_y1[7] + game_camera_buttons_y2[7]) >> 1 < pos_y_ms)
-                        key_code = KEY_SCAN_DOWN;
-                    else
-                        key_code = KEY_SCAN_UP;
-                } else {
-                    switch (((polang(msecoordx - ((game_camera_buttons_x1[8] + game_camera_buttons_x2[8]) >> 1),
-                                         ((game_camera_buttons_y1[8] + game_camera_buttons_y2[8]) >> 1) - pos_y_ms)
-                              + 0x80) & 0x3FF) >> 8) {
-                    case 0:
-                        key_code = KEY_SCAN_UP;
-                        break;
-                    case 1:
-                        key_code = KEY_SCAN_RIGHT;
-                        break;
-                    case 2:
-                        key_code = KEY_SCAN_DOWN;
-                        break;
-                    case 3:
-                        key_code = KEY_SCAN_LEFT;
-                        break;
-                    }
-                }
-            }
-        } else {
-            /* PLATFORM(input_mouse): test the current pointer against UI buttons. */ button = mouse_multi_hittest(1, gameunk_button_x1, gameunk_button_x2, gameunk_button_y1, gameunk_button_y2);
-            if (button == 0 && (key_code == ' ' || key_code == '\r'))
-                key_code = 'c';
-        }
-        /* PLATFORM(input_kb): dispatch a normalized game key. */ if (key_code != 0 && key_code != 0x1B && handle_ingame_kb_shortcuts(key_code) != 0)
-            break;
-        if (inrepflg == 0 && key_code == 0) {
-            if (g_rplybarenable == 0)
-                break;
-            loop_game(1, core.game_frame, core.game_frame);
-            return;
-        }
-        if (g_rplybarenable == 0) {
-            is_in_rplcopy = -1;
-            bitmapdash = -1;
-        }
-        if (inrepflg != 0 && (camera_buttons_pressed[3] != 0 || camera_buttons_pressed[2] != 0))
-            loop_game(2, 4, 0);
-        loop_game(1, core.game_frame, core.game_frame);
-        modifier = 0;
-        /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
-            modifier = 1;
-        if (modifier != 0) {
-            switch (key_code) {
-            case KEY_SCAN_RIGHT:
-                custom_azim_angle += 0x10;
-                return;
-            case KEY_SCAN_LEFT:
-                custom_azim_angle -= 0x10;
-                return;
-            case KEY_SCAN_UP:
-                if (custom_elev_angle + 0x10 < 0x100) {
-                    custom_elev_angle += 0x10;
-                    return;
-                }
-                break;
-            case KEY_SCAN_DOWN:
-                if (custom_elev_angle - 0x10 > -0x100) {
-                    custom_elev_angle -= 0x10;
-                    return;
-                }
-                break;
-            case '-':
-zoom_out:
-                if (cammd == 3) {
-                    if (viewyshift <= 0)
-                        break;
-                    viewyshift -= 30;
-                } else {
-                    if (custom_dist >= 1500)
-                        break;
-                    custom_dist += 30;
-                }
-                goto done;
-            case '+':
-zoom_in:
-                if (cammd == 3) {
-                    if (viewyshift >= 900)
-                        break;
-                    viewyshift += 30;
-                } else {
-                    if (custom_dist <= 120)
-                        break;
-                    custom_dist -= 30;
-                }
-                goto done;
-            }
-            key_code = 0;
-        }
-        switch (key_code) {
-        case '+':
-            goto zoom_in;
-        case '-':
-            goto zoom_out;
-        case KEY_SCAN_LEFT:
-            if (game_camera_buttons_count[cammd] >= camera_button_count_mode[camera_button_index])
-                camera_button_index = camera_button_count_mode[camera_button_index];
-        default:
-redraw_input:
-            loop_game(1, core.game_frame, core.game_frame);
-            goto next_input;
-        case KEY_SCAN_RIGHT:
-            camera_button_index = camera_mode_select_a[camera_button_index];
-            goto redraw_input;
-        case KEY_SCAN_UP:
-            if (camera_button_index == 7)
-                goto zoom_in;
-            camera_button_index = camera_mode_select_b[camera_button_index];
-            goto redraw_input;
-        case KEY_SCAN_DOWN:
-            if (camera_button_index == 7)
-                goto zoom_out;
-            camera_button_index = camera_mode_select_c[camera_button_index];
-            goto redraw_input;
-        case '\r':
-        case ' ':
-            switch (camera_button_index) {
-            case 6:
-pause_menu:
-                inrepflg = 1;
-                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-                loop_game(2, 4, 0);
-                loop_game(1, core.game_frame, core.game_frame);
-                for (i = 0; i < 8; i++)
-                    dialog_params[i] = 0;
-                if (core.playerstate.car_crashBmpFlag != 0)
-                    dialog_params[3] = 1;
-                if (globalgamesettings.game_recordedframes == 0 || elaptm1 != 0)
-                    dialog_params[5] = 1;
-                if (pass_check_flag == 0) {
-                    dialog_params[2] = 1;
-                    dialog_params[3] = 1;
-                }
-                if ((endhsdemo & 4) == 0)
-                    dialog_params[1] = 1;
-                g_simprect = g_vid_flag6;
-                /* PLATFORM(input_joy): collect dialog joystick input. */
-                /* PLATFORM(timer): wait for dialog input using timer ticks. */
-                /* PLATFORM(video): render a modal dialog. */
-                answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "men"), -1, -1, dialogarg2, dialog_params, 0);
-                switch (answer) {
-                /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ case 2:
-                    check_input();
-                    rate_frame = frm_rate2;
-                    globalgamesettings.game_framespersec = frm_rate2;
-                    initialize_game_state(-1);
-                    tmr2 = 0;
-                    globalgamesettings.game_recordedframes = 0;
-                    popupact = 0;
-                    endhsdemo = 1;
-                    goto continue_driving;
-                case 3:
-                    if (endhsdemo & 2)
-                        endhsdemo = 3;
-                    else if (globalgamesettings.game_recordedframes != tmr2) {
-                        /* PLATFORM(input_joy): collect dialog joystick input. */
-                        /* PLATFORM(timer): wait for dialog input using timer ticks. */
-                        /* PLATFORM(video): render a modal dialog. */
-                        i = show_dialog(2, 0, locate_text_resource(gamerptrs, "con"), -1, -1, performGraphColor, 0, 0);
-                        if (i < 1)
+        for (;;) {
+            /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ /* PLATFORM(timer): read the elapsed timer interval. */
+            key_code = input_checking(timer_get_delta_alt());
+            /* PLATFORM(input_mouse): test the current pointer against UI buttons. */ button = mouse_multi_hittest(game_camera_buttons_count[cammd] + 1, game_camera_buttons_x1,
+                                         game_camera_buttons_x2, game_camera_buttons_y1, game_camera_buttons_y2);
+            if (button != -1) {
+                if (button != camera_button_index && key_code == 0)
+                    key_code = 1;
+                camera_button_index = button;
+                if ((key_code == ' ' || key_code == '\r') && camera_button_index >= 7) {
+                    if (camera_button_index == 7) {
+                        if ((game_camera_buttons_y1[7] + game_camera_buttons_y2[7]) >> 1 < pos_y_ms)
+                            key_code = KEY_SCAN_DOWN;
+                        else
+                            key_code = KEY_SCAN_UP;
+                    } else {
+                        switch (((polang(msecoordx - ((game_camera_buttons_x1[8] + game_camera_buttons_x2[8]) >> 1),
+                                             ((game_camera_buttons_y1[8] + game_camera_buttons_y2[8]) >> 1) - pos_y_ms)
+                                  + 0x80) & 0x3FF) >> 8) {
+                        case 0:
+                            key_code = KEY_SCAN_UP;
                             break;
-                        endhsdemo = 3;
-                    } else
-                        endhsdemo = 1;
-                    globalgamesettings.game_recordedframes = tmr2 = core.game_frame;
-    continue_driving:
-                    on_off_dash = 1;
-                    pen_flag_count = 0;
-                    follow_op = 0;
-                    gm_playmode = 0;
-                    cammd = 0;
-                    core.game_3F6autoLoadEvalFlag = 0;
-                    core.game_frame_in_sec = 0;
-                    g_rplmodui = 0;
-                    loop_game(2, 3, 0);
-                    inrepflg = 0;
-                    /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
-                    /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
-                    kbormouse = 0;
-                    break;
-                case 4:
-                    endhsdemo = 0;
-                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-                    /* PLATFORM(file): open the file selection interface. */
-                    /* PLATFORM(input_joy): collect file-selection joystick input. */
-                    /* PLATFORM(timer): wait for file selection using timer ticks. */
-                    /* PLATFORM(video): draw the file selection interface. */
-                    i = do_fileselect_dialog(replay_file, aDefault_1, ".rpl", locate_text_resource(main_data_file_addr, "rep"));
-                    if (i == 0)
-                        break;
-                    waitm_ms = 150;
-                    /* PLATFORM(input_joy): collect waiting-dialog joystick input. */ /* PLATFORM(timer): wait for dialog input using timer ticks. */ /* PLATFORM(video): render a waiting dialog. */ show_waiting();
-                    oldcfg = globalgamesettings;
-                    prev_sky = td14tb[0x384];
-                    /* PLATFORM(file): load replay data from a file. */ if (file_load_replay(replay_file, aDefault_1) != 0)
-                        globalgamesettings.game_recordedframes = 0;
-                    on_off_dash = 0;
-                    track_setup();
-                    i = 0;
-                    if (td14tb[0x384] != prev_sky)
-                        i = 1;
-                    if (oldcfg.game_playercarid[0] != globalgamesettings.game_playercarid[0] ||
-                        oldcfg.game_playercarid[1] != globalgamesettings.game_playercarid[1] ||
-                        oldcfg.game_playercarid[2] != globalgamesettings.game_playercarid[2] ||
-                        oldcfg.game_playercarid[3] != globalgamesettings.game_playercarid[3])
-                        i = 1;
-                    else if (oldcfg.game_opponenttype != globalgamesettings.game_opponenttype)
-                        i = 1;
-                    else if (globalgamesettings.game_opponenttype != 0) {
-                        if (oldcfg.game_opponentcarid[0] != globalgamesettings.game_opponentcarid[0] ||
-                            oldcfg.game_opponentcarid[1] != globalgamesettings.game_opponentcarid[1] ||
-                            oldcfg.game_opponentcarid[2] != globalgamesettings.game_opponentcarid[2] ||
-                            oldcfg.game_opponentcarid[3] != globalgamesettings.game_opponentcarid[3])
-                            i = 1;
-                        else {
-                            /* PLATFORM(file): check required files and request missing files. */
-                            /* PLATFORM(input_joy): collect file-confirmation joystick input. */
-                            /* PLATFORM(input_kb): collect file-confirmation key input. */
-                            /* PLATFORM(input_mouse): collect file-confirmation pointer input. */
-                            /* PLATFORM(timer): wait for file confirmation using timer ticks. */
-                            /* PLATFORM(video): show missing-file guidance. */
-                            ensure_file_exists(2);
-                            load_opponent_data();
+                        case 1:
+                            key_code = KEY_SCAN_RIGHT;
+                            break;
+                        case 2:
+                            key_code = KEY_SCAN_DOWN;
+                            break;
+                        case 3:
+                            key_code = KEY_SCAN_LEFT;
+                            break;
                         }
                     }
-                    if (i != 0) {
-                        free_player_cars();
-                        setup_player_cars();
-                    }
-                    rate_frame = globalgamesettings.game_framespersec;
-                    initialize_game_state(-1);
-                    break;
-                /* PLATFORM(audio): update engine audio from car state. */ case 5:
-                    audio_carstate();
-                    write_state = 0;
-                    while (write_state == 0) {
-                        /* PLATFORM(file): open the save-file interface. */
-                        /* PLATFORM(input_joy): collect file-entry joystick input. */
-                        /* PLATFORM(timer): wait for file entry using timer ticks. */
-                        /* PLATFORM(video): draw the save-file interface. */
-                        if (do_savefile_dialog(replay_file, aDefault_1, locate_text_resource(main_data_file_addr, "rep")) != 0) {
-                            /* PLATFORM(file): build a file path. */ file_build_path(replay_file, aDefault_1, ".rpl", buf_g_path);
-                            write_state = 1;
-                            g_is_busy = 1;
-                            /* PLATFORM(file): check whether a file exists. */ if (file_find(buf_g_path) != 0) {
-                                /* PLATFORM(input_joy): collect dialog joystick input. */
-                                /* PLATFORM(timer): wait for dialog input using timer ticks. */
-                                /* PLATFORM(video): render a modal dialog. */
-                                i = show_dialog(2, 0, locate_text_resource(main_data_file_addr, "fex"), -1, -1, performGraphColor, 0, 0);
-                                if (i == -1)
-                                    write_state = -1;
-                                else if (i == 0)
-                                    write_state = 0;
-                            }
-                            g_is_busy = 0;
-                        } else
-                            write_state = -1;
-                        if (write_state == 1) {
-                            /* PLATFORM(file): write replay data to a file. */ button = file_write_replay(buf_g_path);
-                            if (button != 0) {
-                                /* PLATFORM(input_joy): collect dialog joystick input. */
-                                /* PLATFORM(timer): wait for dialog input using timer ticks. */
-                                /* PLATFORM(video): render a modal dialog. */
-                                show_dialog(1, 0, locate_text_resource(main_data_file_addr, "ser"), -1, -1, performGraphColor, 0, 0);
-                                write_state = 0;
-                            }
-                        }
+                }
+            } else {
+                /* PLATFORM(input_mouse): test the current pointer against UI buttons. */ button = mouse_multi_hittest(1, gameunk_button_x1, gameunk_button_x2, gameunk_button_y1, gameunk_button_y2);
+                if (button == 0 && (key_code == ' ' || key_code == '\r'))
+                    key_code = 'c';
+            }
+            /* PLATFORM(input_kb): dispatch a normalized game key. */ if (key_code != 0 && key_code != 0x1B && handle_ingame_kb_shortcuts(key_code) != 0)
+                return;
+            if (inrepflg == 0 && key_code == 0) {
+                if (g_rplybarenable == 0)
+                    return;
+                loop_game(1, core.game_frame, core.game_frame);
+                return;
+            }
+            if (g_rplybarenable == 0) {
+                is_in_rplcopy = -1;
+                bitmapdash = -1;
+            }
+            if (inrepflg != 0 && (camera_buttons_pressed[3] != 0 || camera_buttons_pressed[2] != 0))
+                loop_game(2, 4, 0);
+            loop_game(1, core.game_frame, core.game_frame);
+            modifier = 0;
+            /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
+                modifier = 1;
+            if (modifier != 0) {
+                switch (key_code) {
+                case KEY_SCAN_RIGHT:
+                    custom_azim_angle += 0x10;
+                    return;
+                case KEY_SCAN_LEFT:
+                    custom_azim_angle -= 0x10;
+                    return;
+                case KEY_SCAN_UP:
+                    if (custom_elev_angle + 0x10 < 0x100) {
+                        custom_elev_angle += 0x10;
+                        return;
                     }
                     break;
-                case 1:
-                    update_crash_state(4, 0);
-                    sigframe = 2;
+                case KEY_SCAN_DOWN:
+                    if (custom_elev_angle - 0x10 > -0x100) {
+                        custom_elev_angle -= 0x10;
+                        return;
+                    }
                     break;
-                case 7:
-                    update_crash_state(4, 0);
-                    endhsdemo = 0;
-                    sigframe = 2;
-                    break;
+                case '-':
+zoom_out:
+                    if (cammd == 3) {
+                        if (viewyshift <= 0)
+                            break;
+                        viewyshift -= 30;
+                    } else {
+                        if (custom_dist >= 1500)
+                            break;
+                        custom_dist += 30;
+                    }
+                    return;
+                case '+':
+zoom_in:
+                    if (cammd == 3) {
+                        if (viewyshift >= 900)
+                            break;
+                        viewyshift += 30;
+                    } else {
+                        if (custom_dist <= 120)
+                            break;
+                        custom_dist -= 30;
+                    }
+                    return;
+                }
+                key_code = 0;
+            }
+            switch (key_code) {
+            case '+':
+                goto zoom_in;
+            case '-':
+                goto zoom_out;
+            case KEY_SCAN_LEFT:
+                if (game_camera_buttons_count[cammd] >= camera_button_count_mode[camera_button_index])
+                    camera_button_index = camera_button_count_mode[camera_button_index];
+            default:
+                loop_game(1, core.game_frame, core.game_frame);
+                continue;
+            case KEY_SCAN_RIGHT:
+                camera_button_index = camera_mode_select_a[camera_button_index];
+                loop_game(1, core.game_frame, core.game_frame);
+                continue;
+            case KEY_SCAN_UP:
+                if (camera_button_index == 7)
+                    goto zoom_in;
+                camera_button_index = camera_mode_select_b[camera_button_index];
+                loop_game(1, core.game_frame, core.game_frame);
+                continue;
+            case KEY_SCAN_DOWN:
+                if (camera_button_index == 7)
+                    goto zoom_out;
+                camera_button_index = camera_mode_select_c[camera_button_index];
+                loop_game(1, core.game_frame, core.game_frame);
+                continue;
+            case '\r':
+            case ' ':
+                switch (camera_button_index) {
                 case 6:
-                    for (i = 0; i < 5; i++)
+pause_menu:
+                    inrepflg = 1;
+                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                    loop_game(2, 4, 0);
+                    loop_game(1, core.game_frame, core.game_frame);
+                    for (i = 0; i < 8; i++)
                         dialog_params[i] = 0;
-                    if (globalgamesettings.game_opponenttype == 0)
-                        dialog_params[4] = 1;
+                    if (core.playerstate.car_crashBmpFlag != 0)
+                        dialog_params[3] = 1;
+                    if (globalgamesettings.game_recordedframes == 0 || elaptm1 != 0)
+                        dialog_params[5] = 1;
+                    if (pass_check_flag == 0) {
+                        dialog_params[2] = 1;
+                        dialog_params[3] = 1;
+                    }
+                    if ((endhsdemo & 4) == 0)
+                        dialog_params[1] = 1;
+                    g_simprect = g_vid_flag6;
                     /* PLATFORM(input_joy): collect dialog joystick input. */
                     /* PLATFORM(timer): wait for dialog input using timer ticks. */
                     /* PLATFORM(video): render a modal dialog. */
-                    answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "mdo"), -1, -1, dialogarg2, dialog_params, 0);
+                    answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "men"), -1, -1, dialogarg2, dialog_params, 0);
                     switch (answer) {
-                    case 0:
-                        on_off_dash ^= 1;
-                        break;
-                    case 1:
-                        replaybar_toggle ^= 1;
-                        break;
-                    case 2:
-                        cammd++;
-                        if (cammd == 4)
-                            cammd = 0;
-                        break;
-                    /* PLATFORM(audio): pause and restore audio around the graphics menu. */
-                    /* PLATFORM(input_joy): collect graphics-menu joystick input. */
-                    /* PLATFORM(input_kb): collect graphics-menu key input. */
-                    /* PLATFORM(input_mouse): collect graphics-menu pointer input. */
-                    /* PLATFORM(timer): wait for graphics selection using timer ticks. */
-                    /* PLATFORM(video): draw the graphics-level selection interface. */
+                    /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ case 2:
+                        check_input();
+                        rate_frame = frm_rate2;
+                        globalgamesettings.game_framespersec = frm_rate2;
+                        initialize_game_state(-1);
+                        tmr2 = 0;
+                        globalgamesettings.game_recordedframes = 0;
+                        popupact = 0;
+                        endhsdemo = 1;
+                        goto continue_driving;
                     case 3:
-                        show_graphic_levels_menu();
+                        if (endhsdemo & 2)
+                            endhsdemo = 3;
+                        else if (globalgamesettings.game_recordedframes != tmr2) {
+                            /* PLATFORM(input_joy): collect dialog joystick input. */
+                            /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                            /* PLATFORM(video): render a modal dialog. */
+                            i = show_dialog(2, 0, locate_text_resource(gamerptrs, "con"), -1, -1, performGraphColor, 0, 0);
+                            if (i < 1)
+                                break;
+                            endhsdemo = 3;
+                        } else
+                            endhsdemo = 1;
+                        globalgamesettings.game_recordedframes = tmr2 = core.game_frame;
+    continue_driving:
+                        on_off_dash = 1;
+                        pen_flag_count = 0;
+                        follow_op = 0;
+                        gm_playmode = 0;
+                        cammd = 0;
+                        core.game_3F6autoLoadEvalFlag = 0;
+                        core.game_frame_in_sec = 0;
+                        g_rplmodui = 0;
+                        loop_game(2, 3, 0);
+                        inrepflg = 0;
+                        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
+                        /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
+                        kbormouse = 0;
                         break;
                     case 4:
-                        follow_op ^= 1;
+                        endhsdemo = 0;
+                        /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                        /* PLATFORM(file): open the file selection interface. */
+                        /* PLATFORM(input_joy): collect file-selection joystick input. */
+                        /* PLATFORM(timer): wait for file selection using timer ticks. */
+                        /* PLATFORM(video): draw the file selection interface. */
+                        i = do_fileselect_dialog(replay_file, aDefault_1, ".rpl", locate_text_resource(main_data_file_addr, "rep"));
+                        if (i == 0)
+                            break;
+                        waitm_ms = 150;
+                        /* PLATFORM(input_joy): collect waiting-dialog joystick input. */ /* PLATFORM(timer): wait for dialog input using timer ticks. */ /* PLATFORM(video): render a waiting dialog. */ show_waiting();
+                        oldcfg = globalgamesettings;
+                        prev_sky = td14tb[0x384];
+                        /* PLATFORM(file): load replay data from a file. */ if (file_load_replay(replay_file, aDefault_1) != 0)
+                            globalgamesettings.game_recordedframes = 0;
+                        on_off_dash = 0;
+                        track_setup();
+                        i = 0;
+                        if (td14tb[0x384] != prev_sky)
+                            i = 1;
+                        if (oldcfg.game_playercarid[0] != globalgamesettings.game_playercarid[0] ||
+                            oldcfg.game_playercarid[1] != globalgamesettings.game_playercarid[1] ||
+                            oldcfg.game_playercarid[2] != globalgamesettings.game_playercarid[2] ||
+                            oldcfg.game_playercarid[3] != globalgamesettings.game_playercarid[3])
+                            i = 1;
+                        else if (oldcfg.game_opponenttype != globalgamesettings.game_opponenttype)
+                            i = 1;
+                        else if (globalgamesettings.game_opponenttype != 0) {
+                            if (oldcfg.game_opponentcarid[0] != globalgamesettings.game_opponentcarid[0] ||
+                                oldcfg.game_opponentcarid[1] != globalgamesettings.game_opponentcarid[1] ||
+                                oldcfg.game_opponentcarid[2] != globalgamesettings.game_opponentcarid[2] ||
+                                oldcfg.game_opponentcarid[3] != globalgamesettings.game_opponentcarid[3])
+                                i = 1;
+                            else {
+                                /* PLATFORM(file): check required files and request missing files. */
+                                /* PLATFORM(input_joy): collect file-confirmation joystick input. */
+                                /* PLATFORM(input_kb): collect file-confirmation key input. */
+                                /* PLATFORM(input_mouse): collect file-confirmation pointer input. */
+                                /* PLATFORM(timer): wait for file confirmation using timer ticks. */
+                                /* PLATFORM(video): show missing-file guidance. */
+                                ensure_file_exists(2);
+                                load_opponent_data();
+                            }
+                        }
+                        if (i != 0) {
+                            free_player_cars();
+                            setup_player_cars();
+                        }
+                        rate_frame = globalgamesettings.game_framespersec;
+                        initialize_game_state(-1);
+                        break;
+                    /* PLATFORM(audio): update engine audio from car state. */ case 5:
+                        audio_carstate();
+                        write_state = 0;
+                        while (write_state == 0) {
+                            /* PLATFORM(file): open the save-file interface. */
+                            /* PLATFORM(input_joy): collect file-entry joystick input. */
+                            /* PLATFORM(timer): wait for file entry using timer ticks. */
+                            /* PLATFORM(video): draw the save-file interface. */
+                            if (do_savefile_dialog(replay_file, aDefault_1, locate_text_resource(main_data_file_addr, "rep")) != 0) {
+                                /* PLATFORM(file): build a file path. */ file_build_path(replay_file, aDefault_1, ".rpl", buf_g_path);
+                                write_state = 1;
+                                g_is_busy = 1;
+                                /* PLATFORM(file): check whether a file exists. */ if (file_find(buf_g_path) != 0) {
+                                    /* PLATFORM(input_joy): collect dialog joystick input. */
+                                    /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                                    /* PLATFORM(video): render a modal dialog. */
+                                    i = show_dialog(2, 0, locate_text_resource(main_data_file_addr, "fex"), -1, -1, performGraphColor, 0, 0);
+                                    if (i == -1)
+                                        write_state = -1;
+                                    else if (i == 0)
+                                        write_state = 0;
+                                }
+                                g_is_busy = 0;
+                            } else
+                                write_state = -1;
+                            if (write_state == 1) {
+                                /* PLATFORM(file): write replay data to a file. */ button = file_write_replay(buf_g_path);
+                                if (button != 0) {
+                                    /* PLATFORM(input_joy): collect dialog joystick input. */
+                                    /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                                    /* PLATFORM(video): render a modal dialog. */
+                                    show_dialog(1, 0, locate_text_resource(main_data_file_addr, "ser"), -1, -1, performGraphColor, 0, 0);
+                                    write_state = 0;
+                                }
+                            }
+                        }
+                        break;
+                    case 1:
+                        update_crash_state(4, 0);
+                        sigframe = 2;
+                        break;
+                    case 7:
+                        update_crash_state(4, 0);
+                        endhsdemo = 0;
+                        sigframe = 2;
+                        break;
+                    case 6:
+                        for (i = 0; i < 5; i++)
+                            dialog_params[i] = 0;
+                        if (globalgamesettings.game_opponenttype == 0)
+                            dialog_params[4] = 1;
+                        /* PLATFORM(input_joy): collect dialog joystick input. */
+                        /* PLATFORM(timer): wait for dialog input using timer ticks. */
+                        /* PLATFORM(video): render a modal dialog. */
+                        answer = show_dialog(2, 0, locate_text_resource(gamerptrs, "mdo"), -1, -1, dialogarg2, dialog_params, 0);
+                        switch (answer) {
+                        case 0:
+                            on_off_dash ^= 1;
+                            break;
+                        case 1:
+                            replaybar_toggle ^= 1;
+                            break;
+                        case 2:
+                            cammd++;
+                            if (cammd == 4)
+                                cammd = 0;
+                            break;
+                        /* PLATFORM(audio): pause and restore audio around the graphics menu. */
+                        /* PLATFORM(input_joy): collect graphics-menu joystick input. */
+                        /* PLATFORM(input_kb): collect graphics-menu key input. */
+                        /* PLATFORM(input_mouse): collect graphics-menu pointer input. */
+                        /* PLATFORM(timer): wait for graphics selection using timer ticks. */
+                        /* PLATFORM(video): draw the graphics-level selection interface. */
+                        case 3:
+                            show_graphic_levels_menu();
+                            break;
+                        case 4:
+                            follow_op ^= 1;
+                            break;
+                        }
                         break;
                     }
-                    break;
-                }
-                /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
-                goto done;
-            case 0:
-                inrepflg = 1;
-                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-                loop_game(2, 0, 0);
-                /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta_alt();
-                travel = 20;
-                while (kbjoyflags & 0x30) {
-                    j = travel / 50 + 3;
-                    if (j > 100)
-                        j = 100;
-                    /* PLATFORM(timer): read the elapsed timer interval. */ i = (time_delta = timer_get_delta_alt()) * j;
-                    travel += i;
+                    /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ check_input();
+                    return;
+                case 0:
+                    inrepflg = 1;
+                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                    loop_game(2, 0, 0);
+                    /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta_alt();
+                    travel = 20;
+                    while (kbjoyflags & 0x30) {
+                        j = travel / 50 + 3;
+                        if (j > 100)
+                            j = 100;
+                        /* PLATFORM(timer): read the elapsed timer interval. */ time_delta = timer_get_delta_alt();
+                        i = time_delta * j;
+                        travel += i;
+                        if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
+                            travel = (I32)(globalgamesettings.game_recordedframes - tmr2) * 20;
+                        loop_game(1, core.game_frame, travel / 20 + tmr2);
+                        /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
+                    }
                     if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
                         travel = (I32)(globalgamesettings.game_recordedframes - tmr2) * 20;
-                    loop_game(1, core.game_frame, travel / 20 + tmr2);
-                    /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
-                }
-                if (globalgamesettings.game_recordedframes - tmr2 < (unsigned)(travel / 20))
-                    travel = (I32)(globalgamesettings.game_recordedframes - tmr2) * 20;
-                i = travel / 20 + tmr2;
-                if (i > globalgamesettings.game_recordedframes)
-                    i = globalgamesettings.game_recordedframes;
-                restore_gamestate(i);
-                tmr2 = i;
-                loop_game(2, 4, 0);
-                copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
-                /* PLATFORM(video): use the display text or sprite interface. */ if (statemgmtcpy != 0)
-                    rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
-                               rcpunk2);
-                /* PLATFORM(video): use the display text or sprite interface. */ else
-                    introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
-                while (core.game_frame != tmr2) {
-                    update_gamestate();
-                    loop_game(1, core.game_frame, tmr2);
-                }
-                /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1000);
-                goto done;
-            case 1:
-                inrepflg = 1;
-                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-                loop_game(2, 1, 0);
-                /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta_alt();
-                travel = 20;
-                while (kbjoyflags & 0x30) {
-                    j = travel / 50 + 3;
-                    if (j > 100)
-                        j = 100;
-                    /* PLATFORM(timer): read the elapsed timer interval. */ time_delta = timer_get_delta_alt();
-                    i = time_delta * j;
-                    travel += i;
-                    if ((unsigned)(travel / 20) > tmr2)
-                        travel = (I32)tmr2 * 20;
-                    loop_game(1, core.game_frame, tmr2 - travel / 20);
-                    /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
-                }
-                if ((unsigned)(travel / 20) > tmr2)
-                    travel = (I32)tmr2 * 20;
-                j = travel / 20;
-                loop_game(2, 4, 0);
-                if (j != 0) {
+                    i = travel / 20 + tmr2;
+                    if (i > globalgamesettings.game_recordedframes)
+                        i = globalgamesettings.game_recordedframes;
+                    restore_gamestate(i);
+                    tmr2 = i;
+                    loop_game(2, 4, 0);
                     copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
                     /* PLATFORM(video): use the display text or sprite interface. */ if (statemgmtcpy != 0)
                         rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
                                    rcpunk2);
                     /* PLATFORM(video): use the display text or sprite interface. */ else
                         introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
-                    i = tmr2 - j;
-                    restore_gamestate(i);
-                    tmr2 = i;
-                    prev_sky = i - core.game_frame;
-                    if (prev_sky != 0) {
-                        i = prev_sky;
-                        while (core.game_frame != tmr2) {
-                            update_gamestate();
-                            i--;
-                            loop_game(1, (I32)i * j / prev_sky + tmr2, tmr2);
-                            /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1);
+                    while (core.game_frame != tmr2) {
+                        update_gamestate();
+                        loop_game(1, core.game_frame, tmr2);
+                    }
+                    /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1000);
+                    return;
+                case 1:
+                    inrepflg = 1;
+                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                    loop_game(2, 1, 0);
+                    /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta_alt();
+                    travel = 20;
+                    while (kbjoyflags & 0x30) {
+                        j = travel / 50 + 3;
+                        if (j > 100)
+                            j = 100;
+                        /* PLATFORM(timer): read the elapsed timer interval. */ time_delta = timer_get_delta_alt();
+                        i = time_delta * j;
+                        travel += i;
+                        if ((unsigned)(travel / 20) > tmr2)
+                            travel = (I32)tmr2 * 20;
+                        loop_game(1, core.game_frame, tmr2 - travel / 20);
+                        /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(time_delta);
+                    }
+                    if ((unsigned)(travel / 20) > tmr2)
+                        travel = (I32)tmr2 * 20;
+                    j = travel / 20;
+                    loop_game(2, 4, 0);
+                    if (j != 0) {
+                        copy_string(&resbuftext, locate_text_resource(gamerptrs, "wai"));
+                        /* PLATFORM(video): use the display text or sprite interface. */ if (statemgmtcpy != 0)
+                            rcunion(rcpunk2, introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0),
+                                       rcpunk2);
+                        /* PLATFORM(video): use the display text or sprite interface. */ else
+                            introtext(&resbuftext, font_op2_alt(&resbuftext), 100, dlg_colour, 0);
+                        i = tmr2 - j;
+                        restore_gamestate(i);
+                        tmr2 = i;
+                        prev_sky = i - core.game_frame;
+                        if (prev_sky != 0) {
+                            i = prev_sky;
+                            while (core.game_frame != tmr2) {
+                                update_gamestate();
+                                i--;
+                                loop_game(1, (I32)i * j / prev_sky + tmr2, tmr2);
+                                /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1);
+                            }
                         }
                     }
+                    loop_game(1, core.game_frame, core.game_frame);
+                    /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1000);
+                    return;
+                case 3:
+                    g_rplmodui = 0;
+                    loop_game(2, 3, 0);
+                    inrepflg = 0;
+                    break;
+                case 4:
+                    inrepflg = 1;
+                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                    loop_game(2, 4, 0);
+                    loop_game(1, core.game_frame, core.game_frame);
+                    loop_game(1, core.game_frame, core.game_frame);
+                    continue;
+                case 5:
+                    inrepflg = 1;
+                    /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+                    loop_game(2, 5, 0);
+                    loop_game(1, core.game_frame, core.game_frame);
+                    restore_gamestate(0);
+                    /* PLATFORM(timer): read the timer counter. */ timer_get_counter_unk(50);
+                    loop_game(2, 4, 0);
+                    loop_game(1, core.game_frame, core.game_frame);
+                    return;
+                case 2:
+                    loop_game(2, 2, 0);
+                    g_rplmodui = 3;
+                    inrepflg = 0;
+                    break;
                 }
                 loop_game(1, core.game_frame, core.game_frame);
-                /* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ input_do_checking(1000);
-                goto done;
-            case 3:
-                g_rplmodui = 0;
-                loop_game(2, 3, 0);
-                inrepflg = 0;
-                break;
-            case 4:
-                inrepflg = 1;
-                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-                loop_game(2, 4, 0);
-                loop_game(1, core.game_frame, core.game_frame);
-                goto redraw_input;
-            case 5:
-                inrepflg = 1;
-                /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-                loop_game(2, 5, 0);
-                loop_game(1, core.game_frame, core.game_frame);
-                restore_gamestate(0);
-                /* PLATFORM(timer): read the timer counter. */ timer_get_counter_unk(50);
-                loop_game(2, 4, 0);
-                loop_game(1, core.game_frame, core.game_frame);
-                return;
-            case 2:
-                loop_game(2, 2, 0);
-                g_rplmodui = 3;
-                inrepflg = 0;
-                break;
+                continue;
+            case 0x1B:
+                goto pause_menu;
             }
-            goto redraw_input;
-        case 0x1B:
-            goto pause_menu;
+            return;
         }
-        break;
     }
-done:
-    ;
 }
 

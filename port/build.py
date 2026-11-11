@@ -67,13 +67,14 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
             ("        key_code = input_checking(timer_get_delta_alt());",
              "        port_replay_activity = port_guest_activity_snapshot();\n"
              "        key_code = input_checking(timer_get_delta_alt());"),
-            ("redraw_input:\n            loop_game(1, core.game_frame, core.game_frame);\n"
-             "            goto next_input;",
-             "redraw_input:\n            loop_game(1, core.game_frame, core.game_frame);\n"
-             "            if (key_code == 0 && inrepflg != 0 &&\n"
-             "                camera_buttons_pressed[2] == 0 && camera_buttons_pressed[3] == 0)\n"
-             "                port_guest_wait_for_activity(port_replay_activity);\n"
-             "            goto next_input;"),
+            # Only the default case is reached with no key; the key cases redraw and continue themselves.
+            ("            default:\n                loop_game(1, core.game_frame, core.game_frame);\n"
+             "                continue;",
+             "            default:\n                loop_game(1, core.game_frame, core.game_frame);\n"
+             "                if (key_code == 0 && inrepflg != 0 &&\n"
+             "                    camera_buttons_pressed[2] == 0 && camera_buttons_pressed[3] == 0)\n"
+             "                    port_guest_wait_for_activity(port_replay_activity);\n"
+             "                continue;"),
         ])
     elif source == "src/obj_seg008.c":
         changes.extend([
