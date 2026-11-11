@@ -814,7 +814,9 @@ def historical_proof():
                 require(name not in providers, 'LINK map cannot uniquely identify library provider: ' + name)
                 providers[name] = (path.name, ordinal, module_name)
             if hits:
-                loaded.append((path.name, ordinal, module_name))
+                # The worker receipt crosses JSON before canonical publication.
+                # Keep the exact identities stable across that round trip.
+                loaded.append([path.name, ordinal, module_name])
     explicit = json.loads((link_dir / 'objects.json').read_bytes())
     # Explicit objects are always loaded; all physical members remain present.
     # GAME.LIB member names are generated from order, not the source basename.

@@ -591,6 +591,29 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(result['failures'][0]['category'], 'name-sensitive')
         self.assertIn('different set of modules', result['failures'][0]['error'])
 
+    def test_historical_member_identities_survive_worker_json(self):
+        import histbuild
+        link = self.root / 'build/historical/reallink/link-library'
+        link.mkdir(parents=True)
+        (link / 'RESULT.MAP').write_text(' 0000:0000       _old_function\n')
+        (link / 'GAME.LIB').write_bytes(b'game')
+        (link / 'LIBH.LIB').write_bytes(b'helpers')
+        (link / 'objects.json').write_text('[{}]')
+        report = {'status': 'BUILT_EXACT', 'report': 'build/historical/report.json',
+                  'link': {'library_report': {'explicit_objects': 1}}}
+        def library(raw):
+            return [('UNIT', object_fixture()[1])] if raw == b'game' else []
+        with patch.object(histbuild, 'ROOT', self.root), \
+             patch.object(histbuild, 'build', return_value=report), \
+             patch.object(OmfReader, 'split_library', side_effect=library):
+            fresh = rename.historical_proof()
+        from_worker = json.loads(json_bytes(fresh))
+        self.assertEqual(fresh['loaded_library_modules'], [['GAME.LIB', 0, 'UNIT']])
+        self.assertEqual(fresh['loaded_library_modules'], from_worker['loaded_library_modules'])
+        changed = copy.deepcopy(from_worker)
+        changed['loaded_library_modules'][0][1] = 1
+        self.assertNotEqual(fresh['loaded_library_modules'], changed['loaded_library_modules'])
+
     def test_external_reorder_is_clean_and_recipe_refresh_is_transactional(self):
         recipe = json.loads(self.files['recipes/owner.json'])
         recipe.update(object_declarations={}, expected_fixups=[])
