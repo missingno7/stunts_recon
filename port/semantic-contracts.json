@@ -44,7 +44,7 @@
       "id": "matrix-multiply",
       "status": "differential-oracle",
       "routines": [
-        "mat_multiply"
+        "transmult"
       ],
       "tests": [
         "tests/test_matrix_machine_semantics.py::test_vector_and_matrix_memory_effects_match_locked_machine"
@@ -57,10 +57,10 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Proves only the listed operands and alias patterns.",
       "historical_route": [
-        "asm/font_matrix_shape_decode.ASM::_mat_multiply"
+        "asm/font_matrix_shape_decode.ASM::_transmult"
       ],
       "portable_route": [
-        "port/matrix.c:mat_multiply"
+        "port/matrix.c:transmult"
       ],
       "source_scope": [
         "port/matrix.c"
@@ -98,12 +98,12 @@
       "id": "shape-render-pipeline",
       "status": "differential-oracle",
       "routines": [
-        "copy_material_list_pointers",
-        "initialize_polyinfo",
+        "INIT_PALETTE",
+        "INIT_MATRIX",
         "set_projection",
-        "select_rot",
-        "trans_op",
-        "polyinfo"
+        "INIT_OBJECTS_BUFFER",
+        "ADD_OBJECT_TO_BUFFER",
+        "DRAW_OBJECTS"
       ],
       "tests": [
         "tests/test_sdl3_shape_pipeline.py::test_all_stock_models_match_frozen_transforms_queues_and_full_frames"
@@ -144,7 +144,7 @@
       "id": "renderer-cull-word-expression",
       "status": "differential-oracle",
       "routines": [
-        "trans_op"
+        "ADD_OBJECT_TO_BUFFER"
       ],
       "tests": [
         "tests/test_sdl3_renderer_arithmetic.py::test_generated_helper_and_signed_compare_match_locked_shl_cmp"
@@ -158,7 +158,7 @@
       "authority": "locked_image_instruction_bytes",
       "claim_limit": "Expression/helper only; does not prove all of trans_op. The shape pipeline separately supplies composite evidence for selected stock shapes.",
       "historical_route": [
-        "src/obj_seg006.c:trans_op",
+        "src/obj_seg006.c:ADD_OBJECT_TO_BUFFER",
         "locked bytes at image offsets 86103 and 86126: SHL CX,1; CMP CX,AX"
       ],
       "portable_route": [
@@ -177,7 +177,7 @@
         "preRender_default",
         "preRender_default_alt",
         "preRender_patterned",
-        "preRender_unk",
+        "sprite_two_color_poly_list",
         "preRender_wheel_helper4"
       ],
       "tests": [
@@ -236,7 +236,7 @@
       "id": "wheel-update",
       "status": "differential-oracle",
       "routines": [
-        "wheel_update"
+        "settires"
       ],
       "tests": [
         "tests/test_sdl3_wheel_update.py::test_split_globals_and_packed_inputs_match_frozen_wheels"
@@ -251,7 +251,7 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Proves the tested routine inputs and layouts; does not establish all vehicle simulation behavior.",
       "historical_route": [
-        "src/obj_seg004.c:wheel_update; locked entry alias sub_204AE"
+        "src/obj_seg004.c:settires; locked entry alias sub_204AE"
       ],
       "portable_route": [
         "PORT_BUILD overlay of src/obj_seg004.c",
@@ -267,9 +267,9 @@
       "status": "differential-oracle",
       "routines": [
         "font_draw_text",
-        "draw_text_at",
-        "font_op",
-        "font_op2",
+        "movtxy",
+        "textnpixels",
+        "textpixels",
         "font_set_unk"
       ],
       "tests": [
@@ -379,8 +379,8 @@
       "id": "gameplay-arithmetic-expressions",
       "status": "differential-oracle",
       "routines": [
-        "update_player_state",
-        "car_car_speed_adjust_maybe"
+        "movecar",
+        "calccoll"
       ],
       "tests": [
         "tests/test_sdl3_word_arithmetic.py::test_overlay_reproduces_locked_threshold_and_collision_windows"
@@ -395,8 +395,8 @@
       "authority": "locked_image_instruction_bytes_live_execution",
       "claim_limit": "Proves selected arithmetic and collision outcomes only, not either full simulation routine or the full vehicle model.",
       "historical_route": [
-        "src/obj_seg001_complete.c:update_player_state",
-        "src/obj_seg001_complete.c:car_car_speed_adjust_maybe",
+        "src/obj_seg001_complete.c:movecar",
+        "src/obj_seg001_complete.c:calccoll",
         "locked instruction windows at load offsets 21706 and 34129"
       ],
       "portable_route": [
@@ -412,8 +412,8 @@
       "id": "projection-math-fixed-vectors",
       "status": "indirect-invariant",
       "routines": [
-        "polang",
-        "projectiondata9_times_ratio"
+        "intatan",
+        "thicknessxp"
       ],
       "tests": [
         "tests/test_sdl3_projection_math.py::test_port_math_matches_locked_machine_word_vectors"
@@ -446,7 +446,7 @@
       "status": "static/layout",
       "routines": [
         "setup_intro",
-        "track_setup"
+        "compiletrack"
       ],
       "tests": [
         "tests/test_sdl3_word_sentinels.py::test_frozen_comparisons_match_three_verified_cmp_and_branch_anchors",
@@ -462,7 +462,7 @@
       "claim_limit": "No locked routine execution or intro/track_setup behavioral differential; source anchor and standalone expression only.",
       "historical_route": [
         "src/obj_seg003.c:setup_intro",
-        "src/obj_seg004.c:track_setup",
+        "src/obj_seg004.c:compiletrack",
         "locked CMP-immediate/branch bytes at offsets 0xDC7D, 0x10CED, 0x10FC6"
       ],
       "portable_route": [
@@ -480,10 +480,10 @@
       "status": "differential-oracle",
       "routines": [
         "file_unflip_shape2d",
-        "parse_shape2d",
-        "shape2d_op_unk",
-        "shape2d_op_unk3",
-        "shape2d_op_unk4",
+        "shapepack",
+        "shape2d_blit_rle",
+        "shape2d_blit_rle_clipped",
+        "shape2d_or_rle",
         "shape2d_render_bmp_as_mask"
       ],
       "tests": [
@@ -520,8 +520,8 @@
         "validate_shape3d_archive",
         "sprite_putimage_transparent",
         "release_shape_resources",
-        "sub_35DC8",
-        "sub_35DE6",
+        "mcgatranslation",
+        "mcgatransrange",
         "file_decomp"
       ],
       "tests": [
@@ -559,8 +559,8 @@
         "timer_get_counter",
         "timer_reg_callback",
         "timer_remove_callback",
-        "timer_compare_dx",
-        "poll_input_abort",
+        "testticks",
+        "testbiosticks",
         "port_guest_wait_for_activity"
       ],
       "tests": [
@@ -688,7 +688,7 @@
       "id": "transition-work-formula",
       "status": "differential-oracle",
       "routines": [
-        "sprite_1_unk3",
+        "sprite_blit_dither_phase",
         "port_transition_row_work"
       ],
       "tests": [
@@ -702,7 +702,7 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Validates this primitive's work-count model, not whole-game cycle timing, physical CPU frequency, or every transition path.",
       "historical_route": [
-        "locked sprite_1_unk3 entry executed by RealModeRunner"
+        "locked sprite_blit_dither_phase entry executed by RealModeRunner"
       ],
       "portable_route": [
         "port/transition_work.h:port_transition_row_work",
@@ -827,10 +827,10 @@
   ],
   "renames": {
     "main": "stunts_game_main",
-    "update_gamestate": "stunts_update_gamestate",
+    "movesim": "stunts_update_gamestate",
     "audio_load_driver": "stunts_audio_load_driver_legacy",
-    "mouse_draw_transparent": "stunts_mouse_draw_transparent",
-    "mouse_draw_opaque": "stunts_mouse_draw_opaque",
+    "doshowmouse": "stunts_mouse_draw_transparent",
+    "dohidemouse": "stunts_mouse_draw_opaque",
     "font_set_unk": "font_setup_unknown",
     "font_set_fontdef2": "fontsetfontdef2"
   }

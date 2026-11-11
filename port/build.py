@@ -61,16 +61,16 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
         ])
     elif source == "src/obj_seg005.c":
         changes.extend([
-            ("void loop_game(I16 mode, I16 frame_index, I16 frame_offset)\n{",
-             "void loop_game(I16 mode, I16 frame_index, I16 frame_offset)\n{\n"
+            ("void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{",
+             "void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{\n"
              "    uint32_t port_replay_activity;"),
             ("        key_code = input_checking(timer_get_delta_alt());",
              "        port_replay_activity = port_guest_activity_snapshot();\n"
              "        key_code = input_checking(timer_get_delta_alt());"),
             # Only the default case is reached with no key; the key cases redraw and continue themselves.
-            ("            default:\n                loop_game(1, core.game_frame, core.game_frame);\n"
+            ("            default:\n                doreplay(1, core.game_frame, core.game_frame);\n"
              "                continue;",
-             "            default:\n                loop_game(1, core.game_frame, core.game_frame);\n"
+             "            default:\n                doreplay(1, core.game_frame, core.game_frame);\n"
              "                if (key_code == 0 && inrepflg != 0 &&\n"
              "                    camera_buttons_pressed[2] == 0 && camera_buttons_pressed[3] == 0)\n"
              "                    port_guest_wait_for_activity(port_replay_activity);\n"
@@ -235,27 +235,27 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
     # the host int typedef used by the diagnostic-only declaration survey.
     declarations.ALIASES.update(I32="long", U32="unsigned long")
     declarations.HOST_OVERRIDES.update({
-        "vector_op_unk2": "extern I16 vector_op_unk2(struct VECTOR *);",
+        "norm_zone": "extern I16 norm_zone(struct VECTOR *);",
         "file_load_shape2d_fatal_thunk": "extern void *file_load_shape2d_fatal_thunk(char *);",
         "mmgr_get_chunk_size": "extern uint16_t mmgr_get_chunk_size(void *);",
         "locate_shape_nofatal": "extern void *locate_shape_nofatal(void *, const char *);",
-        "file_load_3dres": "extern void *file_load_3dres(char *);",
+        "fluffyload": "extern void *fluffyload(char *);",
         "file_load_resource": "extern void *file_load_resource(I16, const char *);",
         "file_find": "extern char *file_find(const char *);",
         "locate_shape_alt": "extern char *locate_shape_alt(char *, char *);",
         "file_load_binary_nofatal": "extern void *file_load_binary_nofatal(const char *);",
-        "mmgr_op_unk": "extern void *mmgr_op_unk(void *);",
+        "mmgr_compact_chunk": "extern void *mmgr_compact_chunk(void *);",
         "parse_shape2d_helper": "extern int32_t parse_shape2d_helper(uint8_t *);",
         "file_read_nofatal": "extern void *file_read_nofatal(const char *, void *);",
         "file_read_fatal": "extern void *file_read_fatal(const char *, void *);",
         "read_file_with_retry": "extern void *read_file_with_retry(I16, char *, void *);",
-        "sub_35DC8": "extern void sub_35DC8(const uint8_t *);",
-        "sub_35DE6": "extern void sub_35DE6(uint16_t, uint16_t, const uint8_t *);",
+        "mcgatranslation": "extern void mcgatranslation(const uint8_t *);",
+        "mcgatransrange": "extern void mcgatransrange(uint16_t, uint16_t, const uint8_t *);",
         "file_combine_and_find": "extern char *file_combine_and_find(char *, char *, char *);",
-        "font_op2": "extern I16 font_op2(const char *);",
-        "shape2d_op_unk4": "extern void shape2d_op_unk4(const struct SHAPE2D *);",
+        "textpixels": "extern I16 textpixels(const char *);",
+        "shape2d_or_rle": "extern void shape2d_or_rle(const struct SHAPE2D *);",
         "shape2d_render_bmp_as_mask": "extern void shape2d_render_bmp_as_mask(const struct SHAPE2D *);",
-        "nopsub_37750": "extern void nopsub_37750(U16, void (*)(I16));",
+        "audio_set_chunk_callback": "extern void audio_set_chunk_callback(U16, void (*)(I16));",
         "do_fileselect_dialog": "extern I16 do_fileselect_dialog(char *, char *, char *, char *);",
     })
     # Local declaration surveys may omit a service entirely. Apply the same
@@ -295,8 +295,8 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         config, local_fns, local_data = probe.local_config(source, text, owner)
         if source == "src/obj_seg006.c":
             cfg = config.read_text(encoding="latin-1")
-            cfg = cfg.replace("vector_op_unk2(struct VECTOR* vec);",
-                              "extern I16 vector_op_unk2(struct VECTOR* vec);")
+            cfg = cfg.replace("norm_zone(struct VECTOR* vec);",
+                              "extern I16 norm_zone(struct VECTOR* vec);")
             config.write_text(cfg, encoding="latin-1")
         transformed, removed = probe.transformed_source(
             source, text, local_fns, local_data, shared_tags)
@@ -309,13 +309,13 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "extern int port_config_manual_word_check(void);\n"
                 "extern void port_test_random_wait_begin(void);\n"
                 "extern void port_test_random_wait_end(void);\n" + transformed)
-            random_wait_call = "          random_wait();\n          if (pass_check_flag == 0)"
+            random_wait_call = "          seedrandom();\n          if (pass_check_flag == 0)"
             if transformed.count(random_wait_call) != 1:
-                raise RuntimeError("Could not locate the startup random_wait boundary")
+                raise RuntimeError("Could not locate the startup seedrandom boundary")
             transformed = transformed.replace(
                 random_wait_call,
                 "          port_test_random_wait_begin();\n"
-                "          random_wait();\n"
+                "          seedrandom();\n"
                 "          port_test_random_wait_end();\n"
                 "          if (pass_check_flag == 0)", 1)
             answer_read = (
@@ -356,7 +356,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "extern I8 *file_combine_and_find(I8 *, I8 *, I8 *);")
             # Native directories can exceed the signed-byte list capacity.
             # Stop before its count wraps and becomes a negative array index.
-            file_row = "        parse_filepath_separators(names[files_found], found);"
+            file_row = "        namecopy(names[files_found], found);"
             if transformed.count(file_row) != 1:
                 raise RuntimeError("Could not locate the bounded file-dialog list")
             transformed = transformed.replace(
@@ -369,7 +369,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = transformed.replace(old, "", 1)
             transformed = "extern I16 port_random_test_rand(void);\n" + transformed
             transformed = "extern void port_video_publish(const char *reason);\n" + transformed
-            for cursor_draw in ("mouse_draw_transparent", "mouse_draw_opaque"):
+            for cursor_draw in ("doshowmouse", "dohidemouse"):
                 transformed, count = re.subn(
                     r"(?m)^void\s+far\s+" + cursor_draw + r"\(void\)",
                     "void far stunts_" + cursor_draw + "(void)", transformed, count=1)
@@ -391,11 +391,11 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                            transformed[match.end():])
         elif source == "src/obj_seg001_complete.c":
             transformed, count = re.subn(
-                r"(?m)^void\s+update_gamestate\s*\(\s*\)\s*\{",
+                r"(?m)^void\s+movesim\s*\(\s*\)\s*\{",
                 "void stunts_update_gamestate(void) {",
                 transformed, count=1)
             if count != 1:
-                raise RuntimeError("Could not locate update_gamestate for the trace wrapper")
+                raise RuntimeError("Could not locate movesim for the trace wrapper")
             transformed += (
                 "\n/* Port-only state observation at the accepted GAMESTATE view. */\n"
                 "uint16_t port_game_frame_snapshot(void) { "
@@ -442,13 +442,13 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 raise RuntimeError("Could not isolate the audio volume/cleanup boundary")
         elif source == "src/obj_seg006.c":
             transformed = transformed.replace(
-                "vector_op_unk2(struct VECTOR*);",
-                "I16 vector_op_unk2(struct VECTOR*);")
+                "norm_zone(struct VECTOR*);",
+                "I16 norm_zone(struct VECTOR*);")
             transformed = transformed.replace(
-                "vector_op_unk2(struct VECTOR* vec) {",
-                "I16 vector_op_unk2(struct VECTOR* vec) {")
+                "norm_zone(struct VECTOR* vec) {",
+                "I16 norm_zone(struct VECTOR* vec) {")
         elif source == "src/obj_seg032_group.c":
-            old = "timer_copy_counter(timerOffset, timerSegment);"
+            old = "setticks(timerOffset, timerSegment);"
             if transformed.count(old) != 2:
                 raise RuntimeError("Could not locate both line-editor timer deadline calls")
             transformed = (
@@ -524,11 +524,11 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         if source in {"src/obj_seg027.c", "src/obj_seg028.c"}:
             transformed = '#include "audio_backend.h"\n' + route_audio_vectors(transformed)
         if source == "src/obj_seg027.c":
-            old = "void FAR nopsub_37750(U16 chunk, I32 value)"
+            old = "void FAR audio_set_chunk_callback(U16 chunk, I32 value)"
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate the audio callback setter signature")
             transformed = transformed.replace(old,
-                "void FAR nopsub_37750(U16 chunk, void (*value)(I16))", 1)
+                "void FAR audio_set_chunk_callback(U16 chunk, void (*value)(I16))", 1)
         if source == "src/obj_seg028.c":
             # SKIDOVER's KEYS instrument is absent from the PC speaker bank.
             # DOS reads 0000:0005 before rejecting the null far pointer; a
@@ -556,7 +556,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         # This also covers private tables which central declarations cannot fix.
         transformed = adapt_aggregate_views(probe.legacy_target_widths(transformed))
         if source == "src/toupper.c":
-            transformed = transformed.replace("I16 toupper(I16 ch)", "int toupper(int ch)")
+            transformed = transformed.replace("I16 cap(I16 ch)", "int cap(int ch)")
         host_config = probe.legacy_target_widths(config.read_text(encoding="latin-1"))
         if source == "src/obj_seg001_complete.c":
             for name in ("centerpos", "veh_position", "veh_z"):
@@ -565,7 +565,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             host_config = host_config.replace("extern I16 inverse_power_of_two_table[32];",
                                                "extern I32 inverse_power_of_two_table[32];")
         if source == "src/toupper.c":
-            host_config = host_config.replace("I16 toupper(I16", "int toupper(int")
+            host_config = host_config.replace("I16 cap(I16", "int cap(int")
         for name, prototype in declarations.HOST_OVERRIDES.items():
             host_config = re.sub(r"(?m)^extern [^\n;]*\b" + re.escape(name) +
                                  r"\([^\n]*;", lambda _: prototype, host_config)
@@ -628,10 +628,10 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         "object_passes": sum(row.get("object") == "ok" for row in rows),
         "port_adapters": [
             "rename recovered main to stunts_game_main",
-            "wrap update_gamestate for post-commit tracing",
+            "wrap movesim for post-commit tracing",
             "expose full GAMESTATE, frame, mode, and rate to port tracing",
             "rename DOS audio loader and route its vectors to typed native driver entries",
-            "type vector_op_unk2's host overlay declaration as I16",
+            "type norm_zone's host overlay declaration as I16",
             "resolve static track camera override offsets relative to camera data",
             "alias the line editor header view to the selected native font",
             "adapt line-editor two-word timer deadlines to the callback counter",
@@ -1037,7 +1037,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--test-auto-protection", action="store_true",
                             help="test only: type the live protection answer through DOS keyboard input")
     run_parser.add_argument("--test-startup-seed", type=Path,
-                            help="test only: replay a Port Forge random_wait/timer/PRNG capture")
+                            help="test only: replay a Port Forge seedrandom/timer/PRNG capture")
     run_parser.add_argument("--stop-after-sim-steps", type=int)
     run_parser.add_argument("--audio", choices=("ad15", "pc15", "none"), default="ad15")
     run_parser.add_argument("--no-build", action="store_true")

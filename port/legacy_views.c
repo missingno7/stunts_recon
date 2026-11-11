@@ -6,24 +6,24 @@
    Its width/height/bottom names actually address foreground/background/
    line height. Keep the alias live instead of copying the default values. */
 typedef struct PortLegacyScreenRect {
-    int16_t width;
-    int16_t height;
-    int16_t reserved[7];
-    int16_t bottom;
+    int16_t foreground;
+    int16_t background;
+    int16_t font_header_middle[7];
+    int16_t line_height;
 } PortLegacyScreenRect;
 
 _Static_assert(sizeof(PortLegacyScreenRect) == 20, "DOS line-editor font view");
-_Static_assert(offsetof(PortLegacyScreenRect, width) == 0, "font foreground");
-_Static_assert(offsetof(PortLegacyScreenRect, height) == 2, "font background");
-_Static_assert(offsetof(PortLegacyScreenRect, bottom) == 18, "font line height");
+_Static_assert(offsetof(PortLegacyScreenRect, foreground) == 0, "font foreground");
+_Static_assert(offsetof(PortLegacyScreenRect, background) == 2, "font background");
+_Static_assert(offsetof(PortLegacyScreenRect, line_height) == 18, "font line height");
 
 extern uint8_t fontdef_default[1408];
-PortLegacyScreenRect *line_input_screen_rect =
+PortLegacyScreenRect *line_input_font_header =
     (PortLegacyScreenRect *)fontdef_default;
 
 void port_line_input_select_font(const void *font_data)
 {
-    line_input_screen_rect = (PortLegacyScreenRect *)font_data;
+    line_input_font_header = (PortLegacyScreenRect *)font_data;
 }
 
 /* Medium-model callers pass the final 32-bit timeout as two stack words.

@@ -194,15 +194,15 @@ int main(void)
         font_draw_text((const char *)text, (int16_t)x, (int16_t)y);
         break;
     case 1u:
-        draw_text_at((const char *)text, (int16_t)x, (int16_t)y);
+        movtxy((const char *)text, (int16_t)x, (int16_t)y);
         break;
     case 2u:
         break;
     case 3u:
-        result = font_op((const char *)text, count);
+        result = textnpixels((const char *)text, count);
         break;
     case 4u:
-        result = font_op2((const char *)text);
+        result = textpixels((const char *)text);
         break;
     default:
         return 10;

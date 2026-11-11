@@ -45,14 +45,14 @@ int port_sprite_active_view(uint8_t **pixels_out, size_t *extent_out,
                             PortSprite **sprite_out);
 void preRender_patterned(int16_t pattern_bits, int16_t color,
                          int16_t point_count, const int16_t *points);
-void preRender_unk(int16_t pattern_bits, int16_t background_color,
+void sprite_two_color_poly_list(int16_t pattern_bits, int16_t background_color,
                    int16_t foreground_color, int16_t point_count,
                    const int16_t *points);
-void preRender_sphere(int16_t center_x, int16_t center_y, int16_t size,
+void drawcircle(int16_t center_x, int16_t center_y, int16_t size,
                       int16_t color);
-unsigned draw_line_related(unsigned x0, unsigned y0, unsigned x1,
+unsigned clipline(unsigned x0, unsigned y0, unsigned x1,
                            unsigned y1, int *record);
-unsigned draw_line_related_alt(unsigned x0, unsigned y0, unsigned x1,
+unsigned slopeline(unsigned x0, unsigned y0, unsigned x1,
                                unsigned y1, int *record);
 
 static void require_pixel(int x, int y, uint8_t expected, const char *case_name)
@@ -121,7 +121,7 @@ static int run_dump(int argc, char **argv)
                 return 2;
             for (i = 0; i < count * 2; ++i)
                 coordinates[i] = parse_i16(argv[arg++]);
-            preRender_unk(pattern, background, foreground, count, coordinates);
+            sprite_two_color_poly_list(pattern, background, foreground, count, coordinates);
         } else if (strcmp(operation, "wheel") == 0) {
             color = parse_i16(argv[arg++]);
             count = parse_i16(argv[arg++]);
@@ -167,7 +167,7 @@ static int run_dump(int argc, char **argv)
                             PORT_SCREEN_WIDTH * PORT_SCREEN_HEIGHT) ? 0 : 3;
     }
     if (strcmp(operation, "sphere") == 0) {
-        preRender_sphere(parse_i16(argv[2]), parse_i16(argv[3]),
+        drawcircle(parse_i16(argv[2]), parse_i16(argv[3]),
                          parse_i16(argv[4]), parse_i16(argv[5]));
         return write_output(output_path, test_video,
                             PORT_SCREEN_WIDTH * PORT_SCREEN_HEIGHT) ? 0 : 3;
@@ -188,7 +188,7 @@ static int run_dump(int argc, char **argv)
                             PORT_SCREEN_WIDTH * PORT_SCREEN_HEIGHT) ? 0 : 3;
     }
     if (strcmp(operation, "record") == 0) {
-        line_result = (uint16_t)draw_line_related(
+        line_result = (uint16_t)clipline(
             (unsigned)parse_i16(argv[2]), (unsigned)parse_i16(argv[3]),
             (unsigned)parse_i16(argv[4]), (unsigned)parse_i16(argv[5]),
             (int *)record);
@@ -232,7 +232,7 @@ int main(int argc, char **argv)
     require_pixel(2, 4, 17, "pattern even third row");
 
     memset(test_video, 0, sizeof(test_video));
-    preRender_unk((int16_t)0xffff, 7, 19, 4, square);
+    sprite_two_color_poly_list((int16_t)0xffff, 7, 19, 4, square);
     require_pixel(1, 2, 19, "secondary material color");
     require_pixel(4, 4, 19, "secondary material color");
 
@@ -243,7 +243,7 @@ int main(int argc, char **argv)
     require_pixel(9, 10, 23, "wheel varargs opposite corner");
 
     memset(test_video, 0, sizeof(test_video));
-    preRender_sphere(10, 10, 4, 5);
+    drawcircle(10, 10, 4, 5);
     require_pixel(8, 9, 5, "small sphere upper profile");
     require_pixel(7, 10, 5, "small sphere widest profile");
     require_pixel(13, 10, 5, "small sphere widest profile");
@@ -251,7 +251,7 @@ int main(int argc, char **argv)
     require_pixel(7, 9, 0, "small sphere upper extent");
 
     memset(test_video, 0, sizeof(test_video));
-    preRender_sphere(80, 90, 100, 9);
+    drawcircle(80, 90, 100, 9);
     require_pixel(80, 130, 9, "large sphere effective vertical radius");
     require_pixel(63, 52, 9, "large sphere upper DDA boundary");
     require_pixel(97, 52, 9, "large sphere upper DDA boundary");
@@ -267,22 +267,22 @@ int main(int argc, char **argv)
     require_pixel(6, 7, 23, "skybox helper first corner");
     require_pixel(9, 10, 23, "skybox helper opposite corner");
 
-    if (draw_line_related((unsigned)(int16_t)-5, 10, 5, 10,
+    if (clipline((unsigned)(int16_t)-5, 10, 5, 10,
                           (int *)record) != 0u ||
         record[1] != 0 || record[3] != 10 || record[4] != 5 ||
         record[5] != 10)
         return 3;
-    if (draw_line_related(10, 10, 20, 20, (int *)record) != 0u ||
+    if (clipline(10, 10, 20, 20, (int *)record) != 0u ||
         record[1] != 10 || record[3] != 10 || record[4] != 20 ||
         record[5] != 20 || record[7] != 11 || record[9] != 4)
         return 5;
-    if (draw_line_related((unsigned)(int16_t)-8, 1,
+    if (clipline((unsigned)(int16_t)-8, 1,
                           (unsigned)(int16_t)-2, 8,
                           (int *)record) == 0u)
         return 4;
 
     memset(record, 0, sizeof(record));
-    if (draw_line_related(333, 88, 164, (unsigned)(int16_t)-21,
+    if (clipline(333, 88, 164, (unsigned)(int16_t)-21,
                           (int *)record) != 0u ||
         record[1] != 197 || record[2] != 18621 ||
         record[3] != 0 || record[4] != 319 || record[5] != 79 ||
@@ -291,7 +291,7 @@ int main(int argc, char **argv)
         return 6;
 
     memset(record, 0, sizeof(record));
-    if (draw_line_related_alt((unsigned)(int16_t)-10, 20, 30, 25,
+    if (slopeline((unsigned)(int16_t)-10, 20, 30, 25,
                               (int *)record) != 0u ||
         record[1] != -10 || record[3] != 20 ||
         record[4] != 30 || record[5] != 25 ||
@@ -299,7 +299,7 @@ int main(int argc, char **argv)
         return 8;
 
     memset(record, 0, sizeof(record));
-    if (draw_line_related((unsigned)(int16_t)-9, 222, 268, 187,
+    if (clipline((unsigned)(int16_t)-9, 222, 268, 187,
                           (int *)record) != 0u ||
         record[1] != 268 || record[3] != 187 ||
         record[4] != 173 || record[5] != 199 ||

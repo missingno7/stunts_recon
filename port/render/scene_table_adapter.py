@@ -18,7 +18,7 @@ static struct TRACKOBJECT *port_track_object_at(unsigned index)
 
 
 def adapt_scene_table_indices(source: str) -> str:
-    signature = "void update_frame(I8 page, struct RECTANGLE* clip) {"
+    signature = "void drawworld(I8 page, struct RECTANGLE* clip) {"
     if source.count(signature) != 1:
         raise ValueError("Missing unique scene-table consumer boundary")
     start = source.index(signature)

@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 
 
-UPDATE_SIGNATURE = "void update_frame(I8 page, struct RECTANGLE* clip) {"
+UPDATE_SIGNATURE = "void drawworld(I8 page, struct RECTANGLE* clip) {"
 TRANS_CAPTURE_END = "            selection_rect.top, selection_rect.bottom);"
 WIDE_DECLARATIONS = r'''
 #include "render/tile_expansion.h"
@@ -66,12 +66,12 @@ def _matching_brace(source: str, opening: int) -> int:
             if ch == "'":
                 state = "code"
         i += 1
-    raise ValueError("unterminated update_frame body")
+    raise ValueError("unterminated drawworld body")
 
 
 def _function_span(source: str, signature: str) -> tuple[int, int]:
     if source.count(signature) != 1:
-        raise ValueError("generated source has no unique update_frame definition")
+        raise ValueError("generated source has no unique drawworld definition")
     start = source.index(signature)
     opening = start + signature.rfind("{")
     return start, _matching_brace(source, opening) + 1
@@ -93,7 +93,7 @@ def adapt_update_frame(source: str) -> str:
     start, end = _function_span(source, UPDATE_SIGNATURE)
     original = source[start:end]
     if "port_render_world_arm(); port_camera_scene_begin();" not in original:
-        raise ValueError("expected current compositor begin hook in update_frame")
+        raise ValueError("expected current compositor begin hook in drawworld")
 
     clone = original.replace(UPDATE_SIGNATURE,
         "static void port_update_frame_wide_capture(I8 page, struct RECTANGLE* clip) {", 1)
@@ -111,8 +111,8 @@ def adapt_update_frame(source: str) -> str:
         local_anchor + "\n\tI8 port_wide_ahead_table[PORT_WIDE_AHEAD_MAX_COUNT * 3];"
         "\n\tI16 port_wide_tile_count = 0x17;", "wide table locals")
 
-    clone = _replace_once(clone, "tile_table = ahead_tables[si];",
-        "tile_table = ahead_tables[si];\n"
+    clone = _replace_once(clone, "tile_table = headingzones[si];",
+        "tile_table = headingzones[si];\n"
         "\tif (port_camera_scene_wide_requested()) {\n"
         "\t\tunsigned port_wide_count = port_expand_ahead_table(\n"
         "\t\t    (const int8_t *)tile_table, 23u,\n"
@@ -155,7 +155,7 @@ def adapt_update_frame(source: str) -> str:
         "rot_ofs.z = 0x3A98; //15000", "cloud forced depth")
     clone = _replace_once(clone, "if (cur_shps->pos.z > PLATFORM_SCREEN_HEIGHT_PIXELS)",
         "if (1)", "cloud legacy depth reject")
-    cloud_call = "result = trans_op(&cur_shps[0]);"
+    cloud_call = "result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);"
     cloud_end = "\n\t\t\t\t\t/* We cannot be out of memory as we are just starting to process. */"
     clone = _replace_once(clone, cloud_call + cloud_end,
         "port_cloud_delta.x = (I16)((U16)port_cloud_native_pos.x - (U16)cur_shps->pos.x);\n"
@@ -178,7 +178,7 @@ def adapt_update_frame(source: str) -> str:
     # wrapper owns only pass ordering and the pending-wide-scene lifecycle.
     faithful = original.replace(UPDATE_SIGNATURE,
         "static void port_update_frame_faithful(I8 page, struct RECTANGLE* clip) {", 1)
-    wrapper = r'''void update_frame(I8 page, struct RECTANGLE* clip) {
+    wrapper = r'''void drawworld(I8 page, struct RECTANGLE* clip) {
     if (port_camera_scene_wide_requested()) {
         unsigned char port_state_before[0x460];
         unsigned char port_state_after[0x460];
@@ -197,14 +197,14 @@ def adapt_update_frame(source: str) -> str:
 }
 '''
     faithful = _replace_once(faithful,
-        "skybox_result = skybox_op(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);",
+        "skybox_result = drawhorizon(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);",
         "port_sky_capture((const I16 *)&view_mat, view_rot_x, viewpoint.y,\n"
-        "        g_skybox_sky_clr, ground_skybox, detail_lvl, (const void *const *)skypics);\n\t"
-        "skybox_result = skybox_op(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);",
+        "        g_skybox_sky_clr, ground_skybox, renderlevel, (const void *const *)skypics);\n\t"
+        "skybox_result = drawhorizon(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);",
         "native panorama snapshot")
     transformed = source[:start] + clone + "\n\n" + faithful + "\n\n" + wrapper + source[end:]
-    if transformed.count("void update_frame(I8 page, struct RECTANGLE* clip) {") != 1:
-        raise AssertionError("public update_frame wrapper was not emitted exactly once")
+    if transformed.count("void drawworld(I8 page, struct RECTANGLE* clip) {") != 1:
+        raise AssertionError("public drawworld wrapper was not emitted exactly once")
     return WIDE_DECLARATIONS + transformed
 
 
@@ -213,7 +213,7 @@ def adapt_trans_op(source: str) -> str:
     entry = "    if (poly_list_insert_result != 0)\n        return 1;"
     source = _replace_once(source, entry,
         "    if (poly_list_insert_result != 0 && !port_renderer_capture_only())\n"
-        "        return 1;", "trans_op pool guard")
+        "        return 1;", "ADD_OBJECT_TO_BUFFER pool guard")
     source = _replace_once(source, "    vertex_count = ts->shapeptr->numverts;",
         "    if (port_render_mode()==2 && (!ts || !ts->shapeptr)) {\n"
         "        port_camera_scene_reject(\"null shape submitted to original transform\"); return 1;\n"

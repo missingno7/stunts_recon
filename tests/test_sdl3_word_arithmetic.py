@@ -184,10 +184,10 @@ class Sdl3WordArithmeticTests(unittest.TestCase):
                          for distance, speed in collision_cases]
         self.assertEqual(locked_speeds, [19968, 0, 2688])
 
-        legacy_body = extract_function(self.original, "car_car_speed_adjust_maybe")
+        legacy_body = extract_function(self.original, "calccoll")
         legacy_body = legacy_body.replace(
-            "car_car_speed_adjust_maybe", "legacy_host_car_speed_adjust_maybe", 1)
-        adapted_body = extract_function(self.overlay, "car_car_speed_adjust_maybe")
+            "calccoll", "legacy_host_car_speed_adjust_maybe", 1)
+        adapted_body = extract_function(self.overlay, "calccoll")
         source = r'''#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -203,14 +203,14 @@ class Sdl3WordArithmeticTests(unittest.TestCase):
 #define ANGLE_UNITS_PER_TURN 0x400
 struct VECTOR { I16S x, y, z; };
 struct CARSTATE {
-    I8 field_C8;
+    I8 car_contact_processed;
     U16S car_speed2;
     struct VECTOR car_rotate;
     I16S car_36MwhlAngle;
     U16S car_speed;
 };
-I16S sinfast(U16S angle) { (void)angle; return 0; }
-I16S cosfast(U16S angle)
+I16S intsin(U16S angle) { (void)angle; return 0; }
+I16S intcos(U16S angle)
 {
     return angle == 0 ? 256 : (angle == 0x200 ? -256 : 0);
 }
@@ -218,7 +218,7 @@ I16S mulscl(I16S value, I16S scale)
 {
     return (I16S)(((int32_t)value * (int32_t)scale) / 256);
 }
-I16 polradius2d(I16 x, I16 y)
+I16 inthypot(I16 x, I16 y)
 {
     uint32_t square = (uint32_t)((int32_t)x * x + (int32_t)y * y);
     uint32_t radius = 0;
@@ -231,7 +231,7 @@ I16 polradius2d(I16 x, I16 y)
         source += "  struct CARSTATE player = {0}, opponent = {0};\n"
         source += "  player.car_speed2 = p; opponent.car_speed2 = o;\n"
         source += "  player.car_rotate.x = 0; opponent.car_rotate.x = 0x200;\n"
-        source += "  if (adapted) car_car_speed_adjust_maybe(&player, &opponent);\n"
+        source += "  if (adapted) calccoll(&player, &opponent);\n"
         source += "  else legacy_host_car_speed_adjust_maybe(&player, &opponent);\n"
         source += "  return player.car_speed2;\n}\n"
         source += "int main(void) {\n"

@@ -562,7 +562,7 @@ void port_video_shutdown(void)
 void video_set_mode_13h(void) { }
 void video_set_mode4(void) { }
 
-void video_set_palette(uint16_t first, uint16_t count, uint8_t *rgb6)
+void vgapalette(uint16_t first, uint16_t count, uint8_t *rgb6)
 {
     port_video_set_palette(first, count, rgb6);
 }
@@ -576,7 +576,7 @@ uint8_t port_video_read_status_1(void)
     return port_vga_input_status_1(port_timer_machine_time_ns());
 }
 
-int16_t video_get_status(void)
+int16_t vsyncstate(void)
 {
     /* This recovered routine returns only Input Status #1 bit 3. Preserve its
        historical interface while the port-level 3DAh read exposes both bits. */

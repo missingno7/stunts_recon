@@ -5,7 +5,7 @@
       "id": "wheel_update.cross_global_inputs",
       "kind": "cross_global_pointer_span",
       "source": "src/obj_seg004.c",
-      "function": "wheel_update",
+      "function": "settires",
       "argument_bindings": {
         "source": {"parameter_index": 4, "elements_read": 24, "element_bytes": 6},
         "origin": {"parameter_index": 5, "elements_read": 6, "element_bytes": 2}
@@ -33,7 +33,7 @@
       "id": "polyinfo.one_past_queue_head",
       "kind": "global_one_past_sentinel",
       "source": "src/obj_seg006.c",
-      "function": "polyinfo",
+      "function": "DRAW_OBJECTS",
       "global": "poly_link_list",
       "capacity_macro": "POLYINFO_CAPACITY",
       "declared_elements": 400,

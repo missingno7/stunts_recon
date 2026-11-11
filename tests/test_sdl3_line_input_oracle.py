@@ -79,8 +79,8 @@ def fresh_transformed_line_input(compiler: Path) -> Path:
     if "void FAR read_line_helper(void)" not in generated or \
             "void FAR read_line_helper2(void)" not in generated:
         raise AssertionError("fresh transformed source omits a line-input helper")
-    if "line_input_screen_rect->width" not in generated or \
-            "line_input_screen_rect->height" not in generated:
+    if "line_input_font_header->foreground" not in generated or \
+            "line_input_font_header->background" not in generated:
         raise AssertionError("transformed helpers no longer read the live header view")
     return overlay
 
@@ -229,7 +229,7 @@ class LineInputMachine:
         self.dgroup = dgroup_segment(CODE_LOAD_SEGMENT)
         self.dgroup_base = data_symbols["frame_load_address"]
         self.rect_pointer_offset = (
-            data_symbols["symbols"]["_line_input_screen_rect"]["load_address"] -
+            data_symbols["symbols"]["_line_input_font_header"]["load_address"] -
             self.dgroup_base
         )
         self.fontdefseg_offset = (
@@ -550,7 +550,7 @@ class Sdl3LineInputOracleTests(unittest.TestCase):
         dlg_address = self.data_symbols["symbols"]["_dlg_colour"]["load_address"]
         self.assertEqual(struct.unpack_from("<H", self.oracle.load_image, dlg_address)[0], 15,
                          "locked dlg_colour data is white palette index 15")
-        pointer_address = self.data_symbols["symbols"]["_line_input_screen_rect"]["load_address"]
+        pointer_address = self.data_symbols["symbols"]["_line_input_font_header"]["load_address"]
         pointer_offset, pointer_segment = struct.unpack_from(
             "<HH", self.oracle.load_image, pointer_address
         )

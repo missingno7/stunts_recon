@@ -75,7 +75,7 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
                 + producer_views + "\n" + consumer_views + "\n",
                 encoding="latin-1")
             producer = scratch / "track_info_producer.c"
-            other_camera_arrays = sorted(set(re.findall(r"\bshapedata42(?:_\d+)?\b", info))
+            other_camera_arrays = sorted(set(re.findall(r"\b(?:shapedata42(?:_\d+)?|FSTR_LIST|SPIPE_LIST|PIPE_LIST|HSTR_LIST|BSTR_LIST|FLBSTR_LIST)\b", info))
                                          - {"shapedata42_10"})
             producer.write_text(
                 '#include <stddef.h>\n#include "stunts_track_views.h"\n'

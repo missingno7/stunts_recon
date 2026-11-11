@@ -4,7 +4,7 @@
 #include <string.h>
 
 extern int dh_screen_reset(const uint8_t *initial, uint32_t length);
-extern void *file_load_shape2d_res_nofatal(char *name);
+extern void *loadandshapepackz(char *name);
 
 __declspec(dllexport) int dh_test_bounded_shape_run(void)
 {
@@ -143,7 +143,7 @@ __declspec(dllexport) int dh_load_dashboard_archive(
 
     s_compressed_asset = compressed;
     s_compressed_asset_size = compressed_size;
-    archive = file_load_shape2d_res_nofatal(resource_name);
+    archive = loadandshapepackz(resource_name);
     s_compressed_asset = NULL;
     s_compressed_asset_size = 0;
     if (archive == NULL)
@@ -212,7 +212,7 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
                         sizeof(PortShape2D);
         memset(target_pixels, 0x35, target_bytes);
         sprite_setup1_from_arg_pointer(target);
-        shape2d_op_unk2(shape, x, y);
+        shape2d_blit_rle_clipped_at(shape, x, y);
         memcpy(output, target_pixels, target_bytes);
         sprite_free_window(target);
         mmgr_free(shape);
@@ -242,7 +242,7 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
         target_pixels = (uint8_t *)target->sprite_bitmapptr +
                         sizeof(PortShape2D);
         sprite_setup1_from_arg_pointer(target);
-        shape2d_op_unknown5(shape, x, y);
+        shape2d_blit_rle_at(shape, x, y);
         memcpy(output, target_pixels, target_bytes);
         sprite_free_window(target);
         mmgr_free(shape);
@@ -267,11 +267,11 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
         return 0;
     }
     if (operation == 0)
-        shape2d_op_unk3(shape);
+        shape2d_blit_rle_clipped(shape);
     else if (operation == 1)
-        shape2d_op_unk(shape);
+        shape2d_blit_rle(shape);
     else if (operation == 4)
-        shape2d_op_unk4(shape);
+        shape2d_or_rle(shape);
     else
         shape2d_render_bmp_as_mask(shape);
     memcpy(output, port_video_pixels(), output_size);

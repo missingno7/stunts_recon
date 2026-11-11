@@ -517,4 +517,4 @@ Every indexed game ASM routine is represented, including seven public labels who
 
 ## Mixed-family owners and unresolved boundaries
 
-Owners with `category: MIXED` contain routines from more than one class; the owner is not a single porting unit. Translate each public routine under its own category while preserving complete owner coverage until an explicit boundary or replacement is proven. `mat_invert` and `sprite_make_wnd` retain the F4c boundary/structure caveats; `vector_op_unk` and `nopsub_326BA` retain their semantic uncertainty. These uncertainties do not justify dropping bytes or inventing behavior.
+Owners with `category: MIXED` contain routines from more than one class; the owner is not a single porting unit. Translate each public routine under its own category while preserving complete owner coverage until an explicit boundary or replacement is proven. `mat_invert` and `sprite_make_wnd` retain the F4c boundary/structure caveats; `zclipline` and `nopsub_326BA` retain their semantic uncertainty. These uncertainties do not justify dropping bytes or inventing behavior.

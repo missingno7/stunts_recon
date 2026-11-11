@@ -157,7 +157,7 @@ void clear_rect(int16_t x, int16_t y, int16_t width, int16_t height,
 /* The shared fill tail at seg012:0x24027 writes an unclipped solid rectangle.
    Each active row starts one sprite pitch after the previous one; byte writes
    preserve the odd-width tail handled by STOSB in the DOS routine. */
-void sprite_1_unk(int16_t x, int16_t y, int16_t width, int16_t height,
+void drawrect(int16_t x, int16_t y, int16_t width, int16_t height,
                   int16_t color)
 {
     PortSpriteView destination;
@@ -355,7 +355,7 @@ static void shape2d_combine_runs(const PortShape2D *shape, int use_and,
     publish_screen_write(operation, &destination);
 }
 
-void shape2d_op_unk4(const PortShape2D *shape)
+void shape2d_or_rle(const PortShape2D *shape)
 {
     shape2d_combine_runs(shape, 0, "shape2d_op_unk4");
 }

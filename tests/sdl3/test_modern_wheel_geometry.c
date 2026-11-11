@@ -21,7 +21,7 @@ typedef struct Capture {
 } Capture;
 
 typedef struct LegacyWheelRect {
-    int16_t left, top, unused0, unused1, unused2, unused3, x, y;
+    int16_t left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y;
 } LegacyWheelRect;
 
 static Capture *legacy_capture;
@@ -187,10 +187,10 @@ static void run_legacy_comparison(const int16_t values[8], double *max_error,
 
     rect.left = values[0];
     rect.top = values[1];
-    rect.unused0 = values[2];
-    rect.unused1 = values[3];
-    rect.unused2 = values[4];
-    rect.unused3 = values[5];
+    rect.section_p1_x = values[2];
+    rect.section_p1_y = values[3];
+    rect.section_p2_x = values[4];
+    rect.section_p2_y = values[5];
     rect.x = values[6];
     rect.y = values[7];
     source[0] = (ModernWheelPoint){values[0], values[1]};

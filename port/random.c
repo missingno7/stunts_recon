@@ -29,7 +29,7 @@ void initialize_kevin_random(const uint8_t *seed)
     memcpy(randomseeds, seed, sizeof(randomseeds));
 }
 
-void get_kevinrandom_seed(uint8_t *seed_out)
+void mygetseeds(uint8_t *seed_out)
 {
     if (seed_out == NULL)
         port_guest_unwind("null random seed destination");

@@ -248,7 +248,7 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
     )
     for offset, values in zip(color_offsets, tables):
         machine.write_ds(offset, struct.pack("<256h", *values))
-    machine.call("copy_material_list_pointers", (*color_offsets, 0))
+    machine.call("INIT_PALETTE", (*color_offsets, 0))
 
     # Keep the original cache setup; intercept only its memory-manager boundary
     # and return a fresh, zero-filled paragraph segment for this fixture.
@@ -272,21 +272,21 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
         machine_uc.reg_write(UC_X86_REG_SP, (sp + 4) & 0xFFFF)
 
     hook = machine.uc.hook_add(UC_HOOK_CODE, pool_allocator)
-    machine.call("initialize_polyinfo")
+    machine.call("INIT_MATRIX")
     machine.uc.hook_del(hook)
     if len(allocation_calls) != 1:
         raise AssertionError(f"original initializer made {len(allocation_calls)} pool requests")
     machine.write_ds(0x5762, _pack_far(0, pool_segment))
     machine.call("set_projection", fixture["projection"])
     camera = fixture["camera"]
-    machine.call("select_rot", (*camera, clip_offset, 1 if fixture["flags"] & 1 else 0))
-    machine.call("trans_op", (ts_offset,))
+    machine.call("INIT_OBJECTS_BUFFER", (*camera, clip_offset, 1 if fixture["flags"] & 1 else 0))
+    machine.call("ADD_OBJECT_TO_BUFFER", (ts_offset,))
 
     count = struct.unpack("<H", machine.read_ds(0x8B76, 2))[0]
     pool = bytes(machine.uc.mem_read(_linear(pool_segment, 0), POOL_BYTES))
     links = struct.unpack("<401h", machine.read_ds(0x5766, LINK_COUNT * 2))
     machine.uc.mem_write(_linear(0xA000, 0), bytes(FRAME_BYTES))
-    machine.call("polyinfo")
+    machine.call("DRAW_OBJECTS")
     frame = bytes(machine.uc.mem_read(_linear(0xA000, 0), FRAME_BYTES))
     return {"count": count, "pool": pool, "links": links, "frame": frame}
 
@@ -329,7 +329,7 @@ static I16 renderer_parity_colors[256], renderer_parity_color2[256];
 static I16 renderer_parity_patterns[256], renderer_parity_patterns2[256];
 extern U8 *port_video_pixels(void);
 extern void port_sprite_init(void);
-extern void initialize_polyinfo(void);
+extern void INIT_MATRIX(void);
 
 __declspec(dllexport) int renderer_parity_run(
     const U8 *chunk, U32 chunk_size, I16 z, I16 x, I16 y,
@@ -358,7 +358,7 @@ __declspec(dllexport) int renderer_parity_run(
     for (j = 0; j < sizeof(renderer_parity_pool); ++j) renderer_parity_pool[j] = 0;
     mat_y_rot_angle = 0xFFFFu;
     backlightovr8 = 0;
-    initialize_polyinfo();
+    INIT_MATRIX();
     polyinfoptr = renderer_parity_pool;
     for (i = 0; i < 256; ++i) {
         renderer_parity_colors[i] = (I16)(i & 0xFFu);
@@ -366,7 +366,7 @@ __declspec(dllexport) int renderer_parity_run(
         renderer_parity_patterns[i] = renderer_pattern_variant ? i % 3 : 0;
         renderer_parity_patterns2[i] = renderer_pattern_variant && i % 4 ? 0x77dd : 0;
     }
-    copy_material_list_pointers(renderer_parity_colors, renderer_parity_color2,
+    INIT_PALETTE(renderer_parity_colors, renderer_parity_color2,
                                 renderer_parity_patterns, renderer_parity_patterns2, 0);
     shape.numverts = nv;
     shape.verts = (struct VECTOR *)(chunk + 4);
@@ -383,16 +383,16 @@ __declspec(dllexport) int renderer_parity_run(
     for (j = 0; j < 0x10000u; ++j) port_video_pixels()[j] = 0;
     port_sprite_init();
     set_projection(proj_left, proj_top, proj_width, proj_height);
-    (void)select_rot(z, x, y, &clip, (flags & 1u) != 0u);
+    (void)INIT_OBJECTS_BUFFER(z, x, y, &clip, (flags & 1u) != 0u);
     port_render_set_mode("modern");
     port_camera_scene_reference_only(0);
     port_camera_scene_begin();
-    (void)trans_op(&ts);
+    (void)ADD_OBJECT_TO_BUFFER(&ts);
     *count_out = (U16)polygonnumber;
     for (j = 0; j < sizeof(renderer_parity_pool); ++j)
         pool_out[j] = (U8)renderer_parity_pool[j];
     for (i = 0; i < 401; ++i) links_out[i] = poly_link_list[i];
-    polyinfo();
+    DRAW_OBJECTS();
     for (j = 0; j < 0x10000u; ++j) frame_out[j] = port_video_pixels()[j];
     return 1;
 }

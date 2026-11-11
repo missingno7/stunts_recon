@@ -242,7 +242,7 @@ void timer_remove_callback(void (*callback)(void))
 /* Faithful state update of asm/timer_counter_deadline_helpers.ASM. Its 32-bit read and
    previous-value store occurred with IRQs masked. The guest pump serializes
    both operations with callback delivery. */
-uint32_t timer_get_delta(void)
+uint32_t elapsedticks(void)
 {
     port_timer_pump();
     uint32_t current = (uint32_t)SDL_GetAtomicInt(&s_callback_counter);
@@ -264,7 +264,7 @@ void port_timer_test_seed_counter(uint32_t counter)
     s_last_delta_counter = counter;
 }
 
-void timer_get_counter_unk(uint32_t ticks)
+void timedwait(uint32_t ticks)
 {
     uint32_t target = timer_get_counter() + ticks;
     while (timer_get_counter() < target) {
@@ -273,7 +273,7 @@ void timer_get_counter_unk(uint32_t ticks)
     }
 }
 
-void timer_copy_counter(int32_t ticks)
+void setticks(int32_t ticks)
 {
     s_copy_deadline = timer_get_counter() + (uint32_t)ticks;
 }
@@ -286,7 +286,7 @@ void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high)
     s_copy_deadline = timer_get_counter() + ticks;
 }
 
-int16_t timer_compare_dx(void)
+int16_t testticks(void)
 {
     return (int16_t)(timer_get_counter() >= s_copy_deadline);
 }
@@ -296,19 +296,19 @@ int16_t timer_compare_dx(void)
    separate 32-bit elapsed counter, incremented at each fifth raw IRQ. The
    original polling code tests both words independently, including its
    non-lexicographic behavior when the high word has already advanced. */
-void set_add_value(int32_t ticks)
+void setbiosticks(int32_t ticks)
 {
     s_input_deadline = (uint32_t)port_timer_tick_count() + (uint32_t)ticks;
 }
 
-int16_t poll_input_abort(void)
+int16_t testbiosticks(void)
 {
     uint32_t now = (uint32_t)port_timer_tick_count();
     return (int16_t)((now >> 16) >= (s_input_deadline >> 16) &&
                      (now & 0xffffu) >= (s_input_deadline & 0xffffu));
 }
 
-void wait_for_input_delay(int32_t ticks)
+void waitbios(int32_t ticks)
 {
     uint32_t deadline = (uint32_t)port_timer_tick_count() + (uint32_t)ticks;
     while (1) {
@@ -321,7 +321,7 @@ void wait_for_input_delay(int32_t ticks)
     }
 }
 
-void timer_wait_for_dx(void)
+void waitticks(void)
 {
     while (timer_get_counter() < s_copy_deadline) {
         port_guest_check_stop();

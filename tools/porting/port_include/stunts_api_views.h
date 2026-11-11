@@ -40,7 +40,7 @@ static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 sec
 static inline void stunts_port_timer_copy_counter_split_view(I16 low_word, I16 high_word)
 {
     /* load_227c0 adds BP+6/BP+8 into DX:AX; preserve that two-word input. */
-    timer_copy_counter((U32)(U16)low_word | ((U32)(U16)high_word << 16));
+    setticks((U32)(U16)low_word | ((U32)(U16)high_word << 16));
 }
 #endif
 

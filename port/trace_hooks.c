@@ -4,7 +4,7 @@
    this wrapper traces only after the real update commits. */
 extern void stunts_update_gamestate(void);
 
-void update_gamestate(void)
+void movesim(void)
 {
     uint8_t state[PORT_GAMESTATE_BYTES];
     size_t state_size;

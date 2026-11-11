@@ -65,8 +65,8 @@ class Sdl3CrashOracleTests(unittest.TestCase):
         struct.pack_into("<H", player, CAR_SPEED_OFFSET, speed)
         struct.pack_into("<H", player, CAR_SPEED2_OFFSET, speed)
         case = RoutineCase(
-            name=f"original update_crash_state({crash_mode}, 0), speed={speed:#06x}",
-            routine="update_crash_state",
+            name=f"original finishgame({crash_mode}, 0), speed={speed:#06x}",
+            routine="finishgame",
             args=(crash_mode, 0),
             call="far",
             memory=[MemoryWrite(self.dgroup, PLAYER_STATE_DS, bytes(player))],

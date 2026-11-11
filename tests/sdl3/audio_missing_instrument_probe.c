@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Preserve this isolated probe's existing host ctype binding. */
+#define cap toupper
+
 #include "stunts_types.h"
 #include "audio_backend.h"
 

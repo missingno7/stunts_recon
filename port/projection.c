@@ -81,7 +81,7 @@ static int16_t projection_y_axis(int16_t coordinate, int16_t depth)
     return projection_add_center(scaled, projectiondata8);
 }
 
-extern int16_t polang(int16_t y, int16_t scale);
+extern int16_t intatan(int16_t y, int16_t scale);
 
 static uint16_t angle_from_degrees_word(uint16_t degrees)
 {
@@ -94,8 +94,8 @@ static uint16_t angle_from_degrees_word(uint16_t degrees)
 
 static uint16_t projection_scale(uint16_t angle, uint16_t half_extent)
 {
-    uint16_t cosine = (uint16_t)cosfast(angle);
-    uint16_t sine = (uint16_t)sinfast(angle);
+    uint16_t cosine = (uint16_t)intcos(angle);
+    uint16_t sine = (uint16_t)intsin(angle);
     uint32_t dividend = (uint32_t)cosine * half_extent;
     if (sine == 0)
         port_guest_unwind("set_projection divided by zero sine");
@@ -140,13 +140,13 @@ void set_projection(int16_t x_angle, int16_t y_angle,
     projection_y_scale = (int16_t)(uint16_t)(scale - eighth - (eighth >> 1));
     projectiondata8 = projection_center_y;
     projectiondata10 = projection_y_scale;
-    projection_y_angle = polang(projection_half_height, projection_y_scale);
+    projection_y_angle = intatan(projection_half_height, projection_y_scale);
 }
 
 /* Semantic translation of the 14-byte accepted
    asm/math_resource_helpers.ASM helper. MUL and DIV both consume
    unsigned 16-bit words even though the original C declarations are signed. */
-int16_t projectiondata9_times_ratio(int16_t factor_arg, int16_t divisor_arg)
+int16_t thicknessxp(int16_t factor_arg, int16_t divisor_arg)
 {
     uint16_t divisor = (uint16_t)divisor_arg;
     uint32_t product = (uint32_t)(uint16_t)projection_x_scale *
@@ -163,7 +163,7 @@ int16_t projectiondata9_times_ratio(int16_t factor_arg, int16_t divisor_arg)
 
 /* Semantic C translation of vector_to_point (load_223d9), whose context.py
    assembly has verified instruction boundaries but no strict acceptance recipe. */
-void vector_to_point(const int16_t *vector, int16_t *point)
+void projectp(const int16_t *vector, int16_t *point)
 {
     int16_t depth = vector[2];
     if (depth <= 0) {

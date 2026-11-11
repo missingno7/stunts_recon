@@ -305,7 +305,7 @@ def generalized_span_candidates(parsed_by_source: dict):
                 remaining = object_bytes - (element_offset * (one_element_bytes or 0))
                 if access["required_bytes"] > remaining:
                     linked_contract = None
-                    if call["name"] == "wheel_update" and access["parameter"] in {"source", "origin"}:
+                    if call["name"] == "settires" and access["parameter"] in {"source", "origin"}:
                         linked_contract = "wheel_update.cross_global_inputs"
                     results.append({
                         "class": "caller_pointer_span_exceeds_named_extent",
@@ -440,7 +440,7 @@ def scan_spans(root, rows):
     # Verify the built representation, rather than a Python adapter name.
     wheel = overlays["src/obj_seg004.c"]
     wheel_body = next(f["body"] for f in function_rows("src/obj_seg004.c", wheel)
-                      if f["name"] == "wheel_update")
+                      if f["name"] == "settires")
     wheel_ok = all(token in wheel_body for token in (
         "port_wheel_source[24]", "source = port_wheel_source;", "origin = port_wheel_origin;",
         "secondveccar", "secondoveh", "car_dvecs", "veh_od", "ancv2", "g_op_carvector2"))

@@ -42,7 +42,7 @@ an index in a later small loop cannot inherit an earlier loop's maximum;
 an unknown assignment clears the prior fact. Negative tests cover that case.
 Fresh compiler pointer/ABI diagnostics remain visible in the risk report,
 including source-selected declarations whose warnings are still compatibility
-debt. A selected `vector_op_unk2` return-width contract now also applies to
+debt. A selected `norm_zone` return-width contract now also applies to
 every production TU, instead of leaving its central declaration implicit.
 
 ## Hard contracts and evidence
@@ -120,7 +120,7 @@ investigation list. Replay traces, crash dumps and F12 captures then provide
 the final integration layer, rather than the primary translation check.
 
 One new investigation distinguished a true span dependency from a data-domain
-condition. `clear_invalid_track_tiles` can syntactically read row-table element
+condition. `trackoverlapcheck` can syntactically read row-table element
 30, which aliases the DOS mouse-button word. The frozen startup reverses the
 row table, so its logical final row is raw TRK row zero. All 41 locally installed
 tracks exclude vertical parent pieces there and horizontal parents in column

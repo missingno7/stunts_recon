@@ -26,7 +26,7 @@ def _source(width: int, height: int) -> bytes:
                  for i in range(width * height))
 
 
-def _sprite_machine_state(routine_name: str = "sprite_1_unk3", *,
+def _sprite_machine_state(routine_name: str = "sprite_blit_dither_phase", *,
                          source_width: int = 0,
                          source_height: int = 0) -> list[MemoryWrite]:
     symbols = SymbolMap()
@@ -89,7 +89,7 @@ def draw_filled_rect_case() -> RoutineCase:
     writes.append(MemoryWrite(0xA000, 0, initial))
     def port_call(lib, _case):
         return lib.run_draw_filled_rect(initial, args)
-    return RoutineCase("draw_filled_rect clipped XOR fill", "draw_filled_rect",
+    return RoutineCase("xorrectc clipped XOR fill", "xorrectc",
                        args=[value & 0xFFFF for value in args], call="far",
                        memory=writes, compare=(FRAME,), result_registers=(),
                        port_call=port_call)
@@ -105,7 +105,7 @@ def sprite_1_unk3_case() -> RoutineCase:
                MemoryWrite(SPRITE_SOURCE_SEGMENT, SPRITE_SOURCE_OFFSET, source)]
     def port_call(lib, _case):
         return lib.run_sprite_1_unk3(initial, pixels, width, height, x, y, phase)
-    return RoutineCase("sprite_1_unk3 phase-interlaced copy", "sprite_1_unk3",
+    return RoutineCase("sprite_blit_dither_phase phase-interlaced copy", "sprite_blit_dither_phase",
                        args=[SPRITE_SOURCE_OFFSET, SPRITE_SOURCE_SEGMENT, phase],
                        call="far", memory=writes, compare=(FRAME,),
                        result_registers=(), port_call=port_call)
@@ -114,11 +114,11 @@ def sprite_1_unk3_case() -> RoutineCase:
 def sprite_1_unk_case() -> RoutineCase:
     args = (45, 27, 39, 7, 0x6D)
     initial = _frame()
-    writes = _sprite_machine_state("sprite_1_unk")
+    writes = _sprite_machine_state("drawrect")
     writes.append(MemoryWrite(0xA000, 0, initial))
     def port_call(lib, _case):
         return lib.run_sprite_1_unk(initial, args)
-    return RoutineCase("sprite_1_unk odd-width solid fill", "sprite_1_unk",
+    return RoutineCase("drawrect odd-width solid fill", "drawrect",
                        args=list(args), call="far", memory=writes,
                        compare=(FRAME,), result_registers=(),
                        port_call=port_call)
@@ -157,7 +157,7 @@ def shape2d_runs_case(use_and: bool) -> RoutineCase:
     width, height, x, y = 9, 5, 72, 52
     encoded = _rle_source()
     initial = _frame()
-    routine = "shape2d_render_bmp_as_mask" if use_and else "shape2d_op_unk4"
+    routine = "shape2d_render_bmp_as_mask" if use_and else "shape2d_or_rle"
     writes = _sprite_machine_state(routine)
     writes += [MemoryWrite(0xA000, 0, initial),
                MemoryWrite(SPRITE_SOURCE_SEGMENT, SPRITE_SOURCE_OFFSET,

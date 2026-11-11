@@ -347,11 +347,11 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
             out = rewrite_calls(out, "call_read_line", "rename:stunts_port_call_read_line_view")
             out = rewrite_calls(out, "locate_shape_fatal", "rename:stunts_port_locate_shape_fatal_shape_view")
     if source == "src/toupper.c":
-        out = re.sub(r"\bI16\s+toupper\s*\(\s*I16\s+ch\s*\)",
-                     "int toupper(int ch)", out, count=1)
+        out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
+                     "int cap(int ch)", out, count=1)
     if STRICT_CENTRAL:
         if source == "src/obj_seg032_group.c":
-            out = rewrite_calls(out, "timer_copy_counter", "rename:stunts_port_timer_copy_counter_split_view")
+            out = rewrite_calls(out, "setticks", "rename:stunts_port_timer_copy_counter_split_view")
         if source == "src/obj_seg028.c":
             out = rewrite_calls(out, "audio_init_chunk", "rename:stunts_port_audio_init_chunk_7_view")
         if source == "src/obj_seg007.c":
@@ -365,8 +365,8 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
     if source == "src/toupper.c":
-        out = re.sub(r"\bI16\s+toupper\s*\(\s*I16\s+ch\s*\)",
-                     "int toupper(int ch)", out, count=1)
+        out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
+                     "int cap(int ch)", out, count=1)
     return out, len(set(removals))
 
 

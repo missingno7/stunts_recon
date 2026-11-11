@@ -1239,8 +1239,8 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
     elif n == "gmconfigbackup":
         replay_class, preserve = "menu_configuration_backup", False
         reason = "This is the configuration copy restored after the menu flow; it is setup/UI state, not per-frame simulation state."
-    elif n in {"hillconsts", "collision_point_set_a", "collision_point_set_b", "collision_point_set_c",
-                "collision_rotation_offsets", "speed_recovery_divisors", "collision_point_x_signs",
+    elif n in {"terheight", "signsizeinfo", "sfpostsizeinfo", "pointsizeinfo",
+                "gravity", "speed_recovery_divisors", "collision_point_x_signs",
                 "collision_point_y_signs", "trklst", "road_elem_ctrz", "ophys_7"}:
         replay_class, preserve = "deterministic_track_or_vehicle_simulation_input", True
         reason = "Accepted simulation/track routines read this table or value to place cars, resolve collision/grip, or interpret the selected track-object geometry; preserve or reproduce the exact backing input for replay."
@@ -1255,37 +1255,37 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
         reason = "Audio voices, profiles, chunks, and playback cursors are presentation/driver state derived from simulation and loaded audio resources."
     elif n in ("fallback_rotation_cache", "plane_rotation_cache"):
         replay_class, preserve = "recomputed_transform_cache", False
-        reason = "plnrotop writes these matrices as transform workspaces from the current rotation inputs before consuming them; they are recomputed derived math state, not replay checkpoint input."
+        reason = "move_on_plane writes these matrices as transform workspaces from the current rotation inputs before consuming them; they are recomputed derived math state, not replay checkpoint input."
     elif n == "pln_rot_output":
         replay_class, preserve = "derived_simulation_frame_scratch", False
-        reason = "plnrotop derives this vector from current plane/rotation inputs, then update_player_state consumes it in wheel-coordinate calculations; the checkpointed CARSTATE and deterministic track/config inputs are authoritative."
+        reason = "move_on_plane derives this vector from current plane/rotation inputs, then movecar consumes it in wheel-coordinate calculations; the checkpointed CARSTATE and deterministic track/config inputs are authoritative."
     elif n == "g_penaltytm":
         replay_class, preserve = "derived_penalty_increment_and_display", False
-        reason = "player_op computes this increment and adds it immediately to core.game_penalty; the latter is the checkpointed simulation total, while g_penaltytm is also read for display."
+        reason = "moveplayer computes this increment and adds it immediately to core.game_penalty; the latter is the checkpointed simulation total, while g_penaltytm is also read for display."
     elif n in {"flagsdown", "byte_3b8f2", "byte_3fe00"}:
         replay_class, preserve = "physical_input_or_dialog_state", False
         reason = "This is live keyboard/joystick/dialog state; replay uses the normalized per-frame input bytes instead of preserving device polling state."
     elif n in {"last_tacho", "steering_zone", "steering_dot_x", "steering_dot_y", "last_steering_step",
                 "half_scale_flag", "current_num_paints", "obj_flags", "vertex_count", "g_vector_bitix",
-                "primitive_type_table", "inverse_power_of_two_table", "function_key_scan_codes",
+                "pt", "inverse_power_of_two_table", "function_key_scan_codes",
                 "sphere_scanline_profiles", "track_prev_vec", "scene2", "scene3", "hill_offs",
                 "fence_offsets", "fence_codes", "fence_off_1", "fence_off_2", "fence_off_3", "fence_off_4",
                 "paint_cycle", "detthrlevel", "cur_shps", "sky_hgt_world", "g_skybox_sky_clr",
                 "g_skyboxwat_clr", "prevcamrot", "scene_1ht", "scene_2ht", "scene_3ht", "scene_4ht",
                 "scene_idx", "maxscnh", "spdneedlegaugeclr", "backlightovr8", "exwd", "car_wheel_offsets",
-                "secondveccar", "veccar", "car_dvecs", "player_engine_profile", "opponent_engine_profile",
+                "secondveccar", "veccar", "car_dvecs", "player_engine_profile", "eng2",
                 "one_through_fourteen_table", "intro_text_color_a", "intro_text_color_b", "intro_text_color_c",
                 "intro_text_color_d", "intro_text_color_e", "intro_text_color_f", "intro_text_style_a",
                 "intro_text_style_b", "intro_text_style_c", "intro_text_style_d", "intro_text_style_e",
                 "intro_text_style_f", "text_cursor_outline_color", "line_edit_x", "line_edit_y",
-                "g_hovercolor_idle", "g_animphase", "timeraud", "slomodiv8", "skybox_loaded", "scenery_names",
+                "g_hovercolor_idle", "g_animphase", "timeraud", "slomodiv8", "skybox_loaded", "tername",
                 "textrespfxchr", "word_3f88e", "g_audchnkvalue", "vidflg4_is1"}:
         replay_class, preserve = "presentation_or_derived_workspace", False
         reason = "Accepted readers/writers place this value in rendering, menu, resource, or audio setup. It is recomputed or reloaded outside the authoritative GAMESTATE/input checkpoint."
-    elif funcs and all(fn in {"update_frame", "draw_track_preview", "draw_clip", "skybox_op_helper2", "skybox_op",
-                              "load_skybox", "unload_skybox", "load_tracks_menu_shapes", "setup_car_shapes",
-                              "shape3d_free_car_shapes", "shape3d_load_car_shapes", "trans_op", "select_rot",
-                              "calc_sincos80", "vector_op_unk2", "mouse_timer_sprite_unknown", "read_line",
+    elif funcs and all(fn in {"drawworld", "draw_track_preview", "drawworldflipzones", "skybox_op_helper2", "drawhorizon",
+                              "initscenery", "removescenery", "load_tracks_menu_shapes", "dodash",
+                              "shape3d_free_car_shapes", "shape3d_load_car_shapes", "add_object_to_buffer", "init_objects_buffer",
+                              "initnm", "norm_zone", "mouse_timer_sprite_unknown", "read_line",
                               "read_line_helper", "read_line_helper2", "do_joystick_resource_text",
                               "do_key_resource_text", "do_mou_resource_text", "do_pau_restext"} for fn in funcs):
         replay_class, preserve = "presentation_or_derived_workspace", False
@@ -1483,13 +1483,13 @@ def build_model(run_probes=True):
             audio_text = mask_noncode(sources.get("src/obj_seg001_complete.c", ""))
             audio_write = re.search(r"audioRecord\s*->\s*player_offsets\s*\[\s*0\s*\]\s*=", audio_text)
             audio_read = re.search(r"record\s*->\s*player_rpm", audio_text)
-            readers = ([{"function": "apply_audio_frame", "source": "src/obj_seg001_complete.c",
+            readers = ([{"function": "myupdatesfx1", "source": "src/obj_seg001_complete.c",
                          "line": line_no(audio_text, audio_read.start())}] if audio_read else [])
-            writers = ([{"function": "audio_carstate", "source": "src/obj_seg001_complete.c",
+            writers = ([{"function": "myupdatesfx", "source": "src/obj_seg001_complete.c",
                          "line": line_no(audio_text, audio_write.start())}] if audio_write else [])
-            refs = ([{"function": "audio_carstate", "source": "src/obj_seg001_complete.c",
+            refs = ([{"function": "myupdatesfx", "source": "src/obj_seg001_complete.c",
                       "line": line_no(audio_text, audio_write.start()), "access": "indirect buffer write through AUDIO_CAR_FRAME *"}] if audio_write else [])
-            refs += ([{"function": "apply_audio_frame", "source": "src/obj_seg001_complete.c",
+            refs += ([{"function": "myupdatesfx1", "source": "src/obj_seg001_complete.c",
                        "line": line_no(audio_text, audio_read.start()), "access": "indirect buffer read through AUDIO_CAR_FRAME *"}] if audio_read else [])
         evidence.extend({"kind": "access", "citation": f"{x['source']}:{x['line']}", "function": x["function"], "access": x["access"]}
                         for x in refs[:24])
@@ -1507,7 +1507,7 @@ def build_model(run_probes=True):
         pointee_replay = None
         if name == "g_tdreplay16buf":
             pointee_replay = {"class": "ordered_replay_input_bytes", "preserve_bit_exactly": True,
-                              "reason": "The frame-indexed bytes are read by update_gamestate and the pointer slot is only their process-local address.",
+                              "reason": "The frame-indexed bytes are read by movesim and the pointer slot is only their process-local address.",
                               "evidence": [{"citation": "src/obj_seg001_complete.c:1758-1770"}]}
         elif name == "cvxs_a":
             pointee_replay = {"class": "GAMESTATE_replay_checkpoint_array", "preserve_bit_exactly": True,
@@ -1651,7 +1651,7 @@ def build_model(run_probes=True):
                             and v.get("tag") == "struct AUDIO_CAR_FRAME"), {})
         audio_decl_ev = next((e for e in audio_buffer["evidence"] if e.get("kind") in ("accepted_c_declaration", "accepted_c_declaration")), {})
         audio_access = next((x for x in audio_buffer["readers"] + audio_buffer["writers"]
-                             if x.get("function") == "audio_carstate"), {})
+                             if x.get("function") == "myupdatesfx"), {})
         audio_source_text = sources.get("src/obj_seg001_complete.c", "")
         audio_cast = re.search(r"\(\s*struct\s+AUDIO_CAR_FRAME\s*\*\s*\)\s*audio_frmarr", mask_noncode(audio_source_text))
         audio_decl_citation = audio_decl_ev.get("citation", "src/obj_seg001_complete.c:unknown")
@@ -1793,12 +1793,12 @@ def build_model(run_probes=True):
                 {"field": "car_speed2", "unit": "unsigned Q8 mph", "meaning": "actual translational speed; can diverge from car_speed during jumps", "evidence": [{"citation": "src/obj_seg003.c:101-107"}]},
                 {"field": "car_posWorld1", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "car world position", "evidence": [{"citation": "src/obj_seg001_complete.c:740-745"}, {"citation": "src/obj_seg001_complete.c:1692-1695"}]},
                 {"field": "car_posWorld2", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "prior/secondary car position used in simulation", "evidence": [{"citation": "src/obj_seg001_complete.c:2699-2711"}]},
-                {"field": "car_36MwhlAngle", "unit": "integer angle consumed by 0x400-turn fast-trig convention", "meaning": "normalized heading difference used as the car's angular skid/impact vector; also passed to cosfast", "evidence": [{"citation": "src/obj_seg001_complete.c:2444-2460"}, {"citation": "src/obj_seg001_complete.c:2527-2537"}, {"citation": "asm/math_resource_helpers.ASM:456-515"}]}
+                {"field": "car_36MwhlAngle", "unit": "integer angle consumed by 0x400-turn fast-trig convention", "meaning": "normalized heading difference used as the car's angular skid/impact vector; also passed to intcos", "evidence": [{"citation": "src/obj_seg001_complete.c:2444-2460"}, {"citation": "src/obj_seg001_complete.c:2527-2537"}, {"citation": "asm/math_resource_helpers.ASM:456-515"}]}
             ]
         elif tag == "GAMESTATE":
             field_semantics = [
                 {"field": "game_frame", "unit": "simulation frame index", "meaning": "indexes g_tdreplay16buf and advances once per state update", "evidence": [{"citation": "src/obj_seg001_complete.c:1758-1770"}]},
-                {"field": "game_frames_per_sec", "unit": "frames per second / scheduling rate", "meaning": "rate counter used by game loop timing", "evidence": [{"citation": "src/obj_seg001_complete.c:1770-1778"}]},
+                {"field": "game_end_delay_limit", "unit": "frames per second / scheduling rate", "meaning": "rate counter used by game loop timing", "evidence": [{"citation": "src/obj_seg001_complete.c:1770-1778"}]},
                 {"field": "game_inputmode", "unit": "enumerated byte flag (0 waiting, 1 active, 2 suppressed during intro)", "meaning": "simulation input mode", "evidence": [{"citation": "src/obj_seg003.c:189"}, {"citation": "src/obj_seg001_complete.c:1758-1763"}]}
             ]
         elif tag == "VECTORLONG":
@@ -1864,7 +1864,7 @@ def build_model(run_probes=True):
 
     # Global data declarations with exact semantic scales grounded in accepted source comments/code.
     scale_ledger = [
-        {"fact": "sinfast selects one of four quadrants from the high byte, indexes the 256-entry quarter-wave table from the low byte, and cosfast adds 0x100; one complete turn is 0x400 units. Table peak 16384 is Q14 amplitude.",
+        {"fact": "intsin selects one of four quadrants from the high byte, indexes the 256-entry quarter-wave table from the low byte, and intcos adds 0x100; one complete turn is 0x400 units. Table peak 16384 is Q14 amplitude.",
          "evidence": ["asm/math_resource_helpers.ASM:456-515", "asm/math_resource_helpers.ASM:7-263", "asm/graphics_resource_runtime.ASM:3103-3121"]},
         {"fact": "CARSTATE.car_speed and car_speed2 are unsigned Q8 mph (raw value = mph * 256); car_speed is rev-coupled and car_speed2 is actual translational speed, so they diverge during jumps.",
          "evidence": ["src/obj_seg003.c:101-107", "src/obj_seg003.c:101-107"]},
@@ -1995,7 +1995,7 @@ def write_markdown(model, output_dir=DOCS):
            "This generated dictionary enumerates every `kind=data` address in `layout/names-registry.json` and every tagged `struct`/`union` definition in the accepted C contributions. Registry identifiers are link/address-constrained reconstruction aliases, not recovered historical names. The accepted declarations, the loaded-image address, and compiler probes are kept separate as evidence.", "",
            f"Coverage: **{model['coverage']['registry_data_symbols']} data symbols** ({model['coverage']['complete_data_symbol_type_and_size']} with grounded type and byte size; {model['coverage']['unresolved_data_symbols']} with a missing type or size), **{model['coverage']['struct_tags']} struct tags** across {model['coverage']['struct_variants']} accepted-TU layouts ({model['coverage']['struct_variants_with_compiler_size']} compiler-sized). Units remain unclassified for {model['coverage']['symbols_with_unknown_unit']} symbols; replay class remains unknown for {model['coverage']['symbols_with_unknown_replay_class']} symbols. {model['coverage']['struct_types_with_instance_dependent_replay_class']} aggregate tags combine instances with different replay classes; see their per-instance rows. See [`state-model.json`](state-model.json) for complete evidence records.", "",
            "## Deterministic replay boundary", "",
-           "The simulation checkpoint is a complete 0x460-byte `GAMESTATE`, including both 0xD0-byte `CARSTATE`s, the six-byte random seed and opaque fields. `update_gamestate` writes the full aggregate into the replay checkpoint array; `restore_gamestate` assigns a full checkpoint back and initializes the random generator from its seed. Replay advances by `core.game_frame` through `g_tdreplay16buf`. Preserve the aggregate bytes, seed, replay bytes and frame order exactly. The pointer slots that address these buffers are process-local and are not portable replay data. Keyboard, joystick, mouse, raster, menu and audio-driver state stay in the presentation/device side of the boundary.", "",
+           "The simulation checkpoint is a complete 0x460-byte `GAMESTATE`, including both 0xD0-byte `CARSTATE`s, the six-byte random seed and opaque fields. `movesim` writes the full aggregate into the replay checkpoint array; `gotosim` assigns a full checkpoint back and initializes the random generator from its seed. Replay advances by `core.game_frame` through `g_tdreplay16buf`. Preserve the aggregate bytes, seed, replay bytes and frame order exactly. The pointer slots that address these buffers are process-local and are not portable replay data. Keyboard, joystick, mouse, raster, menu and audio-driver state stay in the presentation/device side of the boundary.", "",
            "| Evidence-backed state fact | Porting consequence | Evidence |", "|---|---|---|"]
     keyfacts = [
         ("`GAMESTATE` has 0x460 bytes: three 24-element long arrays, timing/frame fields, two embedded `CARSTATE`s, seed bytes, replay flags and opaque spans.", "Keep the whole aggregate in checkpoints, including currently unexplained fields.", "src/obj_seg003.c:155-202; src/obj_seg001_complete.c:1758-1770"),

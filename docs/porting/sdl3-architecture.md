@@ -111,7 +111,7 @@ Those values produce a 359,200-dot frame at 70.086... Hz. The modeled vertical
 retrace interval is lines 412–413 (about 63.6 microseconds). Display-enable
 status uses the 640-by-400 active raster; bit 0 is set during horizontal or
 vertical blanking, and bit 3 is set during vertical retrace. The original
-`video_get_status` helper still returns only bit 3, as its accepted routine
+`vsyncstate` helper still returns only bit 3, as its accepted routine
 does; `port_video_read_status_1` exposes both status bits.
 
 Raster phase and timer deadlines use one monotonic virtual-clock epoch. Timer
@@ -119,7 +119,7 @@ deadlines occur at `origin + tick_id * 10,000,154 ns`, matching the measured
 99.998 Hz Port Forge profile. VGA phase advances continuously in that same
 nanosecond time domain between timer deadlines; host presentation refresh
 never advances it. This supplies realistic register transitions without
-claiming CPU-cycle timing: `random_wait` loop counts can differ from DOS when
+claiming CPU-cycle timing: `seedrandom` loop counts can differ from DOS when
 the host CPU speed or scheduling differs.
 
 ## Input mapping
@@ -155,7 +155,7 @@ runtime stage. A registered callback must not run concurrently with a
 simulation step until the callback/lock boundary has been recovered.
 
 At the game boundary, one `simulation_step` is emitted after a committed
-`update_gamestate` call, with a monotonic `sim_step_id` and the resulting
+`movesim` call, with a monotonic `sim_step_id` and the resulting
 16-bit `game_frame`. Catch-up may produce several steps before one video
 publication. A frame counter sample is not relabeled as a simulation step if
 the update boundary was not observed.
@@ -181,7 +181,7 @@ integer nanoseconds and a separate host timestamp where available.
 | Event | Emission boundary |
 |---|---|
 | `timer_tick` | One emulated deadline, including tick ID, scheduled and observed times. |
-| `simulation_step` | After a committed `update_gamestate`, with step ID and `game_frame`. |
+| `simulation_step` | After a committed `movesim`, with step ID and `game_frame`. |
 | `video_publication` | After the game/adapter publishes the indexed surface, with frame and step IDs. |
 | `host_present` | After SDL successfully presents the current indexed texture. |
 | `audio_publication` | At a guest-side nonempty audio batch boundary. |

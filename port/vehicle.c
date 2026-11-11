@@ -4,7 +4,7 @@
    update_rpm_from_speed entry in seg002. context.py verifies instruction
    boundaries but has no strict recipe; the Restunts statecar.c source lead
    describes the high-word speed-times-ratio update. */
-uint16_t update_rpm_from_speed(uint16_t current_rpm, uint16_t speed,
+uint16_t calcrpm(uint16_t current_rpm, uint16_t speed,
                                uint16_t gear_ratio, int16_t changing_gear,
                                uint16_t idle_rpm)
 {

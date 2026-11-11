@@ -120,17 +120,17 @@ void port_video_transition_advance(PortVideoTransition *transition,
     (void)transition; (void)work_units;
 }
 
-void set_add_value(int32_t ticks) { (void)ticks; }
+void setbiosticks(int32_t ticks) { (void)ticks; }
 
 int16_t kb_call_readchar_callback(void) { return 0; }
 uint32_t port_guest_activity_snapshot(void) { return 0; }
 void port_guest_wait_for_activity(uint32_t observed) { (void)observed; }
-int16_t poll_input_abort(void) { return 0; }
-void timer_copy_counter(int16_t offset, int16_t segment)
+int16_t testbiosticks(void) { return 0; }
+void setticks(int16_t offset, int16_t segment)
 {
     (void)offset; (void)segment;
 }
-int16_t timer_compare_dx(void) { return 0; }
+int16_t testticks(void) { return 0; }
 
 static int read_exact(void *destination, size_t bytes)
 {

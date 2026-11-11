@@ -31,7 +31,7 @@ The existing framebuffer/F12 capture checks still exercise raw 320×200 pixels.
 ## Milestones
 
 1. Correct faithful presentation and mouse mapping.
-2. Record the ordered semantic stream at `polyinfo()` without bypassing the
+2. Record the ordered semantic stream at `DRAW_OBJECTS()` without bypassing the
    faithful rasterizer; compare it against the locked shape fixtures.
 3. Render those commands with native output triangles and explicit 2D layers.
 4. Carry recovered camera-space vertices into native projection.
@@ -45,7 +45,7 @@ confer renderer acceptance.
 ## Ordered semantic boundary
 
 `port/render/legacy_adapter.py` instruments only the generated host view of
-`polyinfo()`. It copies each record immediately before the existing dispatch.
+`DRAW_OBJECTS()`. It copies each record immediately before the existing dispatch.
 The faithful calls and reset still run. Commands contain pool index, linked
 ordinal, signed depth, primitive type, material, ordered projected points,
 selection clip, both resolved colours, wheel colours, pattern class and word.
@@ -102,7 +102,7 @@ frozen DOS oracle: their ordered recovered-C face callbacks reproduce every
 full-wheel pixel exactly. All 22 zero-area faces in those cases paint pixels,
 so the modern contour path never discards them merely for zero area.
 
-The guest captures the indexed background before `polyinfo` and tracks explicit
+The guest captures the indexed background before `DRAW_OBJECTS` and tracks explicit
 2D writes after it. The final indexed image and write mask form an alpha UI
 layer. Equal-colour writes remain opaque; frame differencing would lose them.
 The offscreen MCGA row copy carries the mask to the display. Menus remain exact
@@ -116,7 +116,7 @@ remain exact with layer instrumentation present.
 
 ## Camera-space projection
 
-The generated `trans_op` observer sits after selection of `mview`, fixed-word
+The generated `ADD_OBJECT_TO_BUFFER` observer sits after selection of `mview`, fixed-word
 position and visibility masks, before the legacy rectangle rejects. It repeats
 `mat_vec` and word additions synchronously; its copied XYZ words cannot mutate
 simulation. Scene commands own the widened coordinates, projection and palette
@@ -170,7 +170,7 @@ published frame, with output size and both command counts in a sidecar.
 
 Changing projection alone cannot reveal track objects outside the recovered
 23-tile submission table. `tile_adapter.py` generates a capture-only copy of
-`update_frame` in the host overlay. It uses the same track decoding, instance
+`drawworld` in the host overlay. It uses the same track decoding, instance
 construction, animations, LOD and sorting code. Each of the five forward rows
 gets 12 extra lateral cells at each edge, inheriting the edge detail threshold.
 All 23 original entries remain an ordered subsequence, including heading 2's
@@ -232,7 +232,7 @@ player or absent opponent has horizontal sentinel -1. A neighbour also equal
 to -1 must not select that car or read its unset wheel-row local. The generated
 wide clone adds explicit visible-car guards; the recovered faithful predicates
 remain unchanged. Both supplied minidumps identify a null `shapeptr` dereference
-inside `trans_op`, but their caller frames do not identify the originating
+inside `ADD_OBJECT_TO_BUFFER`, but their caller frames do not identify the originating
 model. The host overlay also turns any remaining null submission into an
 explicit scene error before dereferencing it, rather than a hard crash or an
 omitted primitive. The edge guards address a proven invalid source path; the

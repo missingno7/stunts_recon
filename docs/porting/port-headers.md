@@ -39,9 +39,9 @@ This table records the 14-TU baseline that produced 24/38 passes before the stri
 | `obj_seg007.c` | `audio_tick_divider` conflicts with central target width. `send_audio_stop_event` now has a proven signed 16-bit result consumed by this TU. |
 | `obj_seg008.c` | `g_animphase`, `g_hovercolor_idle`, `fontdefvalue`, `kbjoyflags`, `flagsdown`, `msecoordx`, `pos_y_ms`, `g_mouseyposstacktable`, `g_mousesave_x_tbl` conflict with central target types/extents. Its `call_read_line` definition's six words match the five-argument caller view described below. |
 | `obj_seg009.c` | `track_object.ss_multiTileFlag` alias is absent; `gterrtrk` and `lnoffsets` conflict with central target extents. |
-| `obj_seg028.c` | Selected `AUDIOVOICE` view lacks source fields `resourceIndex`, `active`, `data`, `note`, `state16`, `channelNumber`, `resource`; selected `AUDIOCHUNK` view lacks `channelNumber`, `activeVoices`, `modeValue`; `audio_init_chunk` caller supplies 7 arguments versus the 6-argument definition. |
+| `obj_seg028.c` | Selected `AUDIOVOICE` view lacks source fields `resourceIndex`, `active`, `data`, `note`, `envelope_state`, `channelNumber`, `resource`; selected `AUDIOCHUNK` view lacks `channelNumber`, `activeVoices`, `modeValue`; `audio_init_chunk` caller supplies 7 arguments versus the 6-argument definition. |
 | `obj_seg031.c` | `spritepointermini` and `mouse_ptr_cursor` source pointer declarations conflict with the central target view. `nullsub_2`'s machine behavior is established below; the source declaration spelling remains record-order sensitive. |
-| `obj_seg032_group.c` | `timer_copy_counter` callers split a 32-bit tick delta into two 16-bit arguments; the central/implementation signature takes one 32-bit value. |
+| `obj_seg032_group.c` | `setticks` callers split a 32-bit tick delta into two 16-bit arguments; the central/implementation signature takes one 32-bit value. |
 | `seg017_mouse_whole.c` | `ms_buttons`, `cursorxposition`, `mouse_api_y` source declarations conflict with central target widths. |
 
 `audio_init_chunk` (six versus seven source arguments) remains a Class 2 source-view discrepancy. The four declaration contracts below are machine-proven; their historical spelling remains record-order sensitive.
@@ -64,7 +64,7 @@ Every adapter below is host-only and is excluded from the matching build. The ma
 
 | Blocker class | Adapter or unresolved behavior | Evidence and remaining work |
 |---|---|---|
-| 2 | `timer_copy_counter` caller view | Target `load_227c0` in seg012 (`+0x3DA0`, 23 bytes) adds the words at `BP+6` and `BP+8` into `DX:AX`; `obj_seg032_group.c:34,78,123` declares/passes two words. The host view joins them into one `U32`; source migration remains open. |
+| 2 | `setticks` caller view | Target `load_227c0` in seg012 (`+0x3DA0`, 23 bytes) adds the words at `BP+6` and `BP+8` into `DX:AX`; `obj_seg032_group.c:34,78,123` declares/passes two words. The host view joins them into one `U32`; source migration remains open. |
 | C | `read_file_with_retry`, `call_read_line`, `nullsub_2`, `locate_shape_fatal` | Machine contracts and port declaration views are established in the F3b table. Original C declaration spellings remain record-order sensitive. |
 | 4 | Host file/resource/audio dispatch | `stunts_port_read_file_with_retry_dispatch` and `stunts_port_send_audio_stop_event_dispatch` are host integration hooks declared without implementations. Their unresolved policy/linkage is separate from the now-proven historical call contracts. |
 | 6 | `audio_init_chunk` far pointer | Target `load_27dbc` in seg027 (`+0x0CEC`, 260 bytes) reads seven words, with the far pointer occupying `BP+0xA/+0xC`; `obj_seg028.c:96,203` exposes the seven source expressions and the observed call uses `0:0`. Define `stunts_port_resolve_far_data_pointer` for nonzero segmented addresses before host linking or execution. |
@@ -82,12 +82,12 @@ The type inference report keeps `lookup_span_bytes`, `next_label_gap_bytes`, `mi
 | `scrorder_idxs` | 14 bytes | 2-byte next-label gap | Exact seven-short LINK communal declaration. |
 | `g_mouseyposstacktable` | 10 bytes | 2-byte terminal fallback | Exact five-int LINK communal declaration. |
 | `resbuftext` | 80 bytes | 4-byte data-symbol width alias | Exact 80-byte LINK communal declaration. |
-| `line_input_screen_rect` | No independent allocation claim | 2-byte gap before `fontdefseg` | A four-byte far-pointer view overlaps two public words; preserve the alias relation as unresolved. |
+| `line_input_font_header` | No independent allocation claim | 2-byte gap before `fontdefseg` | A four-byte far-pointer view overlaps two public words; preserve the alias relation as unresolved. |
 
 Other PORT_BUILD type/aggregate views cite their basis beside the declarations: `track_object` aliases preserve same-offset members used by `obj_seg001_complete.c`, `obj_seg003.c`, `obj_seg004.c`, and `obj_seg009.c`; audio records use the source-selected fields at `obj_seg028.c:75-76`; `savedptr_ms`, `td10checkptr`, and the cursor globals retain their source-specific pointer views. The source-selected record layouts are mapped in [AGGREGATE_VIEW_MAP.md](../../tools/porting/port_include/AGGREGATE_VIEW_MAP.md), and machine-backed widths/bindings are in [declaration-evidence.json](../../tools/porting/port_include/declaration-evidence.json). These views do not implement host runtime services.
 
 ## Independently bound declarations
 
-Y2 resolved the former Class 4 binding questions in the central header: `kbormouse` is a byte at `0x2B8F8`, `audiodriverbinary` is a four-byte far pointer at `0x3060A`, and `primidxcounttab` is a 16-byte table at `0x2EA62`. `word_349A2` is the segment word at offset `+2` within `gamerptrs` at `0x349A0`, not a separate object. The evidence anchors are in [Y2 PORT_NOTES](../../build/workers/Y2/PORT_NOTES.md) and `stunts_decls.h`; the shared declarations do not invent an independent symbol binding for `word_349A2`.
+Y2 resolved the former Class 4 binding questions in the central header: `kbormouse` is a byte at `0x2B8F8`, `audiodriverbinary` is a four-byte far pointer at `0x3060A`, and `NP` is a 16-byte table at `0x2EA62`. `word_349A2` is the segment word at offset `+2` within `gamerptrs` at `0x349A0`, not a separate object. The evidence anchors are in [Y2 PORT_NOTES](../../build/workers/Y2/PORT_NOTES.md) and `stunts_decls.h`; the shared declarations do not invent an independent symbol binding for `word_349A2`.
 
 Aggregate names are not guaranteed to denote one layout across recovered translation units. `track_object` and audio records retain source-selected views where the source definitions establish them. The measured map preserves four size families separately: GAMESTATE 1014/1120, SHAPE2D 12/14/16, SPRITE 8/30, and WheelRect 12/16. `track_constants_module.c:494` remains an intentionally opaque 22-byte SHAPE3D view where no field structure is available.

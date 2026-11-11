@@ -24,7 +24,7 @@ static int16_t vector_intersection_component(int16_t first, int16_t second,
    Keep the 16-bit SUB/SHR/IMUL/IDIV widths and write order from the decoded
    segment-012 body; Restunts' math.c version is a semantic lead, not a strict
    source match. */
-void vector_op_unk(int16_t *first, int16_t *second, int16_t *output,
+void zclipline(int16_t *first, int16_t *second, int16_t *output,
                    int16_t target_depth)
 {
     uint16_t numerator;
@@ -67,7 +67,7 @@ static void matrix_row(const int16_t *input, const int16_t *matrix,
 
 /* Semantic C translation of asm/font_matrix_shape_decode.ASM::_mat_multiply. The
    row/column write order preserves the guest routine's input/output aliasing. */
-void mat_multiply(const int16_t *right_matrix, const int16_t *left_matrix,
+void transmult(const int16_t *right_matrix, const int16_t *left_matrix,
                   int16_t *output_matrix)
 {
     unsigned row;

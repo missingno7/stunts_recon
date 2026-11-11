@@ -12,33 +12,33 @@ typedef struct MouseRegs { uint16_t ax, bx, cx, dx, si, di, cflag; } MouseRegs;
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -47,16 +47,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -90,11 +90,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -138,14 +138,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -179,17 +179,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -221,17 +221,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -240,11 +240,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -285,22 +285,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -309,10 +309,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -347,7 +347,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_audio_make_filename)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -420,10 +420,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -431,7 +431,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_audio_make_filename)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -661,33 +661,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -696,16 +696,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -739,11 +739,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -787,14 +787,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -828,17 +828,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -870,17 +870,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -889,11 +889,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -934,22 +934,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -958,10 +958,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -996,7 +996,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_fardata_11036)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -1069,10 +1069,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -1080,7 +1080,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_fardata_11036)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -1310,33 +1310,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -1345,16 +1345,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -1388,11 +1388,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -1436,14 +1436,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -1477,17 +1477,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -1519,17 +1519,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -1538,11 +1538,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -1583,22 +1583,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -1607,10 +1607,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -1645,7 +1645,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_fardata_11039)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -1718,10 +1718,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -1729,7 +1729,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_fardata_11039)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -1959,33 +1959,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -1994,16 +1994,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -2037,11 +2037,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -2085,14 +2085,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -2126,17 +2126,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -2168,17 +2168,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -2187,11 +2187,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -2232,22 +2232,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -2256,10 +2256,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -2294,7 +2294,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_file_get_unflip_size)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -2367,10 +2367,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -2381,12 +2381,12 @@ struct SCREEN_RECT {
 struct SHAPE2D {
     I16 s2d_width;
     I16 s2d_height;
-    U16 s2d_unk1;
-    U16 s2d_unk2;
+    U16 s2d_hotspot_x;
+    U16 s2d_hotspot_y;
     U16 s2d_pos_x;
     U16 s2d_pos_y;
-    U8 s2d_unk3;
-    U8 s2d_unk4;
+    U8 s2d_plane_color0;
+    U8 s2d_plane_color1_bg;
 };
 #pragma pack(pop)
 #endif
@@ -2617,33 +2617,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -2652,16 +2652,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -2695,11 +2695,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -2743,14 +2743,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -2784,17 +2784,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -2826,17 +2826,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -2845,11 +2845,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -2890,22 +2890,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -2914,10 +2914,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -2952,7 +2952,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_file_load_shape2d_expandedsize)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -3025,10 +3025,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -3037,8 +3037,8 @@ struct SCREEN_RECT {
 /* src/file_load_shape2d_expandedsize.c:6; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D {
-    I16 width; I16 height; I16 unknown1; I16 unknown2;
-    I16 x; I16 y; I8 unknown3, unknown4, unknown5, unknown6;
+    I16 width; I16 height; I16 s2d_hotspot_x; I16 s2d_hotspot_y;
+    I16 x; I16 y; I8 s2d_plane_color0, s2d_plane_color1_bg, s2d_plane_color2_flip, s2d_plane_color3_flags;
 };
 #pragma pack(pop)
 #endif
@@ -3269,33 +3269,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -3304,16 +3304,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -3347,11 +3347,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -3395,14 +3395,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -3436,17 +3436,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -3478,17 +3478,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -3497,11 +3497,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -3542,22 +3542,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -3566,10 +3566,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -3604,7 +3604,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_heapsort_by_order)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -3677,10 +3677,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -3688,7 +3688,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_heapsort_by_order)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -3918,33 +3918,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -3953,16 +3953,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -3996,11 +3996,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -4044,14 +4044,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -4085,17 +4085,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -4127,17 +4127,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -4146,11 +4146,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -4191,22 +4191,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -4215,10 +4215,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -4253,7 +4253,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_nopsub_36AF2)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -4326,10 +4326,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -4337,7 +4337,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_nopsub_36AF2)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -4567,33 +4567,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -4602,16 +4602,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -4645,11 +4645,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -4693,14 +4693,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -4734,17 +4734,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -4776,17 +4776,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -4795,11 +4795,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -4840,22 +4840,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -4864,10 +4864,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -4902,7 +4902,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg000)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -4975,10 +4975,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -4986,7 +4986,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg000)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -5216,33 +5216,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -5251,16 +5251,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -5294,11 +5294,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -5342,14 +5342,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -5383,17 +5383,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -5449,22 +5449,22 @@ struct CARSTATE {
 	I16S car_knob_y2;
 	I16S car_angle_z;
 	I16S car_40MfrontWhlAngle;
-	I16S field_42;
+	I16S car_grip_angle_excess;
 	I16S car_demandedGrip;
 	I16S car_surfacegrip_sum;
-	I16S field_48;
+	I16S car_route_bearing;
 	I16S car_trackdata3_index;
-	I16S car_rc1[4]; 
-	I16S car_rc2[4];
+	I16S car_wheel_fall_step[4]; 
+	I16S car_wheel_suspension_offset[4];
 	I16S car_rc3[4];
 	I16S car_rc4[4];
-	I16S car_rc5[4];
+	I16S car_wheel_suspension_target[4];
 	struct VECTOR car_whlWorldCrds1[4];
 	struct VECTOR car_whlWorldCrds2[4];
-	struct VECTOR car_vec_unk3;
-	struct VECTOR car_vec_unk4;
-	struct VECTOR car_vec_unk5;
-	I16S field_B6;
+	struct VECTOR car_route_center;
+	struct VECTOR car_route_edge_a;
+	struct VECTOR car_route_edge_b;
+	I16S car_route_has_link;
 	I16S field_B8;
 	I16S field_BA;
 	I8 car_is_braking;
@@ -5476,14 +5476,14 @@ struct CARSTATE {
 	I8 car_surfaceWhl[4];      
 	I8 car_engineLimiterTimer;
 	I8 car_slidingFlag;
-	I8 field_C8;
+	I8 car_contact_processed;
 	I8 car_crashBmpFlag;
 	I8 car_changing_gear;
 	I8 car_fpsmul2;
 	I8 car_transmission;
-	I8 field_CD;
-	U8  field_CE; 
-	U8  field_CF; 
+	I8 car_finish_route_passed;
+	U8  car_route_point_index; 
+	U8  car_audio_flags; 
 };
 #pragma pack(pop)
 #endif
@@ -5492,11 +5492,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -5537,17 +5537,17 @@ struct GAMEINFO {
 /* src/obj_seg001_complete.c:178; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-	I32 game_longs1[24]; 
-	I32 game_longs2[24]; 
-	I32 game_longs3[24]; 
-	struct VECTOR game_vec1[2]; 
-	struct VECTOR game_vec3[2];
-	I16S game_frame_in_sec;
-	I16S game_frames_per_sec;
-	I32  game_travDist;
+	I32 game_debris_x[24]; 
+	I32 game_debris_y[24]; 
+	I32 game_debris_z[24]; 
+	struct VECTOR game_chase_camera_pos[2]; 
+	struct VECTOR game_chase_camera_prev[2];
+	I16S game_end_delay_elapsed;
+	I16S game_end_delay_limit;
+	I32  game_speed_frame_sum;
 	U16S  game_frame;
 	I16S game_total_finish; 
-	I16S field_144;
+	I16S game_opponent_finish_time;
 	I16S game_pEndFrame;
 	I16S game_oEndFrame;   
 	U16S  game_penalty;
@@ -5556,31 +5556,31 @@ struct GAMESTATE {
 	I16S game_jumpCount;
 	struct CARSTATE playerstate;
 	struct CARSTATE opponentstate;
-	I16S field_2F2;
-	I16S field_2F4;
+	I16S game_player_route_anchor;
+	I16S game_player_last_route_node;
 	I16S game_startcol;
 	I16S game_startcol2;
 	I16S game_startrow;
 	I16S game_startrow2;
-	I16S field_2FE[24];
-	I16S field_32E[24];
-	I16S field_35E[24];
-	I16S field_38E[24];
-	I16S field_3BE[24];
+	I16S game_debris_rot_x[24];
+	I16S game_debris_rot_y[24];
+	I16S game_debris_rot_z[24];
+	I16S game_debris_planar_step[24];
+	I16S game_debris_vertical_step[24];
 	I8 kevinseed[6];
-	I8 field_3F4;
+	I8 game_checkpoint_valid;
 	I8 game_inputmode; 
 	I8 game_3F6autoLoadEvalFlag;
-	I8 field_3F7[2]; 
-	I8 field_3F9;
-	I8 field_3FA[48];
-	I8 field_42A;
-	I8 field_42B[24];
-	I8 field_443[24];
-	I8 field_45B;
-	I8 field_45C;
-	I8 field_45D;
-	I8 field_45E;
+	I8 game_track_camera_index[2]; 
+	I8 game_opponent_speed_limit;
+	I8 game_track_object_broken[48];
+	I8 game_debris_active;
+	I8 game_debris_shape_index[24];
+	I8 game_debris_origin_kind[24];
+	I8 game_route_recovery_mode;
+	I8 game_route_confirm_count;
+	I8 game_player_guidance;
+	I8 game_opponent_pass_side;
 	I8 field_45F;
 };
 #pragma pack(pop)
@@ -5590,10 +5590,10 @@ struct GAMESTATE {
 /* src/obj_seg001_complete.c:227; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-	I32 game_travDist;
+	I32 game_speed_frame_sum;
 	U16S  game_frame;
 	I16S game_total_finish;
-	I16S field_144;
+	I16S game_opponent_finish_time;
 	I16S game_pEndFrame;
 	I16S game_oEndFrame;
 	U16S  game_penalty;
@@ -5628,7 +5628,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg001_complete)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -5708,10 +5708,10 @@ struct RECTANGLE {
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -5719,7 +5719,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg001_complete)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -5970,33 +5970,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -6005,16 +6005,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -6048,11 +6048,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -6096,14 +6096,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -6137,17 +6137,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -6203,22 +6203,22 @@ struct CARSTATE {
 	I16S car_knob_y2;
 	I16S car_angle_z;
 	I16S car_40MfrontWhlAngle;
-	I16S field_42;
+	I16S car_grip_angle_excess;
 	I16S car_demandedGrip;
 	I16S car_surfacegrip_sum;
-	I16S field_48;
+	I16S car_route_bearing;
 	I16S car_trackdata3_index;
-	I16S car_rc1[4]; // four words, one for each wheel.
-	I16S car_rc2[4];
+	I16S car_wheel_fall_step[4]; // four words, one for each wheel.
+	I16S car_wheel_suspension_offset[4];
 	I16S car_rc3[4];
 	I16S car_rc4[4];
-	I16S car_rc5[4];
+	I16S car_wheel_suspension_target[4];
 	struct VECTOR car_whlWorldCrds1[4];
 	struct VECTOR car_whlWorldCrds2[4];
-	struct VECTOR car_vec_unk3;
-	struct VECTOR car_vec_unk4;
-	struct VECTOR car_vec_unk5;
-	I16S field_B6;
+	struct VECTOR car_route_center;
+	struct VECTOR car_route_edge_a;
+	struct VECTOR car_route_edge_b;
+	I16S car_route_has_link;
 	I16S field_B8;
 	I16S field_BA;
 	I8 car_is_braking;
@@ -6230,14 +6230,14 @@ struct CARSTATE {
 	I8 car_surfaceWhl[4];      // surface types for each of the wheels, it seems.
 	I8 car_engineLimiterTimer;
 	I8 car_slidingFlag;
-	I8 field_C8;
+	I8 car_contact_processed;
 	I8 car_crashBmpFlag;
 	I8 car_changing_gear;
 	I8 car_fpsmul2;
 	I8 car_transmission;
-	I8 field_CD;
-	I8 field_CE; // is added?
-	I8 field_CF; // is initialized?
+	I8 car_finish_route_passed;
+	I8 car_route_point_index; // is added?
+	I8 car_audio_flags; // is initialized?
 };
 #pragma pack(pop)
 #endif
@@ -6246,11 +6246,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -6291,18 +6291,18 @@ struct GAMEINFO {
 /* src/obj_seg003.c:179; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-	I32 game_longs1[24]; // x
-	I32 game_longs2[24]; // y
-	I32 game_longs3[24]; // z
-	struct VECTOR game_vec1[2]; // 0 = player, 1 = opponent
-	struct VECTOR game_vec3;
-	struct VECTOR game_vec4;
-	I16S game_frame_in_sec;
-	I16S game_frames_per_sec;
-	I32  game_travDist;
+	I32 game_debris_x[24]; // x
+	I32 game_debris_y[24]; // y
+	I32 game_debris_z[24]; // z
+	struct VECTOR game_chase_camera_pos[2]; // 0 = player, 1 = opponent
+	struct VECTOR game_chase_camera_prev;
+	struct VECTOR game_opponent_camera_prev;
+	I16S game_end_delay_elapsed;
+	I16S game_end_delay_limit;
+	I32  game_speed_frame_sum;
 	U16S  game_frame;
 	I16S game_total_finish; // finish time + penalty when crossed finish line
-	I16S field_144;
+	I16S game_opponent_finish_time;
 	I16S game_pEndFrame;
 	I16S game_oEndFrame;   // former game_frame2
 	I16S game_penalty; // probably penalty counter
@@ -6311,31 +6311,31 @@ struct GAMESTATE {
 	I16S game_jumpCount;
 	struct CARSTATE playerstate;
 	struct CARSTATE opponentstate;
-	I16S field_2F2;
-	I16S field_2F4;
+	I16S game_player_route_anchor;
+	I16S game_player_last_route_node;
 	I16S game_startcol;
 	I16S game_startcol2;
 	I16S game_startrow;
 	I16S game_startrow2;
-	I16S field_2FE[24];
-	I16S field_32E[24];
-	I16S field_35E[24];
-	I16S field_38E[24];
-	I8 field_3BE[48];
+	I16S game_debris_rot_x[24];
+	I16S game_debris_rot_y[24];
+	I16S game_debris_rot_z[24];
+	I16S game_debris_planar_step[24];
+	I8 game_debris_vertical_step[48];
 	I8 kevinseed[6];
-	I8 field_3F4;
+	I8 game_checkpoint_valid;
 	I8 game_inputmode; // 0 = waiting for input, 1 = input active, 2 = no input (during the intro)
 	I8 game_3F6autoLoadEvalFlag;
-	I8 field_3F7[2]; // 0 = player, 1 = opponent
-	I8 field_3F9;
-	I8 field_3FA[48];
-	I8 field_42A;
-	U8  field_42B[24];
-	U8  field_443[24];
-	I8 field_45B;
-	I8 field_45C;
-	I8 field_45D;
-	I8 field_45E;
+	I8 game_track_camera_index[2]; // 0 = player, 1 = opponent
+	I8 game_opponent_speed_limit;
+	I8 game_track_object_broken[48];
+	I8 game_debris_active;
+	U8  game_debris_shape_index[24];
+	U8  game_debris_origin_kind[24];
+	I8 game_route_recovery_mode;
+	I8 game_route_confirm_count;
+	I8 game_player_guidance;
+	I8 game_opponent_pass_side;
 	I8 field_45F;
 };
 #pragma pack(pop)
@@ -6345,10 +6345,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -6383,7 +6383,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg003)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -6465,10 +6465,10 @@ struct RECTANGLE {
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -6476,7 +6476,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg003)
 /* src/obj_seg003.c:713; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -6739,33 +6739,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -6774,16 +6774,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -6817,11 +6817,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -6865,14 +6865,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -6906,17 +6906,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -6948,17 +6948,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -6967,11 +6967,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -7000,7 +7000,7 @@ struct GAMEINFO { I8 game_playercarid[4],game_playermaterial,game_playertransmis
 #if defined(STUNTS_TU_obj_seg004)
 /* src/obj_seg004.c:18; GAMESTATE layout. */
 #pragma pack(push, 2)
-struct GAMESTATE { U8  before_game_inputmode[0x3f5]; I8 game_inputmode; };
+struct GAMESTATE { U8  state_prefix_000[0x3f5]; I8 game_inputmode; };
 #pragma pack(pop)
 #endif
 
@@ -7008,10 +7008,10 @@ struct GAMESTATE { U8  before_game_inputmode[0x3f5]; I8 game_inputmode; };
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -7046,7 +7046,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg004)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -7119,10 +7119,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -7130,7 +7130,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg004)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -7350,33 +7350,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -7385,16 +7385,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -7428,11 +7428,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -7476,14 +7476,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -7517,17 +7517,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -7583,22 +7583,22 @@ struct CARSTATE {
 	I16S car_knob_y2;
 	I16S car_angle_z;
 	I16S car_40MfrontWhlAngle;
-	I16S field_42;
+	I16S car_grip_angle_excess;
 	I16S car_demandedGrip;
 	I16S car_surfacegrip_sum;
-	I16S field_48;
+	I16S car_route_bearing;
 	I16S car_trackdata3_index;
-	I16S car_rc1[4]; // four words, one for each wheel.
-	I16S car_rc2[4];
+	I16S car_wheel_fall_step[4]; // four words, one for each wheel.
+	I16S car_wheel_suspension_offset[4];
 	I16S car_rc3[4];
 	I16S car_rc4[4];
-	I16S car_rc5[4];
+	I16S car_wheel_suspension_target[4];
 	struct VECTOR car_whlWorldCrds1[4];
 	struct VECTOR car_whlWorldCrds2[4];
-	struct VECTOR car_vec_unk3;
-	struct VECTOR car_vec_unk4;
-	struct VECTOR car_vec_unk5;
-	I16S field_B6;
+	struct VECTOR car_route_center;
+	struct VECTOR car_route_edge_a;
+	struct VECTOR car_route_edge_b;
+	I16S car_route_has_link;
 	I16S field_B8;
 	I16S field_BA;
 	I8 car_is_braking;
@@ -7610,14 +7610,14 @@ struct CARSTATE {
 	I8 car_surfaceWhl[4];      // surface types for each of the wheels, it seems.
 	I8 car_engineLimiterTimer;
 	I8 car_slidingFlag;
-	I8 field_C8;
+	I8 car_contact_processed;
 	I8 car_crashBmpFlag;
 	I8 car_changing_gear;
 	I8 car_fpsmul2;
 	I8 car_transmission;
-	I8 field_CD;
-	I8 field_CE; // is added?
-	I8 field_CF; // is initialized?
+	I8 car_finish_route_passed;
+	I8 car_route_point_index; // is added?
+	I8 car_audio_flags; // is initialized?
 };
 #pragma pack(pop)
 #endif
@@ -7626,11 +7626,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -7671,17 +7671,17 @@ struct GAMEINFO {
 /* src/obj_seg005.c:191; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-	I32 game_longs1[24]; // x
-	I32 game_longs2[24]; // y
-	I32 game_longs3[24]; // z
-	struct VECTOR game_vec1[2]; // 0 = player, 1 = opponent
-	struct VECTOR game_vec3[2]; // [0] player, [1] opponent
-	I16S game_frame_in_sec;
-	I16S game_frames_per_sec;
-	I32  game_travDist;
+	I32 game_debris_x[24]; // x
+	I32 game_debris_y[24]; // y
+	I32 game_debris_z[24]; // z
+	struct VECTOR game_chase_camera_pos[2]; // 0 = player, 1 = opponent
+	struct VECTOR game_chase_camera_prev[2]; // [0] player, [1] opponent
+	I16S game_end_delay_elapsed;
+	I16S game_end_delay_limit;
+	I32  game_speed_frame_sum;
 	U16S  game_frame;
 	I16S game_total_finish; // finish time + penalty when crossed finish line
-	I16S field_144;
+	I16S game_opponent_finish_time;
 	I16S game_pEndFrame;
 	I16S game_oEndFrame;   // former game_frame2
 	I16S game_penalty; // probably penalty counter
@@ -7690,31 +7690,31 @@ struct GAMESTATE {
 	I16S game_jumpCount;
 	struct CARSTATE playerstate;
 	struct CARSTATE opponentstate;
-	I16S field_2F2;
-	I16S field_2F4;
+	I16S game_player_route_anchor;
+	I16S game_player_last_route_node;
 	I16S game_startcol;
 	I16S game_startcol2;
 	I16S game_startrow;
 	I16S game_startrow2;
-	I16S field_2FE[24];
-	I16S field_32E[24];
-	I16S field_35E[24];
-	I16S field_38E[24];
-	I8 field_3BE[48];
+	I16S game_debris_rot_x[24];
+	I16S game_debris_rot_y[24];
+	I16S game_debris_rot_z[24];
+	I16S game_debris_planar_step[24];
+	I8 game_debris_vertical_step[48];
 	I8 kevinseed[6];
-	I8 field_3F4;
+	I8 game_checkpoint_valid;
 	I8 game_inputmode; // 0 = waiting for input, 1 = input active, 2 = no input (during the intro)
 	I8 game_3F6autoLoadEvalFlag;
-	I8 field_3F7[2]; // 0 = player, 1 = opponent
-	I8 field_3F9;
-	I8 field_3FA[48];
-	I8 field_42A;
-	I8 field_42B[24];
-	I8 field_443[24];
-	I8 field_45B;
-	I8 field_45C;
-	I8 field_45D;
-	I8 field_45E;
+	I8 game_track_camera_index[2]; // 0 = player, 1 = opponent
+	I8 game_opponent_speed_limit;
+	I8 game_track_object_broken[48];
+	I8 game_debris_active;
+	I8 game_debris_shape_index[24];
+	I8 game_debris_origin_kind[24];
+	I8 game_route_recovery_mode;
+	I8 game_route_confirm_count;
+	I8 game_player_guidance;
+	I8 game_opponent_pass_side;
 	I8 field_45F;
 };
 #pragma pack(pop)
@@ -7724,10 +7724,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -7762,7 +7762,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg005)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -7842,10 +7842,10 @@ struct RECTANGLE {
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -7856,14 +7856,14 @@ struct SCREEN_RECT {
 struct SHAPE2D {
     I16S s2d_width;
     U16S  s2d_height;
-    U16S  s2d_unk1;
-    U16S  s2d_unk2;
+    U16S  s2d_hotspot_x;
+    U16S  s2d_hotspot_y;
     U16S  s2d_pos_x;
     U16S  s2d_pos_y;
-    U8  s2d_unk3;
-    U8  s2d_unk4;
-    U8  s2d_unk5;
-    U8  s2d_unk6;
+    U8  s2d_plane_color0;
+    U8  s2d_plane_color1_bg;
+    U8  s2d_plane_color2_flip;
+    U8  s2d_plane_color3_flags;
 };
 #pragma pack(pop)
 #endif
@@ -8131,33 +8131,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -8166,16 +8166,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -8209,11 +8209,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -8257,14 +8257,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -8298,17 +8298,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -8340,17 +8340,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -8359,11 +8359,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -8404,22 +8404,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -8428,10 +8428,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -8466,7 +8466,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg006)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -8539,10 +8539,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -8550,7 +8550,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg006)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -8781,33 +8781,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -8816,16 +8816,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -8859,11 +8859,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -8907,14 +8907,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -8948,17 +8948,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -8990,17 +8990,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -9009,11 +9009,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -9054,22 +9054,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -9078,10 +9078,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -9116,7 +9116,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg007)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -9189,10 +9189,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -9200,7 +9200,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg007)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -9430,33 +9430,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -9465,16 +9465,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -9508,11 +9508,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -9556,14 +9556,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -9597,17 +9597,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -9639,17 +9639,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -9658,11 +9658,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -9703,22 +9703,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -9727,10 +9727,10 @@ struct GAMESTATE {
 /* src/obj_seg008.c:72; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -9765,7 +9765,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg008)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -9838,10 +9838,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -10066,33 +10066,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -10101,16 +10101,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -10144,11 +10144,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -10192,14 +10192,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -10233,17 +10233,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -10275,17 +10275,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -10294,11 +10294,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -10339,22 +10339,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -10363,10 +10363,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -10401,7 +10401,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg009)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -10474,10 +10474,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -10488,12 +10488,12 @@ struct SCREEN_RECT {
 struct SHAPE2D {
     I16 s2d_width;
     I16 s2d_height;
-    unsigned s2d_unk1;
-    unsigned s2d_unk2;
+    unsigned s2d_hotspot_x;
+    unsigned s2d_hotspot_y;
     unsigned s2d_pos_x;
     unsigned s2d_pos_y;
-    U8  s2d_unk3;
-    U8  s2d_unk4;
+    U8  s2d_plane_color0;
+    U8  s2d_plane_color1_bg;
 };
 #pragma pack(pop)
 #endif
@@ -10743,33 +10743,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -10778,16 +10778,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -10821,11 +10821,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -10869,14 +10869,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -10910,17 +10910,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -10952,17 +10952,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -10971,11 +10971,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -11016,22 +11016,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -11040,10 +11040,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -11078,7 +11078,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg016_group)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -11151,10 +11151,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -11162,7 +11162,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg016_group)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -11392,33 +11392,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -11427,16 +11427,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -11470,11 +11470,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -11518,14 +11518,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -11559,17 +11559,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -11601,17 +11601,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -11620,11 +11620,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -11665,22 +11665,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -11689,10 +11689,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -11727,7 +11727,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg027)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -11800,10 +11800,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -11811,7 +11811,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg027)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -12041,33 +12041,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -12076,16 +12076,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -12119,11 +12119,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -12167,14 +12167,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -12208,17 +12208,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -12250,17 +12250,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -12269,11 +12269,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -12314,22 +12314,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -12338,10 +12338,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -12376,7 +12376,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg028)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -12449,10 +12449,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -12460,7 +12460,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg028)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -12690,33 +12690,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -12725,16 +12725,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -12768,11 +12768,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -12816,14 +12816,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -12857,17 +12857,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -12899,17 +12899,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -12918,11 +12918,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -12963,22 +12963,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -12987,10 +12987,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -13025,7 +13025,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg029)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -13098,10 +13098,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -13109,7 +13109,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg029)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -13339,33 +13339,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -13374,16 +13374,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -13417,11 +13417,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -13465,14 +13465,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -13506,17 +13506,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -13548,17 +13548,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -13567,11 +13567,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -13612,22 +13612,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -13636,10 +13636,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -13674,7 +13674,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg031)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -13747,10 +13747,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -13758,7 +13758,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg031)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -13988,33 +13988,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -14023,16 +14023,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -14066,11 +14066,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -14114,14 +14114,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -14155,17 +14155,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -14197,17 +14197,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -14216,11 +14216,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -14261,22 +14261,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -14285,10 +14285,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -14323,7 +14323,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg032_group)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -14396,10 +14396,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -14407,7 +14407,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg032_group)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -14637,33 +14637,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -14672,16 +14672,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -14715,11 +14715,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -14763,14 +14763,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -14804,17 +14804,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -14846,17 +14846,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -14865,11 +14865,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -14910,22 +14910,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -14934,10 +14934,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -14972,7 +14972,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_obj_seg035_group)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -15045,10 +15045,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -15056,7 +15056,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_obj_seg035_group)
 /* src/obj_seg035_group.c:4; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16 width,height,unknown1,unknown2,pos_x,pos_y; U8 unknown3,unknown4,unknown5,unknown6; };
+struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2d_plane_color0,s2d_plane_color1_bg,s2d_plane_color2_flip,s2d_plane_color3_flags; };
 #pragma pack(pop)
 #endif
 
@@ -15286,33 +15286,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -15321,16 +15321,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -15364,11 +15364,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -15412,14 +15412,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -15453,17 +15453,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -15495,17 +15495,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -15514,11 +15514,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -15559,22 +15559,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -15583,10 +15583,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -15621,7 +15621,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_polarRadius3D)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -15694,10 +15694,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -15705,7 +15705,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_polarRadius3D)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -15935,33 +15935,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -15970,16 +15970,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -16013,11 +16013,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -16061,14 +16061,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -16102,17 +16102,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -16144,17 +16144,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -16163,11 +16163,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -16208,22 +16208,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -16232,10 +16232,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -16270,7 +16270,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_preRender_sphere_helper)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -16343,10 +16343,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -16354,7 +16354,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_preRender_sphere_helper)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -16584,33 +16584,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -16619,16 +16619,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -16662,11 +16662,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -16710,14 +16710,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -16751,17 +16751,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -16793,17 +16793,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -16812,11 +16812,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -16857,22 +16857,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -16881,10 +16881,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -16919,7 +16919,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_preRender_sphere_helper2)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -16989,10 +16989,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -17000,7 +17000,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_preRender_sphere_helper2)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -17230,33 +17230,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -17265,16 +17265,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -17308,11 +17308,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -17356,14 +17356,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -17397,17 +17397,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -17439,17 +17439,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -17458,11 +17458,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -17503,22 +17503,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -17527,10 +17527,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -17565,7 +17565,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_preRender_wheel)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -17635,10 +17635,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -17646,7 +17646,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_preRender_wheel)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -17813,7 +17813,7 @@ struct WALLREC { I16S orientation,x,z; };
 #if defined(STUNTS_TU_preRender_wheel)
 /* src/preRender_wheel.c:11; WheelRect layout. */
 #pragma pack(push, 2)
-struct WheelRect { I16 left, top, unused0, unused1, unused2, unused3, x, y; };
+struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 #pragma pack(pop)
 #endif
 
@@ -17876,33 +17876,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -17911,16 +17911,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -17954,11 +17954,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -18002,14 +18002,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -18043,17 +18043,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -18085,17 +18085,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -18104,11 +18104,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -18149,22 +18149,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -18173,10 +18173,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -18211,7 +18211,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_preRender_wheel_helper)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -18281,10 +18281,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -18292,7 +18292,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_preRender_wheel_helper)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -18459,7 +18459,7 @@ struct WALLREC { I16S orientation,x,z; };
 #if defined(STUNTS_TU_preRender_wheel_helper)
 /* src/preRender_wheel_helper.c:6; WheelRect layout. */
 #pragma pack(push, 2)
-struct WheelRect { I16 left, top, unused0, unused1, unused2, unused3, x, y; };
+struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 #pragma pack(pop)
 #endif
 
@@ -18522,33 +18522,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -18557,16 +18557,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -18600,11 +18600,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -18648,14 +18648,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -18689,17 +18689,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -18731,17 +18731,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -18750,11 +18750,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -18795,22 +18795,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -18819,10 +18819,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -18857,7 +18857,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_preRender_wheel_helper2)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -18927,10 +18927,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -18938,7 +18938,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_preRender_wheel_helper2)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -19168,33 +19168,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -19203,16 +19203,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -19246,11 +19246,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -19294,14 +19294,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -19335,17 +19335,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -19377,17 +19377,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -19396,11 +19396,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -19441,22 +19441,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -19465,10 +19465,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -19503,7 +19503,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_preRender_wheel_helper3)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -19576,10 +19576,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -19587,7 +19587,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_preRender_wheel_helper3)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -19817,33 +19817,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -19852,16 +19852,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -19895,11 +19895,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -19943,14 +19943,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -19984,17 +19984,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -20026,17 +20026,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -20045,11 +20045,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -20090,22 +20090,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -20114,10 +20114,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -20152,7 +20152,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_seg017_mouse_whole)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -20225,10 +20225,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -20236,7 +20236,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_seg017_mouse_whole)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -20466,33 +20466,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -20501,16 +20501,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -20544,11 +20544,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -20592,14 +20592,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -20633,17 +20633,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -20675,17 +20675,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -20694,11 +20694,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -20739,22 +20739,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -20763,10 +20763,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -20801,7 +20801,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_seg024_matrot)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -20874,10 +20874,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -20885,7 +20885,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_seg024_matrot)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -21115,33 +21115,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -21150,16 +21150,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -21193,11 +21193,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -21241,14 +21241,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -21282,17 +21282,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -21324,17 +21324,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -21343,11 +21343,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -21388,22 +21388,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -21412,10 +21412,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -21450,7 +21450,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_seg033_mcgawnd)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -21523,10 +21523,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -21534,7 +21534,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_seg033_mcgawnd)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -21767,33 +21767,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -21802,16 +21802,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -21845,11 +21845,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -21893,14 +21893,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -21934,17 +21934,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -21976,17 +21976,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -21995,11 +21995,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -22040,22 +22040,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -22064,10 +22064,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -22102,7 +22102,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_seg034_shape2d_group)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -22175,10 +22175,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -22186,7 +22186,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_seg034_shape2d_group)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -22416,33 +22416,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -22451,16 +22451,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -22494,11 +22494,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -22542,14 +22542,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -22583,17 +22583,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -22625,17 +22625,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -22644,11 +22644,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -22689,22 +22689,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -22713,10 +22713,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -22751,7 +22751,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_sprite_1_unk4)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -22824,10 +22824,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -22835,7 +22835,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_sprite_1_unk4)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -23065,33 +23065,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -23100,16 +23100,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -23143,11 +23143,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -23191,14 +23191,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -23232,17 +23232,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -23274,17 +23274,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -23293,11 +23293,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -23338,22 +23338,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -23362,10 +23362,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -23400,7 +23400,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_sub_3702E)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -23473,10 +23473,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -23484,7 +23484,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_sub_3702E)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -23714,33 +23714,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -23749,16 +23749,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -23792,11 +23792,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -23840,14 +23840,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -23881,17 +23881,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -23923,17 +23923,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -23942,11 +23942,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -23987,22 +23987,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -24011,10 +24011,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -24049,7 +24049,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_toupper)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -24122,10 +24122,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -24133,7 +24133,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_toupper)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -24363,33 +24363,33 @@ struct track_object_info {
 /* src/obj_seg027.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #endif
@@ -24398,16 +24398,16 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 /* src/obj_seg027.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -24441,11 +24441,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -24489,14 +24489,14 @@ struct AudioPayload {           /* 0x30 bytes */
 /* src/obj_seg028.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -24530,17 +24530,17 @@ struct AudioTimer {             /* 0x4C bytes */
 /* src/obj_seg028.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -24572,17 +24572,17 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #endif
@@ -24591,11 +24591,11 @@ struct CARSTATE {
 /* src/obj_seg005.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #endif
@@ -24636,22 +24636,22 @@ struct GAMEINFO {
 /* src/obj_seg000.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #endif
@@ -24660,10 +24660,10 @@ struct GAMESTATE {
 /* src/obj_seg000.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -24698,7 +24698,7 @@ struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #if defined(STUNTS_TU_track_constants_module)
 /* src/obj_seg003.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
@@ -24771,10 +24771,10 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 /* src/obj_seg032_group.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #endif
@@ -24782,7 +24782,7 @@ struct SCREEN_RECT {
 #if defined(STUNTS_TU_track_constants_module)
 /* src/obj_seg000.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
@@ -25004,47 +25004,47 @@ struct track_object_info {
 /* Default layout for header-only checks and new host modules. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 #pragma pack(pop)
@@ -25070,11 +25070,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -25106,14 +25106,14 @@ struct AudioPayload {           /* 0x30 bytes */
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -25139,17 +25139,17 @@ struct AudioTimer {             /* 0x4C bytes */
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
@@ -25169,26 +25169,26 @@ struct CARSTATE {
     U16S  car_speed, car_speed2, car_lastspeed;
     U16S  car_gearratio, car_gearratioshr8;
     I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, field_42, car_demandedGrip;
-    I16S car_surfacegrip_sum, field_48, car_trackdata3_index;
-    I16S car_rc1[4], car_rc2[4], car_rc3[4], car_rc4[4], car_rc5[4];
+    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
+    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
+    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
     struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_vec_unk3, car_vec_unk4, car_vec_unk5;
-    I16S field_B6, field_B8, field_BA;
+    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
+    I16S car_route_has_link, field_B8, field_BA;
     I8 car_is_braking, car_is_accelerating, car_current_gear;
     I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, field_C8;
+    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
     I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 field_CD, field_CE, field_CF;
+    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
 };
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct ENGINESOUND {
-	I16 es_unk0;
+	I16 es_rate_numerator;
 	I16 es_unk2;
 	I16 es_unk4;
-	I16 es_unk6;
-	I8 far *es_names[10];
+	I16 es_resource_state;
+	I8 far *es_resource_slots[10];
 };
 #pragma pack(pop)
 #pragma pack(push, 2)
@@ -25213,30 +25213,30 @@ struct GAMEINFO {
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct GAMESTATE {
-    I32 game_longs1[24], game_longs2[24], game_longs3[24];
-    struct VECTOR game_vec1[2], game_vec3, game_vec4;
-    I16S game_frame_in_sec, game_frames_per_sec;
-    I32 game_travDist;
-    I16S game_frame, game_total_finish, field_144, game_pEndFrame;
+    I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
+    struct VECTOR game_chase_camera_pos[2], game_chase_camera_prev, game_opponent_camera_prev;
+    I16S game_end_delay_elapsed, game_end_delay_limit;
+    I32 game_speed_frame_sum;
+    I16S game_frame, game_total_finish, game_opponent_finish_time, game_pEndFrame;
     I16S game_oEndFrame, game_penalty;
     U16S  game_impactSpeed, game_topSpeed;
     I16S game_jumpCount;
     struct CARSTATE playerstate, opponentstate;
-    I16S field_2F2, field_2F4, game_startcol, game_startcol2;
+    I16S game_player_route_anchor, game_player_last_route_node, game_startcol, game_startcol2;
     I16S game_startrow, game_startrow2;
-    I16S field_2FE[24], field_32E[24], field_35E[24], field_38E[24];
-    I8 field_3BE[48], kevinseed[6], field_3F4, game_inputmode;
-    I8 game_3F6autoLoadEvalFlag, field_3F7[2], field_3F9, field_3FA[48];
-    I8 field_42A, field_42B[24], field_443[24];
-    I8 field_45B, field_45C, field_45D, field_45E, field_45F;
+    I16S game_debris_rot_x[24], game_debris_rot_y[24], game_debris_rot_z[24], game_debris_planar_step[24];
+    I8 game_debris_vertical_step[48], kevinseed[6], game_checkpoint_valid, game_inputmode;
+    I8 game_3F6autoLoadEvalFlag, game_track_camera_index[2], game_opponent_speed_limit, game_track_object_broken[48];
+    I8 game_debris_active, game_debris_shape_index[24], game_debris_origin_kind[24];
+    I8 game_route_recovery_mode, game_route_confirm_count, game_player_guidance, game_opponent_pass_side, field_45F;
 };
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
-    I32 game_travDist;
+    I32 game_speed_frame_sum;
     U16S  game_frame;
     I16S game_total_finish;
-    I16S field_144;
+    I16S game_opponent_finish_time;
     I16S game_pEndFrame;
     I16S game_oEndFrame;
     U16S  game_penalty;
@@ -25255,7 +25255,7 @@ struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #pragma pack(push, 2)
-struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
@@ -25296,14 +25296,14 @@ struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 #pragma pack(pop)
 #pragma pack(push, 2)
-struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct SHAPE3D {

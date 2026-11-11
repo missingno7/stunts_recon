@@ -101,7 +101,7 @@ provides the recorded simulation states, while the capture identifies the view.
 ## Idle CPU use
 
 The native guest previously retained the DOS polling loops at full host speed.
-Thread sampling found `run_menu -> input_checking -> get_kb_or_joy_flags`
+Thread sampling found `select -> input_checking -> get_kb_or_joy_flags`
 as the idle-menu hotspot; the race loop also spun after catching its timer
 position. Modern overlays now yield at stable UI backedges (main, track,
 car and opponent menus, modal dialogs, line entry and the track editor),
@@ -184,7 +184,7 @@ anchors and current synthesis limits.
   outer loop now pumps them on the guest thread.
 - The presenter read live pixels during drawing. Completed framebuffer and
   palette snapshots are now published together.
-- `wheel_update` treated four separate six-vector globals as 24 contiguous
+- `settires` treated four separate six-vector globals as 24 contiguous
   vectors, and two separate centers as six contiguous words. The locked DOS
   layout has 36-byte array strides and six-byte center strides; GCC's native
   layout has padding between these globals. The second front wheel and rear
@@ -265,7 +265,7 @@ original CPU calibration selects full-frame drawing, while the native
 calibration selects incremental drawing; both paths must preserve the scene.
 
 The track chooser and Options dialog exposed a separate text translation
-error. `draw_text_at` had been aliased to the transparent `font_draw_text`.
+error. `movtxy` had been aliased to the transparent `font_draw_text`.
 The frozen former routine writes both foreground and background pixels;
 the latter preserves pixels under clear glyph bits. Retaining both paths
 restores erased letters and inverted selections. The same family now preserves

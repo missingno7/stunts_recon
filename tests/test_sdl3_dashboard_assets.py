@@ -156,7 +156,7 @@ def locked_machine_parse(oracle: OracleImage, archive: bytes,
     single routine and has no DOS allocator table, so the hook supplies only
     that final RETF and captures its paragraph count.
     """
-    parser = SymbolMap().resolve("parse_shape2d")
+    parser = SymbolMap().resolve("shapepack")
     resize = SymbolMap().resolve("mmgr_resize_memory")
     code_segment, entry_ip = parser.far_at(LOAD_SEGMENT)
     helper_ip = parser.end - parser.code_base
@@ -438,7 +438,7 @@ def framebuffer_case(routine_name: str, shape: bytes, *,
 def gear_window_case(shape: bytes, width: int, height: int,
                      x: int, y: int, label: str,
                      asset_index: int) -> tuple[RoutineCase, dict[str, object]]:
-    routine = SymbolMap().resolve("shape2d_op_unk2")
+    routine = SymbolMap().resolve("shape2d_blit_rle_clipped_at")
     code_segment, _ = routine.far_at(LOAD_SEGMENT)
     data_symbols = json.loads((ROOT / "layout" / "data-symbols.json").read_text(
         encoding="utf-8"))["symbols"]
@@ -455,7 +455,7 @@ def gear_window_case(shape: bytes, width: int, height: int,
     target = struct.pack("<6H4s", width, height, 0, 0, 0, 0, bytes(4))
     target += bytes([0x35]) * (width * height)
     case = RoutineCase(
-        label, "shape2d_op_unk2",
+        label, "shape2d_blit_rle_clipped_at",
         args=[SPRITE_SOURCE_OFFSET, SPRITE_SOURCE_SEGMENT, x, y], call="far",
         memory=[
             MemoryWrite(code_segment, descriptor_offset, descriptor),
@@ -536,11 +536,11 @@ def host_source_overlays(directory: Path, gcc: Path) -> list[tuple[Path, Path]]:
     # Use its pinned evidence record in this isolated host-only overlay.
     declarations_header = include_root / "stunts_decls.h"
     declarations_text = declarations_header.read_text(encoding="latin-1")
-    broken_declaration = "extern vector_op_unk2(struct VECTOR* vec);"
+    broken_declaration = "extern norm_zone(struct VECTOR* vec);"
     if broken_declaration in declarations_text:
         declarations_text = declarations_text.replace(
             broken_declaration,
-            "extern char vector_op_unk2(struct VECTOR* vec);")
+            "extern char norm_zone(struct VECTOR* vec);")
         declarations_header.write_text(declarations_text, encoding="latin-1")
 
     import host_probe_declarations as declarations
@@ -560,7 +560,7 @@ def host_source_overlays(directory: Path, gcc: Path) -> list[tuple[Path, Path]]:
         "mmgr_get_chunk_size": "extern uint16_t mmgr_get_chunk_size(void *);",
         "locate_shape_nofatal":
             "extern void *locate_shape_nofatal(void *, const char *);",
-        "mmgr_op_unk": "extern void *mmgr_op_unk(void *);",
+        "mmgr_compact_chunk": "extern void *mmgr_compact_chunk(void *);",
         "parse_shape2d_helper":
             "extern int32_t parse_shape2d_helper(uint8_t *);",
     }
@@ -781,7 +781,7 @@ class Sdl3DashboardAssetTests(unittest.TestCase):
                     clip = (0, 320, mainclip_top, clip_bottom)
                     label = f"{path.name}:{name} op3 mainclip-{suffix}"
                     case, port_case = framebuffer_case(
-                        "shape2d_op_unk3", shape, clip=clip, operation=0,
+                        "shape2d_blit_rle_clipped", shape, clip=clip, operation=0,
                         label=label)
                     port_case.update(asset_index=asset_index, shape_name=name)
                     all_cases.append((case, port_case))
@@ -797,7 +797,7 @@ class Sdl3DashboardAssetTests(unittest.TestCase):
                 ):
                     label = f"{path.name}:roof opunk mainclip-{suffix}"
                     case, port_case = framebuffer_case(
-                        "shape2d_op_unk", roof,
+                        "shape2d_blit_rle", roof,
                         clip=(0, 320, mainclip_top, clip_bottom), operation=1,
                         label=label)
                     port_case.update(asset_index=asset_index, shape_name="roof")
@@ -821,7 +821,7 @@ class Sdl3DashboardAssetTests(unittest.TestCase):
 
             for name in ("ins1", "ins3"):
                 case, port_case = framebuffer_case(
-                    "shape2d_op_unk4", loaded_shape(shapes, name, path.name),
+                    "shape2d_or_rle", loaded_shape(shapes, name, path.name),
                     clip=(0, 320, mainclip_top, MAINCLIP_BOTTOM_REPLAY),
                     operation=4, label=f"{path.name}:{name} op4 gauge overlay")
                 port_case.update(asset_index=asset_index, shape_name=name)
@@ -891,7 +891,7 @@ class Sdl3DashboardAssetTests(unittest.TestCase):
         for case, _ in all_cases:
             expected_result = runner.call(case)
             memory_name = {
-                "shape2d_op_unk2": "gear_window",
+                "shape2d_blit_rle_clipped_at": "gear_window",
                 "shape2d_op_unk5": "instrument_window",
             }.get(case.routine, "vram")
             expected_frames.append(expected_result.memory[memory_name])

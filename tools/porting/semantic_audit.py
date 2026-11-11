@@ -76,9 +76,9 @@ PROTOTYPES = {
     "file_read_nofatal": "void *(*)(const char *, void *)",
     "file_read_fatal": "void *(*)(const char *, void *)",
     "file_find": "char *(*)(const char *)",
-    "mmgr_op_unk": "void *(*)(void *)",
-    "nopsub_37750": "void (*)(uint16_t, void (*)(int16_t))",
-    "vector_op_unk2": "int16_t (*)(struct VECTOR *)",
+    "mmgr_compact_chunk": "void *(*)(void *)",
+    "audio_set_chunk_callback": "void (*)(uint16_t, void (*)(int16_t))",
+    "norm_zone": "int16_t (*)(struct VECTOR *)",
 }
 
 

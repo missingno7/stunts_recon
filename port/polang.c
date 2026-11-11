@@ -28,7 +28,7 @@ static uint16_t negate_word(uint16_t value)
     return (uint16_t)(0u - value);
 }
 
-int16_t polang(int16_t z_arg, int16_t x_arg)
+int16_t intatan(int16_t z_arg, int16_t x_arg)
 {
     uint16_t z = (uint16_t)z_arg;
     uint16_t x = (uint16_t)x_arg;
@@ -111,9 +111,9 @@ static uint16_t polradius2d_divide(uint16_t component, uint16_t scale)
 /* Semantic translation of asm/timer_video_interrupt_runtime.ASM. Its `polang`, sinfast, and
    cosfast calls retain the recovered word ABI; context.py does not currently
    index this name as a strict historical function extent. */
-uint16_t polradius2d(int16_t z_arg, int16_t y_arg)
+uint16_t inthypot(int16_t z_arg, int16_t y_arg)
 {
-    uint16_t angle = (uint16_t)polang(z_arg, y_arg);
+    uint16_t angle = (uint16_t)intatan(z_arg, y_arg);
     uint16_t component;
     uint16_t scale;
 
@@ -123,12 +123,12 @@ uint16_t polradius2d(int16_t z_arg, int16_t y_arg)
         angle = (uint16_t)(0u - (uint16_t)(angle - 0x0200));
 
     if ((int16_t)angle <= 0x0080) {
-        scale = (uint16_t)cosfast(angle);
+        scale = (uint16_t)intcos(angle);
         component = (uint16_t)y_arg;
         if ((int16_t)component < 0)
             component = (uint16_t)(0u - component);
     } else {
-        scale = (uint16_t)sinfast(angle);
+        scale = (uint16_t)intsin(angle);
         component = (uint16_t)z_arg;
         if ((int16_t)component < 0)
             component = (uint16_t)(0u - component);
@@ -141,5 +141,5 @@ uint16_t polradius2d(int16_t z_arg, int16_t y_arg)
    game's 32-bit host-int ABI and preserving its signed 16-bit AX result. */
 int polarRadius2D(int z_arg, int y_arg)
 {
-    return (int)(int16_t)polradius2d((int16_t)z_arg, (int16_t)y_arg);
+    return (int)(int16_t)inthypot((int16_t)z_arg, (int16_t)y_arg);
 }

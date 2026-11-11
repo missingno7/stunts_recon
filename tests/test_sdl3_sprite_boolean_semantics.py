@@ -230,7 +230,7 @@ def compiled_harness(functions: str) -> str:
 #endif
 
 typedef struct PortShape2D {
-    uint16_t width, height, unknown1, unknown2, pos_x, pos_y;
+    uint16_t width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y;
     uint8_t attributes[4];
 } PortShape2D;
 typedef struct PortSprite {

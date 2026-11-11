@@ -89,7 +89,7 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 1 warnings, 0 errors.
 - Existing tags: none
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\heapsort_by_order.c:5:6: warning: no previous prototype for 'heapsortorder' [-Wmissing-prototypes]`
+  - `src\heapsort_by_order.c:5:6: warning: no previous prototype for 'shellsort' [-Wmissing-prototypes]`
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
 ### `src/nopsub_36AF2.c`
@@ -97,7 +97,7 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 1 warnings, 0 errors.
 - Existing tags: none
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\nopsub_36AF2.c:5:10: warning: no previous prototype for 'nopsub_36AF2' [-Wmissing-prototypes]`
+  - `src\nopsub_36AF2.c:5:10: warning: no previous prototype for 'kb_line_edit_noop' [-Wmissing-prototypes]`
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
 ### `src/obj_seg000.c`
@@ -136,8 +136,8 @@ Accepted C sources: 38
   - `src\obj_seg001_complete.c:685:1: warning: function declaration isn't a prototype [-Wstrict-prototypes]`
   - ? 348 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **pointer size assumptions:** compiler diagnostic; 13 distinct warning/error lines
-  - `src\obj_seg001_complete.c:806:27: warning: passing argument 2 of 'track_edge_points' from incompatible pointer type [-Wincompatible-pointer-types]`
-  - `src\obj_seg001_complete.c:868:27: warning: passing argument 2 of 'track_edge_points' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg001_complete.c:806:27: warning: passing argument 2 of 'gettlistpoint' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg001_complete.c:868:27: warning: passing argument 2 of 'gettlistpoint' from incompatible pointer type [-Wincompatible-pointer-types]`
   - `src\obj_seg001_complete.c:1624:30: warning: assignment to 'char *' from incompatible pointer type 'char (*)[62]' [-Wincompatible-pointer-types]`
   - ? 10 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer
@@ -162,8 +162,8 @@ Accepted C sources: 38
   - ? 250 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **pointer size assumptions:** compiler diagnostic; 7 distinct warning/error lines
   - `src\obj_seg003.c:803:31: warning: passing argument 3 of 'rectsorttop' from incompatible pointer type [-Wincompatible-pointer-types]`
-  - `src\obj_seg003.c:1726:145: warning: passing argument 3 of 'wheel_update' from incompatible pointer type [-Wincompatible-pointer-types]`
-  - `src\obj_seg003.c:1779:147: warning: passing argument 3 of 'wheel_update' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg003.c:1726:145: warning: passing argument 3 of 'settires' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg003.c:1779:147: warning: passing argument 3 of 'settires' from incompatible pointer type [-Wincompatible-pointer-types]`
   - ? 4 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **segment arithmetic:** explicit segment/offset helper or spelling
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer
@@ -193,7 +193,7 @@ Accepted C sources: 38
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 17 distinct warning/error lines
-  - `src\obj_seg004.c:128:6: warning: no previous prototype for 'build_obj' [-Wmissing-prototypes]`
+  - `src\obj_seg004.c:128:6: warning: no previous prototype for 'getpinfo' [-Wmissing-prototypes]`
   - `src\obj_seg004.c:844:1: warning: label 'position_wall' defined but not used [-Wunused-label]`
   - `src\obj_seg004.c:132:14: warning: variable 'angAngle' set but not used [-Wunused-but-set-variable]`
   - ? 14 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
@@ -215,7 +215,7 @@ Accepted C sources: 38
 - **other compiler diagnostic:** compiler diagnostic; 7 distinct warning/error lines
   - `src\obj_seg005.c:61:32: warning: ISO C does not allow extra ';' outside of a function [-Wpedantic]`
   - `src\obj_seg005.c:1063:6: warning: no previous prototype for 'initialize_unknown' [-Wmissing-prototypes]`
-  - `src\obj_seg005.c:1269:10: warning: no previous prototype for 'update_camera_target' [-Wmissing-prototypes]`
+  - `src\obj_seg005.c:1269:10: warning: no previous prototype for 'movehelicopters' [-Wmissing-prototypes]`
   - ? 4 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
@@ -225,7 +225,7 @@ Accepted C sources: 38
 - Existing tags: PLATFORM(memory)@137,138; PLATFORM(video)@637,667,671,674,679 (+3); PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization.@23; PORT: This record contains a near pointer; MSC pointer width and default 2-byte packing determine its offsets.@34; PORT: This record is a 16-bit packed renderer structure; preserve MSC field alignment and signed widths.@44; PORT: signed right shift uses the target arithmetic-shift behavior.@278,279,280,333 (+2)
 - **implicit int widths:** bare int/unsigned int spelling (host int is 32-bit; DOS MSC int is 16-bit); 76 distinct warning/error lines
   - `src\obj_seg006.c:54:16: warning: conflicting types for built-in function 'abs'; expected 'int(int)' [-Wbuiltin-declaration-mismatch]`
-  - `src\obj_seg006.c:133:1: warning: type defaults to 'int' in declaration of 'vector_op_unk2' [-Wimplicit-int]`
+  - `src\obj_seg006.c:133:1: warning: type defaults to 'int' in declaration of 'norm_zone' [-Wimplicit-int]`
   - `src\obj_seg006.c:9:33: warning: overflow in conversion from 'int' to 'int16_t' {aka 'short int'} changes value from '65535' to '-1' [-Woverflow]`
   - ? 73 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer
@@ -234,8 +234,8 @@ Accepted C sources: 38
   - `src\obj_seg006.c:107:11: warning: 'poly_padding_bytes' defined but not used [-Wunused-variable]`
 - **other compiler diagnostic:** compiler diagnostic; 9 distinct warning/error lines
   - `src\obj_seg006.c:133:1: warning: data definition has no type or storage class`
-  - `src\obj_seg006.c:136:6: warning: no previous prototype for 'initialize_polyinfo' [-Wmissing-prototypes]`
-  - `src\obj_seg006.c:146:6: warning: no previous prototype for 'copy_material_list_pointers' [-Wmissing-prototypes]`
+  - `src\obj_seg006.c:136:6: warning: no previous prototype for 'INIT_MATRIX' [-Wmissing-prototypes]`
+  - `src\obj_seg006.c:146:6: warning: no previous prototype for 'INIT_PALETTE' [-Wmissing-prototypes]`
   - ? 6 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
@@ -285,8 +285,8 @@ Accepted C sources: 38
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 65 distinct warning/error lines
   - `src\obj_seg008.c:142:8: warning: no previous prototype for 'point_in_rectangle' [-Wmissing-prototypes]`
-  - `src\obj_seg008.c:179:10: warning: no previous prototype for 'restore_mouse_sprite' [-Wmissing-prototypes]`
-  - `src\obj_seg008.c:205:9: warning: no previous prototype for 'show_dialog' [-Wmissing-prototypes]`
+  - `src\obj_seg008.c:179:10: warning: no previous prototype for 'restoreboxwindow' [-Wmissing-prototypes]`
+  - `src\obj_seg008.c:205:9: warning: no previous prototype for 'messagebox' [-Wmissing-prototypes]`
   - ? 62 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
@@ -310,8 +310,8 @@ Accepted C sources: 38
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 5 distinct warning/error lines
   - `src\obj_seg009.c:177:6: warning: no previous prototype for 'load_tracks_menu_shapes' [-Wmissing-prototypes]`
-  - `src\obj_seg009.c:931:6: warning: no previous prototype for 'preRender_icons' [-Wmissing-prototypes]`
-  - `src\obj_seg009.c:972:6: warning: no previous prototype for 'draw_2DtrackMap' [-Wmissing-prototypes]`
+  - `src\obj_seg009.c:931:6: warning: no previous prototype for 'drawpiecebox' [-Wmissing-prototypes]`
+  - `src\obj_seg009.c:972:6: warning: no previous prototype for 'drawtrackbox' [-Wmissing-prototypes]`
   - ? 2 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: add/review `PORT:` coverage for signed shift
 
@@ -321,8 +321,8 @@ Accepted C sources: 38
 - Existing tags: PLATFORM(file)@6,8,14,18,26 (+3)
 - **other compiler diagnostic:** compiler diagnostic; 4 distinct warning/error lines
   - `src\obj_seg016_group.c:7:6: warning: no previous prototype for 'locate_many_resources' [-Wmissing-prototypes]`
-  - `src\obj_seg016_group.c:15:10: warning: no previous prototype for 'nopsub_367E4' [-Wmissing-prototypes]`
-  - `src\obj_seg016_group.c:27:10: warning: no previous prototype for 'nopsub_36826' [-Wmissing-prototypes]`
+  - `src\obj_seg016_group.c:15:10: warning: no previous prototype for 'file_find_shapes_optional' [-Wmissing-prototypes]`
+  - `src\obj_seg016_group.c:27:10: warning: no previous prototype for 'file_find_sounds_required' [-Wmissing-prototypes]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
@@ -345,7 +345,7 @@ Accepted C sources: 38
 - **other compiler diagnostic:** compiler diagnostic; 35 distinct warning/error lines
   - `src\obj_seg027.c:132:16: warning: no previous prototype for 'init_audio_resources' [-Wmissing-prototypes]`
   - `src\obj_seg027.c:172:10: warning: no previous prototype for 'load_audio_finalize' [-Wmissing-prototypes]`
-  - `src\obj_seg027.c:197:10: warning: no previous prototype for 'audio_unk' [-Wmissing-prototypes]`
+  - `src\obj_seg027.c:197:10: warning: no previous prototype for 'audio_pause_playback' [-Wmissing-prototypes]`
   - ? 32 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: add/review `PORT:` coverage for signed shift
 
@@ -376,7 +376,7 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 8 warnings, 0 errors.
 - Existing tags: PORT: Huge-pointer addition must preserve segment:offset normalization within this resource.@61
 - **implicit int widths:** compiler diagnostic; 4 distinct warning/error lines
-  - `src\obj_seg029.c:3:16: warning: conflicting types for built-in function 'toupper'; expected 'int(int)' [-Wbuiltin-declaration-mismatch]`
+  - `src\obj_seg029.c:3:16: warning: conflicting types for built-in function 'cap'; expected 'int(int)' [-Wbuiltin-declaration-mismatch]`
   - `src\obj_seg029.c:39:31: warning: conversion to 'uint8_t' {aka 'unsigned char'} from 'char' may change the sign of the result [-Wsign-conversion]`
   - `src\obj_seg029.c:59:46: warning: conversion to 'int16_t' {aka 'short int'} from 'uint16_t' {aka 'short unsigned int'} may change the sign of the result [-Wsign-conversion]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
@@ -433,8 +433,8 @@ Accepted C sources: 38
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 3 distinct warning/error lines
-  - `src\obj_seg035_group.c:31:11: warning: no previous prototype for 'file_load_shape2d_res_fatal' [-Wmissing-prototypes]`
-  - `src\obj_seg035_group.c:39:11: warning: no previous prototype for 'file_load_shape2d_res_nofatal' [-Wmissing-prototypes]`
+  - `src\obj_seg035_group.c:31:11: warning: no previous prototype for 'loadandshapepack' [-Wmissing-prototypes]`
+  - `src\obj_seg035_group.c:39:11: warning: no previous prototype for 'loadandshapepackz' [-Wmissing-prototypes]`
   - `src\obj_seg035_group.c:92:9: warning: unused variable 'baseOff' [-Wunused-variable]`
 - Tagging follow-up: add/review `PORT:` coverage for signed shift
 
@@ -444,7 +444,7 @@ Accepted C sources: 38
 - Existing tags: none
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\polarRadius3D.c:7:5: warning: no previous prototype for 'polarRadius3D' [-Wmissing-prototypes]`
+  - `src\polarRadius3D.c:7:5: warning: no previous prototype for 'int3dhypot' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/preRender_sphere_helper.c`
@@ -527,9 +527,9 @@ Accepted C sources: 38
 - Existing tags: none
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 3 distinct warning/error lines
-  - `src\seg024_matrot.c:12:6: warning: no previous prototype for 'mat_rot_x' [-Wmissing-prototypes]`
-  - `src\seg024_matrot.c:24:6: warning: no previous prototype for 'matroty' [-Wmissing-prototypes]`
-  - `src\seg024_matrot.c:36:6: warning: no previous prototype for 'mat_rot_z' [-Wmissing-prototypes]`
+  - `src\seg024_matrot.c:12:6: warning: no previous prototype for 'xformx' [-Wmissing-prototypes]`
+  - `src\seg024_matrot.c:24:6: warning: no previous prototype for 'xformy' [-Wmissing-prototypes]`
+  - `src\seg024_matrot.c:36:6: warning: no previous prototype for 'xformz' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/seg033_mcgawnd.c`
@@ -559,7 +559,7 @@ Accepted C sources: 38
 - **implicit int widths:** compiler diagnostic; 1 distinct warning/error lines
   - `src\sprite_1_unk4.c:12:13: warning: conversion from 'int' to 'int16_t' {aka 'short int'} may change value [-Wconversion]`
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\sprite_1_unk4.c:8:10: warning: no previous prototype for 'sprite_1_unk4' [-Wmissing-prototypes]`
+  - `src\sprite_1_unk4.c:8:10: warning: no previous prototype for 'sprite_draw_rect_outline' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for implicit int widths
 
 ### `src/sub_3702E.c`
@@ -570,7 +570,7 @@ Accepted C sources: 38
   - `src\sub_3702E.c:14:13: warning: conversion from 'int' to 'int16_t' {aka 'short int'} may change value [-Wconversion]`
   - `src\sub_3702E.c:15:14: warning: conversion from 'int' to 'int16_t' {aka 'short int'} may change value [-Wconversion]`
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\sub_3702E.c:9:6: warning: no previous prototype for 'draw_rect_outline' [-Wmissing-prototypes]`
+  - `src\sub_3702E.c:9:6: warning: no previous prototype for 'xorbox' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for implicit int widths
 
 ### `src/toupper.c`
@@ -578,9 +578,9 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 2 warnings, 0 errors.
 - Existing tags: none
 - **implicit int widths:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\toupper.c:5:5: warning: conflicting types for built-in function 'toupper'; expected 'int(int)' [-Wbuiltin-declaration-mismatch]`
+  - `src\toupper.c:5:5: warning: conflicting types for built-in function 'cap'; expected 'int(int)' [-Wbuiltin-declaration-mismatch]`
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\toupper.c:5:5: warning: no previous prototype for 'toupper' [-Wmissing-prototypes]`
+  - `src\toupper.c:5:5: warning: no previous prototype for 'cap' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for implicit int widths
 
 ### `src/track_constants_module.c`

@@ -196,7 +196,7 @@ class PortLibrary:
     def call_sprite_1_unk3(self, pixels: bytes, width: int, height: int,
                            x: int, y: int, phase: int) -> None:
         if self.dll is None:
-            response = self._worker_call("sprite_1_unk3",
+            response = self._worker_call("sprite_blit_dither_phase",
                                          pixels=base64.b64encode(pixels).decode("ascii"),
                                          width=width, height=height, x=x, y=y,
                                          phase=phase)
@@ -242,7 +242,7 @@ class PortLibrary:
         else:
             self.reset_frame(initial)
             if not self._fill(*args):
-                raise HarnessError("port sprite_1_unk call failed")
+                raise HarnessError("port drawrect call failed")
             frame = self.frame()
         return CallResult({}, 0, {"vram": frame}, 0, "cdecl")
 

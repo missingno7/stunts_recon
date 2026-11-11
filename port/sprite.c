@@ -251,7 +251,7 @@ void sprite_set_1_from_argptr(const PortSprite *sprite)
     sprite_setup1_from_arg_pointer(sprite);
 }
 
-void sprite_copy_2_to_1(void)
+void displaywindow(void)
 {
     sprite_setup1_from_arg_pointer(&sprite2);
 }
@@ -260,7 +260,7 @@ void sprite_copy_2_to_1_2(void)
 {
     /* Active C source sprite_copy_2_to_1_2 calls sprcopy2to12, whose accepted
        body selects sprite2 through sprite_setup1_from_arg_pointer. */
-    sprite_copy_2_to_1();
+    displaywindow();
 }
 
 void sprite_copy_arg_to_both(const PortSprite *sprites)
@@ -436,7 +436,7 @@ static int16_t sub_signed_words(int16_t left, int16_t right)
    sub_35B76 migration entry, docs/porting/asm-migration.md:368). Preserve its
    left/right/top/absolute-height clipping, row-table addressing and XOR
    color operation; the DOS ES:DI window maps to the active host sprite. */
-void draw_filled_rect(int16_t x, int16_t y, int16_t width,
+void xorrectc(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color)
 {
     size_t extent;
@@ -606,8 +606,8 @@ static int16_t sprite_header_relative(int16_t coordinate, uint16_t origin)
 void sprite_putimage_and_alt2(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
-        compose_boolean(shape, sprite_header_relative(x, shape->unknown1),
-                        sprite_header_relative(y, shape->unknown2), 1);
+        compose_boolean(shape, sprite_header_relative(x, shape->s2d_hotspot_x),
+                        sprite_header_relative(y, shape->s2d_hotspot_y), 1);
 }
 
 void sprite_putimage_or(const PortShape2D *shape, int16_t x, int16_t y)
@@ -619,8 +619,8 @@ void sprite_putimage_or(const PortShape2D *shape, int16_t x, int16_t y)
 void sprite_putimage_or_alt(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
-        compose_boolean(shape, sprite_header_relative(x, shape->unknown1),
-                        sprite_header_relative(y, shape->unknown2), 0);
+        compose_boolean(shape, sprite_header_relative(x, shape->s2d_hotspot_x),
+                        sprite_header_relative(y, shape->s2d_hotspot_y), 0);
 }
 
 void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y)
@@ -704,7 +704,7 @@ static void shape2d_draw_runs(const PortShape2D *shape,
         port_video_publish(publication_reason);
 }
 
-void shape2d_op_unk(const PortShape2D *shape)
+void shape2d_blit_rle(const PortShape2D *shape)
 {
     if (shape != NULL)
         shape2d_draw_runs(shape, shape->pos_x, shape->pos_y,
@@ -713,7 +713,7 @@ void shape2d_op_unk(const PortShape2D *shape)
 
 /* The 30-byte seg012:0x23DE2 entry loads explicit x/y arguments and jumps
    into the shared run decoder at 0x23E1B. */
-void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y)
+void shape2d_blit_rle_at(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
         shape2d_draw_runs(shape, (uint16_t)x, (uint16_t)y,
@@ -725,7 +725,7 @@ void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y)
    literal bytes. The sign selects the loop form. The
    shape's declared width/height establish source coordinates, while DOS
    clip bounds select destination writes. */
-void shape2d_op_unk3(const PortShape2D *shape)
+void shape2d_blit_rle_clipped(const PortShape2D *shape)
 {
     size_t source_extent;
     size_t destination_extent;
@@ -799,7 +799,7 @@ void shape2d_op_unk3(const PortShape2D *shape)
    shape2d_op_unk3 (seg012:0x54B2). Positive signed run counts repeat the
    following colour byte; negative counts copy the following literal bytes.
    Decode every source row even when clipping hides its left or right edge. */
-void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y)
+void shape2d_blit_rle_clipped_at(const PortShape2D *shape, int16_t x, int16_t y)
 {
     size_t source_extent;
     size_t destination_extent;
@@ -947,7 +947,7 @@ void sprputimage(const PortShape2D *shape)
    phase increment for each destination row. The routine writes directly to
    the active sprite segment, which is the MCGA video aperture for the intro
    transition. */
-void sprite_1_unk3(const PortShape2D *shape, int16_t phase)
+void sprite_blit_dither_phase(const PortShape2D *shape, int16_t phase)
 {
     static const uint8_t row_pattern[12] = {
         11, 5, 8, 2, 10, 4, 7, 1, 9, 3, 6, 0
@@ -1948,7 +1948,7 @@ void preRender_patterned(int16_t pattern_bits, int16_t color,
     raster_polygon(color, point_count, points, RASTER_FILL_PATTERN, 1);
 }
 
-void preRender_unk(int16_t pattern_bits, int16_t background_color,
+void sprite_two_color_poly_list(int16_t pattern_bits, int16_t background_color,
                    int16_t foreground_color, int16_t point_count,
                    const int16_t *points)
 {
@@ -2036,7 +2036,7 @@ static void sphere_build_ring(const int16_t source[6], int16_t output[64])
 /* Port of asm/vector_sphere_sprite_ops.ASM:_preRender_sphere. The 39 small
    sphere profiles and the large-sphere 32-point fallback are anchored by the
    corresponding DATA table and preRender_sphere_helper2 C translation. */
-void preRender_sphere(int16_t center_x, int16_t center_y, int16_t size,
+void drawcircle(int16_t center_x, int16_t center_y, int16_t size,
                       int16_t color)
 {
     uint16_t raw_size = (uint16_t)size;
@@ -2796,13 +2796,13 @@ line_clip_right:
 
 /* Source callers pass 16-bit coordinates in the DOS ABI. Host `unsigned`
    arguments are 32-bit, so only the low word is interpreted as a coordinate. */
-unsigned draw_line_related(unsigned x0, unsigned y0, unsigned x1,
+unsigned clipline(unsigned x0, unsigned y0, unsigned x1,
                            unsigned y1, int *record)
 {
     return draw_line_record(x0, y0, x1, y1, record, 1);
 }
 
-unsigned draw_line_related_alt(unsigned x0, unsigned y0, unsigned x1,
+unsigned slopeline(unsigned x0, unsigned y0, unsigned x1,
                                unsigned y1, int *record)
 {
     return draw_line_record(x0, y0, x1, y1, record, 0);

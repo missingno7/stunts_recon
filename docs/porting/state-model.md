@@ -4,12 +4,12 @@ This is the porting summary of the accepted global-state inventory. Names in `la
 
 ## Replay checkpoint: `GAMESTATE`
 
-The live replay checkpoint `core` is **0x460 bytes (1,120 bytes)**. `update_gamestate` copies the full aggregate to the checkpoint ring; `restore_gamestate` restores the full aggregate and reinitializes the Kevin PRNG from the included seed. The complete extent is authoritative, including fields still named by offsets.
+The live replay checkpoint `core` is **0x460 bytes (1,120 bytes)**. `movesim` copies the full aggregate to the checkpoint ring; `gotosim` restores the full aggregate and reinitializes the Kevin PRNG from the included seed. The complete extent is authoritative, including fields still named by offsets.
 
 | Offset range | Contents | Notes |
 |---|---|---|
-| `0x000?0x11F` | `game_longs1[24]`, `game_longs2[24]`, `game_longs3[24]` | Three 24-element `long` world-position/history arrays. |
-| `0x120?0x137` | Four short `VECTOR`s | `game_vec1[2]` plus the two remaining vector slots. |
+| `0x000?0x11F` | `game_debris_x[24]`, `game_debris_y[24]`, `game_debris_z[24]` | Three 24-element `long` world-position/history arrays. |
+| `0x120?0x137` | Four short `VECTOR`s | `game_chase_camera_pos[2]` plus the two remaining vector slots. |
 | `0x138?0x151` | Frame/timing, travel-distance, finish, penalty, speed and jump fields | `game_frame` is at `0x140`; the legacy counters remain integer fields. |
 | `0x152?0x221` | Player `CARSTATE` (0xD0 bytes) | Embedded simulation state. |
 | `0x222?0x2F1` | Opponent `CARSTATE` (0xD0 bytes) | Embedded simulation state. |
@@ -48,8 +48,8 @@ and `game_camera_buttons_y2` are four 9-element `int16_t` arrays (18 bytes
 each) in `obj_seg005` `_DATA`, at load addresses `0x2EA08`, `0x2EA1A`,
 `0x2EA2C`, and `0x2EA3E` (DGROUP offsets `0x3298`, `0x32AA`, `0x32BC`,
 `0x32CE`). Their starts are 18 bytes apart with no padding.
-`loop_game` passes `game_camera_buttons_count[cammd] + 1` to
-`mouse_multi_hittest`; the count table reaches 8, so the hit-test covers
+`doreplay` passes `game_camera_buttons_count[cammd] + 1` to
+`mousecursor`; the count table reaches 8, so the hit-test covers
 indices 0 through 8. Direct drawing and camera-mode code also reads indices 7
 and 8. The old 8/8/7/7 dimensions came from interior word labels and are not
 allocation sizes. These arrays are presentation/menu state, outside the replay
@@ -83,7 +83,7 @@ The 11 unknown-role rows have now been triaged against accepted access evidence:
 | collision_response_offsets[4] | Static initializer, no accepted direct reader/writer found; retain as unknown. |
 | unused_40E73, track3_gap[2], framerate_pad_0, extra_rclist4[2], spare_td22_1, gap_trackrow_1 | No accepted direct access found; names are reconstruction aliases and do not prove padding or runtime meaning. Keep raw/unclassified. |
 
-`postable` and `z_ctr_pos` are deterministic lookup tables rebuilt from the 30-row index; they need not be serialized as replay checkpoint state. Seven other globals (`collision_response_offsets`, `unused_40E73`, `track3_gap`, `framerate_pad_0`, `extra_rclist4`, `spare_td22_1`, and `gap_trackrow_1`) remain wholly unclassified. `g_corkscrew_type_flag` is a separate question: accepted C writes it during `build_obj`, but no accepted consumer has been identified.
+`postable` and `z_ctr_pos` are deterministic lookup tables rebuilt from the 30-row index; they need not be serialized as replay checkpoint state. Seven other globals (`camerasizeinfo`, `unused_40E73`, `track3_gap`, `framerate_pad_0`, `extra_rclist4`, `spare_td22_1`, and `gap_trackrow_1`) remain wholly unclassified. `g_corkscrew_type_flag` is a separate question: accepted C writes it during `getpinfo`, but no accepted consumer has been identified.
 
 ### High-value physical-unit follow-up order
 

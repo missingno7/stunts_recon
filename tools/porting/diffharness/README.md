@@ -29,7 +29,7 @@ case the package uses `C:\msys64\mingw32\bin\python.exe` as a small 32-bit
 `ctypes` worker; set `DIFFHARNESS_PYTHON32` if it lives elsewhere. When Python
 is already 32-bit, the DLL loads directly through `ctypes`.
 
-The passing calls cover `sprite_1_unk3`, `draw_filled_rect`, `sprite_1_unk`,
+The passing calls cover `sprite_blit_dither_phase`, `xorrectc`, `drawrect`,
 both raw icon mask/fill operations, both signed-run shape mask/fill operations,
 `clear_rect`, and `mulscl`. Every renderer case compares all 65,536 bytes at
 A000:0000 after starting with the same framebuffer contents. The negative

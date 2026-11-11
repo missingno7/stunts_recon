@@ -45,7 +45,7 @@ OP_FONT_OP = 3
 OP_FONT_OP2 = 4
 RENDER_ENTRY = {
     OP_FONT_DRAW: "font_draw_text",
-    OP_DRAW_TEXT_AT: "draw_text_at",
+    OP_DRAW_TEXT_AT: "movtxy",
 }
 FIXED_FRAME = bytes(
     (i * 17 + (i >> 8) * 3 + 11) & 0xFF for i in range(VIDEO_BYTES)
@@ -235,8 +235,8 @@ class FontOracleHarness:
         prepared_font = self.machine_setup(font, foreground, background)
         routine_name = {
             OP_SETUP: None,
-            OP_FONT_OP: "font_op",
-            OP_FONT_OP2: "font_op2",
+            OP_FONT_OP: "textnpixels",
+            OP_FONT_OP2: "textpixels",
         }.get(operation, RENDER_ENTRY.get(operation))
         if routine_name is None:
             unchanged = frame_seed() if initial_frame is None else initial_frame
@@ -377,7 +377,7 @@ class Sdl3FontOracleTests(unittest.TestCase):
                         for row in range(9, 65) for column in range(7, 220)),
                     f"{name} transparent path did not write beyond its restrictive clip",
                 )
-            with self.subTest(font=name, path="draw_text_at"):
+            with self.subTest(font=name, path="movtxy"):
                 output = self.compare_case(
                     f"{name} opaque", OP_DRAW_TEXT_AT, self.fonts[name],
                     builtin=builtin, foreground=background, background=foreground,

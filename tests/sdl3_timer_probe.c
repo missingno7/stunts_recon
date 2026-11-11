@@ -55,7 +55,7 @@ static void callback_remove_b(void)
 static void callback_wait_tick(void)
 {
     s_events[s_event_count++] = 'W';
-    timer_get_counter_unk(1);
+    timedwait(1);
     s_events[s_event_count++] = 'w';
 }
 
@@ -217,7 +217,7 @@ int main(void)
 
     port_timer_test_seed_counter(0xfffffffeu);
     port_timer_copy_counter_words(4, 0);
-    ok &= check(timer_compare_dx() == 1,
+    ok &= check(testticks() == 1,
                 "DOS unsigned counter comparison treats wrapped target as passed");
     raw_irq(1);
     ok &= check(timer_get_counter() == 0xffffffffu,
@@ -227,12 +227,12 @@ int main(void)
                 "callback counter carries through 32-bit wrap");
 
     SDL_SetAtomicInt(&s_elapsed_tick_count, 0x00020000);
-    set_add_value(0x100);
+    setbiosticks(0x100);
     SDL_SetAtomicInt(&s_elapsed_tick_count, 0x00030000);
-    ok &= check(poll_input_abort() == 0,
+    ok &= check(testbiosticks() == 0,
                 "input deadline retains original separate high/low comparison");
     SDL_SetAtomicInt(&s_elapsed_tick_count, 0x00030100);
-    ok &= check(poll_input_abort() == 1,
+    ok &= check(testbiosticks() == 1,
                 "input deadline completes when both words reach target");
 
     ok &= check_idle_wakes();

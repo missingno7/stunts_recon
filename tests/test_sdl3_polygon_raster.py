@@ -53,11 +53,11 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
              "pattern 0xaa55 197", flat_points),
             ("preRender_patterned", "pattern", (0x0000, 197),
              "pattern 0x0000 197", flat_points),
-            ("preRender_unk", "unknown", (0xFFFF, 29, 31),
+            ("sprite_two_color_poly_list", "unknown", (0xFFFF, 29, 31),
              "unknown 0xffff 29 31", flat_points),
-            ("preRender_unk", "unknown", (0xAA55, 29, 31),
+            ("sprite_two_color_poly_list", "unknown", (0xAA55, 29, 31),
              "unknown 0xaa55 29 31", flat_points),
-            ("preRender_unk", "unknown", (0x0000, 29, 31),
+            ("sprite_two_color_poly_list", "unknown", (0x0000, 29, 31),
              "unknown 0x0000 29 31", flat_points),
             ("preRender_default_alt", "alt", (39,), "alt 39", (
                 197, 36, 196, 37, 196, 38, 195, 39, 195, 42, 195, 45,
@@ -96,7 +96,7 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
             )),
             ("preRender_patterned", "pattern", (0x0000, 197),
              "pattern 0x0000 197", (100, 20, 100, 22, 100, 30, 100, 25)),
-            ("preRender_unk", "unknown", (0xAA55, 29, 31),
+            ("sprite_two_color_poly_list", "unknown", (0xAA55, 29, 31),
              "unknown 0xaa55 29 31", (100, 20, 100, 22, 100, 30, 100, 25)),
             # Clipped Audi/LM002 overlays isolated from the stock pose sweep.
             ("preRender_default", "default", (64,), "default 64", (

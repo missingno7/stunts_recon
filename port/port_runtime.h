@@ -33,8 +33,8 @@ typedef struct PortMemoryStats {
 typedef struct PortShape2D {
     uint16_t width;
     uint16_t height;
-    uint16_t unknown1;
-    uint16_t unknown2;
+    uint16_t s2d_hotspot_x;
+    uint16_t s2d_hotspot_y;
     uint16_t pos_x;
     uint16_t pos_y;
     uint8_t attributes[4];
@@ -124,7 +124,7 @@ void *port_far_resolve(PortFarPtr pointer, size_t extent);
 int port_far_from_host(const void *pointer, PortFarPtr *address_out,
                        size_t *remaining_out);
 PortMemoryStats port_memory_stats(void);
-uint16_t mmgr_get_ofs_diff(void);
+uint16_t unlockedmemory(void);
 int port_memory_extent(const void *pointer, size_t *remaining_out);
 int port_memory_resize(void *pointer, size_t size);
 void *mmgr_alloc_pages(const char *name, uint16_t paragraphs);
@@ -176,7 +176,7 @@ PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color);
 void sprite_free_window(void *window);
 void sprite_setup1_from_arg_pointer(const PortSprite *sprite);
 void sprite_set_1_from_argptr(const PortSprite *sprite);
-void sprite_copy_2_to_1(void);
+void displaywindow(void);
 void sprite_copy_2_to_1_2(void);
 void sprite_copy_arg_to_both(const PortSprite *sprites);
 void sprite_copy_both_to_arg(PortSprite *sprites);
@@ -184,16 +184,16 @@ void sprite_clear_1_color(uint8_t color);
 void sprite_clear_shape(PortShape2D *shape);
 void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color);
-void draw_filled_rect(int16_t x, int16_t y, int16_t width,
+void xorrectc(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color);
 void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom);
 void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_shape_to_1_alt(const PortShape2D *shape);
-void shape2d_op_unk(const PortShape2D *shape);
-void shape2d_op_unknown5(const PortShape2D *shape, int16_t x, int16_t y);
+void shape2d_blit_rle(const PortShape2D *shape);
+void shape2d_blit_rle_at(const PortShape2D *shape, int16_t x, int16_t y);
 int16_t port_parse_shape2d_helper3(const uint8_t *source, uint16_t max_pixels);
-void shape2d_op_unk2(const PortShape2D *shape, int16_t x, int16_t y);
-void shape2d_op_unk3(const PortShape2D *shape);
+void shape2d_blit_rle_clipped_at(const PortShape2D *shape, int16_t x, int16_t y);
+void shape2d_blit_rle_clipped(const PortShape2D *shape);
 void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y);
 void sprite_putimage_and(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_putimage_and_alt(const PortShape2D *shape, int16_t x, int16_t y);
@@ -201,7 +201,7 @@ void sprite_putimage_and_alt2(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_putimage_or(const PortShape2D *shape, int16_t x, int16_t y);
 void sprite_putimage_or_alt(const PortShape2D *shape, int16_t x, int16_t y);
 void sprputimage(const PortShape2D *shape);
-void sprite_1_unk3(const PortShape2D *shape, int16_t phase);
+void sprite_blit_dither_phase(const PortShape2D *shape, int16_t phase);
 void sprite_blit_to_video(PortSprite *window, uint16_t mode);
 void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color);
 void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color);
@@ -218,27 +218,27 @@ void set_fontdefseg(const void *font_data);
 void port_line_input_select_font(const void *font_data);
 void font_setup_unknown(uint16_t foreground, uint16_t background);
 void font_draw_text(const char *text, int16_t x, int16_t y);
-void draw_text_at(const char *text, int16_t x, int16_t y);
-int16_t font_op(const char *text, uint16_t count);
-int16_t font_op2(const char *text);
-int16_t sinfast(uint16_t angle);
-int16_t cosfast(uint16_t angle);
+void movtxy(const char *text, int16_t x, int16_t y);
+int16_t textnpixels(const char *text, uint16_t count);
+int16_t textpixels(const char *text);
+int16_t intsin(uint16_t angle);
+int16_t intcos(uint16_t angle);
 int16_t mulscl(int16_t left, int16_t right);
-int16_t polang(int16_t z, int16_t x);
-uint16_t polradius2d(int16_t z, int16_t y);
+int16_t intatan(int16_t z, int16_t x);
+uint16_t inthypot(int16_t z, int16_t y);
 int polarRadius2D(int z, int y);
-void vector_to_point(const int16_t *vector, int16_t *point);
-void vector_op_unk(int16_t *first, int16_t *second, int16_t *output,
+void projectp(const int16_t *vector, int16_t *point);
+void zclipline(int16_t *first, int16_t *second, int16_t *output,
                    int16_t target_depth);
-void mat_multiply(const int16_t *right_matrix, const int16_t *left_matrix,
+void transmult(const int16_t *right_matrix, const int16_t *left_matrix,
                   int16_t *output_matrix);
 void mat_invert(int16_t *input_matrix, int16_t *output_matrix);
 void set_projection(int16_t x_angle, int16_t y_angle,
                     int16_t width, int16_t height);
-int16_t projectiondata9_times_ratio(int16_t factor, int16_t divisor);
+int16_t thicknessxp(int16_t factor, int16_t divisor);
 void mat_vec(const int16_t *input, const int16_t *matrix,
              int16_t *output);
-uint16_t update_rpm_from_speed(uint16_t current_rpm, uint16_t speed,
+uint16_t calcrpm(uint16_t current_rpm, uint16_t speed,
                                uint16_t gear_ratio, int16_t changing_gear,
                                uint16_t idle_rpm);
 
@@ -251,15 +251,15 @@ void port_timer_mark_game_enabled(int enabled);
 void timer_setup_interrupt(void);
 void timer_reg_callback(void (*callback)(void));
 void timer_remove_callback(void (*callback)(void));
-uint32_t timer_get_delta(void);
+uint32_t elapsedticks(void);
 uint32_t timer_get_counter(void);
 void port_timer_test_seed_counter(uint32_t counter);
-void timer_get_counter_unk(uint32_t ticks);
+void timedwait(uint32_t ticks);
 void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high);
-int16_t timer_compare_dx(void);
-void set_add_value(int32_t ticks);
-int16_t poll_input_abort(void);
-void wait_for_input_delay(int32_t ticks);
+int16_t testticks(void);
+void setbiosticks(int32_t ticks);
+int16_t testbiosticks(void);
+void waitbios(int32_t ticks);
 
 void port_input_init(void);
 void port_input_shutdown(void);
@@ -279,7 +279,7 @@ int port_input_type_test_text(const char *text);
 void port_random_test_set_state(uint32_t state);
 int16_t port_random_test_rand(void);
 void initialize_kevin_random(const uint8_t *seed);
-void get_kevinrandom_seed(uint8_t *seed_out);
+void mygetseeds(uint8_t *seed_out);
 int16_t get_kevinrandom(void);
 void port_input_mouse_set_x_bounds(int16_t min_x, int16_t max_x);
 void port_input_mouse_set_y_bounds(int16_t min_y, int16_t max_y);
@@ -305,13 +305,13 @@ void port_sdl_shutdown(void);
 void port_sdl_sleep_until(uint64_t deadline_ns);
 
 void clear_rect(int16_t, int16_t, int16_t, int16_t, int16_t);
-void sprite_1_unk(int16_t, int16_t, int16_t, int16_t, int16_t);
+void drawrect(int16_t, int16_t, int16_t, int16_t, int16_t);
 void putpixel_iconFillings(const PortShape2D *, int16_t, int16_t);
 void putpixel_iconMask(const PortShape2D *, int16_t, int16_t);
-void shape2d_op_unk4(const PortShape2D *);
+void shape2d_or_rle(const PortShape2D *);
 void shape2d_render_bmp_as_mask(const PortShape2D *);
 
-void sub_35DC8(const uint8_t *source);
-void sub_35DE6(uint16_t start, uint16_t count, const uint8_t *source);
+void mcgatranslation(const uint8_t *source);
+void mcgatransrange(uint16_t start, uint16_t count, const uint8_t *source);
 
 #endif

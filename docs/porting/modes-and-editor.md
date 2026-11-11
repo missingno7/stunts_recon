@@ -8,20 +8,20 @@ This documents behavior visible in the current reconstructed C contributions. So
 
 ```mermaid
 flowchart TD
-    Main[main menu: run_menu]
-    TrackMenu[track menu / 3D preview: run_tracks_menu]
+    Main[main menu: select]
+    TrackMenu[track menu / 3D preview: teditmain]
     TrackLoad[choose and read .TRK]
     Editor[track editor: load_tracks_menu_shapes]
-    RaceCheck[track_setup]
+    RaceCheck[compiletrack]
     Race[run_game]
     Results[end_hiscore]
-    Car[run_car_menu: player car]
+    Car[selectcar: player car]
     Opp[run_opponent_menu]
-    OppCar[run_car_menu: opponent car]
+    OppCar[selectcar: opponent car]
     Options[run_option_menu]
     ReplayPick[.RPL file selector]
-    ReplayLoad[file_load_replay]
-    Pause[loop_game pause menu]
+    ReplayLoad[loadreplay]
+    Pause[doreplay pause menu]
 
     Main -->|0: start| RaceCheck
     Main -->|1: car| Car --> Main
@@ -30,13 +30,13 @@ flowchart TD
     Opp -->|done| Main
     Main -->|3: track| TrackMenu
     TrackMenu -->|selection 0| TrackLoad --> TrackMenu
-    TrackMenu -->|selection 1| EditorSetup[track_setup; result ignored] --> Editor
+    TrackMenu -->|selection 1| EditorSetup[compiletrack; result ignored] --> Editor
     Editor -->|C/c: setup, message, route trace| Editor
     Editor -->|save/load/new| Editor
     Editor -->|exit| TrackMenu
     TrackMenu -->|selection 2 or Escape| Main
     RaceCheck -->|0| Race
-    RaceCheck -->|nonzero| Retry[run_tracks_menu restart path] --> RetrySetup[track_setup; result ignored] --> Editor
+    RaceCheck -->|nonzero| Retry[teditmain restart path] --> RetrySetup[compiletrack; result ignored] --> Editor
     Race --> Results
     Results -->|result 0/1 in main loop| Race
     Results -->|other result| Main
@@ -44,17 +44,17 @@ flowchart TD
     Options -->|cancel/back: return 0| Main
     Options -->|load replay: return nonzero| ReplayPick --> ReplayLoad --> RaceCheck
     Race --> Pause
-    Pause -->|load .RPL| PauseReplayPick[.RPL file selector] --> PauseReplayLoad[file_load_replay] --> PauseSetup[track_setup and reinitialize] --> Race
+    Pause -->|load .RPL| PauseReplayPick[.RPL file selector] --> PauseReplayLoad[loadreplay] --> PauseSetup[compiletrack and reinitialize] --> Race
     Pause -->|save .RPL| PauseReplayPick
 ```
 
-`main` maps `run_menu()` results 0/1/2/3/4 to race/player car/opponent/track/options (source `src/obj_seg000.c:530-551`). Main-menu result 0 enters race preparation; a nonzero `track_setup()` result diverts to `run_tracks_menu(1)` and then back to the main menu (`:552-577`). A successful setup reaches `run_game()` (`:594-623`). The normal track-menu entry is result 3. Its three buttons dispatch to load (`selection == 0`), enter editor (`selection == 1`), or return (`selection == 2`); on return the menu releases its preview window (`:893-1035`).
+`main` maps `select()` results 0/1/2/3/4 to race/player car/opponent/track/options (source `src/obj_seg000.c:530-551`). Main-menu result 0 enters race preparation; a nonzero `compiletrack()` result diverts to `teditmain(1)` and then back to the main menu (`:552-577`). A successful setup reaches `run_game()` (`:594-623`). The normal track-menu entry is result 3. Its three buttons dispatch to load (`selection == 0`), enter editor (`selection == 1`), or return (`selection == 2`); on return the menu releases its preview window (`:893-1035`).
 
-The editor itself has no `run_game()` edge. It returns to the track preview. The editor's `C`/`c` key calls `track_setup()`, shows the indexed editor message, and, when the returned value is greater than 1, walks the stored route coordinates to highlight its pieces (`src/obj_seg009.c:624-644`, `:584-596`). The actual drive path is the main-menu start branch above. Track-menu entry with `restart != 0` jumps directly to setup/editor without first drawing the preview (`src/obj_seg000.c:905-908`, `:1026-1035`); that is the recovery route after failed race setup.
+The editor itself has no `run_game()` edge. It returns to the track preview. The editor's `C`/`c` key calls `compiletrack()`, shows the indexed editor message, and, when the returned value is greater than 1, walks the stored route coordinates to highlight its pieces (`src/obj_seg009.c:624-644`, `:584-596`). The actual drive path is the main-menu start branch above. Track-menu entry with `restart != 0` jumps directly to setup/editor without first drawing the preview (`src/obj_seg000.c:905-908`, `:1026-1035`); that is the recovery route after failed race setup.
 
 ## Track preview and editor entry
 
-`run_tracks_menu` builds a 3D track preview by loading the sky selected at `td14tb[0x384]`, loading 3D shapes, setting projection, initializing preview state, calling `draw_track_preview`, then freeing shapes and sky (`src/obj_seg000.c:909-925`). It prints the track name and, when the matching `.HIG` has a valid top record, the best entry (`:927-947`). The button labels are resource IDs `bmt`, `bet`, and `bmm` (`:949-956`); behavior is determined by button index, as listed above.
+`teditmain` builds a 3D track preview by loading the sky selected at `td14tb[0x384]`, loading 3D shapes, setting projection, initializing preview state, calling `draw_track_preview`, then freeing shapes and sky (`src/obj_seg000.c:909-925`). It prints the track name and, when the matching `.HIG` has a valid top record, the best entry (`:927-947`). The button labels are resource IDs `bmt`, `bet`, and `bmm` (`:949-956`); behavior is determined by button index, as listed above.
 
 The editor loads `SDTEDIT` shapes and `TEDIT` text/layout data. It resolves 19 terrain shapes, four cursor shapes `crs0..crs3`, four placement-outline shapes `ucr0..ucr3`, the `pbox` palette layout, and `snam`/`mnam`/`tnam` piece-name tables (`src/obj_seg009.c:204-240`). There are 186 piece mask/fill shape pairs and 186 three-character name keys (`:227-240`, `:438-445`). It creates four size-specific cursor windows from the `crs` dimensions (`:208-215`).
 
@@ -74,22 +74,22 @@ Object piece footprint comes from `trklst[selectedPiece].ss_multiTileFlag`: 0 is
 
 Validation has two layers:
 
-* `validate_track_elements` (source name; evidence boundary `seg009:0x1C81C`, inventory label `sub_2C81C`) first clears broken multi-cell markers. It checks occupied pieces against terrain. Terrain 1–5 admits only object IDs `0x22`, `0x23`, `0x67..0x6C`, and `0xAB..0xAE`; covered-cell markers are resolved back to their anchor. Terrain 7–10 delegates compatibility to `subst_hillroad`. Other nonzero terrain types are rejected. Rejected pieces are erased and the function returns editor message code 12, 13, or 14 (`src/obj_seg009.c:1030-1076`). Terrain 0 and 6 bypass these compatibility checks.
-* `clear_invalid_track_tiles` (source name; evidence boundary `seg009:0x1C9B4`, inventory label `sub_2C9B4`) tracks occupied continuation cells, verifies the exact marker pattern for 1×2, 2×1, and 2×2 objects, and erases orphaned, overlapping, or malformed pieces (`src/obj_seg009.c:1078-1136`).
+* `checktracksyntax` (source name; evidence boundary `seg009:0x1C81C`, inventory label `sub_2C81C`) first clears broken multi-cell markers. It checks occupied pieces against terrain. Terrain 1–5 admits only object IDs `0x22`, `0x23`, `0x67..0x6C`, and `0xAB..0xAE`; covered-cell markers are resolved back to their anchor. Terrain 7–10 delegates compatibility to `roadupcheck`. Other nonzero terrain types are rejected. Rejected pieces are erased and the function returns editor message code 12, 13, or 14 (`src/obj_seg009.c:1030-1076`). Terrain 0 and 6 bypass these compatibility checks.
+* `trackoverlapcheck` (source name; evidence boundary `seg009:0x1C9B4`, inventory label `sub_2C9B4`) tracks occupied continuation cells, verifies the exact marker pattern for 1×2, 2×1, and 2×2 objects, and erases orphaned, overlapping, or malformed pieces (`src/obj_seg009.c:1078-1136`).
 
-Separately, `track_setup` validates the horizontal and vertical terrain-connection sequence across the 30×30 map; a mismatch returns code 11. It then resolves track objects/start directions and builds the route coordinates used by race setup and the editor's `C` route trace (`src/obj_seg004.c:1151-1236`, `:1238-1315`, `:1460-1632`, `:1700-1710`, `:1848-1867`). It returns 0 on success; main diverts nonzero results back to track editing (`src/obj_seg000.c:563-569`).
+Separately, `compiletrack` validates the horizontal and vertical terrain-connection sequence across the 30×30 map; a mismatch returns code 11. It then resolves track objects/start directions and builds the route coordinates used by race setup and the editor's `C` route trace (`src/obj_seg004.c:1151-1236`, `:1238-1315`, `:1460-1632`, `:1700-1710`, `:1848-1867`). It returns 0 on success; main diverts nonzero results back to track editing (`src/obj_seg000.c:563-569`).
 
 ## Load, save, new track, and exit
 
-The track-menu load button opens `do_fileselect_dialog(..., ".trk", ...)`, builds the path, reads into `td14tb`, and returns to the 3D preview (`src/obj_seg000.c:1013-1025`). Inside the editor, the load palette action first asks about dirty edits, then opens the same `.trk` selector; on success it reads the block, calls `track_setup`, resets the cursor to the sampled start, and clears the dirty flag (`src/obj_seg009.c:686-706`).
+The track-menu load button opens `do_fileselect_dialog(..., ".trk", ...)`, builds the path, reads into `td14tb`, and returns to the 3D preview (`src/obj_seg000.c:1013-1025`). Inside the editor, the load palette action first asks about dirty edits, then opens the same `.trk` selector; on success it reads the block, calls `compiletrack`, resets the cursor to the sampled start, and clears the dirty flag (`src/obj_seg009.c:686-706`).
 
-Save opens `do_savefile_dialog` for a `.trk` name, checks an existing file with `file_find` and an overwrite dialog, then writes `td14tb` for exactly `0x70A` bytes. Successful save initializes that track's `.HIG` using `highscore_write_a(1)` and clears `mapDirty`; write errors show resource `ser` and allow retry (`src/obj_seg009.c:707-742`). New/template selection clears the first `0x384` object bytes, copies the selected 901-byte terrain template into `td15p_9`, blanks the track name, and marks it dirty (`:672-685`). Exit checks `mapDirty`; the dialog's save choice jumps into the same writer (`:742-747`).
+Save opens `fsavereq` for a `.trk` name, checks an existing file with `file_find` and an overwrite dialog, then writes `td14tb` for exactly `0x70A` bytes. Successful save initializes that track's `.HIG` using `highscore_write_a(1)` and clears `mapDirty`; write errors show resource `ser` and allow retry (`src/obj_seg009.c:707-742`). New/template selection clears the first `0x384` object bytes, copies the selected 901-byte terrain template into `td15p_9`, blanks the track name, and marks it dirty (`:672-685`). Exit checks `mapDirty`; the dialog's save choice jumps into the same writer (`:742-747`).
 
 ## Other non-race modes
 
 ### Car selection
 
-`run_car_menu` enumerates `car*.res`, keeps up to 32 four-character IDs, sorts them lexically, and begins at the caller's current car (`src/obj_seg000.c:1236-1340`). It loads the selected car's shapes, aerodynamic data and description; renders the car and speed graph; and cycles paints/transmission state (`:1375-1455`). Button indexes are Done, next car, previous car, transmission toggle, and material cycle. Enter/Space/Escape activate a button; up/down and the mouse change selection. Done copies the selected ID to the passed pointer and returns (`:1547-1644`). Main calls it for the player (`:547-551`); opponent selection calls the same function for the AI car (`:1803-1816`).
+`selectcar` enumerates `car*.res`, keeps up to 32 four-character IDs, sorts them lexically, and begins at the caller's current car (`src/obj_seg000.c:1236-1340`). It loads the selected car's shapes, aerodynamic data and description; renders the car and speed graph; and cycles paints/transmission state (`:1375-1455`). Button indexes are Done, next car, previous car, transmission toggle, and material cycle. Enter/Space/Escape activate a button; up/down and the mouse change selection. Done copies the selected ID to the passed pointer and returns (`:1547-1644`). Main calls it for the player (`:547-551`); opponent selection calls the same function for the AI car (`:1803-1816`).
 
 ### Opponent selection
 
@@ -97,9 +97,9 @@ Save opens `do_savefile_dialog` for a `.trk` name, checks an existing file with 
 
 ### Options and replay selection
 
-`run_option_menu` presents the `mop` dialog and dispatches input-device settings (`mid`, keyboard/joystick/mouse), `do_mof_resource_text`, `do_sonsof_resource_text`, replay load, graphics levels, and DOS text (`src/obj_seg000.c:1863-1944`). Selecting replay opens the `.rpl` file selector and calls `file_load_replay`; it returns nonzero to main, which goes on to race setup. Cancel/back returns 0 to the main menu (`:1914-1938`, `:543-546`). The exact user-facing words for the short resource IDs are in packed resources, so this description keeps the IDs and handler names.
+`run_option_menu` presents the `mop` dialog and dispatches input-device settings (`mid`, keyboard/joystick/mouse), `do_mof_resource_text`, `do_sonsof_resource_text`, replay load, graphics levels, and DOS text (`src/obj_seg000.c:1863-1944`). Selecting replay opens the `.rpl` file selector and calls `loadreplay`; it returns nonzero to main, which goes on to race setup. Cancel/back returns 0 to the main menu (`:1914-1938`, `:543-546`). The exact user-facing words for the short resource IDs are in packed resources, so this description keeps the IDs and handler names.
 
-The in-game pause dialog in `loop_game` has separate `.rpl` load and save actions. `file_load_replay` reads at `td13_replay_hdr`, restores its leading `GAMEINFO`, and leaves the following payload in the contiguous track/replay buffers. The pause load branch calls `track_setup`, reinitializes game state, and reloads car resources when the replay changed sky/car/opponent settings (`src/obj_seg005.c:2071-2170`). Save picks a `.rpl` name, handles overwrite confirmation, then calls `file_write_replay` (`:2171-2197`). The fixed `0x724`-byte prefix is `GAMEINFO` (0x1A bytes) plus the two track blocks (0x70A bytes); the writer copies current settings into that header and appends `game_recordedframes` bytes (`src/obj_seg000.c:477-485`; `src/obj_seg005.c:1268-1291`).
+The in-game pause dialog in `doreplay` has separate `.rpl` load and save actions. `loadreplay` reads at `td13_replay_hdr`, restores its leading `GAMEINFO`, and leaves the following payload in the contiguous track/replay buffers. The pause load branch calls `compiletrack`, reinitializes game state, and reloads car resources when the replay changed sky/car/opponent settings (`src/obj_seg005.c:2071-2170`). Save picks a `.rpl` name, handles overwrite confirmation, then calls `savereplay` (`:2171-2197`). The fixed `0x724`-byte prefix is `GAMEINFO` (0x1A bytes) plus the two track blocks (0x70A bytes); the writer copies current settings into that header and appends `game_recordedframes` bytes (`src/obj_seg000.c:477-485`; `src/obj_seg005.c:1268-1291`).
 
 ### High scores and post-race results
 
@@ -111,17 +111,17 @@ Absolute load offsets; ends are exclusive. The member extents are inventory/cont
 
 | Mode/function | Image extent | Source anchor |
 |---|---:|---|
-| `run_menu` | `seg000:0x0F3C–0x10D0` | `src/obj_seg000.c:815-887` |
-| `run_tracks_menu` | `seg000:0x10D0–0x1588` | `src/obj_seg000.c:893-1036` |
+| `select` | `seg000:0x0F3C–0x10D0` | `src/obj_seg000.c:815-887` |
+| `teditmain` | `seg000:0x10D0–0x1588` | `src/obj_seg000.c:893-1036` |
 | `highscore_write_a` / text / entry | `seg000:0x1588–0x1A1C` (members `0x1588`, `0x168E`, `0x18D4`) | `src/obj_seg000.c:1038-1155` |
 | `highscore_write_b` | `seg000:0x1BB4–0x1C42` | `src/obj_seg000.c:1214-1226` |
-| `run_car_menu` | `seg000:0x1C42–0x293C` | `src/obj_seg000.c:1236-1649` |
+| `selectcar` | `seg000:0x1C42–0x293C` | `src/obj_seg000.c:1236-1649` |
 | `run_opponent_menu` | `seg000:0x293C–0x2F4A` | `src/obj_seg000.c:1655-1861` |
 | `run_option_menu` | `seg000:0x2F4A–0x3178` | `src/obj_seg000.c:1863-1944` |
 | `end_hiscore` | `seg000:0x3178–0x44CF` | `src/obj_seg000.c:1957-2512` |
-| `track_setup` | `seg004:0x106D4–0x117CA` | `src/obj_seg004.c:1151-1867` |
-| `file_load_replay` / `file_write_replay` | `seg005:0x12C92–0x12D2E` | `src/obj_seg005.c:1268-1291` |
-| `loop_game` pause/replay actions | `seg005:0x13B4C–0x14D64` | `src/obj_seg005.c:1822-2235` |
+| `compiletrack` | `seg004:0x106D4–0x117CA` | `src/obj_seg004.c:1151-1867` |
+| `loadreplay` / `savereplay` | `seg005:0x12C92–0x12D2E` | `src/obj_seg005.c:1268-1291` |
+| `doreplay` pause/replay actions | `seg005:0x13B4C–0x14D64` | `src/obj_seg005.c:1822-2235` |
 | editor / icons / viewport | `seg009:0x1A2BC–0x1C81C` (members `0x1A2BC`, `0x1BEB6`, `0x1C0A8`) | `src/obj_seg009.c:143-1028` |
 | element validator / marker cleanup | `seg009:0x1C81C–0x1CC52` (`sub_2C81C`, `sub_2C9B4`) | `src/obj_seg009.c:1030-1136` |
 

@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 struct VECTOR { int16_t x, y, z; };
-extern void wheel_update(struct VECTOR *, int16_t, int16_t *, int16_t *,
+extern void settires(struct VECTOR *, int16_t, int16_t *, int16_t *,
                          struct VECTOR *, int16_t *);
 extern struct VECTOR pts_set[6], secondveccar[6], veccar[6], car_dvecs[6];
 extern struct VECTOR pos_pt, ancv2;
@@ -41,7 +41,7 @@ static int16_t initialize_and_call(int player, const int16_t *src24x3,
     for (i = 0; i < 24*3; ++i) out24x3[i] = (int16_t)0x5555;
     for (i = 0; i < 4; ++i) cache5[i] = (int16_t)0x1111;
     cache5[4] = cached_angle;
-    wheel_update((struct VECTOR *)out24x3, angle, (int16_t *)base4, cache5,
+    settires((struct VECTOR *)out24x3, angle, (int16_t *)base4, cache5,
                  source, origin);
     if (addresses8) {
         for (i = 0; i < 4; ++i) addresses8[i] = (uintptr_t)groups[i];
@@ -83,7 +83,7 @@ __declspec(dllexport) int wheel_probe_staged(int player,
     for (i = 0; i < 24*3; ++i) out24x3[i] = (int16_t)0x5555;
     for (i = 0; i < 4; ++i) cache5[i] = (int16_t)0x1111;
     cache5[4] = cached_angle;
-    wheel_update((struct VECTOR *)out24x3, angle, (int16_t *)base4, cache5,
+    settires((struct VECTOR *)out24x3, angle, (int16_t *)base4, cache5,
                  staged, staged_origin);
     return 1;
 }

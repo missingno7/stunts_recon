@@ -39,7 +39,7 @@ OVERRIDES = {
     # Target callers supply one far pointer (4 bytes) plus one selector word (2 bytes).
     "nullsub_2": "void far nullsub_2(void far *resource, int16_t selector);",
     # Active object definition is the best ABI evidence: one near filename pointer, 16-bit status.
-    "file_write_replay": "int16_t far file_write_replay(const char *filename);",
+    "savereplay": "int16_t far savereplay(const char *filename);",
 }
 HOST_OVERRIDES = {
     # Match the host C library declarations supplied by GCC/MinGW headers.
@@ -54,7 +54,7 @@ HOST_OVERRIDES = {
     "strcmp": "extern int strcmp(const char *, const char *);",
     "strcat": "extern char *strcat(char *, const char *);",
     "strcpy": "extern char *strcpy(char *, const char *);",
-    "toupper": "extern int toupper(int);",
+    "cap": "extern int cap(int);",
     "main": "extern int main(int, char **);",
 }
 

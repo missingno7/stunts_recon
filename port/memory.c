@@ -302,7 +302,7 @@ PortMemoryStats port_memory_stats(void)
     return s_stats;
 }
 
-uint16_t mmgr_get_ofs_diff(void)
+uint16_t unlockedmemory(void)
 {
     uint32_t high_water = real_heap_high_water();
     uint32_t paragraphs = (PORT_CONVENTIONAL_END - high_water) >> 4;
@@ -426,7 +426,7 @@ void mmgr_resize_memory(void *pointer, uint16_t paragraphs)
         port_guest_unwind("memory block resize exceeded its reserved segment span");
 }
 
-void *mmgr_op_unk(void *pointer)
+void *mmgr_compact_chunk(void *pointer)
 {
     return pointer;
 }

@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     memset(port_framebuffer, 0, sizeof(port_framebuffer));
     port_sprite_init();
     for (phase = 0; phase < 4; ++phase)
-        sprite_1_unk3((const PortShape2D *)shape_data, (int16_t)phase);
+        sprite_blit_dither_phase((const PortShape2D *)shape_data, (int16_t)phase);
 
     output = fopen(argv[2], "wb");
     if (output == NULL ||

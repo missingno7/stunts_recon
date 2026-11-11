@@ -35,14 +35,14 @@ int main(int argc, char **argv)
     port_test_random_wait_end();
     if (port_test_random_wait_read_count() != 8016u || s_next_counter != 592u)
         return 4;
-    get_kevinrandom_seed(state);
+    mygetseeds(state);
     if (memcmp(state, expected_pre, sizeof(state)) != 0)
         return 5;
     if (port_random_test_rand() != 0x1b04)
         return 6;
     if (get_kevinrandom() != 0x23)
         return 7;
-    get_kevinrandom_seed(state);
+    mygetseeds(state);
     if (memcmp(state, expected_post, sizeof(state)) != 0)
         return 8;
     puts("startup seed exact: reads=8016 timer=592 rand=6916 Kevin=0x23");

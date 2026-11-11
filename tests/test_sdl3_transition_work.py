@@ -72,7 +72,7 @@ class SpriteUnk3TimingTests(unittest.TestCase):
         memory = _sprite_machine_state(source_width=width,
                                        source_height=payload_height)
         memory.append(MemoryWrite(0x6000, 0x0100, shape))
-        case = RoutineCase("sprite_1_unk3 timing", "sprite_1_unk3",
+        case = RoutineCase("sprite_blit_dither_phase timing", "sprite_blit_dither_phase",
                            args=[0x0100, 0x6000, phase], call="far",
                            memory=memory)
         # RealModeRunner's hook counts the synthetic return sentinel too.

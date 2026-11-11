@@ -40,7 +40,7 @@ static const int16_t s_sine_table[257] = {
     16384
 };
 
-int16_t sinfast(uint16_t angle)
+int16_t intsin(uint16_t angle)
 {
     unsigned quadrant = (angle >> 8) & 3u;
     unsigned index = angle & 0xFFu;
@@ -52,9 +52,9 @@ int16_t sinfast(uint16_t angle)
     }
 }
 
-int16_t cosfast(uint16_t angle)
+int16_t intcos(uint16_t angle)
 {
-    return sinfast((uint16_t)(angle + 0x100u));
+    return intsin((uint16_t)(angle + 0x100u));
 }
 
 int16_t mulscl(int16_t left, int16_t right)

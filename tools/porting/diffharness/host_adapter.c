@@ -4,10 +4,10 @@
 
 extern PortSprite sprite2;
 extern void clear_rect(int16_t, int16_t, int16_t, int16_t, int16_t);
-extern void sprite_1_unk(int16_t, int16_t, int16_t, int16_t, int16_t);
+extern void drawrect(int16_t, int16_t, int16_t, int16_t, int16_t);
 extern void putpixel_iconFillings(const PortShape2D *, int16_t, int16_t);
 extern void putpixel_iconMask(const PortShape2D *, int16_t, int16_t);
-extern void shape2d_op_unk4(const PortShape2D *);
+extern void shape2d_or_rle(const PortShape2D *);
 extern void shape2d_render_bmp_as_mask(const PortShape2D *);
 
 static PortSprite s_default_sprite2;
@@ -19,7 +19,7 @@ __declspec(dllexport) int dh_screen_reset(const uint8_t *initial,
         return 0;
     port_memory_init();
     port_sprite_init();
-    sprite_copy_2_to_1();
+    displaywindow();
     s_default_sprite2 = sprite2;
     memset(port_video_pixels(), 0, PORT_VIDEO_MEMORY_BYTES);
     if (length != 0)
@@ -49,7 +49,7 @@ __declspec(dllexport) int dh_call_sprite_1_unk3(const uint8_t *pixels,
     shape->pos_x = x;
     shape->pos_y = y;
     memcpy((uint8_t *)shape + sizeof(*shape), pixels, count);
-    sprite_1_unk3(shape, (int16_t)phase);
+    sprite_blit_dither_phase(shape, (int16_t)phase);
     mmgr_free(shape);
     return 1;
 }
@@ -59,7 +59,7 @@ __declspec(dllexport) void dh_call_draw_filled_rect(int16_t x, int16_t y,
                                                     int16_t height,
                                                     int16_t color)
 {
-    draw_filled_rect(x, y, width, height, color);
+    xorrectc(x, y, width, height, color);
 }
 
 __declspec(dllexport) int dh_call_sprite_1_unk(int16_t x, int16_t y,
@@ -67,7 +67,7 @@ __declspec(dllexport) int dh_call_sprite_1_unk(int16_t x, int16_t y,
                                                int16_t height,
                                                int16_t color)
 {
-    sprite_1_unk(x, y, width, height, color);
+    drawrect(x, y, width, height, color);
     return 1;
 }
 
@@ -126,7 +126,7 @@ __declspec(dllexport) int dh_call_shape2d_runs(const uint8_t *encoded,
     if (use_and)
         shape2d_render_bmp_as_mask(shape);
     else
-        shape2d_op_unk4(shape);
+        shape2d_or_rle(shape);
     mmgr_free(shape);
     return 1;
 }

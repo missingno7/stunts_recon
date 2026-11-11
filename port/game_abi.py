@@ -23,7 +23,7 @@ def adapt_word_sentinels(source: str, unit: str) -> str:
 
 def adapt_renderer_word_arithmetic(source: str) -> str:
     """Keep the renderer's signed comparison after SHL CX,1 at 86103/86126."""
-    definition = re.search(r"(?:unsigned|U16) trans_op\([^\n]*\)\s*\{", source)
+    definition = re.search(r"(?:unsigned|U16) ADD_OBJECT_TO_BUFFER\([^\n]*\)\s*\{", source)
     if definition is None:
         raise ValueError("Could not locate the renderer definition")
     start = definition.start()
@@ -120,11 +120,11 @@ def adapt_aggregate_views(source: str) -> str:
         body = match.group(2)
         name = match.group(1)
         if name == "AUDIOVOICE":
-            body = body.replace("I32 unk10;", "I8 FAR *unk10;")
-            body = body.replace("I16 unk2A;", "struct AUDIOCHUNK *unk2A;")
+            body = body.replace("I32 sample_data;", "I8 FAR *sample_data;")
+            body = body.replace("I16 owner_chunk;", "struct AUDIOCHUNK *owner_chunk;")
         elif name == "AUDIOCHUNK":
-            body = body.replace("I32 unk1E;", "I8 FAR *unk1E;")
-            body = body.replace("I32 unk48;", "void (FAR *unk48)(I16);")
+            body = body.replace("I32 sample_data;", "I8 FAR *sample_data;")
+            body = body.replace("I32 end_callback;", "void (FAR *end_callback)(I16);")
         return "#pragma pack(push, 1)\nstruct " + name + " {" + body + "};\n#pragma pack(pop)"
     source = re.sub(r"#pragma pack\(push, [12]\)\s*struct (AUDIOCHUNK|AUDIOVOICE|AudioChunk|AudioVoice) \{(.*?)\};\s*#pragma pack\(pop\)", adapt, source, flags=re.S)
     # scene2/scene3 use this producer view but the renderer consumes them as
@@ -162,7 +162,7 @@ def adapt_wheel_update_inputs(source: str) -> str:
     two adjacent VECTOR origins. Native global allocation has no such order
     or adjacency contract (and the current GCC adds padding to both groups).
     """
-    signature = ("void wheel_update(struct VECTOR far *out, I16 angle,\n"
+    signature = ("void settires(struct VECTOR far *out, I16 angle,\n"
                  "              I16S *base, I16S *last_angle_and_y,\n"
                  "              struct VECTOR *source, I16S *origin)\n{")
     if source.count(signature) != 1:
@@ -249,13 +249,13 @@ def host_view_contracts(source: str) -> str:
     if unit == "obj_seg004.c":
         views.append(("VECTOR", 6, {"x": 0, "y": 2, "z": 4}))
     if unit == "obj_seg027.c":
-        views.extend((("AUDIOCHUNK", 76, {"unk1E": 30, "unk48": 72}),
-                      ("AUDIOVOICE", 48, {"unk10": 16, "unk2A": 42, "unk2C": 46})))
+        views.extend((("AUDIOCHUNK", 76, {"sample_data": 30, "end_callback": 72}),
+                      ("AUDIOVOICE", 48, {"sample_data": 16, "owner_chunk": 42, "channel_number": 46})))
     if unit == "obj_seg028.c":
         views.extend((("AudioChunk", 76, {"data": 30, "callback": 72}),
                       ("AudioVoice", 48, {"data": 16, "resource": 42, "channelNumber": 46})))
     if unit == "obj_seg032_group.c":
-        views.append(("SCREEN_RECT", 20, {"width": 0, "height": 2, "bottom": 18}))
+        views.append(("SCREEN_RECT", 20, {"foreground": 0, "background": 2, "line_height": 18}))
     if unit == "obj_seg007.c":
         views.extend((("AudioPayload", 48, {"shape": 8}),
                       ("AudioTimer", 76, {"payload": 28})))

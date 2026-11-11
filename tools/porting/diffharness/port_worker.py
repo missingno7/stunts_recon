@@ -47,7 +47,7 @@ def main():
         fn(*request["args"])
         if op == "draw_case":
             response["frame"] = frame()
-    elif op in {"sprite_1_unk3", "sprite_case"}:
+    elif op in {"sprite_blit_dither_phase", "sprite_case"}:
         fn = dll.dh_call_sprite_1_unk3
         fn.argtypes = [ctypes.POINTER(ctypes.c_uint8), ctypes.c_uint16,
                        ctypes.c_uint16, ctypes.c_uint16, ctypes.c_uint16,
@@ -64,7 +64,7 @@ def main():
         fn.argtypes = [ctypes.c_int16] * 5
         fn.restype = ctypes.c_int
         if not fn(*request["args"]):
-            raise RuntimeError("port sprite_1_unk call failed")
+            raise RuntimeError("port drawrect call failed")
         response["frame"] = frame()
     elif op == "icon_case":
         fn = dll.dh_call_icon_combine

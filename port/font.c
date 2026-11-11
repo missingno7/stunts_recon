@@ -105,12 +105,12 @@ static int16_t measure_text(const char *text, uint16_t count, int counted)
     return (int16_t)width;
 }
 
-int16_t font_op(const char *text, uint16_t count)
+int16_t textnpixels(const char *text, uint16_t count)
 {
     return measure_text(text, count, 1);
 }
 
-int16_t font_op2(const char *text)
+int16_t textpixels(const char *text)
 {
     return measure_text(text, 0, 0);
 }
@@ -180,7 +180,7 @@ void font_draw_text(const char *text, int16_t x, int16_t y)
     render_text(text, x, y, 0);
 }
 
-void draw_text_at(const char *text, int16_t x, int16_t y)
+void movtxy(const char *text, int16_t x, int16_t y)
 {
     /* Frozen DRAW_TEXT_AT writes AH (background) for each clear glyph bit;
        FONT_DRAW_TEXT instead advances DI without writing that pixel. */

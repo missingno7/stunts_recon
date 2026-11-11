@@ -77,7 +77,7 @@ static int polang_unwinds(int16_t z, int16_t x, const char *expected_symbol)
 {
     expect_unwind = 1;
     if (setjmp(unwind_target) == 0) {
-        (void)polang(z, x);
+        (void)intatan(z, x);
         expect_unwind = 0;
         return 0;
     }
@@ -91,7 +91,7 @@ static int ratio_unwinds(uint16_t scale, uint16_t factor, uint16_t divisor,
     projection_x_scale = (int16_t)scale;
     expect_unwind = 1;
     if (setjmp(unwind_target) == 0) {
-        (void)projectiondata9_times_ratio((int16_t)factor,
+        (void)thicknessxp((int16_t)factor,
                                           (int16_t)divisor);
         expect_unwind = 0;
         return 0;
@@ -106,7 +106,7 @@ int main(void)
 
     for (i = 0; i < sizeof(polar_cases) / sizeof(polar_cases[0]); ++i) {
         const PolarCase *test = &polar_cases[i];
-        uint16_t actual = (uint16_t)polang(test->z, test->x);
+        uint16_t actual = (uint16_t)intatan(test->z, test->x);
         if (actual != test->expected) {
             fprintf(stderr, "polang %s (%d,%d): expected %04x, got %04x\n",
                     test->name, test->z, test->x, test->expected, actual);
@@ -118,7 +118,7 @@ int main(void)
         const RatioCase *test = &ratio_cases[i];
         uint16_t actual;
         projection_x_scale = (int16_t)test->scale;
-        actual = (uint16_t)projectiondata9_times_ratio(
+        actual = (uint16_t)thicknessxp(
             (int16_t)test->factor, (int16_t)test->divisor);
         if (actual != test->expected) {
             fprintf(stderr,

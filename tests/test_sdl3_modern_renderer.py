@@ -77,8 +77,10 @@ class ModernRendererTests(unittest.TestCase):
             self.skipTest("requires GCC")
         source = (ROOT / "src/obj_seg003.c").read_text(encoding="latin-1")
         tables = []
+        heading_names = ("hzoneNW", "hzoneNE", "hzoneEN", "hzoneES",
+                         "hzoneSE", "hzoneSW", "hzoneWS", "hzoneWN")
         for heading in range(8):
-            match = re.search(rf"lookahead_heading{heading}\[23\]\s*=\s*\{{(.*?)\}};",
+            match = re.search(rf"{heading_names[heading]}\[23\]\s*=\s*\{{(.*?)\}};",
                               source, re.S)
             self.assertIsNotNone(match)
             rows = re.findall(r"\{\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\}", match[1])
@@ -88,7 +90,7 @@ class ModernRendererTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="stunts-tiles-") as directory:
             temp = Path(directory)
             (temp / "tile_tables.generated.h").write_text(
-                "#include <stdint.h>\nstatic const int8_t ahead_tables[8][23][3]={" +
+                "#include <stdint.h>\nstatic const int8_t headingzones[8][23][3]={" +
                 ",".join(tables) + "};\n", encoding="ascii")
             exe = temp / "probe.exe"
             result = subprocess.run([compiler, "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror",

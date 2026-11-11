@@ -18,7 +18,7 @@ from host_probe_modes import legacy_target_widths
 
 PROLOGUE = r'''#include "stunts_types.h"
 struct VECTOR { I16S x, y, z; };
-extern int16_t sinfast(int16_t), cosfast(int16_t), mulscl(int16_t, int16_t);
+extern int16_t intsin(int16_t), intcos(int16_t), mulscl(int16_t, int16_t);
 /* Intentionally break the DOS adjacency; a correct host adapter cannot need it. */
 struct VECTOR pos_pt __attribute__((aligned(4))), ancv2 __attribute__((aligned(4)));
 struct VECTOR ctrmesh __attribute__((aligned(4))), g_op_carvector2 __attribute__((aligned(4)));
@@ -75,7 +75,7 @@ class Sdl3WheelUpdateTests(unittest.TestCase):
             self.assertEqual(data[second]["load_address"] - data[first]["load_address"], 6)
 
         source = (ROOT / "src/obj_seg004.c").read_text(encoding="latin-1")
-        start = source.index("void wheel_update(struct VECTOR far *out, I16 angle,")
+        start = source.index("void settires(struct VECTOR far *out, I16 angle,")
         end = source.index("\n}\n\nstatic U8  arrowConn0", start) + 2
         body = source[start:end]
         wrapper = (ROOT / "tests/sdl3/wheel_update_probe.c").read_text()

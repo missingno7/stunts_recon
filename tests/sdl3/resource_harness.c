@@ -110,7 +110,7 @@ void *file_load_shape2d_nofatal(char *name)
     (void)name;
     return NULL;
 }
-void *file_load_shape2d_res_nofatal(char *name)
+void *loadandshapepackz(char *name)
 {
     (void)name;
     return NULL;
@@ -270,7 +270,7 @@ static void test_mutable_incnums_map(void)
     full_map[5] = 42;
     full_map[6] = 0xff;
     full_map[0xff] = 77;
-    sub_35DC8(full_map);
+    mcgatranslation(full_map);
 
     clear_surface();
     active_sprite.words2[0] = 0;
@@ -282,7 +282,7 @@ static void test_mutable_incnums_map(void)
     assert(surface[2] == 77); /* map[0xff] is drawable after remapping */
     assert(surface[3] == 0);  /* right-edge clipping */
 
-    sub_35DE6(7, (uint16_t)sizeof(partial_map), partial_map);
+    mcgatransrange(7, (uint16_t)sizeof(partial_map), partial_map);
     clear_surface();
     shape = make_shape(3, 1, 0, 0, 0, 0, partial_pixels);
     sprite_putimage_transparent(shape, 0, 1);
@@ -291,11 +291,11 @@ static void test_mutable_incnums_map(void)
     assert(surface[66] == 42);
 
     /* The original initializer is restored for following blitter checks. */
-    sub_35DC8(identity);
-    sub_35DE6(256, 0, NULL); /* zero-byte REP MOVSB does not dereference SI */
+    mcgatranslation(identity);
+    mcgatransrange(256, 0, NULL); /* zero-byte REP MOVSB does not dereference SI */
     catch_unwind = 1;
     if (setjmp(expected_unwind) == 0) {
-        sub_35DE6(255, 2, partial_map);
+        mcgatransrange(255, 2, partial_map);
         assert(!"out-of-span incnums copy must unwind");
     }
     assert(strcmp(unwind_message,

@@ -29,7 +29,7 @@ instruction boundaries but no strict recipe or established C owner. A worker
 candidate compiled to 148 bytes; `promote.py --verify-only` rejected it because
 the complete contribution length differs from the 94-byte target. The SDL
 implementation in `port/sprite.c` is therefore recorded as a semantic port,
-not a strict historical match. `sprite_1_unk3` follows the row, skip, and
+not a strict historical match. `sprite_blit_dither_phase` follows the row, skip, and
 lane-local phase updates in `asm/seg012_sprite_1_unk_group.ASM`; it also has no
 strict recipe. Its SDL port previously advanced SI and DI after each byte
 copied by `mov al,[si]` / `mov es:[di],al`. Those instructions do not advance
@@ -61,14 +61,14 @@ against Port Forge indexed framebuffer and RGB6 palette dumps are:
 | `m1b-menu-aligned/frame-000016.fbr` | `checkpoint_000000001200.pfidx` (menu) | 0 / 64,000 indexed pixels | 0 / 768 RGB6 bytes |
 
 The reported frame-4 (811 pixels) and frame-8 (3,439 pixels) `x mod 5 = 4`
-mismatches came from the extra SI/DI increments in `sprite_1_unk3`, not a
+mismatches came from the extra SI/DI increments in `sprite_blit_dither_phase`, not a
 missing pass in `sprite_blit_to_video`. Both captures now match their
 references exactly, including the complete title lettering.
 
 The menu reference already contains its software cursor and magenta button
-outline. `run_menu` initializes button 0 ("Let's Drive"),
+outline. `select` initializes button 0 ("Let's Drive"),
 `mouse_timer_sprite_unknown` draws its outline, and `input_checking` draws the
-cursor via `mouse_draw_transparent` after mouse coordinates change. The port
+cursor via `doshowmouse` after mouse coordinates change. The port
 needed the INT 33h X coordinate to honor `mousehorscale` at the DOS boundary;
 SDL events remain in logical pixels. With the pointer at logical (208,189),
 the `frame-000016.fbr` menu image and RGB6 palette match checkpoint 1200
@@ -91,7 +91,7 @@ row, pinned-runtime row, or raw-byte ownership was changed. The function
 stubs fail fast and the three data stubs remain zero-filled. Remaining groups
 include file/replay/input/audio and cleanup services, shape operations, and
 the 3D raster path (`preRender_line`, `preRender_patterned`,
-`preRender_sphere`, `preRender_unk`, `draw_line_related`, `skybox_op_helper`).
+`drawcircle`, `sprite_two_color_poly_list`, `clipline`, `skybox_op_helper`).
 They are listed in the generated `build/sdl3/stub-inventory.json`.
 
 The clean `tools/validate.py` acceptance run passed: 725 tests (zero failed or

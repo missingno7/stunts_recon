@@ -77,11 +77,11 @@ static void test_one(const int8_t source[23][3], unsigned extra)
 int main(void)
 {
     for (unsigned heading = 0; heading < 8; ++heading) {
-        test_one(ahead_tables[heading], 0);
-        test_one(ahead_tables[heading], 1);
-        test_one(ahead_tables[heading], 2);
-        test_one(ahead_tables[heading], 4);
-        test_one(ahead_tables[heading], 12);
+        test_one(headingzones[heading], 0);
+        test_one(headingzones[heading], 1);
+        test_one(headingzones[heading], 2);
+        test_one(headingzones[heading], 4);
+        test_one(headingzones[heading], 12);
     }
     puts("tile expansion: all eight recovered tables pass");
     return 0;

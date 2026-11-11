@@ -554,7 +554,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "loop_game",
+          "function": "doreplay",
           "confidence": "source_semantic_only"
         },
         {
@@ -730,7 +730,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "file_load_replay",
+          "function": "loadreplay",
           "confidence": "source_semantic_only"
         },
         {
@@ -742,7 +742,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_tracks_menu",
+          "function": "teditmain",
           "confidence": "source_semantic_only"
         }
       ],
@@ -817,7 +817,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "file_write_replay",
+          "function": "savereplay",
           "confidence": "source_semantic_only"
         },
         {
@@ -982,7 +982,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_310FE",
+          "function": "mmgr_init_video_reserve",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1009,7 +1009,7 @@
       }
     },
     {
-      "function": "nopsub_3111D",
+      "function": "mmgr_alloc_dos_heap",
       "address": "0x02111D",
       "image_load_offset": "0x02111D",
       "image_end_exclusive": "0x021157",
@@ -1226,11 +1226,11 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_36A9A",
+          "function": "mouse_set_horizontal_range",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_36ACA",
+          "function": "mouse_set_vertical_range",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1318,7 +1318,7 @@
       }
     },
     {
-      "function": "sub_2EAD4",
+      "function": "getbiostick",
       "address": "0x01EAD4",
       "image_load_offset": "0x01EAD4",
       "image_end_exclusive": "0x01EADE",
@@ -1331,7 +1331,7 @@
       "confidence": "medium: state meaning opaque",
       "indexed_callers": [
         {
-          "function": "set_add_value",
+          "function": "setbiosticks",
           "confidence": "source_semantic_only"
         },
         {
@@ -1378,7 +1378,7 @@
       "confidence": "high for fallback; path is indirect",
       "indexed_callers": [
         {
-          "function": "nopsub_36826",
+          "function": "file_find_sounds_required",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1404,7 +1404,7 @@
       }
     },
     {
-      "function": "nopsub_305C8",
+      "function": "input_get_action_buttons",
       "address": "0x0205C8",
       "image_load_offset": "0x0205C8",
       "image_end_exclusive": "0x0205FC",
@@ -1462,7 +1462,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_304B6",
+          "function": "input_read_char_or_joystick",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1510,7 +1510,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_304B6",
+          "function": "input_read_char_or_joystick",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1535,7 +1535,7 @@
       }
     },
     {
-      "function": "nopsub_304B6",
+      "function": "input_read_char_or_joystick",
       "address": "0x0204B6",
       "image_load_offset": "0x0204B6",
       "image_end_exclusive": "0x020519",
@@ -2216,7 +2216,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "replay_unk2",
+          "function": "moveeverything",
           "confidence": "source_semantic_only"
         },
         {
@@ -2254,7 +2254,7 @@
       }
     },
     {
-      "function": "nopsub_36A9A",
+      "function": "mouse_set_horizontal_range",
       "address": "0x026A9A",
       "image_load_offset": "0x026A9A",
       "image_end_exclusive": "0x026ACA",
@@ -2288,7 +2288,7 @@
       "blocker_class": 8
     },
     {
-      "function": "nopsub_36ACA",
+      "function": "mouse_set_vertical_range",
       "address": "0x026ACA",
       "image_load_offset": "0x026ACA",
       "image_end_exclusive": "0x026AF2",
@@ -2553,7 +2553,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "set_frame_callback",
+          "function": "gameintinit",
           "confidence": "source_semantic_only"
         }
       ],
@@ -2607,7 +2607,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "remove_frame_callback",
+          "function": "removegameint",
           "confidence": "source_semantic_only"
         }
       ],
@@ -2689,27 +2689,27 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_30A77",
+          "function": "kb_read_until_deadline",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "nopsub_30A97",
+          "function": "kb_read_with_timeout",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "timer_compare_dx",
+          "function": "testticks",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "timer_copy_counter",
+          "function": "setticks",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "timer_get_counter_unk",
+          "function": "timedwait",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "timer_wait_for_dx",
+          "function": "waitticks",
           "confidence": "source_semantic_only"
         }
       ],
@@ -2739,7 +2739,7 @@
       }
     },
     {
-      "function": "timer_custom_delta",
+      "function": "tickcount",
       "address": "0x022782",
       "image_load_offset": "0x022782",
       "image_end_exclusive": "0x02279A",
@@ -2771,7 +2771,7 @@
       }
     },
     {
-      "function": "timer_get_delta",
+      "function": "elapsedticks",
       "address": "0x02279A",
       "image_load_offset": "0x02279A",
       "image_end_exclusive": "0x0227B7",
@@ -2864,7 +2864,7 @@
       }
     },
     {
-      "function": "nopsub_310FE",
+      "function": "mmgr_init_video_reserve",
       "address": "0x0210FE",
       "image_load_offset": "0x0210FE",
       "image_end_exclusive": "0x02111D",
@@ -3219,7 +3219,7 @@
       }
     },
     {
-      "function": "video_set_palette",
+      "function": "vgapalette",
       "address": "0x0246A3",
       "image_load_offset": "0x0246A3",
       "image_end_exclusive": "0x0246BC",
@@ -3259,7 +3259,7 @@
       }
     },
     {
-      "function": "nopsub_32FEE",
+      "function": "vertsync",
       "address": "0x022FEE",
       "image_load_offset": "0x022FEE",
       "image_end_exclusive": "0x022FFC",
@@ -3292,7 +3292,7 @@
       }
     },
     {
-      "function": "video_get_status",
+      "function": "vsyncstate",
       "address": "0x022FFC",
       "image_load_offset": "0x022FFC",
       "image_end_exclusive": "0x023006",
@@ -3305,7 +3305,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "random_wait",
+          "function": "seedrandom",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3332,7 +3332,7 @@
       }
     },
     {
-      "function": "setup_car_shapes",
+      "function": "dodash",
       "address": "0x012D2E",
       "image_load_offset": "0x012D2E",
       "image_end_exclusive": "0x013702",
@@ -3345,7 +3345,7 @@
       "confidence": "medium: setup includes descriptor and image references",
       "indexed_callers": [
         {
-          "function": "free_player_cars",
+          "function": "removegamefiles",
           "confidence": "source_semantic_only"
         },
         {
@@ -3353,7 +3353,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_player_cars",
+          "function": "loadgamefiles",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3392,7 +3392,7 @@
       }
     },
     {
-      "function": "mouse_draw_opaque",
+      "function": "dohidemouse",
       "address": "0x018DC8",
       "image_load_offset": "0x018DC8",
       "image_end_exclusive": "0x018E04",
@@ -3438,7 +3438,7 @@
       }
     },
     {
-      "function": "mouse_draw_transparent",
+      "function": "doshowmouse",
       "address": "0x018E04",
       "image_load_offset": "0x018E04",
       "image_end_exclusive": "0x018E90",
@@ -3502,7 +3502,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "free_player_cars",
+          "function": "removegamefiles",
           "confidence": "source_semantic_only"
         },
         {
@@ -3510,7 +3510,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         },
         {
@@ -3518,7 +3518,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_menu",
+          "function": "select",
           "confidence": "source_semantic_only"
         },
         {
@@ -3526,11 +3526,11 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_tracks_menu",
+          "function": "teditmain",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         },
         {
@@ -3565,7 +3565,7 @@
       }
     },
     {
-      "function": "nopsub_3320E",
+      "function": "sprite_set_window_bounds",
       "address": "0x02320E",
       "image_load_offset": "0x02320E",
       "image_end_exclusive": "0x02327F",
@@ -3627,7 +3627,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "intro_op",
+          "function": "drawlogo",
           "confidence": "source_semantic_only"
         },
         {
@@ -3635,7 +3635,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         },
         {
@@ -3647,15 +3647,15 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_tracks_menu",
+          "function": "teditmain",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "show_dialog",
+          "function": "messagebox",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "skybox_op",
+          "function": "drawhorizon",
           "confidence": "source_semantic_only"
         },
         {
@@ -3749,7 +3749,7 @@
       }
     },
     {
-      "function": "putpixel_line1_maybe",
+      "function": "drawcline",
       "address": "0x0233C0",
       "image_load_offset": "0x0233C0",
       "image_end_exclusive": "0x023578",
@@ -3786,7 +3786,7 @@
       }
     },
     {
-      "function": "sprite_1_unk",
+      "function": "drawrect",
       "address": "0x0235D2",
       "image_load_offset": "0x0235D2",
       "image_end_exclusive": "0x02367A",
@@ -3807,7 +3807,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "draw_button",
+          "function": "draw3dbutton",
           "confidence": "source_semantic_only"
         },
         {
@@ -3815,11 +3815,11 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "loop_game",
+          "function": "doreplay",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_track_op",
+          "function": "doslider",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3848,7 +3848,7 @@
       "blocker_class": 8
     },
     {
-      "function": "sprite_1_unk3",
+      "function": "sprite_blit_dither_phase",
       "address": "0x02367A",
       "image_load_offset": "0x02367A",
       "image_end_exclusive": "0x023742",
@@ -3904,7 +3904,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "draw_button",
+          "function": "draw3dbutton",
           "confidence": "source_semantic_only"
         },
         {
@@ -3924,7 +3924,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         },
         {
@@ -3932,7 +3932,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_tracks_menu",
+          "function": "teditmain",
           "confidence": "source_semantic_only"
         },
         {
@@ -3978,11 +3978,11 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "draw_2DtrackMap",
+          "function": "drawtrackbox",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_draw_transparent",
+          "function": "doshowmouse",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4027,7 +4027,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "draw_2DtrackMap",
+          "function": "drawtrackbox",
           "confidence": "source_semantic_only"
         },
         {
@@ -4035,7 +4035,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "preRender_icons",
+          "function": "drawpiecebox",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4077,7 +4077,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4124,11 +4124,11 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_draw_opaque",
+          "function": "dohidemouse",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         },
         {
@@ -4191,7 +4191,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         },
         {
@@ -4199,7 +4199,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_menu",
+          "function": "select",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4224,7 +4224,7 @@
       }
     },
     {
-      "function": "shape2d_op_unk",
+      "function": "shape2d_blit_rle",
       "address": "0x023E00",
       "image_load_offset": "0x023E00",
       "image_end_exclusive": "0x023E90",
@@ -4237,11 +4237,11 @@
       "confidence": "medium",
       "indexed_callers": [
         {
-          "function": "loop_game",
+          "function": "doreplay",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4270,7 +4270,7 @@
       }
     },
     {
-      "function": "shape2d_op_unk3",
+      "function": "shape2d_blit_rle_clipped",
       "address": "0x023ED2",
       "image_load_offset": "0x023ED2",
       "image_end_exclusive": "0x024060",
@@ -4283,7 +4283,7 @@
       "confidence": "medium",
       "indexed_callers": [
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4324,15 +4324,15 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "draw_2DtrackMap",
+          "function": "drawtrackbox",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_draw_transparent",
+          "function": "doshowmouse",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4381,7 +4381,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "draw_2DtrackMap",
+          "function": "drawtrackbox",
           "confidence": "source_semantic_only"
         },
         {
@@ -4389,7 +4389,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "preRender_icons",
+          "function": "drawpiecebox",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4414,7 +4414,7 @@
       }
     },
     {
-      "function": "shape2d_op_unk4",
+      "function": "shape2d_or_rle",
       "address": "0x0242F6",
       "image_load_offset": "0x0242F6",
       "image_end_exclusive": "0x0243B0",
@@ -4431,7 +4431,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4470,11 +4470,11 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "draw_ingame_text",
+          "function": "drawtext",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4557,7 +4557,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "do_savefile_dialog",
+          "function": "fsavereq",
           "confidence": "source_semantic_only"
         },
         {
@@ -4565,7 +4565,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "loop_game",
+          "function": "doreplay",
           "confidence": "source_semantic_only"
         },
         {
@@ -4577,7 +4577,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "show_dialog",
+          "function": "messagebox",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4615,7 +4615,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "preRender_sphere",
+          "function": "drawcircle",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4692,7 +4692,7 @@
       "confidence": "high surface; apparent I/O is false decode",
       "indexed_callers": [
         {
-          "function": "update_frame",
+          "function": "drawworld",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4777,7 +4777,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         },
         {
@@ -4785,7 +4785,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_menu",
+          "function": "select",
           "confidence": "source_semantic_only"
         },
         {
@@ -4793,11 +4793,11 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_tracks_menu",
+          "function": "teditmain",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_car_shapes",
+          "function": "dodash",
           "confidence": "source_semantic_only"
         },
         {
@@ -4813,7 +4813,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "setup_player_cars",
+          "function": "loadgamefiles",
           "confidence": "source_semantic_only"
         },
         {
@@ -4865,15 +4865,15 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "intro_op",
+          "function": "drawlogo",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "preRender_sphere",
+          "function": "drawcircle",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "run_car_menu",
+          "function": "selectcar",
           "confidence": "source_semantic_only"
         }
       ],
@@ -4983,7 +4983,7 @@
       }
     },
     {
-      "function": "sub_35E08",
+      "function": "shape2d_scale_blit_hotspot",
       "address": "0x025E08",
       "image_load_offset": "0x025E08",
       "image_end_exclusive": "0x025F48",
@@ -5155,11 +5155,11 @@
       "finding": "Linear decode INSB; source procedure has no port instruction there."
     },
     {
-      "at": "0x01ECDE draw_line_related",
+      "at": "0x01ECDE clipline",
       "finding": "Linear decode IN AX,5Dh; source body has no I/O instruction at that location."
     },
     {
-      "at": "0x0226F4 sin_fast; 0x02365C sprite_1_unk; 0x0241F0 sprite_putimage_or; 0x0242B6 putpixel_iconFillings; 0x0244E6 sprite_putimage_transparent; 0x02469C sub_345BC; 0x024A2F shape_op_explosion; 0x025D35-0x025D37 sub_35C4E",
+      "at": "0x0226F4 sin_fast; 0x02365C drawrect; 0x0241F0 sprite_putimage_or; 0x0242B6 putpixel_iconFillings; 0x0244E6 sprite_putimage_transparent; 0x02469C sub_345BC; 0x024A2F shape_op_explosion; 0x025D35-0x025D37 sub_35C4E",
       "finding": "Linear decoder emits port/string/INT1-like instructions in code/data mixtures or ordinary drawing bodies. Do not treat those as I/O without a confirmed instruction boundary and source operation."
     }
   ],

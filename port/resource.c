@@ -588,8 +588,8 @@ void *load_shape2d_nofatal_thunk(char *name)
 
 void *load_shape2d_res_nofatal_thunk(char *name)
 {
-    extern void *file_load_shape2d_res_nofatal(char *);
-    return file_load_shape2d_res_nofatal(name);
+    extern void *loadandshapepackz(char *);
+    return loadandshapepackz(name);
 }
 
 static int archive_view(const uint8_t *archive, size_t *extent_out,
@@ -801,7 +801,7 @@ static void putimage_transparent_at(uint8_t *shape, int16_t x, int16_t y,
     publish_transparent_blit(destination, publication_reason);
 }
 
-void sub_35DC8(const uint8_t *mapping)
+void mcgatranslation(const uint8_t *mapping)
 {
     size_t i;
     if (mapping == NULL)
@@ -811,7 +811,7 @@ void sub_35DC8(const uint8_t *mapping)
         s_incnums[i] = mapping[i];
 }
 
-void sub_35DE6(uint16_t start, uint16_t count, const uint8_t *mapping)
+void mcgatransrange(uint16_t start, uint16_t count, const uint8_t *mapping)
 {
     size_t i;
     if (((size_t)count != 0u && mapping == NULL) ||
