@@ -1,3 +1,54 @@
+; ASMDOC REVIEW: graphics_resource_runtime (candidate, comments only).
+; Retain: one proven object combines angle/line tables and scan conversion with elapsed deadlines, DOS
+; resource sizing/search, cleanup and critical-error services; narrower naming would hide substantial content.
+; Scope: documented public code entries below; two exported data words/bytes are not routines.
+; New ASMDOC comments correct older campaign boilerplate retained verbatim below.
+; BP offsets are after PUSH BP / MOV BP,SP unless an interrupt/entry-SP offset is explicit.
+; Preservation for DOS/BIOS/opaque callbacks is conditional where stated; FLAGS are not C return values.
+; Static liveness means an accepted source reference or installed vector/callback; dead means no known inbound
+; source edge, not a runtime coverage claim.
+; Routine _fatal_error: Print the supplied diagnostic, dispatch cleanup callbacks and abort the process.
+; Routine _polang: Compute a table-rounded signed polar angle in 1024 units per turn.
+; Routine _sub_2EAD4 -> _timer_read_elapsed_ticks: Read a coherent low/high elapsed-tick snapshot while
+; interrupts are masked.
+; Routine _set_add_value: Store elapsed ticks plus a supplied 32-bit delay as the input deadline.
+; Routine _poll_input_abort: Test whether both elapsed counter words have reached their saved deadline words.
+; Routine _wait_for_input_delay: Busy-wait until both elapsed words reach a local elapsed-plus-delay deadline.
+; Routine _draw_line_related_alt: Build a nominally unclipped fixed-point line descriptor without drawing
+; pixels.
+; Routine _draw_line_related: Build a clipped fixed-point line descriptor without drawing pixels.
+; Routine _parse_shape2d_helper: Convert a real-mode segment:offset pointer into its unsigned linear byte
+; position.
+; Routine _parse_shape2d_helper2: Convert a 32-bit byte position to a normalized real-mode pointer.
+; Routine _criterr_interrupt_handler: Call the selected critical-error callback and return its AX result to
+; DOS.
+; Routine _set_criterr_handler: Register cleanup, save INT24 and install a game critical-error callback.
+; Routine _criterr_exithandler: Restore the saved DOS critical-error vector unless its segment equals its
+; offset.
+; Routine _preRender_unk -> _sprite_two_color_poly_list: Select two-color patterned polygon callbacks and
+; enter shared scan conversion using a point-list pointer.
+; Routine _nopsub_2F424 -> _sprite_two_color_poly_args_alt: Select two-color patterned polygon callbacks and
+; enter shared scan conversion using inline arguments.
+; Routine _preRender_line: Clip a line into a local descriptor and rasterize it when visible and nonempty.
+; Routine _add_exit_handler: Append a unique far cleanup callback to a ten-slot table or abort on overflow.
+; Routine _call_exitlist: Invoke all nonzero-segment cleanup callbacks from the highest slot to the lowest.
+; Routine _call_exitlist2: Dispatch cleanup callbacks then terminate with CRT exit status zero.
+; Routine _file_paras: Read physical file length and return its rounded-up paragraph count.
+; Routine _file_paras_nofatal: Read physical file length and return its rounded-up paragraph count with
+; nonfatal policy.
+; Routine _file_paras_fatal: Read physical file length and return its rounded-up paragraph count with fatal
+; policy.
+; Routine _file_decomp_paras: Read packed header output length and return its rounded-up paragraph count.
+; Routine _file_decomp_paras_nofatal: Read packed header output length and return its rounded-up paragraph
+; count with nonfatal policy.
+; Routine _file_decomp_paras_fatal: Read packed header output length and return its rounded-up paragraph count
+; with fatal policy.
+; Routine _file_find: Start a DOS file search and return a shared full path with the matched filename.
+; Routine _file_find_next: Continue the shared DOS search and overwrite the prior result filename in place.
+; Routine _mulscl: Multiply signed words and return a rounded fixed-point product scaled by 2^14.
+; Routine _video_set_mode4: Select BIOS mode 4, program monochrome CRTC timing and clear 32 KiB at B800:0000.
+; Private alternate: preRender_unk_mode_1 -> sprite_two_color_poly_args; inline list, mode 1, unreferenced.
+; Public DATA: _prerender_max_line_width; _video_mode4_active.
 INCLUDE include\platform_hw.inc
 DSEG segment byte public 'STUNTSD'
 extrn _timer_elapsed_ticks_low:word
@@ -225,12 +276,37 @@ public _mulscl
 public _video_set_mode4
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the error or input-control service identified by fatal error.
-; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _fatal_error / _fatal_error
+; Print the supplied diagnostic, dispatch cleanup callbacks and abort the process.
+; Convention: Declared NEAR, operational nonreturning FAR C variadic entry; removes four-byte return address
+; before
+; printf.
+; inputs: Entry SS:SP+4: near DS format pointer followed by C variadic words; DS must address the format and
+; its
+; string arguments.; Requires a FAR call frame despite PROC NEAR; pops both return words.
+; outputs: Does not return; no preserved-register contract after termination.
+; preserves: none.
+; clobbers: AX and stack immediately; all register/global effects of printf, sprite_copy_2_to_1, flush_stdin,
+; exit
+; callbacks and abort.
+; globals_read: _sprite2 (via descriptor copy); _exitlistfuncs; format and variadic argument memory
+; globals_written: _sprite1 (via descriptor copy); stdout/stdin and cleanup-owned state
+; services: CRT _printf, _flush_stdin, _abort; registered far cleanup callbacks
+; Liveness: live; Live: explicit FAR calls throughout resource, memory and file modules; src/obj_seg007.c:145
+; and
+; audio error paths.
+; Notes: Second printf reuses the still-present format/arguments after cleanup. Trailing DB 0 follows
+; nonreturning
+; abort; not an ordinary return path.
 _fatal_error proc near
+; ASMDOC BLOCK: FAR-frame discard: both return words are removed so printf sees the caller format directly.
     pop     ax
     pop     ax
 fatal_copy_display:
@@ -251,11 +327,30 @@ fatal_abort:
 _fatal_error endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the polar angle for the supplied vector.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_x (word ptr 8); arg_z (word ptr 6).
-; Register ABI: touches AX, BX, CX, DX, DI, BP, SP, CS; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_x (word ptr 8); arg_z
+; (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, DI, BP, SP, CS; balanced explicit saves/restores observed: DI; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: _atantable.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _polang / _polang
+; Compute a table-rounded signed polar angle in 1024 units per turn.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] signed z component; [BP+8] signed x component (BP after PUSH BP/MOV BP,SP).; Incoming AX is
+; retained
+; for (z,x)=(0,0). DS must address _atantable.
+; outputs: AX: quadrant-adjusted angle word; the zero vector returns incoming AX.; Signed magnitude
+; comparisons and
+; unsigned DIV are literal; -32768 may cause divide overflow.
+; preserves: SI; DI; BP; DS; ES; SS
+; clobbers: AX; BX; CX; DX; arithmetic flags
+; globals_read: _atantable; CS:line_angle_quadrant_dispatch
+; globals_written: none.
+; services: none.
+; Liveness: live; Live: src/obj_seg000.c:1632 and numerous vehicle/camera calls; timer and projection ASM call
+; _polang.
+; Evidence: asm/graphics_resource_runtime.ASM:259
 _polang proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -301,6 +396,8 @@ polar_dispatch_quadrant:
     jz      short polar_quadrant_1
     mov     ax, 80h
     jmp     cs:line_angle_quadrant_dispatch[di]
+; ASMDOC BLOCK: Inline CS jump table, indexed by even DI quadrant/magnitude flags; never sequentially
+; executed.
 line_angle_quadrant_dispatch     dw offset polar_quadrant_1
     dw offset polar_handle_zero_x
     dw offset polar_quadrant_4
@@ -338,13 +435,28 @@ polar_quadrant_6:
     jmp     short polar_quadrant_1
 _polang endp
 ; -----------------------------------------------------------------------------
-; Purpose: Implement the legacy internal helper sub 2EAD4. Its internal flow uses timer_snapshot_complete, timer_snapshot_return.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Purpose: Implement the legacy internal helper sub 2EAD4. Its internal flow uses timer_snapshot_complete,
+; timer_snapshot_return.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: _timer_elapsed_ticks_high, _timer_elapsed_ticks_low.
 ; Globals written: none identified.
 ; /* PLATFORM(timer): masks or restores interrupts around timer state. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _sub_2EAD4 / _timer_read_elapsed_ticks
+; Read a coherent low/high elapsed-tick snapshot while interrupts are masked.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: DS:DGROUP; no stack arguments.
+; outputs: DX:AX elapsed ticks; IF=1 on return (STI, not restored incoming IF).
+; preserves: BX; CX; SI; DI; BP; DS; ES; SS; arithmetic flags
+; clobbers: AX; DX; IF forced enabled
+; globals_read: _timer_elapsed_ticks_low; _timer_elapsed_ticks_high
+; globals_written: none.
+; services: CLI/STI
+; Liveness: live; Live: same-module deadline setters, testers and wait loops.
+; Evidence: asm/graphics_resource_runtime.ASM:348
 _sub_2EAD4 proc far
     cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov     ax, _timer_elapsed_ticks_low
@@ -356,11 +468,27 @@ timer_snapshot_return:
 _sub_2EAD4 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Add a delay to the current timer count and store the resulting deadline.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: input_deadline_tick_high, input_deadline_tick_low.
 ; Globals written: input_deadline_tick_high, input_deadline_tick_low.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _set_add_value / _set_add_value
+; Store elapsed ticks plus a supplied 32-bit delay as the input deadline.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] unsigned delay low word; [BP+8] high word; modulo-2^32 addition. DS:DGROUP.
+; outputs: DX:AX computed deadline; writes both deadline words; IF=1.
+; preserves: BX; CX; SI; DI; BP; DS; ES; SS
+; clobbers: AX; DX; arithmetic flags; IF
+; globals_read: _timer_elapsed_ticks_low; _timer_elapsed_ticks_high
+; globals_written: input_deadline_tick_low; input_deadline_tick_high
+; services: CLI/STI through timer snapshot
+; Liveness: live; Live: src/obj_seg032_group.c line editor calls it.
+; Notes: An unexported wait loop at line 384 is after RETF and has no inbound source reference; it is not part
+; of the
+; callable setter path.
 _set_add_value proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -381,6 +509,8 @@ deadline_store_high_word:
     mov     input_deadline_tick_high, dx
     pop     bp
     retf
+; ASMDOC BLOCK: Unexported dead interior entry after RETF; its two comparisons mirror the wordwise deadline
+; test.
 deadline_wait_until_reached:
     call    _sub_2EAD4
     cmp     dx, input_deadline_tick_high
@@ -391,11 +521,28 @@ deadline_wait_until_reached:
 _set_add_value endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Poll keyboard and joystick input for the abort command.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: input_deadline_tick_high, input_deadline_tick_low.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _poll_input_abort / _poll_input_abort
+; Test whether both elapsed counter words have reached their saved deadline words.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: DS:DGROUP; no stack arguments.
+; outputs: AX=CX=1 if high>=deadline_high AND low>=deadline_low, else 0; DX=elapsed high; IF=1.
+; preserves: BX; SI; DI; BP; DS; ES; SS
+; clobbers: AX; CX; DX; arithmetic flags; IF
+; globals_read: _timer_elapsed_ticks_low; _timer_elapsed_ticks_high; input_deadline_tick_low;
+; input_deadline_tick_high
+; globals_written: none.
+; services: CLI/STI through snapshot
+; Liveness: live; Live: src/obj_seg032_group.c:94; no keyboard/joystick access.
+; Notes: Independent unsigned word comparisons, not a lexicographic 32-bit comparison. Public name is retained
+; because
+; the provided name plan does not rename it.
 _poll_input_abort proc far
     call    _sub_2EAD4
     xor     cx, cx
@@ -410,11 +557,27 @@ deadline_reached_result:
 _poll_input_abort endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Wait for the input deadline while polling for an abort.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _wait_for_input_delay / _wait_for_input_delay
+; Busy-wait until both elapsed words reach a local elapsed-plus-delay deadline.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] delay low word; [BP+8] delay high word; DS:DGROUP.
+; outputs: DX:AX last elapsed snapshot; IF=1; no logical return value.
+; preserves: BX; CX; SI; DI; BP; DS; ES; SS
+; clobbers: AX; DX; arithmetic flags; IF
+; globals_read: _timer_elapsed_ticks_low; _timer_elapsed_ticks_high
+; globals_written: none.
+; services: CLI/STI per snapshot
+; Liveness: live; Live: src/obj_seg008.c:373 calls with 8L.
+; Notes: Both unsigned comparisons must pass even if high has already exceeded the target; no input polling or
+; abort
+; service occurs.
 _wait_for_input_delay proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -442,11 +605,44 @@ delay_deadline_poll_loop:
 _wait_for_input_delay endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Build line-rendering descriptors using the alternate path.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _draw_line_related_alt / _draw_line_related_alt
+; Build a nominally unclipped fixed-point line descriptor without drawing pixels.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] signed start x; [BP+8] start y; [BP+10] end x; [BP+12] end y.; [BP+14] near DS pointer to a
+; writable
+; 28-byte line descriptor; DS must alias SS for stack-resident callers. +10h color is retained, not
+; initialized.
+; outputs: AX=0 for a usable descriptor; AX=clip code 1/2/4/8 for rejected/outside geometry, with step count
+; 0.;
+; Descriptor: +0 x fraction, +2 start x, +4 y fraction, +6 start y, +8 end x, +Ah end y, +Ch slope, +Eh
+; inclusive step
+; count, +10h retained color, +12h direction byte, +13h clip flags, +14h/+16h left clipped rows, +18h/+1Ah
+; right
+; clipped rows.; Direction values: 0/1 horizontal, 2 vertical, 3/4 diagonal, 5/6 y-major, 7/8 x-major, 9
+; point; all
+; arithmetic uses 16-bit wraps and explicit overflow fallback.
+; preserves: SI; DI; BP; DS; ES; SS
+; clobbers: AX; BX; CX; DX; arithmetic flags
+; globals_read: CS:line_slope_table_limit; CS:line_interp_profile_offsets and profiles;
+; CS:line_direction_case_dispatch and four direction tables; CS:_sprite1 clip bounds only on large-coordinate
+; overflow
+; fallback
+; globals_written: 28-byte caller descriptor except retained color word
+; services: none.
+; Liveness: live; Live: prerender_wheel_raster calls both variants; the normal variant is also called by
+; _preRender_line and C skybox code.
+; Notes: Alternate entry creates identical frame and jumps into normal routine at line_init_output_record. It
+; bypasses
+; initial clipping, but overflow fallback re-enters code that reads clip bounds. Tables are inline CS data; no
+; direct
+; hardware services.
 _draw_line_related_alt proc far
     var_4 = byte ptr -4
      s = byte ptr 0
@@ -461,12 +657,45 @@ _draw_line_related_alt proc far
 _draw_line_related_alt endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Build line-rendering descriptors for the requested endpoints.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_8 (word ptr 14); arg_endX (word ptr 10); arg_endY (word ptr 12); arg_startX (word ptr
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_8 (word ptr 14);
+; arg_endX (word ptr 10); arg_endY (word ptr 12); arg_startX (word ptr
 ;   6); arg_startY (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _draw_line_related / _draw_line_related
+; Build a clipped fixed-point line descriptor without drawing pixels.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] signed start x; [BP+8] start y; [BP+10] end x; [BP+12] end y.; [BP+14] near DS pointer to a
+; writable
+; 28-byte line descriptor; DS must alias SS for stack-resident callers. +10h color is retained, not
+; initialized.
+; outputs: AX=0 for a usable descriptor; AX=clip code 1/2/4/8 for rejected/outside geometry, with step count
+; 0.;
+; Descriptor: +0 x fraction, +2 start x, +4 y fraction, +6 start y, +8 end x, +Ah end y, +Ch slope, +Eh
+; inclusive step
+; count, +10h retained color, +12h direction byte, +13h clip flags, +14h/+16h left clipped rows, +18h/+1Ah
+; right
+; clipped rows.; Direction values: 0/1 horizontal, 2 vertical, 3/4 diagonal, 5/6 y-major, 7/8 x-major, 9
+; point; all
+; arithmetic uses 16-bit wraps and explicit overflow fallback.
+; preserves: SI; DI; BP; DS; ES; SS
+; clobbers: AX; BX; CX; DX; arithmetic flags
+; globals_read: CS:line_slope_table_limit; CS:line_interp_profile_offsets and profiles;
+; CS:line_direction_case_dispatch and four direction tables; CS:_sprite1 clip top/bottom at +16/+18 and
+; left/right at
+; +26/+28
+; globals_written: 28-byte caller descriptor except retained color word
+; services: none.
+; Liveness: live; Live: prerender_wheel_raster calls both variants; the normal variant is also called by
+; _preRender_line and C skybox code.
+; Notes: Alternate entry creates identical frame and jumps into normal routine at line_init_output_record. It
+; bypasses
+; initial clipping, but overflow fallback re-enters code that reads clip bounds. Tables are inline CS data; no
+; direct
+; hardware services.
 _draw_line_related proc far
     var_4 = byte ptr -4
     var_2 = word ptr -2
@@ -483,6 +712,8 @@ _draw_line_related proc far
     push    si
     push    di
     mov     [bp+var_4], 0
+; ASMDOC BLOCK: Both public line prologues join here; DS:SI points at the caller 28-byte record; color at +10h
+; is retained.
 line_init_output_record:
     mov     si, [bp+arg_8]
     mov     word ptr [si+12h], 0FFh
@@ -591,6 +822,8 @@ line_classify_x_slope:
     mov     byte ptr [si+12h], 8
 line_make_x_major:
     xchg    cx, dx
+; ASMDOC BLOCK: Small deltas use inline CS interpolation profiles; larger deltas divide and round the 16.16
+; slope.
 line_slope_lookup_or_divide:
     cmp     cx, cs:line_slope_table_limit
     jge     short line_slope_divide_fallback
@@ -644,6 +877,8 @@ line_dispatch_clip_flags:
     shl     bx, 1
     jz      short line_reject_clipped
     jmp     cs:line_direction_case_dispatch[bx]
+; ASMDOC BLOCK: CS data embedded in line body: branch targets, not instructions. Several entries intentionally
+; alias.
 line_direction_case_dispatch     dw offset line_reject_clipped
     dw offset line_dispatch_right_clip
     dw offset line_dispatch_x_clip_flags
@@ -957,6 +1192,7 @@ line_left_case_06_adjust_x:
     sub     dx, cx
     add     [si+14h], dx
     jmp     line_continue_right_clip
+; ASMDOC BLOCK: Outside/degenerate paths zero length but still record edge codes and clipped-row accounting.
 line_clip_initialize_default:
     mov     dx, 2
 line_commit_clip_bounds:
@@ -1252,6 +1488,8 @@ line_horizontal_clip_right:
     mov     [si+8], bx
 line_horizontal_finish_clipping:
     jmp     line_reject_clipped
+; ASMDOC BLOCK: Signed subtraction overflow falls back to repeated coarse endpoint reduction before normal
+; clipping.
 line_large_coordinate_fallback:
     mov     cx, [si+0Ah]
     sar     cx, 1
@@ -1340,11 +1578,27 @@ line_fallback_retreat_x:
 _draw_line_related endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by parse shape2d helper.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _parse_shape2d_helper / _parse_shape2d_helper
+; Convert a real-mode segment:offset pointer into its unsigned linear byte position.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] unsigned offset; [BP+8] unsigned segment.
+; outputs: DX:AX=(segment<<4)+offset (up to 0x10ffef; no 20-bit wrap).
+; preserves: BX; CX; SI; DI; BP; DS; ES; SS
+; clobbers: AX; DX; arithmetic flags
+; globals_read: none.
+; globals_written: none.
+; services: none.
+; Liveness: live; Live: shape parsing inventory has five call leads; pointer-conversion counterpart is called
+; by
+; src/obj_seg035_group.c.
+; Notes: Arithmetic only; does not parse a shape or touch video memory.
 _parse_shape2d_helper proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1369,11 +1623,28 @@ _parse_shape2d_helper proc far
 _parse_shape2d_helper endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by parse shape2d helper2.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _parse_shape2d_helper2 / _parse_shape2d_helper2
+; Convert a 32-bit byte position to a normalized real-mode pointer.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] position low word; [BP+8] high word.
+; outputs: AX=position&15; DX=(position>>4)&0xffff; BX=high_word>>4 (discarded upper quotient). DX:AX is
+; normalized
+; segment:offset; values above 20 bits are truncated in returned segment.
+; preserves: CX; SI; DI; BP; DS; ES; SS
+; clobbers: AX; BX; DX; arithmetic flags
+; globals_read: none.
+; globals_written: none.
+; services: none.
+; Liveness: live; Live: src/obj_seg035_group.c:112.
+; Notes: Four mutable INT24 vector/callback words follow its RETF inside its PROC extent, not executed
+; instructions.
 _parse_shape2d_helper2 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1395,6 +1666,7 @@ _parse_shape2d_helper2 proc far
     and     ax, 0Fh
     pop     bp
     retf
+; ASMDOC BLOCK: Mutable far vectors/callback words in CODE after RETF; callers intentionally write through CS.
 saved_int24_vector_offset     dw 0
 saved_int24_vector_segment     dw 0
 criterr_handler_offset     dw 0
@@ -1403,12 +1675,30 @@ _parse_shape2d_helper2 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Handle the critical-error interrupt and report its result.
 ; ABI: FAR entry; source return form: IRET; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS, DS, ES, SS; balanced explicit saves/restores observed: BX, CX, DI, DS, DX, ES, SI; path-specific inputs and outputs
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS, DS, ES, SS; balanced explicit saves/restores observed:
+; BX, CX, DI, DS, DX, ES, SI; path-specific inputs and outputs
 ;   follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(bios): returns from a hardware interrupt. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _criterr_interrupt_handler / _criterr_interrupt_handler
+; Call the selected critical-error callback and return its AX result to DOS.
+; Convention: FAR interrupt entry, not ordinary C callable; indirect FAR callback then IRET.
+; inputs: Interrupt frame at entry SS:SP: IP, CS, FLAGS; DOS supplies critical-error register state.; Callback
+; receives DS=SS, AX=SS and BX=offset criterr_handler_offset; CX,DX,SI,DI,ES,BP retain their interrupt values
+; until
+; callback. No C stack arguments are synthesized.
+; outputs: Callback AX (in particular DOS response AL) survives IRET; flags restored from interrupt frame.
+; preserves: BX; CX; DX; SI; DI; BP; DS; ES; SS; interrupted FLAGS via IRET
+; clobbers: AX; callback global state
+; globals_read: CS:criterr_handler_offset/segment
+; globals_written: Callback-selected state
+; services: DOS INT24 callback; IRET
+; Liveness: live; Live: _set_criterr_handler installs this vector with INT21 AX=2524h.
+; Notes: Does not forward incoming AX/BX unchanged: both are overwritten before callback. Eight other
+; general/segment
+; registers are explicitly saved.
 _criterr_interrupt_handler proc far
      r = byte ptr 0
     push    bx
@@ -1419,6 +1709,8 @@ _criterr_interrupt_handler proc far
     push    ds
     push    es
     push    bp
+; ASMDOC BLOCK: Callback data segment becomes SS; original AX/BX interrupt details are not preserved as
+; callback inputs.
     mov     ax, ss
     mov     ds, ax
     mov     bx, offset criterr_handler_offset
@@ -1435,12 +1727,30 @@ _criterr_interrupt_handler proc far
 _criterr_interrupt_handler endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Install the critical-error interrupt handler.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, DX, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DS; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, DX, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DS; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(dos): calls a DOS service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _set_criterr_handler / _set_criterr_handler
+; Register cleanup, save INT24 and install a game critical-error callback.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] callback offset; [BP+8] callback segment; DS:DGROUP; SS must be callback data segment.
+; outputs: INT24 points at _criterr_interrupt_handler; callback and prior vector saved; AX is DOS-dependent,
+; no
+; Boolean result defined.
+; preserves: BP; DS; SI/DI through _add_exit_handler on normal return; SS
+; clobbers: AX; BX; CX; DX; ES=0; flags
+; globals_read: IVT 0000:0090/0092; _exitlistfuncs
+; globals_written: CS:criterr_handler_offset/segment; CS:saved_int24_vector_offset/segment; _exitlistfuncs;
+; DOS INT24
+; vector
+; services: Direct IVT read; INT21 AH=25h AL=24h; _add_exit_handler
+; Liveness: live; Live: src/obj_seg031.c:265 passes do_dea_textres.
+; Notes: Vector and callback words reside in writable CODE storage; routine is non-reentrant.
 _set_criterr_handler proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1477,14 +1787,29 @@ _set_criterr_handler proc far
 _set_criterr_handler endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Restore the previous critical-error vector at process exit.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, DX, CS, DS; balanced explicit saves/restores observed: DS; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, DX, CS, DS; balanced explicit saves/restores observed: DS; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(dos): calls a DOS service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _criterr_exithandler / _criterr_exithandler
+; Restore the saved DOS critical-error vector unless its segment equals its offset.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: DS:DGROUP on normal callback entry; saved vector in CS. No stack arguments.
+; outputs: DS restored; INT24 restored only if saved_segment-saved_offset != 0.
+; preserves: DS; BX/CX/SI/DI/BP subject to documented DOS AH25 preservation; SS
+; clobbers: AX; DX when restore is taken; flags
+; globals_read: CS:saved_int24_vector_offset/segment
+; globals_written: DOS INT24 vector conditionally
+; services: INT21 AH=25h AL=24h
+; Liveness: live; Live: its far address is registered by _set_criterr_handler.
+; Notes: SUB compares segment with offset, not segment|offset against zero: any equal pair skips restoration.
 _criterr_exithandler proc far
     push    ds
+; ASMDOC BLOCK: Literal subtraction is surprising: equal nonzero segment:offset also skips vector restoration.
     mov     ax, cs:saved_int24_vector_segment
     sub     ax, cs:saved_int24_vector_offset
     jz      short criterr_restore_previous_vector
@@ -1499,12 +1824,38 @@ criterr_restore_previous_vector:
 _criterr_exithandler endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender unk.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 8); arg_6 (word ptr 12);
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_2 (word ptr 8); arg_4 (word ptr 8); arg_6 (word ptr 12);
 ;   arg_8 (word ptr 14).
-; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: _imagefunc, _line_pattern_bits, _prerender_auxiliary_arg, _spritefunc.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _preRender_unk / _sprite_two_color_poly_list
+; Select two-color patterned polygon callbacks and enter shared scan conversion using a point-list pointer.
+; Convention: FAR C stack entry, caller cleanup; allocates 2000-byte local workspace, saves SI/DI, tail-jumps
+; NEAR
+; _prerender_shared_setup, which RETFs.
+; inputs: [BP+6] pattern word; [BP+8] primary color word; [BP+10] auxiliary color word; [BP+12] signed point
+; count.;
+; [BP+14] near DS point-list pointer for list entry; inline SS point-list bytes at BP+14 for args entry. DS=SS
+; required by shared stack workspace/near pointers.
+; outputs: Draws through _draw_unknown_lines / _preRender_line; no defined C return value.; Rewrites caller
+; [BP+6]=primary color and [BP+8]=point count before tail jump.
+; preserves: BP; SI; DI restored by shared raster epilogue; DS/SS retained
+; clobbers: AX; BX; CX; DX; ES through raster callbacks; flags
+; globals_read: CS:_sprite1 descriptor via shared rasterizer; point-list memory; _line_pattern_bits via
+; callback
+; globals_written: _line_pattern_bits; _prerender_auxiliary_arg; _spritefunc (near callback offset);
+; _imagefunc (near
+; callback offset); caller first two argument words; active sprite pixels through callbacks
+; services: No direct hardware; indexed destination may be video memory
+; Liveness: live; Live: src/obj_seg006.c:674.
+; Notes: Mode byte [BP-10]=0 for inline-alt entry; normal list entry sets 1. An unlabelled, unreferenced list-
+; mode-0
+; prologue follows line 1524; private preRender_unk_mode_1 at 1575 uses inline list with mode=1 and is also
+; unreferenced.
 _preRender_unk proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -1522,6 +1873,8 @@ _preRender_unk proc far
     mov     [bp+var_A], 1
     jmp     short prerender_setup_shared_core
     db 144
+; ASMDOC BLOCK: Unlabelled alternate prologue: mode 0 list entry. Normal entry jumps over it; no inbound
+; source reference.
     push    bp
     mov     bp, sp
     sub     sp, 7D0h
@@ -1546,11 +1899,39 @@ prerender_setup_shared_core:
 _preRender_unk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 2F424.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_8 (word ptr 14).
-; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_8 (word ptr 14).
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _nopsub_2F424 / _sprite_two_color_poly_args_alt
+; Select two-color patterned polygon callbacks and enter shared scan conversion using inline arguments.
+; Convention: FAR C stack entry, caller cleanup; allocates 2000-byte local workspace, saves SI/DI, tail-jumps
+; NEAR
+; _prerender_shared_setup, which RETFs.
+; inputs: [BP+6] pattern word; [BP+8] primary color word; [BP+10] auxiliary color word; [BP+12] signed point
+; count.;
+; [BP+14] near DS point-list pointer for list entry; inline SS point-list bytes at BP+14 for args entry. DS=SS
+; required by shared stack workspace/near pointers.
+; outputs: Draws through _draw_unknown_lines / _preRender_line; no defined C return value.; Rewrites caller
+; [BP+6]=primary color and [BP+8]=point count before tail jump.
+; preserves: BP; SI; DI restored by shared raster epilogue; DS/SS retained
+; clobbers: AX; BX; CX; DX; ES through raster callbacks; flags
+; globals_read: CS:_sprite1 descriptor via shared rasterizer; point-list memory; _line_pattern_bits via
+; callback
+; globals_written: _line_pattern_bits; _prerender_auxiliary_arg; _spritefunc (near callback offset);
+; _imagefunc (near
+; callback offset); caller first two argument words; active sprite pixels through callbacks
+; services: No direct hardware; indexed destination may be video memory
+; Liveness: dead; Dead by static source and supplied rename plan: no incoming reference to this entry; its
+; shared body
+; is live.
+; Notes: Mode byte [BP-10]=0 for inline-alt entry; normal list entry sets 1. An unlabelled, unreferenced list-
+; mode-0
+; prologue follows line 1524; private preRender_unk_mode_1 at 1575 uses inline list with mode=1 and is also
+; unreferenced.
 _nopsub_2F424 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -1567,11 +1948,15 @@ _nopsub_2F424 proc far
 _nopsub_2F424 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender unk mode 1.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_8 (word ptr 14).
-; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_8 (word ptr 14).
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC BLOCK: Private alternate entry, named in existing rename plan; same frame, inline points, mode flag
+; 1.
 preRender_unk_mode_1 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -1585,6 +1970,7 @@ preRender_unk_mode_1 proc far
     lea     si, [bp+arg_8]
     mov     [bp+var_A], 1
     jmp     short prerender_setup_shared_core
+; ASMDOC BLOCK: The remainder of this PROC until ENDP is CS slope/profile data, not executable polygon code.
 line_slope_table_limit     dw 50
 line_interp_profile_offsets     dw offset line_interp_fallback_offset
     dw offset line_interp_fallback_offset
@@ -2815,12 +3201,28 @@ line_interp_profile_49     dw 64170
 preRender_unk_mode_1 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender line.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 14); arg_endX (word ptr 10); arg_endY (word ptr 12); arg_startX (word
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 14);
+; arg_endX (word ptr 10); arg_endY (word ptr 12); arg_startX (word
 ;   ptr 6); arg_startY (word ptr 8).
-; Register ABI: touches AX, BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _preRender_line / _preRender_line
+; Clip a line into a local descriptor and rasterize it when visible and nonempty.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] start x; [BP+8] start y; [BP+10] end x; [BP+12] end y (signed words).; [BP+14] color word
+; (raster
+; uses low byte); DS=SS for the stack-local 28-byte descriptor.
+; outputs: Active sprite pixels updated if clip AX=0 and signed step count>0; no defined scalar result.
+; preserves: BP; SI; DI through both callees; DS; SS
+; clobbers: AX; BX; CX; DX; ES through pixel worker; flags
+; globals_read: CS:_sprite1 clip bounds and surface/row table; CS:line interpolation tables
+; globals_written: active sprite destination pixels
+; services: No direct hardware; pixel destination can be video memory
+; Liveness: live; Live: many C line callers and _imagefunc callback set by two-color polygon setup.
+; Evidence: asm/graphics_resource_runtime.ASM:2824
 _preRender_line proc far
     var_1C = byte ptr -28
      s = byte ptr 0
@@ -2858,12 +3260,31 @@ prerender_line_return:
 _preRender_line endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Add a far callback to the process exit-handler table.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, BP, SP; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aExitListOverflow, _exitlistfuncs.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _add_exit_handler / _add_exit_handler
+; Append a unique far cleanup callback to a ten-slot table or abort on overflow.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] callback offset; [BP+8] callback segment; DS:DGROUP. Segment zero is an empty-slot marker,
+; not a
+; usable callback.
+; outputs: AX=callback offset; DX=callback segment on normal return; duplicate is ignored; sentinel segment at
+; following slot cleared.
+; preserves: SI; DI; BP; DS; ES; SS
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _exitlistfuncs; _aExitListOverflow on overflow
+; globals_written: _exitlistfuncs
+; services: _fatal_error on overflow
+; Liveness: live; Live: keyboard, timer, video, critical-error and audio setup register callbacks.
+; Notes: 44 bytes = ten registration slots plus one sentinel. A zero-segment insertion can overwrite an
+; existing empty
+; slot repeatedly; normal callers use nonzero code segments.
 _add_exit_handler proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -2888,6 +3309,8 @@ exitlist_check_free_slot:
     mov     ax, offset DGROUP:_aExitListOverflow
     push    ax
     call    far ptr _fatal_error
+; ASMDOC BLOCK: Free-slot insertion clears the following segment as sentinel; label name overflow_error is
+; misleading.
 exitlist_overflow_error:
     mov     word ptr [bx+2], 0
     mov     [bx], ax
@@ -2899,11 +3322,26 @@ exitlist_return:
 _add_exit_handler endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Call the registered process exit handlers in reverse order.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, DI; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, DI; balanced explicit saves/restores observed: DI; path-specific inputs and
+; outputs follow the listed operands.
 ; Globals read: _exitlistfuncs.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _call_exitlist / _call_exitlist
+; Invoke all nonzero-segment cleanup callbacks from the highest slot to the lowest.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: DS:DGROUP; no stack arguments; callback code must keep DS usable for subsequent table reads.
+; outputs: Table retained (callbacks may alter their own state); callback effects otherwise unrestricted.
+; preserves: DI explicitly saved around every callback and restored at exit; BP/SI/DS/ES only if callback ABI
+; preserves them; SS
+; clobbers: AX directly; other registers/flags according to each far callback (not saved by dispatcher)
+; globals_read: _exitlistfuncs
+; globals_written: callback-owned globals only; dispatcher does not erase table
+; services: Indirect FAR calls
+; Liveness: live; Live: _fatal_error and _call_exitlist2.
+; Notes: Scans eleven physical entries, offsets 40..0 by -4; the last is the sentinel registration keeps zero.
 _call_exitlist proc far
      r = byte ptr 0
     push    di
@@ -2925,25 +3363,61 @@ exitlist_callbacks_done:
 _call_exitlist endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Call the exit-handler list and terminate the process.
-; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and
+; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _call_exitlist2 / _call_exitlist2
+; Dispatch cleanup callbacks then terminate with CRT exit status zero.
+; Convention: Declared NEAR; accepts no arguments and never returns, so FAR callers also work
+; (src/obj_seg008.c).
+; inputs: DS:DGROUP; no parameters.
+; outputs: Does not return; _exit(0).
+; preserves: none.
+; clobbers: All call/cleanup effects; no returning ABI.
+; globals_read: _exitlistfuncs
+; globals_written: callback-owned state and process termination
+; services: _call_exitlist; CRT _exit
+; Liveness: live; Live: src/obj_seg008.c:1776.
+; Notes: DB 0 follows the nonreturning call; no RET instruction.
 _call_exitlist2 proc near
     call far ptr _call_exitlist
     xor     ax, ax
     push    ax
     call    far ptr _exit
+; ASMDOC BLOCK: Nonreturning CRT exit is followed by a retained DB 0 byte, not a return instruction.
     db 0
 _call_exitlist2 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the file size rounded up to DOS memory paragraphs.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
-; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_paras / _file_paras
+; Read physical file length and return its rounded-up paragraph count.
+; Convention: FAR C stack entry, caller cleanup; shared body ends RETF.
+; inputs: [BP+6] near DS ASCIIZ filename.; [BP+8] fatal policy: zero returns zero on handled failure; nonzero
+; calls
+; _fatal_error.
+; outputs: AX=ceil(DOS seek DX:AX byte length/16) modulo 65536; zero on handled nonfatal failure.;
+; Seek/readjust/close
+; errors after open are not checked; only open failure selects policy.
+; preserves: BP; SI; DI; DS; SS; ES under DOS service ABI
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _aSFileError_1 only for fatal reporting
+; globals_written: DOS file handle/seek state
+; services: INT21 AH=3Dh(open), AX=4202h/4200h(seek), AH=3Eh(close); _fatal_error on policy failure
+; Liveness: live; Live: resource_file_io_decompression calls this public entry.
+; Notes: Result truncates to 16 bits. Nonfatal and normal prologues JMP over the fatal prologue into its PROC
+; extent;
+; not natural fallthrough.
 _file_paras proc far
     var_fatal = word ptr -6
     var_length = word ptr -4
@@ -2965,11 +3439,31 @@ _file_paras proc far
 _file_paras endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the file size in DOS paragraphs without fatal error handling.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_paras_nofatal / _file_paras_nofatal
+; Read physical file length and return its rounded-up paragraph count with nonfatal policy.
+; Convention: FAR C stack entry, caller cleanup; shared body ends RETF.
+; inputs: [BP+6] near DS ASCIIZ filename.; No policy argument: forces 0 (nonfatal).
+; outputs: AX=ceil(DOS seek DX:AX byte length/16) modulo 65536; zero on handled nonfatal failure.;
+; Seek/readjust/close
+; errors after open are not checked; only open failure selects policy.
+; preserves: BP; SI; DI; DS; SS; ES under DOS service ABI
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _aSFileError_1 only for fatal reporting
+; globals_written: DOS file handle/seek state
+; services: INT21 AH=3Dh(open), AX=4202h/4200h(seek), AH=3Eh(close); _fatal_error on policy failure
+; Liveness: dead; Dead standalone entry: no incoming source/name-plan/inventory reference; its body is live
+; via two
+; sibling entries.
+; Notes: Result truncates to 16 bits. Nonfatal and normal prologues JMP over the fatal prologue into its PROC
+; extent;
+; not natural fallthrough.
 _file_paras_nofatal proc far
     var_6 = word ptr -6
      s = byte ptr 0
@@ -2986,14 +3480,35 @@ _file_paras_nofatal proc far
 _file_paras_nofatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the file size in DOS paragraphs with fatal error handling.
-; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI, DS, DX, SI; path-specific inputs and outputs follow the listed
+; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8);
+; arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI,
+; DS, DX, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSFileError_1.
 ; /* PLATFORM(file): calls a DOS file service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_paras_fatal / _file_paras_fatal
+; Read physical file length and return its rounded-up paragraph count with fatal policy.
+; Convention: Declared NEAR but BP+6 frame and RETF require a FAR C call; caller cleanup.
+; inputs: [BP+6] near DS ASCIIZ filename.; No policy argument: forces 1 (fatal).
+; outputs: AX=ceil(DOS seek DX:AX byte length/16) modulo 65536; zero on handled nonfatal failure.;
+; Seek/readjust/close
+; errors after open are not checked; only open failure selects policy.
+; preserves: BP; SI; DI; DS; SS; ES under DOS service ABI
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _aSFileError_1 only for fatal reporting
+; globals_written: DOS file handle/seek state
+; services: INT21 AH=3Dh(open), AX=4202h/4200h(seek), AH=3Eh(close); _fatal_error on policy failure
+; Liveness: dead; Dead standalone entry: no incoming source/name-plan/inventory reference; its body is live
+; via two
+; sibling entries.
+; Notes: Result truncates to 16 bits. Nonfatal and normal prologues JMP over the fatal prologue into its PROC
+; extent;
+; not natural fallthrough.
+; ASMDOC BLOCK: Declared NEAR is misleading: shared arguments start at BP+6 and all normal exits execute RETF.
 _file_paras_fatal proc near
     var_fatal = word ptr -6
      s = byte ptr 0
@@ -3076,11 +3591,31 @@ file_paras_count_from_bytes:
 _file_paras_fatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file decomp paras.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
-; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_decomp_paras / _file_decomp_paras
+; Read packed header output length and return its rounded-up paragraph count.
+; Convention: FAR C stack entry, caller cleanup; shared body ends RETF.
+; inputs: [BP+6] near DS ASCIIZ filename; DS=SS needed for local packed-header read.; [BP+8] fatal policy:
+; zero
+; returns zero on handled failure; nonzero calls _fatal_error.
+; outputs: AX=ceil(header bytes 1..3/16) modulo 65536; zero on handled nonfatal failure.; No file payload is
+; decompressed.
+; preserves: BP; SI; DI; DS; SS; ES under DOS service ABI
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _aSFileError_1 only for fatal reporting
+; globals_written: DOS file handle/seek state; stack-local header
+; services: INT21 AH=3Dh(open), 3Fh(read four bytes), 3Eh(close); _fatal_error on policy failure
+; Liveness: live; Live: resource_file_io_decompression calls this public entry.
+; Notes: Header type byte is ignored; upper byte of 24-bit length contributes to DX before shifting, but
+; returned AX
+; truncates beyond 65535 paragraphs. Short read is recognized by AX != 4, not CF. Initial MOV DX,filename is
+; duplicated.
 _file_decomp_paras proc far
     var_fatal = word ptr -8
     var_6 = byte ptr -6
@@ -3103,11 +3638,33 @@ _file_decomp_paras proc far
 _file_decomp_paras endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file decomp paras nofatal.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_decomp_paras_nofatal / _file_decomp_paras_nofatal
+; Read packed header output length and return its rounded-up paragraph count with nonfatal policy.
+; Convention: FAR C stack entry, caller cleanup; shared body ends RETF.
+; inputs: [BP+6] near DS ASCIIZ filename; DS=SS needed for local packed-header read.; No policy argument:
+; forces 0
+; (nonfatal).
+; outputs: AX=ceil(header bytes 1..3/16) modulo 65536; zero on handled nonfatal failure.; No file payload is
+; decompressed.
+; preserves: BP; SI; DI; DS; SS; ES under DOS service ABI
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _aSFileError_1 only for fatal reporting
+; globals_written: DOS file handle/seek state; stack-local header
+; services: INT21 AH=3Dh(open), 3Fh(read four bytes), 3Eh(close); _fatal_error on policy failure
+; Liveness: dead; Dead standalone entry: no incoming source/name-plan/inventory reference; its body is live
+; via two
+; sibling entries.
+; Notes: Header type byte is ignored; upper byte of 24-bit length contributes to DX before shifting, but
+; returned AX
+; truncates beyond 65535 paragraphs. Short read is recognized by AX != 4, not CF. Initial MOV DX,filename is
+; duplicated.
 _file_decomp_paras_nofatal proc far
     var_fatal = word ptr -8
      s = byte ptr 0
@@ -3124,14 +3681,38 @@ _file_decomp_paras_nofatal proc far
 _file_decomp_paras_nofatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file decomp paras fatal.
-; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8); arg_filename (word ptr 6).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8);
+; arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, SS; balanced explicit saves/restores observed: DI,
+; DS, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSFileError_1.
 ; /* PLATFORM(file): calls a DOS file service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_decomp_paras_fatal / _file_decomp_paras_fatal
+; Read packed header output length and return its rounded-up paragraph count with fatal policy.
+; Convention: Declared NEAR but BP+6 frame and RETF require a FAR C call; caller cleanup.
+; inputs: [BP+6] near DS ASCIIZ filename; DS=SS needed for local packed-header read.; No policy argument:
+; forces 1
+; (fatal).
+; outputs: AX=ceil(header bytes 1..3/16) modulo 65536; zero on handled nonfatal failure.; No file payload is
+; decompressed.
+; preserves: BP; SI; DI; DS; SS; ES under DOS service ABI
+; clobbers: AX; BX; CX; DX; flags
+; globals_read: _aSFileError_1 only for fatal reporting
+; globals_written: DOS file handle/seek state; stack-local header
+; services: INT21 AH=3Dh(open), 3Fh(read four bytes), 3Eh(close); _fatal_error on policy failure
+; Liveness: dead; Dead standalone entry: no incoming source/name-plan/inventory reference; its body is live
+; via two
+; sibling entries.
+; Notes: Header type byte is ignored; upper byte of 24-bit length contributes to DX before shifting, but
+; returned AX
+; truncates beyond 65535 paragraphs. Short read is recognized by AX != 4, not CF. Initial MOV DX,filename is
+; duplicated.
+; ASMDOC BLOCK: Declared NEAR is misleading here too: entry must use a FAR frame; sibling prologues jump into
+; body.
 _file_decomp_paras_fatal proc near
     var_fatal = word ptr -8
      s = byte ptr 0
@@ -3152,6 +3733,7 @@ _file_decomp_paras_fatal proc near
     arg_filename = word ptr 6
     arg_fatal = word ptr 8
 file_decomp_paras_body:
+; ASMDOC BLOCK: Duplicate MOV DX is retained exactly; no extra semantic operation.
     mov     dx, [bp+arg_filename]
     mov     dx, [bp+arg_filename]
     mov     ah, 3Dh
@@ -3229,13 +3811,35 @@ _file_decomp_paras_fatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Search for the first file matching the DOS search pattern.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS,
+; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _foundfileptr.
 ; Globals written: _foundfileptr.
 ; Global addresses taken: _dtatransbuffer, _foundfile, _foundfilepath.
 ; /* PLATFORM(dos): calls a DOS service. */
 ; /* PLATFORM(file): calls a DOS file service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_find / _file_find
+; Start a DOS file search and return a shared full path with the matched filename.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] near DS ASCIIZ search pattern; DS:DGROUP; incoming DF=0 required by initial LODSB/STOSB
+; loop.; Only
+; CL=6 is set for findfirst attributes: incoming CH must be zero for CX=0006h.
+; outputs: AX=near DS pointer to _foundfile on success, 0 on carry failure; ES=DS on success.; Copies pattern
+; prefix
+; through final colon/backslash, then appends exactly 13 DTA filename bytes; shared storage is overwritten by
+; next
+; search. DF=0 on success.
+; preserves: BP; SI; DI; DS; SS
+; clobbers: AX; CX; DX; ES on success; flags/DF on success; BX subject to DOS service
+; globals_read: caller pattern; DOS search DTA; _foundfilepath; _foundfileptr during join
+; globals_written: DOS current DTA/search state; _dtatransbuffer and adjacent _foundfilepath by DOS;
+; _foundfile;
+; _foundfileptr
+; services: INT21 AH=1Ah(set DTA), AH=4Eh(findfirst)
+; Liveness: live; Live: src/obj_seg000 etc and shape/file loaders.
+; Notes: DTA begins at a 30-byte block; its filename field deliberately continues into adjacent _foundfilepath
+; storage. Does not restore former DOS DTA.
 _file_find proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3249,6 +3853,7 @@ _file_find proc far
     mov     ah, 1Ah
     int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
     mov     dx, [bp+arg_0]
+; ASMDOC BLOCK: CL alone is initialized: attribute mask also depends on incoming CH (normally zero).
     mov     cl, 6
     mov     ah, 4Eh
     int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
@@ -3259,6 +3864,7 @@ _file_find proc far
     mov     cx, 57h
     mov     ax, ds
     mov     es, ax
+; ASMDOC BLOCK: Initial string copy assumes DF=0; explicit CLD occurs only in the common filename-append tail.
 file_find_copy_pattern_loop:
     lodsb
     stosb
@@ -3293,14 +3899,31 @@ _file_find_err:
 _file_find endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Continue the current DOS file search.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _dtatransbuffer.
 ; /* PLATFORM(dos): calls a DOS service. */
 ; /* PLATFORM(file): calls a DOS file service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_find_next / _file_find_next
+; Continue the shared DOS search and overwrite the prior result filename in place.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: No arguments; DS:DGROUP and successful prior _file_find required for _foundfileptr/search context.
+; outputs: AX=near _foundfile pointer or 0; ES=DS and DF=0 on success; prefix retained.
+; preserves: BP; SI; DI; DS; SS
+; clobbers: AX; CX; DX; ES on success; flags; BX subject to DOS service
+; globals_read: DOS DTA/search context; _foundfilepath; _foundfileptr; _foundfile prefix
+; globals_written: DOS current DTA/search state; _dtatransbuffer and adjacent _foundfilepath; _foundfile
+; suffix
+; services: INT21 AH=1Ah, AH=4Fh(findnext)
+; Liveness: live; Live: file_find_next_alt source/inventory wrapper.
+; Notes: Jumps backward into _file_find_ok/_file_find_err and returns through their epilogue, using the
+; identical
+; saved frame. DB 0 is unreachable padding.
 _file_find_next proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3314,17 +3937,36 @@ _file_find_next proc far
     int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
     mov     ah, 4Fh
     int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+; ASMDOC BLOCK: Both branches use the earlier routine shared result/epilogue, not this PROC extent alone.
     jb      short _file_find_err
     jmp     short _file_find_ok
     db 0
 _file_find_next endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Multiply two values and apply the fixed-point scaling shift.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _mulscl / _mulscl
+; Multiply signed words and return a rounded fixed-point product scaled by 2^14.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: [BP+6] signed multiplicand; [BP+8] signed multiplier.
+; outputs: AX=DX=((signed product<<2)>>16)+(carry from original product bit13), modulo 65536; equivalent
+; rounded Q14
+; product.
+; preserves: BX; CX; SI; DI; BP; DS; ES; SS
+; clobbers: AX; DX; flags
+; globals_read: none.
+; globals_written: none.
+; services: none.
+; Liveness: live; Live: src/obj_seg001_complete.c:944 and src/preRender_sphere_helper2.c:38, among many
+; accepted C
+; callers.
+; Notes: Two full SHL/RCL pairs, then SHL AX / ADC DX,0 for rounding. The third shift does not double DX.
 _mulscl proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3338,6 +3980,8 @@ _mulscl proc far
     rcl     dx, 1
     shl     ax, 1
     rcl     dx, 1
+; ASMDOC BLOCK: This final low-word shift supplies rounding carry; DX is incremented, not shifted a third
+; time.
     shl     ax, 1
     adc     dx, 0
     mov     ax, dx
@@ -3346,8 +3990,10 @@ _mulscl proc far
 _mulscl endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Configure the MCGA mode-4 display and clear its text page.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX, DI, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, CX, DX, DI, ES; balanced explicit saves/restores observed: DI; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: video_mode4_register_values.
 ; Globals written: _video_mode4_active.
 ; /* PLATFORM(video): calls a BIOS video service. */
@@ -3355,6 +4001,20 @@ _mulscl endp
 ; /* PLATFORM(video): selects a video-memory segment. */
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _video_set_mode4 / _video_set_mode4
+; Select BIOS mode 4, program monochrome CRTC timing and clear 32 KiB at B800:0000.
+; Convention: FAR, C stack arguments, caller cleanup; RETF
+; inputs: DS:DGROUP; no arguments.
+; outputs: _video_mode4_active low byte=1; ES=B800h; AX=008Ah; CX=0; BX=12; DX=03B8h; DI restored; DF=0.
+; preserves: DI; SI/BP/DS under BIOS service ABI; SS
+; clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; globals_read: BDA 0040:0010 equipment word; video_mode4_register_values
+; globals_written: _video_mode4_active; BDA 0040:0010 equipment bits; B800:0000..7fff; display registers
+; services: INT10 AH=0 AL=4; OUT 03BFh,03B8h,03B4h/03B5h
+; Liveness: live; Live: src/obj_seg031.c:236.
+; Notes: Hardware constants denote monochrome CRTC/control ports; not VGA palette setup. Clears 0x4000 WORDS,
+; not a 4
+; KiB text page.
 _video_set_mode4 proc far
      r = byte ptr 0
     push    di
@@ -3390,6 +4050,7 @@ video_mode4_write_register_loop:
     mov     ax, R5HW_VIDEO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov     es, ax
     xor     di, di
+; ASMDOC BLOCK: 0x4000 words clears 0x8000 bytes in B800 memory.
     mov     cx, 4000h
     xor     ax, ax
     rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */

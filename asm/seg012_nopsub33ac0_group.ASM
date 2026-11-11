@@ -1,3 +1,7 @@
+; ASMDOC Module review: Placeholder group name replaced by signed-run AND-mask decoder family; no split/merge.
+; ASMDOC Scope: code-derived contracts below supersede broad legacy summaries without deleting them. No instructions,
+; ASMDOC declarations, old comments or line endings changed.
+; ASMDOC Public routines: _nopsub_33AC0, _nopsub_33AE4, _shape2d_render_bmp_as_mask. Stack offsets are post-prologue BP offsets.
 .8086
 INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
@@ -14,6 +18,27 @@ public _shape2d_render_bmp_as_mask
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_33AC0; proposed name _shape2d_and_rle_hotspot
+; ASMDOC Purpose: AND a signed packet stream into sprite1 at explicit coordinates minus shape hotspot. Positive control repeats
+; ASMDOC next byte, negative control consumes literal bytes, zero terminates.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] source SHAPE2D offset; [BP+08] source SHAPE2D segment; Shape +00 width word; bitmap/run stream begins
+; ASMDOC +10h; caller supplies valid memory/rows; no clipping; [BP+0A] x word; [BP+0C] y word; subtract shape +04/+06 hotspot.
+; ASMDOC Outputs: No semantic register result; sprite1 pixels changed until zero control; Width controls row wrap; header height
+; ASMDOC is not read and does not limit output.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX on nonzero packets; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment(+2), CS row-table pointer(+0A),row offsets; source width word and stream; hotspot
+; ASMDOC words.
+; ASMDOC Globals written: sprite1 backing pixels.
+; ASMDOC Services: none.
+; ASMDOC Dead: true. Reachability: No runtime symbol reference or address-taking found in tracked src/ or asm/.
+; ASMDOC Shared tail: All three compatible frames save DS/SI/DI/BP and join render_bmp_as_mask_shared_exit (111); common return
+; ASMDOC restores them.
+; ASMDOC Edge cases: No clip or total pixel count. Control 80h NEG wraps to 80h and is used as 128 literal bytes. Runs may cross
+; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per row due signed
+; ASMDOC DEC/JG.
 _nopsub_33AC0 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -50,6 +75,27 @@ _nopsub_33AC0 endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_33AE4; proposed name _shape2d_and_rle_at
+; ASMDOC Purpose: AND a signed packet stream into sprite1 at explicit coordinates. Positive control repeats next byte, negative
+; ASMDOC control consumes literal bytes, zero terminates.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] source SHAPE2D offset; [BP+08] source SHAPE2D segment; Shape +00 width word; bitmap/run stream begins
+; ASMDOC +10h; caller supplies valid memory/rows; no clipping; [BP+0A] x word; [BP+0C] y word.
+; ASMDOC Outputs: No semantic register result; sprite1 pixels changed until zero control; Width controls row wrap; header height
+; ASMDOC is not read and does not limit output.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX on nonzero packets; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment(+2), CS row-table pointer(+0A),row offsets; source width word and stream; explicit
+; ASMDOC stack x/y.
+; ASMDOC Globals written: sprite1 backing pixels.
+; ASMDOC Services: none.
+; ASMDOC Dead: true. Reachability: No runtime symbol reference or address-taking found in tracked src/ or asm/.
+; ASMDOC Shared tail: All three compatible frames save DS/SI/DI/BP and join render_bmp_as_mask_shared_exit (111); common return
+; ASMDOC restores them.
+; ASMDOC Edge cases: No clip or total pixel count. Control 80h NEG wraps to 80h and is used as 128 literal bytes. Runs may cross
+; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per row due signed
+; ASMDOC DEC/JG.
 _nopsub_33AE4 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -85,6 +131,27 @@ _nopsub_33AE4 endp
 ; Globals written: none identified.
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _shape2d_render_bmp_as_mask; proposed name _shape2d_render_bmp_as_mask
+; ASMDOC Purpose: AND a signed packet stream into sprite1 at shape header origin. Positive control repeats next byte, negative
+; ASMDOC control consumes literal bytes, zero terminates.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] source SHAPE2D offset; [BP+08] source SHAPE2D segment; Shape +00 width word; bitmap/run stream begins
+; ASMDOC +10h; caller supplies valid memory/rows; no clipping; Shape +08/+0A supply x/y.
+; ASMDOC Outputs: No semantic register result; sprite1 pixels changed until zero control; Width controls row wrap; header height
+; ASMDOC is not read and does not limit output.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX on nonzero packets; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment(+2), CS row-table pointer(+0A),row offsets; source width word and stream; header
+; ASMDOC x/y.
+; ASMDOC Globals written: sprite1 backing pixels.
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg005.c:854,1671,1675.
+; ASMDOC Shared tail: All three compatible frames save DS/SI/DI/BP and join render_bmp_as_mask_shared_exit (111); common return
+; ASMDOC restores them.
+; ASMDOC Edge cases: No clip or total pixel count. Control 80h NEG wraps to 80h and is used as 128 literal bytes. Runs may cross
+; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per row due signed
+; ASMDOC DEC/JG.
 _shape2d_render_bmp_as_mask proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -108,6 +175,8 @@ _shape2d_render_bmp_as_mask proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC Shared AND decoder: height is never read. Width only selects row breaks; stream zero control is the sole normal
+; ASMDOC terminator.
 render_bmp_as_mask_shared_exit:
     cld
     lea     ax, [si+10h]
@@ -124,6 +193,8 @@ render_bmp_as_mask_shared_exit:
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_6]
+; ASMDOC Signed control byte: 1..127 repeats next byte; 81h..FFh copies 127..1 literals; 80h copies 128 literals after byte NEG;
+; ASMDOC 0 returns.
 render_bmp_as_mask_read_loop:
     lodsb
     or      al, al
@@ -144,6 +215,7 @@ render_bmp_as_mask_scan_loop:
     inc     di
     dec     dx
     jg      short bmp_as_mask_when_greater_2
+; ASMDOC Packets can span rows. Row advance reads the next CS row-table word and restarts at saved x; no clipping/height test.
     add     [bp+var_10], 2
     mov     bx, [bp+var_10]
     mov     di, cs:[bx]

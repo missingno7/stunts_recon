@@ -1,3 +1,10 @@
+; ASMDOC Module: math_resource_helpers. Mixed small helpers: paired 30-byte sprite DESCRIPTORS, archive directory
+; ASMDOC access, Q14 trigonometry, unsigned projection arithmetic and interrupt-protected timer reads. Does not
+; ASMDOC contain pixel blitting loops.
+; ASMDOC Static documentation candidate only. Original comments retained verbatim; these contracts correct generic
+; ASMDOC earlier annotations.
+; ASMDOC No exhaustive dynamic call graph. dead=true means no retained source reference in this bounded audit, not
+; ASMDOC permission to remove bytes.
 .8086
 name math_resource_helpers
 INCLUDE include\platform_hw.inc
@@ -5,6 +12,7 @@ S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'
 public _sinetable
+; ASMDOC Exported DATA: 257 quarter-wave Q14 samples; do not disassemble as executable instructions.
 _sinetable dw 0
     dw 101
     dw 201
@@ -286,6 +294,21 @@ public _sprite_copy_both_to_arg
 ; Globals written: none identified.
 ; Global addresses taken: _sprite1.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_copy_both_to_arg (_sprite_copy_both_to_arg): Save the contiguous pair of 30-byte sprite
+; ASMDOC descriptors with exactly 30 MOVSW operations.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 near DGROUP offset of 60-byte destination; DS=DGROUP on entry; CS:_sprite1 begins contiguous
+; ASMDOC sprite pair
+; ASMDOC outputs: 60 descriptor bytes copied CS:_sprite1 -> entry DS:argument; DF=0; ES=entry DS
+; ASMDOC preserves: BX; DX; SI; DI; BP; DS; IF
+; ASMDOC clobbers: AX; CX; ES; DF cleared
+; ASMDOC globals_read: CS:_sprite1[60]
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: State snapshots include descriptor pointers and clipping/window fields; no framebuffer pixel data
+; ASMDOC is copied. Forward word copy is not arbitrary-overlap memmove.
 _sprite_copy_both_to_arg proc far
  push bp
  mov bp,sp
@@ -320,6 +343,21 @@ public _sprite_copy_arg_to_both
 ; Globals written: none identified.
 ; Global addresses taken: _sprite1.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_copy_arg_to_both (_sprite_copy_arg_to_both): Restore the contiguous pair of 30-byte
+; ASMDOC sprite descriptors with exactly 30 MOVSW operations.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 near DGROUP offset of 60-byte source; DS=DGROUP on entry; CS:_sprite1 begins contiguous
+; ASMDOC sprite pair
+; ASMDOC outputs: 60 descriptor bytes copied entry DS:argument -> CS:_sprite1; DF=0; ES=CS
+; ASMDOC preserves: BX; DX; SI; DI; BP; DS; IF
+; ASMDOC clobbers: AX; CX; ES; DF cleared
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: CS:_sprite1[60]
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: State snapshots include descriptor pointers and clipping/window fields; no framebuffer pixel data
+; ASMDOC is copied. Forward word copy is not arbitrary-overlap memmove.
 _sprite_copy_arg_to_both proc far
  push bp
  mov bp,sp
@@ -351,6 +389,19 @@ public _file_get_res_shape_count
 ; Globals written: none identified.
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _file_get_res_shape_count (_file_get_res_shape_count): Read archive count word at supplied far
+; ASMDOC base+4.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 archive far offset; BP+8 archive far segment
+; ASMDOC outputs: AX=u16 word from segment:[offset+4]; ES=archive segment
+; ASMDOC preserves: BX; CX; DX; SI; DI; BP; DS; FLAGS
+; ASMDOC clobbers: AX; ES
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: No format validation or bounds check. ES addresses arbitrary resource memory, not display memory.
 _file_get_res_shape_count proc far
  push bp
  mov bp,sp
@@ -374,6 +425,24 @@ public _file_get_shape2d
 ; Globals written: none identified.
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _file_get_shape2d (_file_get_shape2d): Compute normalized far shape pointer from count, indexed
+; ASMDOC dword relative offset and archive segment.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 archive far offset (used only to read count at offset+4); BP+8 archive far segment; BP+10 u16
+; ASMDOC shape index; no bounds check
+; ASMDOC outputs: DX:AX=normalized segment:offset, offset 0..15; returned segment truncates so address retains low
+; ASMDOC 20 linear bits; Linear computation starts at 16*archive_segment + ((8*count+6) mod 65536) + indexed offset
+; ASMDOC dword; ES=archive segment
+; ASMDOC preserves: SI; DI; BP; DS; DF; IF
+; ASMDOC clobbers: AX; BX; CX; DX; ES; arithmetic flags
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Directory dword is read at ES:[(4*count+4*index+6) mod 65536], omitting supplied far offset SI.
+; ASMDOC Payload base also omits SI. Therefore ordinary archive formula requires offset zero. Full additions use
+; ASMDOC carry before normalization; no physical extent check.
 _file_get_shape2d proc far
  push bp
  mov bp,sp
@@ -431,6 +500,21 @@ public _nopsub_326BA
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_326BA (_mem_copy_table_dword): Copy an indexed four-byte entry from far base+6+4*index to
+; ASMDOC near output; entry meaning unknown.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 far table offset; BP+8 far table segment; BP+10 u16 index (4*index wraps as word); BP+12 near
+; ASMDOC DS output offset for four bytes
+; ASMDOC outputs: DS:output receives low word then high word; DX:AX retains loaded entry dword; ES=table segment
+; ASMDOC preserves: CX; SI; DI; BP; DS; DF; IF
+; ASMDOC clobbers: AX; BX; DX; ES; arithmetic flags
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Unlike file_get_shape2d, this routine includes far base offset in the indexed reads. No evidence
+; ASMDOC establishes SHAPE3D field roles. Both source words are loaded before either destination store.
 _nopsub_326BA proc far
     push bp
     mov bp, sp
@@ -461,6 +545,19 @@ public _cosfast
 ; Globals read: _sinetable.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sinfast (_sinfast): Return Q14 sine using quadrant-reflected 257-word lookup.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 word angle, 1024 units per turn; only low 10 bits determine result; DS=DGROUP for sine table
+; ASMDOC outputs: AX=signed Q14 value -16384..16384
+; ASMDOC preserves: CX; DX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; BX; arithmetic flags
+; ASMDOC globals_read: _sinetable[257]
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: JMP CS:sine_quadrant_dispatch[2*((angle>>8)&3)] uses four near code offsets embedded in code, not
+; ASMDOC four instructions. Index reflected as 256-lowbyte for odd quadrants.
 _sinfast proc far
      sin_fast_s = byte ptr 0
      sin_fast_r = byte ptr 2
@@ -469,12 +566,15 @@ _sinfast proc far
     push    bp
     mov     bp, sp
     mov     ax, [bp+sin_fast_arg_0]
+; ASMDOC Shared sine body entered by cosine with its own compatible BP frame; quadrant wraps every 1024 angle
+; ASMDOC units.
 code_sin_fast_main:
     mov     bl, ah
     xor     ah, ah
     and     bx, 3
     shl     bx, 1
     jmp     cs:sine_quadrant_dispatch[bx]
+; ASMDOC Inline CODE-segment dispatch DATA: four near offsets read by the preceding indirect JMP.
 sine_quadrant_dispatch     dw offset sinfast_finish
     dw offset sinfast_finish_2
     dw offset sinfast_finish_3
@@ -515,6 +615,18 @@ _sinfast endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _cosfast (_cosfast): Return Q14 cosine by adding one quarter-turn then joining sine body.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 word angle, 1024 units per turn; only low 10 bits determine result; DS=DGROUP for sine table
+; ASMDOC outputs: AX=signed Q14 value -16384..16384
+; ASMDOC preserves: CX; DX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; BX; arithmetic flags
+; ASMDOC globals_read: _sinetable[257]
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Shares code_sin_fast_main and all sine epilogues; trailing DB 0 is alignment/unreached from entry.
 _cosfast proc far
      cos_fast_s = byte ptr 0
      cos_fast_r = byte ptr 2
@@ -539,6 +651,19 @@ public _nopsub_32738
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_32738 (_math_div_u32_u16): Unsigned divide 32-bit stack numerator by 16-bit denominator.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 numerator low word; BP+8 numerator high word; BP+10 u16 denominator
+; ASMDOC outputs: AX=u16 quotient; DX=u16 remainder if DIV succeeds
+; ASMDOC preserves: BX; CX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; DX; DIV arithmetic flags undefined
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: CPU INT0 on divisor zero or quotient overflow
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Success requires denominator!=0 and numerator/denominator<=FFFFh. Installed handler may alter fault
+; ASMDOC recovery; do not interpret result after fault as normal division.
 _nopsub_32738 proc far
     push bp
     mov bp, sp
@@ -558,6 +683,19 @@ public _nopsub_32746
 ; Globals read: _projection_x_scale.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_32746 (_projection_multiply_x_scale): Unsigned multiply projection_x_scale by supplied
+; ASMDOC word, returning full product.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 u16 factor; DS=DGROUP
+; ASMDOC outputs: DX:AX=u32 unsigned product
+; ASMDOC preserves: BX; CX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; DX; MUL CF/OF; other arithmetic flags undefined
+; ASMDOC globals_read: _projection_x_scale
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Evidence: asm/math_resource_helpers.ASM:561
 _nopsub_32746 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -580,6 +718,19 @@ public _nopsub_32751
 ; Globals read: _projection_y_scale.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_32751 (_projection_multiply_y_scale): Unsigned multiply projection_y_scale by supplied
+; ASMDOC word, returning full product.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 u16 factor; DS=DGROUP
+; ASMDOC outputs: DX:AX=u32 unsigned product
+; ASMDOC preserves: BX; CX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; DX; MUL CF/OF; other arithmetic flags undefined
+; ASMDOC globals_read: _projection_y_scale
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Evidence: asm/math_resource_helpers.ASM:583
 _nopsub_32751 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -602,6 +753,20 @@ public _projectiondata9_times_ratio
 ; Globals read: _projection_x_scale.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _projectiondata9_times_ratio (_projectiondata9_times_ratio): Compute unsigned
+; ASMDOC projection_x_scale*numerator/denominator with MUL then DIV.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 u16 numerator; BP+8 u16 denominator; DS=DGROUP
+; ASMDOC outputs: AX=u16 quotient; DX=remainder if DIV succeeds
+; ASMDOC preserves: BX; CX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; DX; DIV arithmetic flags undefined
+; ASMDOC globals_read: _projection_x_scale
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: CPU INT0 on divisor zero or quotient overflow
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: DX is remainder, not high product at return. No fixed-point shift, rounding increment or signed
+; ASMDOC arithmetic is used.
 _projectiondata9_times_ratio proc far
     push bp
     mov bp, sp
@@ -621,6 +786,20 @@ public _nopsub_3276A
 ; Globals read: _projection_y_scale.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_3276A (_projection_scale_y_ratio): Compute unsigned
+; ASMDOC projection_y_scale*numerator/denominator with MUL then DIV.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 u16 numerator; BP+8 u16 denominator; DS=DGROUP
+; ASMDOC outputs: AX=u16 quotient; DX=remainder if DIV succeeds
+; ASMDOC preserves: BX; CX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; DX; DIV arithmetic flags undefined
+; ASMDOC globals_read: _projection_y_scale
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: CPU INT0 on divisor zero or quotient overflow
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: DX is remainder, not high product at return. No fixed-point shift, rounding increment or signed
+; ASMDOC arithmetic is used.
 _nopsub_3276A proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -647,6 +826,19 @@ public _timer_get_counter
 ; Globals written: none identified.
 ; /* PLATFORM(timer): masks or restores interrupts around timer state. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _timer_get_counter (_timer_get_counter): Read low/high words of callback counter with maskable
+; ASMDOC interrupts disabled.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: DS=DGROUP; counter owned by timer ISR
+; ASMDOC outputs: DX:AX=u32 logical callback counter snapshot; IF=1 after STI regardless of incoming IF
+; ASMDOC preserves: BX; CX; SI; DI; BP; DS; ES; DF; arithmetic flags
+; ASMDOC clobbers: AX; DX; IF forced enabled
+; ASMDOC globals_read: _timer_callback_counter
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: CLI; STI
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Does not preserve prior interrupt-enable state. Unit is callback ticks; no milliseconds conversion.
 _timer_get_counter proc far
     cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov ax,word ptr ds:[_timer_callback_counter]
@@ -666,6 +858,20 @@ public _timer_custom_delta
 ; Globals written: none identified.
 ; /* PLATFORM(timer): masks or restores interrupts around timer state. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _timer_custom_delta (_timer_custom_delta): Take interrupt-protected callback snapshot and
+; ASMDOC subtract supplied dword modulo 2^32.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 previous counter low word; BP+8 previous counter high word; DS=DGROUP
+; ASMDOC outputs: DX:AX=(snapshot-previous) modulo 2^32; BX:CX=previous low:high; IF=1
+; ASMDOC preserves: SI; DI; BP; DS; ES; DF
+; ASMDOC clobbers: AX; BX; CX; DX; arithmetic flags; IF forced enabled
+; ASMDOC globals_read: _timer_callback_counter
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: CLI; STI
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Unlike raw snapshot getter, subtraction changes arithmetic flags. No canonical reference found;
+; ASMDOC dead export in current sources.
 _timer_custom_delta proc far
     push bp
     mov bp, sp

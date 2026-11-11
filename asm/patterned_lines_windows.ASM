@@ -1,3 +1,9 @@
+; ASMDOC Module review: Existing module name describes patterned spans and window descriptor storage; keep its complete mixed
+; ASMDOC extent.
+; ASMDOC Scope: code-derived contracts below supersede broad legacy summaries without deleting them. No instructions,
+; ASMDOC declarations, old comments or line endings changed.
+; ASMDOC Public routines: _draw_patterned_lines, _sprite_make_window, _sprite_setup1_from_arg_pointer, _sprite_copy_2_to_1. Stack
+; ASMDOC offsets are post-prologue BP offsets.
 .8086
 INCLUDE include\platform_hw.inc
 name asm012_150408
@@ -51,6 +57,8 @@ public _wnd_defs
 public _sprite_setup1_from_arg_pointer
 public _sprite_copy_2_to_1
 
+; ASMDOC Unexported pattern-setting alternate entry: same span arguments as public entry plus BP+10h pattern; jumps into common
+; ASMDOC core. Normal public entry starts at 63.
     push    bp
     mov     bp, sp
     push    si
@@ -60,6 +68,27 @@ public _sprite_copy_2_to_1
     jmp     short pattern_lines_join_01
     ; align 2
     db 144
+; ASMDOC Contract _draw_patterned_lines; proposed name _draw_patterned_lines
+; ASMDOC Purpose: Draw inclusive spans only where the rotating row-mask bit is 1; bit 0 leaves destination unchanged. Swap
+; ASMDOC pattern bytes initially when first y is even and after every row.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] near DS offset of signed 16-bit inclusive left endpoints, one word per row; [BP+08] near DS offset of
+; ASMDOC signed 16-bit inclusive right endpoints, one word per row; [BP+0A] first y word; caller supplies valid row-table index;
+; ASMDOC [BP+0C] signed row count; zero/negative behavior is entry-specific; [BP+0E] primary color (low byte only); DS addresses
+; ASMDOC span arrays and pattern globals; no clipping in this entry.
+; ASMDOC Outputs: No semantic register result; destination pixels changed; Caller stack slots [BP+06]/[BP+08] advance by 2 each
+; ASMDOC row; [BP+0C] decremented in place.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A) and addressed row offsets; _line_pattern_bits (DS
+; ASMDOC word; alternating low/high row masks).
+; ASMDOC Globals written: _line_pattern_bits; sprite1 backing pixels; caller stack argument slots +06/+08/+0C.
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Address taken in asm/font_matrix_shape_decode.ASM:182 and installed in _spritefunc; indirect
+; ASMDOC span callback, so lack of direct CALL does not imply dead.
+; ASMDOC Edge cases: No initial row-count test: zero or negative count still processes one row. Signed nonpositive span length
+; ASMDOC skips pixels but still advances phase and argument slots.
 _draw_patterned_lines label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw or clear the graphics content identified by draw patterned lines.
@@ -83,6 +112,8 @@ draw_patterned_lines proc far
     mov     bp, sp
     push    si
     push    di
+; ASMDOC Shared span core: swap mask bytes for even first y, align low mask byte to x modulo 8, then consume one bit per
+; ASMDOC inclusive pixel. Zero count still draws one row.
 pattern_lines_join_01:
     cld
     mov     si, [bp+arg_4]
@@ -138,6 +169,27 @@ pattern_lines_branch_path_02:
     ; align 2
     db 0
 draw_patterned_lines endp
+; ASMDOC Contract _sprite_make_window; proposed name _sprite_make_window
+; ASMDOC Purpose: Allocate shape-backed window storage, append a 30-byte sprite descriptor plus height row-offset words to the CS
+; ASMDOC window arena, and return its far pointer. Does not initialize pixel contents.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] width word; [BP+08] height word; A third color word passed by C callers is unused; DS must address
+; ASMDOC memory-manager globals; SS is used as DGROUP on fatal arena exhaustion.
+; ASMDOC Outputs: DX:AX = CS:descriptor offset on success; Allocated shape header +00 width,+02 height,+04/+06/+08/+0A zero;
+; ASMDOC bytes +0C..+0F and pixels untouched; Rows begin at shape offset 0010h; descriptor bitmap offset is zero.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return; ES.
+; ASMDOC Clobbers: AX; BX; CX; DX; arithmetic flags; DF=0 via _mmgr_path_to_name.
+; ASMDOC Globals read: _next_wnd_def; CS arena end address; _resptr2/_resendptr1/_resendptr2/_resmaxsize and MEMCHUNK records via
+; ASMDOC allocator; aMcgaWindow / aWindowdefOutOfRowTableSpa.
+; ASMDOC Globals written: _next_wnd_def; _wnd_defs allocated descriptor and rows; allocated shape header;
+; ASMDOC _resptr2/_resendptr1/_resmaxsize and MEMCHUNK records via allocator.
+; ASMDOC Services: _mmgr_alloc_pages (far; returns segment DX, AX=0; preserves ES/DS/SI/DI/BP); _fatal_error on allocation/arena
+; ASMDOC exhaustion; nonreturning required.
+; ASMDOC Dead: false. Reachability: Many direct C callers, e.g. src/obj_seg000.c:685 and src/seg033_mcgawnd.c:27.
+; ASMDOC Edge cases: Uses signed IMUL but only low AX, adds 10h modulo 16 bits, logical shift right 4 then INC for paragraph
+; ASMDOC count. Arena reservation is 2*(15+height) modulo 16 bits and rejects end >= following code. Height zero enters LOOP with
+; ASMDOC CX=0 and is not safe. Fatal return would fall into inline data, not a normal epilogue.
 _sprite_make_window label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite make wnd.
@@ -191,6 +243,8 @@ sprite_make_wnd proc far
     mov     [bx+SHAPE2D.s2d_pos_y], ax
     mov     [bx+SHAPE2D.s2d_unk1], ax
     mov     [bx+SHAPE2D.s2d_unk2], ax
+; ASMDOC Reserve descriptor (15 words) plus height row words in CS arena. End equality is rejected. Shape allocation has already
+; ASMDOC happened; arena fatal handler must not return.
     mov     ax, 0Fh         ; sizeof SPRITE (in words)
     add     ax, [bp+arg_2]  ; height ??
     shl     ax, 1
@@ -239,6 +293,8 @@ make_window_error_path_01:
     call    far ptr _fatal_error
     ; align 2
     db 144
+; ASMDOC PUBLIC DATA, not entry point: next_wnd_def stores next free CS offset. PUBLIC wnd_defs below is a 3600-byte
+; ASMDOC descriptor/row arena ending at following public code label.
 _next_wnd_def label word
 next_wnd_def     dw offset wnd_defs
 _wnd_defs label byte
@@ -3843,6 +3899,21 @@ wnd_defs     db 0
     db 0
     db 0
 sprite_make_wnd endp
+; ASMDOC Contract _sprite_setup1_from_arg_pointer; proposed name _sprite_setup1_from_arg_pointer
+; ASMDOC Purpose: Copy exactly 15 words of a caller-supplied sprite descriptor into CS:_sprite1; no pixels are copied.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] descriptor offset; [BP+08] descriptor segment; source need not be DGROUP; Source row-table offset is
+; ASMDOC copied verbatim and subsequent renderers dereference it in CS.
+; ASMDOC Outputs: CS:_sprite1 receives 30 bytes; ES=CS; AX=CS; CX=0.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return; BX; DX.
+; ASMDOC Clobbers: AX; CX; ES; DF=0; other arithmetic flags unchanged.
+; ASMDOC Globals read: caller far descriptor (30 bytes).
+; ASMDOC Globals written: _sprite1 descriptor (30 bytes).
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg000.c:2540, src/obj_seg005.c:1512 and internal call at
+; ASMDOC patterned_lines_windows.ASM:3895.
+; ASMDOC End of CS window arena and start of callable descriptor-copy entry; reserving through this address is rejected.
 _sprite_setup1_from_arg_pointer label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite set 1 from argptr.
@@ -3877,6 +3948,18 @@ sprite_set_1_from_argptr proc far
     pop     bp
     retf
 sprite_set_1_from_argptr endp
+; ASMDOC Contract _sprite_copy_2_to_1; proposed name _sprite_copy_2_to_1
+; ASMDOC Purpose: Select sprite2 by calling the descriptor copier; copy 30 descriptor bytes from sprite2 into sprite1.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: No arguments.
+; ASMDOC Outputs: CS:_sprite1 receives CS:_sprite2 descriptor; AX=CS; CX=0; ES=CS.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return; BX; DX.
+; ASMDOC Clobbers: AX; CX; ES; arithmetic flags from ADD SP; DF=0.
+; ASMDOC Globals read: _sprite2 descriptor.
+; ASMDOC Globals written: _sprite1 descriptor.
+; ASMDOC Services: sprite_set_1_from_argptr / _sprite_setup1_from_arg_pointer.
+; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg005.c:1515 and asm/graphics_resource_runtime.ASM:237.
 _sprite_copy_2_to_1 label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite copy 2 to 1.

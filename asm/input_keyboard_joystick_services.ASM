@@ -1,3 +1,33 @@
+; INPUTDOC Module input_keyboard_joystick_services (owner input_keyboard_joystick_services); comment-only static
+; INPUTDOC contract review.
+; INPUTDOC Audited INPUTDOC contracts qualify the older retained generic comments; no code or declarations changed.
+; INPUTDOC Routine names below follow rename-plan.json; definitions retain their original spelling.
+; INPUTDOC dead=true means statically unreferenced; no proof against arbitrary external/numeric callers or execution.
+; INPUTDOC Public data: _callbackflags2
+; INPUTDOC Routine _set_bios_mode3 -> _set_bios_mode3: Clear the video surface, select text equipment bits, set BIOS
+; INPUTDOC mode 3 and palette/background zero.
+; INPUTDOC Routine _kb_parse_key -> _kb_parse_key: Dispatch a key callback or return its ASCII/extended game key word.
+; INPUTDOC Routine _kb_reg_callback -> _kb_reg_callback: Reuse or allocate one of 64 far callback slots and assign its
+; INPUTDOC one-based selector to a key.
+; INPUTDOC Routine _nopsub_304AF -> _kb_clear_key_callback: Clear the callback selector for the supplied key by
+; INPUTDOC entering the registration tail.
+; INPUTDOC Routine _nopsub_304B6 -> _input_read_char_or_joystick: Read a pending BIOS key or return a delayed joystick
+; INPUTDOC direction/button character.
+; INPUTDOC Routine _kb_get_char -> _kb_get_char: Peek a key; consume and parse it only when SS equals DS.
+; INPUTDOC Routine _get_kb_or_joy_flags -> _get_kb_or_joy_flags: Return configured keyboard control flags, falling back
+; INPUTDOC to joystick only if all are zero.
+; INPUTDOC Routine _nopsub_305C8 -> _input_get_action_buttons: OR configured keyboard action buttons with active-low
+; INPUTDOC joystick buttons.
+; INPUTDOC Routine _get_joy_flags -> _get_joy_flags: Measure gameport RC axes, update calibration and return
+; INPUTDOC direction/button bits.
+; INPUTDOC Routine _reset_joystick_selection -> _reset_joystick_selection: Enable joystick sampling and reset only the
+; INPUTDOC X/Y calibration extrema.
+; INPUTDOC Routine _joystick_flags_to_index -> _joystick_flags_to_index: Map low four direction bits through the
+; INPUTDOC 16-entry direction-index table.
+; INPUTDOC Routine _replay_axis_value -> _replay_axis_value: Scale the saved X-axis sample relative to its minimum and
+; INPUTDOC center by 31.
+; INPUTDOC Routine _nopsub_307FA -> _joystick_scale_saved_y: Scale the saved Y-axis sample relative to its minimum and
+; INPUTDOC center by 31.
 .8086
 INCLUDE include\platform_hw.inc
 name asm012_132056
@@ -64,6 +94,18 @@ public _nopsub_307FA
 ; Globals written: none identified.
 ; /* PLATFORM(video): calls a BIOS video service. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _set_bios_mode3 (original _set_bios_mode3).
+; INPUTDOC Purpose: Clear the video surface, select text equipment bits, set BIOS mode 3 and palette/background zero.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: No API return; ES=0040h before BIOS calls; BIOS results unspecified.
+; INPUTDOC Preserves: No explicit saves; do not infer preserved registers across INT10. SP balanced.
+; INPUTDOC Clobbers: Direct AX,BX,ES,FLAGS; video_clear_color additionally CX; BIOS INT10 transitive contract unknown.
+; INPUTDOC Globals read: BDA 0040:0010 equipment word
+; INPUTDOC Globals written: BDA 0040:0010 bits 4..5 := 01b; transitive video memory
+; INPUTDOC Services: video_clear_color(0); INT10 AH=00 AL=03; INT10 AH=0B BH=00 BL=00
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _set_bios_mode3 proc far
     xor     ax, ax
     push    ax
@@ -91,10 +133,27 @@ _set_bios_mode3 endp
 ; Globals written: key_parser_busy_flag.
 ; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_parse_key (original _kb_parse_key).
+; INPUTDOC Purpose: Dispatch a key callback or return its ASCII/extended game key word.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): BIOS key u16; low byte nonzero selects ASCII, masked to 7 bits and overwritten
+; INPUTDOC in caller stack slot; zero low byte selects high-byte index capped at 84h. DS=DGROUP.
+; INPUTDOC Outputs: AX=normalized key when no callback; AX=0 after callback; busy early return leaves incoming AX
+; INPUTDOC unchanged. IF=1.
+; INPUTDOC Preserves: BP,SI,DI explicitly restored; callback must preserve DS for guard cleanup. SS:SP balanced on
+; INPUTDOC normal callback return.
+; INPUTDOC Clobbers: Direct AX,BX,FLAGS,IF; callback may transitively clobber CX,DX,DS,ES and other unsaved state.
+; INPUTDOC Globals read: _callbackflags[0..127]; _callbackflags2[0..132]; _callbacks far-pointer table;
+; INPUTDOC key_parser_busy_flag
+; INPUTDOC Globals written: key_parser_busy_flag; caller key stack word for ASCII; callback-dependent globals
+; INPUTDOC Services: CLI/STI; indirect FAR callback with no explicitly supplied argument words
+; INPUTDOC Reachability: Live via kb_get_char; callback targets are explicitly registered by src/obj_seg031.c.
 _kb_parse_key proc far
     push bp
     mov bp, sp
     cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+; INPUTDOC Busy return intentionally leaves AX untouched; STI does not restore entry IF.
     cmp byte ptr ds:[key_parser_busy_flag], 0
     je acquire_key_parser_lock
     sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
@@ -107,12 +166,14 @@ acquire_key_parser_lock:
     or bl, bl
     je select_keyboard_callback_table
     and bx, 7Fh
+; INPUTDOC ASCII normalization rewrites the caller-owned argument word before any callback.
     mov word ptr [bp + 6], bx
     mov bl, byte ptr _callbackflags[bx]
 dispatch_key_callback:
     dec bx
     jl return_without_callback
     shl bx, 1
+; INPUTDOC These pushes preserve SI/DI, not documented callback arguments; callback must preserve DS for guard cleanup.
     push di
     push si
     shl bx, 1
@@ -126,6 +187,7 @@ dispatch_key_callback:
 select_keyboard_callback_table:
     mov bl, bh
     xor bh, bh
+; INPUTDOC 84h is a valid last index in the 134-byte scan selector allocation.
     cmp bx, 84h
     jl dispatch_keyboard_callback
     mov bx, 84h
@@ -146,6 +208,20 @@ _kb_parse_key endp
 ; Globals written: _callbackflags, _callbackflags2.
 ; Global addresses taken: _callbacks.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_reg_callback (original _kb_reg_callback).
+; INPUTDOC Purpose: Reuse or allocate one of 64 far callback slots and assign its one-based selector to a key.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): encoded key; +8 (entry +6): callback offset; +10 (entry +8): callback segment.
+; INPUTDOC DS=DGROUP. ASCII branch expects key 1..127; signed JG does not reject negative full words.
+; INPUTDOC Outputs: No specified return; AX=one-based slot selector on found/free path, original pointer offset on
+; INPUTDOC full-table failure.
+; INPUTDOC Preserves: Untouched by this body: BP, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,CX,DX,FLAGS
+; INPUTDOC Globals read: _callbacks[64] offset/segment slots
+; INPUTDOC Globals written: _callbacks when free segment=0; _callbackflags or _callbackflags2
+; INPUTDOC Services:
+; INPUTDOC Reachability: Live: src/obj_seg031.c:161-177 registers nine key bindings.
 _kb_reg_callback proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -165,6 +241,7 @@ scan_callback_slots:
     cmp     [bx+2], dx
     jz      short calculate_callback_flag
 check_free_callback_slot:
+; INPUTDOC A zero callback segment marks a free slot; an identical pointer reuses the slot first.
     cmp     word ptr [bx+2], 0
     jz      short store_callback_entry
     add     bx, 4
@@ -181,6 +258,7 @@ store_callback_flags:
     mov     bx, [bp+arg_0]
     or      bl, bl
     jz      short store_scancode_flags
+; INPUTDOC Signed JG rejects positive keys above 127, but negative encoded words pass through.
     cmp     bx, 7Fh ; ''
     jg      short return_after_keyboard_flag
     mov     _callbackflags[bx], al
@@ -204,6 +282,20 @@ _kb_reg_callback endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_clear_key_callback (original _nopsub_304AF).
+; INPUTDOC Purpose: Clear the callback selector for the supplied key by entering the registration tail.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): encoded key, same index rules as kb_reg_callback. DS=DGROUP.
+; INPUTDOC Outputs: AX=0; callback pointer slots remain allocated.
+; INPUTDOC Preserves: Untouched by this body: BP, CX, DI, DS, DX, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,FLAGS
+; INPUTDOC Globals read:
+; INPUTDOC Globals written: _callbackflags or _callbackflags2
+; INPUTDOC Services:
+; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
+; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
+; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _nopsub_304AF proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -211,6 +303,7 @@ _nopsub_304AF proc far
     push    bp
     mov     bp, sp
     xor     ax, ax
+; INPUTDOC Shared tail pops this routine BP and RETFs using its own caller frame.
     jmp     short store_callback_flags
 
 _nopsub_304AF endp
@@ -222,6 +315,22 @@ _nopsub_304AF endp
 ; Globals written: joystick_repeat_count, joystick_repeat_current_key, joystick_repeat_previous_key.
 ; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _input_read_char_or_joystick (original _nopsub_304B6).
+; INPUTDOC Purpose: Read a pending BIOS key or return a delayed joystick direction/button character.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: AX=ASCII with AH=0, extended key word, joystick-mapped key or zero while unchanged/delayed.
+; INPUTDOC Preserves: Untouched by this body: BP, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,CX,DX,FLAGS,IF through get_joy_flags; INT16 external contract unknown.
+; INPUTDOC Globals read: joystick_button_keycode_table; joystick_repeat_previous_key; joystick_repeat_current_key;
+; INPUTDOC joystick_repeat_count; transitive get_joy_flags globals
+; INPUTDOC Globals written: joystick_repeat_previous_key; joystick_repeat_current_key; joystick_repeat_count;
+; INPUTDOC transitive get_joy_flags globals
+; INPUTDOC Services: INT16 AH=01/00; get_joy_flags
+; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
+; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
+; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _nopsub_304B6 proc far
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
@@ -233,6 +342,7 @@ _nopsub_304B6 proc far
     xor     ah, ah
 return_empty_key_char:
     retf
+; INPUTDOC No preceding fall-through: this second BIOS/parser body follows RETF and has no local incoming edge.
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jz      short poll_joystick_for_character
@@ -265,6 +375,7 @@ return_when_key_unchanged:
 check_repeat_key_delay:
     cmp     ax, joystick_repeat_current_key
     jnz     short start_key_repeat_delay
+; INPUTDOC Delay is BYTE-sized because joystick_repeat_count is declared DB; second allocated byte is untouched.
     dec     joystick_repeat_count
     jg      short return_when_key_unchanged
     mov     joystick_repeat_previous_key, ax
@@ -283,6 +394,21 @@ _nopsub_304B6 endp
 ; Globals written: none identified.
 ; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_get_char (original _kb_get_char).
+; INPUTDOC Purpose: Peek a key; consume and parse it only when SS equals DS.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP, SS compared with DS to select consume path.
+; INPUTDOC Outputs: AX=0 if absent; if SS!=DS, raw peeked AX without dequeue; otherwise kb_parse_key result (callback
+; INPUTDOC may consume).
+; INPUTDOC Preserves: BP,SI,DI,SS under parser callback DS-preserving requirement; SP balanced. Other state depends on
+; INPUTDOC callback/BIOS.
+; INPUTDOC Clobbers: Direct AX,BX,CX,FLAGS; parser/callback transitive clobbers conditional; INT16 external contract
+; INPUTDOC unknown.
+; INPUTDOC Globals read: transitive keyboard queue and parser tables/guard
+; INPUTDOC Globals written: transitive queue dequeue, parser guard, callback state
+; INPUTDOC Services: INT16 AH=01/00; kb_parse_key
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _kb_get_char proc far
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
@@ -290,6 +416,7 @@ _kb_get_char proc far
     xor     ax, ax
     retf
 read_buffered_key_char:
+; INPUTDOC Different DS/SS means peek only; no dequeue and no callback parsing.
     mov     bx, ss
     mov     cx, ds
     cmp     bx, cx
@@ -310,6 +437,18 @@ _kb_get_char endp
 ; Globals read: _kbinput, _kbscancodes.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _get_kb_or_joy_flags (original _get_kb_or_joy_flags).
+; INPUTDOC Purpose: Return configured keyboard control flags, falling back to joystick only if all are zero.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: AX=bits 01 up,02 down,04 right,08 left,10 first action,20 second action; AH=0.
+; INPUTDOC Preserves: Untouched by this body: BP, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,FLAGS; CX,DX,IF additionally on enabled joystick fallback.
+; INPUTDOC Globals read: _kbinput; _kbscancodes[10]; transitive get_joy_flags globals
+; INPUTDOC Globals written: transitive get_joy_flags globals on fallback
+; INPUTDOC Services: get_joy_flags only when keyboard flags are zero
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _get_kb_or_joy_flags proc far
     xor     ax, ax
     xor     bx, bx
@@ -365,6 +504,7 @@ check_left_key:
 use_joystick_when_no_key:
     or      ax, ax
     jnz     short return_input_flags
+; INPUTDOC Keyboard has priority; joystick bits are not ORed into a nonzero keyboard result.
     call far ptr _get_joy_flags
 return_input_flags:
     retf
@@ -378,6 +518,20 @@ _get_kb_or_joy_flags endp
 ; Globals written: none identified.
 ; /* PLATFORM(input_joy): accesses the joystick game port. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _input_get_action_buttons (original _nopsub_305C8).
+; INPUTDOC Purpose: OR configured keyboard action buttons with active-low joystick buttons.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: AX contains only 10h/20h button flags; no direction sampling.
+; INPUTDOC Preserves: Untouched by this body: BP, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,CX,DX,FLAGS
+; INPUTDOC Globals read: _kbinput; _kbscancodes[0..1]; _joystick_enabled bit 0
+; INPUTDOC Globals written:
+; INPUTDOC Services: IN 201h if enabled
+; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
+; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
+; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _nopsub_305C8 proc far
     xor     cx, cx
     xor     bx, bx
@@ -418,6 +572,27 @@ _nopsub_305C8 endp
 ; /* PLATFORM(input_joy): accesses the joystick game port. */
 ; /* PLATFORM(bios): changes the processor interrupt-enable state. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _get_joy_flags (original _get_joy_flags).
+; INPUTDOC Purpose: Measure gameport RC axes, update calibration and return direction/button bits.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: AX=0 without sampling when disabled; else zero-extended flags 01/02/04/08/10/20. Enabled path
+; INPUTDOC returns IF=1.
+; INPUTDOC Preserves: Untouched by this body: BP, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,CX,DX,FLAGS,IF; disabled path only AX and arithmetic FLAGS.
+; INPUTDOC Globals read: _joystick_enabled; _joybutton; _joyflag1; _joyflag2; _joyinput; joystick_x_minimum;
+; INPUTDOC joystick_x_sample_minimum; joystick_x_maximum; joystick_x_sample_maximum; joystick_x_calibration_ticks;
+; INPUTDOC joystick_x_left_threshold; joystick_x_right_threshold; joystick_y_minimum; joystick_y_sample_minimum;
+; INPUTDOC joystick_y_maximum; joystick_y_sample_maximum; joystick_y_calibration_ticks; joystick_y_up_threshold;
+; INPUTDOC joystick_y_down_threshold
+; INPUTDOC Globals written: _joybutton; _joyflag1; _joyflag2; _joyinput; joystick_x_minimum; joystick_x_sample_minimum;
+; INPUTDOC joystick_x_maximum; joystick_x_sample_maximum; joystick_x_calibration_ticks; joystick_x_left_threshold;
+; INPUTDOC joystick_x_right_threshold; joystick_x_scale_factor; joystick_y_minimum; joystick_y_sample_minimum;
+; INPUTDOC joystick_y_maximum; joystick_y_sample_maximum; joystick_y_calibration_ticks; joystick_y_up_threshold;
+; INPUTDOC joystick_y_down_threshold; joystick_y_scale_factor
+; INPUTDOC Services: IN/OUT 201h; CLI/STI around axis timing
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _get_joy_flags proc far
     test    _joystick_enabled, 1
     jnz     short start_joystick_sampling
@@ -431,6 +606,7 @@ start_joystick_sampling:
     mov     bl, 3
     mov     _joyflag1, 50h ; 'P'
     mov     _joyflag2, 50h ; 'P'
+; INPUTDOC Interrupts are unconditionally reenabled at calibrate_x_axis after bounded RC polling.
     cli ;/* PLATFORM(bios): changes the processor interrupt-enable state. */
     out     dx, al ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
     mov     cx, 14h
@@ -471,6 +647,7 @@ calibrate_x_axis:
     mov     ax, _joyflag1
     cmp     ax, joystick_x_minimum
     jge     short update_x_axis_maximum
+; INPUTDOC Calibration tick countdown and extrema use the exact signed branches shown; Y differs.
     dec     joystick_x_calibration_ticks
     jle     short set_x_calibration_minimum
     cmp     ax, joystick_x_sample_minimum
@@ -532,6 +709,7 @@ classify_x_axis_direction:
 calibrate_y_axis:
     mov     ax, _joyflag2
     cmp     ax, joystick_y_minimum
+; INPUTDOC Y minimum comparison is unsigned JNB; its maximum countdown later uses JZ, unlike X JLE.
     jnb     short update_y_axis_maximum
     dec     joystick_y_calibration_ticks
     jle     short set_y_calibration_minimum
@@ -596,6 +774,7 @@ classify_y_axis_direction:
     jb      short read_joystick_button_flags
     or      _joyinput, 2
 read_joystick_button_flags:
+; INPUTDOC Button is logically pressed if either first or last active-low sample was low.
     in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
     and     al, _joybutton
 
@@ -618,7 +797,21 @@ _get_joy_flags endp
 ; Globals read: none identified.
 ; Globals written: _joystick_enabled, joystick_x_maximum, joystick_x_minimum, joystick_y_maximum, joystick_y_minimum.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _reset_joystick_selection (original _reset_joystick_selection).
+; INPUTDOC Purpose: Enable joystick sampling and reset only the X/Y calibration extrema.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: No specified return; AX and all other registers untouched.
+; INPUTDOC Preserves: All registers and FLAGS; SP balanced.
+; INPUTDOC Clobbers: None (MOV stores do not change FLAGS).
+; INPUTDOC Globals read:
+; INPUTDOC Globals written: _joystick_enabled :=1; joystick_x_minimum :=0050h; joystick_x_maximum :=0;
+; INPUTDOC joystick_y_minimum :=0050h; joystick_y_maximum :=0
+; INPUTDOC Services:
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _reset_joystick_selection proc far
+; INPUTDOC Only enable and extrema reset; prior thresholds, scale factors and countdowns survive.
     mov     _joystick_enabled, 1
     mov     joystick_x_minimum, 50h
     mov     joystick_x_maximum, 0
@@ -633,6 +826,18 @@ _reset_joystick_selection endp
 ; Globals read: joystick_flags_to_axis_table.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _joystick_flags_to_index (original _joystick_flags_to_index).
+; INPUTDOC Purpose: Map low four direction bits through the 16-entry direction-index table.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): u16 flags; only bits 0..3 used. DS=DGROUP.
+; INPUTDOC Outputs: AX=zero-extended table byte (0..8).
+; INPUTDOC Preserves: Untouched by this body: BP, CX, DI, DS, DX, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,FLAGS
+; INPUTDOC Globals read: joystick_flags_to_axis_table[16]
+; INPUTDOC Globals written:
+; INPUTDOC Services:
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _joystick_flags_to_index proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -656,6 +861,19 @@ _joystick_flags_to_index endp
 ; Globals read: _joyflag1, joystick_x_minimum, joystick_x_scale_factor.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _replay_axis_value (original _replay_axis_value).
+; INPUTDOC Purpose: Scale the saved X-axis sample relative to its minimum and center by 31.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: Let d=(sample-min) mod 65536, replaced with 0 iff signed16(sample)<signed16(min). AX=((u32(d)*scale
+; INPUTDOC >>8) & FFFFh)-31 modulo 65536; DX retains product high word. Retained C caller consumes AL as signed byte.
+; INPUTDOC Preserves: Untouched by this body: BP, BX, CX, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,DX,FLAGS
+; INPUTDOC Globals read: _joyflag1; joystick_x_minimum; joystick_x_scale_factor
+; INPUTDOC Globals written:
+; INPUTDOC Services:
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _replay_axis_value proc far
 
     mov     ax, _joyflag1
@@ -663,6 +881,7 @@ _replay_axis_value proc far
     jge     short clamp_replayed_x_axis
     xor     ax, ax
 clamp_replayed_x_axis:
+; INPUTDOC MUL is unsigned after signed subtraction clamp; byte shuffling extracts product bits 8..23.
     mul     joystick_x_scale_factor
     mov     al, ah
     mov     ah, dl
@@ -676,6 +895,21 @@ _replay_axis_value endp
 ; Globals read: _joyflag2, joystick_y_minimum, joystick_y_scale_factor.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _joystick_scale_saved_y (original _nopsub_307FA).
+; INPUTDOC Purpose: Scale the saved Y-axis sample relative to its minimum and center by 31.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: Let d=(sample-min) mod 65536, replaced with 0 iff signed16(sample)<signed16(min). AX=((u32(d)*scale
+; INPUTDOC >>8) & FFFFh)-31 modulo 65536; DX retains product high word.
+; INPUTDOC Preserves: Untouched by this body: BP, BX, CX, DI, DS, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,DX,FLAGS
+; INPUTDOC Globals read: _joyflag2; joystick_y_minimum; joystick_y_scale_factor
+; INPUTDOC Globals written:
+; INPUTDOC Services:
+; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
+; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
+; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _nopsub_307FA proc far
     mov     ax, _joyflag2
     sub     ax, joystick_y_minimum

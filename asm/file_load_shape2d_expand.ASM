@@ -1,3 +1,8 @@
+; ASMDOC Module: RAM archive rebuild and packed-plane to indexed-pixel expansion.
+; ASMDOC Owner asm_load_25fa2; original source asm/file_load_shape2d_expand.ASM.
+; ASMDOC Routine inventory: _file_load_shape2d_expand
+; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
+; ASMDOC Pure caller-buffer transformation, despite existing PLATFORM(video) tags. No self-modification or indirect callback.
 .8086
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
@@ -15,6 +20,26 @@ public _file_load_shape2d_expand
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_load_shape2d_expand
+; ASMDOC purpose: Construct an archive of 8-times-wider indexed bitmap shapes from up to four packed 1-bit planes.
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC body where applicable.
+; ASMDOC inputs: BP+6 source archive offset; +8 segment; BP+10 destination archive offset; +12 segment; DF must already be clear;
+; ASMDOC source/destination buffers paragraph aligned for _file_get_shape2d; source and destination spans must not destructively overlap;
+; ASMDOC Source dimensions and low-word width*height in 1..8000 for pixel initialization/expansion; output 8*length must fit current segment
+; ASMDOC offsets
+; ASMDOC outputs: Copies source count/names to destination, constructs dword relative offsets and final archive size; Copies first 12
+; ASMDOC shape-header bytes, multiplies destination width by 8, fills background with source byte[13]>>4 then ORs low-nibble plane colors for
+; ASMDOC set bits MSB-first; Destination header bytes 12..15 are left untouched; no defined return value; Out-of-range signed length skips
+; ASMDOC pixel fill/planes after headers/offsets have already been written
+; ASMDOC preserves: BP DS SI DI SP; DF unchanged
+; ASMDOC clobbers: AX BX CX DX ES arithmetic flags; DS transiently source/SS
+; ASMDOC globals_read: none directly; see transitive effects stated in services
+; ASMDOC globals_written: none directly; see transitive effects stated in services
+; ASMDOC services: _file_get_shape2d called for each source and destination shape; its BX CX DX AX ES clobbers and paragraph-base assumption
+; ASMDOC apply; No DOS/BIOS/video service, no allocation or resize; all storage supplied by caller
+; ASMDOC dead: False
+; ASMDOC Public name from existing plan: _file_load_shape2d_expand (unchanged).
 _file_load_shape2d_expand proc far
     var_dstshapeoff = word ptr -16
     var_length = word ptr -14
@@ -41,6 +66,7 @@ _file_load_shape2d_expand proc far
     mov     si, [bp+arg_memchunkoff]
     mov     es, [bp+arg_mempagesseg]
     mov     di, [bp+arg_mempagesoff]
+; ASMDOC Copy count and four-byte names only; destination offset table is rebuilt from zero.
     mov     cx, [si+4]
     mov     [bp+var_shapecount], cx
     shl     cx, 1
@@ -84,6 +110,7 @@ shape_expand_continue_path_2:
     mov     cx, es:[di+2] ;/* PLATFORM(video): accesses display memory through ES. */
     add     di, 4
     mov     [bp+var_offsets], di
+; ASMDOC Length is low word of unsigned MUL; subsequent size shifts do not rotate carry into DX.
     mov     ax, [si]
     mul     word ptr [si+2]
     mov     [bp+var_length], ax
@@ -126,6 +153,7 @@ shape_expand_continue_path_4:
     mov     es, dx
     mov     di, ax
     mov     [bp+var_dstshapeoff], ax
+; ASMDOC Only six words of the header are copied; source bytes 12..15 become plane controls and are not copied.
     mov     ds, [bp+var_srcshapeseg]
     mov     cx, 6
     rep movsw
@@ -146,6 +174,7 @@ shape_expand_shift_value:
     mov     ah, al
     add     di, 10h
 expand_load_source_value_2:
+; ASMDOC Signed 1..8000 guard is after header/directory writes; invalid dimensions skip pixel work.
     mov     cx, [bp+var_length]
     cmp     cx, 0
     jle     short expand_when_less_or_equal
@@ -158,6 +187,7 @@ expand_advance_source_pointer:
     add     si, 10h
     mov     [bp+var_srcdataoff], si
     xor     bx, bx
+; ASMDOC Stop at first zero low-nibble color; expand each packed byte MSB-first and OR color into eight indexed pixels.
 shape_expand_scan_loop:
     mov     si, [bp+var_srcshapeoff]
     mov     ah, [bx+si+0Ch]

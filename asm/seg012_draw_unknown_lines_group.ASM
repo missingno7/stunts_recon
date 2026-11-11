@@ -1,3 +1,7 @@
+; ASMDOC Module review: Placeholder group name replaced by the complete shared two-color span operation; no split/merge.
+; ASMDOC Scope: code-derived contracts below supersede broad legacy summaries without deleting them. No instructions,
+; ASMDOC declarations, old comments or line endings changed.
+; ASMDOC Public routines: _nopsub_33330, _draw_unknown_lines. Stack offsets are post-prologue BP offsets.
 .8086
 INCLUDE include\platform_hw.inc
 _DATA segment word public 'DATA'
@@ -23,6 +27,28 @@ sprite_bitmapptr equ 0
 ; Globals read: none identified.
 ; Globals written: _line_pattern_bits, _prerender_auxiliary_arg.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_33330; proposed name _sprite_fill_two_color_spans_at
+; ASMDOC Purpose: Set the pattern word and auxiliary low color byte then enter the common two-color span filler.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] near DS offset of signed 16-bit inclusive left endpoints, one word per row; [BP+08] near DS offset of
+; ASMDOC signed 16-bit inclusive right endpoints, one word per row; [BP+0A] first y word; caller supplies valid row-table index;
+; ASMDOC [BP+0C] signed row count; zero/negative behavior is entry-specific; [BP+0E] primary color (low byte only); DS addresses
+; ASMDOC span arrays and pattern globals; no clipping in this entry; [BP+10] auxiliary color low byte (only low byte of global
+; ASMDOC changed); [BP+12] 16-bit row pattern.
+; ASMDOC Outputs: No semantic register result; destination pixels changed; Caller stack slots [BP+06]/[BP+08] advance by 2 each
+; ASMDOC row; [BP+0C] decremented in place.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A) and addressed row offsets; _line_pattern_bits (DS
+; ASMDOC word; alternating low/high row masks); _prerender_auxiliary_arg low byte.
+; ASMDOC Globals written: _line_pattern_bits; _prerender_auxiliary_arg low byte; sprite1 backing pixels; caller stack argument
+; ASMDOC slots +06/+08/+0C.
+; ASMDOC Services: none.
+; ASMDOC Dead: true. Reachability: No runtime symbol reference or address-taking found in tracked src/ or asm/. Shared core is
+; ASMDOC live via draw_unknown_lines.
+; ASMDOC Shared tail: Prologue saves SI/DI/BP then jumps to unknown_lines_when_condition (67); outputs, register clobbers and
+; ASMDOC global reads include the entire common core.
 _nopsub_33330 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -51,6 +77,27 @@ _nopsub_33330 endp
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _draw_unknown_lines; proposed name _sprite_fill_two_color_spans
+; ASMDOC Purpose: Fill each inclusive span: pattern bit 0 stores primary color; bit 1 stores auxiliary color. Swap row-mask bytes
+; ASMDOC initially when y is even and after every row.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] near DS offset of signed 16-bit inclusive left endpoints, one word per row; [BP+08] near DS offset of
+; ASMDOC signed 16-bit inclusive right endpoints, one word per row; [BP+0A] first y word; caller supplies valid row-table index;
+; ASMDOC [BP+0C] signed row count; zero/negative behavior is entry-specific; [BP+0E] primary color (low byte only); DS addresses
+; ASMDOC span arrays and pattern globals; no clipping in this entry.
+; ASMDOC Outputs: No semantic register result; destination pixels changed; Caller stack slots [BP+06]/[BP+08] advance by 2 each
+; ASMDOC row; [BP+0C] decremented in place.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A) and addressed row offsets; _line_pattern_bits (DS
+; ASMDOC word; alternating low/high row masks); _prerender_auxiliary_arg low byte.
+; ASMDOC Globals written: _line_pattern_bits; sprite1 backing pixels; caller stack argument slots +06/+08/+0C.
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Address taken and installed as _spritefunc by preRender_unk at
+; ASMDOC asm/graphics_resource_runtime.ASM:1541; indirect span callback.
+; ASMDOC Edge cases: No initial count check: zero/negative row count processes one row. No clipping. Auxiliary color copied to DL
+; ASMDOC each row; primary remains AL throughout.
 _draw_unknown_lines proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -64,6 +111,8 @@ _draw_unknown_lines proc far
     mov     bp, sp
     push    si
     push    di
+; ASMDOC Shared entry for explicit-state and current-state routines; all reads/writes and clobbers apply to both public
+; ASMDOC prologues.
 unknown_lines_when_condition:
     cld
     mov     si, [bp+arg_4]
@@ -95,6 +144,8 @@ draw_unknown_lines_draw_loop:
     jle     short draw_unknown_lines_draw_loop_2
     mov     di, cs:[si]
     add     di, bx
+; ASMDOC After ROL, carry 0 stores primary AL; carry 1 branches to auxiliary DL store. This polarity is opposite the single-color
+; ASMDOC patterned filler.
 draw_unknown_lines_fill_loop:
     rol     ah, 1
     jb      short draw_unknown_lines_when_below

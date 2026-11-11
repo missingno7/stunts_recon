@@ -1,3 +1,9 @@
+; ASMDOC Module: rpm_rng_divide. RPM high-word multiply, six-byte RNG, signed-word sign helper, unknown INT60/61/62
+; ASMDOC wrappers, and INT0 vector lifecycle. Mixed portable arithmetic and DOS boundary; no split proposed.
+; ASMDOC Static documentation candidate only. Original comments retained verbatim; these contracts correct generic
+; ASMDOC earlier annotations.
+; ASMDOC No exhaustive dynamic call graph. dead=true means no retained source reference in this bounded audit, not
+; ASMDOC permission to remove bytes.
 INCLUDE include\platform_hw.inc
 .model medium
 
@@ -33,6 +39,21 @@ S002_TEXT segment byte public 'CODE'
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _update_rpm_from_speed (_update_rpm_from_speed): Return max(unsigned idle RPM, existing RPM
+; ASMDOC during gear change or high word of unsigned speed*gear ratio otherwise).
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 u16 current RPM; BP+8 u16 speed; BP+10 u16 gear ratio; BP+12 word changing-gear flag (zero
+; ASMDOC enables multiply); BP+14 u16 idle RPM
+; ASMDOC outputs: AX=u16 clamped RPM; CX=same RPM; DX=high product only when changing-gear flag is zero; otherwise
+; ASMDOC unchanged
+; ASMDOC preserves: BX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; CX; DX on multiply path; arithmetic flags
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Evidence: asm/obj_seg002.ASM:36
 _update_rpm_from_speed proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -51,6 +72,7 @@ _update_rpm_from_speed proc far
     jnz     short skip_gear_adjustment
     mul     [bp+arg_gearRatio]
     mov     cx, dx
+; ASMDOC Unsigned MUL uses only DX as candidate RPM; changing-gear path keeps current RPM in CX.
 skip_gear_adjustment:
     cmp     cx, [bp+arg_idleRpm]
     jnb     short rpm_ready_to_return
@@ -68,6 +90,18 @@ _update_rpm_from_speed endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_19DE8 (_math_sign_word): Return the sign of a signed 16-bit word (-1,0,+1).
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 i16 value
+; ASMDOC outputs: AX=FFFFh,0,1 for negative,zero,positive; BX=input word
+; ASMDOC preserves: CX; DX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; BX; arithmetic flags
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Evidence: asm/obj_seg002.ASM:71
 _nopsub_19DE8 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -110,6 +144,20 @@ _nopsub_19DE8 endp
 ; Globals written: none identified.
 ; /* PLATFORM(bios): calls a software interrupt service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_19DFF (_dos_call_int61_ax): Pass an opaque word through AX to software INT 61h; provider
+; ASMDOC and operation unknown.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 word opaque service argument; Other registers/segments may be service inputs; unknown
+; ASMDOC outputs: Service-defined results; no result conversion
+; ASMDOC preserves: BP if interrupt respects frame/stack
+; ASMDOC clobbers: AX loaded before interrupt; Other effects unknown: interrupt provider not identified
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: INT 61h (user interrupt; not established BIOS or audio API)
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Do not infer preserved registers, globals, memory effects, or device semantics from the wrapper
+; ASMDOC alone.
 _nopsub_19DFF proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -134,6 +182,20 @@ _nopsub_19DFF endp
 ; Globals written: none identified.
 ; /* PLATFORM(bios): calls a software interrupt service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_19E09 (_dos_call_int60_ax): Pass an opaque word through AX to software INT 60h; provider
+; ASMDOC and operation unknown.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 word opaque service argument; Other registers/segments may be service inputs; unknown
+; ASMDOC outputs: Service-defined results; no result conversion
+; ASMDOC preserves: BP if interrupt respects frame/stack
+; ASMDOC clobbers: AX loaded before interrupt; Other effects unknown: interrupt provider not identified
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: INT 60h (user interrupt; not established BIOS or audio API)
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Do not infer preserved registers, globals, memory effects, or device semantics from the wrapper
+; ASMDOC alone.
 _nopsub_19E09 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -156,6 +218,20 @@ _nopsub_19E09 endp
 ; Globals written: none identified.
 ; /* PLATFORM(bios): calls a software interrupt service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_19E13 (_dos_call_int62_si): Pass an opaque word through SI to software INT 62h; provider
+; ASMDOC and operation unknown.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 word opaque service argument; Other registers/segments may be service inputs; unknown
+; ASMDOC outputs: Service-defined results; no result conversion
+; ASMDOC preserves: BP if interrupt respects frame/stack; SI explicitly saved and restored
+; ASMDOC clobbers: SI loaded before interrupt; Other effects unknown: interrupt provider not identified
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: INT 62h (user interrupt; not established BIOS or audio API)
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Do not infer preserved registers, globals, memory effects, or device semantics from the wrapper
+; ASMDOC alone.
 _nopsub_19E13 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -183,6 +259,20 @@ _nopsub_19E13 endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _initialize_kevin_random (_initialize_kevin_random): Copy six consecutive bytes from a near
+; ASMDOC source into the RNG state in ascending address order.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 near DS offset of six source bytes; DS=DGROUP
+; ASMDOC outputs: randomseeds[0..5] replaced; AL=last source byte; AH unchanged; BX=source offset
+; ASMDOC preserves: CX; DX; SI; DI; BP; DS; ES; FLAGS
+; ASMDOC clobbers: AL; BX
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: _randomseeds[6]
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Six individual byte loads/stores; overlapping source/state aliases observe sequential copying, not
+; ASMDOC an abstract snapshot.
 _initialize_kevin_random proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -221,6 +311,20 @@ _initialize_kevin_random endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _get_kevinrandom_seed (_get_kevinrandom_seed): Copy the six RNG bytes into a near destination in
+; ASMDOC ascending address order.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: BP+6 near DS offset of six writable destination bytes; DS=DGROUP
+; ASMDOC outputs: DS:destination[0..5] written; AL=last state byte; AH unchanged; BX=destination offset
+; ASMDOC preserves: CX; DX; SI; DI; BP; DS; ES; FLAGS
+; ASMDOC clobbers: AL; BX
+; ASMDOC globals_read: _randomseeds[6]
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: May overwrite RNG state if destination aliases it; individual byte operations retain alias
+; ASMDOC ordering.
 _get_kevinrandom_seed proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -254,9 +358,24 @@ _get_kevinrandom_seed endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _get_kevinrandom (_get_kevinrandom): Update six-byte RNG by descending cumulative byte sums
+; ASMDOC followed by carry-propagating increment from byte 5 to byte 0.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: DS=DGROUP
+; ASMDOC outputs: AX=zero-extended updated randomseeds[0] (0..255)
+; ASMDOC preserves: BX; CX; DX; SI; DI; BP; DS; ES; DF; IF
+; ASMDOC clobbers: AX; arithmetic flags
+; ASMDOC globals_read: _randomseeds[6]
+; ASMDOC globals_written: _randomseeds[6]
+; ASMDOC services: none directly identified
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Every ADD wraps modulo 256 without ADC. Increment carry is implemented by testing byte wrap, after
+; ASMDOC cumulative additions.
 _get_kevinrandom proc far
 
     mov     al, _randomseeds+5
+; ASMDOC Cumulative byte ADDs intentionally discard carry; the later INC chain propagates only increment wrap.
 random_add_seed_byte4:
     add     al, _randomseeds+4
 random_store_seed_byte4:
@@ -298,6 +417,21 @@ _get_kevinrandom endp
 ; Globals written: _divide0_fault_cs, _divide0_fault_ip.
 ; /* PLATFORM(bios): returns from a hardware interrupt. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _intr0_handler (_intr0_handler): Record fault CS:IP, advance saved IP by exactly two bytes, zero
+; ASMDOC AX, and resume with IRET.
+; ASMDOC Convention: CPU interrupt entry, not callable C FAR ABI; IRET consumes IP,CS,FLAGS.
+; ASMDOC inputs: CPU interrupt frame at entry SP: IP,+2 CS,+4 FLAGS; After PUSH BP: BP+2 saved IP, BP+4 saved CS,
+; ASMDOC BP+6 saved FLAGS
+; ASMDOC outputs: _divide0_fault_cs=interrupted CS; _divide0_fault_ip=interrupted IP; Saved IP +=2 modulo 65536;
+; ASMDOC AX=0; IRET restores interrupted FLAGS and modified CS:IP
+; ASMDOC preserves: BX; CX; DX; SI; DI; BP; DS; ES; interrupted FLAGS via IRET
+; ASMDOC clobbers: AX; saved interrupt IP
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: _divide0_fault_cs; _divide0_fault_ip
+; ASMDOC services: INT0 exception entry / IRET
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Installed indirectly by initialize_div0. Does not save interrupted AX and does not chain old
+; ASMDOC vector. Two-byte recovery is not general instruction decoding.
 _intr0_handler proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -315,6 +449,7 @@ div0_save_fault_ip:
 div0_prepare_resume_ip:
     mov     ax, [bp+2]
     mov     _divide0_fault_ip, ax
+; ASMDOC Skip exactly two bytes in saved interrupt IP. AX is deliberately destroyed and becomes zero.
 div0_advance_resume_ip:
     inc     ax
     inc     ax
@@ -334,6 +469,19 @@ _intr0_handler endp
 ; Globals written: _old_intr0_handler.
 ; /* PLATFORM(dos): calls a DOS service. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _initialize_div0 (_initialize_div0): Save old INT0 vector then install this module's divide
+; ASMDOC handler.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: DS=DGROUP for storing old vector
+; ASMDOC outputs: _old_intr0_handler=ES:BX returned by DOS AH=35h; INT0 vector becomes CS:_intr0_handler
+; ASMDOC preserves: DS explicitly saved/restored; Other register preservation depends on DOS service contract
+; ASMDOC clobbers: AX; BX; DX; ES; flags/service-defined effects
+; ASMDOC globals_read: none directly identified
+; ASMDOC globals_written: _old_intr0_handler
+; ASMDOC services: INT21h AH=35h AL=0 get vector; INT21h AH=25h AL=0 set vector
+; ASMDOC Reachability: live; direct or indirect reference retained.
+; ASMDOC Notes: Normal RETF precedes restore label: install does not fall through to restoration.
 _initialize_div0 proc far
 
     push    ds
@@ -360,6 +508,21 @@ div0_select_int0_vector:
     pop     ds
 div0_return:
     retf
+; ASMDOC Contract _restore_div_zero_vector (_restore_div_zero_vector): Restore DOS INT0 vector from saved far
+; ASMDOC pointer.
+; ASMDOC Convention: FAR, caller removes arguments; BP offsets below are after PUSH BP / MOV BP,SP (first argument
+; ASMDOC BP+6 = entry SP+4); RETF, including MASM RET inside PROC FAR.
+; ASMDOC inputs: DS=DGROUP; initialize_div0 must have initialized saved vector
+; ASMDOC outputs: INT0 vector restored; DS restored
+; ASMDOC preserves: DS explicitly saved/restored; BP untouched by wrapper; Other preservation depends on DOS
+; ASMDOC service contract
+; ASMDOC clobbers: AX; DX; flags/service-defined effects
+; ASMDOC globals_read: _old_intr0_handler
+; ASMDOC globals_written: none directly identified
+; ASMDOC services: INT21h AH=25h AL=0 set vector
+; ASMDOC Reachability: dead in current static source/reference plan.
+; ASMDOC Notes: Public LABEL BYTE inside initialize_div0 PROC, independently callable FAR entry. Epilogue POP DS /
+; ASMDOC RETF lies after ENDP at tail_19F13. No canonical reference found; retained dead export.
 _restore_div_zero_vector     label byte
     push    ds
     lds     dx, _old_intr0_handler
@@ -367,6 +530,7 @@ _restore_div_zero_vector     label byte
     mov     al, 0
     int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
 _initialize_div0 endp
+; ASMDOC Shared restore-vector epilogue lies outside PROC extent but belongs to the public restore entry.
 tail_19F13:
     pop ds
     retf

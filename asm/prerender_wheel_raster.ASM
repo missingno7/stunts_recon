@@ -1,3 +1,19 @@
+; ASMDOC-GEOMETRY Module: prerender_wheel_raster. Existing content name remains useful; includes shared
+; polygon raster workers and alternate record-list entries. No merge or split proposed.
+; ASMDOC-GEOMETRY Original source: asm/prerender_wheel_raster.ASM; contracts below use ORIGINAL line
+; references.
+; ASMDOC-GEOMETRY Code exports: _prerender_shared_setup, _preRender_default, _preRender_default_alt,
+; _skybox_op_helper, _preRender_wheel_helper4, _preRender_helper, _preRender_helper2, _preRender_helper3,
+; _nopsub_31F39, _nopsub_31F55
+; ASMDOC-GEOMETRY All arguments/coordinates are 16-bit unless explicitly stated. BP offsets are after PUSH
+; BP/MOV BP,SP.
+; ASMDOC-GEOMETRY The detailed comments describe control flow including shared tails and transitive services;
+; old generic comments are retained.
+; ASMDOC-GEOMETRY Data export: _line_pattern_bits: u16 initialized 0; pattern callback rotates its byte phase
+; ASMDOC-GEOMETRY Data export: _prerender_auxiliary_arg: u16 initialized 0, used by auxiliary fill callback
+; ASMDOC-GEOMETRY Data export: _spritefunc: offset=0, segment=S012_TEXT; FAR span callback
+; ASMDOC-GEOMETRY Data export: _imagefunc: offset=0, segment=S012_TEXT; FAR degenerate-line callback
+; ASMDOC-GEOMETRY 
 INCLUDE include\platform_hw.inc
 .model medium
 name asm012_137138
@@ -58,11 +74,70 @@ public _preRender_helper2
 public _preRender_helper3
 public _nopsub_31F39
 public _nopsub_31F55
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _preRender_default (original line 61)
+; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 1; vertices are a near
+; array.
+; ASMDOC-GEOMETRY Proposed public: _preRender_default
+; ASMDOC-GEOMETRY Convention: FAR cdecl; BP established by PUSH BP / MOV BP,SP; BP+6 is first argument, caller
+; removes arguments; RETF
+; ASMDOC-GEOMETRY Input: BP+6 word: color/style passed unchanged to selected callback (solid fill uses AL)
+; ASMDOC-GEOMETRY Input: BP+8 word: positive vertex count; no zero/negative-count guard
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP for near stack scratch pointers; normal sprite1 geometry requires
+; scanline indices inside the 480-word scratch arrays
+; ASMDOC-GEOMETRY Input: BP+10 word: near DS pointer to count POINT2D {x:i16,y:i16} records; MOV SI,[BP+10]
+; ASMDOC-GEOMETRY Output: Writes indexed pixels of current sprite1 through callbacks; no scalar return
+; contract
+; ASMDOC-GEOMETRY Output: Scratch record BP-2000..BP-1973; left array BP-1944+2*y; right array BP-984+2*y (480
+; words each); caller frame and arguments remain except callback-local stack copies
+; ASMDOC-GEOMETRY Output: Sets DF=0; ES becomes SS during setup and may subsequently become selected sprite
+; bitmap segment in callbacks
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: _spritefunc.offset = OFFSET _draw_filled_lines; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: _imagefunc.offset = OFFSET _preRender_line; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing (transitively)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related FAR (clipped 28-byte line-record builder)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related_alt FAR (unclipped record builder)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR register
+; workers
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc]: normally _preRender_line on point/axis-degenerate input
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc]: normally
+; _draw_filled_lines(left*,right*,start_y,count,color)
+; ASMDOC-GEOMETRY Detail: Allocates 0x7D0 bytes plus saved SI/DI; mode stored at byte BP-10. Enters shared
+; setup without a second call frame.
+; ASMDOC-GEOMETRY Detail: Count 1 calls the line callback with identical endpoints before bounding-box
+; rejection; horizontal/vertical polygons call the line callback with bounding endpoints.
+; ASMDOC-GEOMETRY Detail: Strict right rejection is min_x >= (right-1), not min_x >= right; nondegenerate
+; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
+; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
+; call in this module.
+; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg006.c:667 direct polygon call
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_default label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender default.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -78,11 +153,71 @@ preRender_default proc far
     mov     [bp+var_A], 1
     jmp     short pre_default_alt_join_01
 preRender_default endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _preRender_default_alt (original line 81)
+; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 0; vertices are a near
+; array.
+; ASMDOC-GEOMETRY Proposed public: _preRender_default_alt
+; ASMDOC-GEOMETRY Convention: FAR cdecl; BP established by PUSH BP / MOV BP,SP; BP+6 is first argument, caller
+; removes arguments; RETF
+; ASMDOC-GEOMETRY Input: BP+6 word: color/style passed unchanged to selected callback (solid fill uses AL)
+; ASMDOC-GEOMETRY Input: BP+8 word: positive vertex count; no zero/negative-count guard
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP for near stack scratch pointers; normal sprite1 geometry requires
+; scanline indices inside the 480-word scratch arrays
+; ASMDOC-GEOMETRY Input: BP+10 word: near DS pointer to count POINT2D {x:i16,y:i16} records; MOV SI,[BP+10]
+; ASMDOC-GEOMETRY Output: Writes indexed pixels of current sprite1 through callbacks; no scalar return
+; contract
+; ASMDOC-GEOMETRY Output: Scratch record BP-2000..BP-1973; left array BP-1944+2*y; right array BP-984+2*y (480
+; words each); caller frame and arguments remain except callback-local stack copies
+; ASMDOC-GEOMETRY Output: Sets DF=0; ES becomes SS during setup and may subsequently become selected sprite
+; bitmap segment in callbacks
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: _spritefunc.offset = OFFSET _draw_filled_lines; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: _imagefunc.offset = OFFSET _preRender_line; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing (transitively)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related FAR (clipped 28-byte line-record builder)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related_alt FAR (unclipped record builder)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR register
+; workers
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc]: normally _preRender_line on point/axis-degenerate input
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc]: normally
+; _draw_filled_lines(left*,right*,start_y,count,color)
+; ASMDOC-GEOMETRY Detail: Allocates 0x7D0 bytes plus saved SI/DI; mode stored at byte BP-10. Enters shared
+; setup without a second call frame.
+; ASMDOC-GEOMETRY Detail: Count 1 calls the line callback with identical endpoints before bounding-box
+; rejection; horizontal/vertical polygons call the line callback with bounding endpoints.
+; ASMDOC-GEOMETRY Detail: Strict right rejection is min_x >= (right-1), not min_x >= right; nondegenerate
+; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
+; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
+; call in this module.
+; ASMDOC-GEOMETRY Dead: false. Reachability: src/preRender_wheel.c:82,104,106 and
+; src/preRender_sphere_helper.c:16
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_default_alt label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender default alt.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_6 (word ptr 10).
-; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_6 (word ptr 10).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -105,11 +240,70 @@ pre_default_alt_join_01:
     mov     si, [bp+arg_6]
     jmp     short _prerender_shared_setup
 preRender_default_alt endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _skybox_op_helper (original line 108)
+; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 1; vertices are inline
+; stack words.
+; ASMDOC-GEOMETRY Proposed public: _skybox_op_helper
+; ASMDOC-GEOMETRY Convention: FAR cdecl; BP established by PUSH BP / MOV BP,SP; BP+6 is first argument, caller
+; removes arguments; RETF
+; ASMDOC-GEOMETRY Input: BP+6 word: color/style passed unchanged to selected callback (solid fill uses AL)
+; ASMDOC-GEOMETRY Input: BP+8 word: positive vertex count; no zero/negative-count guard
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP for near stack scratch pointers; normal sprite1 geometry requires
+; scanline indices inside the 480-word scratch arrays
+; ASMDOC-GEOMETRY Input: BP+10 onward: count inline POINT2D {x:i16,y:i16} records; LEA SI,[BP+10]
+; ASMDOC-GEOMETRY Output: Writes indexed pixels of current sprite1 through callbacks; no scalar return
+; contract
+; ASMDOC-GEOMETRY Output: Scratch record BP-2000..BP-1973; left array BP-1944+2*y; right array BP-984+2*y (480
+; words each); caller frame and arguments remain except callback-local stack copies
+; ASMDOC-GEOMETRY Output: Sets DF=0; ES becomes SS during setup and may subsequently become selected sprite
+; bitmap segment in callbacks
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: _spritefunc.offset = OFFSET _draw_filled_lines; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: _imagefunc.offset = OFFSET _preRender_line; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing (transitively)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related FAR (clipped 28-byte line-record builder)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related_alt FAR (unclipped record builder)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR register
+; workers
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc]: normally _preRender_line on point/axis-degenerate input
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc]: normally
+; _draw_filled_lines(left*,right*,start_y,count,color)
+; ASMDOC-GEOMETRY Detail: Allocates 0x7D0 bytes plus saved SI/DI; mode stored at byte BP-10. Enters shared
+; setup without a second call frame.
+; ASMDOC-GEOMETRY Detail: Count 1 calls the line callback with identical endpoints before bounding-box
+; rejection; horizontal/vertical polygons call the line callback with bounding endpoints.
+; ASMDOC-GEOMETRY Detail: Strict right rejection is min_x >= (right-1), not min_x >= right; nondegenerate
+; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
+; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
+; call in this module.
+; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg003.c:2238-2239 passes four POINT2D values inline
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _skybox_op_helper label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by skybox op helper.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -125,11 +319,70 @@ skybox_op_helper proc far
     mov     [bp+var_A], 1
     jmp     short wheel_raster_join_01
 skybox_op_helper endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _preRender_wheel_helper4 (original line 128)
+; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 0; vertices are inline
+; stack words.
+; ASMDOC-GEOMETRY Proposed public: _preRender_wheel_helper4
+; ASMDOC-GEOMETRY Convention: FAR cdecl; BP established by PUSH BP / MOV BP,SP; BP+6 is first argument, caller
+; removes arguments; RETF
+; ASMDOC-GEOMETRY Input: BP+6 word: color/style passed unchanged to selected callback (solid fill uses AL)
+; ASMDOC-GEOMETRY Input: BP+8 word: positive vertex count; no zero/negative-count guard
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP for near stack scratch pointers; normal sprite1 geometry requires
+; scanline indices inside the 480-word scratch arrays
+; ASMDOC-GEOMETRY Input: BP+10 onward: count inline POINT2D {x:i16,y:i16} records; LEA SI,[BP+10]
+; ASMDOC-GEOMETRY Output: Writes indexed pixels of current sprite1 through callbacks; no scalar return
+; contract
+; ASMDOC-GEOMETRY Output: Scratch record BP-2000..BP-1973; left array BP-1944+2*y; right array BP-984+2*y (480
+; words each); caller frame and arguments remain except callback-local stack copies
+; ASMDOC-GEOMETRY Output: Sets DF=0; ES becomes SS during setup and may subsequently become selected sprite
+; bitmap segment in callbacks
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: _spritefunc.offset = OFFSET _draw_filled_lines; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: _imagefunc.offset = OFFSET _preRender_line; segment retains initialized
+; S012_TEXT
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing (transitively)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related FAR (clipped 28-byte line-record builder)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related_alt FAR (unclipped record builder)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR register
+; workers
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc]: normally _preRender_line on point/axis-degenerate input
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc]: normally
+; _draw_filled_lines(left*,right*,start_y,count,color)
+; ASMDOC-GEOMETRY Detail: Allocates 0x7D0 bytes plus saved SI/DI; mode stored at byte BP-10. Enters shared
+; setup without a second call frame.
+; ASMDOC-GEOMETRY Detail: Count 1 calls the line callback with identical endpoints before bounding-box
+; rejection; horizontal/vertical polygons call the line callback with bounding endpoints.
+; ASMDOC-GEOMETRY Detail: Strict right rejection is min_x >= (right-1), not min_x >= right; nondegenerate
+; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
+; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
+; call in this module.
+; ASMDOC-GEOMETRY Dead: false. Reachability: src/preRender_wheel.c:37,45 passes four x/y pairs inline
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_wheel_helper4 label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender wheel helper4.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 6); arg_vertlinecount (word ptr 8); arg_vertlines (byte ptr 10).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES, SS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr 6);
+; arg_vertlinecount (word ptr 8); arg_vertlines (byte ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES, SS; balanced explicit saves/restores observed:
+; DI, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
@@ -161,12 +414,71 @@ preRender_wheel_helper4 proc far
     push    si
     push    di
     mov     [bp+var_A], 0
+; ASMDOC-GEOMETRY Inline wrappers obtain vertices with LEA, whereas default wrappers MOV a near pointer; both
+; preserve one FAR wrapper frame.
 wheel_raster_join_01:
     mov     ax, offset draw_filled_lines
     mov     spritefunc, ax
     mov     ax, offset preRender_line
     mov word ptr imagefunc, ax
     lea     si, [bp+arg_vertlines]
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _prerender_shared_setup (original line 170)
+; ASMDOC-GEOMETRY Purpose: Interior polygon-raster continuation shared by solid, patterned, and auxiliary-
+; color entry wrappers.
+; ASMDOC-GEOMETRY Proposed public: _prerender_shared_setup
+; ASMDOC-GEOMETRY Convention: NEAR jump target inside preRender_wheel_helper4, not a callable C function; no
+; prologue, no new return address; shared exits POP DI/POP SI/MOV SP,BP/POP BP/RETF unwind the wrapper
+; ASMDOC-GEOMETRY Input: BP+6 word: color/style passed unchanged to selected callback (solid fill uses AL)
+; ASMDOC-GEOMETRY Input: BP+8 word: positive vertex count; no zero/negative-count guard
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP for near stack scratch pointers; normal sprite1 geometry requires
+; scanline indices inside the 480-word scratch arrays
+; ASMDOC-GEOMETRY Input: SI: near DS pointer to count POINT2D records
+; ASMDOC-GEOMETRY Input: BP points to original FAR wrapper frame; SP=BP-0x7D4, with saved SI at BP-0x7D2 and
+; DI at BP-0x7D4
+; ASMDOC-GEOMETRY Input: byte [SS:BP-10]: merge mode (0 or 1)
+; ASMDOC-GEOMETRY Input: _spritefunc/_imagefunc: valid initialized FAR callback vectors; segment words are not
+; installed here
+; ASMDOC-GEOMETRY Output: Writes indexed pixels of current sprite1 through callbacks; no scalar return
+; contract
+; ASMDOC-GEOMETRY Output: Scratch record BP-2000..BP-1973; left array BP-1944+2*y; right array BP-984+2*y (480
+; words each); caller frame and arguments remain except callback-local stack copies
+; ASMDOC-GEOMETRY Output: Sets DF=0; ES becomes SS during setup and may subsequently become selected sprite
+; bitmap segment in callbacks
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _line_pattern_bits / _prerender_auxiliary_arg only through externally selected
+; callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing via chosen callback
+; ASMDOC-GEOMETRY Global write: _line_pattern_bits may be rotated by _draw_patterned_lines callback
+; ASMDOC-GEOMETRY Service/call: _draw_line_related FAR (clipped 28-byte line-record builder)
+; ASMDOC-GEOMETRY Service/call: _draw_line_related_alt FAR (unclipped record builder)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR register
+; workers
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc]: normally _preRender_line on point/axis-degenerate input
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc]: normally
+; _draw_filled_lines(left*,right*,start_y,count,color)
+; ASMDOC-GEOMETRY Service/call: caller-selected _draw_patterned_lines or _draw_unknown_lines through
+; _spritefunc
+; ASMDOC-GEOMETRY Detail: Cross-module jump is live, despite asm-migration marking
+; NO_INDEXED_C_PATH/INDIRECT_OR_LINK_USE_UNRESOLVED.
+; ASMDOC-GEOMETRY Detail: Neither establishes callback vectors nor allocates its frame; inherited wrapper
+; frame is mandatory.
+; ASMDOC-GEOMETRY Dead: false. Reachability: Local jumps at asm/prerender_wheel_raster.ASM:106,170; external
+; near jumps at asm/font_matrix_shape_decode.ASM:186 and asm/graphics_resource_runtime.ASM:1545
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _prerender_shared_setup:
     mov     [bp+var_vertlineptr], si
     mov     cx, [bp+arg_vertlinecount]
@@ -209,6 +521,8 @@ _prerender_shared_setup:
     mov     sp, bp
     pop     bp
     retf
+; ASMDOC-GEOMETRY Find signed bounding box and first/last y extrema; equal minima replace the chosen top
+; vertex. No source count validation.
 wheel_raster_loop_head_01:
     mov     ax, [si+2]
     cmp     ax, [bp+var_E]
@@ -273,6 +587,8 @@ wheel_raster_branch_path_08:
     mov     sp, bp
     pop     bp
     retf
+; ASMDOC-GEOMETRY Walk opposite sides of cyclic vertex ring; only rising-y edges emit records. First chain
+; seeds arrays, second merges them.
 wheel_raster_branch_path_09:
     lea     si, [bp+var_7D0]
     mov     di, [bp+var_10]
@@ -374,11 +690,46 @@ wheel_raster_branch_path_18:
     pop     bp
     retf
 preRender_wheel_helper4 endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _preRender_helper (original line 377)
+; ASMDOC-GEOMETRY Purpose: Prefill clipped rows of both boundary arrays with empty spans, then fall through to
+; _preRender_helper2.
+; ASMDOC-GEOMETRY Proposed public: _preRender_helper
+; ASMDOC-GEOMETRY Convention: NEAR register worker; BP is inherited outer frame, not worker frame; RETN
+; returns to internal caller
+; ASMDOC-GEOMETRY Input: DS:SI: 28-byte prepared line record: +0 x fraction u16,+2 start x i16,+4 y fraction
+; u16,+6 start y i16,+8 end x i16,+10 end y i16,+12 slope u16,+14 sample count i16,+16 color,+18 mode byte
+; (0..9),+19 clip flags,+20/+22 top/bottom rows,+24/+26 left/right rows
+; ASMDOC-GEOMETRY Input: SS:BP-24 word: base near offset of left scanline array; right array is base+0x3C0;
+; absolute y indexes into these arrays
+; ASMDOC-GEOMETRY Input: ES=DS=SS, DF=0; BP remains outer polygon frame; NEAR CALL supplies only a return IP,
+; no stack arguments
+; ASMDOC-GEOMETRY Output: Updates ES scanline arrays; no scalar return; line record and SI unchanged
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: ES
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: DI
+; ASMDOC-GEOMETRY Clobbers: FLAGS
+; ASMDOC-GEOMETRY Global read: _sprite1 +26/+28 clip edges
+; ASMDOC-GEOMETRY Service/call: falls through to _preRender_helper2
+; ASMDOC-GEOMETRY Detail: Reads _sprite1 left/right-exclusive for sentinel pairs. For clipped top/bottom uses
+; (left,left-1); for clipped left/right uses (right,right-1).
+; ASMDOC-GEOMETRY Dead: false. Reachability: Live transitive internal calls from polygon rasterizer;
+; asm/prerender_wheel_raster.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_helper label near
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender helper.
-; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: CX, DI; path-specific inputs and outputs follow the listed operands.
+; ABI: NEAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: no named stack arguments referenced.
+; Register ABI: touches AX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: CX, DI; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -460,11 +811,44 @@ edge_clear_branch_path_03:
     dec     ax
     rep stosw
 preRender_helper endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _preRender_helper2 (original line 463)
+; ASMDOC-GEOMETRY Purpose: Seed both scanline boundary arrays from one line record using the mode dispatch
+; table.
+; ASMDOC-GEOMETRY Proposed public: _preRender_helper2
+; ASMDOC-GEOMETRY Convention: NEAR register worker; BP is inherited outer frame, not worker frame; RETN
+; returns to internal caller
+; ASMDOC-GEOMETRY Input: DS:SI: 28-byte prepared line record: +0 x fraction u16,+2 start x i16,+4 y fraction
+; u16,+6 start y i16,+8 end x i16,+10 end y i16,+12 slope u16,+14 sample count i16,+16 color,+18 mode byte
+; (0..9),+19 clip flags,+20/+22 top/bottom rows,+24/+26 left/right rows
+; ASMDOC-GEOMETRY Input: SS:BP-24 word: base near offset of left scanline array; right array is base+0x3C0;
+; absolute y indexes into these arrays
+; ASMDOC-GEOMETRY Input: ES=DS=SS, DF=0; BP remains outer polygon frame; NEAR CALL supplies only a return IP,
+; no stack arguments
+; ASMDOC-GEOMETRY Output: Updates ES scanline arrays; no scalar return; line record and SI unchanged
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: ES
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: DI
+; ASMDOC-GEOMETRY Clobbers: FLAGS
+; ASMDOC-GEOMETRY Detail: Mode 0,1,9 or nonpositive sample count returns immediately. Modes 2..8 implement
+; vertical, unit-slope, y-major and x-major fixed-point stepping; rounding adds 0x8000 with carry.
+; ASMDOC-GEOMETRY Dead: false. Reachability: Live transitive internal calls from polygon rasterizer;
+; asm/prerender_wheel_raster.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_helper2 label near
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender helper2.
-; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: none
+; inferred; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -481,6 +865,8 @@ preRender_helper2 proc near
     xor     bh, bh
     shl     bx, 1
     jmp     cs:sprite_line_fill_mode_dispatch[bx]
+; ASMDOC-GEOMETRY Code-resident 10-word jump table indexed by unsigned mode byte; legal modes 0..9 are
+; required. Entries 0/1/9 go to RET, not hardware instructions.
 sprite_line_fill_mode_dispatch     dw offset slope_fill_mode_case_02
     dw offset slope_fill_mode_case_02
     dw offset slope_fill_mode_case_01
@@ -596,11 +982,49 @@ slope_fill_branch_path_02:
     mov     [di+3C0h], ax
     retn
 preRender_helper2 endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _preRender_helper3 (original line 599)
+; ASMDOC-GEOMETRY Purpose: Merge the second polygon chain into existing scanline boundaries and restore
+; clipped boundary rows.
+; ASMDOC-GEOMETRY Proposed public: _preRender_helper3
+; ASMDOC-GEOMETRY Convention: NEAR register worker; BP is inherited outer frame, not worker frame; RETN
+; returns to internal caller
+; ASMDOC-GEOMETRY Input: DS:SI: 28-byte prepared line record: +0 x fraction u16,+2 start x i16,+4 y fraction
+; u16,+6 start y i16,+8 end x i16,+10 end y i16,+12 slope u16,+14 sample count i16,+16 color,+18 mode byte
+; (0..9),+19 clip flags,+20/+22 top/bottom rows,+24/+26 left/right rows
+; ASMDOC-GEOMETRY Input: SS:BP-24 word: base near offset of left scanline array; right array is base+0x3C0;
+; absolute y indexes into these arrays
+; ASMDOC-GEOMETRY Input: ES=DS=SS, DF=0; BP remains outer polygon frame; NEAR CALL supplies only a return IP,
+; no stack arguments
+; ASMDOC-GEOMETRY Input: byte [SS:BP-10] merge selector; byte [SS:BP-12] clipping flag
+; ASMDOC-GEOMETRY Output: Updates ES scanline arrays; no scalar return; line record and SI unchanged
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: ES
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: DI
+; ASMDOC-GEOMETRY Clobbers: FLAGS
+; ASMDOC-GEOMETRY Global read: _sprite1 +26/+28 clip edges
+; ASMDOC-GEOMETRY Detail: SS:BP-10 byte selects per-row extrema merge (nonzero) or choose-a-side run fill
+; (zero); SS:BP-12 byte enables clip postamble.
+; ASMDOC-GEOMETRY Detail: Mode 0,1,9 dispatch directly to shared RET in helper2 and bypass the clip postamble.
+; ASMDOC-GEOMETRY Detail: For top/bottom clipped rows postamble writes left only; for left/right clipped rows
+; it writes right=clip_right-1 only.
+; ASMDOC-GEOMETRY Dead: false. Reachability: Live transitive internal calls from polygon rasterizer;
+; asm/prerender_wheel_raster.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_helper3 label near
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender helper3.
-; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, CS; balanced explicit saves/restores observed: none
+; inferred; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -623,6 +1047,8 @@ preRender_helper3 proc near
     jmp     cs:sprite_line_merge_mode_dispatch[bx]
 slope_raster_branch_path_01:
     jmp     cs:sprite_line_merge_mode_alt[bx]
+; ASMDOC-GEOMETRY Nonzero merge selector: compare each raster sample with current signed left/right extrema.
+; This is code data.
 sprite_line_merge_mode_alt     dw offset slope_fill_mode_case_02
     dw offset slope_fill_mode_case_02
     dw offset slope_raster_mode_case_01
@@ -803,6 +1229,8 @@ slope_raster_branch_path_16:
     jge     short slope_raster_loop_head_08
     mov     [di+3C0h], ax
     jmp     slope_raster_join_01
+; ASMDOC-GEOMETRY Zero selector: scan until the edge escapes current span, then fill that one boundary for the
+; remaining run. This is code data.
 sprite_line_merge_mode_dispatch     dw offset slope_fill_mode_case_02
     dw offset slope_fill_mode_case_02
     dw offset slope_raster_mode_case_08
@@ -1044,6 +1472,8 @@ slope_raster_branch_path_32:
     loop    slope_raster_loop_head_31
     jmp     short slope_raster_join_01
     db 144
+; ASMDOC-GEOMETRY Clipping postamble differs from prefill: it rewrites only one array per clipped side.
+; Dispatch-to-RET modes bypass this postamble.
 slope_raster_join_01:
     cmp     [bp+var_C], 0
     jnz     short slope_raster_branch_path_33
@@ -1101,11 +1531,65 @@ slope_raster_branch_path_36:
 slope_raster_return_01:
     retn
 preRender_helper3 endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _nopsub_31F39 (original line 1104)
+; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic list of near pointers to already prepared 28-byte line records;
+; merge mode 1.
+; ASMDOC-GEOMETRY Proposed public: _sprite_fill_line_records
+; ASMDOC-GEOMETRY Convention: FAR cdecl shared-frame wrapper; caller stack BP+6/+8/+10; RETF through sibling
+; body
+; ASMDOC-GEOMETRY Input: BP+6 word: span color
+; ASMDOC-GEOMETRY Input: BP+8 word: positive record count; no guard
+; ASMDOC-GEOMETRY Input: BP+10 onward: count inline word DS offsets to line records (not POINT2D coordinates)
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP; each record layout is the same as the NEAR workers; ring must reach
+; selected top and bottom records
+; ASMDOC-GEOMETRY Output: Writes sprite1 pixels through span callback; may call _putpixel_line1_maybe at
+; S012_TEXT:49A0 for count=1/degenerate input
+; ASMDOC-GEOMETRY Output: Count=1 literally stores color to DS:[BP+DI+6], where DI is first record pointer;
+; this is not DS:[DI+16]
+; ASMDOC-GEOMETRY Output: Allocates same 0x7D0 scratch frame; no scalar result; DF cleared; ES changed
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: _spritefunc.offset = OFFSET _draw_filled_lines
+; ASMDOC-GEOMETRY Global write: _imagefunc.offset = 49A0h; initialized segment remains S012_TEXT
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing; count=1 anomalous DS:[BP+DI+6] store
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc] = S012_TEXT:49A0 = _putpixel_line1_maybe(record*)
+; (evidence/functions.json segment_offset=18848)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc] _draw_filled_lines
+; ASMDOC-GEOMETRY Detail: The two variants converge at line_raster_join_01; _nopsub_31F39 needs the later body
+; for all exits.
+; ASMDOC-GEOMETRY Detail: Mode lookup tables target worker case labels, not these wrappers; indirect callbacks
+; go to selected image/span routines, not these wrappers.
+; ASMDOC-GEOMETRY Detail: Literal callback binding is grounded by evidence/functions.json:
+; putpixel_line1_maybe start=144320, segment_paragraph=7842, segment_offset=18848 (49A0h); source uses a
+; numeric offset rather than a symbol.
+; ASMDOC-GEOMETRY Dead: true. Reachability: No external symbolic call/address-taking or accepted source caller
+; found; no dispatch table stores these entries. Name-plan dead=true. This is a static conclusion, not a
+; runtime coverage proof.
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _nopsub_31F39 label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31F39.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (byte ptr 10).
-; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
+; arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (byte ptr 10).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-
+; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -1143,11 +1627,66 @@ nopsub_31F39 proc far
     jmp     short line_raster_join_01
     db 144
 nopsub_31F39 endp
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
+; ASMDOC-GEOMETRY PUBLIC _nopsub_31F55 (original line 1146)
+; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic list of near pointers to already prepared 28-byte line records;
+; merge mode 0.
+; ASMDOC-GEOMETRY Proposed public: _sprite_fill_line_records_alt
+; ASMDOC-GEOMETRY Convention: Declared LABEL/PROC NEAR, but implementation consumes a FAR return frame (BP+6
+; arguments) and executes RETF; ordinary NEAR CALL is invalid
+; ASMDOC-GEOMETRY Input: BP+6 word: span color
+; ASMDOC-GEOMETRY Input: BP+8 word: positive record count; no guard
+; ASMDOC-GEOMETRY Input: BP+10 onward: count inline word DS offsets to line records (not POINT2D coordinates)
+; ASMDOC-GEOMETRY Input: DS=SS=DGROUP; each record layout is the same as the NEAR workers; ring must reach
+; selected top and bottom records
+; ASMDOC-GEOMETRY Output: Writes sprite1 pixels through span callback; may call _putpixel_line1_maybe at
+; S012_TEXT:49A0 for count=1/degenerate input
+; ASMDOC-GEOMETRY Output: Count=1 literally stores color to DS:[BP+DI+6], where DI is first record pointer;
+; this is not DS:[DI+16]
+; ASMDOC-GEOMETRY Output: Allocates same 0x7D0 scratch frame; no scalar result; DF cleared; ES changed
+; ASMDOC-GEOMETRY Preserves: BP
+; ASMDOC-GEOMETRY Preserves: SI
+; ASMDOC-GEOMETRY Preserves: DI
+; ASMDOC-GEOMETRY Preserves: DS
+; ASMDOC-GEOMETRY Preserves: SS
+; ASMDOC-GEOMETRY Clobbers: AX
+; ASMDOC-GEOMETRY Clobbers: BX
+; ASMDOC-GEOMETRY Clobbers: CX
+; ASMDOC-GEOMETRY Clobbers: DX
+; ASMDOC-GEOMETRY Clobbers: ES
+; ASMDOC-GEOMETRY Clobbers: FLAGS (DF cleared)
+; ASMDOC-GEOMETRY Global read: _sprite1 clip words +26 left,+28 right-exclusive,+16 top,+18 bottom-exclusive
+; ASMDOC-GEOMETRY Global read: _spritefunc and _imagefunc far callback vectors
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global read: _sprite1 FAR bitmap pointer and line-offset table through pixel/span callbacks
+; ASMDOC-GEOMETRY Global write: _spritefunc.offset = OFFSET _draw_filled_lines
+; ASMDOC-GEOMETRY Global write: _imagefunc.offset = 49A0h; initialized segment remains S012_TEXT
+; ASMDOC-GEOMETRY Global write: current sprite1 pixel backing; count=1 anomalous DS:[BP+DI+6] store
+; ASMDOC-GEOMETRY Service/call: FAR [_imagefunc] = S012_TEXT:49A0 = _putpixel_line1_maybe(record*)
+; (evidence/functions.json segment_offset=18848)
+; ASMDOC-GEOMETRY Service/call: _preRender_helper / _preRender_helper2 / _preRender_helper3 NEAR
+; ASMDOC-GEOMETRY Service/call: FAR [_spritefunc] _draw_filled_lines
+; ASMDOC-GEOMETRY Detail: The two variants converge at line_raster_join_01; _nopsub_31F39 needs the later body
+; for all exits.
+; ASMDOC-GEOMETRY Detail: Mode lookup tables target worker case labels, not these wrappers; indirect callbacks
+; go to selected image/span routines, not these wrappers.
+; ASMDOC-GEOMETRY Detail: Literal callback binding is grounded by evidence/functions.json:
+; putpixel_line1_maybe start=144320, segment_paragraph=7842, segment_offset=18848 (49A0h); source uses a
+; numeric offset rather than a symbol.
+; ASMDOC-GEOMETRY Dead: true. Reachability: No external symbolic call/address-taking or accepted source caller
+; found; no dispatch table stores these entries. Name-plan dead=true. This is a static conclusion, not a
+; runtime coverage proof.
+; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _nopsub_31F55 label near
 ; -----------------------------------------------------------------------------
-; Purpose: Implement the legacy internal helper nopsub 31F55. Its internal flow uses line_raster_join_01, line_raster_branch_path_01.
-; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (byte ptr 10).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES, SS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed
+; Purpose: Implement the legacy internal helper nopsub 31F55. Its internal flow uses line_raster_join_01,
+; line_raster_branch_path_01.
+; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_0 (word ptr 6);
+; arg_2 (word ptr 8); arg_4 (byte ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES, SS; balanced explicit saves/restores observed:
+; DI, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
@@ -1186,6 +1725,8 @@ nopsub_31F55 proc near
     arg_0 = word ptr 6
     arg_2 = word ptr 8
     arg_4 = byte ptr 10
+; ASMDOC-GEOMETRY Alternate input representation is an inline array of near record pointers; geometry is read
+; from record fields, not x/y vertices.
 line_raster_join_01:
     lea     si, [bp+arg_4]
     mov     [bp+var_6], si

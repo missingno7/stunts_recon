@@ -1,3 +1,9 @@
+; ASMDOC(font_shapes) Module seg012_shape2d_extended_group. Replace placeholder extended operation names with the common
+; ASMDOC(font_shapes) signed-packet RLE overwrite blit, with clipped and unclipped entry families. Public callable entries:
+; ASMDOC(font_shapes) _nopsub_33DBE, _shape2d_op_unknown5, _shape2d_op_unk, _nopsub_33E90, _shape2d_op_unk2, _shape2d_op_unk3.
+; ASMDOC(font_shapes) Contract offsets use BP after the standard prologue; FAR return IP/CS occupy BP+2/+4. Original source
+; ASMDOC(font_shapes) comments remain verbatim and may contain older incomplete summaries; these added contracts describe
+; ASMDOC(font_shapes) transitive shared exits.
 .8086
 INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
@@ -17,6 +23,32 @@ public _shape2d_op_unk3
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC(font_shapes) Contract _nopsub_33DBE (proposed _shape2d_blit_rle_hotspot): Decode a signed-packet RLE shape as pixel
+; ASMDOC(font_shapes) overwrite, using requested coordinates minus header hotspot (+4,+6).
+; ASMDOC(font_shapes) FAR cdecl; RETF, caller removes arguments. Stack offsets below are from BP after PUSH BP / MOV BP,SP:
+; ASMDOC(font_shapes) saved BP +0, return IP +2, return CS +4; first argument +6. Balanced SP on return.
+; ASMDOC(font_shapes) inputs: [BP+6] SHAPE2D far offset; [BP+8] SHAPE2D far segment; [BP+10] s16 requested x; [BP+12] s16
+; ASMDOC(font_shapes) requested y; SHAPE2D +0 width word,+2 height word; signed-byte packet stream +10h; valid positive
+; ASMDOC(font_shapes) dimensions and enough encoded/destination storage required
+; ASMDOC(font_shapes) outputs: No scalar return; positive control 1..127 repeats following color; negative -1..-128 copies
+; ASMDOC(font_shapes) that many literals; zero control ends stream; Runs cross row boundaries; destination row offsets
+; ASMDOC(font_shapes) resolved from sprite1 line table; no transparency or Boolean combine; Shape height is not used by the
+; ASMDOC(font_shapes) shared unclipped decoder; zero packet alone terminates it
+; ASMDOC(font_shapes) preserves: BP; SI; DI; DS; CS; SS; SP (balanced)
+; ASMDOC(font_shapes) clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; ASMDOC(font_shapes) globals_read: CS:_sprite1+2 bitmap segment,+10 line table; CS:line-table entries; shape width/header and
+; ASMDOC(font_shapes) encoded bytes
+; ASMDOC(font_shapes) globals_written: sprite1 bitmap pixels within computed span
+; ASMDOC(font_shapes) services: none in this routine.
+; ASMDOC(font_shapes) Reachability: No executable token reference or address-taking found in accepted asm/ and src/ outside
+; ASMDOC(font_shapes) declaration/definition; agrees with existing rename plan. No indirect table reference found. Static
+; ASMDOC(font_shapes) absence is scoped to accepted sources, not proof about arbitrary external callers.
+; ASMDOC(font_shapes) Header source offset/segment equate names are swapped in _shape2d_op_unk, but the instructions still
+; ASMDOC(font_shapes) load offset from BP+6 and segment from BP+8.
+; ASMDOC(font_shapes) Hotspot/explicit stubs jump into the respective shared body; all return via its DS/SI/DI/BP-restoring
+; ASMDOC(font_shapes) epilogue.
+; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance past declared
+; ASMDOC(font_shapes) height until a zero packet.
 _nopsub_33DBE proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -53,6 +85,30 @@ _nopsub_33DBE endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC(font_shapes) Contract _shape2d_op_unknown5 (proposed _shape2d_blit_rle_at): Decode a signed-packet RLE shape as pixel
+; ASMDOC(font_shapes) overwrite, using explicit x,y.
+; ASMDOC(font_shapes) FAR cdecl; RETF, caller removes arguments. Stack offsets below are from BP after PUSH BP / MOV BP,SP:
+; ASMDOC(font_shapes) saved BP +0, return IP +2, return CS +4; first argument +6. Balanced SP on return.
+; ASMDOC(font_shapes) inputs: [BP+6] SHAPE2D far offset; [BP+8] SHAPE2D far segment; [BP+10] s16 requested x; [BP+12] s16
+; ASMDOC(font_shapes) requested y; SHAPE2D +0 width word,+2 height word; signed-byte packet stream +10h; valid positive
+; ASMDOC(font_shapes) dimensions and enough encoded/destination storage required
+; ASMDOC(font_shapes) outputs: No scalar return; positive control 1..127 repeats following color; negative -1..-128 copies
+; ASMDOC(font_shapes) that many literals; zero control ends stream; Runs cross row boundaries; destination row offsets
+; ASMDOC(font_shapes) resolved from sprite1 line table; no transparency or Boolean combine; Shape height is not used by the
+; ASMDOC(font_shapes) shared unclipped decoder; zero packet alone terminates it
+; ASMDOC(font_shapes) preserves: BP; SI; DI; DS; CS; SS; SP (balanced)
+; ASMDOC(font_shapes) clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; ASMDOC(font_shapes) globals_read: CS:_sprite1+2 bitmap segment,+10 line table; CS:line-table entries; shape width/header and
+; ASMDOC(font_shapes) encoded bytes
+; ASMDOC(font_shapes) globals_written: sprite1 bitmap pixels within computed span
+; ASMDOC(font_shapes) services: none in this routine.
+; ASMDOC(font_shapes) Reachability: Retained accepted-source caller or address reference; see reachability_evidence.
+; ASMDOC(font_shapes) Header source offset/segment equate names are swapped in _shape2d_op_unk, but the instructions still
+; ASMDOC(font_shapes) load offset from BP+6 and segment from BP+8.
+; ASMDOC(font_shapes) Hotspot/explicit stubs jump into the respective shared body; all return via its DS/SI/DI/BP-restoring
+; ASMDOC(font_shapes) epilogue.
+; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance past declared
+; ASMDOC(font_shapes) height until a zero packet.
 _shape2d_op_unknown5 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -88,6 +144,30 @@ _shape2d_op_unknown5 endp
 ; Globals written: none identified.
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; -----------------------------------------------------------------------------
+; ASMDOC(font_shapes) Contract _shape2d_op_unk (proposed _shape2d_blit_rle): Decode a signed-packet RLE shape as pixel
+; ASMDOC(font_shapes) overwrite, using header position (+8,+0A).
+; ASMDOC(font_shapes) FAR cdecl; RETF, caller removes arguments. Stack offsets below are from BP after PUSH BP / MOV BP,SP:
+; ASMDOC(font_shapes) saved BP +0, return IP +2, return CS +4; first argument +6. Balanced SP on return.
+; ASMDOC(font_shapes) inputs: [BP+6] SHAPE2D far offset; [BP+8] SHAPE2D far segment; SHAPE2D +0 width word,+2 height word;
+; ASMDOC(font_shapes) signed-byte packet stream +10h; valid positive dimensions and enough encoded/destination storage
+; ASMDOC(font_shapes) required
+; ASMDOC(font_shapes) outputs: No scalar return; positive control 1..127 repeats following color; negative -1..-128 copies
+; ASMDOC(font_shapes) that many literals; zero control ends stream; Runs cross row boundaries; destination row offsets
+; ASMDOC(font_shapes) resolved from sprite1 line table; no transparency or Boolean combine; Shape height is not used by the
+; ASMDOC(font_shapes) shared unclipped decoder; zero packet alone terminates it
+; ASMDOC(font_shapes) preserves: BP; SI; DI; DS; CS; SS; SP (balanced)
+; ASMDOC(font_shapes) clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; ASMDOC(font_shapes) globals_read: CS:_sprite1+2 bitmap segment,+10 line table; CS:line-table entries; shape width/header and
+; ASMDOC(font_shapes) encoded bytes
+; ASMDOC(font_shapes) globals_written: sprite1 bitmap pixels within computed span
+; ASMDOC(font_shapes) services: none in this routine.
+; ASMDOC(font_shapes) Reachability: Retained accepted-source caller or address reference; see reachability_evidence.
+; ASMDOC(font_shapes) Header source offset/segment equate names are swapped in _shape2d_op_unk, but the instructions still
+; ASMDOC(font_shapes) load offset from BP+6 and segment from BP+8.
+; ASMDOC(font_shapes) Hotspot/explicit stubs jump into the respective shared body; all return via its DS/SI/DI/BP-restoring
+; ASMDOC(font_shapes) epilogue.
+; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance past declared
+; ASMDOC(font_shapes) height until a zero packet.
 _shape2d_op_unk proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -111,6 +191,7 @@ _shape2d_op_unk proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC(font_shapes) Unclipped entry family shares width and stream initialization. Height does not bound the common decoder.
 shape_op_unk_shared_exit:
     cld
     lea     ax, [si+10h]
@@ -128,6 +209,8 @@ shape_op_unk_draw_loop:
     mov     es, ax
     mov     si, [bp+var_E]
     mov     dx, [bp+var_6]
+; ASMDOC(font_shapes) Signed packet: zero exits; positive consumes one repeated color; negative consumes literal bytes. Runs
+; ASMDOC(font_shapes) may cross row boundaries.
 shape_op_unk_read_loop:
     lodsb
     or      al, al
@@ -182,6 +265,34 @@ _shape2d_op_unk endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC(font_shapes) Contract _nopsub_33E90 (proposed _shape2d_blit_rle_clip_hotspot): Clip and decode a signed-packet RLE
+; ASMDOC(font_shapes) shape as pixel overwrite, using requested coordinates minus header hotspot (+4,+6).
+; ASMDOC(font_shapes) FAR cdecl; RETF, caller removes arguments. Stack offsets below are from BP after PUSH BP / MOV BP,SP:
+; ASMDOC(font_shapes) saved BP +0, return IP +2, return CS +4; first argument +6. Balanced SP on return.
+; ASMDOC(font_shapes) inputs: [BP+6] SHAPE2D far offset; [BP+8] SHAPE2D far segment; [BP+10] s16 requested x; [BP+12] s16
+; ASMDOC(font_shapes) requested y; SHAPE2D +0 width word,+2 height word; signed-byte packet stream +10h; valid positive
+; ASMDOC(font_shapes) dimensions and enough encoded/destination storage required
+; ASMDOC(font_shapes) outputs: No scalar return; positive control 1..127 repeats following color; negative -1..-128 copies
+; ASMDOC(font_shapes) that many literals; zero control ends stream; Runs cross row boundaries; destination row offsets
+; ASMDOC(font_shapes) resolved from sprite1 line table; no transparency or Boolean combine; Writes stop after last visible
+; ASMDOC(font_shapes) clipped row even if encoded stream continues
+; ASMDOC(font_shapes) preserves: BP; SI; DI; DS; CS; SS; SP (balanced)
+; ASMDOC(font_shapes) clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; ASMDOC(font_shapes) globals_read: CS:_sprite1+2 bitmap segment,+10 line table; CS:line-table entries; shape width/header and
+; ASMDOC(font_shapes) encoded bytes; CS:_sprite1+12/+14 left/right,+16/+18 top/bottom, exclusive right/bottom; signed word
+; ASMDOC(font_shapes) comparisons
+; ASMDOC(font_shapes) globals_written: sprite1 bitmap pixels within computed span
+; ASMDOC(font_shapes) services: none in this routine.
+; ASMDOC(font_shapes) Reachability: No executable token reference or address-taking found in accepted asm/ and src/ outside
+; ASMDOC(font_shapes) declaration/definition; agrees with existing rename plan. No indirect table reference found. Static
+; ASMDOC(font_shapes) absence is scoped to accepted sources, not proof about arbitrary external callers.
+; ASMDOC(font_shapes) Header source offset/segment equate names are swapped in _shape2d_op_unk, but the instructions still
+; ASMDOC(font_shapes) load offset from BP+6 and segment from BP+8.
+; ASMDOC(font_shapes) Hotspot/explicit stubs jump into the respective shared body; all return via its DS/SI/DI/BP-restoring
+; ASMDOC(font_shapes) epilogue.
+; ASMDOC(font_shapes) When fully inside the window, far JMP enters shape_op_unk_draw_loop in the unclipped routine, with the
+; ASMDOC(font_shapes) already-built compatible frame. Otherwise source skips account for top/left/right clipping across packet
+; ASMDOC(font_shapes) boundaries.
 _nopsub_33E90 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -218,6 +329,32 @@ _nopsub_33E90 endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC(font_shapes) Contract _shape2d_op_unk2 (proposed _shape2d_blit_rle_clipped_at): Clip and decode a signed-packet RLE
+; ASMDOC(font_shapes) shape as pixel overwrite, using explicit x,y.
+; ASMDOC(font_shapes) FAR cdecl; RETF, caller removes arguments. Stack offsets below are from BP after PUSH BP / MOV BP,SP:
+; ASMDOC(font_shapes) saved BP +0, return IP +2, return CS +4; first argument +6. Balanced SP on return.
+; ASMDOC(font_shapes) inputs: [BP+6] SHAPE2D far offset; [BP+8] SHAPE2D far segment; [BP+10] s16 requested x; [BP+12] s16
+; ASMDOC(font_shapes) requested y; SHAPE2D +0 width word,+2 height word; signed-byte packet stream +10h; valid positive
+; ASMDOC(font_shapes) dimensions and enough encoded/destination storage required
+; ASMDOC(font_shapes) outputs: No scalar return; positive control 1..127 repeats following color; negative -1..-128 copies
+; ASMDOC(font_shapes) that many literals; zero control ends stream; Runs cross row boundaries; destination row offsets
+; ASMDOC(font_shapes) resolved from sprite1 line table; no transparency or Boolean combine; Writes stop after last visible
+; ASMDOC(font_shapes) clipped row even if encoded stream continues
+; ASMDOC(font_shapes) preserves: BP; SI; DI; DS; CS; SS; SP (balanced)
+; ASMDOC(font_shapes) clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; ASMDOC(font_shapes) globals_read: CS:_sprite1+2 bitmap segment,+10 line table; CS:line-table entries; shape width/header and
+; ASMDOC(font_shapes) encoded bytes; CS:_sprite1+12/+14 left/right,+16/+18 top/bottom, exclusive right/bottom; signed word
+; ASMDOC(font_shapes) comparisons
+; ASMDOC(font_shapes) globals_written: sprite1 bitmap pixels within computed span
+; ASMDOC(font_shapes) services: none in this routine.
+; ASMDOC(font_shapes) Reachability: Retained accepted-source caller or address reference; see reachability_evidence.
+; ASMDOC(font_shapes) Header source offset/segment equate names are swapped in _shape2d_op_unk, but the instructions still
+; ASMDOC(font_shapes) load offset from BP+6 and segment from BP+8.
+; ASMDOC(font_shapes) Hotspot/explicit stubs jump into the respective shared body; all return via its DS/SI/DI/BP-restoring
+; ASMDOC(font_shapes) epilogue.
+; ASMDOC(font_shapes) When fully inside the window, far JMP enters shape_op_unk_draw_loop in the unclipped routine, with the
+; ASMDOC(font_shapes) already-built compatible frame. Otherwise source skips account for top/left/right clipping across packet
+; ASMDOC(font_shapes) boundaries.
 _shape2d_op_unk2 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -253,6 +390,32 @@ _shape2d_op_unk2 endp
 ; Globals written: none identified.
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; -----------------------------------------------------------------------------
+; ASMDOC(font_shapes) Contract _shape2d_op_unk3 (proposed _shape2d_blit_rle_clipped): Clip and decode a signed-packet RLE
+; ASMDOC(font_shapes) shape as pixel overwrite, using header position (+8,+0A).
+; ASMDOC(font_shapes) FAR cdecl; RETF, caller removes arguments. Stack offsets below are from BP after PUSH BP / MOV BP,SP:
+; ASMDOC(font_shapes) saved BP +0, return IP +2, return CS +4; first argument +6. Balanced SP on return.
+; ASMDOC(font_shapes) inputs: [BP+6] SHAPE2D far offset; [BP+8] SHAPE2D far segment; SHAPE2D +0 width word,+2 height word;
+; ASMDOC(font_shapes) signed-byte packet stream +10h; valid positive dimensions and enough encoded/destination storage
+; ASMDOC(font_shapes) required
+; ASMDOC(font_shapes) outputs: No scalar return; positive control 1..127 repeats following color; negative -1..-128 copies
+; ASMDOC(font_shapes) that many literals; zero control ends stream; Runs cross row boundaries; destination row offsets
+; ASMDOC(font_shapes) resolved from sprite1 line table; no transparency or Boolean combine; Writes stop after last visible
+; ASMDOC(font_shapes) clipped row even if encoded stream continues
+; ASMDOC(font_shapes) preserves: BP; SI; DI; DS; CS; SS; SP (balanced)
+; ASMDOC(font_shapes) clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF cleared
+; ASMDOC(font_shapes) globals_read: CS:_sprite1+2 bitmap segment,+10 line table; CS:line-table entries; shape width/header and
+; ASMDOC(font_shapes) encoded bytes; CS:_sprite1+12/+14 left/right,+16/+18 top/bottom, exclusive right/bottom; signed word
+; ASMDOC(font_shapes) comparisons
+; ASMDOC(font_shapes) globals_written: sprite1 bitmap pixels within computed span
+; ASMDOC(font_shapes) services: none in this routine.
+; ASMDOC(font_shapes) Reachability: Retained accepted-source caller or address reference; see reachability_evidence.
+; ASMDOC(font_shapes) Header source offset/segment equate names are swapped in _shape2d_op_unk, but the instructions still
+; ASMDOC(font_shapes) load offset from BP+6 and segment from BP+8.
+; ASMDOC(font_shapes) Hotspot/explicit stubs jump into the respective shared body; all return via its DS/SI/DI/BP-restoring
+; ASMDOC(font_shapes) epilogue.
+; ASMDOC(font_shapes) When fully inside the window, far JMP enters shape_op_unk_draw_loop in the unclipped routine, with the
+; ASMDOC(font_shapes) already-built compatible frame. Otherwise source skips account for top/left/right clipping across packet
+; ASMDOC(font_shapes) boundaries.
 _shape2d_op_unk3 proc far
     var_10 = word ptr -16
     var_E = word ptr -14
@@ -279,6 +442,8 @@ _shape2d_op_unk3 proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC(font_shapes) Clipped family clips signed coordinates and extents against all four active sprite bounds before
+; ASMDOC(font_shapes) decoding source skips.
 shape_op_unk3_shared_exit:
     cld
     lea     ax, [si+10h]
@@ -364,7 +529,11 @@ shape_op_unk3_shared_path:
     mov     [bp+var_2], bx
     or      di, di
     jnz     short shape_op_unk3_when_nonzero
+; ASMDOC(font_shapes) Fully-contained shapes reuse the unclipped decoder by a far jump with the same live frame; no far return
+; ASMDOC(font_shapes) address is added.
     jmp far ptr shape_op_unk_draw_loop
+; ASMDOC(font_shapes) A clipped span must skip encoded source pixels and stop after the final visible row, even in the middle
+; ASMDOC(font_shapes) of a packet.
 shape_op_unk3_when_nonzero:
     mov     bx, [bp+var_4]
     shl     bx, 1
@@ -448,6 +617,7 @@ shape_op_unk3_when_less_5:
 shape_op_unk3_when_less_6:
     neg     cx
     mov     dx, cx
+; ASMDOC(font_shapes) Consume hidden pixels as packet counts/literals, retaining any remainder for visible output.
 shape_op_unk3_when_nonzero_2:
     lodsb
     or      al, al

@@ -1,3 +1,9 @@
+; ASMDOC Module: seg012_putimage_shared_group. Proposed content name: sprite_opaque_blitters. The public group copies
+; ASMDOC bitmap bytes using MOVS; old segment and AND wording obscure the operation; no split or merge.
+; ASMDOC Public routines: _nopsub_33B98, _sprite_putimage_and_alt, _sprputimage.
+; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated comments
+; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination bitmap/table
+; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
 INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
@@ -14,6 +20,25 @@ public _sprputimage
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_33B98: Clipped opaque bitmap copy with hotspot-adjusted destination.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 source SHAPE2D offset; BP+8 source segment; source header width +0, height +2; packed pixel
+; ASMDOC bytes +10h; BP+10 i16 destination x; BP+12 i16 destination y; header +4/+6 signed hotspot words subtracted
+; ASMDOC from x/y with 16-bit wrap.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF cleared only if draw path reaches CLD.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, row-table offset +0Ah, clip left/right +0Ch/+0Eh, top/bottom
+; ASMDOC +10h/+12h, pitch +14h; CS row-table words.
+; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: True.
+; ASMDOC notes: Actual work and return are in _sprputimage shared tail. Positive source dimensions are an expected
+; ASMDOC precondition (height zero can still execute one row). Clips using signed 16-bit branches and wrapped
+; ASMDOC coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path increments row
+; ASMDOC advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS calls..
+; ASMDOC Proposed routine name: _shape2d_blit_bitmap_hotspot.
 _nopsub_33B98 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -50,6 +75,23 @@ _nopsub_33B98 endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_putimage_and_alt: Clipped opaque bitmap copy at explicit destination.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 source SHAPE2D offset; BP+8 source segment; source header width +0, height +2; packed pixel
+; ASMDOC bytes +10h; BP+10 i16 destination x; BP+12 i16 destination y.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF cleared only if draw path reaches CLD.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, row-table offset +0Ah, clip left/right +0Ch/+0Eh, top/bottom
+; ASMDOC +10h/+12h, pitch +14h; CS row-table words.
+; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: No AND operation: shared tail uses REP MOVSB/MOVSW or MOVSB. Positive source dimensions are an expected
+; ASMDOC precondition (height zero can still execute one row). Clips using signed 16-bit branches and wrapped
+; ASMDOC coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path increments row
+; ASMDOC advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS calls..
 _sprite_putimage_and_alt proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -84,6 +126,23 @@ _sprite_putimage_and_alt endp
 ; Globals read: _sprite1.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprputimage: Clipped opaque bitmap copy at shape-stored position.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 source SHAPE2D offset; BP+8 source segment; source header width +0, height +2; packed pixel
+; ASMDOC bytes +10h; header x +8, y +0Ah.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF cleared only if draw path reaches CLD.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, row-table offset +0Ah, clip left/right +0Ch/+0Eh, top/bottom
+; ASMDOC +10h/+12h, pitch +14h; CS row-table words.
+; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: Positive source dimensions are an expected precondition (height zero can still execute one row). Clips
+; ASMDOC using signed 16-bit branches and wrapped coordinates. Source and destination offsets wrap at 16 bits.
+; ASMDOC Width-one, zero-source-skip path increments row advance after each row: later destination row strides grow by
+; ASMDOC one. No callbacks, DOS or BIOS calls..
 _sprputimage proc far
     var_E = word ptr -14
     var_bitmap = word ptr -12
@@ -109,6 +168,7 @@ _sprputimage proc far
     mov     [bp+shapex], ax
     mov     ax, [si+0Ah]
     mov     [bp+shapey], ax
+; ASMDOC Shared signed clipping and opaque MOVS rows; the AND-named wrapper performs no AND.
 sprputimage_shared_exit:
     mov     bx, [bp+shapey]
     mov     cx, [si+2]

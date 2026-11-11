@@ -1,3 +1,9 @@
+; ASMDOC Module: sprite_rectangle_scaled_blitters. Proposed content name: sprite_rectangle_scaled_blitters. Existing
+; ASMDOC module name covers rectangles, mapping-table operations and shared scaled bitmap tail; retain.
+; ASMDOC Public routines: _draw_filled_rect, _clear_rect, _sub_35DC8, _sub_35DE6, _sub_35E08, _loc_35ED9.
+; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated comments
+; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination bitmap/table
+; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
 INCLUDE include\platform_hw.inc
 name asm012_154486
@@ -44,6 +50,22 @@ public _loc_35ED9
 ; Globals written: none identified.
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _draw_filled_rect: XOR the clipped rectangle with the low byte of the supplied color.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 i16 x; BP+8 i16 y; BP+10 i16 width; BP+12 i16 height; BP+14 u8 XOR operand (only low byte read);
+; ASMDOC clipping mutates x/y/width/height argument words; width then replaced by half-width.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP, DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, flags; DF=0 on accepted dimensions, unchanged on early clipping exit.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, row-table offset +0Ah, clip left/right +0Ch/+0Eh, top/bottom
+; ASMDOC +10h/+12h, pitch +14h; CS row-table words.
+; ASMDOC globals_written: Caller x/y/width/height argument words on clipping/draw paths; Bitmap memory selected by
+; ASMDOC CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: Uses XOR, not assignment fill, and no sprite scaling. Signed wrapped clip arithmetic; empty dimensions
+; ASMDOC rejected. Later rows add pitch. Unreachable unclipped prologue after normal early-exit jump..
 _draw_filled_rect proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -93,10 +115,13 @@ return_empty_rectangle:
     jmp     short return_after_rectangle_draw
     ; align 2
     db 144
+; ASMDOC Dormant unlabeled prologue: unclipped XOR rectangle entry. Named public-entry control flow skips this stub;
+; ASMDOC retained extent is intentional.
     push    bp
     mov     bp, sp
     push    si
     push    di
+; ASMDOC After clipping, XOR rectangle rows; not assignment fill.
 draw_clipped_rectangle:
     cld
     cmp     [bp+arg_4], 0
@@ -172,6 +197,23 @@ _draw_filled_rect endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _clear_rect: Copy a rectangle from sprite2 to a linearly displaced position in sprite1.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 i16 source x; BP+8 i16 source y; BP+10 u16 byte width; BP+12 i16 row count; BP+14 i16 linear
+; ASMDOC destination displacement; quotient/remainder from signed (x+displacement modulo 65536)/sprite1.width2 select
+; ASMDOC destination y+quotient and remainder x.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, flags; DF=0.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, line-table +0Ah, signed width2 +18h; CS:_sprite2 bitmap segment
+; ASMDOC +2 and line-table +0Ah; both CS row-table arrays.
+; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: Not a color clear. REP MOVSB forward, then source/destination row table cursors +2; no clipping, no
+; ASMDOC overlap repair, no dimension validation. Zero/negative height still executes first row. Division can fault on
+; ASMDOC zero divisor or quotient overflow..
 _clear_rect proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -222,6 +264,7 @@ _clear_rect proc far
     add     [bp+var_2], dx
     mov     [bp+var_6], cx
     mov     dx, [bp+arg_6]
+; ASMDOC Forward sprite2-to-sprite1 row copy; row-table cursors advance independently.
 copy_sprite_scanline:
     mov     cx, [bp+arg_4]
     mov     bx, [bp+var_4]
@@ -241,6 +284,8 @@ copy_sprite_scanline:
     mov     sp, bp
     pop     bp
     retf
+; ASMDOC PUBLIC DATA _incnums: Identity-initialized byte-to-byte pixel remapping table; full/partial copy entries can
+; ASMDOC change it; transparent bitmap paths test mapped value against FFh.
 _incnums    db 0
     db 1
     db 2
@@ -506,6 +551,20 @@ copy_bytes equ 100h
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sub_35DC8: Copy exactly 256 source bytes into the code-segment remapping table.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 source offset; BP+8 source segment; at least 256 readable bytes.
+; ASMDOC outputs: CS:_incnums[0..255] overwritten in forward order; AX=CS, CX=0, ES=CS..
+; ASMDOC preserves: BP, SP, DS, SI, DI, BX, DX, SS, CS.
+; ASMDOC clobbers: AX, CX, ES; DF=0, other arithmetic flags unchanged by body.
+; ASMDOC globals_read: none.
+; ASMDOC globals_written: CS:_incnums[256].
+; ASMDOC services: none.
+; ASMDOC dead: True.
+; ASMDOC notes: Data in CODE segment is writable. No span checks or overlap buffering; changes data bytes, not
+; ASMDOC executable opcodes..
+; ASMDOC Proposed routine name: _sprite_copy_increment_table.
 _sub_35DC8 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -537,6 +596,20 @@ _sub_35DC8 endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sub_35DE6: Copy an explicit source byte span into the code-segment remapping table at an index.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 destination table index; BP+8 u16 byte count; BP+10 source offset; BP+12 source segment.
+; ASMDOC outputs: count bytes copied forward to CS:(_incnums+index modulo 65536); AX=CS, CX=0, ES=CS..
+; ASMDOC preserves: BP, SP, DS, SI, DI, BX, DX, SS, CS.
+; ASMDOC clobbers: AX, CX, ES; DF=0, other arithmetic flags unchanged by body.
+; ASMDOC globals_read: none.
+; ASMDOC globals_written: CS:_incnums+index for count bytes; no table-bound check.
+; ASMDOC services: none.
+; ASMDOC dead: True.
+; ASMDOC notes: Count zero copies nothing; caller must keep requested destination within intended storage. Normal host
+; ASMDOC adapter deliberately rejects out-of-table spans..
+; ASMDOC Proposed routine name: _sprite_update_increment_table.
 _sub_35DE6 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -575,6 +648,25 @@ _sub_35DE6 endp
 ; Globals read: source_row_fraction_accumulator.
 ; Globals written: source_row_fraction_accumulator.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sub_35E08: Unclipped Q8 scaled transparent bitmap blit with scaled hotspot.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 Q8 scale (256=1:1; accepted 2..65535); BP+8 source shape offset; BP+10 source segment; BP+12
+; ASMDOC i16 destination x; BP+14 i16 destination y; source +0/+2 dimensions, +4/+6 hotspot, bitmap +10h; SS must
+; ASMDOC address DGROUP for row fraction accumulator.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF cleared only if draw path reaches CLD.
+; ASMDOC globals_read: CS:_sprite1 pitch +14h, bitmap segment +2, row-table +0Ah; first CS row-table word.
+; ASMDOC globals_written: SS:source_row_fraction_accumulator; Bitmap memory selected by CS:_sprite1; descriptor fields
+; ASMDOC unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: True.
+; ASMDOC notes: No clipping in this public prologue. Dimensions use unsigned MUL(scale) with middle 16 product bits;
+; ASMDOC hotspot uses signed IMUL middle bits. scale<2 rejected unsigned; zero scaled dimension rejected. Source
+; ASMDOC step=floor(65536/scale), Q8 sampling; initial half-step selects sampling center; raw FFh skips (no incnums
+; ASMDOC remap). Shares live tail _loc_35ED9..
+; ASMDOC Proposed routine name: _shape2d_scale_blit_hotspot.
 _sub_35E08 proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -619,6 +711,8 @@ prepare_sprite_dimensions:
     jmp     short validate_sprite_dimensions
     ; align 2
     db 144
+; ASMDOC Dormant unlabeled prologue: scaled transparent blit at explicit position. Named public-entry control flow
+; ASMDOC skips this stub; retained extent is intentional.
     push    bp
     mov     bp, sp
     sub     sp, 16h
@@ -641,6 +735,8 @@ return_invalid_sprite_size:
     mov     sp, bp
     pop     bp
     retf
+; ASMDOC Dormant unlabeled prologue: scaled transparent blit at stored position. Named public-entry control flow skips
+; ASMDOC this stub; retained extent is intentional.
     push    bp
     mov     bp, sp
     sub     sp, 16h
@@ -653,6 +749,8 @@ return_invalid_sprite_size:
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC Unclipped scale setup computes positive dimensions and reciprocal; later public tail is also used by
+; ASMDOC shapeexpl.
 validate_sprite_dimensions:
     cmp     [bp+arg_0], 2
     jb      short return_invalid_sprite_size
@@ -710,6 +808,28 @@ save_sprite_source_origin:
     arg_shapeptr = dword ptr 8
     arg_6 = word ptr 12
     arg_8 = word ptr 14
+; ASMDOC Contract _loc_35ED9: Shared scaled-transparent bitmap raster continuation, also reached from shapeexpl.
+; ASMDOC convention: Public interior near-jump continuation, NOT a callable FAR/near procedure; falls through from
+; ASMDOC local setup or JMP from _shapeexpl; shared unwind performs RETF to original caller.
+; ASMDOC inputs: Inherited BP frame: [BP-2] x, [-4] y, [-6] positive output width, [-8] positive remaining rows, [-10]
+; ASMDOC source width, [-12] destination pitch minus output width, [-14] source row origin, [-16] reciprocal Q8 step,
+; ASMDOC [-18] initial vertical fraction, [-20] horizontal fraction; DS:SI current source pixel; SS=DGROUP; stack
+; ASMDOC already contains saved DS, SI, DI from SUB SP,16h/PUSH DS/PUSH SI/PUSH DI; BP+2/+4 FAR return.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: Restores original caller BP, SP, DS, SI and DI from inherited frame; does not preserve
+; ASMDOC continuation-entry DS/SI/DI values; SS and CS unchanged.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF inherited (normal setup supplies DF=0).
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2 and row-table +0Ah; first CS row-table word;
+; ASMDOC SS:source_row_fraction_accumulator.
+; ASMDOC globals_written: SS:source_row_fraction_accumulator; Inherited locals [BP-8] remaining rows and [BP-14] source
+; ASMDOC row origin; Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: Does not perform clipping itself; shapeexpl supplies clipped locals. Pixel AL=FFh leaves destination
+; ASMDOC unchanged; otherwise write raw AL. Fraction high byte selects integer source skip then is cleared; source and
+; ASMDOC destination arithmetic wrap at 16 bits. Final unwind restores saved DS/SI/DI/BP. Shared data state is
+; ASMDOC non-reentrant..
+; ASMDOC Proposed routine name: _shape2d_scale_blit_tail.
 _loc_35ED9:
     mov     ax, word ptr cs:_sprite1.sprite_bitmapptr+2
     mov     es, ax
@@ -721,6 +841,7 @@ _loc_35ED9:
     mov     dx, [bp+var_10]
     mov     ax, [bp+var_12]
     mov     ss:source_row_fraction_accumulator, ax
+; ASMDOC Horizontal Q8 sampling restarts each row; vertical fraction lives in SS:DGROUP writable data.
 begin_scaled_sprite_row:
     mov     cx, [bp+var_6]
     mov     bx, [bp+var_14]

@@ -1,3 +1,8 @@
+; ASMDOC Module: PES selected-plane transpose through caller scratch RAM.
+; ASMDOC Owner load_260f6; original source asm/file_unflip_shape2d_pes.ASM.
+; ASMDOC Routine inventory: _file_unflip_shape2d_pes
+; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
+; ASMDOC Pure memory transpose. No self-modification, code-data overlap, or indirect callback.
 .8086
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
@@ -14,6 +19,24 @@ public _file_unflip_shape2d_pes
 ; Globals written: none identified.
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; -----------------------------------------------------------------------------
+; ASMDOC CONTRACT _file_unflip_shape2d_pes
+; ASMDOC purpose: Transpose each selected PES plane through scratch, copying it back to the same archive plane.
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC body where applicable.
+; ASMDOC inputs: BP+6 archive offset; +8 segment; BP+10 scratch offset; +12 segment; DF must already be clear; helper requires
+; ASMDOC paragraph-aligned archive; scratch must fit width*height low-word bytes and not overlap active plane; Requires nonempty archive and
+; ASMDOC nonzero dimensions for normal finite loops; source plane layout contains four consecutive width*height spans
+; ASMDOC outputs: Selected plane byte[x*height+y] becomes plane byte[y*width+x]; advances every plane including unselected; Suppresses a
+; ASMDOC whole shape if header[15]&0xF0; selects planes by bits 0..3 of header[14]>>4; Does not clear flip/suppression flags or change
+; ASMDOC dimensions; no defined return value
+; ASMDOC preserves: BP DS SI DI SP; DF unchanged
+; ASMDOC clobbers: AX BX CX DX ES arithmetic flags; DS transiently archive/scratch
+; ASMDOC globals_read: none directly; see transitive effects stated in services
+; ASMDOC globals_written: none directly; see transitive effects stated in services
+; ASMDOC services: _file_get_shape2d(archive,index) normalized return and AX BX CX DX ES clobbers apply; No video/DOS/BIOS service; scratch
+; ASMDOC and archive RAM only
+; ASMDOC dead: False
+; ASMDOC Public name from existing plan: _file_unflip_shape2d_pes (unchanged).
 _file_unflip_shape2d_pes proc far
     var_val = byte ptr -20
     var_iterations = byte ptr -18
@@ -45,6 +68,7 @@ _file_unflip_shape2d_pes proc far
     mov     bx, [si+4]
     mov     [bp+var_shapecount], bx
     mov     [bp+var_shapecounter], 0
+; ASMDOC Do-while shape iteration: count zero is not checked before first lookup.
 shape_unflip_wait_loop:
     push    [bp+var_shapecounter]
     push    [bp+arg_memchunkseg]
@@ -57,6 +81,7 @@ shape_unflip_wait_loop:
     mov     [bp+var_shapeseg], dx
     mov     si, ax
     mov     ds, dx
+; ASMDOC Suppression upper nibble overrides all four per-plane transpose bits.
     mov     al, [si+0Fh]
 shape_unflip_mask_value:
     and     al, 0F0h
@@ -92,6 +117,7 @@ unflip_store_output_value:
     mov     [bp+var_dataptr], si
 unflip_store_output_value_2:
     mov     [bp+var_iterations], 4
+; ASMDOC Consume one selection bit each iteration; unselected plane still advances by low-word width*height.
 shape_unflip_scan_loop:
     shr     [bp+var_val], 1
     jnb     short shape_unflip_when_not_below
@@ -102,6 +128,7 @@ unflip_load_source_value_3:
     mov     ds, [bp+var_shapeseg]
     xor     dx, dx
 unflip_load_source_value_4:
+; ASMDOC Gather source by height stride into scratch in row-major order; zero width/height are not guarded.
     mov     bx, [bp+var_height]
 shape_unflip_fill_loop:
     mov     si, [bp+var_dataptr]
@@ -119,6 +146,7 @@ shape_unflip_check_dx:
     cmp     dx, bx
     jnz     short shape_unflip_fill_loop
 unflip_load_source_value_5:
+; ASMDOC Copy the gathered plane back in-place; headers and flip flags remain untouched.
     mov     es, [bp+var_shapeseg]
 unflip_load_source_value_6:
     mov     di, [bp+var_dataptr]

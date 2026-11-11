@@ -1,3 +1,9 @@
+; ASMDOC Module: seg012_putimage_and_group. Proposed content name: sprite_and_blitters. Replaces segment-address
+; ASMDOC placeholder with the shared clipped AND bitmap behavior; no split or merge.
+; ASMDOC Public routines: _sprite_putimage_and_alt2, _sprite_putimage_and.
+; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated comments
+; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination bitmap/table
+; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
 INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
@@ -13,6 +19,25 @@ public _sprite_putimage_and
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_putimage_and_alt2: Clipped AND bitmap blit with hotspot-adjusted destination.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 source SHAPE2D offset; BP+8 source segment; source header width +0, height +2; packed pixel
+; ASMDOC bytes +10h; BP+10 i16 destination x; BP+12 i16 destination y; header +4/+6 signed hotspot words subtracted
+; ASMDOC from x/y with 16-bit wrap.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF cleared only if draw path reaches CLD.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, row-table offset +0Ah, clip left/right +0Ch/+0Eh, top/bottom
+; ASMDOC +10h/+12h, pitch +14h; CS row-table words.
+; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: Enters putimage_and_shared_exit; shared tail restores DS/SI/DI/BP and RETF. Positive source dimensions
+; ASMDOC are an expected precondition (height zero can still execute one row). Clips using signed 16-bit branches and
+; ASMDOC wrapped coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path
+; ASMDOC increments row advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS
+; ASMDOC calls..
 _sprite_putimage_and_alt2 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -50,6 +75,23 @@ _sprite_putimage_and_alt2 endp
 ; Globals written: none identified.
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_putimage_and: Clipped AND bitmap blit at explicit destination.
+; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
+; ASMDOC arguments.
+; ASMDOC inputs: BP+6 u16 source SHAPE2D offset; BP+8 source segment; source header width +0, height +2; packed pixel
+; ASMDOC bytes +10h; BP+10 i16 destination x; BP+12 i16 destination y.
+; ASMDOC outputs: No defined scalar return; writes destination pixels..
+; ASMDOC preserves: BP, SP (caller argument cleanup), DS, SI, DI, SS, CS.
+; ASMDOC clobbers: AX, BX, CX, DX, ES, arithmetic flags; DF cleared only if draw path reaches CLD.
+; ASMDOC globals_read: CS:_sprite1 bitmap segment +2, row-table offset +0Ah, clip left/right +0Ch/+0Eh, top/bottom
+; ASMDOC +10h/+12h, pitch +14h; CS row-table words.
+; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
+; ASMDOC services: none.
+; ASMDOC dead: False.
+; ASMDOC notes: Positive source dimensions are an expected precondition (height zero can still execute one row). Clips
+; ASMDOC using signed 16-bit branches and wrapped coordinates. Source and destination offsets wrap at 16 bits.
+; ASMDOC Width-one, zero-source-skip path increments row advance after each row: later destination row strides grow by
+; ASMDOC one. No callbacks, DOS or BIOS calls..
 _sprite_putimage_and proc far
     var_E = word ptr -14
     var_C = word ptr -12
@@ -80,6 +122,8 @@ _sprite_putimage_and proc far
     jmp     short putimage_and_shared_exit
     ; align 2
     db 144
+; ASMDOC Dormant unlabeled prologue: AND at stored shape position. Named public-entry control flow skips this stub;
+; ASMDOC retained extent is intentional.
     push    bp
     mov     bp, sp
     sub     sp, 0Eh
@@ -92,6 +136,7 @@ _sprite_putimage_and proc far
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC Shared signed clipping and AND rows, despite the exit label name; wrappers share the RETF epilogue.
 putimage_and_shared_exit:
     mov     bx, [bp+var_4]
     mov     cx, [si+2]

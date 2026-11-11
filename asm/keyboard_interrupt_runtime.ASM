@@ -1,3 +1,18 @@
+; INPUTDOC Module keyboard_interrupt_runtime (owner keyboard_interrupt_runtime); comment-only static contract review.
+; INPUTDOC Audited INPUTDOC contracts qualify the older retained generic comments; no code or declarations changed.
+; INPUTDOC Routine names below follow rename-plan.json; definitions retain their original spelling.
+; INPUTDOC dead=true means statically unreferenced; no proof against arbitrary external/numeric callers or execution.
+; INPUTDOC Public data: _kbinput
+; INPUTDOC Routine _kb_init_interrupt -> _kb_init_interrupt: Install IRQ1 and INT16 vectors, clear 90 held-key bytes
+; INPUTDOC and register exit cleanup.
+; INPUTDOC Routine _keyboard_exit_handler -> _keyboard_exit_handler: Restore saved keyboard vectors and clear
+; INPUTDOC held-modifier BDA low bits.
+; INPUTDOC Routine _kb_int9_handler -> _kb_int9_handler: Acknowledge keyboard IRQ, update held state and overwrite the
+; INPUTDOC translated key queue.
+; INPUTDOC Routine _kb_int16_handler -> _kb_int16_handler: Provide nonblocking dequeue, peek and held-shift services
+; INPUTDOC with live result flags.
+; INPUTDOC Routine _kb_get_key_state -> _kb_get_key_state: Read and zero-extend one byte from the held-key table
+; INPUTDOC without bounds checking.
 .8086
 INCLUDE include\platform_hw.inc
 name asm012_133138
@@ -70,6 +85,23 @@ public _kb_get_key_state
 ; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
 ; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_init_interrupt (original _kb_init_interrupt).
+; INPUTDOC Purpose: Install IRQ1 and INT16 vectors, clear 90 held-key bytes and register exit cleanup.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: No specified result; ES=DS and DF=0 on normal return; AX/BX/CX/DX depend on add_exit_handler slot
+; INPUTDOC search.
+; INPUTDOC Preserves: DI explicitly saved; SI,BP,DS,SS preserved by normal add_exit_handler. SP balanced; overflow
+; INPUTDOC fatal_error is outside normal return contract.
+; INPUTDOC Clobbers: Direct AX,BX,CX,ES,FLAGS,DF; normal add_exit_handler also DX; fatal_error overflow path contract
+; INPUTDOC unknown.
+; INPUTDOC Globals read: IVT 0000:0024..0027 and 0058..005B
+; INPUTDOC Globals written: old_kb_intr_ofs/seg; old_kb_intr_bios_ofs/seg; IVT INT09/INT16; _kbinput[90]; transitive
+; INPUTDOC exit-handler registry
+; INPUTDOC Services: IN/OUT PIC mask 21h (temporarily masks IRQ0/1); add_exit_handler(FAR keyboard_exit_handler)
+; INPUTDOC Reachability: Live: src/obj_seg031.c:154; installs two public interrupt entries and saves a public exit
+; INPUTDOC callback.
 _kb_init_interrupt proc far
     push di
     in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
@@ -79,6 +111,7 @@ _kb_init_interrupt proc far
     xor bx, bx
     mov es, bx
     mov bx, word ptr es:[24h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+; INPUTDOC Installation detection compares only INT09 offset, not its segment; common setup still runs.
     cmp bx, offset _kb_int9_handler
     je keyboard_init_finish_setup
     mov word ptr ds:[old_kb_intr_ofs], bx
@@ -97,6 +130,7 @@ keyboard_init_finish_setup:
     out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ax, ds
     mov es, ax
+; INPUTDOC Only held keys are cleared here; ring indices/count/capacity are not reset.
     mov di, offset DGROUP:_kbinput
     mov cx, 5Ah
     xor ax, ax
@@ -119,6 +153,18 @@ _kb_init_interrupt endp
 ; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
 ; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _keyboard_exit_handler (original _keyboard_exit_handler).
+; INPUTDOC Purpose: Restore saved keyboard vectors and clear held-modifier BDA low bits.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
+; INPUTDOC Outputs: No specified result; ES=0; restores PIC mask read on entry.
+; INPUTDOC Preserves: Untouched by this body: BP, CX, DI, DS, DX, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,ES,FLAGS
+; INPUTDOC Globals read: old_kb_intr_ofs/seg; old_kb_intr_bios_ofs/seg; BDA 0000:0417
+; INPUTDOC Globals written: IVT INT09/INT16 if old_kb_intr_ofs !=0; BDA 0000:0417 := old & F0h
+; INPUTDOC Services: IN/OUT PIC mask 21h
+; INPUTDOC Reachability: Live: registered in kb_init_interrupt:105-108 and called in src/obj_seg000.c:664.
 _keyboard_exit_handler proc far
     in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ah, al
@@ -136,6 +182,7 @@ _keyboard_exit_handler proc far
     mov word ptr es:[58h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
     mov bx, word ptr ds:[old_kb_intr_bios_seg]
     mov word ptr es:[5Ah], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+; INPUTDOC AND F0h preserves lock-toggle high nibble and clears low held-modifier nibble.
     mov al, byte ptr es:[417h]
     and al, 0F0h
     mov byte ptr es:[417h], al
@@ -154,7 +201,22 @@ _keyboard_exit_handler endp
 ; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
 ; /* PLATFORM(input_kb): returns from a keyboard hardware interrupt. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_int9_handler (original _kb_int9_handler).
+; INPUTDOC Purpose: Acknowledge keyboard IRQ, update held state and overwrite the translated key queue.
+; INPUTDOC Convention: Hardware interrupt FAR entry; IRET consumes IP,CS,FLAGS; no C arguments.
+; INPUTDOC Inputs: Hardware INT09 stack at entry SP+0 IP, +2 CS, +4 FLAGS; scan byte from port60h. Incoming DS
+; INPUTDOC arbitrary; handler loads dseg.
+; INPUTDOC Outputs: IRET to interrupted CS:IP with original FLAGS restored; PIC EOI emitted.
+; INPUTDOC Preserves: AX,BX,CX,DX,DS explicitly saved; SI,DI,BP,ES,SS untouched; original FLAGS restored by IRET.
+; INPUTDOC Clobbers: No register or saved-FLAGS clobber on IRET; temporary IF enabling permits nested interrupts.
+; INPUTDOC Globals read: _kbinput modifier indices 56,29,42,54,58; keymap1..keymap5; kb_intr_data; kb_intr_data3;
+; INPUTDOC kb_intr_data4
+; INPUTDOC Globals written: _kbinput[clamped scan]; kblastinput; kb_intr_data_array; kb_intr_data; kb_intr_data2 on
+; INPUTDOC overflow; kb_intr_data4
+; INPUTDOC Services: IN 60h/61h; OUT 61h acknowledge pulse; OUT PIC20h EOI; CLI/STI; IRET
+; INPUTDOC Reachability: Live: kb_init_interrupt:87-88 writes this address to IVT INT09.
 _kb_int9_handler proc far
+; INPUTDOC Nested interrupts enabled before register saves; this does not chain the old INT09 handler.
     sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     push ax
     push bx
@@ -188,6 +250,7 @@ keyboard_irq_send_eoi_restore:
 keyboard_irq_decode_make_code:
     xor ah, ah
     mov bx, ax
+; INPUTDOC Out-of-range make/break scans are mapped to state index zero; no E0-prefix state machine.
     cmp bx, 5Ah
     jb keyboard_irq_clamp_scan_code
     xor bx, bx
@@ -202,6 +265,7 @@ keyboard_irq_clamp_scan_code:
     jne keyboard_irq_normalize_extended
     test byte ptr ds:[_kbinput+54], 1
     jne keyboard_irq_normalize_extended
+; INPUTDOC Caps selection tests held scan 3Ah, not a toggled BDA CapsLock bit.
     test byte ptr ds:[_kbinput+58], 1
     jne keyboard_irq_map_shifted_key
     mov al, byte ptr keymap1[bx]
@@ -210,6 +274,7 @@ keyboard_irq_store_make_state:
     jne keyboard_irq_commit_queue_tail
     xor ah, ah
 keyboard_irq_translate_key:
+; INPUTDOC Queue capacity is kb_intr_data3 bytes (initialized to 2), although backing allocation is 128 bytes.
     mov bx, word ptr ds:[kb_intr_data]
     cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     mov word ptr kb_intr_data_array[bx], ax
@@ -222,6 +287,7 @@ keyboard_irq_enqueue_key_event:
     mov bx, word ptr ds:[kb_intr_data4]
     add bx, 2
     cmp bx, word ptr ds:[kb_intr_data3]
+; INPUTDOC At capacity, advance read index to new write index: overwrite oldest key, saturate byte count.
     jbe keyboard_irq_advance_queue_head
     mov bx, word ptr ds:[kb_intr_data3]
     mov ax, word ptr ds:[kb_intr_data]
@@ -268,6 +334,22 @@ _kb_int9_handler endp
 ; Globals written: kb_intr_data2, kb_intr_data4.
 ; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_int16_handler (original _kb_int16_handler).
+; INPUTDOC Purpose: Provide nonblocking dequeue, peek and held-shift services with live result flags.
+; INPUTDOC Convention: Software interrupt entry, not ordinary FAR callable: RETF 2 pops IP/CS and discards FLAGS word
+; INPUTDOC without POPF.
+; INPUTDOC Inputs: Software INT16 stack entry SP+0 IP, +2 CS, +4 saved FLAGS; AH=00 dequeue,01 peek,02 shift query,
+; INPUTDOC otherwise unsupported. Incoming DS arbitrary.
+; INPUTDOC Outputs: AH00 AX=queued word or 0; AH01 AX=peek or 0, ZF=0 when queue nonempty and ZF=1 empty; AH02
+; INPUTDOC AL=left|right shift (0/1), AH remains02, ZF reflects OR; unsupported AX=0,ZF=1. IF=1. AH00 success ZF
+; INPUTDOC follows final queue-count SUB, not character availability.
+; INPUTDOC Preserves: BX,DS explicitly restored; CX,DX,SI,DI,BP,ES,SS untouched; stack restored including discarded
+; INPUTDOC saved FLAGS.
+; INPUTDOC Clobbers: AX, live arithmetic FLAGS,IF; original stacked FLAGS discarded.
+; INPUTDOC Globals read: _kbinput[42],_kbinput[54]; kb_intr_data2; kb_intr_data3; kb_intr_data4; kb_intr_data_array
+; INPUTDOC Globals written: kb_intr_data2; kb_intr_data4 on successful AH00
+; INPUTDOC Services: CLI/STI; RETF 2 discards saved interrupt FLAGS
+; INPUTDOC Reachability: Live: kb_init_interrupt:93-94 writes this address to IVT INT16.
 _kb_int16_handler proc far
     push bx
     push ds
@@ -285,9 +367,11 @@ keyboard_bios_return_common:
     sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
     pop ds
     pop bx
+; INPUTDOC Discard saved interrupt FLAGS instead of restoring them, exposing service ZF and enabled IF.
     retf 2
 keyboard_bios_read_waiting_key:
     cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+; INPUTDOC AH00 is nonblocking in this replacement: an empty queue returns AX=0 immediately.
     cmp word ptr ds:[kb_intr_data4], 0
     je keyboard_bios_unknown_function
     mov bx, word ptr ds:[kb_intr_data2]
@@ -312,6 +396,7 @@ keyboard_bios_peek_key:
     pop bx
     retf 2
 kb_bios_read_modifier_flags:
+; INPUTDOC Only shift held bytes are ORed into AL; AH stays 02h, not a full BIOS modifier bitmap.
     mov al, byte ptr ds:[_kbinput+42]
     or al, byte ptr ds:[_kbinput+54]
     jmp keyboard_bios_return_common
@@ -323,9 +408,23 @@ _kb_int16_handler endp
 ; Globals read: _kbinput.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; INPUTDOC Contract _kb_get_key_state (original _kb_get_key_state).
+; INPUTDOC Purpose: Read and zero-extend one byte from the held-key table without bounds checking.
+; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
+; INPUTDOC far).
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): byte-table index (intended 0..89); DS=DGROUP. Out-of-range accesses adjacent
+; INPUTDOC DGROUP storage.
+; INPUTDOC Outputs: AX=zero-extended _kbinput[index].
+; INPUTDOC Preserves: Untouched by this body: BP, CX, DI, DS, DX, ES, SI, SS; SP balanced.
+; INPUTDOC Clobbers: AX,BX,FLAGS
+; INPUTDOC Globals read: _kbinput[index]
+; INPUTDOC Globals written:
+; INPUTDOC Services:
+; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _kb_get_key_state proc far
     push bp
     mov bp, sp
+; INPUTDOC No bounds check protects the 90-byte table; callers must supply a valid scan index.
     mov bx, word ptr [bp + 6]
     mov al, byte ptr _kbinput[bx]
     xor ah, ah

@@ -1,3 +1,8 @@
+; ASMDOC Module review: Existing name is descriptive; preserve its mixed span, capture, scaled-shape, data, and font extent.
+; ASMDOC Scope: code-derived contracts below supersede broad legacy summaries without deleting them. No instructions,
+; ASMDOC declarations, old comments or line endings changed.
+; ASMDOC Public routines: _draw_filled_lines, _nopsub_34736, _sprite_clear_shape_alt, _sprite_clear_shape, _shapeexpl,
+; ASMDOC _font_setup_unknown, _set_fontdefseg. Stack offsets are post-prologue BP offsets.
 .8086
 INCLUDE include\platform_hw.inc
 name asm012_149180
@@ -47,6 +52,25 @@ public _set_fontdefseg
 ; Globals written: none identified.
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _draw_filled_lines; proposed name _draw_filled_lines
+; ASMDOC Purpose: Fill inclusive left/right spans with the low color byte, selecting byte/word stores by destination alignment.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] near DS offset of signed 16-bit inclusive left endpoints, one word per row; [BP+08] near DS offset of
+; ASMDOC signed 16-bit inclusive right endpoints, one word per row; [BP+0A] first y word; caller supplies valid row-table index;
+; ASMDOC [BP+0C] signed row count; zero/negative behavior is entry-specific; [BP+0E] primary color (low byte only); DS addresses
+; ASMDOC endpoint arrays; caller supplies valid rows/spans; no clipping.
+; ASMDOC Outputs: No semantic register result; destination pixels changed; Caller stack slots [BP+06]/[BP+08] advance by 2 each
+; ASMDOC row; [BP+0C] decremented in place.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return; DX.
+; ASMDOC Clobbers: AX; BX; CX; ES; arithmetic flags; DF=0 only if row count nonzero.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A) and addressed row offsets.
+; ASMDOC Globals written: sprite1 backing pixels; caller stack slots +06/+08/+0C.
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Address taken in asm/prerender_wheel_raster.ASM:101 etc.; direct call
+; ASMDOC asm/vector_sphere_sprite_ops.ASM:287.
+; ASMDOC Edge cases: Zero rows returns without setting DF or ES. Negative nonzero row count draws one row. Signed nonpositive
+; ASMDOC (right-left+1) skips pixels.
 _draw_filled_lines proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -71,6 +95,8 @@ _draw_filled_lines proc far
     mov     es, ax
     mov     ax, [bp+arg_color]
     mov     ah, al
+; ASMDOC Common row loop: endpoint difference is signed 16-bit plus one. Span clipping is caller-owned; stack pointer arguments
+; ASMDOC are advanced in place.
 fill_lines_loop_head_01:
     mov     bx, [bp+arg_x2arr]
     mov     cx, [bx]
@@ -130,6 +156,24 @@ _draw_filled_lines endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _nopsub_34736; proposed name _shape2d_capture_bitmap_hotspot
+; ASMDOC Purpose: Capture active-sprite rectangle into shape bitmap at explicit coordinates minus shape hotspot words +04/+06.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] destination SHAPE2D offset; [BP+08] destination SHAPE2D segment; Shape width/height words +00/+02;
+; ASMDOC destination bitmap starts +10h; No clip or source/destination extent checks; caller supplies positive height and valid
+; ASMDOC spans; [BP+0A] x word; [BP+0C] y word; subtract shape signed hotspot modulo 16 bits.
+; ASMDOC Outputs: Shape bitmap receives width bytes per row, consecutive destination rows; no semantic register result.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A), row offsets; destination shape header
+; ASMDOC width/height and selected origin/hotspot fields.
+; ASMDOC Globals written: destination far shape bitmap (+10h onward).
+; ASMDOC Services: none.
+; ASMDOC Dead: true. Reachability: No runtime symbol reference or address-taking found in tracked src/ or asm/; joins
+; ASMDOC shape_clear_join_01, not a no-op.
+; ASMDOC Shared tail: All three entries establish compatible BP locals and save DS/SI/DI before joining line 228; shared epilogue
+; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0 still copies one row.
 _nopsub_34736 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -166,6 +210,24 @@ _nopsub_34736 endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_clear_shape_alt; proposed name _sprite_clear_shape_alt
+; ASMDOC Purpose: Store explicit x/y into the destination shape header then capture that active-sprite rectangle into the shape
+; ASMDOC bitmap.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] destination SHAPE2D offset; [BP+08] destination SHAPE2D segment; Shape width/height words +00/+02;
+; ASMDOC destination bitmap starts +10h; No clip or source/destination extent checks; caller supplies positive height and valid
+; ASMDOC spans; [BP+0A] x word; [BP+0C] y word; copied to shape +08/+0A.
+; ASMDOC Outputs: Shape bitmap receives width bytes per row, consecutive destination rows; no semantic register result.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A), row offsets; destination shape header
+; ASMDOC width/height and selected origin/hotspot fields.
+; ASMDOC Globals written: destination far shape bitmap (+10h onward); destination shape +08/+0A.
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg000.c:1518 and src/obj_seg008.c:170.
+; ASMDOC Shared tail: All three entries establish compatible BP locals and save DS/SI/DI before joining line 228; shared epilogue
+; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0 still copies one row.
 _sprite_clear_shape_alt proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -202,6 +264,24 @@ _sprite_clear_shape_alt endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _sprite_clear_shape; proposed name _sprite_clear_shape
+; ASMDOC Purpose: Capture active-sprite rectangle using x/y already stored in shape +08/+0A; this saves pixels and does not clear
+; ASMDOC either buffer.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] destination SHAPE2D offset; [BP+08] destination SHAPE2D segment; Shape width/height words +00/+02;
+; ASMDOC destination bitmap starts +10h; No clip or source/destination extent checks; caller supplies positive height and valid
+; ASMDOC spans; Shape +08/+0A supply x/y.
+; ASMDOC Outputs: Shape bitmap receives width bytes per row, consecutive destination rows; no semantic register result.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES; arithmetic flags; DF=0.
+; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A), row offsets; destination shape header
+; ASMDOC width/height and selected origin/hotspot fields.
+; ASMDOC Globals written: destination far shape bitmap (+10h onward).
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Direct caller src/obj_seg000.c:863.
+; ASMDOC Shared tail: All three entries establish compatible BP locals and save DS/SI/DI before joining line 228; shared epilogue
+; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0 still copies one row.
 _sprite_clear_shape proc far
     var_A = word ptr -10
     var_8 = word ptr -8
@@ -225,6 +305,8 @@ _sprite_clear_shape proc far
     mov     [bp+var_2], ax
     mov     ax, [di+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC Shared capture core, entered with destination shape in DS:DI and x/y locals. Reads sprite pixels through DS, writes
+; ASMDOC shape payload through ES; does not clear pixels.
 shape_clear_join_01:
     mov     ax, [di]
     mov     [bp+var_8], ax
@@ -264,6 +346,28 @@ _sprite_clear_shape endp
 ; Globals written: none identified.
 ; /* PLATFORM(video): selects a video-memory segment. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _shapeexpl; proposed name _shapeexpl
+; ASMDOC Purpose: Scale a transparent bitmap by unsigned 8.8 scale, subtract signed scaled hotspot, clip to sprite1 secondary
+; ASMDOC horizontal bounds and vertical bounds, then tail-jump into the shared transparent scaled blitter.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] scale word (unsigned checks/dimension products; signed IMUL for hotspot products); [BP+08] source shape
+; ASMDOC offset; [BP+0A] source shape segment; [BP+0C] anchor x word; [BP+0E] anchor y word; Source header +00/+02 width/height,
+; ASMDOC +04/+06 signed hotspot; pixels +10h; FFh transparent.
+; ASMDOC Outputs: No semantic register result; clipped sprite1 backing pixels updated by _loc_35ED9; Scale <2 or zero scaled
+; ASMDOC dimensions / fully clipped rectangle returns without drawing.
+; ASMDOC Preserves: BP; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; BX; CX; DX; ES on drawing path; arithmetic flags; DF=0 after accepted scale check.
+; ASMDOC Globals read: _sprite1 pitch(+14h), left2(+1Ah), widthsum(+1Ch), top(+10h), bottom(+12h); _sprite1 bitmap segment(+2),
+; ASMDOC CS row-table pointer(+0Ah) via shared blit tail; caller source header and pixels.
+; ASMDOC Globals written: sprite1 backing pixels; SS:source_row_fraction_accumulator via external tail.
+; ASMDOC Services: _loc_35ED9 near continuation in asm/sprite_rectangle_scaled_blitters.ASM:713 (not CALL; consumes this frame).
+; ASMDOC Dead: false. Reachability: Direct caller src/obj_seg003.c:1926.
+; ASMDOC Shared tail: Frame reserves 16h bytes and pushes DS/SI/DI. Tail requires local
+; ASMDOC x=-2,y=-4,width=-6,height=-8,sourcewidth=-0A,rowstride=-0C,sourcebase=-0E,step=-10,yfraction=-12,xfraction=-14 and DS:SI
+; ASMDOC source. Tail restores DS/SI/DI/BP and RETFs to original caller.
+; ASMDOC Edge cases: Unlabeled alternate coordinate/header-origin prologues at lines 308 and 330 are bypassed. Bytes 449..650 are
+; ASMDOC public descriptors and row table inside PROC extent, never executed by normal entry.
 _shapeexpl proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -305,6 +409,8 @@ _shapeexpl proc far
     jmp     short shape_explode_join_01
     ; align 2
     db 144
+; ASMDOC Unexported explicit-coordinate alternate prologue. Public hotspot entry jumps over it; no normal fallthrough from public
+; ASMDOC entry.
     push    bp
     mov     bp, sp
     sub     sp, 16h
@@ -327,6 +433,7 @@ shape_explode_loop_head_01:
     mov     sp, bp
     pop     bp
     retf
+; ASMDOC Unexported shape-origin alternate prologue following a RETF. Public hotspot entry does not reach this prologue.
     push    bp
     mov     bp, sp
     sub     sp, 16h
@@ -339,6 +446,8 @@ shape_explode_loop_head_01:
     mov     [bp+var_2], ax
     mov     ax, [si+0Ah]
     mov     [bp+var_4], ax
+; ASMDOC 8.8 scale core: scaled dimensions are unsigned product >>8, hotspot setup used signed products. Prepare matching frame
+; ASMDOC locals for external near continuation.
 shape_explode_join_01:
     cmp     [bp+arg_0], 2
     jb      short shape_explode_loop_head_01
@@ -438,6 +547,8 @@ shape_explode_branch_path_04:
 shape_explode_branch_path_05:
     mov     dx, [bp+var_10]
     mov     [bp+var_E], si
+; ASMDOC Tail jump into another module; _loc_35ED9 consumes this frame, sets ES and writes pixels (FFh transparent), and mutates
+; ASMDOC SS:source_row_fraction_accumulator.
     jmp near ptr _loc_35ED9
 shape_explode_branch_path_06:
     pop     di
@@ -446,6 +557,8 @@ shape_explode_branch_path_06:
     mov     sp, bp
     pop     bp
     retf
+; ASMDOC PUBLIC DATA _sprite1/_sprite2 (30 bytes each), followed by 200 row offsets y*320. These words live inside PROC extent
+; ASMDOC but are never executed by normal shapeexpl paths.
 _sprite1 dw 0,0A000h,0,0,0,offset lineoffsets,0,0140h,0,00C8h,0140h,0,0140h,0,0140h ;/* PLATFORM(video): selects a video-memory segment. */
 _sprite2 dw 0,0A000h,0,0,0,offset lineoffsets,0,0140h,0,00C8h,0140h,0,0140h,0,0140h ;/* PLATFORM(video): selects a video-memory segment. */
 lineoffsets     dw 0
@@ -657,6 +770,21 @@ _shapeexpl endp
 ; Globals written: _fontdefseg.
 ; /* PLATFORM(video): accesses display memory through ES. */
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _font_setup_unknown; proposed name _font_set_colors
+; ASMDOC Purpose: Set foreground/background font words to zero-extended argument low bytes in current font segment.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] foreground low byte; [BP+08] background low byte; DS addresses _fontdefseg; font segment offset 0 is
+; ASMDOC header base.
+; ASMDOC Outputs: font[0]=foreground & 255; font[2]=background & 255; AX=foreground & 255; ES=current font segment.
+; ASMDOC Preserves: BP; BX; CX; DX; SI; DI; DS; SS; CS; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX; ES; arithmetic flags from XOR AH,AH; DF unchanged.
+; ASMDOC Globals read: _fontdefseg.
+; ASMDOC Globals written: current font segment words +00/+02 (not _fontdefseg itself).
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg000.c:1035 and port/font.c:72.
+; ASMDOC Edge cases: Later unlabeled code at 677/686/705 is separate unreachable-from-this-entry font operations; do not
+; ASMDOC aggregate their register/global effects into this public entry.
 _font_setup_unknown proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -674,6 +802,8 @@ _font_setup_unknown proc far
     mov     es:0, ax
     pop     bp
     retf
+; ASMDOC Unexported font-coordinate setter after RETF: BP+6/BP+8 -> current font words +8/+0A; separate operation, not
+; ASMDOC fallthrough from color setter.
     push    bp
     mov     bp, sp
     mov     es, ds:[_fontdefseg]
@@ -683,6 +813,8 @@ _font_setup_unknown proc far
     mov     es:0Ah, ax
     pop     bp
     retf
+; ASMDOC Unexported font-state save after RETF: near DS destination BP+6 gets 11 header words and font segment at +16h; restores
+; ASMDOC DS/SI/DI, sets ES to caller DS, CX=0, DF=0.
     push    bp
     mov     bp, sp
     push    ds
@@ -702,6 +834,8 @@ _font_setup_unknown proc far
     pop     ds
     pop     bp
     retf
+; ASMDOC Unexported font-state restore after RETF: near DS source BP+6 supplies font segment +16h and 11 words; changes
+; ASMDOC _fontdefseg and selected font header; restores SI/DI, sets ES/CX/DF.
     push    bp
     mov     bp, sp
     push    di
@@ -726,6 +860,18 @@ _font_setup_unknown endp
 ; Globals read: none identified.
 ; Globals written: _fontdefseg.
 ; -----------------------------------------------------------------------------
+; ASMDOC Contract _set_fontdefseg; proposed name _set_fontdefseg
+; ASMDOC Purpose: Select the font definition by storing only the supplied far-pointer segment word; offset argument is ignored.
+; ASMDOC Convention: 16-bit far cdecl; caller removes arguments; offsets below are from BP after PUSH BP / MOV BP,SP (entry SP
+; ASMDOC offsets are two bytes smaller).
+; ASMDOC Inputs: [BP+06] far pointer offset, unused; [BP+08] far pointer segment; DS addresses _fontdefseg.
+; ASMDOC Outputs: DS:_fontdefseg = segment; AX = segment.
+; ASMDOC Preserves: BP; BX; CX; DX; SI; DI; DS; ES; SS; CS; all flags including DF; SP balanced except consumed far return.
+; ASMDOC Clobbers: AX.
+; ASMDOC Globals read: none.
+; ASMDOC Globals written: _fontdefseg.
+; ASMDOC Services: none.
+; ASMDOC Dead: false. Reachability: Direct caller src/obj_seg008.c:1454; port/font.c:53 adapts far segment to host pointer.
 _set_fontdefseg proc far
      s = byte ptr 0
      r = byte ptr 2
