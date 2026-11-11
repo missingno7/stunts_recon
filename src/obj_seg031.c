@@ -226,7 +226,6 @@ void initialize_main(I16 argc, I8* argv[])
 	}
 	
 	// Unused "/nd" switch. Maybe used when loading other video drivers?
-	(void)unknown;
 
 	// Video mode.
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
@@ -384,7 +383,7 @@ void load_palandcursor(void)
     /* PLATFORM(file): read startup shape resources through the game file service. */
     filedata = file_load_shape2d_fatal_thunk("sdmain");
     /* PLATFORM(file): read startup shape resources through the game file service. */
-    palptr = (U8 FAR *)locate_shape_fatal(filedata, "!pal");
+    palptr = locate_shape_fatal(filedata, "!pal");
     palptr += 0x10;
     for (count = 0; count < 0x300; ++count)
         colors[count] = palptr[count];

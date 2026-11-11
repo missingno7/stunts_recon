@@ -154,15 +154,15 @@ void FAR* file_load_shape2d(I8* shapename, I16 fatal) {
 	if (palette_data) file_load_shape2d_palmap_init((U8 FAR*)(palette_data + SHAPE2D_HEADER_BYTES));
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 	work_pages = mmgr_alloc_pages(file_buffer, output_size);
-	*(U32 FAR*)work_pages = (U32)output_size * 16UL;
+	*(U32 FAR*)work_pages = output_size * 16UL;
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-	file_load_shape2d_expand((U8 FAR*)loaded_chunk, (I8 FAR*)work_pages);
+	file_load_shape2d_expand(loaded_chunk, work_pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 	mmgr_release(loaded_chunk);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-	loaded_chunk = mmgr_op_unk((I8 FAR*)work_pages);
+	loaded_chunk = mmgr_op_unk(work_pages);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-	file_load_shape2d_palmap_apply((U8 FAR*)loaded_chunk, palmap);
+	file_load_shape2d_palmap_apply(loaded_chunk, palmap);
 	return loaded_chunk;
 }
 /* Copy the resource palette map into the shared shape palette table.

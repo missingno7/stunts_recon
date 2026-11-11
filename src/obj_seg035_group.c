@@ -97,8 +97,8 @@ void parse_shape2d(void FAR *memchunk, void FAR *mempages)
     /* PLATFORM(file): read the shape count from the loaded resource block. */
     index = file_get_res_shape_count(memchunk);
     pagescnt = (U32 FAR *)((U8 FAR *)mempages + index * 4 + 6);
-    page_data = (U8 FAR *)mempages;
-    input_read = (U8 FAR *)memchunk;
+    page_data = mempages;
+    input_read = memchunk;
     for (shape_index = 0; shape_index < index * 4 + 6; shape_index++) {
         *page_data++ = *input_read++;
     }
@@ -107,9 +107,9 @@ void parse_shape2d(void FAR *memchunk, void FAR *mempages)
     baseaddr = dest;
     for (shape_index = 0; shape_index < index; shape_index++) {
     /* PLATFORM(file): read the current shape descriptor from the loaded resource block. */
-        shape = file_get_shape2d((U8 FAR *)memchunk, shape_index);
+        shape = file_get_shape2d(memchunk, shape_index);
         page_position = parse_shape2d_helper(dest);
-        dest = (U8 FAR *)parse_shape2d_helper2(page_position);
+        dest = parse_shape2d_helper2(page_position);
         *pagescnt++ = parse_shape2d_helper(dest) - parse_shape2d_helper(baseaddr);
         src = (U8 FAR *)shape;
         for (shape_data_num = 0; shape_data_num < 16; shape_data_num++) {
@@ -130,7 +130,7 @@ void parse_shape2d(void FAR *memchunk, void FAR *mempages)
                         *dest++ = *literal_from++;
                 }
                 if (literal_cnt != 0) {
-                    *dest++ = (U8)(-literal_cnt);
+                    *dest++ = -literal_cnt;
                     page_remaining -= literal_cnt;
                     for (shape_data_num = 0; shape_data_num < literal_cnt; shape_data_num++)
                         *dest++ = *literal_from++;
@@ -145,7 +145,7 @@ void parse_shape2d(void FAR *memchunk, void FAR *mempages)
                     src += 127;
                 }
                 if (repeat > 3) {
-                    *dest++ = (U8)repeat;
+                    *dest++ = repeat;
                     page_remaining -= repeat;
                     *dest++ = *src;
                     src += repeat;
@@ -159,14 +159,14 @@ void parse_shape2d(void FAR *memchunk, void FAR *mempages)
         *dest++ = 0;
     }
 
-    output_size = parse_shape2d_helper(dest) - parse_shape2d_helper((U8 FAR *)mempages);
+    output_size = parse_shape2d_helper(dest) - parse_shape2d_helper(mempages);
     if (output_size & 15) {
         output_size = (output_size >> 4) + 1;
     } else {
         output_size >>= 4;
     }
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-    mmgr_resize_memory(mempages, (U16S)output_size);
+    mmgr_resize_memory(mempages, output_size);
 }
 
 /* Count the repeated byte run beginning at the source pointer.

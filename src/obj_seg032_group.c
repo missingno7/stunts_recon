@@ -83,7 +83,7 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   {
     if (pendingKey != 0)
     {
-      inputKey = (I16S) pendingKey;
+      inputKey = pendingKey;
       pendingKey = 0;
     }
     else
@@ -113,16 +113,14 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
     /* PLATFORM(timer): check whether the timer countdown expired. */
       if ((timerOffset | timerSegment) != 0 && timer_compare_dx() != 0)
       {
-done:
-        read_line_helper();
-        return inputKey;
+        break;
       }
       continue;
     }
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
     timer_copy_counter(timerOffset, timerSegment);
     if (inputKey == KEY_ASCII_ENTER || inputKey == KEY_ASCII_ESCAPE || inputKey == KEY_SCAN_UP || inputKey == KEY_SCAN_DOWN && !(flags & 8) || inputKey == KEY_ASCII_TAB && !(flags & 0x10))
-      goto done;
+      break;
     if (inputKey == KEY_SCAN_RIGHT)
     {
       read_line_helper();
@@ -237,7 +235,7 @@ done:
         }
 
       }
-      buffer[line_input_cursor_slot] = (I8) inputKey;
+      buffer[line_input_cursor_slot] = inputKey;
       if (line_input_cursor_slot < bufferLimit)
         ++line_input_cursor_slot;
       read_line_helper2();
@@ -250,6 +248,8 @@ done:
     read_line_helper();
     firstKey = 0;
   }
+  read_line_helper();
+  return inputKey;
 }
 
 

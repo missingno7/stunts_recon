@@ -112,11 +112,9 @@ void FAR _loadds audio_driver_func1E(I16 first, I16 last);
 
 void FAR _loadds audiodriver_timer(void)
 {
-    if (audiodriverbinary == (I8 FAR *)0)
+    if (audiodriverbinary == 0)
         return;
-    if (audio_update_lock != 0)
-        return;
-    if (audio_timer_reentry_lock != 0)
+    if (audio_update_lock != 0 || audio_timer_reentry_lock != 0)
         return;
 
     audio_timer_reentry_lock++;
@@ -232,7 +230,7 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                     audio_unk2(chunkIndex, param);
                     break;
                 case 0xdf:
-                    apply_audio_voice_event(chunkIndex, param, (I16)audioevent.value);
+                    apply_audio_voice_event(chunkIndex, param, audioevent.value);
                     break;
                 case 0xe0:
                     chunk->maxVoices = param;
@@ -259,7 +257,7 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                     chunk->channelNumber = param;
                     break;
                 case 0xe5:
-                    set_audio_voice_parameter(chunkIndex, (I16)audioevent.value);
+                    set_audio_voice_parameter(chunkIndex, audioevent.value);
                     break;
                 }
             } else {
@@ -342,7 +340,7 @@ void FAR _loadds audio_unk2(I16 voiceIndex, U8 type)
     audioChunk->program = type;
     if (audio_driver_mode == 0) {
         i = 0;
-        if ((U16)i < g_audiodrvvoices_count) {
+        if (i < g_audiodrvvoices_count) {
             typeCode = type;
             do {
                 if (snd_voices_tbl[i].resourceIndex == voiceIndex)
@@ -350,7 +348,7 @@ void FAR _loadds audio_unk2(I16 voiceIndex, U8 type)
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         (audiodriverbinary + 0x12))(i, &snd_voices_tbl[i], typeCode);
                 ++i;
-            } while ((U16)i < g_audiodrvvoices_count);
+            } while (i < g_audiodrvvoices_count);
         }
     } else {
         ((void (FAR *)(I16, struct AudioVoice *, I16))
@@ -375,7 +373,7 @@ void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
         audiochunktable[voiceIndex].channelNumber = (voiceIndex & 0x0f) + 1;
     if (audio_driver_mode == 0) {
         i = 0;
-        if ((U16)i < g_audiodrvvoices_count) {
+        if (i < g_audiodrvvoices_count) {
             chunk = &audiochunktable[voiceIndex];
             do {
                 if (snd_voices_tbl[i].resourceIndex == voiceIndex)
@@ -383,7 +381,7 @@ void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         (audiodriverbinary + 0x21))(i, &snd_voices_tbl[i], chunk, voiceData);
                 ++i;
-            } while ((U16)i < g_audiodrvvoices_count);
+            } while (i < g_audiodrvvoices_count);
         }
     } else {
         ((void (FAR *)(I16, struct AudioVoice *, struct AudioChunk *, I8 FAR *))
@@ -448,7 +446,7 @@ I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                 (audiodriverbinary + 0x21))(voiceNum, channel, resource, sample);
     }
-    channel->resourceIndex = (U8)chunkIndex;
+    channel->resourceIndex = chunkIndex;
     channel->resource = resource;
     channel->active = 1;
     channel->state16 = 1;
@@ -468,13 +466,13 @@ I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
     channel->value22 = 0;
     channel->value29 = 0;
     if (audio_driver_mode == 0)
-        channel->channelNumber = (U8)voiceNum;
+        channel->channelNumber = voiceNum;
     else
         channel->channelNumber = resource->channelNumber;
     if (event->command == 0xff) {
         ((void (FAR *)(I16, struct AudioVoice *, U16S))
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
-            (audiodriverbinary + 0x24))(channel->channelNumber, channel, (U16S)event->delta);
+            (audiodriverbinary + 0x24))(channel->channelNumber, channel, event->delta);
         if (audio_driver_mode != 0)
             event->command = 0x3c;
     }
@@ -551,7 +549,7 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
         return slotSounding;
     }
     if (chunk->activeVoices >= chunk->maxVoices) {
-        for (slot = 0; (U16)slot < g_audiodrvvoices_count; slot++) {
+        for (slot = 0; slot < g_audiodrvvoices_count; slot++) {
             if (*(U16S FAR *)(sample + 0x0c) & audio_bit_masks[slot]) {
                 voice = &snd_voices_tbl[slot];
                 if (voice->resourceIndex == chunk->resourceType) {
@@ -587,7 +585,7 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + 0x0f))(slotSounding, &snd_voices_tbl[slotSounding]);
         return slotSounding;
     } else {
-        for (slot = 0; (U16)slot < g_audiodrvvoices_count; slot++) {
+        for (slot = 0; slot < g_audiodrvvoices_count; slot++) {
             voice = &snd_voices_tbl[slot];
             if (*(U16S FAR *)(sample + 0x0c) & audio_bit_masks[slot]) {
                 if (voice->active == 0) {
@@ -681,7 +679,7 @@ void FAR _loadds read_audio_event(struct AudioEvent *event, U8 FAR *stream)
             event->value = (event->value << 7) + (*stream & 0x7f);
         } while (*stream++ & 0x80);
     }
-    event->length = (U8)(stream - start);
+    event->length = stream - start;
 }
 
 void FAR _loadds update_audio_voice_state(void)
@@ -727,7 +725,7 @@ void FAR _loadds clear_audio_voice(struct AudioVoice *voice)
 void FAR _loadds reset_audio_event_state(void)
 {
     I16 i;
-    for (i = 0; (U16)i < g_audiodrvvoices_count; ++i) {
+    for (i = 0; i < g_audiodrvvoices_count; ++i) {
         struct AudioVoice *voice;
         struct AudioSample FAR *sample;
         voice = &snd_voices_tbl[i];
@@ -807,13 +805,12 @@ void FAR _loadds reset_audio_event_state(void)
                 --voice->value20;
                 if (voice->value28 != 0) {
                     --voice->value28;
-                    goto pulseUpdateDone;
+                } else {
+                    voice->value28 = sample->pulseCount;
+                    voice->value22 = sample->pulseTable[voice->value29++ & 7];
                 }
-                voice->value28 = sample->pulseCount;
-                voice->value22 = sample->pulseTable[voice->value29++ & 7];
             }
         }
-pulseUpdateDone:
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(U16, struct AudioVoice *, struct AudioChunk *, I8 FAR *))(audiodriverbinary + 0x27))(
             voice->channelNumber, voice, voice->resource, voice->data);

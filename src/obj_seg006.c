@@ -823,16 +823,16 @@ vector_op_unk2(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the
 		angle += ANGLE_UNITS_PER_TURN;
 	}
 	
-	octant += (((I32)angle * 15L) >> 10);
+	octant += ((angle * 15L) >> 10);
 	
 	return octant;
 }
 
 void calc_sincos80(void) { /* PURPOSE: Cache the sine and cosine values used by view-vector classification. Params: none. Returns: void. Globals: reads none; writes vector_angle_cos, vector_angle_cos2, vector_angle_sin, vector_angle_sin2. */
-    vector_angle_sin = (I32)sinfast(ANGLE_EIGHTH_TURN);
-    vector_angle_cos = (I32)cosfast(ANGLE_EIGHTH_TURN);
-    vector_angle_sin2 = (I32)sinfast(ANGLE_EIGHTH_TURN);
-    vector_angle_cos2 = (I32)cosfast(ANGLE_EIGHTH_TURN);
+    vector_angle_sin = sinfast(ANGLE_EIGHTH_TURN);
+    vector_angle_cos = cosfast(ANGLE_EIGHTH_TURN);
+    vector_angle_sin2 = sinfast(ANGLE_EIGHTH_TURN);
+    vector_angle_cos2 = cosfast(ANGLE_EIGHTH_TURN);
 }
 
 I32 nopsub_26552(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }

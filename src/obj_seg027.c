@@ -144,7 +144,7 @@ void FAR * FAR init_audio_resources(void FAR *song, void FAR *voice, I8 *name)
         audio_map_song_instruments(titleres, voice);
         audio_map_song_tracks(titleres);
         ((I8 FAR *)hdrptr)[5] = 1;
-        trackptr = (I8 FAR *)titleres + ((U16)((U8 FAR *)titleres)[4] << 3) + 1;
+        trackptr = (I8 FAR *)titleres + (((U8 FAR *)titleres)[4] << 3) + 1;
         audioresource_copy_4_bytes((U8 FAR *)hdrptr, (U8 FAR *)&trackptr);
     }
     return hdrptr;
@@ -261,7 +261,7 @@ void FAR reset_audio_chunks(void)
 }
 
 void FAR audio_enable_flag2(void) { audioflag2 = 1; }
-void FAR audio_disable_flag2(void) { audioflag2 = 0; audio_update_lock = 1; if (block_audio_num) { audio_driver_func1E(0, (U16)block_audio_num - 1); } reset_audio_event_state(); audio_update_lock = 0; }
+void FAR audio_disable_flag2(void) { audioflag2 = 0; audio_update_lock = 1; if (block_audio_num) { audio_driver_func1E(0, block_audio_num - 1); } reset_audio_event_state(); audio_update_lock = 0; }
 I16 FAR audio_toggle_flag2(void) { if (audioflag2 == 1) { audio_disable_flag2(); return 0; } audio_enable_flag2(); return 1; }
 
 I16 FAR nopsub_373FE(void)
@@ -430,19 +430,19 @@ void FAR audio_driver_func3F(I16 ticks)
             set_all_audio_chunk_volume(counter);
             audio_update_lock = 0;
     /* PLATFORM(timer): use or register the game timer service. */
-            timer_copy_counter((I32)ticks);
+            timer_copy_counter(ticks);
     /* PLATFORM(timer): use or register the game timer service. */
             timer_wait_for_dx();
         }
     } else {
         for (counter = 100; counter > 0; counter -= 2) {
             audio_update_lock = 1;
-            audio_driver_volume_command[3] = (U8)counter;
+            audio_driver_volume_command[3] = counter;
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
             ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x3f))(4, (void FAR *)audio_driver_volume_command);
             audio_update_lock = 0;
     /* PLATFORM(timer): use or register the game timer service. */
-            timer_copy_counter((I32)ticks);
+            timer_copy_counter(ticks);
     /* PLATFORM(timer): use or register the game timer service. */
             timer_wait_for_dx();
         }
@@ -510,39 +510,39 @@ I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature)
     audiodriverbinary = file_load_binary_nofatal(path);
     g_musicvolumesetting = 0x7f;
     sfx_audio_vol = 0x7f;
-    if (audiodriverbinary == 0)
-        goto fail;
-    g_audiodrvvoices_count = ((U8 (FAR *)(void))audiodriverbinary)();
-    if (g_audiodrvvoices_count == 0 || g_audiodrvvoices_count == 0xff)
-        return 2;
-    if (g_audiodrvvoices_count > 0x7f) {
-        g_audiodrvvoices_count = 16;
-        audio_driver_mode = 1;
-        audio_driver_extension_mode = 0;
-    }
-    reset_audio_driver_state();
-    /* PLATFORM(timer): use or register the game timer service. */
-    timer_reg_callback(audiodriver_timer);
-    if (audio_driver_mode != 0) {
-    /* PLATFORM(file): load or decompress the named audio resource. */
-        patches = file_load_binary_nofatal("mt32.plb");
-        if (patches != 0) {
-    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
-            ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x42))(patches);
-    /* PLATFORM(memory): release storage through the game memory manager. */
-            mmgr_release(patches);
-            audio_driver_volume_command[3] = 100;
-    /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
-            ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x3f))(4, (void FAR *)audio_driver_volume_command);
+    if (audiodriverbinary != 0) {
+        g_audiodrvvoices_count = ((U8 (FAR *)(void))audiodriverbinary)();
+        if (g_audiodrvvoices_count == 0 || g_audiodrvvoices_count == 0xff)
+            return 2;
+        if (g_audiodrvvoices_count > 0x7f) {
+            g_audiodrvvoices_count = 16;
+            audio_driver_mode = 1;
+            audio_driver_extension_mode = 0;
         }
+        reset_audio_driver_state();
+        /* PLATFORM(timer): use or register the game timer service. */
+        timer_reg_callback(audiodriver_timer);
+        if (audio_driver_mode != 0) {
+        /* PLATFORM(file): load or decompress the named audio resource. */
+            patches = file_load_binary_nofatal("mt32.plb");
+            if (patches != 0) {
+        /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
+                ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x42))(patches);
+        /* PLATFORM(memory): release storage through the game memory manager. */
+                mmgr_release(patches);
+                audio_driver_volume_command[3] = 100;
+        /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
+                ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x3f))(4, (void FAR *)audio_driver_volume_command);
+            }
+        }
+        audio_pause_in_progress = 0;
+        audioflag2 = 1;
+        audio_song_ready = 0;
+        audioflag6 = 1;
+        return 0;
+    } else {
+        fatal_error("Can't find driver!\n");
     }
-    audio_pause_in_progress = 0;
-    audioflag2 = 1;
-    audio_song_ready = 0;
-    audioflag6 = 1;
-    return 0;
-fail:
-    fatal_error("Can't find driver!\n");
 }
 
 /* Remove the audio timer callback, shut down the driver, and release its loaded image.
@@ -833,8 +833,8 @@ void FAR audio_map_song_tracks(U8 FAR *song)
     chunk_offsets = chunk_names + numberOfChunks * 4;
     lo_chunk_data = song + numberOfChunks * 8 + 6;
     for (no = 0; no < numberOfChunks; no++) {
-        cur = lo_chunk_data + (U16)audioresource_get_dword((U32 FAR *)(chunk_offsets + no * 4));
-        track_end = cur + (U16)audioresource_get_dword((U32 FAR *)&cur);
+        cur = lo_chunk_data + audioresource_get_dword((U32 FAR *)(chunk_offsets + no * 4));
+        track_end = cur + audioresource_get_dword((U32 FAR *)&cur);
         cur += 4;
         if (audioresource_compare_chunknames(0, (I8 FAR *)(chunk_names + no * 4), "hdr1", 4)) {
             cur += 2;
@@ -847,7 +847,7 @@ void FAR audio_map_song_tracks(U8 FAR *song)
                 ok_idx = audioresource_get_chunk_index(0, numberOfChunks, name_buffer, (I8 FAR *)chunk_names);
                 if (ok_idx != -1) {
                     relative = audioresource_get_dword((U32 FAR *)(chunk_offsets + ok_idx * 4));
-                    p_copy = lo_chunk_data + (U16)relative;
+                    p_copy = lo_chunk_data + relative;
                     audioresource_copy_4_bytes(cur, (U8 FAR *)&p_copy);
                 }
                 cur += 5;
@@ -864,7 +864,7 @@ void FAR audio_map_song_tracks(U8 FAR *song)
                     ok_idx = audioresource_get_chunk_index(0, numberOfChunks, name_buffer, (I8 FAR *)chunk_names);
                     if (ok_idx != -1) {
                         relative = audioresource_get_dword((U32 FAR *)(chunk_offsets + ok_idx * 4));
-                        p_copy = lo_chunk_data + (U16)relative;
+                        p_copy = lo_chunk_data + relative;
                         audioresource_copy_4_bytes(cur, (U8 FAR *)&p_copy);
                     }
                     cur += 4;
