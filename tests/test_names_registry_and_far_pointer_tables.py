@@ -96,8 +96,8 @@ class NamesRegistryTests(unittest.TestCase):
 
     def test_registry_spelling_is_an_accepted_member_public(self):
         from asm_module import expected_publics, registry_publics
-        self.assertEqual(registry_publics('plane_rotate_op'), {'_plnrotop'})
-        self.assertIn('_plnrotop', expected_publics('plane_rotate_op', 'c'))
+        self.assertEqual(registry_publics('plane_rotate_op'), {'_move_on_plane'})
+        self.assertIn('_move_on_plane', expected_publics('plane_rotate_op', 'c'))
         self.assertIn('_main', expected_publics('ported_stuntsmain_', 'c'))
         self.assertEqual(registry_publics('no_such_entry'), set())
         self.assertNotIn('_plane_rotate_opx', expected_publics('plane_rotate_op', 'asm'))

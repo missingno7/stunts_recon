@@ -19,7 +19,8 @@ from probe_module import probe
 from promote import _checked_prerender_table_boundary, checked_asm_function
 
 DATA_ALIASES = {'_word_303BA': '_projection_x_scale',
-                '_word_303BC': '_projection_y_scale'}
+                '_word_303BC': '_projection_y_scale',
+                '_projectiondata9_times_ratio': '_thicknessxp'}
 
 
 def _rename(value):
@@ -157,7 +158,7 @@ class Integ16Tests(unittest.TestCase):
              'publics':obj.publics,'externals':obj.externals}
         recipe['expected_fixups']=obj.linker_fixups
         recipe['members']=[
-            {'name':'first','public':'_projectiondata9_times_ratio',
+            {'name':'first','public':'_thicknessxp',
              'start':recipe['start'],'end':recipe['start']+7},
             {'name':'second','public':'_second',
              'start':recipe['start']+7,'end':recipe['end']}]

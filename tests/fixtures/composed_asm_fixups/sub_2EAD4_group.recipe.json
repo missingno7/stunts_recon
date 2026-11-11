@@ -229,81 +229,124 @@
   ],
   "expected_relocations": [
     {
-      "segment": 4096,
+      "load_offset": 125668,
       "offset": 60132,
-      "load_offset": 125668
+      "segment": 4096
     },
     {
-      "segment": 4096,
+      "load_offset": 125688,
       "offset": 60152,
-      "load_offset": 125688
+      "segment": 4096
     },
     {
-      "segment": 4096,
+      "load_offset": 125706,
       "offset": 60170,
-      "load_offset": 125706
+      "segment": 4096
     },
     {
-      "segment": 4096,
+      "load_offset": 125735,
       "offset": 60199,
-      "load_offset": 125735
+      "segment": 4096
     },
     {
-      "segment": 4096,
+      "load_offset": 125752,
       "offset": 60216,
-      "load_offset": 125752
+      "segment": 4096
     }
   ],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
   "id": "sub_2EAD4_group",
   "include_closure": [],
   "kind": "asm",
   "members": [
     {
+      "end": 125662,
       "name": "sub_2EAD4",
+      "public": "_getbiostick",
       "stable_id": "load_1ead4",
       "start": 125652,
-      "end": 125662,
-      "public": "_sub_2EAD4",
       "target": {
-        "size": 10,
-        "sha256": "a4f750dd75cfb3d84b6af405aab77cc873a9cc3716596d771fd730f0d177dc14"
+        "sha256": "a4f750dd75cfb3d84b6af405aab77cc873a9cc3716596d771fd730f0d177dc14",
+        "size": 10
       }
     },
     {
+      "end": 125703,
       "name": "set_add_value",
+      "public": "_setbiosticks",
       "stable_id": "load_1eade",
       "start": 125662,
-      "end": 125703,
-      "public": "_set_add_value",
       "target": {
-        "size": 41,
-        "sha256": "2bf012b2c5e4c519f03b843fbd20e7befcfb9b6e5bd870aafff730943cffc5d7"
+        "sha256": "2bf012b2c5e4c519f03b843fbd20e7befcfb9b6e5bd870aafff730943cffc5d7",
+        "size": 41
       }
     },
     {
+      "end": 125726,
       "name": "sub_2EB07",
+      "public": "_sub_2EB07",
       "stable_id": "load_1eb07",
       "start": 125703,
-      "end": 125726,
-      "public": "_sub_2EB07",
       "target": {
-        "size": 23,
-        "sha256": "6c8baaff4a832a084c2b30accdd6f9ab964113672749f9f1356c0f7be7d156e1"
+        "sha256": "6c8baaff4a832a084c2b30accdd6f9ab964113672749f9f1356c0f7be7d156e1",
+        "size": 23
       }
     },
     {
+      "end": 125768,
       "name": "sub_2EB1E",
+      "public": "_sub_2EB1E",
       "stable_id": "load_1eb1e",
       "start": 125726,
-      "end": 125768,
-      "public": "_sub_2EB1E",
       "target": {
-        "size": 42,
-        "sha256": "2630eba0695c5ba1ef551e26f742107f68f918a61f7a4b526dd69e66b429fa63"
+        "sha256": "2630eba0695c5ba1ef551e26f742107f68f918a61f7a4b526dd69e66b429fa63",
+        "size": 42
       }
     }
   ],
   "object_declarations": {
+    "externals": [
+      "_word_3F1C2",
+      "_word_3F1C4",
+      "_word_3F87C",
+      "_word_3F87E"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          1
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_setbiosticks",
+        "offset": 10,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_sub_2EB07",
+        "offset": 51,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_sub_2EB1E",
+        "offset": 74,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_getbiostick",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
     "segments": [
       {
         "acbp": 40,
@@ -337,63 +380,20 @@
         "overlay_index": 1,
         "use_32bit_offset": false
       }
-    ],
-    "groups": [
-      {
-        "index": 1,
-        "name": "DGROUP",
-        "segment_indices": [
-          1
-        ],
-        "segments": [
-          "DSEG"
-        ]
-      }
-    ],
-    "publics": [
-      {
-        "name": "_set_add_value",
-        "offset": 10,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_sub_2EB07",
-        "offset": 51,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_sub_2EB1E",
-        "offset": 74,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_sub_2EAD4",
-        "offset": 0,
-        "segment": "_TEXT"
-      }
-    ],
-    "externals": [
-      "_word_3F1C2",
-      "_word_3F1C4",
-      "_word_3F87C",
-      "_word_3F87E"
     ]
   },
   "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_sub_2EAD4",
+  "public": "_getbiostick",
+  "secondary_dgroup_segments": {},
   "source": "tests/fixtures/composed_asm_fixups/sub_2EAD4_group.ASM",
   "start": 125652,
-  "target": {
-    "size": 116,
-    "sha256": "1b0a190ed0551a26f2762bacc228435108b0b9945967f94b693818620fa1cfdd"
-  },
-  "secondary_dgroup_segments": {},
-  "external_binding": {
-    "mode": "asm-external-dgroup-offset16-v1"
-  },
-  "original_frame_load_address": 125472,
   "subsumed_owners": [
     "load_1ead4"
-  ]
+  ],
+  "target": {
+    "sha256": "1b0a190ed0551a26f2762bacc228435108b0b9945967f94b693818620fa1cfdd",
+    "size": 116
+  }
 }

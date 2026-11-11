@@ -13,13 +13,13 @@ _FRAME_CALLBACK_OBJECT = bytes.fromhex(
 _FRAME_CALLBACK_FIXUPS = [
     (24, 'offset16', 2, '_byte_442E4', 5),
     (15, 'pointer32', 4, '_timer_reg_callback', 3),
-    (10, 'base16', 2, '_frame_callback', 2),
-    (7, 'loader-offset16', 2, '_frame_callback', 2),
+    (10, 'base16', 2, '_gameint', 2),
+    (7, 'loader-offset16', 2, '_gameint', 2),
     (2, 'offset16', 2, '_word_46468', 4),
 ]
 _FRAME_CALLBACK_EXTERNALS = [
-    '__acrtused', '_frame_callback', '_timer_reg_callback',
-    '_word_46468', '_byte_442E4', '_set_frame_callback',
+    '__acrtused', '_gameint', '_timer_reg_callback',
+    '_word_46468', '_byte_442E4', '_gameintinit',
 ]
 _FRAME_CALLBACK_SEGMENTS = [
     {'index': index, 'name': name, 'class': segment_class, 'length': length,
@@ -31,7 +31,7 @@ _FRAME_CALLBACK_SEGMENTS = [
         (3, 'CONST', 'CONST', 0), (4, '_BSS', 'BSS', 0))
 ]
 _FRAME_CALLBACK_SYMBOLS = {
-    '_frame_callback': {'kind': 'far-code', 'frame_load_address': 0x11b70,
+    '_gameint': {'kind': 'far-code', 'frame_load_address': 0x11b70,
                         'load_address': 0x12596},
     '_timer_reg_callback': {'kind': 'far-code', 'frame_load_address': 0x1ea20,
                             'load_address': 0x202aa},
@@ -1220,7 +1220,7 @@ def bind_frame_callback(obj, segment, public, length, expected_fixups, declarati
     No original PUBDEF or translation-unit ownership is inferred.
     """
     require((segment, public, length, start) ==
-            ('UNIT_TEXT', '_set_frame_callback', 28, 0x1255a),
+            ('UNIT_TEXT', '_gameintinit', 28, 0x1255a),
             'Frame callback identity/extent differs')
     require(obj.linker_fixups == expected_fixups and len(expected_fixups) == 5,
             'Complete ordered frame callback FIXUPP differs')

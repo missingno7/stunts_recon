@@ -35,8 +35,8 @@ class PortHeaderLayoutTests(unittest.TestCase):
         source_text = """#include "stunts_structs.h"
 _Static_assert(sizeof(stunts_GAMESTATE_1014) == 1014, "GAMESTATE prefix size");
 _Static_assert(sizeof(stunts_GAMESTATE_1120) == 1120, "GAMESTATE full size");
-_Static_assert(offsetof(stunts_GAMESTATE_1120, game_vec1) == 0x120, "GAMESTATE vector offset");
-_Static_assert(offsetof(stunts_GAMESTATE_1120, game_vec3) == 0x12c, "GAMESTATE vector overlay offset");
+_Static_assert(offsetof(stunts_GAMESTATE_1120, game_chase_camera_pos) == 0x120, "GAMESTATE vector offset");
+_Static_assert(offsetof(stunts_GAMESTATE_1120, game_chase_camera_prev) == 0x12c, "GAMESTATE vector overlay offset");
 _Static_assert(sizeof(stunts_SHAPE2D_12) == 12, "SHAPE2D 12-byte view");
 _Static_assert(sizeof(stunts_SHAPE2D_14) == 14, "SHAPE2D 14-byte view");
 _Static_assert(sizeof(stunts_SHAPE2D_16) == 16, "SHAPE2D 16-byte view");

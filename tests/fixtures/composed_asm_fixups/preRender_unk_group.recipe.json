@@ -126,34 +126,70 @@
     }
   ],
   "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
   "id": "preRender_unk",
   "include_closure": [],
   "kind": "asm",
   "members": [
     {
+      "end": 128036,
       "name": "preRender_unk",
+      "public": "_sprite_two_color_poly_list",
       "stable_id": "load_1f3da",
       "start": 127962,
-      "end": 128036,
-      "public": "_preRender_unk",
       "target": {
-        "size": 74,
-        "sha256": "c560f4a76cd59e6374260a8f6532e76a59dcadfbf576fa05671830fc7052f013"
+        "sha256": "c560f4a76cd59e6374260a8f6532e76a59dcadfbf576fa05671830fc7052f013",
+        "size": 74
       }
     },
     {
+      "end": 128054,
       "name": "nopsub_2F424",
+      "public": "_sprite_two_color_poly_args_alt",
       "stable_id": "load_1f424",
       "start": 128036,
-      "end": 128054,
-      "public": "_nopsub_2F424",
       "target": {
-        "size": 18,
-        "sha256": "c412c07a7c4a6f42ee231901758a280e30c7819756195bc6a4b8eec4fa74b587"
+        "sha256": "c412c07a7c4a6f42ee231901758a280e30c7819756195bc6a4b8eec4fa74b587",
+        "size": 18
       }
     }
   ],
   "object_declarations": {
+    "externals": [
+      "_draw_unknown_lines",
+      "_loc_3180A",
+      "_preRender_line",
+      "_imagefunc",
+      "_word_40320",
+      "_word_4031E",
+      "_spritefunc"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          1
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_sprite_two_color_poly_args_alt",
+        "offset": 74,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_sprite_two_color_poly_list",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
     "segments": [
       {
         "acbp": 40,
@@ -187,54 +223,12 @@
         "overlay_index": 1,
         "use_32bit_offset": false
       }
-    ],
-    "groups": [
-      {
-        "index": 1,
-        "name": "DGROUP",
-        "segment_indices": [
-          1
-        ],
-        "segments": [
-          "DSEG"
-        ]
-      }
-    ],
-    "publics": [
-      {
-        "name": "_nopsub_2F424",
-        "offset": 74,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_preRender_unk",
-        "offset": 0,
-        "segment": "_TEXT"
-      }
-    ],
-    "externals": [
-      "_draw_unknown_lines",
-      "_loc_3180A",
-      "_preRender_line",
-      "_imagefunc",
-      "_word_40320",
-      "_word_4031E",
-      "_spritefunc"
     ]
   },
   "object_segment": "_TEXT",
-  "profile": "masm510-game",
-  "public": "_preRender_unk",
-  "source": "tests/fixtures/composed_asm_fixups/preRender_unk_group.ASM",
-  "start": 127962,
-  "target": {
-    "size": 92,
-    "sha256": "4f269bc59b9d104264c448669f7ac480aa1dddeca6e85fde3dc643badb50d30e"
-  },
-  "external_binding": {
-    "mode": "asm-external-dgroup-offset16-v1"
-  },
   "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_sprite_two_color_poly_list",
   "reviewed_code_offsets": [
     "_draw_unknown_lines",
     "_preRender_line"
@@ -243,5 +237,11 @@
     "_loc_3180A": {
       "source_line": 6552
     }
+  },
+  "source": "tests/fixtures/composed_asm_fixups/preRender_unk_group.ASM",
+  "start": 127962,
+  "target": {
+    "sha256": "4f269bc59b9d104264c448669f7ac480aa1dddeca6e85fde3dc643badb50d30e",
+    "size": 92
   }
 }

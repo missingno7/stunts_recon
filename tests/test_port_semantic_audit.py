@@ -39,7 +39,7 @@ class PortSemanticAuditTests(unittest.TestCase):
         self.assertIn("matrix-mat-vec", matrix["evidence"])
         self.assertIn("differential-oracle", matrix["coverage"])
         self.assertTrue(all(c["scope_level"] == "direct-routine-cases" for c in matrix["evidence_claims"]))
-        transform = next(r for r in report["functions"] if r.get("historical_name") == "trans_op")
+        transform = next(r for r in report["functions"] if r.get("historical_name") == "ADD_OBJECT_TO_BUFFER")
         self.assertNotIn("differential-oracle", transform["coverage"])
         self.assertEqual({c["scope_level"] for c in transform["evidence_claims"]},
                          {"composite-path-only", "expression-window-only"})

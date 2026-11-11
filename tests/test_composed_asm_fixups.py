@@ -19,7 +19,14 @@ from oracle import verify
 SYMBOL_ALIASES = {'_word_3F87C': '_timer_elapsed_ticks_low',
                   '_word_3F87E': '_timer_elapsed_ticks_high',
                   '_word_4031E': '_line_pattern_bits',
-                  '_word_40320': '_prerender_auxiliary_arg'}
+                  '_word_40320': '_prerender_auxiliary_arg',
+                  '_aMemoryManagerB': '_blknotfound',
+                  '_nopsub_31525': '_mmgr_move_chunk_to_high',
+                  '_preRender_unk': '_sprite_two_color_poly_list',
+                  '_nopsub_2F424': '_sprite_two_color_poly_args_alt',
+                  '_sub_2EAD4': '_getbiostick',
+                  '_set_add_value': '_setbiosticks',
+                  '_sprite_copy_2_to_1': '_displaywindow'}
 
 
 def _rename(value):
@@ -130,7 +137,8 @@ class Integ18Tests(unittest.TestCase):
 
     def test_self_text_base_plus_external_far_call(self):
         recipe=read_json(FIXTURES/'sprite_copy_2_to_1.recipe.json')
-        obj,_=assemble_source((ROOT/recipe['source']).read_bytes(),recipe['profile'])
+        source_bytes=_rename_source((ROOT/recipe['source']).read_bytes())
+        obj,_=assemble_source(source_bytes,recipe['profile'])
         symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         payload,receipt=bind_contribution(obj,recipe,symbols)
         self.assertEqual(payload,self.image[recipe['start']:recipe['end']])

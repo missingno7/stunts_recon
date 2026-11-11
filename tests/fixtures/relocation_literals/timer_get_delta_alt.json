@@ -3,7 +3,7 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_timer_get_delta",
+        "_elapsedticks",
         "_timer_get_delta_alt"
       ],
       "groups": [
@@ -108,7 +108,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_delta",
+      "frame": "_elapsedticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -116,7 +116,7 @@
       "offset": 1,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_get_delta",
+      "target": "_elapsedticks",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,

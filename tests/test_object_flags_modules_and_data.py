@@ -203,13 +203,13 @@ class MasmTruncation(unittest.TestCase):
         self.assertIn('_nopsub_kb_get_readchar_callbac',
                       expected_publics('nopsub_kb_get_readchar_callback', 'asm'))
         self.assertEqual(expected_publics('nopsub_kb_get_readchar_callback', 'c'),
-                         {'_nopsub_kb_get_readchar_callback'})
+                         {'_nopsub_kb_get_readchar_callback', '_kb_get_readchar_callback'})
         self.assertEqual(expected_publics('kb_check', 'asm'), {'_kb_check'})
 
     def test_truncated_code_alias_needs_review(self):
         image, relocations = Oracle.load()
         layout = read_json(ROOT/'layout/code-symbols.json')
-        entry = copy.deepcopy(layout['symbols']['_file_load_shape2d_res_nofatal'])
+        entry = copy.deepcopy(layout['symbols']['_loadandshapepackz'])
         bad = copy.deepcopy(layout)
         bad['symbols']['_file_load_shape2d_res_nofata'] = entry
         with layout_override('code_symbols', 'code-symbols.json', bad):
@@ -406,13 +406,13 @@ class FarTransfers(unittest.TestCase):
 
     def test_neighbour_bounded_alias_needs_review(self):
         image, relocations = Oracle.load()
-        resolve_code_symbols({'_putpixel_line1_maybe'}, image, relocations)
+        resolve_code_symbols({'_drawcline'}, image, relocations)
         layout = read_json(ROOT/'layout/code-symbols.json')
         bad = copy.deepcopy(layout)
-        bad['symbols']['_putpixel_line1_maybe'].pop('boundary_proof')
+        bad['symbols']['_drawcline'].pop('boundary_proof')
         with layout_override('code_symbols', 'code-symbols.json', bad):
             with self.assertRaisesRegex(ValueError, 'unique verified mapped target'):
-                resolve_code_symbols({'_putpixel_line1_maybe'}, image, relocations)
+                resolve_code_symbols({'_drawcline'}, image, relocations)
 
 
 class DataRegistry(unittest.TestCase):

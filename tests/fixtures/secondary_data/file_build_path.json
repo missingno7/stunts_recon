@@ -144,7 +144,7 @@
       "__acrtused",
       "_strlen",
       "_strcpy",
-      "_file_build_path",
+      "_makename",
       "_strcat"
     ],
     "groups": [
@@ -165,7 +165,7 @@
     ],
     "publics": [
       {
-        "name": "_file_build_path",
+        "name": "_makename",
         "offset": 0,
         "segment": "UNIT_TEXT"
       }
@@ -240,7 +240,7 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [],
   "profile": "msc510-medium",
-  "public": "_file_build_path",
+  "public": "_makename",
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 13369,

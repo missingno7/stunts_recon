@@ -11,7 +11,7 @@ extern unsigned int word_44D3C;
 extern unsigned int word_44D62;
 extern unsigned int mousehorscale;
 extern int word_40318;
-extern int showmouse;
+extern int mouseshown;
 extern int far int86(unsigned int interrupt_no, MouseRegs *input, MouseRegs *output);
 void far mouse_set_pixratio(unsigned int xratio, unsigned int yratio);
 void far mouse_set_minmax(unsigned int xmin, unsigned int ymin, unsigned int xmax, unsigned int ymax);
@@ -68,17 +68,17 @@ static unsigned int far mouse_get_position(void)
 
 static void far mouse_show_cursor(void)
 {
-    ++showmouse;
-    if (showmouse < 1) return;
-    showmouse = 1;
+    ++mouseshown;
+    if (mouseshown < 1) return;
+    mouseshown = 1;
     regs_x86.ax = 1;
     int86(0x33, &regs_x86, &regs_x86);
 }
 
 static void far mouse_hide_cursor(void)
 {
-    --showmouse;
-    if (showmouse != 0) return;
+    --mouseshown;
+    if (mouseshown != 0) return;
     regs_x86.ax = 2;
     int86(0x33, &regs_x86, &regs_x86);
 }

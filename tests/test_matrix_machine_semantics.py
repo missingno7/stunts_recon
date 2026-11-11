@@ -181,13 +181,13 @@ def differential_cases(vector_name: str, multiply_name: str):
         cases.append((label, vector_name, mode, first, second, output, words))
 
     for label, output in (
-        ("mat_multiply distinct", 32),
-        ("mat_multiply output aliases right", 0),
-        ("mat_multiply output aliases left", 16),
-        ("mat_multiply overwrites right term 2", 1),
-        ("mat_multiply overwrites right term 3", 2),
-        ("mat_multiply overwrites left term 2", 19),
-        ("mat_multiply overwrites left term 3", 22),
+        ("transmult distinct", 32),
+        ("transmult output aliases right", 0),
+        ("transmult output aliases left", 16),
+        ("transmult overwrites right term 2", 1),
+        ("transmult overwrites right term 3", 2),
+        ("transmult overwrites left term 2", 19),
+        ("transmult overwrites left term 3", 22),
     ):
         words = [0] * WORD_COUNT
         set_words(words, 0, [11000, -2300, 4100, 6700, 9200, -3700,
@@ -208,7 +208,7 @@ class MatrixMachineSemanticsTest(unittest.TestCase):
         oracle = OracleImage.load()
         symbols = SymbolMap()
         vector_name = symbols.resolve("mat_vec").name
-        multiply_name = symbols.resolve("mat_multiply").name
+        multiply_name = symbols.resolve("transmult").name
         runner = RealModeRunner(oracle, instruction_budget=1_000_000)
         cases = differential_cases(vector_name, multiply_name)
 

@@ -25,7 +25,7 @@ class IntegrationRules(unittest.TestCase):
 
     def test_single_anchor_alias_and_rejections(self):
         for name in ('_file_find_next', '_file_load_shape2d_nofatal_thunk',
-                     '_mmgr_get_ofs_diff'):
+                     '_unlockedmemory'):
             self.assertEqual(resolve_code_symbols([name], self.image, self.relocations)[name]['kind'],
                              'far-code')
         import code_symbols

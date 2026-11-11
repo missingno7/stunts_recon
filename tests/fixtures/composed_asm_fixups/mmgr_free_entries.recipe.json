@@ -1,67 +1,9 @@
 {
-  "id": "mmgr_free_entries",
-  "kind": "asm",
-  "source": "tests/fixtures/composed_asm_fixups/mmgr_free_entries.ASM",
-  "profile": "masm510-game",
-  "include_closure": [],
   "assembler_flags": [
     "/Mx",
     "/I."
   ],
-  "start": 136316,
   "end": 136866,
-  "target": {
-    "size": 550,
-    "sha256": "a3d86e3707da87ecc285b7a10030c7ac6b980cb4a9d966c639cbe3fcda828373"
-  },
-  "members": [
-    {
-      "name": "mmgr_free",
-      "stable_id": "load_2147c",
-      "start": 136316,
-      "end": 136485,
-      "public": "_mmgr_free",
-      "target": {
-        "size": 169,
-        "sha256": "56dfe4eee60738b3caa0c1ea5550776e12041aac165384dc64a521e7c697978c"
-      }
-    },
-    {
-      "name": "nopsub_31525",
-      "stable_id": "load_21525",
-      "start": 136485,
-      "end": 136769,
-      "public": "_nopsub_31525",
-      "target": {
-        "size": 284,
-        "sha256": "37751e384a32c95f08cd52a7aa73c40b48ced0597df0a0f19705701135bca06b"
-      }
-    },
-    {
-      "name": "mmgr_release",
-      "stable_id": "load_21641",
-      "start": 136769,
-      "end": 136828,
-      "public": "_mmgr_release",
-      "target": {
-        "size": 59,
-        "sha256": "1ed3b0c6dc3f6afa4bcfbaf75e6fe0450b3eba7e110284370f63010287e07d93"
-      }
-    },
-    {
-      "name": "mmgr_get_chunk_size",
-      "stable_id": "load_2167c",
-      "start": 136828,
-      "end": 136866,
-      "public": "_mmgr_get_chunk_size",
-      "target": {
-        "size": 38,
-        "sha256": "4981ce0e781e5b9d402147f8588255f57c61b1f6c8cade357ce919378d166f89"
-      }
-    }
-  ],
-  "object_segment": "_TEXT",
-  "public": "_mmgr_free",
   "expected_fixups": [
     {
       "displacement": 0,
@@ -100,7 +42,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_aMemoryManagerB",
+      "frame": "_blknotfound",
       "frame_index": 5,
       "frame_kind": "external",
       "frame_method": 2,
@@ -108,7 +50,7 @@
       "offset": 32,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_aMemoryManagerB",
+      "target": "_blknotfound",
       "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
@@ -695,27 +637,127 @@
   ],
   "expected_relocations": [
     {
-      "segment": 8192,
+      "load_offset": 136354,
       "offset": 5282,
-      "load_offset": 136354
+      "segment": 8192
     },
     {
-      "segment": 8192,
+      "load_offset": 136451,
       "offset": 5379,
-      "load_offset": 136451
+      "segment": 8192
     },
     {
-      "segment": 8192,
+      "load_offset": 136671,
       "offset": 5599,
-      "load_offset": 136671
+      "segment": 8192
     },
     {
-      "segment": 8192,
+      "load_offset": 136733,
       "offset": 5661,
-      "load_offset": 136733
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "mmgr_free_entries",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 136485,
+      "name": "mmgr_free",
+      "public": "_mmgr_free",
+      "stable_id": "load_2147c",
+      "start": 136316,
+      "target": {
+        "sha256": "56dfe4eee60738b3caa0c1ea5550776e12041aac165384dc64a521e7c697978c",
+        "size": 169
+      }
+    },
+    {
+      "end": 136769,
+      "name": "nopsub_31525",
+      "public": "_mmgr_move_chunk_to_high",
+      "stable_id": "load_21525",
+      "start": 136485,
+      "target": {
+        "sha256": "37751e384a32c95f08cd52a7aa73c40b48ced0597df0a0f19705701135bca06b",
+        "size": 284
+      }
+    },
+    {
+      "end": 136828,
+      "name": "mmgr_release",
+      "public": "_mmgr_release",
+      "stable_id": "load_21641",
+      "start": 136769,
+      "target": {
+        "sha256": "1ed3b0c6dc3f6afa4bcfbaf75e6fe0450b3eba7e110284370f63010287e07d93",
+        "size": 59
+      }
+    },
+    {
+      "end": 136866,
+      "name": "mmgr_get_chunk_size",
+      "public": "_mmgr_get_chunk_size",
+      "stable_id": "load_2167c",
+      "start": 136828,
+      "target": {
+        "sha256": "4981ce0e781e5b9d402147f8588255f57c61b1f6c8cade357ce919378d166f89",
+        "size": 38
+      }
     }
   ],
   "object_declarations": {
+    "externals": [
+      "_fatal_error",
+      "_copy_paras_reverse",
+      "_resptr1",
+      "_resptr2",
+      "_blknotfound",
+      "_mmgr_copy_paras",
+      "_resendptr1",
+      "_resendptr2"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2,
+          3,
+          4
+        ],
+        "segments": [
+          "_DATA",
+          "CONST",
+          "_BSS"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_mmgr_move_chunk_to_high",
+        "offset": 169,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_mmgr_release",
+        "offset": 453,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_mmgr_get_chunk_size",
+        "offset": 512,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_mmgr_free",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
     "segments": [
       {
         "acbp": 72,
@@ -781,59 +823,17 @@
         "overlay_index": 1,
         "use_32bit_offset": false
       }
-    ],
-    "groups": [
-      {
-        "index": 1,
-        "name": "DGROUP",
-        "segment_indices": [
-          2,
-          3,
-          4
-        ],
-        "segments": [
-          "_DATA",
-          "CONST",
-          "_BSS"
-        ]
-      }
-    ],
-    "publics": [
-      {
-        "name": "_nopsub_31525",
-        "offset": 169,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_mmgr_release",
-        "offset": 453,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_mmgr_get_chunk_size",
-        "offset": 512,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_mmgr_free",
-        "offset": 0,
-        "segment": "_TEXT"
-      }
-    ],
-    "externals": [
-      "_fatal_error",
-      "_copy_paras_reverse",
-      "_resptr1",
-      "_resptr2",
-      "_aMemoryManagerB",
-      "_mmgr_copy_paras",
-      "_resendptr1",
-      "_resendptr2"
     ]
   },
-  "secondary_dgroup_segments": {},
+  "object_segment": "_TEXT",
   "original_frame_load_address": 125472,
-  "external_binding": {
-    "mode": "external-far-call-dgroup-offset16-v1"
+  "profile": "masm510-game",
+  "public": "_mmgr_free",
+  "secondary_dgroup_segments": {},
+  "source": "tests/fixtures/composed_asm_fixups/mmgr_free_entries.ASM",
+  "start": 136316,
+  "target": {
+    "sha256": "a3d86e3707da87ecc285b7a10030c7ac6b980cb4a9d966c639cbe3fcda828373",
+    "size": 550
   }
 }

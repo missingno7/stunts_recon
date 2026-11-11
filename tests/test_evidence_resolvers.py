@@ -101,7 +101,7 @@ class EvidenceTests(unittest.TestCase):
                      if symbol.get('anchors') or symbol.get('pointer_anchors') or
                      symbol.get('table_anchors')}
         resolved = resolve_code_symbols(far_names, self.image, self.relocations)
-        resolved['_frame_callback'] = resolve_callback_pointer(self.image, self.relocations)
+        resolved['_gameint'] = resolve_callback_pointer(self.image, self.relocations)
         self.assertEqual(set(resolved), set(layout['symbols']))
 
         raw_name = next(name for name, symbol in layout['symbols'].items()
@@ -117,7 +117,7 @@ class EvidenceTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 resolve_code_symbols({raw_name}, self.image, self.relocations)
 
-        promoted_name = '_unload_resource'
+        promoted_name = '_closeresource'
         manifest = read_json(ROOT / 'layout/manifest.json')
         # Remove whichever owner (the function or a whole object subsuming it)
         # covers the alias's mapped entry.
@@ -142,7 +142,7 @@ class EvidenceTests(unittest.TestCase):
             resolve_callback_pointer(self.image, without_pointer)
 
         changed = read_json(ROOT / 'layout/code-symbols.json')
-        changed['symbols']['_frame_callback']['mapped_target']['sha256'] = '0' * 64
+        changed['symbols']['_gameint']['mapped_target']['sha256'] = '0' * 64
 
         def read_with_bad_callback(path):
             return changed if path == ROOT / 'layout/code-symbols.json' else read_json(path)

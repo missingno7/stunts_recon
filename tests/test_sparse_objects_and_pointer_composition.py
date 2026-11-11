@@ -108,7 +108,7 @@ class DataPublics(unittest.TestCase):
     def test_public_at_its_alias_address_is_accepted(self):
         from secondary_contribution import check_data_publics
         check_data_publics(self.Obj([{'name': '_byte_3B80C', 'segment': '_DATA', 'offset': 90},
-                                     {'name': '_scenery_names', 'segment': '_DATA', 'offset': 264},
+                                     {'name': '_TerName', 'segment': '_DATA', 'offset': 264},
                                      {'name': '_main', 'segment': 'UNIT_TEXT', 'offset': 0}]),
                            self.spec(), 'UNIT_TEXT')
 
@@ -171,9 +171,9 @@ class DgroupBase16(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Unreviewed composed segment target'):
             resolve_recipe_symbols(bad, o.image, o.relocations)
 
-    SOURCE = (b"extern char far sprite2[];\nextern void far nopsub_36AF2(void);\n"
+    SOURCE = (b"extern char far sprite2[];\nextern void far kb_line_edit_noop(void);\n"
               b"void far * far _loadds f(int i) { if (i) return (void far *)sprite2;"
-              b" return (void far *)nopsub_36AF2; }\n")
+              b" return (void far *)kb_line_edit_noop; }\n")
 
     def composed(self, mutate=None):
         from compiler import compile_source
@@ -203,8 +203,8 @@ class DgroupBase16(unittest.TestCase):
         self.assertEqual(word(at[('base16', '_DATA')]), 178032 // 16)
         self.assertEqual(word(at[('offset16', '_sprite2')]), 149854 - 125472)
         self.assertEqual(word(at[('base16', '_sprite2')]), 125472 // 16)
-        self.assertEqual(word(at[('base16', '_nopsub_36AF2')]) * 16 +
-                         word(at[('loader-offset16', '_nopsub_36AF2')]), 158450)
+        self.assertEqual(word(at[('base16', '_kb_line_edit_noop')]) * 16 +
+                         word(at[('loader-offset16', '_kb_line_edit_noop')]), 158450)
         self.assertEqual(len(receipt['generated_relocations']), 3)
 
     def test_unpaired_cs_or_code_pointer_words_are_refused(self):
@@ -213,7 +213,7 @@ class DgroupBase16(unittest.TestCase):
                 obj.linker_fixups = [f for f in obj.linker_fixups
                                      if (f['loc'], f['target']) != (loc, target)]
             return mutate
-        for loc, target in (('base16', '_sprite2'), ('loader-offset16', '_nopsub_36AF2')):
+        for loc, target in (('base16', '_sprite2'), ('loader-offset16', '_kb_line_edit_noop')):
             with self.subTest(target=target), self.assertRaises(ValueError):
                 self.composed(drop(loc, target))
 
@@ -257,13 +257,13 @@ class ModuleForms(unittest.TestCase):
         o = Oracle.load()
         source = (b".8086\r\n_TEXT segment word public 'CODE'\r\nassume cs:_TEXT\r\n"
                   b"extrn sprite2:byte\r\nextrn _sprite_set_1_from_argptr:far\r\n"
-                  b"public _sprite_copy_2_to_1\r\n_sprite_copy_2_to_1 proc far\r\n"
+                  b"public _displaywindow\r\n_displaywindow proc far\r\n"
                   b"    mov ax, seg _TEXT\r\n    push ax\r\n    mov ax, offset sprite2\r\n"
                   b"    push ax\r\n    call _sprite_set_1_from_argptr\r\n    add sp, 4\r\n"
-                  b"    retf\r\n    db 0\r\n_sprite_copy_2_to_1 endp\r\n_TEXT ends\r\nend\r\n")
+                  b"    retf\r\n    db 0\r\n_displaywindow endp\r\n_TEXT ends\r\nend\r\n")
         obj, _ = assemble_source(source, 'masm510-game')
         recipe = {'id': 'sprite_copy_2_to_1', 'kind': 'asm', 'start': 154388, 'end': 154406,
-                  'object_segment': '_TEXT', 'public': '_sprite_copy_2_to_1',
+                  'object_segment': '_TEXT', 'public': '_displaywindow',
                   'original_frame_load_address': 125472, 'expected_fixups': obj.linker_fixups,
                   'expected_relocations': [{'segment': 8192, 'offset': 23317, 'load_offset': 154389},
                                            {'segment': 8192, 'offset': 23327, 'load_offset': 154399}],
@@ -327,7 +327,7 @@ class ReviewedExtents(unittest.TestCase):
             data_symbols._check_pair_extent('_word_449FC', {**symbol, 'width': 6}, layout,
                                             o.image, o.relocations)
         with self.assertRaisesRegex(ValueError, 'Unreviewed word-pair extent'):
-            data_symbols._check_pair_extent('_word_449FE', symbol, layout, o.image, o.relocations)
+            data_symbols._check_pair_extent('_sky_rotation_page1_alias', symbol, layout, o.image, o.relocations)
         saved = data_symbols._PAIR_EXTENTS['_word_449FC']
         data_symbols._PAIR_EXTENTS['_word_449FC'] = {**saved, 'witnesses': (
             ('sub_19F14', 40787, 'a166ac' 'a38c92'),)}

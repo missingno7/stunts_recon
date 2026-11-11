@@ -182,7 +182,7 @@ class NameBindingTests(unittest.TestCase):
         from omf import OmfReader
         # the data publics that other objects reach with target/external frames
         wanted = {'keyboard_input_callbacks': {'_joystick_enabled'}, 'projection_vector_window': {'_projection_x_scale', '_projection_y_scale'},
-                  'input_keyboard_joystick_services': {'_callbackflags2'}, 'timer_counter_deadline_helpers': {'_line_input_screen_rect'}}
+                  'input_keyboard_joystick_services': {'_callbackflags2'}, 'timer_counter_deadline_helpers': {'_line_input_font_header'}}
         for name, publics in wanted.items():
             recipe = read_json(ROOT / ('recipes/%s.json' % name))
             obj, receipt = assemble_source((ROOT / recipe['source']).read_bytes(), recipe['profile'])

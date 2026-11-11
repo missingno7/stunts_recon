@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 void mat_vec(const int16_t *input, const int16_t *matrix, int16_t *output);
-void mat_multiply(const int16_t *right, const int16_t *left,
+void transmult(const int16_t *right, const int16_t *left,
                   int16_t *output);
 
 void port_guest_unwind(const char *message)
@@ -29,7 +29,7 @@ int main(void)
                     (const int16_t *)&words[second],
                     (int16_t *)&words[output]);
         } else if (mode == 1) {
-            mat_multiply((const int16_t *)&words[first],
+            transmult((const int16_t *)&words[first],
                          (const int16_t *)&words[second],
                          (int16_t *)&words[output]);
         } else {

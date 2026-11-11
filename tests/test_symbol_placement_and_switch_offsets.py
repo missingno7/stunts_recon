@@ -49,7 +49,7 @@ class ProcedureTiedDataAliases(unittest.TestCase):
         # A genuine 0x81E2 immediate is not enough when it lies outside the
         # verified procedure that holds the pinned use line.
         with self.assertRaisesRegex(ValueError, 'verified procedure|procedure'):
-            self.resolve_with('_mat_z_rot', lambda s: s.update(reference_use_proc='mat_rot_z'))
+            self.resolve_with('_mat_z_rot', lambda s: s.update(reference_use_proc='xformz'))
         def moved(symbol):
             symbol['references'] = [{'start': 159704, 'hex': '55', 'operand_offset': 0}]
         with self.assertRaisesRegex(ValueError, 'outside its verified procedure'):

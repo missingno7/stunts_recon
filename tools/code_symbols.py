@@ -272,7 +272,7 @@ def resolve_callback_pointer(image, relocations):
     """
     layout = read_json(ROOT/'layout/code-symbols.json')
     require(layout['oracle_sha256'] == sha(image), 'Callback alias belongs to another oracle')
-    symbol = layout['symbols']['_frame_callback']
+    symbol = layout['symbols']['_gameint']
     target = symbol['mapped_target']
     inventory = read_json(ROOT/'evidence/functions.json')
     matches = [f for f in inventory['functions']
@@ -502,10 +502,10 @@ def resolve_recipe_symbols(recipe, image, relocations):
         return resolve_code_symbols(names,image,relocations)
     if mode == 'external-far-call-code-pointer-v1':
         require(recipe['id']=='remove_frame_callback' and
-                names=={'_timer_get_counter_unk','_timer_remove_callback','_frame_callback'},
+                names=={'_timedwait','_timer_remove_callback','_gameint'},
                 'Unreviewed code-pointer-only candidate')
-        return {**resolve_code_symbols(names-{'_frame_callback'},image,relocations),
-                '_frame_callback':resolve_callback_pointer(image,relocations)}
+        return {**resolve_code_symbols(names-{'_gameint'},image,relocations),
+                '_gameint':resolve_callback_pointer(image,relocations)}
     if mode == 'asm-external-cs-offset16-v1':
         from data_symbols import resolve_cs_symbols
         return resolve_cs_symbols(names,image,relocations)
@@ -539,11 +539,11 @@ def resolve_recipe_symbols(recipe, image, relocations):
                 **resolve_cs_symbols(data,image,relocations)}
     if mode=='external-frame-callback-v1':
         require(names == {'_byte_442E4', '_word_46468', '_timer_reg_callback',
-                          '_frame_callback'}, 'Callback binding external set changed')
+                          '_gameint'}, 'Callback binding external set changed')
         from data_symbols import resolve_symbols
         return {**resolve_symbols({'_byte_442E4', '_word_46468'}, image, relocations),
                 **resolve_code_symbols({'_timer_reg_callback'}, image, relocations),
-                '_frame_callback': resolve_callback_pointer(image, relocations)}
+                '_gameint': resolve_callback_pointer(image, relocations)}
     from data_symbols import resolve_symbols, check_folded_recipe
     result = resolve_symbols(names,image,relocations)
     check_folded_recipe(recipe, result, image)
