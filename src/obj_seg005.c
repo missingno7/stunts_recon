@@ -1111,55 +1111,52 @@ void far frame_callback(void)
     }
 
     call_proc_flag++;
-    if (call_proc_flag != 1) {
-        goto frame_callback_done;
-    }
-
-    snd_tick_clock++;
-    if (snd_tick_clock >= frmcs_time && g_audio_frms_ix != sndposrecord) {
-        /* PLATFORM(audio): apply recorded engine audio state. */ apply_audio_frame(&audio_frmarr[g_audio_frms_ix * 0x22], snd_tick_clock);
-        snd_tick_clock = 0;
-        g_audio_frms_ix++;
-        if (g_audio_frms_ix == 0x28) {
-            g_audio_frms_ix = 0;
-        }
-    }
-
-    if (sigframe != 0 || g_rplbfask != 0) {
-        goto frame_callback_done;
-    }
-    if (inrepflg != 0 && gm_playmode == 2) {
-        goto frame_callback_done;
-    }
-    if (gm_playmode == 0 && core.game_frame_in_sec >= core.game_frames_per_sec) {
-        inrepflg = 1;
-        /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
-        goto frame_callback_done;
-    }
-
-    timeraud--;
-    if (timeraud == 0) {
-        timeraud = frmcs_time;
-        g_clocks++;
-        if (gm_playmode == 2) {
-            switch (g_rplmodui) {
-            case 2:
-                slomodiv8--;
-                if (slomodiv8 == 0) {
-                    replay_unk2(0);
-                    slomodiv8 = 2;
-                }
-                goto frame_callback_done;
-            case 3:
-                replay_unk2(0);
-                break;
-            default:
-                break;
+    if (call_proc_flag == 1) {
+        snd_tick_clock++;
+        if (snd_tick_clock >= frmcs_time && g_audio_frms_ix != sndposrecord) {
+            /* PLATFORM(audio): apply recorded engine audio state. */ apply_audio_frame(&audio_frmarr[g_audio_frms_ix * 0x22], snd_tick_clock);
+            snd_tick_clock = 0;
+            g_audio_frms_ix++;
+            if (g_audio_frms_ix == 0x28) {
+                g_audio_frms_ix = 0;
             }
         }
-        replay_unk2(0);
-    }
 
+        if (sigframe != 0 || g_rplbfask != 0) {
+            goto frame_callback_done;
+        }
+        if (inrepflg != 0 && gm_playmode == 2) {
+            goto frame_callback_done;
+        }
+        if (gm_playmode == 0 && core.game_frame_in_sec >= core.game_frames_per_sec) {
+            inrepflg = 1;
+            /* PLATFORM(audio): update engine audio from car state. */ audio_carstate();
+            goto frame_callback_done;
+        }
+
+        timeraud--;
+        if (timeraud == 0) {
+            timeraud = frmcs_time;
+            g_clocks++;
+            if (gm_playmode == 2) {
+                switch (g_rplmodui) {
+                case 2:
+                    slomodiv8--;
+                    if (slomodiv8 == 0) {
+                        replay_unk2(0);
+                        slomodiv8 = 2;
+                    }
+                    goto frame_callback_done;
+                case 3:
+                    replay_unk2(0);
+                    break;
+                default:
+                    break;
+                }
+            }
+            replay_unk2(0);
+        }
+    }
 frame_callback_done:
     call_proc_flag--;
 }
@@ -2042,40 +2039,42 @@ void loop_game(I16 mode, I16 frame_index, I16 frame_offset)
             /* PLATFORM(video): draw a UI sprite. */ sprite_1_unk(i + 0x9A, 0xB1, 6, 6, dlg_colour);
             /* PLATFORM(video): draw a UI sprite outline. */ sprite_1_unk4(j + 0x9A, 0xB1, j + 0x9F, 0xB6, camera_select_outline_color);
         }
-        if (view_camera_choice[cam_idg] != camera_button_index)
-            goto redraw_buttons;
-        for (button = 0; button < 7; button++) {
-            if (camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button])
+        do {
+            if (view_camera_choice[cam_idg] != camera_button_index)
                 goto redraw_buttons;
-        }
-        goto buttons_done;
-/* PLATFORM(video): select the opaque drawing path. */ redraw_buttons:
-        msdrawopaquechk();
-        if (view_camera_choice[cam_idg] != -1) {
-            /* PLATFORM(video): draw a shape layer. */ if (camera_buttons_state_per_view[view_camera_choice[cam_idg] * 2 + cam_idg] != 0)
-                shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 14]);
-            /* PLATFORM(video): draw a shape layer. */ else
-                shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 5]);
-            view_camera_choice[cam_idg] = -1;
-        }
-        for (button = 0; button < 7; button++) {
-            if (camera_buttons_pressed[button] == 0 && camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button]) {
-                /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[button + 5]);
-                camera_buttons_state_per_view[button * 2 + cam_idg] = 0;
+            for (button = 0; button < 7; button++) {
+                if (camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button])
+                    goto redraw_buttons;
             }
-        }
-        for (button = 0; button < 7; button++) {
-            if (camera_buttons_pressed[button] != 0) {
-                camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
-                /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[button + 14]);
-                camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
+            continue;
+    /* PLATFORM(video): select the opaque drawing path. */ redraw_buttons:
+            msdrawopaquechk();
+            if (view_camera_choice[cam_idg] != -1) {
+                /* PLATFORM(video): draw a shape layer. */ if (camera_buttons_state_per_view[view_camera_choice[cam_idg] * 2 + cam_idg] != 0)
+                    shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 14]);
+                /* PLATFORM(video): draw a shape layer. */ else
+                    shape2d_op_unk(replayshapes[view_camera_choice[cam_idg] + 5]);
+                view_camera_choice[cam_idg] = -1;
             }
-        }
-        view_camera_choice[cam_idg] = camera_button_index;
-        /* PLATFORM(video): draw a UI sprite outline. */ if (camera_button_index != -1)
-            sprite_1_unk4(game_camera_buttons_x1[camera_button_index], game_camera_buttons_y1[camera_button_index],
-                          game_camera_buttons_x2[camera_button_index], game_camera_buttons_y2[camera_button_index], camera_select_outline_color);
-/* PLATFORM(video): select the transparent drawing path. */ buttons_done:
+            for (button = 0; button < 7; button++) {
+                if (camera_buttons_pressed[button] == 0 && camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button]) {
+                    /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[button + 5]);
+                    camera_buttons_state_per_view[button * 2 + cam_idg] = 0;
+                }
+            }
+            for (button = 0; button < 7; button++) {
+                if (camera_buttons_pressed[button] != 0) {
+                    camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
+                    /* PLATFORM(video): draw a shape layer. */ shape2d_op_unk(replayshapes[button + 14]);
+                    camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
+                }
+            }
+            view_camera_choice[cam_idg] = camera_button_index;
+            /* PLATFORM(video): draw a UI sprite outline. */ if (camera_button_index != -1)
+                sprite_1_unk4(game_camera_buttons_x1[camera_button_index], game_camera_buttons_y1[camera_button_index],
+                              game_camera_buttons_x2[camera_button_index], game_camera_buttons_y2[camera_button_index], camera_select_outline_color);
+        } while (0);
+/* PLATFORM(video): select the transparent drawing path. */ 
         msdrawtransparentchk();
         break;
     case 3:

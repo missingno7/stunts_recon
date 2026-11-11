@@ -1876,20 +1876,21 @@ I16 track_setup(void)
 
   trk_sample_count = j;
   err = 0;
-  goto release;
+  if (err != 0) {
   error:
-  if (cur_col == (-1))
-    cur_col = 0;
-  else if (cur_col == 30)
-    cur_col = 29;
+    if (cur_col == (-1))
+      cur_col = 0;
+    else if (cur_col == 30)
+      cur_col = 29;
 
-  if (y == (-1))
-    y = 0;
-  else if (y == 30)
-    y = 29;
-  sampled_trk_column = cur_col;
-  g_cur_track_row = y;
-  /* PLATFORM(memory): release a resource block. */ release:
+    if (y == (-1))
+      y = 0;
+    else if (y == 30)
+      y = 29;
+    sampled_trk_column = cur_col;
+    g_cur_track_row = y;
+  }
+  /* PLATFORM(memory): release a resource block. */
   mmgr_release(alloc);
 
   return err;
