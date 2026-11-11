@@ -1,11 +1,14 @@
 ; ASMDOC Module: DOS whole-file reads, managed binary loading, RLE/VLE decompression dispatch, and archive ID lookup.
 ; ASMDOC Owner resource_file_io_decompression; original source asm/resource_file_io_decompression.ASM.
-; ASMDOC Routine inventory: _file_read, _file_read_nofatal, _file_read_fatal, _file_decomp_rle, _file_decomp_rle_single,
-; ASMDOC _file_decomp_rle_seq, _file_load_binary, _file_load_binary_nofatal, _file_decomp, _file_decomp_nofatal, _file_decomp_fatal,
+; ASMDOC Routine inventory: _file_read, _file_read_nofatal, _file_read_fatal, _file_decomp_rle,
+; _file_decomp_rle_single,
+; ASMDOC _file_decomp_rle_seq, _file_load_binary, _file_load_binary_nofatal, _file_decomp, _file_decomp_nofatal,
+; _file_decomp_fatal,
 ; ASMDOC _locate_shape_nofatal, _locate_shape_fatal, _locate_sound_fatal
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
 ; ASMDOC No self-modifying code found. CODE contains the two-entry compression dispatch table.
-; ASMDOC Original comments are preserved verbatim even when superseded by these contracts; see files-report.md for discrepancies.
+; ASMDOC Original comments are preserved verbatim even when superseded by these contracts; see files-report.md
+; for discrepancies.
 .8086
 INCLUDE include\platform_hw.inc
 name asm012_133840
@@ -37,38 +40,44 @@ public _locate_shape_nofatal
 public _locate_shape_fatal
 public _locate_sound_fatal
 S012_TEXT segment word public 'CODE'
-assume cs:S012_TEXT, ds:DGROUP
+assume cs:S012_TEXT
 
 ; file_read
-assume cs:S012_TEXT
 ; -----------------------------------------------------------------------------
 ; Purpose: Read file data through the DOS handle API.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 12).
-; Register ABI: touches AX, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; arg_fatal (word ptr 12).
+; Register ABI: touches AX, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_read
 ; ASMDOC purpose: Read a complete file in 16 KiB DOS handle chunks using caller policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 near ASCIIZ filename in entry DS (normally DGROUP=SS); BP+8 destination offset; BP+10 destination segment; destination
-; ASMDOC must fit repeated 0x4000-byte reads with fixed offset and segment += 0x400; For _file_read only BP+12 policy: zero returns null on
+; ASMDOC inputs: BP+6 near ASCIIZ filename in entry DS (normally DGROUP=SS); BP+8 destination offset; BP+10
+; destination segment; destination
+; ASMDOC must fit repeated 0x4000-byte reads with fixed offset and segment += 0x400; For _file_read only BP+12
+; policy: zero returns null on
 ; ASMDOC error, nonzero calls fatal_error
-; ASMDOC outputs: DX:AX original destination far pointer after short read/EOF; 0000:0000 on nonfatal error; Partial destination data remains
+; ASMDOC outputs: DX:AX original destination far pointer after short read/EOF; 0000:0000 on nonfatal error;
+; Partial destination data remains
 ; ASMDOC on read failure; no total length returned; close failure ignored
-; ASMDOC preserves: BP, DS, SP restored on normal return; SI, DI untouched locally; DOS/fatal_error effects are service-dependent
-; ASMDOC clobbers: AX, BX, CX, DX, arithmetic flags; DS transiently points to destination; fatal path is assumed nonreturning
+; ASMDOC preserves: BP, DS, SP restored on normal return; SI, DI untouched locally; DOS/fatal_error effects are
+; service-dependent
+; ASMDOC clobbers: AX, BX, CX, DX, arithmetic flags; DS transiently points to destination; fatal path is assumed
+; nonreturning
 ; ASMDOC globals_read: _aSFileError bytes on fatal path
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: DOS INT 21h AH=3Dh AL=0 open, AH=3Fh read, AH=3Eh close; fatal_error(format,filename) on enabled failure; read errors do
+; ASMDOC services: DOS INT 21h AH=3Dh AL=0 open, AH=3Fh read, AH=3Eh close; fatal_error(format,filename) on
+; enabled failure; read errors do
 ; ASMDOC not close an already-open handle
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_read (unchanged).
 _file_read proc far
     var_fatal = word ptr -8
-     s = byte ptr 0
-     r = byte ptr 2
     arg_fatal = word ptr 12
 
     push    bp
@@ -78,51 +87,57 @@ _file_read proc far
     mov     ax, [bp+arg_fatal]
     mov     [bp+var_fatal], ax
     jmp     short read_body
-    ; align 2
-    db 144
+    even ; word-align the following entry
 
 _file_read endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read file data and return failure without raising a fatal error.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; no named stack arguments referenced.
+; Register ABI: touches BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_read_nofatal
 ; ASMDOC purpose: Read a complete file in 16 KiB DOS handle chunks using zero/nonfatal policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 near ASCIIZ filename in entry DS (normally DGROUP=SS); BP+8 destination offset; BP+10 destination segment; destination
+; ASMDOC inputs: BP+6 near ASCIIZ filename in entry DS (normally DGROUP=SS); BP+8 destination offset; BP+10
+; destination segment; destination
 ; ASMDOC must fit repeated 0x4000-byte reads with fixed offset and segment += 0x400
-; ASMDOC outputs: DX:AX original destination far pointer after short read/EOF; 0000:0000 on nonfatal error; Partial destination data remains
+; ASMDOC outputs: DX:AX original destination far pointer after short read/EOF; 0000:0000 on nonfatal error;
+; Partial destination data remains
 ; ASMDOC on read failure; no total length returned; close failure ignored
-; ASMDOC preserves: BP, DS, SP restored on normal return; SI, DI untouched locally; DOS/fatal_error effects are service-dependent
-; ASMDOC clobbers: AX, BX, CX, DX, arithmetic flags; DS transiently points to destination; fatal path is assumed nonreturning
+; ASMDOC preserves: BP, DS, SP restored on normal return; SI, DI untouched locally; DOS/fatal_error effects are
+; service-dependent
+; ASMDOC clobbers: AX, BX, CX, DX, arithmetic flags; DS transiently points to destination; fatal path is assumed
+; nonreturning
 ; ASMDOC globals_read: _aSFileError bytes on fatal path
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: DOS INT 21h AH=3Dh AL=0 open, AH=3Fh read, AH=3Eh close; fatal_error(format,filename) on enabled failure; read errors do
+; ASMDOC services: DOS INT 21h AH=3Dh AL=0 open, AH=3Fh read, AH=3Eh close; fatal_error(format,filename) on
+; enabled failure; read errors do
 ; ASMDOC not close an already-open handle
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_read_nofatal (unchanged).
 _file_read_nofatal proc far
     var_fatal = word ptr -8
-     s = byte ptr 0
-     r = byte ptr 2
-
     push    bp
     mov     bp, sp
     sub     sp, 8
     push    ds
     mov     [bp+var_fatal], 0
     jmp     short read_body
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 
 _file_read_nofatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read file data and route failures to the fatal-error handler.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 8); arg_dstseg (word ptr 10); arg_filename (word ptr 6).
-; Register ABI: touches AX, BX, CX, DX, BP, SP, DS, SS; balanced explicit saves/restores observed: DS; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 8);
+; arg_dstseg (word ptr 10); arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, CX, DX, BP, SP, DS, SS; balanced explicit saves/restores observed: DS;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSFileError.
@@ -130,17 +145,23 @@ _file_read_nofatal endp
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_read_fatal
 ; ASMDOC purpose: Read a complete file in 16 KiB DOS handle chunks using one/fatal policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 near ASCIIZ filename in entry DS (normally DGROUP=SS); BP+8 destination offset; BP+10 destination segment; destination
+; ASMDOC inputs: BP+6 near ASCIIZ filename in entry DS (normally DGROUP=SS); BP+8 destination offset; BP+10
+; destination segment; destination
 ; ASMDOC must fit repeated 0x4000-byte reads with fixed offset and segment += 0x400
-; ASMDOC outputs: DX:AX original destination far pointer after short read/EOF; 0000:0000 on nonfatal error; Partial destination data remains
+; ASMDOC outputs: DX:AX original destination far pointer after short read/EOF; 0000:0000 on nonfatal error;
+; Partial destination data remains
 ; ASMDOC on read failure; no total length returned; close failure ignored
-; ASMDOC preserves: BP, DS, SP restored on normal return; SI, DI untouched locally; DOS/fatal_error effects are service-dependent
-; ASMDOC clobbers: AX, BX, CX, DX, arithmetic flags; DS transiently points to destination; fatal path is assumed nonreturning
+; ASMDOC preserves: BP, DS, SP restored on normal return; SI, DI untouched locally; DOS/fatal_error effects are
+; service-dependent
+; ASMDOC clobbers: AX, BX, CX, DX, arithmetic flags; DS transiently points to destination; fatal path is assumed
+; nonreturning
 ; ASMDOC globals_read: _aSFileError bytes on fatal path
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: DOS INT 21h AH=3Dh AL=0 open, AH=3Fh read, AH=3Eh close; fatal_error(format,filename) on enabled failure; read errors do
+; ASMDOC services: DOS INT 21h AH=3Dh AL=0 open, AH=3Fh read, AH=3Eh close; fatal_error(format,filename) on
+; enabled failure; read errors do
 ; ASMDOC not close an already-open handle
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_read_fatal (unchanged).
@@ -150,7 +171,6 @@ _file_read_fatal proc far
     var_curoff = word ptr -4
     var_filehandle = word ptr -2
      s = byte ptr 0
-     r = byte ptr 2
     arg_filename = word ptr 6
     arg_dstoff = word ptr 8
     arg_dstseg = word ptr 10
@@ -192,7 +212,8 @@ readloop:
     mov     sp, bp
     pop     bp
     retf
-; ASMDOC Read failure skips handle cleanup. A fatal_error return would fall through into the RLE entry with this frame still active.
+; ASMDOC Read failure skips handle cleanup. A fatal_error return would fall through into the RLE entry with this
+; frame still active.
 error:
     cmp     [bp+var_fatal], 0
     jnz     short fatal
@@ -213,34 +234,44 @@ fatal:
 _file_read_fatal endp
 
 ; file_decomp_rle
-assume cs:S012_TEXT
 ; -----------------------------------------------------------------------------
 ; Purpose: Expand an RLE-compressed resource stream.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 8); arg_dstseg (word ptr 10); arg_srcoff (word ptr 6); arg_srcseg
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr
+; 8); arg_dstseg (word ptr 10); arg_srcoff (word ptr 6); arg_srcseg
 ;   (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI,
+; DS, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp_rle
-; ASMDOC purpose: Decode type-1 packed stream: optional sequence expansion, relocate intermediate bytes to top of allocation, then decode
+; ASMDOC purpose: Decode type-1 packed stream: optional sequence expansion, relocate intermediate bytes to top
+; of allocation, then decode
 ; ASMDOC byte runs.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 source offset; BP+8 source segment; BP+10 destination offset is passed by dispatcher but ignored here; BP+12
-; ASMDOC destination segment (output begins at offset 0); BP+14 destination allocation paragraph count; Entry DS=SS/DGROUP for initial
-; ASMDOC 16-byte header/table copy into BP scratch; caller supplies writable stack argument slots; Source contains 4-byte pass header, 4-byte
-; ASMDOC encoded-count/reserved word pair, escape count/table and encoded data; valid nonzero counts required; only 11 escape-table bytes are
+; ASMDOC inputs: BP+6 source offset; BP+8 source segment; BP+10 destination offset is passed by dispatcher but
+; ignored here; BP+12
+; ASMDOC destination segment (output begins at offset 0); BP+14 destination allocation paragraph count; Entry
+; DS=SS/DGROUP for initial
+; ASMDOC 16-byte header/table copy into BP scratch; caller supplies writable stack argument slots; Source
+; contains 4-byte pass header, 4-byte
+; ASMDOC encoded-count/reserved word pair, escape count/table and encoded data; valid nonzero counts required;
+; only 11 escape-table bytes are
 ; ASMDOC copied to frame (E>11 reads saved-frame bytes)
-; ASMDOC outputs: DX:AX declared u24 output size from source bytes 1..3, not actual single-stage return count; Writes decoded bytes at
+; ASMDOC outputs: DX:AX declared u24 output size from source bytes 1..3, not actual single-stage return count;
+; Writes decoded bytes at
 ; ASMDOC destination-segment:0; mutates BP+6 source offset and BP+8 source segment in caller argument area
 ; ASMDOC preserves: BP, DS, SI, DI, SP restored; DF cleared
 ; ASMDOC clobbers: AX BX CX DX ES arithmetic flags; near helpers overwrite caller BP scratch
 ; ASMDOC globals_read: none directly; see transitive effects stated in services
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: NEAR _file_decomp_rle_seq and _file_decomp_rle_single share this BP frame (not ordinary C-callable);
-; ASMDOC _copy_paras_reverse(source_segment,destination_segment,paragraph_count) copies rounded paragraph span backward; preserves
+; ASMDOC services: NEAR _file_decomp_rle_seq and _file_decomp_rle_single share this BP frame (not ordinary
+; C-callable);
+; ASMDOC _copy_paras_reverse(source_segment,destination_segment,paragraph_count) copies rounded paragraph span
+; backward; preserves
 ; ASMDOC BP/DS/SI/DI, clears DF, clobbers AX/BX/CX/ES/flags; no DOS/device service
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_decomp_rle (unchanged).
@@ -250,8 +281,6 @@ _file_decomp_rle proc far
     var_16 = word ptr -22
     var_14 = word ptr -20
     var_esclen = word ptr -18
-     s = byte ptr 0
-     r = byte ptr 2
     arg_srcoff = word ptr 6
     arg_srcseg = word ptr 8
     arg_dstoff = word ptr 12
@@ -273,7 +302,8 @@ _file_decomp_rle proc far
     mov     al, [si+3]
     xor     ah, ah
     mov     [bp+var_lenhi], ax
-; ASMDOC Reads bytes 4..19 into the enclosing frame: encoded byte count/reserved, escape count, and initial escape bytes.
+; ASMDOC Reads bytes 4..19 into the enclosing frame: encoded byte count/reserved, escape count, and initial
+; escape bytes.
     add     si, 4           ; Skip header + unused byte
     mov     cx, 8
     lea     di, [bp+var_16] ; Read 8 words
@@ -288,7 +318,8 @@ _file_decomp_rle proc far
     mov     [bp+arg_srcoff], si; Skip escape codes
     cmp     byte ptr [bp+var_esclen], 80h ; ''; Skip seq pass flag
     ja      short skip_seq_pass
-; ASMDOC Near helper borrows this BP frame; E==1 early return leaves AX/DX unchanged, so well-formed stream assumptions matter.
+; ASMDOC Near helper borrows this BP frame; E==1 early return leaves AX/DX unchanged, so well-formed stream
+; assumptions matter.
     call near ptr _file_decomp_rle_seq
     mov     [bp+var_16], ax
     mov     [bp+var_14], dx
@@ -330,20 +361,26 @@ skip_seq_pass:
 _file_decomp_rle endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Expand one RLE-compressed resource block.
-; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES, SS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES, SS; balanced explicit saves/restores observed: none
+; inferred; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp_rle_single
 ; ASMDOC purpose: Expand byte runs using a 256-byte escape-byte-to-ordinal table and an encoded-input byte countdown.
-; ASMDOC convention: NEAR RETN; no prologue and no independent stack argument frame. BP must be the enclosing _file_decomp_rle BP; DF must be
+; ASMDOC convention: NEAR RETN; no prologue and no independent stack argument frame. BP must be the enclosing
+; _file_decomp_rle BP; DF must be
 ; ASMDOC clear.
-; ASMDOC inputs: Inherited BP+6/8 source offset/segment; BP+12 destination segment, destination offset 0; Inherited BP-22/-20 encoded-input
-; ASMDOC byte count; BP-18 low seven bits escape count; BP-17 onward escape bytes; Writable BP-284..-29 table, BP-28 high countdown; nonzero
+; ASMDOC inputs: Inherited BP+6/8 source offset/segment; BP+12 destination segment, destination offset 0;
+; Inherited BP-22/-20 encoded-input
+; ASMDOC byte count; BP-18 low seven bits escape count; BP-17 onward escape bytes; Writable BP-284..-29 table,
+; BP-28 high countdown; nonzero
 ; ASMDOC valid encoded sizes and escape count required
-; ASMDOC outputs: DX:AX actual output byte count computed from ES delta and DI; Writes output and stack table/countdown; input count
+; ASMDOC outputs: DX:AX actual output byte count computed from ES delta and DI; Writes output and stack
+; table/countdown; input count
 ; ASMDOC decrements by encoded instruction length, not decoded output bytes
 ; ASMDOC preserves: BP, SP; DF unchanged (requires clear)
 ; ASMDOC clobbers: AX BX CX DX SI DI DS ES arithmetic flags
@@ -386,13 +423,12 @@ rle_single_loop_head_02:
     cmp     si, 8000h
     jbe     short rle_single_loop_head_03
     jmp     short rle_single_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 rle_single_loop_head_03:
     cmp     di, 8000h
     jbe     short rle_single_loop_head_04
     jmp     short rle_single_join_02
-    ; align 2
-    db 144
+    even ; word-align the following entry
 rle_single_loop_head_04:
     lodsb
     xor     ah, ah
@@ -465,19 +501,26 @@ rle_single_join_02:
 _file_decomp_rle_single endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Expand a sequence of RLE-compressed resource blocks.
-; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: arg_srcoff (word ptr 6); arg_srcseg (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES; balanced explicit saves/restores observed: CX, DS, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: NEAR entry; source return form: RET mnemonic for NEAR entry; stack arguments: arg_srcoff (word ptr 6);
+; arg_srcseg (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, DS, ES; balanced explicit saves/restores observed: CX, DS,
+; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp_rle_seq
-; ASMDOC purpose: Expand marker-delimited literal sequences, retaining one scanned copy and appending repeat-count minus one copies.
-; ASMDOC convention: NEAR RETN; no prologue and no independent stack argument frame. BP must be the enclosing _file_decomp_rle BP; DF must be
+; ASMDOC purpose: Expand marker-delimited literal sequences, retaining one scanned copy and appending
+; repeat-count minus one copies.
+; ASMDOC convention: NEAR RETN; no prologue and no independent stack argument frame. BP must be the enclosing
+; _file_decomp_rle BP; DF must be
 ; ASMDOC clear.
-; ASMDOC inputs: Inherited BP+6/8 source offset/segment; BP+12 destination segment, offset 0; Inherited BP-22/-20 encoded byte countdown;
-; ASMDOC BP-18 raw escape count; BP-16 is sequence marker (second escape byte); Requires valid nonzero repeat counts and nonwrapping sequence
+; ASMDOC inputs: Inherited BP+6/8 source offset/segment; BP+12 destination segment, offset 0; Inherited
+; BP-22/-20 encoded byte countdown;
+; ASMDOC BP-18 raw escape count; BP-16 is sequence marker (second escape byte); Requires valid nonzero repeat
+; counts and nonwrapping sequence
 ; ASMDOC spans; writable BP-28 temporary high countdown
-; ASMDOC outputs: DX:AX actual output length on normal decode completion; If raw escape count == 1, returns immediately with incoming AX/DX
+; ASMDOC outputs: DX:AX actual output length on normal decode completion; If raw escape count == 1, returns
+; immediately with incoming AX/DX
 ; ASMDOC unchanged (does not initialize a length); Writes output and BP-28 countdown
 ; ASMDOC preserves: BP, SP; DF unchanged (requires clear)
 ; ASMDOC clobbers: AX BX CX DX SI DI DS ES arithmetic flags
@@ -581,27 +624,32 @@ rle_sequence_loop_head_06:
 _file_decomp_rle_seq endp
 
 ; file_load_binary_group
-assume cs:S012_TEXT
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file load binary.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; no named stack arguments referenced.
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_load_binary
 ; ASMDOC purpose: Return cached named chunk, otherwise size/allocate/read a binary file using BP+8 caller policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
 ; ASMDOC inputs: BP+6 near filename in DGROUP; _file_load_binary additionally BP+8 fatal policy
-; ASMDOC outputs: DX:AX cached or newly allocated file chunk; DX=0 on empty/missing size or failed nonfatal read; New allocation is not
+; ASMDOC outputs: DX:AX cached or newly allocated file chunk; DX=0 on empty/missing size or failed nonfatal
+; read; New allocation is not
 ; ASMDOC released here if the following read fails
 ; ASMDOC preserves: BP SP; SI DI DS preservation depends on named callees (MSC convention expected)
 ; ASMDOC clobbers: AX BX CX DX ES flags through callees; no direct memory-manager globals accessed
 ; ASMDOC globals_read: none directly; see transitive effects stated in services
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: _mmgr_get_chunk_by_name(filename), _file_paras(filename,policy), _mmgr_alloc_pages(filename,paragraphs),
-; ASMDOC _file_read(filename,far_buffer,policy); Transitive memory-manager allocation/cache updates and DOS file operations; preserve each
+; ASMDOC services: _mmgr_get_chunk_by_name(filename), _file_paras(filename,policy),
+; _mmgr_alloc_pages(filename,paragraphs),
+; ASMDOC _file_read(filename,far_buffer,policy); Transitive memory-manager allocation/cache updates and DOS file
+; operations; preserve each
 ; ASMDOC callee contract
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_load_binary (unchanged).
@@ -616,24 +664,30 @@ _file_load_binary proc far
 _file_load_binary endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file load binary nofatal.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_load_binary_nofatal
 ; ASMDOC purpose: Return cached named chunk, otherwise size/allocate/read a binary file using zero policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
 ; ASMDOC inputs: BP+6 near filename in DGROUP; _file_load_binary additionally BP+8 fatal policy
-; ASMDOC outputs: DX:AX cached or newly allocated file chunk; DX=0 on empty/missing size or failed nonfatal read; New allocation is not
+; ASMDOC outputs: DX:AX cached or newly allocated file chunk; DX=0 on empty/missing size or failed nonfatal
+; read; New allocation is not
 ; ASMDOC released here if the following read fails
 ; ASMDOC preserves: BP SP; SI DI DS preservation depends on named callees (MSC convention expected)
 ; ASMDOC clobbers: AX BX CX DX ES flags through callees; no direct memory-manager globals accessed
 ; ASMDOC globals_read: none directly; see transitive effects stated in services
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: _mmgr_get_chunk_by_name(filename), _file_paras(filename,policy), _mmgr_alloc_pages(filename,paragraphs),
-; ASMDOC _file_read(filename,far_buffer,policy); Transitive memory-manager allocation/cache updates and DOS file operations; preserve each
+; ASMDOC services: _mmgr_get_chunk_by_name(filename), _file_paras(filename,policy),
+; _mmgr_alloc_pages(filename,paragraphs),
+; ASMDOC _file_read(filename,far_buffer,policy); Transitive memory-manager allocation/cache updates and DOS file
+; operations; preserve each
 ; ASMDOC callee contract
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_load_binary_nofatal (unchanged).
@@ -684,36 +738,47 @@ _file_load_binary_nofatal endp
 ; file_decomp_group
 ; -----------------------------------------------------------------------------
 ; Purpose: Dispatch resource decompression.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_fatal (word ptr 12).
-; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; arg_fatal (word ptr 12).
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp
-; ASMDOC purpose: Return cached chunk or read/decompress a packed file, dispatching RLE/VLE for each pass with BP+8 caller policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC purpose: Return cached chunk or read/decompress a packed file, dispatching RLE/VLE for each pass with
+; BP+8 caller policy.
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 near filename in DGROUP; _file_decomp additionally BP+8 fatal policy; Named file/size services, writable managed
+; ASMDOC inputs: BP+6 near filename in DGROUP; _file_decomp additionally BP+8 fatal policy; Named file/size
+; services, writable managed
 ; ASMDOC allocation; paragraph-aligned buffers assumed by zero-offset intermediate passes
-; ASMDOC outputs: DX:AX cached or decoded chunk; 0000:0000 on disabled error path; Allocated size shrinks to header-derived paragraphs
-; ASMDOC (initial allocation minus four), not final decoder return length; DS is not saved: valid codec dispatch sets it to DSEG and both
-; ASMDOC known codecs restore that value; an invalid-type nonfatal return can retain packed-source DS; fatal path sets DS=SS
+; ASMDOC outputs: DX:AX cached or decoded chunk; 0000:0000 on disabled error path; Allocated size shrinks to
+; header-derived paragraphs
+; ASMDOC (initial allocation minus four), not final decoder return length; DS is not saved: valid codec dispatch
+; sets it to DSEG and both
+; ASMDOC known codecs restore that value; an invalid-type nonfatal return can retain packed-source DS; fatal
+; path sets DS=SS
 ; ASMDOC preserves: BP SI DI SP on ordinary return; DS not promised
 ; ASMDOC clobbers: AX BX CX DX DS ES flags; indirect codec effects included
-; ASMDOC globals_read: CS:compression_type far pointer table (_file_decomp_rle,_file_decomp_vle); _aSInvalidPackTy error format; Transitive
+; ASMDOC globals_read: CS:compression_type far pointer table (_file_decomp_rle,_file_decomp_vle);
+; _aSInvalidPackTy error format; Transitive
 ; ASMDOC VLE CS:vle_esc1, CS:vle_esc2, CS alphabet table at offset 0x425C
-; ASMDOC globals_written: Transitive VLE rewrites CS:vle_esc1, CS:vle_esc2 and alphabet table at CS:0x425C; managed cache/allocations through
+; ASMDOC globals_written: Transitive VLE rewrites CS:vle_esc1, CS:vle_esc2 and alphabet table at CS:0x425C;
+; managed cache/allocations through
 ; ASMDOC named services
-; ASMDOC services: mmgr cache/get/alloc/resize; _file_decomp_paras; _file_paras; _file_read; _copy_paras_reverse; Indirect FAR call
-; ASMDOC CS:compression_type[(type-1)*4]: type 1 RLE, type 2 VLE. Both mutate supplied output and scratch/register state; VLE also writes its
-; ASMDOC CS decoding tables/alphabet; both restore entry DS/SI/DI/BP and return DX:AX declared decoded size; no arbitrary callback target;
+; ASMDOC services: mmgr cache/get/alloc/resize; _file_decomp_paras; _file_paras; _file_read;
+; _copy_paras_reverse; Indirect FAR call
+; ASMDOC CS:compression_type[(type-1)*4]: type 1 RLE, type 2 VLE. Both mutate supplied output and
+; scratch/register state; VLE also writes its
+; ASMDOC CS decoding tables/alphabet; both restore entry DS/SI/DI/BP and return DX:AX declared decoded size; no
+; arbitrary callback target;
 ; ASMDOC fatal_error(format,filename) for enabled errors; allocated storage not released on failure here
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_decomp (unchanged).
 _file_decomp proc far
     var_fatal = word ptr -12
-     s = byte ptr 0
-     r = byte ptr 2
     arg_fatal = word ptr 8
 
     push    bp
@@ -724,41 +789,51 @@ _file_decomp proc far
     mov     ax, [bp+arg_fatal]
     mov     [bp+var_fatal], ax
     jmp     short decomp_body
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 _file_decomp endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Dispatch resource decompression with nonfatal error handling.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; no named stack arguments referenced.
+; Register ABI: touches SI, DI, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp_nofatal
-; ASMDOC purpose: Return cached chunk or read/decompress a packed file, dispatching RLE/VLE for each pass with zero policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC purpose: Return cached chunk or read/decompress a packed file, dispatching RLE/VLE for each pass with
+; zero policy.
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 near filename in DGROUP; _file_decomp additionally BP+8 fatal policy; Named file/size services, writable managed
+; ASMDOC inputs: BP+6 near filename in DGROUP; _file_decomp additionally BP+8 fatal policy; Named file/size
+; services, writable managed
 ; ASMDOC allocation; paragraph-aligned buffers assumed by zero-offset intermediate passes
-; ASMDOC outputs: DX:AX cached or decoded chunk; 0000:0000 on disabled error path; Allocated size shrinks to header-derived paragraphs
-; ASMDOC (initial allocation minus four), not final decoder return length; DS is not saved: valid codec dispatch sets it to DSEG and both
-; ASMDOC known codecs restore that value; an invalid-type nonfatal return can retain packed-source DS; fatal path sets DS=SS
+; ASMDOC outputs: DX:AX cached or decoded chunk; 0000:0000 on disabled error path; Allocated size shrinks to
+; header-derived paragraphs
+; ASMDOC (initial allocation minus four), not final decoder return length; DS is not saved: valid codec dispatch
+; sets it to DSEG and both
+; ASMDOC known codecs restore that value; an invalid-type nonfatal return can retain packed-source DS; fatal
+; path sets DS=SS
 ; ASMDOC preserves: BP SI DI SP on ordinary return; DS not promised
 ; ASMDOC clobbers: AX BX CX DX DS ES flags; indirect codec effects included
-; ASMDOC globals_read: CS:compression_type far pointer table (_file_decomp_rle,_file_decomp_vle); _aSInvalidPackTy error format; Transitive
+; ASMDOC globals_read: CS:compression_type far pointer table (_file_decomp_rle,_file_decomp_vle);
+; _aSInvalidPackTy error format; Transitive
 ; ASMDOC VLE CS:vle_esc1, CS:vle_esc2, CS alphabet table at offset 0x425C
-; ASMDOC globals_written: Transitive VLE rewrites CS:vle_esc1, CS:vle_esc2 and alphabet table at CS:0x425C; managed cache/allocations through
+; ASMDOC globals_written: Transitive VLE rewrites CS:vle_esc1, CS:vle_esc2 and alphabet table at CS:0x425C;
+; managed cache/allocations through
 ; ASMDOC named services
-; ASMDOC services: mmgr cache/get/alloc/resize; _file_decomp_paras; _file_paras; _file_read; _copy_paras_reverse; Indirect FAR call
-; ASMDOC CS:compression_type[(type-1)*4]: type 1 RLE, type 2 VLE. Both mutate supplied output and scratch/register state; VLE also writes its
-; ASMDOC CS decoding tables/alphabet; both restore entry DS/SI/DI/BP and return DX:AX declared decoded size; no arbitrary callback target;
+; ASMDOC services: mmgr cache/get/alloc/resize; _file_decomp_paras; _file_paras; _file_read;
+; _copy_paras_reverse; Indirect FAR call
+; ASMDOC CS:compression_type[(type-1)*4]: type 1 RLE, type 2 VLE. Both mutate supplied output and
+; scratch/register state; VLE also writes its
+; ASMDOC CS decoding tables/alphabet; both restore entry DS/SI/DI/BP and return DX:AX declared decoded size; no
+; arbitrary callback target;
 ; ASMDOC fatal_error(format,filename) for enabled errors; allocated storage not released on failure here
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_decomp_nofatal (unchanged).
 _file_decomp_nofatal proc far
     var_fatal = word ptr -12
-     s = byte ptr 0
-     r = byte ptr 2
-
     push    bp
     mov     bp, sp
     sub     sp, 0Ch
@@ -766,34 +841,47 @@ _file_decomp_nofatal proc far
     push    di
     mov     [bp+var_fatal], 0
     jmp     short decomp_body
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 _file_decomp_nofatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Dispatch resource decompression with fatal error handling.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_6 (word ptr 12); arg_filename (word ptr 6).
-; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, SS; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_6 (word ptr 12);
+; arg_filename (word ptr 6).
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP, CS, DS, SS; balanced explicit saves/restores observed: DI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSInvalidPackTy.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp_fatal
-; ASMDOC purpose: Return cached chunk or read/decompress a packed file, dispatching RLE/VLE for each pass with one policy.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC purpose: Return cached chunk or read/decompress a packed file, dispatching RLE/VLE for each pass with
+; one policy.
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 near filename in DGROUP; _file_decomp additionally BP+8 fatal policy; Named file/size services, writable managed
+; ASMDOC inputs: BP+6 near filename in DGROUP; _file_decomp additionally BP+8 fatal policy; Named file/size
+; services, writable managed
 ; ASMDOC allocation; paragraph-aligned buffers assumed by zero-offset intermediate passes
-; ASMDOC outputs: DX:AX cached or decoded chunk; 0000:0000 on disabled error path; Allocated size shrinks to header-derived paragraphs
-; ASMDOC (initial allocation minus four), not final decoder return length; DS is not saved: valid codec dispatch sets it to DSEG and both
-; ASMDOC known codecs restore that value; an invalid-type nonfatal return can retain packed-source DS; fatal path sets DS=SS
+; ASMDOC outputs: DX:AX cached or decoded chunk; 0000:0000 on disabled error path; Allocated size shrinks to
+; header-derived paragraphs
+; ASMDOC (initial allocation minus four), not final decoder return length; DS is not saved: valid codec dispatch
+; sets it to DSEG and both
+; ASMDOC known codecs restore that value; an invalid-type nonfatal return can retain packed-source DS; fatal
+; path sets DS=SS
 ; ASMDOC preserves: BP SI DI SP on ordinary return; DS not promised
 ; ASMDOC clobbers: AX BX CX DX DS ES flags; indirect codec effects included
-; ASMDOC globals_read: CS:compression_type far pointer table (_file_decomp_rle,_file_decomp_vle); _aSInvalidPackTy error format; Transitive
+; ASMDOC globals_read: CS:compression_type far pointer table (_file_decomp_rle,_file_decomp_vle);
+; _aSInvalidPackTy error format; Transitive
 ; ASMDOC VLE CS:vle_esc1, CS:vle_esc2, CS alphabet table at offset 0x425C
-; ASMDOC globals_written: Transitive VLE rewrites CS:vle_esc1, CS:vle_esc2 and alphabet table at CS:0x425C; managed cache/allocations through
+; ASMDOC globals_written: Transitive VLE rewrites CS:vle_esc1, CS:vle_esc2 and alphabet table at CS:0x425C;
+; managed cache/allocations through
 ; ASMDOC named services
-; ASMDOC services: mmgr cache/get/alloc/resize; _file_decomp_paras; _file_paras; _file_read; _copy_paras_reverse; Indirect FAR call
-; ASMDOC CS:compression_type[(type-1)*4]: type 1 RLE, type 2 VLE. Both mutate supplied output and scratch/register state; VLE also writes its
-; ASMDOC CS decoding tables/alphabet; both restore entry DS/SI/DI/BP and return DX:AX declared decoded size; no arbitrary callback target;
+; ASMDOC services: mmgr cache/get/alloc/resize; _file_decomp_paras; _file_paras; _file_read;
+; _copy_paras_reverse; Indirect FAR call
+; ASMDOC CS:compression_type[(type-1)*4]: type 1 RLE, type 2 VLE. Both mutate supplied output and
+; scratch/register state; VLE also writes its
+; ASMDOC CS decoding tables/alphabet; both restore entry DS/SI/DI/BP and return DX:AX declared decoded size; no
+; arbitrary callback target;
 ; ASMDOC fatal_error(format,filename) for enabled errors; allocated storage not released on failure here
 ; ASMDOC dead: True
 ; ASMDOC Public name from existing plan: _file_decomp_fatal (unchanged).
@@ -805,7 +893,6 @@ _file_decomp_fatal proc far
     var_dstseg = word ptr -4
     var_dstoff = word ptr -2
      s = byte ptr 0
-     r = byte ptr 2
     arg_filename = word ptr 6
     arg_6 = word ptr 12
 
@@ -886,7 +973,8 @@ decompress_subfile:
     mov     ax, seg dseg
     mov     ds, ax
     shl     bx, 1
-; ASMDOC Only two indirect targets are possible after signed type validation; table below consists of far code pointers.
+; ASMDOC Only two indirect targets are possible after signed type validation; table below consists of far code
+; pointers.
     call    dword ptr cs:compression_type[bx]
     add     sp, 0Ah
     dec     [bp+var_passes]
@@ -953,7 +1041,8 @@ fd_done:
     mov     sp, bp
     pop     bp
     retf
-; ASMDOC Retained unlabelled wrapper code after the shared RETF; no canonical public declaration or source incoming edge.
+; ASMDOC Retained unlabelled wrapper code after the shared RETF; no canonical public declaration or source
+; incoming edge.
     push    bp
     mov     bp, sp
     sub     sp, 0Ch
@@ -962,7 +1051,7 @@ fd_done:
     mov     ax, [bp+arg_6]
     mov     [bp+var_fatal], ax
     jmp     short decomp_fatal_join_02
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
     push    bp
     mov     bp, sp
     sub     sp, 0Ch
@@ -970,7 +1059,7 @@ fd_done:
     push    di
     mov     [bp+var_fatal], 0
     jmp     short decomp_fatal_join_02
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
     push    bp
     mov     bp, sp
     sub     sp, 0Ch
@@ -993,32 +1082,37 @@ _file_decomp_fatal endp
 ; locate_entries
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by locate shape nofatal.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; no named stack arguments referenced.
+; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _locate_shape_nofatal
 ; ASMDOC purpose: Find a four-byte archive ID; return null on missing resource.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 archive offset; BP+8 archive segment; paragraph-aligned archive required for correct payload-base calculation; BP+10
-; ASMDOC near writable requested name in DSEG; first NUL and subsequent bytes through byte 3 are overwritten with spaces; Archive count at
+; ASMDOC inputs: BP+6 archive offset; BP+8 archive segment; paragraph-aligned archive required for correct
+; payload-base calculation; BP+10
+; ASMDOC near writable requested name in DSEG; first NUL and subsequent bytes through byte 3 are overwritten
+; with spaces; Archive count at
 ; ASMDOC [offset+4], name table at offset+6, dword relative-offset table; signed nonnegative small count assumed
-; ASMDOC outputs: DX:AX normalized found far payload pointer (offset 0..15), or 0000:0000 for nonfatal miss; Mutates requested name to
-; ASMDOC four-byte space-padded ID; does not terminate it again; Fatal miss calls fatal_error then INT 20h fallback if it returns
+; ASMDOC outputs: DX:AX normalized found far payload pointer (offset 0..15), or 0000:0000 for nonfatal miss;
+; Mutates requested name to
+; ASMDOC four-byte space-padded ID; does not terminate it again; Fatal miss calls fatal_error then INT 20h
+; fallback if it returns
 ; ASMDOC preserves: BP DS SI DI SP restored on returning paths; DF cleared
 ; ASMDOC clobbers: AX BX CX DX ES flags
 ; ASMDOC globals_read: aLocateshape4_4sShapeNotF / aLocatesound4_4sSoundNotF on fatal miss
 ; ASMDOC globals_written: Caller-requested four-byte name in DSEG (not an owned module global)
-; ASMDOC services: fatal_error(format,name) on enabled miss; DOS INT 20h fallback; No filesystem service on successful lookup; archive and
+; ASMDOC services: fatal_error(format,name) on enabled miss; DOS INT 20h fallback; No filesystem service on
+; successful lookup; archive and
 ; ASMDOC requested-name memory only
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _locate_shape_nofatal (unchanged).
 _locate_shape_nofatal proc far
-     s = byte ptr 0
-     r = byte ptr 2
-
     push    bp
     mov     bp, sp
     push    ds
@@ -1026,36 +1120,41 @@ _locate_shape_nofatal proc far
     push    di
     xor     dx, dx
     jmp     short _alt_locate_resource
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 _locate_shape_nofatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by locate shape fatal.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; no named stack arguments referenced.
+; Register ABI: touches DX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _locate_shape_fatal
 ; ASMDOC purpose: Find a four-byte archive ID; report missing shape as fatal.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 archive offset; BP+8 archive segment; paragraph-aligned archive required for correct payload-base calculation; BP+10
-; ASMDOC near writable requested name in DSEG; first NUL and subsequent bytes through byte 3 are overwritten with spaces; Archive count at
+; ASMDOC inputs: BP+6 archive offset; BP+8 archive segment; paragraph-aligned archive required for correct
+; payload-base calculation; BP+10
+; ASMDOC near writable requested name in DSEG; first NUL and subsequent bytes through byte 3 are overwritten
+; with spaces; Archive count at
 ; ASMDOC [offset+4], name table at offset+6, dword relative-offset table; signed nonnegative small count assumed
-; ASMDOC outputs: DX:AX normalized found far payload pointer (offset 0..15), or 0000:0000 for nonfatal miss; Mutates requested name to
-; ASMDOC four-byte space-padded ID; does not terminate it again; Fatal miss calls fatal_error then INT 20h fallback if it returns
+; ASMDOC outputs: DX:AX normalized found far payload pointer (offset 0..15), or 0000:0000 for nonfatal miss;
+; Mutates requested name to
+; ASMDOC four-byte space-padded ID; does not terminate it again; Fatal miss calls fatal_error then INT 20h
+; fallback if it returns
 ; ASMDOC preserves: BP DS SI DI SP restored on returning paths; DF cleared
 ; ASMDOC clobbers: AX BX CX DX ES flags
 ; ASMDOC globals_read: aLocateshape4_4sShapeNotF / aLocatesound4_4sSoundNotF on fatal miss
 ; ASMDOC globals_written: Caller-requested four-byte name in DSEG (not an owned module global)
-; ASMDOC services: fatal_error(format,name) on enabled miss; DOS INT 20h fallback; No filesystem service on successful lookup; archive and
+; ASMDOC services: fatal_error(format,name) on enabled miss; DOS INT 20h fallback; No filesystem service on
+; successful lookup; archive and
 ; ASMDOC requested-name memory only
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _locate_shape_fatal (unchanged).
 _locate_shape_fatal proc far
-     s = byte ptr 0
-     r = byte ptr 2
-
     push    bp
     mov     bp, sp
     push    ds
@@ -1063,12 +1162,14 @@ _locate_shape_fatal proc far
     push    di
     mov     dx, 1
     jmp     short _alt_locate_resource
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 _locate_shape_fatal endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by locate sound fatal.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI,
+; DS, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
@@ -1077,27 +1178,31 @@ _locate_shape_fatal endp
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _locate_sound_fatal
 ; ASMDOC purpose: Find a four-byte archive ID; report missing sound as fatal.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 archive offset; BP+8 archive segment; paragraph-aligned archive required for correct payload-base calculation; BP+10
-; ASMDOC near writable requested name in DSEG; first NUL and subsequent bytes through byte 3 are overwritten with spaces; Archive count at
+; ASMDOC inputs: BP+6 archive offset; BP+8 archive segment; paragraph-aligned archive required for correct
+; payload-base calculation; BP+10
+; ASMDOC near writable requested name in DSEG; first NUL and subsequent bytes through byte 3 are overwritten
+; with spaces; Archive count at
 ; ASMDOC [offset+4], name table at offset+6, dword relative-offset table; signed nonnegative small count assumed
-; ASMDOC outputs: DX:AX normalized found far payload pointer (offset 0..15), or 0000:0000 for nonfatal miss; Mutates requested name to
-; ASMDOC four-byte space-padded ID; does not terminate it again; Fatal miss calls fatal_error then INT 20h fallback if it returns
+; ASMDOC outputs: DX:AX normalized found far payload pointer (offset 0..15), or 0000:0000 for nonfatal miss;
+; Mutates requested name to
+; ASMDOC four-byte space-padded ID; does not terminate it again; Fatal miss calls fatal_error then INT 20h
+; fallback if it returns
 ; ASMDOC preserves: BP DS SI DI SP restored on returning paths; DF cleared
 ; ASMDOC clobbers: AX BX CX DX ES flags
 ; ASMDOC globals_read: aLocateshape4_4sShapeNotF / aLocatesound4_4sSoundNotF on fatal miss
 ; ASMDOC globals_written: Caller-requested four-byte name in DSEG (not an owned module global)
-; ASMDOC services: fatal_error(format,name) on enabled miss; DOS INT 20h fallback; No filesystem service on successful lookup; archive and
+; ASMDOC services: fatal_error(format,name) on enabled miss; DOS INT 20h fallback; No filesystem service on
+; successful lookup; archive and
 ; ASMDOC requested-name memory only
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _locate_sound_fatal (unchanged).
 _locate_sound_fatal proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
+    arg_archive_offset = word ptr 6
+    arg_archive_segment = word ptr 8
+    arg_requested_name = word ptr 10
 
     push    bp
     mov     bp, sp
@@ -1108,11 +1213,11 @@ _locate_sound_fatal proc far
 ; ASMDOC Shared archive lookup; ES addresses DSEG requested-name RAM, not display memory.
 _alt_locate_resource:
     cld
-    mov     ds, [bp+arg_2]
-    mov     si, [bp+arg_0]
+    mov     ds, [bp+arg_archive_segment]
+    mov     si, [bp+arg_archive_offset]
     mov     ax, seg dseg
     mov     es, ax
-    mov     di, [bp+arg_4]
+    mov     di, [bp+arg_requested_name]
     mov     cx, 4
     mov     bx, 0
 find_sound_fatal_loop_head_01:
@@ -1128,15 +1233,14 @@ find_sound_fatal_loop_head_02:
     mov     bx, si
 find_sound_fatal_loop_head_03:
     mov     si, bx
-    mov     di, [bp+arg_4]
+    mov     di, [bp+arg_requested_name]
     mov     cx, 4
 find_sound_fatal_loop_head_04:
     cmpsb
     jnz     short find_sound_fatal_branch_path_01
     loop    find_sound_fatal_loop_head_04
     jmp     short _found_resource
-    ; align 2
-    db 144
+    even ; word-align the following entry
 find_sound_fatal_branch_path_01:
     cmp     byte ptr [si-1], 0
     jnz     short find_sound_fatal_branch_path_02
@@ -1144,7 +1248,8 @@ find_sound_fatal_branch_path_01:
     jz      short _found_resource
 find_sound_fatal_branch_path_02:
     add     bx, 4
-; ASMDOC Signed JGE after decrement permits the count-zero comparison once more; preserve this off-by-one read in a literal translation.
+; ASMDOC Signed JGE after decrement permits the count-zero comparison once more; preserve this off-by-one read
+; in a literal translation.
     dec     ax
     jge     short find_sound_fatal_loop_head_03
 _end_of_locate:
@@ -1153,22 +1258,20 @@ _end_of_locate:
     jg      short find_sound_fatal_branch_path_03
     mov     dx, offset DGROUP:aLocateshape4_4sShapeNotF; "locateshape - %-4.4s SHAPE NOT FOUND\r\n"
     jmp     short find_sound_fatal_error_path_01
-    ; align 2
-    db 144
+    even ; word-align the following entry
 find_sound_fatal_branch_path_03:
     mov     dx, offset DGROUP:aLocatesound4_4sSoundNotF; "locatesound - %-4.4s SOUND NOT FOUND\r\n"
 find_sound_fatal_error_path_01:
     mov     ax, seg dseg
     mov     ds, ax
-    push    [bp+arg_4]
+    push    [bp+arg_requested_name]
     push    dx
     call    far ptr _fatal_error
     int     R5HW_DOS_TERMINATE_INT ; DOS - PROGRAM TERMINATION /* PLATFORM(dos): terminates the DOS process. */
 find_sound_fatal_branch_path_04:
     xor     ax, ax
     jmp     short find_sound_fatal_join_01
-    ; align 2
-    db 144
+    even ; word-align the following entry
 ; ASMDOC Writes padding directly into the requested four-byte name; caller must provide writable DSEG storage.
 find_sound_fatal_loop_head_05:
     mov     byte ptr es:[bx+di], 20h ; ' '
@@ -1177,7 +1280,7 @@ find_sound_fatal_loop_head_05:
     jmp     short find_sound_fatal_loop_head_02
 _found_resource:
 ; ASMDOC Found-address normalization omits archive offset in the physical payload base.
-    mov     si, [bp+arg_0]
+    mov     si, [bp+arg_archive_offset]
     mov     ax, [si+4]
     shl     ax, 1
     shl     ax, 1

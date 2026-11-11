@@ -9,10 +9,10 @@ DSEG ends
 _DATA segment word public 'DATA'
 ; ASMDOC[timers] Block: Private console state plus 120-byte output buffer; no data labels are public. Return slots
 ; ASMDOC[timers]   and sprintf buffer make printing non-reentrant.
-console_cursor_row db 0
-console_save_cursor db 0
-console_text_attribute db 7
-db 0
+console_cursor_row db 00h
+console_save_cursor db 00h
+console_text_attribute db 07h
+db 00h
 console_saved_cursor dw 3840
 console_cursor_offset dw 0
 console_return_ip dw 0
@@ -27,14 +27,15 @@ public _nopsub_3216C
 public _debug_printf_text
 public _nopsub_322B4
 S012_TEXT segment word public 'CODE'
-assume cs:S012_TEXT, ds:DGROUP
+assume cs:S012_TEXT
 
 ; nopsub_3215A
-assume cs:S012_TEXT
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3215A.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, CX, DI, ES; balanced explicit saves/restores observed: DI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, CX, DI, ES; balanced explicit saves/restores observed: DI; path-specific inputs and
+; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(video): selects a video-memory segment. */
@@ -67,8 +68,10 @@ _nopsub_3215A endp
 ; nopsub_3216C
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3216C.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, CX, SI, DI, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, CX, SI, DI, DS, ES; balanced explicit saves/restores observed: DI, DS, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: console_cursor_row.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -87,8 +90,6 @@ _nopsub_3215A endp
 ; ASMDOC[timers] reachability: debug_printf_text overflow/newline paths call this far routine.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _nopsub_3216C proc far
-     r = byte ptr 0
-
     push    si
     push    di
     push    ds
@@ -121,10 +122,14 @@ _nopsub_3216C endp
 ; nopsub_3219D
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by debug printf text.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, DX, SI, BP, SP, ES; balanced explicit saves/restores observed: AX, SI; path-specific inputs and outputs follow the listed operands.
-; Globals read: console_cursor_offset, console_return_cs, console_return_ip, console_save_cursor, console_saved_cursor, console_text_attribute.
-; Globals written: console_cursor_offset, console_cursor_row, console_return_cs, console_return_ip, console_save_cursor, console_saved_cursor.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, DX, SI, BP, SP, ES; balanced explicit saves/restores observed: AX, SI;
+; path-specific inputs and outputs follow the listed operands.
+; Globals read: console_cursor_offset, console_return_cs, console_return_ip, console_save_cursor,
+; console_saved_cursor, console_text_attribute.
+; Globals written: console_cursor_offset, console_cursor_row, console_return_cs, console_return_ip,
+; console_save_cursor, console_saved_cursor.
 ; Global addresses taken: _output_buffer.
 ; /* PLATFORM(video): selects a video-memory segment. */
 ; -----------------------------------------------------------------------------
@@ -179,7 +184,7 @@ noop_entry3_loop_head_01:
     mov si, 4BC6h
     mov dh, byte ptr console_text_attribute
 noop_entry3_loop_head_02:
-    mov dl, byte ptr [si]
+    mov dl, [si]
     inc si
     or dl, dl
     jz short noop_entry3_branch_path_02
@@ -194,7 +199,7 @@ noop_entry3_loop_head_02:
     mov bx, 0F00h
     mov word ptr console_cursor_offset, bx
 noop_entry3_branch_path_01:
-    mov word ptr es:[bx], dx
+    mov es:[bx], dx
     add word ptr console_cursor_offset, 2
     jmp short noop_entry3_loop_head_02
 noop_entry3_branch_path_02:
@@ -268,7 +273,7 @@ noop_entry3_branch_path_10:
 noop_entry3_branch_path_11:
     push bp
     mov bp, sp
-    mov ax, word ptr [bp+6]
+    mov ax, [bp+6]
     cmp ax, 0
     jge short noop_entry3_branch_path_12
     xor ax, ax
@@ -286,7 +291,8 @@ _debug_printf_text endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 322B4.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: console_text_attribute.
 ; -----------------------------------------------------------------------------
@@ -304,18 +310,16 @@ _debug_printf_text endp
 ; ASMDOC[timers]   fallthrough (preceding fragment RETF). Preserve complete extent including trailing zero.
 ; ASMDOC[timers] dead: true (static known-program reachability; never permission to trim extent)
 _nopsub_322B4 proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_attribute = word ptr 6
 
     push    bp
     mov     bp, sp
-    mov     ax, [bp+arg_0]
+    mov     ax, [bp+arg_attribute]
     mov     console_text_attribute, al
     pop     bp
     retf
 
-    db 0
+    db 0 ; retained zero fill at this boundary
 _nopsub_322B4 endp
 
 S012_TEXT ends

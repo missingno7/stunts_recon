@@ -1,8 +1,10 @@
 ; ASMDOC Module: load_232c0. Proposed content name: sprite_clear_1_color. Address-derived owner load_232c0 should
 ; ASMDOC follow its single-purpose existing source filename; no split or merge.
 ; ASMDOC Public routines: _sprite_clear_1_color.
-; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated comments
-; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination bitmap/table
+; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated
+; comments
+; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination
+; bitmap/table
 ; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
 INCLUDE include\platform_hw.inc
@@ -13,7 +15,8 @@ public _sprite_clear_1_color
 ; -----------------------------------------------------------------------------
 ; Purpose: Clear sprite image 1 to the requested color.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (byte ptr 6).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, ES; balanced explicit saves/restores observed: DI,
+; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
 ; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
@@ -35,9 +38,7 @@ public _sprite_clear_1_color
 ; ASMDOC extents return. First row uses CS row-table; later rows advance by pitch. Odd-width and singleton paths write
 ; ASMDOC final byte directly. No BIOS/device service: writes whatever segment sprite1 selects, commonly A000h..
 _sprite_clear_1_color proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = byte ptr 6
+    arg_color = byte ptr 6
 
     push    bp
     mov     bp, sp
@@ -58,7 +59,7 @@ _sprite_clear_1_color proc far
     jle     short sprite_clear_1_color_draw_loop
     mov     si, cs:[_sprite1+20]
     sub     si, bx
-    mov     al, [bp+arg_0]
+    mov     al, [bp+arg_color]
     mov     ah, al
     shr     bx, 1
     jb      short clear_1_color_when_below
@@ -94,8 +95,7 @@ clear_1_color_draw_loop_2:
     dec     dx
     jg      short clear_1_color_draw_loop_2
     jmp     short sprite_clear_1_color_draw_loop
-    ; align 2
-    db 0
+    db 0 ; retained zero fill at this boundary
 _sprite_clear_1_color endp
 S012_TEXT ends
 end

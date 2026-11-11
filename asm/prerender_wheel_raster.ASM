@@ -142,15 +142,13 @@ _preRender_default label far
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 preRender_default proc far
-    var_A = byte ptr -10
-     s = byte ptr 0
-     r = byte ptr 2
+    local_merge_mode = byte ptr -10
     push    bp
     mov     bp, sp
     sub     sp, 7D0h
     push    si
     push    di
-    mov     [bp+var_A], 1
+    mov     [bp+local_merge_mode], 1
     jmp     short pre_default_alt_join_01
 preRender_default endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
@@ -222,22 +220,20 @@ _preRender_default_alt label far
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 preRender_default_alt proc far
-    var_A = byte ptr -10
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_6 = word ptr 10
+    local_merge_mode = byte ptr -10
+    arg_vertices = word ptr 10
     push    bp
     mov     bp, sp
     sub     sp, 7D0h
     push    si
     push    di
-    mov     [bp+var_A], 0
+    mov     [bp+local_merge_mode], 0
 pre_default_alt_join_01:
     mov     ax, offset draw_filled_lines
     mov     spritefunc, ax
     mov     ax, offset preRender_line
     mov word ptr imagefunc, ax
-    mov     si, [bp+arg_6]
+    mov     si, [bp+arg_vertices]
     jmp     short _prerender_shared_setup
 preRender_default_alt endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
@@ -308,15 +304,13 @@ _skybox_op_helper label far
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 skybox_op_helper proc far
-    var_A = byte ptr -10
-     s = byte ptr 0
-     r = byte ptr 2
+    local_merge_mode = byte ptr -10
     push    bp
     mov     bp, sp
     sub     sp, 7D0h
     push    si
     push    di
-    mov     [bp+var_A], 1
+    mov     [bp+local_merge_mode], 1
     jmp     short wheel_raster_join_01
 skybox_op_helper endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
@@ -388,23 +382,21 @@ _preRender_wheel_helper4 label far
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 preRender_wheel_helper4 proc far
-    var_7D0 = word ptr -2000
-    var_798 = word ptr -1944
-    var_3D8 = word ptr -984
-    var_18 = word ptr -24
+    local_line_descriptor = word ptr -2000
+    local_left_edges = word ptr -1944
+    local_right_edges = word ptr -984
+    local_edge_cursor = word ptr -24
     var_16 = word ptr -22
-    var_14 = word ptr -20
-    var_12 = word ptr -18
-    var_10 = word ptr -16
-    var_E = word ptr -14
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-    var_8 = word ptr -8
+    local_bottom_entry = word ptr -20
+    local_bottom_y = word ptr -18
+    local_top_entry = word ptr -16
+    local_top_y = word ptr -14
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
+    local_last_list_entry = word ptr -8
     var_vertlineptr = word ptr -6
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
+    local_clip_right_inclusive = word ptr -4
+    local_clip_left = word ptr -2
     arg_color = word ptr 6
     arg_vertlinecount = word ptr 8
     arg_vertlines = byte ptr 10
@@ -413,7 +405,7 @@ preRender_wheel_helper4 proc far
     sub     sp, 7D0h
     push    si
     push    di
-    mov     [bp+var_A], 0
+    mov     [bp+local_merge_mode], 0
 ; ASMDOC-GEOMETRY Inline wrappers obtain vertices with LEA, whereas default wrappers MOV a near pointer; both
 ; preserve one FAR wrapper frame.
 wheel_raster_join_01:
@@ -487,24 +479,24 @@ _prerender_shared_setup:
     shl     ax, 1
     shl     ax, 1
     add     ax, si
-    mov     [bp+var_8], ax
+    mov     [bp+local_last_list_entry], ax
     cld
     mov     ax, ss
     mov     es, ax
-    lea     ax, [bp+var_798]
-    mov     [bp+var_18], ax
-    mov     ax, word ptr cs:[_sprite1+SPRITE_LEFT2_OFFSET]
-    mov     [bp+var_2], ax
-    mov     ax, word ptr cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
+    lea     ax, [bp+local_left_edges]
+    mov     [bp+local_edge_cursor], ax
+    mov     ax, cs:[_sprite1+SPRITE_LEFT2_OFFSET]
+    mov     [bp+local_clip_left], ax
+    mov     ax, cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
     dec     ax
-    mov     [bp+var_4], ax
+    mov     [bp+local_clip_right_inclusive], ax
     mov     ax, [si+2]
-    mov     [bp+var_E], ax
-    mov     [bp+var_12], ax
+    mov     [bp+local_top_y], ax
+    mov     [bp+local_bottom_y], ax
     mov     bx, [si]
     mov     dx, bx
-    mov     [bp+var_10], si
-    mov     [bp+var_14], si
+    mov     [bp+local_top_entry], si
+    mov     [bp+local_bottom_entry], si
     add     si, 4
     dec     cx
     jnz     short wheel_raster_loop_head_01
@@ -525,15 +517,15 @@ _prerender_shared_setup:
 ; vertex. No source count validation.
 wheel_raster_loop_head_01:
     mov     ax, [si+2]
-    cmp     ax, [bp+var_E]
+    cmp     ax, [bp+local_top_y]
     jg      short wheel_raster_branch_path_01
-    mov     [bp+var_E], ax
-    mov     [bp+var_10], si
+    mov     [bp+local_top_y], ax
+    mov     [bp+local_top_entry], si
 wheel_raster_branch_path_01:
-    cmp     ax, [bp+var_12]
+    cmp     ax, [bp+local_bottom_y]
     jle     short wheel_raster_branch_path_02
-    mov     [bp+var_12], ax
-    mov     [bp+var_14], si
+    mov     [bp+local_bottom_y], ax
+    mov     [bp+local_bottom_entry], si
 wheel_raster_branch_path_02:
     mov     ax, [si]
     cmp     ax, bx
@@ -546,27 +538,27 @@ wheel_raster_branch_path_03:
 wheel_raster_branch_path_04:
     add     si, 4
     loop    wheel_raster_loop_head_01
-    cmp     dx, [bp+var_2]
+    cmp     dx, [bp+local_clip_left]
     jl      short wheel_raster_branch_path_08
-    cmp     bx, [bp+var_4]
+    cmp     bx, [bp+local_clip_right_inclusive]
     jge     short wheel_raster_branch_path_08
-    mov     ax, [bp+var_12]
-    cmp     ax, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    mov     ax, [bp+local_bottom_y]
+    cmp     ax, cs:[_sprite1+SPRITE_TOP_OFFSET]
     jl      short wheel_raster_branch_path_08
-    mov     cx, [bp+var_E]
-    cmp     cx, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    mov     cx, [bp+local_top_y]
+    cmp     cx, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     jge     short wheel_raster_branch_path_08
-    mov     [bp+var_C], 0
-    cmp     dx, [bp+var_4]
+    mov     [bp+local_clip_required], 0
+    cmp     dx, [bp+local_clip_right_inclusive]
     jg      short wheel_raster_branch_path_05
-    cmp     bx, [bp+var_2]
+    cmp     bx, [bp+local_clip_left]
     jl      short wheel_raster_branch_path_05
-    cmp     ax, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    cmp     ax, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     jge     short wheel_raster_branch_path_05
-    cmp     cx, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    cmp     cx, cs:[_sprite1+SPRITE_TOP_OFFSET]
     jge     short wheel_raster_branch_path_06
 wheel_raster_branch_path_05:
-    mov     [bp+var_C], 1
+    mov     [bp+local_clip_required], 1
 wheel_raster_branch_path_06:
     cmp     ax, cx
     jz      short wheel_raster_branch_path_07
@@ -590,13 +582,13 @@ wheel_raster_branch_path_08:
 ; ASMDOC-GEOMETRY Walk opposite sides of cyclic vertex ring; only rising-y edges emit records. First chain
 ; seeds arrays, second merges them.
 wheel_raster_branch_path_09:
-    lea     si, [bp+var_7D0]
-    mov     di, [bp+var_10]
+    lea     si, [bp+local_line_descriptor]
+    mov     di, [bp+local_top_entry]
 wheel_raster_loop_head_02:
     mov     ax, [di+2]
     mov     cx, [di]
     add     di, 4
-    cmp     di, [bp+var_8]
+    cmp     di, [bp+local_last_list_entry]
     jbe     short wheel_raster_branch_path_10
     mov     di, [bp+var_vertlineptr]
 wheel_raster_branch_path_10:
@@ -608,13 +600,13 @@ wheel_raster_branch_path_10:
     push    word ptr [di]
     push    ax
     push    cx
-    cmp     [bp+var_C], 0
+    cmp     [bp+local_clip_required], 0
     jz      short wheel_raster_branch_path_11
     call    draw_line_related
     mov     [bp+var_16], di
     call near ptr preRender_helper
     jmp     short wheel_raster_join_02
-    db 144
+    even ; word-align the following entry
 wheel_raster_branch_path_11:
     call    draw_line_related_alt
     mov     [bp+var_16], di
@@ -623,16 +615,16 @@ wheel_raster_join_02:
     mov     di, [bp+var_16]
     add     sp, 0Ah
 wheel_raster_branch_path_12:
-    cmp     di, [bp+var_14]
+    cmp     di, [bp+local_bottom_entry]
     jnz     short wheel_raster_loop_head_02
-    mov     di, [bp+var_10]
+    mov     di, [bp+local_top_entry]
 wheel_raster_loop_head_03:
     mov     ax, [di+2]
     mov     cx, [di]
     sub     di, 4
     cmp     di, [bp+var_vertlineptr]
     jnb     short wheel_raster_branch_path_13
-    mov     di, [bp+var_8]
+    mov     di, [bp+local_last_list_entry]
 wheel_raster_branch_path_13:
     mov     dx, [di+2]
     cmp     dx, ax
@@ -642,11 +634,11 @@ wheel_raster_branch_path_13:
     push    word ptr [di]
     push    ax
     push    cx
-    cmp     [bp+var_C], 0
+    cmp     [bp+local_clip_required], 0
     jz      short wheel_raster_branch_path_14
     call    draw_line_related
     jmp     short wheel_raster_join_03
-    db 144
+    even ; word-align the following entry
 wheel_raster_branch_path_14:
     call    draw_line_related_alt
 wheel_raster_join_03:
@@ -655,18 +647,18 @@ wheel_raster_join_03:
     mov     di, [bp+var_16]
     add     sp, 0Ah
 wheel_raster_branch_path_15:
-    cmp     di, [bp+var_14]
+    cmp     di, [bp+local_bottom_entry]
     jnz     short wheel_raster_loop_head_03
-    mov     ax, [bp+var_12]
-    cmp     ax, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    mov     ax, [bp+local_bottom_y]
+    cmp     ax, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     jl      short wheel_raster_branch_path_16
-    mov     ax, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    mov     ax, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     dec     ax
 wheel_raster_branch_path_16:
-    mov     bx, [bp+var_E]
-    cmp     bx, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    mov     bx, [bp+local_top_y]
+    cmp     bx, cs:[_sprite1+SPRITE_TOP_OFFSET]
     jge     short wheel_raster_branch_path_17
-    mov     bx, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    mov     bx, cs:[_sprite1+SPRITE_TOP_OFFSET]
 wheel_raster_branch_path_17:
     sub     ax, bx
     jle     short wheel_raster_branch_path_18
@@ -675,10 +667,10 @@ wheel_raster_branch_path_17:
     push    ax
     push    bx
     shl     bx, 1
-    lea     ax, [bp+var_3D8]
+    lea     ax, [bp+local_right_edges]
     add     ax, bx
     push    ax
-    lea     ax, [bp+var_798]
+    lea     ax, [bp+local_left_edges]
     add     ax, bx
     push    ax
     call    dword ptr spritefunc
@@ -734,9 +726,7 @@ _preRender_helper label near
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 preRender_helper proc near
-    var_18 = word ptr -24
-     s = byte ptr 0
-     r = byte ptr 2
+    local_edge_cursor = word ptr -24
     mov     cx, [si+14h]
     or      cx, cx
     jle     short edge_clear_branch_path_01
@@ -746,8 +736,8 @@ preRender_helper proc near
     adc     di, 0
     sub     di, cx
     shl     di, 1
-    add     di, [bp+var_18]
-    mov     ax, word ptr cs:[_sprite1+SPRITE_LEFT2_OFFSET]
+    add     di, [bp+local_edge_cursor]
+    mov     ax, cs:[_sprite1+SPRITE_LEFT2_OFFSET]
     push    cx
     push    di
     rep stosw
@@ -766,8 +756,8 @@ edge_clear_branch_path_01:
     adc     di, 0
     sub     di, cx
     shl     di, 1
-    add     di, [bp+var_18]
-    mov     ax, word ptr cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
+    add     di, [bp+local_edge_cursor]
+    mov     ax, cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
     push    cx
     push    di
     rep stosw
@@ -783,8 +773,8 @@ edge_clear_branch_path_02:
     mov     di, [si+0Ah]
     inc     di
     shl     di, 1
-    add     di, [bp+var_18]
-    mov     ax, word ptr cs:[_sprite1+SPRITE_LEFT2_OFFSET]
+    add     di, [bp+local_edge_cursor]
+    mov     ax, cs:[_sprite1+SPRITE_LEFT2_OFFSET]
     push    cx
     push    di
     rep stosw
@@ -800,8 +790,8 @@ edge_clear_branch_path_03:
     mov     di, [si+0Ah]
     inc     di
     shl     di, 1
-    add     di, [bp+var_18]
-    mov     ax, word ptr cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
+    add     di, [bp+local_edge_cursor]
+    mov     ax, cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
     push    cx
     push    di
     rep stosw
@@ -853,14 +843,13 @@ _preRender_helper2 label near
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 preRender_helper2 proc near
-    var_18 = word ptr -24
-     r = byte ptr 0
+    local_edge_cursor = word ptr -24
     mov     cx, [si+0Eh]
     or      cx, cx
     jle     short slope_fill_mode_case_02
     mov     di, [si+6]
     shl     di, 1
-    add     di, [bp+var_18]
+    add     di, [bp+local_edge_cursor]
     mov     bl, [si+12h]
     xor     bh, bh
     shl     bx, 1
@@ -1029,20 +1018,19 @@ _preRender_helper3 label near
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 preRender_helper3 proc near
-    var_18 = word ptr -24
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-     r = byte ptr 0
+    local_edge_cursor = word ptr -24
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
     mov     cx, [si+0Eh]
     or      cx, cx
     jle     short slope_raster_branch_path_02
     mov     di, [si+6]
     shl     di, 1
-    add     di, [bp+var_18]
+    add     di, [bp+local_edge_cursor]
     mov     bl, [si+12h]
     xor     bh, bh
     shl     bx, 1
-    cmp     [bp+var_A], 0
+    cmp     [bp+local_merge_mode], 0
     jnz     short slope_raster_branch_path_01
     jmp     cs:sprite_line_merge_mode_dispatch[bx]
 slope_raster_branch_path_01:
@@ -1399,11 +1387,11 @@ slope_raster_loop_head_26:
     jnb     short slope_raster_branch_path_25
     loop    slope_raster_loop_head_25
     jmp     short slope_raster_join_01
-    db 144
+    even ; word-align the following entry
 slope_raster_branch_path_25:
     loop    slope_raster_loop_head_26
     jmp     short slope_raster_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 slope_raster_loop_head_27:
     add     dx, bx
     jnb     short slope_raster_branch_path_27
@@ -1412,14 +1400,14 @@ slope_raster_branch_path_26:
     dec     ax
     loop    slope_raster_loop_head_27
     jmp     short slope_raster_join_01
-    db 144
+    even ; word-align the following entry
 slope_raster_branch_path_27:
     dec     ax
     loop    slope_raster_loop_head_27
     inc     ax
     mov     [di], ax
     jmp     short slope_raster_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 slope_raster_mode_case_14:
     mov     cx, [si+0Eh]
     mov     ax, [si+2]
@@ -1440,7 +1428,7 @@ slope_raster_branch_path_28:
     inc     ax
     loop    slope_raster_loop_head_28
     jmp     short slope_raster_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 slope_raster_branch_path_29:
     add     di, 3C0h
 slope_raster_loop_head_29:
@@ -1454,14 +1442,14 @@ slope_raster_loop_head_30:
     dec     ax
     mov     [di], ax
     jmp     short slope_raster_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 slope_raster_branch_path_30:
     loop    slope_raster_loop_head_30
     add     di, 2
     dec     ax
     mov     [di], ax
     jmp     short slope_raster_join_01
-    db 144
+    even ; word-align the following entry
 slope_raster_loop_head_31:
     add     dx, bx
     jnb     short slope_raster_branch_path_32
@@ -1471,11 +1459,11 @@ slope_raster_branch_path_32:
     inc     ax
     loop    slope_raster_loop_head_31
     jmp     short slope_raster_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 ; ASMDOC-GEOMETRY Clipping postamble differs from prefill: it rewrites only one array per clipped side.
 ; Dispatch-to-RET modes bypass this postamble.
 slope_raster_join_01:
-    cmp     [bp+var_C], 0
+    cmp     [bp+local_clip_required], 0
     jnz     short slope_raster_branch_path_33
     retn
 slope_raster_branch_path_33:
@@ -1488,8 +1476,8 @@ slope_raster_branch_path_33:
     adc     di, 0
     sub     di, cx
     shl     di, 1
-    add     di, [bp+var_18]
-    mov     ax, word ptr cs:[_sprite1+SPRITE_LEFT2_OFFSET]
+    add     di, [bp+local_edge_cursor]
+    mov     ax, cs:[_sprite1+SPRITE_LEFT2_OFFSET]
     rep stosw
 slope_raster_branch_path_34:
     mov     cx, [si+18h]
@@ -1501,9 +1489,9 @@ slope_raster_branch_path_34:
     adc     di, 0
     sub     di, cx
     shl     di, 1
-    add     di, [bp+var_18]
+    add     di, [bp+local_edge_cursor]
     add     di, 3C0h
-    mov     ax, word ptr cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
+    mov     ax, cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
     dec     ax
     rep stosw
 slope_raster_branch_path_35:
@@ -1513,8 +1501,8 @@ slope_raster_branch_path_35:
     mov     di, [si+0Ah]
     inc     di
     shl     di, 1
-    add     di, [bp+var_18]
-    mov     ax, word ptr cs:[_sprite1+SPRITE_LEFT2_OFFSET]
+    add     di, [bp+local_edge_cursor]
+    mov     ax, cs:[_sprite1+SPRITE_LEFT2_OFFSET]
     rep stosw
 slope_raster_branch_path_36:
     mov     cx, [si+1Ah]
@@ -1523,9 +1511,9 @@ slope_raster_branch_path_36:
     mov     di, [si+0Ah]
     inc     di
     shl     di, 1
-    add     di, [bp+var_18]
+    add     di, [bp+local_edge_cursor]
     add     di, 3C0h
-    mov     ax, word ptr cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
+    mov     ax, cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
     dec     ax
     rep stosw
 slope_raster_return_01:
@@ -1594,38 +1582,36 @@ _nopsub_31F39 label far
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 nopsub_31F39 proc far
-    var_7D0 = word ptr -2000
-    var_798 = byte ptr -1944
-    var_3D8 = byte ptr -984
-    var_18 = word ptr -24
+    local_line_descriptor = word ptr -2000
+    local_left_edges = byte ptr -1944
+    local_right_edges = byte ptr -984
+    local_edge_cursor = word ptr -24
     var_16 = word ptr -22
-    var_14 = word ptr -20
-    var_12 = word ptr -18
-    var_10 = word ptr -16
-    var_E = word ptr -14
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-    var_8 = word ptr -8
-    var_6 = word ptr -6
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = byte ptr 10
+    local_bottom_entry = word ptr -20
+    local_bottom_y = word ptr -18
+    local_top_entry = word ptr -16
+    local_top_y = word ptr -14
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
+    local_last_list_entry = word ptr -8
+    local_first_list_entry = word ptr -6
+    local_clip_right_inclusive = word ptr -4
+    local_clip_left = word ptr -2
+    arg_color = word ptr 6
+    arg_record_count = word ptr 8
+    arg_inline_records = byte ptr 10
     push    bp
     mov     bp, sp
     sub     sp, 7D0h
     push    si
     push    di
-    mov     [bp+var_A], 1
+    mov     [bp+local_merge_mode], 1
     mov     ax, offset draw_filled_lines
     mov     spritefunc, ax
     mov     ax, 49A0h
     mov word ptr imagefunc, ax
     jmp     short line_raster_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 nopsub_31F39 endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _nopsub_31F55 (original line 1146)
@@ -1692,83 +1678,79 @@ _nopsub_31F55 label near
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
 nopsub_31F55 proc near
-    var_A = byte ptr -10
-     s = byte ptr 0
-     r = byte ptr 2
+    local_merge_mode = byte ptr -10
     push    bp
     mov     bp, sp
     sub     sp, 7D0h
     push    si
     push    di
-    mov     [bp+var_A], 0
+    mov     [bp+local_merge_mode], 0
     mov     ax, offset draw_filled_lines
     mov     spritefunc, ax
     mov     ax, 49A0h
     mov word ptr imagefunc, ax
-    var_7D0 = word ptr -2000
-    var_798 = byte ptr -1944
-    var_3D8 = byte ptr -984
-    var_18 = word ptr -24
+    local_line_descriptor = word ptr -2000
+    local_left_edges = byte ptr -1944
+    local_right_edges = byte ptr -984
+    local_edge_cursor = word ptr -24
     var_16 = word ptr -22
-    var_14 = word ptr -20
-    var_12 = word ptr -18
-    var_10 = word ptr -16
-    var_E = word ptr -14
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-    var_8 = word ptr -8
-    var_6 = word ptr -6
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = byte ptr 10
+    local_bottom_entry = word ptr -20
+    local_bottom_y = word ptr -18
+    local_top_entry = word ptr -16
+    local_top_y = word ptr -14
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
+    local_last_list_entry = word ptr -8
+    local_first_list_entry = word ptr -6
+    local_clip_right_inclusive = word ptr -4
+    local_clip_left = word ptr -2
+    arg_color = word ptr 6
+    arg_record_count = word ptr 8
+    arg_inline_records = byte ptr 10
 ; ASMDOC-GEOMETRY Alternate input representation is an inline array of near record pointers; geometry is read
 ; from record fields, not x/y vertices.
 line_raster_join_01:
-    lea     si, [bp+arg_4]
-    mov     [bp+var_6], si
-    mov     cx, [bp+arg_2]
+    lea     si, [bp+arg_inline_records]
+    mov     [bp+local_first_list_entry], si
+    mov     cx, [bp+arg_record_count]
     mov     ax, cx
     dec     ax
     shl     ax, 1
     add     ax, si
-    mov     [bp+var_8], ax
+    mov     [bp+local_last_list_entry], ax
     cld
     mov     ax, ss
     mov     es, ax
-    lea     ax, [bp+var_798]
-    mov     [bp+var_18], ax
-    mov     ax, word ptr cs:[_sprite1+SPRITE_LEFT2_OFFSET]
-    mov     [bp+var_2], ax
-    mov     ax, word ptr cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
+    lea     ax, [bp+local_left_edges]
+    mov     [bp+local_edge_cursor], ax
+    mov     ax, cs:[_sprite1+SPRITE_LEFT2_OFFSET]
+    mov     [bp+local_clip_left], ax
+    mov     ax, cs:[_sprite1+SPRITE_WIDTHSUM_OFFSET]
     dec     ax
-    mov     [bp+var_4], ax
+    mov     [bp+local_clip_right_inclusive], ax
     mov     di, [si]
     mov     ax, [di+6]
     sub     ax, [di+14h]
     sub     ax, [di+18h]
-    mov     [bp+var_E], ax
+    mov     [bp+local_top_y], ax
     mov     ax, [di+0Ah]
     add     ax, [di+16h]
     add     ax, [di+1Ah]
-    mov     [bp+var_12], ax
-    mov     [bp+var_7D0], 3
+    mov     [bp+local_bottom_y], ax
+    mov     [bp+local_line_descriptor], 3
     mov     bx, [di+2]
     mov     dx, [di+8]
     cmp     bx, dx
     jle     short line_raster_branch_path_01
     xchg    bx, dx
 line_raster_branch_path_01:
-    mov     [bp+var_10], si
-    mov     [bp+var_14], si
+    mov     [bp+local_top_entry], si
+    mov     [bp+local_bottom_entry], si
     add     si, 2
     dec     cx
     jnz     short line_raster_loop_head_01
-    mov     ax, [bp+arg_0]
-    mov     [bp+di+arg_0], ax
+    mov     ax, [bp+arg_color]
+    mov     [bp+di+arg_color], ax
     push    di
     call    dword ptr imagefunc
     add     sp, 2
@@ -1782,77 +1764,73 @@ line_raster_loop_head_01:
     mov     ax, [di+6]
     sub     ax, [di+14h]
     sub     ax, [di+18h]
-    cmp     ax, [bp+var_E]
+    cmp     ax, [bp+local_top_y]
     jg      short line_raster_branch_path_03
     jnz     short line_raster_branch_path_02
-    test    [bp+var_7D0], 1
+    test    [bp+local_line_descriptor], 01h
     jz      short line_raster_branch_path_04
 line_raster_branch_path_02:
-    mov     [bp+var_E], ax
-    mov     [bp+var_10], si
-    or      [bp+var_7D0], 1
+    mov     [bp+local_top_y], ax
+    mov     [bp+local_top_entry], si
+    or      [bp+local_line_descriptor], 01h
     jmp     short line_raster_branch_path_04
-    db 144
-    var_7D0 = word ptr -2000
-    var_798 = byte ptr -1944
-    var_3D8 = byte ptr -984
-    var_18 = word ptr -24
+    even ; word-align the following entry
+    local_line_descriptor = word ptr -2000
+    local_left_edges = byte ptr -1944
+    local_right_edges = byte ptr -984
+    local_edge_cursor = word ptr -24
     var_16 = word ptr -22
-    var_14 = word ptr -20
-    var_12 = word ptr -18
-    var_10 = word ptr -16
-    var_E = word ptr -14
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-    var_8 = word ptr -8
-    var_6 = word ptr -6
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = byte ptr 10
+    local_bottom_entry = word ptr -20
+    local_bottom_y = word ptr -18
+    local_top_entry = word ptr -16
+    local_top_y = word ptr -14
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
+    local_last_list_entry = word ptr -8
+    local_first_list_entry = word ptr -6
+    local_clip_right_inclusive = word ptr -4
+    local_clip_left = word ptr -2
+    arg_color = word ptr 6
+    arg_record_count = word ptr 8
+    arg_inline_records = byte ptr 10
 line_raster_branch_path_03:
-    and     [bp+var_7D0], 2
+    and     [bp+local_line_descriptor], 02h
 line_raster_branch_path_04:
     mov     ax, [di+0Ah]
     add     ax, [di+16h]
     add     ax, [di+1Ah]
-    cmp     ax, [bp+var_12]
+    cmp     ax, [bp+local_bottom_y]
     jl      short line_raster_branch_path_07
     jnz     short line_raster_branch_path_06
 line_raster_branch_path_05:
-    test    [bp+var_7D0], 2
+    test    [bp+local_line_descriptor], 02h
     jnz     short line_raster_branch_path_08
 line_raster_branch_path_06:
-    mov     [bp+var_12], ax
-    mov     [bp+var_14], si
-    or      [bp+var_7D0], 2
+    mov     [bp+local_bottom_y], ax
+    mov     [bp+local_bottom_entry], si
+    or      [bp+local_line_descriptor], 02h
     jmp     short line_raster_branch_path_08
-    db 144
-    var_7D0 = word ptr -2000
-    var_798 = byte ptr -1944
-    var_3D8 = byte ptr -984
-    var_18 = word ptr -24
+    nop ; retained code pad at an even offset; EVEN would emit no byte
+    local_line_descriptor = word ptr -2000
+    local_left_edges = byte ptr -1944
+    local_right_edges = byte ptr -984
+    local_edge_cursor = word ptr -24
     var_16 = word ptr -22
-    var_14 = word ptr -20
-    var_12 = word ptr -18
-    var_10 = word ptr -16
-    var_E = word ptr -14
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-    var_8 = word ptr -8
-    var_6 = word ptr -6
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = byte ptr 10
+    local_bottom_entry = word ptr -20
+    local_bottom_y = word ptr -18
+    local_top_entry = word ptr -16
+    local_top_y = word ptr -14
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
+    local_last_list_entry = word ptr -8
+    local_first_list_entry = word ptr -6
+    local_clip_right_inclusive = word ptr -4
+    local_clip_left = word ptr -2
+    arg_color = word ptr 6
+    arg_record_count = word ptr 8
+    arg_inline_records = byte ptr 10
 line_raster_branch_path_07:
-    and     [bp+var_7D0], 1
+    and     [bp+local_line_descriptor], 01h
 line_raster_branch_path_08:
     mov     ax, [di+2]
     cmp     ax, bx
@@ -1874,34 +1852,34 @@ line_raster_branch_path_11:
 line_raster_branch_path_12:
     add     si, 2
     loop    line_raster_loop_head_01
-    cmp     dx, [bp+var_2]
+    cmp     dx, [bp+local_clip_left]
     jl      short line_raster_branch_path_16
-    cmp     bx, [bp+var_4]
+    cmp     bx, [bp+local_clip_right_inclusive]
     jge     short line_raster_branch_path_16
-    mov     ax, [bp+var_12]
-    cmp     ax, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    mov     ax, [bp+local_bottom_y]
+    cmp     ax, cs:[_sprite1+SPRITE_TOP_OFFSET]
     jl      short line_raster_branch_path_16
-    mov     cx, [bp+var_E]
-    cmp     cx, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    mov     cx, [bp+local_top_y]
+    cmp     cx, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     jge     short line_raster_branch_path_16
-    mov     [bp+var_C], 0
-    cmp     dx, [bp+var_4]
+    mov     [bp+local_clip_required], 0
+    cmp     dx, [bp+local_clip_right_inclusive]
     jg      short line_raster_branch_path_13
-    cmp     bx, [bp+var_2]
+    cmp     bx, [bp+local_clip_left]
     jl      short line_raster_branch_path_13
-    cmp     ax, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    cmp     ax, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     jge     short line_raster_branch_path_13
-    cmp     cx, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    cmp     cx, cs:[_sprite1+SPRITE_TOP_OFFSET]
     jge     short line_raster_branch_path_14
 line_raster_branch_path_13:
-    mov     [bp+var_C], 1
+    mov     [bp+local_clip_required], 1
 line_raster_branch_path_14:
     cmp     ax, cx
     jz      short line_raster_branch_path_15
     cmp     dx, bx
     jnz     short line_raster_branch_path_17
 line_raster_branch_path_15:
-    mov     si, [bp+var_6]
+    mov     si, [bp+local_first_list_entry]
     mov     di, [si]
     push    di
     call    dword ptr imagefunc
@@ -1913,58 +1891,56 @@ line_raster_branch_path_16:
     pop     bp
     retf
 line_raster_branch_path_17:
-    mov     di, [bp+var_10]
+    mov     di, [bp+local_top_entry]
 line_raster_loop_head_02:
     mov     si, [di]
     cmp     byte ptr [si+12h], 2
     jl      short line_raster_branch_path_19
     mov     [bp+var_16], di
-    cmp     [bp+var_C], 0
+    cmp     [bp+local_clip_required], 0
     jz      short line_raster_branch_path_18
     call near ptr preRender_helper
     jmp     short line_raster_join_02
-    db 144
-    var_7D0 = word ptr -2000
-    var_798 = byte ptr -1944
-    var_3D8 = byte ptr -984
-    var_18 = word ptr -24
+    even ; word-align the following entry
+    local_line_descriptor = word ptr -2000
+    local_left_edges = byte ptr -1944
+    local_right_edges = byte ptr -984
+    local_edge_cursor = word ptr -24
     var_16 = word ptr -22
-    var_14 = word ptr -20
-    var_12 = word ptr -18
-    var_10 = word ptr -16
-    var_E = word ptr -14
-    var_C = byte ptr -12
-    var_A = byte ptr -10
-    var_8 = word ptr -8
-    var_6 = word ptr -6
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = byte ptr 10
+    local_bottom_entry = word ptr -20
+    local_bottom_y = word ptr -18
+    local_top_entry = word ptr -16
+    local_top_y = word ptr -14
+    local_clip_required = byte ptr -12
+    local_merge_mode = byte ptr -10
+    local_last_list_entry = word ptr -8
+    local_first_list_entry = word ptr -6
+    local_clip_right_inclusive = word ptr -4
+    local_clip_left = word ptr -2
+    arg_color = word ptr 6
+    arg_record_count = word ptr 8
+    arg_inline_records = byte ptr 10
 line_raster_branch_path_18:
     call near ptr preRender_helper2
 line_raster_join_02:
     mov     di, [bp+var_16]
 line_raster_branch_path_19:
-    cmp     di, [bp+var_14]
+    cmp     di, [bp+local_bottom_entry]
     jz      short line_raster_branch_path_20
     add     di, 2
-    cmp     di, [bp+var_8]
+    cmp     di, [bp+local_last_list_entry]
     jbe     short line_raster_loop_head_02
-    mov     di, [bp+var_6]
+    mov     di, [bp+local_first_list_entry]
     jmp     short line_raster_loop_head_02
 line_raster_branch_path_20:
-    mov     di, [bp+var_10]
+    mov     di, [bp+local_top_entry]
 line_raster_loop_head_03:
     sub     di, 2
-    cmp     di, [bp+var_6]
+    cmp     di, [bp+local_first_list_entry]
     jnb     short line_raster_branch_path_21
-    mov     di, [bp+var_8]
+    mov     di, [bp+local_last_list_entry]
 line_raster_branch_path_21:
-    cmp     di, [bp+var_14]
+    cmp     di, [bp+local_bottom_entry]
     jz      short line_raster_branch_path_22
     mov     si, [di]
     cmp     byte ptr [si+12h], 2
@@ -1974,28 +1950,28 @@ line_raster_branch_path_21:
     mov     di, [bp+var_16]
     jmp     short line_raster_loop_head_03
 line_raster_branch_path_22:
-    mov     ax, [bp+var_12]
-    cmp     ax, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    mov     ax, [bp+local_bottom_y]
+    cmp     ax, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     jl      short line_raster_branch_path_23
-    mov     ax, word ptr cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
+    mov     ax, cs:[_sprite1+SPRITE_HEIGHT_OFFSET]
     dec     ax
 line_raster_branch_path_23:
-    mov     bx, [bp+var_E]
-    cmp     bx, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    mov     bx, [bp+local_top_y]
+    cmp     bx, cs:[_sprite1+SPRITE_TOP_OFFSET]
     jge     short line_raster_branch_path_24
-    mov     bx, word ptr cs:[_sprite1+SPRITE_TOP_OFFSET]
+    mov     bx, cs:[_sprite1+SPRITE_TOP_OFFSET]
 line_raster_branch_path_24:
     sub     ax, bx
     jle     short line_raster_branch_path_25
     inc     ax
-    push    [bp+arg_0]
+    push    [bp+arg_color]
     push    ax
     push    bx
     shl     bx, 1
-    lea     ax, [bp+var_3D8]
+    lea     ax, [bp+local_right_edges]
     add     ax, bx
     push    ax
-    lea     ax, [bp+var_798]
+    lea     ax, [bp+local_left_edges]
     add     ax, bx
     push    ax
     call    dword ptr spritefunc

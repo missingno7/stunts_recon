@@ -2,7 +2,8 @@
 ; ASMDOC Owner asm_load_25fa2; original source asm/file_load_shape2d_expand.ASM.
 ; ASMDOC Routine inventory: _file_load_shape2d_expand
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
-; ASMDOC Pure caller-buffer transformation, despite existing PLATFORM(video) tags. No self-modification or indirect callback.
+; ASMDOC Pure caller-buffer transformation, despite existing PLATFORM(video) tags. No self-modification or
+; indirect callback.
 .8086
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
@@ -11,9 +12,11 @@ extrn _file_get_shape2d:far
 public _file_load_shape2d_expand
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file load shape2d expand.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_memchunkoff (word ptr 6); arg_memchunkseg (word ptr 8); arg_mempagesoff (word ptr 10);
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_memchunkoff (word ptr
+; 6); arg_memchunkseg (word ptr 8); arg_mempagesoff (word ptr 10);
 ;   arg_mempagesseg (word ptr 12).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES, SS; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES, SS; balanced explicit saves/restores observed:
+; DI, DS, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
@@ -22,21 +25,29 @@ public _file_load_shape2d_expand
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_load_shape2d_expand
 ; ASMDOC purpose: Construct an archive of 8-times-wider indexed bitmap shapes from up to four packed 1-bit planes.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 source archive offset; +8 segment; BP+10 destination archive offset; +12 segment; DF must already be clear;
-; ASMDOC source/destination buffers paragraph aligned for _file_get_shape2d; source and destination spans must not destructively overlap;
-; ASMDOC Source dimensions and low-word width*height in 1..8000 for pixel initialization/expansion; output 8*length must fit current segment
+; ASMDOC inputs: BP+6 source archive offset; +8 segment; BP+10 destination archive offset; +12 segment; DF must
+; already be clear;
+; ASMDOC source/destination buffers paragraph aligned for _file_get_shape2d; source and destination spans must
+; not destructively overlap;
+; ASMDOC Source dimensions and low-word width*height in 1..8000 for pixel initialization/expansion; output
+; 8*length must fit current segment
 ; ASMDOC offsets
-; ASMDOC outputs: Copies source count/names to destination, constructs dword relative offsets and final archive size; Copies first 12
-; ASMDOC shape-header bytes, multiplies destination width by 8, fills background with source byte[13]>>4 then ORs low-nibble plane colors for
-; ASMDOC set bits MSB-first; Destination header bytes 12..15 are left untouched; no defined return value; Out-of-range signed length skips
+; ASMDOC outputs: Copies source count/names to destination, constructs dword relative offsets and final archive
+; size; Copies first 12
+; ASMDOC shape-header bytes, multiplies destination width by 8, fills background with source byte[13]>>4 then
+; ORs low-nibble plane colors for
+; ASMDOC set bits MSB-first; Destination header bytes 12..15 are left untouched; no defined return value;
+; Out-of-range signed length skips
 ; ASMDOC pixel fill/planes after headers/offsets have already been written
 ; ASMDOC preserves: BP DS SI DI SP; DF unchanged
 ; ASMDOC clobbers: AX BX CX DX ES arithmetic flags; DS transiently source/SS
 ; ASMDOC globals_read: none directly; see transitive effects stated in services
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: _file_get_shape2d called for each source and destination shape; its BX CX DX AX ES clobbers and paragraph-base assumption
+; ASMDOC services: _file_get_shape2d called for each source and destination shape; its BX CX DX AX ES clobbers
+; and paragraph-base assumption
 ; ASMDOC apply; No DOS/BIOS/video service, no allocation or resize; all storage supplied by caller
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_load_shape2d_expand (unchanged).
@@ -49,8 +60,6 @@ _file_load_shape2d_expand proc far
     var_offsets = word ptr -6
     var_shapecounter = word ptr -4
     var_shapecount = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
     arg_memchunkoff = word ptr 6
     arg_memchunkseg = word ptr 8
     arg_mempagesoff = word ptr 10
@@ -127,8 +136,7 @@ shape_expand_continue_path_2:
     mov     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
     mov     es:[di+2], dx ;/* PLATFORM(video): accesses display memory through ES. */
     jmp     short shape_expand_when_condition
-    ; align 2
-    db 144
+    even ; word-align the following entry
 expand_when_greater_or_equal:
     mov     bx, [bp+var_shapecount]
     shl     bx, 1
@@ -187,7 +195,8 @@ expand_advance_source_pointer:
     add     si, 10h
     mov     [bp+var_srcdataoff], si
     xor     bx, bx
-; ASMDOC Stop at first zero low-nibble color; expand each packed byte MSB-first and OR color into eight indexed pixels.
+; ASMDOC Stop at first zero low-nibble color; expand each packed byte MSB-first and OR color into eight indexed
+; pixels.
 shape_expand_scan_loop:
     mov     si, [bp+var_srcshapeoff]
     mov     ah, [bx+si+0Ch]
@@ -218,8 +227,7 @@ shape_expand_when_not_below:
 expand_when_less_or_equal:
     inc     [bp+var_shapecounter]
     jmp     shape_expand_wait_loop
-    ; align 2
-    db 0
+    db 0 ; retained zero fill at this boundary
 _file_load_shape2d_expand endp
 S012_TEXT ends
 end

@@ -8,8 +8,8 @@ name asm012_140718
 _DATA segment word public 'DATA'
 ; ASMDOC[timers] Block: Private bytes: zero-mode sentinel and saved low BDA equipment byte. Neither is an exported
 ; ASMDOC[timers]   code entry.
-_currentvideomode db 0
-saved_video_control_register db 0
+_currentvideomode db 00h
+saved_video_control_register db 00h
 _DATA ends
 _BSS segment word public 'BSS'
 _BSS ends
@@ -22,14 +22,15 @@ extrn _video_clear_color:far
 public _video_add_exithandler
 public _video_on_exit
 S012_TEXT segment word public 'CODE'
-assume cs:S012_TEXT, ds:DGROUP
+assume cs:S012_TEXT
 
 ; video_add_exithandler
-assume cs:S012_TEXT, ds:DGROUP
 ; -----------------------------------------------------------------------------
 ; Purpose: Register a video cleanup handler for process exit.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, SP, CS, DS, ES; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _currentvideomode.
 ; Globals written: _currentvideomode, saved_video_control_register.
 ; /* PLATFORM(video): calls a BIOS video service. */
@@ -55,11 +56,11 @@ _video_add_exithandler proc far
 ; ASMDOC[timers]   prevent later registrations.
     mov ah, 0Fh
     int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
-    mov byte ptr ds:[_currentvideomode], al
+    mov ds:[_currentvideomode], al
     mov ax, 40h
     mov es, ax
-    mov al, byte ptr es:[10h] ;/* PLATFORM(video): accesses display memory through ES. */
-    mov byte ptr ds:[saved_video_control_register], al
+    mov al, es:[10h] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov ds:[saved_video_control_register], al
 ; ASMDOC[timers] Block: Address-taken FAR cleanup callback makes video_on_exit live without a direct CALL.
     push cs
     mov ax, offset _video_on_exit
@@ -71,11 +72,12 @@ skip_if_saved_mode_exists:
 _video_add_exithandler endp
 
 ; video_on_exit
-assume cs:S012_TEXT, ds:DGROUP
 ; -----------------------------------------------------------------------------
 ; Purpose: Restore the saved video mode during process cleanup.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, SP, DS, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, SP, DS, ES; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _currentvideomode, saved_video_control_register.
 ; Globals written: none identified.
 ; /* PLATFORM(video): accesses display memory through ES. */
@@ -100,15 +102,15 @@ assume cs:S012_TEXT, ds:DGROUP
 _video_on_exit proc far
     mov ax, 40h
     mov es, ax
-    mov al, byte ptr ds:[saved_video_control_register]
-    mov byte ptr es:[10h], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov al, ds:[saved_video_control_register]
+    mov es:[10h], al ;/* PLATFORM(video): accesses display memory through ES. */
     mov ah, 0
-    mov al, byte ptr ds:[_currentvideomode]
+    mov al, ds:[_currentvideomode]
     int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
     mov ax, 40h
     mov es, ax
-    mov al, byte ptr ds:[saved_video_control_register]
-    mov byte ptr es:[10h], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov al, ds:[saved_video_control_register]
+    mov es:[10h], al ;/* PLATFORM(video): accesses display memory through ES. */
 ; ASMDOC[timers] Block: Test saved equipment display bits, not a hardware control register. Saved state is retained
 ; ASMDOC[timers]   after restoration.
     and al, 30h

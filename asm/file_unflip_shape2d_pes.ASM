@@ -11,9 +11,11 @@ extrn _file_get_shape2d:far
 public _file_unflip_shape2d_pes
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file unflip shape2d pes.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_memchunkoff (word ptr 6); arg_memchunkseg (word ptr 8); arg_mempagesoff (word ptr 10);
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_memchunkoff (word ptr
+; 6); arg_memchunkseg (word ptr 8); arg_mempagesoff (word ptr 10);
 ;   arg_mempagesseg (word ptr 12).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI,
+; DS, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
@@ -21,19 +23,25 @@ public _file_unflip_shape2d_pes
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_unflip_shape2d_pes
 ; ASMDOC purpose: Transpose each selected PES plane through scratch, copying it back to the same archive plane.
-; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP offsets minus 2); RETF via shared
+; ASMDOC convention: FAR caller-clean stack; BP offsets after PUSH BP / MOV BP,SP (entry SP offsets are BP
+; offsets minus 2); RETF via shared
 ; ASMDOC body where applicable.
-; ASMDOC inputs: BP+6 archive offset; +8 segment; BP+10 scratch offset; +12 segment; DF must already be clear; helper requires
-; ASMDOC paragraph-aligned archive; scratch must fit width*height low-word bytes and not overlap active plane; Requires nonempty archive and
+; ASMDOC inputs: BP+6 archive offset; +8 segment; BP+10 scratch offset; +12 segment; DF must already be clear;
+; helper requires
+; ASMDOC paragraph-aligned archive; scratch must fit width*height low-word bytes and not overlap active plane;
+; Requires nonempty archive and
 ; ASMDOC nonzero dimensions for normal finite loops; source plane layout contains four consecutive width*height spans
-; ASMDOC outputs: Selected plane byte[x*height+y] becomes plane byte[y*width+x]; advances every plane including unselected; Suppresses a
-; ASMDOC whole shape if header[15]&0xF0; selects planes by bits 0..3 of header[14]>>4; Does not clear flip/suppression flags or change
+; ASMDOC outputs: Selected plane byte[x*height+y] becomes plane byte[y*width+x]; advances every plane including
+; unselected; Suppresses a
+; ASMDOC whole shape if header[15]&0xF0; selects planes by bits 0..3 of header[14]>>4; Does not clear
+; flip/suppression flags or change
 ; ASMDOC dimensions; no defined return value
 ; ASMDOC preserves: BP DS SI DI SP; DF unchanged
 ; ASMDOC clobbers: AX BX CX DX ES arithmetic flags; DS transiently archive/scratch
 ; ASMDOC globals_read: none directly; see transitive effects stated in services
 ; ASMDOC globals_written: none directly; see transitive effects stated in services
-; ASMDOC services: _file_get_shape2d(archive,index) normalized return and AX BX CX DX ES clobbers apply; No video/DOS/BIOS service; scratch
+; ASMDOC services: _file_get_shape2d(archive,index) normalized return and AX BX CX DX ES clobbers apply; No
+; video/DOS/BIOS service; scratch
 ; ASMDOC and archive RAM only
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_unflip_shape2d_pes (unchanged).
@@ -48,8 +56,6 @@ _file_unflip_shape2d_pes proc far
     var_shapeofs = word ptr -6
     var_shapecounter = word ptr -4
     var_shapecount = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
     arg_memchunkoff = word ptr 6
     arg_memchunkseg = word ptr 8
     arg_mempagesoff = word ptr 10

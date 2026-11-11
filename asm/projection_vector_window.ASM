@@ -46,51 +46,19 @@ _projection_x_scale     dw 0
 _projection_y_scale     dw 0
 _projection_x_angle     dw 0
 _projection_y_angle     dw 0
-_window_release_order_error_msg     db 87
-    db 105
-    db 110
-    db 100
-    db 111
-    db 119
-    db 32
-    db 82
-    db 101
-    db 108
-    db 101
-    db 97
-    db 115
-    db 101
-    db 100
-    db 32
-    db 79
-    db 117
-    db 116
-    db 32
-    db 111
-    db 102
-    db 32
-    db 79
-    db 114
-    db 100
-    db 101
-    db 114
-    db 13
-    db 10
-    db 0
-    db 0
+_window_release_order_error_msg db 'Window Released Out of Order', 0Dh, 0Ah, 00h, 00h
 _DATA ends
 CONST segment word public 'CONST'
 CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
-assume cs:S012_TEXT, ds:DGROUP
+assume cs:S012_TEXT
 extrn _cosfast:far
 extrn _polang:far
 extrn _sinfast:far
 extrn _mmgr_release:far
 extrn _fatal_error:far
 S012_TEXT segment word public 'CODE'
-assume cs:S012_TEXT
 public _nopsub_322C0
 public _nopsub_322DF
 public _set_projection
@@ -137,18 +105,16 @@ public _sprite_free_window
 ; callback/table target; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _nopsub_322C0 proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
+    arg_left_origin = word ptr 6
+    arg_top_origin = word ptr 8
 
     push    bp
     mov     bp, sp
-    mov     ax, [bp+arg_0]
+    mov     ax, [bp+arg_left_origin]
     mov     _projection_left_origin, ax
     add     ax, _projection_half_width
     mov     _projection_center_x, ax
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_top_origin]
     mov     _projection_top_origin, ax
     add     ax, _projection_half_height
     mov     _projection_center_y, ax
@@ -210,21 +176,19 @@ _nopsub_322C0 endp
 ; set_projection at projection_join_01; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _nopsub_322DF proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
+    arg_horizontal_angle = word ptr 6
+    arg_vertical_angle = word ptr 8
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_0]
+    mov     ax, [bp+arg_horizontal_angle]
     mov     _projection_x_angle, ax
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_vertical_angle]
     mov     _projection_y_angle, ax
     jmp     short projection_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 _nopsub_322DF endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Set the projection parameters used by vector rendering.
@@ -283,18 +247,16 @@ _nopsub_322DF endp
 ; src/obj_seg005.c:820
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _set_projection proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
-    arg_6 = word ptr 12
+    arg_horizontal_degrees = word ptr 6
+    arg_vertical_degrees = word ptr 8
+    arg_width = word ptr 10
+    arg_height = word ptr 12
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_0]
+    mov     ax, [bp+arg_horizontal_degrees]
     xor     dh, dh
     mov     dl, ah
     mov     ah, al
@@ -308,7 +270,7 @@ projection_loop_head_01:
     div     cx
     shr     ax, 1
     mov     _projection_x_angle, ax
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_vertical_degrees]
     xor     dh, dh
     mov     dl, ah
     mov     ah, al
@@ -325,12 +287,12 @@ projection_loop_head_02:
 ; ASMDOC-GEOMETRY Both angle entry paths converge here; BOTH require width at BP+10 and height at BP+12.
 ; Direct-angle wrapper is not a two-argument function.
 projection_join_01:
-    mov     ax, [bp+arg_4]
+    mov     ax, [bp+arg_width]
     shr     ax, 1
     mov     _projection_half_width, ax
     add     ax, _projection_left_origin
     mov     _projection_center_x, ax
-    mov     ax, [bp+arg_6]
+    mov     ax, [bp+arg_height]
     shr     ax, 1
     mov     _projection_half_height, ax
     add     ax, _projection_top_origin
@@ -439,9 +401,7 @@ _set_projection endp
 ; src/obj_seg006.c:293,348,383,400 and others
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _vector_to_point proc far
-    var_8000 = byte ptr -32768
-     s = byte ptr 0
-     r = byte ptr 2
+    projection_invalid_coordinate = byte ptr -32768
     arg_vec = word ptr 6
     arg_point2dout = word ptr 8
 
@@ -471,7 +431,7 @@ vector_point_branch_path_01:
     jo      short vector_point_branch_path_05
     mov     [di], ax
     jmp     short vector_point_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 vector_point_branch_path_02:
     neg     ax
     mul     _projection_x_scale
@@ -489,14 +449,14 @@ vector_point_branch_path_03:
     jo      short vector_point_branch_path_05
     mov     [di], ax
     jmp     short vector_point_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 vector_point_branch_path_04:
     mov     ax, 32768
     mov     [di], ax
     mov     [di+2], ax
     jmp     short vector_point_loop_head_01
 
-    db 144
+    even ; word-align the following entry
 vector_point_branch_path_05:
     or      ax, ax
     jge     short vector_point_branch_path_07
@@ -505,7 +465,7 @@ vector_point_branch_path_06:
     mov     [di], ax
     jmp     short vector_point_join_01
 
-    db 144
+    even ; word-align the following entry
 vector_point_branch_path_07:
     mov     ax, 8300h
     mov     [di], ax
@@ -620,19 +580,19 @@ _sprite_free_window proc far
     push    si
     push    di
     mov     es, word ptr [bp+8]
-    mov     di, word ptr [bp+6]
+    mov     di, [bp+6]
     mov     ds, word ptr es:[di+2] ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     si, word ptr es:[di] ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     ax, word ptr [si+2]
+    mov     si, es:[di] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     ax, [si+2]
     add     ax, 0Fh
     shl     ax, 1
     mov     dx, ax
     add     dx, di
-    mov     bx, word ptr cs:[62C4h]
+    mov     bx, cs:[62C4h]
     cmp     bx, dx
     jnz     short window_free_error_path_01
     sub     bx, ax
-    mov     word ptr cs:[62C4h], bx
+    mov     cs:[62C4h], bx
     push    ds
     push    si
     mov     ax, ss

@@ -14,7 +14,8 @@
 ; INPUTDOC Routine _nopsub_304B6 -> _input_read_char_or_joystick: Read a pending BIOS key or return a delayed joystick
 ; INPUTDOC direction/button character.
 ; INPUTDOC Routine _kb_get_char -> _kb_get_char: Peek a key; consume and parse it only when SS equals DS.
-; INPUTDOC Routine _get_kb_or_joy_flags -> _get_kb_or_joy_flags: Return configured keyboard control flags, falling back
+; INPUTDOC Routine _get_kb_or_joy_flags -> _get_kb_or_joy_flags: Return configured keyboard control flags,
+; falling back
 ; INPUTDOC to joystick only if all are zero.
 ; INPUTDOC Routine _nopsub_305C8 -> _input_get_action_buttons: OR configured keyboard action buttons with active-low
 ; INPUTDOC joystick buttons.
@@ -38,16 +39,19 @@ _callbackflags db 128 dup (0)
 _callbackflags2 db 134 dup (0)
 key_parser_busy_flag db 2 dup (0)
 _callbacks db 256 dup (0)
-joystick_button_keycode_table dw 0, 04800h, 05000h, 0, 04D00h, 04900h, 05100h, 0
-    dw 04B00h, 04700h, 04F00h, 0, 0, 0, 0, 0
+; BIOS key words: scan code in AH, zero ASCII byte in AL; literal direction policy.
+; Literal translation or hardware policy table; no analytic generator is inferred.
+joystick_button_keycode_table dw 0000h, 4800h, 5000h, 0000h, 4D00h, 4900h, 5100h, 0000h
+    dw 4B00h, 4700h, 4F00h, 0000h, 0000h, 0000h, 0000h, 0000h
 joystick_repeat_previous_key dw 0
 joystick_repeat_current_key dw 0
 joystick_repeat_count db 2 dup (0)
-_kbscancodes db 039h, 01Ch, 047h, 048h, 049h, 04Dh, 051h, 050h, 04Fh, 04Bh
+; Literal translation or hardware policy table; no analytic generator is inferred.
+_kbscancodes db 39h, 1Ch, 47h, 48h, 49h, 4Dh, 51h, 50h, 4Fh, 4Bh
 _joyflag1 dw 0
 _joyflag2 dw 0
-_joybutton db 0
-_joyinput db 0
+_joybutton db 00h
+_joyinput db 00h
 joystick_x_minimum dw 00050h
 joystick_x_sample_minimum dw 0
 joystick_x_maximum dw 0
@@ -64,11 +68,12 @@ joystick_y_up_threshold dw 0
 joystick_y_down_threshold dw 0
 joystick_x_scale_factor dw 0
 joystick_y_scale_factor dw 0
-joystick_flags_to_axis_table db 0, 1, 5, 0, 3, 2, 4, 3, 7, 8, 6, 7, 0, 1, 5, 0
+; Literal translation or hardware policy table; no analytic generator is inferred.
+joystick_flags_to_axis_table db 00h, 01h, 05h, 00h, 03h, 02h, 04h, 03h, 07h, 08h, 06h, 07h
+    db 00h, 01h, 05h, 00h
 extrn _kbinput:byte
 extrn _joystick_enabled:byte
 _DATA ends
-assume ds:DGROUP
 extrn _video_clear_color:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
@@ -88,8 +93,10 @@ public _replay_axis_value
 public _nopsub_307FA
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by set bios mode3.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, SP, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, SP, ES; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(video): calls a BIOS video service. */
@@ -127,8 +134,10 @@ _set_bios_mode3 proc far
 _set_bios_mode3 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Translate a BIOS key word into the game keyboard representation.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
+; arguments referenced.
+; Register ABI: touches AX, BX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _callbackflags, _callbackflags2, key_parser_busy_flag.
 ; Globals written: key_parser_busy_flag.
 ; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
@@ -137,7 +146,8 @@ _set_bios_mode3 endp
 ; INPUTDOC Purpose: Dispatch a key callback or return its ASCII/extended game key word.
 ; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
 ; INPUTDOC far).
-; INPUTDOC Inputs: SS:BP+6 (entry SP+4): BIOS key u16; low byte nonzero selects ASCII, masked to 7 bits and overwritten
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): BIOS key u16; low byte nonzero selects ASCII, masked to 7 bits and
+; overwritten
 ; INPUTDOC in caller stack slot; zero low byte selects high-byte index capped at 84h. DS=DGROUP.
 ; INPUTDOC Outputs: AX=normalized key when no callback; AX=0 after callback; busy early return leaves incoming AX
 ; INPUTDOC unchanged. IF=1.
@@ -162,18 +172,19 @@ _kb_parse_key proc far
 acquire_key_parser_lock:
     mov byte ptr ds:[key_parser_busy_flag], 1
     sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
-    mov bx, word ptr [bp + 6]
+    mov bx, [bp + 6]
     or bl, bl
     je select_keyboard_callback_table
     and bx, 7Fh
 ; INPUTDOC ASCII normalization rewrites the caller-owned argument word before any callback.
-    mov word ptr [bp + 6], bx
-    mov bl, byte ptr _callbackflags[bx]
+    mov [bp + 6], bx
+    mov bl, _callbackflags[bx]
 dispatch_key_callback:
     dec bx
     jl return_without_callback
     shl bx, 1
-; INPUTDOC These pushes preserve SI/DI, not documented callback arguments; callback must preserve DS for guard cleanup.
+; INPUTDOC These pushes preserve SI/DI, not documented callback arguments; callback must preserve DS for guard
+; cleanup.
     push di
     push si
     shl bx, 1
@@ -192,18 +203,20 @@ select_keyboard_callback_table:
     jl dispatch_keyboard_callback
     mov bx, 84h
 dispatch_keyboard_callback:
-    mov bl, byte ptr _callbackflags2[bx]
+    mov bl, _callbackflags2[bx]
     jmp dispatch_key_callback
 return_without_callback:
-    mov ax, word ptr [bp + 6]
+    mov ax, [bp + 6]
     mov byte ptr ds:[key_parser_busy_flag], 0
     pop bp
     retf
 _kb_parse_key endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Register a keyboard input callback.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
-; Register ABI: touches AX, BX, CX, DX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6);
+; arg_2 (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, DX, BP, SP; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: _callbackflags, _callbackflags2.
 ; Global addresses taken: _callbacks.
@@ -212,7 +225,8 @@ _kb_parse_key endp
 ; INPUTDOC Purpose: Reuse or allocate one of 64 far callback slots and assign its one-based selector to a key.
 ; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
 ; INPUTDOC far).
-; INPUTDOC Inputs: SS:BP+6 (entry SP+4): encoded key; +8 (entry +6): callback offset; +10 (entry +8): callback segment.
+; INPUTDOC Inputs: SS:BP+6 (entry SP+4): encoded key; +8 (entry +6): callback offset; +10 (entry +8): callback
+; segment.
 ; INPUTDOC DS=DGROUP. ASCII branch expects key 1..127; signed JG does not reject negative full words.
 ; INPUTDOC Outputs: No specified return; AX=one-based slot selector on found/free path, original pointer offset on
 ; INPUTDOC full-table failure.
@@ -223,18 +237,16 @@ _kb_parse_key endp
 ; INPUTDOC Services:
 ; INPUTDOC Reachability: Live: src/obj_seg031.c:161-177 registers nine key bindings.
 _kb_reg_callback proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
+    arg_encoded_key = word ptr 6
+    arg_callback_offset = word ptr 8
+    arg_callback_segment = word ptr 10
 
     push    bp
     mov     bp, sp
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_callback_offset]
     mov     cx, 40h ; '@'
     mov     bx, offset DGROUP:_callbacks
-    mov     dx, [bp+arg_4]
+    mov     dx, [bp+arg_callback_segment]
 scan_callback_slots:
     cmp     [bx], ax
     jnz     short check_free_callback_slot
@@ -255,7 +267,7 @@ calculate_callback_flag:
     mov     ax, 41h ; 'A'
     sub     ax, cx
 store_callback_flags:
-    mov     bx, [bp+arg_0]
+    mov     bx, [bp+arg_encoded_key]
     or      bl, bl
     jz      short store_scancode_flags
 ; INPUTDOC Signed JG rejects positive keys above 127, but negative encoded words pass through.
@@ -277,8 +289,10 @@ store_scancode_flags:
 _kb_reg_callback endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 304AF.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; no named stack arguments referenced.
+; Register ABI: touches AX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -297,9 +311,6 @@ _kb_reg_callback endp
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _nopsub_304AF proc far
-     s = byte ptr 0
-     r = byte ptr 2
-
     push    bp
     mov     bp, sp
     xor     ax, ax
@@ -308,10 +319,14 @@ _nopsub_304AF proc far
 
 _nopsub_304AF endp
 ; -----------------------------------------------------------------------------
-; Purpose: Implement the legacy internal helper nopsub 304B6. Its internal flow uses return_empty_key_char, poll_joystick_for_character.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
-; Globals read: joystick_button_keycode_table, joystick_repeat_count, joystick_repeat_current_key, joystick_repeat_previous_key.
+; Purpose: Implement the legacy internal helper nopsub 304B6. Its internal flow uses return_empty_key_char,
+; poll_joystick_for_character.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
+; arguments referenced.
+; Register ABI: touches AX, BX, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
+; Globals read: joystick_button_keycode_table, joystick_repeat_count, joystick_repeat_current_key,
+; joystick_repeat_previous_key.
 ; Globals written: joystick_repeat_count, joystick_repeat_current_key, joystick_repeat_previous_key.
 ; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
 ; -----------------------------------------------------------------------------
@@ -333,10 +348,12 @@ _nopsub_304AF endp
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _nopsub_304B6 proc far
     mov     ah, 1
-    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int     R5HW_BIOS_KEYBOARD_INT
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jz      short poll_joystick_for_character
     mov     ah, 0
-    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int     R5HW_BIOS_KEYBOARD_INT
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     or      al, al
     jz      short return_empty_key_char
     xor     ah, ah
@@ -344,10 +361,12 @@ return_empty_key_char:
     retf
 ; INPUTDOC No preceding fall-through: this second BIOS/parser body follows RETF and has no local incoming edge.
     mov     ah, 1
-    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int     R5HW_BIOS_KEYBOARD_INT
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jz      short poll_joystick_for_character
     mov     ah, 0
-    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int     R5HW_BIOS_KEYBOARD_INT
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     push    ax
     call far ptr _kb_parse_key
     add     sp, 2
@@ -359,7 +378,7 @@ poll_joystick_for_character:
     jz      short map_joystick_button_char
     mov     ax, 0Dh
     jmp     short compare_joystick_repeat_key
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 map_joystick_button_char:
 
     and     bx, 0Fh
@@ -388,8 +407,10 @@ start_key_repeat_delay:
 _nopsub_304B6 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read a character from the BIOS keyboard buffer.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, SP, DS, SS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
+; arguments referenced.
+; Register ABI: touches AX, BX, CX, SP, DS, SS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
@@ -411,7 +432,8 @@ _nopsub_304B6 endp
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _kb_get_char proc far
     mov     ah, 1
-    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int     R5HW_BIOS_KEYBOARD_INT
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jnz     short read_buffered_key_char
     xor     ax, ax
     retf
@@ -422,7 +444,8 @@ read_buffered_key_char:
     cmp     bx, cx
     jnz     short return_keyboard_character
     mov     ah, 0
-    int     R5HW_BIOS_KEYBOARD_INT ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int     R5HW_BIOS_KEYBOARD_INT
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     push    ax
     call far ptr _kb_parse_key
     add     sp, 2
@@ -432,8 +455,10 @@ return_keyboard_character:
 _kb_get_char endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the combined keyboard or joystick input flags.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
+; arguments referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: _kbinput, _kbscancodes.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -465,32 +490,32 @@ check_up_left_key:
     mov     bl, _kbscancodes+2
     cmp     _kbinput[bx], 0
     jz      short check_up_key
-    or      al, 9
+    or      al, 09h
 check_up_key:
     mov     bl, _kbscancodes+3
     cmp     _kbinput[bx], 0
     jz      short check_up_right_key
-    or      al, 1
+    or      al, 01h
 check_up_right_key:
     mov     bl, _kbscancodes+4
     cmp     _kbinput[bx], 0
     jz      short check_right_key
-    or      al, 5
+    or      al, 05h
 check_right_key:
     mov     bl, _kbscancodes+5
     cmp     _kbinput[bx], 0
     jz      short check_down_right_key
-    or      al, 4
+    or      al, 04h
 check_down_right_key:
     mov     bl, _kbscancodes+6
     cmp     _kbinput[bx], 0
     jz      short check_down_key
-    or      al, 6
+    or      al, 06h
 check_down_key:
     mov     bl, _kbscancodes+7
     cmp     _kbinput[bx], 0
     jz      short check_down_left_key
-    or      al, 2
+    or      al, 02h
 check_down_left_key:
     mov     bl, _kbscancodes+8
     cmp     _kbinput[bx], 0
@@ -500,7 +525,7 @@ check_left_key:
     mov     bl, _kbscancodes+9
     cmp     _kbinput[bx], 0
     jz      short use_joystick_when_no_key
-    or      al, 8
+    or      al, 08h
 use_joystick_when_no_key:
     or      ax, ax
     jnz     short return_input_flags
@@ -511,9 +536,12 @@ return_input_flags:
 
 _get_kb_or_joy_flags endp
 ; -----------------------------------------------------------------------------
-; Purpose: Implement the legacy internal helper nopsub 305C8. Its internal flow uses check_second_keyboard_scancode, read_joystick_buttons.
-; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Purpose: Implement the legacy internal helper nopsub 305C8. Its internal flow uses
+; check_second_keyboard_scancode, read_joystick_buttons.
+; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
+; arguments referenced.
+; Register ABI: touches AX, BX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: _joystick_enabled, _kbinput, _kbscancodes.
 ; Globals written: none identified.
 ; /* PLATFORM(input_joy): accesses the joystick game port. */
@@ -547,7 +575,7 @@ check_second_keyboard_scancode:
 read_joystick_buttons:
     xor     ax, ax
     mov     dx, R5HW_JOYSTICK_GAME_PORT
-    test    _joystick_enabled, 1
+    test    _joystick_enabled, 01h
     jz      short return_combined_input_flags
     in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
     not     al
@@ -561,14 +589,21 @@ return_combined_input_flags:
 _nopsub_305C8 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read and normalize the game-port joystick button and axis state.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
-; Globals read: _joystick_enabled, _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks, joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
-;   joystick_x_right_threshold, joystick_x_sample_maximum, joystick_x_sample_minimum, joystick_y_calibration_ticks, joystick_y_down_threshold, joystick_y_maximum,
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, CX, DX; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
+; Globals read: _joystick_enabled, _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks,
+; joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
+; joystick_x_right_threshold, joystick_x_sample_maximum, joystick_x_sample_minimum,
+; joystick_y_calibration_ticks, joystick_y_down_threshold, joystick_y_maximum,
 ;   joystick_y_minimum, joystick_y_sample_maximum, joystick_y_sample_minimum, joystick_y_up_threshold.
-; Globals written: _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks, joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
-;   joystick_x_right_threshold, joystick_x_sample_maximum, joystick_x_sample_minimum, joystick_x_scale_factor, joystick_y_calibration_ticks, joystick_y_down_threshold,
-;   joystick_y_maximum, joystick_y_minimum, joystick_y_sample_maximum, joystick_y_sample_minimum, joystick_y_scale_factor, joystick_y_up_threshold.
+; Globals written: _joybutton, _joyflag1, _joyflag2, _joyinput, joystick_x_calibration_ticks,
+; joystick_x_left_threshold, joystick_x_maximum, joystick_x_minimum,
+; joystick_x_right_threshold, joystick_x_sample_maximum, joystick_x_sample_minimum, joystick_x_scale_factor,
+; joystick_y_calibration_ticks, joystick_y_down_threshold,
+; joystick_y_maximum, joystick_y_minimum, joystick_y_sample_maximum, joystick_y_sample_minimum,
+; joystick_y_scale_factor, joystick_y_up_threshold.
 ; /* PLATFORM(input_joy): accesses the joystick game port. */
 ; /* PLATFORM(bios): changes the processor interrupt-enable state. */
 ; -----------------------------------------------------------------------------
@@ -586,7 +621,8 @@ _nopsub_305C8 endp
 ; INPUTDOC joystick_x_left_threshold; joystick_x_right_threshold; joystick_y_minimum; joystick_y_sample_minimum;
 ; INPUTDOC joystick_y_maximum; joystick_y_sample_maximum; joystick_y_calibration_ticks; joystick_y_up_threshold;
 ; INPUTDOC joystick_y_down_threshold
-; INPUTDOC Globals written: _joybutton; _joyflag1; _joyflag2; _joyinput; joystick_x_minimum; joystick_x_sample_minimum;
+; INPUTDOC Globals written: _joybutton; _joyflag1; _joyflag2; _joyinput; joystick_x_minimum;
+; joystick_x_sample_minimum;
 ; INPUTDOC joystick_x_maximum; joystick_x_sample_maximum; joystick_x_calibration_ticks; joystick_x_left_threshold;
 ; INPUTDOC joystick_x_right_threshold; joystick_x_scale_factor; joystick_y_minimum; joystick_y_sample_minimum;
 ; INPUTDOC joystick_y_maximum; joystick_y_sample_maximum; joystick_y_calibration_ticks; joystick_y_up_threshold;
@@ -594,7 +630,7 @@ _nopsub_305C8 endp
 ; INPUTDOC Services: IN/OUT 201h; CLI/STI around axis timing
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _get_joy_flags proc far
-    test    _joystick_enabled, 1
+    test    _joystick_enabled, 01h
     jnz     short start_joystick_sampling
     xor     ax, ax
     retf
@@ -622,24 +658,24 @@ sample_joystick_axes:
     cmp     cx, 0FA0h
     jl      short sample_joystick_axes
     jmp     short calibrate_x_axis
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 classify_axis_sample:
-    test    al, 1
+    test    al, 01h
     jnz     short store_x_axis_sample
 store_y_axis_sample:
-    test    al, 2
+    test    al, 02h
     jz      short sample_joystick_axes
     mov     _joyflag2, cx
 
-    and     bl, 1
+    and     bl, 01h
 
     jnz     short sample_joystick_axes
     jmp     short calibrate_x_axis
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 store_x_axis_sample:
     mov     _joyflag1, cx
 
-    and     bl, 2
+    and     bl, 02h
 
     jnz     short store_y_axis_sample
 calibrate_x_axis:
@@ -654,8 +690,7 @@ calibrate_x_axis:
     jl      short classify_x_axis_direction
     mov     joystick_x_sample_minimum, ax
     jmp     short classify_x_axis_direction
-    ; align 2
-    db 144
+    even ; word-align the following entry
 set_x_calibration_minimum:
     mov     bx, joystick_x_sample_minimum
     mov     joystick_x_minimum, bx
@@ -681,7 +716,7 @@ compute_x_axis_thresholds:
     mov     joystick_x_left_threshold, ax
     mov     ax, _joyflag1
     jmp     short reset_x_axis_calibration
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 update_x_axis_maximum:
     cmp     ax, joystick_x_maximum
     jle     short reset_x_axis_calibration
@@ -691,7 +726,7 @@ update_x_axis_maximum:
     jge     short classify_x_axis_direction
     mov     joystick_x_sample_maximum, ax
     jmp     short classify_x_axis_direction
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 finish_x_axis_calibration:
     mov     bx, joystick_x_sample_maximum
     mov     joystick_x_maximum, bx
@@ -705,7 +740,7 @@ classify_x_axis_direction:
     jl      short set_left_direction_flag
     cmp     ax, joystick_x_right_threshold
     jl      short calibrate_y_axis
-    or      _joyinput, 4
+    or      _joyinput, 04h
 calibrate_y_axis:
     mov     ax, _joyflag2
     cmp     ax, joystick_y_minimum
@@ -717,7 +752,7 @@ calibrate_y_axis:
     jl      short classify_y_axis_direction
     mov     joystick_y_sample_minimum, ax
     jmp     short classify_y_axis_direction
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 set_y_calibration_minimum:
     mov     bx, joystick_y_sample_minimum
     mov     joystick_y_minimum, bx
@@ -743,10 +778,9 @@ compute_y_axis_thresholds:
     mov     joystick_y_up_threshold, ax
     mov     ax, _joyflag2
     jmp     short reset_y_axis_calibration
-    ; align 2
-    db 144
+    even ; word-align the following entry
 set_left_direction_flag:
-    or      _joyinput, 8
+    or      _joyinput, 08h
     jmp     short calibrate_y_axis
 update_y_axis_maximum:
     cmp     ax, joystick_y_maximum
@@ -758,7 +792,7 @@ store_new_y_axis_sample:
     jge     short classify_y_axis_direction
     mov     joystick_y_sample_maximum, ax
     jmp     short classify_y_axis_direction
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 finish_y_axis_calibration:
     mov     bx, joystick_y_sample_maximum
     mov     joystick_y_maximum, bx
@@ -772,7 +806,7 @@ classify_y_axis_direction:
     jb      short set_up_direction_flag
     cmp     ax, joystick_y_down_threshold
     jb      short read_joystick_button_flags
-    or      _joyinput, 2
+    or      _joyinput, 02h
 read_joystick_button_flags:
 ; INPUTDOC Button is logically pressed if either first or last active-low sample was low.
     in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
@@ -786,14 +820,16 @@ read_joystick_button_flags:
     xor     ah, ah
     retf
 set_up_direction_flag:
-    or      _joyinput, 1
+    or      _joyinput, 01h
     jmp     short read_joystick_button_flags
 
 _get_joy_flags endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Reset the recorded joystick selection state.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches none; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches none; balanced explicit saves/restores observed: none inferred; path-specific inputs and
+; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: _joystick_enabled, joystick_x_maximum, joystick_x_minimum, joystick_y_maximum, joystick_y_minimum.
 ; -----------------------------------------------------------------------------
@@ -822,7 +858,8 @@ _reset_joystick_selection endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Convert joystick state flags to the selected joystick index.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: joystick_flags_to_axis_table.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -839,13 +876,11 @@ _reset_joystick_selection endp
 ; INPUTDOC Services:
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _joystick_flags_to_index proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_axis_flags = word ptr 6
 
     push    bp
     mov     bp, sp
-    mov     bx, [bp+arg_0]
+    mov     bx, [bp+arg_axis_flags]
 
     and     bx, 0Fh
 
@@ -856,8 +891,10 @@ _joystick_flags_to_index proc far
 _joystick_flags_to_index endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return a recorded joystick axis value for replay.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and
+; outputs follow the listed operands.
 ; Globals read: _joyflag1, joystick_x_minimum, joystick_x_scale_factor.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -866,7 +903,8 @@ _joystick_flags_to_index endp
 ; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
 ; INPUTDOC far).
 ; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
-; INPUTDOC Outputs: Let d=(sample-min) mod 65536, replaced with 0 iff signed16(sample)<signed16(min). AX=((u32(d)*scale
+; INPUTDOC Outputs: Let d=(sample-min) mod 65536, replaced with 0 iff signed16(sample)<signed16(min).
+; AX=((u32(d)*scale
 ; INPUTDOC >>8) & FFFFh)-31 modulo 65536; DX retains product high word. Retained C caller consumes AL as signed byte.
 ; INPUTDOC Preserves: Untouched by this body: BP, BX, CX, DI, DS, ES, SI, SS; SP balanced.
 ; INPUTDOC Clobbers: AX,DX,FLAGS
@@ -890,8 +928,10 @@ clamp_replayed_x_axis:
 _replay_axis_value endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 307FA. Its internal flow uses scale_replayed_y_axis.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX; balanced explicit saves/restores observed: none inferred; path-specific inputs and
+; outputs follow the listed operands.
 ; Globals read: _joyflag2, joystick_y_minimum, joystick_y_scale_factor.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -900,7 +940,8 @@ _replay_axis_value endp
 ; INPUTDOC Convention: 16-bit FAR caller-clean; entry SS:SP+0 return IP, +2 return CS; RETF (RET in FAR PROC is also
 ; INPUTDOC far).
 ; INPUTDOC Inputs: No stack arguments; DS=DGROUP when globals are used.
-; INPUTDOC Outputs: Let d=(sample-min) mod 65536, replaced with 0 iff signed16(sample)<signed16(min). AX=((u32(d)*scale
+; INPUTDOC Outputs: Let d=(sample-min) mod 65536, replaced with 0 iff signed16(sample)<signed16(min).
+; AX=((u32(d)*scale
 ; INPUTDOC >>8) & FFFFh)-31 modulo 65536; DX retains product high word.
 ; INPUTDOC Preserves: Untouched by this body: BP, BX, CX, DI, DS, ES, SI, SS; SP balanced.
 ; INPUTDOC Clobbers: AX,DX,FLAGS
@@ -921,7 +962,7 @@ scale_replayed_y_axis:
     mov     ah, dl
     sub     ax, 1Fh
     retf
-    db 0
+    db 0 ; retained zero fill at this boundary
 _nopsub_307FA endp
 S012_TEXT ends
 end

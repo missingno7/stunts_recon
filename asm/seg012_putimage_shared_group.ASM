@@ -1,8 +1,10 @@
 ; ASMDOC Module: seg012_putimage_shared_group. Proposed content name: sprite_opaque_blitters. The public group copies
 ; ASMDOC bitmap bytes using MOVS; old segment and AND wording obscure the operation; no split or merge.
 ; ASMDOC Public routines: _nopsub_33B98, _sprite_putimage_and_alt, _sprputimage.
-; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated comments
-; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination bitmap/table
+; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated
+; comments
+; ASMDOC below are retained verbatim and may disagree. BP offsets are after PUSH BP/MOV BP,SP. Destination
+; bitmap/table
 ; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
 INCLUDE include\platform_hw.inc
@@ -14,9 +16,11 @@ public _sprite_putimage_and_alt
 public _sprputimage
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33B98.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10);
 ;   arg_6 (word ptr 12).
-; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -40,14 +44,12 @@ public _sprputimage
 ; ASMDOC advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS calls..
 ; ASMDOC Proposed routine name: _shape2d_blit_bitmap_hotspot.
 _nopsub_33B98 proc far
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
-    arg_6 = word ptr 12
+    local_destination_y = word ptr -4
+    local_destination_x = word ptr -2
+    arg_shape_offset = word ptr 6
+    arg_shape_segment = word ptr 8
+    arg_destination_x = word ptr 10
+    arg_destination_y = word ptr 12
 
     push    bp
     mov     bp, sp
@@ -55,23 +57,24 @@ _nopsub_33B98 proc far
     push    ds
     push    si
     push    di
-    mov     ds, [bp+arg_2]
-    mov     si, [bp+arg_0]
-    mov     ax, [bp+arg_4]
+    mov     ds, [bp+arg_shape_segment]
+    mov     si, [bp+arg_shape_offset]
+    mov     ax, [bp+arg_destination_x]
     sub     ax, [si+4]
-    mov     [bp+var_2], ax
-    mov     ax, [bp+arg_6]
+    mov     [bp+local_destination_x], ax
+    mov     ax, [bp+arg_destination_y]
     sub     ax, [si+6]
-    mov     [bp+var_4], ax
+    mov     [bp+local_destination_y], ax
     jmp     short sprputimage_shared_exit
-    ; align 2
-    db 144
+    even ; word-align the following entry
 _nopsub_33B98 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a sprite image using the alternate AND compositing path.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; arg_2 (word ptr 8); arg_4 (word ptr 10); arg_6 (word ptr 12);
 ;   arg_8 (word ptr 12).
-; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, SI, DI, BP, SP, DS; balanced explicit saves/restores observed: none inferred;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -88,19 +91,18 @@ _nopsub_33B98 endp
 ; ASMDOC globals_written: Bitmap memory selected by CS:_sprite1; descriptor fields unchanged.
 ; ASMDOC services: none.
 ; ASMDOC dead: False.
-; ASMDOC notes: No AND operation: shared tail uses REP MOVSB/MOVSW or MOVSB. Positive source dimensions are an expected
+; ASMDOC notes: No AND operation: shared tail uses REP MOVSB/MOVSW or MOVSB. Positive source dimensions are an
+; expected
 ; ASMDOC precondition (height zero can still execute one row). Clips using signed 16-bit branches and wrapped
 ; ASMDOC coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path increments row
 ; ASMDOC advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS calls..
 _sprite_putimage_and_alt proc far
-    var_4 = word ptr -4
-    var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_2 = word ptr 6
-    arg_4 = word ptr 8
-    arg_6 = word ptr 10
-    arg_8 = word ptr 12
+    local_destination_y = word ptr -4
+    local_destination_x = word ptr -2
+    arg_shape_offset = word ptr 6
+    arg_shape_segment = word ptr 8
+    arg_destination_x = word ptr 10
+    arg_destination_y = word ptr 12
 
     push    bp
     mov     bp, sp
@@ -108,20 +110,21 @@ _sprite_putimage_and_alt proc far
     push    ds
     push    si
     push    di
-    mov     ds, [bp+arg_4]
-    mov     si, [bp+arg_2]
-    mov     ax, [bp+arg_6]
-    mov     [bp+var_2], ax
-    mov     ax, [bp+arg_8]
-    mov     [bp+var_4], ax
+    mov     ds, [bp+arg_shape_segment]
+    mov     si, [bp+arg_shape_offset]
+    mov     ax, [bp+arg_destination_x]
+    mov     [bp+local_destination_x], ax
+    mov     ax, [bp+arg_destination_y]
+    mov     [bp+local_destination_y], ax
     jmp     short sprputimage_shared_exit
-    ; align 2
-    db 144
+    even ; word-align the following entry
 _sprite_putimage_and_alt endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprputimage.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed:
+; DI, DS, SI; path-specific inputs and outputs follow the listed
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
@@ -151,10 +154,8 @@ _sprputimage proc far
     var_6 = word ptr -6
     shapey = word ptr -4
     shapex = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
+    arg_shape_offset = word ptr 6
+    arg_shape_segment = word ptr 8
 
     push    bp
     mov     bp, sp
@@ -162,8 +163,8 @@ _sprputimage proc far
     push    ds
     push    si
     push    di
-    mov     ds, [bp+arg_2]
-    mov     si, [bp+arg_0]
+    mov     ds, [bp+arg_shape_segment]
+    mov     si, [bp+arg_shape_offset]
     mov     ax, [si+8]
     mov     [bp+shapex], ax
     mov     ax, [si+0Ah]
@@ -222,7 +223,7 @@ sprputimage_when_less_or_equal:
     jle     short sprputimage_draw_loop
     mov     dx, ax
     jmp     short sprputimage_shared_path
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 sprputimage_when_less_2:
     mov     bx, word ptr cs:[_sprite1+12]
     add     ax, cx
@@ -248,7 +249,7 @@ sprputimage_shared_path:
     mov     [bp+var_8], dx
     mov     [bp+shapex], bx
     cld
-    mov     es, word ptr word ptr cs:[_sprite1+2]
+    mov     es, word ptr cs:[_sprite1+2]
     mov     bx, [bp+shapey]
     shl     bx, 1
     add     bx, word ptr cs:[_sprite1+10]

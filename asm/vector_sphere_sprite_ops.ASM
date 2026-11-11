@@ -76,9 +76,6 @@ public _video_clear_color
 ; rename plan dead=true; tail-jumps to live interpolation body.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _nopsub_33006 proc far
-     s = byte ptr 0
-     r = byte ptr 2
-
     push    bp
     mov     bp, sp
     sub     sp, 4
@@ -86,8 +83,7 @@ _nopsub_33006 proc far
     push    di
     mov     ax, ds:_vector_op_base_z
     jmp     short vector_op_join_01
-    ; align 2
-    db 144
+    even ; word-align the following entry
 _nopsub_33006 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the graphics or geometry helper identified by vector op unk.
@@ -133,48 +129,46 @@ _nopsub_33006 endp
 _vector_op_unk proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
-    arg_6 = word ptr 12
+    arg_first_vector = word ptr 6
+    arg_second_vector = word ptr 8
+    arg_output_vector = word ptr 10
+    arg_target_z = word ptr 12
 
     push    bp
     mov     bp, sp
     sub     sp, 4
     push    si
     push    di
-    mov     ax, [bp+arg_6]
+    mov     ax, [bp+arg_target_z]
 ; ASMDOC-GEOMETRY Store output Z BEFORE reading either input Z; aliased vectors can change
 ; numerator/denominator. Negative wrapped denominator uses logical SHR on both differences.
 vector_op_join_01:
-    mov     si, [bp+arg_0]
-    mov     bx, [bp+arg_2]
-    mov     di, [bp+arg_4]
-    mov     word ptr [di+4], ax
-    sub     ax, word ptr [bx+4]
+    mov     si, [bp+arg_first_vector]
+    mov     bx, [bp+arg_second_vector]
+    mov     di, [bp+arg_output_vector]
+    mov     [di+4], ax
+    sub     ax, [bx+4]
     mov     [bp+var_4], ax
-    mov     ax, word ptr [si+4]
-    sub     ax, word ptr [bx+4]
+    mov     ax, [si+4]
+    sub     ax, [bx+4]
     or      ax, ax
     jge     short vector_op_branch_path_01
     shr     [bp+var_4], 1
     shr     ax, 1
 vector_op_branch_path_01:
     mov     [bp+var_2], ax
-    mov     ax, word ptr [si+0]
-    sub     ax, word ptr [bx+0]
+    mov     ax, [si+0]
+    sub     ax, [bx+0]
     imul    [bp+var_4]
     idiv    [bp+var_2]
-    add     ax, word ptr [bx+0]
-    mov     word ptr [di+0], ax
-    mov     ax, word ptr [si+2]
-    sub     ax, word ptr [bx+2]
+    add     ax, [bx+0]
+    mov     [di+0], ax
+    mov     ax, [si+2]
+    sub     ax, [bx+2]
     imul    [bp+var_4]
     idiv    [bp+var_2]
-    add     ax, word ptr [bx+2]
-    mov     word ptr [di+2], ax
+    add     ax, [bx+2]
+    mov     [di+2], ax
     pop     di
     pop     si
     mov     sp, bp
@@ -252,7 +246,7 @@ _preRender_sphere proc far
     sub sp, 79Ah
     push si
     push di
-    mov dx, word ptr [bp + 0Ah]
+    mov dx, [bp + 0Ah]
     mov ax, dx
     shr ax, 1
     shr ax, 1
@@ -268,7 +262,7 @@ _preRender_sphere proc far
     pop bp
     retf
 sphere_render_branch_path_01:
-    mov word ptr [bp - 6], dx
+    mov [bp - 6], dx
     mov bx, dx
     shr dx, 1
     jne sphere_render_branch_path_02
@@ -286,16 +280,16 @@ sphere_render_loop_head_01:
 sphere_render_branch_path_02:
     sub bx, dx
     mov ax, word ptr cs:[_sprite1+26]
-    mov word ptr [bp - 4], ax
+    mov [bp - 4], ax
     mov ax, word ptr cs:[_sprite1+28]
     dec ax
-    mov word ptr [bp - 2], ax
-    mov cx, word ptr [bp + 8]
+    mov [bp - 2], ax
+    mov cx, [bp + 8]
     mov ax, cx
     sub ax, dx
     cmp ax, word ptr cs:[_sprite1+18]
     jge sphere_render_loop_head_01
-    mov word ptr [bp - 14h], ax
+    mov [bp - 14h], ax
     add cx, bx
     cmp cx, word ptr cs:[_sprite1+16]
     jle sphere_render_loop_head_01
@@ -304,31 +298,31 @@ sphere_render_branch_path_02:
     shr ax, 1
     shr ax, 1
     add dx, ax
-    mov cx, word ptr [bp + 6]
+    mov cx, [bp + 6]
     mov ax, cx
     sub ax, dx
-    cmp ax, word ptr [bp - 2]
+    cmp ax, [bp - 2]
     jg sphere_render_loop_head_01
     add cx, dx
-    cmp cx, word ptr [bp - 4]
+    cmp cx, [bp - 4]
     jl sphere_render_loop_head_01
-    cmp bx, word ptr ds:[_prerender_max_line_width]
+    cmp bx, ds:[_prerender_max_line_width]
     jl sphere_render_branch_path_03
-    mov ax, word ptr [bp + 6]
-    mov word ptr [bp - 12h], ax
-    mov word ptr [bp - 0Eh], ax
-    mov dx, word ptr [bp + 0Ah]
+    mov ax, [bp + 6]
+    mov [bp - 12h], ax
+    mov [bp - 0Eh], ax
+    mov dx, [bp + 0Ah]
     shr dx, 1
     add ax, dx
-    mov word ptr [bp - 0Ah], ax
-    mov ax, word ptr [bp + 8]
-    mov word ptr [bp - 10h], ax
-    mov word ptr [bp - 8], ax
-    mov dx, word ptr [bp - 6]
+    mov [bp - 0Ah], ax
+    mov ax, [bp + 8]
+    mov [bp - 10h], ax
+    mov [bp - 8], ax
+    mov dx, [bp - 6]
     shr dx, 1
     add ax, dx
-    mov word ptr [bp - 0Ch], ax
-    mov dx, word ptr [bp + 0Ch]
+    mov [bp - 0Ch], ax
+    mov dx, [bp + 0Ch]
     lea ax, [bp - 12h]
     add sp, 780h
     push dx
@@ -345,41 +339,41 @@ sphere_render_branch_path_02:
 ; if max-line-width global is changed beyond table coverage.
 sphere_render_branch_path_03:
     shl bx, 1
-    mov ax, word ptr [bx + 3C58h]
-    mov word ptr [bp - 16h], ax
-    mov ax, word ptr [bp - 6]
-    mov word ptr [bp - 1Ah], ax
+    mov ax, [bx + 3C58h]
+    mov [bp - 16h], ax
+    mov ax, [bp - 6]
+    mov [bp - 1Ah], ax
     dec ax
     shl ax, 1
-    mov word ptr [bp - 18h], ax
+    mov [bp - 18h], ax
     lea si, [bp - 3DAh]
     lea di, [bp - 79Ah]
 sphere_render_loop_head_02:
-    mov bx, word ptr [bp - 16h]
-    mov dl, byte ptr [bx]
+    mov bx, [bp - 16h]
+    mov dl, [bx]
     inc word ptr [bp - 16h]
     xor dh, dh
-    mov bx, word ptr [bp - 18h]
-    mov ax, word ptr [bp + 6]
+    mov bx, [bp - 18h]
+    mov ax, [bp + 6]
     sub ax, dx
-    cmp ax, word ptr [bp - 2]
+    cmp ax, [bp - 2]
     jg sphere_render_branch_path_06
-    cmp ax, word ptr [bp - 4]
+    cmp ax, [bp - 4]
     jge sphere_render_branch_path_04
-    mov ax, word ptr [bp - 4]
+    mov ax, [bp - 4]
 sphere_render_branch_path_04:
-    mov word ptr [si], ax
-    mov word ptr [bx + si], ax
-    mov ax, word ptr [bp + 6]
+    mov [si], ax
+    mov [bx + si], ax
+    mov ax, [bp + 6]
     add ax, dx
-    cmp ax, word ptr [bp - 4]
+    cmp ax, [bp - 4]
     jl sphere_render_branch_path_06
-    cmp ax, word ptr [bp - 2]
+    cmp ax, [bp - 2]
     jle sphere_render_branch_path_05
-    mov ax, word ptr [bp - 2]
+    mov ax, [bp - 2]
 sphere_render_branch_path_05:
-    mov word ptr [di], ax
-    mov word ptr [bx + di], ax
+    mov [di], ax
+    mov [bx + di], ax
     add si, 2
     add di, 2
     sub word ptr [bp - 18h], 4
@@ -400,19 +394,19 @@ sphere_render_branch_path_06:
 sphere_render_join_01:
     xor dx, dx
     mov ax, word ptr cs:[_sprite1+16]
-    sub ax, word ptr [bp - 14h]
+    sub ax, [bp - 14h]
     jle sphere_render_branch_path_07
-    sub word ptr [bp - 1Ah], ax
+    sub [bp - 1Ah], ax
     shl ax, 1
     mov dx, ax
     mov ax, word ptr cs:[_sprite1+16]
-    mov word ptr [bp - 14h], ax
+    mov [bp - 14h], ax
 sphere_render_branch_path_07:
-    mov ax, word ptr [bp - 14h]
-    add ax, word ptr [bp - 1Ah]
+    mov ax, [bp - 14h]
+    add ax, [bp - 1Ah]
     sub ax, word ptr cs:[_sprite1+18]
     jle sphere_render_branch_path_08
-    sub word ptr [bp - 1Ah], ax
+    sub [bp - 1Ah], ax
 sphere_render_branch_path_08:
     push word ptr [bp + 0Ch]
     push word ptr [bp - 1Ah]
@@ -475,38 +469,36 @@ _preRender_sphere endp
 ; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _nopsub_3320E proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
-    arg_6 = word ptr 12
-    arg_8 = word ptr 14
-    arg_A = word ptr 16
+    arg_sprite_offset = word ptr 6
+    arg_sprite_segment = word ptr 8
+    arg_left = word ptr 10
+    arg_right = word ptr 12
+    arg_top = word ptr 14
+    arg_bottom = word ptr 16
 
     push    bp
     mov     bp, sp
     push    ds
     push    si
-    mov     ds, [bp+arg_2]
-    mov     si, [bp+arg_0]
+    mov     ds, [bp+arg_sprite_segment]
+    mov     si, [bp+arg_sprite_offset]
     mov     ax, [si+2]
-    cmp     word ptr cs:[_sprite1+2], ax
+    cmp      word ptr cs:[_sprite1+2], ax
     jnz     short noop_entry2_branch_path_01
-    mov     ax, [bp+arg_4]
+    mov     ax, [bp+arg_left]
     mov     [si+1Ah], ax
     mov     cs:[_sprite1+26], ax
     mov     [si+0Ch], ax
     mov     cs:[_sprite1+12], ax
-    mov     ax, [bp+arg_6]
+    mov     ax, [bp+arg_right]
     mov     [si+1Ch], ax
     mov     cs:[_sprite1+28], ax
     mov     [si+0Eh], ax
     mov     cs:[_sprite1+14], ax
-    mov     ax, [bp+arg_8]
+    mov     ax, [bp+arg_top]
     mov     [si+10h], ax
     mov     cs:[_sprite1+16], ax
-    mov     ax, [bp+arg_A]
+    mov     ax, [bp+arg_bottom]
     mov     [si+12h], ax
     mov     cs:[_sprite1+18], ax
     pop     si
@@ -516,15 +508,15 @@ _nopsub_3320E proc far
 ; ASMDOC-GEOMETRY A bitmap SEGMENT comparison alone controls active-descriptor mirroring; offsets are
 ; deliberately not tested.
 noop_entry2_branch_path_01:
-    mov     ax, [bp+arg_4]
+    mov     ax, [bp+arg_left]
     mov     [si+1Ah], ax
     mov     [si+0Ch], ax
-    mov     ax, [bp+arg_6]
+    mov     ax, [bp+arg_right]
     mov     [si+1Ch], ax
     mov     [si+0Eh], ax
-    mov     ax, [bp+arg_8]
+    mov     ax, [bp+arg_top]
     mov     [si+10h], ax
-    mov     ax, [bp+arg_A]
+    mov     ax, [bp+arg_bottom]
     mov     [si+12h], ax
     pop     si
     pop     ds
@@ -564,24 +556,22 @@ _nopsub_3320E endp
 ; :845,849,861,865,1017,1658; rectangle bounds are right/bottom exclusive in consumers.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _sprset1size proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
-    arg_6 = word ptr 12
+    arg_left = word ptr 6
+    arg_right = word ptr 8
+    arg_top = word ptr 10
+    arg_bottom = word ptr 12
 
     push    bp
     mov     bp, sp
-    mov     ax, [bp+arg_0]
+    mov     ax, [bp+arg_left]
     mov     cs:[_sprite1+26], ax
     mov     cs:[_sprite1+12], ax
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_right]
     mov     cs:[_sprite1+28], ax
     mov     cs:[_sprite1+14], ax
-    mov     ax, [bp+arg_4]
+    mov     ax, [bp+arg_top]
     mov     cs:[_sprite1+16], ax
-    mov     ax, [bp+arg_6]
+    mov     ax, [bp+arg_bottom]
     mov     cs:[_sprite1+18], ax
     pop     bp
     retf
@@ -637,14 +627,14 @@ _video_clear_color proc far
     push di
     mov ax,R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov es,ax
-    mov ax,word ptr [bp+6]
+    mov ax,[bp+6]
     mov di,0
     mov cx,0FA00h
     rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
     pop di
     pop bp
     retf
-    db 0
+    db 0 ; retained zero fill at this boundary
 _video_clear_color endp
 S012_TEXT ends
 end

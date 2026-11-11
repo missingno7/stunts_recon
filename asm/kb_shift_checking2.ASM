@@ -13,8 +13,10 @@ assume cs:S018_TEXT
 public _kb_shift_checking2
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the keyboard or joystick service identified by kb shift checking2.
-; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, ES; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------

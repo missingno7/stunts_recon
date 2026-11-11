@@ -22,7 +22,7 @@ DGROUP group _DATA, DSEG
 assume ds:DGROUP
 extrn _fatal_error:far
 S012_TEXT segment word public 'CODE'
-assume cs:S012_TEXT, ds:DGROUP
+assume cs:S012_TEXT
 public _mmgr_alloc_resmem
 public _mmgr_alloc_a000
 public _nopsub_310FE
@@ -47,7 +47,8 @@ public _aReservememoryOutOfMemory, _aResizememoryCa, _aResizememoryNo, _resource
 ; -----------------------------------------------------------------------------
 ; Purpose: Allocate a resource-memory slot and associate the requested region.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, BX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, SI, DI, BP, SP, CS, DS, ES; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resmem_base_seg, _resmem_end_seg, _resptr1.
 ; Globals written: _pspofs, _pspseg, _resendptr1, _resmem_base_seg, _resmem_end_seg, _resptr2.
 ; /* PLATFORM(dos): calls a DOS service. */
@@ -73,9 +74,7 @@ public _aReservememoryOutOfMemory, _aResizememoryCa, _aResizememoryNo, _resource
 ; ASMDOC pre-DOS3 path PSP offset fallback is CS, not an independently fetched PSP. Allocation CF is not checked;
 ; ASMDOC two identical AH=4Ah calls are real.
 _mmgr_alloc_resmem proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_exclusive_upper_segment = word ptr 6
 
     push    bp
     mov     bp, sp
@@ -100,12 +99,14 @@ resmem_alloc_branch_path_01:
     mov     [si+MEMCHUNK.resofs], ax
     mov     _resmem_base_seg, ax
     mov     es, ax
-    mov     bx, [bp+arg_0]
+    mov     bx, [bp+arg_exclusive_upper_segment]
     sub     bx, [si+MEMCHUNK.resofs]
     mov     ah, 4Ah
-    int     R5HW_DOS_INT ; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
+    int     R5HW_DOS_INT
+; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
     mov     ah, 4Ah
-    int     R5HW_DOS_INT ; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
+    int     R5HW_DOS_INT
+; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
     mov     ax, _resmem_base_seg
     add     ax, bx
     mov     si, _resendptr2
@@ -132,8 +133,10 @@ resmem_alloc_branch_path_02:
 _mmgr_alloc_resmem endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Allocate a memory block at the A0000h graphics-memory base.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; /* PLATFORM(video): selects a video-memory segment. */
@@ -166,7 +169,8 @@ _mmgr_alloc_a000 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 310FE.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, BP, SP; balanced explicit saves/restores observed: none inferred; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resmem_end_seg.
 ; Globals written: _resmem_end_seg.
 ; /* PLATFORM(video): selects a video-memory segment. */
@@ -188,9 +192,7 @@ _mmgr_alloc_a000 endp
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: Reservation subtraction runs even if allocator skipped DOS allocation. No underflow guard.
 _nopsub_310FE proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_reserve_paragraphs = word ptr 6
 
     push    bp
     mov     bp, sp
@@ -198,7 +200,7 @@ _nopsub_310FE proc far
     push    ax
     call    _mmgr_alloc_resmem
     add     sp, 2
-    mov     ax, [bp+arg_0]
+    mov     ax, [bp+arg_reserve_paragraphs]
     mov     bx, _resendptr2
     sub     [bx+MEMCHUNK.resofs], ax
     sub     _resmem_end_seg, ax
@@ -207,8 +209,10 @@ _nopsub_310FE proc far
 _nopsub_310FE endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3111D. Its internal flow uses noop_entry2_branch_path_01.
-; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, BX, SI, DI, BP, SP, CS, DS; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
+; arg_0 (word ptr 6).
+; Register ABI: touches AX, BX, SI, DI, BP, SP, CS, DS; balanced explicit saves/restores observed: none
+; inferred; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resmem_end_seg, _resptr1.
 ; Globals written: _pspofs, _pspseg, _resmem_base_seg, _resmem_end_seg.
 ; /* PLATFORM(memory): calls a DOS memory-allocation service. */
@@ -230,9 +234,7 @@ _nopsub_310FE endp
 ; ASMDOC Notes: Shares resmem_alloc_loop_head_01 and return in mmgr_alloc_resmem. If retry also fails there is no
 ; ASMDOC further error check. Records PSP offset as CS directly.
 _nopsub_3111D proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_requested_paragraphs = word ptr 6
 
     push    bp
     mov     bp, sp
@@ -242,7 +244,7 @@ _nopsub_3111D proc far
     mov     _pspseg, ds
     cmp     _resmem_end_seg, 0
     jnz     short resmem_alloc_loop_head_01
-    mov     bx, [bp+arg_0]
+    mov     bx, [bp+arg_requested_paragraphs]
     mov     ah, 48h
     int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
     jnb     short noop_entry2_branch_path_01
@@ -260,8 +262,10 @@ noop_entry2_branch_path_01:
 _nopsub_3111D endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31157.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resptr2.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -290,8 +294,10 @@ _nopsub_31157 proc far
 _nopsub_31157 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31169.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: _resptr1, _resptr2.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -319,8 +325,10 @@ _nopsub_31169 proc far
 _nopsub_31169 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the offset difference between two memory locations.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX; balanced explicit saves/restores observed: none inferred; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resptr2.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -349,8 +357,10 @@ _mmgr_get_ofs_diff proc far
 _mmgr_get_ofs_diff endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy a block of memory measured in DOS paragraphs.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
-; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS,
+; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -370,11 +380,9 @@ _mmgr_get_ofs_diff endp
 ; ASMDOC Notes: Splits at 1000h paragraphs (64 KiB) to preserve 16-bit SI/DI traversal. Segment
 ; ASMDOC additions/subtractions wrap as words. Sets CLD even for count zero.
 _mmgr_copy_paras proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
+    arg_source_segment = word ptr 6
+    arg_destination_segment = word ptr 8
+    arg_paragraph_count = word ptr 10
 
     push    bp
     mov     bp, sp
@@ -382,9 +390,9 @@ _mmgr_copy_paras proc far
     push    si
     push    di
     cld
-    mov     ds, [bp+arg_0]
-    mov     es, [bp+arg_2]
-    mov     bx, [bp+arg_4]
+    mov     ds, [bp+arg_source_segment]
+    mov     es, [bp+arg_destination_segment]
+    mov     bx, [bp+arg_paragraph_count]
 ; ASMDOC 1000h paragraphs = 8000h words = one full 64 KiB MOVSW block; segment steps prevent SI/DI wrap from losing
 ; ASMDOC position.
 copy_fwd_loop_head_01:
@@ -420,8 +428,10 @@ copy_fwd_branch_path_02:
 _mmgr_copy_paras endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy a paragraph block in reverse order to handle overlap.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8); arg_4 (word ptr 10).
-; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8); arg_4 (word ptr 10).
+; Register ABI: touches AX, BX, CX, SI, DI, BP, SP, DS, ES; balanced explicit saves/restores observed: DI, DS,
+; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -441,11 +451,9 @@ _mmgr_copy_paras endp
 ; ASMDOC Notes: Splits at 1000h paragraphs (64 KiB) to preserve 16-bit SI/DI traversal. Segment
 ; ASMDOC additions/subtractions wrap as words. Sets STD then explicitly CLD even for count zero.
 _copy_paras_reverse proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
+    arg_source_segment = word ptr 6
+    arg_destination_segment = word ptr 8
+    arg_paragraph_count = word ptr 10
 
     push    bp
     mov     bp, sp
@@ -453,11 +461,11 @@ _copy_paras_reverse proc far
     push    si
     push    di
     std
-    mov     bx, [bp+arg_4]
-    mov     ax, [bp+arg_0]
+    mov     bx, [bp+arg_paragraph_count]
+    mov     ax, [bp+arg_source_segment]
     add     ax, bx
     mov     ds, ax
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_destination_segment]
     add     ax, bx
     mov     es, ax
 ; ASMDOC Begin from exclusive source/destination ends, step down by block paragraphs, then copy words backward.
@@ -499,7 +507,8 @@ _copy_paras_reverse endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Extract a resource name from its path.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_filename (word ptr 6).
-; Register ABI: touches AX, BX, SI, BP, SP; balanced explicit saves/restores observed: SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, SI, BP, SP; balanced explicit saves/restores observed: SI; path-specific inputs
+; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -518,8 +527,6 @@ _copy_paras_reverse endp
 ; ASMDOC Notes: Does not strip extension, fold case, treat forward slash as delimiter, copy a name, or validate
 ; ASMDOC pointer. Scans with 16-bit SI wrap.
 _mmgr_path_to_name proc far
-     s = byte ptr 0
-     r = byte ptr 2
     arg_filename = word ptr 6
 
     push    bp
@@ -547,8 +554,10 @@ path_name_branch_path_02:
 _mmgr_path_to_name endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Allocate the requested number of memory pages.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resendptr2, _resmaxsize, _resptr2.
 ; Globals written: _resendptr1, _resmaxsize, _resptr2.
 ; Global addresses taken: _aReservememoryO, _aReservememoryOutOfMemory.
@@ -572,10 +581,8 @@ _mmgr_path_to_name endp
 ; ASMDOC Paragraph arithmetic wraps in 16 bits; no explicit wrap guard. Fatal calls assume nonreturn; returning
 ; ASMDOC would enter shared/cross-procedure code with arguments still stacked.
 _mmgr_alloc_pages proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
+    arg_pathname = word ptr 6
+    arg_paragraph_count = word ptr 8
 
     push    bp
     mov     bp, sp
@@ -590,7 +597,7 @@ _mmgr_alloc_pages proc far
     jbe     short pages_alloc_branch_path_02
 pages_alloc_loop_head_01:
     mov     _resptr2, di
-    push    [bp+arg_0]
+    push    [bp+arg_pathname]
     call    _mmgr_path_to_name
     add     sp, 2
     mov     si, ax
@@ -598,12 +605,12 @@ pages_alloc_loop_head_01:
     mov     cx, 0Ch
 ; ASMDOC Always copy 12 basename bytes, including bytes beyond a NUL; no string padding or length check here.
 pages_alloc_loop_head_02:
-    mov     al, byte ptr [bx+si+MEMCHUNK.resname]
-    mov     byte ptr [bx+di+MEMCHUNK.resname], al
+    mov     al, [bx+si+MEMCHUNK.resname]
+    mov     [bx+di+MEMCHUNK.resname], al
     inc     bx
     loop    pages_alloc_loop_head_02
     mov     si, _resendptr1
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_paragraph_count]
     mov     [di+MEMCHUNK.resofs], dx
     mov     [di+MEMCHUNK.ressize], ax
     mov     [di+MEMCHUNK.resunk], 2
@@ -627,7 +634,7 @@ pages_alloc_branch_path_02:
     mov     _resendptr1, si
     jmp     short pages_alloc_loop_head_01
 pages_alloc_error_path_01:
-    push    [bp+arg_0]
+    push    [bp+arg_pathname]
     mov     ax, offset DGROUP:_aReservememoryO; "reservememory - OUT OF MEMORY SLOTS RES"...
     push    ax
     call    far ptr _fatal_error
@@ -650,15 +657,17 @@ pages_alloc_branch_path_04:
     mov     bx, _resmaxsize
     push    bx
     push    [di+MEMCHUNK.ressize]
-    push    [bp+arg_0]
+    push    [bp+arg_pathname]
     mov     ax, offset DGROUP:_aReservememoryOutOfMemory; "reservememory - OUT OF MEMORY RESERVING"...
     push    ax
     call    far ptr _fatal_error
 _mmgr_alloc_pages endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Find a free memory-manager entry for the requested block.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments referenced.
-; Register ABI: touches AX, BX, CX, DX, SI, DI, SP; balanced explicit saves/restores observed: DI, DX, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
+; referenced.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, SP; balanced explicit saves/restores observed: DI, DX, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resendptr2.
 ; Globals written: _resendptr1.
 ; -----------------------------------------------------------------------------
@@ -678,8 +687,6 @@ _mmgr_alloc_pages endp
 ; ASMDOC Notes: No free-block handle or descriptor is returned. Selects keepers by TEST state,1, rather than
 ; ASMDOC state!=0. Accumulated DX gap is restored to caller at exit.
 _mmgr_find_free proc far
-     r = byte ptr 0
-
     push    si
     push    di
     push    dx
@@ -689,11 +696,11 @@ _mmgr_find_free proc far
 ; ASMDOC State bit 0 selects retained high chunks. Non-bit0 sizes accumulate as a gap; later keepers move upward
 ; ASMDOC with reverse copy.
 find_free_loop_head_01:
-    test    [si+MEMCHUNK.resunk], 1
+    test    [si+MEMCHUNK.resunk], 01h
     jnz     short find_free_branch_path_01
     add     dx, [si+MEMCHUNK.ressize]
     jmp     short find_free_join_01
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 find_free_branch_path_01:
     or      dx, dx
     jnz     short find_free_branch_path_02
@@ -726,8 +733,8 @@ find_free_branch_path_02:
     xor     bx, bx
     mov     cx, 0Ch
 find_free_loop_head_03:
-    mov     al, byte ptr [bx+si+MEMCHUNK.resname]
-    mov     byte ptr [bx+di+MEMCHUNK.resname], al
+    mov     al, [bx+si+MEMCHUNK.resname]
+    mov     [bx+di+MEMCHUNK.resname], al
     inc     bx
     loop    find_free_loop_head_03
     call    _copy_paras_reverse
@@ -737,7 +744,8 @@ _mmgr_find_free endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Find a memory-manager chunk by its name.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resendptr2, _resptr2.
 ; Globals written: _resendptr1, _resptr2.
 ; -----------------------------------------------------------------------------
@@ -758,16 +766,14 @@ _mmgr_find_free endp
 ; ASMDOC Notes: Compares case-sensitively up to 12 bytes. A shorter query matches stored dot or NUL; zero-state
 ; ASMDOC descriptor terminates search immediately. Not a read-only lookup and does not return the old high address.
 _mmgr_get_chunk_by_name proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_pathname = word ptr 6
 
     push    bp
     mov     bp, sp
     push    si
     push    di
     mov     si, _resendptr1
-    push    [bp+arg_0]
+    push    [bp+arg_pathname]
     call    _mmgr_path_to_name
     add     sp, 2
     mov     di, ax
@@ -779,13 +785,13 @@ find_chunk_loop_head_02:
     mov     al, [bx+di]
     or      al, al
     jz      short find_chunk_branch_path_01
-    cmp     al, byte ptr [bx+si+MEMCHUNK.resname]
+    cmp     al, [bx+si+MEMCHUNK.resname]
     jnz     short find_chunk_branch_path_02
     inc     bx
     cmp     bx, 0Ch
     jl      short find_chunk_loop_head_02
     jmp     short find_chunk_branch_path_04
-    db 144
+    nop ; retained code pad at an even offset; EVEN would emit no byte
 ; ASMDOC An exhausted query can match a stored extension separator; comparison is otherwise case-sensitive.
 find_chunk_branch_path_01:
     cmp     byte ptr [bx+si+MEMCHUNK.resname], 2Eh ; '.'
@@ -823,8 +829,8 @@ find_chunk_branch_path_04:
     xor     bx, bx
     mov     cx, 0Ch
 find_chunk_loop_head_04:
-    mov     al, byte ptr [bx+si+MEMCHUNK.resname]
-    mov     byte ptr [bx+di+MEMCHUNK.resname], al
+    mov     al, [bx+si+MEMCHUNK.resname]
+    mov     [bx+di+MEMCHUNK.resname], al
     inc     bx
     loop    find_chunk_loop_head_04
     cmp     di, _resendptr1
@@ -850,9 +856,11 @@ find_chunk_branch_path_06:
     jmp     short find_chunk_loop_head_03
 _mmgr_get_chunk_by_name endp
 ; -----------------------------------------------------------------------------
-; Purpose: Implement the legacy internal helper nopsub 31429. Its internal flow uses noop_entry5_loop_head_01, noop_entry5_loop_head_02.
+; Purpose: Implement the legacy internal helper nopsub 31429. Its internal flow uses noop_entry5_loop_head_01,
+; noop_entry5_loop_head_02.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
-; Register ABI: touches AX, BX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resendptr2.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -871,16 +879,14 @@ _mmgr_get_chunk_by_name endp
 ; ASMDOC Notes: Case-sensitive 12-byte maximum; shorter basename may match stored extension. Reads descriptor state
 ; ASMDOC at +10h; no cache population.
 _nopsub_31429 proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
+    arg_pathname = word ptr 6
 
     push    bp
     mov     bp, sp
     push    si
     push    di
     mov     si, _resendptr1
-    push    [bp+arg_0]
+    push    [bp+arg_pathname]
     call    _mmgr_path_to_name
     add     sp, 2
     mov     di, ax
@@ -898,8 +904,7 @@ noop_entry5_loop_head_02:
     cmp     bx, 0Ch
     jl      short noop_entry5_loop_head_02
     jmp     short noop_entry5_branch_path_04
-    ; align 2
-    db 144
+    even ; word-align the following entry
 noop_entry5_branch_path_01:
     cmp     byte ptr [bx+si], 2Eh ; '.'
     jz      short noop_entry5_branch_path_04
@@ -925,8 +930,10 @@ noop_entry5_branch_path_04:
 _nopsub_31429 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Release the selected memory-manager allocation.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resptr1, _resptr2.
 ; Globals written: _resendptr1, _resptr2.
 ; Global addresses taken: _aMemoryManagerB.
@@ -949,16 +956,14 @@ _nopsub_31429 endp
 ; ASMDOC Notes: This is cache transfer/discard, not DOS AH=49h free. Segment search excludes low sentinel. Internal
 ; ASMDOC free_chunk_loop_head_02 is shared fatal target of multiple routines.
 _mmgr_free proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
+    arg_unused_offset = word ptr 6
+    arg_chunk_segment = word ptr 8
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_chunk_segment]
     mov     si, _resptr2
 free_chunk_loop_head_01:
     cmp     si, _resptr1
@@ -970,12 +975,12 @@ free_chunk_loop_head_01:
 ; ASMDOC Shared missing-segment fatal path. Several procedures jump here with different frames; fatal_error must
 ; ASMDOC not return.
 free_chunk_loop_head_02:
-    push    [bp+arg_2]
+    push    [bp+arg_chunk_segment]
     mov     ax, offset DGROUP:_aMemoryManagerB; "memory manager - BLOCK NOT FOUND at SEG"...
     push    ax
     call    far ptr _fatal_error
 free_chunk_branch_path_01:
-    mov     [bp+arg_2], 0
+    mov     [bp+arg_chunk_segment], 0
     mov     [si+MEMCHUNK.resunk], 0
     cmp     si, _resptr2
     jz      short free_chunk_branch_path_02
@@ -997,7 +1002,7 @@ free_chunk_branch_path_02:
     mov     ax, [di+MEMCHUNK.resofs]
     sub     ax, bx
     push    ax
-    mov     [bp+arg_2], ax
+    mov     [bp+arg_chunk_segment], ax
     push    [si+MEMCHUNK.resofs]
     sub     di, 12h
     mov     _resendptr1, di
@@ -1007,8 +1012,8 @@ free_chunk_branch_path_02:
     mov     cx, 0Ch
     xor     bx, bx
 free_chunk_loop_head_03:
-    mov     al, byte ptr [bx+si+MEMCHUNK.resname]
-    mov     byte ptr [bx+di+MEMCHUNK.resname], al
+    mov     al, [bx+si+MEMCHUNK.resname]
+    mov     [bx+di+MEMCHUNK.resname], al
     inc     bx
     loop    free_chunk_loop_head_03
     call    _copy_paras_reverse
@@ -1022,17 +1027,20 @@ free_chunk_loop_head_04:
     jz      short free_chunk_loop_head_04
     mov     _resptr2, si
 free_chunk_branch_path_04:
-    mov     ax, [bp+arg_0]
-    mov     dx, [bp+arg_2]
+    mov     ax, [bp+arg_unused_offset]
+    mov     dx, [bp+arg_chunk_segment]
     pop     di
     pop     si
     pop     bp
     retf
 _mmgr_free endp
 ; -----------------------------------------------------------------------------
-; Purpose: Implement the legacy internal helper nopsub 31525. Its internal flow uses noop_entry6_loop_head_01, noop_entry6_branch_path_01.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Purpose: Implement the legacy internal helper nopsub 31525. Its internal flow uses noop_entry6_loop_head_01,
+; noop_entry6_branch_path_01.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
+; (word ptr 8).
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resendptr2, _resptr1, _resptr2.
 ; Globals written: _resendptr1, _resptr2.
 ; -----------------------------------------------------------------------------
@@ -1057,17 +1065,15 @@ _mmgr_free endp
 _nopsub_31525 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_0 = word ptr 6
-    arg_2 = word ptr 8
+    arg_unused_offset = word ptr 6
+    arg_chunk_segment = word ptr 8
 
     push    bp
     mov     bp, sp
     sub     sp, 6
     push    si
     push    di
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_chunk_segment]
     mov     si, _resptr2
 noop_entry6_loop_head_01:
     cmp     si, _resptr1
@@ -1079,7 +1085,7 @@ noop_entry6_loop_head_01:
 noop_entry6_branch_path_01:
     jmp     free_chunk_loop_head_02
 noop_entry6_branch_path_02:
-    mov     [bp+arg_2], 0
+    mov     [bp+arg_chunk_segment], 0
     mov     word ptr [si+10h], 0
     cmp     si, _resptr2
     jz      short noop_entry6_branch_path_03
@@ -1173,8 +1179,8 @@ noop_entry6_loop_head_05:
     jz      short noop_entry6_loop_head_05
     mov     _resptr2, si
 noop_entry6_branch_path_08:
-    mov     ax, [bp+arg_0]
-    mov     dx, [bp+arg_2]
+    mov     ax, [bp+arg_unused_offset]
+    mov     dx, [bp+arg_chunk_segment]
     pop     di
     pop     si
     mov     sp, bp
@@ -1184,7 +1190,8 @@ _nopsub_31525 endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Release memory-manager state associated with the selected block.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
-; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: _resptr1, _resptr2.
 ; Globals written: _resptr2.
 ; -----------------------------------------------------------------------------
@@ -1203,15 +1210,13 @@ _nopsub_31525 endp
 ; ASMDOC Notes: Does not clear bytes or issue DOS free. Unknown segment enters free_chunk_loop_head_02; failure may
 ; ASMDOC have transitive effects from fatal_error.
 _mmgr_release proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_2 = word ptr 8
+    arg_chunk_segment = word ptr 8
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_chunk_segment]
     mov     si, _resptr2
 release_chunk_loop_head_01:
     cmp     si, _resptr1
@@ -1240,7 +1245,8 @@ _mmgr_release endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the size of the requested memory-manager chunk.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
-; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: _resptr1, _resptr2.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
@@ -1258,15 +1264,13 @@ _mmgr_release endp
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: No high-cache lookup; missing segment is fatal, not zero size.
 _mmgr_get_chunk_size proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_2 = word ptr 8
+    arg_chunk_segment = word ptr 8
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_chunk_segment]
     mov     si, _resptr2
 chunk_size_loop_head_01:
     cmp     si, _resptr1
@@ -1286,8 +1290,10 @@ chunk_size_branch_path_02:
 _mmgr_get_chunk_size endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Resize an existing memory-manager allocation.
-; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8); arg_4 (word ptr 10).
-; Register ABI: touches AX, BX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8); arg_4
+; (word ptr 10).
+; Register ABI: touches AX, BX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific
+; inputs and outputs follow the listed operands.
 ; Globals read: _resendptr1, _resendptr2, _resmaxsize, _resptr1, _resptr2.
 ; Globals written: _resendptr1, _resmaxsize.
 ; Global addresses taken: _aResizememoryCa, _aResizememoryNo.
@@ -1309,16 +1315,14 @@ _mmgr_get_chunk_size endp
 ; ASMDOC Notes: Size is written before overlap/exhaustion detection. No DOS resize here. Error callees are assumed
 ; ASMDOC nonreturn; memory and stack state already changed.
 _mmgr_resize_memory proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_2 = word ptr 8
-    arg_4 = word ptr 10
+    arg_chunk_segment = word ptr 8
+    arg_new_paragraphs = word ptr 10
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_chunk_segment]
     mov     si, _resptr2
 resize_mem_loop_head_01:
     cmp     si, _resptr1
@@ -1330,7 +1334,7 @@ resize_mem_loop_head_01:
 resize_mem_branch_path_01:
     jmp     free_chunk_loop_head_02
 resize_mem_branch_path_02:
-    mov     ax, [bp+arg_4]
+    mov     ax, [bp+arg_new_paragraphs]
     cmp     ax, [si+MEMCHUNK.ressize]
     ja      short resize_mem_branch_path_03
     mov     [si+MEMCHUNK.ressize], ax
@@ -1385,7 +1389,8 @@ _mmgr_resize_memory endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the memory-manager operation identified by mmgr op unk.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
-; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI; path-specific inputs and outputs follow the listed operands.
+; Register ABI: touches AX, BX, CX, DX, SI, DI, BP, SP; balanced explicit saves/restores observed: DI, SI;
+; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resptr1, _resptr2.
 ; Globals written: _resptr2.
 ; -----------------------------------------------------------------------------
@@ -1406,15 +1411,13 @@ _mmgr_resize_memory endp
 ; ASMDOC Notes: Returns offset zero rather than preserving original input offset. Compacts this selected chunk
 ; ASMDOC only. Vacant descriptor size fields are not used to choose destination.
 _mmgr_op_unk proc far
-     s = byte ptr 0
-     r = byte ptr 2
-    arg_2 = word ptr 8
+    arg_chunk_segment = word ptr 8
 
     push    bp
     mov     bp, sp
     push    si
     push    di
-    mov     ax, [bp+arg_2]
+    mov     ax, [bp+arg_chunk_segment]
     mov     si, _resptr2
 memory_op_loop_head_01:
     cmp     si, _resptr1
@@ -1454,8 +1457,8 @@ memory_op_branch_path_03:
     mov     cx, 0Ch
     xor     bx, bx
 memory_op_loop_head_03:
-    mov     al, byte ptr [bx+si+MEMCHUNK.resname]
-    mov     byte ptr [bx+di+MEMCHUNK.resname], al
+    mov     al, [bx+si+MEMCHUNK.resname]
+    mov     [bx+di+MEMCHUNK.resname], al
     inc     bx
     loop    memory_op_loop_head_03
     call    _mmgr_copy_paras
@@ -1470,1167 +1473,28 @@ memory_op_loop_head_04:
 memory_op_branch_path_04:
     mov     di, si
     jmp     short memory_op_loop_head_04
-    ; align 2
-    db 0
+    db 0 ; retained zero fill at this boundary
 _mmgr_op_unk endp
 S012_TEXT ends
 _DATA segment word public 'DATA'
-_aReservememoryOutOfMemory     db 114
-    db 101
-    db 115
-    db 101
-    db 114
-    db 118
-    db 101
-    db 109
-    db 101
-    db 109
-    db 111
-    db 114
-    db 121
-    db 32
-    db 45
-    db 32
-    db 79
-    db 85
-    db 84
-    db 32
-    db 79
-    db 70
-    db 32
-    db 77
-    db 69
-    db 77
-    db 79
-    db 82
-    db 89
-    db 32
-    db 82
-    db 69
-    db 83
-    db 69
-    db 82
-    db 86
-    db 73
-    db 78
-    db 71
-    db 32
-    db 37
-    db 115
-    db 32
-    db 80
-    db 61
-    db 37
-    db 120
-    db 32
-    db 72
-    db 87
-    db 61
-    db 37
-    db 120
-    db 13
-    db 10
-    db 0
-_aReservememoryO     db 114
-    db 101
-    db 115
-    db 101
-    db 114
-    db 118
-    db 101
-    db 109
-    db 101
-    db 109
-    db 111
-    db 114
-    db 121
-    db 32
-    db 45
-    db 32
-    db 79
-    db 85
-    db 84
-    db 32
-    db 79
-    db 70
-    db 32
-    db 77
-    db 69
-    db 77
-    db 79
-    db 82
-    db 89
-    db 32
-    db 83
-    db 76
-    db 79
-    db 84
-    db 83
-    db 32
-    db 82
-    db 69
-    db 83
-    db 69
-    db 82
-    db 86
-    db 73
-    db 78
-    db 71
-    db 32
-    db 37
-    db 115
-    db 13
-    db 10
-    db 0
-_aMemoryManagerB     db 109
-    db 101
-    db 109
-    db 111
-    db 114
-    db 121
-    db 32
-    db 109
-    db 97
-    db 110
-    db 97
-    db 103
-    db 101
-    db 114
-    db 32
-    db 45
-    db 32
-    db 66
-    db 76
-    db 79
-    db 67
-    db 75
-    db 32
-    db 78
-    db 79
-    db 84
-    db 32
-    db 70
-    db 79
-    db 85
-    db 78
-    db 68
-    db 32
-    db 97
-    db 116
-    db 32
-    db 83
-    db 69
-    db 71
-    db 61
-    db 32
-    db 37
-    db 120
-    db 13
-    db 10
-    db 0
-_aResizememoryCa     db 114
-    db 101
-    db 115
-    db 105
-    db 122
-    db 101
-    db 109
-    db 101
-    db 109
-    db 111
-    db 114
-    db 121
-    db 32
-    db 45
-    db 32
-    db 67
-    db 65
-    db 78
-    db 78
-    db 79
-    db 84
-    db 32
-    db 69
-    db 88
-    db 80
-    db 65
-    db 78
-    db 68
-    db 32
-    db 66
-    db 76
-    db 79
-    db 67
-    db 75
-    db 32
-    db 78
-    db 79
-    db 84
-    db 32
-    db 65
-    db 84
-    db 32
-    db 84
-    db 79
-    db 80
-    db 13
-    db 10
-    db 0
-_aResizememoryNo     db 114
-    db 101
-    db 115
-    db 105
-    db 122
-    db 101
-    db 109
-    db 101
-    db 109
-    db 111
-    db 114
-    db 121
-    db 32
-    db 45
-    db 32
-    db 78
-    db 79
-    db 32
-    db 77
-    db 69
-    db 77
-    db 79
-    db 82
-    db 89
-    db 32
-    db 76
-    db 69
-    db 70
-    db 84
-    db 32
-    db 84
-    db 79
-    db 32
-    db 69
-    db 88
-    db 80
-    db 65
-    db 78
-    db 68
-    db 32
-    db 72
-    db 87
-    db 61
-    db 37
-    db 120
-    db 13
-    db 10
-    db 0
-    db 0
+_aReservememoryOutOfMemory db 'reservememory - OUT OF MEMORY RESERVING %s P=%x HW=%x', 0Dh, 0Ah, 00h
+_aReservememoryO db 'reservememory - OUT OF MEMORY SLOTS RESERVING %s', 0Dh, 0Ah, 00h
+_aMemoryManagerB db 'memory manager - BLOCK NOT FOUND at SEG= %x', 0Dh, 0Ah, 00h
+_aResizememoryCa db 'resizememory - CANNOT EXPAND BLOCK NOT AT TOP', 0Dh, 0Ah, 00h
+_aResizememoryNo db 'resizememory - NO MEMORY LEFT TO EXPAND HW=%x', 0Dh, 0Ah, 00h, 00h
 _resmem_end_seg     dw 0
 _resmem_base_seg     dw 0
 _resmaxsize     dw 0
 _pspofs     dw 0
 _pspseg     dw 0
 ; ASMDOC Exported DATA, not callable code: 18-byte descriptors, first state 2 and final state 1 are sentinels.
-_resources     db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 2
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 0
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 32
-    db 0
-    db 0
-    db 0
-    db 0
-    db 1
-    db 0
+; Fifty 18-byte resource slots: name=12 spaces, size=segment=0.
+; State=2 at slot 0, state=1 at slot 49, otherwise 0. Verified 900/900 bytes.
+_resources db '            ', 00h, 00h, 00h, 00h, 02h, 00h
+    REPT 48
+    db '            ', 00h, 00h, 00h, 00h, 00h, 00h
+    ENDM
+    db '            ', 00h, 00h, 00h, 00h, 01h, 00h
 _resptr1     dw offset DGROUP:_resources
 _resptr2     dw offset DGROUP:_resources
 _resendptr1     dw offset DGROUP:_resources.resname+372h
