@@ -228,7 +228,7 @@
   "object_segment": "_TEXT",
   "profile": "masm510-game",
   "public": "_projectiondata9_times_ratio",
-  "source": "tests/fixtures/historical_workers/integ16/projectiondata9_f2.ASM",
+  "source": "tests/fixtures/asm_frames_and_local_tables/projectiondata9_f2.ASM",
   "stable_id": "load_2275c",
   "start": 141148,
   "target": {

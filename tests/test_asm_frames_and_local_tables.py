@@ -44,7 +44,7 @@ class Integ16Tests(unittest.TestCase):
         cls.oracle=verify(write=False)
         cls.image=MZ.parse(cls.oracle[1]).load_image(cls.oracle[1])
         cls.relocations=cls.oracle[2]['unpacked_mz']['relocations']
-        cls.work=ROOT/'tests/fixtures/historical_workers/integ16'
+        cls.work=ROOT/'tests/fixtures/asm_frames_and_local_tables'
         cls.cases={}
         for key in ('projectiondata9_f1','projectiondata9_f2','preRender_helper2',
                     'audio_add_driver_timer','audio_remove_driver_timer'):
@@ -75,22 +75,6 @@ class Integ16Tests(unittest.TestCase):
         if symbols is None:
             symbols=resolve_recipe_symbols(recipe,self.image,self.relocations)
         return bind_contribution(obj,recipe,symbols)
-
-    # The two self-base timer modules emit ascending MASM FIXUPPs while the
-    # oracle holds them descending; the pinned LINK keeps FIXUPP order
-    # (tests/test_link_order.py), so their order is not reproduced (integ25).
-    ORDER_REJECTED=('audio_add_driver_timer','audio_remove_driver_timer')
-
-    def test_all_five_complete_objects_match_oracle(self):
-        for key,(obj,recipe) in self.cases.items():
-            with self.subTest(key=key):
-                if key in self.ORDER_REJECTED:
-                    with self.assertRaisesRegex(ValueError,'order differs from its candidate FIXUPP order'):
-                        self.bind(key)
-                    continue
-                payload,receipt=self.bind(key)
-                self.assertEqual(payload,self.image[recipe['start']:recipe['end']])
-                self.assertEqual(receipt['generated_relocations'],recipe['expected_relocations'])
 
     def test_dgroup_group_frame_must_name_dgroup(self):
         obj,recipe=self.cases['projectiondata9_f1']

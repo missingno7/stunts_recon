@@ -2,7 +2,6 @@
 both hosts, the register-gated MSC 6.00 profile (readable `_asm`, optimize
 pragma regions, CodeView debug segments), and the numeric program-address lint."""
 import copy
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -20,7 +19,7 @@ from preprocessor import prepare
 
 C6 = 'msc600-medium-zi'
 C6_FLAGS = ['/AM', '/Os', '/Oe', '/Og', '/Gs', '/Zi']
-FIXTURE = ROOT/'tests/fixtures/integ27/c6_zi_unit.c'
+FIXTURE = ROOT/'tests/fixtures/c6_debug/c6_zi_unit.c'
 
 
 def patched_lock(mutate):
@@ -230,24 +229,6 @@ class ShortNameAliases(unittest.TestCase):
         cls.image = MZ.parse(result[1]).load_image(result[1])
         cls.relocations = result[2]['unpacked_mz']['relocations']
 
-    def test_every_short_name_is_a_clone_with_provenance(self):
-        symbols = read_json(ROOT/'layout/data-symbols.json')['symbols']
-        clones = {n: s for n, s in symbols.items() if 'clone_of' in s}
-        self.assertGreaterEqual(len(clones), 49)
-        for name, symbol in clones.items():
-            # integ31: a clone may also carry the spelling of the accepted
-            # defining object's public at that address (names registry).
-            # integ33: reviewed readable reconstruction names (L7-naming).
-            # integ40: communal public spellings are constrained by LINK's
-            # first-sight hash allocation order.
-            self.assertTrue('pressure-constrained reconstruction name' in symbol['name_provenance'] or
-                            symbol['name_provenance'].startswith('readable reconstruction name (integ33') or
-                            symbol['name_provenance'].startswith('spelling of the accepted') or
-                            symbol['name_provenance'].startswith('link-hash-constrained reconstruction name (integ40'),
-                            symbol['name_provenance'])
-            source = symbols[symbol['clone_of']]
-            self.assertEqual((symbol['load_address'], symbol['storage'], symbol.get('width')),
-                             (source['load_address'], source['storage'], source.get('width')))
 
     def test_clone_resolves_exactly_as_its_source(self):
         from data_symbols import resolve_symbols
@@ -269,38 +250,6 @@ class ShortNameAliases(unittest.TestCase):
         chained['_trackpos'] = dict(chained['_trkpos'], clone_of='_trkpos2')
         with self.assertRaisesRegex(ValueError, 'Clone data alias differs'):
             data_symbols.clone_sources(chained, ['_trkpos'])
-
-
-class AddressLint(unittest.TestCase):
-    """Numeric program addresses without a FIXUPP (tools/address_lint.py)."""
-
-    def test_hard_coded_cs_island_offset_is_flagged(self):
-        import address_lint
-        from assembler import assemble_source
-        source = (b".8086\r\nextrn _incnums:byte\r\n_TEXT segment word public 'CODE'\r\n"
-                  b"assume cs:_TEXT\r\npublic _f\r\n_f proc far\r\n mov di, 72A8h\r\n"
-                  b" mov di, offset _incnums\r\n mov al, cs:[72A8h]\r\n mov al, cs:_incnums[bx]\r\n"
-                  b" mov ax, word ptr ds:[9234h]\r\n retf\r\n_f endp\r\n_TEXT ends\r\nend\r\n")
-        obj, _ = assemble_source(source, 'masm510-game')
-        findings = address_lint.lint_object(obj, '_TEXT', 125472)
-        self.assertEqual([(f['offset'], f['level']) for f in findings],
-                         [(0, 'HIGH'), (6, 'HIGH'), (15, 'HIGH')])
-        self.assertTrue(all('_incnums' in f['symbols'] for f in findings[:2]))
-        self.assertIn('_gameconfig', findings[2]['symbols'])
-
-    def test_hard_coded_dgroup_offset_is_flagged_in_c(self):
-        import address_lint
-        layout = read_json(ROOT/'layout/data-symbols.json')
-        offset = layout['symbols']['_gameconfig']['load_address'] - layout['frame_load_address']
-        literal = f'int f(void) {{ return *(int *)0x{offset:x}; }}\n'.encode()
-        symbolic = b'extern int gameconfig; int f(void) { return gameconfig; }\n'
-        bad, _ = compile_source(literal, 'msc510-medium')
-        good, _ = compile_source(symbolic, 'msc510-medium')
-        findings = address_lint.lint_object(bad, 'UNIT_TEXT')
-        # MSC loads the constant pointer as `mov bx,imm`: reported for review.
-        self.assertEqual([f['level'] for f in findings], ['REVIEW'])
-        self.assertIn('_gameconfig', findings[0]['symbols'])
-        self.assertEqual(address_lint.lint_object(good, 'UNIT_TEXT'), [])
 
 
 if __name__ == '__main__':

@@ -131,7 +131,7 @@
   "original_frame_load_address": 93088,
   "profile": "masm510-game",
   "public": "_audio_add_driver_timer",
-  "source": "tests/fixtures/historical_workers/integ16/audio_add_driver_timer.ASM",
+  "source": "tests/fixtures/asm_frames_and_local_tables/audio_add_driver_timer.ASM",
   "stable_id": "load_16bae",
   "start": 93102,
   "target": {

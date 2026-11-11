@@ -382,7 +382,7 @@
   "object_segment": "_TEXT",
   "profile": "masm510-game",
   "public": "_sub_2EAD4",
-  "source": "tests/fixtures/historical_workers/integ18/sub_2EAD4_group.ASM",
+  "source": "tests/fixtures/composed_asm_fixups/sub_2EAD4_group.ASM",
   "start": 125652,
   "target": {
     "size": 116,

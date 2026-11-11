@@ -96,7 +96,7 @@
   "object_segment": "_TEXT",
   "profile": "masm510-game",
   "public": "_sprite_copy_2_to_1",
-  "source": "tests/fixtures/historical_workers/integ18/sprite_copy_2_to_1.ASM",
+  "source": "tests/fixtures/composed_asm_fixups/sprite_copy_2_to_1.ASM",
   "stable_id": "asm_load_25b14",
   "start": 154388,
   "target": {

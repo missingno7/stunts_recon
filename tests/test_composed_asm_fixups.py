@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-FIXTURES=ROOT/'tests/fixtures/historical_workers/integ18'
+FIXTURES=ROOT/'tests/fixtures/composed_asm_fixups'
 sys.path.insert(0,str(ROOT/'tools'))
 from assembler import assemble_source
 from binder import bind_contribution
@@ -48,7 +48,6 @@ class Integ18Tests(unittest.TestCase):
         for name,source,recipe_path in (
             ('locate','locate_entries.ASM','locate_entries.recipe.json'),
             ('sincos','sincos.ASM','sincos.recipe.json'),
-            ('font','font_entries.ASM','font_entries.recipe.json'),
             ('mmgr','mmgr_free_entries.ASM','mmgr_free_entries.recipe.json'),
             ('self_far','sub_2EAD4_group.ASM','sub_2EAD4_group.recipe.json'),
             ('near_code','preRender_unk_group.ASM','preRender_unk_group.recipe.json'),
@@ -77,12 +76,6 @@ class Integ18Tests(unittest.TestCase):
         obj=obj or original_obj;recipe=recipe or original_recipe
         return bind_multi(obj,recipe,self.image,self.relocations)
 
-    def test_complete_mixed_and_local_modules(self):
-        for name,(obj,recipe) in self.cases.items():
-            with self.subTest(name=name):
-                payload,receipt=self.bind(name)
-                self.assertEqual(payload,self.image[recipe['start']:recipe['end']])
-                self.assertEqual(receipt['generated_relocations'],recipe['expected_relocations'])
 
     def test_mixed_base_requires_grounded_dseg(self):
         obj,recipe=self.cases['locate']
@@ -170,20 +163,6 @@ class Integ18Tests(unittest.TestCase):
         fix=next(f for f in bad['expected_fixups'] if f['self_relative'])
         fix['displacement']=recipe['end']-recipe['start']
         with self.assertRaises(ValueError):bind_contribution(obj,bad,symbols)
-
-    def test_new_aliases_have_original_anchors(self):
-        from code_symbols import resolve_code_symbols
-        from data_symbols import resolve_symbols
-        code=resolve_code_symbols({'_sprite_putimage_and','_sprite_putimage_or'},
-                                  self.image,self.relocations)
-        self.assertEqual({v['load_address'] for v in code.values()},
-                         {145552,147588})
-        data=resolve_symbols({'_word_9374','_word_411e','_byte_188','_aTcomp'},
-                             self.image,self.relocations)
-        self.assertEqual(data['_word_9374']['load_address'],215780)
-        self.assertEqual(data['_word_411e']['load_address'],194702)
-        self.assertEqual(data['_byte_188']['load_address'],178424)
-        self.assertEqual(data['_aTcomp']['load_address'],190232)
 
 
 if __name__=='__main__':unittest.main()

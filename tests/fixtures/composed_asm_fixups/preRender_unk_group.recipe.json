@@ -225,7 +225,7 @@
   "object_segment": "_TEXT",
   "profile": "masm510-game",
   "public": "_preRender_unk",
-  "source": "tests/fixtures/historical_workers/integ18/preRender_unk_group.ASM",
+  "source": "tests/fixtures/composed_asm_fixups/preRender_unk_group.ASM",
   "start": 127962,
   "target": {
     "size": 92,

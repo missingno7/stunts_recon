@@ -1,7 +1,7 @@
 {
   "id": "sincos",
   "kind": "asm",
-  "source": "tests/fixtures/historical_workers/integ18/sincos.ASM",
+  "source": "tests/fixtures/composed_asm_fixups/sincos.ASM",
   "profile": "masm510-game",
   "include_closure": [],
   "assembler_flags": [

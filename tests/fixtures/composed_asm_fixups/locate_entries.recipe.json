@@ -1,7 +1,7 @@
 {
   "id": "locate_entries",
   "kind": "asm",
-  "source": "tests/fixtures/historical_workers/integ18/locate_entries.ASM",
+  "source": "tests/fixtures/composed_asm_fixups/locate_entries.ASM",
   "profile": "masm510-game",
   "include_closure": [],
   "assembler_flags": [

@@ -2,7 +2,7 @@
   "id": "preRender_helper2",
   "stable_id": "asm_load_21a67",
   "kind": "asm",
-  "source": "tests/fixtures/historical_workers/integ16/preRender_helper2.ASM",
+  "source": "tests/fixtures/asm_frames_and_local_tables/preRender_helper2.ASM",
   "profile": "masm510-game",
   "include_closure": [],
   "assembler_flags": [

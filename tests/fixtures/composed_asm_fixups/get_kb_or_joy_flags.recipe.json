@@ -436,7 +436,7 @@
   "object_segment": "_TEXT",
   "profile": "masm510-game",
   "public": "_get_kb_or_joy_flags",
-  "source": "tests/fixtures/historical_workers/integ18/get_kb_or_joy_flags.ASM",
+  "source": "tests/fixtures/composed_asm_fixups/get_kb_or_joy_flags.ASM",
   "stable_id": "load_20538",
   "start": 132408,
   "target": {
