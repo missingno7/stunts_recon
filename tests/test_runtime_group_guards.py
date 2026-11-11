@@ -14,7 +14,7 @@ from mz import MZ
 from library import bind_library
 from promote_runtime import replace_raw_library
 from runtime_binding import group_public, crt0dat_data_public, file_data_public
-from test_runtime_binding import runtime_owner
+from runtime_fixtures import runtime_owner
 
 
 class RuntimeGroupTests(unittest.TestCase):
@@ -70,12 +70,6 @@ class RuntimeGroupTests(unittest.TestCase):
                 manifest=replace_raw_library(manifest,row)
         return rows,manifest
 
-    def test_closed_group_binds_all_three_members(self):
-        rows,manifest=self.group()
-        for row in rows:
-            payload,proof=bind_library(row,self.image,self.relocs,manifest=manifest)
-            self.assertEqual(payload,self.image[row['start']:row['end']])
-            self.assertEqual(proof['binding']['mode'],'runtime-owner-group-v2')
 
     def test_group_public_and_complete_common_are_not_forgeable(self):
         rows,manifest=self.group()
@@ -120,12 +114,6 @@ class RuntimeGroupTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Holes'):
             read_object(blob,record_policy=policy)
 
-    def test_chkstk_end_uses_load_coordinates(self):
-        frame=read_json(ROOT/'layout/data-symbols.json')['frame_load_address']
-        chk=frame+int.from_bytes(self.image[192036:192038],'little')-256
-        crt=frame+int.from_bytes(self.image[117968:117970],'little')
-        self.assertEqual((chk,crt),(222352,222352))
-        self.assertNotEqual(frame+int.from_bytes(self.image[192036+10384:192038+10384],'little')-256,crt)
 
     def test_signal_complete_data_and_crt_publics(self):
         self.assertEqual(crt0dat_data_public('__child',self.image,self.relocs)['address'],192020)

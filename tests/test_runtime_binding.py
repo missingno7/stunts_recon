@@ -16,33 +16,13 @@ from omf import OmfReader
 from oracle import verify
 from mz import MZ
 from object_probe import read_object, _iterated_data
-from runtime_link_probe import reviewed_policy
-from runtime_binding import declarations
+from runtime_fixtures import runtime_owner
 from library import bind_library
 import promote_runtime as promoter
 import transaction
-from test_pipeline import record
+from test_oracle_codecs_and_object_guards import record
 
 
-def runtime_owner(module, public, start, end, archive='MLIBCR.LIB', data=None, storage=None):
-    path = 'toolchain/msc510/'+archive
-    archive_bytes = toolchain_path(path).read_bytes()
-    blobs = [b for n,b in OmfReader().split_library(archive_bytes) if n == module
-             and public in [p['name'] for p in OmfReader().read(b).publics]
-             and OmfReader().read(b).segment_length('_TEXT') == end-start]
-    if len(blobs) != 1: raise AssertionError('Fixture member ambiguous')
-    blob = blobs[0]; policy = reviewed_policy(blob)
-    policy = policy if any(r['overlap_offsets'] for r in policy['records']) else None
-    obj = read_object(blob,ledata_policy=policy)
-    result = {'id':'test_runtime_'+public, 'name':module, 'kind':'KNOWN_TOOLCHAIN_LIBRARY',
-              'classification':'RUNTIME_LIBRARY','profile':'msc510-medium',
-              'library':path,'library_sha256':sha(archive_bytes),'module':module,'module_sha256':sha(blob),
-              'segment':'_TEXT','start':start,'end':end,'publics':obj.publics,'externals':obj.externals,
-              'expected_fixups':obj.linker_fixups,'expected_relocations':[],
-              'binding':{'mode':'runtime-member-v1','declarations':declarations(obj),
-                         'data_bindings':data or {},'storage':storage or {}}}
-    if policy: result['ledata_policy']=policy
-    return result,blob
 
 
 class RuntimeBindingTests(unittest.TestCase):

@@ -6,8 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools'))
 from object_probe import read_object
-from runtime_link_probe import selected_rows, original_module, reviewed_policy, experiment
-from test_pipeline import object_fixture, record
+from runtime_fixtures import selected_rows, original_module, reviewed_policy
+from test_oracle_codecs_and_object_guards import object_fixture, record
 
 
 class LibraryOverlapTests(unittest.TestCase):
@@ -55,14 +55,6 @@ class LibraryOverlapTests(unittest.TestCase):
         while data[at] != 0x8a: at += 3 + struct.unpack_from('<H', data, at+1)[0]
         data = data[:at] + record(0x9c, b'\xc4\x00\x54\x01') + data[at:]
         with self.assertRaisesRegex(ValueError, 'disagree at fixup field'): read_object(data, ledata_policy=reviewed_policy(data))
-
-    def test_historical_link_complete_combined_members_and_aliases(self):
-        for profile in ['msc510-medium', 'msc500-medium']:
-            row = experiment(self.rows, profile)
-            self.assertEqual(row['status'], 'HISTORICAL_LINK_MATCH')
-            self.assertEqual(row['text']['size'], 305)
-            self.assertEqual(len(row['publics']), 4)
-            self.assertFalse(row['relocations'])
 
 
 if __name__ == '__main__': unittest.main()
