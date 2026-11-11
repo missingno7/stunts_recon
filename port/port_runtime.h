@@ -160,6 +160,8 @@ int port_video_debug_capture_enabled(void);
 void port_video_debug_capture(void);
 void port_video_publish(const char *reason);
 void port_video_present(void);
+void port_video_mouse_to_logical(int window_w, int window_h, int output_w,
+    int output_h, float x, float y, int *logical_x, int *logical_y);
 void port_video_request_redraw(int reupload);
 uint8_t port_video_read_status_1(void);
 int port_test_startup_seed_load(const char *path);

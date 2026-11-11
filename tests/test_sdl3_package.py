@@ -33,6 +33,11 @@ class Sdl3PackageTests(unittest.TestCase):
             run_dir = Path(temporary)
             game_folder = run_dir / "Game folder with spaces"
             shutil.copytree(ASSETS, game_folder)
+            # User config files in local assets are not test fixtures. Use a
+            # known existing renderer preference and prove upgrades preserve it.
+            config = game_folder / "config.json"
+            config_content = b'{"manual_word_check":false,"renderer":"modern"}\n'
+            config.write_bytes(config_content)
             # Installing a newer port intentionally replaces its own files.
             # Exercise that upgrade even if the supplied game folder is clean.
             (game_folder / "stunts-sdl3.exe").write_bytes(b"old SDL3 installation")
@@ -63,8 +68,7 @@ class Sdl3PackageTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("AD15 OPL2 output opened through SDL3", result.stderr)
             self.assertNotIn("FILE ERROR", result.stderr)
-            config = game_folder / "config.json"
-            self.assertEqual(json.loads(config.read_text()), {"manual_word_check": False})
+            self.assertEqual(config.read_bytes(), config_content)
             self.assertFalse((other_cwd / "config.json").exists())
             self.assertEqual((game_folder / "saves" / "zzztest.trk").stat().st_size, 0x70A)
             self.assertEqual((game_folder / "saves" / "zzztest.hig").stat().st_size, 0x16C)

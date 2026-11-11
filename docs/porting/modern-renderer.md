@@ -15,6 +15,15 @@ window coordinates to render-output pixels before applying the same rectangle's
 inverse. Bars clamp to the logical edges. Minimized/zero-size surfaces map to
 the origin. No game projection or framebuffer byte is changed.
 
+Alt+Enter (including keypad Enter and either Alt key) toggles desktop borderless
+fullscreen on the current monitor for both renderers. SDL restores the windowed
+geometry on exit. The shortcut is consumed by the host, including repeats and
+the Enter release after Alt has been released. Fullscreen and resize events
+invalidate the host presentation; the game continues through its usual frame
+publication path. `tests/test_sdl3_fullscreen.py` checks desktop mode, monitor
+bounds, restored geometry and key routing with SDL's dummy and Windows backends;
+the Windows check also verifies the native window has no caption or resize frame.
+
 `tests/test_sdl3_viewport.py` checks exact reference rectangles and every logical
 pixel centre across 4:3, wide, portrait, fractional HiDPI and small outputs.
 The existing framebuffer/F12 capture checks still exercise raw 320×200 pixels.
@@ -122,8 +131,16 @@ At 960×720, x scales by 3 and y by 3.6, preserving the intended 4:3 display.
 For wider windows at the same height, those scales stay constant; only the
 horizontal clip expands. Dashboard views use the original height-dependent
 half-angle and center (e.g. 35,151/6,320,151); they are not replaced with an
-estimated uniform field of view. Roof/dashboard assets occlude a full world
-layer in the central composition, so side areas show world behind that UI.
+estimated uniform field of view. The world renders behind the cockpit assets.
+In widescreen modern mode, the roof and dashboard bands scale uniformly from
+their corrected 4:3 display size until they span the output width. Their inner
+edges stay at the published windscreen top/bottom: the enlarged roof extends
+above the viewport and the dashboard extends below it, where SDL crops them.
+This preserves the visible vertical extent and the world projection. Transparent
+cockpit pixels remain transparent; UI within the windscreen retains its original
+placement. Mouse hit testing in the widened bands inverts that same transform
+using the displayed snapshot, so clickable HUD controls follow their artwork.
+At 4:3 and narrower, the original whole-UI composition is retained.
 
 The z=12 near plane and fixed-word intersections are retained initially.
 Separate integer reference projection reproduces clipped adjacent-point
@@ -135,8 +152,16 @@ Z sort would be incorrect.
 The expanded 1,124-fixture differential now checks camera command type,
 material, depth, painter chain and independently projected reference points
 against the locked DOS records, alongside unchanged full frame/pool equality.
-Native probes prove fractional edge placement and identical central 4:3
-composition at 960×720, 1280×720 and 1680×720; UI does not extend sideways.
+Native probes prove fractional edge placement and identical central world
+projection at 960×720, 1280×720 and 1680×720. A separate cockpit probe checks
+uniform scale-to-width, outward cropping, alpha holes, fixed windscreen
+clearance and unchanged in-world HUD placement, including fractional and
+portrait output sizes.
+The 2026-10-03 cockpit overscan run passed 837 tests without skips, all 90
+independent DOSBox-X contribution checks, fresh `HYBRID_EXACT` equality and the
+BSS/runtime link gate. A real GPU capture at 1680×720 verified the full-width
+cockpit composition. The live cross-aspect tests retained identical matching
+GAMESTATE bytes and authoritative indexed frames/palettes.
 `--window=WIDTHxHEIGHT --hidden --render-capture-dir=PATH` supports automated
 native capture. It writes a native BMP and exact indexed FBR for the same
 published frame, with output size and both command counts in a sidecar.
@@ -172,9 +197,9 @@ modern 4:3, 16:9 and 21:9. At least 100 matching live-frame state snapshots and
 90 matching faithful framebuffers/palettes must be byte-identical in every run.
 No timing, physics or authoritative input code is changed.
 
-Native pixel probes require the central 960×720 composition to be identical
-at 960, 1280 and 1680 output widths with constant height, and verify side-world
-coverage below the central dashboard. The production camera converter's
+Native pixel probes require the central world to be identical at 960, 1280
+and 1680 output widths with constant height. The cockpit covers the full width
+within its original visible vertical bands. The production camera converter's
 reference-accepted subsequence is checked against all 1,124 DOS shape fixtures.
 The full historical validation remains a separate mandatory gate.
 
@@ -223,7 +248,7 @@ maps that atlas to a cylinder with angular direction
 `theta = (u - center_x - 512 + yaw) * 2*pi/1024`, then applies the captured
 column-major Q14 pitch/roll matrix. Vertical height uses the recovered focal
 scale and the original 15000-unit horizon distance. Original bitmap content
-is retained with linear sampling; no new scenery texture is invented. Small
+is retained with nearest-neighbour sampling; no new scenery texture is invented. Small
 angular/vertical cells and native frustum clipping avoid the DOS scanline
 rotation approximation. Sky/ground bands use the camera world-up halfplane,
 including straight-up/down and rolled views. The angular projection is an
@@ -259,3 +284,28 @@ the real-link BSS/runtime gates. Historical ownership remains unchanged:
 C 154,618 bytes, ASM 36,552 bytes, pinned runtime 8,768 bytes, and zero raw
 initialized or BSS bytes. These are finite regression results, not a claim
 that every possible runtime scene has been exhaustively covered.
+
+## Native table continuation at track corners
+
+Three subsequent debug sessions stopped at the null-shape guard. Instrumented
+replay of the shortest session resolved the submission to a boundary fence:
+`fence_codes[1] = 215`, LOD 2, at track column 29 and row 0. The original
+`trklst[215]` expression is a DOS data-layout alias. The locked symbol map puts
+`trklst` at load address 186376 for 215 fourteen-byte records, `scene2` directly
+after it at 189386 for 19 records, and `scene3` at 189652 for 13 records.
+Thus index 215 selects `scene2[0]`, whose original models are `g_shapes3d[108]`
+and `g_shapes3d[109]`. The native globals were separate and padded; reading
+past `trklst` selected neither model.
+
+The generated host consumer now resolves this index space explicitly across
+the three tables, for both faithful and modern passes and the track preview.
+It preserves every source initializer, geometry choice, LOD and material.
+Unknown indices fail explicitly. This also covers overlay indices 222–225.
+The new scene-table regression compares model pointers, rotation and all six
+scalar attributes for all 247 rows against the immutable DOS load image.
+No historical source, declaration, ownership or expected image is changed.
+
+The JSON renderer setting is available in older user configs by adding
+`"renderer": "modern"` or `"renderer": "faithful"`; a command-line renderer
+argument overrides it. Existing files remain preserved rather than being
+automatically rewritten. Native panorama sampling defaults to nearest-neighbour.

@@ -38,6 +38,9 @@ class ModernRendererTests(unittest.TestCase):
     def test_native_panorama_yaw_roll_pitch_and_horizontal_extension(self):
         self.run_probe("sky_probe.c", ["renderer_modern.c", "triangulate2d.c", "modern_wheel.c", "renderer_scene.c", "edge_chain_tessellator.c"], True)
 
+    def test_cockpit_uniform_width_scale_crop_and_world_clearance(self):
+        self.run_probe("cockpit_probe.c", ["renderer_modern.c", "triangulate2d.c", "modern_wheel.c", "renderer_scene.c", "edge_chain_tessellator.c"], True)
+
     def test_modern_scene_and_gpu_failure_never_present_faithful_world(self):
         compiler = compiler_path()
         self.assertIsNotNone(compiler)

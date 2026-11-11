@@ -525,6 +525,19 @@ void port_video_request_redraw(int reupload)
     }
 }
 
+void port_video_mouse_to_logical(int window_w, int window_h, int output_w,
+    int output_h, float x, float y, int *logical_x, int *logical_y)
+{
+#ifdef PORT_RENDER_INSTRUMENT
+    if (port_render_mode()==2 && s_present_layer.valid) {
+        port_viewport_cockpit_mouse(window_w,window_h,output_w,output_h,x,y,
+            s_present_layer.clip[2],s_present_layer.clip[3],logical_x,logical_y);
+        return;
+    }
+#endif
+    port_viewport_mouse(window_w,window_h,output_w,output_h,x,y,logical_x,logical_y);
+}
+
 void port_video_shutdown(void)
 {
 #ifdef PORT_RENDER_INSTRUMENT

@@ -26,6 +26,8 @@ int main(void)
     SDL_Renderer *r=SDL_CreateSoftwareRenderer(surface);PortModernBackend b;
     check(r&&port_modern_init(&b,r));
     check(port_modern_compose(&b,NULL,0,NULL,0,layer,frame,palette,1680,720));
+    SDL_ScaleMode sampling;
+    check(SDL_GetTextureScaleMode(b.panorama,&sampling) && sampling==SDL_SCALEMODE_NEAREST);
     check(sample(r,840,330)==0x0000ff); /* forward panorama */
     check(sample(r,30,330)==0x00ff00); /* distinct extra horizontal world */
     check(sample(r,840,650)==0xffff00); /* native ground */

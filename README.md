@@ -16,7 +16,9 @@ The native SDL3 game is developed separately on `portable-sdl3`. Build with
 next to itself. See the [SDL3 handoff](docs/porting/HANDOFF.md) for toolchain,
 runtime coverage and validation details.
 The resizable window defaults to 960×720: the original 320×200 grid is presented
-at its intended 4:3 display aspect. Run with `--renderer=modern` for native world
+at its intended 4:3 display aspect. Alt+Enter toggles borderless fullscreen on
+the current monitor and restores the previous window size and position on exit.
+Run with `--renderer=modern` for native world
 polygons and additional horizontal visibility in widescreen, or
 `--renderer=faithful` for the exact indexed reference (the default). The JSON
 `renderer` setting accepts these same names. See the
@@ -27,6 +29,19 @@ extract `build/sdl3/stunts-sdl3-win32.zip` into the game folder, and launch
 First launch creates `config.json` beside the executable with
 `"manual_word_check": false`. Set it to `true` and restart to restore the
 original manual-word prompt. Upgrades preserve your existing config.
+To select the native renderer without a command-line flag, add the renderer
+setting to that file (older configs may contain only `manual_word_check`):
+
+```json
+{
+  "manual_word_check": false,
+  "renderer": "modern"
+}
+```
+
+Use `"renderer": "faithful"` for the indexed reference. A `--renderer=...`
+argument overrides the JSON setting for that launch. The native scenery
+panorama uses nearest-neighbour sampling, preserving the original pixel art.
 Crash reports go into the executable's `diagnostics` directory. Launch with
 `stunts-sdl3.exe --debug` to also record detailed logs and gameplay/input traces;
 ZIP the newest diagnostics session after a failure. See the SDL3 handoff for details.

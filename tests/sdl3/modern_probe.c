@@ -89,7 +89,7 @@ int main(void)
         SDL_DestroyRenderer(r);SDL_DestroySurface(surface);
     }
 
-    /* Same camera snapshot, central composition and UI at three aspect ratios.
+    /* Same camera snapshot and central world at three aspect ratios.
        Side polygons were never quantized or admitted by a 320-wide viewport. */
     assert(port_render_set_mode("modern"));
     SDL_Surface *baseline=NULL;
@@ -129,19 +129,18 @@ int main(void)
         if (!baseline) baseline=SDL_DuplicateSurface(read);
         else {
             assert(read->format==baseline->format);
-            for (int y=0;y<720;++y)
+            for (int y=0;y<543;++y)
                 assert(!memcmp((uint8_t *)baseline->pixels+y*baseline->pitch,
                                (uint8_t *)read->pixels+y*read->pitch+margin*4,960*4));
         }
         uint8_t red,green,blue,alpha;
-        /* Dashboard stays central; the extra area contains native world below
-           the old windscreen selection bottom rather than extended UI. */
+        /* Dashboard spans the full width while its inner edge stays at the
+           original windscreen boundary. World projection remains unchanged. */
         if (margin) {
             assert(SDL_ReadSurfacePixel(read,margin-75,600,&red,&green,&blue,&alpha));
-            assert(red==255&&green==0&&blue==0);
+            assert(red==0&&green==255&&blue==0);
             assert(SDL_ReadSurfacePixel(read,margin-10,600,&red,&green,&blue,&alpha));
-            if (!(red==0&&green==0&&blue==255)) fprintf(stderr,"side background %u %u %u at width%d\n",red,green,blue,w);
-            assert(red==0&&green==0&&blue==255);
+            assert(red==0&&green==255&&blue==0);
         }
         /* Left boundary is x=153.5, giving a half-logical-pixel edge. */
         assert(SDL_ReadSurfacePixel(read,margin+461,240,&red,&green,&blue,&alpha));

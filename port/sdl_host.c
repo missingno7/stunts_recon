@@ -12,6 +12,20 @@ void port_sdl_hidden_window(void) { s_hidden=1; }
 void port_sdl_initial_size(int width,int height)
 { s_initial_width=width;s_initial_height=height; }
 static int s_quit;
+static unsigned s_fullscreen_keys;
+
+static void toggle_fullscreen(void)
+{
+    bool fullscreen = !(SDL_GetWindowFlags(s_window) & SDL_WINDOW_FULLSCREEN);
+    /* NULL selects desktop borderless mode, without changing the display mode.
+       SDL preserves the windowed geometry for restoration on exit. */
+    if ((fullscreen && !SDL_SetWindowFullscreenMode(s_window, NULL)) ||
+        !SDL_SetWindowFullscreen(s_window, fullscreen)) {
+        SDL_Log("Fullscreen toggle failed: %s", SDL_GetError());
+        return;
+    }
+    port_video_request_redraw(0);
+}
 
 static void mouse_to_logical(float x, float y, int *logical_x, int *logical_y)
 {
@@ -21,13 +35,14 @@ static void mouse_to_logical(float x, float y, int *logical_x, int *logical_y)
     int output_h = 0;
     SDL_GetWindowSize(s_window, &window_w, &window_h);
     SDL_GetRenderOutputSize(s_renderer, &output_w, &output_h);
-    port_viewport_mouse(window_w, window_h, output_w, output_h,
+    port_video_mouse_to_logical(window_w, window_h, output_w, output_h,
                         x, y, logical_x, logical_y);
 }
 
 void port_sdl_init(const char *title)
 {
     s_quit = 0;
+    s_fullscreen_keys = 0;
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
     s_window = SDL_CreateWindow(title, s_initial_width, s_initial_height,
@@ -69,13 +84,31 @@ int port_sdl_poll(void)
                    event.type == SDL_EVENT_WINDOW_RESTORED ||
                    event.type == SDL_EVENT_WINDOW_SHOWN ||
                    event.type == SDL_EVENT_WINDOW_MAXIMIZED ||
+                   event.type == SDL_EVENT_WINDOW_ENTER_FULLSCREEN ||
+                   event.type == SDL_EVENT_WINDOW_LEAVE_FULLSCREEN ||
                    event.type == SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED) {
             port_video_request_redraw(0);
         } else if (event.type == SDL_EVENT_RENDER_TARGETS_RESET ||
                    event.type == SDL_EVENT_RENDER_DEVICE_RESET) {
             port_video_request_redraw(1);
         } else if (event.type == SDL_EVENT_WINDOW_FOCUS_LOST) {
+            s_fullscreen_keys = 0;
             port_input_handle_event(event.type, 0, 0);
+        } else if ((event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP) &&
+                   (event.key.scancode == SDL_SCANCODE_RETURN ||
+                    event.key.scancode == SDL_SCANCODE_KP_ENTER)) {
+            unsigned key = event.key.scancode == SDL_SCANCODE_RETURN ? 1u : 2u;
+            if (event.type == SDL_EVENT_KEY_DOWN &&
+                ((event.key.mod & SDL_KMOD_ALT) || (s_fullscreen_keys & key))) {
+                if (!event.key.repeat && !(s_fullscreen_keys & key))
+                    toggle_fullscreen();
+                s_fullscreen_keys |= key;
+            } else if (event.type == SDL_EVENT_KEY_UP && (s_fullscreen_keys & key)) {
+                s_fullscreen_keys &= ~key;
+            } else {
+                port_input_handle_event(event.type, event.key.scancode,
+                    event.type == SDL_EVENT_KEY_DOWN && event.key.repeat ? 1 : 0);
+            }
         } else if ((event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP) &&
                    event.key.scancode == SDL_SCANCODE_F12 &&
                    port_video_debug_capture_enabled()) {

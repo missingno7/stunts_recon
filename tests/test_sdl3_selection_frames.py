@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build/sdl3"
 FIXTURES = ROOT / "tests/fixtures/sdl3/original_replay"
 LABELS = ("car-countach", "track-default", "opponent-clock")
-RUN_MS = 34_000
+RUN_MS = 38_000
 
 
 def references():
@@ -63,13 +63,17 @@ def write_input(path):
     # Move from Next to Done before pressing it.
     mouse(24.8, 279, 115)
     key(25, 1)
-    mouse(26, 218, 100, 1)
-    mouse(26.15, 218, 100)
-    mouse(26.5, 191, 139)
+    # The recovered mouse activation uses held-button repeat timing.
+    # Hover to select, then use a queued Enter instead of a 150 ms pulse.
+    mouse(26, 218, 100)
+    key(26.3, 28)
+    mouse(28, 191, 139)
     key(29, 1)
-    mouse(30, 40, 144, 1)
-    mouse(30.15, 40, 144)
-    mouse(30.5, 191, 139)
+    mouse(30, 40, 144)
+    key(30.3, 28)
+    # Keep the selected hitbox stable while the guest consumes Enter.
+    # A move onto the main-menu Drive hitbox must follow that transition.
+    mouse(33, 191, 139)
     path.write_text(json.dumps({"format": "portforge-exact-input-script-v1",
                                 "anchor_tick": 0, "events": events}) + "\n")
 

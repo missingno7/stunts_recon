@@ -294,9 +294,8 @@ int port_modern_draw_camera(PortModernBackend *b, const PortNativeCommand *comma
         }
         PortRenderCommand paint=c->paint;
         paint.point_count=c->geometry.point_count;
-        /* UI covers the legacy selection box outside the windscreen. Render
-           behind it as well, so wide side areas contain world, never a
-           horizontally extended dashboard. Projection framing stays fixed. */
+        /* Render the complete world behind the independently composited
+           cockpit bands. Projection framing stays fixed. */
         paint.clip[0]=-32768;paint.clip[1]=32767;
         paint.clip[2]=0;paint.clip[3]=200;
         double radius=c->geometry.radius*c->projection.scale_x/c->geometry.xyz[0].z;
@@ -396,7 +395,7 @@ static int draw_native_sky(PortModernBackend *b,const PortSkyView *s,
         }
         b->sky_rgba[i*4+3]=255;
     }
-    if (!SDL_SetTextureScaleMode(b->panorama,SDL_SCALEMODE_LINEAR) ||
+    if (!SDL_SetTextureScaleMode(b->panorama,SDL_SCALEMODE_NEAREST) ||
         !SDL_UpdateTexture(b->panorama,NULL,b->sky_rgba,PORT_SKY_WIDTH*4)) return 0;
     b->vertices=0;
     SDL_FColor white={1,1,1,1};
@@ -418,6 +417,43 @@ static int draw_native_sky(PortModernBackend *b,const PortSkyView *s,
         }
     }
     return !b->vertices || SDL_RenderGeometry(b->renderer,b->panorama,b->mesh,(int)b->vertices,NULL,0);
+}
+
+static int draw_ui(PortModernBackend *b, const PortRenderLayer *layer,
+                   PortViewport v, int width)
+{
+    SDL_FRect destination={v.x,v.y,v.w,v.h};
+    if (port_render_mode()!=2 || width<=v.w || v.w<=0 || v.h<=0)
+        return SDL_RenderTexture(b->renderer,b->ui,NULL,&destination);
+
+    int top=layer->clip[2], bottom=layer->clip[3];
+    if (top<0) top=0;
+    if (top>200) top=200;
+    if (bottom<top) bottom=top;
+    if (bottom>200) bottom=200;
+    float scale=(float)width/v.w;
+    /* Keep the inner edges of the cockpit at their reference heights. The
+       scaled roof overflows above the viewport; the dashboard overflows
+       below it. Both use the same additional x/y scale after pixel-aspect
+       correction. Transparent pixels still reveal the expanded world. */
+    if (top>0) {
+        SDL_FRect source={0,0,320,(float)top};
+        float h=top*v.h/200*scale;
+        SDL_FRect target={0,v.y+top*v.h/200-h,(float)width,h};
+        if (!SDL_RenderTexture(b->renderer,b->ui,&source,&target)) return 0;
+    }
+    if (bottom>top) {
+        SDL_FRect source={0,(float)top,320,(float)(bottom-top)};
+        SDL_FRect target={v.x,v.y+top*v.h/200,v.w,(bottom-top)*v.h/200};
+        if (!SDL_RenderTexture(b->renderer,b->ui,&source,&target)) return 0;
+    }
+    if (bottom<200) {
+        SDL_FRect source={0,(float)bottom,320,(float)(200-bottom)};
+        SDL_FRect target={0,v.y+bottom*v.h/200,(float)width,
+                          (200-bottom)*v.h/200*scale};
+        if (!SDL_RenderTexture(b->renderer,b->ui,&source,&target)) return 0;
+    }
+    return 1;
 }
 
 int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size_t count,
@@ -459,6 +495,5 @@ int port_modern_compose(PortModernBackend *b, const PortRenderCommand *cmd, size
             !port_modern_draw_camera(b,native,native_count,palette,width,height)) return 0;
     } else if (!SDL_RenderTexture(b->renderer,b->background,NULL,&destination) ||
         !port_modern_draw_projected(b,cmd,count,palette,width,height)) return 0;
-    if (!SDL_RenderTexture(b->renderer,b->ui,NULL,&destination)) return 0;
-    return 1;
+    return draw_ui(b,layer,v,width);
 }

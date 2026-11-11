@@ -16,6 +16,7 @@ import zipfile
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 from render.tile_adapter import adapt_update_frame, adapt_trans_op
+from render.scene_table_adapter import adapt_scene_table_indices
 from render.camera_adapter import inject as adapt_camera_capture
 from render.legacy_adapter import adapt_render_stream, adapt_render_layers
 
@@ -589,6 +590,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                                               "file_read_nofatal(first, second)")
         transformed = transformed.replace("((int16_t (*)())call_read_line)", "port_call_read_line")
         if source == "src/obj_seg003.c":
+            transformed = adapt_scene_table_indices(transformed)
             transformed = adapt_update_frame(transformed)
         transformed = probe.rewrite_calls(transformed, "call_read_line", "rename:port_call_read_line")
         transformed = "extern int16_t port_call_read_line(char *, int16_t, int16_t, int16_t, int32_t);\n" + transformed
@@ -982,8 +984,11 @@ def package(args) -> Path:
         "\"manual_word_check\": true in config.json and restart the game.\n"
         "Upgrades preserve your existing config.json.\n\n"
         "The default resizable window is 960x720 (the intended 4:3 display).\n"
+        "Alt+Enter toggles borderless fullscreen on the current monitor;\n"
+        "toggle again to restore the previous window size and position.\n"
         "Use --renderer=modern for native-resolution world polygons and\n"
-        "horizontal widescreen extension around the original dashboard.\n"
+        "horizontal widescreen world expansion. Cockpit bands scale uniformly\n"
+        "to the screen width and crop outward, preserving windscreen clearance.\n"
         "Use --renderer=faithful for the exact indexed visual reference.\n"
         "You can also set \"renderer\": \"modern\" in config.json.\n\n"
         "Crash diagnostics are saved in diagnostics beside this executable.\n"

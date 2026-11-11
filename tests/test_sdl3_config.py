@@ -98,6 +98,27 @@ class Sdl3ConfigTests(unittest.TestCase):
         self.assertEqual(self.probe_file(self.root), (0, 0))
         self.assertTrue(self.root.is_dir())
 
+    def test_renderer_json_choices_defaults_and_invalid_values(self):
+        path = self.root / "renderer.json"
+        cases = [
+            (b'{"renderer":"modern","manual_word_check":false}', "modern", 1),
+            (b'{"renderer":"faithful"}', "faithful", 1),
+            (b'{"manual_word_check":false}', "faithful", 1),
+            (b'{"nested":{"renderer":"modern"}}', "faithful", 1),
+            (b'{"renderer":"projected"}', "faithful", 0),
+            (b'{"renderer":true}', "faithful", 0),
+            (b'{"renderer":"modern","renderer":"faithful"}', "faithful", 0),
+        ]
+        for content, renderer, loaded in cases:
+            with self.subTest(content=content):
+                path.write_bytes(content)
+                result = subprocess.run([str(self.probe), str(path), "renderer"],
+                    env=self.environment, capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout.strip(), renderer)
+                self.assertEqual(self.probe_file(path), (loaded, 0))
+                self.assertEqual(path.read_bytes(), content)
+
     def test_live_game_skips_by_default_and_restores_manual_prompt(self):
         assert_build_ready()
         with tempfile.TemporaryDirectory(prefix="stunts-config-game-") as temporary:
@@ -131,6 +152,27 @@ class Sdl3ConfigTests(unittest.TestCase):
                     self.assertEqual(json.loads(config.read_text()),
                                      ({"manual_word_check": True} if enabled else
                                       {"manual_word_check": False, "renderer": "faithful"}))
+
+    def test_game_uses_renderer_json_and_command_line_override(self):
+        assert_build_ready()
+        with tempfile.TemporaryDirectory(prefix="stunts-renderer-config-") as temporary:
+            root = Path(temporary)
+            config = root / "config.json"
+            content = b'{"manual_word_check":false,"renderer":"modern"}\n'
+            config.write_bytes(content)
+            for extra, expected in (([], "modern"), (["--renderer=faithful"], "faithful")):
+                with self.subTest(renderer=expected):
+                    diagnostics = root / expected
+                    result = subprocess.run([
+                        str(EXECUTABLE), f"--config={config}", f"--assets={ASSETS}",
+                        f"--diagnostics-dir={diagnostics}", "--hidden",
+                        f"--test-startup-seed={STARTUP_SEED}", "--run-ms=500", *extra,
+                    ], cwd=root, env=self.environment, capture_output=True, text=True, timeout=15)
+                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                    logs = list(diagnostics.glob("*/session.log"))
+                    self.assertEqual(len(logs), 1)
+                    self.assertIn(f"\nrenderer={expected}\n", logs[0].read_text(encoding="utf-8"))
+                    self.assertEqual(config.read_bytes(), content)
 
 
 if __name__ == "__main__":
