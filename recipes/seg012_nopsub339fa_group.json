@@ -74,7 +74,7 @@
     {
       "end": 145950,
       "name": "nopsub_339FA",
-      "public": "_nopsub_339FA",
+      "public": "_shape2d_and_bitmap_hotspot",
       "stable_id": "load_239fa",
       "start": 145914,
       "target": {
@@ -101,13 +101,13 @@
     "groups": [],
     "publics": [
       {
-        "name": "_nopsub_339FA",
-        "offset": 0,
+        "name": "_putpixel_iconMask",
+        "offset": 36,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_putpixel_iconMask",
-        "offset": 36,
+        "name": "_shape2d_and_bitmap_hotspot",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

@@ -16,48 +16,48 @@ static U8 saved_effect_chunk_volumes[24];
 /* PORT: Packed audio records depend on 16-bit far-pointer width and MSC field packing. */
 #pragma pack(1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *data;                 /* 00 */
-    U8 unk04;            /* 04 */
-    I8 FAR *unk05;                /* 05 */
-    U8 unk09[12];        /* 09 */
-    U8 unk15;            /* 15 */
-    U8 unk16;            /* 16 */
+    I8 FAR *event_pos;                 /* 00 */
+    U8 call_depth;            /* 04 */
+    I8 FAR *restart_pos;                /* 05 */
+    U8 return_stack_tail[12];        /* 09 */
+    U8 active_voices;            /* 15 */
+    U8 max_voices;            /* 16 */
     U8 unk17;            /* 17 */
-    I32 unk18;                     /* 18 */
+    I32 event_delay;                     /* 18 */
     U8 unk1C;            /* 1C */
     U8 unk1D;            /* 1D */
-    I32 unk1E;                     /* 1E */
-    U8 unk22;            /* 22 */
+    I32 sample_data;                     /* 1E */
+    U8 velocity;            /* 22 */
     U8 index;            /* 23 */
     U8 priority;         /* 24 */
-    U8 unk25;            /* 25 */
-    I16 unk26;                      /* 26 */
+    U8 sustain_mode;            /* 25 */
+    I16 pitch_bend;                      /* 26 */
     U8 volume;           /* 28 */
-    U8 unk29;            /* 29 */
+    U8 driver_parameter_29;            /* 29 */
     U8 unk2A;            /* 2A */
-    U8 unk2B;            /* 2B */
-    U8 unk2C;            /* 2C */
+    U8 driver_parameter_2b;            /* 2B */
+    U8 driver_parameter_2c;            /* 2C */
     U8 unk2D;            /* 2D */
-    I8 FAR *unk2E;                /* 2E */
-    U8 unk32;            /* 32 */
-    U8 unk33[20];        /* 33 */
-    U8 unk47;            /* 47 */
-    I32 unk48;                     /* 48 */
+    I8 FAR *sample_table;                /* 2E */
+    U8 loop_depth;            /* 32 */
+    U8 loop_state[20];        /* 33 */
+    U8 channel_number;            /* 47 */
+    I32 end_callback;                     /* 48 */
 };
 #pragma pack()
 /* READABILITY: Load and drive the DOS audio module, schedule its timer callback, and resolve audio resources. */
 
 struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 unk00;            /* 00 */
+    U8 resource_index;            /* 00 */
     U8 state;            /* 01 */
-    U8 unk02;            /* 02 */
-    U8 unk03[5];         /* 03 */
+    U8 priority;            /* 02 */
+    U8 driver_note_pitch[5];         /* 03 */
     I32 position;                  /* 08 */
     I32 length;                    /* 0C */
-    I32 unk10;                     /* 10 */
-    U8 unk14[22];        /* 14 */
-    I16 unk2A;                      /* 2A */
-    U8 unk2C;            /* 2C */
+    I32 sample_data;                     /* 10 */
+    U8 envelope_modulation_state[22];        /* 14 */
+    I16 owner_chunk;                      /* 2A */
+    U8 channel_number;            /* 2C */
     U8 unk2D;            /* 2D */
 };
 
@@ -84,7 +84,7 @@ void far *resource_sound_hit;
 
 
 void FAR * FAR audioresource_find(void FAR *resource, I8 *name);
-void FAR audio_unk2(I16 index, U8 value);
+void FAR audio_set_chunk_volume(I16 index, U8 value);
 void FAR audio_driver_func1E(I16 first, I16 last);
 void FAR reset_audio_event_state(void);
 I8 * FAR audio_make_filename(I8 *name, I8 *ext, I8 *kind);
@@ -102,9 +102,9 @@ void FAR timer_reg_callback(void (FAR *callback)(void));
 void FAR timer_remove_callback(void (FAR *callback)(void));
 void FAR audiodriver_timer(void);
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR timer_copy_counter(I32 ticks);
+void FAR setticks(I32 ticks);
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR timer_wait_for_dx(void);
+void FAR waitticks(void);
     /* PLATFORM(file): resolve an audio resource entry in the loaded bundle. */
 void FAR * FAR locate_shape_nofatal(void FAR *shapes, I8 *name);
 I16 FAR audioresource_get_chunk_index(I16 start, I16 count, I8 *name, I8 FAR *names);
@@ -194,7 +194,7 @@ void FAR load_audio_finalize(void FAR *song)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): dispatch the prepared volume command into the DOS sound driver. */
-void FAR audio_unk(void)
+void FAR audio_pause_playback(void)
 {
     struct AUDIOVOICE *channel;
     I16 i;
@@ -205,7 +205,7 @@ void FAR audio_unk(void)
         for (i = 0; i < 24; i++) {
             if (audioflag6 == 1 || i < 16) {
                 saved_music_chunk_volumes[i] = audiochunktable[i].volume;
-                audio_unk2(i, 0);
+                audio_set_chunk_volume(i, 0);
             }
         }
     } else {
@@ -217,7 +217,7 @@ void FAR audio_unk(void)
         for (i = 0; i < 16; i++) {
             channel = &snd_voices_tbl[i];
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
-            ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x27))(channel->unk2C, channel, channel->unk2A, channel->unk10);
+            ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x27))(channel->channel_number, channel, channel->owner_chunk, channel->sample_data);
         }
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x30))(snd_voices_tbl);
@@ -238,7 +238,7 @@ void FAR restore_audio_volume(void)
     if (audio_driver_mode == 0) {
         for (i = 0; i < 24; i++) {
             if (audioflag6 == 1 || i < 16)
-                audio_unk2(i, saved_music_chunk_volumes[i]);
+                audio_set_chunk_volume(i, saved_music_chunk_volumes[i]);
         }
     } else {
         audio_driver_volume_command[3] = 100;
@@ -264,19 +264,19 @@ void FAR audio_enable_flag2(void) { audioflag2 = 1; }
 void FAR audio_disable_flag2(void) { audioflag2 = 0; audio_update_lock = 1; if (block_audio_num) { audio_driver_func1E(0, block_audio_num - 1); } reset_audio_event_state(); audio_update_lock = 0; }
 I16 FAR audio_toggle_flag2(void) { if (audioflag2 == 1) { audio_disable_flag2(); return 0; } audio_enable_flag2(); return 1; }
 
-I16 FAR nopsub_373FE(void)
+I16 FAR audio_music_is_idle(void)
 {
     I16 i;
     if (audio_pause_in_progress == 1 || audioflag2 == 0)
         return 1;
     for (i = 0; i < block_audio_num; i++)
-        if (audiochunktable[i].data != 0)
+        if (audiochunktable[i].event_pos != 0)
             return 0;
     return 1;
 }
 
 I16 FAR audio_check_flag2(void FAR *res, I16 chunk, U8 priority);
-I16 FAR nopsub_37456(void FAR *res)
+I16 FAR audio_play_resource_default(void FAR *res)
 {
     return audio_check_flag2(res, -1, 0x40);
 }
@@ -287,7 +287,7 @@ I16 FAR reserve_audio_chunk(I16 chunk, U8 priority)
     if (chunk == -1) {
         for (i = 16; i <= 23; i++) {
             if (chunk == -1) {
-                if (audiochunktable[i].data == 0 && audiochnk_actflags[i] == 0)
+                if (audiochunktable[i].event_pos == 0 && audiochnk_actflags[i] == 0)
                     chunk = i;
             } else
                 break;
@@ -335,7 +335,7 @@ I16 FAR audio_check_flag(void FAR *res, I16 chunk, U8 priority, U16 volume)
     if (chunk == -1) {
         for (i = 16; i <= 23; i++) {
             if (chunk == -1) {
-                if (audiochunktable[i].data == 0 && audiochnk_actflags[i] == 0)
+                if (audiochunktable[i].event_pos == 0 && audiochnk_actflags[i] == 0)
                     chunk = i;
             } else
                 break;
@@ -365,7 +365,7 @@ I16 FAR audio_check_flag(void FAR *res, I16 chunk, U8 priority, U16 volume)
 void FAR audio_init_chunk2(I16 chunk)
 {
     if (chunk < 16 || chunk > 23) return;
-    audiochunktable[chunk].data = 0;
+    audiochunktable[chunk].event_pos = 0;
     audio_driver_func1E(chunk, chunk);
     audio_init_chunk(chunk, chunk, 0, 0, sfx_audio_vol, 0);
 }
@@ -375,7 +375,7 @@ void FAR audio_enable_flag6(void)
     I16 i;
     if (audioflag6 != 1) {
         for (i = 16; i < 24; i++)
-            audio_unk2(i, saved_effect_chunk_volumes[i]);
+            audio_set_chunk_volume(i, saved_effect_chunk_volumes[i]);
         audioflag6 = 1;
     }
 }
@@ -386,7 +386,7 @@ void FAR audio_disable_flag6(void)
     if (audioflag6 != 0) {
         for (i = 16; i < 24; i++) {
             saved_effect_chunk_volumes[i] = audiochunktable[i].volume;
-            audio_unk2(i, 0);
+            audio_set_chunk_volume(i, 0);
         }
         audioflag6 = 0;
     }
@@ -406,13 +406,13 @@ I16 FAR audio_chunk_is_unavailable(I16 chunk)
 {
     if (audioflag6 == 0) return 1;
     if (chunk < 16 || chunk > 23) return 1;
-    if (audiochunktable[chunk].data == 0) return 1;
+    if (audiochunktable[chunk].event_pos == 0) return 1;
     return 0;
 }
 
-void FAR nopsub_37750(U16 chunk, I32 value)
+void FAR audio_set_chunk_callback(U16 chunk, I32 value)
 {
-    audiochunktable[chunk].unk48 = value;
+    audiochunktable[chunk].end_callback = value;
 }
 
 /* Change the driver volume while waiting against the game timer.
@@ -430,9 +430,9 @@ void FAR audio_driver_func3F(I16 ticks)
             set_all_audio_chunk_volume(counter);
             audio_update_lock = 0;
     /* PLATFORM(timer): use or register the game timer service. */
-            timer_copy_counter(ticks);
+            setticks(ticks);
     /* PLATFORM(timer): use or register the game timer service. */
-            timer_wait_for_dx();
+            waitticks();
         }
     } else {
         for (counter = 100; counter > 0; counter -= 2) {
@@ -442,17 +442,17 @@ void FAR audio_driver_func3F(I16 ticks)
             ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x3f))(4, (void FAR *)audio_driver_volume_command);
             audio_update_lock = 0;
     /* PLATFORM(timer): use or register the game timer service. */
-            timer_copy_counter(ticks);
+            setticks(ticks);
     /* PLATFORM(timer): use or register the game timer service. */
-            timer_wait_for_dx();
+            waitticks();
         }
     }
     reset_audio_chunks();
     if (audio_driver_mode != 0) {
     /* PLATFORM(timer): use or register the game timer service. */
-        timer_copy_counter(50L);
+        setticks(50L);
     /* PLATFORM(timer): use or register the game timer service. */
-        timer_wait_for_dx();
+        waitticks();
         audio_driver_volume_command[3] = 100;
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x3f))(4, (void FAR *)audio_driver_volume_command);
@@ -464,20 +464,20 @@ void FAR set_all_audio_chunk_volume(I16 value)
     I16 index;
     index = 0;
     while (index < block_audio_num) {
-        audio_unk2(index, value);
+        audio_set_chunk_volume(index, value);
         ++index;
     }
 }
 
-void FAR nopsub_37898(I16 value)
+void FAR audio_set_music_volume(I16 value)
 {
     g_musicvolumesetting = value;
     set_all_audio_chunk_volume(value);
 }
 
-U16 FAR nopsub_378AE(I16 index) { return g_audchnkvalue[index]; }
+U16 FAR audio_get_chunk_marker(I16 index) { return g_audchnkvalue[index]; }
 
-U16 FAR nopsub_378BC(I16 index) { return audioblock[index]; }
+U16 FAR audio_get_chunk_note(I16 index) { return audioblock[index]; }
 
 /* Load and initialize the audio driver, install its timer callback, and optionally load patches.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -664,7 +664,7 @@ void FAR * FAR load_voice_file(I8 *filename)
     return result;
 }
 
-void FAR * FAR nopsub_37D7A(I8 *filename)
+void FAR * FAR audio_load_sample_bank(I8 *filename)
 {
     void FAR *result;
 
@@ -682,35 +682,35 @@ void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset, U8 vol
 
     for (i = first; i <= last; i++) {
         chunk = &audiochunktable[i];
-        chunk->unk48 = 0;
-        chunk->unk22 = 0x7f;
+        chunk->end_callback = 0;
+        chunk->velocity = 0x7f;
         chunk->index = i;
-        chunk->unk16 = 0x0f;
+        chunk->max_voices = 0x0f;
         g_audchnkvalue[i] = 0;
         audioblock[i] = 0;
-        chunk->unk32 = 0;
-        chunk->unk04 = 0;
+        chunk->loop_depth = 0;
+        chunk->call_depth = 0;
         chunk->priority = priority;
-        chunk->unk15 = 0;
-        chunk->unk18 = 0;
+        chunk->active_voices = 0;
+        chunk->event_delay = 0;
         chunk->unk1C = 0;
-        chunk->unk1E = 0;
+        chunk->sample_data = 0;
         chunk->volume = volume;
-        chunk->unk25 = 0;
-        chunk->unk26 = 0;
-        chunk->unk29 = 0;
+        chunk->sustain_mode = 0;
+        chunk->pitch_bend = 0;
+        chunk->driver_parameter_29 = 0;
         chunk->unk2A = 0;
-        chunk->unk2B = 0;
-        chunk->unk2C = 0;
-        chunk->unk47 = 0xff;
+        chunk->driver_parameter_2b = 0;
+        chunk->driver_parameter_2c = 0;
+        chunk->channel_number = 0xff;
         if (res != 0) {
             p = (I8 FAR *)res + offset;
-            chunk->unk05 = (I8 FAR *)audioresource_get_dword((U32 FAR *)p) + 4;
-            chunk->data = (I8 FAR *)audioresource_get_dword((U32 FAR *)p) + 4;
+            chunk->restart_pos = (I8 FAR *)audioresource_get_dword((U32 FAR *)p) + 4;
+            chunk->event_pos = (I8 FAR *)audioresource_get_dword((U32 FAR *)p) + 4;
             offset += 5;
-            chunk->unk2E = (I8 FAR *)res + 7;
+            chunk->sample_table = (I8 FAR *)res + 7;
         } else {
-            chunk->data = 0;
+            chunk->event_pos = 0;
         }
     }
 }
@@ -798,10 +798,10 @@ void FAR reset_audio_driver_state(void)
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x1e))(i);
         snd_voices_tbl[i].state = 0;
-        snd_voices_tbl[i].unk00 = 0xff;
-        snd_voices_tbl[i].unk02 = 0;
-        snd_voices_tbl[i].unk10 = 0;
-        snd_voices_tbl[i].unk2C = 0xff;
+        snd_voices_tbl[i].resource_index = 0xff;
+        snd_voices_tbl[i].priority = 0;
+        snd_voices_tbl[i].sample_data = 0;
+        snd_voices_tbl[i].channel_number = 0xff;
     }
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
     ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x18))();
@@ -907,7 +907,7 @@ void FAR audioresource_copy_4_bytes(U8 FAR *dst, U8 FAR *src)
     *dst = *src;
 }
 
-void FAR nopsub_38570(void)
+void FAR audio_debug_dump_state(void)
 {
     I16 i;
 
@@ -915,7 +915,7 @@ void FAR nopsub_38570(void)
                  audio_pause_in_progress, audioflag2, audio_song_ready, audioflag6);
     debug_printf_text("ubMusicVolume = %d, ubSfxVolume = %d\n", g_musicvolumesetting, sfx_audio_vol);
     for (i = 0; i < 24; i++)
-        debug_printf_text("T%02x-ND=%lx,DL=%ld\n", i, audiochunktable[i].data, audiochunktable[i].unk18);
+        debug_printf_text("T%02x-ND=%lx,DL=%ld\n", i, audiochunktable[i].event_pos, audiochunktable[i].event_delay);
     debug_printf_text("Press a Key\n");
     flush_stdin();
     for (i = 0; i < 16; i++)

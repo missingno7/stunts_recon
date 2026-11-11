@@ -20,13 +20,13 @@ DGROUP group _DATA, dseg
 S002_TEXT segment byte public 'CODE'
     assume cs:S002_TEXT
     assume es:nothing, ss:nothing, ds:DGROUP
-    public _update_rpm_from_speed
-    public _nopsub_19DE8
+    public _calcrpm
+    public _math_sign_word
     public _nopsub_19DFF
     public _nopsub_19E09
     public _nopsub_19E13
     public _initialize_kevin_random
-    public _get_kevinrandom_seed
+    public _mygetseeds
     public _get_kevinrandom
     public _intr0_handler
     public _initialize_div0
@@ -56,7 +56,7 @@ S002_TEXT segment byte public 'CODE'
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Evidence: asm/obj_seg002.ASM:36
-_update_rpm_from_speed proc far
+_calcrpm proc far
     arg_currRpm = word ptr 6
     arg_speed = word ptr 8
     arg_gearRatio = word ptr 10
@@ -82,7 +82,7 @@ rpm_ready_to_return:
     pop     bp
     pop     bp
     retf
-_update_rpm_from_speed endp
+_calcrpm endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 19DE8. Its internal flow uses compare_value_prologue,
 ; clear_comparison_result.
@@ -104,7 +104,7 @@ _update_rpm_from_speed endp
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Evidence: asm/obj_seg002.ASM:71
-_nopsub_19DE8 proc far
+_math_sign_word proc far
     arg_value = word ptr 6
 
     push    bp
@@ -135,7 +135,7 @@ return_nonpositive_result:
     pop     bp
 sign_word_nonpositive_return:
     retf
-_nopsub_19DE8 endp
+_math_sign_word endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 19DFF. Its internal flow uses int61_set_frame,
 ; int61_load_argument.
@@ -325,7 +325,7 @@ _initialize_kevin_random endp
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: May overwrite RNG state if destination aliases it; individual byte operations retain alias
 ; ASMDOC ordering.
-_get_kevinrandom_seed proc far
+_mygetseeds proc far
     arg_seed_destination = word ptr 6
 
     push    bp
@@ -348,7 +348,7 @@ seed_copy_byte5:
     pop     bp
     pop     bp
     retf
-_get_kevinrandom_seed endp
+_mygetseeds endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by get kevinrandom.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments

@@ -4,8 +4,8 @@
 #define DOS_PARAGRAPH_SHIFT 4
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
 struct SHAPE2D {
-    I16 width; I16 height; I16 unknown1; I16 unknown2;
-    I16 x; I16 y; I8 unknown3, unknown4, unknown5, unknown6;
+    I16 width; I16 height; I16 s2d_hotspot_x; I16 s2d_hotspot_y;
+    I16 x; I16 y; I8 s2d_plane_color0, s2d_plane_color1_bg, s2d_plane_color2_flip, s2d_plane_color3_flags;
 };
 extern I16 FAR file_get_res_shape_count(void FAR *memchunk);
 extern struct SHAPE2D FAR * FAR file_get_shape2d(U8 FAR *memchunk, I16 index);

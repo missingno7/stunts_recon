@@ -746,7 +746,7 @@
     {
       "end": 139628,
       "name": "nopsub_3215A",
-      "public": "_nopsub_3215A",
+      "public": "_console_clear_mono_screen",
       "stable_id": "load_2215a",
       "start": 139610,
       "target": {
@@ -757,7 +757,7 @@
     {
       "end": 139677,
       "name": "nopsub_3216C",
-      "public": "_nopsub_3216C",
+      "public": "_console_delete_current_row",
       "stable_id": "load_2216c",
       "start": 139628,
       "target": {
@@ -779,7 +779,7 @@
     {
       "end": 139968,
       "name": "nopsub_322B4",
-      "public": "_nopsub_322B4",
+      "public": "_console_set_text_attribute",
       "stable_id": null,
       "start": 139956,
       "target": {
@@ -808,23 +808,23 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_3215A",
+        "name": "_debug_printf_text",
+        "offset": 67,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_console_clear_mono_screen",
         "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_322B4",
-        "offset": 346,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_3216C",
+        "name": "_console_delete_current_row",
         "offset": 18,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_debug_printf_text",
-        "offset": 67,
+        "name": "_console_set_text_attribute",
+        "offset": 346,
         "segment": "S012_TEXT"
       }
     ],

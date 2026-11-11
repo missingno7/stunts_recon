@@ -63,37 +63,37 @@
 };
 
 
-I16S sinfast(U16S  s);
-I16S cosfast(U16S  s);
+I16S intsin(U16S  s);
+I16S intcos(U16S  s);
 
-I16 polang(I16 z, I16 y);
-I16 polradius2d(I16 z, I16 y);
-I16 polarRadius3D(struct VECTOR* vec);
+I16 intatan(I16 z, I16 y);
+I16 inthypot(I16 z, I16 y);
+I16 int3dhypot(struct VECTOR* vec);
 
-unsigned rect_compare_point(struct POINT2D* pt);
+unsigned getoutcode(struct POINT2D* pt);
 
 void mat_vec(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
 void mat_mul_vector2(struct VECTOR* invec, struct MATRIX far* mat, struct VECTOR* outvec);
-void mat_multiply(struct MATRIX* rmat, struct MATRIX* lmat, struct MATRIX* outmat);
+void transmult(struct MATRIX* rmat, struct MATRIX* lmat, struct MATRIX* outmat);
 void mat_invert(struct MATRIX* inmat, struct MATRIX* outmat);
-void mat_rot_x(struct MATRIX* outmat, I16 angle);
-void matroty(struct MATRIX* outmat, I16 angle);
-void mat_rot_z(struct MATRIX* outmat, I16 angle);
-struct MATRIX* matrotzxy(I16 z, I16 x, I16 y, I16 unk);
+void xformx(struct MATRIX* outmat, I16 angle);
+void xformy(struct MATRIX* outmat, I16 angle);
+void xformz(struct MATRIX* outmat, I16 angle);
+struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk);
 
-void rect_adjust_from_point(struct POINT2D* pt, struct RECTANGLE* rc);
+void zonecheck(struct POINT2D* pt, struct RECTANGLE* rc);
 
-I16 vector_op_unk2(struct VECTOR* vec);
-void vector_to_point(struct VECTOR* vec, struct POINT2D* outpt);
-void vector_op_unk(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
+I16 norm_zone(struct VECTOR* vec);
+void projectp(struct VECTOR* vec, struct POINT2D* outpt);
+void zclipline(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
 
 I16S mulscl(I16S a1, I16S a2);
 
-void rcunion(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
-I8 rcintersect(struct RECTANGLE* r1, struct RECTANGLE* r2);
+void mergezones(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
+I8 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
 
-void plnrotop(void);
-I16 plnoriginop(I16 index, I16 b, I16 c, I16 d);
+void move_on_plane(void);
+I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 
 
 
@@ -139,22 +139,22 @@ I16 plnoriginop(I16 index, I16 b, I16 c, I16 d);
 	I16S car_knob_y2;
 	I16S car_angle_z;
 	I16S car_40MfrontWhlAngle;
-	I16S field_42;
+	I16S car_grip_angle_excess;
 	I16S car_demandedGrip;
 	I16S car_surfacegrip_sum;
-	I16S field_48;
+	I16S car_route_bearing;
 	I16S car_trackdata3_index;
-	I16S car_rc1[4]; // four words, one for each wheel.
-	I16S car_rc2[4];
+	I16S car_wheel_fall_step[4]; // four words, one for each wheel.
+	I16S car_wheel_suspension_offset[4];
 	I16S car_rc3[4];
 	I16S car_rc4[4];
-	I16S car_rc5[4];
+	I16S car_wheel_suspension_target[4];
 	struct VECTOR car_whlWorldCrds1[4];
 	struct VECTOR car_whlWorldCrds2[4];
-	struct VECTOR car_vec_unk3;
-	struct VECTOR car_vec_unk4;
-	struct VECTOR car_vec_unk5;
-	I16S field_B6;
+	struct VECTOR car_route_center;
+	struct VECTOR car_route_edge_a;
+	struct VECTOR car_route_edge_b;
+	I16S car_route_has_link;
 	I16S field_B8;
 	I16S field_BA;
 	I8 car_is_braking;
@@ -166,29 +166,29 @@ I16 plnoriginop(I16 index, I16 b, I16 c, I16 d);
 	I8 car_surfaceWhl[4];      // surface types for each of the wheels, it seems.
 	I8 car_engineLimiterTimer;
 	I8 car_slidingFlag;
-	I8 field_C8;
+	I8 car_contact_processed;
 	I8 car_crashBmpFlag;
 	I8 car_changing_gear;
 	I8 car_fpsmul2;
 	I8 car_transmission;
-	I8 field_CD;
-	I8 field_CE; // is added?
-	I8 field_CF; // is initialized?
+	I8 car_finish_route_passed;
+	I8 car_route_point_index; // is added?
+	I8 car_audio_flags; // is initialized?
 };
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct GAMESTATE {
-	I32 game_longs1[24]; // x
-	I32 game_longs2[24]; // y
-	I32 game_longs3[24]; // z
-	struct VECTOR game_vec1[2]; // 0 = player, 1 = opponent
-	struct VECTOR game_vec3;
-	struct VECTOR game_vec4;
-	I16S game_frame_in_sec;
-	I16S game_frames_per_sec;
-	I32  game_travDist;
+	I32 game_debris_x[24]; // x
+	I32 game_debris_y[24]; // y
+	I32 game_debris_z[24]; // z
+	struct VECTOR game_chase_camera_pos[2]; // 0 = player, 1 = opponent
+	struct VECTOR game_chase_camera_prev;
+	struct VECTOR game_opponent_camera_prev;
+	I16S game_end_delay_elapsed;
+	I16S game_end_delay_limit;
+	I32  game_speed_frame_sum;
 	U16S  game_frame;
 	I16S game_total_finish; // finish time + penalty when crossed finish line
-	I16S field_144;
+	I16S game_opponent_finish_time;
 	I16S game_pEndFrame;
 	I16S game_oEndFrame;   // former game_frame2
 	I16S game_penalty; // probably penalty counter
@@ -197,31 +197,31 @@ I16 plnoriginop(I16 index, I16 b, I16 c, I16 d);
 	I16S game_jumpCount;
 	struct CARSTATE playerstate;
 	struct CARSTATE opponentstate;
-	I16S field_2F2;
-	I16S field_2F4;
+	I16S game_player_route_anchor;
+	I16S game_player_last_route_node;
 	I16S game_startcol;
 	I16S game_startcol2;
 	I16S game_startrow;
 	I16S game_startrow2;
-	I16S field_2FE[24];
-	I16S field_32E[24];
-	I16S field_35E[24];
-	I16S field_38E[24];
-	I8 field_3BE[48];
+	I16S game_debris_rot_x[24];
+	I16S game_debris_rot_y[24];
+	I16S game_debris_rot_z[24];
+	I16S game_debris_planar_step[24];
+	I8 game_debris_vertical_step[48];
 	I8 kevinseed[6];
-	I8 field_3F4;
+	I8 game_checkpoint_valid;
 	I8 game_inputmode; // 0 = waiting for input, 1 = input active, 2 = no input (during the intro)
 	I8 game_3F6autoLoadEvalFlag;
-	I8 field_3F7[2]; // 0 = player, 1 = opponent
-	I8 field_3F9;
-	I8 field_3FA[48];
-	I8 field_42A;
-	U8  field_42B[24];
-	U8  field_443[24];
-	I8 field_45B;
-	I8 field_45C;
-	I8 field_45D;
-	I8 field_45E;
+	I8 game_track_camera_index[2]; // 0 = player, 1 = opponent
+	I8 game_opponent_speed_limit;
+	I8 game_track_object_broken[48];
+	I8 game_debris_active;
+	U8  game_debris_shape_index[24];
+	U8  game_debris_origin_kind[24];
+	I8 game_route_recovery_mode;
+	I8 game_route_confirm_count;
+	I8 game_player_guidance;
+	I8 game_opponent_pass_side;
 	I8 field_45F;
 };
 
@@ -319,7 +319,7 @@ extern void* steerWhlRespTable_10fps;
 extern void* steerWhlRespTable_20fps;
 extern I8 idxtrk, tagtrk;
 extern I8 g_hillf;
-extern I16S hillconsts[];
+extern I16S terheight[];
 
 extern struct RECTANGLE boundglassrect;
 extern I16S bitmapdash;
@@ -359,16 +359,16 @@ extern I16 dashbmy9;
 extern I16 rfy5;
 extern struct RECTANGLE* rectp;
 
-extern void player_op(I8);
-extern void opponent_op(void);
-extern void audio_carstate(void);
-extern void setup_car_shapes(I16);
-extern void update_frame(I8 a, struct RECTANGLE* rc);
-extern void loop_game(I16, I16, I16);
-extern void set_frame_callback(void);
+extern void moveplayer(I8);
+extern void moveopponent(void);
+extern void myupdatesfx(void);
+extern void dodash(I16);
+extern void drawworld(I8 a, struct RECTANGLE* rc);
+extern void doreplay(I16, I16, I16);
+extern void gameintinit(void);
 extern void mouse_minmax_position(I16);
 extern I16 kb_get_char(void);
-extern void handle_ingame_kb_shortcuts(I16);
+extern void mainkey(I16);
 
 extern I16 flagsdown;
 extern I16 msecoordx;
@@ -418,7 +418,7 @@ extern I8 g_is_busy;
 extern I8 buf_g_path[];
 extern I8 track_file[];
 extern I8 menutimeout;
-extern U16S  dialogarg2;
+extern U16S  dialog_frame_color;
 extern I8 replay_file[];
 extern I8 endhsdemo;
 extern I8 aMain[];
@@ -438,7 +438,7 @@ extern U16S  rate_frame;
 extern U16S  frm_rate2;
 extern U16S  slow_video_mode_state;
 extern unsigned short statemgmtcpy;
-extern U8  detail_lvl;
+extern U8  renderlevel;
 
 extern U16S  pspofs;
 extern U16S  pspseg;
@@ -453,14 +453,14 @@ extern U16S  resmaxsize;
 
 extern U32  timer_callback_counter;
 extern U32  last_timer_callback_counter;
-extern U32  timer_copy_unk;
+extern U32  timer_deadline_ticks;
 
 extern U8  randomseeds[];
-extern const I8 aReservememoryO[];
-extern const I8 aReservememoryOutOfMemory[];
-extern const I8 aMemoryManagerB[];
-extern const I8 aResizememoryNo[];
-extern const I8 aResizememoryCa[];
+extern const I8 noblkerr[];
+extern const I8 nomemerr[];
+extern const I8 blknotfound[];
+extern const I8 exmemerr[];
+extern const I8 expanderr[];
 extern const I8 aSFileError[];
 extern const I8 aSFileError_0[];
 extern const I8 aSFileError_1[];
@@ -487,17 +487,17 @@ extern I16* material_patlist2_ptr;
 extern I16* matpatlistcopypointer2;
 extern U16S  video_cnstval;
 
-extern I16S track_edge_points(I16S car_trackdata3_index, struct VECTOR* car_vec_unk3, I16S field_CE, I16S* unk);
+extern I16S gettlistpoint(I16S car_trackdata3_index, struct VECTOR* car_vec_unk3, I16S field_CE, I16S* unk);
 extern void fontsetfontdef(void);
-extern void initialize_polyinfo(void);
+extern void INIT_MATRIX(void);
 extern U16S  run_intro_looped(void);
-extern U16S  show_dialog(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
-extern I8 run_menu(void);
+extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
+extern I8 select(void);
 extern I8 setup_track(void);
-extern void run_tracks_menu(I16 unk);
+extern void teditmain(I16 unk);
 extern void run_opponent_menu(void);
-extern void show_waiting(void);
-extern void run_car_menu(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
+extern void loading(void);
+extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
 extern void run_game(void);
 extern unsigned end_hiscore(void);
 extern unsigned run_option_menu(void);
@@ -521,7 +521,7 @@ extern I16S audio_toggle_flag6(void);
 extern void audio_stop_unknown(void);
 extern void audiodrv_atexit(void);
 
-extern void check_input(void);
+extern void clear_keyboardbuffer(void);
 extern I16 input_do_checking(I16 unk);
 extern void keyboard_exit_handler(void);
 extern void keyboard_shift_checking1(void);
@@ -602,28 +602,28 @@ extern void _srand(U16 );
 
 I16 shape3d_load_all(void);
 void shape3d_free_all(void);
-void shape3d_init_shape(I8 far* shapeptr, struct SHAPE3D* gameshape);
-I8 trans_op(struct TRANSFORMEDSHAPE3D* arg_transshapeptr);
+void makeobjdef(I8 far* shapeptr, struct SHAPE3D* gameshape);
+I8 ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* arg_transshapeptr);
 void set_projection(I16 i1, I16 i2, I16 i3, I16 i4);
-I16 polang(I16 z, I16 y);
-unsigned select_rot(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk);
-void initialize_polyinfo(void);
+I16 intatan(I16 z, I16 y);
+unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk);
+void INIT_MATRIX(void);
 void polyinfo_reset(void);
-void polyinfo(void);
-void wheel_update(struct VECTOR far* wheel_vertices, I16 steering_angle, I16S* base_heights, I16S* cached_angles_and_heights, struct VECTOR* wheel_offsets, struct VECTOR* car_origin);
+void DRAW_OBJECTS(void);
+void settires(struct VECTOR far* wheel_vertices, I16 steering_angle, I16S* base_heights, I16S* cached_angles_and_heights, struct VECTOR* wheel_offsets, struct VECTOR* car_origin);
 
 
-extern struct RECTANGLE* rcpunk2;
+extern struct RECTANGLE* active_ui_dirty_rect;
 extern struct RECTANGLE rclist[];
 extern struct RECTANGLE g_savrc[];
 extern struct RECTANGLE tparr[];
-extern struct RECTANGLE clipunk;
+extern struct RECTANGLE empty_rectangle;
 extern struct VECTOR tvec2;
 extern struct VECTOR pln_rot_output;
 extern I16 g_planidx2;
 extern I16 pln_rotate_z, car_roty_pln, car_rotate_xc, frwhl_angadjusted;
 extern struct MATRIX wkmatx;
-extern I16 custom_dist;
+extern I16 camlen;
 extern I16 custom_elev_angle;
 extern I16 custom_azim_angle;
 extern I16 viewyshift;
@@ -631,7 +631,7 @@ extern I8 detthrlevel[];
 extern I8 paint_cycle[];
 extern unsigned g_clocks;
 extern I16 fence_offsets[];
-extern I8* ahead_tables[];
+extern I8* headingzones[];
 extern struct SHAPE3D* fence_shapes[];
 extern I16 hgthgt;
 extern I16 pl_i;
@@ -670,25 +670,25 @@ extern void far* fntled_res;
 extern I16 dlg_colour;
 extern char g_ts_num;
 
-void build_obj(struct VECTOR* a, struct VECTOR* b);
+void getpinfo(struct VECTOR* a, struct VECTOR* b);
 void transformed_shape_add_for_sort(I16 zadjust, I8 sort_group_id);
-U8  subst_hillroad(U8  a, U8  b);
-I16 skybox_op(I16 a, struct RECTANGLE* rectptr, I16 e, struct MATRIX* matptr, I16 c, I16 f, I16 g);
-struct RECTANGLE* draw_ingame_text(void);
-struct RECTANGLE* init_crak(I16 frame, I16 top, I16 height);
+U8  roadupcheck(U8  a, U8  b);
+I16 drawhorizon(I16 a, struct RECTANGLE* rectptr, I16 e, struct MATRIX* matptr, I16 c, I16 f, I16 g);
+struct RECTANGLE* drawtext(void);
+struct RECTANGLE* crack(I16 frame, I16 top, I16 height);
 struct RECTANGLE* do_sinking(I16 frame, I16 top, I16 height);
-struct RECTANGLE* introtext(I8* str, I16 a, I16 b, I16 c, I16 d);
+struct RECTANGLE* shadowtext(I8* str, I16 a, I16 b, I16 c, I16 d);
 void fontsetfontdef2(void far* data);
 void fmtframestr(I8* s, I16 time, I16 c);
 void shapeexpl(I16 a, void far* shp, I16 x, I16 y);
-void heapsortorder(I16 n, I16* heap, I16* data);
+void shellsort(I16 n, I16* heap, I16* data);
 
 
 extern struct RECTANGLE game_rect_txt_in, rect_ingame_text2, rect_ingame_text3, rect_ingame_text4;
 extern I8 aDm1[], aDm2[], aPre[], aSe1[], aSe2[], aWww[], aOpp[], aPen[], aRpl_0[], aOpp_0[];
 extern I8 far * far locate_text_resource(void far *data, I8 *name);
-extern void copy_string(I8 *destination, I8 far *source);
-extern I16 far font_op2_alt(I8 *name);
+extern void strcpyfar(I8 *destination, I8 far *source);
+extern I16 far mycenter(I8 *name);
 extern void sprite_putimage_transparent(void far *shape, I16 x, I16 y);
 extern unsigned strlen(I8 *s);
 extern I16 g_penaltytm;
@@ -704,14 +704,14 @@ extern struct RECTANGLE trackpreview_cliprect;
 extern I16S horizon_angles[];
 extern I16 camera_aim_z, camera_pos_z, camera_aim_x, camera_pos_x, camera_aim_y, camera_pos_y;
 extern struct VECTOR track_prev_vec;
-extern unsigned draw_line_related(unsigned, unsigned, unsigned, unsigned, I16 *);
+extern unsigned clipline(unsigned, unsigned, unsigned, unsigned, I16 *);
 void far skybox_op_helper(unsigned color, unsigned count, struct POINT2D p1, struct POINT2D p2, struct POINT2D p3, struct POINT2D p4);
 void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon);
 void draw_track_preview(void);
 
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SHAPE2D { I16S width, height, unk1, unk2, pos_x, pos_y; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct MATERIALCLRLIST { U8  pad20[0x20]; I16S ground, sky; U8  pad24[0xa4]; I16S water; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SPRITE { void far *image; U16S  words[13]; };
@@ -719,18 +719,18 @@ void draw_track_preview(void);
 extern struct SHAPE3D intro_alt, logo_title, brav;
 extern I8 far *loadedresourceptr;
 /* Unused OMF-order declarations; the containing storage is tparr[15]. */
-extern I16 word_34A06, word_34A08, word_34A0A;
+extern I16 dirty_rect_right_alias, dirty_rect_top_alias, dirty_rect_bottom_alias;
 extern I16 intro_colorvalue, intro_color_max;
-extern void far *file_load_3dres(I8 *);
+extern void far *fluffyload(I8 *);
 extern void far locate_many_resources(void far *, I8 *, I8 far **);
 extern void far *sprite_make_window(I16, I16, I16);
 extern I16 far get_kevinrandom(void);
 extern I8 far *file_load_resource_file(I8 *);
 extern void far setup_aero_trackdata(I8 far *, I16);
-extern void far unload_resource(I8 far *);
-extern void far init_plantrak(void);
-extern I16 far timer_get_delta(void);
-extern void far do_opponent_op(void);
+extern void far closeresource(I8 far *);
+extern void far initlogo(void);
+extern I16 far elapsedticks(void);
+extern void far movelogo(void);
 extern void far setup_mcgawnd2(void);
 extern void far setup_mcgawnd1(void);
 extern void far sprite_copy_wnd_to_1(void);
@@ -740,29 +740,29 @@ extern void far sprite_free_window(void far *);
 extern void far mmgr_free(void far *);
 
 /* Unused OMF-order alias declaration; accesses use rotpr[1]. */
-extern I16 word_449FE, frmexcess;
+extern I16 sky_rotation_page1_alias, frmexcess;
 extern int spdneedlegaugeclr;
 extern U8  skybox_loaded, scene_idx;
 extern struct RECTANGLE rc0_cpy;
 extern struct RECTANGLE intro_cliprect;
 extern union FARRESOURCE skyres_handle;
-extern I8 scenery_names[];
+extern I8 TerName[];
 extern void far *file_load_shape2d_fatal_thunk(I8 *);
 extern char far *sdgame2hdl;
 extern void far *file_load_resource(I16, I8 *);
-extern void far load_sdgame2_shapes(void);
-extern void far free_sdgame2(void);
-extern void far init_rect_arrays(void);
-extern void far draw_clip(struct RECTANGLE *);
-extern void far load_skybox(I8);
-extern void far unload_skybox(void);
+extern void far loaddrawbits(void);
+extern void far removedrawbits(void);
+extern void far initdrawworld(void);
+extern void far drawworldflipzones(struct RECTANGLE *);
+extern void far initscenery(I8);
+extern void far removescenery(void);
 extern I8 far setup_intro(void);
-extern void far intro_op(I16, I16, I16, I16, I16, I16, I16, struct VECTOR *, struct POINT2D *, I16 *, struct RECTANGLE, struct RECTANGLE *, struct RECTANGLE *);
+extern void far drawlogo(I16, I16, I16, I16, I16, I16, I16, struct VECTOR *, struct POINT2D *, I16 *, struct RECTANGLE, struct RECTANGLE *, struct RECTANGLE *);
 
 
 /* Copies a clipped window region. Params: clip rectangle. Returns: none. State: reads the active window sprite and clip state. */
 /* PLATFORM(video): draws to or configures the display surface. */
-void far draw_clip(struct RECTANGLE *clipRect)
+void far drawworldflipzones(struct RECTANGLE *clipRect)
 {
 	extern I8 g_simprect;
 	extern void far msdrawopaquechk(void);
@@ -772,7 +772,7 @@ void far draw_clip(struct RECTANGLE *clipRect)
 	extern int rcmapix[45];
 	extern char rect_num3;
 	extern char rects_updt[15];
-	extern void far rectlist_add(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
+	extern void far makezonelist(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
 	extern void far sprcopy2to12(void);
 	extern void far sprputimage(void far *);
 	extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
@@ -788,7 +788,7 @@ void far draw_clip(struct RECTANGLE *clipRect)
         if (statemgmtcpy != 0) {
             for (i=0; i<15; ++i)
                 rects_updt[i] = 3;
-            if (detail_lvl == 4)
+            if (renderlevel == 4)
                 rotpr[1] = prevcamrot;
             if (rotpr[1] == prevcamrot &&
                 rclist[5].left == g_savrc[5].left &&
@@ -797,7 +797,7 @@ void far draw_clip(struct RECTANGLE *clipRect)
                 rclist[5].bottom == g_savrc[5].bottom)
                 rects_updt[5] = 0;
             rect_num3 = 0;
-            rectlist_add(15, rects_updt, rclist,
+            makezonelist(15, rects_updt, rclist,
                 g_savrc, clipRect, &rect_num3,
                 rectclip);
             if (rect_num3 != 0) {
@@ -834,23 +834,23 @@ draw_rect_check:
     }
 }
 
-/* Resets saved clip rectangles for the current drawing mode. Params: none. Returns: none. State: reads clip state and updates rectangle buffers. */ void far init_rect_arrays(void)
+/* Resets saved clip rectangles for the current drawing mode. Params: none. Returns: none. State: reads clip state and updates rectangle buffers. */ void far initdrawworld(void)
 {
-	extern struct RECTANGLE rcunk5;
+	extern struct RECTANGLE full_screen_rectangle;
     register I16 i;
 
     if (statemgmtcpy != 0) {
-        rclist[0] = rcunk5;
-        g_savrc[0] = rcunk5;
+        rclist[0] = full_screen_rectangle;
+        g_savrc[0] = full_screen_rectangle;
         for (i = 1; i < 15; ++i) {
-            rclist[i] = clipunk;
-            g_savrc[i] = clipunk;
+            rclist[i] = empty_rectangle;
+            g_savrc[i] = empty_rectangle;
         }
     }
 }
 /* Updates the visible game frame. Params: page and clip rectangle. Returns: none. State: reads frame, scene, camera and sprite globals; updates render lists. */
 /* PLATFORM(video): draws to or configures the display surface. */
-void update_frame(I8 page, struct RECTANGLE* clip) {
+void drawworld(I8 page, struct RECTANGLE* clip) {
 	extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
 	extern I16 rotpr[];
 	extern I16 prevcamrot;
@@ -926,18 +926,18 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 	crashed[0] = 0;
 	crashed[1] = 0;
 	if (g_videoflg5 != 0 && page != 0) {
-		rcpunk2 = rclist;
+		active_ui_dirty_rect = rclist;
 		rectp = g_savrc;
 	} else {
 		rectp = rclist;
-		rcpunk2 = g_savrc;
+		active_ui_dirty_rect = g_savrc;
 	}
 
 	if (statemgmtcpy != 0) {
 		flagbits = 8;
 		rect_ptr = tparr;
 		for (si = 0; si < 15; si++) {
-			*rect_ptr++ = clipunk;
+			*rect_ptr++ = empty_rectangle;
 		}
 	} else {
 		flagbits = 0;
@@ -969,28 +969,28 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 		offset_v.x = 0;
 		offset_v.y = 0;
 		offset_v.z = 0x4000;
-		car_matrix = matrotzxy(-my_car_bank, -car_angle_y, -rot_x, 0);
+		car_matrix = makematrix(-my_car_bank, -car_angle_y, -rot_x, 0);
 		mat_vec(&offset_v, car_matrix, &rot_ofs);
-		si = polang(rot_ofs.x, rot_ofs.z);
+		si = intatan(rot_ofs.x, rot_ofs.z);
 		offset_v.x = 0;
 		offset_v.y = 0;
-		offset_v.z = custom_dist;
-		car_matrix = matrotzxy(0, -custom_elev_angle, si - custom_azim_angle, 0);
+		offset_v.z = camlen;
+		car_matrix = makematrix(0, -custom_elev_angle, si - custom_azim_angle, 0);
 		mat_vec(&offset_v, car_matrix, &rot_ofs);
 		viewpoint.x = car_coord.x + rot_ofs.x;
 		viewpoint.y = car_coord.y + rot_ofs.y;
 		viewpoint.z = car_coord.z + rot_ofs.z;
 		break;
 	case 1:
-		viewpoint.x = core.game_vec1[follow_op].x;
-		viewpoint.z = core.game_vec1[follow_op].z;
-		viewpoint.y = core.game_vec1[follow_op].y;
+		viewpoint.x = core.game_chase_camera_pos[follow_op].x;
+		viewpoint.z = core.game_chase_camera_pos[follow_op].z;
+		viewpoint.y = core.game_chase_camera_pos[follow_op].y;
 		break;
 	case 0:
 		view_rot_x = rot_x & FAST_TRIG_ANGLE_MASK;
 		cam_elev = car_angle_y & FAST_TRIG_ANGLE_MASK;
 		cam_bank = my_car_bank & FAST_TRIG_ANGLE_MASK;
-		car_matrix = matrotzxy(-my_car_bank, -car_angle_y, -rot_x, 0);
+		car_matrix = makematrix(-my_car_bank, -car_angle_y, -rot_x, 0);
 		offset_v.x = 0;
 		offset_v.z = 0;
 		offset_v.y = simdp7.car_height - 6;
@@ -1000,21 +1000,21 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 		viewpoint.z = car_coord.z + rot_ofs.z;
 		break;
 	case 3:
-		viewpoint.x = trkptrpath[core.field_3F7[follow_op]].x;
-		viewpoint.y = trkptrpath[core.field_3F7[follow_op]].y + viewyshift + 0x5A;
-		viewpoint.z = trkptrpath[core.field_3F7[follow_op]].z;
+		viewpoint.x = trkptrpath[core.game_track_camera_index[follow_op]].x;
+		viewpoint.y = trkptrpath[core.game_track_camera_index[follow_op]].y + viewyshift + 0x5A;
+		viewpoint.z = trkptrpath[core.game_track_camera_index[follow_op]].z;
 		break;
 	}
 
 	// Unknown part; seems to be performing some initialization
 	if (view_rot_x == -1) {
-		build_obj(&viewpoint, &viewpoint);
+		getpinfo(&viewpoint, &viewpoint);
 		if (viewpoint.y < hgthgt) {
 			viewpoint.y = hgthgt;
 		}
 
 		if (test_pln != 0) {		
-			si = plnoriginop(pl_i, viewpoint.x, viewpoint.y, viewpoint.z);
+			si = plane_distance(pl_i, viewpoint.x, viewpoint.y, viewpoint.z);
 			if (si < 0xC) {			
 				tvec2.x = 0;
 				tvec2.y = 0xC - si;
@@ -1024,16 +1024,16 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 				car_roty_pln = 0;
 				pln_rotate_z = 0;
 				car_rotate_xc = 0;
-				plnrotop();
+				move_on_plane();
 				viewpoint.x += pln_rot_output.x;
 				viewpoint.y += pln_rot_output.y;
 				viewpoint.z += pln_rot_output.z;
 			}
 		}
 
-		view_rot_x = (-polang(car_coord.x - viewpoint.x, car_coord.z - viewpoint.z)) & FAST_TRIG_ANGLE_MASK;
-		ground_dist = polradius2d(car_coord.x - viewpoint.x, car_coord.z - viewpoint.z);
-		cam_elev = polang(car_coord.y - viewpoint.y + 0x32, ground_dist) & FAST_TRIG_ANGLE_MASK;
+		view_rot_x = (-intatan(car_coord.x - viewpoint.x, car_coord.z - viewpoint.z)) & FAST_TRIG_ANGLE_MASK;
+		ground_dist = inthypot(car_coord.x - viewpoint.x, car_coord.z - viewpoint.z);
+		cam_elev = intatan(car_coord.y - viewpoint.y + 0x32, ground_dist) & FAST_TRIG_ANGLE_MASK;
 	}
 
 	if (cam_bank > 1 && cam_bank < FAST_TRIG_ANGLE_MASK) {
@@ -1063,11 +1063,11 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 	// (farthest tiles first). If a car is cur_view_heading_val north but slightly west, the
 	// algo will draw the NW tile before the NE, and vice-versa
 
-	cur_view_heading_val = select_rot(bank, cam_elev, view_rot_x, clip, 0);
+	cur_view_heading_val = INIT_OBJECTS_BUFFER(bank, cam_elev, view_rot_x, clip, 0);
 	si = (cur_view_heading_val & FAST_TRIG_ANGLE_MASK) >> 7;
-	tile_table = ahead_tables[si];
+	tile_table = headingzones[si];
 
-	view_mat = *matrotzxy(bank, cam_elev, 0, 1);
+	view_mat = *makematrix(bank, cam_elev, 0, 1);
 	offset_v.x = 0;
 	offset_v.y = 0;
 	offset_v.z = 0x3E8;
@@ -1080,7 +1080,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 	// Draw 8 shapes (still TBD what they are), but only if the detail
 	// level is the max one
-	if (detail_lvl == 0) {
+	if (renderlevel == 0) {
 		cur_shps->rectptr = &tparr[7];
 		cur_shps->ts_flags = flagbits | 7;
 		cur_shps->rotvec.x = 0;
@@ -1091,7 +1091,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 		for (nfences = 0; nfences < 8; nfences++) {
 			si = (fence_offsets[nfences] + view_rot_x + runrndx) & FAST_TRIG_ANGLE_MASK;
 			if (si < 0x87 || si > 0x379) {
-				matroty(&sky_mat, si);
+				xformy(&sky_mat, si);
 				offset_v.x = 0;
 				offset_v.y = 0xAE6 - viewpoint.y;
 				offset_v.z = 0x3A98; //15000
@@ -1101,7 +1101,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 				if (cur_shps->pos.z > PLATFORM_SCREEN_HEIGHT_PIXELS) {
 					cur_shps->shapeptr = fence_shapes[nfences];
 					cur_shps->rotvec.z = -view_rot_x;
-					result = trans_op(&cur_shps[0]);
+					result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);
 					/* We cannot be out of memory as we are just starting to process. */
 				}
 			}
@@ -1114,7 +1114,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 	cam_tx = viewpoint.x >> 0xA;
 	cam_tz = -((viewpoint.z >> 0xA) - 0x1D);
-	if (detail_lvl != 0) {
+	if (renderlevel != 0) {
 		car_x_tile = core.playerstate.car_posWorld1.lx >> 16;
 		car_z_tile = 0x1D - (core.playerstate.car_posWorld1.lz >> 16);
 	}
@@ -1125,7 +1125,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 	// Select the detail level (FULL if 1st or 2nd option in the graphics menu
 	// were chosen, MEDIUM if the 3rd, FASTEST if 4th or 5th)
-	thresh = detthrlevel[detail_lvl];
+	thresh = detthrlevel[renderlevel];
 	
 	// Cycle on the 23 tiles to draw, determine if they really need to be drawn
 	for (si = 0x16; si >= 0; si--) {
@@ -1143,7 +1143,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 	
 					if (track_elem != 0) {
 						if (tile_ground >= 7 && tile_ground < 0xB) {
-							track_elem = subst_hillroad(tile_ground, track_elem);
+							track_elem = roadupcheck(tile_ground, track_elem);
 							tile_ground = 0;
 						}
 	
@@ -1170,7 +1170,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 					terrain_list[si] = tile_ground;
 					lod_levels[si] = tile_table[si * 3 + 2];
 	
-					if (track_elem != 0 && detail_lvl != 0 &&
+					if (track_elem != 0 && renderlevel != 0 &&
 						trklst[track_elem].ss_physicalModel >= 0x40 &&
 						(tx != car_x_tile || trow != car_z_tile))
 					{
@@ -1226,7 +1226,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 		if (core.playerstate.car_crashBmpFlag != 2) {
 
-			car_matrix = matrotzxy(-core.playerstate.car_rotate.z, -core.playerstate.car_rotate.y, -core.playerstate.car_rotate.x, 0);
+			car_matrix = makematrix(-core.playerstate.car_rotate.z, -core.playerstate.car_rotate.y, -core.playerstate.car_rotate.x, 0);
 			j = -1;
 			j2 = -1;
 			for (wheel_idx = 0; wheel_idx < 4; wheel_idx++) {
@@ -1270,7 +1270,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 		if (cammd != 0 || follow_op == 0) {
 			if (core.opponentstate.car_crashBmpFlag != 2) {
-				car_matrix = matrotzxy(-core.opponentstate.car_rotate.z, -core.opponentstate.car_rotate.y, -core.opponentstate.car_rotate.x, 0);
+				car_matrix = makematrix(-core.opponentstate.car_rotate.z, -core.opponentstate.car_rotate.y, -core.opponentstate.car_rotate.x, 0);
 				j = -1;
 				j2 = -1;
 
@@ -1356,7 +1356,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 			tile_east2 = fence_list[j * 2] + tx;
 			drow = fence_list[j * 2 + 1] + trow;
 
-			if (detail_lvl != 0 && (tile_east2 != car_x_tile || drow != car_z_tile))
+			if (renderlevel != 0 && (tile_east2 != car_x_tile || drow != car_z_tile))
 				continue;
 
 			switch (tile_east2) {
@@ -1410,7 +1410,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 				cur_shps->rotvec.z = shape_rot[j2];
 				cur_shps->unk = 0x400;
 				cur_shps->material = 0;
-				result = trans_op(&cur_shps[0]);
+				result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);
 				if (result > 0)
 					goto draw_done;
 			}
@@ -1419,7 +1419,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 		// terrain type 0x06: a flat piece of land at an elevated level
 		if (tile_ground == 6) {
-			hill_elev = hillconsts[1];
+			hill_elev = terheight[1];
 			if (track_elem != 0)
 				tile_ground = 0;
 		} else {
@@ -1464,7 +1464,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 						cur_shps->rotvec.z = trkobj->ss_rotY;
 						cur_shps->unk = 0x400;
 						cur_shps->material = 0;
-						result = trans_op(&cur_shps[0]);
+						result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);
 						if (result > 0)
 							goto draw_done;
 					}
@@ -1497,7 +1497,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 			cur_shps->rotvec.z = trkobj->ss_rotY;
 			cur_shps->unk = 0x400;
 			cur_shps->material = 0;
-			result = trans_op(&cur_shps[0]);
+			result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);
 			if (result > 0)
 				goto draw_done;
 		}
@@ -1557,7 +1557,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 					cur_shps->rotvec.z = 0;
 					cur_shps->unk = 0x800;
 					cur_shps->material = 0;
-					result = trans_op(&cur_shps[0]);
+					result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);
 					if (result > 0)
 						goto draw_done;
 				}
@@ -1591,7 +1591,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 					cur_shps[1].ts_flags = ovl->ss_ignoreZBias | flagbits | 4;
 					if ((cur_shps[1].ts_flags & 1) != 0) {
 						cur_shps[1].rectptr = &tparr[1];
-						result = trans_op(&cur_shps[1]);
+						result = ADD_OBJECT_TO_BUFFER(&cur_shps[1]);
 						if (result > 0)
 							goto draw_done;
 					} else {
@@ -1626,7 +1626,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 			if ((trkobj->ss_ignoreZBias & 1) != 0) {
 				cur_shps->rectptr = &tparr[1];
-				result = trans_op(&cur_shps[0]);
+				result = ADD_OBJECT_TO_BUFFER(&cur_shps[0]);
 				if (result > 0)
 					goto draw_done;
 			} else {
@@ -1653,20 +1653,20 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 			checkpoint_no = td19hdl[lnoffsets[trow] + tx];
 			if (checkpoint_no != -1) {
-				if (core.field_3FA[checkpoint_no] != 0) {
-					if (core.field_42A != 0) {
+				if (core.game_track_object_broken[checkpoint_no] != 0) {
+					if (core.game_debris_active != 0) {
 						for (j2 = 0; j2 < 0x18; j2++) {
-							if (core.field_38E[j2] != 0) if (checkpoint_no + 2 == core.field_443[j2]) {
-								trkobj = &scene3[core.field_42B[j2]];
-								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_longs1[j2] >> WORLD_COORDINATE_SHIFT) + td10checkptr[checkpoint_no * 3 + 0] - viewpoint.x;
-								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_longs2[j2] >> WORLD_COORDINATE_SHIFT) + td10checkptr[checkpoint_no * 3 + 1] - viewpoint.y;
-								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_longs3[j2] >> WORLD_COORDINATE_SHIFT) + td10checkptr[checkpoint_no * 3 + 2] - viewpoint.z;
+							if (core.game_debris_planar_step[j2] != 0) if (checkpoint_no + 2 == core.game_debris_origin_kind[j2]) {
+								trkobj = &scene3[core.game_debris_shape_index[j2]];
+								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_debris_x[j2] >> WORLD_COORDINATE_SHIFT) + td10checkptr[checkpoint_no * 3 + 0] - viewpoint.x;
+								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_debris_y[j2] >> WORLD_COORDINATE_SHIFT) + td10checkptr[checkpoint_no * 3 + 1] - viewpoint.y;
+								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_debris_z[j2] >> WORLD_COORDINATE_SHIFT) + td10checkptr[checkpoint_no * 3 + 2] - viewpoint.z;
 								g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
 								g_curr_tsp->rectptr = &tparr[2];
 								g_curr_tsp->ts_flags = flagbits | 5;
-								g_curr_tsp->rotvec.x = -core.field_2FE[j2];
-								g_curr_tsp->rotvec.y = -core.field_32E[j2];
-								g_curr_tsp->rotvec.z = -core.field_35E[j2];
+								g_curr_tsp->rotvec.x = -core.game_debris_rot_x[j2];
+								g_curr_tsp->rotvec.y = -core.game_debris_rot_y[j2];
+								g_curr_tsp->rotvec.z = -core.game_debris_rot_z[j2];
 								g_curr_tsp->unk = 0x400;
 								g_curr_tsp->material = 0;
 								transformed_shape_add_for_sort(0, 0);
@@ -1695,19 +1695,19 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 		}
 
 		if ((car_east1 == tx || car_east1 == tile_east2) && (wheel_south == trow || wheel_south == drow)) {
-			if (core.field_42A != 0) {
+			if (core.game_debris_active != 0) {
 				for (j2 = 0; j2 < 0x18; j2++) {
-					if (core.field_38E[j2] != 0) if (core.field_443[j2] == 0) {
-						trkobj = &scene3[core.field_42B[j2]];
-						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_longs1[j2] + core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
-						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_longs2[j2] + core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
-						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_longs3[j2] + core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
+					if (core.game_debris_planar_step[j2] != 0) if (core.game_debris_origin_kind[j2] == 0) {
+						trkobj = &scene3[core.game_debris_shape_index[j2]];
+						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_debris_x[j2] + core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
+						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_debris_y[j2] + core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
+						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_debris_z[j2] + core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 						g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
 						g_curr_tsp->rectptr = &tparr[2];
 						g_curr_tsp->ts_flags = flagbits | 5;
-						g_curr_tsp->rotvec.x = -core.field_2FE[j2];
-						g_curr_tsp->rotvec.y = -core.field_32E[j2];
-						g_curr_tsp->rotvec.z = -core.field_35E[j2];
+						g_curr_tsp->rotvec.x = -core.game_debris_rot_x[j2];
+						g_curr_tsp->rotvec.y = -core.game_debris_rot_y[j2];
+						g_curr_tsp->rotvec.z = -core.game_debris_rot_z[j2];
 						g_curr_tsp->unk = 0x400;
 						g_curr_tsp->material = globalgamesettings.game_playermaterial;
 						transformed_shape_add_for_sort(car_zofs & start_bias, 0);
@@ -1720,18 +1720,18 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
 			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 			
-			if (tile_lod != 0 || detail_lvl > 2) {
+			if (tile_lod != 0 || renderlevel > 2) {
 				g_curr_tsp->shapeptr = trkobj->ss_loShapePtr;
 			} else {
 				g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
-				wheel_update(&g_shapes3d[0x0AD4 / sizeof(struct SHAPE3D)].shape3d_verts[8], core.playerstate.car_steeringAngle, &core.playerstate.car_rc2, ywhlang, pts_set, &pos_pt);
+				settires(&g_shapes3d[0x0AD4 / sizeof(struct SHAPE3D)].shape3d_verts[8], core.playerstate.car_steeringAngle, &core.playerstate.car_wheel_suspension_offset, ywhlang, pts_set, &pos_pt);
 			}
 
 			if (statemgmtcpy != 0) {
 				g_curr_tsp->rectptr = &tparr[3];
 				g_curr_tsp->ts_flags = 0xC;
 			} else if (core.playerstate.car_crashBmpFlag == 1) {
-				cliprect1 = clipunk;
+				cliprect1 = empty_rectangle;
 				g_curr_tsp->rectptr = &cliprect1;
 				g_curr_tsp->ts_flags = 0xC;
 			} else {
@@ -1747,20 +1747,20 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 		}
 		
 		if ((cur_opp_east == tx || cur_opp_east == tile_east2) && (opp_wheel_south_val == trow || opp_wheel_south_val == drow)) {
-			if (core.field_42A != 0) {
+			if (core.game_debris_active != 0) {
 				for (j2 = 0; j2 < 0x18; j2++) {
-					if (core.field_38E[j2] != 0) {
-						if (core.field_443[j2] == 1) {
-							trkobj = &scene3[core.field_42B[j2]];
-							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_longs1[j2] + core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
-							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_longs2[j2] + core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
-							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_longs3[j2] + core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
+					if (core.game_debris_planar_step[j2] != 0) {
+						if (core.game_debris_origin_kind[j2] == 1) {
+							trkobj = &scene3[core.game_debris_shape_index[j2]];
+							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_debris_x[j2] + core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
+							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_debris_y[j2] + core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
+							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_debris_z[j2] + core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 							g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
 							g_curr_tsp->rectptr = &tparr[2];
 							g_curr_tsp->ts_flags = flagbits | 5;
-							g_curr_tsp->rotvec.x = -core.field_2FE[j2];
-							g_curr_tsp->rotvec.y = -core.field_32E[j2];
-							g_curr_tsp->rotvec.z = -core.field_35E[j2];
+							g_curr_tsp->rotvec.x = -core.game_debris_rot_x[j2];
+							g_curr_tsp->rotvec.y = -core.game_debris_rot_y[j2];
+							g_curr_tsp->rotvec.z = -core.game_debris_rot_z[j2];
 							g_curr_tsp->unk = 0x400;
 							g_curr_tsp->material = globalgamesettings.game_opponentmaterial;
 							transformed_shape_add_for_sort(opp_zbias_val & start_bias, 0);
@@ -1773,18 +1773,18 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
 			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 
-			if (tile_lod != 0 || detail_lvl > 2) {
+			if (tile_lod != 0 || renderlevel > 2) {
 				g_curr_tsp->shapeptr = trkobj->ss_loShapePtr;
 			} else {
 				g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
-				wheel_update(&g_shapes3d[0x0AEA / sizeof(struct SHAPE3D)].shape3d_verts[8], core.opponentstate.car_steeringAngle, &core.opponentstate.car_rc2, buf_obase, veco, &ctrmesh);
+				settires(&g_shapes3d[0x0AEA / sizeof(struct SHAPE3D)].shape3d_verts[8], core.opponentstate.car_steeringAngle, &core.opponentstate.car_wheel_suspension_offset, buf_obase, veco, &ctrmesh);
 			}
 
 			if (statemgmtcpy != 0) {
 				g_curr_tsp->rectptr = &tparr[4];
 				g_curr_tsp->ts_flags = 0xC;
 			} else if (core.opponentstate.car_crashBmpFlag == 1) {
-				cliprect2 = clipunk;
+				cliprect2 = empty_rectangle;
 				g_curr_tsp->rectptr = &cliprect2;
 				g_curr_tsp->ts_flags = 0xC;
 			} else {
@@ -1802,8 +1802,8 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 		if (core.game_inputmode == 0) {
 			if ((tx == idxtrk || tile_east2 == idxtrk) && (trow == tagtrk || drow == tagtrk)) {
 
-				j = mulscl(cosfast(g_sgateopn), 0x24);
-				nfences = mulscl(sinfast(g_sgateopn), 0x24) + 0x38;
+				j = mulscl(intcos(g_sgateopn), 0x24);
+				nfences = mulscl(intsin(g_sgateopn), 0x24) + 0x38;
 
 				vptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)].shape3d_verts[8];
 				vptr[0].x = j - 0x24;
@@ -1817,13 +1817,13 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 				vptr[3].z = nfences;
 				 
 				g_curr_tsp->pos.x =
-					mulscl(sinfast(st_hdg + 0x200), 0x1B6) +
-					mulscl(sinfast(st_hdg + 0x100), 0x24) + 
+					mulscl(intsin(st_hdg + 0x200), 0x1B6) +
+					mulscl(intsin(st_hdg + 0x100), 0x24) + 
 					trackctrpos2[idxtrk] - viewpoint.x;
-				g_curr_tsp->pos.y = hillconsts[g_hillf] - viewpoint.y;
+				g_curr_tsp->pos.y = terheight[g_hillf] - viewpoint.y;
 				g_curr_tsp->pos.z =
-					mulscl(cosfast(st_hdg + 0x200), 0x1B6) +
-					mulscl(cosfast(st_hdg + 0x100), 0x24) + 
+					mulscl(intcos(st_hdg + 0x200), 0x1B6) +
+					mulscl(intcos(st_hdg + 0x100), 0x24) + 
 					row_ctr_zs[tagtrk] - viewpoint.z;
 
 				g_curr_tsp->shapeptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)];
@@ -1845,7 +1845,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 		if (g_ts_num != 0) {
 			if (g_ts_num > 1) {
-				heapsortorder(g_ts_num, g_tdist, tsix);
+				shellsort(g_ts_num, g_tdist, tsix);
 			}
 
 			// Draw red overlights on the brake lights on own and opponent's car
@@ -1869,7 +1869,7 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 					break;
 				}
 
-				result = trans_op(&cur_shps[j2]);
+				result = ADD_OBJECT_TO_BUFFER(&cur_shps[j2]);
 				if (result > 0)
 					goto draw_done;
 
@@ -1891,9 +1891,9 @@ void update_frame(I8 page, struct RECTANGLE* clip) {
 
 draw_done:
 	// Draw the skybox
-	skybox_result = skybox_op(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);
+	skybox_result = drawhorizon(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);
 	/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
-	polyinfo();
+	DRAW_OBJECTS();
 
 	// This supposedly draws the explosion. The fact that it cycles three
 	// different patterns, each 4 frames long, seems to corroborate the
@@ -1911,7 +1911,7 @@ draw_done:
 			rect_ptr = (si == 0) ? &cliprect1 : &cliprect2;
 		}
 
-		if (rcintersect(rect_ptr, clip) == 0) {
+		if (clipzone(rect_ptr, clip) == 0) {
 			/* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rect_ptr->left, rect_ptr->right, rect_ptr->top, rect_ptr->bottom);
 			offset_v.x = (rect_ptr->right + rect_ptr->left) >> 1;
 			offset_v.y = (rect_ptr->top + rect_ptr->bottom) >> 1;
@@ -1945,13 +1945,13 @@ draw_done:
 
 		if (followed->car_crashBmpFlag == 1) {
 			if (statemgmtcpy != 0) {
-				rcunion(init_crak(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
+				mergezones(crack(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
 			} else {
-				init_crak(core.game_frame - si, clip->top, clip->bottom - clip->top);
+				crack(core.game_frame - si, clip->top, clip->bottom - clip->top);
 			}
 		} else if (followed->car_crashBmpFlag == 2) {
 			if (statemgmtcpy != 0) {
-				rcunion(do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
+				mergezones(do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
 			} else {
 				do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top);
 			}
@@ -1964,9 +1964,9 @@ draw_done:
 			fmtframestr(&resbuftext, elaptm1 + tmr2, 0);
 			/* PLATFORM(video): select a font definition. */ fontsetfontdef2(fntled_res);
 			if (statemgmtcpy != 0) {
-				/* PLATFORM(video): draw the introduction text. */ rcunion(introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
+				/* PLATFORM(video): draw the introduction text. */ mergezones(shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
 			} else {
-				/* PLATFORM(video): draw the introduction text. */ introtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
+				/* PLATFORM(video): draw the introduction text. */ shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
 			}
 
 			/* PLATFORM(video): select the active font definition. */ fontsetfontdef();
@@ -1974,11 +1974,11 @@ draw_done:
 	}
 
 	if (statemgmtcpy != 0) {
-		rcunion(draw_ingame_text(), tparr, tparr);
+		mergezones(drawtext(), tparr, tparr);
 		if (skybox_result != 0) {
 			tparr[0] = *clip;
 			for (si = 1; si < 15; si++) {
-				tparr[si] = clipunk;
+				tparr[si] = empty_rectangle;
 			}
 		}
 
@@ -1989,7 +1989,7 @@ draw_done:
 		prevcamrot = view_rot_x;
 
 	} else {
-		draw_ingame_text();
+		drawtext();
 	}
 
 }
@@ -2002,8 +2002,8 @@ extern struct RECTANGLE rectclip[15];
 extern I16 rcmapix[45];
 extern I8 rect_num3;
 extern I8 rects_updt[15];
-extern struct RECTANGLE rcunk5;
-extern void far rectlist_add(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
+extern struct RECTANGLE full_screen_rectangle;
+extern void far makezonelist(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
 extern void far sprcopy2to12(void);
 extern void far sprputimage(void far *);
 extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
@@ -2017,7 +2017,7 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
 {
     {
         register I16 upper_height;
-        if (detail_lvl != 4)
+        if (renderlevel != 4)
             upper_height = horizon - rectptr->top - sky_hgt_world;
         else
             upper_height = horizon - rectptr->top;
@@ -2033,7 +2033,7 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
 
     {
         register I16 sky_x;
-        if (detail_lvl != 4) {
+        if (renderlevel != 4) {
             sky_x = ((x + SKYBOX_HORIZONTAL_HALF_WRAP) & FAST_TRIG_ANGLE_MASK) - SKYBOX_HORIZONTAL_WRAP_SIZE;
             if (rectptr->top < horizon && horizon - maxscnh <= rectptr->bottom) {
                 /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
@@ -2064,7 +2064,7 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
 
 /* Builds and draws the skybox view. Params: preview, clip, latitude, rotation, mode, detail and camera height. Returns: draw status. State: reads skybox/terrain state and updates clip rectangles. */
 /* PLATFORM(video): draws to or configures the display surface. */
-I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
+I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
               struct MATRIX *rotation, I16 projection_mode, I16 detail, I16 camera_y)
 {
     register I16 i;
@@ -2103,8 +2103,8 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
             goto done;
         }
 
-        vector_to_point(&vecs[0], &pts[0]);
-        vector_to_point(&vecs[1], &pts[1]);
+        projectp(&vecs[0], &pts[0]);
+        projectp(&vecs[1], &pts[1]);
 
         if (pts[0].px > PLATFORM_SCREEN_WIDTH_PIXELS && pts[1].px > PLATFORM_SCREEN_WIDTH_PIXELS) {
             if (pts[0].py < pts[1].py) {
@@ -2140,8 +2140,8 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
         }
 
         found = 0;
-        if (detail_lvl != 4 && pts[1].px < 0 && pts[0].px > PLATFORM_SCREEN_WIDTH_PIXELS &&
-            draw_line_related(pts[1].px, pts[1].py,
+        if (renderlevel != 4 && pts[1].px < 0 && pts[0].px > PLATFORM_SCREEN_WIDTH_PIXELS &&
+            clipline(pts[1].px, pts[1].py,
                               pts[0].px, pts[0].py, clip_line) == 0) {
             temp = clip_line[3] - clip_line[5];
             if ((temp < 0 ? -temp : temp) < 0x60) {
@@ -2178,9 +2178,9 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
 
                     rc.top = 0;
                     rc.bottom = tparr[5].top;
-                    if (!rcintersect(&rc, clip)) {
+                    if (!clipzone(&rc, clip)) {
                         rect_num3 = 0;
-                        rectlist_add(15, rects_updt, rectp, tparr,
+                        makezonelist(15, rects_updt, rectp, tparr,
                                            &rc, &rect_num3, rectclip);
                         for (temp = 0; temp < rect_num3; temp++) {
                             rectptr = &rectclip[temp];
@@ -2191,9 +2191,9 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
 
                     rc.top = tparr[5].bottom;
                     rc.bottom = PLATFORM_SCREEN_HEIGHT_PIXELS;
-                    if (!rcintersect(&rc, clip)) {
+                    if (!clipzone(&rc, clip)) {
                         rect_num3 = 0;
-                        rectlist_add(15, rects_updt, rectp, tparr,
+                        makezonelist(15, rects_updt, rectp, tparr,
                                            &rc, &rect_num3, rectclip);
                         for (temp = 0; temp < rect_num3; temp++) {
                             rectptr = &rectclip[temp];
@@ -2210,7 +2210,7 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
             }
             rc.left = 0;
             rc.right = PLATFORM_SCREEN_WIDTH_PIXELS;
-            if (!rcintersect(&rc, clip)) {
+            if (!clipzone(&rc, clip)) {
                 xstart = 0;
                 temp = (slope < 0 ? -slope : slope) + 1;
                 if (temp > 0x20)
@@ -2226,14 +2226,14 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
                 }
             }
         } else {
-            i = polang(pts[0].px - pts[1].px, pts[0].py - pts[1].py) & FAST_TRIG_ANGLE_MASK;
+            i = intatan(pts[0].px - pts[1].px, pts[0].py - pts[1].py) & FAST_TRIG_ANGLE_MASK;
             for (slope = 2; slope < 6; slope++) {
                 if (slope < 4)
                     temp = 0;
                 else
                     temp = 1;
-                pts[slope].px = pts[temp].px + mulscl(0x3e80, sinfast(horizon_angles[slope - 2] + i));
-                pts[slope].py = pts[temp].py + mulscl(0x3e80, cosfast(horizon_angles[slope - 2] + i));
+                pts[slope].px = pts[temp].px + mulscl(0x3e80, intsin(horizon_angles[slope - 2] + i));
+                pts[slope].py = pts[temp].py + mulscl(0x3e80, intcos(horizon_angles[slope - 2] + i));
             }
             skybox_op_helper(g_skybox_sky_clr, 4, pts[0], pts[1], pts[3], pts[2]);
             skybox_op_helper(ground_skybox, 4, pts[0], pts[1], pts[4], pts[5]);
@@ -2256,7 +2256,7 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
             goto done;
         }
 
-        vector_to_point(&vecs[0], &pts[0]);
+        projectp(&vecs[0], &pts[0]);
         horizon = pts[0].py;
         if (clip->top > horizon)
             horizon = clip->top;
@@ -2264,7 +2264,7 @@ I16 skybox_op(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
         if (latitude == 1) {
             if (statemgmtcpy == 0)
                 goto simple;
-            tparr[5].top = (detail_lvl == 4) ? horizon - 1 : horizon - maxscnh;
+            tparr[5].top = (renderlevel == 4) ? horizon - 1 : horizon - maxscnh;
             tparr[5].left = 0;
             tparr[5].right = PLATFORM_SCREEN_WIDTH_PIXELS;
             tparr[5].bottom = horizon;
@@ -2278,7 +2278,7 @@ simple:
             } else {
                 for (i = 0; i < 15; i++)
                     rects_updt[i] = 1;
-                if (detail_lvl == 4)
+                if (renderlevel == 4)
                     rotpr[preview_index] = prevcamrot;
                 if (rotpr[preview_index] == detail &&
                     rectp[5].left == tparr[5].left &&
@@ -2289,7 +2289,7 @@ simple:
                 else
                     rects_updt[5] = 3;
                 rect_num3 = 0;
-                rectlist_add(15, rects_updt, rectp, tparr,
+                makezonelist(15, rects_updt, rectp, tparr,
                                    clip, &rect_num3, rectclip);
                 for (temp = 0; temp < rect_num3; temp++)
                     skybox_op_helper2(&rectclip[temp], detail, horizon);
@@ -2351,12 +2351,12 @@ void draw_track_preview(void)
     U8  terr;
     struct TRACKOBJECT *track_obj;
 
-    camera_distance = polradius2d(camera_aim_x - camera_pos_x,
+    camera_distance = inthypot(camera_aim_x - camera_pos_x,
                                     camera_aim_z - camera_pos_z);
-    rot_angle = polang(camera_aim_y - camera_pos_y, camera_distance);
-    cam_matrix = matrotzxy(0, rot_angle, 0, 1);
+    rot_angle = intatan(camera_aim_y - camera_pos_y, camera_distance);
+    cam_matrix = makematrix(0, rot_angle, 0, 1);
     mat_vec(&track_prev_vec, cam_matrix, &vector);
-    vector_to_point(&vector, &screen_point);
+    projectp(&vector, &screen_point);
 
     horizon = screen_point.py;
     if (horizon < 0)
@@ -2369,7 +2369,7 @@ void draw_track_preview(void)
     /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, horizon, PLATFORM_SCREEN_HEIGHT_PIXELS);
     /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(ground_skybox);
     /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS);
-    select_rot(0, rot_angle, 0, &trackpreview_cliprect, 1);
+    INIT_OBJECTS_BUFFER(0, rot_angle, 0, &trackpreview_cliprect, 1);
 
     transformed.rotvec.x = 0;
     transformed.rotvec.y = 0;
@@ -2381,7 +2381,7 @@ void draw_track_preview(void)
             terr = td15p_9[gterrtrk[row_idx] + tile_col];
             if (elem != 0) {
                 if (terr >= 7 && terr < 11) {
-                    elem = subst_hillroad(terr, elem);
+                    elem = roadupcheck(terr, elem);
                     terr = 0;
                 }
                 switch (elem) {
@@ -2395,7 +2395,7 @@ void draw_track_preview(void)
             }
 
             if (terr == 6) {
-                obj_height = hillconsts[1];
+                obj_height = terheight[1];
                 if (elem != 0)
                     terr = 0;
             } else {
@@ -2437,7 +2437,7 @@ void draw_track_preview(void)
                             transformed.rotvec.z = track_obj->ss_rotY;
                             transformed.unk = 0x400;
                             transformed.material = 0;
-                            trans_op(&transformed);
+                            ADD_OBJECT_TO_BUFFER(&transformed);
                         }
                     }
                     terr = 0;
@@ -2454,7 +2454,7 @@ void draw_track_preview(void)
                 transformed.rotvec.z = track_obj->ss_rotY;
                 transformed.ts_flags = 5;
                 transformed.material = 0;
-                trans_op(&transformed);
+                ADD_OBJECT_TO_BUFFER(&transformed);
             }
 
             if (elem != 0) {
@@ -2487,7 +2487,7 @@ void draw_track_preview(void)
                     transformed.rotvec.z = 0;
                     transformed.ts_flags = 5;
                     transformed.material = 0;
-                    trans_op(&transformed);
+                    ADD_OBJECT_TO_BUFFER(&transformed);
                 }
 
                 if (track_obj->ss_ssOvelay != 0) {
@@ -2501,7 +2501,7 @@ void draw_track_preview(void)
                             transformed.material = overlay->ss_surfaceType;
                         else
                             transformed.material = 0;
-                        trans_op(&transformed);
+                        ADD_OBJECT_TO_BUFFER(&transformed);
                     }
                 }
 
@@ -2513,98 +2513,98 @@ void draw_track_preview(void)
                     transformed.material = track_obj->ss_surfaceType;
                 else
                     transformed.material = 0;
-                trans_op(&transformed);
+                ADD_OBJECT_TO_BUFFER(&transformed);
             }
-            polyinfo();
+            DRAW_OBJECTS();
         }
     }
 }
 
 /* Draws the in-game text overlay. Params: none. Returns: the affected rectangle. State: reads and updates text and game-display state. */
 /* PLATFORM(video): draws to or configures the display surface. */
-struct RECTANGLE *draw_ingame_text(void)
+struct RECTANGLE *drawtext(void)
 {
     register I16 remainder;
 
-    game_rect_txt_in = clipunk;
+    game_rect_txt_in = empty_rectangle;
 
     if (menutimeout != 0) {
-        copy_string(&resbuftext, locate_text_resource(gamerptrs, aDm1));
-        /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-            introtext(&resbuftext, font_op2_alt(&resbuftext), 0xAA, dlg_colour, 0),
+        strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aDm1));
+        /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+            shadowtext(&resbuftext, mycenter(&resbuftext), 0xAA, dlg_colour, 0),
             &game_rect_txt_in);
 
-        copy_string(&resbuftext, locate_text_resource(gamerptrs, aDm2));
-        /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-            introtext(&resbuftext, font_op2_alt(&resbuftext), 0xB6, dlg_colour, 0),
+        strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aDm2));
+        /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+            shadowtext(&resbuftext, mycenter(&resbuftext), 0xB6, dlg_colour, 0),
             &game_rect_txt_in);
     } else if (gm_playmode == 0) {
         if (core.game_inputmode == 0) {
-            copy_string(&resbuftext, locate_text_resource(gamerptrs, aPre));
-            /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-                introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5A, dlg_colour, 0),
+            strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aPre));
+            /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                shadowtext(&resbuftext, mycenter(&resbuftext), 0x5A, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (pass_check_flag == 0) {
-            copy_string(&resbuftext, locate_text_resource(gamerptrs, aSe1));
-            /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-                introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5D, dlg_colour, 0),
+            strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aSe1));
+            /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                shadowtext(&resbuftext, mycenter(&resbuftext), 0x5D, dlg_colour, 0),
                 &game_rect_txt_in);
-            copy_string(&resbuftext, locate_text_resource(gamerptrs, aSe2));
-            /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-                introtext(&resbuftext, font_op2_alt(&resbuftext), 0x69, dlg_colour, 0),
+            strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aSe2));
+            /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                shadowtext(&resbuftext, mycenter(&resbuftext), 0x69, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (follow_op == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
-            switch (core.field_45D) {
+            switch (core.game_player_guidance) {
             /* PLATFORM(video): blit a transparent shape. */ case 1:
                 sprite_putimage_transparent(sdgbmp_v[3], 0x94, 0x5D);
-                rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
+                mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             /* PLATFORM(video): blit a transparent shape. */ case 2:
                 sprite_putimage_transparent(sdgbmp_v[4], 0x94, 0x5D);
-                rcunion(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
+                mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 3:
-                copy_string(&resbuftext, locate_text_resource(gamerptrs, aWww));
-                /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-                    introtext(&resbuftext, font_op2_alt(&resbuftext), 0x5D, dlg_colour, 0),
+                strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aWww));
+                /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                    shadowtext(&resbuftext, mycenter(&resbuftext), 0x5D, dlg_colour, 0),
                     &game_rect_txt_in);
                 break;
             }
 
             resbuftext = 0;
-            switch (core.field_45E) {
+            switch (core.game_opponent_pass_side) {
             /* PLATFORM(video): blit a transparent shape. */ case 1:
                 sprite_putimage_transparent(sdgbmp_v[3], 0x44, 0x71);
-                rcunion(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
-                copy_string(&resbuftext, locate_text_resource(gamerptrs, aOpp));
+                mergezones(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
+                strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aOpp));
                 break;
             /* PLATFORM(video): blit a transparent shape. */ case 2:
                 sprite_putimage_transparent(sdgbmp_v[4], 0xE4, 0x71);
-                rcunion(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
-                copy_string(&resbuftext, locate_text_resource(gamerptrs, aOpp_0));
+                mergezones(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
+                strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aOpp_0));
                 break;
             }
 
             if (resbuftext != 0) {
-                /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-                    introtext(&resbuftext, font_op2_alt(&resbuftext), 0x74, dlg_colour, 0),
+                /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                    shadowtext(&resbuftext, mycenter(&resbuftext), 0x74, dlg_colour, 0),
                     &game_rect_txt_in);
             }
 
             if (pen_flag_count != 0) {
-                copy_string(&resbuftext, locate_text_resource(gamerptrs, aPen));
+                strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aPen));
                 fmtframestr(&resbuftext + strlen(&resbuftext), g_penaltytm, 0);
-                /* PLATFORM(video): use the display text or sprite interface. */ rcunion(&game_rect_txt_in,
-                    introtext(&resbuftext, font_op2_alt(&resbuftext), 0x66, dlg_colour, 0),
+                /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                    shadowtext(&resbuftext, mycenter(&resbuftext), 0x66, dlg_colour, 0),
                     &game_rect_txt_in);
             }
         }
     } else if (gm_playmode == 2) {
         remainder = core.game_frame % rate_frame;
         if (remainder < ((I16S)rate_frame >> 1)) {
-            copy_string(&resbuftext, locate_text_resource(gamerptrs, aRpl_0));
-            /* PLATFORM(video): draw the introduction text. */ rcunion(&game_rect_txt_in,
-                introtext(&resbuftext, 0x138 - (strlen(&resbuftext) << 3), 0x0F, dlg_colour, 0),
+            strcpyfar(&resbuftext, locate_text_resource(gamerptrs, aRpl_0));
+            /* PLATFORM(video): draw the introduction text. */ mergezones(&game_rect_txt_in,
+                shadowtext(&resbuftext, 0x138 - (strlen(&resbuftext) << 3), 0x0F, dlg_colour, 0),
                 &game_rect_txt_in);
         }
     }
@@ -2646,7 +2646,7 @@ struct SHAPE3D *fence_shapes[8] = {
     &g_shapes3d[47],
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading0[23] = {
+static struct LOOKAHEAD_TILE hzoneNW[23] = {
     { -2, -4, 2 },
     { -1, -4, 2 },
     { 0, -4, 2 },
@@ -2672,7 +2672,7 @@ static struct LOOKAHEAD_TILE lookahead_heading0[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading1[23] = {
+static struct LOOKAHEAD_TILE hzoneNE[23] = {
     { 2, -4, 2 },
     { 1, -4, 2 },
     { 0, -4, 2 },
@@ -2698,7 +2698,7 @@ static struct LOOKAHEAD_TILE lookahead_heading1[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading2[23] = {
+static struct LOOKAHEAD_TILE hzoneEN[23] = {
     { 4, -2, 2 },
     { 4, -1, 2 },
     { 4, 0, 2 },
@@ -2724,7 +2724,7 @@ static struct LOOKAHEAD_TILE lookahead_heading2[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading3[23] = {
+static struct LOOKAHEAD_TILE hzoneES[23] = {
     { 4, 2, 2 },
     { 4, 1, 2 },
     { 4, 0, 2 },
@@ -2750,7 +2750,7 @@ static struct LOOKAHEAD_TILE lookahead_heading3[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading4[23] = {
+static struct LOOKAHEAD_TILE hzoneSE[23] = {
     { 2, 4, 2 },
     { 1, 4, 2 },
     { 0, 4, 2 },
@@ -2776,7 +2776,7 @@ static struct LOOKAHEAD_TILE lookahead_heading4[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading5[23] = {
+static struct LOOKAHEAD_TILE hzoneSW[23] = {
     { -2, 4, 2 },
     { -1, 4, 2 },
     { 0, 4, 2 },
@@ -2802,7 +2802,7 @@ static struct LOOKAHEAD_TILE lookahead_heading5[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading6[23] = {
+static struct LOOKAHEAD_TILE hzoneWS[23] = {
     { -4, 2, 2 },
     { -4, 1, 2 },
     { -4, 0, 2 },
@@ -2828,7 +2828,7 @@ static struct LOOKAHEAD_TILE lookahead_heading6[23] = {
     { 0, 0, 0 },
 };
 
-static struct LOOKAHEAD_TILE lookahead_heading7[23] = {
+static struct LOOKAHEAD_TILE hzoneWN[23] = {
     { -4, -2, 2 },
     { -4, -1, 2 },
     { -4, 0, 2 },
@@ -2854,8 +2854,8 @@ static struct LOOKAHEAD_TILE lookahead_heading7[23] = {
     { 0, 0, 0 },
 };
 
-I8 *ahead_tables[8] = { (I8 *)lookahead_heading1, (I8 *)lookahead_heading2, (I8 *)lookahead_heading3, (I8 *)lookahead_heading4, (I8 *)lookahead_heading5, (I8 *)lookahead_heading6, (I8 *)lookahead_heading7, (I8 *)lookahead_heading0 };
-struct RECTANGLE rcunk5 = { 0, 320, 0, 200 };
+I8 *headingzones[8] = { (I8 *)hzoneNE, (I8 *)hzoneEN, (I8 *)hzoneES, (I8 *)hzoneSE, (I8 *)hzoneSW, (I8 *)hzoneWS, (I8 *)hzoneWN, (I8 *)hzoneNW };
+struct RECTANGLE full_screen_rectangle = { 0, 320, 0, 200 };
 I8 detthrlevel[6] = { 2, 2, 1, 0, 0, 0 };
 I16 hill_offs[9][2] = {
     { 0, 0 },
@@ -2905,7 +2905,7 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
 /* Updates the crack/crash overlay. Params: frame, top and height. Returns: affected rectangle. State: reads and updates crash-overlay state. */
 /* PLATFORM(video): draws to or configures the display surface. */
-/* PLATFORM(file): resolves crash-shape data inside a loaded resource. */ struct RECTANGLE *init_crak(I16 frame, I16 top, I16 height)
+/* PLATFORM(file): resolves crash-shape data inside a loaded resource. */ struct RECTANGLE *crack(I16 frame, I16 top, I16 height)
 {
     /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct CRACK_LINE { struct POINT2D start, end; };
     struct CRACK_LINE far *crak_shape;
@@ -2923,7 +2923,7 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
         animation_counter = cinf_shape[0] - 1;
     total_lines = cinf_shape[animation_counter + 1];
 
-    game_rect_txt_in = clipunk;
+    game_rect_txt_in = empty_rectangle;
     for (crackIndex = 0; crackIndex < total_lines; ++crackIndex) {
             start_point = crak_shape[crackIndex].start;
             crack_end = crak_shape[crackIndex].end;
@@ -2941,19 +2941,19 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
         if (statemgmtcpy != 0) {
             adjust_point.px = start_point.px;
             adjust_point.py = start_point.py + top - 1;
-            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
+            zonecheck(&adjust_point, &game_rect_txt_in);
 
             adjust_point.px = crack_end.px;
             adjust_point.py = crack_end.py + top + 1;
-            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
+            zonecheck(&adjust_point, &game_rect_txt_in);
 
             adjust_point.px = start_point.px;
             adjust_point.py = start_point.py + top + 1;
-            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
+            zonecheck(&adjust_point, &game_rect_txt_in);
 
             adjust_point.px = crack_end.px;
             adjust_point.py = crack_end.py + top - 1;
-            rect_adjust_from_point(&adjust_point, &game_rect_txt_in);
+            zonecheck(&adjust_point, &game_rect_txt_in);
         }
     }
 
@@ -2964,7 +2964,7 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
 /* Loads the selected skybox. Params: skybox mode. Returns: none. State: updates the skybox resource handle and loaded-state flag. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
-void far load_skybox(I8 mode)
+void far initscenery(I8 mode)
 {
     register I16 skyHeight;
     struct MATERIALCLRLIST *materials;
@@ -2974,10 +2974,10 @@ void far load_skybox(I8 mode)
     else if (skybox_loaded != 0 && mode == scene_idx)
         return;
     else {
-        unload_skybox();
+        removescenery();
         scene_idx = mode;
         skybox_loaded = 1;
-        /* PLATFORM(file): load the selected skybox resource. */ skyres_handle.pointer = file_load_shape2d_fatal_thunk(scenery_names + 9 * mode);
+        /* PLATFORM(file): load the selected skybox resource. */ skyres_handle.pointer = file_load_shape2d_fatal_thunk(TerName + 9 * mode);
         locate_many_resources(skyres_handle.pointer, "scensce2sce3sce4",
                               (I8 far **)skypics);
         scene_1ht = skypics[0]->height;
@@ -3005,7 +3005,7 @@ void far load_skybox(I8 mode)
 
 /* Releases the active skybox resource. Params: none. Returns: none. State: clears the skybox resource handle and loaded-state flag. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void far unload_skybox(void)
+void far removescenery(void)
 {
     /* PLATFORM(memory): release resource memory. */ if (skybox_loaded != 0)
         mmgr_free(skyres_handle.pointer);
@@ -3014,7 +3014,7 @@ void far unload_skybox(void)
 
 /* Loads the SD game shape set. Params: none. Returns: none. State: stores the loaded resource handle. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
-void far load_sdgame2_shapes(void)
+void far loaddrawbits(void)
 {
     register I16 i;
     /* PLATFORM(file): load a named resource. */ sdgame2hdl = file_load_resource(8, "sdgame2");
@@ -3026,7 +3026,7 @@ void far load_sdgame2_shapes(void)
 
 /* Releases the SD game shape set. Params: none. Returns: none. State: reads the stored resource handle. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void far free_sdgame2(void) { /* PLATFORM(memory): release resource memory. */ mmgr_free(sdgame2hdl); }
+void far removedrawbits(void) { /* PLATFORM(memory): release resource memory. */ mmgr_free(sdgame2hdl); }
 
 I8 aCarcoun_0[] = "carcoun";
 
@@ -3075,11 +3075,11 @@ I8 far setup_intro(void)
     I16 savedGoalZ;
 
     operationResult = 0;
-    /* PLATFORM(file): load a 3D resource. */ title3dresValue = file_load_3dres("title");
+    /* PLATFORM(file): load a 3D resource. */ title3dresValue = fluffyload("title");
     locate_many_resources(title3dresValue, "logolog2brav", lastShapeResources);
-    shape3d_init_shape(lastShapeResources[0], &intro_alt);
-    shape3d_init_shape(lastShapeResources[1], &logo_title);
-    shape3d_init_shape(lastShapeResources[2], &brav);
+    makeobjdef(lastShapeResources[0], &intro_alt);
+    makeobjdef(lastShapeResources[1], &logo_title);
+    makeobjdef(lastShapeResources[2], &brav);
     /* PLATFORM(video): create an offscreen sprite surface. */ if (g_videoflg5 == 0)
         g_wndspr = sprite_make_window(PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS, 0x0f);
 
@@ -3099,9 +3099,9 @@ I8 far setup_intro(void)
     lastElapsedFrames = 0;
     /* PLATFORM(file): load a resource file. */ otherCarResource = file_load_resource_file(aCarcoun_0);
     setup_aero_trackdata(otherCarResource, 1);
-    /* PLATFORM(memory): release a loaded resource. */ unload_resource(otherCarResource);
-    init_plantrak();
-    /* PLATFORM(timer): read the elapsed timer interval. */ timer_get_delta();
+    /* PLATFORM(memory): release a loaded resource. */ closeresource(otherCarResource);
+    initlogo();
+    /* PLATFORM(timer): read the elapsed timer interval. */ elapsedticks();
     pointTotalB = 0;
     activePointCountA = 0;
     statemgmtcpy = slow_video_mode_state;
@@ -3115,11 +3115,11 @@ I8 far setup_intro(void)
     frameReady = 1;
 
     do {
-        /* PLATFORM(timer): read the elapsed timer interval. */ baseFrameDelta = timer_get_delta();
+        /* PLATFORM(timer): read the elapsed timer interval. */ baseFrameDelta = elapsedticks();
         frmexcess += baseFrameDelta;
         while (frmexcess > frmcs_time) {
             frmexcess -= frmcs_time;
-            do_opponent_op();
+            movelogo();
             frameReady = 1;
             if (11 * ((I16)rate_frame) < ++lastElapsedFrames) {
                 oldPhase = 1;
@@ -3171,9 +3171,9 @@ I8 far setup_intro(void)
                 savedGoalZ = savedOpponentZ;
             }
             if (carHeadingData == 0xffff) {
-                carHeadingData = (-polang(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious)) & 0x03ff;
-                oldCarDistance = polradius2d(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious);
-                introCloudTilt = polang(lastGoalY - cameraYIdle, oldCarDistance) & 0x03ff;
+                carHeadingData = (-intatan(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious)) & 0x03ff;
+                oldCarDistance = inthypot(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious);
+                introCloudTilt = intatan(lastGoalY - cameraYIdle, oldCarDistance) & 0x03ff;
             }
 
             if (statemgmtcpy != 0) {
@@ -3185,7 +3185,7 @@ I8 far setup_intro(void)
                     drawSelectedCount = &activePointCountA;
                 }
             }
-            intro_op(oldCameraX, cameraYIdle, cameraZPrevious, carHeadingData, introCloudTilt,
+            drawlogo(oldCameraX, cameraYIdle, cameraZPrevious, carHeadingData, introCloudTilt,
                      oldDrawOpponent, oldPhase, cloudPointsList,
                      (struct POINT2D *)currentPoints, drawSelectedCount,
                      tparr[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
@@ -3200,8 +3200,8 @@ I8 far setup_intro(void)
             } else {
                 /* PLATFORM(video): copy the working sprite pages. */ sprcopy2to12();
                 if (statemgmtcpy != 0) {
-                    rcunion(&lastDrawRect, &tparr[2], &oldSavedRect);
-                    if (rcintersect(&oldSavedRect, &rc0_cpy) == 0) {
+                    mergezones(&lastDrawRect, &tparr[2], &oldSavedRect);
+                    if (clipzone(&oldSavedRect, &rc0_cpy) == 0) {
                         /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(oldSavedRect.left, oldSavedRect.right,
                                           oldSavedRect.top, oldSavedRect.bottom);
                         /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
@@ -3218,7 +3218,7 @@ I8 far setup_intro(void)
             }
 
         }
-/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ check_input: /* MSC 5.10: deleting this unused label changes COMDEF order. */
+/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ clear_keyboardbuffer: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         if (input_do_checking(baseFrameDelta)) {
             operationResult = 1;
             break;
@@ -3242,7 +3242,7 @@ I8 far setup_intro(void)
 
 /* Draws the introduction scene. Params: camera, projection and clip data from the signature. Returns: none. State: reads intro-scene and sprite state. */
 /* PLATFORM(video): draws to or configures the display surface. */
-void far intro_op(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
+void far drawlogo(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
                   I16 cloudRotation, I16 showOpponent, I16 useLogo,
                   struct VECTOR *cloudPoints, struct POINT2D *oldPoints,
                   I16 *oldPointCount, struct RECTANGLE inputClip,
@@ -3258,8 +3258,8 @@ void far intro_op(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
     struct VECTOR inputPoint;
     struct VECTOR relativeVector;
 
-    initialClip = clipunk;
-    select_rot(0, cloudRotation, logoRotation, &intro_cliprect, 0);
+    initialClip = empty_rectangle;
+    INIT_OBJECTS_BUFFER(0, cloudRotation, logoRotation, &intro_cliprect, 0);
     if (useLogo)
         modelShape.shape = &intro_alt;
     else
@@ -3278,7 +3278,7 @@ void far intro_op(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
     modelShape.rotation.z = 0;
     modelShape.scale = 0x400;
     modelShape.material = 0;
-    trans_op(&modelShape);
+    ADD_OBJECT_TO_BUFFER(&modelShape);
     if (showOpponent) {
         /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.x = (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - camX;
         /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.y = (I16)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - camY;
@@ -3295,7 +3295,7 @@ void far intro_op(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
         modelShape.rotation.z = -core.opponentstate.car_rotate.x;
         modelShape.scale = 0x400;
         modelShape.material = 0;
-        trans_op(&modelShape);
+        ADD_OBJECT_TO_BUFFER(&modelShape);
     }
 logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
     if (statemgmtcpy == 0)
@@ -3308,8 +3308,8 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
             ++index;
         }
     }
-    rcunion(oldClip, &inputClip, &unionRect);
-    if (rcintersect(&unionRect, &rc0_cpy) == 0) {
+    mergezones(oldClip, &inputClip, &unionRect);
+    if (clipzone(&unionRect, &rc0_cpy) == 0) {
         /* PLATFORM(video): select the sprite clip rectangle. */ sprset1size(unionRect.left, unionRect.right,
                           unionRect.top, unionRect.bottom);
         /* PLATFORM(video): fill the active clip with a color. */ sprite_clear_1_color(0);
@@ -3332,12 +3332,12 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         inputPoint.z = cloudPoints[index].z - camZ;
         mat_vec(&inputPoint, &wkmatx, &relativeVector);
         if (relativeVector.z > PLATFORM_SCREEN_HEIGHT_PIXELS) {
-            vector_to_point(&relativeVector, &projectedPoint);
+            projectp(&relativeVector, &projectedPoint);
             /* PLATFORM(video): draw a display pixel. */ putpixel_single_maybe(projectedPoint.px, projectedPoint.py,
                                   intro_colorvalue);
             if (statemgmtcpy != 0) {
                 oldPoints[count++] = projectedPoint;
-                rect_adjust_from_point(&projectedPoint, &previousClip);
+                zonecheck(&projectedPoint, &previousClip);
             }
             ++intro_colorvalue;
             if (intro_colorvalue == intro_color_max)
@@ -3347,7 +3347,7 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
     } while (index < 100);
     if (statemgmtcpy != 0)
         *oldPointCount = count;
-    polyinfo();
+    DRAW_OBJECTS();
     if (statemgmtcpy != 0) {
         *oldClip = initialClip;
         *oldUnion = previousClip;

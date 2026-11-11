@@ -8,7 +8,7 @@
 #define WHEEL_DRAW_FACE_POINT_COUNT 18
 #define WHEEL_HALF_RING_POINT_COUNT 8
 struct Point { I16 x; I16 y; };
-struct WheelRect { I16 left, top, unused0, unused1, unused2, unused3, x, y; };
+struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 extern void FAR preRender_wheel_helper(struct WheelRect *, I16 *, I16);
 extern void FAR preRender_wheel_helper4(I16, I16, ...);
 extern void FAR preRender_default_alt(I16, I16, I8 *);

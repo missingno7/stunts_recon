@@ -53,16 +53,16 @@ CONST ends
 _BSS segment word public 'BSS'
 _BSS ends
 assume cs:S012_TEXT
-extrn _cosfast:far
-extrn _polang:far
-extrn _sinfast:far
+extrn _intcos:far
+extrn _intatan:far
+extrn _intsin:far
 extrn _mmgr_release:far
 extrn _fatal_error:far
 S012_TEXT segment word public 'CODE'
-public _nopsub_322C0
-public _nopsub_322DF
+public _projectorgp
+public _setprojectpb
 public _set_projection
-public _vector_to_point
+public _projectp
 public _sprite_free_window
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 322C0.
@@ -104,7 +104,7 @@ public _sprite_free_window
 ; ASMDOC-GEOMETRY Dead: true. Reachability: No symbolic call/address-taking found outside owner; no
 ; callback/table target; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_nopsub_322C0 proc far
+_projectorgp proc far
     arg_left_origin = word ptr 6
     arg_top_origin = word ptr 8
 
@@ -120,7 +120,7 @@ _nopsub_322C0 proc far
     mov     _projection_center_y, ax
     pop     bp
     retf
-_nopsub_322C0 endp
+_projectorgp endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 322DF.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -175,7 +175,7 @@ _nopsub_322C0 endp
 ; ASMDOC-GEOMETRY Dead: true. Reachability: No external symbolic calls or address-taking found; jumps into
 ; set_projection at projection_join_01; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_nopsub_322DF proc far
+_setprojectpb proc far
     arg_horizontal_angle = word ptr 6
     arg_vertical_angle = word ptr 8
 
@@ -189,7 +189,7 @@ _nopsub_322DF proc far
     mov     _projection_y_angle, ax
     jmp     short projection_join_01
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_nopsub_322DF endp
+_setprojectpb endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Set the projection parameters used by vector rendering.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -298,13 +298,13 @@ projection_join_01:
     add     ax, _projection_top_origin
     mov     _projection_center_y, ax
     push    _projection_x_angle
-    call _cosfast
+    call _intcos
     add     sp, 2
     mul     _projection_half_width
     mov     si, ax
     mov     di, dx
     push    _projection_x_angle
-    call _sinfast
+    call _intsin
     add     sp, 2
     mov     cx, ax
     mov     dx, di
@@ -315,13 +315,13 @@ projection_join_01:
     or      bx, bx
     jz      short projection_branch_path_01
     push    _projection_y_angle
-    call _cosfast
+    call _intcos
     add     sp, 2
     mul     _projection_half_height
     mov     si, ax
     mov     di, dx
     push    _projection_y_angle
-    call _sinfast
+    call _intsin
     add     sp, 2
     mov     cx, ax
     mov     dx, di
@@ -345,7 +345,7 @@ projection_branch_path_01:
     mov     _projection_y_scale, ax
     push    _projection_half_height
     push    ax
-    call _polang
+    call _intatan
     add     sp, 4
     mov     _projection_y_angle, ax
     pop     di
@@ -400,7 +400,7 @@ _set_projection endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg003.c:2106-2107,2259,2359,3335;
 ; src/obj_seg006.c:293,348,383,400 and others
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_vector_to_point proc far
+_projectp proc far
     projection_invalid_coordinate = byte ptr -32768
     arg_vec = word ptr 6
     arg_point2dout = word ptr 8
@@ -521,7 +521,7 @@ vector_point_branch_path_13:
     mov     ax, 7D00h
     mov     [di+2], ax
     jmp     short vector_point_loop_head_01
-_vector_to_point endp
+_projectp endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Release the selected sprite window.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments

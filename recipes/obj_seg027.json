@@ -603,7 +603,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_audio_unk2",
+      "frame": "_audio_set_chunk_volume",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -611,7 +611,7 @@
       "offset": 594,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_unk2",
+      "target": "_audio_set_chunk_volume",
       "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
@@ -909,7 +909,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_audio_unk2",
+      "frame": "_audio_set_chunk_volume",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -917,7 +917,7 @@
       "offset": 378,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_unk2",
+      "target": "_audio_set_chunk_volume",
       "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
@@ -1334,7 +1334,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_copy_counter",
+      "frame": "_setticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1342,7 +1342,7 @@
       "offset": 1888,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_copy_counter",
+      "target": "_setticks",
       "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
@@ -1385,7 +1385,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_wait_for_dx",
+      "frame": "_waitticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1393,7 +1393,7 @@
       "offset": 1856,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_wait_for_dx",
+      "target": "_waitticks",
       "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
@@ -1402,7 +1402,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_copy_counter",
+      "frame": "_setticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1410,7 +1410,7 @@
       "offset": 1848,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_copy_counter",
+      "target": "_setticks",
       "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
@@ -1521,7 +1521,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_wait_for_dx",
+      "frame": "_waitticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1529,7 +1529,7 @@
       "offset": 1767,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_wait_for_dx",
+      "target": "_waitticks",
       "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
@@ -1538,7 +1538,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_copy_counter",
+      "frame": "_setticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1546,7 +1546,7 @@
       "offset": 1759,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_copy_counter",
+      "target": "_setticks",
       "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
@@ -1793,7 +1793,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_audio_unk2",
+      "frame": "_audio_set_chunk_volume",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1801,7 +1801,7 @@
       "offset": 1560,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_unk2",
+      "target": "_audio_set_chunk_volume",
       "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
@@ -1878,7 +1878,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_audio_unk2",
+      "frame": "_audio_set_chunk_volume",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1886,7 +1886,7 @@
       "offset": 1502,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_unk2",
+      "target": "_audio_set_chunk_volume",
       "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
@@ -3867,7 +3867,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_audio_unk2",
+      "frame": "_audio_set_chunk_volume",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -3875,7 +3875,7 @@
       "offset": 1961,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_unk2",
+      "target": "_audio_set_chunk_volume",
       "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
@@ -3952,7 +3952,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_wait_for_dx",
+      "frame": "_waitticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -3960,7 +3960,7 @@
       "offset": 1896,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_wait_for_dx",
+      "target": "_waitticks",
       "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
@@ -6861,7 +6861,7 @@
     {
       "end": 160500,
       "name": "audio_unk",
-      "public": "_audio_unk",
+      "public": "_audio_pause_playback",
       "stable_id": "load_27216",
       "start": 160278,
       "target": {
@@ -6927,7 +6927,7 @@
     {
       "end": 160854,
       "name": "nopsub_373FE",
-      "public": "_nopsub_373FE",
+      "public": "_audio_music_is_idle",
       "stable_id": "load_273fe",
       "start": 160766,
       "target": {
@@ -6938,7 +6938,7 @@
     {
       "end": 160880,
       "name": "nopsub_37456",
-      "public": "_nopsub_37456",
+      "public": "_audio_play_resource_default",
       "stable_id": "load_27456",
       "start": 160854,
       "target": {
@@ -7048,7 +7048,7 @@
     {
       "end": 161644,
       "name": "nopsub_37750",
-      "public": "_nopsub_37750",
+      "public": "_audio_set_chunk_callback",
       "stable_id": "load_27750",
       "start": 161616,
       "target": {
@@ -7081,7 +7081,7 @@
     {
       "end": 161966,
       "name": "nopsub_37898",
-      "public": "_nopsub_37898",
+      "public": "_audio_set_music_volume",
       "stable_id": "load_27898",
       "start": 161944,
       "target": {
@@ -7092,7 +7092,7 @@
     {
       "end": 161980,
       "name": "nopsub_378AE",
-      "public": "_nopsub_378AE",
+      "public": "_audio_get_chunk_marker",
       "stable_id": "load_278ae",
       "start": 161966,
       "target": {
@@ -7103,7 +7103,7 @@
     {
       "end": 161994,
       "name": "nopsub_378BC",
-      "public": "_nopsub_378BC",
+      "public": "_audio_get_chunk_note",
       "stable_id": "load_278bc",
       "start": 161980,
       "target": {
@@ -7191,7 +7191,7 @@
     {
       "end": 163260,
       "name": "nopsub_37D7A",
-      "public": "_nopsub_37D7A",
+      "public": "_audio_load_sample_bank",
       "stable_id": "load_27d7a",
       "start": 163194,
       "target": {
@@ -7301,7 +7301,7 @@
     {
       "end": 165436,
       "name": "nopsub_38570",
-      "public": "_nopsub_38570",
+      "public": "_audio_debug_dump_state",
       "stable_id": "load_28570",
       "start": 165232,
       "target": {
@@ -7326,14 +7326,14 @@
       "_restore_audio_volume",
       "_audioresource_find",
       "_load_sfx_file",
-      "_audio_unk2",
+      "_audio_set_chunk_volume",
       "_audio_init_chunk",
       "_audio_driver_func1E",
       "_reset_audio_event_state",
-      "_nopsub_37898",
+      "_audio_set_music_volume",
       "_audio_check_flag",
       "_audio_make_filename",
-      "_nopsub_378AE",
+      "_audio_get_chunk_marker",
       "_audio_enable_flag2",
       "_audio_init_chunk2",
       "_link_audio_shape_resources",
@@ -7341,7 +7341,7 @@
       "_file_load_binary_nofatal",
       "_audio_disable_flag2",
       "_reset_audio_chunks",
-      "_nopsub_378BC",
+      "_audio_get_chunk_note",
       "_file_decomp_nofatal",
       "_set_all_audio_chunk_volume",
       "_reset_audio_driver_state",
@@ -7350,7 +7350,7 @@
       "_mmgr_release",
       "_audio_load_driver",
       "_fatal_error",
-      "_nopsub_373FE",
+      "_audio_music_is_idle",
       "_load_voice_file",
       "_add_exit_handler",
       "_init_audio_resources",
@@ -7358,14 +7358,14 @@
       "_audio_enable_flag6",
       "_timer_remove_callback",
       "_audiodriver_timer",
-      "_timer_copy_counter",
-      "_timer_wait_for_dx",
-      "_nopsub_37D7A",
+      "_setticks",
+      "_waitticks",
+      "_audio_load_sample_bank",
       "_audio_disable_flag6",
       "_audio_check_flag2",
       "_locate_shape_nofatal",
-      "_nopsub_37456",
-      "_nopsub_38570",
+      "_audio_play_resource_default",
+      "_audio_debug_dump_state",
       "_audioresource_get_chunk_index",
       "_reset_audio_voice_length",
       "_reserve_audio_chunk",
@@ -7384,10 +7384,10 @@
       "_sfx_audio_vol",
       "_flush_stdin",
       "_release_audio_chunk",
-      "_audio_unk",
+      "_audio_pause_playback",
       "_g_musicvolumesetting",
       "_g_audiodrvvoices_count",
-      "_nopsub_37750",
+      "_audio_set_chunk_callback",
       "_audiochnk_actflags",
       "_snd_sample_rate_phase",
       "_audio_driver_func3F",
@@ -7450,7 +7450,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_37898",
+        "name": "_audio_set_music_volume",
         "offset": 1990,
         "segment": "UNIT_TEXT"
       },
@@ -7460,7 +7460,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_378AE",
+        "name": "_audio_get_chunk_marker",
         "offset": 2012,
         "segment": "UNIT_TEXT"
       },
@@ -7495,7 +7495,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_378BC",
+        "name": "_audio_get_chunk_note",
         "offset": 2026,
         "segment": "UNIT_TEXT"
       },
@@ -7525,7 +7525,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_373FE",
+        "name": "_audio_music_is_idle",
         "offset": 812,
         "segment": "UNIT_TEXT"
       },
@@ -7545,7 +7545,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_37D7A",
+        "name": "_audio_load_sample_bank",
         "offset": 3240,
         "segment": "UNIT_TEXT"
       },
@@ -7570,7 +7570,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_nopsub_37456",
+        "name": "_audio_play_resource_default",
         "offset": 900,
         "segment": "UNIT_TEXT"
       },
@@ -7595,7 +7595,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_nopsub_38570",
+        "name": "_audio_debug_dump_state",
         "offset": 5278,
         "segment": "UNIT_TEXT"
       },
@@ -7660,12 +7660,12 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_unk",
+        "name": "_audio_pause_playback",
         "offset": 324,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_37750",
+        "name": "_audio_set_chunk_callback",
         "offset": 1662,
         "segment": "UNIT_TEXT"
       },

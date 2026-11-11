@@ -195,22 +195,22 @@
           "segment": "_DATA"
         },
         {
-          "name": "_dialogarg2",
+          "name": "_dialog_frame_color",
           "offset": 86,
           "segment": "_DATA"
         },
         {
-          "name": "_material_color_list",
+          "name": "_SDPAL_mcgacol1",
           "offset": 88,
           "segment": "_DATA"
         },
         {
-          "name": "_material_pattern_list",
+          "name": "_SDPAL_mcgatype",
           "offset": 346,
           "segment": "_DATA"
         },
         {
-          "name": "_material_pattern2_list",
+          "name": "_SDPAL_mcgadither",
           "offset": 604,
           "segment": "_DATA"
         }
@@ -845,22 +845,22 @@
         "segment": "_DATA"
       },
       {
-        "name": "_dialogarg2",
+        "name": "_dialog_frame_color",
         "offset": 86,
         "segment": "_DATA"
       },
       {
-        "name": "_material_color_list",
+        "name": "_SDPAL_mcgacol1",
         "offset": 88,
         "segment": "_DATA"
       },
       {
-        "name": "_material_pattern_list",
+        "name": "_SDPAL_mcgatype",
         "offset": 346,
         "segment": "_DATA"
       },
       {
-        "name": "_material_pattern2_list",
+        "name": "_SDPAL_mcgadither",
         "offset": 604,
         "segment": "_DATA"
       }

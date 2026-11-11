@@ -688,16 +688,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_copy_2_to_1",
-      "frame_index": 10,
+      "frame": "_displaywindow",
+      "frame_index": 11,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 3,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sprite_copy_2_to_1",
-      "target_index": 10,
+      "target": "_displaywindow",
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3698,7 +3698,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_draw_unknown_lines",
-      "frame_index": 11,
+      "frame_index": 10,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -3706,7 +3706,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_draw_unknown_lines",
-      "target_index": 11,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3757,7 +3757,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_imagefunc",
-      "target_index": 13,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4649,16 +4649,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_putpixel_line1_maybe",
-      "frame_index": 12,
+      "frame": "_drawcline",
+      "frame_index": 13,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 5095,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_putpixel_line1_maybe",
-      "target_index": 12,
+      "target": "_drawcline",
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5139,43 +5139,43 @@
     },
     {
       "name": "polarAngle",
-      "public": "_polang",
+      "public": "_intatan",
       "stable_id": "load_1ea4e",
       "start": 125518
     },
     {
       "name": "sub_2EAD4",
-      "public": "_sub_2EAD4",
+      "public": "_getbiostick",
       "stable_id": "load_1ead4",
       "start": 125652
     },
     {
       "name": "set_add_value",
-      "public": "_set_add_value",
+      "public": "_setbiosticks",
       "stable_id": "load_1eade",
       "start": 125662
     },
     {
       "name": "sub_2EB07",
-      "public": "_poll_input_abort",
+      "public": "_testbiosticks",
       "stable_id": "load_1eb07",
       "start": 125703
     },
     {
       "name": "sub_2EB1E",
-      "public": "_wait_for_input_delay",
+      "public": "_waitbios",
       "stable_id": "load_1eb1e",
       "start": 125726
     },
     {
       "name": "draw_line_related_alt",
-      "public": "_draw_line_related_alt",
+      "public": "_slopeline",
       "stable_id": "load_1eb48",
       "start": 125768
     },
     {
       "name": "draw_line_related",
-      "public": "_draw_line_related",
+      "public": "_clipline",
       "stable_id": "load_1eb56",
       "start": 125782
     },
@@ -5211,13 +5211,13 @@
     },
     {
       "name": "preRender_unk",
-      "public": "_preRender_unk",
+      "public": "_sprite_two_color_poly_list",
       "stable_id": "load_1f3da",
       "start": 127962
     },
     {
       "name": "nopsub_2F424",
-      "public": "_nopsub_2F424",
+      "public": "_sprite_two_color_poly_args_alt",
       "stable_id": "load_1f424",
       "start": 128036
     },
@@ -5327,10 +5327,10 @@
       "_printf",
       "_timer_elapsed_ticks_high",
       "_sprite1",
-      "_sprite_copy_2_to_1",
       "_draw_unknown_lines",
-      "_putpixel_line1_maybe",
+      "_displaywindow",
       "_imagefunc",
+      "_drawcline",
       "_exit",
       "_spritefunc"
     ],
@@ -5350,13 +5350,8 @@
     ],
     "publics": [
       {
-        "name": "_poll_input_abort",
-        "offset": 221,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_2F424",
-        "offset": 2554,
+        "name": "_getbiostick",
+        "offset": 170,
         "segment": "S012_TEXT"
       },
       {
@@ -5375,16 +5370,6 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_draw_line_related",
-        "offset": 300,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_polang",
-        "offset": 36,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_video_mode4_active",
         "offset": 1946,
         "segment": "_DATA"
@@ -5400,13 +5385,28 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_setbiosticks",
+        "offset": 180,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_prerender_max_line_width",
         "offset": 774,
         "segment": "_DATA"
       },
       {
+        "name": "_intatan",
+        "offset": 36,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_file_decomp_paras_nofatal",
         "offset": 5390,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_testbiosticks",
+        "offset": 221,
         "segment": "S012_TEXT"
       },
       {
@@ -5415,23 +5415,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_set_add_value",
-        "offset": 180,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_call_exitlist",
         "offset": 5167,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_preRender_unk",
-        "offset": 2480,
+        "name": "_set_criterr_handler",
+        "offset": 2381,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_set_criterr_handler",
-        "offset": 2381,
+        "name": "_clipline",
+        "offset": 300,
         "segment": "S012_TEXT"
       },
       {
@@ -5450,13 +5445,18 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_waitbios",
+        "offset": 244,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_preRender_line",
         "offset": 5044,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sub_2EAD4",
-        "offset": 170,
+        "name": "_sprite_two_color_poly_args_alt",
+        "offset": 2554,
         "segment": "S012_TEXT"
       },
       {
@@ -5475,18 +5475,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_wait_for_input_delay",
-        "offset": 244,
+        "name": "_slopeline",
+        "offset": 286,
         "segment": "S012_TEXT"
       },
       {
         "name": "_video_set_mode4",
         "offset": 5684,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_draw_line_related_alt",
-        "offset": 286,
         "segment": "S012_TEXT"
       },
       {
@@ -5502,6 +5497,11 @@
       {
         "name": "_add_exit_handler",
         "offset": 5106,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_sprite_two_color_poly_list",
+        "offset": 2480,
         "segment": "S012_TEXT"
       }
     ],

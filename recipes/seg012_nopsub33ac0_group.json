@@ -57,7 +57,7 @@
     {
       "end": 146148,
       "name": "nopsub_33AC0",
-      "public": "_nopsub_33AC0",
+      "public": "_shape2d_and_rle_hotspot",
       "stable_id": "load_23ac0",
       "start": 146112,
       "target": {
@@ -68,7 +68,7 @@
     {
       "end": 146178,
       "name": "nopsub_33AE4",
-      "public": "_nopsub_33AE4",
+      "public": "_shape2d_and_rle_at",
       "stable_id": "load_23ae4",
       "start": 146148,
       "target": {
@@ -95,12 +95,12 @@
     "groups": [],
     "publics": [
       {
-        "name": "_nopsub_33AC0",
+        "name": "_shape2d_and_rle_hotspot",
         "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_33AE4",
+        "name": "_shape2d_and_rle_at",
         "offset": 36,
         "segment": "S012_TEXT"
       },

@@ -401,7 +401,7 @@
     },
     {
       "name": "sprite_copy_2_to_1",
-      "public": "_sprite_copy_2_to_1",
+      "public": "_displaywindow",
       "stable_id": null,
       "start": 154388
     }
@@ -467,7 +467,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_copy_2_to_1",
+        "name": "_displaywindow",
         "offset": 3980,
         "segment": "S012_TEXT"
       },

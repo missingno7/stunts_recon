@@ -7,161 +7,11 @@
       "kind": "code",
       "name": "main"
     },
-    "5774": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "highscore_text_unk",
+    "100194": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "parse_filepath_separators",
       "kind": "code",
-      "name": "highscore_text_unknown"
-    },
-    "27394": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_game_state",
-      "kind": "code",
-      "name": "initialize_game_state"
-    },
-    "36102": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_18D06",
-      "kind": "code",
-      "name": "apply_audio_frame"
-    },
-    "36192": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'edge_state': uninformative (reads as a variable): the function computes a track tile's lane edge points and centre into a TRACKRESULT and returns whether the side is the last lane",
-      "inventory_name": "sub_18D60",
-      "kind": "code",
-      "name": "track_edge_points"
-    },
-    "38804": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "plane_rotate_op",
-      "kind": "code",
-      "name": "plnrotop"
-    },
-    "39206": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "plane_origin_op",
-      "kind": "code",
-      "name": "plnoriginop"
-    },
-    "39840": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_19BA0",
-      "kind": "code",
-      "name": "update_crash_debris"
-    },
-    "40481": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_kevinrandom",
-      "kind": "code",
-      "name": "initialize_kevin_random"
-    },
-    "40680": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_div0",
-      "kind": "code",
-      "name": "initialize_div0"
-    },
-    "40724": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_19F14",
-      "kind": "code",
-      "name": "draw_clip"
-    },
-    "57760": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "build_track_object",
-      "kind": "code",
-      "name": "build_obj"
-    },
-    "66734": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_204AE",
-      "kind": "code",
-      "name": "wheel_update"
-    },
-    "72282": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "subst_hillroad_track",
-      "kind": "code",
-      "name": "subst_hillroad"
-    },
-    "75058": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_unknown",
-      "kind": "code",
-      "name": "initialize_unknown"
-    },
-    "76172": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_2298C",
-      "kind": "code",
-      "name": "update_camera_target"
-    },
-    "85348": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "init_polyinfo",
-      "kind": "code",
-      "name": "initialize_polyinfo"
-    },
-    "85510": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "select_cliprect_rotate",
-      "kind": "code",
-      "name": "select_rot"
-    },
-    "85662": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "transformed_shape_op",
-      "kind": "code",
-      "name": "trans_op"
-    },
-    "90102": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "get_a_poly_info",
-      "kind": "code",
-      "name": "polyinfo"
-    },
-    "90618": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "mat_rot_zxy",
-      "kind": "code",
-      "name": "matrotzxy"
-    },
-    "91506": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rect_union",
-      "kind": "code",
-      "name": "rcunion"
-    },
-    "91628": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rect_intersect",
-      "kind": "code",
-      "name": "rcintersect"
-    },
-    "92754": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rectlist_add_rects",
-      "kind": "code",
-      "name": "rectlist_add"
-    },
-    "93002": {
-      "basis": "integ28 registry (plan C + readability)",
-      "inventory_name": "rect_array_sort_by_top",
-      "kind": "code",
-      "name": "rectsorttop"
-    },
-    "95408": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_274B0",
-      "kind": "code",
-      "name": "point_in_rectangle"
-    },
-    "95686": {
-      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
-      "inventory_name": "sub_275C6",
-      "kind": "code",
-      "name": "restore_mouse_sprite"
+      "name": "namecopy"
     },
     "100850": {
       "basis": "integ28 registry (plan C + readability)",
@@ -169,11 +19,29 @@
       "kind": "code",
       "name": "file_load_resource_file"
     },
+    "100984": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "unload_resource",
+      "kind": "code",
+      "name": "closeresource"
+    },
     "101026": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "locate_text_res",
       "kind": "code",
       "name": "locate_text_resource"
+    },
+    "101078": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "copy_string",
+      "kind": "code",
+      "name": "strcpyfar"
+    },
+    "101134": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mouse_track_op",
+      "kind": "code",
+      "name": "doslider"
     },
     "101790": {
       "basis": "integ28 registry (plan C + readability)",
@@ -187,6 +55,36 @@
       "kind": "code",
       "name": "msdrawopaquechk"
     },
+    "101832": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mouse_draw_opaque",
+      "kind": "code",
+      "name": "dohidemouse"
+    },
+    "101892": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mouse_draw_transparent",
+      "kind": "code",
+      "name": "doshowmouse"
+    },
+    "102032": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mouse_multi_hittest",
+      "kind": "code",
+      "name": "mousecursor"
+    },
+    "102116": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "check_input",
+      "kind": "code",
+      "name": "clear_keyboardbuffer"
+    },
+    "102182": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_28F26",
+      "kind": "code",
+      "name": "waitforkey"
+    },
     "102204": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "sprite_copy_2_to_1_2",
@@ -197,13 +95,37 @@
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "intro_draw_text",
       "kind": "code",
-      "name": "introtext"
+      "name": "shadowtext"
     },
     "102766": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "draw_lines_unk",
       "kind": "code",
-      "name": "draw_lines_unknown"
+      "name": "sprite_draw_beveled_frame"
+    },
+    "103132": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "draw_button",
+      "kind": "code",
+      "name": "draw3dbutton"
+    },
+    "103770": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "shape3d_init_shape",
+      "kind": "code",
+      "name": "makeobjdef"
+    },
+    "103942": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "font_op2_alt",
+      "kind": "code",
+      "name": "mycenter"
+    },
+    "104106": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "show_waiting",
+      "kind": "code",
+      "name": "loading"
     },
     "104306": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -247,6 +169,18 @@
       "kind": "code",
       "name": "read_file_with_retry"
     },
+    "105196": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "input_push_status",
+      "kind": "code",
+      "name": "pushmouse"
+    },
+    "105224": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "input_pop_status",
+      "kind": "code",
+      "name": "pullmouse"
+    },
     "105266": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "do_joy_restext",
@@ -283,17 +217,41 @@
       "kind": "code",
       "name": "do_dos_resource_text"
     },
+    "107008": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "do_mer_restext",
+      "kind": "code",
+      "name": "memerr"
+    },
+    "107062": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_load_3dres",
+      "kind": "code",
+      "name": "fluffyload"
+    },
+    "114358": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "preRender_icons",
+      "kind": "code",
+      "name": "drawpiecebox"
+    },
+    "114856": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "draw_2DtrackMap",
+      "kind": "code",
+      "name": "drawtrackbox"
+    },
     "116764": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_2C81C",
       "kind": "code",
-      "name": "validate_track_elements"
+      "name": "checktracksyntax"
     },
     "117172": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_2C9B4",
       "kind": "code",
-      "name": "clear_invalid_track_tiles"
+      "name": "trackoverlapcheck"
     },
     "118252": {
       "basis": "integ30: pinned runtime library public (toolchain/msc510/MLIBCR.LIB member dos\\crt0dat.asm)",
@@ -307,23 +265,65 @@
       "kind": "code",
       "name": "sprintf"
     },
+    "125448": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "polarRadius3D",
+      "kind": "code",
+      "name": "int3dhypot"
+    },
     "125518": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "polarAngle",
       "kind": "code",
-      "name": "polang"
+      "name": "intatan"
+    },
+    "125652": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sub_2EAD4",
+      "kind": "code",
+      "name": "getbiostick"
+    },
+    "125662": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "set_add_value",
+      "kind": "code",
+      "name": "setbiosticks"
     },
     "125703": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_2EB07",
       "kind": "code",
-      "name": "poll_input_abort"
+      "name": "testbiosticks"
     },
     "125726": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_2EB1E",
       "kind": "code",
-      "name": "wait_for_input_delay"
+      "name": "waitbios"
+    },
+    "125768": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "draw_line_related_alt",
+      "kind": "code",
+      "name": "slopeline"
+    },
+    "125782": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "draw_line_related",
+      "kind": "code",
+      "name": "clipline"
+    },
+    "127962": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "preRender_unk",
+      "kind": "code",
+      "name": "sprite_two_color_poly_list"
+    },
+    "128036": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_2F424",
+      "kind": "code",
+      "name": "sprite_two_color_poly_args_alt"
     },
     "131140": {
       "basis": "integ28 registry (plan C + readability)",
@@ -335,13 +335,43 @@
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "polarRadius2D",
       "kind": "code",
-      "name": "polradius2d"
+      "name": "inthypot"
+    },
+    "131456": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_30180",
+      "kind": "code",
+      "name": "timer_setup_sound_countdown"
     },
     "131688": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "audio_stop_unk",
       "kind": "code",
       "name": "audio_stop_unknown"
+    },
+    "132026": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sub_303BA",
+      "kind": "code",
+      "name": "timer_tick_sound_and_chain"
+    },
+    "132271": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_304AF",
+      "kind": "code",
+      "name": "kb_clear_key_callback"
+    },
+    "132278": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_304B6",
+      "kind": "code",
+      "name": "input_read_char_or_joystick"
+    },
+    "132552": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_305C8",
+      "kind": "code",
+      "name": "input_get_action_buttons"
     },
     "133044": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -361,17 +391,149 @@
       "kind": "code",
       "name": "replay_axis_value"
     },
+    "133114": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_307FA",
+      "kind": "code",
+      "name": "joystick_scale_saved_y"
+    },
     "133251": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "kb_exit_handler",
       "kind": "code",
       "name": "keyboard_exit_handler"
     },
+    "133700": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_kb_set_readchar_callback",
+      "kind": "code",
+      "name": "kb_set_readchar_callback"
+    },
+    "133717": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_kb_get_readchar_callback",
+      "kind": "code",
+      "name": "kb_get_readchar_callback"
+    },
+    "133751": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_30A77",
+      "kind": "code",
+      "name": "kb_read_until_deadline"
+    },
+    "133783": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_30A97",
+      "kind": "code",
+      "name": "kb_read_with_timeout"
+    },
+    "135422": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_310FE",
+      "kind": "code",
+      "name": "mmgr_init_video_reserve"
+    },
+    "135453": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_3111D",
+      "kind": "code",
+      "name": "mmgr_alloc_dos_heap"
+    },
+    "135511": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_31157",
+      "kind": "code",
+      "name": "poolmemory"
+    },
+    "135529": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_31169",
+      "kind": "code",
+      "name": "lockedmemory"
+    },
+    "135547": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mmgr_get_ofs_diff",
+      "kind": "code",
+      "name": "unlockedmemory"
+    },
+    "136233": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_31429",
+      "kind": "code",
+      "name": "mmgr_has_high_resource"
+    },
+    "136485": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_31525",
+      "kind": "code",
+      "name": "mmgr_move_chunk_to_high"
+    },
+    "137010": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mmgr_op_unk",
+      "kind": "code",
+      "name": "mmgr_compact_chunk"
+    },
+    "137226": {
+      "basis": "N2: asm/prerender_wheel_raster.ASM:103-107,143-170; shared prerender entry imported by graphics_resource_runtime.",
+      "inventory_name": "loc_3180A",
+      "kind": "code",
+      "name": "prerender_shared_setup"
+    },
+    "139065": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_31F39",
+      "kind": "code",
+      "name": "sprite_fill_line_records"
+    },
+    "139093": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_31F55",
+      "kind": "code",
+      "name": "sprite_fill_line_records_alt"
+    },
+    "139610": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_3215A",
+      "kind": "code",
+      "name": "console_clear_mono_screen"
+    },
+    "139628": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_3216C",
+      "kind": "code",
+      "name": "console_delete_current_row"
+    },
     "139677": {
       "basis": "integ44 L19-asmC: Proposal: formats variadic text to the VGA text buffer and interprets cursor controls; C call sites are updated in obj_seg007 and obj_seg027.",
       "inventory_name": "nopsub_3219D",
       "kind": "code",
       "name": "debug_printf_text"
+    },
+    "139956": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_322B4",
+      "kind": "code",
+      "name": "console_set_text_attribute"
+    },
+    "139968": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_322C0",
+      "kind": "code",
+      "name": "projectorgp"
+    },
+    "139999": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_322DF",
+      "kind": "code",
+      "name": "setprojectpb"
+    },
+    "140249": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "vector_to_point",
+      "kind": "code",
+      "name": "projectp"
     },
     "140458": {
       "basis": "integ28 registry (plan C + readability)",
@@ -383,19 +545,157 @@
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "sin_fast",
       "kind": "code",
-      "name": "sinfast"
+      "name": "intsin"
     },
     "141100": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "cos_fast",
       "kind": "code",
-      "name": "cosfast"
+      "name": "intcos"
+    },
+    "141112": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_32738",
+      "kind": "code",
+      "name": "thickness"
+    },
+    "141126": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_32746",
+      "kind": "code",
+      "name": "scalethicknessxp"
+    },
+    "141137": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_32751",
+      "kind": "code",
+      "name": "scalethicknessyp"
+    },
+    "141148": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "projectiondata9_times_ratio",
+      "kind": "code",
+      "name": "thicknessxp"
+    },
+    "141162": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_3276A",
+      "kind": "code",
+      "name": "thicknessyp"
+    },
+    "141186": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_custom_delta",
+      "kind": "code",
+      "name": "tickcount"
+    },
+    "141210": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_get_delta",
+      "kind": "code",
+      "name": "elapsedticks"
+    },
+    "141239": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_reset",
+      "kind": "code",
+      "name": "resettick"
+    },
+    "141248": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_copy_counter",
+      "kind": "code",
+      "name": "setticks"
+    },
+    "141271": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_wait_for_dx",
+      "kind": "code",
+      "name": "waitticks"
+    },
+    "141291": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_compare_dx",
+      "kind": "code",
+      "name": "testticks"
+    },
+    "141317": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "timer_get_counter_unk",
+      "kind": "code",
+      "name": "timedwait"
+    },
+    "141362": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "font_op",
+      "kind": "code",
+      "name": "textnpixels"
+    },
+    "141379": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "font_op2",
+      "kind": "code",
+      "name": "textpixels"
+    },
+    "141513": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_328C9",
+      "kind": "code",
+      "name": "sprite_pattern_poly_args"
+    },
+    "141531": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_328DB",
+      "kind": "code",
+      "name": "sprite_pattern_poly_args_alt"
     },
     "141550": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "mat_mul_vector",
       "kind": "code",
       "name": "mat_vec"
+    },
+    "141810": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mat_multiply",
+      "kind": "code",
+      "name": "transmult"
+    },
+    "143342": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_32FEE",
+      "kind": "code",
+      "name": "vertsync"
+    },
+    "143356": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "video_get_status",
+      "kind": "code",
+      "name": "vsyncstate"
+    },
+    "143366": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33006",
+      "kind": "code",
+      "name": "zclip"
+    },
+    "143380": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "vector_op_unk",
+      "kind": "code",
+      "name": "zclipline"
+    },
+    "143474": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "preRender_sphere",
+      "kind": "code",
+      "name": "drawcircle"
+    },
+    "143886": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_3320E",
+      "kind": "code",
+      "name": "sprite_set_window_bounds"
     },
     "143999": {
       "basis": "integ28 registry (plan C + readability)",
@@ -409,11 +709,35 @@
       "kind": "code",
       "name": "sprite_clear_1_color"
     },
+    "144176": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33330",
+      "kind": "code",
+      "name": "sprite_fill_two_color_spans_at"
+    },
+    "144320": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "putpixel_line1_maybe",
+      "kind": "code",
+      "name": "drawcline"
+    },
     "144760": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "sprite_1_unk2",
       "kind": "code",
       "name": "sprite1_unknown2"
+    },
+    "144850": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sprite_1_unk",
+      "kind": "code",
+      "name": "drawrect"
+    },
+    "145018": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sprite_1_unk3",
+      "kind": "code",
+      "name": "sprite_blit_dither_phase"
     },
     "145485": {
       "basis": "integ30 unification (existing spelling kept)",
@@ -427,17 +751,83 @@
       "kind": "code",
       "name": "load_shape2d_nofatal_thunk"
     },
+    "145914": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_339FA",
+      "kind": "code",
+      "name": "shape2d_and_bitmap_hotspot"
+    },
+    "146112": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33AC0",
+      "kind": "code",
+      "name": "shape2d_and_rle_hotspot"
+    },
+    "146148": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33AE4",
+      "kind": "code",
+      "name": "shape2d_and_rle_at"
+    },
+    "146328": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33B98",
+      "kind": "code",
+      "name": "shape2d_blit_bitmap_hotspot"
+    },
     "146394": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "sprite_putimage",
       "kind": "code",
       "name": "sprputimage"
     },
+    "146700": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33D0C",
+      "kind": "code",
+      "name": "shape2d_copy_bitmap_hotspot"
+    },
+    "146878": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33DBE",
+      "kind": "code",
+      "name": "shape2d_blit_rle_hotspot"
+    },
     "146914": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "shape2d_op_unk5",
       "kind": "code",
-      "name": "shape2d_op_unknown5"
+      "name": "shape2d_blit_rle_at"
+    },
+    "146944": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "shape2d_op_unk",
+      "kind": "code",
+      "name": "shape2d_blit_rle"
+    },
+    "147088": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_33E90",
+      "kind": "code",
+      "name": "shape2d_blit_rle_clip_hotspot"
+    },
+    "147124": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "shape2d_op_unk2",
+      "kind": "code",
+      "name": "shape2d_blit_rle_clipped_at"
+    },
+    "147154": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "shape2d_op_unk3",
+      "kind": "code",
+      "name": "shape2d_blit_rle_clipped"
+    },
+    "148214": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "shape2d_op_unk4",
+      "kind": "code",
+      "name": "shape2d_or_rle"
     },
     "148774": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -449,7 +839,19 @@
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_345BC",
       "kind": "code",
-      "name": "draw_text_at"
+      "name": "movtxy"
+    },
+    "149155": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "video_set_palette",
+      "kind": "code",
+      "name": "vgapalette"
+    },
+    "149302": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_34736",
+      "kind": "code",
+      "name": "shape2d_capture_bitmap_hotspot"
     },
     "149468": {
       "basis": "integ28 registry (plan C + readability)",
@@ -475,17 +877,89 @@
       "kind": "code",
       "name": "sprite_setup1_from_arg_pointer"
     },
+    "154388": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sprite_copy_2_to_1",
+      "kind": "code",
+      "name": "displaywindow"
+    },
     "154486": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_35B76",
       "kind": "code",
-      "name": "draw_filled_rect"
+      "name": "xorrectc"
     },
     "154702": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_35C4E",
       "kind": "code",
       "name": "clear_rect"
+    },
+    "155080": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sub_35DC8",
+      "kind": "code",
+      "name": "mcgatranslation"
+    },
+    "155110": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sub_35DE6",
+      "kind": "code",
+      "name": "mcgatransrange"
+    },
+    "155144": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sub_35E08",
+      "kind": "code",
+      "name": "shape2d_scale_blit_hotspot"
+    },
+    "155353": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "loc_35ED9",
+      "kind": "code",
+      "name": "shape2d_scale_blit_tail"
+    },
+    "156092": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "sprite_1_unk4",
+      "kind": "code",
+      "name": "sprite_draw_rect_outline"
+    },
+    "157668": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_367E4",
+      "kind": "code",
+      "name": "file_find_shapes_optional"
+    },
+    "157734": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_36826",
+      "kind": "code",
+      "name": "file_find_sounds_required"
+    },
+    "157800": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_36868",
+      "kind": "code",
+      "name": "file_find_shapes_optional_alt"
+    },
+    "158362": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_36A9A",
+      "kind": "code",
+      "name": "mouse_set_horizontal_range"
+    },
+    "158410": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_36ACA",
+      "kind": "code",
+      "name": "mouse_set_vertical_range"
+    },
+    "158450": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_36AF2",
+      "kind": "code",
+      "name": "kb_line_edit_noop"
     },
     "158452": {
       "basis": "integ28 registry (plan C + readability)",
@@ -497,19 +971,43 @@
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "heapsort_by_order",
       "kind": "code",
-      "name": "heapsortorder"
+      "name": "shellsort"
+    },
+    "159530": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mat_rot_x",
+      "kind": "code",
+      "name": "xformx"
     },
     "159616": {
       "basis": "integ28 registry (plan C + readability)",
       "inventory_name": "mat_rot_y",
       "kind": "code",
-      "name": "matroty"
+      "name": "xformy"
+    },
+    "159704": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mat_rot_z",
+      "kind": "code",
+      "name": "xformz"
     },
     "159790": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_3702E",
       "kind": "code",
-      "name": "draw_rect_outline"
+      "name": "xorbox"
+    },
+    "159930": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "toupper",
+      "kind": "code",
+      "name": "cap"
+    },
+    "160278": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "audio_unk",
+      "kind": "code",
+      "name": "audio_pause_playback"
     },
     "160500": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -522,6 +1020,18 @@
       "inventory_name": "sub_3736A",
       "kind": "code",
       "name": "reset_audio_chunks"
+    },
+    "160766": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_373FE",
+      "kind": "code",
+      "name": "audio_music_is_idle"
+    },
+    "160854": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_37456",
+      "kind": "code",
+      "name": "audio_play_resource_default"
     },
     "160880": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -541,17 +1051,47 @@
       "kind": "code",
       "name": "audio_chunk_is_unavailable"
     },
+    "161616": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_37750",
+      "kind": "code",
+      "name": "audio_set_chunk_callback"
+    },
     "161896": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_37868",
       "kind": "code",
       "name": "set_all_audio_chunk_volume"
     },
+    "161944": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_37898",
+      "kind": "code",
+      "name": "audio_set_music_volume"
+    },
+    "161966": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_378AE",
+      "kind": "code",
+      "name": "audio_get_chunk_marker"
+    },
+    "161980": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_378BC",
+      "kind": "code",
+      "name": "audio_get_chunk_note"
+    },
     "162872": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "inventory_name": "sub_37C38",
       "kind": "code",
       "name": "set_audio_load_error_policy"
+    },
+    "163194": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_37D7A",
+      "kind": "code",
+      "name": "audio_load_sample_bank"
     },
     "163900": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -570,6 +1110,12 @@
       "inventory_name": "sub_38178",
       "kind": "code",
       "name": "reset_audio_driver_state"
+    },
+    "165232": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_38570",
+      "kind": "code",
+      "name": "audio_debug_dump_state"
     },
     "165514": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -606,6 +1152,12 @@
       "inventory_name": "sub_38BEA",
       "kind": "code",
       "name": "set_audio_voice_parameter"
+    },
+    "166988": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "audio_unk2",
+      "kind": "code",
+      "name": "audio_set_chunk_volume"
     },
     "167160": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -667,10 +1219,52 @@
       "kind": "code",
       "name": "initialize_main"
     },
+    "172636": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "random_wait",
+      "kind": "code",
+      "name": "seedrandom"
+    },
+    "173188": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mmgr_get_res_ofs_diff_scaled",
+      "kind": "code",
+      "name": "availmem"
+    },
+    "173206": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "mmgr_get_chunk_size_bytes",
+      "kind": "code",
+      "name": "modsize"
+    },
+    "175320": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_load_shape2d_res_fatal",
+      "kind": "code",
+      "name": "loadandshapepack"
+    },
+    "175340": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_load_shape2d_res_nofatal",
+      "kind": "code",
+      "name": "loadandshapepackz"
+    },
+    "175358": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_load_shape2d_res",
+      "kind": "code",
+      "name": "loadandshapepacka"
+    },
+    "175516": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "parse_shape2d",
+      "kind": "code",
+      "name": "shapepack"
+    },
     "178184": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "rcpunk2"
+      "name": "active_ui_dirty_rect"
     },
     "178186": {
       "basis": "integ28 registry (plan C + readability)",
@@ -690,22 +1284,22 @@
     "178352": {
       "basis": "integ30 unification (existing spelling kept)",
       "kind": "data",
-      "name": "aDefault_1"
+      "name": "ReplayName"
     },
     "178362": {
       "basis": "integ30 unification (existing spelling kept)",
       "kind": "data",
-      "name": "scenery_names"
+      "name": "TerName"
     },
     "178408": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "hillconsts"
+      "name": "terheight"
     },
     "178412": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "custom_dist"
+      "name": "camlen"
     },
     "178414": {
       "basis": "integ28 registry (plan C + readability)",
@@ -719,9 +1313,9 @@
     },
     "178418": {
       "basis": "N1: semantic name from mouse_minmax_position and mouse_get_state; option selection distinguishes the mouse flag from joystick input (N1/REPORT.md).",
+      "inventory_name": "byte_3B8F2",
       "kind": "data",
-      "name": "mouse_enabled",
-      "inventory_name": "byte_3B8F2"
+      "name": "mouse_enabled"
     },
     "178421": {
       "basis": "integ28 registry (plan C + readability)",
@@ -741,7 +1335,7 @@
     "178426": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "detail_lvl"
+      "name": "renderlevel"
     },
     "178428": {
       "basis": "integ28 registry (plan C + readability)",
@@ -751,7 +1345,7 @@
     "179030": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "rectangle_unknown16"
+      "name": "car_menu_clip_rect"
     },
     "179038": {
       "basis": "integ28 registry (plan C + readability)",
@@ -776,27 +1370,27 @@
     "179538": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "collision_response_offsets"
+      "name": "camerasizeinfo"
     },
     "179546": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "collision_point_set_a"
+      "name": "signsizeinfo"
     },
     "179554": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "collision_point_set_b"
+      "name": "sfpostsizeinfo"
     },
     "179562": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "collision_point_set_c"
+      "name": "pointsizeinfo"
     },
     "179570": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "collision_rotation_offsets"
+      "name": "gravity"
     },
     "179704": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -836,12 +1430,12 @@
     "180356": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "ahead_tables"
+      "name": "headingzones"
     },
     "180372": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "rcunk5"
+      "name": "full_screen_rectangle"
     },
     "180380": {
       "basis": "integ28 registry (plan C + readability)",
@@ -923,6 +1517,12 @@
       "kind": "data",
       "name": "track_prev_vec"
     },
+    "18194": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "opponent_op",
+      "kind": "code",
+      "name": "moveopponent"
+    },
     "186376": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
@@ -981,7 +1581,7 @@
     "190508": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "opponent_engine_profile"
+      "name": "eng2"
     },
     "190556": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -1016,7 +1616,7 @@
     "191090": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "primitive_type_table"
+      "name": "PT"
     },
     "191106": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -1026,7 +1626,7 @@
     "191236": {
       "basis": "integ28 registry (plan C + readability)",
       "kind": "data",
-      "name": "clipunk"
+      "name": "empty_rectangle"
     },
     "191376": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
@@ -1064,10 +1664,10 @@
       "name": "prerender_max_line_width"
     },
     "193480": {
+      "basis": "integ43: reviewed L14 semantic name; The 40-entry sphere profile pointer table in graphics_resource_runtime; layout/data-symbols.json anchors _off_3F3C8 at this initialized address, and the pinned Restunts seg012 source uses it from preRender_sphere.",
       "kind": "data",
       "name": "sphere_scanline_profiles",
-      "object_declared": false,
-      "basis": "integ43: reviewed L14 semantic name; The 40-entry sphere profile pointer table in graphics_resource_runtime; layout/data-symbols.json anchors _off_3F3C8 at this initialized address, and the pinned Restunts seg012 source uses it from preRender_sphere."
+      "object_declared": false
     },
     "194650": {
       "basis": "integ44 L19-asmA: High-confidence proposal: set by mode-4 setup and checked by mode-7 setup.",
@@ -1131,15 +1731,15 @@
     },
     "194702": {
       "basis": "N1: input_push_status sets this flag and input_pop_status clears it; accepted timer callback code skips dispatch while nonzero (N1/REPORT.md; asm/timer_video_interrupt_runtime.ASM:505).",
+      "inventory_name": "word_3F88E",
       "kind": "data",
-      "name": "input_pushed",
-      "inventory_name": "word_3F88E"
+      "name": "input_pushed"
     },
     "196096": {
       "basis": "N2: src/obj_seg008.c:1618,1650-1652 and asm/keyboard_input_callbacks.ASM; selected consistently across accepted C and ASM users.",
+      "inventory_name": "byte_3FE00",
       "kind": "data",
-      "name": "joystick_enabled",
-      "inventory_name": "byte_3FE00"
+      "name": "joystick_enabled"
     },
     "196482": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'state_a': uninformative: resource_memory_manager mmgr_alloc_resmem stores the end paragraph of the DOS resource block (start + size) and tests it for 0 as the initialised flag; module-private label of resource_memory_manager (DSEG/_DATA label without PUBLIC, only that module's code uses it; the C TUs only carry unused extern declarations, which MSC emits no EXTDEF for): no accepted object declares any spelling of this address",
@@ -1231,7 +1831,7 @@
     "198142": {
       "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
       "kind": "data",
-      "name": "line_input_screen_rect"
+      "name": "line_input_font_header"
     },
     "198146": {
       "basis": "L19-asmB accepted public proposal: default vector operation base z",
@@ -1422,6 +2022,12 @@
       "basis": "integ30 unification (existing spelling kept)",
       "kind": "data",
       "name": "performGraphColor"
+    },
+    "19874": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "update_player_state",
+      "kind": "code",
+      "name": "movecar"
     },
     "199434": {
       "basis": "integ30 unification (existing spelling kept)",
@@ -1749,17 +2355,17 @@
       "object_declared": false
     },
     "202836": {
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for the 22-byte polyvertpointptrtab object, anchored as _word_31854 at this BSS address; the accepted obj_seg006 source maps it in its reviewed symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'projected_point_ptr_table'.",
       "kind": "data",
       "name": "projected_point_table",
       "object_declared": false,
-      "basis": "integ43: reviewed L14 semantic name; Semantic alias for the 22-byte polyvertpointptrtab object, anchored as _word_31854 at this BSS address; the accepted obj_seg006 source maps it in its reviewed symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'projected_point_ptr_table'.",
       "source_identifier": "projected_point_ptr_table"
     },
     "202858": {
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transshapeprimptr, anchored as _word_3186A at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'shape_prim_next'.",
       "kind": "data",
       "name": "transformed_primitive_cursor",
       "object_declared": false,
-      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transshapeprimptr, anchored as _word_3186A at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'shape_prim_next'.",
       "source_identifier": "shape_prim_next"
     },
     "202862": {
@@ -1781,10 +2387,10 @@
       "object_declared": false
     },
     "202872": {
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transshaperectptr, anchored as _word_31878 at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'current_rect'.",
       "kind": "data",
       "name": "transformed_shape_bounds",
       "object_declared": false,
-      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transshaperectptr, anchored as _word_31878 at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'current_rect'.",
       "source_identifier": "current_rect"
     },
     "202874": {
@@ -1806,10 +2412,10 @@
       "object_declared": false
     },
     "202882": {
+      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transprimitivepaintjob, anchored as _byte_31882 at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'current_paintjob'.",
       "kind": "data",
       "name": "transformed_primitive_paint",
       "object_declared": false,
-      "basis": "integ43: reviewed L14 semantic name; Semantic alias for transprimitivepaintjob, anchored as _byte_31882 at this BSS address and mapped in the accepted obj_seg006 symbol comment. The hash-constrained C identifier remains unchanged. Supersedes registry name 'current_paintjob'.",
       "source_identifier": "current_paintjob"
     },
     "202884": {
@@ -3504,11 +4110,521 @@
       "kind": "data",
       "name": "g_mouseyposstacktable"
     },
-    "137226": {
-      "name": "prerender_shared_setup",
+    "27394": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_game_state",
       "kind": "code",
-      "inventory_name": "loc_3180A",
-      "basis": "N2: asm/prerender_wheel_raster.ASM:103-107,143-170; shared prerender entry imported by graphics_resource_runtime."
+      "name": "initialize_game_state"
+    },
+    "28474": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "restore_gamestate",
+      "kind": "code",
+      "name": "gotosim"
+    },
+    "28680": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "update_gamestate",
+      "kind": "code",
+      "name": "movesim"
+    },
+    "29160": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "player_op",
+      "kind": "code",
+      "name": "moveplayer"
+    },
+    "30742": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "detect_penalty",
+      "kind": "code",
+      "name": "findcar"
+    },
+    "32726": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "update_grip",
+      "kind": "code",
+      "name": "dohandling"
+    },
+    "33894": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "car_car_speed_adjust_maybe",
+      "kind": "code",
+      "name": "calccoll"
+    },
+    "34294": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "carState_rc_op",
+      "kind": "code",
+      "name": "doshock"
+    },
+    "34738": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "upd_statef20_from_steer_input",
+      "kind": "code",
+      "name": "dosteering"
+    },
+    "34980": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "audio_carstate",
+      "kind": "code",
+      "name": "myupdatesfx"
+    },
+    "36056": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "audio_unk3",
+      "kind": "code",
+      "name": "audio_dispatch_car_events"
+    },
+    "36102": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_18D06",
+      "kind": "code",
+      "name": "myupdatesfx1"
+    },
+    "36192": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU); review replaced L7 'edge_state': uninformative (reads as a variable): the function computes a track tile's lane edge points and centre into a TRACKRESULT and returns whether the side is the last lane",
+      "inventory_name": "sub_18D60",
+      "kind": "code",
+      "name": "gettlistpoint"
+    },
+    "36980": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "car_car_coll_detect_maybe",
+      "kind": "code",
+      "name": "car_test_car_overlap"
+    },
+    "37856": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "init_plantrak",
+      "kind": "code",
+      "name": "initlogo"
+    },
+    "38368": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "do_opponent_op",
+      "kind": "code",
+      "name": "movelogo"
+    },
+    "38374": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "update_crash_state",
+      "kind": "code",
+      "name": "finishgame"
+    },
+    "38804": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "plane_rotate_op",
+      "kind": "code",
+      "name": "move_on_plane"
+    },
+    "3900": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "run_menu",
+      "kind": "code",
+      "name": "select"
+    },
+    "39206": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "plane_origin_op",
+      "kind": "code",
+      "name": "plane_distance"
+    },
+    "39468": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "state_op_unk",
+      "kind": "code",
+      "name": "init_explode"
+    },
+    "39840": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_19BA0",
+      "kind": "code",
+      "name": "update_crash_debris"
+    },
+    "40390": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "update_rpm_from_speed",
+      "kind": "code",
+      "name": "calcrpm"
+    },
+    "40424": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_19DE8",
+      "kind": "code",
+      "name": "math_sign_word"
+    },
+    "40481": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_kevinrandom",
+      "kind": "code",
+      "name": "initialize_kevin_random"
+    },
+    "40526": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "get_kevinrandom_seed",
+      "kind": "code",
+      "name": "mygetseeds"
+    },
+    "40680": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_div0",
+      "kind": "code",
+      "name": "initialize_div0"
+    },
+    "40724": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_19F14",
+      "kind": "code",
+      "name": "drawworldflipzones"
+    },
+    "41110": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "init_rect_arrays",
+      "kind": "code",
+      "name": "initdrawworld"
+    },
+    "41204": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "update_frame",
+      "kind": "code",
+      "name": "drawworld"
+    },
+    "4304": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "run_tracks_menu",
+      "kind": "code",
+      "name": "teditmain"
+    },
+    "50292": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "skybox_op",
+      "kind": "code",
+      "name": "drawhorizon"
+    },
+    "53550": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "draw_ingame_text",
+      "kind": "code",
+      "name": "drawtext"
+    },
+    "54708": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "init_crak",
+      "kind": "code",
+      "name": "crack"
+    },
+    "55202": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "load_skybox",
+      "kind": "code",
+      "name": "initscenery"
+    },
+    "55476": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "unload_skybox",
+      "kind": "code",
+      "name": "removescenery"
+    },
+    "55506": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "load_sdgame2_shapes",
+      "kind": "code",
+      "name": "loaddrawbits"
+    },
+    "55594": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "free_sdgame2",
+      "kind": "code",
+      "name": "removedrawbits"
+    },
+    "56998": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "intro_op",
+      "kind": "code",
+      "name": "drawlogo"
+    },
+    "5774": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "highscore_text_unk",
+      "kind": "code",
+      "name": "highscore_text_unknown"
+    },
+    "57760": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "build_track_object",
+      "kind": "code",
+      "name": "getpinfo"
+    },
+    "64228": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "bto_auxiliary1",
+      "kind": "code",
+      "name": "getwpinfo"
+    },
+    "66734": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_204AE",
+      "kind": "code",
+      "name": "settires"
+    },
+    "67284": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "track_setup",
+      "kind": "code",
+      "name": "compiletrack"
+    },
+    "71626": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "load_opponent_data",
+      "kind": "code",
+      "name": "opponentcompile"
+    },
+    "72282": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "subst_hillroad_track",
+      "kind": "code",
+      "name": "roadupcheck"
+    },
+    "7234": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "run_car_menu",
+      "kind": "code",
+      "name": "selectcar"
+    },
+    "74746": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "handle_ingame_kb_shortcuts",
+      "kind": "code",
+      "name": "mainkey"
+    },
+    "75058": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_unknown",
+      "kind": "code",
+      "name": "initialize_unknown"
+    },
+    "75098": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "set_frame_callback",
+      "kind": "code",
+      "name": "gameintinit"
+    },
+    "75126": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "remove_frame_callback",
+      "kind": "code",
+      "name": "removegameint"
+    },
+    "75158": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "frame_callback",
+      "kind": "code",
+      "name": "gameint"
+    },
+    "75416": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "replay_unk2",
+      "kind": "code",
+      "name": "moveeverything"
+    },
+    "76172": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_2298C",
+      "kind": "code",
+      "name": "movehelicopters"
+    },
+    "76946": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_load_replay",
+      "kind": "code",
+      "name": "loadreplay"
+    },
+    "77032": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_write_replay",
+      "kind": "code",
+      "name": "savereplay"
+    },
+    "77102": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "setup_car_shapes",
+      "kind": "code",
+      "name": "dodash"
+    },
+    "79618": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "setup_player_cars",
+      "kind": "code",
+      "name": "loadgamefiles"
+    },
+    "80308": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "free_player_cars",
+      "kind": "code",
+      "name": "removegamefiles"
+    },
+    "80536": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "replay_unk",
+      "kind": "code",
+      "name": "mousesteer"
+    },
+    "80716": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "loop_game",
+      "kind": "code",
+      "name": "doreplay"
+    },
+    "85348": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "init_polyinfo",
+      "kind": "code",
+      "name": "INIT_MATRIX"
+    },
+    "85442": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "copy_material_list_pointers",
+      "kind": "code",
+      "name": "INIT_PALETTE"
+    },
+    "85510": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "select_cliprect_rotate",
+      "kind": "code",
+      "name": "INIT_OBJECTS_BUFFER"
+    },
+    "85662": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "transformed_shape_op",
+      "kind": "code",
+      "name": "ADD_OBJECT_TO_BUFFER"
+    },
+    "89826": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "rect_compare_point",
+      "kind": "code",
+      "name": "getoutcode"
+    },
+    "89902": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "is_facing_camera",
+      "kind": "code",
+      "name": "front_facing"
+    },
+    "90102": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "get_a_poly_info",
+      "kind": "code",
+      "name": "DRAW_OBJECTS"
+    },
+    "90618": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "mat_rot_zxy",
+      "kind": "code",
+      "name": "makematrix"
+    },
+    "91002": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "rect_adjust_from_point",
+      "kind": "code",
+      "name": "zonecheck"
+    },
+    "91078": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "vector_op_unk2",
+      "kind": "code",
+      "name": "norm_zone"
+    },
+    "91392": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "calc_sincos80",
+      "kind": "code",
+      "name": "initnm"
+    },
+    "91474": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "nopsub_26552",
+      "kind": "code",
+      "name": "lgabs"
+    },
+    "91506": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rect_union",
+      "kind": "code",
+      "name": "mergezones"
+    },
+    "91628": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rect_intersect",
+      "kind": "code",
+      "name": "clipzone"
+    },
+    "91760": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "rectlist_add_rect",
+      "kind": "code",
+      "name": "addzone"
+    },
+    "92510": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "rect_is_overlapping",
+      "kind": "code",
+      "name": "zoneoverlap"
+    },
+    "92572": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "rect_is_inside",
+      "kind": "code",
+      "name": "zoneinside"
+    },
+    "92624": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "rect_is_adjacent",
+      "kind": "code",
+      "name": "zoneadjacent"
+    },
+    "92754": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rectlist_add_rects",
+      "kind": "code",
+      "name": "makezonelist"
+    },
+    "93002": {
+      "basis": "integ28 registry (plan C + readability)",
+      "inventory_name": "rect_array_sort_by_top",
+      "kind": "code",
+      "name": "rectsorttop"
+    },
+    "95408": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_274B0",
+      "kind": "code",
+      "name": "point_in_rectangle"
+    },
+    "95686": {
+      "basis": "integ33: reviewed L7-naming readable name (semantic role from accepted code/usage; namefit-exact in every accepted TU)",
+      "inventory_name": "sub_275C6",
+      "kind": "code",
+      "name": "restoreboxwindow"
+    },
+    "95878": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "show_dialog",
+      "kind": "code",
+      "name": "messagebox"
+    },
+    "99778": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "file_build_path",
+      "kind": "code",
+      "name": "makename"
+    },
+    "99898": {
+      "basis": "Explicit rename plan; pinned-object and exact-image proof required",
+      "inventory_name": "do_savefile_dialog",
+      "kind": "code",
+      "name": "fsavereq"
     }
   },
   "schema": "names-registry-v1",

@@ -13152,7 +13152,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42",
+        "name": "_FSTR_LIST",
         "offset": 580,
         "segment": "_DATA"
       },
@@ -13162,12 +13162,12 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_3",
+        "name": "_SPIPE_LIST",
         "offset": 694,
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_11",
+        "name": "_PIPE_LIST",
         "offset": 736,
         "segment": "_DATA"
       },
@@ -13187,7 +13187,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_5",
+        "name": "_HSTR_LIST",
         "offset": 1480,
         "segment": "_DATA"
       },
@@ -13217,12 +13217,12 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_8",
+        "name": "_BSTR_LIST",
         "offset": 2704,
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_9",
+        "name": "_FLBSTR_LIST",
         "offset": 2746,
         "segment": "_DATA"
       },
@@ -14403,6 +14403,12 @@
       }
     },
     "public_offsets": {
+      "_BSTR_LIST": 2704,
+      "_FLBSTR_LIST": 2746,
+      "_FSTR_LIST": 580,
+      "_HSTR_LIST": 1480,
+      "_PIPE_LIST": 736,
+      "_SPIPE_LIST": 694,
       "_aBarn": 0,
       "_aCar0": 9470,
       "_aGame1": 9458,
@@ -14428,17 +14434,11 @@
       "_shape_template_points_d": 9410,
       "_shape_template_points_e": 9422,
       "_shape_template_points_f": 9434,
-      "_shapedata42": 580,
       "_shapedata42_10": 2788,
-      "_shapedata42_11": 736,
       "_shapedata42_2": 622,
-      "_shapedata42_3": 694,
       "_shapedata42_4": 778,
-      "_shapedata42_5": 1480,
       "_shapedata42_6": 1522,
       "_shapedata42_7": 2194,
-      "_shapedata42_8": 2704,
-      "_shapedata42_9": 2746,
       "_shapeinfos": 4024,
       "_trklst": 5704
     },
@@ -14453,6 +14453,12 @@
   "preprocessor_closure": [],
   "profile": "msc510-medium",
   "public_object_sizes": {
+    "_BSTR_LIST": 42,
+    "_FLBSTR_LIST": 42,
+    "_FSTR_LIST": 42,
+    "_HSTR_LIST": 42,
+    "_PIPE_LIST": 42,
+    "_SPIPE_LIST": 42,
     "_aBarn": 580,
     "_aCar0": 76,
     "_aGame1": 6,
@@ -14478,17 +14484,11 @@
     "_shape_template_points_d": 12,
     "_shape_template_points_e": 12,
     "_shape_template_points_f": 24,
-    "_shapedata42": 42,
     "_shapedata42_10": 1236,
-    "_shapedata42_11": 42,
     "_shapedata42_2": 72,
-    "_shapedata42_3": 42,
     "_shapedata42_4": 702,
-    "_shapedata42_5": 42,
     "_shapedata42_6": 672,
     "_shapedata42_7": 510,
-    "_shapedata42_8": 42,
-    "_shapedata42_9": 42,
     "_shapeinfos": 1680,
     "_trklst": 3010
   },

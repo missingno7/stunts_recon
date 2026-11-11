@@ -396,7 +396,7 @@
   "members": [
     {
       "name": "sub_35B76",
-      "public": "_draw_filled_rect",
+      "public": "_xorrectc",
       "start": 154486
     },
     {
@@ -407,19 +407,19 @@
     },
     {
       "name": "sub_35DC8",
-      "public": "_sub_35DC8",
+      "public": "_mcgatranslation",
       "stable_id": "load_25dc8",
       "start": 155080
     },
     {
       "name": "sub_35DE6",
-      "public": "_sub_35DE6",
+      "public": "_mcgatransrange",
       "stable_id": "load_25de6",
       "start": 155110
     },
     {
       "name": "sub_35E08",
-      "public": "_sub_35E08",
+      "public": "_shape2d_scale_blit_hotspot",
       "start": 155144
     }
   ],
@@ -431,7 +431,7 @@
       },
       {
         "offset": 867,
-        "public": "_loc_35ED9"
+        "public": "_shape2d_scale_blit_tail"
       }
     ],
     "end_boundary": {
@@ -461,38 +461,38 @@
     ],
     "publics": [
       {
+        "name": "_shape2d_scale_blit_tail",
+        "offset": 867,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_incnums",
         "offset": 338,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sub_35E08",
-        "offset": 658,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_loc_35ED9",
-        "offset": 867,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_sub_35DE6",
+        "name": "_mcgatransrange",
         "offset": 624,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sub_35DC8",
+        "name": "_xorrectc",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_shape2d_scale_blit_hotspot",
+        "offset": 658,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mcgatranslation",
         "offset": 594,
         "segment": "S012_TEXT"
       },
       {
         "name": "_clear_rect",
         "offset": 216,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_draw_filled_rect",
-        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

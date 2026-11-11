@@ -30,7 +30,7 @@ public _timer_interrupt_reload_value
 public _bios_tick_countdown
 public _timer_callback_reentry_peak
 public _timer_callback_reentry_depth
-public _timer_callback_busy, _input_pushed, _timerintr, _aNoRoomLeftOnTimerInterru
+public _timer_callback_busy, _input_pushed, _timerintr, _adderr
 ; ASMDOC[timers] Block: Owned data exports below are storage, not routine entries. The first 12 bytes are the CRTC
 ; ASMDOC[timers]   table read later via literal DS:40F8h.
 ; Literal translation or hardware policy table; no analytic generator is inferred.
@@ -51,23 +51,23 @@ db 03h
 _input_pushed dw 0
 _timerintr dd 0
 db 24 dup (0)
-_aNoRoomLeftOnTimerInterru db "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE LIST", 13, 0
+_adderr db "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE LIST", 13, 0
 _DATA ends
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _polradius2d
+public _inthypot
 public _video_set_mode7
-public _nopsub_30180
+public _timer_setup_sound_countdown
 public _timer_setup_interrupt
 public _audio_stop_unknown
 public _timer_reg_callback
 public _timer_remove_callback
 public _compare_ds_ss
 public _timer_intr_callback
-public _sub_303BA
-extrn _cosfast:far
-extrn _polang:far
-extrn _sinfast:far
+public _timer_tick_sound_and_chain
+extrn _intcos:far
+extrn _intatan:far
+extrn _intsin:far
 extrn _video_mode4_active:byte
 extrn _set_bios_mode3:far
 extrn _add_exit_handler:far
@@ -100,14 +100,14 @@ extrn _fatal_error:far
 ; ASMDOC[timers] services: FAR _polang(z,y); FAR _cosfast(angle) or _sinfast(angle)
 ; ASMDOC[timers] reachability: Direct C callers in obj_seg003/005/006 and obj_seg007; live geometry helper.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_polradius2d proc far
+_inthypot proc far
     arg_z = word ptr 6
     arg_y = word ptr 8
     push bp
     mov bp, sp
     push word ptr [bp+arg_y]
     push word ptr [bp+arg_z]
-    call far ptr _polang
+    call far ptr _intatan
     add sp, 4
     or ax, ax
     jge short radius_reflect_angle_into_range
@@ -123,7 +123,7 @@ radius_choose_cosine_branch:
     cmp ax, 80h
     jg short radius_choose_sine_branch
     push ax
-    call far ptr _cosfast
+    call far ptr _intcos
     add sp, 2
     mov bx, ax
     mov dx, [bp+arg_y]
@@ -143,7 +143,7 @@ radius_scale_absolute_z:
     retf
 radius_choose_sine_branch:
     push ax
-    call far ptr _sinfast
+    call far ptr _intsin
     add sp, 2
     mov bx, ax
     mov dx, [bp+arg_z]
@@ -161,7 +161,7 @@ radius_scale_absolute_x:
     div bx
     pop bp
     retf
-_polradius2d endp
+_inthypot endp
 
 ; video_set_mode7: _video_set_mode7
 ; -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ mode7_write_crtc_register_loop:
     retf
 _video_set_mode7 endp
 
-; nopsub_30180: _nopsub_30180
+; timer_setup_sound_countdown: _nopsub_30180
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 30180.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -278,7 +278,7 @@ _video_set_mode7 endp
 ; ASMDOC[timers]   no callback/vector installation targets this alternate entry. Shared tail remains live from normal
 ; ASMDOC[timers]   setup.
 ; ASMDOC[timers] dead: true (static known-program reachability; never permission to trim extent)
-_nopsub_30180 proc far
+_timer_setup_sound_countdown proc far
     push    bp
     mov     bp, sp
     mov     dx, 2E9Ch
@@ -289,9 +289,9 @@ _nopsub_30180 proc far
     jmp     short shared_setup
     even ; word-align the following entry
 
-_nopsub_30180 endp
+_timer_setup_sound_countdown endp
 
-; nopsub_30180: _timer_setup_interrupt
+; timer_setup_sound_countdown: _timer_setup_interrupt
 ; -----------------------------------------------------------------------------
 ; Purpose: Install and configure the game timer interrupt handler.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -529,7 +529,7 @@ timer_callback_find_free_slot:
     jz      short timer_callback_slot_available
     add     bx, 4
     loop    timer_callback_find_free_slot
-    mov     ax, offset DGROUP:_aNoRoomLeftOnTimerInterru; "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE"...
+    mov     ax, offset DGROUP:_adderr; "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE"...
     push    ax
     call    far ptr _fatal_error
 timer_callback_slot_available:
@@ -799,7 +799,7 @@ _timer_intr_callback endp
 ; ASMDOC[timers] reachability: Called by IRQ0 via local alias timer_sound_countdown_entry at same address as public.
 ; ASMDOC[timers]   Live.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_sub_303BA proc near
+_timer_tick_sound_and_chain proc near
 ; ASMDOC[timers] Block: Same address as public timer_tick_sound_and_chain; local alias is a real incoming call edge.
 timer_sound_countdown_entry:
     cmp byte ptr _timer_sound_countdown_active, 0
@@ -815,6 +815,6 @@ timer_chain_previous_timer_irq:
     call dword ptr _previous_timer_irq_vector
     retn
     db 0 ; retained zero fill at this boundary
-_sub_303BA endp
+_timer_tick_sound_and_chain endp
 S012_TEXT ends
 end

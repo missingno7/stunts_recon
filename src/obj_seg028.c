@@ -21,11 +21,11 @@ struct AudioChunk {
     I8 FAR *data;
     U8 velocity;
     U8 resourceType;
-    U8 note;
+    U8 priority;
     U8 modeValue;
-    U16S value26;
-    U8 program;
-    U8 reserved29[5];
+    U16S pitch_bend;
+    U8 volume;
+    U8 driver_parameter_span[5];
     I8 FAR *FAR *samples;
     U8 loopDepth;
     I8 FAR *loopPos[4];
@@ -35,30 +35,30 @@ struct AudioChunk {
 };
 
 struct AudioVoice {
-    U8 resourceIndex, active, note, reserved03[5];
+    U8 resourceIndex, active, priority, driver_note_pitch[5];
     U32 position, remaining;
     I8 FAR *data;
-    I16S sampleRate;
-    U8 state16, reserved17;
-    U16S value18, value1a;
-    I16S value1c;
-    U16S value1e, value20;
-    U8 value22, reserved23;
-    U16S value24;
-    U8 value26, value27, value28, value29;
+    I16S envelope_value;
+    U8 envelope_state, reserved17;
+    U16S modulation_delay, modulation_duration;
+    I16S modulation_offset;
+    U16S pulse_delay, pulse_duration;
+    U8 pulse_value, reserved23;
+    U16S modulation_step;
+    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
     struct AudioChunk *resource;
     U8 channelNumber, reserved2d;
 };
 
 struct AudioSample {
-    U8 reserved00[0x1e];
+    U8 sample_header[0x1e];
     I16S level1e, level20, level22, level24, level26;
     U8 loopMode, loopCount;
-    U8 reserved2a[4];
+    U8 modulation_timing[4];
     U16S limit2e;
-    U8 reserved30[4];
+    U8 modulation_step_span[4];
     U8 loopFlags, pulsePresent;
-    U8 reserved36[4];
+    U8 pulse_timing[4];
     U8 pulseCount;
     U8 pulseTable[8];
 };
@@ -103,7 +103,7 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex);
 I8 FAR * FAR _loadds find_audio_chunk_data(U8 index, struct AudioChunk *chunk);
 void FAR _loadds apply_audio_voice_event(I16 voiceIndex, U8 type, I16 value);
 void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value);
-void FAR _loadds audio_unk2(I16 voiceIndex, U8 type);
+void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type);
 I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex);
 I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk);
 void FAR _loadds read_audio_event(struct AudioEvent *event, U8 FAR *stream);
@@ -216,7 +216,7 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                             chunk->channelNumber = (chunkIndex & 0x0f) + 1;
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         ((void (FAR *)(I16, I16, I16))(audiodriverbinary + 0x12))(
-                            (U8)chunk->channelNumber, 0, chunk->program);
+                            (U8)chunk->channelNumber, 0, chunk->volume);
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         ((void (FAR *)(I16, I16, struct AudioChunk *, I8 FAR *))(audiodriverbinary + 0x21))(
                             chunk->channelNumber, 0, chunk, chunk->data);
@@ -227,7 +227,7 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                         mus_samplelimit = 32000U / param;
                     break;
                 case 0xde:
-                    audio_unk2(chunkIndex, param);
+                    audio_set_chunk_volume(chunkIndex, param);
                     break;
                 case 0xdf:
                     apply_audio_voice_event(chunkIndex, param, audioevent.value);
@@ -236,7 +236,7 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                     chunk->maxVoices = param;
                     break;
                 case 0xe1:
-                    chunk->note = param;
+                    chunk->priority = param;
                     break;
                 case 0xe2:
                     chunk->loopPos[chunk->loopDepth] = chunk->pos;
@@ -305,7 +305,7 @@ void FAR _loadds apply_audio_voice_event(I16 voiceIndex, U8 type, I16 value)
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             ((void (FAR *)(I16, struct AudioVoice *, I16, I16))(audiodriverbinary + 0x15))(i, &snd_voices_tbl[i], type, value);
         if (type == 0x40 && value == 0 && snd_voices_tbl[i].active == 2 && snd_voices_tbl[i].resourceIndex == chunk->resourceType)
-            snd_voices_tbl[i].state16 = 4;
+            snd_voices_tbl[i].envelope_state = 4;
     }
 }
 
@@ -321,7 +321,7 @@ void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value)
     if (value & 0x100)
         value |= 0x80;
     value = ((value & 0xff00) >> 1) + ((I8S)value - 0x2000);
-    voice->value26 = value;
+    voice->pitch_bend = value;
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
     ((void (FAR *)(struct AudioChunk *, I16, I16))(audiodriverbinary + 0x1b))(voice, value, voice->channelNumber);
 }
@@ -330,14 +330,14 @@ void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): route channel parameter updates to the DOS sound driver. */
-void FAR _loadds audio_unk2(I16 voiceIndex, U8 type)
+void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
 {
     struct AudioChunk *audioChunk;
     I16 i;
     U16 typeCode;
 
     audioChunk = &audiochunktable[voiceIndex];
-    audioChunk->program = type;
+    audioChunk->volume = type;
     if (audio_driver_mode == 0) {
         i = 0;
         if (i < g_audiodrvvoices_count) {
@@ -449,22 +449,22 @@ I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
     channel->resourceIndex = chunkIndex;
     channel->resource = resource;
     channel->active = 1;
-    channel->state16 = 1;
-    channel->sampleRate = ((U16S FAR *)channel->data)[0x0e];
-    channel->note = resource->note;
+    channel->envelope_state = 1;
+    channel->envelope_value = ((U16S FAR *)channel->data)[0x0e];
+    channel->priority = resource->priority;
     channel->position = 0;
     channel->remaining = event->value - 1;
-    channel->value18 = *(U16S FAR *)(sample + 0x2a);
-    channel->value1a = *(U16S FAR *)(sample + 0x2c);
-    channel->value24 = *(U16S FAR *)(sample + 0x30);
-    channel->value1c = 0;
-    channel->value26 = sample[0x34];
-    channel->value27 = 0;
-    channel->value1e = *(U16S FAR *)(sample + 0x36);
-    channel->value20 = *(U16S FAR *)(sample + 0x38);
-    channel->value28 = 0;
-    channel->value22 = 0;
-    channel->value29 = 0;
+    channel->modulation_delay = *(U16S FAR *)(sample + 0x2a);
+    channel->modulation_duration = *(U16S FAR *)(sample + 0x2c);
+    channel->modulation_step = *(U16S FAR *)(sample + 0x30);
+    channel->modulation_offset = 0;
+    channel->modulation_direction = sample[0x34];
+    channel->modulation_step_delay = 0;
+    channel->pulse_delay = *(U16S FAR *)(sample + 0x36);
+    channel->pulse_duration = *(U16S FAR *)(sample + 0x38);
+    channel->pulse_step_delay = 0;
+    channel->pulse_value = 0;
+    channel->pulse_table_index = 0;
     if (audio_driver_mode == 0)
         channel->channelNumber = voiceNum;
     else
@@ -557,7 +557,7 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
                         chunk->activeVoices++;
                         return slot;
                     }
-                    if (chunk->note >= voice->note) {
+                    if (chunk->priority >= voice->priority) {
                         if (voice->active == 1 && voice->position > longestSounding) {
                             longestSounding = voice->position;
                             slotSounding = slot;
@@ -592,7 +592,7 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
                     chunk->activeVoices++;
                     return slot;
                 }
-                if (chunk->note >= voice->note) {
+                if (chunk->priority >= voice->priority) {
                     if (voice->active == 1 && voice->position > longestSounding) {
                         longestSounding = voice->position;
                         slotSounding = slot;
@@ -709,10 +709,10 @@ void FAR _loadds clear_audio_voice(struct AudioVoice *voice)
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + 0x0c))(voice->channelNumber, voice);
         voice->active = 2;
         if (audiochunktable[voice->resourceIndex].modeValue != 0) {
-            voice->state16 = 3;
+            voice->envelope_state = 3;
             return;
         }
-        voice->state16 = 4;
+        voice->envelope_state = 4;
         return;
     }
     voice->remaining--;
@@ -735,30 +735,30 @@ void FAR _loadds reset_audio_event_state(void)
             clear_audio_voice(voice);
         sample = (struct AudioSample FAR *)voice->data;
 
-        if (voice->state16 == 1) {
-            voice->sampleRate += sample->level20;
-            if (voice->sampleRate >= sample->level1e) {
-                voice->sampleRate = sample->level1e;
+        if (voice->envelope_state == 1) {
+            voice->envelope_value += sample->level20;
+            if (voice->envelope_value >= sample->level1e) {
+                voice->envelope_value = sample->level1e;
                 if (sample->level24 >= sample->level1e)
-                    voice->state16 = 3;
+                    voice->envelope_state = 3;
                 else
-                    voice->state16 = 2;
+                    voice->envelope_state = 2;
             }
         }
-        if (voice->state16 == 2) {
-            voice->sampleRate -= sample->level22;
-            if (voice->sampleRate <= sample->level24) {
-                voice->state16 = 3;
-                voice->sampleRate = sample->level24;
+        if (voice->envelope_state == 2) {
+            voice->envelope_value -= sample->level22;
+            if (voice->envelope_value <= sample->level24) {
+                voice->envelope_state = 3;
+                voice->envelope_value = sample->level24;
             }
         }
-        if (voice->state16 == 3 && sample->level24 == 0)
-            voice->state16 = 4;
-        if (voice->state16 == 4) {
-            voice->sampleRate -= sample->level26;
-            if (voice->sampleRate <= 0) {
-                voice->sampleRate = 0;
-                voice->state16 = 0;
+        if (voice->envelope_state == 3 && sample->level24 == 0)
+            voice->envelope_state = 4;
+        if (voice->envelope_state == 4) {
+            voice->envelope_value -= sample->level26;
+            if (voice->envelope_value <= 0) {
+                voice->envelope_value = 0;
+                voice->envelope_state = 0;
                 voice->active = 0;
                 --audiochunktable[voice->resourceIndex].activeVoices;
     /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
@@ -768,46 +768,46 @@ void FAR _loadds reset_audio_event_state(void)
         }
 
         if (sample->loopMode != 0) {
-            if (voice->value18 != 0) {
-                --voice->value18;
-            } else if (voice->value1a != 0) {
-                if (voice->value1a != 0x7fff)
-                    --voice->value1a;
-                if (voice->value27 == 0) {
-                    voice->value27 = sample->loopCount;
-                    if (voice->value26 == 2) {
-                        voice->value1c -= voice->value24;
-                        if ((abs(voice->value1c)) >= sample->limit2e) {
+            if (voice->modulation_delay != 0) {
+                --voice->modulation_delay;
+            } else if (voice->modulation_duration != 0) {
+                if (voice->modulation_duration != 0x7fff)
+                    --voice->modulation_duration;
+                if (voice->modulation_step_delay == 0) {
+                    voice->modulation_step_delay = sample->loopCount;
+                    if (voice->modulation_direction == 2) {
+                        voice->modulation_offset -= voice->modulation_step;
+                        if ((abs(voice->modulation_offset)) >= sample->limit2e) {
                             if (sample->loopFlags & 1)
-                                voice->value26 = 1;
+                                voice->modulation_direction = 1;
                             else
-                                voice->value1c = 0;
+                                voice->modulation_offset = 0;
                         }
                     } else {
-                        voice->value1c += voice->value24;
-                        if ((abs(voice->value1c)) >= sample->limit2e) {
+                        voice->modulation_offset += voice->modulation_step;
+                        if ((abs(voice->modulation_offset)) >= sample->limit2e) {
                             if (sample->loopFlags & 2)
-                                voice->value26 = 2;
+                                voice->modulation_direction = 2;
                             else
-                                voice->value1c = 0;
+                                voice->modulation_offset = 0;
                         }
                     }
                 } else {
-                    --voice->value27;
+                    --voice->modulation_step_delay;
                 }
             }
         }
 
         if (sample->pulsePresent != 0) {
-            if (voice->value1e != 0) {
-                --voice->value1e;
-            } else if (voice->value20 != 0) {
-                --voice->value20;
-                if (voice->value28 != 0) {
-                    --voice->value28;
+            if (voice->pulse_delay != 0) {
+                --voice->pulse_delay;
+            } else if (voice->pulse_duration != 0) {
+                --voice->pulse_duration;
+                if (voice->pulse_step_delay != 0) {
+                    --voice->pulse_step_delay;
                 } else {
-                    voice->value28 = sample->pulseCount;
-                    voice->value22 = sample->pulseTable[voice->value29++ & 7];
+                    voice->pulse_step_delay = sample->pulseCount;
+                    voice->pulse_value = sample->pulseTable[voice->pulse_table_index++ & 7];
                 }
             }
         }
@@ -836,7 +836,7 @@ void FAR _loadds audio_driver_func1E(I16 first, I16 last)
                 snd_voices_tbl[i].active = 0;
                 snd_voices_tbl[i].data = 0;
                 snd_voices_tbl[i].resourceIndex = 0xff;
-                snd_voices_tbl[i].note = 0;
+                snd_voices_tbl[i].priority = 0;
             }
         }
     } else {
@@ -849,7 +849,7 @@ void FAR _loadds audio_driver_func1E(I16 first, I16 last)
                         snd_voices_tbl[j].active = 0;
                         snd_voices_tbl[j].data = 0;
                         snd_voices_tbl[j].resourceIndex = 0xff;
-                        snd_voices_tbl[j].note = 0;
+                        snd_voices_tbl[j].priority = 0;
                     }
                 }
             }

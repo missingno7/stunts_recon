@@ -34,9 +34,9 @@ sprite_left2 dw ?
 sprite_widthsum dw ?
 SPRITE ends
 extrn _fontdefseg:word
-extrn _loc_35ED9:near
+extrn _shape2d_scale_blit_tail:near
 public _draw_filled_lines
-public _nopsub_34736
+public _shape2d_capture_bitmap_hotspot
 public _sprite_clear_shape_alt
 public _sprite_clear_shape
 public _shapeexpl
@@ -193,7 +193,7 @@ _draw_filled_lines endp
 ; 228; shared epilogue
 ; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0
 ; still copies one row.
-_nopsub_34736 proc far
+_shape2d_capture_bitmap_hotspot proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -217,7 +217,7 @@ _nopsub_34736 proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_clear_join_01
     even ; word-align the following entry
-_nopsub_34736 endp
+_shape2d_capture_bitmap_hotspot endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite clear shape alt.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -591,7 +591,7 @@ shape_explode_branch_path_05:
 ; ASMDOC Tail jump into another module; _loc_35ED9 consumes this frame, sets ES and writes pixels (FFh
 ; transparent), and mutates
 ; ASMDOC SS:source_row_fraction_accumulator.
-    jmp near ptr _loc_35ED9
+    jmp near ptr _shape2d_scale_blit_tail
 shape_explode_branch_path_06:
     pop     di
     pop     si

@@ -50,7 +50,7 @@ extern int far reserve_audio_chunk(int a, int b);
 extern void far fatal_error(char *message);
 extern void far start_audio_voice_sample(int handle, u8 far *shape);
 extern short far send_audio_stop_event(u16 rate, int handle);
-extern void far audio_unk2(int handle, int value);
+extern void far audio_set_chunk_volume(int handle, int value);
 extern void far set_audio_voice_value(int channel, int rate);
 extern void far audio_init_chunk2(int channel);
 extern int far audio_chunk_is_unavailable(int channel);
@@ -157,7 +157,7 @@ void far audio_op_unk(int index)
         timer->rate = payload->sample_word / payload->shape[0x0e] + (payload->shape[0x0f] << 4);
         timer->channels[1] = send_audio_stop_event(timer->rate, timer->handle) /* PLATFORM(audio): start a sample channel at the requested rate. */;
         timer->dirty = timer->state = 1;
-        audio_unk2(timer->handle, 0) /* PLATFORM(audio): update an audio handle parameter. */;
+        audio_set_chunk_volume(timer->handle, 0) /* PLATFORM(audio): update an audio handle parameter. */;
     }
 }
 
@@ -195,14 +195,14 @@ void far audio_driver_timer(void)
         pitch = timer->pitch_avg >> 4;
         if (pitch != timer->last_pitch || timer->dirty) {
             value = pitch;
-            audio_unk2(timer->handle, value) /* PLATFORM(audio): update an audio handle parameter. */;
+            audio_set_chunk_volume(timer->handle, value) /* PLATFORM(audio): update an audio handle parameter. */;
             value -= 10;
             if (value < 0)
                 value = 0;
             if (timer->channels[2] != -1)
-                audio_unk2(timer->channels[2], value) /* PLATFORM(audio): update an audio handle parameter. */;
+                audio_set_chunk_volume(timer->channels[2], value) /* PLATFORM(audio): update an audio handle parameter. */;
             if (timer->channels[3] != -1)
-                audio_unk2(timer->channels[3], value) /* PLATFORM(audio): update an audio handle parameter. */;
+                audio_set_chunk_volume(timer->channels[3], value) /* PLATFORM(audio): update an audio handle parameter. */;
             timer->last_pitch = pitch;
         }
         timer->rate_avg = (timer->rate_avg * 7 + ((u32)timer->rate << 4)) >> 3;

@@ -27,15 +27,15 @@ sprite_field4 dw ?
 sprite_field6 dw ?
 sprite_field8 dw ?
 sprite_lineofs dw ?
-sprite_fieldC dw ?
-sprite_fieldE dw ?
-sprite_field10 dw ?
-sprite_field12 dw ?
-sprite_field14 dw ?
+sprite_left dw ?
+sprite_right dw ?
+sprite_top dw ?
+sprite_bottom dw ?
+sprite_pitch dw ?
 sprite_field16 dw ?
-sprite_field18 dw ?
-sprite_field1A dw ?
-sprite_field1C dw ?
+sprite_width2 dw ?
+sprite_left2 dw ?
+sprite_widthsum dw ?
 SPRITE1 ends
 ; Font header at DS/ES = _fontdefseg: 0Bh words, then the 256-entry glyph offset table.
 FONTHDR struc

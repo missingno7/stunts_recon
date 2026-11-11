@@ -278,7 +278,7 @@
     {
       "end": 146364,
       "name": "nopsub_33B98",
-      "public": "_nopsub_33B98",
+      "public": "_shape2d_blit_bitmap_hotspot",
       "stable_id": "load_23b98",
       "start": 146328,
       "target": {
@@ -316,11 +316,6 @@
     "groups": [],
     "publics": [
       {
-        "name": "_nopsub_33B98",
-        "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_sprputimage",
         "offset": 66,
         "segment": "S012_TEXT"
@@ -328,6 +323,11 @@
       {
         "name": "_sprite_putimage_and_alt",
         "offset": 36,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_shape2d_blit_bitmap_hotspot",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

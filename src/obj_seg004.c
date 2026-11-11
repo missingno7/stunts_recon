@@ -15,7 +15,7 @@ struct TRACKOBJECT { struct TRKOBJINFO *info; I16S rotation; struct SHAPE3D *sha
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-struct GAMESTATE { U8  before_game_inputmode[0x3f5]; I8 game_inputmode; };
+struct GAMESTATE { U8  state_prefix_000[0x3f5]; I8 game_inputmode; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct WALLREC { I16S orientation,x,z; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
@@ -32,8 +32,8 @@ int z_ctr_pos[30];
 extern U8  far *td14tb;
 extern U8  far *td15p_9;
 extern struct TRACKOBJECT trklst[215];
-extern I16 far sinfast(I16),far cosfast(I16),far mulscl(I16,I16);
-extern I16 far polradius2d(I16,I16),far polang(I16,I16);
+extern I16 far intsin(I16),far intcos(I16),far mulscl(I16,I16);
+extern I16 far inthypot(I16,I16),far intatan(I16,I16);
 short pl_i;
 short road_num;
 short wall_wallelement;
@@ -44,7 +44,7 @@ unsigned char test_pln;
 short hgthgt;
 short x_course_part;
 short road_elem_ctrz;
-extern I16S hillconsts[];
+extern I16S terheight[];
 struct WALLREC far *wallrecrecord;
 extern U8  far *g_planlist;
 extern U8  far *plncurrptr;
@@ -58,11 +58,11 @@ extern I16S bkRdEntr_triang_zAdjust[],corkLR_negZBound[],corkLR_posZBound[];
 void far *g_game13dresource;
 void far *game2res_pointer;
 void far *ptr_model_active;
-extern I32 far mmgr_get_res_ofs_diff_scaled(void),far mmgr_get_chunk_size_bytes(I8 far *);
-extern I8 far *file_load_3dres(I8 *name);
+extern I32 far availmem(void),far modsize(I8 far *);
+extern I8 far *fluffyload(I8 *name);
 extern I8 far *locate_shape_fatal();
 extern I8 far *locate_shape_nofatal();
-extern void shape3d_init_shape(I8 far *,struct SHAPE3D *);
+extern void makeobjdef(I8 far *,struct SHAPE3D *);
 struct SHAPE3D g_shapes3d[130];
 extern I8 aBarn[116][5];
 extern I8 aGame1[],aGame2[];
@@ -91,12 +91,12 @@ char trk_sample_count;
 extern I8 far *mmgr_alloc_resbytes(I8 *,I32);
 extern void far mmgr_free(void far *),far mmgr_release(void far *);
 /* Unused OMF-order alias; accesses use g_shapes3d[127].shape3d_verts. */
-extern I8 far *word_338A8;
+extern I8 far *shape127_vertices_alias;
 /* Unused OMF-order alias; accesses use g_shapes3d[126].shape3d_verts. */
-extern I8 far *word_33892;
-extern I16 bto_auxiliary1(I16,I16,struct VECTOR *);
-extern void wheel_update(struct VECTOR far *,I16,I16S *,I16S *,struct VECTOR *,I16S *);
-extern U8  subst_hillroad(U8 ,U8 );
+extern I8 far *shape126_vertices_alias;
+extern I16 getwpinfo(I16,I16,struct VECTOR *);
+extern void settires(struct VECTOR far *,I16,I16S *,I16S *,struct VECTOR *,I16S *);
+extern U8  roadupcheck(U8 ,U8 );
 short far *g_td01_track_filecpy;
 extern I16S far *trackdata_penalty_related;
 unsigned char far *td19hdl;
@@ -123,11 +123,11 @@ extern I8 aOpp1[],opptext_label[];
 extern void far *file_load_resource_file(const I8 *);
 extern I8 far *locate_text_resource(void far *,const I8 *);
 extern I8 far *locate_shape_alt(void far *,const I8 *);
-extern void copy_string(I8 *,I8 far *);
-extern void far unload_resource(void far *);
+extern void strcpyfar(I8 *,I8 far *);
+extern void far closeresource(void far *);
 
 /* Adds track objects and wall anchors for adjacent positions. Params: current and next track positions. Returns: none. State: reads track tables and updates object lists and anchors. */
-void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
+void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 {
 	struct TRACKOBJECT *o;
 	I16S wallOrientationState;
@@ -174,7 +174,7 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 	if (cellTerr != 0) {
 		switch (cellTerr) {
 		case 6:
-			hgthgt = hillconsts[1];
+			hgthgt = terheight[1];
 			break;
 		case 2:
 			step = 0x80;
@@ -190,8 +190,8 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		slope:
 			locElemCrds.x = position->x - x_course_part;
 			locElemCrds.z = position->z - road_elem_ctrz;
-			side = mulscl(cosfast(step), locElemCrds.x) +
-				mulscl(sinfast(step), locElemCrds.z);
+			side = mulscl(intcos(step), locElemCrds.x) +
+				mulscl(intsin(step), locElemCrds.z);
 			if (side < 0)
 				g_cursurfacekindvalue = 5;
 			break;
@@ -240,7 +240,7 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 	nextPositionElemCrds.x = nextPosition->x - x_course_part;
 	nextPositionElemCrds.z = nextPosition->z - road_elem_ctrz;
 	if (tileElem != 0 && cellTerr >= 7 && cellTerr < 11)
-		tileElem = subst_hillroad(cellTerr, tileElem);
+		tileElem = roadupcheck(cellTerr, tileElem);
 
 	o = &trklst[tileElem];
 	physModel = o->physicalModel;
@@ -299,7 +299,7 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 			locElemCrds.x = -locElemCrds.x;
 		}
 	case 3:
-		turnRadius = polradius2d(locElemCrds.x + 0x400, locElemCrds.z + 0x400);
+		turnRadius = inthypot(locElemCrds.x + 0x400, locElemCrds.z + 0x400);
 		if (turnRadius > 0x588 && turnRadius < 0x678) g_cursurfacekindvalue = surfType;
 		break;
 	case 6:
@@ -308,27 +308,27 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 			break;
 		}
 	case 2:
-		turnRadius = polradius2d(locElemCrds.x + 0x200, locElemCrds.z + 0x200);
+		turnRadius = inthypot(locElemCrds.x + 0x200, locElemCrds.z + 0x200);
 		if (turnRadius > 0x188 && turnRadius < 0x278) g_cursurfacekindvalue = surfType;
 		break;
 	case 7:
 		if (absLocalCrds.x < 0x78) g_cursurfacekindvalue = surfType;
 		else {
-			turnRadius = polradius2d(0x200 - locElemCrds.x, locElemCrds.z + 0x200);
+			turnRadius = inthypot(0x200 - locElemCrds.x, locElemCrds.z + 0x200);
 			if (turnRadius > 0x188 && turnRadius < 0x278) g_cursurfacekindvalue = surfType;
 		}
 		break;
 	case 8:
 		if (locElemCrds.x >= 0x188 && locElemCrds.x <= 0x278) g_cursurfacekindvalue = surfType;
 		else {
-			turnRadius = polradius2d(locElemCrds.x + 0x400, locElemCrds.z + 0x400);
+			turnRadius = inthypot(locElemCrds.x + 0x400, locElemCrds.z + 0x400);
 			if (turnRadius > 0x588 && turnRadius < 0x678) g_cursurfacekindvalue = surfType;
 		}
 		break;
 	case 9:
 		if (locElemCrds.x >= -0x278 && locElemCrds.x <= -0x188) g_cursurfacekindvalue = surfType;
 		else {
-			turnRadius = polradius2d(0x400 - locElemCrds.x, locElemCrds.z + 0x400);
+			turnRadius = inthypot(0x400 - locElemCrds.x, locElemCrds.z + 0x400);
 			if (turnRadius > 0x588 && turnRadius < 0x678) g_cursurfacekindvalue = surfType;
 		}
 		break;
@@ -431,13 +431,13 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		break;
 	case 21:
 		if (position->y - hgthgt <= 0x186) break;
-		turnRadius = polradius2d(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
+		turnRadius = inthypot(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
 		if (turnRadius <= -0x96 || turnRadius >= 0x96) break;
 		g_cursurfacekindvalue = surfType;
 		pl_i = 2;
 		test_pln = 0;
 		if (turnRadius >= -0x6c && turnRadius <= 0x6c) break;
-		side = (polang(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
+		side = (intatan(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
 		localX = 0x11 - (side >> 8);
 		wall_wallelement = 0x2a;
 		element_min_wall = -12;
@@ -470,8 +470,8 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 			else if (locElemCrds.z < 0) { pl_i = baseIndex + 3; localX = 1; }
 			else if (locElemCrds.z < 0xa8) { pl_i = baseIndex + 5; localX = 2; }
 			else if (locElemCrds.z < 0x14e) { pl_i = baseIndex + 7; localX = 3; }
-			side = mulscl(cosfast(step), locElemCrds.x) +
-				mulscl(sinfast(step), locElemCrds.z - bkRdEntr_triang_zAdjust[localX]);
+			side = mulscl(intcos(step), locElemCrds.x) +
+				mulscl(intsin(step), locElemCrds.z - bkRdEntr_triang_zAdjust[localX]);
 			if (side > 0) ++pl_i;
 		}
 		break;
@@ -484,9 +484,9 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		road_num = 0x65;
 		break;
 	case 26:
-		turnRadius = polradius2d(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
+		turnRadius = inthypot(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
 		if (turnRadius <= -0x78 || turnRadius >= 0x7e) break;
-		side = (polang(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
+		side = (intatan(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
 		localX = 0x11 - (side >> 8);
 		pl_i = localX + 7;
 		g_cursurfacekindvalue = surfType;
@@ -594,8 +594,8 @@ loop_base:
 		else if (locElemCrds.x < 0) { pl_i = 0x47; localX = -0x39; step = -8; }
 		else if (locElemCrds.x > 0x54) { pl_i = 0x4d; localX = 0x64; step = 5; }
 		else { pl_i = 0x4b; localX = 0x39; step = 8; }
-		side = mulscl(cosfast(step), locElemCrds.x - localX) +
-			mulscl(sinfast(step), locElemCrds.z);
+		side = mulscl(intcos(step), locElemCrds.x - localX) +
+			mulscl(intsin(step), locElemCrds.z);
 		if (side < 0) ++pl_i;
 		break;
 	case 31:
@@ -700,9 +700,9 @@ loop_base:
 			test_pln = 0;
 			break;
 		}
-		turnRadius = polradius2d(localX, locElemCrds.z);
+		turnRadius = inthypot(localX, locElemCrds.z);
 		if (turnRadius <= 0x14c || turnRadius >= 0x2b4) break;
-		step = ((0x100 - polang(localX, locElemCrds.z)) & FAST_TRIG_ANGLE_MASK) * 0x18 >> 10;
+		step = ((0x100 - intatan(localX, locElemCrds.z)) & FAST_TRIG_ANGLE_MASK) * 0x18 >> 10;
 		pl_i = side + step + 1;
 		g_cursurfacekindvalue = surfType;
 		test_pln = 0;
@@ -817,13 +817,13 @@ finish:
 			if (pl_i == 0) pl_i = 3;
 			break;
 		case 11: case 12: case 13: case 14:
-			side = mulscl(cosfast(0xff80), locElemCrds.x) +
-				mulscl(sinfast(0xff80), locElemCrds.z);
+			side = mulscl(intcos(0xff80), locElemCrds.x) +
+				mulscl(intsin(0xff80), locElemCrds.z);
 			if (side < 0) pl_i = 4;
 			break;
 		case 15: case 16: case 17: case 18:
-			side = mulscl(cosfast(0xff80), locElemCrds.x) +
-				mulscl(sinfast(0xff80), locElemCrds.z);
+			side = mulscl(intcos(0xff80), locElemCrds.x) +
+				mulscl(intsin(0xff80), locElemCrds.z);
 			if (side > 0) pl_i = 5;
 			else hgthgt = 0x1c2;
 			break;
@@ -871,7 +871,7 @@ position_wall:
 }
 
 /* Builds auxiliary geometry for one track tile. Params: tile column, row and output vertices. Returns: generated vertex count. State: reads track templates and terrain data. */
-I16 bto_auxiliary1(I16 column, I16 row, struct VECTOR *vertices) {
+I16 getwpinfo(I16 column, I16 row, struct VECTOR *vertices) {
     U8  tileElement;
     I16 centerRow;
     I16 height;
@@ -944,7 +944,7 @@ I16 bto_auxiliary1(I16 column, I16 row, struct VECTOR *vertices) {
     if (numPoints == 0) return 0;
 
     terrainIndex = td15p_9[column + gterrtrk[row]];
-    if (terrainIndex == 6) height = hillconsts[1];
+    if (terrainIndex == 6) height = terheight[1];
     else height = 0;
     rotationY = trklst[tileElement].rotation;
 
@@ -984,17 +984,17 @@ I16 shape3d_load_all(void)
 
     g_game13dresource = 0;
     game2res_pointer = 0;
-    /* PLATFORM(memory): query available resource memory. */ if (mmgr_get_res_ofs_diff_scaled() < 65000L) {
+    /* PLATFORM(memory): query available resource memory. */ if (availmem() < 65000L) {
         return 1;
     }
-    /* PLATFORM(file): load a 3D resource. */ g_game13dresource = file_load_3dres(aGame1);
-    /* PLATFORM(file): load a 3D resource. */ game2res_pointer = file_load_3dres(aGame2);
+    /* PLATFORM(file): load a 3D resource. */ g_game13dresource = fluffyload(aGame1);
+    /* PLATFORM(file): load a 3D resource. */ game2res_pointer = fluffyload(aGame2);
     for (i = 0; i < 0x74; ++i) {
         ptr_model_active = locate_shape_nofatal(g_game13dresource, aBarn[i]);
         if (ptr_model_active == 0) {
             ptr_model_active = locate_shape_fatal(game2res_pointer, aBarn[i]);
         }
-        shape3d_init_shape(ptr_model_active, &g_shapes3d[i]);
+        makeobjdef(ptr_model_active, &g_shapes3d[i]);
     }
     return 0;
 }
@@ -1024,9 +1024,9 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	aStxxx[3] = arg_playercarid[1];
 	aStxxx[4] = arg_playercarid[2];
 	aStxxx[5] = arg_playercarid[3];
-	/* PLATFORM(file): load a 3D resource. */ pl_carres_3d = file_load_3dres(aStxxx);
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[124]);
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[126]);
+	/* PLATFORM(file): load a 3D resource. */ pl_carres_3d = fluffyload(aStxxx);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[124]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[126]);
 
 	vertices = &(g_shapes3d[126].shape3d_verts[8]);
 	pos_pt.z = vertices[0].z;
@@ -1049,18 +1049,18 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 		ywhlang[loopIndex] = 0;
 	}
 
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[2]), &g_shapes3d[128]);
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[3]), &g_shapes3d[116]);
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[4]), &g_shapes3d[117]);
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[5]), &g_shapes3d[118]);
-	shape3d_init_shape(locate_shape_fatal(pl_carres_3d, aCar0[6]), &g_shapes3d[119]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[2]), &g_shapes3d[128]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[3]), &g_shapes3d[116]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[4]), &g_shapes3d[117]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[5]), &g_shapes3d[118]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[6]), &g_shapes3d[119]);
 
 	firstOpponent = arg_opponentcarid[0];
 	if (firstOpponent != -1) {
 		if (arg_playercarid[0] == firstOpponent && arg_playercarid[1] == arg_opponentcarid[1] &&
 			arg_playercarid[2] == arg_opponentcarid[2] && arg_playercarid[3] == arg_opponentcarid[3])
 		{
-			/* PLATFORM(memory): query a resource block size. */ sizeBytes = mmgr_get_chunk_size_bytes(pl_carres_3d);
+			/* PLATFORM(memory): query a resource block size. */ sizeBytes = modsize(pl_carres_3d);
 			/* PLATFORM(memory): allocate resource memory. */ carcopyresourceptr = mmgr_alloc_resbytes(aCar0[7], sizeBytes);
 			
 			for (copyOffset = 0; copyOffset < sizeBytes; copyOffset++) {
@@ -1071,11 +1071,11 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 			aStxxx[3] = arg_opponentcarid[1];
 			aStxxx[4] = arg_opponentcarid[2];
 			aStxxx[5] = arg_opponentcarid[3];
-			/* PLATFORM(file): load a 3D resource. */ carcopyresourceptr = file_load_3dres(aStxxx);
+			/* PLATFORM(file): load a 3D resource. */ carcopyresourceptr = fluffyload(aStxxx);
 		}
 
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[125]);
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[9]), &g_shapes3d[127]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[125]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[9]), &g_shapes3d[127]);
 
 		vertices = &(g_shapes3d[127].shape3d_verts[8]);
 		ctrmesh.z = vertices[0].z;
@@ -1096,11 +1096,11 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 		for (loopIndex = 0; loopIndex < 5; loopIndex++) {
 			buf_obase[loopIndex] = 0;
 		}
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[10]), &g_shapes3d[129]);
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[11]), &g_shapes3d[120]);
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[12]), &g_shapes3d[121]);
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[13]), &g_shapes3d[122]);
-		shape3d_init_shape(locate_shape_fatal(carcopyresourceptr, aCar0[14]), &g_shapes3d[123]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[10]), &g_shapes3d[129]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[11]), &g_shapes3d[120]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[12]), &g_shapes3d[121]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[13]), &g_shapes3d[122]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[14]), &g_shapes3d[123]);
 	} else {
 		carcopyresourceptr = 0;
 	}
@@ -1111,15 +1111,15 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 void shape3d_free_car_shapes(void)
 {
     if (carcopyresourceptr != 0) {
-        wheel_update(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
+        settires(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
         /* PLATFORM(memory): release a resource block. */ mmgr_release(carcopyresourceptr);
     }
-    wheel_update(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
+    settires(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
     /* PLATFORM(memory): release resource memory. */ mmgr_free(pl_carres_3d);
 }
 
 /* Rebuilds cached wheel vertices when steering or wheel height changes. Params: output vertices, steering angle, base heights, cached values, source offsets and origin. Returns: none. State: updates wheel geometry and cached values. */
-void wheel_update(struct VECTOR far *out, I16 angle,
+void settires(struct VECTOR far *out, I16 angle,
               I16S *base, I16S *last_angle_and_y,
               struct VECTOR *source, I16S *origin)
 {
@@ -1132,8 +1132,8 @@ void wheel_update(struct VECTOR far *out, I16 angle,
     I16 cosine;
 
     if (last_angle_and_y[4] != angle) {
-        sine = sinfast(angle >> 1);
-        cosine = cosfast(angle >> 1);
+        sine = intsin(angle >> 1);
+        cosine = intcos(angle >> 1);
 
         for (i = 0; i < 6; ++i) {
             out[i].x = mulscl(source[i].z, sine)
@@ -1179,7 +1179,7 @@ static U8  terrConnDataStoN[19] = { 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 4, 0, 5, 4, 0,
 
 /* Builds track and route data from the selected track resources. Params: none. Returns: setup status. State: reads track resources and updates track tables. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-I16 track_setup(void)
+I16 compiletrack(void)
 {
   I8 matches;
   U8  entryPt;
@@ -1387,7 +1387,7 @@ I16 track_setup(void)
     object = td14tb[lnoffsets[y] + cur_col];
     tileTerr = td15p_9[gterrtrk[y] + cur_col];
     if (object != 0 && tileTerr != 0 && tileTerr >= 7 && tileTerr < 11)
-      object = subst_hillroad(tileTerr, object);
+      object = roadupcheck(tileTerr, object);
     if (object >= 0xfd)
     {
       switch (object)
@@ -1899,7 +1899,7 @@ I16 track_setup(void)
 /* Loads opponent-specific data. Params: none. Returns: none. State: stores the loaded opponent resource. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void load_opponent_data(void)
+void opponentcompile(void)
 {
     U32  savedSums[256];
     I16S savedIndices[256];
@@ -1921,7 +1921,7 @@ void load_opponent_data(void)
 
     aOpp1[3] = globalgamesettings.game_opponenttype + '0';
     /* PLATFORM(file): load a resource file. */ res = file_load_resource_file(aOpp1);
-    copy_string(opptext_label, locate_text_resource(res, "nam"));
+    strcpyfar(opptext_label, locate_text_resource(res, "nam"));
     /* PLATFORM(file): locate opponent path data in the loaded bundle. */ pathData = locate_shape_alt(res, "path");
     /* PORT: the speed table is traversed through a segmented FAR resource pointer. */ /* PLATFORM(file): locate opponent speed data in the loaded bundle. */ tbl = (U8  far *)locate_shape_alt(res, "sped");
     for (i = 0; i < 16; i++)
@@ -1961,7 +1961,7 @@ void load_opponent_data(void)
                 td3[count + 1] = 1;
             }
             if (dep == 0) {
-                /* PLATFORM(memory): release a loaded resource. */ unload_resource(res);
+                /* PLATFORM(memory): release a loaded resource. */ closeresource(res);
                 return;
             }
             dep--;
@@ -1981,7 +1981,7 @@ void load_opponent_data(void)
 }
 
 /* Maps a terrain and object pair to its hill-road replacement. Params: terrain and object IDs. Returns: replacement object ID. State: reads fixed substitution tables. */
-U8  subst_hillroad(U8  a, U8  b)
+U8  roadupcheck(U8  a, U8  b)
 {
     switch (a) {
     case 7:

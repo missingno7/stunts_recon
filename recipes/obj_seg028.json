@@ -58,7 +58,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_audio_unk2",
+      "frame": "_audio_set_chunk_volume",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -66,7 +66,7 @@
       "offset": 801,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_audio_unk2",
+      "target": "_audio_set_chunk_volume",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -4958,7 +4958,7 @@
     {
       "end": 167160,
       "name": "audio_unk2",
-      "public": "_audio_unk2",
+      "public": "_audio_set_chunk_volume",
       "stable_id": "load_28c4c",
       "start": 166988,
       "target": {
@@ -5080,7 +5080,7 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_audio_unk2",
+      "_audio_set_chunk_volume",
       "_process_audio_event",
       "_select_audio_voice_slot",
       "_read_audio_event",
@@ -5144,7 +5144,7 @@
     ],
     "publics": [
       {
-        "name": "_audio_unk2",
+        "name": "_audio_set_chunk_volume",
         "offset": 1552,
         "segment": "UNIT_TEXT"
       },

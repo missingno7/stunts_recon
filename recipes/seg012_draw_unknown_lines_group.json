@@ -193,7 +193,7 @@
     {
       "end": 144196,
       "name": "nopsub_33330",
-      "public": "_nopsub_33330",
+      "public": "_sprite_fill_two_color_spans_at",
       "stable_id": "load_23330",
       "start": 144176,
       "target": {
@@ -237,13 +237,13 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_33330",
-        "offset": 0,
+        "name": "_draw_unknown_lines",
+        "offset": 20,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_draw_unknown_lines",
-        "offset": 20,
+        "name": "_sprite_fill_two_color_spans_at",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

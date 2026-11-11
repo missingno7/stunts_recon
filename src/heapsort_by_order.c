@@ -2,7 +2,7 @@
 /* READABILITY: Sort the heap keys in descending order while applying each swap to the paired data array. */
 /* Sort heap keys descending and apply the same swaps to the associated data.
  * Params and return follow the declared C signature. */
-void heapsortorder(I16 n, I16 *heap, I16 *data)
+void shellsort(I16 n, I16 *heap, I16 *data)
 {
     I16 temp;
     I16 gap;

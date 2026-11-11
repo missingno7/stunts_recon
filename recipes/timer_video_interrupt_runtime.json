@@ -16,8 +16,8 @@
       "offset": 10,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_polang",
-      "target_index": 2,
+      "target": "_intatan",
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -33,8 +33,8 @@
       "offset": 40,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_cosfast",
-      "target_index": 4,
+      "target": "_intcos",
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -50,8 +50,8 @@
       "offset": 74,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinfast",
-      "target_index": 5,
+      "target": "_intsin",
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -68,7 +68,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_video_mode4_active",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1061,7 +1061,7 @@
   "members": [
     {
       "name": "polarRadius2D",
-      "public": "_polradius2d",
+      "public": "_inthypot",
       "stable_id": "load_200b6",
       "start": 131254
     },
@@ -1073,7 +1073,7 @@
     },
     {
       "name": "nopsub_30180",
-      "public": "_nopsub_30180",
+      "public": "_timer_setup_sound_countdown",
       "stable_id": "load_20180",
       "start": 131456
     },
@@ -1115,7 +1115,7 @@
     },
     {
       "name": "sub_303BA",
-      "public": "_sub_303BA",
+      "public": "_timer_tick_sound_and_chain",
       "start": 132026
     }
   ],
@@ -1131,10 +1131,10 @@
   "object_declarations": {
     "externals": [
       "_fatal_error",
-      "_polang",
       "_video_mode4_active",
-      "_cosfast",
-      "_sinfast",
+      "_intcos",
+      "_intsin",
+      "_intatan",
       "_set_bios_mode3",
       "_add_exit_handler"
     ],
@@ -1154,12 +1154,7 @@
     ],
     "publics": [
       {
-        "name": "_polradius2d",
-        "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_30180",
+        "name": "_timer_setup_sound_countdown",
         "offset": 202,
         "segment": "S012_TEXT"
       },
@@ -1171,6 +1166,11 @@
       {
         "name": "_timer_sound_countdown_active",
         "offset": 24,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_adderr",
+        "offset": 68,
         "segment": "_DATA"
       },
       {
@@ -1219,24 +1219,24 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_aNoRoomLeftOnTimerInterru",
-        "offset": 68,
-        "segment": "_DATA"
-      },
-      {
         "name": "_bios_tick_countdown",
         "offset": 30,
         "segment": "_DATA"
       },
       {
-        "name": "_sub_303BA",
-        "offset": 772,
+        "name": "_inthypot",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
         "name": "_previous_timer_irq_vector",
         "offset": 12,
         "segment": "_DATA"
+      },
+      {
+        "name": "_timer_tick_sound_and_chain",
+        "offset": 772,
+        "segment": "S012_TEXT"
       },
       {
         "name": "_byte_3F868",

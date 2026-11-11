@@ -2358,7 +2358,7 @@
     {
       "end": 135453,
       "name": "nopsub_310FE",
-      "public": "_nopsub_310FE",
+      "public": "_mmgr_init_video_reserve",
       "stable_id": "load_210fe",
       "start": 135422,
       "target": {
@@ -2369,7 +2369,7 @@
     {
       "end": 135511,
       "name": "nopsub_3111D",
-      "public": "_nopsub_3111D",
+      "public": "_mmgr_alloc_dos_heap",
       "stable_id": "load_2111d",
       "start": 135453,
       "target": {
@@ -2380,7 +2380,7 @@
     {
       "end": 135529,
       "name": "nopsub_31157",
-      "public": "_nopsub_31157",
+      "public": "_poolmemory",
       "stable_id": "load_21157",
       "start": 135511,
       "target": {
@@ -2391,7 +2391,7 @@
     {
       "end": 135547,
       "name": "nopsub_31169",
-      "public": "_nopsub_31169",
+      "public": "_lockedmemory",
       "stable_id": "load_21169",
       "start": 135529,
       "target": {
@@ -2402,7 +2402,7 @@
     {
       "end": 135565,
       "name": "mmgr_get_ofs_diff",
-      "public": "_mmgr_get_ofs_diff",
+      "public": "_unlockedmemory",
       "stable_id": "load_2117b",
       "start": 135547,
       "target": {
@@ -2479,7 +2479,7 @@
     {
       "end": 136316,
       "name": "nopsub_31429",
-      "public": "_nopsub_31429",
+      "public": "_mmgr_has_high_resource",
       "stable_id": "load_21429",
       "start": 136233,
       "target": {
@@ -2501,7 +2501,7 @@
     {
       "end": 136769,
       "name": "nopsub_31525",
-      "public": "_nopsub_31525",
+      "public": "_mmgr_move_chunk_to_high",
       "stable_id": "load_21525",
       "start": 136485,
       "target": {
@@ -2545,7 +2545,7 @@
     {
       "end": 137138,
       "name": "mmgr_op_unk",
-      "public": "_mmgr_op_unk",
+      "public": "_mmgr_compact_chunk",
       "stable_id": null,
       "start": 137010,
       "target": {
@@ -2574,23 +2574,8 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_31525",
-        "offset": 1195,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_31157",
-        "offset": 221,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_31429",
+        "name": "_mmgr_has_high_resource",
         "offset": 943,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_31169",
-        "offset": 239,
         "segment": "S012_TEXT"
       },
       {
@@ -2599,28 +2584,8 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_3111D",
-        "offset": 163,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_310FE",
-        "offset": 132,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_mmgr_alloc_resmem",
         "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_mmgr_get_ofs_diff",
-        "offset": 257,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_mmgr_op_unk",
-        "offset": 1720,
         "segment": "S012_TEXT"
       },
       {
@@ -2629,8 +2594,28 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_lockedmemory",
+        "offset": 239,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mmgr_init_video_reserve",
+        "offset": 132,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_mmgr_release",
         "offset": 1479,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mmgr_move_chunk_to_high",
+        "offset": 1195,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_mmgr_compact_chunk",
+        "offset": 1720,
         "segment": "S012_TEXT"
       },
       {
@@ -2644,9 +2629,9 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_aReservememoryOutOfMemory",
-        "offset": 0,
-        "segment": "_DATA"
+        "name": "_mmgr_alloc_dos_heap",
+        "offset": 163,
+        "segment": "S012_TEXT"
       },
       {
         "name": "_mmgr_get_chunk_size",
@@ -2654,8 +2639,23 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_exmemerr",
+        "offset": 201,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_nomemerr",
+        "offset": 0,
+        "segment": "_DATA"
+      },
+      {
         "name": "_mmgr_alloc_a000",
         "offset": 119,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_unlockedmemory",
+        "offset": 257,
         "segment": "S012_TEXT"
       },
       {
@@ -2664,7 +2664,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_aResizememoryCa",
+        "name": "_expanderr",
         "offset": 153,
         "segment": "_DATA"
       },
@@ -2679,11 +2679,6 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aResizememoryNo",
-        "offset": 201,
-        "segment": "_DATA"
-      },
-      {
         "name": "_mmgr_copy_paras",
         "offset": 275,
         "segment": "S012_TEXT"
@@ -2691,6 +2686,11 @@
       {
         "name": "_mmgr_alloc_pages",
         "offset": 462,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_poolmemory",
+        "offset": 221,
         "segment": "S012_TEXT"
       }
     ],

@@ -480,25 +480,25 @@
   "members": [
     {
       "name": "nopsub_33006",
-      "public": "_nopsub_33006",
+      "public": "_zclip",
       "stable_id": "load_23006",
       "start": 143366
     },
     {
       "name": "vector_op_unk",
-      "public": "_vector_op_unk",
+      "public": "_zclipline",
       "stable_id": "load_23014",
       "start": 143380
     },
     {
       "name": "preRender_sphere",
-      "public": "_preRender_sphere",
+      "public": "_drawcircle",
       "stable_id": "load_23072",
       "start": 143474
     },
     {
       "name": "nopsub_3320E",
-      "public": "_nopsub_3320E",
+      "public": "_sprite_set_window_bounds",
       "stable_id": "load_2320e",
       "start": 143886
     },
@@ -551,13 +551,8 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_33006",
+        "name": "_zclip",
         "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_3320E",
-        "offset": 520,
         "segment": "S012_TEXT"
       },
       {
@@ -571,12 +566,17 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_vector_op_unk",
+        "name": "_sprite_set_window_bounds",
+        "offset": 520,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_zclipline",
         "offset": 14,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_preRender_sphere",
+        "name": "_drawcircle",
         "offset": 108,
         "segment": "S012_TEXT"
       }

@@ -11,7 +11,7 @@
       "groups": [],
       "publics": [
         {
-          "name": "_putpixel_line1_maybe",
+          "name": "_drawcline",
           "offset": 0,
           "segment": "S012_TEXT"
         }
@@ -415,7 +415,7 @@
     "groups": [],
     "publics": [
       {
-        "name": "_putpixel_line1_maybe",
+        "name": "_drawcline",
         "offset": 0,
         "segment": "S012_TEXT"
       }
@@ -442,7 +442,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_putpixel_line1_maybe",
+  "public": "_drawcline",
   "source": "asm/putpixel_line1_maybe.ASM",
   "stable_id": "asm_load_233c0",
   "start": 144320,

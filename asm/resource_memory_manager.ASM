@@ -12,7 +12,7 @@ MEMCHUNK struc
 resname db 12 dup (?)
 ressize dw ?
 resofs dw ?
-resunk dw ?
+res_flags dw ?
 MEMCHUNK ends
 DSEG segment byte public 'STUNTSD'
 DSEG ends
@@ -25,25 +25,25 @@ S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _mmgr_alloc_resmem
 public _mmgr_alloc_a000
-public _nopsub_310FE
-public _nopsub_3111D
-public _nopsub_31157
-public _nopsub_31169
-public _mmgr_get_ofs_diff
+public _mmgr_init_video_reserve
+public _mmgr_alloc_dos_heap
+public _poolmemory
+public _lockedmemory
+public _unlockedmemory
 public _mmgr_copy_paras
 public _copy_paras_reverse
 public _mmgr_path_to_name
 public _mmgr_alloc_pages
 public _mmgr_find_free
 public _mmgr_get_chunk_by_name
-public _nopsub_31429
+public _mmgr_has_high_resource
 public _mmgr_free
-public _nopsub_31525
+public _mmgr_move_chunk_to_high
 public _mmgr_release
 public _mmgr_get_chunk_size
 public _mmgr_resize_memory
-public _mmgr_op_unk
-public _aReservememoryOutOfMemory, _aResizememoryCa, _aResizememoryNo, _resources
+public _mmgr_compact_chunk
+public _nomemerr, _expanderr, _exmemerr, _resources
 ; -----------------------------------------------------------------------------
 ; Purpose: Allocate a resource-memory slot and associate the requested region.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -123,7 +123,7 @@ resmem_alloc_loop_head_02:
     add     si, 12h
     cmp     si, _resendptr2
     jz      short resmem_alloc_branch_path_02
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     jmp     short resmem_alloc_loop_head_02
 resmem_alloc_branch_path_02:
     pop     di
@@ -191,7 +191,7 @@ _mmgr_alloc_a000 endp
 ; ASMDOC resize twice
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: Reservation subtraction runs even if allocator skipped DOS allocation. No underflow guard.
-_nopsub_310FE proc far
+_mmgr_init_video_reserve proc far
     arg_reserve_paragraphs = word ptr 6
 
     push    bp
@@ -206,7 +206,7 @@ _nopsub_310FE proc far
     sub     _resmem_end_seg, ax
     pop     bp
     retf
-_nopsub_310FE endp
+_mmgr_init_video_reserve endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3111D. Its internal flow uses noop_entry2_branch_path_01.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -233,7 +233,7 @@ _nopsub_310FE endp
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: Shares resmem_alloc_loop_head_01 and return in mmgr_alloc_resmem. If retry also fails there is no
 ; ASMDOC further error check. Records PSP offset as CS directly.
-_nopsub_3111D proc far
+_mmgr_alloc_dos_heap proc far
     arg_requested_paragraphs = word ptr 6
 
     push    bp
@@ -259,7 +259,7 @@ noop_entry2_branch_path_01:
     mov     [si+MEMCHUNK.resofs], ax
     mov     _resmem_end_seg, ax
     jmp     resmem_alloc_loop_head_01
-_nopsub_3111D endp
+_mmgr_alloc_dos_heap endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31157.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -283,7 +283,7 @@ _nopsub_3111D endp
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Evidence: asm/resource_memory_manager.ASM:191
-_nopsub_31157 proc far
+_poolmemory proc far
 
     mov     bx, _resendptr1
     mov     ax, [bx+MEMCHUNK.resofs]
@@ -291,7 +291,7 @@ _nopsub_31157 proc far
     sub     ax, [bx+MEMCHUNK.resofs]
     sub     ax, [bx+MEMCHUNK.ressize]
     retf
-_nopsub_31157 endp
+_poolmemory endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31169.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -314,7 +314,7 @@ _nopsub_31157 endp
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Evidence: asm/resource_memory_manager.ASM:207
-_nopsub_31169 proc far
+_lockedmemory proc far
 
     mov     bx, _resptr2
     mov     ax, [bx+MEMCHUNK.resofs]
@@ -322,7 +322,7 @@ _nopsub_31169 proc far
     mov     bx, _resptr1
     sub     ax, [bx+MEMCHUNK.resofs]
     retf
-_nopsub_31169 endp
+_lockedmemory endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the offset difference between two memory locations.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -346,7 +346,7 @@ _nopsub_31169 endp
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Evidence: asm/resource_memory_manager.ASM:223
-_mmgr_get_ofs_diff proc far
+_unlockedmemory proc far
 
     mov     bx, _resendptr2
     mov     ax, [bx+MEMCHUNK.resofs]
@@ -354,7 +354,7 @@ _mmgr_get_ofs_diff proc far
     sub     ax, [bx+MEMCHUNK.resofs]
     sub     ax, [bx+MEMCHUNK.ressize]
     retf
-_mmgr_get_ofs_diff endp
+_unlockedmemory endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy a block of memory measured in DOS paragraphs.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -613,7 +613,7 @@ pages_alloc_loop_head_02:
     mov     ax, [bp+arg_paragraph_count]
     mov     [di+MEMCHUNK.resofs], dx
     mov     [di+MEMCHUNK.ressize], ax
-    mov     [di+MEMCHUNK.resunk], 2
+    mov     [di+MEMCHUNK.res_flags], 2
     add     ax, dx
     cmp     ax, _resmaxsize
     jb      short pages_alloc_branch_path_01
@@ -635,7 +635,7 @@ pages_alloc_branch_path_02:
     jmp     short pages_alloc_loop_head_01
 pages_alloc_error_path_01:
     push    [bp+arg_pathname]
-    mov     ax, offset DGROUP:_aReservememoryO; "reservememory - OUT OF MEMORY SLOTS RES"...
+    mov     ax, offset DGROUP:_noblkerr; "reservememory - OUT OF MEMORY SLOTS RES"...
     push    ax
     call    far ptr _fatal_error
 pages_alloc_branch_path_03:
@@ -649,7 +649,7 @@ pages_alloc_loop_head_04:
     jbe     short pages_alloc_loop_head_03
     cmp     si, _resendptr2
     jz      short pages_alloc_branch_path_04
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     add     si, 12h
     mov     _resendptr1, si
     jmp     short pages_alloc_loop_head_04
@@ -658,7 +658,7 @@ pages_alloc_branch_path_04:
     push    bx
     push    [di+MEMCHUNK.ressize]
     push    [bp+arg_pathname]
-    mov     ax, offset DGROUP:_aReservememoryOutOfMemory; "reservememory - OUT OF MEMORY RESERVING"...
+    mov     ax, offset DGROUP:_nomemerr; "reservememory - OUT OF MEMORY RESERVING"...
     push    ax
     call    far ptr _fatal_error
 _mmgr_alloc_pages endp
@@ -696,7 +696,7 @@ _mmgr_find_free proc far
 ; ASMDOC State bit 0 selects retained high chunks. Non-bit0 sizes accumulate as a gap; later keepers move upward
 ; ASMDOC with reverse copy.
 find_free_loop_head_01:
-    test    [si+MEMCHUNK.resunk], 01h
+    test    [si+MEMCHUNK.res_flags], 01h
     jnz     short find_free_branch_path_01
     add     dx, [si+MEMCHUNK.ressize]
     jmp     short find_free_join_01
@@ -727,9 +727,9 @@ find_free_branch_path_02:
     sub     di, 12h
     mov     [di+MEMCHUNK.ressize], bx
     mov     [di+MEMCHUNK.resofs], ax
-    mov     cx, [si+MEMCHUNK.resunk]
-    mov     [si+MEMCHUNK.resunk], 0
-    mov     [di+MEMCHUNK.resunk], cx
+    mov     cx, [si+MEMCHUNK.res_flags]
+    mov     [si+MEMCHUNK.res_flags], 0
+    mov     [di+MEMCHUNK.res_flags], cx
     xor     bx, bx
     mov     cx, 0Ch
 find_free_loop_head_03:
@@ -779,7 +779,7 @@ _mmgr_get_chunk_by_name proc far
     mov     di, ax
 find_chunk_loop_head_01:
     xor     bx, bx
-    cmp     [si+MEMCHUNK.resunk], 0
+    cmp     [si+MEMCHUNK.res_flags], 0
     jz      short find_chunk_branch_path_03
 find_chunk_loop_head_02:
     mov     al, [bx+di]
@@ -822,10 +822,10 @@ find_chunk_branch_path_04:
     push    ax
     push    dx
     push    [si+MEMCHUNK.resofs]
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     mov     [di+MEMCHUNK.resofs], dx
     mov     [di+MEMCHUNK.ressize], ax
-    mov     [di+MEMCHUNK.resunk], 2
+    mov     [di+MEMCHUNK.res_flags], 2
     xor     bx, bx
     mov     cx, 0Ch
 find_chunk_loop_head_04:
@@ -846,7 +846,7 @@ find_chunk_branch_path_05:
 find_chunk_loop_head_05:
     cmp     ax, [si+MEMCHUNK.resofs]
     jbe     short find_chunk_branch_path_06
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     add     si, 12h
     mov     _resendptr1, si
     jmp     short find_chunk_loop_head_05
@@ -878,7 +878,7 @@ _mmgr_get_chunk_by_name endp
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: Case-sensitive 12-byte maximum; shorter basename may match stored extension. Reads descriptor state
 ; ASMDOC at +10h; no cache population.
-_nopsub_31429 proc far
+_mmgr_has_high_resource proc far
     arg_pathname = word ptr 6
 
     push    bp
@@ -927,7 +927,7 @@ noop_entry5_branch_path_04:
     pop     si
     pop     bp
     retf
-_nopsub_31429 endp
+_mmgr_has_high_resource endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Release the selected memory-manager allocation.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -976,12 +976,12 @@ free_chunk_loop_head_01:
 ; ASMDOC not return.
 free_chunk_loop_head_02:
     push    [bp+arg_chunk_segment]
-    mov     ax, offset DGROUP:_aMemoryManagerB; "memory manager - BLOCK NOT FOUND at SEG"...
+    mov     ax, offset DGROUP:_blknotfound; "memory manager - BLOCK NOT FOUND at SEG"...
     push    ax
     call    far ptr _fatal_error
 free_chunk_branch_path_01:
     mov     [bp+arg_chunk_segment], 0
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     cmp     si, _resptr2
     jz      short free_chunk_branch_path_02
     mov     bx, _resptr2
@@ -1008,7 +1008,7 @@ free_chunk_branch_path_02:
     mov     _resendptr1, di
     mov     [di+MEMCHUNK.resofs], ax
     mov     [di+MEMCHUNK.ressize], bx
-    mov     [di+MEMCHUNK.resunk], 1
+    mov     [di+MEMCHUNK.res_flags], 1
     mov     cx, 0Ch
     xor     bx, bx
 free_chunk_loop_head_03:
@@ -1023,7 +1023,7 @@ free_chunk_branch_path_03:
     jnz     short free_chunk_branch_path_04
 free_chunk_loop_head_04:
     sub     si, 12h
-    cmp     [si+MEMCHUNK.resunk], 0
+    cmp     [si+MEMCHUNK.res_flags], 0
     jz      short free_chunk_loop_head_04
     mov     _resptr2, si
 free_chunk_branch_path_04:
@@ -1062,7 +1062,7 @@ _mmgr_free endp
 ; ASMDOC Notes: Has six-byte local frame, unlike free. Its missing-segment jump enters free fatal path; if
 ; ASMDOC fatal_error returned, incompatible locals/stack would make subsequent flow invalid. No cache address is
 ; ASMDOC written back on the copying path.
-_nopsub_31525 proc far
+_mmgr_move_chunk_to_high proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
     arg_unused_offset = word ptr 6
@@ -1186,7 +1186,7 @@ noop_entry6_branch_path_08:
     mov     sp, bp
     pop     bp
     retf
-_nopsub_31525 endp
+_mmgr_move_chunk_to_high endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Release memory-manager state associated with the selected block.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).
@@ -1228,12 +1228,12 @@ release_chunk_loop_head_01:
 release_chunk_branch_path_01:
     jmp     free_chunk_loop_head_02
 release_chunk_branch_path_02:
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     cmp     si, _resptr2
     jnz     short release_chunk_branch_path_03
 release_chunk_loop_head_02:
     sub     si, 12h
-    cmp     [si+MEMCHUNK.resunk], 0
+    cmp     [si+MEMCHUNK.res_flags], 0
     jz      short release_chunk_loop_head_02
     mov     _resptr2, si
 release_chunk_branch_path_03:
@@ -1362,7 +1362,7 @@ resize_mem_loop_head_02:
     pop     bp
     retf
 resize_mem_error_path_01:
-    mov     ax, offset DGROUP:_aResizememoryCa; "resizememory - CANNOT EXPAND BLOCK NOT "...
+    mov     ax, offset DGROUP:_expanderr; "resizememory - CANNOT EXPAND BLOCK NOT "...
     push    ax
     call    far ptr _fatal_error
 resize_mem_branch_path_05:
@@ -1375,14 +1375,14 @@ resize_mem_loop_head_03:
     jbe     short resize_mem_loop_head_02
     cmp     si, _resendptr2
     jz      short resize_mem_error_path_02
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     add     si, 12h
     mov     _resendptr1, si
     jmp     short resize_mem_loop_head_03
 resize_mem_error_path_02:
     mov     bx, _resmaxsize
     push    bx
-    mov     ax, offset DGROUP:_aResizememoryNo; "resizememory - NO MEMORY LEFT TO EXPAND"...
+    mov     ax, offset DGROUP:_exmemerr; "resizememory - NO MEMORY LEFT TO EXPAND"...
     push    ax
     call    far ptr _fatal_error
 _mmgr_resize_memory endp
@@ -1410,7 +1410,7 @@ _mmgr_resize_memory endp
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: Returns offset zero rather than preserving original input offset. Compacts this selected chunk
 ; ASMDOC only. Vacant descriptor size fields are not used to choose destination.
-_mmgr_op_unk proc far
+_mmgr_compact_chunk proc far
     arg_chunk_segment = word ptr 8
 
     push    bp
@@ -1431,15 +1431,15 @@ memory_op_branch_path_01:
 memory_op_branch_path_02:
     mov     di, si
     sub     di, 12h
-    cmp     [di+MEMCHUNK.resunk], 0
+    cmp     [di+MEMCHUNK.res_flags], 0
     jnz     short memory_op_branch_path_04
 ; ASMDOC Walk backward over vacant low descriptors; selected chunk relocates to previous occupied end, not to a
 ; ASMDOC first-fit gap.
 memory_op_loop_head_02:
     sub     di, 12h
-    cmp     [di+MEMCHUNK.resunk], 0
+    cmp     [di+MEMCHUNK.res_flags], 0
     jz      short memory_op_loop_head_02
-    mov     [si+MEMCHUNK.resunk], 0
+    mov     [si+MEMCHUNK.res_flags], 0
     mov     bx, [si+MEMCHUNK.ressize]
     push    bx
     mov     ax, [di+MEMCHUNK.resofs]
@@ -1453,7 +1453,7 @@ memory_op_loop_head_02:
 memory_op_branch_path_03:
     mov     [di+MEMCHUNK.resofs], ax
     mov     [di+MEMCHUNK.ressize], bx
-    mov     [di+MEMCHUNK.resunk], 2
+    mov     [di+MEMCHUNK.res_flags], 2
     mov     cx, 0Ch
     xor     bx, bx
 memory_op_loop_head_03:
@@ -1474,14 +1474,14 @@ memory_op_branch_path_04:
     mov     di, si
     jmp     short memory_op_loop_head_04
     db 0 ; retained zero fill at this boundary
-_mmgr_op_unk endp
+_mmgr_compact_chunk endp
 S012_TEXT ends
 _DATA segment word public 'DATA'
-_aReservememoryOutOfMemory db 'reservememory - OUT OF MEMORY RESERVING %s P=%x HW=%x', 0Dh, 0Ah, 00h
-_aReservememoryO db 'reservememory - OUT OF MEMORY SLOTS RESERVING %s', 0Dh, 0Ah, 00h
-_aMemoryManagerB db 'memory manager - BLOCK NOT FOUND at SEG= %x', 0Dh, 0Ah, 00h
-_aResizememoryCa db 'resizememory - CANNOT EXPAND BLOCK NOT AT TOP', 0Dh, 0Ah, 00h
-_aResizememoryNo db 'resizememory - NO MEMORY LEFT TO EXPAND HW=%x', 0Dh, 0Ah, 00h, 00h
+_nomemerr db 'reservememory - OUT OF MEMORY RESERVING %s P=%x HW=%x', 0Dh, 0Ah, 00h
+_noblkerr db 'reservememory - OUT OF MEMORY SLOTS RESERVING %s', 0Dh, 0Ah, 00h
+_blknotfound db 'memory manager - BLOCK NOT FOUND at SEG= %x', 0Dh, 0Ah, 00h
+_expanderr db 'resizememory - CANNOT EXPAND BLOCK NOT AT TOP', 0Dh, 0Ah, 00h
+_exmemerr db 'resizememory - NO MEMORY LEFT TO EXPAND HW=%x', 0Dh, 0Ah, 00h, 00h
 _resmem_end_seg     dw 0
 _resmem_base_seg     dw 0
 _resmaxsize     dw 0

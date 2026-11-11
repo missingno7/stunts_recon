@@ -804,7 +804,7 @@
     {
       "end": 148400,
       "name": "shape2d_op_unk4",
-      "public": "_shape2d_op_unk4",
+      "public": "_shape2d_or_rle",
       "stable_id": "load_242f6",
       "start": 148214,
       "target": {
@@ -837,7 +837,7 @@
     {
       "end": 149155,
       "name": "sub_345BC",
-      "public": "_draw_text_at",
+      "public": "_movtxy",
       "stable_id": null,
       "start": 148924,
       "target": {
@@ -848,7 +848,7 @@
     {
       "end": 149180,
       "name": "video_set_palette",
-      "public": "_video_set_palette",
+      "public": "_vgapalette",
       "stable_id": null,
       "start": 149155,
       "target": {
@@ -893,12 +893,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_video_set_palette",
-        "offset": 1603,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_draw_text_at",
+        "name": "_movtxy",
         "offset": 1372,
         "segment": "S012_TEXT"
       },
@@ -908,13 +903,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_op_unk4",
+        "name": "_shape2d_or_rle",
         "offset": 662,
         "segment": "S012_TEXT"
       },
       {
         "name": "_putpixel_iconFillings",
         "offset": 434,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_vgapalette",
+        "offset": 1603,
         "segment": "S012_TEXT"
       },
       {

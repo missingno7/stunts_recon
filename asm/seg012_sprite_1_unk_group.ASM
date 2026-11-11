@@ -14,8 +14,8 @@ extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _sprite1_unknown2
-public _sprite_1_unk
-public _sprite_1_unk3
+public _drawrect
+public _sprite_blit_dither_phase
 ; -----------------------------------------------------------------------------
 ; Purpose: Apply the legacy sprite-1 operation exposed at this entry.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -140,7 +140,7 @@ _sprite1_unknown2 endp
 ; ASMDOC(font_shapes) Segment from sprite1+2 and line table offsets establish destination; bitmap offset word is
 ; unused. Width
 ; ASMDOC(font_shapes) 1 has separate byte-only loop; odd wider rows append one byte.
-_sprite_1_unk proc far
+_drawrect proc far
     arg_x = word ptr 6
     arg_y = word ptr 8
     arg_width = word ptr 10
@@ -244,7 +244,7 @@ sprite_run_post_skip_by_phase     db 03h
     mov     ax, [bp+0Eh]
     jmp     short sprite_1_unk3_when_condition
     even ; word-align the following entry
-_sprite_1_unk endp
+_drawrect endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite 1 unk3.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -288,7 +288,7 @@ _sprite_1_unk endp
 ; ASMDOC(font_shapes) No clip/window checks. Unlabelled prologue at original line 166 uses explicit x at
 ; [BP+12],y at [BP+14],
 ; ASMDOC(font_shapes) with phase still [BP+10], and joins the same core.
-_sprite_1_unk3 proc far
+_sprite_blit_dither_phase proc far
     var_16 = word ptr -22
     var_14 = word ptr -20
     var_12 = word ptr -18
@@ -392,6 +392,6 @@ sprite_1_unk3_when_not_below:
     mov     sp, bp
     pop     bp
     retf
-_sprite_1_unk3 endp
+_sprite_blit_dither_phase endp
 S012_TEXT ends
 end

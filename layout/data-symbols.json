@@ -110,7 +110,7 @@
       "basis": "pinned dseg.asm places label primidxcounttab at 0x32f2 (line 14230), not at 0x9284",
       "dgroup_offset": "0x9284",
       "now": "_transshapenumvertscopy",
-      "old": "_primidxcounttab",
+      "old": "_NP",
       "rederived_at": 191074
     },
     {
@@ -227,6 +227,42 @@
   "symbols": {
     "_HKeyFlag": {
       "load_address": 178420,
+      "storage": "initialized"
+    },
+    "_NP": {
+      "load_address": 191074,
+      "reference_declaration_line": 14230,
+      "reference_label": "primidxcounttab",
+      "reference_use_line": 646,
+      "reference_use_path": "src/restunts/asmorig/seg006.asm",
+      "reference_use_proc": "transformed_shape_op",
+      "references": [
+        {
+          "hex": "8a87f232",
+          "operand_offset": 2,
+          "start": 86588
+        }
+      ],
+      "storage": "initialized",
+      "width": 16,
+      "width_provenance": "reference-label-span: dseg.asm:14230-14246"
+    },
+    "_PT": {
+      "clone_of": "_byte_2EA72",
+      "load_address": 191090,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
+    "_ReplayName": {
+      "clone_of": "_byte_3B8B0",
+      "load_address": 178352,
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
+    "_TerName": {
+      "clone_of": "_aDesert",
+      "load_address": 178362,
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
       "storage": "initialized"
     },
     "__ctype": {
@@ -1698,12 +1734,6 @@
       ],
       "storage": "initialized"
     },
-    "_aDefault_1": {
-      "clone_of": "_byte_3B8B0",
-      "load_address": 178352,
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_aDer": {
       "load_address": 191501,
       "reference_declaration_line": 14539,
@@ -2017,24 +2047,6 @@
         }
       ],
       "storage": "initialized"
-    },
-    "_aExitListOverflow": {
-      "load_address": 194384,
-      "reference_declaration_line": 17275,
-      "reference_label": "aExitListOverflow",
-      "reference_use_line": 2949,
-      "reference_use_path": "src/restunts/asmorig/seg012.asm",
-      "reference_use_proc": "add_exit_handler",
-      "references": [
-        {
-          "hex": "b8e03f",
-          "operand_offset": 1,
-          "start": 130623
-        }
-      ],
-      "storage": "initialized",
-      "width": 22,
-      "width_provenance": "reference-label-span: dseg.asm:17275-17297"
     },
     "_aExp0_0": {
       "load_address": 190157,
@@ -3176,19 +3188,6 @@
       ],
       "storage": "initialized"
     },
-    "_aMemoryManagerB": {
-      "load_address": 196339,
-      "references": [
-        {
-          "hex": "08b88347",
-          "operand_offset": 2,
-          "start": 136346
-        }
-      ],
-      "storage": "initialized",
-      "width": 46,
-      "width_provenance": "reference-label-span: dseg.asm:19117-19163"
-    },
     "_aMen": {
       "load_address": 191582,
       "reference_declaration_line": 14620,
@@ -3594,19 +3593,6 @@
         }
       ],
       "storage": "initialized"
-    },
-    "_aNoRoomLeftOnTimerInterru": {
-      "load_address": 194732,
-      "references": [
-        {
-          "hex": "b83c41",
-          "operand_offset": 1,
-          "start": 131774
-        }
-      ],
-      "storage": "initialized",
-      "width": 46,
-      "width_provenance": "reference-label-span: dseg.asm:17605-17651"
     },
     "_aOhht": {
       "load_address": 198409,
@@ -4069,78 +4055,6 @@
         }
       ],
       "storage": "initialized"
-    },
-    "_aReservememoryO": {
-      "load_address": 196288,
-      "reference_declaration_line": 19066,
-      "reference_label": "aReservememoryO",
-      "reference_use_line": 5846,
-      "reference_use_path": "src/restunts/asmorig/seg012.asm",
-      "reference_use_proc": "mmgr_alloc_pages",
-      "references": [
-        {
-          "hex": "b85047",
-          "operand_offset": 1,
-          "start": 135865
-        }
-      ],
-      "storage": "initialized",
-      "width": 51,
-      "width_provenance": "reference-label-span: dseg.asm:19066-19117"
-    },
-    "_aReservememoryOutOfMemory": {
-      "load_address": 196232,
-      "reference_declaration_line": 19010,
-      "reference_label": "aReservememoryOutOfMemory",
-      "reference_use_line": 5868,
-      "reference_use_path": "src/restunts/asmorig/seg012.asm",
-      "reference_use_proc": "mmgr_alloc_pages",
-      "references": [
-        {
-          "hex": "b81847",
-          "operand_offset": 1,
-          "start": 135924
-        }
-      ],
-      "storage": "initialized",
-      "width": 56,
-      "width_provenance": "reference-label-span: dseg.asm:19010-19066"
-    },
-    "_aResizememoryCa": {
-      "load_address": 196385,
-      "reference_declaration_line": 19163,
-      "reference_label": "aResizememoryCa",
-      "reference_use_line": 6382,
-      "reference_use_path": "src/restunts/asmorig/seg012.asm",
-      "reference_use_proc": "mmgr_resize_memory",
-      "references": [
-        {
-          "hex": "b8b147",
-          "operand_offset": 1,
-          "start": 136948
-        }
-      ],
-      "storage": "initialized",
-      "width": 48,
-      "width_provenance": "reference-label-span: dseg.asm:19163-19211"
-    },
-    "_aResizememoryNo": {
-      "load_address": 196433,
-      "reference_declaration_line": 19211,
-      "reference_label": "aResizememoryNo",
-      "reference_use_line": 6402,
-      "reference_use_path": "src/restunts/asmorig/seg012.asm",
-      "reference_use_proc": "mmgr_resize_memory",
-      "references": [
-        {
-          "hex": "b8e147",
-          "operand_offset": 1,
-          "start": 137001
-        }
-      ],
-      "storage": "initialized",
-      "width": 49,
-      "width_provenance": "reference-label-span: dseg.asm:19211-19260"
     },
     "_aRide": {
       "load_address": 198394,
@@ -5757,11 +5671,42 @@
       ],
       "storage": "initialized"
     },
-    "_ahead_tables": {
-      "clone_of": "_lookahead_tiles_tables",
-      "load_address": 180356,
+    "_active_ui_dirty_rect": {
+      "clone_of": "_rectptr_unk2",
+      "load_address": 178184,
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "storage": "initialized"
+    },
+    "_adderr": {
+      "load_address": 194732,
+      "references": [
+        {
+          "hex": "b83c41",
+          "operand_offset": 1,
+          "start": 131774
+        }
+      ],
+      "storage": "initialized",
+      "width": 46,
+      "width_provenance": "reference-label-span: dseg.asm:17605-17651"
+    },
+    "_addexiterr": {
+      "load_address": 194384,
+      "reference_declaration_line": 17275,
+      "reference_label": "aExitListOverflow",
+      "reference_use_line": 2949,
+      "reference_use_path": "src/restunts/asmorig/seg012.asm",
+      "reference_use_proc": "add_exit_handler",
+      "references": [
+        {
+          "hex": "b8e03f",
+          "operand_offset": 1,
+          "start": 130623
+        }
+      ],
+      "storage": "initialized",
+      "width": 22,
+      "width_provenance": "reference-label-span: dseg.asm:17275-17297"
     },
     "_ancv2": {
       "clone_of": "_word_32CC0",
@@ -6458,6 +6403,19 @@
         }
       ],
       "storage": "initialized"
+    },
+    "_blknotfound": {
+      "load_address": 196339,
+      "references": [
+        {
+          "hex": "08b88347",
+          "operand_offset": 2,
+          "start": 136346
+        }
+      ],
+      "storage": "initialized",
+      "width": 46,
+      "width_provenance": "reference-label-span: dseg.asm:19117-19163"
     },
     "_block_audio_num": {
       "clone_of": "_byte_44290",
@@ -8018,6 +7976,12 @@
       "load_address": 178421,
       "storage": "initialized"
     },
+    "_camlen": {
+      "clone_of": "_custom_camera_distance",
+      "load_address": 178412,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
     "_cammd": {
       "clone_of": "_cameramode",
       "load_address": 178421,
@@ -8058,6 +8022,14 @@
       "storage": "initialized",
       "width": 6,
       "width_provenance": "reference-label-span: dseg.asm:2443-2449"
+    },
+    "_car_menu_clip_rect": {
+      "clone_of": "_rect_unk16",
+      "load_address": 179030,
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "storage": "initialized",
+      "width": 8,
+      "width_provenance": "reference-label-span: dseg.asm:2435-2443"
     },
     "_car_rotate_xc": {
       "clone_of": "_pState_minusRotate_y_2",
@@ -8268,30 +8240,6 @@
       ],
       "storage": "initialized"
     },
-    "_clipunk": {
-      "clone_of": "_cliprect_unk",
-      "load_address": 191236,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
-    "_collision_point_set_a": {
-      "clone_of": "_unk_3BD5A",
-      "load_address": 179546,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
-    "_collision_point_set_b": {
-      "clone_of": "_unk_3BD62",
-      "load_address": 179554,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
-    "_collision_point_set_c": {
-      "clone_of": "_unk_3BD6A",
-      "load_address": 179562,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_collision_point_x_signs": {
       "clone_of": "_word_3BE04",
       "load_address": 179716,
@@ -8301,12 +8249,6 @@
     "_collision_point_y_signs": {
       "clone_of": "_word_3BE0C",
       "load_address": 179724,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
-    "_collision_rotation_offsets": {
-      "clone_of": "_word_3BD72",
-      "load_address": 179570,
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized"
     },
@@ -8618,12 +8560,6 @@
       "load_address": 178416,
       "storage": "initialized"
     },
-    "_custom_dist": {
-      "clone_of": "_custom_camera_distance",
-      "load_address": 178412,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_custom_elev_angle": {
       "clone_of": "_custom_camera_elevation_angle",
       "load_address": 178416,
@@ -8922,12 +8858,6 @@
       "load_address": 178426,
       "storage": "initialized"
     },
-    "_detail_lvl": {
-      "clone_of": "_byte_18a",
-      "load_address": 178426,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_detail_threshold_by_level": {
       "load_address": 180380,
       "storage": "initialized"
@@ -8954,7 +8884,7 @@
       "load_address": 198602,
       "storage": "initialized"
     },
-    "_dialogarg2": {
+    "_dialog_frame_color": {
       "load_address": 198658,
       "storage": "initialized"
     },
@@ -9043,6 +8973,12 @@
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
+    "_empty_rectangle": {
+      "clone_of": "_cliprect_unk",
+      "load_address": 191236,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
     "_end_hiscore_random": {
       "load_address": 200002,
       "storage": "bss"
@@ -9066,6 +9002,12 @@
       "storage": "bss",
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:38052-38053"
+    },
+    "_eng2": {
+      "clone_of": "_unk_3E82C",
+      "load_address": 190508,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
     },
     "_engdata": {
       "clone_of": "_engptr",
@@ -9104,6 +9046,42 @@
       "storage": "initialized",
       "width": 44,
       "width_provenance": "reference-label-span: dseg.asm:17253-17275"
+    },
+    "_exmemerr": {
+      "load_address": 196433,
+      "reference_declaration_line": 19211,
+      "reference_label": "aResizememoryNo",
+      "reference_use_line": 6402,
+      "reference_use_path": "src/restunts/asmorig/seg012.asm",
+      "reference_use_proc": "mmgr_resize_memory",
+      "references": [
+        {
+          "hex": "b8e147",
+          "operand_offset": 1,
+          "start": 137001
+        }
+      ],
+      "storage": "initialized",
+      "width": 49,
+      "width_provenance": "reference-label-span: dseg.asm:19211-19260"
+    },
+    "_expanderr": {
+      "load_address": 196385,
+      "reference_declaration_line": 19163,
+      "reference_label": "aResizememoryCa",
+      "reference_use_line": 6382,
+      "reference_use_path": "src/restunts/asmorig/seg012.asm",
+      "reference_use_proc": "mmgr_resize_memory",
+      "references": [
+        {
+          "hex": "b8b147",
+          "operand_offset": 1,
+          "start": 136948
+        }
+      ],
+      "storage": "initialized",
+      "width": 48,
+      "width_provenance": "reference-label-span: dseg.asm:19163-19211"
     },
     "_exwd": {
       "clone_of": "_sdgame2_widths",
@@ -9459,6 +9437,12 @@
       "load_address": 216904,
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
+    },
+    "_full_screen_rectangle": {
+      "clone_of": "_rect_unk5",
+      "load_address": 180372,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized"
     },
     "_fullclip": {
       "clone_of": "_cliprect_unk",
@@ -10190,6 +10174,78 @@
       ],
       "storage": "initialized"
     },
+    "_game_change_view_x1": {
+      "load_address": 191056,
+      "reference_declaration_line": 14216,
+      "reference_label": "gameunk_button_x1",
+      "reference_use_line": 4001,
+      "reference_use_path": "src/restunts/asmorig/seg005.asm",
+      "reference_use_proc": "loop_game",
+      "references": [
+        {
+          "hex": "b8e032",
+          "operand_offset": 1,
+          "start": 82148
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14216-14217"
+    },
+    "_game_change_view_x2": {
+      "load_address": 191058,
+      "reference_declaration_line": 14217,
+      "reference_label": "gameunk_button_x2",
+      "reference_use_line": 3999,
+      "reference_use_path": "src/restunts/asmorig/seg005.asm",
+      "reference_use_proc": "loop_game",
+      "references": [
+        {
+          "hex": "b8e232",
+          "operand_offset": 1,
+          "start": 82144
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14217-14218"
+    },
+    "_game_change_view_y1": {
+      "load_address": 191060,
+      "reference_declaration_line": 14218,
+      "reference_label": "gameunk_button_y1",
+      "reference_use_line": 3997,
+      "reference_use_path": "src/restunts/asmorig/seg005.asm",
+      "reference_use_proc": "loop_game",
+      "references": [
+        {
+          "hex": "b8e432",
+          "operand_offset": 1,
+          "start": 82140
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14218-14219"
+    },
+    "_game_change_view_y2": {
+      "load_address": 191062,
+      "reference_declaration_line": 14219,
+      "reference_label": "gameunk_button_y2",
+      "reference_use_line": 3995,
+      "reference_use_path": "src/restunts/asmorig/seg005.asm",
+      "reference_use_proc": "loop_game",
+      "references": [
+        {
+          "hex": "b8e632",
+          "operand_offset": 1,
+          "start": 82136
+        }
+      ],
+      "storage": "initialized",
+      "width": 2,
+      "width_provenance": "reference-label-span: dseg.asm:14219-14220"
+    },
     "_game_rect_txt_in": {
       "clone_of": "_rect_ingame_text",
       "load_address": 221566,
@@ -10345,78 +10401,6 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:35352-35353"
     },
-    "_gameunk_button_x1": {
-      "load_address": 191056,
-      "reference_declaration_line": 14216,
-      "reference_label": "gameunk_button_x1",
-      "reference_use_line": 4001,
-      "reference_use_path": "src/restunts/asmorig/seg005.asm",
-      "reference_use_proc": "loop_game",
-      "references": [
-        {
-          "hex": "b8e032",
-          "operand_offset": 1,
-          "start": 82148
-        }
-      ],
-      "storage": "initialized",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:14216-14217"
-    },
-    "_gameunk_button_x2": {
-      "load_address": 191058,
-      "reference_declaration_line": 14217,
-      "reference_label": "gameunk_button_x2",
-      "reference_use_line": 3999,
-      "reference_use_path": "src/restunts/asmorig/seg005.asm",
-      "reference_use_proc": "loop_game",
-      "references": [
-        {
-          "hex": "b8e232",
-          "operand_offset": 1,
-          "start": 82144
-        }
-      ],
-      "storage": "initialized",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:14217-14218"
-    },
-    "_gameunk_button_y1": {
-      "load_address": 191060,
-      "reference_declaration_line": 14218,
-      "reference_label": "gameunk_button_y1",
-      "reference_use_line": 3997,
-      "reference_use_path": "src/restunts/asmorig/seg005.asm",
-      "reference_use_proc": "loop_game",
-      "references": [
-        {
-          "hex": "b8e432",
-          "operand_offset": 1,
-          "start": 82140
-        }
-      ],
-      "storage": "initialized",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:14218-14219"
-    },
-    "_gameunk_button_y2": {
-      "load_address": 191062,
-      "reference_declaration_line": 14219,
-      "reference_label": "gameunk_button_y2",
-      "reference_use_line": 3995,
-      "reference_use_path": "src/restunts/asmorig/seg005.asm",
-      "reference_use_proc": "loop_game",
-      "references": [
-        {
-          "hex": "b8e632",
-          "operand_offset": 1,
-          "start": 82136
-        }
-      ],
-      "storage": "initialized",
-      "width": 2,
-      "width_provenance": "reference-label-span: dseg.asm:14219-14220"
-    },
     "_gear_knob_x_last": {
       "clone_of": "_word_40D70",
       "load_address": 200048,
@@ -10487,6 +10471,12 @@
       "width": 24,
       "width_provenance": "reference-label-span: dseg.asm:22109-22115"
     },
+    "_gravity": {
+      "clone_of": "_word_3BD72",
+      "load_address": 179570,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
     "_ground_skybox": {
       "clone_of": "_skybox_grd_color",
       "load_address": 215688,
@@ -10516,6 +10506,12 @@
       "storage": "bss",
       "width": 60,
       "width_provenance": "reference-label-span: dseg.asm:33870-33900"
+    },
+    "_headingzones": {
+      "clone_of": "_lookahead_tiles_tables",
+      "load_address": 180356,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized"
     },
     "_height_above_replaybar": {
       "load_address": 219604,
@@ -10684,14 +10680,6 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized",
       "width": 36
-    },
-    "_hillconsts": {
-      "clone_of": "_hillHeightConsts",
-      "load_address": 178408,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized",
-      "width": 4,
-      "width_provenance": "reference-label-span: dseg.asm:1870-1872"
     },
     "_hillhgts": {
       "clone_of": "_hillHeightConsts",
@@ -10946,6 +10934,10 @@
     },
     "_input_framecounter": {
       "load_address": 191422,
+      "storage": "initialized"
+    },
+    "_input_pushed": {
+      "load_address": 194702,
       "storage": "initialized"
     },
     "_input_status_stack_depth": {
@@ -11334,6 +11326,10 @@
       "width": 2,
       "width_provenance": "reference-label-span: dseg.asm:14465-14466"
     },
+    "_joystick_enabled": {
+      "load_address": 196096,
+      "storage": "initialized"
+    },
     "_kb_readchar_callback": {
       "fields": [
         {
@@ -11403,7 +11399,7 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized"
     },
-    "_line_input_screen_rect": {
+    "_line_input_font_header": {
       "clone_of": "_word_405FE",
       "load_address": 198142,
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
@@ -12497,8 +12493,8 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized"
     },
-    "_mouse_isdirty": {
-      "load_address": 178425,
+    "_mouse_enabled": {
+      "load_address": 178418,
       "storage": "initialized"
     },
     "_mouse_oldbut": {
@@ -12710,6 +12706,14 @@
       "load_address": 197402,
       "storage": "initialized"
     },
+    "_mouseonscreen": {
+      "load_address": 178425,
+      "storage": "initialized"
+    },
+    "_mouseshown": {
+      "load_address": 197404,
+      "storage": "initialized"
+    },
     "_mouseunkspriteptr": {
       "load_address": 218568,
       "storage": "bss",
@@ -12874,6 +12878,42 @@
       "load_address": 219646,
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
+    },
+    "_noblkerr": {
+      "load_address": 196288,
+      "reference_declaration_line": 19066,
+      "reference_label": "aReservememoryO",
+      "reference_use_line": 5846,
+      "reference_use_path": "src/restunts/asmorig/seg012.asm",
+      "reference_use_proc": "mmgr_alloc_pages",
+      "references": [
+        {
+          "hex": "b85047",
+          "operand_offset": 1,
+          "start": 135865
+        }
+      ],
+      "storage": "initialized",
+      "width": 51,
+      "width_provenance": "reference-label-span: dseg.asm:19066-19117"
+    },
+    "_nomemerr": {
+      "load_address": 196232,
+      "reference_declaration_line": 19010,
+      "reference_label": "aReservememoryOutOfMemory",
+      "reference_use_line": 5868,
+      "reference_use_path": "src/restunts/asmorig/seg012.asm",
+      "reference_use_proc": "mmgr_alloc_pages",
+      "references": [
+        {
+          "hex": "b81847",
+          "operand_offset": 1,
+          "start": 135924
+        }
+      ],
+      "storage": "initialized",
+      "width": 56,
+      "width_provenance": "reference-label-span: dseg.asm:19010-19066"
     },
     "_numid": {
       "clone_of": "_byte_44346",
@@ -13156,12 +13196,6 @@
     "_oppnentSped": {
       "load_address": 216400,
       "storage": "bss"
-    },
-    "_opponent_engine_profile": {
-      "clone_of": "_unk_3E82C",
-      "load_address": 190508,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
     },
     "_opponent_pointc": {
       "clone_of": "_data_3493C",
@@ -13633,6 +13667,12 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:36211-36212"
     },
+    "_pointsizeinfo": {
+      "clone_of": "_unk_3BD6A",
+      "load_address": 179562,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
     "_poly_cursor1": {
       "clone_of": "_poly_linklist_40ED6_iter1",
       "load_address": 211278,
@@ -13838,30 +13878,6 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:17566-17567"
     },
-    "_primidxcounttab": {
-      "load_address": 191074,
-      "reference_declaration_line": 14230,
-      "reference_label": "primidxcounttab",
-      "reference_use_line": 646,
-      "reference_use_path": "src/restunts/asmorig/seg006.asm",
-      "reference_use_proc": "transformed_shape_op",
-      "references": [
-        {
-          "hex": "8a87f232",
-          "operand_offset": 2,
-          "start": 86588
-        }
-      ],
-      "storage": "initialized",
-      "width": 16,
-      "width_provenance": "reference-label-span: dseg.asm:14230-14246"
-    },
-    "_primitive_type_table": {
-      "clone_of": "_byte_2EA72",
-      "load_address": 191090,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_projection_center_x": {
       "load_address": 197558,
       "storage": "initialized"
@@ -13959,111 +13975,111 @@
       "width_provenance": "reference-label-span: dseg.asm:31196-31226"
     },
     "_race_stats": {
-      "load_address": 213832,
-      "storage": "bss",
-      "width": 22,
       "fields": [
         {
           "offset": 0,
-          "width": 2,
           "reference": {
-            "start": 13653,
             "hex": "ff36d88b",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 13653
+          },
+          "width": 2
         },
         {
           "offset": 2,
-          "width": 2,
           "reference": {
-            "start": 13649,
             "hex": "ff36da8b",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 13649
+          },
+          "width": 2
         },
         {
           "offset": 4,
-          "width": 2,
           "reference": {
-            "start": 14483,
             "hex": "0306dc8b",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 14483
+          },
+          "width": 2
         },
         {
           "offset": 6,
-          "width": 2,
           "reference": {
-            "start": 12919,
             "hex": "833ede8b00",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 12919
+          },
+          "width": 2
         },
         {
           "offset": 8,
-          "width": 2,
           "reference": {
-            "start": 13237,
             "hex": "833ee08b00",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 13237
+          },
+          "width": 2
         },
         {
           "offset": 10,
-          "width": 2,
           "reference": {
-            "start": 13584,
             "hex": "a1e28b",
-            "operand_offset": 1
-          }
+            "operand_offset": 1,
+            "start": 13584
+          },
+          "width": 2
         },
         {
           "offset": 12,
-          "width": 2,
           "reference": {
-            "start": 13587,
             "hex": "3906e48b",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 13587
+          },
+          "width": 2
         },
         {
           "offset": 14,
-          "width": 2,
           "reference": {
-            "start": 12936,
             "hex": "2b06e68b",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 12936
+          },
+          "width": 2
         },
         {
           "offset": 16,
-          "width": 2,
           "reference": {
-            "start": 13795,
             "hex": "833ee88b00",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 13795
+          },
+          "width": 2
         },
         {
           "offset": 18,
-          "width": 2,
           "reference": {
-            "start": 14002,
             "hex": "a1ea8b",
-            "operand_offset": 1
-          }
+            "operand_offset": 1,
+            "start": 14002
+          },
+          "width": 2
         },
         {
           "offset": 20,
-          "width": 2,
           "reference": {
-            "start": 14121,
             "hex": "833eec8b00",
-            "operand_offset": 2
-          }
+            "operand_offset": 2,
+            "start": 14121
+          },
+          "width": 2
         }
       ],
-      "name_provenance": "Scratch aggregate binding: 11 consecutive word starts, each tied to a decoded unrelocated original operand; full 22-byte extent also matches the GAMESTATE_SNAPSHOT tentative definition and communal unit."
+      "load_address": 213832,
+      "name_provenance": "Scratch aggregate binding: 11 consecutive word starts, each tied to a decoded unrelocated original operand; full 22-byte extent also matches the GAMESTATE_SNAPSHOT tentative definition and communal unit.",
+      "storage": "bss",
+      "width": 22
     },
     "_randomseeds": {
       "clone_of": "_g_kevinrandom_seed",
@@ -14109,24 +14125,12 @@
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
-    "_rcpunk2": {
-      "clone_of": "_rectptr_unk2",
-      "load_address": 178184,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_rcunk": {
       "clone_of": "_rect_unk",
       "load_address": 215556,
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "storage": "bss",
       "width": 120
-    },
-    "_rcunk5": {
-      "clone_of": "_rect_unk5",
-      "load_address": 180372,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized"
     },
     "_readchar_callback_ofs": {
       "load_address": 196092,
@@ -14351,14 +14355,6 @@
       "width": 8,
       "width_provenance": "reference-label-span: dseg.asm:31231-31239"
     },
-    "_rectangle_unknown16": {
-      "clone_of": "_rect_unk16",
-      "load_address": 179030,
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
-      "storage": "initialized",
-      "width": 8,
-      "width_provenance": "reference-label-span: dseg.asm:2435-2443"
-    },
     "_rectarr": {
       "clone_of": "_data_3554C",
       "load_address": 218444,
@@ -14432,6 +14428,12 @@
       "storage": "bss",
       "width": 14,
       "width_provenance": "reference-label-span: dseg.asm:35332-35346"
+    },
+    "_renderlevel": {
+      "clone_of": "_byte_18a",
+      "load_address": 178426,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized"
     },
     "_replay_axis_magnitude": {
       "clone_of": "_byte_3E85C",
@@ -14781,12 +14783,6 @@
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
-    "_scenery_names": {
-      "clone_of": "_aDesert",
-      "load_address": 178362,
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_sceneshapes2": {
       "load_address": 189386,
       "reference_declaration_line": 12711,
@@ -14955,6 +14951,12 @@
       "width": 8,
       "width_provenance": "reference-label-span: dseg.asm:22254-22262"
     },
+    "_sfpostsizeinfo": {
+      "clone_of": "_unk_3BD62",
+      "load_address": 179554,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
     "_sfx_audio_vol": {
       "clone_of": "_byte_45948",
       "load_address": 219464,
@@ -15021,15 +15023,17 @@
       "load_address": 215455,
       "storage": "bss"
     },
-    "_showmouse": {
-      "load_address": 197404,
-      "storage": "initialized"
-    },
     "_sigframe": {
       "clone_of": "_byte_449DA",
       "load_address": 215514,
       "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
+    },
+    "_signsizeinfo": {
+      "clone_of": "_unk_3BD5A",
+      "load_address": 179546,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "storage": "initialized"
     },
     "_simd_opp": {
       "clone_of": "_simd_opponent",
@@ -16330,6 +16334,14 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:40235-40236"
     },
+    "_terheight": {
+      "clone_of": "_hillHeightConsts",
+      "load_address": 178408,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:1870-1872"
+    },
     "_terrConnDataEtoW": {
       "load_address": 190250,
       "reference_declaration_line": 13506,
@@ -16565,7 +16577,7 @@
       "load_address": 198136,
       "storage": "initialized"
     },
-    "_timer_copy_unk": {
+    "_timer_deadline_ticks": {
       "load_address": 198134,
       "storage": "initialized",
       "width": 4,
@@ -22251,18 +22263,6 @@
       "storage": "initialized",
       "width": 2,
       "width_provenance": "reference-label-span: dseg.asm:18204-18205"
-    },
-    "_mouse_enabled": {
-      "load_address": 178418,
-      "storage": "initialized"
-    },
-    "_joystick_enabled": {
-      "load_address": 196096,
-      "storage": "initialized"
-    },
-    "_input_pushed": {
-      "load_address": 194702,
-      "storage": "initialized"
     }
   }
 }

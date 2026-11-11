@@ -14,12 +14,12 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _nopsub_33DBE
-public _shape2d_op_unknown5
-public _shape2d_op_unk
-public _nopsub_33E90
-public _shape2d_op_unk2
-public _shape2d_op_unk3
+public _shape2d_blit_rle_hotspot
+public _shape2d_blit_rle_at
+public _shape2d_blit_rle
+public _shape2d_blit_rle_clip_hotspot
+public _shape2d_blit_rle_clipped_at
+public _shape2d_blit_rle_clipped
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33DBE.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -68,7 +68,7 @@ public _shape2d_op_unk3
 ; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance
 ; past declared
 ; ASMDOC(font_shapes) height until a zero packet.
-_nopsub_33DBE proc far
+_shape2d_blit_rle_hotspot proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -92,7 +92,7 @@ _nopsub_33DBE proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_op_unk_shared_exit
     even ; word-align the following entry
-_nopsub_33DBE endp
+_shape2d_blit_rle_hotspot endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Process the fifth 2D shape operation.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -137,7 +137,7 @@ _nopsub_33DBE endp
 ; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance
 ; past declared
 ; ASMDOC(font_shapes) height until a zero packet.
-_shape2d_op_unknown5 proc far
+_shape2d_blit_rle_at proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -159,7 +159,7 @@ _shape2d_op_unknown5 proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_op_unk_shared_exit ; goto shape2d_op_unk3
     even ; word-align the following entry
-_shape2d_op_unknown5 endp
+_shape2d_blit_rle_at endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Process a 2D shape operation.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 8);
@@ -203,7 +203,7 @@ _shape2d_op_unknown5 endp
 ; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance
 ; past declared
 ; ASMDOC(font_shapes) height until a zero packet.
-_shape2d_op_unk proc far
+_shape2d_blit_rle proc far
     local_row_table_cursor = word ptr -16
     local_source_cursor = word ptr -14
     local_source_width = word ptr -6
@@ -290,7 +290,7 @@ shape_op_unk_when_greater_3:
     loop    shape_op_unk_copy_loop
     jmp     short shape_op_unk_read_loop
     db 0 ; retained zero fill at this boundary
-_shape2d_op_unk endp
+_shape2d_blit_rle endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33E90.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -343,7 +343,7 @@ _shape2d_op_unk endp
 ; ASMDOC(font_shapes) already-built compatible frame. Otherwise source skips account for top/left/right clipping
 ; across packet
 ; ASMDOC(font_shapes) boundaries.
-_nopsub_33E90 proc far
+_shape2d_blit_rle_clip_hotspot proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -367,7 +367,7 @@ _nopsub_33E90 proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_op_unk3_shared_exit
     even ; word-align the following entry
-_nopsub_33E90 endp
+_shape2d_blit_rle_clip_hotspot endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Process a 2D shape operation variant.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -416,7 +416,7 @@ _nopsub_33E90 endp
 ; ASMDOC(font_shapes) already-built compatible frame. Otherwise source skips account for top/left/right clipping
 ; across packet
 ; ASMDOC(font_shapes) boundaries.
-_shape2d_op_unk2 proc far
+_shape2d_blit_rle_clipped_at proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -438,7 +438,7 @@ _shape2d_op_unk2 proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_op_unk3_shared_exit ; goto somewhere inside shape2d_op_unk3
     even ; word-align the following entry
-_shape2d_op_unk2 endp
+_shape2d_blit_rle_clipped_at endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Process a 2D shape operation variant.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shape2dofs (word ptr 6);
@@ -487,7 +487,7 @@ _shape2d_op_unk2 endp
 ; ASMDOC(font_shapes) already-built compatible frame. Otherwise source skips account for top/left/right clipping
 ; across packet
 ; ASMDOC(font_shapes) boundaries.
-_shape2d_op_unk3 proc far
+_shape2d_blit_rle_clipped proc far
     var_10 = word ptr -16
     var_E = word ptr -14
     var_C = word ptr -12
@@ -711,6 +711,6 @@ shape_op_unk3_when_less_7:
     xor     ch, ch
     jmp     short shape_op_unk3_scan_loop_3
     db 0 ; retained zero fill at this boundary
-_shape2d_op_unk3 endp
+_shape2d_blit_rle_clipped endp
 S012_TEXT ends
 end

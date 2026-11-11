@@ -3,8 +3,8 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_polradius2d",
-        "_polarRadius3D"
+        "_inthypot",
+        "_int3dhypot"
       ],
       "groups": [
         {
@@ -24,7 +24,7 @@
       ],
       "publics": [
         {
-          "name": "_polarRadius3D",
+          "name": "_int3dhypot",
           "offset": 0,
           "segment": "UNIT_TEXT"
         }
@@ -103,7 +103,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_polradius2d",
+      "frame": "_inthypot",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -111,7 +111,7 @@
       "offset": 24,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_polradius2d",
+      "target": "_inthypot",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -120,7 +120,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_polradius2d",
+      "frame": "_inthypot",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -128,7 +128,7 @@
       "offset": 15,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_polradius2d",
+      "target": "_inthypot",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -152,8 +152,8 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_polradius2d",
-      "_polarRadius3D"
+      "_inthypot",
+      "_int3dhypot"
     ],
     "groups": [
       {
@@ -173,7 +173,7 @@
     ],
     "publics": [
       {
-        "name": "_polarRadius3D",
+        "name": "_int3dhypot",
         "offset": 0,
         "segment": "UNIT_TEXT"
       }
@@ -254,7 +254,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "public": "_polarRadius3D",
+  "public": "_int3dhypot",
   "source": "src/polarRadius3D.c",
   "stable_id": "load_1ea08",
   "start": 125448,

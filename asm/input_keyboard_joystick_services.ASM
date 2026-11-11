@@ -81,16 +81,16 @@ public _callbackflags2
 public _set_bios_mode3
 public _kb_parse_key
 public _kb_reg_callback
-public _nopsub_304AF
-public _nopsub_304B6
+public _kb_clear_key_callback
+public _input_read_char_or_joystick
 public _kb_get_char
 public _get_kb_or_joy_flags
-public _nopsub_305C8
+public _input_get_action_buttons
 public _get_joy_flags
 public _reset_joystick_selection
 public _joystick_flags_to_index
 public _replay_axis_value
-public _nopsub_307FA
+public _joystick_scale_saved_y
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by set bios mode3.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -310,14 +310,14 @@ _kb_reg_callback endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_304AF proc far
+_kb_clear_key_callback proc far
     push    bp
     mov     bp, sp
     xor     ax, ax
 ; INPUTDOC Shared tail pops this routine BP and RETFs using its own caller frame.
     jmp     short store_callback_flags
 
-_nopsub_304AF endp
+_kb_clear_key_callback endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 304B6. Its internal flow uses return_empty_key_char,
 ; poll_joystick_for_character.
@@ -346,7 +346,7 @@ _nopsub_304AF endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_304B6 proc far
+_input_read_char_or_joystick proc far
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
 ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
@@ -404,7 +404,7 @@ start_key_repeat_delay:
     mov     joystick_repeat_current_key, ax
     jmp     short return_when_key_unchanged
 
-_nopsub_304B6 endp
+_input_read_char_or_joystick endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read a character from the BIOS keyboard buffer.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
@@ -560,7 +560,7 @@ _get_kb_or_joy_flags endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_305C8 proc far
+_input_get_action_buttons proc far
     xor     cx, cx
     xor     bx, bx
     mov     bl, _kbscancodes
@@ -586,7 +586,7 @@ return_combined_input_flags:
     or      ax, cx
     retf
 
-_nopsub_305C8 endp
+_input_get_action_buttons endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read and normalize the game-port joystick button and axis state.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -951,7 +951,7 @@ _replay_axis_value endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_307FA proc far
+_joystick_scale_saved_y proc far
     mov     ax, _joyflag2
     sub     ax, joystick_y_minimum
     jge     short scale_replayed_y_axis
@@ -963,6 +963,6 @@ scale_replayed_y_axis:
     sub     ax, 1Fh
     retf
     db 0 ; retained zero fill at this boundary
-_nopsub_307FA endp
+_joystick_scale_saved_y endp
 S012_TEXT ends
 end

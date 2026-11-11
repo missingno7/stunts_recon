@@ -207,7 +207,7 @@
       "offset": 116,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_timer_copy_unk",
+      "target": "_timer_deadline_ticks",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -330,13 +330,13 @@
     },
     {
       "name": "nopsub_kb_set_readchar_callback",
-      "public": "_nopsub_kb_set_readchar_callbac",
+      "public": "_kb_set_readchar_callback",
       "stable_id": "load_20a44",
       "start": 133700
     },
     {
       "name": "nopsub_kb_get_readchar_callback",
-      "public": "_nopsub_kb_get_readchar_callbac",
+      "public": "_kb_get_readchar_callback",
       "stable_id": "load_20a55",
       "start": 133717
     },
@@ -354,13 +354,13 @@
     },
     {
       "name": "nopsub_30A77",
-      "public": "_nopsub_30A77",
+      "public": "_kb_read_until_deadline",
       "stable_id": "load_20a77",
       "start": 133751
     },
     {
       "name": "nopsub_30A97",
-      "public": "_nopsub_30A97",
+      "public": "_kb_read_with_timeout",
       "stable_id": null,
       "start": 133783
     }
@@ -384,7 +384,7 @@
     "externals": [
       "_timer_copy_target_high",
       "_timer_get_counter",
-      "_timer_copy_unk"
+      "_timer_deadline_ticks"
     ],
     "groups": [
       {
@@ -409,33 +409,23 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_30A77",
-        "offset": 91,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_30A97",
-        "offset": 123,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_flush_stdin",
         "offset": 65,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_read_char",
-        "offset": 5,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_kb_get_readchar_callbac",
+        "name": "_kb_get_readchar_callback",
         "offset": 57,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_kb_set_readchar_callbac",
+        "name": "_kb_set_readchar_callback",
         "offset": 40,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_kb_read_char",
+        "offset": 5,
         "segment": "S012_TEXT"
       },
       {
@@ -449,9 +439,19 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_kb_read_with_timeout",
+        "offset": 123,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_joystick_enabled",
         "offset": 4,
         "segment": "_DATA"
+      },
+      {
+        "name": "_kb_read_until_deadline",
+        "offset": 91,
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [

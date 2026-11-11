@@ -9,7 +9,7 @@ INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _sprite1:byte
-public _putpixel_line1_maybe
+public _drawcline
 SPRITE struc
  sprite_bitmapptr dw ?
  sprite_bitmapseg dw ?
@@ -68,7 +68,7 @@ SPRITE ends
 ; ASMDOC Vertical/diagonal/y-major modes index raw record y high word; horizontal/singleton/x-major modes use
 ; rounded local y.
 ; ASMDOC Zero/one modes share implementation. Fractional locals mutate only stack frame.
-_putpixel_line1_maybe proc far
+_drawcline proc far
     local_color = byte ptr -14
     local_fraction_step = word ptr -10
     local_rounded_y = word ptr -8
@@ -287,6 +287,6 @@ putpixel_line_draw_loop_7:
     mov     sp, bp
     pop     bp
     retf
-_putpixel_line1_maybe endp
+_drawcline endp
 S012_TEXT ends
 end

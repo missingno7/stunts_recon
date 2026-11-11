@@ -12,14 +12,14 @@ name asm012_150408
 SHAPE2D struc
 s2d_width dw ?
 s2d_height dw ?
-s2d_unk1 dw ?
-s2d_unk2 dw ?
+s2d_hotspot_x dw ?
+s2d_hotspot_y dw ?
 s2d_pos_x dw ?
 s2d_pos_y dw ?
-s2d_unk3 db ?
-s2d_unk4 db ?
-s2d_unk5 db ?
-s2d_unk6 db ?
+s2d_plane_color0 db ?
+s2d_plane_color1_bg db ?
+s2d_plane_color2_flip db ?
+s2d_plane_color3_flags db ?
 SHAPE2D ends
 SPRITE struc
 sprite_bitmapptr dd ?
@@ -57,7 +57,7 @@ public _sprite_make_window
 public _next_wnd_def
 public _wnd_defs
 public _sprite_setup1_from_arg_pointer
-public _sprite_copy_2_to_1
+public _displaywindow
 
 ; ASMDOC Unexported pattern-setting alternate entry: same span arguments as public entry plus BP+10h pattern;
 ; jumps into common
@@ -260,8 +260,8 @@ sprite_make_wnd proc far
     xor     ax, ax
     mov     [bx+SHAPE2D.s2d_pos_x], ax
     mov     [bx+SHAPE2D.s2d_pos_y], ax
-    mov     [bx+SHAPE2D.s2d_unk1], ax
-    mov     [bx+SHAPE2D.s2d_unk2], ax
+    mov     [bx+SHAPE2D.s2d_hotspot_x], ax
+    mov     [bx+SHAPE2D.s2d_hotspot_y], ax
 ; ASMDOC Reserve descriptor (15 words) plus height row words in CS arena. End equality is rejected. Shape
 ; allocation has already
 ; ASMDOC happened; arena fatal handler must not return.
@@ -389,7 +389,7 @@ sprite_set_1_from_argptr endp
 ; ASMDOC Globals written: _sprite1 descriptor.
 ; ASMDOC Services: sprite_set_1_from_argptr / _sprite_setup1_from_arg_pointer.
 ; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg005.c:1515 and asm/graphics_resource_runtime.ASM:237.
-_sprite_copy_2_to_1 label far
+_displaywindow label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite copy 2 to 1.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -400,7 +400,7 @@ _sprite_copy_2_to_1 label far
 ; Globals written: none identified.
 ; Global addresses taken: _sprite2.
 ; -----------------------------------------------------------------------------
-sprite_copy_2_to_1 proc far
+displaywindow proc far
 
     mov     ax, seg S012_TEXT
     push    ax
@@ -410,6 +410,6 @@ sprite_copy_2_to_1 proc far
     add     sp, 4
     retf
     db 0 ; retained zero fill at this boundary
-sprite_copy_2_to_1 endp
+displaywindow endp
 S012_TEXT ends
 end

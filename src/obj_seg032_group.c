@@ -2,40 +2,40 @@
 #include "platform_hw.h"
 /* READABILITY: Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
 struct SCREEN_RECT {
-    I16S width;
-    I16S height;
-    I16S reserved[7];
-    I16S bottom;
+    I16S foreground;
+    I16S background;
+    I16S font_header_middle[7];
+    I16S line_height;
 };
 
 static I8 *line_input_text_buffer;
 static I16S line_input_cursor_vertical, line_edit_x, line_edit_y;
 static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
-extern struct SCREEN_RECT FAR *line_input_screen_rect;
+extern struct SCREEN_RECT FAR *line_input_font_header;
 
 extern I16 strlen(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern I16 FAR font_op(I8 *text, I16 count);
-extern I16 FAR font_op2(I8 *text);
+extern I16 FAR textnpixels(I8 *text, I16 count);
+extern I16 FAR textpixels(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void FAR draw_filled_rect(I16 x, I16 y, I16 width, I16 height, I16 right);
+extern void FAR xorrectc(I16 x, I16 y, I16 width, I16 height, I16 right);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void FAR draw_text_at(I8 *text, I16 x, I16 y);
+extern void FAR movtxy(I8 *text, I16 x, I16 y);
     /* PLATFORM(video): measure or draw the current line-edit display. */
 extern void FAR sprite1_unknown2(I16 x, I16 y, I16 width, I16 height, I16 right);
-extern void FAR sprite_copy_2_to_1(void);
+extern void FAR displaywindow(void);
 extern void FAR read_line_helper(void);
 extern void FAR read_line_helper2(void);
     /* PLATFORM(input_kb): poll the game input-abort state. */
-extern I16 FAR poll_input_abort(void);
+extern I16 FAR testbiosticks(void);
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
 extern I16 FAR kb_call_readchar_callback(void);
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
-extern void FAR timer_copy_counter(I16 offset, I16 segment);
+extern void FAR setticks(I16 offset, I16 segment);
     /* PLATFORM(timer): set the cursor-blink timer interval. */
-extern void FAR set_add_value(I32 ticks);
+extern void FAR setbiosticks(I32 ticks);
     /* PLATFORM(timer): check whether the timer countdown expired. */
-extern I16 FAR timer_compare_dx(void);
+extern I16 FAR testticks(void);
 
 /* Edit a bounded text buffer using keyboard input, blink timing, and the line-rendering helpers.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -53,7 +53,7 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   I16S cursorIndex;
   I16S insertMode;
     /* PLATFORM(video): copy the active render surface before editing. */
-  sprite_copy_2_to_1();
+  displaywindow();
   line_edit_x = x;
   line_edit_y = y;
   line_input_text_buffer = buffer;
@@ -75,9 +75,9 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   insertMode = 0;
   read_line_helper();
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
-  timer_copy_counter(timerOffset, timerSegment);
+  setticks(timerOffset, timerSegment);
     /* PLATFORM(timer): set the cursor-blink timer interval. */
-  set_add_value(4L);
+  setbiosticks(4L);
   firstKey = 1;
   for (;;)
   {
@@ -91,14 +91,14 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
       while ((inputKey = kb_call_readchar_callback()) == 0) {
     /* PLATFORM(input_kb): poll the game input-abort state. */
-        if (poll_input_abort() != 0) { inputKey = 0; break; }
+        if (testbiosticks() != 0) { inputKey = 0; break; }
         readCallback();
       }
     }
     if (inputKey == 0)
     {
     /* PLATFORM(timer): set the cursor-blink timer interval. */
-      set_add_value(4L);
+      setbiosticks(4L);
       savedBlink = cursor_flash_state;
       cursor_flash_state = 1;
       read_line_helper();
@@ -111,14 +111,14 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
         cursor_flash_state = 1;
       }
     /* PLATFORM(timer): check whether the timer countdown expired. */
-      if ((timerOffset | timerSegment) != 0 && timer_compare_dx() != 0)
+      if ((timerOffset | timerSegment) != 0 && testticks() != 0)
       {
         break;
       }
       continue;
     }
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
-    timer_copy_counter(timerOffset, timerSegment);
+    setticks(timerOffset, timerSegment);
     if (inputKey == KEY_ASCII_ENTER || inputKey == KEY_ASCII_ESCAPE || inputKey == KEY_SCAN_UP || inputKey == KEY_SCAN_DOWN && !(flags & 8) || inputKey == KEY_ASCII_TAB && !(flags & 0x10))
       break;
     if (inputKey == KEY_SCAN_RIGHT)
@@ -270,16 +270,16 @@ void FAR read_line_helper(void)
         line_input_cursor_slot = strlen(line_input_text_buffer);
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
-    width = font_op(line_input_text_buffer + line_input_cursor_slot, 1);
+    width = textnpixels(line_input_text_buffer + line_input_cursor_slot, 1);
     if (width == 0)
     /* PLATFORM(video): measure displayed text using the game font renderer. */
-        width = font_op2(" ");
+        width = textpixels(" ");
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
-    x = font_op(line_input_text_buffer, line_input_cursor_slot) + line_edit_x;
-    y = line_input_screen_rect->bottom + line_edit_y - line_input_cursor_vertical;
+    x = textnpixels(line_input_text_buffer, line_input_cursor_slot) + line_edit_x;
+    y = line_input_font_header->line_height + line_edit_y - line_input_cursor_vertical;
     /* PLATFORM(video): measure or draw the current line-edit display. */
-    draw_filled_rect(x, y, width, line_input_cursor_vertical, line_input_screen_rect->width);
+    xorrectc(x, y, width, line_input_cursor_vertical, line_input_font_header->foreground);
 }
 
 /* Clamp text to the configured width, draw it, and update the remaining line background.
@@ -295,7 +295,7 @@ void FAR read_line_helper2(void)
     if (line_text_max_width != 0) {
         for (;;) {
     /* PLATFORM(video): measure displayed text using the game font renderer. */
-            if (font_op2(line_input_text_buffer) <= line_text_max_width)
+            if (textpixels(line_input_text_buffer) <= line_text_max_width)
                 break;
             if (strlen(line_input_text_buffer) == 0)
                 break;
@@ -308,14 +308,14 @@ void FAR read_line_helper2(void)
         line_input_cursor_slot = length;
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
-    draw_text_at(line_input_text_buffer, line_edit_x, line_edit_y);
+    movtxy(line_input_text_buffer, line_edit_x, line_edit_y);
     if (line_text_max_width != 0) {
     /* PLATFORM(video): measure displayed text using the game font renderer. */
-        fontWidth = font_op2(line_input_text_buffer);
+        fontWidth = textpixels(line_input_text_buffer);
         unusedWidth = line_text_max_width - fontWidth;
         if (unusedWidth > 0)
     /* PLATFORM(video): measure or draw the current line-edit display. */
             sprite1_unknown2(fontWidth + line_edit_x, line_edit_y, unusedWidth,
-                          line_input_screen_rect->bottom, line_input_screen_rect->height);
+                          line_input_font_header->line_height, line_input_font_header->background);
     }
 }

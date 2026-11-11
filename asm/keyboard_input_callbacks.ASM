@@ -33,7 +33,7 @@ _BSS segment word public 'BSS'
 _BSS ends
 CONST segment word public 'CONST'
 CONST ends
-extrn _timer_copy_unk:word
+extrn _timer_deadline_ticks:word
 extrn _timer_copy_target_high:word
 extrn _timer_get_counter:far
 S012_TEXT segment word public 'CODE'
@@ -42,12 +42,12 @@ public _joystick_enabled
 public _kb_call_readchar_callback
 public _kb_read_char
 public _kb_checking
-public _nopsub_kb_set_readchar_callback
-public _nopsub_kb_get_readchar_callback
+public _kb_set_readchar_callback
+public _kb_get_readchar_callback
 public _flush_stdin
 public _kb_check
-public _nopsub_30A77
-public _nopsub_30A97
+public _kb_read_until_deadline
+public _kb_read_with_timeout
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the keyboard or joystick service identified by kb call readchar callback.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -179,7 +179,7 @@ _kb_checking endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_kb_set_readchar_callback proc far
+_kb_set_readchar_callback proc far
     push    bp
     mov     bp, sp
     mov     ax, [bp+6]
@@ -188,7 +188,7 @@ _nopsub_kb_set_readchar_callback proc far
     mov     ds:[_readchar_callback_seg], ax
     pop     bp
     retf
-_nopsub_kb_set_readchar_callback endp
+_kb_set_readchar_callback endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub kb get readchar callback.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -212,11 +212,11 @@ _nopsub_kb_set_readchar_callback endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_kb_get_readchar_callback proc far
+_kb_get_readchar_callback proc far
     mov     ax, ds:[_kb_readchar_callback]
     mov     dx, ds:[_readchar_callback_seg]
     retf
-_nopsub_kb_get_readchar_callback endp
+_kb_get_readchar_callback endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by flush stdin.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -315,22 +315,22 @@ _kb_check endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_30A77 proc far
+_kb_read_until_deadline proc far
     call    far ptr _kb_call_readchar_callback
     cmp     ax, 0
 ; INPUTDOC Unsigned high/low comparison against a shared deadline is not timer-wrap-safe.
     jnz     short readchar_timeout_return
     call    far ptr _timer_get_counter
     cmp     dx, ds:[_timer_copy_target_high]
-    jb      short _nopsub_30A77
+    jb      short _kb_read_until_deadline
     ja      short readchar_poll_deadline_expired
-    cmp     ax, ds:[_timer_copy_unk]
-    jb      short _nopsub_30A77
+    cmp     ax, ds:[_timer_deadline_ticks]
+    jb      short _kb_read_until_deadline
 readchar_poll_deadline_expired:
     xor     ax, ax
 readchar_timeout_return:
     retf
-_nopsub_30A77 endp
+_kb_read_until_deadline endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 30A97. Its internal flow uses readchar_timeout_poll_loop,
 ; readchar_timeout_return_zero.
@@ -359,7 +359,7 @@ _nopsub_30A77 endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_nopsub_30A97 proc far
+_kb_read_with_timeout proc far
     push    bp
     mov     bp, sp
     sub     sp, 4
@@ -386,6 +386,6 @@ readchar_restore_and_return:
     pop     bp
     retf
     db 0 ; retained zero fill at this boundary
-_nopsub_30A97 endp
+_kb_read_with_timeout endp
 S012_TEXT ends
 end

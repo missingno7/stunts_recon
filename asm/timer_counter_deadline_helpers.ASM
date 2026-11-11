@@ -10,14 +10,14 @@ name asm012_141210
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP
 _DATA segment word public 'DATA'
-public _timer_copy_unk, _timer_copy_target_high, _line_input_screen_rect
+public _timer_deadline_ticks, _timer_copy_target_high, _line_input_font_header
 ; ASMDOC[timers] Block: Exported data: shared deadline dword and high-word EQU alias. line_input_screen_rect is
 ; ASMDOC[timers]   separate storage, not code.
-_timer_copy_unk dd 0
-_timer_copy_target_high equ _timer_copy_unk+2
+_timer_deadline_ticks dd 0
+_timer_copy_target_high equ _timer_deadline_ticks+2
 _last_timer_callback_counter dd 0
 previous_timer_counter_hi equ _last_timer_callback_counter+2
-_line_input_screen_rect dw 0
+_line_input_font_header dw 0
 _DATA ends
 _BSS segment word public 'BSS'
 _BSS ends
@@ -27,14 +27,14 @@ extrn _timer_callback_counter:dword
 extrn _timer_get_counter:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _timer_get_delta
-public _timer_reset
-public _timer_copy_counter
-public _timer_wait_for_dx
-public _timer_compare_dx
-public _timer_get_counter_unk
+public _elapsedticks
+public _resettick
+public _setticks
+public _waitticks
+public _testticks
+public _timedwait
 
-; timer_get_delta
+; elapsedticks
 ; -----------------------------------------------------------------------------
 ; Purpose: Compute the elapsed timer delta between stored counter values.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -58,7 +58,7 @@ public _timer_get_counter_unk
 ; ASMDOC[timers] services: CLI/STI only around current read; previous read/store outside masked interval
 ; ASMDOC[timers] reachability: Called by setup_intro and timer_get_delta_alt.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_get_delta proc far
+_elapsedticks proc far
 ; ASMDOC[timers] Block: Previous snapshot load/store are outside critical section; only current low/high read is
 ; ASMDOC[timers]   IRQ-masked.
     mov bx, word ptr ds:[_last_timer_callback_counter]
@@ -72,8 +72,8 @@ _timer_get_delta proc far
     sub ax, bx
     sbb dx, cx
     retf
-_timer_get_delta endp
-; timer_reset
+_elapsedticks endp
+; resettick
 ; -----------------------------------------------------------------------------
 ; Purpose: Reset the timer counter state.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -96,14 +96,14 @@ _timer_get_delta endp
 ; ASMDOC[timers] reachability: No known direct, address-taken, vector or callback reference in active
 ; ASMDOC[timers]   sources/recipes; no fallthrough from preceding RETF. Treat as unused public, not removable bytes.
 ; ASMDOC[timers] dead: true (static known-program reachability; never permission to trim extent)
-_timer_reset proc far
+_resettick proc far
 ; ASMDOC[timers] Block: Reset performs two unmasked word stores and leaves previous-delta snapshot unchanged.
     xor     ax, ax
     mov     word ptr _timer_callback_counter, ax
     mov     word ptr _timer_callback_counter+2, ax
     retf
-_timer_reset endp
-; timer_copy_counter
+_resettick endp
+; setticks
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy the current timer counter into the caller-provided value.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_ticksh (word ptr 8);
@@ -126,7 +126,7 @@ _timer_reset endp
 ; ASMDOC[timers] services: FAR _timer_get_counter
 ; ASMDOC[timers] reachability: Line editor/audio wait paths establish shared deadline.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_copy_counter proc far
+_setticks proc far
     arg_ticksl = word ptr 6
     arg_ticksh = word ptr 8
 
@@ -137,12 +137,12 @@ _timer_copy_counter proc far
     call    _timer_get_counter
     add     ax, [bp+arg_ticksl]
     adc     dx, [bp+arg_ticksh]
-    mov     word ptr _timer_copy_unk, ax
+    mov     word ptr _timer_deadline_ticks, ax
     mov     word ptr _timer_copy_target_high, dx
     pop     bp
     retf
-_timer_copy_counter endp
-; timer_wait_for_dx
+_setticks endp
+; waitticks
 ; -----------------------------------------------------------------------------
 ; Purpose: Wait until the timer counter reaches the requested high-word value.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
@@ -166,19 +166,19 @@ _timer_copy_counter endp
 ; ASMDOC[timers] reachability: Audio wait callers; backward branches target same FAR public entry without changing
 ; ASMDOC[timers]   return frame.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_wait_for_dx proc far
+_waitticks proc far
     call    _timer_get_counter
 ; ASMDOC[timers] Block: Unsigned lexicographic high/low comparison against shared dword; incoming DX is not an
 ; ASMDOC[timers]   argument.
     cmp     dx, word ptr _timer_copy_target_high
-    jb      short near ptr _timer_wait_for_dx
+    jb      short near ptr _waitticks
     ja      short return_when_deadline_reached
-    cmp     ax, word ptr _timer_copy_unk
-    jb      short near ptr _timer_wait_for_dx
+    cmp     ax, word ptr _timer_deadline_ticks
+    jb      short near ptr _waitticks
 return_when_deadline_reached:
     retf
-_timer_wait_for_dx endp
-; timer_compare_dx
+_waitticks endp
+; testticks
 ; -----------------------------------------------------------------------------
 ; Purpose: Compare the timer counter high word with the requested value.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -201,13 +201,13 @@ _timer_wait_for_dx endp
 ; ASMDOC[timers] services: FAR _timer_get_counter
 ; ASMDOC[timers] reachability: Line editor and audio scheduling callers.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_compare_dx proc far
+_testticks proc far
 ; ASMDOC[timers] Block: Return AX Boolean for full unsigned counter>=deadline; flags are path-dependent.
  call far ptr _timer_get_counter
  cmp dx,word ptr ds:[_timer_copy_target_high]
  jb zero_result
  ja one_result
- cmp ax, word ptr ds:[_timer_copy_unk]
+ cmp ax, word ptr ds:[_timer_deadline_ticks]
  jb zero_result
 one_result:
  mov ax,1
@@ -215,8 +215,8 @@ one_result:
 zero_result:
  xor ax,ax
  ret
-_timer_compare_dx endp
-; timer_get_counter_unk
+_testticks endp
+; timedwait
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the timer service identified by timer get counter unk.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -240,7 +240,7 @@ _timer_compare_dx endp
 ; ASMDOC[timers] reachability: Game/menu pacing callers. Uses local [BP-4]/[BP-2], so does not overwrite shared
 ; ASMDOC[timers]   deadline.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_get_counter_unk proc far
+_timedwait proc far
     push bp
     mov bp, sp
     sub sp, 4
@@ -263,6 +263,6 @@ counter_reached:
     pop bp
     retf
     db 0 ; retained zero fill at this boundary
-_timer_get_counter_unk endp
+_timedwait endp
 S012_TEXT ends
 end

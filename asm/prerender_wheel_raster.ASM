@@ -54,14 +54,14 @@ DGROUP group CONST,_BSS,_DATA
 extrn _sprite1:word
 extrn _draw_filled_lines:far
 extrn _preRender_line:far
-extrn _draw_line_related:far
-extrn _draw_line_related_alt:far
+extrn _clipline:far
+extrn _slopeline:far
 spritefunc equ _spritefunc
 imagefunc equ _imagefunc
 draw_filled_lines equ _draw_filled_lines
 preRender_line equ _preRender_line
-draw_line_related equ _draw_line_related
-draw_line_related_alt equ _draw_line_related_alt
+clipline equ _clipline
+slopeline equ _slopeline
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
 public _prerender_shared_setup
@@ -72,8 +72,8 @@ public _preRender_wheel_helper4
 public _preRender_helper
 public _preRender_helper2
 public _preRender_helper3
-public _nopsub_31F39
-public _nopsub_31F55
+public _sprite_fill_line_records
+public _sprite_fill_line_records_alt
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _preRender_default (original line 61)
 ; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 1; vertices are a near
@@ -602,13 +602,13 @@ wheel_raster_branch_path_10:
     push    cx
     cmp     [bp+local_clip_required], 0
     jz      short wheel_raster_branch_path_11
-    call    draw_line_related
+    call    clipline
     mov     [bp+var_16], di
     call near ptr preRender_helper
     jmp     short wheel_raster_join_02
     even ; word-align the following entry
 wheel_raster_branch_path_11:
-    call    draw_line_related_alt
+    call    slopeline
     mov     [bp+var_16], di
     call near ptr preRender_helper2
 wheel_raster_join_02:
@@ -636,11 +636,11 @@ wheel_raster_branch_path_13:
     push    cx
     cmp     [bp+local_clip_required], 0
     jz      short wheel_raster_branch_path_14
-    call    draw_line_related
+    call    clipline
     jmp     short wheel_raster_join_03
     even ; word-align the following entry
 wheel_raster_branch_path_14:
-    call    draw_line_related_alt
+    call    slopeline
 wheel_raster_join_03:
     mov     [bp+var_16], di
     call near ptr preRender_helper3
@@ -1571,7 +1571,7 @@ preRender_helper3 endp
 ; found; no dispatch table stores these entries. Name-plan dead=true. This is a static conclusion, not a
 ; runtime coverage proof.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_nopsub_31F39 label far
+_sprite_fill_line_records label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31F39.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -1581,7 +1581,7 @@ _nopsub_31F39 label far
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
-nopsub_31F39 proc far
+sprite_fill_line_records proc far
     local_line_descriptor = word ptr -2000
     local_left_edges = byte ptr -1944
     local_right_edges = byte ptr -984
@@ -1612,7 +1612,7 @@ nopsub_31F39 proc far
     mov word ptr imagefunc, ax
     jmp     short line_raster_join_01
     nop ; retained code pad at an even offset; EVEN would emit no byte
-nopsub_31F39 endp
+sprite_fill_line_records endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _nopsub_31F55 (original line 1146)
 ; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic list of near pointers to already prepared 28-byte line records;
@@ -1665,7 +1665,7 @@ nopsub_31F39 endp
 ; found; no dispatch table stores these entries. Name-plan dead=true. This is a static conclusion, not a
 ; runtime coverage proof.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_nopsub_31F55 label near
+_sprite_fill_line_records_alt label near
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 31F55. Its internal flow uses line_raster_join_01,
 ; line_raster_branch_path_01.
@@ -1677,7 +1677,7 @@ _nopsub_31F55 label near
 ; Globals read: _sprite1.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
-nopsub_31F55 proc near
+sprite_fill_line_records_alt proc near
     local_merge_mode = byte ptr -10
     push    bp
     mov     bp, sp
@@ -1982,6 +1982,6 @@ line_raster_branch_path_25:
     mov     sp, bp
     pop     bp
     retf
-nopsub_31F55 endp
+sprite_fill_line_records_alt endp
 S012_TEXT ends
 end

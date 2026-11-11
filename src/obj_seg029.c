@@ -1,6 +1,6 @@
 #include "stunts_types.h"
 /* READABILITY: Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
-extern I16 FAR toupper(I16 value);
+extern I16 FAR cap(I16 value);
 extern U32 FAR audioresource_get_dword(I8 FAR *address);
 
 /* Compare up to count bytes of two names, optionally using case-sensitive matching.
@@ -14,7 +14,7 @@ I16 FAR audioresource_compare_chunknames(I16 caseSensitive, U8 FAR *chunkName,
                 break;
             if (caseSensitive != 0 && *chunkName != *foundName)
                 return 0;
-            if (caseSensitive == 0 && toupper(*chunkName) != toupper(*foundName))
+            if (caseSensitive == 0 && cap(*chunkName) != cap(*foundName))
                 return 0;
             chunkName++;
             foundName++;

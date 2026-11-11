@@ -186,7 +186,7 @@
       "offset": 635,
       "segment": "S012_TEXT",
       "self_relative": true,
-      "target": "_loc_35ED9",
+      "target": "_shape2d_scale_blit_tail",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -334,7 +334,7 @@
     },
     {
       "name": "nopsub_34736",
-      "public": "_nopsub_34736",
+      "public": "_shape2d_capture_bitmap_hotspot",
       "stable_id": "load_24736",
       "start": 149302
     },
@@ -390,7 +390,7 @@
   },
   "object_declarations": {
     "externals": [
-      "_loc_35ED9",
+      "_shape2d_scale_blit_tail",
       "_fontdefseg"
     ],
     "groups": [
@@ -416,11 +416,6 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_34736",
-        "offset": 122,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_draw_filled_lines",
         "offset": 0,
         "segment": "S012_TEXT"
@@ -428,6 +423,11 @@
       {
         "name": "_sprite_clear_shape",
         "offset": 194,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_shape2d_capture_bitmap_hotspot",
+        "offset": 122,
         "segment": "S012_TEXT"
       },
       {
@@ -530,7 +530,7 @@
     "integ30: whole seg012 module [149180,150408) from build/workers/L3-asm (pinned seg012.asm 13373..): draw_filled_lines .. set_fontdefseg, with the CS sprite pair declared PUBLIC _sprite1/_sprite2 (60-byte island inside shape_op_explosion) and every numeric CS address rewritten symbolically (sprite fields, `offset lineoffsets` in the sprite records); link-faithful S012_TEXT segment; near JMP to the reviewed interior label _loc_35ED9 of sub_35E08."
   ],
   "reviewed_near_targets": {
-    "_loc_35ED9": {
+    "_shape2d_scale_blit_tail": {
       "source_line": 18566
     }
   },

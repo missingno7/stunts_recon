@@ -33,14 +33,14 @@ VECTOR ends
 SHAPE2D struc
 s2d_width dw ?
 s2d_height dw ?
-s2d_unk1 dw ?
-s2d_unk2 dw ?
+s2d_hotspot_x dw ?
+s2d_hotspot_y dw ?
 s2d_pos_x dw ?
 s2d_pos_y dw ?
-s2d_unk3 db ?
-s2d_unk4 db ?
-s2d_unk5 db ?
-s2d_unk6 db ?
+s2d_plane_color0 db ?
+s2d_plane_color1_bg db ?
+s2d_plane_color2_flip db ?
+s2d_plane_color3_flags db ?
 SHAPE2D ends
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
@@ -72,18 +72,18 @@ extrn _file_get_shape2d:far
 extrn _draw_patterned_lines:far
 extrn _preRender_line:far
 extrn _prerender_shared_setup:near
-public _font_op
-public _font_op2
+public _textnpixels
+public _textpixels
 public _preRender_patterned
-public _nopsub_328C9
-public _nopsub_328DB
+public _sprite_pattern_poly_args
+public _sprite_pattern_poly_args_alt
 public _mat_vec
-public _mat_multiply
+public _transmult
 public _mat_invert
 public _file_unflip_shape2d
 public _file_decomp_vle
-public _nopsub_32FEE
-public _video_get_status
+public _vertsync
+public _vsyncstate
 S012_TEXT segment word public 'CODE'
 
 ; -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ S012_TEXT segment word public 'CODE'
 ; ASMDOC(font_shapes) _font_op2 initializes DX=0; shared DEC DX / JZ can stop after 65536 present glyphs even
 ; without NUL.
 ; ASMDOC(font_shapes) Font and text memory are ordinary data; ES glyph reads do not establish a hardware service.
-_font_op proc far
+_textnpixels proc far
     arg_maximum_characters = word ptr 8
 
     push    bp
@@ -134,7 +134,7 @@ _font_op proc far
     xor     ax, ax
     jmp     short font_op2_branch_path_03
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_font_op endp
+_textnpixels endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Dispatch a font operation using the alternate glyph path.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -168,7 +168,7 @@ _font_op endp
 ; ASMDOC(font_shapes) _font_op2 initializes DX=0; shared DEC DX / JZ can stop after 65536 present glyphs even
 ; without NUL.
 ; ASMDOC(font_shapes) Font and text memory are ordinary data; ES glyph reads do not establish a hardware service.
-_font_op2 proc far
+_textpixels proc far
     arg_text_offset = word ptr 6
 
     push    bp
@@ -208,7 +208,7 @@ font_op2_branch_path_03:
     pop     si
     pop     bp
     retf
-_font_op2 endp
+_textpixels endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender patterned.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -353,7 +353,7 @@ _preRender_patterned endp
 ; ASMDOC(font_shapes) The unlabelled prologue after the first jump in _preRender_patterned uses mode 0 with
 ; pointer input, but
 ; ASMDOC(font_shapes) is not a public export.
-_nopsub_328C9 proc far
+_sprite_pattern_poly_args proc far
     local_merge_mode = byte ptr -10
     arg_inline_vertices = byte ptr 12
 
@@ -365,7 +365,7 @@ _nopsub_328C9 proc far
     lea     si, [bp+arg_inline_vertices]
     mov     [bp+local_merge_mode], 1
     jmp     short patterned_loop_head_01
-_nopsub_328C9 endp
+_sprite_pattern_poly_args endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 328DB.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -420,7 +420,7 @@ _nopsub_328C9 endp
 ; ASMDOC(font_shapes) The unlabelled prologue after the first jump in _preRender_patterned uses mode 0 with
 ; pointer input, but
 ; ASMDOC(font_shapes) is not a public export.
-_nopsub_328DB proc far
+_sprite_pattern_poly_args_alt proc far
     local_merge_mode = byte ptr -10
     arg_inline_vertices = byte ptr 12
 
@@ -433,7 +433,7 @@ _nopsub_328DB proc far
     mov     [bp+local_merge_mode], 0
     jmp     short patterned_loop_head_01
     db 0 ; retained zero fill at this boundary
-_nopsub_328DB endp
+_sprite_pattern_poly_args_alt endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Multiply a matrix by a vector using the supplied fixed-point values.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_inpVector (word ptr 6);
@@ -638,7 +638,7 @@ _mat_vec endp
 ; ASMDOC(font_shapes) word); partial results are individually truncated, then word-added. Column-major 18-byte MATRIX:
 ; ASMDOC(font_shapes) _11,_21,_31,_12,_22,_32,_13,_23,_33.
 ; ASMDOC(font_shapes) Preserve instruction write order if any ranges overlap; no temporary matrix is made.
-_mat_multiply proc far
+_transmult proc far
     arg_rightMatrix = word ptr 6
     arg_leftMatrix = word ptr 8
     arg_outputMatrix = word ptr 10
@@ -708,7 +708,7 @@ matrix_mul_branch_path_04:
     pop     si
     pop     bp
     retf
-_mat_multiply endp
+_transmult endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Invert the fixed-point matrix in the supplied workspace.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_mat_in (word ptr 6);
@@ -891,10 +891,10 @@ unflip_shape_loop_head_01:
     mov     ds, dx
     mov     di, [bp+local_scratch_offset]
     mov     es, [bp+local_scratch_segment]
-    mov     al, [si+SHAPE2D.s2d_unk6]; unk6 = is flipped
+    mov     al, [si+SHAPE2D.s2d_plane_color3_flags]; unk6 = is flipped
     and     al, 0F0h
     jnz     short unflip_shape_loop_head_02
-    mov     al, [si+SHAPE2D.s2d_unk5]; (unk4 >> 4) = fliptype, 1..3
+    mov     al, [si+SHAPE2D.s2d_plane_color2_flip]; (unk4 >> 4) = fliptype, 1..3
     shr     al, 1
     shr     al, 1
     shr     al, 1
@@ -1485,7 +1485,7 @@ _file_decomp_vle endp
 ; found. Static
 ; ASMDOC(font_shapes) absence is scoped to accepted sources, not proof about arbitrary external callers.
 ; ASMDOC(font_shapes) Two busy loops, no timeout; this is active I/O despite the nopsub name.
-_nopsub_32FEE proc far
+_vertsync proc far
 
     mov     dx, R5HW_VIDEO_STATUS_PORT
 ; ASMDOC(font_shapes) Wait for current bit-3 interval to end before waiting for the next rising interval.
@@ -1498,7 +1498,7 @@ noop_entry3_loop_head_02:
     test    al, 08h
     jz      short noop_entry3_loop_head_02
     retf
-_nopsub_32FEE endp
+_vertsync endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read the video status register and return its status bits.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -1522,14 +1522,14 @@ _nopsub_32FEE endp
 ; ASMDOC(font_shapes) globals_written: none in this routine.
 ; ASMDOC(font_shapes) services: IN AL,DX at R5HW_VIDEO_STATUS_PORT (03DAh)
 ; ASMDOC(font_shapes) Reachability: Retained accepted-source caller or address reference; see reachability_evidence.
-_video_get_status proc far
+_vsyncstate proc far
 
     mov     dx, R5HW_VIDEO_STATUS_PORT
     in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
     and     al, 08h
     xor     ah, ah
     retf
-_video_get_status endp
+_vsyncstate endp
 
     db 0 ; retained zero fill at this boundary
 S012_TEXT ends

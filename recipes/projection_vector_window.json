@@ -297,16 +297,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_cosfast",
-      "frame_index": 4,
+      "frame": "_intcos",
+      "frame_index": 3,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 151,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_cosfast",
-      "target_index": 4,
+      "target": "_intcos",
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -348,16 +348,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sinfast",
-      "frame_index": 5,
+      "frame": "_intsin",
+      "frame_index": 4,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 171,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinfast",
-      "target_index": 5,
+      "target": "_intsin",
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -416,16 +416,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_cosfast",
-      "frame_index": 4,
+      "frame": "_intcos",
+      "frame_index": 3,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 202,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_cosfast",
-      "target_index": 4,
+      "target": "_intcos",
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -467,16 +467,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sinfast",
-      "frame_index": 5,
+      "frame": "_intsin",
+      "frame_index": 4,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 222,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_sinfast",
-      "target_index": 5,
+      "target": "_intsin",
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -535,16 +535,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_polang",
-      "frame_index": 2,
+      "frame": "_intatan",
+      "frame_index": 5,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 267,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_polang",
-      "target_index": 2,
+      "target": "_intatan",
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -706,7 +706,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_mmgr_release",
-      "frame_index": 3,
+      "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -714,7 +714,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_mmgr_release",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -807,7 +807,7 @@
     {
       "end": 139999,
       "name": "nopsub_322C0",
-      "public": "_nopsub_322C0",
+      "public": "_projectorgp",
       "stable_id": "load_222c0",
       "start": 139968,
       "target": {
@@ -818,7 +818,7 @@
     {
       "end": 140019,
       "name": "nopsub_322DF",
-      "public": "_nopsub_322DF",
+      "public": "_setprojectpb",
       "stable_id": "load_222df",
       "start": 139999,
       "target": {
@@ -840,7 +840,7 @@
     {
       "end": 140458,
       "name": "vector_to_point",
-      "public": "_vector_to_point",
+      "public": "_projectp",
       "stable_id": "load_223d9",
       "start": 140249,
       "target": {
@@ -863,10 +863,10 @@
   "object_declarations": {
     "externals": [
       "_fatal_error",
-      "_polang",
       "_mmgr_release",
-      "_cosfast",
-      "_sinfast"
+      "_intcos",
+      "_intsin",
+      "_intatan"
     ],
     "groups": [
       {
@@ -891,12 +891,12 @@
         "segment": "_DATA"
       },
       {
-        "name": "_nopsub_322C0",
+        "name": "_projectorgp",
         "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_322DF",
+        "name": "_setprojectpb",
         "offset": 31,
         "segment": "S012_TEXT"
       },
@@ -941,6 +941,11 @@
         "segment": "_DATA"
       },
       {
+        "name": "_projectp",
+        "offset": 281,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_set_projection",
         "offset": 51,
         "segment": "S012_TEXT"
@@ -954,11 +959,6 @@
         "name": "_projection_top_origin",
         "offset": 6,
         "segment": "_DATA"
-      },
-      {
-        "name": "_vector_to_point",
-        "offset": 281,
-        "segment": "S012_TEXT"
       },
       {
         "name": "_projection_half_height",

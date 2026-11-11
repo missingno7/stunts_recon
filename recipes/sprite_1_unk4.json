@@ -4,7 +4,7 @@
       "externals": [
         "__acrtused",
         "_sprite1_unknown2",
-        "_sprite_1_unk4"
+        "_sprite_draw_rect_outline"
       ],
       "groups": [
         {
@@ -24,7 +24,7 @@
       ],
       "publics": [
         {
-          "name": "_sprite_1_unk4",
+          "name": "_sprite_draw_rect_outline",
           "offset": 0,
           "segment": "UNIT_TEXT"
         }
@@ -206,7 +206,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "public": "_sprite_1_unk4",
+  "public": "_sprite_draw_rect_outline",
   "source": "src/sprite_1_unk4.c",
   "stable_id": "load_261bc",
   "start": 156092,

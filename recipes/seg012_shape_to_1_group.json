@@ -74,7 +74,7 @@
     {
       "end": 146736,
       "name": "nopsub_33D0C",
-      "public": "_nopsub_33D0C",
+      "public": "_shape2d_copy_bitmap_hotspot",
       "stable_id": "load_23d0c",
       "start": 146700,
       "target": {
@@ -112,13 +112,13 @@
     "groups": [],
     "publics": [
       {
-        "name": "_nopsub_33D0C",
-        "offset": 0,
+        "name": "_sprite_shape_to_1",
+        "offset": 36,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_shape_to_1",
-        "offset": 36,
+        "name": "_shape2d_copy_bitmap_hotspot",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {

@@ -12,7 +12,7 @@ extern I8 FAR * FAR locate_shape_nofatal(I8 FAR *data, I8 *name);
 /* Resolve packed shape names without fatal error handling.
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve shape names in the loaded resource block. */
-void FAR nopsub_367E4(I8 FAR *data, I8 *names, I8 FAR **results) {
+void FAR file_find_shapes_optional(I8 FAR *data, I8 *names, I8 FAR **results) {
     I16 index = 0;
     while (*names != 0) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
@@ -24,7 +24,7 @@ extern I8 FAR * FAR locate_sound_fatal(I8 FAR *data, I8 *name);
 /* Resolve packed sound names with fatal error handling.
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve sound names in the loaded resource block. */
-void FAR nopsub_36826(I8 FAR *data, I8 *names, I8 FAR **results) {
+void FAR file_find_sounds_required(I8 FAR *data, I8 *names, I8 FAR **results) {
     I16 index = 0;
     while (*names != 0) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
@@ -35,7 +35,7 @@ void FAR nopsub_36826(I8 FAR *data, I8 *names, I8 FAR **results) {
 /* Resolve packed shape names without fatal error handling using indexed output slots.
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve shape names in the loaded resource block. */
-void FAR nopsub_36868(I8 FAR *data, I8 *names, I8 FAR **results) {
+void FAR file_find_shapes_optional_alt(I8 FAR *data, I8 *names, I8 FAR **results) {
     I16 index = 0;
     while (*names != 0) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */

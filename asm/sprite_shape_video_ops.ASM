@@ -12,14 +12,14 @@ INCLUDE include\platform_hw.inc
 SHAPE2D struc
 s2d_width dw ?
 s2d_height dw ?
-s2d_unk1 dw ?
-s2d_unk2 dw ?
+s2d_hotspot_x dw ?
+s2d_hotspot_y dw ?
 s2d_pos_x dw ?
 s2d_pos_y dw ?
-s2d_unk3 db ?
-s2d_unk4 db ?
-s2d_unk5 db ?
-s2d_unk6 db ?
+s2d_plane_color0 db ?
+s2d_plane_color1_bg db ?
+s2d_plane_color2_flip db ?
+s2d_plane_color3_flags db ?
 SHAPE2D ends
 ; Font header at DS/ES = _fontdefseg: 0Bh words, then the 256-entry glyph offset table.
 FONTHDR struc
@@ -70,11 +70,11 @@ extrn _incnums:byte
 public _sprite_putimage_or_alt
 public _sprite_putimage_or
 public _putpixel_iconFillings
-public _shape2d_op_unk4
+public _shape2d_or_rle
 public _sprite_putimage_transparent
 public _release_shape_resources
-public _draw_text_at
-public _video_set_palette
+public _movtxy
+public _vgapalette
 S012_TEXT segment word public 'CODE'
 
 ; -----------------------------------------------------------------------------
@@ -556,7 +556,7 @@ _putpixel_iconFillings endp
 ; ASMDOC notes: Width resets the per-row remainder; each row reloads its CS row-table entry. Shape height is never
 ; ASMDOC read: only zero packet terminates; no stream/span checks. Negative 80h means 128 literals..
 ; ASMDOC Proposed routine name: _shape2d_or_rle.
-_shape2d_op_unk4 proc far
+_shape2d_or_rle proc far
     var_10 = word ptr -16
     var_E = word ptr -14
     var_6 = word ptr -6
@@ -658,7 +658,7 @@ shape_op4_branch_path_04:
     mov     [bp-4], ax
     jmp     short sprite_alpha_join_01
     even ; word-align the following entry
-_shape2d_op_unk4 endp
+_shape2d_or_rle endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a sprite image while preserving transparent pixels.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_4 (word ptr 8); arg_6
@@ -1027,7 +1027,7 @@ _release_shape_resources endp
 ; ASMDOC resets x to left and adds line height; CRLF does that twice. Existing CR/LF glyph suppresses control
 ; handling.
 ; ASMDOC No clipping; positive glyph rowbytes/height required..
-_draw_text_at proc far
+_movtxy proc far
     local_rows_left = word ptr -4
     local_glyph_x = word ptr -2
     arg_text_offset = word ptr 6
@@ -1152,7 +1152,7 @@ draw_text_branch_path_05:
     mov     ax, [bp+0Ch]
     jmp     short palette_join_01
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_draw_text_at endp
+_movtxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Load a block of palette entries through the BIOS video service.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -1180,7 +1180,7 @@ _draw_text_at endp
 ; ASMDOC dead: False.
 ; ASMDOC notes: ES is not saved. Wrapper does not modify DS itself; no RGB range checks. Unreachable preceding stub
 ; ASMDOC accepts source segment at BP+12 then joins palette_join_01..
-_video_set_palette proc far
+_vgapalette proc far
     arg_first_index = word ptr 6
     arg_entry_count = word ptr 8
     arg_rgb_offset = word ptr 10
@@ -1201,7 +1201,7 @@ palette_join_01:
     pop     bp
     retf
     db 0 ; retained zero fill at this boundary
-_video_set_palette endp
+_vgapalette endp
 
 S012_TEXT ends
 end

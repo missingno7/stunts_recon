@@ -17,7 +17,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "public": "_toupper",
+  "public": "_cap",
   "source": "src/toupper.c",
   "stable_id": "load_270ba",
   "start": 159930,

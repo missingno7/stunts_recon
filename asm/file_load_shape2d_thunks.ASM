@@ -14,10 +14,10 @@ INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 assume cs:S012_TEXT
-extrn _file_load_shape2d_res_fatal:far
-extrn _file_load_shape2d_res_nofatal:far
-extrn _file_load_shape2d_res:far
-extrn _parse_shape2d:far
+extrn _loadandshapepack:far
+extrn _loadandshapepackz:far
+extrn _loadandshapepacka:far
+extrn _shapepack:far
 extrn _file_load_shape2d_fatal:far
 extrn _file_load_shape2d_nofatal:far
 extrn _file_load_shape2d:far
@@ -69,7 +69,7 @@ S012_TEXT segment word public 'CODE'
 _file_load_shape2d_res_fatal_thunk proc far
 
 ; ASMDOC Tail jump preserves the existing far return address; all target side effects remain part of this ABI.
-    jmp     _file_load_shape2d_res_fatal
+    jmp     _loadandshapepack
 _file_load_shape2d_res_fatal_thunk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Call the shape resource loader with fatal-error handling disabled.
@@ -109,7 +109,7 @@ _file_load_shape2d_res_fatal_thunk endp
 ; ASMDOC Public name from existing plan: _load_shape2d_res_nofatal_thunk (unchanged).
 _load_shape2d_res_nofatal_thunk proc far
 
-    jmp     _file_load_shape2d_res_nofatal
+    jmp     _loadandshapepackz
 _load_shape2d_res_nofatal_thunk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Forward to the shared shape resource loader.
@@ -149,7 +149,7 @@ _load_shape2d_res_nofatal_thunk endp
 ; ASMDOC Public name from existing plan: _file_load_shape2d_res_thunk (unchanged).
 _file_load_shape2d_res_thunk proc far
 
-    jmp     _file_load_shape2d_res
+    jmp     _loadandshapepacka
 _file_load_shape2d_res_thunk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Forward to the shared 2D shape parser.
@@ -186,7 +186,7 @@ _file_load_shape2d_res_thunk endp
 ; ASMDOC Public name from existing plan: _parse_shape2d_thunk (unchanged).
 _parse_shape2d_thunk proc far
 
-    jmp     _parse_shape2d
+    jmp     _shapepack
 _parse_shape2d_thunk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Call the shape loader with fatal-error handling enabled.

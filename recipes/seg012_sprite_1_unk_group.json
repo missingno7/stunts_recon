@@ -272,7 +272,7 @@
     {
       "end": 145018,
       "name": "sprite_1_unk",
-      "public": "_sprite_1_unk",
+      "public": "_drawrect",
       "stable_id": null,
       "start": 144850,
       "target": {
@@ -283,7 +283,7 @@
     {
       "end": 145218,
       "name": "sprite_1_unk3",
-      "public": "_sprite_1_unk3",
+      "public": "_sprite_blit_dither_phase",
       "stable_id": "load_2367a",
       "start": 145018,
       "target": {
@@ -299,13 +299,13 @@
     "groups": [],
     "publics": [
       {
-        "name": "_sprite_1_unk",
-        "offset": 90,
+        "name": "_sprite_blit_dither_phase",
+        "offset": 258,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_1_unk3",
-        "offset": 258,
+        "name": "_drawrect",
+        "offset": 90,
         "segment": "S012_TEXT"
       },
       {

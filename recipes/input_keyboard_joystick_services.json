@@ -2157,13 +2157,13 @@
     },
     {
       "name": "nopsub_304AF",
-      "public": "_nopsub_304AF",
+      "public": "_kb_clear_key_callback",
       "stable_id": "load_204af",
       "start": 132271
     },
     {
       "name": "nopsub_304B6",
-      "public": "_nopsub_304B6",
+      "public": "_input_read_char_or_joystick",
       "stable_id": "load_204b6",
       "start": 132278
     },
@@ -2181,7 +2181,7 @@
     },
     {
       "name": "nopsub_305C8",
-      "public": "_nopsub_305C8",
+      "public": "_input_get_action_buttons",
       "stable_id": "load_205c8",
       "start": 132552
     },
@@ -2211,7 +2211,7 @@
     },
     {
       "name": "nopsub_307FA",
-      "public": "_nopsub_307FA",
+      "public": "_joystick_scale_saved_y",
       "stable_id": null,
       "start": 133114
     }
@@ -2251,28 +2251,13 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_304B6",
-        "offset": 222,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_305C8",
-        "offset": 496,
+        "name": "_joystick_scale_saved_y",
+        "offset": 1058,
         "segment": "S012_TEXT"
       },
       {
         "name": "_kb_get_char",
         "offset": 321,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_304AF",
-        "offset": 215,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_307FA",
-        "offset": 1058,
         "segment": "S012_TEXT"
       },
       {
@@ -2301,6 +2286,11 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_input_get_action_buttons",
+        "offset": 496,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_get_joy_flags",
         "offset": 548,
         "segment": "S012_TEXT"
@@ -2318,6 +2308,16 @@
       {
         "name": "_kb_reg_callback",
         "offset": 134,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_kb_clear_key_callback",
+        "offset": 215,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_input_read_char_or_joystick",
+        "offset": 222,
         "segment": "S012_TEXT"
       }
     ],

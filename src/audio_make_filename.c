@@ -61,8 +61,8 @@ I16 menu_clear_color = 9;
 I16 camera_select_fill_color = 1;
 I16 camera_select_outline_color = 4;
 I16 performGraphColor = 1;
-I16 dialogarg2 = 4;
-U16S material_color_list[129] = {
+I16 dialog_frame_color = 4;
+U16S SDPAL_mcgacol1[129] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     12, 13, 14, 15, 108, 116, 15, 28, 29, 14, 28, 31,
     14, 200, 198, 196, 112, 114, 116, 194, 197, 200, 146, 37,
@@ -75,7 +75,7 @@ U16S material_color_list[129] = {
     60, 77, 46, 61, 45, 202, 190, 186, 183, 180, 0, 28,
     30, 16, 20, 68, 54, 39, 43, 12, 17
 };
-U16S material_pattern_list[129] = {
+U16S SDPAL_mcgatype[129] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
@@ -88,7 +88,7 @@ U16S material_pattern_list[129] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
     1, 1, 1, 1, 1, 1, 1, 0, 0
 };
-U16S material_pattern2_list[129] = {
+U16S SDPAL_mcgadither[129] = {
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF, 0x0000, 0xFFFF, 0xFFFF, 0xFFFF, 0x77DD, 0xDD77,
@@ -107,7 +107,7 @@ U16S material_pattern2_list[129] = {
     0x33CC, 0xB66D, 0x4992, 0xB66D, 0x4992, 0xB66D, 0x4992, 0x0000,
     0x0000
 };
-U16S *material_clrlist_ptr = material_color_list;
-U16S *material_color_table_pointer = material_color_list;
-U16S *material_pattern_table_pointer = material_pattern_list;
-U16S *material_pattern2_table_ptr = material_pattern2_list;
+U16S *material_clrlist_ptr = SDPAL_mcgacol1;
+U16S *material_color_table_pointer = SDPAL_mcgacol1;
+U16S *material_pattern_table_pointer = SDPAL_mcgatype;
+U16S *material_pattern2_table_ptr = SDPAL_mcgadither;

@@ -3,7 +3,7 @@
 
 #define WHEEL_RING_POINT_COUNT 16
 #define WHEEL_OUTER_RING_OFFSET 32
-struct WheelRect { I16 left, top, unused0, unused1, unused2, unused3, x, y; };
+struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 struct Point { I16 x, y; };
 extern void FAR preRender_wheel_helper2(struct WheelRect *, struct Point *, I16);
 /* Generate wheel section rings and copy a translated ring using the rectangle origin delta.

@@ -15,7 +15,7 @@ extern void FAR* load_shape2d_nofatal_thunk(I8* shapename);
 /* PLATFORM(file): forward the shape path to the shared file/resource loader. */
 void FAR* file_load_shape2d_nofatal2(I8* shapename) { return load_shape2d_nofatal_thunk(shapename); }
     /* PLATFORM(file): use the game file and resource search service. */
-extern void FAR file_build_path(I8 *dir, I8 *name, I8 *ext, I8 *dst);
+extern void FAR makename(I8 *dir, I8 *name, I8 *ext, I8 *dst);
     /* PLATFORM(file): use the game file and resource search service. */
 extern I8 * FAR file_find(I8 *query);
 /* Build a directory/name/extension path and ask the file service to find it.
@@ -26,7 +26,7 @@ I8 * FAR file_combine_and_find(I8 *dir, I8 *name, I8 *ext)
 {
     I8 path[80];
     /* PLATFORM(file): use the game file and resource search service. */
-    file_build_path(dir, name, ext, path);
+    makename(dir, name, ext, path);
     /* PLATFORM(file): use the game file and resource search service. */
     return file_find(path);
 }
@@ -51,7 +51,7 @@ unsigned short slow_video_mode_state;
 extern U16S frm_rate2;
 extern U16S rate_frame;
 extern U16S statemgmtcpy;
-extern U8 detail_lvl;
+extern U8 renderlevel;
 extern I16 *material_pattern2_table_ptr, *material_pattern_table_pointer, *material_color_table_pointer, *material_clrlist_ptr;
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 extern void FAR kb_init_interrupt(void);
@@ -92,9 +92,9 @@ extern I16S FAR audio_toggle_flag2(void);
 extern I16S FAR audio_toggle_flag6(void);
 extern I16S FAR set_criterr_handler(I16S (FAR *)(void));
 void load_palandcursor(void);
-void random_wait(void);
+void seedrandom(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void FAR sprite_copy_2_to_1(void);
+extern void FAR displaywindow(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 extern void FAR sprset1size(U16S, U16S, U16S, U16S);
     /* PLATFORM(timer): use the game timer service. */
@@ -103,11 +103,11 @@ extern I16 FAR timer_get_delta_alt(void);
 extern void FAR sprite_clear_1_color(U8);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 extern void FAR sprite_clear_1_color(U8);
-extern void FAR rect_adjust_from_point(struct POINT2D*, struct RECTANGLE*);
-extern void FAR copy_material_list_pointers(void*, void*, void*, void*, U16S);
+extern void FAR zonecheck(struct POINT2D*, struct RECTANGLE*);
+extern void FAR INIT_PALETTE(void*, void*, void*, void*, U16S);
 extern U16 FAR strlen(I8*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern I16 FAR video_get_status(void);
+extern I16 FAR vsyncstate(void);
 extern I16 FAR rand(void);
 extern I16 FAR get_kevinrandom(void);
     /* PLATFORM(file): read startup shape resources through the game file service. */
@@ -115,7 +115,7 @@ extern void FAR * FAR file_load_shape2d_fatal_thunk(I8*);
     /* PLATFORM(file): read startup shape resources through the game file service. */
 extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-extern void FAR video_set_palette(U16S, U16S, U8*);
+extern void FAR vgapalette(U16S, U16S, U8*);
     /* PLATFORM(memory): use the game-managed far-memory service. */
 extern void FAR mmgr_free(void FAR*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
@@ -267,7 +267,7 @@ void initialize_main(I16 argc, I8* argv[])
 	
 	// Timing measures.
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-		sprite_copy_2_to_1();
+		displaywindow();
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 	sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 120);
 
@@ -291,7 +291,7 @@ void initialize_main(I16 argc, I8* argv[])
 		
 		for (j = 0; j < 400; ++j) {
 			tmppoint.py = tmppoint.px = j;
-			rect_adjust_from_point(&tmppoint, &limits);
+			zonecheck(&tmppoint, &limits);
 		}
 		
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
@@ -303,7 +303,7 @@ void initialize_main(I16 argc, I8* argv[])
 
 	for (i = 0; i < 146; ++i) {
 		for (j = 0; j < 255; ++j) {
-			rect_adjust_from_point(&tmppoint, &limits);
+			zonecheck(&tmppoint, &limits);
 		}
 	}
 	
@@ -320,41 +320,41 @@ void initialize_main(I16 argc, I8* argv[])
 		frm_rate2 = 10;
 
 	if (timerdelta3 < 35) {
-		detail_lvl = 0;
+		renderlevel = 0;
 	}
 	else if (timerdelta3 < 55) {
-		detail_lvl = 1;
+		renderlevel = 1;
 	}
 	else if (timerdelta3 < 75) {
-		detail_lvl = 2;
+		renderlevel = 2;
 	}
 	else if (timerdelta3 < 100 || !slow_video_mode_state) {
-		detail_lvl = 3;
+		renderlevel = 3;
 	}
 	else {
-		detail_lvl = 4;
+		renderlevel = 4;
 	}
 
 	rate_frame = frm_rate2;
 	statemgmtcpy = slow_video_mode_state;
 	
-	random_wait();
+	seedrandom();
 	
-	copy_material_list_pointers(material_clrlist_ptr, material_color_table_pointer, material_pattern_table_pointer, material_pattern2_table_ptr, 0);
+	INIT_PALETTE(material_clrlist_ptr, material_color_table_pointer, material_pattern_table_pointer, material_pattern2_table_ptr, 0);
 }
 
 /* Wait for a video-status transition and advance the game random generators.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(video): synchronize the startup delay against video status. */
-void random_wait(void)
+void seedrandom(void)
 {
     register I16 status1, i;
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-    status1 = video_get_status();
+    status1 = vsyncstate();
     i = 0;
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-    while (status1 == video_get_status() && i < 12000)
+    while (status1 == vsyncstate() && i < 12000)
         ++i;
     if (i == 1024)
         /* PLATFORM(bios): read the BIOS tick-count byte as the fallback seed. */
@@ -388,7 +388,7 @@ void load_palandcursor(void)
     for (count = 0; count < 0x300; ++count)
         colors[count] = palptr[count];
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-    video_set_palette(0, PLATFORM_PALETTE_COLOR_COUNT, colors);
+    vgapalette(0, PLATFORM_PALETTE_COLOR_COUNT, colors);
 
     /* PLATFORM(file): read startup shape resources through the game file service. */
     shape_data = locate_shape_fatal(filedata, "smou");
@@ -431,18 +431,18 @@ void FAR *mmgr_alloc_resbytes(const I8 *name, I32 size)
     /* PLATFORM(memory): use the game-managed far-memory service. */
     return mmgr_alloc_pages(name, size / 16 + 1);
 }
-extern U16S mmgr_get_ofs_diff(void);
+extern U16S unlockedmemory(void);
 
-U32 mmgr_get_res_ofs_diff_scaled(void)
+U32 availmem(void)
 {
     /* PLATFORM(memory): read the current game-memory-manager offset difference. */
-    return ((U32)mmgr_get_ofs_diff()) << 4;
+    return ((U32)unlockedmemory()) << 4;
 }
 extern U16S FAR mmgr_get_chunk_size(I8 FAR *ptr);
 
 /* Convert a memory-manager chunk size from paragraphs to bytes.
  * PLATFORM(memory): query the game memory manager chunk record. */
-U32 FAR mmgr_get_chunk_size_bytes(I8 FAR *ptr)
+U32 FAR modsize(I8 FAR *ptr)
 {
     /* PLATFORM(memory): read this game-memory-manager chunk size. */
     return ((U32)mmgr_get_chunk_size(ptr)) << 4;

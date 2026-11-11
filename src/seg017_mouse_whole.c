@@ -19,7 +19,7 @@ unsigned int cursorxposition;
 unsigned int mouse_api_y;
 extern U16 mousehorscale;
 extern I16 mouse_button_state_cache;
-extern I16 showmouse;
+extern I16 mouseshown;
 extern I16 FAR int86(U16 interrupt_no, MouseRegs *input, MouseRegs *output);
 void FAR mouse_set_pixratio(U16 xratio, U16 yratio);
 void FAR mouse_set_minmax(U16 xmin, U16 ymin, U16 xmax, U16 ymax);
@@ -102,9 +102,9 @@ static U16 FAR mouse_get_position(void)
 /* PLATFORM(input_mouse): show the DOS mouse cursor. */
 static void FAR mouse_show_cursor(void)
 {
-    ++showmouse;
-    if (showmouse < 1) return;
-    showmouse = 1;
+    ++mouseshown;
+    if (mouseshown < 1) return;
+    mouseshown = 1;
     msregisterms.ax = MOUSE_FN_SHOW_CURSOR;
     /* PLATFORM(input_mouse): call the DOS mouse driver through INT 33h. */
     int86(PLATFORM_DOS_MOUSE_INTERRUPT, &msregisterms, &msregisterms);
@@ -116,8 +116,8 @@ static void FAR mouse_show_cursor(void)
 /* PLATFORM(input_mouse): hide the DOS mouse cursor. */
 static void FAR mouse_hide_cursor(void)
 {
-    --showmouse;
-    if (showmouse != 0) return;
+    --mouseshown;
+    if (mouseshown != 0) return;
     msregisterms.ax = MOUSE_FN_HIDE_CURSOR;
     /* PLATFORM(input_mouse): call the DOS mouse driver through INT 33h. */
     int86(PLATFORM_DOS_MOUSE_INTERRUPT, &msregisterms, &msregisterms);
@@ -156,7 +156,7 @@ void FAR mouse_get_state(U16 *ax, U16 *cx, U16 *dx)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): update the DOS mouse horizontal range. */
-void FAR nopsub_36A9A(I16 xmin, I16 xmax)
+void FAR mouse_set_horizontal_range(I16 xmin, I16 xmax)
 {
     msregisterms.ax = MOUSE_FN_SET_HORIZONTAL_RANGE;
     msregisterms.cx = xmin >> mousehorscale;
@@ -169,7 +169,7 @@ void FAR nopsub_36A9A(I16 xmin, I16 xmax)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): update the DOS mouse vertical range. */
-void FAR nopsub_36ACA(U16 ymin, U16 ymax)
+void FAR mouse_set_vertical_range(U16 ymin, U16 ymax)
 {
     msregisterms.ax = MOUSE_FN_SET_VERTICAL_RANGE;
     msregisterms.cx = ymin;
@@ -180,4 +180,4 @@ void FAR nopsub_36ACA(U16 ymin, U16 ymax)
 
 I16 mouse_button_state_cache = 0;
 U16 mousehorscale = 0;
-I16 showmouse = 0;
+I16 mouseshown = 0;

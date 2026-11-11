@@ -372,7 +372,7 @@
     {
       "end": 141239,
       "name": "timer_get_delta",
-      "public": "_timer_get_delta",
+      "public": "_elapsedticks",
       "stable_id": "load_2279a",
       "start": 141210,
       "target": {
@@ -383,7 +383,7 @@
     {
       "end": 141248,
       "name": "timer_reset",
-      "public": "_timer_reset",
+      "public": "_resettick",
       "stable_id": "load_227b7",
       "start": 141239,
       "target": {
@@ -394,7 +394,7 @@
     {
       "end": 141271,
       "name": "timer_copy_counter",
-      "public": "_timer_copy_counter",
+      "public": "_setticks",
       "stable_id": "load_227c0",
       "start": 141248,
       "target": {
@@ -405,7 +405,7 @@
     {
       "end": 141291,
       "name": "timer_wait_for_dx",
-      "public": "_timer_wait_for_dx",
+      "public": "_waitticks",
       "stable_id": "load_227d7",
       "start": 141271,
       "target": {
@@ -416,7 +416,7 @@
     {
       "end": 141317,
       "name": "timer_compare_dx",
-      "public": "_timer_compare_dx",
+      "public": "_testticks",
       "stable_id": "load_227eb",
       "start": 141291,
       "target": {
@@ -427,7 +427,7 @@
     {
       "end": 141362,
       "name": "timer_get_counter_unk",
-      "public": "_timer_get_counter_unk",
+      "public": "_timedwait",
       "stable_id": null,
       "start": 141317,
       "target": {
@@ -459,47 +459,47 @@
     ],
     "publics": [
       {
+        "name": "_line_input_font_header",
+        "offset": 8,
+        "segment": "_DATA"
+      },
+      {
         "name": "_timer_copy_target_high",
         "offset": 2,
         "segment": "_DATA"
       },
       {
-        "name": "_line_input_screen_rect",
-        "offset": 8,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_timer_reset",
-        "offset": 29,
+        "name": "_elapsedticks",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_timer_wait_for_dx",
-        "offset": 61,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_timer_copy_counter",
+        "name": "_setticks",
         "offset": 38,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_timer_copy_unk",
+        "name": "_timer_deadline_ticks",
         "offset": 0,
         "segment": "_DATA"
       },
       {
-        "name": "_timer_get_delta",
-        "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_timer_get_counter_unk",
+        "name": "_timedwait",
         "offset": 107,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_timer_compare_dx",
+        "name": "_resettick",
+        "offset": 29,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_waitticks",
+        "offset": 61,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_testticks",
         "offset": 81,
         "segment": "S012_TEXT"
       }

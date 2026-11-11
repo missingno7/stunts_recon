@@ -8,8 +8,8 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _nopsub_33AC0
-public _nopsub_33AE4
+public _shape2d_and_rle_hotspot
+public _shape2d_and_rle_at
 public _shape2d_render_bmp_as_mask
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33AC0.
@@ -51,7 +51,7 @@ public _shape2d_render_bmp_as_mask
 ; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per
 ; row due signed
 ; ASMDOC DEC/JG.
-_nopsub_33AC0 proc far
+_shape2d_and_rle_hotspot proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -75,7 +75,7 @@ _nopsub_33AC0 proc far
     mov     [bp+local_destination_y], ax
     jmp     short render_bmp_as_mask_shared_exit
     even ; word-align the following entry
-_nopsub_33AC0 endp
+_shape2d_and_rle_hotspot endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33AE4.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -115,7 +115,7 @@ _nopsub_33AC0 endp
 ; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per
 ; row due signed
 ; ASMDOC DEC/JG.
-_nopsub_33AE4 proc far
+_shape2d_and_rle_at proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -137,7 +137,7 @@ _nopsub_33AE4 proc far
     mov     [bp+local_destination_y], ax
     jmp     short render_bmp_as_mask_shared_exit
     even ; word-align the following entry
-_nopsub_33AE4 endp
+_shape2d_and_rle_at endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Render a 2D bitmap shape as a mask.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 6);

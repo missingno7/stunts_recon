@@ -401,7 +401,7 @@
     {
       "end": 141100,
       "name": "sin_fast",
-      "public": "_sinfast",
+      "public": "_intsin",
       "stable_id": "load_226de",
       "start": 141022,
       "target": {
@@ -412,7 +412,7 @@
     {
       "end": 141112,
       "name": "cos_fast",
-      "public": "_cosfast",
+      "public": "_intcos",
       "stable_id": null,
       "start": 141100,
       "target": {
@@ -423,7 +423,7 @@
     {
       "end": 141126,
       "name": "nopsub_32738",
-      "public": "_nopsub_32738",
+      "public": "_thickness",
       "stable_id": "load_22738",
       "start": 141112,
       "target": {
@@ -434,7 +434,7 @@
     {
       "end": 141137,
       "name": "nopsub_32746",
-      "public": "_nopsub_32746",
+      "public": "_scalethicknessxp",
       "stable_id": "load_22746",
       "start": 141126,
       "target": {
@@ -445,7 +445,7 @@
     {
       "end": 141148,
       "name": "nopsub_32751",
-      "public": "_nopsub_32751",
+      "public": "_scalethicknessyp",
       "stable_id": "load_22751",
       "start": 141137,
       "target": {
@@ -456,7 +456,7 @@
     {
       "end": 141162,
       "name": "projectiondata9_times_ratio",
-      "public": "_projectiondata9_times_ratio",
+      "public": "_thicknessxp",
       "stable_id": "load_2275c",
       "start": 141148,
       "target": {
@@ -467,7 +467,7 @@
     {
       "end": 141176,
       "name": "nopsub_3276A",
-      "public": "_nopsub_3276A",
+      "public": "_thicknessyp",
       "stable_id": "load_2276a",
       "start": 141162,
       "target": {
@@ -489,7 +489,7 @@
     {
       "end": 141210,
       "name": "timer_custom_delta",
-      "public": "_timer_custom_delta",
+      "public": "_tickcount",
       "stable_id": "load_22782",
       "start": 141186,
       "target": {
@@ -523,23 +523,8 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_32751",
-        "offset": 323,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_32746",
-        "offset": 312,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_32738",
-        "offset": 298,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_3276A",
-        "offset": 348,
+        "name": "_thicknessxp",
+        "offset": 334,
         "segment": "S012_TEXT"
       },
       {
@@ -548,8 +533,23 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_thicknessyp",
+        "offset": 348,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_timer_get_counter",
         "offset": 362,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_intcos",
+        "offset": 286,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_intsin",
+        "offset": 208,
         "segment": "S012_TEXT"
       },
       {
@@ -563,23 +563,8 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_timer_custom_delta",
-        "offset": 372,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_cosfast",
-        "offset": 286,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_file_get_res_shape_count",
         "offset": 60,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_sinfast",
-        "offset": 208,
         "segment": "S012_TEXT"
       },
       {
@@ -588,13 +573,28 @@
         "segment": "_DATA"
       },
       {
-        "name": "_projectiondata9_times_ratio",
-        "offset": 334,
+        "name": "_thickness",
+        "offset": 298,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_tickcount",
+        "offset": 372,
         "segment": "S012_TEXT"
       },
       {
         "name": "_file_get_shape2d",
         "offset": 77,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_scalethicknessxp",
+        "offset": 312,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_scalethicknessyp",
+        "offset": 323,
         "segment": "S012_TEXT"
       }
     ],

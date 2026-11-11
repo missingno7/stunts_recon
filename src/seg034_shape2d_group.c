@@ -44,7 +44,7 @@ extern void file_load_shape2d_palmap_init(U8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_load_shape2d_expand(U8 FAR *, I8 FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern I8 FAR *mmgr_op_unk(I8 FAR *);
+extern I8 FAR *mmgr_compact_chunk(I8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_load_shape2d_palmap_apply(U8 FAR *, U8 []);
 void FAR *file_load_shape2d(I8 *, I16);
@@ -160,7 +160,7 @@ void FAR* file_load_shape2d(I8* shapename, I16 fatal) {
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 	mmgr_release(loaded_chunk);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-	loaded_chunk = mmgr_op_unk(work_pages);
+	loaded_chunk = mmgr_compact_chunk(work_pages);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 	file_load_shape2d_palmap_apply(loaded_chunk, palmap);
 	return loaded_chunk;

@@ -685,13 +685,13 @@
   "members": [
     {
       "name": "update_rpm_from_speed",
-      "public": "_update_rpm_from_speed",
+      "public": "_calcrpm",
       "stable_id": "load_09dc6",
       "start": 40390
     },
     {
       "name": "nopsub_19DE8",
-      "public": "_nopsub_19DE8",
+      "public": "_math_sign_word",
       "stable_id": "load_09de8",
       "start": 40424
     },
@@ -721,7 +721,7 @@
     },
     {
       "name": "get_kevinrandom_seed",
-      "public": "_get_kevinrandom_seed",
+      "public": "_mygetseeds",
       "stable_id": "load_09e4e",
       "start": 40526
     },
@@ -791,11 +791,6 @@
         "segment": "S002_TEXT"
       },
       {
-        "name": "_nopsub_19DE8",
-        "offset": 34,
-        "segment": "S002_TEXT"
-      },
-      {
         "name": "_initialize_kevin_random",
         "offset": 91,
         "segment": "S002_TEXT"
@@ -811,13 +806,18 @@
         "segment": "S002_TEXT"
       },
       {
+        "name": "_calcrpm",
+        "offset": 0,
+        "segment": "S002_TEXT"
+      },
+      {
         "name": "_intr0_handler",
         "offset": 259,
         "segment": "S002_TEXT"
       },
       {
-        "name": "_get_kevinrandom_seed",
-        "offset": 136,
+        "name": "_math_sign_word",
+        "offset": 34,
         "segment": "S002_TEXT"
       },
       {
@@ -831,8 +831,8 @@
         "segment": "S002_TEXT"
       },
       {
-        "name": "_update_rpm_from_speed",
-        "offset": 0,
+        "name": "_mygetseeds",
+        "offset": 136,
         "segment": "S002_TEXT"
       }
     ],

@@ -191,7 +191,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_op_unk",
+      "frame": "_mmgr_compact_chunk",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -199,7 +199,7 @@
       "offset": 185,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_mmgr_op_unk",
+      "target": "_mmgr_compact_chunk",
       "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
@@ -225,7 +225,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_parse_shape2d",
+      "frame": "_shapepack",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -233,7 +233,7 @@
       "offset": 159,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_parse_shape2d",
+      "target": "_shapepack",
       "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
@@ -327,7 +327,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_file_load_shape2d_res",
+      "frame": "_loadandshapepacka",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -335,7 +335,7 @@
       "offset": 31,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_file_load_shape2d_res",
+      "target": "_loadandshapepacka",
       "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
@@ -344,7 +344,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_file_load_shape2d_res",
+      "frame": "_loadandshapepacka",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -352,7 +352,7 @@
       "offset": 12,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_file_load_shape2d_res",
+      "target": "_loadandshapepacka",
       "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
@@ -456,7 +456,7 @@
       "end": 175340,
       "local_symbol": false,
       "name": "file_load_shape2d_res_fatal",
-      "public": "_file_load_shape2d_res_fatal",
+      "public": "_loadandshapepack",
       "stable_id": "load_2acd8",
       "start": 175320,
       "target": {
@@ -468,7 +468,7 @@
       "end": 175358,
       "local_symbol": false,
       "name": "file_load_shape2d_res_nofatal",
-      "public": "_file_load_shape2d_res_nofatal",
+      "public": "_loadandshapepackz",
       "stable_id": "load_2acec",
       "start": 175340,
       "target": {
@@ -480,7 +480,7 @@
       "end": 175516,
       "local_symbol": false,
       "name": "file_load_shape2d_res",
-      "public": "_file_load_shape2d_res",
+      "public": "_loadandshapepacka",
       "stable_id": "load_2acfe",
       "start": 175358,
       "target": {
@@ -492,7 +492,7 @@
       "end": 176268,
       "local_symbol": false,
       "name": "parse_shape2d",
-      "public": "_parse_shape2d",
+      "public": "_shapepack",
       "stable_id": "load_2ad9c",
       "start": 175516,
       "target": {
@@ -516,7 +516,7 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_file_load_shape2d_res_nofatal",
+      "_loadandshapepackz",
       "__aFNalshr",
       "_mmgr_path_to_name",
       "_mmgr_get_chunk_by_name",
@@ -524,16 +524,16 @@
       "_mmgr_get_chunk_size",
       "_mmgr_alloc_pages",
       "_mmgr_release",
-      "_mmgr_op_unk",
+      "_mmgr_compact_chunk",
       "_file_get_res_shape_count",
       "_file_get_shape2d",
       "_parse_shape2d_helper",
       "_parse_shape2d_helper2",
       "_parse_shape2d_helper3",
       "_mmgr_resize_memory",
-      "_file_load_shape2d_res",
-      "_parse_shape2d",
-      "_file_load_shape2d_res_fatal"
+      "_loadandshapepacka",
+      "_shapepack",
+      "_loadandshapepack"
     ],
     "groups": [
       {
@@ -553,7 +553,7 @@
     ],
     "publics": [
       {
-        "name": "_file_load_shape2d_res_nofatal",
+        "name": "_loadandshapepackz",
         "offset": 20,
         "segment": "UNIT_TEXT"
       },
@@ -563,17 +563,17 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_file_load_shape2d_res",
+        "name": "_loadandshapepacka",
         "offset": 38,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_parse_shape2d",
+        "name": "_shapepack",
         "offset": 196,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_file_load_shape2d_res_fatal",
+        "name": "_loadandshapepack",
         "offset": 0,
         "segment": "UNIT_TEXT"
       }

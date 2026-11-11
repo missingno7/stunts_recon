@@ -16,7 +16,7 @@ S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
 extrn _line_pattern_bits:word
 extrn _prerender_auxiliary_arg:word
-public _nopsub_33330
+public _sprite_fill_two_color_spans_at
 public _draw_unknown_lines
 extrn _sprite1:byte
 sprite_lineofs equ 0Ah
@@ -62,7 +62,7 @@ sprite_bitmapptr equ 0
 ; ASMDOC Shared tail: Prologue saves SI/DI/BP then jumps to unknown_lines_when_condition (67); outputs, register
 ; clobbers and
 ; ASMDOC global reads include the entire common core.
-_nopsub_33330 proc far
+_sprite_fill_two_color_spans_at proc far
     arg_auxiliary_color = word ptr 16
     arg_row_pattern = word ptr 18
 
@@ -76,7 +76,7 @@ _nopsub_33330 proc far
     mov      byte ptr ds:[_prerender_auxiliary_arg], al
     jmp     short unknown_lines_when_condition
     even ; word-align the following entry
-_nopsub_33330 endp
+_sprite_fill_two_color_spans_at endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw the line set from the prepared line records.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2

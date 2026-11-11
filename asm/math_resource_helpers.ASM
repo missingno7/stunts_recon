@@ -319,8 +319,8 @@ _nopsub_326BA endp
 
 assume ds:DGROUP
 public 'CODE'
-public _sinfast
-public _cosfast
+public _intsin
+public _intcos
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the fast fixed-point sine approximation.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -343,7 +343,7 @@ public _cosfast
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: JMP CS:sine_quadrant_dispatch[2*((angle>>8)&3)] uses four near code offsets embedded in code, not
 ; ASMDOC four instructions. Index reflected as 256-lowbyte for odd quadrants.
-_sinfast proc far
+_intsin proc far
      sin_fast_s = byte ptr 0
      sin_fast_r = byte ptr 2
     sin_fast_arg_0 = word ptr 6
@@ -392,7 +392,7 @@ sinfast_finish_4:
     neg     ax
     pop     bp
     retf
-_sinfast endp
+_intsin endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the fast fixed-point cosine approximation.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -414,7 +414,7 @@ _sinfast endp
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: Shares code_sin_fast_main and all sine epilogues; trailing DB 0 is alignment/unreached from entry.
-_cosfast proc far
+_intcos proc far
      cos_fast_s = byte ptr 0
      cos_fast_r = byte ptr 2
     cos_fast_arg_0 = word ptr 6
@@ -426,10 +426,10 @@ _cosfast proc far
     jmp     short code_sin_fast_main
 
     db 0 ; retained zero fill at this boundary
-_cosfast endp
+_intcos endp
 
 public 'CODE'
-public _nopsub_32738
+public _thickness
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 32738.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -452,7 +452,7 @@ public _nopsub_32738
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: Success requires denominator!=0 and numerator/denominator<=FFFFh. Installed handler may alter fault
 ; ASMDOC recovery; do not interpret result after fault as normal division.
-_nopsub_32738 proc far
+_thickness proc far
     push bp
     mov bp, sp
     mov dx, [bp+8]
@@ -460,10 +460,10 @@ _nopsub_32738 proc far
     div word ptr [bp+0Ah]
     pop bp
     retf
-_nopsub_32738 endp
+_thickness endp
 
 public 'CODE'
-public _nopsub_32746
+public _scalethicknessxp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 32746.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -485,7 +485,7 @@ public _nopsub_32746
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Evidence: asm/math_resource_helpers.ASM:561
-_nopsub_32746 proc far
+_scalethicknessxp proc far
     arg_factor = word ptr 6
 
     push    bp
@@ -494,10 +494,10 @@ _nopsub_32746 proc far
     mul     [bp+arg_factor]
     pop     bp
     retf
-_nopsub_32746 endp
+_scalethicknessxp endp
 
 public 'CODE'
-public _nopsub_32751
+public _scalethicknessyp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 32751.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -519,7 +519,7 @@ public _nopsub_32751
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Evidence: asm/math_resource_helpers.ASM:583
-_nopsub_32751 proc far
+_scalethicknessyp proc far
     arg_factor = word ptr 6
 
     push    bp
@@ -528,10 +528,10 @@ _nopsub_32751 proc far
     mul     [bp+arg_factor]
     pop     bp
     retf
-_nopsub_32751 endp
+_scalethicknessyp endp
 
 public 'CODE'
-public _projectiondata9_times_ratio
+public _thicknessxp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the graphics or geometry helper identified by projectiondata9 times ratio.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -555,7 +555,7 @@ public _projectiondata9_times_ratio
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: DX is remainder, not high product at return. No fixed-point shift, rounding increment or signed
 ; ASMDOC arithmetic is used.
-_projectiondata9_times_ratio proc far
+_thicknessxp proc far
     push bp
     mov bp, sp
     mov ax, word ptr DGROUP:_projection_x_scale
@@ -563,10 +563,10 @@ _projectiondata9_times_ratio proc far
     div word ptr [bp+8]
     pop bp
     retf
-_projectiondata9_times_ratio endp
+_thicknessxp endp
 
 public 'CODE'
-public _nopsub_3276A
+public _thicknessyp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3276A.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -590,7 +590,7 @@ public _nopsub_3276A
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: DX is remainder, not high product at return. No fixed-point shift, rounding increment or signed
 ; ASMDOC arithmetic is used.
-_nopsub_3276A proc far
+_thicknessyp proc far
     arg_numerator = word ptr 6
     arg_denominator = word ptr 8
 
@@ -601,7 +601,7 @@ _nopsub_3276A proc far
     div     [bp+arg_denominator]
     pop     bp
     retf
-_nopsub_3276A endp
+_thicknessyp endp
 
 public 'CODE'
 public _timer_get_counter
@@ -637,7 +637,7 @@ _timer_get_counter proc far
 _timer_get_counter endp
 
 public 'CODE'
-public _timer_custom_delta
+public _tickcount
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the timer service identified by timer custom delta.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -662,7 +662,7 @@ public _timer_custom_delta
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Notes: Unlike raw snapshot getter, subtraction changes arithmetic flags. No canonical reference found;
 ; ASMDOC dead export in current sources.
-_timer_custom_delta proc far
+_tickcount proc far
     push bp
     mov bp, sp
     mov bx, [bp + 6]
@@ -675,6 +675,6 @@ _timer_custom_delta proc far
     sbb dx, cx
     pop bp
     retf
-_timer_custom_delta endp
+_tickcount endp
 S012_TEXT ends
 end

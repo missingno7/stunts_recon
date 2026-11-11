@@ -475,13 +475,13 @@
   "members": [
     {
       "name": "font_op",
-      "public": "_font_op",
+      "public": "_textnpixels",
       "stable_id": "load_22832",
       "start": 141362
     },
     {
       "name": "font_op2",
-      "public": "_font_op2",
+      "public": "_textpixels",
       "stable_id": "load_22843",
       "start": 141379
     },
@@ -493,13 +493,13 @@
     },
     {
       "name": "nopsub_328C9",
-      "public": "_nopsub_328C9",
+      "public": "_sprite_pattern_poly_args",
       "stable_id": "load_228c9",
       "start": 141513
     },
     {
       "name": "nopsub_328DB",
-      "public": "_nopsub_328DB",
+      "public": "_sprite_pattern_poly_args_alt",
       "stable_id": null,
       "start": 141531
     },
@@ -511,7 +511,7 @@
     },
     {
       "name": "mat_multiply",
-      "public": "_mat_multiply",
+      "public": "_transmult",
       "stable_id": "load_229f2",
       "start": 141810
     },
@@ -564,13 +564,13 @@
     },
     {
       "name": "nopsub_32FEE",
-      "public": "_nopsub_32FEE",
+      "public": "_vertsync",
       "stable_id": "load_22fee",
       "start": 143342
     },
     {
       "name": "video_get_status",
-      "public": "_video_get_status",
+      "public": "_vsyncstate",
       "stable_id": null,
       "start": 143356
     }
@@ -614,33 +614,18 @@
     ],
     "publics": [
       {
-        "name": "_video_get_status",
-        "offset": 1994,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_vector_op_base_z",
         "offset": 2,
         "segment": "_DATA"
       },
       {
-        "name": "_nopsub_328C9",
-        "offset": 151,
+        "name": "_textnpixels",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_nopsub_328DB",
+        "name": "_sprite_pattern_poly_args_alt",
         "offset": 169,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_nopsub_32FEE",
-        "offset": 1980,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_mat_multiply",
-        "offset": 448,
         "segment": "S012_TEXT"
       },
       {
@@ -659,13 +644,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_font_op",
-        "offset": 0,
+        "name": "_sprite_pattern_poly_args",
+        "offset": 151,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_font_op2",
-        "offset": 17,
+        "name": "_vertsync",
+        "offset": 1980,
         "segment": "S012_TEXT"
       },
       {
@@ -674,13 +659,28 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_transmult",
+        "offset": 448,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_fontdefseg",
         "offset": 0,
         "segment": "_DATA"
       },
       {
+        "name": "_vsyncstate",
+        "offset": 1994,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_mat_invert",
         "offset": 576,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_textpixels",
+        "offset": 17,
         "segment": "S012_TEXT"
       }
     ],

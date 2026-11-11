@@ -27,10 +27,10 @@ extrn _preRender_sphere_helper:far
 extrn _putpixel_single_maybe:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
-public _nopsub_33006
-public _vector_op_unk
-public _preRender_sphere
-public _nopsub_3320E
+public _zclip
+public _zclipline
+public _drawcircle
+public _sprite_set_window_bounds
 public _sprset1size
 public _video_clear_color
 ; -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ public _video_clear_color
 ; ASMDOC-GEOMETRY Dead: true. Reachability: No external symbolic calls/address-taking or table target found;
 ; rename plan dead=true; tail-jumps to live interpolation body.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_nopsub_33006 proc far
+_zclip proc far
     push    bp
     mov     bp, sp
     sub     sp, 4
@@ -84,7 +84,7 @@ _nopsub_33006 proc far
     mov     ax, ds:_vector_op_base_z
     jmp     short vector_op_join_01
     even ; word-align the following entry
-_nopsub_33006 endp
+_zclip endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the graphics or geometry helper identified by vector op unk.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -126,7 +126,7 @@ _nopsub_33006 endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg001_complete.c:1154,1297;
 ; src/obj_seg006.c:382,399,441,444
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_vector_op_unk proc far
+_zclipline proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
     arg_first_vector = word ptr 6
@@ -174,7 +174,7 @@ vector_op_branch_path_01:
     mov     sp, bp
     pop     bp
     retf
-_vector_op_unk endp
+_zclipline endp
 ; ASMDOC-GEOMETRY Unexported and unreferenced setter-like fragment; no return/prologue cleanup before falling
 ; into sphere prologue. Not a normal independently callable setter.
 vector_set_base_z:
@@ -240,7 +240,7 @@ vector_set_base_z:
 ; rows; if reached after prior array writes, falling out there returns without drawing accumulated rows.
 ; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg006.c:687 sphere primitive dispatcher
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_preRender_sphere proc far
+_drawcircle proc far
     push bp
     mov bp, sp
     sub sp, 79Ah
@@ -424,7 +424,7 @@ sphere_render_branch_path_08:
     mov sp, bp
     pop bp
     retf
-_preRender_sphere endp
+_drawcircle endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3320E. Its internal flow uses
 ; noop_entry2_branch_path_01.
@@ -468,7 +468,7 @@ _preRender_sphere endp
 ; ASMDOC-GEOMETRY Dead: true. Reachability: No external symbolic calls/address-taking or table target found;
 ; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_nopsub_3320E proc far
+_sprite_set_window_bounds proc far
     arg_sprite_offset = word ptr 6
     arg_sprite_segment = word ptr 8
     arg_left = word ptr 10
@@ -522,7 +522,7 @@ noop_entry2_branch_path_01:
     pop     ds
     pop     bp
     retf
-_nopsub_3320E endp
+_sprite_set_window_bounds endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprset1size.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2

@@ -61,9 +61,9 @@ DSEG ends
 extrn _exit:far
 extrn _printf:far
 extrn _abort:far
-extrn _sprite_copy_2_to_1:far
+extrn _displaywindow:far
 extrn _flush_stdin:far
-extrn _putpixel_line1_maybe:far
+extrn _drawcline:far
 extrn _sprite1:word
 extrn _draw_unknown_lines:far
 extrn _prerender_shared_setup:near
@@ -314,7 +314,7 @@ sphere_scanline_profile_38 db 0Bh, 0Fh, 13h, 16h, 18h, 1Ah, 1Ch, 1Eh, 1Fh, 21h, 
     db 2Eh, 2Eh, 2Eh, 2Fh, 2Fh, 2Fh, 30h, 30h, 30h, 30h, 30h, 31h
     db 31h, 31h, 31h
 _exitlistfuncs db 44 dup (0)
-_aExitListOverflow db 'EXIT LIST OVERFLOW', 0Dh, 0Ah, 0, 0
+_addexiterr db 'EXIT LIST OVERFLOW', 0Dh, 0Ah, 0, 0
 _aSFileError_1 db '%s FILE ERROR', 0
 _foundfile db 100 dup (0)
 _foundfileptr dw 0
@@ -331,20 +331,20 @@ public _video_mode4_active
 assume cs:S012_TEXT
 assume es:nothing, ss:nothing, ds:DGROUP
 public _fatal_error
-public _polang
-public _sub_2EAD4
-public _set_add_value
-public _poll_input_abort
-public _wait_for_input_delay
-public _draw_line_related_alt
-public _draw_line_related
+public _intatan
+public _getbiostick
+public _setbiosticks
+public _testbiosticks
+public _waitbios
+public _slopeline
+public _clipline
 public _parse_shape2d_helper
 public _parse_shape2d_helper2
 public _criterr_interrupt_handler
 public _set_criterr_handler
 public _criterr_exithandler
-public _preRender_unk
-public _nopsub_2F424
+public _sprite_two_color_poly_list
+public _sprite_two_color_poly_args_alt
 public _preRender_line
 public _add_exit_handler
 public _call_exitlist
@@ -395,7 +395,7 @@ _fatal_error proc near
     pop     ax
     pop     ax
 fatal_copy_display:
-    call    _sprite_copy_2_to_1
+    call    _displaywindow
 fatal_print_message:
     call    _printf
 fatal_flush_stdin:
@@ -436,7 +436,7 @@ _fatal_error endp
 ; Liveness: live; Live: src/obj_seg000.c:1632 and numerous vehicle/camera calls; timer and projection ASM call
 ; _polang.
 ; Evidence: asm/graphics_resource_runtime.ASM:259
-_polang proc far
+_intatan proc far
     arg_z = word ptr 6
     arg_x = word ptr 8
     push    bp
@@ -516,7 +516,7 @@ polar_quadrant_7:
 polar_quadrant_6:
     sub     ah, 2
     jmp     short polar_quadrant_1
-_polang endp
+_intatan endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper sub 2EAD4. Its internal flow uses timer_snapshot_complete,
 ; timer_snapshot_return.
@@ -540,7 +540,7 @@ _polang endp
 ; services: CLI/STI
 ; Liveness: live; Live: same-module deadline setters, testers and wait loops.
 ; Evidence: asm/graphics_resource_runtime.ASM:348
-_sub_2EAD4 proc far
+_getbiostick proc far
     cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov     ax, _timer_elapsed_ticks_low
     mov     dx, _timer_elapsed_ticks_high
@@ -548,7 +548,7 @@ timer_snapshot_complete:
     sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
 timer_snapshot_return:
     retf
-_sub_2EAD4 endp
+_getbiostick endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Add a delay to the current timer count and store the resulting deadline.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -572,14 +572,14 @@ _sub_2EAD4 endp
 ; Notes: An unexported wait loop at line 384 is after RETF and has no inbound source reference; it is not part
 ; of the
 ; callable setter path.
-_set_add_value proc far
+_setbiosticks proc far
     arg_delay_low = word ptr 6
     arg_delay_high = word ptr 8
     push    bp
 deadline_frame_setup:
     mov     bp, sp
 deadline_read_timer:
-    call    _sub_2EAD4
+    call    _getbiostick
 deadline_add_low_word:
     add     ax, [bp+arg_delay_low]
 deadline_add_high_word:
@@ -593,13 +593,13 @@ deadline_store_high_word:
 ; ASMDOC BLOCK: Unexported dead interior entry after RETF; its two comparisons mirror the wordwise deadline
 ; test.
 deadline_wait_until_reached:
-    call    _sub_2EAD4
+    call    _getbiostick
     cmp     dx, input_deadline_tick_high
     jb      short deadline_wait_until_reached
     cmp     ax, input_deadline_tick_low
     jb      short deadline_wait_until_reached
     retf
-_set_add_value endp
+_setbiosticks endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Poll keyboard and joystick input for the abort command.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -624,8 +624,8 @@ _set_add_value endp
 ; Notes: Independent unsigned word comparisons, not a lexicographic 32-bit comparison. Public name is retained
 ; because
 ; the provided name plan does not rename it.
-_poll_input_abort proc far
-    call    _sub_2EAD4
+_testbiosticks proc far
+    call    _getbiostick
     xor     cx, cx
     cmp     dx, input_deadline_tick_high
     jb      short deadline_reached_result
@@ -635,7 +635,7 @@ _poll_input_abort proc far
 deadline_reached_result:
     mov     ax, cx
     retf
-_poll_input_abort endp
+_testbiosticks endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Wait for the input deadline while polling for an abort.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -659,7 +659,7 @@ _poll_input_abort endp
 ; Notes: Both unsigned comparisons must pass even if high has already exceeded the target; no input polling or
 ; abort
 ; service occurs.
-_wait_for_input_delay proc far
+_waitbios proc far
     local_deadline_low = word ptr -4
     local_deadline_high = word ptr -2
     arg_delay_low = word ptr 6
@@ -667,13 +667,13 @@ _wait_for_input_delay proc far
     push    bp
     mov     bp, sp
     sub     sp, 4
-    call    _sub_2EAD4
+    call    _getbiostick
     add     ax, [bp+arg_delay_low]
     adc     dx, [bp+arg_delay_high]
     mov     [bp+local_deadline_low], ax
     mov     [bp+local_deadline_high], dx
 delay_deadline_poll_loop:
-    call    _sub_2EAD4
+    call    _getbiostick
     cmp     dx, [bp+local_deadline_high]
     jb      short delay_deadline_poll_loop
     cmp     ax, [bp+local_deadline_low]
@@ -681,7 +681,7 @@ delay_deadline_poll_loop:
     mov     sp, bp
     pop     bp
     retf
-_wait_for_input_delay endp
+_waitbios endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Build line-rendering descriptors using the alternate path.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -722,7 +722,7 @@ _wait_for_input_delay endp
 ; initial clipping, but overflow fallback re-enters code that reads clip bounds. Tables are inline CS data; no
 ; direct
 ; hardware services.
-_draw_line_related_alt proc far
+_slopeline proc far
     var_4 = byte ptr -4
     push    bp
     mov     bp, sp
@@ -731,7 +731,7 @@ _draw_line_related_alt proc far
     push    di
     mov     [bp+var_4], 1
     jmp     short line_init_output_record
-_draw_line_related_alt endp
+_slopeline endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Build line-rendering descriptors for the requested endpoints.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_8 (word ptr 14);
@@ -773,7 +773,7 @@ _draw_line_related_alt endp
 ; initial clipping, but overflow fallback re-enters code that reads clip bounds. Tables are inline CS data; no
 ; direct
 ; hardware services.
-_draw_line_related proc far
+_clipline proc far
     var_4 = byte ptr -4
     var_2 = word ptr -2
     arg_startX = word ptr 6
@@ -1650,7 +1650,7 @@ line_fallback_mark_bottom_clip:
 line_fallback_retreat_x:
     sub     [si+8], dx
     jmp     short line_fallback_check_start_y
-_draw_line_related endp
+_clipline endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by parse shape2d helper.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -1924,7 +1924,7 @@ _criterr_exithandler endp
 ; mode-0
 ; prologue follows line 1524; private preRender_unk_mode_1 at 1575 uses inline list with mode=1 and is also
 ; unreferenced.
-_preRender_unk proc far
+_sprite_two_color_poly_list proc far
     local_merge_mode = byte ptr -10
     arg_pattern = word ptr 6
     arg_primary_color = word ptr 8
@@ -1962,7 +1962,7 @@ prerender_setup_shared_core:
     mov     ax, offset _preRender_line
     mov     _imagefunc, ax
     jmp     _prerender_shared_setup
-_preRender_unk endp
+_sprite_two_color_poly_list endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 2F424.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -1998,7 +1998,7 @@ _preRender_unk endp
 ; mode-0
 ; prologue follows line 1524; private preRender_unk_mode_1 at 1575 uses inline list with mode=1 and is also
 ; unreferenced.
-_nopsub_2F424 proc far
+_sprite_two_color_poly_args_alt proc far
     local_merge_mode = byte ptr -10
     arg_inline_points = byte ptr 14
     push    bp
@@ -2009,7 +2009,7 @@ _nopsub_2F424 proc far
     lea     si, [bp+arg_inline_points]
     mov     [bp+local_merge_mode], 0
     jmp     short prerender_setup_shared_core
-_nopsub_2F424 endp
+_sprite_two_color_poly_args_alt endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender unk mode 1.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -2195,7 +2195,7 @@ _preRender_line proc far
     push    [bp+arg_endX]
     push    [bp+arg_startY]
     push    [bp+arg_startX]
-    call    _draw_line_related
+    call    _clipline
     add     sp, 0Ah
     or      ax, ax
     jnz     short prerender_line_return
@@ -2203,7 +2203,7 @@ _preRender_line proc far
     cmp     word ptr [bx+0Eh], 0
     jle     short prerender_line_return
     push    bx
-    call    _putpixel_line1_maybe
+    call    _drawcline
     add     sp, 2
 prerender_line_return:
     mov     sp, bp
@@ -2256,7 +2256,7 @@ exitlist_check_free_slot:
     jz      short exitlist_overflow_error
     add     bx, 4
     loop    exitlist_search_callback
-    mov     ax, offset DGROUP:_aExitListOverflow
+    mov     ax, offset DGROUP:_addexiterr
     push    ax
     call    far ptr _fatal_error
 ; ASMDOC BLOCK: Free-slot insertion clears the following segment as sentinel; label name overflow_error is

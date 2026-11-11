@@ -82,7 +82,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_toupper",
+      "frame": "_cap",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -90,7 +90,7 @@
       "offset": 100,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_toupper",
+      "target": "_cap",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -99,7 +99,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_toupper",
+      "frame": "_cap",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -107,7 +107,7 @@
       "offset": 80,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_toupper",
+      "target": "_cap",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -185,7 +185,7 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_toupper",
+      "_cap",
       "_audioresource_get_dword",
       "_audioresource_compare_chunkname",
       "_audioresource_get_chunk_index",

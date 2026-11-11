@@ -14,7 +14,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sinfast",
+      "frame": "_intsin",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -22,7 +22,7 @@
       "offset": 198,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sinfast",
+      "target": "_intsin",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -31,7 +31,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_cosfast",
+      "frame": "_intcos",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -39,7 +39,7 @@
       "offset": 184,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_cosfast",
+      "target": "_intcos",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -48,7 +48,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sinfast",
+      "frame": "_intsin",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -56,7 +56,7 @@
       "offset": 110,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sinfast",
+      "target": "_intsin",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -65,7 +65,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_cosfast",
+      "frame": "_intcos",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -73,7 +73,7 @@
       "offset": 96,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_cosfast",
+      "target": "_intcos",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -82,7 +82,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sinfast",
+      "frame": "_intsin",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -90,7 +90,7 @@
       "offset": 24,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sinfast",
+      "target": "_intsin",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -99,7 +99,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_cosfast",
+      "frame": "_intcos",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -107,7 +107,7 @@
       "offset": 10,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_cosfast",
+      "target": "_intcos",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -155,7 +155,7 @@
     {
       "end": 159616,
       "name": "mat_rot_x",
-      "public": "_mat_rot_x",
+      "public": "_xformx",
       "stable_id": "load_26f2a",
       "start": 159530,
       "target": {
@@ -166,7 +166,7 @@
     {
       "end": 159704,
       "name": "mat_rot_y",
-      "public": "_matroty",
+      "public": "_xformy",
       "stable_id": "load_26f80",
       "start": 159616,
       "target": {
@@ -177,7 +177,7 @@
     {
       "end": 159790,
       "name": "mat_rot_z",
-      "public": "_mat_rot_z",
+      "public": "_xformz",
       "stable_id": "load_26fd8",
       "start": 159704,
       "target": {
@@ -189,11 +189,11 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_mat_rot_z",
-      "_cosfast",
-      "_sinfast",
-      "_mat_rot_x",
-      "_matroty"
+      "_xformz",
+      "_intcos",
+      "_intsin",
+      "_xformx",
+      "_xformy"
     ],
     "groups": [
       {
@@ -213,17 +213,17 @@
     ],
     "publics": [
       {
-        "name": "_mat_rot_z",
+        "name": "_xformz",
         "offset": 174,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mat_rot_x",
+        "name": "_xformx",
         "offset": 0,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_matroty",
+        "name": "_xformy",
         "offset": 86,
         "segment": "UNIT_TEXT"
       }

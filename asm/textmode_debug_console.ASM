@@ -22,14 +22,14 @@ _DATA ends
 DGROUP group _DATA,DSEG
 assume ds:DGROUP
 extrn _sprintf:far
-public _nopsub_3215A
-public _nopsub_3216C
+public _console_clear_mono_screen
+public _console_delete_current_row
 public _debug_printf_text
-public _nopsub_322B4
+public _console_set_text_attribute
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 
-; nopsub_3215A
+; console_clear_mono_screen
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3215A.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -52,7 +52,7 @@ assume cs:S012_TEXT
 ; ASMDOC[timers] services: REP STOSW 2000 words
 ; ASMDOC[timers] reachability: Called by debug_printf_text form-feed control; live despite legacy nopsub name.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_nopsub_3215A proc far
+_console_clear_mono_screen proc far
     push di
     mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
     mov es, ax
@@ -63,9 +63,9 @@ _nopsub_3215A proc far
     rep stosw
     pop di
     retf
-_nopsub_3215A endp
+_console_clear_mono_screen endp
 
-; nopsub_3216C
+; console_delete_current_row
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 3216C.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -89,7 +89,7 @@ _nopsub_3215A endp
 ; ASMDOC[timers] services: REP MOVSW (24-row)*80 words; REP STOSW 80 words
 ; ASMDOC[timers] reachability: debug_printf_text overflow/newline paths call this far routine.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_nopsub_3216C proc far
+_console_delete_current_row proc far
     push    si
     push    di
     push    ds
@@ -117,7 +117,7 @@ _nopsub_3216C proc far
     pop     di
     pop     si
     retf
-_nopsub_3216C endp
+_console_delete_current_row endp
 
 ; nopsub_3219D
 ; -----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ noop_entry3_loop_head_02:
     mov bx, word ptr console_cursor_offset
     cmp bx, 0FA0h
     jl short noop_entry3_branch_path_01
-    call far ptr _nopsub_3216C
+    call far ptr _console_delete_current_row
     mov bx, 0F00h
     mov word ptr console_cursor_offset, bx
 noop_entry3_branch_path_01:
@@ -217,7 +217,7 @@ noop_entry3_branch_path_04:
     jnz short noop_entry3_branch_path_06
     cmp word ptr console_cursor_offset, 0F00h
     jle short noop_entry3_branch_path_05
-    call far ptr _nopsub_3216C
+    call far ptr _console_delete_current_row
     mov word ptr console_cursor_offset, 0F00h
     jmp short noop_entry3_loop_head_02
 noop_entry3_branch_path_05:
@@ -239,7 +239,7 @@ noop_entry3_branch_path_06:
 noop_entry3_branch_path_07:
     cmp dl, 0Ch
     jnz short noop_entry3_branch_path_08
-    call far ptr _nopsub_3215A
+    call far ptr _console_clear_mono_screen
     mov word ptr console_cursor_offset, 0
     jmp noop_entry3_loop_head_02
 noop_entry3_branch_path_08:
@@ -287,7 +287,7 @@ noop_entry3_branch_path_13:
     retf
 _debug_printf_text endp
 
-; nopsub_322B4
+; console_set_text_attribute
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 322B4.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -309,7 +309,7 @@ _debug_printf_text endp
 ; ASMDOC[timers] reachability: No direct, address-taken, callback or vector reference found; no predecessor
 ; ASMDOC[timers]   fallthrough (preceding fragment RETF). Preserve complete extent including trailing zero.
 ; ASMDOC[timers] dead: true (static known-program reachability; never permission to trim extent)
-_nopsub_322B4 proc far
+_console_set_text_attribute proc far
     arg_attribute = word ptr 6
 
     push    bp
@@ -320,7 +320,7 @@ _nopsub_322B4 proc far
     retf
 
     db 0 ; retained zero fill at this boundary
-_nopsub_322B4 endp
+_console_set_text_attribute endp
 
 S012_TEXT ends
 end

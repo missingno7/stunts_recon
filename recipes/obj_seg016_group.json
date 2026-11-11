@@ -117,7 +117,7 @@
     {
       "end": 157734,
       "name": "nopsub_367E4",
-      "public": "_nopsub_367E4",
+      "public": "_file_find_shapes_optional",
       "stable_id": "load_267e4",
       "start": 157668,
       "target": {
@@ -128,7 +128,7 @@
     {
       "end": 157800,
       "name": "nopsub_36826",
-      "public": "_nopsub_36826",
+      "public": "_file_find_sounds_required",
       "stable_id": "load_26826",
       "start": 157734,
       "target": {
@@ -139,7 +139,7 @@
     {
       "end": 157866,
       "name": "nopsub_36868",
-      "public": "_nopsub_36868",
+      "public": "_file_find_shapes_optional_alt",
       "stable_id": "load_26868",
       "start": 157800,
       "target": {
@@ -151,12 +151,12 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_nopsub_36826",
-      "_nopsub_36868",
+      "_file_find_sounds_required",
+      "_file_find_shapes_optional_alt",
       "_locate_shape_fatal",
       "_locate_many_resources",
       "_locate_shape_nofatal",
-      "_nopsub_367E4",
+      "_file_find_shapes_optional",
       "_locate_sound_fatal"
     ],
     "groups": [
@@ -177,12 +177,12 @@
     ],
     "publics": [
       {
-        "name": "_nopsub_36826",
+        "name": "_file_find_sounds_required",
         "offset": 116,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_36868",
+        "name": "_file_find_shapes_optional_alt",
         "offset": 182,
         "segment": "UNIT_TEXT"
       },
@@ -192,7 +192,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_nopsub_367E4",
+        "name": "_file_find_shapes_optional",
         "offset": 50,
         "segment": "UNIT_TEXT"
       }

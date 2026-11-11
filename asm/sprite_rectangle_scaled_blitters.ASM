@@ -35,13 +35,13 @@ sprite_widthsum dw ?
 SPRITE ends
 extrn _sprite1:word
 extrn _sprite2:word
-public _draw_filled_rect
+public _xorrectc
 public _clear_rect
 public _incnums
-public _sub_35DC8
-public _sub_35DE6
-public _sub_35E08
-public _loc_35ED9
+public _mcgatranslation
+public _mcgatransrange
+public _shape2d_scale_blit_hotspot
+public _shape2d_scale_blit_tail
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a filled rectangle using the scaled sprite blitter.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6);
@@ -70,7 +70,7 @@ public _loc_35ED9
 ; ASMDOC dead: False.
 ; ASMDOC notes: Uses XOR, not assignment fill, and no sprite scaling. Signed wrapped clip arithmetic; empty dimensions
 ; ASMDOC rejected. Later rows add pitch. Unreachable unclipped prologue after normal early-exit jump..
-_draw_filled_rect proc far
+_xorrectc proc far
     arg_x = word ptr 6
     arg_y = word ptr 8
     arg_width = word ptr 10
@@ -187,7 +187,7 @@ write_single_pixel_rows:
     jg      short write_single_pixel_rows
     jmp     short return_after_rectangle_draw
     db 0 ; retained zero fill at this boundary
-_draw_filled_rect endp
+_xorrectc endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Clear a rectangle in the active sprite or video buffer.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -319,7 +319,7 @@ copy_bytes equ 100h
 ; ASMDOC notes: Data in CODE segment is writable. No span checks or overlap buffering; changes data bytes, not
 ; ASMDOC executable opcodes..
 ; ASMDOC Proposed routine name: _sprite_copy_increment_table.
-_sub_35DC8 proc far
+_mcgatranslation proc far
     arg_source_offset = word ptr 6
     arg_source_segment = word ptr 8
     push bp
@@ -340,7 +340,7 @@ _sub_35DC8 proc far
     pop ds
     pop bp
     retf
-_sub_35DC8 endp
+_mcgatranslation endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper sub 35DE6. Its internal flow uses clear_copy_direction_flag,
 ; copy_bytes_to_increment_table.
@@ -365,7 +365,7 @@ _sub_35DC8 endp
 ; ASMDOC notes: Count zero copies nothing; caller must keep requested destination within intended storage. Normal host
 ; ASMDOC adapter deliberately rejects out-of-table spans..
 ; ASMDOC Proposed routine name: _sprite_update_increment_table.
-_sub_35DE6 proc far
+_mcgatransrange proc far
     arg_table_index = word ptr 6
     arg_byte_count = word ptr 8
     arg_source_offset = word ptr 10
@@ -391,7 +391,7 @@ copy_bytes_to_increment_table:
     pop ds
     pop bp
     retf
-_sub_35DE6 endp
+_mcgatransrange endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper sub 35E08. Its internal flow uses allocate_sprite_scale_locals,
 ; prepare_sprite_dimensions.
@@ -423,7 +423,7 @@ _sub_35DE6 endp
 ; ASMDOC step=floor(65536/scale), Q8 sampling; initial half-step selects sampling center; raw FFh skips (no incnums
 ; ASMDOC remap). Shares live tail _loc_35ED9..
 ; ASMDOC Proposed routine name: _shape2d_scale_blit_hotspot.
-_sub_35E08 proc far
+_shape2d_scale_blit_hotspot proc far
     local_horizontal_fraction = word ptr -20
     local_vertical_fraction = word ptr -18
     local_reciprocal_step_q8 = word ptr -16
@@ -581,7 +581,7 @@ save_sprite_source_origin:
 ; ASMDOC destination arithmetic wrap at 16 bits. Final unwind restores saved DS/SI/DI/BP. Shared data state is
 ; ASMDOC non-reentrant..
 ; ASMDOC Proposed routine name: _shape2d_scale_blit_tail.
-_loc_35ED9:
+_shape2d_scale_blit_tail:
     mov     ax, word ptr cs:_sprite1.sprite_bitmapptr+2
     mov     es, ax
     mov     bx, [bp+local_destination_y]
@@ -632,6 +632,6 @@ return_after_sprite_draw:
     pop     bp
     retf
     db 0 ; retained zero fill at this boundary
-_sub_35E08 endp
+_shape2d_scale_blit_hotspot endp
 S012_TEXT ends
 end

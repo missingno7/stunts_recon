@@ -7,12 +7,12 @@
 struct SHAPE2D {
     I16 s2d_width;
     I16 s2d_height;
-    U16 s2d_unk1;
-    U16 s2d_unk2;
+    U16 s2d_hotspot_x;
+    U16 s2d_hotspot_y;
     U16 s2d_pos_x;
     U16 s2d_pos_y;
-    U8 s2d_unk3;
-    U8 s2d_unk4;
+    U8 s2d_plane_color0;
+    U8 s2d_plane_color1_bg;
 };
 extern I16 FAR file_get_res_shape_count(I8 FAR *memchunk);
 extern struct SHAPE2D FAR * FAR file_get_shape2d(I8 FAR *memchunk, I16 index);
