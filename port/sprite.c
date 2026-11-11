@@ -9,7 +9,7 @@
 
 /*
  * Faithful C translation of the DOS sprite-window descriptor and row-table
- * setup in asm/sprite_make_wnd.ASM and asm/patterned_lines_windows.ASM. The
+ * setup in asm/patterned_lines_windows.ASM and asm/patterned_lines_windows.ASM. The
  * 16-bit row-table offsets become host pointers in the PORT_BUILD overlay;
  * pixel storage retains the original 16-byte SHAPE2D header and row-major
  * indexed bytes.
@@ -199,7 +199,7 @@ PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color)
         port_guest_unwind("MCGA window descriptor table exhausted");
 
     pixels = (uint32_t)width * height;
-    /* asm/sprite_make_wnd.ASM: ((width*height + 16) >> 4) + 1 paragraphs. */
+    /* asm/patterned_lines_windows.ASM: ((width*height + 16) >> 4) + 1 paragraphs. */
     paragraphs = ((pixels + 16u) >> 4) + 1u;
     shape = (PortShape2D *)mmgr_alloc_pages("MCGA WINDOW",
                                              (uint16_t)paragraphs);

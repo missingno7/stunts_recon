@@ -239,7 +239,7 @@ void timer_remove_callback(void (*callback)(void))
     }
 }
 
-/* Faithful state update of asm/timer_get_delta.ASM. Its 32-bit read and
+/* Faithful state update of asm/timer_counter_deadline_helpers.ASM. Its 32-bit read and
    previous-value store occurred with IRQs masked. The guest pump serializes
    both operations with callback delivery. */
 uint32_t timer_get_delta(void)

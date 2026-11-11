@@ -65,7 +65,7 @@ static void matrix_row(const int16_t *input, const int16_t *matrix,
                            (uint16_t)matrix_product_word(matrix[6], input[2]));
 }
 
-/* Semantic C translation of asm/mat_multiply.ASM::_mat_multiply. The
+/* Semantic C translation of asm/font_matrix_shape_decode.ASM::_mat_multiply. The
    row/column write order preserves the guest routine's input/output aliasing. */
 void mat_multiply(const int16_t *right_matrix, const int16_t *left_matrix,
                   int16_t *output_matrix)
