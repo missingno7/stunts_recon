@@ -162,8 +162,8 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 	wallOrientationState = step;
 	elementAngle = step;
 	hgthgt = step;
-	trackCol = (I8S )(position->x >> 10);
-	trkR = (I8S )(position->z >> 10);
+	trackCol = position->x >> 10;
+	trkR = position->z >> 10;
 	physModel = -1;
 	if (trackCol < 0 || trackCol > 29 || trkR < 0 || trkR > 29)
 		goto select_plan;
@@ -188,8 +188,8 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		case 5:
 			step = -0x80;
 		slope:
-			locElemCrds.x = (I16S)(position->x - x_course_part);
-			locElemCrds.z = (I16S)(position->z - road_elem_ctrz);
+			locElemCrds.x = position->x - x_course_part;
+			locElemCrds.z = position->z - road_elem_ctrz;
 			side = mulscl(cosfast(step), locElemCrds.x) +
 				mulscl(sinfast(step), locElemCrds.z);
 			if (side < 0)
@@ -235,10 +235,10 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 			x_course_part = xcols[trackCol + 1];
 	}
 
-	locElemCrds.x = (I16S)(position->x - x_course_part);
-	locElemCrds.z = (I16S)(position->z - road_elem_ctrz);
-	nextPositionElemCrds.x = (I16S)(nextPosition->x - x_course_part);
-	nextPositionElemCrds.z = (I16S)(nextPosition->z - road_elem_ctrz);
+	locElemCrds.x = position->x - x_course_part;
+	locElemCrds.z = position->z - road_elem_ctrz;
+	nextPositionElemCrds.x = nextPosition->x - x_course_part;
+	nextPositionElemCrds.z = nextPosition->z - road_elem_ctrz;
 	if (tileElem != 0 && cellTerr >= 7 && cellTerr < 11)
 		tileElem = subst_hillroad(cellTerr, tileElem);
 
@@ -251,32 +251,33 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 	case 0x300:
 		localX = locElemCrds.x;
 		locElemCrds.x = locElemCrds.z;
-		locElemCrds.z = (I16S)-localX;
+		locElemCrds.z = -localX;
 		localX = nextPositionElemCrds.x;
 		nextPositionElemCrds.x = nextPositionElemCrds.z;
-		nextPositionElemCrds.z = (I16S)-localX;
+		nextPositionElemCrds.z = -localX;
 		break;
 	case 0x200:
-		locElemCrds.z = (I16S)-locElemCrds.z;
-		locElemCrds.x = (I16S)-locElemCrds.x;
-		nextPositionElemCrds.z = (I16S)-nextPositionElemCrds.z;
-		nextPositionElemCrds.x = (I16S)-nextPositionElemCrds.x;
+		locElemCrds.z = -locElemCrds.z;
+		locElemCrds.x = -locElemCrds.x;
+		nextPositionElemCrds.z = -nextPositionElemCrds.z;
+		nextPositionElemCrds.x = -nextPositionElemCrds.x;
 		break;
 	case 0x100:
 		localX = locElemCrds.x;
-		locElemCrds.x = (I16S)-locElemCrds.z;
+		locElemCrds.x = -locElemCrds.z;
 		locElemCrds.z = localX;
 		localX = nextPositionElemCrds.x;
-		nextPositionElemCrds.x = (I16S)-nextPositionElemCrds.z;
+		nextPositionElemCrds.x = -nextPositionElemCrds.z;
 		nextPositionElemCrds.z = localX;
 		break;
 	}
+	/* MSC 5.10 emits this unused store; removing it changes the object. */
 	angAngle = 0;
-	surfType = (U8 )(o->surface + 1);
+	surfType = o->surface + 1;
 	if ((I8S )surfType < 1)
 		surfType = 1;
-	absLocalCrds.x = locElemCrds.x < 0 ? (I16S)-locElemCrds.x : locElemCrds.x;
-	absLocalCrds.z = locElemCrds.z < 0 ? (I16S)-locElemCrds.z : locElemCrds.z;
+	absLocalCrds.x = locElemCrds.x < 0 ? -locElemCrds.x : locElemCrds.x;
+	absLocalCrds.z = locElemCrds.z < 0 ? -locElemCrds.z : locElemCrds.z;
 	switch (physModel) {
 	case 0:
 		if (core.game_inputmode == 0 && locElemCrds.x > 0) {
@@ -337,17 +338,17 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		if (highEntrXInnBounds0[step + 1] == highEntrXInnBounds0[step])
 			localX = highEntrXInnBounds0[step];
 		else
-			localX = (I16S)(highEntrXInnBounds0[step] +
+			localX = highEntrXInnBounds0[step] +
 				(I32)(highEntrXInnBounds0[step + 1] - highEntrXInnBounds0[step]) *
 				(locElemCrds.z - highEntrZBounds0[step]) /
-				(highEntrZBounds0[step + 1] - highEntrZBounds0[step]));
+				(highEntrZBounds0[step + 1] - highEntrZBounds0[step]);
 		if (highEntrXOutBounds0[step + 1] == highEntrXOutBounds0[step])
 			side = highEntrXOutBounds0[step];
 		else
-			side = (I16S)(highEntrXOutBounds0[step] +
+			side = highEntrXOutBounds0[step] +
 				(I32)(highEntrXOutBounds0[step + 1] - highEntrXOutBounds0[step]) *
 				(locElemCrds.z - highEntrZBounds0[step]) /
-				(highEntrZBounds0[step + 1] - highEntrZBounds0[step]));
+				(highEntrZBounds0[step + 1] - highEntrZBounds0[step]);
 		if (baseIndex > localX && baseIndex < side) {
 			g_cursurfacekindvalue = surfType;
 			break;
@@ -429,19 +430,19 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		}
 		break;
 	case 21:
-		if (position->y - hgthgt <= 0x186) goto finish;
-		turnRadius = (I16S)(polradius2d((I16S)(locElemCrds.x + 0x400), (I16S)(locElemCrds.z + 0x400)) - 0x600);
-		if (turnRadius <= -0x96 || turnRadius >= 0x96) goto finish;
+		if (position->y - hgthgt <= 0x186) break;
+		turnRadius = polradius2d(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
+		if (turnRadius <= -0x96 || turnRadius >= 0x96) break;
 		g_cursurfacekindvalue = surfType;
 		pl_i = 2;
 		test_pln = 0;
-		if (turnRadius >= -0x6c && turnRadius <= 0x6c) goto finish;
+		if (turnRadius >= -0x6c && turnRadius <= 0x6c) break;
 		side = (polang(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
-		localX = (I16S)(0x11 - (side >> 8));
+		localX = 0x11 - (side >> 8);
 		wall_wallelement = 0x2a;
 		element_min_wall = -12;
-		if (turnRadius < 0) road_num = (I16S)(localX + 0x69);
-		else road_num = (I16S)(localX + 0x7b);
+		if (turnRadius < 0) road_num = localX + 0x69;
+		else road_num = localX + 0x7b;
 		break;
 	case 24:
 		baseIndex = 0x23;
@@ -475,7 +476,7 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		}
 		break;
 	case 25:
-		if (absLocalCrds.x > 0x78) goto finish;
+		if (absLocalCrds.x > 0x78) break;
 		g_cursurfacekindvalue = surfType;
 		pl_i = 6;
 		if (nextPositionElemCrds.x < 0x78) break;
@@ -483,22 +484,22 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		road_num = 0x65;
 		break;
 	case 26:
-		turnRadius = (I16S)(polradius2d((I16S)(locElemCrds.x + 0x400), (I16S)(locElemCrds.z + 0x400)) - 0x600);
-		if (turnRadius <= -0x78 || turnRadius >= 0x7e) goto finish;
+		turnRadius = polradius2d(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
+		if (turnRadius <= -0x78 || turnRadius >= 0x7e) break;
 		side = (polang(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
-		localX = (I16S)(0x11 - (side >> 8));
-		pl_i = (I16S)(localX + 7);
+		localX = 0x11 - (side >> 8);
+		pl_i = localX + 7;
 		g_cursurfacekindvalue = surfType;
-		if (turnRadius <= 0x66) goto finish;
+		if (turnRadius <= 0x66) break;
 		wallOrientationState = 0x200;
-		road_num = (I16S)(localX + 0x7b);
+		road_num = localX + 0x7b;
 		test_pln = 0;
 		break;
 	case 27:
 		if (locElemCrds.z < 0) {
 			baseIndex = 0x33;
-			effElemCrds.x = (I16S)-locElemCrds.x;
-			effElemCrds.z = (I16S)-locElemCrds.z;
+			effElemCrds.x = -locElemCrds.x;
+			effElemCrds.z = -locElemCrds.z;
 		} else {
 			baseIndex = 0x2d;
 			effElemCrds.x = locElemCrds.x;
@@ -540,20 +541,20 @@ void build_obj(struct VECTOR *position, struct VECTOR *nextPosition)
 		}
 loop_base:
 		for (step = 0; effElemCrds.z > loopBase_ZBounds0[step + 1]; ++step) { }
-		localX = (I16S)(loopBae_InnXBounds0[step] +
+		localX = loopBae_InnXBounds0[step] +
 			(I32)(loopBae_InnXBounds0[step + 1] - loopBae_InnXBounds0[step]) *
 			(effElemCrds.z - loopBase_ZBounds0[step]) /
-			(loopBase_ZBounds0[step + 1] - loopBase_ZBounds0[step]));
-		side = (I16S)(loopBase_OutXBounds0[step] +
+			(loopBase_ZBounds0[step + 1] - loopBase_ZBounds0[step]);
+		side = loopBase_OutXBounds0[step] +
 			(I32)(loopBase_OutXBounds0[step + 1] - loopBase_OutXBounds0[step]) *
 			(effElemCrds.z - loopBase_ZBounds0[step]) /
-			(loopBase_ZBounds0[step + 1] - loopBase_ZBounds0[step]));
+			(loopBase_ZBounds0[step + 1] - loopBase_ZBounds0[step]);
 		if (effElemCrds.x >= localX && effElemCrds.x <= side) g_cursurfacekindvalue = surfType;
 		break;
 	case 28:
 		if (position->y - hgthgt >= 0x90 ||
 			nextPosition->y - hgthgt >= 0x90) {
-			if (absLocalCrds.x >= 0x10e) goto finish;
+			if (absLocalCrds.x >= 0x10e) break;
 			g_cursurfacekindvalue = surfType;
 			pl_i = 0x85;
 			break;
@@ -672,7 +673,7 @@ loop_base:
 		}
 		break;
 	case 32:
-		localX = (I16S)-locElemCrds.x;
+		localX = -locElemCrds.x;
 		side = 0x4f;
 		wallHi = 0x32;
 		wallIx = 0x4b;
@@ -732,7 +733,7 @@ loop_base:
 	case 60: case 61: case 62: case 63: case 64:
 		break;
 	case 65:
-		if (absLocalCrds.x > 0x96 || absLocalCrds.z > 0x96) goto finish;
+		if (absLocalCrds.x > 0x96 || absLocalCrds.z > 0x96) break;
 		wall_wallelement = 0x1a9;
 		if (nextPositionElemCrds.z <= -0x96) road_num = 0xa1;
 		else if (nextPositionElemCrds.z >= 0x96) road_num = 0xa2;
@@ -740,7 +741,7 @@ loop_base:
 		else if (nextPositionElemCrds.x <= -0x96) road_num = 0xa4;
 		break;
 	case 66:
-		if (locElemCrds.x < -0xc8 || locElemCrds.x > 0x104 || absLocalCrds.z > 0x50) goto finish;
+		if (locElemCrds.x < -0xc8 || locElemCrds.x > 0x104 || absLocalCrds.z > 0x50) break;
 		wall_wallelement = 0xe6;
 		if (nextPositionElemCrds.z <= -0x50) road_num = 0xa5;
 		else if (nextPositionElemCrds.z >= 0x50) road_num = 0xa8;
@@ -748,7 +749,7 @@ loop_base:
 		else if (nextPositionElemCrds.x >= 0x104) road_num = 0xa7;
 		break;
 	case 67:
-		if (absLocalCrds.x > 0xb4 || absLocalCrds.z > 0x64) goto finish;
+		if (absLocalCrds.x > 0xb4 || absLocalCrds.z > 0x64) break;
 		wall_wallelement = 0xf8;
 		if (nextPositionElemCrds.z <= -0x64) road_num = 0xa9;
 		else if (nextPositionElemCrds.z >= 0x64) road_num = 0xac;
@@ -756,7 +757,7 @@ loop_base:
 		else if (nextPositionElemCrds.x >= 0xb4) road_num = 0xaa;
 		break;
 	case 68:
-		if (absLocalCrds.x > 0xc8 || absLocalCrds.z > 0xc8) goto finish;
+		if (absLocalCrds.x > 0xc8 || absLocalCrds.z > 0xc8) break;
 		wall_wallelement = 0x226;
 		if (nextPositionElemCrds.z <= -0xc8) road_num = 0xad;
 		else if (nextPositionElemCrds.z >= 0xc8) road_num = 0xae;
@@ -764,7 +765,7 @@ loop_base:
 		else if (nextPositionElemCrds.x >= 0xc8) road_num = 0xb0;
 		break;
 	case 69:
-		if (absLocalCrds.x > 0x72 || absLocalCrds.z > 0x72) goto finish;
+		if (absLocalCrds.x > 0x72 || absLocalCrds.z > 0x72) break;
 		wall_wallelement = 0x1ef;
 		if (nextPositionElemCrds.z <= -0x72) road_num = 0xb4;
 		else if (nextPositionElemCrds.z >= 0x72) road_num = 0xb2;
@@ -772,7 +773,7 @@ loop_base:
 		else if (nextPositionElemCrds.x >= 0x72) road_num = 0xb3;
 		break;
 	case 70:
-		if (locElemCrds.x < -0xaa || locElemCrds.x > 0x104 || absLocalCrds.z > 0x6e) goto finish;
+		if (locElemCrds.x < -0xaa || locElemCrds.x > 0x104 || absLocalCrds.z > 0x6e) break;
 		wall_wallelement = 0xe6;
 		if (nextPositionElemCrds.z <= -0x6e) road_num = 0xb5;
 		else if (nextPositionElemCrds.z >= 0x6e) road_num = 0xb8;
@@ -787,8 +788,8 @@ loop_base:
 
 finish:
 	if (cellTerr >= 7) {
-		locElemCrds.x = (I16S)(position->x - trackctrpos2[trackCol]);
-		locElemCrds.z = (I16S)(position->z - z_ctr_pos[trkR]);
+		locElemCrds.x = position->x - trackctrpos2[trackCol];
+		locElemCrds.z = position->z - z_ctr_pos[trkR];
 		switch (cellTerr) {
 		case 7: case 11: case 15:
 			elementAngle = 0;
@@ -797,17 +798,17 @@ finish:
 			elementAngle = 0x300;
 			localX = locElemCrds.x;
 			locElemCrds.x = locElemCrds.z;
-			locElemCrds.z = (I16S)-localX;
+			locElemCrds.z = -localX;
 			break;
 		case 9: case 13: case 17:
 			elementAngle = 0x200;
-			locElemCrds.z = (I16S)-locElemCrds.z;
-			locElemCrds.x = (I16S)-locElemCrds.x;
+			locElemCrds.z = -locElemCrds.z;
+			locElemCrds.x = -locElemCrds.x;
 			break;
 		case 10: case 14: case 18:
 			elementAngle = 0x100;
 			localX = locElemCrds.x;
-			locElemCrds.x = (I16S)-locElemCrds.z;
+			locElemCrds.x = -locElemCrds.z;
 			locElemCrds.z = localX;
 			break;
 		}
@@ -843,9 +844,10 @@ select_plan:
 	else
 		hgthgt += 2;
 
+/* MSC 5.10 changes code generation if this unreferenced label is removed. */
 position_wall:
 	if (road_num < 0) return;
-	wall_facingang = (I16S)((-wallrecrecord[road_num].orientation + elementAngle + wallOrientationState) & FAST_TRIG_ANGLE_MASK);
+	wall_facingang = (-wallrecrecord[road_num].orientation + elementAngle + wallOrientationState) & FAST_TRIG_ANGLE_MASK;
 	switch (elementAngle) {
 	case 0:
 		wallanchor_x = wallrecrecord[road_num].x;
@@ -1033,9 +1035,9 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	ancv2.x = (vertices[6].x + vertices[9].x) >> 1;
 	
 	for (loopIndex = 0; loopIndex < 6; loopIndex++) {
-		pts_set[loopIndex].x = pos_pt.x - vertices[loopIndex + 0].x;
-		pts_set[loopIndex].z = pos_pt.z - vertices[loopIndex + 0].z;
-		pts_set[loopIndex].y = vertices[loopIndex + 0].y;
+		pts_set[loopIndex].x = pos_pt.x - vertices[loopIndex].x;
+		pts_set[loopIndex].z = pos_pt.z - vertices[loopIndex].z;
+		pts_set[loopIndex].y = vertices[loopIndex].y;
 		secondveccar[loopIndex].x = ancv2.x - vertices[loopIndex + 6].x;
 		secondveccar[loopIndex].z = ancv2.z - vertices[loopIndex + 6].z;
 		secondveccar[loopIndex].y = vertices[loopIndex + 6].y;
@@ -1082,9 +1084,9 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 		g_op_carvector2.x = (vertices[6].x + vertices[9].x) >> 1;
 
 		for (loopIndex = 0; loopIndex < 6; loopIndex++) {
-			veco[loopIndex].x = ctrmesh.x - vertices[loopIndex + 0].x;
-			veco[loopIndex].z = ctrmesh.z - vertices[loopIndex + 0].z;
-			veco[loopIndex].y = vertices[loopIndex + 0].y;
+			veco[loopIndex].x = ctrmesh.x - vertices[loopIndex].x;
+			veco[loopIndex].z = ctrmesh.z - vertices[loopIndex].z;
+			veco[loopIndex].y = vertices[loopIndex].y;
 			secondoveh[loopIndex].x = g_op_carvector2.x - vertices[loopIndex + 6].x;
 			secondoveh[loopIndex].z = g_op_carvector2.z - vertices[loopIndex + 6].z;
 			secondoveh[loopIndex].y = vertices[loopIndex + 6].y;
@@ -1160,10 +1162,8 @@ void wheel_update(struct VECTOR far *out, I16 angle,
         if (last_angle_and_y[j] != y) {
             span_start = j * 6;
             end = span_start + 6;
-            i = span_start;
-            while (i < end) {
+            for (i = span_start; i < end; ++i) {
                 out[i].y = source[i].y - y;
-                ++i;
             }
             last_angle_and_y[j] = y;
         }
@@ -1511,8 +1511,7 @@ I16 track_setup(void)
             goto elem_mismatch;
           conn = 0;
         }
-        else
-          if (blk->exitPoint == entryPt)
+        else if (blk->exitPoint == entryPt)
         {
           if (blk->exitType != prev_exit_type)
             goto elem_mismatch;
@@ -1542,6 +1541,7 @@ I16 track_setup(void)
         }
         if (conn < 0)
         {
+          /* Keep the empty arm: inverting this test changes MSC branch layout. */
         }
         else
         {
@@ -1667,69 +1667,68 @@ I16 track_setup(void)
   if (arrow == 0)
   {
     runLength++;
-    goto next_piece;
-  }
-  if (arrow != (-1) && runLength > 3 && g_road_piece_id != 0x30)
-  {
-    objInfo = trklst[object].info;
-    blk = objInfo + sub;
-    arrow = blk->opponent3;
-    objInfo = trklst[prev_elem].info;
-    blk = objInfo + prevBlock;
-    if (prev_reversed_dir != 0)
+  } else {
+    if (arrow != (-1) && runLength > 3 && g_road_piece_id != 0x30)
     {
-      if (blk->cameraOverlay.cameraOffsetOverride != 0)
-        camData = (struct VECTOR *) blk->cameraOverlay.cameraOffsetOverride;
+      objInfo = trklst[object].info;
+      blk = objInfo + sub;
+      arrow = blk->opponent3;
+      objInfo = trklst[prev_elem].info;
+      blk = objInfo + prevBlock;
+      if (prev_reversed_dir != 0)
+      {
+        if (blk->cameraOverlay.cameraOffsetOverride != 0)
+          camData = (struct VECTOR *) blk->cameraOverlay.cameraOffsetOverride;
+        else
+          camData = (struct VECTOR *) blk->cameraDataOffset;
+      }
       else
         camData = (struct VECTOR *) blk->cameraDataOffset;
+      if (prev_reversed_dir != 0)
+        cur_pos = camData[blk->arrowType * 2 + 2];
+      else
+        cur_pos = camData[blk->arrowType * 2 + 1];
+      if (connStat != 0)
+        arrow = arrowConn1[arrow];
+      else
+        arrow = arrowConn0[arrow];
+      angle = blk->arrowOrient;
+      switch (angle)
+      {
+        case 0x300:
+          xsave = cur_pos.x;
+          cur_pos.x = -cur_pos.z;
+          cur_pos.z = xsave;
+          break;
+
+        case 0x200:
+          cur_pos.z = -cur_pos.z;
+          cur_pos.x = -cur_pos.x;
+          break;
+
+        case 0x100:
+          xsave = cur_pos.x;
+          cur_pos.x = cur_pos.z;
+          cur_pos.z = -xsave;
+          break;
+
+      }
+
+      if (prev_reversed_dir != 0)
+        g_td08d[g_road_piece_id] = angle ^ 0x200;
+      else
+        g_td08d[g_road_piece_id] = angle;
+      trkd23adr[g_road_piece_id] = arrow;
+      if (td15p_9[gterrtrk[oldRow] + oldX] == 6)
+        cur_pos.y += 0x1c2;
+      td10checkptr[g_road_piece_id].y = cur_pos.y;
+      td10checkptr[g_road_piece_id].z = ((trklst[prev_elem].multiTile & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
+      td10checkptr[g_road_piece_id].x = ((trklst[prev_elem].multiTile & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
+      td19hdl[lnoffsets[oldRow] + oldX] = g_road_piece_id;
+      g_road_piece_id++;
     }
-    else
-      camData = (struct VECTOR *) blk->cameraDataOffset;
-    if (prev_reversed_dir != 0)
-      cur_pos = camData[blk->arrowType * 2 + 2];
-    else
-      cur_pos = camData[blk->arrowType * 2 + 1];
-    if (connStat != 0)
-      arrow = arrowConn1[arrow];
-    else
-      arrow = arrowConn0[arrow];
-    angle = blk->arrowOrient;
-    switch (angle)
-    {
-      case 0x300:
-        xsave = cur_pos.x;
-        cur_pos.x = -cur_pos.z;
-        cur_pos.z = xsave;
-        break;
-
-      case 0x200:
-        cur_pos.z = -cur_pos.z;
-        cur_pos.x = -cur_pos.x;
-        break;
-
-      case 0x100:
-        xsave = cur_pos.x;
-        cur_pos.x = cur_pos.z;
-        cur_pos.z = -xsave;
-        break;
-
-    }
-
-    if (prev_reversed_dir != 0)
-      g_td08d[g_road_piece_id] = angle ^ 0x200;
-    else
-      g_td08d[g_road_piece_id] = angle;
-    trkd23adr[g_road_piece_id] = arrow;
-    if (td15p_9[gterrtrk[oldRow] + oldX] == 6)
-      cur_pos.y += 0x1c2;
-    td10checkptr[g_road_piece_id].y = cur_pos.y;
-    td10checkptr[g_road_piece_id].z = ((trklst[prev_elem].multiTile & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
-    td10checkptr[g_road_piece_id].x = ((trklst[prev_elem].multiTile & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
-    td19hdl[lnoffsets[oldRow] + oldX] = g_road_piece_id;
-    g_road_piece_id++;
+    runLength = 0;
   }
-  runLength = 0;
-  next_piece:
   if ((++g_trackpiecescounter) == 0x385)
   {
     err = 6;
@@ -1881,19 +1880,17 @@ I16 track_setup(void)
   error:
   if (cur_col == (-1))
     cur_col = 0;
-  else
-    if (cur_col == 30)
+  else if (cur_col == 30)
     cur_col = 29;
 
   if (y == (-1))
     y = 0;
-  else
-    if (y == 30)
+  else if (y == 30)
     y = 29;
   sampled_trk_column = cur_col;
   g_cur_track_row = y;
   /* PLATFORM(memory): release a resource block. */ release:
-  mmgr_release((I8 far *) alloc);
+  mmgr_release(alloc);
 
   return err;
 }
@@ -1921,7 +1918,7 @@ void load_opponent_data(void)
     I16S sequence[901];
     register I16S visited;
 
-    aOpp1[3] = (I8)(globalgamesettings.game_opponenttype + '0');
+    aOpp1[3] = globalgamesettings.game_opponenttype + '0';
     /* PLATFORM(file): load a resource file. */ res = file_load_resource_file(aOpp1);
     copy_string(opptext_label, locate_text_resource(res, "nam"));
     /* PLATFORM(file): locate opponent path data in the loaded bundle. */ pathData = locate_shape_alt(res, "path");
@@ -1952,7 +1949,7 @@ void load_opponent_data(void)
             }
         }
         sequence[count++] = i;
-        sum += (U8 )tbl[(U8 )road_trk[i]] + 1;
+        sum += tbl[(U8 )road_trk[i]] + 1;
         if (f != 0) {
             if (valid != 0 && sum < minSum) {
                 sequence[count++] = 0;
