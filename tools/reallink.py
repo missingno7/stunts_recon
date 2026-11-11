@@ -2104,6 +2104,59 @@ def render_historical_response(name, replacements):
     return text.replace('\r\n', '\n').replace('\n', '\r\n')
 
 
+# Recovered facts about the original library (build/workers/linkrule, 2026-11-11):
+# Microsoft's toupper is absent (the game's own seg026 toupper is the only provider),
+# and these five Microsoft members sit after every other runtime member.
+HISTORICAL_LATE_PUBLICS = ('__ldiv', '__lmul', '__lshr', '__uldiv', '_strrchr')
+HISTORICAL_ABSENT_PUBLICS = ('_toupper',)
+# Old helper names that some original object declared; their thunks are in the
+# image and nothing calls them.  ASSUMPTION: the declaring object is unknown.
+HISTORICAL_OLD_HELPER_NAMES = ('__ldiv', '__lmul', '__lshr', '__uldiv')
+# Assembly units that are in the image but unreferenced: they belonged to one
+# original object with their referenced neighbours (load_2260e .. load_22782).
+HISTORICAL_UNREFERENCED_UNITS = ('load_226ba', 'load_22738', 'load_22746', 'load_22751',
+                                 'load_2276a', 'load_22782')
+
+
+def historical_runtime_members(work):
+    """MLIBCR members as R*.OBJ in the recovered order; returns the file names."""
+    path = toolchain_path(PINNED_RUNTIME_LIBRARIES[0])
+    modules = list(OmfReader().split_library(path.read_bytes()))
+    late, rest = {}, []
+    for index, (module, blob) in enumerate(modules):
+        names = library_public_names(blob)
+        if names & set(HISTORICAL_ABSENT_PUBLICS):
+            continue
+        hit = [n for n in HISTORICAL_LATE_PUBLICS if n in names]
+        if hit:
+            late[hit[0]] = (index, blob)
+        else:
+            rest.append((index, blob))
+    if set(late) != set(HISTORICAL_LATE_PUBLICS):
+        raise ValueError('Pinned MLIBCR lacks a recovered late member')
+    ordered = rest + [late[n] for n in HISTORICAL_LATE_PUBLICS]
+    files = []
+    for index, blob in ordered:
+        name = 'R%03d.OBJ' % index
+        (work / name).write_bytes(blob)
+        files.append(name)
+    return files
+
+
+def historical_references(game_units):
+    """The few external references the recovered link still has to assume."""
+    names = list(HISTORICAL_OLD_HELPER_NAMES)
+    for u in game_units:
+        if any(u.id.endswith(tag) for tag in HISTORICAL_UNREFERENCED_UNITS):
+            for entry in u.objs:
+                local = {p['name'] for p in entry['obj'].local_publics}
+                public = [p['name'] for p in entry['obj'].publics if p['name'] not in local]
+                if public:
+                    names.append(public[0])
+                    break
+    return names
+
+
 def library_link(c, ordered, args):
     """Library-search hypothesis: explicit seg000-seg009 objects (plus raw
     DGROUP debt, BSS and STACK), then RT.LIB (runtime _TEXT units) and
@@ -2161,7 +2214,11 @@ def library_link(c, ordered, args):
         shutil.rmtree(work)
     work.mkdir(parents=True)
     explicit_segments = {'S%03d_TEXT' % n for n in range(10)}
-    explicit, runtime, game = [], [], []
+    # The recovered historical configuration: one library (the Microsoft runtime
+    # followed by the game modules), LIBH searched second, the track data module
+    # listed explicitly after seg003, and no object that references every public.
+    historical = getattr(args, 'library_order', None) == 'historical'
+    explicit, runtime, game, data_modules = [], [], [], []
     for u in ordered:
         blobs = [sh.build() for sh in u.shims.values()]
         blobs += [e['bytes'] for e in u.objs] if u.accepted else [u.raw.build(getattr(u, 'cuts', None))]
@@ -2174,6 +2231,8 @@ def library_link(c, ordered, args):
         if (getattr(args, 'game_input', 'library') == 'explicit' and
                 u.kind == 'raw-data' and u.segment == '_DATA'):
             game.append((u, blobs))
+        elif historical and u.kind == 'data-module':
+            data_modules.append((u, blobs))
         elif u.kind in ('prelude', 'raw-data', 'bss', 'stack') or u.segment in explicit_segments:
             explicit.append((u, blobs))
         elif u.segment == '_TEXT':
@@ -2196,6 +2255,10 @@ def library_link(c, ordered, args):
             return (3, u.start if host is not None else 1 << 30)
         return (rank.get(u.kind, 1), u.start if u.kind != 'raw-data' else 0)
     explicit.sort(key=explicit_key)
+    if data_modules:
+        # Its DGROUP contribution lies between those of seg003 and seg004.
+        at = 1 + max(i for i, (u, _) in enumerate(explicit) if u.segment == 'S003_TEXT')
+        explicit[at:at] = data_modules
     if getattr(args, 'game_order', 'oracle') in ('image', 'image-back'):
         # integ31 hypothesis: image-derived member order (no relocation-table
         # information): the code-segment chains (C objects by segment, ASM
@@ -2291,6 +2354,8 @@ def library_link(c, ordered, args):
                 for shim in u.shims.values():
                     for name, _offset in shim.publics:
                         root_add(name)
+        if historical:
+            root_names = historical_references([u for u, _ in game])
         root_blob = library_root_object(root_names)
         root_file = 'ROOT.OBJ'
         (work / root_file).write_bytes(root_blob)
@@ -2321,6 +2386,13 @@ def library_link(c, ordered, args):
             # MLIBCR.LIB (one library, game modules after member 220).
             (work / 'GAME.LIB').write_bytes((work / 'MLIBCR.LIB').read_bytes())
             libraries = ['GAME.LIB'] + pinned_names[1:]
+    if historical:
+        if not (pinned and getattr(args, 'game_input', 'library') == 'library'):
+            raise ValueError('The historical library order needs --runtime libraries and library game input')
+        runtime_files = historical_runtime_members(work)
+        gm = runtime_files + gm
+        libraries = ['GAME.LIB', 'LIBH.LIB']
+        (work / 'GAME.LIB').unlink(missing_ok=True)
     for lib, files in (('RT.LIB', rt), ('GAME.LIB', gm)):
         if pinned and (lib == 'RT.LIB' or
                        (lib == 'GAME.LIB' and getattr(args, 'game_input', 'library') == 'explicit')):
@@ -2624,7 +2696,7 @@ def main():
                     help='--order library: GAME.LIB member order (oracle-derived processing order, '
                          'independent load-image address order, or the image-derived DGROUP-anchor '
                          'merge of the code-segment chains, integ31)')
-    ap.add_argument('--library-order', choices=['runtime-first', 'game-first', 'combined'],
+    ap.add_argument('--library-order', choices=['runtime-first', 'game-first', 'combined', 'historical'],
                     default='runtime-first',
                     help='--runtime libraries: library search order on the LINK line')
     ap.add_argument('--game-input', choices=['library', 'explicit'], default='library',

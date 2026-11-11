@@ -16,7 +16,7 @@ class HistoricalBuildPlanningTests(unittest.TestCase):
         plan = histbuild.run_plan(reallink.LINK_OPTIONS)
         self.assertEqual(plan, {
             'runtime': 'libraries', 'partial': 'split', 'order': 'library',
-            'library_order': 'combined', 'game_order': 'image', 'game_input': 'library',
+            'library_order': 'historical', 'game_order': 'oracle', 'game_input': 'library',
             'link_options': reallink.LINK_OPTIONS,
         })
 

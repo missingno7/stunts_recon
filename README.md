@@ -4,7 +4,7 @@ This workspace replaces explicit raw regions of the original MCGA image with byt
 
 ## Current status
 
-The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes the complete test suite, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` reports zero raw-debt OMF objects; its separate library-order diagnostic still has a relocation-order residual.
+The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes the complete test suite, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` rebuilds the packed executable exactly through an ordinary library-search link, with zero raw-debt objects.
 
 The freeze evidence and remaining scope are recorded in [the freeze draft](docs/freeze.md), [unresolved questions](docs/unresolved.md), and the [Port Forge runtime oracle](docs/porting/runtime-oracle.md). Runtime captures are a bounded SDL3 reference, separate from the byte-exact historical acceptance proof.
 
@@ -84,37 +84,35 @@ Run the complete historical toolchain pipeline from the repository root with:
 python tools/histbuild.py
 ```
 
-Each run freshly compiles every accepted C contribution from `src/` with its
-recipe's pinned CL profile and assembles accepted ASM modules with pinned MASM.
-The current `combined` link hypothesis starts `GAME.LIB` with pinned
-`MLIBCR.LIB`, appends reconstructed game modules in image-derived order, and
-searches pinned `LIBH.LIB` separately with LINK 3.65
-(`/DOSSEG /NOI /NOD /MAP /CP:1 /ST:8000`) before EXEPACK. This arrangement is a **reconstruction
-assumption**, not a recovered original LINK command or library recipe. The
-independent evidence has not identified a natural command that reproduces the
-target image and relocation order; the latest MLIBCE-based candidate still
-omits six game members and seven runtime members. See [the link-configuration
-evidence](docs/acceptance.md#link-configuration-evidence-integ47). The byte-exact
-`validate.py --image` result uses the separately labelled oracle-derived order
-and does not verify this historical-link assumption.
+Each run freshly compiles every accepted C contribution from `src/` with its recipe's pinned CL
+profile, assembles the accepted ASM modules with pinned MASM, builds one library, and links with
+LINK 3.65 followed by EXEPACK. It reports `BUILT_EXACT`: the load image, all 2,588 relocations in
+order and the packed executable equal the locked original.
 
-A zero-segment EXTDEF root retains reviewed game and accepted pinned-runtime
-contributions through normal LINK library search; any other runtime member
-still depends on its original root/EXTDEF chain. The build compares its linked
-image, relocation set/order, header and packed executable to the locked oracle
-and prints the separate C, ASM, pinned-runtime, LINK-fill and raw-debt totals.
-Raw OMF debt inputs are named `Dnnn.OBJ` and listed with their source ranges in
-the report.
+The link is an ordinary one. The explicit objects are the first ten C segments, one assembly object
+and the track data module; `GAME.LIB` holds the Microsoft medium-model runtime followed by the game
+modules; `LIBH.LIB` is searched second (`/DOSSEG /NOI /NOD /MAP /CP:1 /ST:8000`). LINK's own library
+search selects and orders every runtime and game module. LINK 3.65 loads a library's needed members
+in physical order, visits libraries in rotation, and holds at most 512 found symbols per visit, so no
+object may reference every public.
 
-Detailed logs, fresh compiler commands, raw-debt inventory, the DOS-side
-`MAKEFILE`/response bundle and `report.json` are written under a unique
-`build/histbuild/<run>/` directory. The generated NMAKE bundle reruns GAME.LIB
-construction, LINK and EXEPACK from that directory. Image-derived
-  ordering leaves a measured order residual: the independent build matches
-  2,023 of 2,588 relocation positions (bank 0 is exact; banks 1–3 differ).
-  The report gives per-bank counts and first member-order divergences. The
-separate `python tools/validate.py --image` acceptance diagnostic uses the
-oracle-derived order and checks the byte-exact full executable.
+What this configuration still assumes, and cannot recover from the executable:
+
+- The member order of the library. It is taken from the image and the relocation table; 49 pairs of
+  late code modules are not constrained by either.
+- Microsoft's `toupper` is absent from the library (the game's own is the only provider), and five
+  Microsoft members (`__ldiv`, `__lmul`, `__lshr`, `__uldiv` thunks and `strrchr`) sit after every
+  other runtime member.
+- Some original object declared the four old helper names; their thunks are in the image and nothing
+  calls them. A ten-symbol reference object stands in for that declaration and for six assembly
+  fragments that are unreferenced on their own (`tools/reallink.py`, `HISTORICAL_*`).
+- A zero-length prelude object.
+
+`python tools/validate.py --image` remains the separate diagnostic that links every accepted unit in
+the oracle-derived order.
+
+Detailed logs, compiler commands, the DOS-side `MAKEFILE`/response bundle and `report.json` are
+written under a unique `build/histbuild/<run>/` directory.
 
 ## Everyday work
 
