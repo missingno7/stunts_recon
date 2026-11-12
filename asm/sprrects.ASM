@@ -13,7 +13,7 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _sprite1_unknown2
+public _drawrectc
 public _drawrect
 public _sprite_blit_dither_phase
 ; -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ public _sprite_blit_dither_phase
 ; ASMDOC(font_shapes) Segment from sprite1+2 and line table offsets establish destination; bitmap offset word is
 ; unused. Width
 ; ASMDOC(font_shapes) 1 has separate byte-only loop; odd wider rows append one byte.
-_sprite1_unknown2 proc far
+_drawrectc proc far
     arg_x = word ptr 6
     arg_y = word ptr 8
     arg_width = word ptr 10
@@ -100,7 +100,7 @@ unknown2_when_less_or_equal_3:
 sprite1_unknown2_draw_loop:
     jmp     short sprite_1_unk_draw_loop
     even ; word-align the following entry
-_sprite1_unknown2 endp
+_drawrectc endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite 1 unk.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2

@@ -62,7 +62,7 @@ extern void far audio_op_unk7(int);
 extern int far audio_play_resource_default(void far *);
 extern void far audio_set_chunk_callback(unsigned int, long);
 extern void far audio_set_music_volume(int);
-extern void far audio_stop_unknown(void);
+extern void far restoretimer(void);
 extern int far audio_toggle_flag2(void);
 extern int far audio_toggle_flag6(void);
 extern void far audio_unload(void);

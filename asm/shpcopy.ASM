@@ -13,7 +13,7 @@ S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _movfxy
 public _movfxya
-public _sprite_shape_to_1_alt
+public _movf
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33D0C.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -178,7 +178,7 @@ _movfxya endp
 ; ASMDOC(font_shapes) word/byte copy path; destination next-row stepping uses sprite1 pitch, not another
 ; line-table lookup.
 ; ASMDOC(font_shapes) MOVS is forward copy, not overlap-safe memmove; no source/destination segment-wrap adjustment.
-_sprite_shape_to_1_alt proc far
+_movf proc far
     local_source_width = word ptr -6
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
@@ -247,6 +247,6 @@ sprite_shape_to_1_copy_loop_4:
     jg      short sprite_shape_to_1_copy_loop_4
     jmp     short sprite_shape_to_1_copy_loop_2
     db 0 ; retained zero fill at this boundary
-_sprite_shape_to_1_alt endp
+_movf endp
 S012_TEXT ends
 end

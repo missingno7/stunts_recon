@@ -74,7 +74,7 @@
     {
       "end": 140718,
       "name": "file_write_fatal",
-      "public": "_file_write_fatal",
+      "public": "_savefilez",
       "stable_id": "load_2250b",
       "start": 140555,
       "target": {
@@ -115,7 +115,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_write_fatal",
+        "name": "_savefilez",
         "offset": 17,
         "segment": "S012_TEXT"
       }

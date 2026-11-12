@@ -145,8 +145,8 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     }
   ],
   "profile": "msc510-medium",

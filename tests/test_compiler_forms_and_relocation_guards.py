@@ -60,9 +60,9 @@ class ObjectFlagEntries(unittest.TestCase):
 
 # ---------------------------------------------------------------- item 12a
 LITERAL_FAR_CALL_ASM = (b"UNIT_TEXT SEGMENT BYTE PUBLIC 'CODE'\r\n ASSUME CS:UNIT_TEXT\r\n"
-                        b"PUBLIC _timer_get_delta_alt\r\n_timer_get_delta_alt PROC FAR\r\n"
+                        b"PUBLIC _elticks\r\n_elticks PROC FAR\r\n"
                         b" db 09Ah\r\n dw 03D7Ah, 01EA2h\r\n retf\r\n"
-                        b"_timer_get_delta_alt ENDP\r\nUNIT_TEXT ENDS\r\nEND\r\n")
+                        b"_elticks ENDP\r\nUNIT_TEXT ENDS\r\nEND\r\n")
 
 
 class HardCodedProgramAddress(unittest.TestCase):
@@ -78,7 +78,7 @@ class HardCodedProgramAddress(unittest.TestCase):
         recipe = {'id': 'timer_get_delta_alt', 'kind': 'asm', 'profile': 'masm510-game',
                   'assembler_flags': ['/Mx', '/I.'], 'include_closure': [], 'source': 'x.ASM',
                   'start': accepted['start'], 'end': accepted['end'], 'target': accepted['target'],
-                  'object_segment': 'UNIT_TEXT', 'public': '_timer_get_delta_alt',
+                  'object_segment': 'UNIT_TEXT', 'public': '_elticks',
                   'object_declarations': {'segments': obj.segment_defs, 'groups': obj.groups,
                                           'publics': obj.publics, 'externals': obj.externals},
                   'expected_fixups': [], 'expected_relocations': accepted['expected_relocations']}

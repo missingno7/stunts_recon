@@ -9068,7 +9068,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_alloc_resbytes",
+      "frame": "_resmem",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -9076,7 +9076,7 @@
       "offset": 8257,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_mmgr_alloc_resbytes",
+      "target": "_resmem",
       "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
@@ -12791,7 +12791,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_alloc_resbytes",
+      "frame": "_resmem",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -12799,7 +12799,7 @@
       "offset": 9544,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_mmgr_alloc_resbytes",
+      "target": "_resmem",
       "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
@@ -14168,7 +14168,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0200",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14176,7 +14176,7 @@
       "offset": 12696,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
@@ -14185,7 +14185,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14193,7 +14193,7 @@
       "offset": 12692,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
@@ -14270,7 +14270,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0200",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14278,7 +14278,7 @@
       "offset": 12615,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
@@ -14287,7 +14287,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14295,7 +14295,7 @@
       "offset": 12611,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
@@ -14372,7 +14372,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0200",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14380,7 +14380,7 @@
       "offset": 12528,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
@@ -14389,7 +14389,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14397,7 +14397,7 @@
       "offset": 12524,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
@@ -14678,7 +14678,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_alt",
+      "frame": "_getres",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14686,7 +14686,7 @@
       "offset": 13975,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_alt",
+      "target": "_getres",
       "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
@@ -14712,7 +14712,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_alt",
+      "frame": "_getres",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14720,7 +14720,7 @@
       "offset": 13947,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_alt",
+      "target": "_getres",
       "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
@@ -14780,7 +14780,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_text_resource",
+      "frame": "_getresl",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14788,7 +14788,7 @@
       "offset": 13913,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_text_resource",
+      "target": "_getresl",
       "target_index": 121,
       "target_kind": "external",
       "target_method": 2,
@@ -14814,7 +14814,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_file_load_resource_file",
+      "frame": "_openresource",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -14822,7 +14822,7 @@
       "offset": 13888,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_file_load_resource_file",
+      "target": "_openresource",
       "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
@@ -16297,7 +16297,7 @@
     {
       "end": 65374,
       "name": "shape3d_load_all",
-      "public": "_shape3d_load_all",
+      "public": "_init_3dpieces",
       "stable_id": "load_0fe94",
       "start": 65172,
       "target": {
@@ -16308,7 +16308,7 @@
     {
       "end": 65426,
       "name": "shape3d_free_all",
-      "public": "_shape3d_free_all",
+      "public": "_remove_3dpieces",
       "stable_id": "load_0ff5e",
       "start": 65374,
       "target": {
@@ -16319,7 +16319,7 @@
     {
       "end": 66616,
       "name": "shape3d_load_car_shapes",
-      "public": "_shape3d_load_car_shapes",
+      "public": "_init_3dcars",
       "stable_id": "load_0ff92",
       "start": 65426,
       "target": {
@@ -16330,7 +16330,7 @@
     {
       "end": 66734,
       "name": "shape3d_free_car_shapes",
-      "public": "_shape3d_free_car_shapes",
+      "public": "_remove_3dcars",
       "stable_id": "load_10438",
       "start": 66616,
       "target": {
@@ -16408,7 +16408,7 @@
       "__acrtused",
       "_makeobjdef",
       "_aBarn",
-      "_shape3d_load_all",
+      "_init_3dpieces",
       "_secondoveh",
       "_aGame1",
       "_wall_facingang",
@@ -16433,11 +16433,11 @@
       "_td14tb",
       "_trklst",
       "_g_cursurfacekindvalue",
-      "_shape3d_free_all",
+      "_remove_3dpieces",
       "_test_pln",
-      "_shape3d_free_car_shapes",
+      "_remove_3dcars",
       "_wallrecrecord",
-      "_shape3d_load_car_shapes",
+      "_init_3dcars",
       "_g_planlist",
       "_g_corkscrew_type_flag",
       "_gap_trackrow_1",
@@ -16486,7 +16486,7 @@
       "_shape_template_points_f",
       "_g_game13dresource",
       "_strcpyfar",
-      "_mmgr_alloc_resbytes",
+      "_resmem",
       "_freememory",
       "_getpinfo",
       "_purgememory",
@@ -16515,19 +16515,19 @@
       "_td6_ptr_b",
       "_trackdat7",
       "_pl_carres_3d",
-      "_td10checkptr",
+      "_trksign",
       "_pl_i",
       "_trkptrpath",
       "_td15p_9",
       "_pos_pt",
       "_td3",
       "_postable",
-      "_file_load_resource_file",
+      "_openresource",
       "_terheight",
       "_ptr_model_active",
-      "_locate_text_resource",
+      "_getresl",
       "_pts_set",
-      "_locate_shape_alt",
+      "_getres",
       "_r_zp",
       "_inthypot",
       "_lnoffsets",
@@ -16556,7 +16556,7 @@
     ],
     "publics": [
       {
-        "name": "_shape3d_load_all",
+        "name": "_init_3dpieces",
         "offset": 7412,
         "segment": "UNIT_TEXT"
       },
@@ -16566,17 +16566,17 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_shape3d_free_all",
+        "name": "_remove_3dpieces",
         "offset": 7614,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_shape3d_free_car_shapes",
+        "name": "_remove_3dcars",
         "offset": 8856,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_shape3d_load_car_shapes",
+        "name": "_init_3dcars",
         "offset": 7666,
         "segment": "UNIT_TEXT"
       },
@@ -16698,8 +16698,8 @@
     },
     {
       "path": "include/dlgapi.h",
-      "sha256": "cf7150306b1a1d5145c76b02c9989c0b426c99016a20f98571c1f7aa3f22667b",
-      "size": 3480
+      "sha256": "7e1f5a3deac2bb5e28e4aa94a6fb3cbdad5ee2a734188971150a258502ce6939",
+      "size": 3394
     },
     {
       "path": "include/dlgcolor.h",
@@ -16718,8 +16718,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/geom2d.h",
@@ -16763,8 +16763,8 @@
     },
     {
       "path": "include/render.h",
-      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
-      "size": 2799
+      "sha256": "3fbaca8201aed98ce123d7023893c1793bc0d77d82585d41852019a92386b5c3",
+      "size": 2773
     },
     {
       "path": "include/replay.h",
@@ -16773,8 +16773,8 @@
     },
     {
       "path": "include/resapi.h",
-      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
-      "size": 1686
+      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
+      "size": 1650
     },
     {
       "path": "include/skybox.h",
@@ -16788,13 +16788,13 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     },
     {
       "path": "include/track.h",
-      "sha256": "5c2b369aab56ce0920c7fe831366e1e4300907c8dc91f1b305977a9729155bc2",
-      "size": 3814
+      "sha256": "2acb2f8daa69a0a6842795031dfcffac90ddd0347842192b7506c83cde8bf24f",
+      "size": 3796
     },
     {
       "path": "include/trackrec.h",

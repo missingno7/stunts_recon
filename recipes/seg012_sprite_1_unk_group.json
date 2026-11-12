@@ -261,7 +261,7 @@
     {
       "end": 144850,
       "name": "sprite_1_unk2",
-      "public": "_sprite1_unknown2",
+      "public": "_drawrectc",
       "stable_id": "load_23578",
       "start": 144760,
       "target": {
@@ -309,7 +309,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite1_unknown2",
+        "name": "_drawrectc",
         "offset": 0,
         "segment": "S012_TEXT"
       }

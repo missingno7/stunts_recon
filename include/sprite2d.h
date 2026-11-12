@@ -3,7 +3,7 @@
 #define STUNTS_SPRITE2D_H_INCLUDED
 #include "stunts_types.h"
 
-extern void FAR sprite1_unknown2(I16 x, I16 y, I16 width, I16 height, I16 color);
+extern void FAR drawrectc(I16 x, I16 y, I16 width, I16 height, I16 color);
 
 #define PALETTE_REMAP_ENTRY_COUNT 16 /* I16, 16 */
 #define PES_UNFLIP_WORK_PARAGRAPHS 1000 /* I16, 1000 */

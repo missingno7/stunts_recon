@@ -26,7 +26,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_delta_alt",
+      "frame": "_elticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -34,8 +34,8 @@
       "offset": 931,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_get_delta_alt",
-      "target_index": 7,
+      "target": "_elticks",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -60,7 +60,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_delta_alt",
+      "frame": "_elticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -68,8 +68,8 @@
       "offset": 881,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_get_delta_alt",
-      "target_index": 7,
+      "target": "_elticks",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -77,7 +77,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_clear_1_color",
+      "frame": "_clearwindow",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -85,8 +85,8 @@
       "offset": 867,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_clear_1_color",
-      "target_index": 10,
+      "target": "_clearwindow",
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -111,7 +111,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprset1size",
+      "frame": "_clippix",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -119,7 +119,7 @@
       "offset": 803,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprset1size",
+      "target": "_clippix",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -128,7 +128,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_delta_alt",
+      "frame": "_elticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -136,8 +136,8 @@
       "offset": 781,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_get_delta_alt",
-      "target_index": 7,
+      "target": "_elticks",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -145,7 +145,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_clear_1_color",
+      "frame": "_clearwindow",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -153,8 +153,8 @@
       "offset": 767,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_clear_1_color",
-      "target_index": 10,
+      "target": "_clearwindow",
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -162,7 +162,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_delta_alt",
+      "frame": "_elticks",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -170,8 +170,8 @@
       "offset": 757,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_timer_get_delta_alt",
-      "target_index": 7,
+      "target": "_elticks",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -179,7 +179,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprset1size",
+      "frame": "_clippix",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -187,7 +187,7 @@
       "offset": 749,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprset1size",
+      "target": "_clippix",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -332,7 +332,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_audio_stop_unknown",
+      "frame": "_restoretimer",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -340,7 +340,7 @@
       "offset": 677,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_audio_stop_unknown",
+      "target": "_restoretimer",
       "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
@@ -400,7 +400,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite_copy_2_to_1_clear",
+      "frame": "_usescreenc",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -408,7 +408,7 @@
       "offset": 636,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite_copy_2_to_1_clear",
+      "target": "_usescreenc",
       "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
@@ -426,7 +426,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_setup_interrupt",
-      "target_index": 6,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -698,7 +698,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 9,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -723,7 +723,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_dos_resource_text",
+      "frame": "_mdosexit",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -731,7 +731,7 @@
       "offset": 253,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_dos_resource_text",
+      "target": "_mdosexit",
       "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
@@ -740,7 +740,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_dos_resource_text",
+      "frame": "_mdosexit",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -748,7 +748,7 @@
       "offset": 250,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_dos_resource_text",
+      "target": "_mdosexit",
       "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
@@ -774,7 +774,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_sonsof_resource_text",
+      "frame": "_msoundtog",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -782,7 +782,7 @@
       "offset": 233,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_sonsof_resource_text",
+      "target": "_msoundtog",
       "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
@@ -791,7 +791,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_sonsof_resource_text",
+      "frame": "_msoundtog",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -799,7 +799,7 @@
       "offset": 230,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_sonsof_resource_text",
+      "target": "_msoundtog",
       "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
@@ -825,7 +825,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_dos_resource_text",
+      "frame": "_mdosexit",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -833,7 +833,7 @@
       "offset": 213,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_dos_resource_text",
+      "target": "_mdosexit",
       "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
@@ -842,7 +842,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_dos_resource_text",
+      "frame": "_mdosexit",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -850,7 +850,7 @@
       "offset": 210,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_dos_resource_text",
+      "target": "_mdosexit",
       "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
@@ -978,7 +978,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_mof_resource_text",
+      "frame": "_mmusictog",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -986,7 +986,7 @@
       "offset": 153,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_mof_resource_text",
+      "target": "_mmusictog",
       "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
@@ -995,7 +995,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_do_mof_resource_text",
+      "frame": "_mmusictog",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1003,7 +1003,7 @@
       "offset": 150,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_do_mof_resource_text",
+      "target": "_mmusictog",
       "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
@@ -1131,7 +1131,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_show_graphic_levels_menu",
+      "frame": "_msetrender",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1139,7 +1139,7 @@
       "offset": 93,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_show_graphic_levels_menu",
+      "target": "_msetrender",
       "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
@@ -1148,7 +1148,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_show_graphic_levels_menu",
+      "frame": "_msetrender",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1156,7 +1156,7 @@
       "offset": 90,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_show_graphic_levels_menu",
+      "target": "_msetrender",
       "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
@@ -1352,7 +1352,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprcopy2to12",
+      "frame": "_usescreen",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1360,7 +1360,7 @@
       "offset": 1599,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprcopy2to12",
+      "target": "_usescreen",
       "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
@@ -1964,7 +1964,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_get_kevinrandom",
+      "frame": "_myrandom",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1972,7 +1972,7 @@
       "offset": 1173,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_get_kevinrandom",
+      "target": "_myrandom",
       "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
@@ -1981,7 +1981,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_get_kevinrandom",
+      "frame": "_myrandom",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1989,7 +1989,7 @@
       "offset": 1154,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_get_kevinrandom",
+      "target": "_myrandom",
       "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
@@ -2805,7 +2805,7 @@
     {
       "end": 171602,
       "name": "file_find_next_alt",
-      "public": "_file_find_next_alt",
+      "public": "_myfindnext",
       "stable_id": "load_29e4c",
       "start": 171596,
       "target": {
@@ -2838,7 +2838,7 @@
     {
       "end": 172636,
       "name": "init_main",
-      "public": "_initialize_main",
+      "public": "_initmodes",
       "stable_id": "load_29e56",
       "start": 171606,
       "target": {
@@ -2882,7 +2882,7 @@
     {
       "end": 173188,
       "name": "mmgr_alloc_resbytes",
-      "public": "_mmgr_alloc_resbytes",
+      "public": "_resmem",
       "stable_id": "load_2a460",
       "start": 173152,
       "target": {
@@ -2917,14 +2917,14 @@
     "externals": [
       "__acrtused",
       "_initmouse",
-      "_sprset1size",
-      "_initialize_main",
-      "_file_find_next_alt",
+      "_clippix",
+      "_initmodes",
+      "_myfindnext",
+      "_elticks",
       "_timer_setup_interrupt",
-      "_timer_get_delta_alt",
       "_vgapalette",
+      "_clearwindow",
       "_pixel_scales",
-      "_sprite_clear_1_color",
       "_initmemory",
       "_video_set_mode4",
       "_file_load_shape2d_fatal_thunk",
@@ -2951,25 +2951,25 @@
       "_load_shape2d_nofatal_thunk",
       "_kb_init_interrupt",
       "_kb_shift_checking2",
-      "_show_graphic_levels_menu",
+      "_msetrender",
       "__aFldiv",
       "_criterr",
       "_do_dea_textres",
       "_loadpalandmouse",
       "_displaywindow",
-      "_do_dos_resource_text",
+      "_mdosexit",
       "_seedrandom",
       "_do_joystick_resource_text",
-      "_do_mof_resource_text",
-      "_sprcopy2to12",
-      "_audio_stop_unknown",
+      "_mmusictog",
+      "_usescreen",
+      "_restoretimer",
       "_findfirst",
       "_unlockedmemory",
       "_audio_toggle_flag2",
-      "_do_sonsof_resource_text",
-      "_mmgr_alloc_resbytes",
+      "_msoundtog",
+      "_resmem",
       "_audio_toggle_flag6",
-      "_sprite_copy_2_to_1_clear",
+      "_usescreenc",
       "_availmem",
       "_vsyncstate",
       "_file_combine_and_find",
@@ -2983,7 +2983,7 @@
       "_reservememory",
       "_get_0",
       "_g_vid_flg2_set",
-      "_get_kevinrandom",
+      "_myrandom",
       "_vidflg3is_minus1",
       "_g_videoflg5",
       "_g_vid_flag6",
@@ -3016,12 +3016,12 @@
     ],
     "publics": [
       {
-        "name": "_initialize_main",
+        "name": "_initmodes",
         "offset": 66,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_file_find_next_alt",
+        "name": "_myfindnext",
         "offset": 56,
         "segment": "UNIT_TEXT"
       },
@@ -3051,7 +3051,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mmgr_alloc_resbytes",
+        "name": "_resmem",
         "offset": 1612,
         "segment": "UNIT_TEXT"
       },
@@ -3174,8 +3174,8 @@
   "preprocessor_closure": [
     {
       "path": "include/audapi.h",
-      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
-      "size": 4348
+      "sha256": "969bb452d8258b945ca6f7ea31d93fd5e17e872761f83809e72ec52902115e4a",
+      "size": 4342
     },
     {
       "path": "include/auddrv.h",
@@ -3204,8 +3204,8 @@
     },
     {
       "path": "include/dlgapi.h",
-      "sha256": "cf7150306b1a1d5145c76b02c9989c0b426c99016a20f98571c1f7aa3f22667b",
-      "size": 3480
+      "sha256": "7e1f5a3deac2bb5e28e4aa94a6fb3cbdad5ee2a734188971150a258502ce6939",
+      "size": 3394
     },
     {
       "path": "include/dlgcolor.h",
@@ -3224,8 +3224,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/geom2d.h",
@@ -3234,13 +3234,13 @@
     },
     {
       "path": "include/gfxapi.h",
-      "sha256": "b966458208d94c62a09d8430ef62b76a89bc0c0782aff562e28b1f42b3f561ef",
-      "size": 1231
+      "sha256": "58324548a2ee1621d772130e0432c7c6d61960cba899e48f360f65e1fc2303c2",
+      "size": 1221
     },
     {
       "path": "include/input.h",
-      "sha256": "6b3b573371ebc39e1b1b973e7e4d574e227122a673267f21f64fc4736c87e942",
-      "size": 1640
+      "sha256": "d43bddf63efc4400afb7396fc0c52009a31f8f1d4e30b04f976309bb75a64769",
+      "size": 1584
     },
     {
       "path": "include/memapi.h",
@@ -3259,8 +3259,8 @@
     },
     {
       "path": "include/render.h",
-      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
-      "size": 2799
+      "sha256": "3fbaca8201aed98ce123d7023893c1793bc0d77d82585d41852019a92386b5c3",
+      "size": 2773
     },
     {
       "path": "include/replay.h",
@@ -3269,13 +3269,13 @@
     },
     {
       "path": "include/resapi.h",
-      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
-      "size": 1686
+      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
+      "size": 1650
     },
     {
       "path": "include/shape2d.h",
-      "sha256": "44aab7b2f37c2e235e0e93d98988d92f09516d4a6b5842440bb29644cc62cc21",
-      "size": 1915
+      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
+      "size": 1825
     },
     {
       "path": "include/stunts_types.h",
@@ -3284,8 +3284,8 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     },
     {
       "path": "include/timer.h",

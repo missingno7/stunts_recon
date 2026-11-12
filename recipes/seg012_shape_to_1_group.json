@@ -96,7 +96,7 @@
     {
       "end": 146878,
       "name": "sprite_shape_to_1_alt",
-      "public": "_sprite_shape_to_1_alt",
+      "public": "_movf",
       "stable_id": null,
       "start": 146766,
       "target": {
@@ -122,7 +122,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_shape_to_1_alt",
+        "name": "_movf",
         "offset": 66,
         "segment": "S012_TEXT"
       }

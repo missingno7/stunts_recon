@@ -11,7 +11,7 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _sprite_clear_1_color
+public _clearwindow
 ; -----------------------------------------------------------------------------
 ; Purpose: Clear sprite image 1 to the requested color.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (byte ptr 6).
@@ -37,7 +37,7 @@ public _sprite_clear_1_color
 ; ASMDOC notes: No CLD: relies on caller direction flag. Clip right-left and bottom-top tested signed and nonpositive
 ; ASMDOC extents return. First row uses CS row-table; later rows advance by pitch. Odd-width and singleton paths write
 ; ASMDOC final byte directly. No BIOS/device service: writes whatever segment sprite1 selects, commonly A000h..
-_sprite_clear_1_color proc far
+_clearwindow proc far
     arg_color = byte ptr 6
 
     push    bp
@@ -96,6 +96,6 @@ clear_1_color_draw_loop_2:
     jg      short clear_1_color_draw_loop_2
     jmp     short sprite_clear_1_color_draw_loop
     db 0 ; retained zero fill at this boundary
-_sprite_clear_1_color endp
+_clearwindow endp
 S012_TEXT ends
 end

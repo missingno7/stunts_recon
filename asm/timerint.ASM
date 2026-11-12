@@ -59,7 +59,7 @@ public _inthypot
 public _video_set_mode7
 public _timer_setup_sound_countdown
 public _timer_setup_interrupt
-public _audio_stop_unknown
+public _restoretimer
 public _addtimer
 public _deltimer
 public _sseqds
@@ -438,7 +438,7 @@ _timer_setup_interrupt endp
 ; ASMDOC[timers] services: IN/OUT 21h; CLI/STI; OUT 40h twice with zero; IN/OUT 61h clears bits 0-1
 ; ASMDOC[timers] reachability: Direct shutdown callers plus exit list registered through CS:1848h, not dead.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_audio_stop_unknown proc far
+_restoretimer proc far
 
     xor     ax, ax
     mov     es, ax
@@ -484,7 +484,7 @@ timer_restore_prev_irq_vector:
     out     R5HW_KEYBOARD_CONTROL_PORT, al
 ; PC/XT PPI port B bits: /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
     retf
-_audio_stop_unknown endp
+_restoretimer endp
 
 ; addtimer: _timer_reg_callback
 ; -----------------------------------------------------------------------------

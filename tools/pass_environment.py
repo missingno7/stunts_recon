@@ -6,7 +6,7 @@ builds itself: `MSC_CMD_FLAGS=-il <TEMP prefix> -ef <pass directory>\\c23.err
 strings into its near heap, so the DOS-visible pass directory and TEMP
 prefix consume part of the budget that also holds the translation unit's
 symbol table (FACT-tu-extern-count-limits-cse).  Near that budget, code
-generation changes: whole seg000 keeps end_hiscore's dead `pop si` only
+generation changes: whole seg000 keeps evaluation's dead `pop si` only
 with a pass directory string of at least six characters.  Free conventional
 memory above the passes' needs had no observable effect (see the integ27
 report), but it is pinned separately for each host. With TEMP=. and TMP=.
@@ -131,7 +131,7 @@ def dosbox_compile_commands(profile, config, flags):
     mounts = [f'mount {drive.lower()} "{root}" -ro']
     # TMP as well as TEMP: the pinned runner sets both (tools/compiler.py), and CL takes
     # the passes' temporary-file prefix from TMP.  Without it whole seg000, which sits at
-    # the passes' near-heap limit, loses end_hiscore's dead `pop si` under DOSBox-X as soon
+    # the passes' near-heap limit, loses evaluation's dead `pop si` under DOSBox-X as soon
     # as its identifiers get a few characters shorter.
     commands = ['e:', 'set PATH=' + env['dos_directory'], 'set TEMP=' + env['temp'],
                 'set TMP=' + env['temp']]

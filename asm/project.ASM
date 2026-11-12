@@ -3,7 +3,7 @@
 ; ASMDOC-GEOMETRY Original source: asm/project.ASM; contracts below use ORIGINAL line
 ; references.
 ; ASMDOC-GEOMETRY Code exports: _nopsub_322C0, _nopsub_322DF, _set_projection, _vector_to_point,
-; _sprite_free_window
+; _removewindow
 ; ASMDOC-GEOMETRY All arguments/coordinates are 16-bit unless explicitly stated. BP offsets are after PUSH
 ; BP/MOV BP,SP.
 ; ASMDOC-GEOMETRY The detailed comments describe control flow including shared tails and transitive services;
@@ -61,9 +61,9 @@ extrn _abortmessage:far
 S012_TEXT segment word public 'CODE'
 public _projectorgp
 public _setprojectpb
-public _set_projection
+public _setprojectp
 public _projectp
-public _sprite_free_window
+public _removewindow
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 322C0.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -246,7 +246,7 @@ _setprojectpb endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: src/frontend.c:1013,1531; src/render.c:3094;
 ; src/race.c:820
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_set_projection proc far
+_setprojectp proc far
     arg_horizontal_degrees = word ptr 6
     arg_vertical_degrees = word ptr 8
     arg_width = word ptr 10
@@ -352,7 +352,7 @@ projection_branch_path_01:
     pop     si
     pop     bp
     retf
-_set_projection endp
+_setprojectp endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Project a vector into screen-space coordinates.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_point2dout (word ptr
@@ -573,7 +573,7 @@ _projectp endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: Many direct calls: src/frontend.c:687,697,964 etc.;
 ; render.c:3237; race.c:1710-1712; uires.c:201; trackedt.c:922-926
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_sprite_free_window proc far
+_removewindow proc far
     push    bp
     mov     bp, sp
     push    ds
@@ -612,6 +612,6 @@ window_free_error_path_01:
     lea     ax, ds:[_window_release_order_error_msg]
     push    ax
     call    far ptr _abortmessage
-_sprite_free_window endp
+_removewindow endp
 S012_TEXT ends
 end

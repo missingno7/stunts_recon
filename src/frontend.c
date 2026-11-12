@@ -130,12 +130,12 @@ struct TRANSFORMEDSHAPE3D {
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 /* Local view: call_read_line; return is void; another unit uses signed word. */
-extern void far call_read_line(I8 *destination, I16 maxLength, I16 x, I16 y, I32 source);
+extern void far instringz(I8 *destination, I16 maxLength, I16 x, I16 y, I32 source);
 
 
 
 /* Local view: do_fileselect_dialog; parameters[3].pointer is signed byte; another unit uses void. */
-extern I8 far do_fileselect_dialog(I8 *directory, I8 *track,
+extern I8 far floadreq(I8 *directory, I8 *track,
                                      I8 *extension, I8 far *text);
 
 
@@ -155,13 +155,13 @@ extern I8 * far file_combine_and_find(I8 *, I8 *, I8 *);
 /* Local view: loadreplay; return is signed word; another unit uses signed byte. */
 extern I16S far loadreplay(I8 *dir, I8 *name);
 /* Local view: file_load_resource_file; return.pointer is void; another unit uses signed byte. */
-extern void far *far file_load_resource_file(I8 *name);
+extern void far *far openresource(I8 *name);
 
 /* Local view: file_load_shape2d_fatal_thunk; return.pointer is void; another unit uses unsigned byte. */
 extern void far * file_load_shape2d_fatal_thunk(I8 *);
 
 /* Local view: file_write_fatal; parameters[1].pointer is struct HighScoreRecord; another unit uses void. */
-extern I16S far file_write_fatal(I8 *path, struct HighScoreRecord far *source,
+extern I16S far savefilez(I8 *path, struct HighScoreRecord far *source,
                                   U32  length);
 
 
@@ -169,13 +169,13 @@ extern I16S far file_write_fatal(I8 *path, struct HighScoreRecord far *source,
 
 
 /* Local view: font_setup_unknown; parameters[0] is signed word; another unit uses unsigned word. */
-extern void far font_setup_unknown(I16 colour, I16 mode);
+extern void far textcolor(I16 colour, I16 mode);
 /* Local view: fmtframestr; parameters[1] is unsigned word; another unit uses signed word. */
-extern void far fmtframestr(I8 *destination, U16S  frames, I16 mode);
+extern void far maketime(I8 *destination, U16S  frames, I16 mode);
 
 
 /* Local view: highscore_write_a; return is signed byte; another unit uses void. */
-extern I8 far highscore_write_a(I16 create_defaults);
+extern I8 far readhighs(I16 create_defaults);
 
 /* Local view: hiscore_draw_text; return is void; another unit uses near pointer. */
 extern void far hiscore_draw_text();
@@ -187,13 +187,13 @@ extern void far shadowtext(I8 *text, I16 width, I16 x, I16 colour, I16 mode);
 extern void far initscenery(U8  skybox);
 
 /* Local view: locate_many_resources; parameters[2].pointer.pointer is void; another unit uses signed byte. */
-extern void far locate_many_resources(void far *, I8 *, void far **);
+extern void far locateshapes(void far *, I8 *, void far **);
 /* Local view: locate_shape_alt; return.pointer is void; another unit uses signed byte. */
-extern void far * far locate_shape_alt();
+extern void far * far getres();
 /* Local view: locate_shape_fatal; return.pointer is struct SHAPE2D; another unit uses signed byte. */
 extern struct SHAPE2D far * far locate_shape_fatal(void far *, I8 *);
 /* Local view: locate_text_resource; parameters[0].pointer is signed byte; another unit uses void. */
-extern I8 far * far locate_text_resource(I8 far *data, I8 *name);
+extern I8 far * far getresl(I8 far *data, I8 *name);
 /* Local view: freememory; return is void; another unit uses far pointer. */
 extern void far freememory(void far *);
 
@@ -209,7 +209,7 @@ extern void far nullsub_2(void far *, I16);
 
 
 /* Local view: print_int_as_string_maybe; return is signed word; another unit uses void. */
-extern I16 far print_int_as_string_maybe(I8 *text, I16 value, I16 mode, I16 width);
+extern I16 far myitoa(I8 *text, I16 value, I16 mode, I16 width);
 
 /* Local view: clipzone; return is signed word; another unit uses signed byte. */
 extern I16 far clipzone(struct RECTANGLE *, struct RECTANGLE *);
@@ -220,14 +220,14 @@ extern void far selectcar(I8 *, I8 *, I8 *, I16);
 extern I16 far INIT_OBJECTS_BUFFER(I16, I16, I16, struct RECTANGLE *, I16);
 
 /* Local view: setup_aero_trackdata; parameters[0].pointer is void; another unit uses signed byte. */
-extern void far setup_aero_trackdata(void far *, I16);
+extern void far getsimdata(void far *, I16);
 
 /* Local view: shape2d_blit_rle_at; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far shape2d_blit_rle_at(void far *shape, I16 x, I16 y);
+extern void far movpackfxya(void far *shape, I16 x, I16 y);
 
 
 /* Local view: shape3d_load_all; return is void; another unit uses signed word. */
-extern void far shape3d_load_all(void);
+extern void far init_3dpieces(void);
 
 /* Local view: messagebox; return is signed word; another unit uses unsigned word. */
 extern I16 far messagebox();
@@ -236,25 +236,25 @@ extern I16 far messagebox();
 /* Local view: sprite_blit_to_video; return is signed word; another unit uses void. */
 extern I16 far sprite_blit_to_video(void far *sprite, I16 effect);
 /* Local view: sprite_clear_1_color; parameters[0] is signed word; another unit uses unsigned byte. */
-extern void far sprite_clear_1_color(I16 colour);
+extern void far clearwindow(I16 colour);
 /* Local view: sprite_clear_shape_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far sprite_clear_shape_alt(void far *, I16, I16);
+extern void far readfxya(void far *, I16, I16);
 
 
 
 /* Local view: sprite_free_window; parameters[0].pointer is void; another unit uses struct SPRITE. */
-extern void far sprite_free_window(void far *sprite);
+extern void far removewindow(void far *sprite);
 /* Local view: sprite_make_window; return.pointer is void; another unit uses struct SPRITE. */
 extern void far *far sprite_make_window(I16 width, I16 height, I16 depth);
 /* Local view: sprputimage; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far sprputimage(void far *);
+extern void far movcf(void far *);
 /* Local view: sprite_putimage_and_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far sprite_putimage_and_alt(void far *, I16, I16);
+extern void far movcfxya(void far *, I16, I16);
 
 /* Local view: sprite_setup1_from_arg_pointer; parameters[0].pointer is void; another unit uses struct SPRITE. */
 extern void far sprite_setup1_from_arg_pointer(void far *sprite);
 /* Local view: sprset1size; parameters[0] is signed word; another unit uses unsigned word. */
-extern void far sprset1size(I16 x, I16 y, I16 width, I16 height);
+extern void far clippix(I16 x, I16 y, I16 width, I16 height);
 
 
 
@@ -266,7 +266,7 @@ extern I16 strlen(I8 *text);
 extern void far * far read_file_with_retry(I16, I8 *, void far *);
 
 /* Local view: timer_get_delta_alt; return is signed word; another unit uses unsigned long. */
-extern I16 far timer_get_delta_alt(void);
+extern I16 far elticks(void);
 /* Local view: compiletrack; return is signed byte; another unit uses signed word. */
 extern I8 far compiletrack(void);
 /* Local view: ADD_OBJECT_TO_BUFFER; return is unsigned word; another unit uses void. */
@@ -275,7 +275,7 @@ extern U16  far ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D *);
 extern void far closeresource(void far *resource);
 
 /* Local view: update_car_speed; parameters[0] is signed word; another unit uses signed byte. */
-extern void far update_car_speed(I16, I16, struct CARSTATE *, struct SIMD *);
+extern void far doengine(I16, I16, struct CARSTATE *, struct SIMD *);
 
 
 
@@ -320,7 +320,7 @@ extern U8  backlightovr8;
 /* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
 extern I8 joystick_enabled;
 /* Local view: endhsdemo; type is unsigned byte; another unit uses signed byte. */
-extern U8  endhsdemo;
+extern U8  didrace;
 /* Local views precede the shared UI interfaces to preserve communal first sightings. */
 /* Local view: unused_count; type is signed word; another unit uses unsigned word. */
 int unused_count;
@@ -400,6 +400,67 @@ struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y;
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
+#include "matrix.h"
+struct PLANE;
+/* Shared simulation state definitions. */
+unsigned char g_rpl_init;
+long centerpos;
+int car_roty_pln;
+char g_plyr_snd_state;
+int wall_facingang;
+int rotxvehicle;
+unsigned char test_pln;
+unsigned char g_cursurfacekindvalue;
+int g_penaltytm;
+struct SIMD ophys_7;
+int viewyshift;
+long veh_position;
+short g_cvxintvl;
+struct MATRIX matrix_transform_view;
+short st_hdg;
+unsigned char sigframe;
+char audio_frmarr[1360];
+int g_audio_frms_ix;
+short g_sgateopn;
+unsigned short tmr2;
+char inrepflg;
+char tagtrk;
+int nextpos_normalip;
+int wallanchor_z;
+int frwhl_angadjusted;
+char audiooppflag;
+struct PLANE far* plncurrptr;
+char g_hillf;
+short x_course_part;
+struct VECTOR tvec2;
+short wallanchor_x;
+char gm_playmode;
+int op_eng_sound_id;
+struct PLANE far* g_planlist;
+int g_trackpiecescounter;
+long veh_z;
+char sndpendingstate;
+int g_player_sound_id;
+short wall_wallelement;
+short hgthgt;
+struct VECTOR pln_rot_output;
+int g_planidx2;
+short frmcs_time;
+int car_rotate_xc;
+short element_min_wall;
+char idxtrk;
+short road_num;
+int pln_rotate_z;
+char *table_lookup;
+short pl_i;
+int anglerotate_car;
+short sndposrecord;
+int yrotrotveh;
+char intraffic;
+short road_elem_ctrz;
+char pen_flag_count;
+unsigned char opponent_spd_tbl[16];
+
 #include "audapi.h"
 #include "car.h"
 #include "chartab.h"
@@ -438,7 +499,7 @@ extern I16 far *g_td08d;
 /* Local view: trkptrpath; pointer is signed word; another unit uses struct VECTOR. */
 extern I16 far *trkptrpath;
 /* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
-extern I16 far *td10checkptr;
+extern I16 far *trksign;
 /* Local view: savedptr_ms; pointer is signed byte; another unit uses struct SPRITE. */
 char far *savedptr_ms;
 
@@ -462,7 +523,7 @@ char pass_check_flag;
 
 
 /* Local view: mmgr_alloc_resbytes; return.pointer is void; another unit uses signed byte. */
-extern void far *mmgr_alloc_resbytes(I8 *, U32 );
+extern void far *resmem(I8 *, U32 );
 
 
 
@@ -484,7 +545,7 @@ extern void far getprotection(I16);
 extern I16 far findfirst(I8 *);
 
 /* Local view: end_hiscore; return is signed byte; another unit uses unsigned word. */
-extern I8 far end_hiscore(void);
+extern I8 far evaluation(void);
 
 
 
@@ -518,17 +579,17 @@ I8 ReplayName[10] = "DEFAULT";
 I8 TerName[5][9] = { "desert", "tropical", "alpine", "city", "country" };
 I16 terheight[2] = { 0, 450 };
 I16 camlen = 210;
-I16 custom_azim_angle = 464;
-I16 custom_elev_angle = 80;
+I16 camheading = 464;
+I16 campitch = 80;
 /* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
-I8 mouse_enabled = 0;
+I8 mousedrive = 0;
 /* Local view: is_audioloaded; type is signed byte; another unit uses signed word. */
 I8 is_audioloaded = 0;
 I8 HKeyFlag = 0;
 I8 cammd = 0;
 /* Local view: skybox_loaded; type is signed byte; another unit uses unsigned byte. */
 I8 skybox_loaded = 0;
-I8 mouse_transparent_mode = 0;
+I8 mouseonstat = 0;
 I8 kbormouse = 0;
 I8 mouseonscreen = 0;
 /* Local view: renderlevel; type is signed byte; another unit uses unsigned byte. */
@@ -567,7 +628,7 @@ I16 main(I16 argc, I8 *argv[])
   I8 menuFlag;
   register I16 result;
   I8 far *trackBlock;
-  initialize_main(argc, argv);
+  initmodes(argc, argv);
   initialize_div0();
   for (index = 0; index < 30; ++index)
   {
@@ -583,13 +644,13 @@ I16 main(I16 argc, I8 *argv[])
     xcols[index] = index * 1024u;
     trackctrpos2[index] = index * 1024 + 512;
   }
-  main_data_file_addr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("main");
-  def_fntadr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(0, "fontdef.fnt");
-  fntndat = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(0, "fontn.fnt");
+  main_data_file_addr = /* PLATFORM(file): Legacy file and resource API. */ openresource("main");
+  def_fntadr = /* PLATFORM(file): Legacy file and resource API. */ myload(0, "fontdef.fnt");
+  fntndat = /* PLATFORM(file): Legacy file and resource API. */ myload(0, "fontn.fnt");
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
   INIT_MATRIX();
   index = 0x6BF3;
-  trackBlock = /* PLATFORM(memory): Game memory-manager API. */ mmgr_alloc_resbytes("trakdata", index);
+  trackBlock = /* PLATFORM(memory): Game memory-manager API. */ resmem("trakdata", index);
   g_td01_track_filecpy = (I16S far *) trackBlock;
   trackBlock += TRACK_MAP_PAIR_BYTES;
   trackdata_penalty_related = (I16S far *) trackBlock;
@@ -608,7 +669,7 @@ I16 main(I16 argc, I8 *argv[])
   trackBlock += 0x60;
   trkptrpath = (I16 far *) trackBlock;
   trackBlock += 0x180;
-  td10checkptr = (I16 far *) trackBlock;
+  trksign = (I16 far *) trackBlock;
   trackBlock += 0x120;
   hscore_trk11_ptr = (struct HighScoreRecord far *) trackBlock;
   trackBlock += 0x16C;
@@ -637,17 +698,17 @@ I16 main(I16 argc, I8 *argv[])
   trkd23adr = (U8  far *) trackBlock;
   /* MSC 5.10: retain the final, otherwise unused arena advance. */
   trackBlock += 0x30;
-  initialize_unknown();
-  initialize_kevin_random(aKevin);
+  initworld();
+  mysetseeds(aKevin);
   strcpy(globalgamesettings.game_trackname, "DEFAULT");
   /* MSC 5.10: this overwritten assignment affects object output. */
   index = 0;
-  input_do_checking(1);
-  input_do_checking(1);
-  msdrawopaquechk();
+  hurrykey(1);
+  hurrykey(1);
+  mouseoff();
   kbormouse = 0;
   pass_check_flag = 0;
-  set_default_car();
+  initselections();
   index = 1;
   goto do_intro;
   do
@@ -677,7 +738,7 @@ I16 main(I16 argc, I8 *argv[])
       case 2:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
         loading();
-        run_opponent_menu();
+        selectopponent();
         goto show_menu;
       case 4:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
@@ -711,7 +772,7 @@ I16 main(I16 argc, I8 *argv[])
           }
           seedrandom();
           if (pass_check_flag == 0)
-            getprotection((I8)(get_super_random() % 20));
+            getprotection((I8)(drnd() % 20));
         }
         else if (/* PLATFORM(file): Legacy file and resource API. */ findfirst("tedit.*") == 0)
           goto prepare_intro;
@@ -719,10 +780,10 @@ I16 main(I16 argc, I8 *argv[])
           goto init_replay;
       init_replay:
         /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unload();
-        cvxs_a = /* PLATFORM(memory): Game memory-manager API. */ mmgr_alloc_resbytes("cvx", 22400);
-        initialize_game_state(-1);
+        cvxs_a = /* PLATFORM(memory): Game memory-manager API. */ resmem("cvx", 22400);
+        initsim(-1);
         if (menuFlag != 0)
-          endhsdemo = 0;
+          didrace = 0;
         else
           globalgamesettings.game_recordedframes = 0;
         break;
@@ -737,12 +798,12 @@ I16 main(I16 argc, I8 *argv[])
     {
       loading();
       run_game();
-      if (menutimeout == 0 && endhsdemo != 0)
+      if (menutimeout == 0 && didrace != 0)
       {
-        switch (end_hiscore())
+        switch (evaluation())
         {
           case 0:
-            endhsdemo = 4;
+            didrace = 4;
             continue;
           case 1:
             globalgamesettings.game_recordedframes = 0;
@@ -763,9 +824,9 @@ I16 main(I16 argc, I8 *argv[])
     if (menutimeout != 0)
       goto do_intro0;
     goto show_menu;
-  } while (messagebox(2, 1, locate_text_resource(main_data_file_addr, "dos"), 0xFFFF, 0xFFFF, dialog_frame_color, 0, 0) < 1);
-  msdrawopaquechk();
-  /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_stop_unknown();
+  } while (messagebox(2, 1, getresl(main_data_file_addr, "dos"), 0xFFFF, 0xFFFF, dialog_frame_color, 0, 0) < 1);
+  mouseoff();
+  /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ restoretimer();
   audiodrv_atexit();
   /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ keyboard_exit_handler();
   /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ keyboard_shift_checking1();
@@ -788,20 +849,20 @@ I16 far run_intro_looped(void)
 {
     register I16 inputResult;
     /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ file_load_audio_resource("skidtitl", "skidms", "TITL");
-    loadedresourceptr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(2, "sdtitl");
+    loadedresourceptr = /* PLATFORM(file): Legacy file and resource API. */ myload(2, "sdtitl");
     g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(SCREEN_WIDTH_PIXELS, SCREEN_HEIGHT_PIXELS, 0x0f);
     inputResult = run_intro();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
     /* PLATFORM(memory): Game memory-manager API. */ freememory(loadedresourceptr);
     if (inputResult == 0) {
-        inputResult = setup_intro();
+        inputResult = logo();
         if (inputResult == 0) {
-            loadedresourceptr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(2, "sdcred");
+            loadedresourceptr = /* PLATFORM(file): Legacy file and resource API. */ myload(2, "sdcred");
             g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(SCREEN_WIDTH_PIXELS, SCREEN_HEIGHT_PIXELS, 0x0f);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1_clear();
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebufferc();
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, 0);
             inputResult = load_intro_resources();
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
             /* PLATFORM(memory): Game memory-manager API. */ freememory(loadedresourceptr);
         }
     }
@@ -820,25 +881,25 @@ I16 far run_intro_looped(void)
 I16 far run_intro(void)
 {
     register I16 inputResult;
-    msdrawopaquechk();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_2_to_1_clear();
-    msdrawtransparentchk();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1_clear();
+    mouseoff();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreenc();
+    mouseon();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebufferc();
     if (locate_shape_fatal(loadedresourceptr, "prod")->pos_y != 0)
         waitm_ms = 0xa0;
     else
         waitm_ms = 0xb4;
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(locate_shape_fatal(loadedresourceptr, "prod"));
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(locate_shape_fatal(loadedresourceptr, "prod"));
     inputResult = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, 0xffff);
     if (inputResult == 0) {
-        inputResult = input_repeat_check(0x190);
+        inputResult = mykeywait(0x190);
         if (inputResult == 0) {
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1_clear();
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebufferc();
             waitm_ms = 0xb4;
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(locate_shape_fatal(loadedresourceptr, "titl"));
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(locate_shape_fatal(loadedresourceptr, "titl"));
             inputResult = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, 0xffff);
             if (inputResult == 0)
-                inputResult = input_repeat_check(0x190);
+                inputResult = mykeywait(0x190);
         }
     }
     return inputResult;
@@ -868,76 +929,76 @@ I8S  far load_intro_resources(void)
   I16S timerStep;
   I16 inputResult;
   I16S displayHeight;
-  introFile = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("cred");
-  locate_many_resources(loadedresourceptr, "arowarrwarw1arw2arw3arw4arw5arw6arw7arw8type", resources);
+  introFile = /* PLATFORM(file): Legacy file and resource API. */ openresource("cred");
+  locateshapes(loadedresourceptr, "arowarrwarw1arw2arw3arw4arw5arw6arw7arw8type", resources);
   waitm_ms = 0x96;
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1_clear();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebufferc();
   imageWidth = ((struct SHAPE2D far *) resources[1])->pos_x;
   waitLimit = ((struct SHAPE2D far *) resources[1])->pos_y;
   scaledWidth = ((struct SHAPE2D far *) resources[1])->width * pixel_scales;
   displayHeight = ((struct SHAPE2D far *) resources[1])->height;
-  strcpyfar(resbuftext, locate_text_resource(introFile, "cre"));
+  strcpyfar(resbuftext, getresl(introFile, "cre"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x78, 0, intro_text_color_b, intro_text_style_b);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gds0"));
+  strcpyfar(resbuftext, getres(introFile, "gds0"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x3c, 0x0c, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gds1"));
+  strcpyfar(resbuftext, getres(introFile, "gds1"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x68, 0x14, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_text_resource(introFile, "des"));
+  strcpyfar(resbuftext, getresl(introFile, "des"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x20, intro_text_color_c, intro_text_style_c);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gdon"));
+  strcpyfar(resbuftext, getres(introFile, "gdon"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x2c, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gkev"));
+  strcpyfar(resbuftext, getres(introFile, "gkev"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x34, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gbra"));
+  strcpyfar(resbuftext, getres(introFile, "gbra"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x3c, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "grob"));
+  strcpyfar(resbuftext, getres(introFile, "grob"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x44, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gsta"));
+  strcpyfar(resbuftext, getres(introFile, "gsta"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x4c, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_text_resource(introFile, "mus"));
+  strcpyfar(resbuftext, getresl(introFile, "mus"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x5c, intro_text_color_f, intro_text_style_f);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gmsy"));
+  strcpyfar(resbuftext, getres(introFile, "gmsy"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x68, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gkri"));
+  strcpyfar(resbuftext, getres(introFile, "gkri"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x70, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gbri"));
+  strcpyfar(resbuftext, getres(introFile, "gbri"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0x14, 0x78, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_text_resource(introFile, "pro"));
+  strcpyfar(resbuftext, getresl(introFile, "pro"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x20, intro_text_color_d, intro_text_style_d);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gkev"));
+  strcpyfar(resbuftext, getres(introFile, "gkev"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x2c, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_text_resource(introFile, "opr"));
+  strcpyfar(resbuftext, getresl(introFile, "opr"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x38, intro_text_color_d, intro_text_style_d);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gbra"));
+  strcpyfar(resbuftext, getres(introFile, "gbra"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x40, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gric"));
+  strcpyfar(resbuftext, getres(introFile, "gric"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x48, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_text_resource(introFile, "art"));
+  strcpyfar(resbuftext, getresl(introFile, "art"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x54, intro_text_color_e, intro_text_style_e);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gmsm"));
+  strcpyfar(resbuftext, getres(introFile, "gmsm"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x60, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gdav"));
+  strcpyfar(resbuftext, getres(introFile, "gdav"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x68, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gnic"));
+  strcpyfar(resbuftext, getres(introFile, "gnic"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x70, intro_text_color_a, intro_text_style_a);
-  strcpyfar(resbuftext, locate_shape_alt(introFile, "gkev"));
+  strcpyfar(resbuftext, getres(introFile, "gkev"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, 0xac, 0x78, intro_text_color_a, intro_text_style_a);
   closeresource(introFile);
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, 0xffff);
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-  /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+  /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
   elapsed = 0x14a;
   for (;;)
   {
-    timerStep = /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
+    timerStep = /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
     elapsed -= timerStep << 1;
     if (imageWidth > elapsed)
       break;
-    msdrawopaquechk();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_putimage_and_alt(resources[1], elapsed, waitLimit);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite1_unknown2(scaledWidth + elapsed, waitLimit, 0x20, displayHeight, 0);
-    msdrawtransparentchk();
-    inputResult = input_do_checking(timerStep);
+    mouseoff();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcfxya(resources[1], elapsed, waitLimit);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ drawrectc(scaledWidth + elapsed, waitLimit, 0x20, displayHeight, 0);
+    mouseon();
+    inputResult = hurrykey(timerStep);
     if (inputResult != 0)
       break;
   }
@@ -948,33 +1009,33 @@ I8S  far load_intro_resources(void)
   {
     if (inputResult != 0)
       break;
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(0, SCREEN_WIDTH_PIXELS, waitLimit, SCREEN_HEIGHT_PIXELS);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(0);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(resources[picture]);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(0, SCREEN_WIDTH_PIXELS, waitLimit, SCREEN_HEIGHT_PIXELS);
-    msdrawopaquechk();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprputimage(g_wndspr->image);
-    msdrawtransparentchk();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(0, SCREEN_WIDTH_PIXELS, waitLimit, SCREEN_HEIGHT_PIXELS);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(0);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(resources[picture]);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(0, SCREEN_WIDTH_PIXELS, waitLimit, SCREEN_HEIGHT_PIXELS);
+    mouseoff();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcf(g_wndspr->image);
+    mouseon();
     step += 5;
     while (step > elapsed)
     {
-      timerStep = /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
-      inputResult = input_do_checking(timerStep);
+      timerStep = /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
+      inputResult = hurrykey(timerStep);
       elapsed += timerStep;
     }
   }
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(0, SCREEN_WIDTH_PIXELS, 0, SCREEN_HEIGHT_PIXELS);
-  msdrawopaquechk();
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_shape(g_wndspr->image);
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(0, SCREEN_WIDTH_PIXELS, waitLimit, SCREEN_HEIGHT_PIXELS);
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(0);
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(resources[0]);
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(resources[10]);
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(0, SCREEN_WIDTH_PIXELS, 0, SCREEN_HEIGHT_PIXELS);
+  mouseoff();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ readf(g_wndspr->image);
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(0, SCREEN_WIDTH_PIXELS, waitLimit, SCREEN_HEIGHT_PIXELS);
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(0);
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(resources[0]);
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(resources[10]);
   inputResult = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, 0);
-  if (inputResult != 0 || input_repeat_check(0x1f4) != 0)
+  if (inputResult != 0 || mykeywait(0x1f4) != 0)
     return 1;
   return 0;
 }
@@ -1015,25 +1076,25 @@ I8 far select(void)
     waitm_ms = 180;
     g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(320, 200, 15);
 
-    data_resource = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(2, "sdmsel");
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(locate_shape_fatal(data_resource, "scrn"));
+    data_resource = /* PLATFORM(file): Legacy file and resource API. */ myload(2, "sdmsel");
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(locate_shape_fatal(data_resource, "scrn"));
     /* PLATFORM(memory): Game memory-manager API. */ freememory(data_resource);
 
     for (;;) {
         if (selection != oldSelection) {
             oldSelection = selection;
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, drawMode);
             drawMode = -2;
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-            reset_idle_counters();
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+            docursorinit();
         }
 
-        mouseDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mouse_timer_sprite_unknown(selection,
+        mouseDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(selection,
             menu_buttons_x1, menu_buttons_x2,
             menu_buttons_y1, menu_buttons_y2, menu_hover_color_a, menu_hover_color_b);
-        keyCode = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ input_checking(mouseDelta);
+        keyCode = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ mykey(mouseDelta);
         hit = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mousecursor(5, menu_buttons_x1, menu_buttons_x2,
                                   menu_buttons_y1, menu_buttons_y2);
         if (hit != -1)
@@ -1068,7 +1129,7 @@ I8 far select(void)
     }
 
 menu_done:
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
     return selection;
 }
 
@@ -1116,44 +1177,44 @@ preview:
     waitm_ms = 0x9b;
     g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(SCREEN_WIDTH_PIXELS, SCREEN_HEIGHT_PIXELS, 0x0f);
     initscenery((U8 )td14tb[0x384]);
-    shape3d_load_all();
-    set_projection(0x28, 0x28, SCREEN_WIDTH_PIXELS, 0xc8);
-    initialize_game_state(-2);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(ground_skybox);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(0, SCREEN_WIDTH_PIXELS, 0, SCREEN_HEIGHT_PIXELS);
-    draw_track_preview();
-    shape3d_free_all();
+    init_3dpieces();
+    setprojectp(0x28, 0x28, SCREEN_WIDTH_PIXELS, 0xc8);
+    initsim(-2);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(ground_skybox);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(0, SCREEN_WIDTH_PIXELS, 0, SCREEN_HEIGHT_PIXELS);
+    drawblimpworld();
+    remove_3dpieces();
     removescenery();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
     strcpy(resbuftext, "'");
     strcat(resbuftext, globalgamesettings.game_trackname);
     strcat(resbuftext, "'");
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 6,
                         dlg_colour, 0);
 
-    if (highscore_write_a(0) == 0) {
+    if (readhighs(0) == 0) {
         if (hscore_trk11_ptr[scrorder_idxs[0]].marker != 0xffff) {
-        strcpyfar(resbuftext, locate_text_resource(main_data_file_addr, "hs0"));
+        strcpyfar(resbuftext, getresl(main_data_file_addr, "hs0"));
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 0x12,
                         dlg_colour, 0);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
-        print_highscore_entry(0, offsets);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_setup_unknown(0, 0);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[0], 16, 30);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[1], 120, 30);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[2], 224, 30);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[3], 272, 30);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
+        genhline(0, offsets);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(0, 0);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[0], 16, 30);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[1], 120, 30);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[2], 224, 30);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[3], 272, 30);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
         }
     }
 
-    trkEdit = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("tedit");
-    draw3dbutton(locate_text_resource(trkEdit, "bmt"), 0x11, 0xac, 0x5e, 0x18,
+    trkEdit = /* PLATFORM(file): Legacy file and resource API. */ openresource("tedit");
+    draw3dbutton(getresl(trkEdit, "bmt"), 0x11, 0xac, 0x5e, 0x18,
                 menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-    draw3dbutton(locate_text_resource(trkEdit, "bet"), 0x71, 0xac, 0x5e, 0x18,
+    draw3dbutton(getresl(trkEdit, "bet"), 0x71, 0xac, 0x5e, 0x18,
                 menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-    draw3dbutton(locate_text_resource(trkEdit, "bmm"), 0xd1, 0xac, 0x5e, 0x18,
+    draw3dbutton(getresl(trkEdit, "bmm"), 0xd1, 0xac, 0x5e, 0x18,
                 menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
     closeresource(trkEdit);
 
@@ -1162,11 +1223,11 @@ menu_loop:
         lastSelection = trackSelection;
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, displayState);
         displayState = -2;
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-        reset_idle_counters();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+        docursorinit();
     }
 
-    timerDiff = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mouse_timer_sprite_unknown(trackSelection,
+    timerDiff = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(trackSelection,
         trackmenu_buttons_x1, trackmenu_buttons_x2,
         trackmenu_buttons_y1, trackmenu_buttons_y2,
         menu_hover_color_a, menu_hover_color_b);
@@ -1175,7 +1236,7 @@ menu_loop:
         unused_count = 0;
         ++menutimeout;
     }
-    keyCodePressed = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ input_checking(timerDiff);
+    keyCodePressed = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ mykey(timerDiff);
     choice = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mousecursor(3,
         trackmenu_buttons_x1, trackmenu_buttons_x2,
         trackmenu_buttons_y1, trackmenu_buttons_y2);
@@ -1210,29 +1271,29 @@ menu_loop:
     }
     switch (trackSelection) {
     default:
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
         return;
     case 0:
-        dialogRes = do_fileselect_dialog(track_file, globalgamesettings.game_trackname,
+        dialogRes = floadreq(track_file, globalgamesettings.game_trackname,
                                          ".trk",
-                                         locate_text_resource(main_data_file_addr, "trk"));
+                                         getresl(main_data_file_addr, "trk"));
         /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname,
                         ".trk", buf_g_path);
         if (dialogRes != 0) {
             /* PLATFORM(file): Legacy file and resource API. */ loadfileat(buf_g_path, td14tb);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
             goto preview;
         }
         lastSelection = -1;
         goto menu_loop;
     case 1:
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
     restart_game:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
         loading();
         waitm_ms = 0x82;
         compiletrack();
-        load_tracks_menu_shapes();
+        trackedit();
         goto preview;
     }
 }
@@ -1246,7 +1307,7 @@ menu_loop:
  */
 
 /* Local view: highscore_write_a; return is signed byte; another unit uses void. */
-I8 far highscore_write_a(I16 create_defaults)
+I8 far readhighs(I16 create_defaults)
 {
   void far *loaded_data;
   I16 index;
@@ -1277,7 +1338,7 @@ I8 far highscore_write_a(I16 create_defaults)
   row.marker = 0xffff;
   for (index = 0; index < 7; ++index)
     hscore_trk11_ptr[index] = row;
-  index = /* PLATFORM(file): Legacy file and resource API. */ file_write_fatal(buf_g_path, hscore_trk11_ptr, 0x16C);
+  index = /* PLATFORM(file): Legacy file and resource API. */ savefilez(buf_g_path, hscore_trk11_ptr, 0x16C);
   if (index != 0)
     return 1;
   return 0;
@@ -1292,48 +1353,48 @@ I8 far highscore_write_a(I16 create_defaults)
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
 
-void far highscore_text_unknown(void)
+void far drawhighs(void)
 {
     I16 row_color;
     I16 row_top;
     I8 offsets[4];
     I8 row_index;
 
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
 
-    strcpyfar(resbuftext, locate_text_resource(main_data_file_addr, "hs1"));
+    strcpyfar(resbuftext, getresl(main_data_file_addr, "hs1"));
     strcat(resbuftext, " '");
     strcat(resbuftext, globalgamesettings.game_trackname);
     strcat(resbuftext, "'");
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext),
                       5, dlg_colour, 0);
 
-    strcpyfar(resbuftext, locate_text_resource(main_data_file_addr, "hs2"));
+    strcpyfar(resbuftext, getresl(main_data_file_addr, "hs2"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 16, 15, dlg_colour, 0);
-    strcpyfar(resbuftext, locate_text_resource(main_data_file_addr, "hs3"));
+    strcpyfar(resbuftext, getresl(main_data_file_addr, "hs3"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 120, 15, dlg_colour, 0);
-    strcpyfar(resbuftext, locate_text_resource(main_data_file_addr, "hs5"));
+    strcpyfar(resbuftext, getresl(main_data_file_addr, "hs5"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 224, 15, dlg_colour, 0);
-    strcpyfar(resbuftext, locate_text_resource(main_data_file_addr, "hs4"));
+    strcpyfar(resbuftext, getresl(main_data_file_addr, "hs4"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 272, 15, dlg_colour, 0);
 
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
     row_index = 0;
     goto row_check;
 row_normal:
     row_color = 0;
 row_draw:
     row_top = row_index * 10 + 25;
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_setup_unknown(row_color, 0);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[0], 16, row_top);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[1], 120, row_top);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[2], 224, row_top);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext + offsets[3], 272, row_top);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(row_color, 0);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[0], 16, row_top);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[1], 120, row_top);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[2], 224, row_top);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[3], 272, row_top);
     ++row_index;
 row_check:
     if (row_index >= 7)
         goto row_done;
-    print_highscore_entry(row_index, offsets);
+    genhline(row_index, offsets);
     if (row_index != entry_score_index)
         goto row_normal;
     row_color = dialog_frame_color;
@@ -1350,7 +1411,7 @@ row_done:
  * PLATFORM(timer): Timer-selected frame rate or timer position.
  */
 
-void far print_highscore_entry(I16 rowIndex, I8 *stringOffsets)
+void far genhline(I16 rowIndex, I8 *stringOffsets)
 {
     I8 timeText[18];
     I8 textLength;
@@ -1375,9 +1436,9 @@ void far print_highscore_entry(I16 rowIndex, I8 *stringOffsets)
     frameRate = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
     /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame = 20;
     if (scoreRecord.marker != 0xffff)
-        fmtframestr(timeText, scoreRecord.marker, 1);
+        maketime(timeText, scoreRecord.marker, 1);
     else
-        fmtframestr(timeText, 0, 1);
+        maketime(timeText, 0, 1);
     stringOffsets[3] = textLength;
     strcpy(resbuftext + textLength, timeText);
     /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame = frameRate;
@@ -1394,7 +1455,7 @@ void far print_highscore_entry(I16 rowIndex, I8 *stringOffsets)
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
 
-void far enter_hiscore(U16S  score, I8 far *text, U8  carStyle)
+void far addhighs(U16S  score, I8 far *text, U8  carStyle)
 {
     I8 selectedIndex;
     I8 insertionIndex;
@@ -1429,23 +1490,23 @@ void far enter_hiscore(U16S  score, I8 far *text, U8  carStyle)
         }
         hscore_trk11_ptr[6] = current;
 
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-        highscore_text_unknown();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+        drawhighs();
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, -1);
         messagebox(3, 0, text, -1, -1,
                     dialog_frame_color, &dialogY, 0);
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
-        call_read_line(results_entryname, 16, dialogY, dialogX, 30000);
+        instringz(results_entryname, 16, dialogY, dialogX, 30000);
         strcpy((I8 *)current.bytes, results_entryname);
         hscore_trk11_ptr[6] = current;
 
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-        highscore_text_unknown();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+        drawhighs();
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, -1);
-        highscore_write_b();
+        savehighs();
     }
 
-    highscore_text_unknown();
+    drawhighs();
 }
 
 /* Purpose: Writes the ordered high-score table.
@@ -1456,7 +1517,7 @@ void far enter_hiscore(U16S  score, I8 far *text, U8  carStyle)
  * PLATFORM(file): Legacy file and resource API.
  */
 
-void far highscore_write_b(void)
+void far savehighs(void)
 {
     I16 index;
     struct HighScoreRecord orderedScores[7];
@@ -1466,7 +1527,7 @@ void far highscore_write_b(void)
 
     /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname, ".hig", buf_g_path);
     g_is_busy = 1;
-    /* PLATFORM(file): Legacy file and resource API. */ file_write_fatal(buf_g_path, orderedScores, 0x16cUL);
+    /* PLATFORM(file): Legacy file and resource API. */ savefilez(buf_g_path, orderedScores, 0x16cUL);
     g_is_busy = 0;
 }
 
@@ -1565,7 +1626,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
   carCountLast = 1;
   do
   {
-    findfileX = /* PLATFORM(file): Legacy file and resource API. */ file_find_next_alt();
+    findfileX = /* PLATFORM(file): Legacy file and resource API. */ myfindnext();
     if (findfileX == 0)
       break;
     else
@@ -1612,7 +1673,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
   backlightovr8 = 0x2d;
   sdcselPos = /* PLATFORM(file): Legacy file and resource API. */ file_load_shape2d_fatal_thunk("sdcsel");
   if (opponenttype == 0)
-    g_miscfile_ptr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("misc");
+    g_miscfile_ptr = /* PLATFORM(file): Legacy file and resource API. */ openresource("misc");
   if (opponenttype != 0)
   {
     car_menu_clip_rect.right = 0xf0;
@@ -1621,10 +1682,10 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
       opponentShapeCopy = g_opp_resources[opponenttype];
       opponentWindowX = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(((struct OPPONENTIMAGE far *) opponentShapeCopy)->width, ((struct OPPONENTIMAGE far *) opponentShapeCopy)->height, 0x0f);
       setup_mcgawnd2();
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(0);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(0);
       nullsub_2(resource_ptropp, (I8) (opponenttype + '0'));
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_putimage_transparent(g_opp_resources[opponenttype], 0, 0);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_shape_alt(opponentWindowX->image, 0, 0);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ tmaskxcfxya(g_opp_resources[opponenttype], 0, 0);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ readfxya(opponentWindowX->image, 0, 0);
     }
   }
   else
@@ -1634,11 +1695,11 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
   previousCarIndexCar = -1;
   rotation = 0;
   selectedButtonY = 0;
-  reset_idle_counters();
+  docursorinit();
   rotationDeltaY = 0;
   previousButton = -1;
-  set_projection(0x24, 0x11, SCREEN_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS);
-  /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
+  setprojectp(0x24, 0x11, SCREEN_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS);
+  /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
   g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(SCREEN_WIDTH_PIXELS, SCREEN_HEIGHT_PIXELS, 0x0f);
   for (;;)
   {
@@ -1649,48 +1710,48 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
       if (previousCarIndexCar != -1)
       {
         closeresource(carres);
-        shape3d_free_car_shapes();
+        remove_3dcars();
       }
-      shape3d_load_car_shapes(carids[carIndexY], globalgamesettings.game_opponentcarid);
+      init_3dcars(carids[carIndexY], globalgamesettings.game_opponentcarid);
       aCarcoun[3] = carids[carIndexY][0];
       aCarcoun[4] = carids[carIndexY][1];
       aCarcoun[5] = carids[carIndexY][2];
       aCarcoun[6] = carids[carIndexY][3];
-      carres = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file(aCarcoun);
-      setup_aero_trackdata(carres, 0);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1_clear();
+      carres = /* PLATFORM(file): Legacy file and resource API. */ openresource(aCarcoun);
+      getsimdata(carres, 0);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebufferc();
       draw3dbutton(0, 0, 0x67, SCREEN_WIDTH_PIXELS, 0x61, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
       draw3dbutton(0, 5, 0x6d, 0x46, 0x55, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
       draw3dbutton(0, 0x52, 0x6d, 0x8c, 0x55, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(locate_shape_fatal(sdcselPos, "grap"));
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_setup_unknown(0, dlg_colour);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text("150", 9, 0x73);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text("100", 9, 0x87);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(" 50", 9, 0x9b);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text("  0", 9, 0xaf);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text("0  20  40", 0x1a, 0xb9);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movf(locate_shape_fatal(sdcselPos, "grap"));
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(0, dlg_colour);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy("150", 9, 0x73);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy("100", 9, 0x87);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(" 50", 9, 0x9b);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy("  0", 9, 0xaf);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy("0  20  40", 0x1a, 0xb9);
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
-      draw3dbutton(locate_text_resource(g_miscfile_ptr, "bdo"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[0] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-      draw3dbutton(locate_text_resource(g_miscfile_ptr, "bnx"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[1] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-      draw3dbutton(locate_text_resource(g_miscfile_ptr, "bla"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[2] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-      buttonText = locate_text_resource(g_miscfile_ptr, ((*transmissionofs) != 0) ? ("bau") : ("bma"));
+      draw3dbutton(getresl(g_miscfile_ptr, "bdo"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[0] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+      draw3dbutton(getresl(g_miscfile_ptr, "bnx"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[1] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+      draw3dbutton(getresl(g_miscfile_ptr, "bla"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[2] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+      buttonText = getresl(g_miscfile_ptr, ((*transmissionofs) != 0) ? ("bau") : ("bma"));
       draw3dbutton(buttonText, carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[3] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-      draw3dbutton(locate_text_resource(g_miscfile_ptr, "bco"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[4] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+      draw3dbutton(getresl(g_miscfile_ptr, "bco"), carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[4] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
       oldFramesPerSecond = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
       /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame = 20;
-      initialize_game_state(-2);
+      initsim(-2);
       core.playerstate.car_transmission = 1;
       graphIndexY = 0;
       for (;;)
       {
-        update_car_speed(1, 0, &core.playerstate, &simdp7);
+        doengine(1, 0, &core.playerstate, &simdp7);
         carSpeedY = core.playerstate.car_speed >> Q8_FRACTION_BITS; /* PORT: Q8 value is converted at the legacy boundary. */
         graphYX = -((I16) ((((U32 ) carSpeedY) << 6) / 150 - 0xb5));
         if (graphYX >= 0x75)
         {
           innerIndexOld = ((U16 ) (0x26 * graphIndexY)) / 0x320 + 0x1c;
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ putpixel_single_maybe(innerIndexOld, graphYX, performGraphColor);
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ writepixelc(innerIndexOld, graphYX, performGraphColor);
           ++graphIndexY;
           if (graphIndexY < 0x320)
             continue;
@@ -1699,8 +1760,8 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
       }
 
       /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame = oldFramesPerSecond;
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
-      descriptionCar = locate_text_resource(carres, "des");
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
+      descriptionCar = getresl(carres, "des");
       innerIndexOld = 0;
       graphYX = 0x74;
       do
@@ -1711,7 +1772,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
           if (innerIndexOld != 0)
           {
             resbuftext[innerIndexOld] = '\0';
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, 0x58, graphYX);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, 0x58, graphYX);
           }
           innerIndexOld = 0;
           graphYX += fontdefvalue;
@@ -1723,7 +1784,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
       }
       while ((*descriptionCar) != '\0');
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
-      /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
+      /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
       previousButton = -1;
       fullClip.left = 0;
       fullClip.right = SCREEN_WIDTH_PIXELS;
@@ -1763,29 +1824,29 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
       draw_full_car:
         runStateNew = 0;
         canLeave = 1;
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(unionRectY.left, unionRectY.right, unionRectY.top, unionRectY.bottom);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprputimage(locate_shape_fatal(sdcselPos, "stop"));
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(unionRectY.left, unionRectY.right, unionRectY.top, unionRectY.bottom);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcf(locate_shape_fatal(sdcselPos, "stop"));
         DRAW_OBJECTS();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(unionRectY.left, unionRectY.right, unionRectY.top, unionRectY.bottom);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(unionRectY.left, unionRectY.right, unionRectY.top, unionRectY.bottom);
         fullClip = localClipId;
         if (opponenttype != 0 && carIndexY != previousCarIndexCar)
         {
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
           if (g_videoflg5 == 0)
           {
             nullsub_2(resource_ptropp, (I8) (opponenttype + '0'));
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_putimage_transparent(g_opp_resources[opponenttype], 0xf0, 0);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ tmaskxcfxya(g_opp_resources[opponenttype], 0xf0, 0);
           }
           else
           {
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_putimage_and_alt(opponentWindowX->image, 0xf0, 0);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcfxya(opponentWindowX->image, 0xf0, 0);
           }
         }
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(unionRectY.left, unionRectY.right, unionRectY.top, unionRectY.bottom);
-        msdrawopaquechk();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(unionRectY.left, unionRectY.right, unionRectY.top, unionRectY.bottom);
+        mouseoff();
         if (blitColorY != -2)
         {
           /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, blitColorY);
@@ -1793,9 +1854,9 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
         }
         else
         {
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprputimage(g_wndspr->image);
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcf(g_wndspr->image);
         }
-        msdrawtransparentchk();
+        mouseon();
         previousCarIndexCar = carIndexY;
         break;
     }
@@ -1803,26 +1864,26 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
     {
       if (previousButton != -1)
       {
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(carmenu_buttons_y1[0], carmenu_buttons_y2[0] + g_vid_flg2_set & vidflg3is_minus1, carmenu_buttons_x1[0], carmenu_buttons_x2[4] + 1);
-        msdrawopaquechk();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprputimage(g_wndspr->image);
-        msdrawtransparentchk();
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(carmenu_buttons_y1[0], carmenu_buttons_y2[0] + g_vid_flg2_set & vidflg3is_minus1, carmenu_buttons_x1[0], carmenu_buttons_x2[4] + 1);
+        mouseoff();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcf(g_wndspr->image);
+        mouseon();
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
       }
-      reset_idle_counters();
+      docursorinit();
       previousButton = selectedButtonY;
     }
 
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-    rotationDeltaY = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mouse_timer_sprite_unknown(selectedButtonY, carmenu_buttons_y1, carmenu_buttons_y2, carmenu_buttons_x1, carmenu_buttons_x2, menu_hover_color_a, menu_hover_color_b);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+    rotationDeltaY = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(selectedButtonY, carmenu_buttons_y1, carmenu_buttons_y2, carmenu_buttons_x1, carmenu_buttons_x2, menu_hover_color_a, menu_hover_color_b);
     unused_count += rotationDeltaY;
     if (unused_count > 0x2ee0)
     {
       unused_count = 0;
       ++menutimeout;
     }
-    keyCode = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ input_checking(rotationDeltaY);
+    keyCode = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ mykey(rotationDeltaY);
     hitButtonX = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mousecursor(5, carmenu_buttons_y1, carmenu_buttons_y2, carmenu_buttons_x1, carmenu_buttons_x2);
     if (hitButtonX != -1)
       selectedButtonY = hitButtonX;
@@ -1845,15 +1906,15 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
           case 0:
             if (canLeave == 0)
               continue;
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
             closeresource(carres);
-            shape3d_free_car_shapes();
+            remove_3dcars();
             if (opponenttype != 0 && g_videoflg5 != 0)
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(opponentWindowX);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(opponentWindowX);
             if (opponenttype == 0)
             closeresource(g_miscfile_ptr);
             /* PLATFORM(memory): Game memory-manager API. */ freememory(sdcselPos);
-            msdrawopaquechk();
+            mouseoff();
             caridptr[0] = carids[carIndexY][0];
             caridptr[1] = carids[carIndexY][1];
             caridptr[2] = carids[carIndexY][2];
@@ -1875,13 +1936,13 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
 
           case 3:
             *transmissionofs ^= 1;
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-            buttonText = locate_text_resource(g_miscfile_ptr, ((*transmissionofs) != 0) ? ("bau") : ("bma"));
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+            buttonText = getresl(g_miscfile_ptr, ((*transmissionofs) != 0) ? ("bau") : ("bma"));
             draw3dbutton(buttonText, carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[3] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-            msdrawopaquechk();
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+            mouseoff();
             draw3dbutton(buttonText, carmenu_buttons_y1[0] + 1, carmenu_buttons_x1[3] + 1, 0x56, 0x10, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-            msdrawtransparentchk();
+            mouseon();
             continue;
 
           case 4:
@@ -1940,7 +2001,7 @@ I16 opponentmenu_buttons_y2[5] = { 197, 197, 197, 197, 197 };
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
 
-void far run_opponent_menu(void)
+void far selectopponent(void)
 {
     I8 textch;
     I8 lastColor;
@@ -1957,23 +2018,23 @@ void far run_opponent_menu(void)
     I8 previousType;
 
     ensure_file_exists(4);
-    g_miscfile_ptr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("misc");
-    resource_ptropp = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(8, "sdosel");
-    locate_many_resources(resource_ptropp, "opp0opp1opp2opp3opp4opp5opp6", g_opp_resources);
+    g_miscfile_ptr = /* PLATFORM(file): Legacy file and resource API. */ openresource("misc");
+    resource_ptropp = /* PLATFORM(file): Legacy file and resource API. */ myload(8, "sdosel");
+    locateshapes(resource_ptropp, "opp0opp1opp2opp3opp4opp5opp6", g_opp_resources);
 
     selectionIndex = 0;
     isLoaded = 0;
     previousType = -1;
     lastColor = -1;
-    reset_idle_counters();
+    docursorinit();
 /* MSC 5.10: retain this label after replacing its jump with continue. */
 menu_opponent_mouse_redraw:
-    msdrawtransparentchk();
+    mouseon();
 
     for (;;) {
         if (previousType != globalgamesettings.game_opponenttype) {
             if (previousType != -1) {
-                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
                 if (isLoaded != 0)
                     closeresource(oppRes);
             }
@@ -1981,7 +2042,7 @@ menu_opponent_mouse_redraw:
             ensure_file_exists(4);
             if (globalgamesettings.game_opponenttype != 0) {
                 aOpp1[3] = globalgamesettings.game_opponenttype + '0';
-                oppRes = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file(aOpp1);
+                oppRes = /* PLATFORM(file): Legacy file and resource API. */ openresource(aOpp1);
                 isLoaded = 1;
             } else {
                 isLoaded = 0;
@@ -1991,46 +2052,46 @@ menu_opponent_mouse_redraw:
             previousType = globalgamesettings.game_opponenttype;
             lastSelection = -1;
             if (g_videoflg5 == 0)
-                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
             else
                 setup_mcgawnd2();
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(0);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(0);
 
             nullsub_2(resource_ptropp, 0x37);
-            release_shape_resources(locate_shape_fatal(resource_ptropp, "scrn"));
+            tmaskxf(locate_shape_fatal(resource_ptropp, "scrn"));
 
-            draw3dbutton(locate_text_resource(g_miscfile_ptr, "bla"), 0x15,
+            draw3dbutton(getresl(g_miscfile_ptr, "bla"), 0x15,
                         opponentmenu_buttons_y1[0] + 1, 0x36, 0x12,
                         menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-            draw3dbutton(locate_text_resource(g_miscfile_ptr, "bnx"), 0x4d,
+            draw3dbutton(getresl(g_miscfile_ptr, "bnx"), 0x4d,
                         opponentmenu_buttons_y1[0] + 1, 0x36, 0x12,
                         menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-            draw3dbutton(locate_text_resource(g_miscfile_ptr, "bcl"), 0x85,
+            draw3dbutton(getresl(g_miscfile_ptr, "bcl"), 0x85,
                         opponentmenu_buttons_y1[0] + 1, 0x36, 0x12,
                         menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-            draw3dbutton(locate_text_resource(g_miscfile_ptr, "bca"), 0xbd,
+            draw3dbutton(getresl(g_miscfile_ptr, "bca"), 0xbd,
                         opponentmenu_buttons_y1[0] + 1, 0x36, 0x12,
                         menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-            draw3dbutton(locate_text_resource(g_miscfile_ptr, "bdo"), 0xf5,
+            draw3dbutton(getresl(g_miscfile_ptr, "bdo"), 0xf5,
                         opponentmenu_buttons_y1[0] + 1, 0x36, 0x12,
                         menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
 
             nullsub_2(resource_ptropp, (I8)(globalgamesettings.game_opponenttype + '0'));
-            release_shape_resources(g_opp_resources[globalgamesettings.game_opponenttype]);
+            tmaskxf(g_opp_resources[globalgamesettings.game_opponenttype]);
             nullsub_2(resource_ptropp, 0x37);
-            release_shape_resources(locate_shape_fatal(resource_ptropp, "clip"));
+            tmaskxf(locate_shape_fatal(resource_ptropp, "clip"));
 
             if (g_videoflg5 != 0) {
-                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_shape_alt(g_wndspr->image, 0, 0);
-                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ readfxya(g_wndspr->image, 0, 0);
+                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
             }
 
             if (globalgamesettings.game_opponenttype != 0)
-                resourceText = locate_text_resource(oppRes, "des");
+                resourceText = getresl(oppRes, "des");
             else
-                resourceText = locate_text_resource(g_miscfile_ptr, "rac");
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_setup_unknown(0, dlg_colour);
+                resourceText = getresl(g_miscfile_ptr, "rac");
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(0, dlg_colour);
             textpos = 0;
             y = 0;
             do {
@@ -2038,7 +2099,7 @@ menu_opponent_mouse_redraw:
                 if (textch == ']') {
                     if (textpos != 0) {
                         resbuftext[textpos] = '\0';
-                        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, 0x0c, y + 0x21);
+                        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, 0x0c, y + 0x21);
                     }
                     textpos = 0;
                     y += fontdefvalue;
@@ -2053,13 +2114,13 @@ menu_opponent_mouse_redraw:
             lastSelection = selectionIndex;
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, lastColor);
             lastColor = -2;
-            /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
-            reset_idle_counters();
+            /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
+            docursorinit();
         }
 
-        timeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mouse_timer_sprite_unknown(selectionIndex, opponentmenu_buttons_x1, opponentmenu_buttons_x2, opponentmenu_buttons_y1, opponentmenu_buttons_y2,
+        timeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(selectionIndex, opponentmenu_buttons_x1, opponentmenu_buttons_x2, opponentmenu_buttons_y1, opponentmenu_buttons_y2,
                                            menu_hover_color_a, menu_hover_color_b);
-        key = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ input_checking(timeDelta);
+        key = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ mykey(timeDelta);
         button = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mousecursor(5, opponentmenu_buttons_x1,
                                         opponentmenu_buttons_x2,
                                         opponentmenu_buttons_y1,
@@ -2092,8 +2153,8 @@ menu_opponent_mouse_redraw:
             case 3:
                 if (globalgamesettings.game_opponenttype != 0) {
                     /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
-                    msdrawopaquechk();
-                    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+                    mouseoff();
+                    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
                     closeresource(oppRes);
                     loading();
                     selectcar(globalgamesettings.game_opponentcarid,
@@ -2101,7 +2162,7 @@ menu_opponent_mouse_redraw:
                                  &globalgamesettings.game_opponenttransmission,
                                  globalgamesettings.game_opponenttype);
                     previousType = -1;
-                    msdrawtransparentchk();
+                    mouseon();
                     continue;
                 }
                 break;
@@ -2120,12 +2181,12 @@ menu_opponent_mouse_redraw:
                     globalgamesettings.game_opponentcarid[0] = -1;
                 }
 
-                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+                /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
                 if (isLoaded != 0)
                     closeresource(oppRes);
                 /* PLATFORM(memory): Game memory-manager API. */ freememory(resource_ptropp);
                 closeresource(g_miscfile_ptr);
-                msdrawopaquechk();
+                mouseoff();
                 return;
             }
             break;
@@ -2168,27 +2229,27 @@ I8 far run_option_menu(void)
     I8 selection;
     I8 color_or_file;
 
-    g_miscfile_ptr = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("misc");
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(menu_clear_color);
+    g_miscfile_ptr = /* PLATFORM(file): Legacy file and resource API. */ openresource("misc");
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(menu_clear_color);
 
-    strcpyfar(resbuftext, locate_shape_alt(g_miscfile_ptr, "gstu"));
+    strcpyfar(resbuftext, getres(g_miscfile_ptr, "gstu"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 6,
                     dlg_colour, 0);
 
-    strcpyfar(resbuftext, locate_shape_alt(g_miscfile_ptr, "gver"));
+    strcpyfar(resbuftext, getres(g_miscfile_ptr, "gver"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 16,
                     dlg_colour, 0);
 
     active = 1;
     while (active != 0) {
         selection = messagebox(2, 1,
-            locate_text_resource(g_miscfile_ptr, "mop"),
+            getresl(g_miscfile_ptr, "mop"),
             0xffff, 0xffff, dialog_frame_color, 0, 0);
 
         switch (selection) {
         case 0:
-            if (mouse_enabled != 0) {
+            if (mousedrive != 0) {
                 color_or_file = 2;
             } else if (joystick_enabled != 0) {
                 color_or_file = 1;
@@ -2196,26 +2257,26 @@ I8 far run_option_menu(void)
                 color_or_file = 0;
             }
             selection = messagebox(2, 1,
-                locate_text_resource(g_miscfile_ptr, "mid"),
+                getresl(g_miscfile_ptr, "mid"),
                 0xffff, 0xffff, performGraphColor, 0, color_or_file);
             switch (selection) {
             case 0: mkeyon(); break;
             case 1: do_joystick_resource_text(); break;
-            case 2: do_mou_resource_text(); break;
+            case 2: mmouseon(); break;
             }
             break;
 
         case 1:
-            do_mof_resource_text();
+            mmusictog();
             break;
 
         case 2:
-            do_sonsof_resource_text();
+            msoundtog();
             break;
 
         case 3:
-            color_or_file = do_fileselect_dialog(replay_file, ReplayName, ".rpl",
-                locate_text_resource(main_data_file_addr, "rep"));
+            color_or_file = floadreq(replay_file, ReplayName, ".rpl",
+                getresl(main_data_file_addr, "rep"));
             if (color_or_file != 0) {
                 waitm_ms = 150;
                 loading();
@@ -2227,11 +2288,11 @@ I8 far run_option_menu(void)
             break;
 
         case 4:
-            show_graphic_levels_menu();
+            msetrender();
             break;
 
         case 5:
-            do_dos_resource_text();
+            mdosexit();
             break;
 
         case -1:
@@ -2283,7 +2344,7 @@ I8 aOp01[] = "op01";
  */
 
 /* Local view: end_hiscore; return is signed byte; another unit uses unsigned word. */
-I8 far end_hiscore(void)
+I8 far evaluation(void)
 {
   I8 newEvaluation;
   I8 formattedRaceTextBuffer[18];
@@ -2327,33 +2388,33 @@ I8 far end_hiscore(void)
   I16 screenXOffset;
 
   ensure_file_exists(4);
-  textFile = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("misc");
+  textFile = /* PLATFORM(file): Legacy file and resource API. */ openresource("misc");
   if (globalgamesettings.game_opponenttype != 0)
   {
     aOpp1[3] = globalgamesettings.game_opponenttype + '0';
-    enemyRes = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file(aOpp1);
+    enemyRes = /* PLATFORM(file): Legacy file and resource API. */ openresource(aOpp1);
   }
   g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(SCREEN_WIDTH_PIXELS, SCREEN_HEIGHT_PIXELS, 0x0f);
   if (g_videoflg5 != 0)
     hiddenWindow = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(MENU_WINDOW_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS, 0x0f);
   screenBlitFlag = -1;
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1_clear();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebufferc();
   draw3dbutton(0, 0, 0, SCREEN_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   draw3dbutton(0, 0, 0x65, SCREEN_WIDTH_PIXELS, 0x63, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   y = 0x6b;
-  strcpyfar(resbuftext, locate_text_resource(textFile, "elt"));
+  strcpyfar(resbuftext, getresl(textFile, "elt"));
   if (race_stats.game_total_finish != 0)
   {
-    fmtframestr(formattedRaceTextBuffer, race_stats.game_total_finish - race_stats.game_penalty, 1);
+    maketime(formattedRaceTextBuffer, race_stats.game_total_finish - race_stats.game_penalty, 1);
     strcat(resbuftext, formattedRaceTextBuffer);
-    if (endhsdemo & 2)
-      strcpyfar(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "con"));
+    if (didrace & 2)
+      strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "con"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
     y += 10;
     if (race_stats.game_penalty != 0)
     {
-      strcpyfar(resbuftext, locate_text_resource(textFile, "ppt"));
-      fmtframestr(formattedRaceTextBuffer, race_stats.game_penalty, 1);
+      strcpyfar(resbuftext, getresl(textFile, "ppt"));
+      maketime(formattedRaceTextBuffer, race_stats.game_penalty, 1);
       strcat(resbuftext, formattedRaceTextBuffer);
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
       y += 10;
@@ -2361,7 +2422,7 @@ I8 far end_hiscore(void)
   }
   else
   {
-    strcpyfar(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "dnf"));
+    strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "dnf"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
     y += 10;
   }
@@ -2370,22 +2431,22 @@ I8 far end_hiscore(void)
   {
     if (race_stats.game_opponent_finish_time == 0)
     {
-      strcpyfar(resbuftext, locate_text_resource(textFile, "olt"));
-      strcpyfar(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "dnf"));
+      strcpyfar(resbuftext, getresl(textFile, "olt"));
+      strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "dnf"));
       if (race_stats.game_total_finish != 0)
         resultMode = 0;
     }
     else if (race_stats.game_total_finish == 0 || (U16S ) race_stats.game_opponent_finish_time < (U16S ) race_stats.game_total_finish)
     {
-      strcpyfar(resbuftext, locate_text_resource(textFile, "owt"));
-      fmtframestr(formattedRaceTextBuffer, race_stats.game_opponent_finish_time, 1);
+      strcpyfar(resbuftext, getresl(textFile, "owt"));
+      maketime(formattedRaceTextBuffer, race_stats.game_opponent_finish_time, 1);
       strcat(resbuftext, formattedRaceTextBuffer);
       resultMode = 1;
     }
     else
     {
-      strcpyfar(resbuftext, locate_text_resource(textFile, "olt"));
-      fmtframestr(formattedRaceTextBuffer, race_stats.game_opponent_finish_time, 1);
+      strcpyfar(resbuftext, getresl(textFile, "olt"));
+      maketime(formattedRaceTextBuffer, race_stats.game_opponent_finish_time, 1);
       strcat(resbuftext, formattedRaceTextBuffer);
       if (race_stats.game_total_finish != 0)
         resultMode = 0;
@@ -2401,86 +2462,86 @@ I8 far end_hiscore(void)
   if (resultMode == 2)
     if (race_stats.game_oEndFrame != race_stats.game_pEndFrame)
     opponent = 0;
-  strcpyfar(resbuftext, locate_text_resource(textFile, "avs"));
+  strcpyfar(resbuftext, getresl(textFile, "avs"));
   (race_stats.game_pEndFrame + elaptm1) != 0 ?
     (i = (I16) ((race_stats.game_speed_frame_sum / (U16S ) (race_stats.game_pEndFrame + elaptm1)) >> Q8_FRACTION_BITS)) : (i = 0); /* PORT: Q8 value is converted at the legacy boundary. */
-  print_int_as_string_maybe(formattedRaceTextBuffer, i, 0, 3);
+  myitoa(formattedRaceTextBuffer, i, 0, 3);
   strcat(resbuftext, formattedRaceTextBuffer);
-  strcpyfar(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "mph"));
+  strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "mph"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
   y += 10;
   if (race_stats.game_impactSpeed != 0)
   {
-    strcpyfar(resbuftext, locate_text_resource(textFile, "imp"));
-    print_int_as_string_maybe(formattedRaceTextBuffer, race_stats.game_impactSpeed >> Q8_FRACTION_BITS, 0, 3); /* PORT: Q8 value is converted at the legacy boundary. */
+    strcpyfar(resbuftext, getresl(textFile, "imp"));
+    myitoa(formattedRaceTextBuffer, race_stats.game_impactSpeed >> Q8_FRACTION_BITS, 0, 3); /* PORT: Q8 value is converted at the legacy boundary. */
     strcat(resbuftext, formattedRaceTextBuffer);
-    strcpyfar(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "mph"));
+    strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "mph"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
     y += 10;
   }
-  strcpyfar(resbuftext, locate_text_resource(textFile, "top"));
-  print_int_as_string_maybe(formattedRaceTextBuffer, race_stats.game_topSpeed >> Q8_FRACTION_BITS, 0, 3); /* PORT: Q8 value is converted at the legacy boundary. */
+  strcpyfar(resbuftext, getresl(textFile, "top"));
+  myitoa(formattedRaceTextBuffer, race_stats.game_topSpeed >> Q8_FRACTION_BITS, 0, 3); /* PORT: Q8 value is converted at the legacy boundary. */
   strcat(resbuftext, formattedRaceTextBuffer);
-  strcpyfar(resbuftext + strlen(resbuftext), locate_text_resource(textFile, "mph"));
+  strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "mph"));
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
   y += 10;
   if (race_stats.game_jumpCount != 0)
   {
-    strcpyfar(resbuftext, locate_text_resource(textFile, "jum"));
-    print_int_as_string_maybe(formattedRaceTextBuffer, race_stats.game_jumpCount, 0, 3);
+    strcpyfar(resbuftext, getresl(textFile, "jum"));
+    myitoa(formattedRaceTextBuffer, race_stats.game_jumpCount, 0, 3);
     strcat(resbuftext, formattedRaceTextBuffer);
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
   }
   if (opponent != 0)
   {
-    if ((endhsdemo & 4) == 0)
+    if ((didrace & 4) == 0)
     {
       hiscore_rank_prev = hiscore_current_place;
       hiscore_old_entry = end_hiscore_random;
       hiscore_opponent_earlier = hiscore_opponent_live;
-      hiscore_current_place = get_super_random() % 3;
+      hiscore_current_place = drnd() % 3;
       if (hiscore_current_place == hiscore_rank_prev)
         hiscore_current_place = hiscore_rank_remap[hiscore_current_place];
-      hiscore_opponent_live = get_super_random() % 3;
+      hiscore_opponent_live = drnd() % 3;
       if (hiscore_opponent_live == hiscore_opponent_earlier)
         hiscore_opponent_live = hiscore_rank_remap[hiscore_opponent_live];
       if (resultMode == 1)
       {
         if (race_stats.game_total_finish != 0)
-          end_hiscore_random = get_super_random() % 2 + 2;
+          end_hiscore_random = drnd() % 2 + 2;
         else
-          end_hiscore_random = get_super_random() % 2;
+          end_hiscore_random = drnd() % 2;
       }
       else
-        end_hiscore_random = get_super_random() % 4;
+        end_hiscore_random = drnd() % 4;
       if (end_hiscore_random == hiscore_old_entry)
         end_hiscore_random = hiscore_entry_remap[end_hiscore_random];
     }
     if (resultMode == 1)
     {
       aOpp2win[3] = globalgamesettings.game_opponenttype + '0';
-      scoreResource = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(3, aOpp2win);
-      animationFrameList = locate_shape_alt(enemyRes, "winn");
+      scoreResource = /* PLATFORM(file): Legacy file and resource API. */ myload(3, aOpp2win);
+      animationFrameList = getres(enemyRes, "winn");
       end_hiscore_random = race_stats.game_total_finish != 0 ?
-          ((get_kevinrandom() + race_stats.game_frame) & 1) + 2 : (get_kevinrandom() + race_stats.game_frame) & 1;
+          ((myrandom() + race_stats.game_frame) & 1) + 2 : (myrandom() + race_stats.game_frame) & 1;
       resChar = 'v';
     }
     else
     {
       aOpp2lose[3] = globalgamesettings.game_opponenttype + '0';
-      scoreResource = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(3, aOpp2lose);
-      animationFrameList = locate_shape_alt(enemyRes, "lose");
-      end_hiscore_random = (get_kevinrandom() + race_stats.game_frame) & 3;
+      scoreResource = /* PLATFORM(file): Legacy file and resource API. */ myload(3, aOpp2lose);
+      animationFrameList = getres(enemyRes, "lose");
+      end_hiscore_random = (myrandom() + race_stats.game_frame) & 3;
       resChar = 'd';
     }
   }
   newRecord = 0;
   /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname, ".trk", buf_g_path);
-  trackFile = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(1, buf_g_path);
+  trackFile = /* PLATFORM(file): Legacy file and resource API. */ myload(1, buf_g_path);
   if (trackFile == 0)
   {
-    if (messagebox(1, 1, locate_text_resource(main_data_file_addr, "ihd"), -1, -1, dialog_frame_color, 0, 0) != 0)
-      trackFile = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(1, buf_g_path);
+    if (messagebox(1, 1, getresl(main_data_file_addr, "ihd"), -1, -1, dialog_frame_color, 0, 0) != 0)
+      trackFile = /* PLATFORM(file): Legacy file and resource API. */ myload(1, buf_g_path);
   }
   if (trackFile != 0)
   {
@@ -2498,15 +2559,15 @@ I8 far end_hiscore(void)
     newRecord = -1;
   if (newRecord != -1)
   {
-    if (highscore_write_a(0) != 0)
-      if (highscore_write_a(1) != 0)
+    if (readhighs(0) != 0)
+      if (readhighs(1) != 0)
       newRecord = -1;
   }
   if (newRecord == 0)
   if (race_stats.game_total_finish != 0)
   {
     finalScoreTimeForRecord = race_stats.game_total_finish;
-    if ((endhsdemo & 6) == 0)
+    if ((didrace & 6) == 0)
       if (finalScoreTimeForRecord != 0 && hscore_trk11_ptr[6].marker > finalScoreTimeForRecord)
       newRecord = 1;
   }
@@ -2517,8 +2578,8 @@ redraw:
   if (opponent != 0 && newRecord == 2)
   {
     newRecord = 0;
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
-    highscore_text_unknown();
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
+    drawhighs();
     /* MSC 5.10: keep this assignment despite the common assignment below. */
     currentMenuSelection = 1;
     newEvaluation = 1;
@@ -2532,9 +2593,9 @@ redraw:
     animationYPosition = (0x63 - shapePtr->height) >> 1;
     sprite_draw_beveled_frame(animationXPosition - 3, animationYPosition - 3, y + 5, shapePtr->height + 5, dlg_colour, 0, animation_outline_color);
     aOp01[3] = animationFrameList[currentAnimationFrame] + '0';
-    shape2d_blit_rle_at(locate_shape_fatal(scoreResource, aOp01), animationXPosition, animationYPosition);
+    movpackfxya(locate_shape_fatal(scoreResource, aOp01), animationXPosition, animationYPosition);
     previousAnimationFrame = currentAnimationFrame;
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_setup_unknown(0, 0);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(0, 0);
     y = 8;
     textLen = 0;
     pixels = 0;
@@ -2549,31 +2610,31 @@ redraw:
       {
         case 0:
           if (resultMode == 2)
-            textResourceCursor = locate_text_resource(enemyRes, "d4a");
+            textResourceCursor = getresl(enemyRes, "d4a");
           else
           {
             formattedRaceTextBuffer[0] = resChar;
             formattedRaceTextBuffer[1] = '1';
             formattedRaceTextBuffer[2] = (I8) hiscore_current_place + 'a';
-            textResourceCursor = locate_text_resource(enemyRes, formattedRaceTextBuffer);
+            textResourceCursor = getresl(enemyRes, formattedRaceTextBuffer);
           }
           break;
         case 1:
           formattedRaceTextBuffer[0] = resChar;
           formattedRaceTextBuffer[1] = '2';
           formattedRaceTextBuffer[2] = (I8) end_hiscore_random + 'a';
-          textResourceCursor = locate_text_resource(enemyRes, formattedRaceTextBuffer);
+          textResourceCursor = getresl(enemyRes, formattedRaceTextBuffer);
           break;
         case 2:
           formattedRaceTextBuffer[0] = resChar;
           formattedRaceTextBuffer[1] = '3';
           formattedRaceTextBuffer[2] = (I8) hiscore_opponent_live + 'a';
-          textResourceCursor = locate_text_resource(enemyRes, formattedRaceTextBuffer);
+          textResourceCursor = getresl(enemyRes, formattedRaceTextBuffer);
           break;
         default:
           break;
       }
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
       do
       {
         glyph = *textResourceCursor++;
@@ -2590,7 +2651,7 @@ redraw:
           else
           {
             resbuftext[textLen] = 0;
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, 8, y);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, 8, y);
             y += 8;
             if (currentWordText[0] == ' ')
               src = 1;
@@ -2612,9 +2673,9 @@ redraw:
     }
     if (textLen != 0)
     {
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef2(fntndat);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mysetfont(fntndat);
       resbuftext[textLen] = 0;
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, 8, y);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, 8, y);
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
     }
     newEvaluation = 0;
@@ -2622,16 +2683,16 @@ redraw:
     {
       newRecord = 0;
       newEvaluation = 1;
-      draw3dbutton(locate_text_resource(textFile, "bct"), 0x81, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+      draw3dbutton(getresl(textFile, "bct"), 0x81, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, screenBlitFlag);
       screenBlitFlag = -2;
-      reset_idle_counters();
+      docursorinit();
       /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
       y = 1;
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
       do
       {
-        animationTimeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mouse_timer_sprite_unknown(4, hiscore_buttons_x1, hiscore_buttons_x2, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
+        animationTimeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(4, hiscore_buttons_x1, hiscore_buttons_x2, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
         animTime += animationTimeDelta;
         if (animTime >= 30)
         {
@@ -2644,77 +2705,77 @@ redraw:
         {
           previousAnimationFrame = currentAnimationFrame;
           aOp01[3] = animationFrameList[currentAnimationFrame] + '0';
-          msdrawopaquechk();
+          mouseoff();
           shapePtr = locate_shape_fatal(scoreResource, aOp01);
           if (g_videoflg5 != 0)
           {
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_setup1_from_arg_pointer(hiddenWindow);
-            shape2d_blit_rle_at(shapePtr, 0, 0);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(animationXPosition, shapePtr->width * pixel_scales + animationXPosition, animationYPosition, shapePtr->height + animationYPosition);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_putimage_and_alt(hiddenWindow->image, animationXPosition, animationYPosition);
-            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
+            movpackfxya(shapePtr, 0, 0);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(animationXPosition, shapePtr->width * pixel_scales + animationXPosition, animationYPosition, shapePtr->height + animationYPosition);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcfxya(hiddenWindow->image, animationXPosition, animationYPosition);
+            /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
           }
           else
-            shape2d_blit_rle_at(shapePtr, animationXPosition, animationYPosition);
-          msdrawtransparentchk();
+            movpackfxya(shapePtr, animationXPosition, animationYPosition);
+          mouseon();
         }
-        inputKey = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ input_checking(i);
+        inputKey = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ mykey(i);
         if (inputKey == 13 || inputKey == 32 || inputKey == 27)
           y = 0;
       }
       while (y != 0);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
       draw3dbutton(0, 0, 0, SCREEN_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(8, 0x138, hiscore_buttons_y1[0], hiscore_buttons_y2[0] + 1);
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_clear_1_color(menu_button_color_c);
-      msdrawopaquechk();
-      enter_hiscore(finalScoreTimeForRecord, locate_text_resource(textFile, "inh"), resultMode);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(8, 0x138, hiscore_buttons_y1[0], hiscore_buttons_y2[0] + 1);
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clearwindow(menu_button_color_c);
+      mouseoff();
+      addhighs(finalScoreTimeForRecord, getresl(textFile, "inh"), resultMode);
     }
   }
   else if (newRecord > 0)
   {
     /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
-    msdrawopaquechk();
-    enter_hiscore(finalScoreTimeForRecord, locate_text_resource(textFile, "inh"), 0);
+    mouseoff();
+    addhighs(finalScoreTimeForRecord, getresl(textFile, "inh"), 0);
     newRecord = 0;
     screenBlitFlag = -2;
   }
   else
   {
-    msdrawopaquechk();
+    mouseoff();
     if (newRecord == -1)
     {
-      strcpyfar(resbuftext, locate_text_resource(textFile, "hna"));
+      strcpyfar(resbuftext, getresl(textFile, "hna"));
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 0x32, dlg_colour, 0);
     }
     else
-      highscore_text_unknown();
+      drawhighs();
   }
 /* MSC 5.10: this unreferenced boundary remains object-sensitive. */
 show_buttons:
   currentMenuSelection = 1;
   priorMenuIndex = 1;
-  reset_idle_counters();
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+  docursorinit();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
   if (opponent == 0 || newRecord == -1)
     screenXOffset = -36;
   else
   {
     screenXOffset = 0;
     if (newEvaluation != 0)
-      menuText = locate_text_resource(textFile, "bev");
+      menuText = getresl(textFile, "bev");
     else
-      menuText = locate_text_resource(textFile, "bhi");
+      menuText = getresl(textFile, "bhi");
     draw3dbutton(menuText, hiscore_buttons_x1[0] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   }
-  draw3dbutton(locate_text_resource(textFile, "brp"), screenXOffset + hiscore_buttons_x1[1] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+  draw3dbutton(getresl(textFile, "brp"), screenXOffset + hiscore_buttons_x1[1] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   if (opponent != 0)
-    menuText = locate_text_resource(textFile, "bra");
+    menuText = getresl(textFile, "bra");
   else
-    menuText = locate_text_resource(textFile, "bdr");
+    menuText = getresl(textFile, "bdr");
   draw3dbutton(menuText, screenXOffset + hiscore_buttons_x1[2] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
-  draw3dbutton(locate_text_resource(textFile, "bmm"), screenXOffset + hiscore_buttons_x1[3] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+  draw3dbutton(getresl(textFile, "bmm"), screenXOffset + hiscore_buttons_x1[3] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   for (i = 0; i < 4; ++i)
   {
     buttonsX1[i] = hiscore_buttons_x1[i] + screenXOffset;
@@ -2723,21 +2784,21 @@ show_buttons:
   /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, screenBlitFlag);
   screenBlitFlag = -2;
-  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
+  /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
   for (;;)
   {
     if (currentMenuSelection != priorMenuIndex)
     {
       priorMenuIndex = currentMenuSelection;
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(0, SCREEN_WIDTH_PIXELS, hiscore_buttons_y1[0], hiscore_buttons_y2[0] + 1);
-      msdrawopaquechk();
-      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprputimage(g_wndspr->image);
-      msdrawtransparentchk();
-      /* PLATFORM(timer): Timer-selected frame rate or timer position. */ timer_get_delta_alt();
-      reset_idle_counters();
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(0, SCREEN_WIDTH_PIXELS, hiscore_buttons_y1[0], hiscore_buttons_y2[0] + 1);
+      mouseoff();
+      /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcf(g_wndspr->image);
+      mouseon();
+      /* PLATFORM(timer): Timer-selected frame rate or timer position. */ elticks();
+      docursorinit();
     }
-    animationTimeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mouse_timer_sprite_unknown(currentMenuSelection, buttonsX1, buttonX2Positions, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
+    animationTimeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(currentMenuSelection, buttonsX1, buttonX2Positions, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
     if (newEvaluation == 0)
     if (resultMode != 2)
     {
@@ -2753,21 +2814,21 @@ show_buttons:
       {
         previousAnimationFrame = currentAnimationFrame;
         aOp01[3] = animationFrameList[currentAnimationFrame] + '0';
-        msdrawopaquechk();
+        mouseoff();
         shapePtr = locate_shape_fatal(scoreResource, aOp01);
         if (g_videoflg5 != 0)
         {
           /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_setup1_from_arg_pointer(hiddenWindow);
-          shape2d_blit_rle_at(shapePtr, 0, 0);
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprset1size(animationXPosition, shapePtr->width * pixel_scales + animationXPosition, animationYPosition, shapePtr->height + animationYPosition);
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_putimage_and_alt(hiddenWindow->image, animationXPosition, animationYPosition);
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprcopy2to12();
+          movpackfxya(shapePtr, 0, 0);
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ clippix(animationXPosition, shapePtr->width * pixel_scales + animationXPosition, animationYPosition, shapePtr->height + animationYPosition);
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ movcfxya(hiddenWindow->image, animationXPosition, animationYPosition);
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
         }
         else
-          shape2d_blit_rle_at(shapePtr, animationXPosition, animationYPosition);
-        shape2d_blit_rle_at(locate_shape_fatal(scoreResource, aOp01), animationXPosition, animationYPosition);
-        msdrawtransparentchk();
+          movpackfxya(shapePtr, animationXPosition, animationYPosition);
+        movpackfxya(locate_shape_fatal(scoreResource, aOp01), animationXPosition, animationYPosition);
+        mouseon();
       }
     }
     if (opponent == 0 || newRecord == -1)
@@ -2782,7 +2843,7 @@ show_buttons:
       if (clickedButton != -1)
         currentMenuSelection = clickedButton;
     }
-    inputKey = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ input_checking(animationTimeDelta);
+    inputKey = /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ mykey(animationTimeDelta);
     if (inputKey == 0)
       continue;
     switch (inputKey)
@@ -2791,7 +2852,7 @@ show_buttons:
       case 32:
         if (currentMenuSelection == 0)
         {
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
           draw3dbutton(0, 0, 0, SCREEN_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
           if (newEvaluation != 0)
           {
@@ -2808,8 +2869,8 @@ show_buttons:
         if (opponent != 0)
           /* PLATFORM(memory): Game memory-manager API. */ purgememory(scoreResource);
         if (g_videoflg5 != 0)
-          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(hiddenWindow);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
+          /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(hiddenWindow);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
         if (globalgamesettings.game_opponenttype != 0)
           closeresource(enemyRes);
         closeresource(textFile);
@@ -2867,9 +2928,9 @@ void far getprotection(I16 selection)
 
     aQ00[2] = score_entry_alphabet[selection];
     aA00[2] = score_entry_alphabet[selection];
-    resource = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource_file("misc");
-    strcpyfar(prompt, locate_text_resource(resource, "cop"));
-    strcpyfar(resbuftext, locate_text_resource(resource, aQ00));
+    resource = /* PLATFORM(file): Legacy file and resource API. */ openresource("misc");
+    strcpyfar(prompt, getresl(resource, "cop"));
+    strcpyfar(resbuftext, getresl(resource, aQ00));
     strcat(prompt, resbuftext + 6);
     for (scanIndex = 0; scanIndex < 6; ++scanIndex)
         questionID[scanIndex] = resbuftext[scanIndex];
@@ -2878,20 +2939,20 @@ void far getprotection(I16 selection)
     resbuftext[2] = 0;
     resbuftext[0] = questionID[0];
     resbuftext[1] = questionID[1];
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, points[0].x, points[0].y);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, points[0].x, points[0].y);
     resbuftext[0] = questionID[2];
     resbuftext[1] = questionID[3];
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, points[1].x, points[1].y);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, points[1].x, points[1].y);
     resbuftext[0] = questionID[4];
     resbuftext[1] = questionID[5];
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ font_draw_text(resbuftext, points[2].x, points[2].y);
-    strcpyfar(resbuftext, locate_text_resource(resource, aA00));
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext, points[2].x, points[2].y);
+    strcpyfar(resbuftext, getresl(resource, aA00));
     points[0] = points[3];
     textLength = strlen(resbuftext);
     userInput[0] = 0;
     failures = 0;
     do {
-        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);
+        instringz(userInput, textLength, points[0].x, points[0].y, 30000);
         scanIndex = 0;
         while (userInput[scanIndex] != 0)
         {
@@ -2905,11 +2966,11 @@ void far getprotection(I16 selection)
             ++failures;
     } while (pass_check_flag == 0 && failures != 3);
     restoreboxwindow();
-    msdrawtransparentchk();
+    mouseon();
     closeresource(resource);
 }
 
-void set_default_car(void)
+void initselections(void)
 {
     globalgamesettings.game_playercarid[0] = 'C';
     globalgamesettings.game_playercarid[1] = 'O';

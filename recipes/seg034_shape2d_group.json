@@ -1188,8 +1188,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/geom2d.h",
@@ -1198,8 +1198,8 @@
     },
     {
       "path": "include/gfxapi.h",
-      "sha256": "b966458208d94c62a09d8430ef62b76a89bc0c0782aff562e28b1f42b3f561ef",
-      "size": 1231
+      "sha256": "58324548a2ee1621d772130e0432c7c6d61960cba899e48f360f65e1fc2303c2",
+      "size": 1221
     },
     {
       "path": "include/memapi.h",
@@ -1213,13 +1213,13 @@
     },
     {
       "path": "include/resapi.h",
-      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
-      "size": 1686
+      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
+      "size": 1650
     },
     {
       "path": "include/shape2d.h",
-      "sha256": "44aab7b2f37c2e235e0e93d98988d92f09516d4a6b5842440bb29644cc62cc21",
-      "size": 1915
+      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
+      "size": 1825
     },
     {
       "path": "include/stunts_types.h",
@@ -1228,8 +1228,8 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     },
     {
       "path": "include/viewstat.h",

@@ -321,7 +321,7 @@ void FAR read_line_helper2(void)
         unusedWidth = line_text_max_width - fontWidth;
         if (unusedWidth > 0)
     /* PLATFORM(video): measure or draw the current line-edit display. */
-            sprite1_unknown2(fontWidth + line_edit_x, line_edit_y, unusedWidth,
+            drawrectc(fontWidth + line_edit_x, line_edit_y, unusedWidth,
                           line_input_font_header->line_height, line_input_font_header->background);
     }
 }

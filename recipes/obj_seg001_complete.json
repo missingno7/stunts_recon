@@ -2466,7 +2466,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_update_car_speed",
+      "frame": "_doengine",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -2474,7 +2474,7 @@
       "offset": 1275,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_update_car_speed",
+      "target": "_doengine",
       "target_index": 97,
       "target_kind": "external",
       "target_method": 2,
@@ -7617,7 +7617,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -7625,7 +7625,7 @@
       "offset": 8071,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
@@ -7634,7 +7634,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_td10checkptr",
+      "frame": "_trksign",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -7642,7 +7642,7 @@
       "offset": 8050,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_td10checkptr",
+      "target": "_trksign",
       "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
@@ -8127,7 +8127,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_initialize_unknown",
+      "frame": "_initworld",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -8135,7 +8135,7 @@
       "offset": 9329,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_initialize_unknown",
+      "target": "_initworld",
       "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
@@ -10218,7 +10218,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_update_car_speed",
+      "frame": "_doengine",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -10226,7 +10226,7 @@
       "offset": 11074,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_update_car_speed",
+      "target": "_doengine",
       "target_index": 97,
       "target_kind": "external",
       "target_method": 2,
@@ -11510,7 +11510,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_initialize_kevin_random",
+      "frame": "_mysetseeds",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -11518,7 +11518,7 @@
       "offset": 10454,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_initialize_kevin_random",
+      "target": "_mysetseeds",
       "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
@@ -11765,7 +11765,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_initialize_game_state",
+      "frame": "_initsim",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -11773,7 +11773,7 @@
       "offset": 10306,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_initialize_game_state",
+      "target": "_initsim",
       "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
@@ -15743,7 +15743,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_follow_op",
+      "frame": "_intraffic",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -15751,7 +15751,7 @@
       "offset": 17501,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_follow_op",
+      "target": "_intraffic",
       "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
@@ -15794,7 +15794,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_follow_op",
+      "frame": "_intraffic",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -15802,7 +15802,7 @@
       "offset": 17457,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_follow_op",
+      "target": "_intraffic",
       "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
@@ -15896,7 +15896,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_follow_op",
+      "frame": "_intraffic",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -15904,7 +15904,7 @@
       "offset": 17218,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_follow_op",
+      "target": "_intraffic",
       "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
@@ -19160,7 +19160,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_initialize_game_state",
+      "frame": "_initsim",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -19168,7 +19168,7 @@
       "offset": 19676,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_initialize_game_state",
+      "target": "_initsim",
       "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
@@ -19177,7 +19177,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_get_kevinrandom",
+      "frame": "_myrandom",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -19185,7 +19185,7 @@
       "offset": 21494,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_get_kevinrandom",
+      "target": "_myrandom",
       "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
@@ -20503,7 +20503,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_endhsdemo",
+      "frame": "_didrace",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -20511,7 +20511,7 @@
       "offset": 20585,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_endhsdemo",
+      "target": "_didrace",
       "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
@@ -20622,7 +20622,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_alt",
+      "frame": "_getres",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -20630,7 +20630,7 @@
       "offset": 22168,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_alt",
+      "target": "_getres",
       "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
@@ -20809,7 +20809,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_alt",
+      "frame": "_getres",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -20817,7 +20817,7 @@
       "offset": 22063,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_alt",
+      "target": "_getres",
       "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
@@ -20860,7 +20860,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_alt",
+      "frame": "_getres",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -20868,7 +20868,7 @@
       "offset": 22037,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_alt",
+      "target": "_getres",
       "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
@@ -21047,7 +21047,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_alt",
+      "frame": "_getres",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -21055,7 +21055,7 @@
       "offset": 21932,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_alt",
+      "target": "_getres",
       "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
@@ -21506,7 +21506,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_get_kevinrandom",
+      "frame": "_myrandom",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -21514,7 +21514,7 @@
       "offset": 21571,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_get_kevinrandom",
+      "target": "_myrandom",
       "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
@@ -21591,7 +21591,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_get_kevinrandom",
+      "frame": "_myrandom",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -21599,7 +21599,7 @@
       "offset": 21510,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_get_kevinrandom",
+      "target": "_myrandom",
       "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
@@ -22668,7 +22668,7 @@
     {
       "end": 28474,
       "name": "init_game_state",
-      "public": "_initialize_game_state",
+      "public": "_initsim",
       "stable_id": "load_06b02",
       "start": 27394,
       "target": {
@@ -22723,7 +22723,7 @@
     {
       "end": 32726,
       "name": "update_car_speed",
-      "public": "_update_car_speed",
+      "public": "_doengine",
       "stable_id": "load_07a78",
       "start": 31352,
       "target": {
@@ -22921,7 +22921,7 @@
     {
       "end": 40390,
       "name": "setup_aero_trackdata",
-      "public": "_setup_aero_trackdata",
+      "public": "_getsimdata",
       "stable_id": "load_09ca2",
       "start": 40098,
       "target": {
@@ -22970,7 +22970,7 @@
       "_g_sgateopn",
       "_g_cursurfacekindvalue",
       "_xformx",
-      "_get_kevinrandom",
+      "_myrandom",
       "_audio_op_unk4",
       "_g_planlist",
       "_pl_i",
@@ -22997,9 +22997,9 @@
       "_sigframe",
       "_road_num",
       "_cammd",
-      "_initialize_game_state",
-      "_initialize_kevin_random",
-      "_initialize_unknown",
+      "_initsim",
+      "_mysetseeds",
+      "_initworld",
       "_initlogo",
       "__AHSHIFT",
       "_sndpendingstate",
@@ -23024,11 +23024,11 @@
       "_moveopponent",
       "_tagtrk",
       "_moveplayer",
-      "_td10checkptr",
+      "_trksign",
       "_td19hdl",
       "_movesim",
       "_element_min_wall",
-      "_update_car_speed",
+      "_doengine",
       "_core",
       "_td14tb",
       "_veh_position",
@@ -23049,12 +23049,12 @@
       "_tdfrompathrow22",
       "_anglerotate_car",
       "_textstr",
-      "_locate_shape_alt",
+      "_getres",
       "_yrotrotveh",
       "_gettlistpoint",
       "_g_player_sound_id",
-      "_setup_aero_trackdata",
-      "_endhsdemo",
+      "_getsimdata",
+      "_didrace",
       "_g_plyr_snd_state",
       "_ophys_7",
       "_abs",
@@ -23085,7 +23085,7 @@
       "_wallanchor_z",
       "_hgthgt",
       "_movecar",
-      "_follow_op",
+      "_intraffic",
       "_x_course_part",
       "_xcols",
       "_audio_dispatch_car_events",
@@ -23178,7 +23178,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_initialize_game_state",
+        "name": "_initsim",
         "offset": 9200,
         "segment": "UNIT_TEXT"
       },
@@ -23238,7 +23238,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_update_car_speed",
+        "name": "_doengine",
         "offset": 13158,
         "segment": "UNIT_TEXT"
       },
@@ -23258,7 +23258,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_setup_aero_trackdata",
+        "name": "_getsimdata",
         "offset": 21904,
         "segment": "UNIT_TEXT"
       },
@@ -23390,8 +23390,8 @@
   "preprocessor_closure": [
     {
       "path": "include/audapi.h",
-      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
-      "size": 4348
+      "sha256": "969bb452d8258b945ca6f7ea31d93fd5e17e872761f83809e72ec52902115e4a",
+      "size": 4342
     },
     {
       "path": "include/auddrv.h",
@@ -23430,8 +23430,8 @@
     },
     {
       "path": "include/dlgapi.h",
-      "sha256": "cf7150306b1a1d5145c76b02c9989c0b426c99016a20f98571c1f7aa3f22667b",
-      "size": 3480
+      "sha256": "7e1f5a3deac2bb5e28e4aa94a6fb3cbdad5ee2a734188971150a258502ce6939",
+      "size": 3394
     },
     {
       "path": "include/dlgcolor.h",
@@ -23445,8 +23445,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/gamerec.h",
@@ -23460,13 +23460,13 @@
     },
     {
       "path": "include/gfxapi.h",
-      "sha256": "b966458208d94c62a09d8430ef62b76a89bc0c0782aff562e28b1f42b3f561ef",
-      "size": 1231
+      "sha256": "58324548a2ee1621d772130e0432c7c6d61960cba899e48f360f65e1fc2303c2",
+      "size": 1221
     },
     {
       "path": "include/input.h",
-      "sha256": "6b3b573371ebc39e1b1b973e7e4d574e227122a673267f21f64fc4736c87e942",
-      "size": 1640
+      "sha256": "d43bddf63efc4400afb7396fc0c52009a31f8f1d4e30b04f976309bb75a64769",
+      "size": 1584
     },
     {
       "path": "include/mathapi.h",
@@ -23505,8 +23505,8 @@
     },
     {
       "path": "include/render.h",
-      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
-      "size": 2799
+      "sha256": "3fbaca8201aed98ce123d7023893c1793bc0d77d82585d41852019a92386b5c3",
+      "size": 2773
     },
     {
       "path": "include/replay.h",
@@ -23515,13 +23515,13 @@
     },
     {
       "path": "include/resapi.h",
-      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
-      "size": 1686
+      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
+      "size": 1650
     },
     {
       "path": "include/shape2d.h",
-      "sha256": "44aab7b2f37c2e235e0e93d98988d92f09516d4a6b5842440bb29644cc62cc21",
-      "size": 1915
+      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
+      "size": 1825
     },
     {
       "path": "include/simd.h",
@@ -23540,8 +23540,8 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     },
     {
       "path": "include/timer.h",
@@ -23555,8 +23555,8 @@
     },
     {
       "path": "include/track.h",
-      "sha256": "5c2b369aab56ce0920c7fe831366e1e4300907c8dc91f1b305977a9729155bc2",
-      "size": 3814
+      "sha256": "2acb2f8daa69a0a6842795031dfcffac90ddd0347842192b7506c83cde8bf24f",
+      "size": 3796
     },
     {
       "path": "include/trackrec.h",

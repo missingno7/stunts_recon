@@ -106,8 +106,8 @@
   "preprocessor_closure": [
     {
       "path": "include/input.h",
-      "sha256": "6b3b573371ebc39e1b1b973e7e4d574e227122a673267f21f64fc4736c87e942",
-      "size": 1640
+      "sha256": "d43bddf63efc4400afb7396fc0c52009a31f8f1d4e30b04f976309bb75a64769",
+      "size": 1584
     },
     {
       "path": "include/stunts_types.h",

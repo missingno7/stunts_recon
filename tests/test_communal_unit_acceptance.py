@@ -160,7 +160,7 @@ class NamesAndBasisTests(unittest.TestCase):
 
         def item(name, address, kind='declared-type'):
             return {'name': name, 'address': address, 'size': 2, 'declarers': ['x'], 'size_basis': {'kind': kind}}
-        self.assertEqual(cu.check_names([item('_td10checkptr', 207408)], manifest), [])
+        self.assertEqual(cu.check_names([item('_trksign', 207408)], manifest), [])
         self.assertTrue(cu.check_names([item('_td10checkrel', 207408)], manifest))
         self.assertTrue(cu.check_names([item('_slot207408_a', 207408)], manifest))
         self.assertEqual(cu.check_names([item('__bufin', 215782, 'pinned-member')], manifest), [])

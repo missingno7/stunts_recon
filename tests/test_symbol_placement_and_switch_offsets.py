@@ -40,7 +40,7 @@ class ProcedureTiedDataAliases(unittest.TestCase):
 
 
     def test_use_line_outside_procedure_rejects(self):
-        # seg001:9582 genuinely uses gnam_string, but inside setup_aero_trackdata.
+        # seg001:9582 genuinely uses gnam_string, but inside getsimdata.
         with self.assertRaisesRegex(ValueError, 'outside its pinned procedure'):
             self.resolve_with('_gnam_string', lambda s: s.update(
                 reference_use_path='src/restunts/asmorig/seg001.asm', reference_use_line=9582))

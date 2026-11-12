@@ -71,8 +71,8 @@ public _orcfxy
 public _orcfxya
 public _orfxya
 public _orpackf
-public _sprite_putimage_transparent
-public _release_shape_resources
+public _tmaskxcfxya
+public _tmaskxf
 public _movtxy
 public _vgapalette
 S012_TEXT segment word public 'CODE'
@@ -689,7 +689,7 @@ _orpackf endp
 ; dimensions are
 ; ASMDOC an expected precondition (height zero can still execute one row). Clips using signed 16-bit branches and
 ; ASMDOC wrapped coordinates. Source and destination offsets wrap at 16 bits. No callbacks, DOS or BIOS calls..
-_sprite_putimage_transparent proc far
+_tmaskxcfxya proc far
     var_bmpptr = word ptr -12
     var_A = word ptr -10
     var_8 = word ptr -8
@@ -882,7 +882,7 @@ sprite_alpha_branch_path_08:
     mov     [bp-4], ax
     jmp     short shape_release_join_01
     even ; word-align the following entry
-_sprite_putimage_transparent endp
+_tmaskxcfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by release shape resources.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -912,7 +912,7 @@ _sprite_putimage_transparent endp
 ; tests. Only
 ; ASMDOC initial destination row uses row table; later rows add pitch. Does not write copyright scratch or font state:
 ; ASMDOC those instructions belong to an unreachable trailing entry stub..
-_release_shape_resources proc far
+_tmaskxf proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
     local_destination_y = word ptr -4
@@ -993,7 +993,7 @@ shape_release_join_02:
     mov     ds:[fh_y], ax
     jmp     short draw_text_join_01
     even ; word-align the following entry
-_release_shape_resources endp
+_tmaskxf endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw or clear the graphics content identified by draw text at.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2

@@ -217,8 +217,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/geom2d.h",

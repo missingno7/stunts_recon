@@ -7976,6 +7976,12 @@
       "load_address": 178421,
       "storage": "initialized"
     },
+    "_camheading": {
+      "clone_of": "_custom_camera_azimuth_angle",
+      "load_address": 178414,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "storage": "initialized"
+    },
     "_camlen": {
       "clone_of": "_custom_camera_distance",
       "load_address": 178412,
@@ -7992,6 +7998,12 @@
       "clone_of": "_cameramode",
       "load_address": 178421,
       "name_provenance": "pressure-constrained reconstruction name (seg003 whole object, build/workers/s003d/extern_names.json); binding alias only, not a recovered original name",
+      "storage": "initialized"
+    },
+    "_campitch": {
+      "clone_of": "_custom_camera_elevation_angle",
+      "load_address": 178416,
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "storage": "initialized"
     },
     "_car2resptr": {
@@ -8542,12 +8554,6 @@
       "name_provenance": "pressure-constrained reconstruction name (seg003 whole object, build/workers/s003d/extern_names.json); binding alias only, not a recovered original name",
       "storage": "initialized"
     },
-    "_custom_azim_angle": {
-      "clone_of": "_custom_camera_azimuth_angle",
-      "load_address": 178414,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "storage": "initialized"
-    },
     "_custom_camera_azimuth_angle": {
       "load_address": 178414,
       "storage": "initialized"
@@ -8558,12 +8564,6 @@
     },
     "_custom_camera_elevation_angle": {
       "load_address": 178416,
-      "storage": "initialized"
-    },
-    "_custom_elev_angle": {
-      "clone_of": "_custom_camera_elevation_angle",
-      "load_address": 178416,
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "storage": "initialized"
     },
     "_cvxptr": {
@@ -8888,6 +8888,12 @@
       "load_address": 198658,
       "storage": "initialized"
     },
+    "_didrace": {
+      "clone_of": "_byte_43966",
+      "load_address": 211302,
+      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
+      "storage": "bss"
+    },
     "_digshapes": {
       "load_address": 200072,
       "storage": "bss",
@@ -8981,12 +8987,6 @@
     },
     "_end_hiscore_random": {
       "load_address": 200002,
-      "storage": "bss"
-    },
-    "_endhsdemo": {
-      "clone_of": "_byte_43966",
-      "load_address": 211302,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
     "_eng1ptr": {
@@ -9181,12 +9181,6 @@
     },
     "_followOpponentFlag_copy": {
       "load_address": 207416,
-      "storage": "bss"
-    },
-    "_follow_op": {
-      "clone_of": "_followOpponentFlag",
-      "load_address": 222176,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
       "storage": "bss"
     },
     "_followflg": {
@@ -10954,6 +10948,12 @@
       "width": 2,
       "width_provenance": "reference-label-span: dseg.asm:38057-38059"
     },
+    "_intraffic": {
+      "clone_of": "_followOpponentFlag",
+      "load_address": 222176,
+      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
+      "storage": "bss"
+    },
     "_intro_alt": {
       "clone_of": "_logoshape",
       "load_address": 213808,
@@ -12493,10 +12493,6 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized"
     },
-    "_mouse_enabled": {
-      "load_address": 178418,
-      "storage": "initialized"
-    },
     "_mouse_oldbut": {
       "load_address": 191420,
       "reference_declaration_line": 14463,
@@ -12558,12 +12554,6 @@
       "storage": "bss",
       "width": 16,
       "width_provenance": "reference-label-span: dseg.asm:28181-28185"
-    },
-    "_mouse_transparent_mode": {
-      "clone_of": "_byte_3B8F7",
-      "load_address": 178423,
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "storage": "initialized"
     },
     "_mouse_unk_sprite_ptr": {
       "clone_of": "_mouseunkspriteptr",
@@ -12702,12 +12692,22 @@
       "width": 2,
       "width_provenance": "reference-label-span: dseg.asm:14466-14467"
     },
+    "_mousedrive": {
+      "load_address": 178418,
+      "storage": "initialized"
+    },
     "_mousehorscale": {
       "load_address": 197402,
       "storage": "initialized"
     },
     "_mouseonscreen": {
       "load_address": 178425,
+      "storage": "initialized"
+    },
+    "_mouseonstat": {
+      "clone_of": "_byte_3B8F7",
+      "load_address": 178423,
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "storage": "initialized"
     },
     "_mouseshown": {
@@ -15982,14 +15982,6 @@
       "width": 4,
       "width_provenance": "reference-label-span: dseg.asm:27512-27513"
     },
-    "_td10checkptr": {
-      "clone_of": "_td10_track_check_rel",
-      "load_address": 207408,
-      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
-      "storage": "bss",
-      "width": 4,
-      "width_provenance": "reference-label-span: dseg.asm:27512-27513"
-    },
     "_td10checkrel": {
       "clone_of": "_td10_track_check_rel",
       "load_address": 207408,
@@ -17561,6 +17553,14 @@
       "storage": "bss",
       "width": 60,
       "width_provenance": "reference-label-span: dseg.asm:40126-40156"
+    },
+    "_trksign": {
+      "clone_of": "_td10_track_check_rel",
+      "load_address": 207408,
+      "name_provenance": "link-hash-constrained reconstruction name (integ40 communal publication: the LINK 3.65 c_common allocation order depends on every communal spelling; names from build/workers/nameA208070, nameBfix, nameCfix); binding alias only, not a recovered name",
+      "storage": "bss",
+      "width": 4,
+      "width_provenance": "reference-label-span: dseg.asm:27512-27513"
     },
     "_tshapearg2arr": {
       "clone_of": "_transformedshape_arg2array",

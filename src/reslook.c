@@ -9,7 +9,7 @@ extern I8 FAR * FAR locate_shape_fatal(I8 FAR *data, I8 *name);
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve shape names in the loaded resource block. */
 /* Local view: locate_many_resources; parameters[0].pointer is signed byte; another unit uses void. */
-void locate_many_resources(I8 FAR *data, I8 *names, I8 FAR **result) {
+void locateshapes(I8 FAR *data, I8 *names, I8 FAR **result) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
     while (*names != 0) { *result++ = locate_shape_fatal(data, names); names += 4; }
 }

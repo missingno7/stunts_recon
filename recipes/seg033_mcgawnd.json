@@ -146,7 +146,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprputimage",
+      "frame": "_movcf",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -154,7 +154,7 @@
       "offset": 64,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprputimage",
+      "target": "_movcf",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -380,7 +380,7 @@
       "__acrtused",
       "_sprite_make_window",
       "_sprite_setup1_from_arg_pointer",
-      "_sprputimage",
+      "_movcf",
       "_mcgawnd_window_sprite",
       "_sprite2",
       "_setup_mcgawnd1",
@@ -490,8 +490,8 @@
     },
     {
       "path": "include/shape2d.h",
-      "sha256": "44aab7b2f37c2e235e0e93d98988d92f09516d4a6b5842440bb29644cc62cc21",
-      "size": 1915
+      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
+      "size": 1825
     },
     {
       "path": "include/stunts_types.h",

@@ -50,7 +50,7 @@ I8 * FAR file_combine_and_find(I8 *dir, I8 *name, I8 *ext)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(file): continue the shared DOS file search. */
-const I8* file_find_next_alt(void) { return findnext(); }
+const I8* myfindnext(void) { return findnext(); }
 void nullsub_1(void) {}
 /* Local view: nullsub_2; parameters.count is 0; another unit uses 2. */
 void nullsub_2(void) {}
@@ -124,16 +124,16 @@ extern I16S FAR initmouse(U16S, U16S);
 
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 /* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
-extern void FAR sprset1size(U16S, U16S, U16S, U16S);
+extern void FAR clippix(U16S, U16S, U16S, U16S);
     /* PLATFORM(timer): use the game timer service. */
 /* Local view: timer_get_delta_alt; return is signed word; another unit uses unsigned long. */
-extern I16 FAR timer_get_delta_alt(void);
+extern I16 FAR elticks(void);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 /* Local view: sprite_clear_1_color; parameters[0] is unsigned byte; another unit uses signed word. */
-extern void FAR sprite_clear_1_color(U8);
+extern void FAR clearwindow(U8);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 /* Local view: sprite_clear_1_color; parameters[0] is unsigned byte; another unit uses signed word. */
-extern void FAR sprite_clear_1_color(U8);
+extern void FAR clearwindow(U8);
 
 
 /* Local view: strlen; return is unsigned word; another unit uses signed word. */
@@ -182,7 +182,7 @@ extern void FAR *mouse_unk_sprite_ptr;
 /* PLATFORM(input_mouse): initialize the DOS mouse for the 320x200 screen. */
 /* PLATFORM(audio): initialize or disable the selected DOS sound driver. */
 /* PLATFORM(file): load the startup shape and palette resources. */
-void initialize_main(I16 argc, I8* argv[])
+void initmodes(I16 argc, I8* argv[])
 {
 	register I16 i, j;
 	U8 mode_4, nosound, unknown;
@@ -199,23 +199,23 @@ void initialize_main(I16 argc, I8* argv[])
 	testkey();
 
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-	interpretsub(0x0007, &show_graphic_levels_menu);
+	interpretsub(0x0007, &msetrender);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x000A, &do_joystick_resource_text);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x000B, &mkeyon);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-	interpretsub(0x3200, &do_mof_resource_text);
+	interpretsub(0x3200, &mmusictog);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x0010, &msystempause);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub('p', &msystempause);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-	interpretsub(0x0011, &do_dos_resource_text);
+	interpretsub(0x0011, &mdosexit);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-	interpretsub(0x0013, &do_sonsof_resource_text);
+	interpretsub(0x0013, &msoundtog);
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-	interpretsub(0x0018, &do_dos_resource_text);
+	interpretsub(0x0018, &mdosexit);
 	
 	// Video
 	pixel_scales = 1;
@@ -280,7 +280,7 @@ void initialize_main(I16 argc, I8* argv[])
 	timer_setup_interrupt();
 
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-	sprite_copy_2_to_1_clear();
+	usescreenc();
 
     /* PLATFORM(input_mouse): initialize DOS mouse bounds for the display. */
 	initmouse(PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
@@ -289,7 +289,7 @@ void initialize_main(I16 argc, I8* argv[])
     /* PLATFORM(audio): call the configured DOS audio driver service. */
 	if (audio_load_driver(audiodriverstring, 0, 0)) {
     /* PLATFORM(audio): call the configured DOS audio driver service. */
-		audio_stop_unknown();
+		restoretimer();
     /* PLATFORM(dos): terminate the DOS process on startup failure. */
 		exit(1);
 	}
@@ -310,19 +310,19 @@ void initialize_main(I16 argc, I8* argv[])
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		displaywindow();
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-	sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 120);
+	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 120);
 
     /* PLATFORM(timer): use the game timer service. */
-	timer_get_delta_alt();
+	elticks();
 	for (i = 0; i < 15; ++i) {
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-		sprite_clear_1_color(0); // the c impl is too slow/wrong and produces faulty timing values
+		clearwindow(0); // the c impl is too slow/wrong and produces faulty timing values
 	}
     /* PLATFORM(timer): use the game timer service. */
-	timer1 = timer_get_delta_alt();
+	timer1 = elticks();
 	
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-	sprset1size(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 60);
+	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 60);
 
 	for (i = 0; i < 15; ++i) {
 		limits.left = 0;
@@ -336,11 +336,11 @@ void initialize_main(I16 argc, I8* argv[])
 		}
 		
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-		sprite_clear_1_color(0);
+		clearwindow(0);
 	}
 	
     /* PLATFORM(timer): use the game timer service. */
-	middle_delta = timer_get_delta_alt();
+	middle_delta = elticks();
 
 	for (i = 0; i < 146; ++i) {
 		for (j = 0; j < 255; ++j) {
@@ -349,7 +349,7 @@ void initialize_main(I16 argc, I8* argv[])
 	}
 	
     /* PLATFORM(timer): use the game timer service. */
-	timerdelta3 = timer_get_delta_alt();
+	timerdelta3 = elticks();
 	
 	if (middle_delta > timer1)
 		slow_video_mode_state = 0;
@@ -400,9 +400,9 @@ void seedrandom(void)
     if (i == 1024)
         /* PLATFORM(bios): read the BIOS tick-count byte as the fallback seed. */
         i = *((I8S *)0x046c);
-    while (i--) { rand(); get_kevinrandom(); }
+    while (i--) { rand(); myrandom(); }
     i &= 0xff;
-    while (i--) { get_kevinrandom(); rand(); }
+    while (i--) { myrandom(); rand(); }
 }
 
 /* Load the startup palette and mouse cursor shapes, then copy them to the render surfaces.
@@ -457,7 +457,7 @@ void loadpalandmouse(void)
     /* PLATFORM(memory): use the game-managed far-memory service. */
     freememory(filedata);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-    sprcopy2to12();
+    usescreen();
 }
 I16 get_0(void) { return 0; }
     /* PLATFORM(memory): use the game-managed far-memory service. */
@@ -468,7 +468,7 @@ I16 get_0(void) { return 0; }
  */
 /* PLATFORM(memory): request paragraph-backed storage from the game memory manager. */
 /* Local view: mmgr_alloc_resbytes; parameters[1] is signed long; another unit uses unsigned long. */
-void FAR *mmgr_alloc_resbytes(const I8 *name, I32 size)
+void FAR *resmem(const I8 *name, I32 size)
 {
     /* PLATFORM(memory): use the game-managed far-memory service. */
     return reservememory(name, size / 16 + 1);

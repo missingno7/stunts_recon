@@ -257,7 +257,7 @@ extern I8 steerWhlRespTable_20fps[];
 /* Local view: popupact; type is signed word; another unit uses signed byte. */
 extern I16 popupact;
 /* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
-extern I8 mouse_enabled;
+extern I8 mousedrive;
 /* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
 extern I8 joystick_enabled;
 
@@ -330,7 +330,7 @@ extern I16 far* g_td08d;
 /* Local view: trkptrpath; pointer is signed word; another unit uses struct VECTOR. */
 extern I16 far* trkptrpath;
 /* Local view: td10checkptr; pointer is struct VECTOR; another unit uses signed word. */
-extern struct VECTOR far* td10checkptr;
+extern struct VECTOR far* trksign;
 /* Local view: hscore_trk11_ptr; pointer is signed byte; another unit uses struct HighScoreRecord. */
 extern I8 far* hscore_trk11_ptr; 
 /* Local view: savedptr_ms; pointer is signed byte; another unit uses struct SPRITE. */
@@ -363,7 +363,7 @@ extern I8 menutimeout;
 extern U16S  dialog_frame_color;
 
 /* Local view: endhsdemo; type is signed byte; another unit uses unsigned byte. */
-extern I8 endhsdemo;
+extern I8 didrace;
 
 
 
@@ -445,7 +445,7 @@ extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U1
 extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
 
 /* Local view: end_hiscore; return is unsigned word; another unit uses signed byte. */
-extern unsigned end_hiscore(void);
+extern unsigned evaluation(void);
 /* Local view: run_option_menu; return is unsigned word; another unit uses signed byte. */
 extern unsigned run_option_menu(void);
 /* Local view: getprotection; parameters.count is 0; another unit uses 1. */
@@ -496,9 +496,9 @@ extern I16S initmouse(I16S a1, I16S a2);
 
 
 /* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
-extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
+extern void clippix(U16S  left, U16S  right, U16S  top, U16S  height);
 /* Local view: sprite_clear_1_color; parameters[0] is unsigned byte; another unit uses signed word. */
-extern void sprite_clear_1_color(U8 );
+extern void clearwindow(U8 );
 /* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
@@ -506,7 +506,7 @@ extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
 
 /* Local view: timer_get_delta_alt; return is unsigned long; another unit uses signed word. */
-extern U32  timer_get_delta_alt(void);
+extern U32  elticks(void);
 
 
 
@@ -665,7 +665,7 @@ static struct MATRIX plane_rotation_cache;
 
 
 /* Local view: update_car_speed; parameters[0] is signed byte; another unit uses signed word. */
-void update_car_speed(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup);
+void doengine(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup);
 
 
 
@@ -907,7 +907,7 @@ steer:
                 mode = 2;
         }
     }
-    update_car_speed(mode, 1, &core.opponentstate, &ophys_7);
+    doengine(mode, 1, &core.opponentstate, &ophys_7);
     dohandling(&core.opponentstate, &ophys_7, 0);
     movecar(&core.opponentstate, &ophys_7, &core.playerstate, &simdp7, 1);
     if (core.opponentstate.car_crashBmpFlag == 0) {
@@ -1480,9 +1480,9 @@ wheels_done:
 		}
 		i = (I8)td19hdl[lnoffsets[res.z] + res.x];
 		if (i != -1 && core.game_track_object_broken[i] == 0) {
-			objPos[0].x = td10checkptr[i].x;
-			objPos[0].y = td10checkptr[i].y;
-			objPos[0].z = td10checkptr[i].z;
+			objPos[0].x = trksign[i].x;
+			objPos[0].y = trksign[i].y;
+			objPos[0].z = trksign[i].z;
 			if (boxcheck(activeCarSetup->collide_points, self, signsizeinfo, objPos)) {
 				core.game_track_object_broken[i] = 1;
 				init_explode(i + 2, -activeCarState->car_rotate.x, (I32)activeCarState->car_speed2 * 0x580 / 0x3C00U);
@@ -1591,7 +1591,7 @@ void initcar(struct CARSTATE* playerstate, struct SIMD* simd,
  * PLATFORM(timer): Timer-selected frame rate or timer position.
  */
 
-void initialize_game_state(I16S arg)
+void initsim(I16S arg)
 {
 	register I16 zeroValue = 0;
 	register I16 i;
@@ -1616,7 +1616,7 @@ void initialize_game_state(I16S arg)
 	frmcs_time = 100 / /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
 
 	if (arg != -3) {
-		initialize_unknown();
+		initworld();
 
 		core.game_checkpoint_valid = 1;
 		core.game_end_delay_limit = 1;
@@ -1744,7 +1744,7 @@ void gotosim(I16 frame)
     register I16 curframe;
 
     if (frame == 0 && elaptm1 == 0) {
-        initialize_game_state(0);
+        initsim(0);
     }
 
     curframe = frame / g_cvxintvl;
@@ -1758,7 +1758,7 @@ void gotosim(I16 frame)
         if (cvxs_a[curframe].game_checkpoint_valid != 0) {
 restore:
             core = cvxs_a[curframe];
-            initialize_kevin_random(core.kevinseed);
+            mysetseeds(core.kevinseed);
             /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ tmr2 = core.game_frame;
             return;
         }
@@ -1893,7 +1893,7 @@ void moveplayer(I8 inputByte) {
 		}
 	}
 
-	update_car_speed(inputByte, 0, &core.playerstate, &simdp7);
+	doengine(inputByte, 0, &core.playerstate, &simdp7);
 	dosteering((inputByte >> 2) & 3);
 	dohandling(&core.playerstate, &simdp7, 1);
 	movecar(&core.playerstate, &simdp7, &core.opponentstate, &ophys_7, 0);
@@ -2175,7 +2175,7 @@ I8 findcar(I16 *trackIndex, I16 *penaltyCounter)
  */
 
 /* Local view: update_car_speed; parameters[0] is signed byte; another unit uses signed word. */
-void update_car_speed(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup) {
+void doengine(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup) {
 	I16 knobStep;
 	I16 offset;
 	U16  updatedSpeed;
@@ -2747,7 +2747,7 @@ void myupdatesfx(void)
     switch (cammd) {
     case 0:
     case 2:
-        if (follow_op != 0) {
+        if (intraffic != 0) {
             targetNow = opponentCurrent;
             targetPast = opponentPrior;
         } else {
@@ -2756,13 +2756,13 @@ void myupdatesfx(void)
         }
         break;
     case 1:
-        targetNow = core.game_chase_camera_pos[follow_op];
-        targetPast = core.game_chase_camera_prev[follow_op];
+        targetNow = core.game_chase_camera_pos[intraffic];
+        targetPast = core.game_chase_camera_prev[intraffic];
         break;
     case 3:
-        targetNow.x = ((struct VECTOR far *)trkptrpath)[core.game_track_camera_index[follow_op]].x;
-        targetNow.y = ((struct VECTOR far *)trkptrpath)[core.game_track_camera_index[follow_op]].y + viewyshift + 90;
-        targetNow.z = ((struct VECTOR far *)trkptrpath)[core.game_track_camera_index[follow_op]].z;
+        targetNow.x = ((struct VECTOR far *)trkptrpath)[core.game_track_camera_index[intraffic]].x;
+        targetNow.y = ((struct VECTOR far *)trkptrpath)[core.game_track_camera_index[intraffic]].y + viewyshift + 90;
+        targetNow.z = ((struct VECTOR far *)trkptrpath)[core.game_track_camera_index[intraffic]].z;
         targetPast = targetNow;
         break;
     }
@@ -3093,7 +3093,7 @@ I8 boxcheck(struct POINT2D *pCollPoints,
 void initlogo(void)
 {
     register I16S zeroValue;
-    initialize_game_state(-3);
+    initsim(-3);
     zeroValue = 0;
     core.game_inputmode = 2;
     g_planlist = plan_memres;
@@ -3201,7 +3201,7 @@ void finishgame(I16 crashMode, I16 isOpponent) {
 		core.game_pEndFrame = core.game_frame;
 	if (core.game_3F6autoLoadEvalFlag == 0 && isOpponent == 0)
 		core.game_3F6autoLoadEvalFlag = crashMode;
-	if ((endhsdemo & 4) == 0)
+	if ((didrace & 4) == 0)
 		race_stats = *(struct GAMESTATE_SNAPSHOT *)&core.game_speed_frame_sum;
 }
 
@@ -3317,10 +3317,10 @@ void init_explode(I16 mode, I16S angle, I16S speed)
             core.game_debris_x[debrisIndex] = 0;
             core.game_debris_y[debrisIndex] = 0;
             core.game_debris_z[debrisIndex] = 0;
-            core.game_debris_rot_x[debrisIndex] = (get_kevinrandom() << 2);
-            core.game_debris_rot_y[debrisIndex] = (get_kevinrandom() << 2);
+            core.game_debris_rot_x[debrisIndex] = (myrandom() << 2);
+            core.game_debris_rot_y[debrisIndex] = (myrandom() << 2);
             core.game_debris_rot_z[debrisIndex] = ((((I32)speedFactor * made) / unusedCount + startAngle) & ANGLE_TURN_MASK);
-            verticalValue = (((get_kevinrandom() * 6) >> 2) + speed + 0x180);
+            verticalValue = (((myrandom() * 6) >> 2) + speed + 0x180);
             core.game_debris_planar_step[debrisIndex] = verticalValue;
             core.game_debris_vertical_step[debrisIndex] = ((verticalStep * verticalValue) >> 2);
             if (++made == unusedCount)
@@ -3372,29 +3372,29 @@ void update_crash_debris(void)
     core.game_debris_active = keepAlive;
 }
 /* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
-extern I8 far *locate_shape_alt(I8 far *data, I8 *name);
+extern I8 far *getres(I8 far *data, I8 *name);
 
 
 
 
 /* Local view: setup_aero_trackdata; parameters[0].pointer is void; another unit uses signed byte. */
-void setup_aero_trackdata(void far *carresptr, I16 is_opponent)
+void getsimdata(void far *carresptr, I16 is_opponent)
 {
     register I16 i;
     if (is_opponent == 0) {
-        simdp7 = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
+        simdp7 = *(struct SIMD far *)getres(carresptr, "simd");
         simdp7.aerorestable = track04_plyraero;
         for (i = 0; i < 0x40; i++) {
             track04_plyraero[i] = ((I32)simdp7.aero_resistance * i * i) >> 9;
         }
-        strcpyfar(textstr, locate_shape_alt(carresptr, "gnam"));
+        strcpyfar(textstr, getres(carresptr, "gnam"));
     } else {
-        ophys_7 = *(struct SIMD far *)locate_shape_alt(carresptr, "simd");
+        ophys_7 = *(struct SIMD far *)getres(carresptr, "simd");
         ophys_7.aerorestable = trackdata_05_opp_aerotbl;
         for (i = 0; i < 0x40; i++) {
             trackdata_05_opp_aerotbl[i] = ((I32)ophys_7.aero_resistance * i * i) >> 9;
         }
-        strcpyfar(g_gsnashape_data, locate_shape_alt(carresptr, "gsna"));
+        strcpyfar(g_gsnashape_data, getres(carresptr, "gsna"));
     }
 }
 

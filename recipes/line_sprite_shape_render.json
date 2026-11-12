@@ -345,13 +345,13 @@
     },
     {
       "name": "sprite_clear_shape_alt",
-      "public": "_sprite_clear_shape_alt",
+      "public": "_readfxya",
       "stable_id": "load_2475a",
       "start": 149338
     },
     {
       "name": "sprite_clear_shape",
-      "public": "_sprite_clear_shape",
+      "public": "_readf",
       "stable_id": "load_2477e",
       "start": 149374
     },
@@ -363,7 +363,7 @@
     },
     {
       "name": "font_set_unk",
-      "public": "_font_setup_unknown",
+      "public": "_textcolor",
       "stable_id": "load_24b0c",
       "start": 150284
     },
@@ -416,18 +416,8 @@
     ],
     "publics": [
       {
-        "name": "_sprite_clear_shape_alt",
-        "offset": 158,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_draw_filled_lines",
         "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_sprite_clear_shape",
-        "offset": 194,
         "segment": "S012_TEXT"
       },
       {
@@ -451,13 +441,23 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_font_setup_unknown",
-        "offset": 1104,
+        "name": "_readfxya",
+        "offset": 158,
         "segment": "S012_TEXT"
       },
       {
         "name": "_scalecfxy",
         "offset": 288,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_textcolor",
+        "offset": 1104,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_readf",
+        "offset": 194,
         "segment": "S012_TEXT"
       }
     ],

@@ -106,7 +106,7 @@
     {
       "end": 157668,
       "name": "locate_many_resources",
-      "public": "_locate_many_resources",
+      "public": "_locateshapes",
       "stable_id": "load_267b2",
       "start": 157618,
       "target": {
@@ -154,7 +154,7 @@
       "_file_find_shapes_optional_alt",
       "_locateshapesz",
       "_locate_shape_fatal",
-      "_locate_many_resources",
+      "_locateshapes",
       "_file_find_sounds_required",
       "_locateshapez",
       "_locate_sound_fatal"
@@ -187,7 +187,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_locate_many_resources",
+        "name": "_locateshapes",
         "offset": 0,
         "segment": "UNIT_TEXT"
       },
@@ -268,8 +268,8 @@
   "preprocessor_closure": [
     {
       "path": "include/audapi.h",
-      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
-      "size": 4348
+      "sha256": "969bb452d8258b945ca6f7ea31d93fd5e17e872761f83809e72ec52902115e4a",
+      "size": 4342
     },
     {
       "path": "include/auddrv.h",
@@ -283,8 +283,8 @@
     },
     {
       "path": "include/resapi.h",
-      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
-      "size": 1686
+      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
+      "size": 1650
     },
     {
       "path": "include/stunts_types.h",

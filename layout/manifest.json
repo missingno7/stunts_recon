@@ -178,10 +178,10 @@
           "declarers": [
             "obj_seg003"
           ],
-          "name": "_td10checkptr",
+          "name": "_trksign",
           "size": 4,
           "size_basis": {
-            "declaration": "int far* td10checkptr;",
+            "declaration": "int far* trksign;",
             "kind": "declared-type"
           }
         },
@@ -272,6 +272,7 @@
         {
           "address": 208130,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_tmr2",
@@ -320,6 +321,7 @@
         {
           "address": 208160,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_wallanchor_x",
@@ -344,6 +346,7 @@
         {
           "address": 208166,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_plyr_snd_state",
@@ -368,6 +371,7 @@
         {
           "address": 208170,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_audiooppflag",
@@ -380,6 +384,7 @@
         {
           "address": 208172,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_wallanchor_z",
@@ -464,6 +469,7 @@
         {
           "address": 211244,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_test_pln",
@@ -512,6 +518,7 @@
         {
           "address": 211260,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_g_rpl_init",
@@ -621,6 +628,7 @@
         {
           "address": 211300,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_player_sound_id",
@@ -635,10 +643,10 @@
           "declarers": [
             "obj_seg005"
           ],
-          "name": "_endhsdemo",
+          "name": "_didrace",
           "size": 1,
           "size_basis": {
-            "declaration": "char endhsdemo;",
+            "declaration": "char didrace;",
             "kind": "declared-type"
           }
         },
@@ -669,6 +677,7 @@
         {
           "address": 213132,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_op_eng_sound_id",
@@ -692,6 +701,7 @@
         {
           "address": 213646,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_road_num",
@@ -728,6 +738,7 @@
         {
           "address": 213714,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_matrix_transform_view",
@@ -848,6 +859,7 @@
         {
           "address": 213854,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_rotxvehicle",
@@ -1124,6 +1136,7 @@
         {
           "address": 215430,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_yrotrotveh",
@@ -1136,6 +1149,7 @@
         {
           "address": 215432,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_element_min_wall",
@@ -1160,6 +1174,7 @@
         {
           "address": 215448,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_anglerotate_car",
@@ -1172,6 +1187,7 @@
         {
           "address": 215450,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_idxtrk",
@@ -1184,6 +1200,7 @@
         {
           "address": 215451,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_hillf",
@@ -1196,6 +1213,7 @@
         {
           "address": 215452,
           "declarers": [
+            "obj_seg000",
             "obj_seg003"
           ],
           "name": "_frmcs_time",
@@ -1208,6 +1226,7 @@
         {
           "address": 215454,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_tagtrk",
@@ -1220,6 +1239,7 @@
         {
           "address": 215455,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_pen_flag_count",
@@ -1256,6 +1276,7 @@
         {
           "address": 215486,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_centerpos",
@@ -1280,6 +1301,7 @@
         {
           "address": 215494,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_veh_position",
@@ -1292,6 +1314,7 @@
         {
           "address": 215498,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_veh_z",
@@ -1365,6 +1388,7 @@
         {
           "address": 215514,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_sigframe",
@@ -1389,6 +1413,7 @@
         {
           "address": 215520,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_x_course_part",
@@ -1413,6 +1438,7 @@
         {
           "address": 215524,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_sndposrecord",
@@ -1437,6 +1463,7 @@
         {
           "address": 215528,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_table_lookup",
@@ -1461,6 +1488,7 @@
         {
           "address": 215532,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_hgthgt",
@@ -1509,6 +1537,7 @@
         {
           "address": 215542,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_road_elem_ctrz",
@@ -1618,6 +1647,7 @@
         {
           "address": 215692,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_wall_wallelement",
@@ -1749,6 +1779,7 @@
         {
           "address": 216350,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_g_audio_frms_ix",
@@ -1761,6 +1792,7 @@
         {
           "address": 216352,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_viewyshift",
@@ -1857,6 +1889,7 @@
         {
           "address": 216391,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_g_cursurfacekindvalue",
@@ -1905,6 +1938,7 @@
         {
           "address": 216400,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_opponent_spd_tbl",
@@ -1941,6 +1975,7 @@
         {
           "address": 216420,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_plncurrptr",
@@ -1965,6 +2000,7 @@
         {
           "address": 216518,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_pl_i",
@@ -1989,6 +2025,7 @@
         {
           "address": 216522,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_sgateopn",
@@ -2038,6 +2075,7 @@
         {
           "address": 216886,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_tvec2",
@@ -2050,6 +2088,7 @@
         {
           "address": 216892,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_pln_rot_output",
@@ -2062,6 +2101,7 @@
         {
           "address": 216898,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_pln_rotate_z",
@@ -2074,6 +2114,7 @@
         {
           "address": 216900,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_car_roty_pln",
@@ -2086,6 +2127,7 @@
         {
           "address": 216902,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_car_rotate_xc",
@@ -2098,6 +2140,7 @@
         {
           "address": 216904,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_frwhl_angadjusted",
@@ -2110,6 +2153,7 @@
         {
           "address": 216906,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_planidx2",
@@ -2122,6 +2166,7 @@
         {
           "address": 216908,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_audio_frmarr",
@@ -2230,6 +2275,7 @@
         {
           "address": 218296,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_inrepflg",
@@ -2278,6 +2324,7 @@
         {
           "address": 218306,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_planlist",
@@ -2386,6 +2433,7 @@
         {
           "address": 218390,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_st_hdg",
@@ -2659,6 +2707,7 @@
         {
           "address": 218688,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_ophys_7",
@@ -2767,6 +2816,7 @@
         {
           "address": 219608,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_sndpendingstate",
@@ -2877,6 +2927,7 @@
         {
           "address": 219646,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_nextpos_normalip",
@@ -2889,6 +2940,7 @@
         {
           "address": 219648,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_cvxintvl",
@@ -3142,6 +3194,7 @@
         {
           "address": 220566,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_wall_facingang",
@@ -3178,6 +3231,7 @@
         {
           "address": 220594,
           "declarers": [
+            "obj_seg000",
             "obj_seg005"
           ],
           "name": "_gm_playmode",
@@ -3248,6 +3302,7 @@
         {
           "address": 220624,
           "declarers": [
+            "obj_seg000",
             "obj_seg004"
           ],
           "name": "_g_trackpiecescounter",
@@ -3525,6 +3580,7 @@
         {
           "address": 221642,
           "declarers": [
+            "obj_seg000",
             "obj_seg001_complete"
           ],
           "name": "_g_penaltytm",
@@ -3632,12 +3688,13 @@
         {
           "address": 222176,
           "declarers": [
+            "obj_seg000",
             "obj_seg003"
           ],
-          "name": "_follow_op",
+          "name": "_intraffic",
           "size": 1,
           "size_basis": {
-            "declaration": "I8 follow_op;",
+            "declaration": "I8 intraffic;",
             "kind": "declared-type"
           }
         },

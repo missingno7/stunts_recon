@@ -1085,7 +1085,7 @@
     },
     {
       "name": "audio_stop_unk",
-      "public": "_audio_stop_unknown",
+      "public": "_restoretimer",
       "stable_id": "load_20268",
       "start": 131688
     },
@@ -1189,6 +1189,11 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_restoretimer",
+        "offset": 434,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_timer_elapsed_ticks_high",
         "offset": 22,
         "segment": "_DATA"
@@ -1197,11 +1202,6 @@
         "name": "_input_pushed",
         "offset": 38,
         "segment": "_DATA"
-      },
-      {
-        "name": "_audio_stop_unknown",
-        "offset": 434,
-        "segment": "S012_TEXT"
       },
       {
         "name": "_timer_intr_callback",

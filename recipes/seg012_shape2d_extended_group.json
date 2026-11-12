@@ -261,7 +261,7 @@
     {
       "end": 146944,
       "name": "shape2d_op_unk5",
-      "public": "_shape2d_blit_rle_at",
+      "public": "_movpackfxya",
       "stable_id": "load_23de2",
       "start": 146914,
       "target": {
@@ -321,6 +321,11 @@
     "groups": [],
     "publics": [
       {
+        "name": "_movpackfxya",
+        "offset": 36,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_movpackcfxy",
         "offset": 210,
         "segment": "S012_TEXT"
@@ -328,11 +333,6 @@
       {
         "name": "_movpackcfxya",
         "offset": 246,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_shape2d_blit_rle_at",
-        "offset": 36,
         "segment": "S012_TEXT"
       },
       {

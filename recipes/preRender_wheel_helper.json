@@ -156,8 +156,8 @@
     },
     {
       "path": "include/render.h",
-      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
-      "size": 2799
+      "sha256": "3fbaca8201aed98ce123d7023893c1793bc0d77d82585d41852019a92386b5c3",
+      "size": 2773
     },
     {
       "path": "include/stunts_types.h",

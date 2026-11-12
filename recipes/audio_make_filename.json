@@ -936,8 +936,8 @@
   "preprocessor_closure": [
     {
       "path": "include/audapi.h",
-      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
-      "size": 4348
+      "sha256": "969bb452d8258b945ca6f7ea31d93fd5e17e872761f83809e72ec52902115e4a",
+      "size": 4342
     },
     {
       "path": "include/auddrv.h",
@@ -961,8 +961,8 @@
     },
     {
       "path": "include/dlgapi.h",
-      "sha256": "cf7150306b1a1d5145c76b02c9989c0b426c99016a20f98571c1f7aa3f22667b",
-      "size": 3480
+      "sha256": "7e1f5a3deac2bb5e28e4aa94a6fb3cbdad5ee2a734188971150a258502ce6939",
+      "size": 3394
     },
     {
       "path": "include/dlgcolor.h",
@@ -981,8 +981,8 @@
     },
     {
       "path": "include/gfxapi.h",
-      "sha256": "b966458208d94c62a09d8430ef62b76a89bc0c0782aff562e28b1f42b3f561ef",
-      "size": 1231
+      "sha256": "58324548a2ee1621d772130e0432c7c6d61960cba899e48f360f65e1fc2303c2",
+      "size": 1221
     },
     {
       "path": "include/platform_hw.h",
@@ -1001,8 +1001,8 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     },
     {
       "path": "include/ui.h",

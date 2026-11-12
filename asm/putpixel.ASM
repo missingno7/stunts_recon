@@ -7,7 +7,7 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _putpixel_single_maybe
+public _writepixelc
 ; -----------------------------------------------------------------------------
 ; Purpose: Write one pixel to the selected video page.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -38,7 +38,7 @@ public _putpixel_single_maybe
 ; ASMDOC Edge cases: RET spelling is inside PROC FAR (MASM far return), not evidence of a near ABI. Unlabeled
 ; unchecked prologue
 ; ASMDOC at lines 35..38 is skipped by normal control flow; accepted path jumps to write_pixel at 39.
-_putpixel_single_maybe proc far
+_writepixelc proc far
  push bp
  mov bp,sp
  push si
@@ -81,6 +81,6 @@ write_pixel:
  pop bp
  ret
     db 0 ; retained zero fill at this boundary
-_putpixel_single_maybe endp
+_writepixelc endp
 S012_TEXT ends
 end

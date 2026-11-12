@@ -3,7 +3,7 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_sprite1_unknown2",
+        "_drawrectc",
         "_sprite_draw_rect_outline"
       ],
       "groups": [
@@ -108,7 +108,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite1_unknown2",
+      "frame": "_drawrectc",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -116,7 +116,7 @@
       "offset": 126,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite1_unknown2",
+      "target": "_drawrectc",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -125,7 +125,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite1_unknown2",
+      "frame": "_drawrectc",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -133,7 +133,7 @@
       "offset": 102,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite1_unknown2",
+      "target": "_drawrectc",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -142,7 +142,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite1_unknown2",
+      "frame": "_drawrectc",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -150,7 +150,7 @@
       "offset": 72,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite1_unknown2",
+      "target": "_drawrectc",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -159,7 +159,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite1_unknown2",
+      "frame": "_drawrectc",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -167,7 +167,7 @@
       "offset": 48,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite1_unknown2",
+      "target": "_drawrectc",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -206,8 +206,8 @@
     },
     {
       "path": "include/sprite2d.h",
-      "sha256": "1d4abc24ddd51f52f5adda31a18ab7313f763135c63af17e5242ce5ea04429b1",
-      "size": 1150
+      "sha256": "1c64a1146359650dc0291dad206ea15209292d7e6a12731d558aa0ab09e0efad",
+      "size": 1143
     },
     {
       "path": "include/stunts_types.h",

@@ -15,14 +15,14 @@ void FAR sprite_draw_rect_outline(I16 x1, I16 y1, I16 x2, I16 y2, I16 color)
     height = y2 - y1;
     if (width > 0) {
     /* PLATFORM(video): draw one rectangle edge with the sprite renderer. */
-        sprite1_unknown2(x1, y1, width, RECTANGLE_EDGE_THICKNESS_PIXELS, color);
+        drawrectc(x1, y1, width, RECTANGLE_EDGE_THICKNESS_PIXELS, color);
     /* PLATFORM(video): draw one rectangle edge with the sprite renderer. */
-        sprite1_unknown2(x1, y2, width, RECTANGLE_EDGE_THICKNESS_PIXELS, color);
+        drawrectc(x1, y2, width, RECTANGLE_EDGE_THICKNESS_PIXELS, color);
     }
     if (height > 0) {
     /* PLATFORM(video): draw one rectangle edge with the sprite renderer. */
-        sprite1_unknown2(x1, y1, RECTANGLE_EDGE_THICKNESS_PIXELS, height, color);
+        drawrectc(x1, y1, RECTANGLE_EDGE_THICKNESS_PIXELS, height, color);
     /* PLATFORM(video): draw one rectangle edge with the sprite renderer. */
-        sprite1_unknown2(x2, y1, RECTANGLE_EDGE_THICKNESS_PIXELS, height, color);
+        drawrectc(x2, y1, RECTANGLE_EDGE_THICKNESS_PIXELS, height, color);
     }
 }

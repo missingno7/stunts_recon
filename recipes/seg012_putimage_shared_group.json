@@ -289,7 +289,7 @@
     {
       "end": 146394,
       "name": "sprite_putimage_and_alt",
-      "public": "_sprite_putimage_and_alt",
+      "public": "_movcfxya",
       "stable_id": "load_23bbc",
       "start": 146364,
       "target": {
@@ -300,7 +300,7 @@
     {
       "end": 146700,
       "name": "sprite_putimage",
-      "public": "_sprputimage",
+      "public": "_movcf",
       "stable_id": "load_23bda",
       "start": 146394,
       "target": {
@@ -316,12 +316,12 @@
     "groups": [],
     "publics": [
       {
-        "name": "_sprputimage",
+        "name": "_movcf",
         "offset": 66,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_putimage_and_alt",
+        "name": "_movcfxya",
         "offset": 36,
         "segment": "S012_TEXT"
       },

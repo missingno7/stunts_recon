@@ -20,7 +20,7 @@ extern struct SPRITE FAR * FAR sprite_make_window(U16 width, U16 height, U16 col
 extern void FAR sprite_setup1_from_arg_pointer(struct SPRITE FAR *argsprite);
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */
 /* Local view: sprputimage; parameters[0].pointer is struct SHAPE2D; another unit uses void. */
-extern void FAR sprputimage(struct SHAPE2D FAR *shape);
+extern void FAR movcf(struct SHAPE2D FAR *shape);
 
 /* Create the MCGA window sprite if needed, select the scene sprite, and draw the window image.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -34,7 +34,7 @@ void FAR setup_mcgawnd1(void)
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */
     sprite_setup1_from_arg_pointer(&sprite2);
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */
-    sprputimage(mcgawnd_window_sprite->sprite_bitmapptr);
+    movcf(mcgawnd_window_sprite->sprite_bitmapptr);
 }
 
 /* Create the MCGA window sprite if needed and select it for subsequent drawing.

@@ -829,7 +829,7 @@
     {
       "end": 140249,
       "name": "set_projection",
-      "public": "_set_projection",
+      "public": "_setprojectp",
       "stable_id": "load_222f3",
       "start": 140019,
       "target": {
@@ -851,7 +851,7 @@
     {
       "end": 140538,
       "name": "sprite_free_wnd",
-      "public": "_sprite_free_window",
+      "public": "_removewindow",
       "stable_id": "load_224aa",
       "start": 140458,
       "target": {
@@ -896,8 +896,18 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_setprojectp",
+        "offset": 51,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_setprojectpb",
         "offset": 31,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_removewindow",
+        "offset": 490,
         "segment": "S012_TEXT"
       },
       {
@@ -921,11 +931,6 @@
         "segment": "_DATA"
       },
       {
-        "name": "_sprite_free_window",
-        "offset": 490,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_window_release_order_error_msg",
         "offset": 20,
         "segment": "_DATA"
@@ -943,11 +948,6 @@
       {
         "name": "_projectp",
         "offset": 281,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_set_projection",
-        "offset": 51,
         "segment": "S012_TEXT"
       },
       {

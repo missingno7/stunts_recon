@@ -15,7 +15,7 @@ extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _movpackfxy
-public _shape2d_blit_rle_at
+public _movpackfxya
 public _movpackf
 public _movpackcfxy
 public _movpackcfxya
@@ -137,7 +137,7 @@ _movpackfxy endp
 ; ASMDOC(font_shapes) No clipping, height limit, span checks or segment-wrap normalization; rows can advance
 ; past declared
 ; ASMDOC(font_shapes) height until a zero packet.
-_shape2d_blit_rle_at proc far
+_movpackfxya proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -159,7 +159,7 @@ _shape2d_blit_rle_at proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_op_unk_shared_exit ; goto shape2d_op_unk3
     even ; word-align the following entry
-_shape2d_blit_rle_at endp
+_movpackfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Process a 2D shape operation.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 8);

@@ -25,9 +25,9 @@ S002_TEXT segment byte public 'CODE'
     public _nopsub_19DFF
     public _nopsub_19E09
     public _nopsub_19E13
-    public _initialize_kevin_random
+    public _mysetseeds
     public _mygetseeds
-    public _get_kevinrandom
+    public _myrandom
     public _intr0_handler
     public _initialize_div0
     public _restore_div_zero_vector
@@ -274,7 +274,7 @@ _nopsub_19E13 endp
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: Six individual byte loads/stores; overlapping source/state aliases observe sequential copying, not
 ; ASMDOC an abstract snapshot.
-_initialize_kevin_random proc far
+_mysetseeds proc far
     arg_seed_source = word ptr 6
 
     push    bp
@@ -302,7 +302,7 @@ seed_init_store_byte3:
 seed_init_return:
     pop     bp
     retf
-_initialize_kevin_random endp
+_mysetseeds endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by get kevinrandom seed.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -372,7 +372,7 @@ _mygetseeds endp
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: Every ADD wraps modulo 256 without ADC. Increment carry is implemented by testing byte wrap, after
 ; ASMDOC cumulative additions.
-_get_kevinrandom proc far
+_myrandom proc far
 
     mov     al, _randomseeds+5
 ; ASMDOC Cumulative byte ADDs intentionally discard carry; the later INC chain propagates only increment wrap.
@@ -408,7 +408,7 @@ random_return_seed_byte0:
     mov     al, _randomseeds
     xor     ah, ah
     retf
-_get_kevinrandom endp
+_myrandom endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by intr0 handler.
 ; ABI: FAR entry; source return form: IRET; stack arguments: no named stack arguments referenced.

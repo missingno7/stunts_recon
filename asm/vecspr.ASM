@@ -24,14 +24,14 @@ extrn _prerender_max_line_width:word
 extrn _vector_op_base_z:word
 extrn _draw_filled_lines:far
 extrn _solidellipseh:far
-extrn _putpixel_single_maybe:far
+extrn _writepixelc:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
 public _zclip
 public _zclipline
 public _drawcircle
 public _clippixwindow
-public _sprset1size
+public _clippix
 public _clearscreen
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33006.
@@ -269,7 +269,7 @@ sphere_render_branch_path_01:
     push word ptr [bp + 0Ch]
     push word ptr [bp + 8]
     push word ptr [bp + 6]
-    call far ptr _putpixel_single_maybe
+    call far ptr _writepixelc
     add sp, 6
 sphere_render_loop_head_01:
     pop di
@@ -555,7 +555,7 @@ _clippixwindow endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: Many src/frontend.c callers, including
 ; :845,849,861,865,1017,1658; rectangle bounds are right/bottom exclusive in consumers.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_sprset1size proc far
+_clippix proc far
     arg_left = word ptr 6
     arg_right = word ptr 8
     arg_top = word ptr 10
@@ -575,7 +575,7 @@ _sprset1size proc far
     mov     cs:[_sprite1+18], ax
     pop     bp
     retf
-_sprset1size endp
+_clippix endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Clear the active video page to the requested color.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments

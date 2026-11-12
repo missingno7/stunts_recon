@@ -1234,7 +1234,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_sprite1_unknown2",
+      "frame": "_drawrectc",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1242,7 +1242,7 @@
       "offset": 1174,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_sprite1_unknown2",
+      "target": "_drawrectc",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -1911,7 +1911,7 @@
     "externals": [
       "__acrtused",
       "_read_line_helper",
-      "_sprite1_unknown2",
+      "_drawrectc",
       "_read_line_helper2",
       "_displaywindow",
       "_setbiosticks",
@@ -2056,8 +2056,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/geom2d.h",
@@ -2066,8 +2066,8 @@
     },
     {
       "path": "include/input.h",
-      "sha256": "6b3b573371ebc39e1b1b973e7e4d574e227122a673267f21f64fc4736c87e942",
-      "size": 1640
+      "sha256": "d43bddf63efc4400afb7396fc0c52009a31f8f1d4e30b04f976309bb75a64769",
+      "size": 1584
     },
     {
       "path": "include/platform_hw.h",
@@ -2081,8 +2081,8 @@
     },
     {
       "path": "include/sprite2d.h",
-      "sha256": "1d4abc24ddd51f52f5adda31a18ab7313f763135c63af17e5242ce5ea04429b1",
-      "size": 1150
+      "sha256": "1c64a1146359650dc0291dad206ea15209292d7e6a12731d558aa0ab09e0efad",
+      "size": 1143
     },
     {
       "path": "include/stunts_types.h",
@@ -2091,8 +2091,8 @@
     },
     {
       "path": "include/text.h",
-      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
-      "size": 2076
+      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
+      "size": 1990
     },
     {
       "path": "include/timer.h",

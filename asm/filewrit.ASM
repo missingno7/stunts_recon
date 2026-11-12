@@ -23,7 +23,7 @@ assume cs:S012_TEXT, ds:DGROUP
 extrn _abortmessage:far
 S012_TEXT segment word public 'CODE'
 public _savefile
-public _file_write_fatal
+public _savefilez
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file write nofatal.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -106,7 +106,7 @@ _savefile endp
 ; ASMDOC fatal_error(format,filename) only when BP-4==0; named callee effects/nonreturn assumption apply
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_write_fatal (unchanged).
-_file_write_fatal proc far
+_savefilez proc far
     var_errno = word ptr -6
     var_fatal = word ptr -4
     var_filehandle = word ptr -2
@@ -196,6 +196,6 @@ file_fatal_return_if_nonzero:
     mov     sp, bp
     pop     bp
     retf
-_file_write_fatal endp
+_savefilez endp
 S012_TEXT ends
 end

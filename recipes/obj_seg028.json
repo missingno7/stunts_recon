@@ -5323,8 +5323,8 @@
   "preprocessor_closure": [
     {
       "path": "include/audapi.h",
-      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
-      "size": 4348
+      "sha256": "969bb452d8258b945ca6f7ea31d93fd5e17e872761f83809e72ec52902115e4a",
+      "size": 4342
     },
     {
       "path": "include/auddrv.h",
@@ -5358,8 +5358,8 @@
     },
     {
       "path": "include/gameapi.h",
-      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
-      "size": 11031
+      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
+      "size": 10975
     },
     {
       "path": "include/geom2d.h",

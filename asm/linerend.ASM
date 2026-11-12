@@ -38,12 +38,12 @@ extrn _fontdefseg:word
 extrn _shape2d_scale_blit_tail:near
 public _draw_filled_lines
 public _readfxy
-public _sprite_clear_shape_alt
-public _sprite_clear_shape
+public _readfxya
+public _readf
 public _scalecfxy
 public _sprite1
 public _sprite2
-public _font_setup_unknown
+public _textcolor
 public _setfont
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw filled scan lines from the prepared line descriptors.
@@ -254,7 +254,7 @@ _readfxy endp
 ; 228; shared epilogue
 ; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0
 ; still copies one row.
-_sprite_clear_shape_alt proc far
+_readfxya proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -278,7 +278,7 @@ _sprite_clear_shape_alt proc far
     mov     [di+0Ah], ax
     jmp     short shape_clear_join_01
     even ; word-align the following entry
-_sprite_clear_shape_alt endp
+_readfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite clear shape.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -314,7 +314,7 @@ _sprite_clear_shape_alt endp
 ; 228; shared epilogue
 ; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0
 ; still copies one row.
-_sprite_clear_shape proc far
+_readf proc far
     var_A = word ptr -10
     var_8 = word ptr -8
     var_6 = word ptr -6
@@ -367,7 +367,7 @@ shape_clear_loop_head_01:
     mov     sp, bp
     pop     bp
     retf
-_sprite_clear_shape endp
+_readf endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by shapeexpl.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_6
@@ -649,7 +649,7 @@ _scalecfxy endp
 ; ASMDOC Edge cases: Later unlabeled code at 677/686/705 is separate unreachable-from-this-entry font
 ; operations; do not
 ; ASMDOC aggregate their register/global effects into this public entry.
-_font_setup_unknown proc far
+_textcolor proc far
     arg_foreground = word ptr 6
     arg_background = word ptr 8
 
@@ -716,7 +716,7 @@ _font_setup_unknown proc far
     pop     di
     pop     bp
     retf
-_font_setup_unknown endp
+_textcolor endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the video or display setup operation identified by set fontdefseg.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_2 (word ptr 8).

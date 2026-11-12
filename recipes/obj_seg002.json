@@ -715,7 +715,7 @@
     },
     {
       "name": "init_kevinrandom",
-      "public": "_initialize_kevin_random",
+      "public": "_mysetseeds",
       "stable_id": "load_09e21",
       "start": 40481
     },
@@ -727,7 +727,7 @@
     },
     {
       "name": "get_kevinrandom",
-      "public": "_get_kevinrandom",
+      "public": "_myrandom",
       "stable_id": "load_09e7b",
       "start": 40571
     },
@@ -791,11 +791,6 @@
         "segment": "S002_TEXT"
       },
       {
-        "name": "_initialize_kevin_random",
-        "offset": 91,
-        "segment": "S002_TEXT"
-      },
-      {
         "name": "_nopsub_19DFF",
         "offset": 57,
         "segment": "S002_TEXT"
@@ -816,6 +811,11 @@
         "segment": "S002_TEXT"
       },
       {
+        "name": "_myrandom",
+        "offset": 181,
+        "segment": "S002_TEXT"
+      },
+      {
         "name": "_initialize_div0",
         "offset": 290,
         "segment": "S002_TEXT"
@@ -826,13 +826,13 @@
         "segment": "S002_TEXT"
       },
       {
-        "name": "_get_kevinrandom",
-        "offset": 181,
+        "name": "_mygetseeds",
+        "offset": 136,
         "segment": "S002_TEXT"
       },
       {
-        "name": "_mygetseeds",
-        "offset": 136,
+        "name": "_mysetseeds",
+        "offset": 91,
         "segment": "S002_TEXT"
       }
     ],

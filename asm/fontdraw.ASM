@@ -19,7 +19,7 @@ S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
 extrn _fontdefseg:word
 extrn _sprite1:byte
-public _font_draw_text
+public _fortextxy
 SPRITE1 struc
 sprite_bitmapptr dw ?
 sprite_bitmapseg dw ?
@@ -105,7 +105,7 @@ FONTHDR ends
 ; ASMDOC(font_shapes) Unlabelled alternate prologue at original line 77 skips x/y initialization and continues
 ; the stored font
 ; ASMDOC(font_shapes) cursor; not a public export.
-_font_draw_text proc far
+_fortextxy proc far
     local_rows_left = word ptr -4
     local_glyph_x = word ptr -2
     arg_text_offset = word ptr 6
@@ -222,6 +222,6 @@ font_text_when_not_below:
     mov ax, ds:[fh_advance]
     add ds:[fh_x], ax
     jmp font_text_draw_loop
-_font_draw_text endp
+_fortextxy endp
 S012_TEXT ends
 end

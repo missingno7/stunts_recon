@@ -120,7 +120,7 @@ extern struct VECTOR shape_template_points_a[],shape_template_points_b[],shape_t
 char g_road_piece_id;
 char trk_sample_count;
 /* Local view: mmgr_alloc_resbytes; return.pointer is signed byte; another unit uses void. */
-extern I8 far *mmgr_alloc_resbytes(I8 *,I32);
+extern I8 far *resmem(I8 *,I32);
 /* Local view: freememory, purgememory; return is void; another unit uses far pointer. */
 extern void far freememory(void far *),far purgememory(void far *);
 /* Unused OMF-order alias; accesses use g_shapes3d[127].shape3d_verts. */
@@ -158,7 +158,7 @@ extern U16S  far *td6_ptr_b;
 /* Local view: trackdat7; pointer is unsigned word; another unit uses signed byte. */
 unsigned short far *trackdat7;
 /* Local view: td10checkptr; pointer is struct VECTOR; another unit uses signed word. */
-extern struct VECTOR far *td10checkptr;
+extern struct VECTOR far *trksign;
 /* Local view: trkptrpath; pointer is struct VECTOR; another unit uses signed word. */
 struct VECTOR far *trkptrpath;
 
@@ -167,11 +167,11 @@ struct VECTOR far *trkptrpath;
 extern I16S far *td3;
 
 /* Local view: file_load_resource_file; return.pointer is void; another unit uses signed byte. */
-extern void far *file_load_resource_file(const I8 *);
+extern void far *openresource(const I8 *);
 /* Local view: locate_text_resource; parameters[0].pointer is void; another unit uses signed byte. */
-extern I8 far *locate_text_resource(void far *,const I8 *);
+extern I8 far *getresl(void far *,const I8 *);
 /* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
-extern I8 far *locate_shape_alt(void far *,const I8 *);
+extern I8 far *getres(void far *,const I8 *);
 
 /* Local view: closeresource; parameters[0].pointer is void; another unit uses signed byte. */
 extern void far closeresource(void far *);
@@ -1029,7 +1029,7 @@ I16 getwpinfo(I16 column, I16 row, struct VECTOR *vertices) {
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
 /* Local view: shape3d_load_all; return is signed word; another unit uses void. */
-I16 shape3d_load_all(void)
+I16 init_3dpieces(void)
 {
     register I16 i;
 
@@ -1052,7 +1052,7 @@ I16 shape3d_load_all(void)
 
 /* Releases shared 3D shape resources. Params: none. Returns: none. State: reads and clears shared resource handles. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void shape3d_free_all(void)
+void remove_3dpieces(void)
 {
     if (g_game13dresource != 0) {
         /* PLATFORM(memory): release resource memory. */ freememory(g_game13dresource);
@@ -1065,7 +1065,7 @@ void shape3d_free_all(void)
 /* Loads player and opponent car shapes. Params: player and opponent car IDs. Returns: none. State: updates car-shape resource pointers. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
+void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	I32 copyOffset;
 	I32 sizeBytes;
 	register I16 loopIndex;
@@ -1112,7 +1112,7 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 			arg_playercarid[2] == arg_opponentcarid[2] && arg_playercarid[3] == arg_opponentcarid[3])
 		{
 			/* PLATFORM(memory): query a resource block size. */ sizeBytes = modsize(pl_carres_3d);
-			/* PLATFORM(memory): allocate resource memory. */ carcopyresourceptr = mmgr_alloc_resbytes(aCar0[7], sizeBytes);
+			/* PLATFORM(memory): allocate resource memory. */ carcopyresourceptr = resmem(aCar0[7], sizeBytes);
 			
 			for (copyOffset = 0; copyOffset < sizeBytes; copyOffset++) {
 				carcopyresourceptr[copyOffset] = pl_carres_3d[copyOffset];
@@ -1159,7 +1159,7 @@ void shape3d_load_car_shapes(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 
 /* Releases player and opponent car-shape resources. Params: none. Returns: none. State: reads and clears car resource pointers. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void shape3d_free_car_shapes(void)
+void remove_3dcars(void)
 {
     if (carcopyresourceptr != 0) {
         settires(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
@@ -1274,7 +1274,7 @@ I16 compiletrack(void)
   I8S  conn;
   I8 loop_done;
   U8  prev_elem;
-  /* PLATFORM(memory): allocate resource memory. */ alloc = mmgr_alloc_resbytes("tcomp", 0x380L);
+  /* PLATFORM(memory): allocate resource memory. */ alloc = resmem("tcomp", 0x380L);
   if (alloc == 0)
     return 2;
   queuePtr = alloc;
@@ -1774,9 +1774,9 @@ I16 compiletrack(void)
       trkd23adr[g_road_piece_id] = arrow;
       if (td15p_9[gterrtrk[oldRow] + oldX] == 6)
         cur_pos.y += 0x1c2;
-      td10checkptr[g_road_piece_id].y = cur_pos.y;
-      td10checkptr[g_road_piece_id].z = ((trklst[prev_elem].multiTile & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
-      td10checkptr[g_road_piece_id].x = ((trklst[prev_elem].multiTile & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
+      trksign[g_road_piece_id].y = cur_pos.y;
+      trksign[g_road_piece_id].z = ((trklst[prev_elem].multiTile & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
+      trksign[g_road_piece_id].x = ((trklst[prev_elem].multiTile & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
       td19hdl[lnoffsets[oldRow] + oldX] = g_road_piece_id;
       g_road_piece_id++;
     }
@@ -1973,10 +1973,10 @@ void opponentcompile(void)
     register I16S visited;
 
     aOpp1[3] = globalgamesettings.game_opponenttype + '0';
-    /* PLATFORM(file): load a resource file. */ res = file_load_resource_file(aOpp1);
-    strcpyfar(opptext_label, locate_text_resource(res, "nam"));
-    /* PLATFORM(file): locate opponent path data in the loaded bundle. */ pathData = locate_shape_alt(res, "path");
-    /* PORT: the speed table is traversed through a segmented FAR resource pointer. */ /* PLATFORM(file): locate opponent speed data in the loaded bundle. */ tbl = (U8  far *)locate_shape_alt(res, "sped");
+    /* PLATFORM(file): load a resource file. */ res = openresource(aOpp1);
+    strcpyfar(opptext_label, getresl(res, "nam"));
+    /* PLATFORM(file): locate opponent path data in the loaded bundle. */ pathData = getres(res, "path");
+    /* PORT: the speed table is traversed through a segmented FAR resource pointer. */ /* PLATFORM(file): locate opponent speed data in the loaded bundle. */ tbl = (U8  far *)getres(res, "sped");
     for (i = 0; i < 16; i++)
         opponent_spd_tbl[i] = tbl[i];
 

@@ -19,7 +19,7 @@ extern unsigned short slow_video_mode_state;
 extern unsigned short video_cnstval;
 extern void far drawcircle(int, int, int, int);
 extern void far INIT_PALETTE(void *, void *, void *, void *, unsigned short);
-extern void far putpixel_single_maybe(int, int, int);
+extern void far writepixelc(int, int, int);
 extern void far skybox_op_helper(unsigned, unsigned, struct POINT2D, struct POINT2D, struct POINT2D, struct POINT2D);
 extern void far skybox_op_helper2(struct RECTANGLE *, int, int);
 extern void far vgapalette(unsigned short, unsigned short, unsigned char *);

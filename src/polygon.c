@@ -54,7 +54,7 @@
 
 
 /* Local view: mmgr_alloc_resbytes; parameters[1] is signed long; another unit uses unsigned long. */
-extern void far* far mmgr_alloc_resbytes(I8*, I32);
+extern void far* far resmem(I8*, I32);
 
 
 /* Local view: drawpolypt; parameters[2].pointer is struct POINT2D; another unit uses signed word. */
@@ -129,7 +129,7 @@ static struct POINT2D* projected_point_ptr_table[11];
 
 void INIT_MATRIX(void)
 { /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
-    polyinfoptr = mmgr_alloc_resbytes("polyinfo", POLYINFO_POOL_BYTES) /* PLATFORM(memory): allocate the polygon information buffer from game memory. */;
+    polyinfoptr = resmem("polyinfo", POLYINFO_POOL_BYTES) /* PLATFORM(memory): allocate the polygon information buffer from game memory. */;
     xformy(&mat_no_turn, 0);
     xformy(&mat_quarter_turn, ANGLE_QUARTER_TURN);
     xformy(&mat_half_turn, ANGLE_HALF_TURN);
@@ -683,7 +683,7 @@ void DRAW_OBJECTS(void)
             drawcircle(info->points[0].x, info->points[0].y, info->points[1].x, fill) /* PLATFORM(video): draw a sphere primitive. */;
             break;
         case 5:
-            putpixel_single_maybe(info->points[0].x, info->points[0].y, fill) /* PLATFORM(video): plot a pixel primitive. */;
+            writepixelc(info->points[0].x, info->points[0].y, fill) /* PLATFORM(video): plot a pixel primitive. */;
             break;
         }
     }

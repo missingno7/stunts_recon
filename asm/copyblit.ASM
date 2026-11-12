@@ -12,8 +12,8 @@ extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _shape2d_blit_bitmap_hotspot
-public _sprite_putimage_and_alt
-public _sprputimage
+public _movcfxya
+public _movcf
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33B98.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -96,7 +96,7 @@ _shape2d_blit_bitmap_hotspot endp
 ; ASMDOC precondition (height zero can still execute one row). Clips using signed 16-bit branches and wrapped
 ; ASMDOC coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path increments row
 ; ASMDOC advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS calls..
-_sprite_putimage_and_alt proc far
+_movcfxya proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -118,7 +118,7 @@ _sprite_putimage_and_alt proc far
     mov     [bp+local_destination_y], ax
     jmp     short sprputimage_shared_exit
     even ; word-align the following entry
-_sprite_putimage_and_alt endp
+_movcfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprputimage.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -146,7 +146,7 @@ _sprite_putimage_and_alt endp
 ; ASMDOC using signed 16-bit branches and wrapped coordinates. Source and destination offsets wrap at 16 bits.
 ; ASMDOC Width-one, zero-source-skip path increments row advance after each row: later destination row strides grow by
 ; ASMDOC one. No callbacks, DOS or BIOS calls..
-_sprputimage proc far
+_movcf proc far
     var_E = word ptr -14
     var_bitmap = word ptr -12
     var_A = word ptr -10
@@ -298,6 +298,6 @@ sprputimage_copy_loop_4:
     dec     dx
     jg      short sprputimage_copy_loop_4
     jmp     sprputimage_draw_loop
-_sprputimage endp
+_movcf endp
 S012_TEXT ends
 end

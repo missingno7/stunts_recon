@@ -815,7 +815,7 @@
     {
       "end": 148774,
       "name": "sprite_putimage_transparent",
-      "public": "_sprite_putimage_transparent",
+      "public": "_tmaskxcfxya",
       "stable_id": null,
       "start": 148400,
       "target": {
@@ -826,7 +826,7 @@
     {
       "end": 148924,
       "name": "sub_34526",
-      "public": "_release_shape_resources",
+      "public": "_tmaskxf",
       "stable_id": "load_24526",
       "start": 148774,
       "target": {
@@ -883,8 +883,8 @@
     ],
     "publics": [
       {
-        "name": "_release_shape_resources",
-        "offset": 1222,
+        "name": "_tmaskxcfxya",
+        "offset": 848,
         "segment": "S012_TEXT"
       },
       {
@@ -913,13 +913,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_vgapalette",
-        "offset": 1603,
+        "name": "_tmaskxf",
+        "offset": 1222,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_putimage_transparent",
-        "offset": 848,
+        "name": "_vgapalette",
+        "offset": 1603,
         "segment": "S012_TEXT"
       }
     ],

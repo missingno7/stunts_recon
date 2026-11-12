@@ -256,13 +256,13 @@
     },
     {
       "path": "include/resapi.h",
-      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
-      "size": 1686
+      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
+      "size": 1650
     },
     {
       "path": "include/sprite2d.h",
-      "sha256": "1d4abc24ddd51f52f5adda31a18ab7313f763135c63af17e5242ce5ea04429b1",
-      "size": 1150
+      "sha256": "1c64a1146359650dc0291dad206ea15209292d7e6a12731d558aa0ab09e0efad",
+      "size": 1143
     },
     {
       "path": "include/stunts_types.h",
