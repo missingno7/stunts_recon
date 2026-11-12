@@ -9,8 +9,8 @@ def adapt_word_sentinels(source: str, unit: str) -> str:
     instead promotes to signed int32 on the host, where -1 != 65535.
     """
     anchors = {
-        "obj_seg003.c": ("carHeadingData == 0xffff", 1),
-        "obj_seg004.c": ("g_td01_track_filecpy[prev_path] == 0xffff", 2),
+        "render.c": ("carHeadingData == 0xffff", 1),
+        "trkscene.c": ("g_td01_track_filecpy[prev_path] == 0xffff", 2),
     }
     if unit not in anchors:
         return source
@@ -224,42 +224,42 @@ def host_view_contracts(source: str) -> str:
     """
     unit = source.rsplit("/", 1)[-1]
     views = []
-    if unit in {"obj_seg000.c", "obj_seg001_complete.c", "obj_seg003.c",
-                "obj_seg004.c", "obj_seg005.c", "obj_seg006.c", "obj_seg009.c"}:
-        vertex_field = "verts" if unit == "obj_seg006.c" else "shape3d_verts"
+    if unit in {"frontend.c", "carsim.c", "render.c",
+                "trkscene.c", "race.c", "polygon.c", "trackedt.c"}:
+        vertex_field = "verts" if unit == "polygon.c" else "shape3d_verts"
         views.append(("SHAPE3D", 22, {vertex_field: 2}))
-    if unit in {"obj_seg000.c", "obj_seg001_complete.c", "obj_seg003.c", "obj_seg006.c"}:
+    if unit in {"frontend.c", "carsim.c", "render.c", "polygon.c"}:
         views.extend((("MATRIX", 18, {}),
                       ("TRANSFORMEDSHAPE3D", 24,
                        {"shapeptr": 6, "rectptr": 10, "rotvec": 14,
                         "ts_flags": 22, "material": 23})))
-    if unit == "seg024_matrot.c":
+    if unit == "matrot.c":
         views.append(("MATRIX", 18, {"m._21": 2, "m._12": 6, "m._13": 12}))
-    if unit in {"obj_seg000.c", "obj_seg001_complete.c", "obj_seg003.c",
-                "obj_seg004.c", "obj_seg009.c"}:
-        shape_field = "shape" if unit == "obj_seg004.c" else "ss_shapePtr"
+    if unit in {"frontend.c", "carsim.c", "render.c",
+                "trkscene.c", "trackedt.c"}:
+        shape_field = "shape" if unit == "trkscene.c" else "ss_shapePtr"
         views.append(("TRACKOBJECT", 20, {shape_field: 6}))
-    if unit == "track_constants_module.c":
+    if unit == "trkconst.c":
         views.extend((("SHAPE3D", 22, {}),
                       ("scene_shape", 20, {"shape": 6}),
                       ("track_object", 20, {"shape": 6}),
                       ("track_object_info", 16, {"camera_data": 8, "opponent1": 12})))
-    if unit == "obj_seg001_complete.c":
+    if unit == "carsim.c":
         views.append(("TRKOBJINFO", 16, {"si_cameraDataOffset": 8, "link": 12}))
-    if unit == "obj_seg004.c":
+    if unit == "trkscene.c":
         views.append(("VECTOR", 6, {"x": 0, "y": 2, "z": 4}))
-    if unit == "obj_seg027.c":
+    if unit == "audiores.c":
         views.extend((("AUDIOCHUNK", 76, {"sample_data": 30, "end_callback": 72}),
                       ("AUDIOVOICE", 48, {"sample_data": 16, "owner_chunk": 42, "channel_number": 46})))
-    if unit == "obj_seg028.c":
+    if unit == "audioply.c":
         views.extend((("AudioChunk", 76, {"data": 30, "callback": 72}),
                       ("AudioVoice", 48, {"data": 16, "resource": 42, "channelNumber": 46})))
-    if unit == "obj_seg032_group.c":
+    if unit == "lineedit.c":
         views.append(("SCREEN_RECT", 20, {"foreground": 0, "background": 2, "line_height": 18}))
-    if unit == "obj_seg007.c":
+    if unit == "audioeng.c":
         views.extend((("AudioPayload", 48, {"shape": 8}),
                       ("AudioTimer", 76, {"payload": 28})))
-    if unit in {"obj_seg000.c", "obj_seg001_complete.c", "obj_seg003.c", "obj_seg005.c"}:
+    if unit in {"frontend.c", "carsim.c", "render.c", "race.c"}:
         views.extend((("GAMESTATE", 1120, {"game_frame": 320, "game_inputmode": 1013}),
                       ("CARSTATE", 208, {}), ("SIMD", 776, {}), ("GAMEINFO", 26, {})))
     lines = ["\n/* PORT_BUILD: independently grounded scalar and shared-view contracts. */",

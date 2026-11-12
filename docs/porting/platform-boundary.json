@@ -61,17 +61,17 @@
           ]
         },
         "current_source_mentions": [
-          "asm/obj_seg002.ASM",
+          "asm/rpmrand.ASM",
           "src/audio_unk3.c",
           "src/do_sinking.c",
           "src/file_load_replay.c",
           "src/init_crak.c",
           "src/init_unknown.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
@@ -144,7 +144,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -181,7 +181,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/graphics_resource_runtime.ASM",
+          "asm/gfxres.ASM",
           "src/audio_unk3.c",
           "src/do_sinking.c",
           "src/file_load_replay.c",
@@ -189,12 +189,12 @@
           "src/init_main.c",
           "src/init_unknown.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg031.c",
+          "src/startup.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
           "src/transformed_shape_add_for_sort.c",
@@ -231,7 +231,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -347,7 +347,7 @@
         },
         "current_source_mentions": [
           "asm/file_paras_group.ASM",
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -380,7 +380,7 @@
         },
         "current_source_mentions": [
           "asm/file_paras_group.ASM",
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -413,7 +413,7 @@
         },
         "current_source_mentions": [
           "asm/file_paras_group.ASM",
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -451,7 +451,7 @@
         },
         "current_source_mentions": [
           "asm/file_decomp_paras.ASM",
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -484,7 +484,7 @@
         },
         "current_source_mentions": [
           "asm/file_decomp_paras.ASM",
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -517,7 +517,7 @@
         },
         "current_source_mentions": [
           "asm/file_decomp_paras.ASM",
-          "asm/graphics_resource_runtime.ASM"
+          "asm/gfxres.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -575,15 +575,15 @@
         },
         "current_source_mentions": [
           "asm/file_find.ASM",
-          "asm/graphics_resource_runtime.ASM",
+          "asm/gfxres.ASM",
           "src/file_combine_and_find.c",
-          "src/obj_seg000.c",
-          "src/obj_seg005.c",
+          "src/frontend.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg008.c",
-          "src/obj_seg009.c",
-          "src/obj_seg031.c",
-          "src/seg034_shape2d_group.c"
+          "src/uires.c",
+          "src/trackedt.c",
+          "src/startup.c",
+          "src/shp2file.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -621,9 +621,9 @@
         },
         "current_source_mentions": [
           "asm/file_find.ASM",
-          "asm/graphics_resource_runtime.ASM",
+          "asm/gfxres.ASM",
           "src/file_find_next_alt.c",
-          "src/obj_seg031.c"
+          "src/startup.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -665,7 +665,7 @@
         },
         "current_source_mentions": [
           "asm/file_read.ASM",
-          "asm/resource_file_io_decompression.ASM"
+          "asm/fileio.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -703,10 +703,10 @@
         },
         "current_source_mentions": [
           "asm/file_read.ASM",
-          "asm/resource_file_io_decompression.ASM",
+          "asm/fileio.ASM",
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -759,12 +759,12 @@
         },
         "current_source_mentions": [
           "asm/file_read.ASM",
-          "asm/resource_file_io_decompression.ASM",
+          "asm/fileio.ASM",
           "src/file_load_replay.c",
-          "src/obj_seg000.c",
-          "src/obj_seg005.c",
+          "src/frontend.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg009.c"
+          "src/trackedt.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -796,7 +796,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/file_write_entries.ASM"
+          "asm/filewrit.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -845,13 +845,13 @@
           ]
         },
         "current_source_mentions": [
-          "asm/file_write_entries.ASM",
+          "asm/filewrit.ASM",
           "src/file_load_replay.c",
           "src/init_unknown.c",
-          "src/obj_seg000.c",
-          "src/obj_seg005.c",
+          "src/frontend.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg009.c",
+          "src/trackedt.c",
           "src/remove_frame_callback.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -1001,7 +1001,7 @@
           "asm/mmgr_alloc_call_group.ASM",
           "asm/mmgr_alloc_nop3111d_group.ASM",
           "asm/mmgr_alloc_resmem.ASM",
-          "asm/resource_memory_manager.ASM"
+          "asm/memmgr.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1034,7 +1034,7 @@
         },
         "current_source_mentions": [
           "asm/mmgr_alloc_nop3111d_group.ASM",
-          "asm/resource_memory_manager.ASM"
+          "asm/memmgr.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1355,7 +1355,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/graphics_resource_runtime.ASM",
+          "asm/gfxres.ASM",
           "asm/sub_2EAD4.ASM",
           "asm/sub_2EAD4_group.ASM"
         ],
@@ -1395,8 +1395,8 @@
         },
         "current_source_mentions": [
           "asm/locate_entries.ASM",
-          "asm/resource_file_io_decompression.ASM",
-          "src/obj_seg016_group.c"
+          "asm/fileio.ASM",
+          "src/reslook.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1429,7 +1429,7 @@
         },
         "current_source_mentions": [
           "asm/get_kb_or_joy_flags.ASM",
-          "asm/input_keyboard_joystick_services.ASM"
+          "asm/kbjoy.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1479,10 +1479,10 @@
         },
         "current_source_mentions": [
           "asm/get_kb_or_joy_flags.ASM",
-          "asm/input_keyboard_joystick_services.ASM",
+          "asm/kbjoy.ASM",
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -1526,7 +1526,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/input_keyboard_joystick_services.ASM",
+          "asm/kbjoy.ASM",
           "asm/kb_parse_key.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -1559,7 +1559,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/input_keyboard_joystick_services.ASM",
+          "asm/kbjoy.ASM",
           "asm/nopsub_304B6.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -1601,7 +1601,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/input_keyboard_joystick_services.ASM",
+          "asm/kbjoy.ASM",
           "asm/kb_get_char.ASM",
           "src/audio_unk3.c",
           "src/audio_unload.c",
@@ -1611,12 +1611,12 @@
           "src/init_unknown.c",
           "src/mouse_draw_opaque.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/remove_frame_callback.c",
           "src/run_02.c",
@@ -1662,9 +1662,9 @@
         },
         "current_source_mentions": [
           "asm/kb_init_interrupt.ASM",
-          "asm/keyboard_interrupt_runtime.ASM",
+          "asm/kbint.ASM",
           "src/init_main.c",
-          "src/obj_seg031.c"
+          "src/startup.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1747,7 +1747,7 @@
         },
         "current_source_mentions": [
           "asm/kb_int9_handler.ASM",
-          "asm/keyboard_interrupt_runtime.ASM"
+          "asm/kbint.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1780,7 +1780,7 @@
         },
         "current_source_mentions": [
           "asm/kb_int16_handler.ASM",
-          "asm/keyboard_interrupt_runtime.ASM"
+          "asm/kbint.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1818,8 +1818,8 @@
         },
         "current_source_mentions": [
           "asm/kb_read_char.ASM",
-          "asm/keyboard_input_callbacks.ASM",
-          "src/obj_seg008.c"
+          "asm/kbcalls.ASM",
+          "src/uires.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1861,7 +1861,7 @@
         },
         "current_source_mentions": [
           "asm/kb_checking.ASM",
-          "asm/keyboard_input_callbacks.ASM"
+          "asm/kbcalls.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1899,8 +1899,8 @@
         },
         "current_source_mentions": [
           "asm/kb_check.ASM",
-          "asm/keyboard_input_callbacks.ASM",
-          "src/obj_seg008.c"
+          "asm/kbcalls.ASM",
+          "src/uires.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1939,7 +1939,7 @@
         "current_source_mentions": [
           "src/mouse_set_pixratio.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -1984,15 +1984,15 @@
           "src/init_unknown.c",
           "src/mouse_set_pixratio.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg031.c",
+          "src/startup.c",
           "src/remove_frame_callback.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c",
+          "src/mouse.c",
           "src/sub_18D06.c",
           "src/transformed_shape_add_for_sort.c",
           "src/upd_statef20_from_steer_input.c",
@@ -2041,11 +2041,11 @@
           "src/file_load_replay.c",
           "src/mouse_minmax_position.c",
           "src/mouse_set_pixratio.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "reviewed_pristine_entry_extent_cfg",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2079,7 +2079,7 @@
         "current_source_mentions": [
           "src/mouse_set_pixratio.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "reviewed_pristine_local_entry_extent_cfg",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2113,7 +2113,7 @@
         "current_source_mentions": [
           "src/mouse_set_pixratio.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "reviewed_pristine_local_entry_extent_cfg",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2147,7 +2147,7 @@
         "current_source_mentions": [
           "src/mouse_set_pixratio.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "reviewed_pristine_local_entry_extent_cfg",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2187,11 +2187,11 @@
           "src/file_load_replay.c",
           "src/mouse_minmax_position.c",
           "src/mouse_set_position.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2239,14 +2239,14 @@
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
           "src/mouse_get_state.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c",
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2279,7 +2279,7 @@
         },
         "current_source_mentions": [
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2313,7 +2313,7 @@
         },
         "current_source_mentions": [
           "src/seg017_mouse_partial.c",
-          "src/seg017_mouse_whole.c"
+          "src/mouse.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2345,7 +2345,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/obj_seg002.ASM"
+          "asm/rpmrand.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2378,7 +2378,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/obj_seg002.ASM"
+          "asm/rpmrand.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2411,7 +2411,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/obj_seg002.ASM"
+          "asm/rpmrand.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2451,7 +2451,7 @@
         "current_source_mentions": [
           "asm/nopsub_30180.ASM",
           "asm/timer_setup_interrupt.ASM",
-          "asm/timer_video_interrupt_runtime.ASM",
+          "asm/timerint.ASM",
           "src/audio_unk3.c",
           "src/do_sinking.c",
           "src/file_load_replay.c",
@@ -2459,12 +2459,12 @@
           "src/init_main.c",
           "src/init_unknown.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg031.c",
+          "src/startup.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
           "src/transformed_shape_add_for_sort.c",
@@ -2570,13 +2570,13 @@
         },
         "current_source_mentions": [
           "asm/timer_reg_callback.ASM",
-          "asm/timer_video_interrupt_runtime.ASM",
+          "asm/timerint.ASM",
           "src/file_load_replay.c",
           "src/frame_helpers_group.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg007.c",
-          "src/obj_seg027.c",
+          "src/audioeng.c",
+          "src/audiores.c",
           "src/remove_frame_callback.c",
           "src/set_frame_callback.c"
         ],
@@ -2624,13 +2624,13 @@
         },
         "current_source_mentions": [
           "asm/timer_remove_callback.ASM",
-          "asm/timer_video_interrupt_runtime.ASM",
+          "asm/timerint.ASM",
           "src/file_load_replay.c",
           "src/frame_helpers_group.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg007.c",
-          "src/obj_seg027.c",
+          "src/audioeng.c",
+          "src/audiores.c",
           "src/remove_frame_callback.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -2664,7 +2664,7 @@
         },
         "current_source_mentions": [
           "asm/timer_intr_group.ASM",
-          "asm/timer_video_interrupt_runtime.ASM"
+          "asm/timerint.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2728,7 +2728,7 @@
           "asm/timer_get_counter.ASM",
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -2804,13 +2804,13 @@
           ]
         },
         "current_source_mentions": [
-          "asm/timer_counter_deadline_helpers.ASM",
+          "asm/timerhlp.ASM",
           "asm/timer_get_delta.ASM",
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg003.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c",
@@ -2854,9 +2854,9 @@
           "asm/mmgr_alloc_a000.ASM",
           "asm/mmgr_alloc_call_group.ASM",
           "asm/mmgr_alloc_nop3111d_group.ASM",
-          "asm/resource_memory_manager.ASM",
+          "asm/memmgr.ASM",
           "src/init_main.c",
-          "src/obj_seg031.c"
+          "src/startup.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2891,7 +2891,7 @@
           "asm/mmgr_alloc_call_group.ASM",
           "asm/mmgr_alloc_nop3111d_group.ASM",
           "asm/nopsub_310FE.ASM",
-          "asm/resource_memory_manager.ASM"
+          "asm/memmgr.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -2936,7 +2936,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/vector_sphere_sprite_ops.ASM",
+          "asm/vecspr.ASM",
           "asm/video_clear_color.ASM"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
@@ -2974,7 +2974,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/graphics_resource_runtime.ASM",
+          "asm/gfxres.ASM",
           "asm/video_set_mode4.ASM",
           "src/audio_unk3.c",
           "src/do_sinking.c",
@@ -2983,12 +2983,12 @@
           "src/init_main.c",
           "src/init_unknown.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg031.c",
+          "src/startup.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
           "src/transformed_shape_add_for_sort.c",
@@ -3030,19 +3030,19 @@
           ]
         },
         "current_source_mentions": [
-          "asm/timer_video_interrupt_runtime.ASM",
+          "asm/timerint.ASM",
           "asm/video_set_mode7.ASM",
           "src/audio_unk3.c",
           "src/do_sinking.c",
           "src/file_load_replay.c",
           "src/init_crak.c",
           "src/init_unknown.c",
-          "src/obj_seg000.c",
+          "src/frontend.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
@@ -3085,7 +3085,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/input_keyboard_joystick_services.ASM"
+          "asm/kbjoy.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -3123,7 +3123,7 @@
         },
         "current_source_mentions": [
           "asm/video_add_exithandler.ASM",
-          "asm/video_mode_restore_handlers.ASM"
+          "asm/vidmode.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -3155,7 +3155,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/video_mode_restore_handlers.ASM",
+          "asm/vidmode.ASM",
           "asm/video_on_exit.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -3193,7 +3193,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/video_set_mode_13h.ASM",
+          "asm/mode13h.ASM",
           "src/audio_unk3.c",
           "src/do_sinking.c",
           "src/file_load_replay.c",
@@ -3201,12 +3201,12 @@
           "src/init_main.c",
           "src/init_unknown.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg031.c",
+          "src/startup.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
           "src/transformed_shape_add_for_sort.c",
@@ -3248,10 +3248,10 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_shape_video_ops.ASM",
+          "asm/sprvideo.ASM",
           "asm/video_set_palette.ASM",
           "src/init_main.c",
-          "src/obj_seg031.c"
+          "src/startup.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -3283,7 +3283,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/font_matrix_shape_decode.ASM",
+          "asm/fontmat.ASM",
           "asm/nopsub_32FEE.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -3321,10 +3321,10 @@
           ]
         },
         "current_source_mentions": [
-          "asm/font_matrix_shape_decode.ASM",
+          "asm/fontmat.ASM",
           "asm/video_get_status.ASM",
           "src/init_main.c",
-          "src/obj_seg031.c"
+          "src/startup.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -3375,10 +3375,10 @@
           "src/init_crak.c",
           "src/init_unknown.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c",
           "src/sub_18D06.c",
@@ -3427,7 +3427,7 @@
         "current_source_mentions": [
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -3474,7 +3474,7 @@
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
           "src/mouse_draw_transparent.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -3590,7 +3590,7 @@
         },
         "current_source_mentions": [
           "asm/nopsub_3320E.ASM",
-          "asm/vector_sphere_sprite_ops.ASM"
+          "asm/vecspr.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -3683,7 +3683,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_clear_1_color.ASM",
+          "asm/sprclear.ASM",
           "src/audio_unk3.c",
           "src/audio_unload.c",
           "src/do_sinking.c",
@@ -3691,15 +3691,15 @@
           "src/init_main.c",
           "src/init_unknown.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg000.c",
+          "src/frontend.c",
           "src/obj_seg001.c",
-          "src/obj_seg001_complete.c",
-          "src/obj_seg003.c",
+          "src/carsim.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg008.c",
-          "src/obj_seg031.c",
+          "src/uires.c",
+          "src/startup.c",
           "src/print_int_as_string_maybe.c",
           "src/remove_frame_callback.c",
           "src/run_02.c",
@@ -3741,7 +3741,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_draw_unknown_lines_group.ASM"
+          "asm/linedisp.ASM"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -3778,7 +3778,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/putpixel_line1_maybe.ASM"
+          "asm/pixline.ASM"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -3835,11 +3835,11 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_sprite_1_unk_group.ASM",
-          "src/obj_seg005.c",
+          "asm/sprrects.ASM",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg008.c",
-          "src/obj_seg009.c"
+          "src/uires.c",
+          "src/trackedt.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -3877,10 +3877,10 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_sprite_1_unk_group.ASM",
+          "asm/sprrects.ASM",
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
-          "src/obj_seg008.c",
+          "src/uires.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -3952,11 +3952,11 @@
           ]
         },
         "current_source_mentions": [
-          "asm/font_draw_text.ASM",
+          "asm/fontdraw.ASM",
           "src/hiscore_draw_text.c",
           "src/intro_draw_text.c",
-          "src/obj_seg000.c",
-          "src/obj_seg008.c",
+          "src/frontend.c",
+          "src/uires.c",
           "src/print_highscore_entry.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -3998,12 +3998,12 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_putimage_and_group.ASM",
+          "asm/maskblit.ASM",
           "src/audio_unload.c",
           "src/mouse_draw_opaque.c",
           "src/mouse_draw_transparent.c",
-          "src/obj_seg008.c",
-          "src/obj_seg009.c",
+          "src/uires.c",
+          "src/trackedt.c",
           "src/print_int_as_string_maybe.c",
           "src/run_02.c",
           "src/run_03.c"
@@ -4051,8 +4051,8 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_nopsub339fa_group.ASM",
-          "src/obj_seg009.c"
+          "asm/iconmask.ASM",
+          "src/trackedt.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -4093,8 +4093,8 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_nopsub33ac0_group.ASM",
-          "src/obj_seg005.c",
+          "asm/bmpmask.ASM",
+          "src/race.c",
           "src/obj_seg005_prefix.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -4215,8 +4215,8 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_shape_to_1_group.ASM",
-          "src/obj_seg000.c"
+          "asm/shpcopy.ASM",
+          "src/frontend.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -4258,9 +4258,9 @@
         },
         "current_source_mentions": [
           "asm/seg012_nopsub33dbe_group.ASM",
-          "asm/seg012_shape2d_extended_group.ASM",
+          "asm/shp2ops.ASM",
           "src/file_load_replay.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c"
         ],
@@ -4299,9 +4299,9 @@
           ]
         },
         "current_source_mentions": [
-          "asm/seg012_shape2d_extended_group.ASM",
+          "asm/shp2ops.ASM",
           "src/file_load_replay.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
           "src/remove_frame_callback.c"
         ],
@@ -4348,15 +4348,15 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_shape_video_ops.ASM",
+          "asm/sprvideo.ASM",
           "src/audio_unload.c",
           "src/file_load_replay.c",
           "src/mouse_draw_opaque.c",
           "src/mouse_draw_transparent.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/obj_seg008.c",
-          "src/obj_seg009.c",
+          "src/uires.c",
+          "src/trackedt.c",
           "src/print_int_as_string_maybe.c",
           "src/remove_frame_callback.c",
           "src/run_02.c",
@@ -4405,8 +4405,8 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_shape_video_ops.ASM",
-          "src/obj_seg009.c"
+          "asm/sprvideo.ASM",
+          "src/trackedt.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -4447,8 +4447,8 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_shape_video_ops.ASM",
-          "src/obj_seg005.c",
+          "asm/sprvideo.ASM",
+          "src/race.c",
           "src/obj_seg005_prefix.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
@@ -4490,11 +4490,11 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_shape_video_ops.ASM",
+          "asm/sprvideo.ASM",
           "src/do_sinking.c",
           "src/init_crak.c",
-          "src/obj_seg000.c",
-          "src/obj_seg003.c",
+          "src/frontend.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
           "src/transformed_shape_add_for_sort.c"
         ],
@@ -4632,7 +4632,7 @@
         },
         "current_source_mentions": [
           "asm/draw_filled_lines.ASM",
-          "asm/line_sprite_shape_render.ASM"
+          "asm/linerend.ASM"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -4669,9 +4669,9 @@
           ]
         },
         "current_source_mentions": [
-          "asm/line_sprite_shape_render.ASM",
+          "asm/linerend.ASM",
           "asm/seg012_sprite_clear_shared_group.ASM",
-          "src/obj_seg000.c"
+          "src/frontend.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",
@@ -4744,7 +4744,7 @@
         },
         "current_source_mentions": [
           "asm/draw_patterned_lines.ASM",
-          "asm/patterned_lines_windows.ASM"
+          "asm/patlines.ASM"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -4833,7 +4833,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/patterned_lines_windows.ASM",
+          "asm/patlines.ASM",
           "asm/sprite_make_wnd.ASM",
           "src/file_load_replay.c",
           "src/init_main.c",
@@ -4889,11 +4889,11 @@
           ]
         },
         "current_source_mentions": [
-          "asm/putpixel_single_maybe.ASM",
-          "src/obj_seg000.c",
-          "src/obj_seg003.c",
+          "asm/putpixel.ASM",
+          "src/frontend.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg006.c"
+          "src/polygon.c"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
         "boundary_status": "BOUNDARIES_AND_EMISSION_BYTES_VERIFIED",
@@ -5007,7 +5007,7 @@
           ]
         },
         "current_source_mentions": [
-          "asm/sprite_rectangle_scaled_blitters.ASM",
+          "asm/scalblit.ASM",
           "asm/sub_35E08.ASM"
         ],
         "boundary_confidence": "verified_emission_coordinates_cfg_unreviewed",
@@ -5049,11 +5049,11 @@
           ]
         },
         "current_source_mentions": [
-          "src/obj_seg003.c",
+          "src/render.c",
           "src/obj_seg003_prefix.c",
-          "src/obj_seg005.c",
+          "src/race.c",
           "src/obj_seg005_prefix.c",
-          "src/seg033_mcgawnd.c"
+          "src/mcgawnd.c"
         ],
         "boundary_confidence": "verified_instruction_boundaries",
         "boundary_status": "BOUNDARIES_AND_INSTRUCTION_ANCHORS_VERIFIED",

@@ -48,7 +48,7 @@ class Sdl3SceneLayoutTests(unittest.TestCase):
         compiler_env["PATH"] = str(compiler.parent) + os.pathsep + compiler_env.get("PATH", "")
 
         historical = expand_project_headers(
-            (ROOT / "src" / "track_constants_module.c").read_text(encoding="latin-1"), ROOT)
+            (ROOT / "src" / "trkconst.c").read_text(encoding="latin-1"), ROOT)
         self.assertIn("unsigned short opaque_first_word;", historical)
         scene2 = scene_array(historical, "scene2", 19)
         scene3 = scene_array(historical, "scene3", 13)
@@ -60,8 +60,8 @@ class Sdl3SceneLayoutTests(unittest.TestCase):
         original_header = (PORT_INCLUDE / "stunts_structs.h").read_text(
             encoding="latin-1")
         derived = adapt_aggregate_views(legacy_target_widths(original_header))
-        producer_view = selected_view(derived, "track_constants_module", "scene_shape")
-        consumer_view = selected_view(derived, "obj_seg003", "TRACKOBJECT")
+        producer_view = selected_view(derived, "trkconst", "scene_shape")
+        consumer_view = selected_view(derived, "render", "TRACKOBJECT")
         self.assertIn("void *opaque_first_word;", producer_view)
 
         with tempfile.TemporaryDirectory(prefix="stunts-sdl3-scene-abi-") as directory:
@@ -87,7 +87,7 @@ class Sdl3SceneLayoutTests(unittest.TestCase):
             executable = scratch / "scene_layout_probe.exe"
             result = subprocess.run(
                 [str(compiler), "-std=gnu11", "-O0", "-Werror",
-                 "-DSTUNTS_TU_track_constants_module=1", "-I", str(scratch),
+                 "-DSTUNTS_TU_trkconst=1", "-I", str(scratch),
                  "-c", str(producer), "-o", str(scratch / "producer.o")],
                 cwd=ROOT, env=compiler_env, capture_output=True, text=True,
                 timeout=30, check=False,
@@ -95,7 +95,7 @@ class Sdl3SceneLayoutTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             result = subprocess.run(
                 [str(compiler), "-std=gnu11", "-O0", "-Werror",
-                 "-DSTUNTS_TU_obj_seg003=1", "-I", str(scratch),
+                 "-DSTUNTS_TU_render=1", "-I", str(scratch),
                  "-c", str(consumer), "-o", str(scratch / "consumer.o")],
                 cwd=ROOT, env=compiler_env, capture_output=True, text=True,
                 timeout=30, check=False,

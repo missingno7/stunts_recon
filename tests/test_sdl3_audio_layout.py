@@ -38,7 +38,7 @@ class Sdl3AudioLayoutTests(unittest.TestCase):
                       "AudioPayload", "AudioTimer"}
 
             source = ROOT / "tests" / "sdl3" / "audio_layout_probe.c"
-            for unit in ("obj_seg027", "obj_seg028", "obj_seg007"):
+            for unit in ("audiores", "audioply", "audioeng"):
                 # Each derived view is repeated for every accepted TU. Compile
                 # its exact selected blocks, without parsing the whole header
                 # (including hundreds of unrelated aggregates) three times.

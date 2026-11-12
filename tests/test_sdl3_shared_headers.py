@@ -35,7 +35,7 @@ class SharedHeaderTests(unittest.TestCase):
     def test_existing_units_expose_their_shared_types_and_imports(self):
         import host_probe_declarations as declarations
         import cdecls
-        unit='src/preRender_wheel_helper3.c'
+        unit='src/whlhelp3.c'
         text=expand_project_headers((ROOT/unit).read_text(),ROOT)
         parsed=cdecls.Unit(declarations.source_parser_text(text),unit)
         self.assertIn('Point',parsed.typedefs)

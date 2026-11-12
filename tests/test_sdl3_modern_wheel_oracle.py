@@ -14,7 +14,7 @@ import unittest
 
 HERE = Path(__file__).resolve().parent
 ROOT = next(parent for parent in HERE.parents
-            if (parent / "src" / "preRender_wheel.c").is_file() and
+            if (parent / "src" / "wheel.c").is_file() and
             (parent / "assets").is_dir())
 sys.path[:0] = [str(ROOT / "build" / "python"), str(ROOT)]
 from tests.test_sdl3_shape_pipeline import (  # noqa: E402
@@ -203,10 +203,10 @@ class ModernWheelOracleTests(unittest.TestCase):
             geometry_test = temp / "modern_wheel_geometry"
             capture_exe = temp / "legacy_wheel_capture"
             common = (
-                ROOT / "src" / "preRender_wheel.c",
-                ROOT / "src" / "preRender_wheel_helper.c",
-                ROOT / "src" / "preRender_wheel_helper2.c",
-                ROOT / "src" / "preRender_wheel_helper3.c",
+                ROOT / "src" / "wheel.c",
+                ROOT / "src" / "whlhelp.c",
+                ROOT / "src" / "whlhelp2.c",
+                ROOT / "src" / "whlhelp3.c",
                 ROOT / "port" / "sincos.c",
             )
             compile_helper(compiler, geometry_test,

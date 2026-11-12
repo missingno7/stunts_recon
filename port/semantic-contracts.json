@@ -30,7 +30,7 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Proves these call cases and memory effects only; does not prove all matrices, mat_invert, or the renderer as a whole.",
       "historical_route": [
-        "asm/font_matrix_shape_decode.ASM::_mat_vec"
+        "asm/fontmat.ASM::_mat_vec"
       ],
       "portable_route": [
         "port/matrix.c:mat_vec"
@@ -57,7 +57,7 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Proves only the listed operands and alias patterns.",
       "historical_route": [
-        "asm/font_matrix_shape_decode.ASM::_transmult"
+        "asm/fontmat.ASM::_transmult"
       ],
       "portable_route": [
         "port/matrix.c:transmult"
@@ -119,10 +119,10 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "This is joint path evidence; routines are not isolated and untested shape data, flags, rotations, culling states, and unrelated renderer entries remain uncovered.",
       "historical_route": [
-        "src/obj_seg006.c and the mapped renderer ASM entries called by the fixture"
+        "src/polygon.c and the mapped renderer ASM entries called by the fixture"
       ],
       "portable_route": [
-        "fresh PORT_BUILD overlay of src/obj_seg006.c",
+        "fresh PORT_BUILD overlay of src/polygon.c",
         "port/matrix.c",
         "port/polang.c",
         "port/projection.c",
@@ -136,7 +136,7 @@
         "port/projection.c",
         "port/sincos.c",
         "port/sprite.c",
-        "src/obj_seg006.c"
+        "src/polygon.c"
       ],
       "evidence_scope": "composite-path-only"
     },
@@ -158,15 +158,15 @@
       "authority": "locked_image_instruction_bytes",
       "claim_limit": "Expression/helper only; does not prove all of trans_op. The shape pipeline separately supplies composite evidence for selected stock shapes.",
       "historical_route": [
-        "src/obj_seg006.c:ADD_OBJECT_TO_BUFFER",
+        "src/polygon.c:ADD_OBJECT_TO_BUFFER",
         "locked bytes at image offsets 86103 and 86126: SHL CX,1; CMP CX,AX"
       ],
       "portable_route": [
         "port/game_abi.py:adapt_renderer_word_arithmetic",
-        "PORT_BUILD overlay of src/obj_seg006.c"
+        "PORT_BUILD overlay of src/polygon.c"
       ],
       "source_scope": [
-        "src/obj_seg006.c"
+        "src/polygon.c"
       ],
       "evidence_scope": "expression-window-only"
     },
@@ -251,14 +251,14 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Proves the tested routine inputs and layouts; does not establish all vehicle simulation behavior.",
       "historical_route": [
-        "src/obj_seg004.c:settires; locked entry alias sub_204AE"
+        "src/trkscene.c:settires; locked entry alias sub_204AE"
       ],
       "portable_route": [
-        "PORT_BUILD overlay of src/obj_seg004.c",
+        "PORT_BUILD overlay of src/trkscene.c",
         "port/game_abi.py:adapt_wheel_update_inputs"
       ],
       "source_scope": [
-        "src/obj_seg004.c"
+        "src/trkscene.c"
       ],
       "evidence_scope": "direct-routine-cases"
     },
@@ -287,19 +287,19 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Entry fixtures and tested fonts only; does not prove every font resource or all caller timing/layout behavior.",
       "historical_route": [
-        "asm/font_draw_text.ASM",
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/line_sprite_shape_render.ASM"
+        "asm/fontdraw.ASM",
+        "asm/fontmat.ASM",
+        "asm/linerend.ASM"
       ],
       "portable_route": [
         "port/font.c",
         "port/sprite.c",
-        "src/fardata_11039.c built-in font data"
+        "src/deffont.c built-in font data"
       ],
       "source_scope": [
         "port/font.c",
         "port/sprite.c",
-        "src/fardata_11039.c"
+        "src/deffont.c"
       ],
       "evidence_scope": "listed-routine-cases"
     },
@@ -329,20 +329,20 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Composite helper path and these seven states only; it deliberately aborts if the full interactive read_line loop is entered.",
       "historical_route": [
-        "src/obj_seg032_group.c:read_line_helper/read_line_helper2",
+        "src/lineedit.c:read_line_helper/read_line_helper2",
         "locked font entrypoints resolved from the image"
       ],
       "portable_route": [
-        "fresh transformed src/obj_seg032_group.c",
+        "fresh transformed src/lineedit.c",
         "port/font.c",
         "port/sprite.c",
-        "src/fardata_11039.c"
+        "src/deffont.c"
       ],
       "source_scope": [
         "port/font.c",
         "port/sprite.c",
-        "src/fardata_11039.c",
-        "src/obj_seg032_group.c"
+        "src/deffont.c",
+        "src/lineedit.c"
       ],
       "evidence_scope": "composite-path-only"
     },
@@ -363,7 +363,7 @@
       "authority": "locked_image_instruction_bytes_live_execution",
       "claim_limit": "Expression/helper only; no full draw_track_preview output differential.",
       "historical_route": [
-        "src/obj_seg003.c:draw_track_preview",
+        "src/render.c:draw_track_preview",
         "locked SUB AX,[camera_pos_z]; SAR AX,1 at image offset 0xCDA4"
       ],
       "portable_route": [
@@ -371,7 +371,7 @@
         "PORT_BUILD overlay helper port_preview_coord_half"
       ],
       "source_scope": [
-        "src/obj_seg003.c"
+        "src/render.c"
       ],
       "evidence_scope": "expression-window-only"
     },
@@ -395,16 +395,16 @@
       "authority": "locked_image_instruction_bytes_live_execution",
       "claim_limit": "Proves selected arithmetic and collision outcomes only, not either full simulation routine or the full vehicle model.",
       "historical_route": [
-        "src/obj_seg001_complete.c:movecar",
-        "src/obj_seg001_complete.c:calccoll",
+        "src/carsim.c:movecar",
+        "src/carsim.c:calccoll",
         "locked instruction windows at load offsets 21706 and 34129"
       ],
       "portable_route": [
         "port/build.py:adapt_gameplay_word_arithmetic",
-        "PORT_BUILD overlay of src/obj_seg001_complete.c"
+        "PORT_BUILD overlay of src/carsim.c"
       ],
       "source_scope": [
-        "src/obj_seg001_complete.c"
+        "src/carsim.c"
       ],
       "evidence_scope": "expression-window-only"
     },
@@ -461,17 +461,17 @@
       "authority": "locked_image_instruction_bytes_live_execution",
       "claim_limit": "No locked routine execution or intro/track_setup behavioral differential; source anchor and standalone expression only.",
       "historical_route": [
-        "src/obj_seg003.c:setup_intro",
-        "src/obj_seg004.c:compiletrack",
+        "src/render.c:setup_intro",
+        "src/trkscene.c:compiletrack",
         "locked CMP-immediate/branch bytes at offsets 0xDC7D, 0x10CED, 0x10FC6"
       ],
       "portable_route": [
         "port/game_abi.py:adapt_word_sentinels",
-        "PORT_BUILD overlays of obj_seg003.c and obj_seg004.c"
+        "PORT_BUILD overlays of render.c and trkscene.c"
       ],
       "source_scope": [
-        "src/obj_seg003.c",
-        "src/obj_seg004.c"
+        "src/render.c",
+        "src/trkscene.c"
       ],
       "evidence_scope": "expression-window-only"
     },
@@ -499,17 +499,17 @@
       "authority": "locked_image_live_execution",
       "claim_limit": "Specific dashboard asset families and listed operation modes; not all resource loaders, malformed files, game assets, or resource ownership paths.",
       "historical_route": [
-        "locked resource and shape routines resolved by SymbolMap; game callers in src/obj_seg035_group.c"
+        "locked resource and shape routines resolved by SymbolMap; game callers in src/shp2res.c"
       ],
       "portable_route": [
         "port/resource.c",
         "port/sprite.c",
-        "generated production overlays of src/obj_seg035_group.c and dashboard loader sources"
+        "generated production overlays of src/shp2res.c and dashboard loader sources"
       ],
       "source_scope": [
         "port/resource.c",
         "port/sprite.c",
-        "src/obj_seg035_group.c"
+        "src/shp2res.c"
       ],
       "evidence_scope": "composite-path-only"
     },
@@ -577,7 +577,7 @@
       "authority": "source_or_layout_assertion",
       "claim_limit": "No direct original DOS timer routine comparison; test does not establish absolute PIT frequency or timing phase.",
       "historical_route": [
-        "host timer boundary replacing DOS timer/IRQ owners; source contracts include asm/timer_video_interrupt_runtime.ASM and src/obj_seg032_group.c deadline calls"
+        "host timer boundary replacing DOS timer/IRQ owners; source contracts include asm/timerint.ASM and src/lineedit.c deadline calls"
       ],
       "portable_route": [
         "port/timer.c",
@@ -706,7 +706,7 @@
       ],
       "portable_route": [
         "port/transition_work.h:port_transition_row_work",
-        "build/sdl3/host-build/overlay/src/obj_seg000.c transition integration"
+        "build/sdl3/host-build/overlay/src/frontend.c transition integration"
       ],
       "source_scope": [
         "port/sprite.c",
@@ -759,14 +759,14 @@
       "authority": "source_or_layout_assertion",
       "claim_limit": "Validates the explicit host safety boundary only; it is not a differential for DOS invalid-pointer behavior or general audio-event handling.",
       "historical_route": [
-        "generated host view of src/obj_seg028.c:process_audio_event; DOS null far-pointer physical-memory behavior is intentionally not reproduced"
+        "generated host view of src/audioply.c:process_audio_event; DOS null far-pointer physical-memory behavior is intentionally not reproduced"
       ],
       "portable_route": [
-        "port/build.py generated obj_seg028.c overlay",
+        "port/build.py generated audioply.c overlay",
         "port/audio.c host audio boundary"
       ],
       "source_scope": [
-        "src/obj_seg028.c"
+        "src/audioply.c"
       ],
       "evidence_scope": "boundary-invariant-only"
     },
@@ -814,7 +814,7 @@
       "historical_route": [
         "assets/MT15.DRV",
         "assets/TD15.DRV",
-        "asm/timer_video_interrupt_runtime.ASM"
+        "asm/timerint.ASM"
       ],
       "portable_route": [
         "no MT15/TD15 host output backend; port/timer.c substitutes host scheduling"

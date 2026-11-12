@@ -73,9 +73,9 @@ def fresh_transformed_line_input(compiler: Path) -> Path:
             "fresh PORT_BUILD transformation failed:\n" +
             refreshed.stdout + refreshed.stderr
         )
-    overlay = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "src" / "obj_seg032_group.c"
+    overlay = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "src" / "lineedit.c"
     if not overlay.is_file():
-        raise AssertionError("fresh host build did not produce obj_seg032_group.c")
+        raise AssertionError("fresh host build did not produce lineedit.c")
     generated = overlay.read_text(encoding="latin-1")
     if "void FAR read_line_helper(void)" not in generated or \
             "void FAR read_line_helper2(void)" not in generated:

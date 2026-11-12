@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Six-byte BSS state owned by obj_seg002.ASM in the original game. */
+/* Six-byte BSS state owned by rpmrand.ASM in the original game. */
 uint8_t randomseeds[6];
 static uint32_t s_test_rand_state;
 static int s_test_rand_enabled;
@@ -36,7 +36,7 @@ void mygetseeds(uint8_t *seed_out)
     memcpy(seed_out, randomseeds, sizeof(randomseeds));
 }
 
-/* C translation of asm/obj_seg002.ASM:get_kevinrandom. Each addition is
+/* C translation of asm/rpmrand.ASM:get_kevinrandom. Each addition is
    byte-sized, and the six increment steps propagate a carry across the seed. */
 int16_t get_kevinrandom(void)
 {

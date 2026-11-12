@@ -31,7 +31,7 @@ DATA_STUB_BYTES = 65536
 def adapt_host_idle_waits(source: str, text: str) -> str:
     """Yield at audited UI backedges, preserving the recovered input routine."""
     changes: list[tuple[str, str]] = []
-    if source == "src/obj_seg000.c":
+    if source == "src/frontend.c":
         for variable, epoch in (("mouseDelta", "menu"), ("timerDiff", "track"),
                                 ("rotationDeltaY", "car"), ("timeDelta", "opponent")):
             old = f"    {variable} = /* PLATFORM(input_mouse):"
@@ -59,7 +59,7 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
              "        port_guest_wait_for_activity(port_car_activity);\n"
              "    if (keyCode != 0)\n    {\n      switch (keyCode)"),
         ])
-    elif source == "src/obj_seg005.c":
+    elif source == "src/race.c":
         changes.extend([
             ("void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{",
              "void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{\n"
@@ -76,7 +76,7 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
              "                    port_guest_wait_for_activity(port_replay_activity);\n"
              "                continue;"),
         ])
-    elif source == "src/obj_seg008.c":
+    elif source == "src/uires.c":
         changes.extend([
             ("    case 1:\n        do {\n            key = input_checking",
              "    case 1:\n        do {\n"
@@ -94,7 +94,7 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
              "                port_guest_wait_for_activity(port_activity);\n"
              "            switch (key) {\n            case KEY_SCAN_UP:"),
         ])
-    elif source == "src/obj_seg009.c":
+    elif source == "src/trackedt.c":
         changes.extend([
             ("            stepTime = timer_get_delta_alt()",
              "            uint32_t port_activity = port_guest_activity_snapshot();\n"
@@ -107,7 +107,7 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
              "                port_guest_wait_for_activity(port_activity);\n"
              "        } while (key == 0);"),
         ])
-    elif source == "src/obj_seg032_group.c":
+    elif source == "src/lineedit.c":
         changes.extend([
             ("      while ((inputKey = testkey()) == 0) {",
              "      for (;;) {\n"
@@ -293,7 +293,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
     for index, (source, owner) in enumerate(sources.items(), start=1):
         text = probe.expand_project_headers((ROOT / source).read_text(encoding="latin-1"), ROOT)
         config, local_fns, local_data = probe.local_config(source, text, owner)
-        if source == "src/obj_seg006.c":
+        if source == "src/polygon.c":
             cfg = config.read_text(encoding="latin-1")
             cfg = cfg.replace("norm_zone(struct VECTOR* vec);",
                               "extern I16 norm_zone(struct VECTOR* vec);")
@@ -302,7 +302,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             source, text, local_fns, local_data, shared_tags)
         transformed = adapt_host_idle_waits(source, transformed)
         transformed = adapt_render_layers(source, transformed)
-        if source == "src/obj_seg000.c":
+        if source == "src/frontend.c":
             transformed = (
                 "extern int port_input_test_auto_protection_enabled(void);\n"
                 "extern int port_input_type_test_text(const char *text);\n"
@@ -342,7 +342,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 transformed, count=1)
             if count != 1:
                 raise RuntimeError("Could not generate the host main-entry adapter")
-        elif source == "src/obj_seg008.c":
+        elif source == "src/uires.c":
             # The historical near-pointer extension occupied one word. Keep
             # that parameter as a native pointer in the host view, consistently
             # with the .trk/.rpl callers and file_combine_and_find's callee.
@@ -389,7 +389,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = (transformed[:match.start()] +
                            body.replace("rand()", "port_random_test_rand()", 1) +
                            transformed[match.end():])
-        elif source == "src/obj_seg001_complete.c":
+        elif source == "src/carsim.c":
             transformed, count = re.subn(
                 r"(?m)^void\s+movesim\s*\(\s*\)\s*\{",
                 "void stunts_update_gamestate(void) {",
@@ -413,7 +413,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "uint16_t port_game_rate_snapshot(void) { "
                 "return (uint16_t)rate_frame; }\n"
             )
-        elif source == "src/obj_seg027.c":
+        elif source == "src/audiores.c":
             transformed, count = re.subn(
                 r"(?m)^I16\s+(?:FAR\s+)?audio_load_driver\s*\(",
                 "I16 FAR stunts_audio_load_driver_legacy(",
@@ -440,14 +440,14 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 transformed, count=1)
             if count != 1:
                 raise RuntimeError("Could not isolate the audio volume/cleanup boundary")
-        elif source == "src/obj_seg006.c":
+        elif source == "src/polygon.c":
             transformed = transformed.replace(
                 "norm_zone(struct VECTOR*);",
                 "I16 norm_zone(struct VECTOR*);")
             transformed = transformed.replace(
                 "norm_zone(struct VECTOR* vec) {",
                 "I16 norm_zone(struct VECTOR* vec) {")
-        elif source == "src/obj_seg032_group.c":
+        elif source == "src/lineedit.c":
             old = "setticks(timerOffset, timerSegment);"
             if transformed.count(old) != 2:
                 raise RuntimeError("Could not locate both line-editor timer deadline calls")
@@ -456,7 +456,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "U16 ticks_high);\n" + transformed)
             transformed = transformed.replace(
                 old, "port_timer_copy_counter_words((U16)timerOffset, (U16)timerSegment);")
-        elif source == "src/obj_seg035_group.c":
+        elif source == "src/shp2res.c":
             # The DOS FAR scanner wraps its 16-bit offset and can examine
             # unrelated allocator bytes beyond the image. Native pointers
             # must stay within the unconsumed pixels, including zero at the
@@ -469,7 +469,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 + transformed.replace(old,
                     "repeat = port_parse_shape2d_helper3((const uint8_t *)src, "
                     "(uint16_t)(page_remaining - literal_cnt));", 1))
-        elif source == "src/obj_seg005.c":
+        elif source == "src/race.c":
             original = "\t\tfor (;;) {\n\t\t\twhile (core.game_frame != tmr2) {"
             if transformed.count(original) != 1:
                 raise RuntimeError("Could not locate the race timer dispatch boundary")
@@ -482,7 +482,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                           "\t\t\t\tport_guest_wait_for_activity(port_activity);\n"
                           "\t\t\tport_guest_check_stop();\n"
                           "\t\t\twhile (core.game_frame != tmr2) {")
-        elif source == "src/obj_seg004.c":
+        elif source == "src/trkscene.c":
             for block in ("blk[sub]", "blk"):
                 field = block + ("." if block.endswith("]") else "->")
                 old = "camData = (struct VECTOR *) " + field + "cameraOverlay.cameraOffsetOverride;"
@@ -495,7 +495,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                     raise RuntimeError("Could not locate the track camera DGROUP-offset adapter")
                 transformed = transformed.replace(old, new, 1)
 
-        if source == "src/obj_seg001_complete.c":
+        if source == "src/carsim.c":
             old = "trackData = (struct VECTOR far *)objectInfo->link.dataPointer;"
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate the track-edge DOS near-offset adapter")
@@ -506,30 +506,30 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "objectInfo->si_cameraDataOffset + sizeof(struct VECTOR) * 7u);", 1)
             transformed = adapt_gameplay_word_arithmetic(transformed)
 
-        if source == "src/obj_seg003.c":
+        if source == "src/render.c":
             transformed = adapt_preview_word_arithmetic(transformed)
-        if source == "src/obj_seg004.c":
+        if source == "src/trkscene.c":
             transformed = adapt_wheel_update_inputs(transformed)
 
         transformed = adapt_word_sentinels(transformed, Path(source).name)
 
-        if source == "src/obj_seg006.c":
+        if source == "src/polygon.c":
             transformed = adapt_renderer_word_arithmetic(transformed)
 
-        if source == "src/obj_seg031.c":
+        if source == "src/startup.c":
             if transformed.count("exit(1);") != 1:
                 raise RuntimeError("Could not locate guest audio-failure exit")
             transformed = "extern void port_guest_exit(int status);\n" + transformed.replace("exit(1);", "port_guest_exit(1);")
 
-        if source in {"src/obj_seg027.c", "src/obj_seg028.c"}:
+        if source in {"src/audiores.c", "src/audioply.c"}:
             transformed = '#include "audio_backend.h"\n' + route_audio_vectors(transformed)
-        if source == "src/obj_seg027.c":
+        if source == "src/audiores.c":
             old = "void FAR audio_set_chunk_callback(U16 chunk, I32 value)"
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate the audio callback setter signature")
             transformed = transformed.replace(old,
                 "void FAR audio_set_chunk_callback(U16 chunk, void (*value)(I16))", 1)
-        if source == "src/obj_seg028.c":
+        if source == "src/audioply.c":
             # SKIDOVER's KEYS instrument is absent from the PC speaker bank.
             # DOS reads 0000:0005 before rejecting the null far pointer; a
             # native process cannot perform that read. Preserve its rejection
@@ -540,10 +540,10 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = transformed.replace(old,
                 "    sample = resource->data;\n    if (sample == 0) return -1;\n"
                 "    if (sample[5] == 5) {", 1)
-        if source in {"src/obj_seg007.c", "src/obj_seg028.c"}:
+        if source in {"src/audioeng.c", "src/audioply.c"}:
             transformed = "extern int32_t port_audio_is_active(void);\n" + transformed
             boundaries = ({"audio_op_unk": "return;", "audio_driver_timer": "return;"}
-                          if source.endswith("007.c") else {"process_audio_event": "return -1;"})
+                          if source == "src/audioeng.c" else {"process_audio_event": "return -1;"})
             for name, stop in boundaries.items():
                 pattern = r"(?m)^([^;\n]*\b" + name + r"\([^;\n]*\)\s*\{)"
                 transformed, count = re.subn(pattern, lambda m: m.group(1) +
@@ -558,10 +558,10 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         if source == "src/toupper.c":
             transformed = transformed.replace("I16 cap(I16 ch)", "int cap(int ch)")
         host_config = probe.legacy_target_widths(config.read_text(encoding="latin-1"))
-        if source == "src/obj_seg001_complete.c":
+        if source == "src/carsim.c":
             for name in ("centerpos", "veh_position", "veh_z"):
                 host_config = host_config.replace(f"extern I16 {name};", f"extern I32 {name};")
-        if source == "src/obj_seg006.c":
+        if source == "src/polygon.c":
             host_config = host_config.replace("extern I16 inverse_power_of_two_table[32];",
                                                "extern I32 inverse_power_of_two_table[32];")
         if source == "src/toupper.c":
@@ -571,7 +571,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                                  r"\([^\n]*;", lambda _: prototype, host_config)
         config.write_text(host_config, encoding="latin-1")
 
-        if source == "src/obj_seg006.c":
+        if source == "src/polygon.c":
             # DOS links index 400 to the adjacent reset marker at DS:5A86.
             # Host BSS order instead placed the pool pointer there. Give the
             # head its own element and alias the marker deliberately.
@@ -582,7 +582,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed += ("\nuint16_t port_game_y_rotation_snapshot(void) { "
                             "return (uint16_t)mat_y_rot_angle; }\n")
 
-        if source == "src/obj_seg008.c":
+        if source == "src/uires.c":
             old = "read_file_with_retry(I16 type, U16  first, U16  second, U16  third)"
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate split-word file read ABI")
@@ -590,7 +590,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = transformed.replace("loadfileatz(first, second, third)",
                                               "loadfileatz(first, second)")
         transformed = transformed.replace("((int16_t (*)())call_read_line)", "port_call_read_line")
-        if source == "src/obj_seg003.c":
+        if source == "src/render.c":
             transformed = adapt_scene_table_indices(transformed)
             transformed = adapt_update_frame(transformed)
         transformed = probe.rewrite_calls(transformed, "call_read_line", "rename:port_call_read_line")

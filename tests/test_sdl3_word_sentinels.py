@@ -37,7 +37,7 @@ class Sdl3WordSentinelTests(unittest.TestCase):
     def setUpClass(cls):
         cls.sources = {
             name: (ROOT / "src" / name).read_text(encoding="latin-1")
-            for name in ("obj_seg003.c", "obj_seg004.c")
+            for name in ("render.c", "trkscene.c")
         }
         cls.adapted = {
             name: adapt_word_sentinels(source, name)
@@ -58,8 +58,8 @@ class Sdl3WordSentinelTests(unittest.TestCase):
                 self.assertEqual(image[offset:offset + len(expected)], expected)
 
     def test_adapter_has_only_the_three_counted_source_anchors(self):
-        intro_name = "obj_seg003.c"
-        track_name = "obj_seg004.c"
+        intro_name = "render.c"
+        track_name = "trkscene.c"
         intro_expr = "carHeadingData == 0xffff"
         track_expr = "g_td01_track_filecpy[prev_path] == 0xffff"
         self.assertEqual(self.sources[intro_name].count(intro_expr), 1)
@@ -84,8 +84,8 @@ class Sdl3WordSentinelTests(unittest.TestCase):
                          "int untouched;\n")
 
     def test_missing_machine_proven_source_anchors_are_rejected(self):
-        intro_name = "obj_seg003.c"
-        track_name = "obj_seg004.c"
+        intro_name = "render.c"
+        track_name = "trkscene.c"
         with self.assertRaisesRegex(ValueError, "Expected 1"):
             adapt_word_sentinels(
                 self.sources[intro_name].replace("carHeadingData == 0xffff", "", 1),

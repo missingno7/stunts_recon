@@ -161,7 +161,7 @@ def local_config(source: str, text: str, owner: str):
                 typ = parse_type_declaration(spec.get("declaration", ""), name)
                 if typ and typ.get("k") == "fn":
                     fn_protos[name] = "extern " + render_type(typ["ret"], name + "()", target=False) + ";"
-        if source == "src/obj_seg000.c" and "locate_shape_fatal" in fn_protos:
+        if source == "src/frontend.c" and "locate_shape_fatal" in fn_protos:
             fn_protos["locate_shape_fatal"] = "extern struct SHAPE2D *locate_shape_fatal();"
     lines = ["/* Generated per-TU PORT_BUILD declaration replacement. */",
              "#ifndef PORT_BUILD", "#define PORT_BUILD 1", "#endif"]
@@ -318,19 +318,19 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     out = text
     for a, b in sorted(set(removals), reverse=True):
         out = out[:a] + "\n#ifndef PORT_BUILD\n" + out[a:b] + "\n#endif /* PORT_BUILD */\n" + out[b:]
-    if source == "src/obj_seg007.c":
+    if source == "src/audioeng.c":
         out = replace_seg007_asm(out, STRICT_CENTRAL)
         out = re.sub(r"typedef\s+unsigned\s+int\s+u16\s*;", "typedef uint16_t u16;", out)
         out = re.sub(r"typedef\s+unsigned\s+long\s+u32\s*;", "typedef uint32_t u32;", out)
         out = re.sub(r"typedef\s+unsigned\s+char\s+u8\s*;", "typedef uint8_t u8;", out)
         out = '#include "seg007_arith.h"\n' + out
-    if source == "src/obj_seg003.c":
+    if source == "src/render.c":
         out = out.replace("((I16)statemgmtcpy) = ((I16)slow_video_mode_state);",
                           "statemgmtcpy = (I16)slow_video_mode_state; /* PORT_BUILD: replace target lvalue cast. */")
-    if source == "src/obj_seg004.c":
+    if source == "src/trkscene.c":
         # Keep the host's DOS offset word until its camera adapter resolves it.
         out = out.replace("cameraOverlay.dataPointer", "cameraOverlay.cameraOffsetOverride")
-    if source == "src/obj_seg008.c":
+    if source == "src/uires.c":
         out = re.sub(r"\bU32\s+(?:far\s+)?timer_get_delta_alt\s*\(",
                      "I16 far timer_get_delta_alt(", out)
         # Keep the six-word definition intact; strict mode redirects only its
@@ -341,10 +341,10 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     # spellings cast the value-width of globals whose declarations already carry it.
     out = re.sub(r"\(\(\s*((?:I8S|U8|I16S|U16S|I16|U16|I32|U32))\s*\)\s*([A-Za-z_]\w*)\s*\)\s*=(?!=)\s*([^;]+);",
                  lambda m: f"{m.group(2)} = ({m.group(1)})({m.group(3)}); /* PORT_BUILD lvalue cast */", out)
-    if source == "src/obj_seg031.c":
+    if source == "src/startup.c":
         out = re.sub(r"\bvoid\s+(?:far\s+)?nullsub_2\s*\(\s*void\s*\)",
                      "void nullsub_2(void *resource, int16_t selector)", out, count=1)
-    if source == "src/obj_seg000.c":
+    if source == "src/frontend.c":
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
         if STRICT_CENTRAL:
@@ -357,18 +357,18 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
         out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
                      "int cap(int ch)", out, count=1)
     if STRICT_CENTRAL:
-        if source == "src/obj_seg032_group.c":
+        if source == "src/lineedit.c":
             out = rewrite_calls(out, "setticks", "rename:stunts_port_timer_copy_counter_split_view")
-        if source == "src/obj_seg028.c":
+        if source == "src/audioply.c":
             out = rewrite_calls(out, "audio_init_chunk", "rename:stunts_port_audio_init_chunk_7_view")
-        if source == "src/obj_seg007.c":
+        if source == "src/audioeng.c":
             out = rewrite_calls(out, "send_audio_stop_event", "rename:stunts_port_send_audio_stop_event_value_view")
-        if source == "src/obj_seg003.c":
+        if source == "src/render.c":
             out = re.sub(r"\bresbuftext\s*=\s*0\s*;", "resbuftext[0] = 0;", out, count=1)
     out = rewrite_calls(out, "nullsub_2", "pad2")
     if STRICT_CENTRAL:
         out = legacy_target_widths(out)
-    if source == "src/obj_seg000.c":
+    if source == "src/frontend.c":
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
     if source == "src/toupper.c":

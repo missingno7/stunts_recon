@@ -46,7 +46,7 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
         compiler_env = os.environ.copy()
         compiler_env["PATH"] = str(compiler.parent) + os.pathsep + compiler_env.get("PATH", "")
 
-        historical = (ROOT / "src" / "track_constants_module.c").read_text(
+        historical = (ROOT / "src" / "trkconst.c").read_text(
             encoding="latin-1")
         info = initialized_array(historical, "struct track_object_info shapeinfos[120]")
         tracks = initialized_array(historical, "struct track_object trklst[215]")
@@ -59,9 +59,9 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
         original_header = (PORT_INCLUDE / "stunts_structs.h").read_text(
             encoding="latin-1")
         derived = adapt_aggregate_views(legacy_target_widths(original_header))
-        producer_views = "\n".join(selected_view(derived, "track_constants_module", name)
+        producer_views = "\n".join(selected_view(derived, "trkconst", name)
                                    for name in ("track_object_info", "track_object"))
-        consumer_views = "\n".join(selected_view(derived, "obj_seg001_complete", name)
+        consumer_views = "\n".join(selected_view(derived, "carsim", name)
                                    for name in ("VECTOR", "TRKOBJINFO_LINK_BYTES",
                                                 "TRKOBJINFO", "TRACKOBJECT"))
         self.assertIn("U16S dataPointer", consumer_views)
@@ -89,8 +89,8 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
                 encoding="latin-1")
             consumer = ROOT / "tests" / "sdl3" / "track_info_layout_consumer.c"
             objects = []
-            for source, unit in ((producer, "track_constants_module"),
-                                 (consumer, "obj_seg001_complete")):
+            for source, unit in ((producer, "trkconst"),
+                                 (consumer, "carsim")):
                 output = scratch / (source.stem + ".o")
                 result = subprocess.run(
                     [str(compiler), "-std=gnu11", "-O0", "-Werror",

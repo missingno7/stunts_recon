@@ -560,7 +560,7 @@ void port_input_shutdown(void)
     }
 }
 
-/* Port replacement for asm/keyboard_input_callbacks.ASM's lcall [0x468c].
+/* Port replacement for asm/kbcalls.ASM's lcall [0x468c].
    The host's BIOS-key queue is the configured DOS reader callback target. */
 int16_t testkey(void)
 {
@@ -675,7 +675,7 @@ int16_t get_joy_flags(void)
 int16_t convertjoy(int16_t flags)
 {
     /* Exact 16-entry conversion table from
-       asm/input_keyboard_joystick_services.ASM. */
+       asm/kbjoy.ASM. */
     static const uint8_t axis_index[16] = {
         0, 1, 5, 0, 3, 2, 4, 3, 7, 8, 6, 7, 0, 1, 5, 0
     };

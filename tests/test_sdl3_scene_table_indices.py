@@ -21,17 +21,17 @@ class SceneTableIndexTests(unittest.TestCase):
         self.assertTrue(compiler.is_file(), "i686 GCC is required")
         environment = os.environ.copy()
         environment["PATH"] = str(compiler.parent) + os.pathsep + environment.get("PATH", "")
-        historical = (ROOT / "src/track_constants_module.c").read_text(encoding="latin-1")
+        historical = (ROOT / "src/trkconst.c").read_text(encoding="latin-1")
         track = re.search(r"struct track_object trklst\[215\] = \{.*?^\};",
                           historical, re.S | re.M).group(0)
         scene2 = scene_array(historical, "scene2", 19)
         scene3 = scene_array(historical, "scene3", 13)
         header = adapt_aggregate_views(legacy_target_widths(
             (PORT_INCLUDE / "stunts_structs.h").read_text(encoding="latin-1")))
-        producer_view = "\n".join(selected_view(header, "track_constants_module", name)
+        producer_view = "\n".join(selected_view(header, "trkconst", name)
                                   for name in ("scene_shape", "track_object", "track_object_info"))
-        consumer_view = selected_view(header, "obj_seg003", "TRACKOBJECT")
-        source = (ROOT / "src/obj_seg003.c").read_text(encoding="utf-8")
+        consumer_view = selected_view(header, "render", "TRACKOBJECT")
+        source = (ROOT / "src/render.c").read_text(encoding="utf-8")
         adapted = adapt_scene_table_indices(source)
         self.assertEqual(adapted.count("port_track_object_at("), 12)
         self.assertNotIn("&trklst[fence_codes[j2]]", adapted)
@@ -83,7 +83,7 @@ int main(void) {
     return 0;
 }
 ''', encoding="latin-1")
-            for unit, define in (("producer", "track_constants_module"), ("consumer", "obj_seg003")):
+            for unit, define in (("producer", "trkconst"), ("consumer", "render")):
                 result = subprocess.run([str(compiler), "-std=gnu11", "-O2", "-Werror",
                     f"-DSTUNTS_TU_{define}=1", "-I", str(scratch), "-c",
                     str(scratch / f"{unit}.c"), "-o", str(scratch / f"{unit}.o")],

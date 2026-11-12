@@ -47,7 +47,7 @@ static void capture_polygon(void *user, const ModernWheelPoint *points,
         face->points[i] = points[i];
 }
 
-/* These two hooks capture the real recovered preRender_wheel.c submissions. */
+/* These two hooks capture the real recovered wheel.c submissions. */
 void drawpolyp(int16_t color, int16_t point_count, int8_t *points)
 {
     const int16_t *xy = (const int16_t *)points;

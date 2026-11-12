@@ -4,7 +4,7 @@
     {
       "id": "wheel_update.cross_global_inputs",
       "kind": "cross_global_pointer_span",
-      "source": "src/obj_seg004.c",
+      "source": "src/trkscene.c",
       "function": "settires",
       "argument_bindings": {
         "source": {"parameter_index": 4, "elements_read": 24, "element_bytes": 6},
@@ -21,9 +21,9 @@
       "adapter": "port/game_abi.py::adapt_wheel_update_inputs",
       "behavioral_test": "tests/test_sdl3_wheel_update.py::Sdl3WheelUpdateTests.test_split_globals_and_packed_inputs_match_frozen_wheels",
       "evidence": [
-        "src/obj_seg004.c:73-84",
-        "src/obj_seg004.c:1112-1115",
-        "src/obj_seg004.c:1120-1170",
+        "src/trkscene.c:73-84",
+        "src/trkscene.c:1112-1115",
+        "src/trkscene.c:1120-1170",
         "layout/data-symbols.json: symbols named by target_groups/target_origin_pairs",
         "tools/porting/port_include/stunts_structs_target.h: struct stunts_VECTOR"
       ],
@@ -32,7 +32,7 @@
     {
       "id": "polyinfo.one_past_queue_head",
       "kind": "global_one_past_sentinel",
-      "source": "src/obj_seg006.c",
+      "source": "src/polygon.c",
       "function": "DRAW_OBJECTS",
       "global": "poly_link_list",
       "capacity_macro": "POLYINFO_CAPACITY",
@@ -44,9 +44,9 @@
       "adapter": "port/game_abi.py::adapt_polygon_storage",
       "behavioral_test": "tests/test_sdl3_polygon_storage.py::Sdl3PolygonStorageTests.test_list_head_and_polygon_pool_have_separate_storage",
       "evidence": [
-        "src/obj_seg006.c:97-105",
-        "src/obj_seg006.c:155-161",
-        "src/obj_seg006.c:649-652",
+        "src/polygon.c:97-105",
+        "src/polygon.c:155-161",
+        "src/polygon.c:649-652",
         "tests/test_sdl3_polygon_storage.py::Sdl3PolygonStorageTests.test_historical_head_is_the_word_after_400_links",
         "layout/data-symbols.json: _polyinfo_reset_marker",
         "layout/names-registry.json: poly_link_list binding"

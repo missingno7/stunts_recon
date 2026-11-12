@@ -206,7 +206,7 @@ undefined symbols or the linker reports a concrete non-symbol error.
 
 M0 runs the original `main` entry on a guest worker after SDL, timer, input,
 and the indexed framebuffer have started. The renderer's 15-word sprite
-descriptor setup is translated from `asm/patterned_lines_windows.ASM:3855-3879`
+descriptor setup is translated from `asm/patlines.ASM:3855-3879`
 as an exact 30-byte copy. Startup currently stops at the unresolved
 `file_load_shape2d_fatal_thunk`, called by `init_main.c:256` for the `sdmain`
 shape/palette container. Asset file dispatch works, but this container reader

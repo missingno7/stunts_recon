@@ -1,5 +1,5 @@
 /* PORTING ONLY: NOT PART OF THE MATCHING BUILD. */
-/* PORT_BUILD model for the two original 8086 arithmetic blocks in obj_seg007.c.
+/* PORT_BUILD model for the two original 8086 arithmetic blocks in audioeng.c.
    unsigned DX:AX DIV r/m16 raises #DE for divisor 0 or quotient > 0xffff. */
 #ifndef X2_SEG007_ARITH_H
 #define X2_SEG007_ARITH_H

@@ -65,7 +65,7 @@ typedef struct stunts_WheelRect_16 stunts_WheelRect_16;
 typedef struct stunts_car_exp_name_table stunts_car_exp_name_table;
 typedef struct stunts_coord_pair stunts_coord_pair;
 
-/* stunts_AUDIO_CAR_FRAME: target size 34; representative src/obj_seg001_complete.c:541; measured packing 2. */
+/* stunts_AUDIO_CAR_FRAME: target size 34; representative src/carsim.c:541; measured packing 2. */
 struct stunts_AUDIO_CAR_FRAME {
         int8_t reserved[6];
         int16_t player_offsets[6];
@@ -74,7 +74,7 @@ struct stunts_AUDIO_CAR_FRAME {
         int16_t opponent_rpm;
 };
 
-/* stunts_AudioEvent: target size 12; representative src/obj_seg028.c:2; measured packing 2. */
+/* stunts_AudioEvent: target size 12; representative src/audioply.c:2; measured packing 2. */
 struct stunts_AudioEvent {
         uint32_t delta;
         uint8_t command;
@@ -83,7 +83,7 @@ struct stunts_AudioEvent {
         uint8_t length;
 };
 
-/* stunts_AudioPayload: target size 48; representative src/obj_seg007.c:7; measured packing 2. */
+/* stunts_AudioPayload: target size 48; representative src/audioeng.c:7; measured packing 2. */
 struct stunts_AudioPayload {
         uint16_t sample_word;
         uint16_t unk2;
@@ -95,7 +95,7 @@ struct stunts_AudioPayload {
         st_target_far_dataptr_array16_t resources[8];
 };
 
-/* stunts_AudioSample: target size 68; representative src/obj_seg028.c:51; measured packing 2. */
+/* stunts_AudioSample: target size 68; representative src/audioply.c:51; measured packing 2. */
 struct stunts_AudioSample {
         uint8_t sample_header[0x1e];
         int16_t level1e;
@@ -115,7 +115,7 @@ struct stunts_AudioSample {
         uint8_t pulseTable[8];
 };
 
-/* stunts_AudioTimer: target size 76; representative src/obj_seg007.c:18; measured packing 2. */
+/* stunts_AudioTimer: target size 76; representative src/audioeng.c:18; measured packing 2. */
 struct stunts_AudioTimer {
         uint8_t active;
         uint8_t state;
@@ -134,21 +134,21 @@ struct stunts_AudioTimer {
         stunts_AudioPayload payload;
 };
 
-/* stunts_VECTOR: target size 6; representative src/obj_seg004.c:2; measured packing 2. */
+/* stunts_VECTOR: target size 6; representative src/trkscene.c:2; measured packing 2. */
 struct stunts_VECTOR {
         int16_t x;
         int16_t y;
         int16_t z;
 };
 
-/* stunts_VECTORLONG: target size 12; representative src/obj_seg001_complete.c:15; measured packing 2. */
+/* stunts_VECTORLONG: target size 12; representative src/carsim.c:15; measured packing 2. */
 struct stunts_VECTORLONG {
         int32_t lx;
         int32_t ly;
         int32_t lz;
 };
 
-/* stunts_CARSTATE: target size 208; representative src/obj_seg001_complete.c:79; measured packing 2. */
+/* stunts_CARSTATE: target size 208; representative src/carsim.c:79; measured packing 2. */
 struct stunts_CARSTATE {
         stunts_VECTORLONG car_posWorld1;
         stunts_VECTORLONG car_posWorld2;
@@ -208,19 +208,19 @@ struct stunts_CARSTATE {
         uint8_t car_audio_flags;
 };
 
-/* stunts_POINT2D: target size 4; representative src/obj_seg000.c:24; measured packing 2. */
+/* stunts_POINT2D: target size 4; representative src/frontend.c:24; measured packing 2. */
 struct stunts_POINT2D {
         int16_t x;
         int16_t y;
 };
 
-/* stunts_CRACK_LINE: target size 8; representative src/obj_seg003.c:2885; measured packing 2. */
+/* stunts_CRACK_LINE: target size 8; representative src/render.c:2885; measured packing 2. */
 struct stunts_CRACK_LINE {
         stunts_POINT2D start;
         stunts_POINT2D end;
 };
 
-/* stunts_ENGINESOUND: target size 48; representative src/obj_seg005.c:576; measured packing 2. */
+/* stunts_ENGINESOUND: target size 48; representative src/race.c:576; measured packing 2. */
 struct stunts_ENGINESOUND {
         int16_t es_rate_numerator;
         int16_t es_unk2;
@@ -229,7 +229,7 @@ struct stunts_ENGINESOUND {
         st_target_far_dataptr_array16_t es_resource_slots[10];
 };
 
-/* stunts_FARRESOURCE: target size 4; representative src/obj_seg003.c:691; measured packing 2. */
+/* stunts_FARRESOURCE: target size 4; representative src/render.c:691; measured packing 2. */
 union stunts_FARRESOURCE {
         st_target_far_dataptr16_t pointer;
         struct 
@@ -239,13 +239,13 @@ union stunts_FARRESOURCE {
 } word;
 };
 
-/* stunts_FONTDEF_PREFIX: target size 16; representative src/obj_seg008.c:46; measured packing 2. */
+/* stunts_FONTDEF_PREFIX: target size 16; representative src/uires.c:46; measured packing 2. */
 struct stunts_FONTDEF_PREFIX {
         uint8_t bytes[14];
         uint16_t value;
 };
 
-/* stunts_GAMEINFO: target size 26; representative src/obj_seg001_complete.c:66; measured packing 2. */
+/* stunts_GAMEINFO: target size 26; representative src/carsim.c:66; measured packing 2. */
 struct stunts_GAMEINFO {
         int8_t game_playercarid[4];
         int8_t game_playermaterial;
@@ -259,13 +259,13 @@ struct stunts_GAMEINFO {
         uint16_t game_recordedframes;
 };
 
-/* stunts_GAMESTATE_1014: target size 1014; representative src/obj_seg004.c:7; measured packing 2. */
+/* stunts_GAMESTATE_1014: target size 1014; representative src/trkscene.c:7; measured packing 2. */
 struct stunts_GAMESTATE_1014 {
         uint8_t state_prefix_000[0x3f5];
         int8_t game_inputmode;
 };
 
-/* stunts_GAMESTATE_1120: target size 1120; representative src/obj_seg003.c:155; measured packing 2. */
+/* stunts_GAMESTATE_1120: target size 1120; representative src/render.c:155; measured packing 2. */
 struct stunts_GAMESTATE_1120 {
         int32_t game_debris_x[24];
         int32_t game_debris_y[24];
@@ -314,7 +314,7 @@ struct stunts_GAMESTATE_1120 {
         int8_t field_45F;
 };
 
-/* stunts_GAMESTATE_SNAPSHOT: target size 22; representative src/obj_seg001_complete.c:192; measured packing 2. */
+/* stunts_GAMESTATE_SNAPSHOT: target size 22; representative src/carsim.c:192; measured packing 2. */
 struct stunts_GAMESTATE_SNAPSHOT {
         int32_t game_speed_frame_sum;
         uint16_t game_frame;
@@ -328,20 +328,20 @@ struct stunts_GAMESTATE_SNAPSHOT {
         int16_t game_jumpCount;
 };
 
-/* stunts_HighScoreRecord: target size 52; representative src/obj_seg000.c:21; measured packing 2. */
+/* stunts_HighScoreRecord: target size 52; representative src/frontend.c:21; measured packing 2. */
 struct stunts_HighScoreRecord {
         uint8_t bytes[50];
         uint16_t marker;
 };
 
-/* stunts_LOOKAHEAD_TILE: target size 3; representative src/obj_seg003.c:2611; measured packing 2. */
+/* stunts_LOOKAHEAD_TILE: target size 3; representative src/render.c:2611; measured packing 2. */
 struct stunts_LOOKAHEAD_TILE {
         int8_t east_delta;
         int8_t south_delta;
         int8_t detail;
 };
 
-/* stunts_MATERIALCLRLIST: target size 202; representative src/obj_seg003.c:690; measured packing 2. */
+/* stunts_MATERIALCLRLIST: target size 202; representative src/render.c:690; measured packing 2. */
 struct stunts_MATERIALCLRLIST {
         uint8_t colors_00_0f[0x20];
         int16_t ground;
@@ -350,12 +350,12 @@ struct stunts_MATERIALCLRLIST {
         int16_t water;
 };
 
-/* stunts_MATRIX: target size 18; representative src/obj_seg003.c:29; measured packing 2. */
+/* stunts_MATRIX: target size 18; representative src/render.c:29; measured packing 2. */
 struct stunts_MATRIX {
         int16_t vals[9];
 };
 
-/* stunts_MouseRegs: target size 14; representative src/seg017_mouse_whole.c:3; measured packing 2. */
+/* stunts_MouseRegs: target size 14; representative src/mouse.c:3; measured packing 2. */
 struct stunts_MouseRegs {
         uint16_t ax;
         uint16_t bx;
@@ -366,13 +366,13 @@ struct stunts_MouseRegs {
         uint16_t cflag;
 };
 
-/* stunts_OPPONENTIMAGE: target size 4; representative src/obj_seg000.c:104; measured packing 2. */
+/* stunts_OPPONENTIMAGE: target size 4; representative src/frontend.c:104; measured packing 2. */
 struct stunts_OPPONENTIMAGE {
         uint16_t width;
         uint16_t height;
 };
 
-/* stunts_PLANE: target size 34; representative src/obj_seg001_complete.c:25; measured packing 2. */
+/* stunts_PLANE: target size 34; representative src/carsim.c:25; measured packing 2. */
 struct stunts_PLANE {
         int16_t plane_yz;
         int16_t plane_xy;
@@ -381,7 +381,7 @@ struct stunts_PLANE {
         stunts_MATRIX plane_rotation;
 };
 
-/* stunts_POLYINFO: target size 46; representative src/obj_seg006.c:30; measured packing 2. */
+/* stunts_POLYINFO: target size 46; representative src/polygon.c:30; measured packing 2. */
 struct stunts_POLYINFO {
         int16_t depth;
         uint8_t material;
@@ -391,7 +391,7 @@ struct stunts_POLYINFO {
         stunts_POINT2D points[10];
 };
 
-/* stunts_RECTANGLE: target size 8; representative src/obj_seg001_complete.c:4; measured packing 2. */
+/* stunts_RECTANGLE: target size 8; representative src/carsim.c:4; measured packing 2. */
 struct stunts_RECTANGLE {
         int16_t left;
         int16_t right;
@@ -399,7 +399,7 @@ struct stunts_RECTANGLE {
         int16_t bottom;
 };
 
-/* stunts_SCREEN_RECT: target size 20; representative src/obj_seg032_group.c:3; measured packing 2. */
+/* stunts_SCREEN_RECT: target size 20; representative src/lineedit.c:3; measured packing 2. */
 struct stunts_SCREEN_RECT {
         int16_t foreground;
         int16_t background;
@@ -407,7 +407,7 @@ struct stunts_SCREEN_RECT {
         int16_t line_height;
 };
 
-/* stunts_SHAPE2D_12: target size 12; representative src/obj_seg000.c:318; measured packing 2. */
+/* stunts_SHAPE2D_12: target size 12; representative src/frontend.c:318; measured packing 2. */
 struct stunts_SHAPE2D_12 {
         int16_t width;
         int16_t height;
@@ -417,7 +417,7 @@ struct stunts_SHAPE2D_12 {
         int16_t pos_y;
 };
 
-/* stunts_SHAPE2D_14: target size 14; representative src/obj_seg009.c:2; measured packing 2. */
+/* stunts_SHAPE2D_14: target size 14; representative src/trackedt.c:2; measured packing 2. */
 struct stunts_SHAPE2D_14 {
         int16_t s2d_width;
         int16_t s2d_height;
@@ -429,13 +429,13 @@ struct stunts_SHAPE2D_14 {
         uint8_t s2d_plane_color1_bg;
 };
 
-/* stunts_SHAPE2D_16: target size 16; representative src/obj_seg005.c:1341; measured packing 2. */
+/* stunts_SHAPE2D_16: target size 16; representative src/race.c:1341; measured packing 2. */
 struct stunts_SHAPE2D_16 {
 union { struct { int16_t s2d_width; uint16_t s2d_height; uint16_t s2d_hotspot_x; uint16_t s2d_hotspot_y; uint16_t s2d_pos_x; uint16_t s2d_pos_y; }; uint16_t words[6]; };
         union { struct { uint8_t s2d_plane_color0; uint8_t s2d_plane_color1_bg; uint8_t s2d_plane_color2_flip; uint8_t s2d_plane_color3_flags; }; uint8_t bytes[4]; };
 };
 
-/* stunts_SHAPE3D: target size 22; representative src/obj_seg004.c:3; measured packing 2. */
+/* stunts_SHAPE3D: target size 22; representative src/trkscene.c:3; measured packing 2. */
 struct stunts_SHAPE3D {
         uint16_t numverts;
         st_target_far_dataptr16_t shape3d_verts;
@@ -446,7 +446,7 @@ struct stunts_SHAPE3D {
         st_target_far_dataptr16_t cull2;
 };
 
-/* stunts_SHAPE3DHEADER: target size 4; representative src/obj_seg003.c:561; measured packing 2. */
+/* stunts_SHAPE3DHEADER: target size 4; representative src/render.c:561; measured packing 2. */
 struct stunts_SHAPE3DHEADER {
         uint8_t header_numverts;
         uint8_t header_numprimitives;
@@ -454,7 +454,7 @@ struct stunts_SHAPE3DHEADER {
         uint8_t header_reserved;
 };
 
-/* stunts_SIMD: target size 776; representative src/obj_seg003.c:204; measured packing 2. */
+/* stunts_SIMD: target size 776; representative src/render.c:204; measured packing 2. */
 struct stunts_SIMD {
         int8_t num_gears;
         int8_t simd_unk;
@@ -487,20 +487,20 @@ struct stunts_SIMD {
         st_target_far_dataptr16_t aerorestable;
 };
 
-/* stunts_SPRITE_8: target size 8; representative src/obj_seg009.c:12; measured packing 2. */
+/* stunts_SPRITE_8: target size 8; representative src/trackedt.c:12; measured packing 2. */
 struct stunts_SPRITE_8 {
         st_target_far_dataptr16_t sprite_bitmapptr;
         uint16_t sprite_unk1;
         uint16_t sprite_unk2;
 };
 
-/* stunts_SPRITE_30: target size 30; representative src/obj_seg005.c:1353; measured packing 2. */
+/* stunts_SPRITE_30: target size 30; representative src/race.c:1353; measured packing 2. */
 struct stunts_SPRITE_30 {
 st_target_far_dataptr16_t sprite_bitmapptr;
         union { uint16_t words[13]; struct { uint16_t sprite_unk1; uint16_t sprite_unk2; uint16_t sprite_unk3; st_target_near_dataptr16_t sprite_lineofs; uint16_t sprite_left; uint16_t sprite_right; uint16_t sprite_top; uint16_t sprite_height; uint16_t sprite_pitch; uint16_t sprite_unk4; uint16_t sprite_width2; uint16_t sprite_left2; uint16_t sprite_widthsum; }; };
 };
 
-/* stunts_SecurityDialogResult: target size 24; representative src/obj_seg000.c:320; measured packing 2. */
+/* stunts_SecurityDialogResult: target size 24; representative src/frontend.c:320; measured packing 2. */
 struct stunts_SecurityDialogResult {
         int16_t first_x;
         int16_t first_y;
@@ -513,7 +513,7 @@ struct stunts_SecurityDialogResult {
         int16_t trailing_state[4];
 };
 
-/* stunts_TRACKOBJECT: target size 14; representative src/obj_seg003.c:252; measured packing 2. */
+/* stunts_TRACKOBJECT: target size 14; representative src/render.c:252; measured packing 2. */
 struct stunts_TRACKOBJECT {
         union { st_target_near_dataptr16_t info; st_target_near_dataptr16_t ss_trkObjInfoPtr; };
         union { int16_t rotation_y; int16_t ss_rotY; };
@@ -527,7 +527,7 @@ struct stunts_TRACKOBJECT {
         union { int8_t unknown; int8_t scene_unk5; };
 };
 
-/* stunts_TRACKRESULT: target size 20; representative src/obj_seg001_complete.c:548; measured packing 2. */
+/* stunts_TRACKRESULT: target size 20; representative src/carsim.c:548; measured packing 2. */
 struct stunts_TRACKRESULT {
         stunts_VECTOR center;
         stunts_VECTOR edge_a;
@@ -535,7 +535,7 @@ struct stunts_TRACKRESULT {
         int16_t has_opponent_link;
 };
 
-/* stunts_TRANSFORMEDSHAPE3D: target size 20; representative src/obj_seg003.c:568; measured packing 2. */
+/* stunts_TRANSFORMEDSHAPE3D: target size 20; representative src/render.c:568; measured packing 2. */
 struct stunts_TRANSFORMEDSHAPE3D {
         stunts_VECTOR pos;
         st_target_near_dataptr16_t shapeptr;
@@ -546,7 +546,7 @@ struct stunts_TRANSFORMEDSHAPE3D {
         uint8_t material;
 };
 
-/* stunts_TRKOBJINFO: target size 14; representative src/obj_seg004.c:4; measured packing 2. */
+/* stunts_TRKOBJINFO: target size 14; representative src/trkscene.c:4; measured packing 2. */
 struct stunts_TRKOBJINFO {
         uint8_t noOfBlocks;
         uint8_t entry;
@@ -569,13 +569,13 @@ struct stunts_TRKOBJINFO {
         uint8_t opponentSpeedCode;
 };
 
-/* stunts_TRKOBJINFO_LINK_BYTES: target size 2; representative src/obj_seg001_complete.c:237; measured packing 2. */
+/* stunts_TRKOBJINFO_LINK_BYTES: target size 2; representative src/carsim.c:237; measured packing 2. */
 struct stunts_TRKOBJINFO_LINK_BYTES {
         int8_t first;
         int8_t second;
 };
 
-/* stunts_TrackNode: target size 14; representative src/obj_seg004.c:6; measured packing 2. */
+/* stunts_TrackNode: target size 14; representative src/trkscene.c:6; measured packing 2. */
 struct stunts_TrackNode {
         uint8_t column;
         uint8_t row;
@@ -592,21 +592,21 @@ struct stunts_TrackNode {
         int16_t parent;
 };
 
-/* stunts_WALLREC: target size 6; representative src/obj_seg004.c:8; measured packing 2. */
+/* stunts_WALLREC: target size 6; representative src/trkscene.c:8; measured packing 2. */
 struct stunts_WALLREC {
         int16_t orientation;
         int16_t x;
         int16_t z;
 };
 
-/* stunts_WheelRect_12: target size 12; representative src/preRender_wheel_helper2.c:3; measured packing 2. */
+/* stunts_WheelRect_12: target size 12; representative src/whlhelp2.c:3; measured packing 2. */
 struct stunts_WheelRect_12 {
         stunts_POINT2D p0;
         stunts_POINT2D p1;
         stunts_POINT2D p2;
 };
 
-/* stunts_WheelRect_16: target size 16; representative src/preRender_wheel.c:3; measured packing 2. */
+/* stunts_WheelRect_16: target size 16; representative src/wheel.c:3; measured packing 2. */
 struct stunts_WheelRect_16 {
         int16_t left;
         int16_t top;
@@ -618,13 +618,13 @@ struct stunts_WheelRect_16 {
         int16_t y;
 };
 
-/* stunts_car_exp_name_table: target size 76; representative src/track_constants_module.c:842; measured packing 2. */
+/* stunts_car_exp_name_table: target size 76; representative src/trkconst.c:842; measured packing 2. */
 struct stunts_car_exp_name_table {
         int8_t entry[15][5];
         int8_t trailing_zero;
 };
 
-/* stunts_coord_pair: target size 4; representative src/track_constants_module.c:802; measured packing 2. */
+/* stunts_coord_pair: target size 4; representative src/trkconst.c:802; measured packing 2. */
 struct stunts_coord_pair {
         int16_t x;
         int16_t z;

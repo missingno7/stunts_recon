@@ -6,8 +6,8 @@ The startup resource path now loads bounded archive entries, decodes RLE/VLE,
 resolves shape records, expands ESH bitplanes, and applies the 16-entry shape
 palette map. Expansion follows the layout and MSB-first plane rules in
 `tools/porting/format_reference.py::expand_esh` and the operation in
-`asm/file_load_shape2d_expand.ASM`. The palette pass follows
-`asm/file_load_shape2d_palmap_apply.ASM`. Both assembly references assembled
+`asm/shpexpnd.ASM`. The palette pass follows
+`asm/shppal.ASM`. Both assembly references assembled
 to their recipe sizes and passed `promote.py --verify-only` with fresh
 `HYBRID_EXACT` and ordered-relocation checks (340 bytes and 90 bytes,
 respectively). These checks qualify the assembly references; the SDL host C
@@ -19,9 +19,9 @@ indexed framebuffer. Sprite windows, row offsets, clipping, shape composition,
 boolean blits, text, and font loading have host implementations. Their source
 anchors include `asm/mmgr_alloc_call_group.ASM`,
 `asm/mmgr_alloc_pages.ASM`, `asm/mmgr_free_entries.ASM`,
-`asm/video_set_palette.ASM`, `asm/patterned_lines_windows.ASM`,
-`asm/seg012_shape_to_1_group.ASM`, `asm/seg012_putimage_shared_group.ASM`,
-`asm/font_draw_text.ASM`, and `asm/font_entries.ASM`.
+`asm/video_set_palette.ASM`, `asm/patlines.ASM`,
+`asm/shpcopy.ASM`, `asm/copyblit.ASM`,
+`asm/fontdraw.ASM`, and `asm/font_entries.ASM`.
 
 `sprite_clear_shape` copies the active sprite rectangle at the SHAPE2D x/y
 origin into its backing bitmap. Its 94-byte context (`load_2477e`) has verified
@@ -30,7 +30,7 @@ candidate compiled to 148 bytes; `promote.py --verify-only` rejected it because
 the complete contribution length differs from the 94-byte target. The SDL
 implementation in `port/sprite.c` is therefore recorded as a semantic port,
 not a strict historical match. `sprite_blit_dither_phase` follows the row, skip, and
-lane-local phase updates in `asm/seg012_sprite_1_unk_group.ASM`; it also has no
+lane-local phase updates in `asm/sprrects.ASM`; it also has no
 strict recipe. Its SDL port previously advanced SI and DI after each byte
 copied by `mov al,[si]` / `mov es:[di],al`. Those instructions do not advance
 either register; only the explicit skip/phase updates do. Removing the two

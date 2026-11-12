@@ -438,13 +438,13 @@ def scan_spans(root, rows):
         read_json(root / "layout/data-symbols.json"))
     overlays = {row["source"]: Path(row["overlay"]).read_text(encoding="latin-1") for row in rows}
     # Verify the built representation, rather than a Python adapter name.
-    wheel = overlays["src/obj_seg004.c"]
-    wheel_body = next(f["body"] for f in function_rows("src/obj_seg004.c", wheel)
+    wheel = overlays["src/trkscene.c"]
+    wheel_body = next(f["body"] for f in function_rows("src/trkscene.c", wheel)
                       if f["name"] == "settires")
     wheel_ok = all(token in wheel_body for token in (
         "port_wheel_source[24]", "source = port_wheel_source;", "origin = port_wheel_origin;",
         "secondveccar", "secondoveh", "car_dvecs", "veh_od", "ancv2", "g_op_carvector2"))
-    polygon = overlays["src/obj_seg006.c"]
+    polygon = overlays["src/polygon.c"]
     polygon_ok = bool(re.search(r"poly_link_list\[POLYINFO_CAPACITY\s*\+\s*1\]", polygon)
                       and re.search(r"#define\s+polyinfo_reset_marker\s+poly_link_list\[POLYINFO_CAPACITY\]", polygon))
     for item in findings:

@@ -31,7 +31,7 @@ except ImportError:  # pragma: no cover - required workstation dependency
     Uc = None
 
 
-SOURCE_PATH = ROOT / "src" / "obj_seg003.c"
+SOURCE_PATH = ROOT / "src" / "render.c"
 CODE_START = 0xCDA4
 LOCKED_CODE = bytes.fromhex("2b 06 9c 09 d1 f8")  # SUB AX,[camera_pos_z]; SAR AX,1
 CAMERA_POS_Z_DS_OFFSET = 0x099C

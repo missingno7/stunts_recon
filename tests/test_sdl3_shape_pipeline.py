@@ -459,7 +459,7 @@ def _compile_native_dll(temporary: Path) -> Path:
                          dict(declarations.HOST_OVERRIDES))
 
     def append_harness(source: str, overlay: Path, config: Path, index: int):
-        if source == "src/obj_seg006.c":
+        if source == "src/polygon.c":
             generated = overlay.read_text(encoding="latin-1")
             if "port_renderer_double_word(ts->unk)" not in generated:
                 raise AssertionError("fresh production overlay omitted the locked renderer adapter")
@@ -491,13 +491,13 @@ def _compile_native_dll(temporary: Path) -> Path:
             declarations.HOST_OVERRIDES.update(declaration_state[2])
     if report["source_count"] != 38 or report["object_passes"] != 38:
         raise AssertionError("fresh production renderer object build did not compile all 38 sources")
-    obj006 = next(path for path in game_objects if path.name.endswith("_obj_seg006.o"))
+    obj006 = next(path for path in game_objects if path.name.endswith("_polygon.o"))
     render_support = [
         obj006,
         *(next(path for path in game_objects if path.name.endswith("_" + suffix + ".o"))
-          for suffix in ("polarRadius3D", "preRender_wheel", "preRender_wheel_helper",
-                         "preRender_wheel_helper2", "preRender_wheel_helper3",
-                         "seg024_matrot", "heapsort_by_order")),
+          for suffix in ("polarrad", "wheel", "whlhelp",
+                         "whlhelp2", "whlhelp3",
+                         "matrot", "heapsort")),
     ]
     common = [
         str(compiler), "-std=gnu11", "-O0", "-g", "-DPORT_BUILD=1",

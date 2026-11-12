@@ -777,7 +777,7 @@ void port_fs_close(int handle)
     }
 }
 
-/* Translates asm/resource_file_io_decompression.ASM:_file_read_fatal. DOS reads in 0x4000-byte
+/* Translates asm/fileio.ASM:_file_read_fatal. DOS reads in 0x4000-byte
    chunks, advancing the destination segment by 0x400 paragraphs each time.
    The host pointer is already normalized by the port's far-memory model. */
 void *loadfileat(const char *filename, void *destination)

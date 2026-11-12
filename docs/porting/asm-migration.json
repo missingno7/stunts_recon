@@ -38,7 +38,7 @@
     {
       "owner_id": "obj_seg002",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/obj_seg002.ASM",
+      "module": "asm/rpmrand.ASM",
       "target_extent": {
         "start": 40390,
         "end": 40724,
@@ -64,8 +64,8 @@
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)",
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM module-level inventory"
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM module-level inventory"
       ]
     },
     {
@@ -1449,7 +1449,7 @@
     {
       "owner_id": "graphics_resource_runtime",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/graphics_resource_runtime.ASM",
+      "module": "asm/gfxres.ASM",
       "target_extent": {
         "start": 125482,
         "end": 131254,
@@ -1477,8 +1477,8 @@
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)",
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM module-level inventory",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM module-level inventory",
         "graphics_resource_runtime",
         "mixed-family summary from renderer inventory"
       ]
@@ -1486,7 +1486,7 @@
     {
       "owner_id": "timer_video_interrupt_runtime",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/timer_video_interrupt_runtime.ASM",
+      "module": "asm/timerint.ASM",
       "target_extent": {
         "start": 131254,
         "end": 132056,
@@ -1512,8 +1512,8 @@
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)",
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM module-level inventory",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM module-level inventory",
         "timer_video_interrupt_runtime",
         "mixed-family summary from renderer inventory"
       ]
@@ -1521,7 +1521,7 @@
     {
       "owner_id": "input_keyboard_joystick_services",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/input_keyboard_joystick_services.ASM",
+      "module": "asm/kbjoy.ASM",
       "target_extent": {
         "start": 132056,
         "end": 133138,
@@ -1543,8 +1543,8 @@
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)",
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM module-level inventory",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM module-level inventory",
         "input_keyboard_joystick_services",
         "mixed-family summary from renderer inventory"
       ]
@@ -1552,7 +1552,7 @@
     {
       "owner_id": "keyboard_interrupt_runtime",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/keyboard_interrupt_runtime.ASM",
+      "module": "asm/kbint.ASM",
       "target_extent": {
         "start": 133138,
         "end": 133660,
@@ -1574,14 +1574,14 @@
         "layout/manifest.json:keyboard_interrupt_runtime [0x20812,0x20a1c)",
         "recipes/keyboard_interrupt_runtime.json",
         "layout/manifest.json:keyboard_interrupt_runtime _DATA [0x2fb48,0x2fdfc)",
-        "asm/keyboard_interrupt_runtime.ASM",
-        "asm/keyboard_interrupt_runtime.ASM module-level inventory"
+        "asm/kbint.ASM",
+        "asm/kbint.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "keyboard_input_callbacks",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/keyboard_input_callbacks.ASM",
+      "module": "asm/kbcalls.ASM",
       "target_extent": {
         "start": 133660,
         "end": 133840,
@@ -1603,14 +1603,14 @@
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)",
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM module-level inventory"
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "resource_file_io_decompression",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/resource_file_io_decompression.ASM",
+      "module": "asm/fileio.ASM",
       "target_extent": {
         "start": 133840,
         "end": 135290,
@@ -1636,14 +1636,14 @@
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)",
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM module-level inventory"
+        "asm/fileio.ASM",
+        "asm/fileio.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "resource_memory_manager",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/resource_memory_manager.ASM",
+      "module": "asm/memmgr.ASM",
       "target_extent": {
         "start": 135290,
         "end": 137138,
@@ -1665,14 +1665,14 @@
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)",
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM module-level inventory"
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "prerender_wheel_raster",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/prerender_wheel_raster.ASM",
+      "module": "asm/whlrast.ASM",
       "target_extent": {
         "start": 137138,
         "end": 139609,
@@ -1700,7 +1700,7 @@
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)",
-        "asm/prerender_wheel_raster.ASM",
+        "asm/whlrast.ASM",
         "prerender_wheel_raster",
         "mixed-family summary from renderer inventory"
       ]
@@ -1708,7 +1708,7 @@
     {
       "owner_id": "textmode_debug_console",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/textmode_debug_console.ASM",
+      "module": "asm/textcon.ASM",
       "target_extent": {
         "start": 139610,
         "end": 139968,
@@ -1730,8 +1730,8 @@
         "layout/manifest.json:textmode_debug_console [0x2215a,0x222c0)",
         "recipes/textmode_debug_console.json",
         "layout/manifest.json:textmode_debug_console _DATA [0x3032a,0x303ae)",
-        "asm/textmode_debug_console.ASM",
-        "asm/textmode_debug_console.ASM module-level inventory",
+        "asm/textcon.ASM",
+        "asm/textcon.ASM module-level inventory",
         "textmode_debug_console",
         "mixed-family summary from renderer inventory"
       ]
@@ -1739,7 +1739,7 @@
     {
       "owner_id": "projection_vector_window",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/projection_vector_window.ASM",
+      "module": "asm/project.ASM",
       "target_extent": {
         "start": 139968,
         "end": 140538,
@@ -1765,7 +1765,7 @@
         "layout/manifest.json:projection_vector_window [0x222c0,0x224fa)",
         "recipes/projection_vector_window.json",
         "layout/manifest.json:projection_vector_window _DATA [0x303ae,0x303e2)",
-        "asm/projection_vector_window.ASM",
+        "asm/project.ASM",
         "projection_vector_window",
         "mixed-family summary from renderer inventory"
       ]
@@ -1773,7 +1773,7 @@
     {
       "owner_id": "file_write_entries",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_write_entries.ASM",
+      "module": "asm/filewrit.ASM",
       "target_extent": {
         "start": 140538,
         "end": 140718,
@@ -1795,14 +1795,14 @@
         "layout/manifest.json:file_write_entries [0x224fa,0x225ae)",
         "recipes/file_write_entries.json",
         "layout/manifest.json:file_write_entries _DATA [0x303e2,0x303f2)",
-        "asm/file_write_entries.ASM",
-        "asm/file_write_entries.ASM module-level inventory"
+        "asm/filewrit.ASM",
+        "asm/filewrit.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "video_mode_restore_handlers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/video_mode_restore_handlers.ASM",
+      "module": "asm/vidmode.ASM",
       "target_extent": {
         "start": 140718,
         "end": 140814,
@@ -1824,8 +1824,8 @@
         "layout/manifest.json:video_mode_restore_handlers [0x225ae,0x2260e)",
         "recipes/video_mode_restore_handlers.json",
         "layout/manifest.json:video_mode_restore_handlers _DATA [0x303f2,0x303f4)",
-        "asm/video_mode_restore_handlers.ASM",
-        "asm/video_mode_restore_handlers.ASM module-level inventory",
+        "asm/vidmode.ASM",
+        "asm/vidmode.ASM module-level inventory",
         "video_mode_restore_handlers",
         "mixed-family summary from renderer inventory"
       ]
@@ -1833,7 +1833,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 140814,
         "end": 140846,
@@ -1854,7 +1854,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x2260e,0x2262e)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "sprite_copy_both_to_arg",
         "mixed-family summary from renderer inventory"
       ]
@@ -1862,7 +1862,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 140846,
         "end": 140874,
@@ -1883,7 +1883,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x2262e,0x2264a)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "sprite_copy_arg_to_both",
         "mixed-family summary from renderer inventory"
       ]
@@ -1891,7 +1891,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 140874,
         "end": 140891,
@@ -1912,14 +1912,14 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x2264a,0x2265b)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM module-level inventory"
+        "asm/mathres.ASM",
+        "asm/mathres.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 140891,
         "end": 140986,
@@ -1940,14 +1940,14 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x2265b,0x226ba)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM module-level inventory"
+        "asm/mathres.ASM",
+        "asm/mathres.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 140986,
         "end": 141022,
@@ -1968,8 +1968,8 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x226ba,0x226de)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM module-level inventory",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM module-level inventory",
         "nopsub_326BA",
         "mixed-family summary from renderer inventory"
       ]
@@ -1977,7 +1977,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141022,
         "end": 141112,
@@ -1999,7 +1999,7 @@
         "layout/manifest.json:math_resource_helpers [0x226de,0x22738)",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers _DATA [0x303f4,0x305f6)",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "math_resource_helpers",
         "mixed-family summary from renderer inventory"
       ]
@@ -2007,7 +2007,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141112,
         "end": 141126,
@@ -2028,7 +2028,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x22738,0x22746)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "nopsub_32738",
         "mixed-family summary from renderer inventory"
       ]
@@ -2036,7 +2036,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141126,
         "end": 141137,
@@ -2057,7 +2057,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x22746,0x22751)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "nopsub_32746",
         "mixed-family summary from renderer inventory"
       ]
@@ -2065,7 +2065,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141137,
         "end": 141148,
@@ -2086,7 +2086,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x22751,0x2275c)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "nopsub_32751",
         "mixed-family summary from renderer inventory"
       ]
@@ -2094,7 +2094,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141148,
         "end": 141162,
@@ -2115,7 +2115,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x2275c,0x2276a)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "projectiondata9_times_ratio",
         "mixed-family summary from renderer inventory"
       ]
@@ -2123,7 +2123,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141162,
         "end": 141176,
@@ -2144,7 +2144,7 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x2276a,0x22778)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "nopsub_3276A",
         "mixed-family summary from renderer inventory"
       ]
@@ -2152,7 +2152,7 @@
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141176,
         "end": 141186,
@@ -2173,14 +2173,14 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x22778,0x22782)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM module-level inventory"
+        "asm/mathres.ASM",
+        "asm/mathres.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "math_resource_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "target_extent": {
         "start": 141186,
         "end": 141210,
@@ -2201,14 +2201,14 @@
       "evidence": [
         "layout/manifest.json:math_resource_helpers [0x22782,0x2279a)",
         "recipes/math_resource_helpers.json",
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM module-level inventory"
+        "asm/mathres.ASM",
+        "asm/mathres.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "timer_counter_deadline_helpers",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/timer_counter_deadline_helpers.ASM",
+      "module": "asm/timerhlp.ASM",
       "target_extent": {
         "start": 141210,
         "end": 141362,
@@ -2230,14 +2230,14 @@
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)",
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM module-level inventory"
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "font_matrix_shape_decode",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/font_matrix_shape_decode.ASM",
+      "module": "asm/fontmat.ASM",
       "target_extent": {
         "start": 141362,
         "end": 143366,
@@ -2265,7 +2265,7 @@
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)",
-        "asm/font_matrix_shape_decode.ASM",
+        "asm/fontmat.ASM",
         "font_matrix_shape_decode",
         "mixed-family summary from renderer inventory"
       ]
@@ -2273,7 +2273,7 @@
     {
       "owner_id": "vector_sphere_sprite_ops",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/vector_sphere_sprite_ops.ASM",
+      "module": "asm/vecspr.ASM",
       "target_extent": {
         "start": 143366,
         "end": 144064,
@@ -2300,7 +2300,7 @@
       "evidence": [
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)",
         "recipes/vector_sphere_sprite_ops.json",
-        "asm/vector_sphere_sprite_ops.ASM",
+        "asm/vecspr.ASM",
         "vector_sphere_sprite_ops",
         "mixed-family summary from renderer inventory"
       ]
@@ -2308,7 +2308,7 @@
     {
       "owner_id": "load_232c0",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/sprite_clear_1_color.ASM",
+      "module": "asm/sprclear.ASM",
       "target_extent": {
         "start": 144064,
         "end": 144176,
@@ -2329,7 +2329,7 @@
       "evidence": [
         "layout/manifest.json:load_232c0 [0x232c0,0x23330)",
         "recipes/sprite_clear_1_color.json",
-        "asm/sprite_clear_1_color.ASM",
+        "asm/sprclear.ASM",
         "sprite_clear_1_color",
         "mixed-family summary from renderer inventory"
       ]
@@ -2337,7 +2337,7 @@
     {
       "owner_id": "seg012_draw_unknown_lines_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_draw_unknown_lines_group.ASM",
+      "module": "asm/linedisp.ASM",
       "target_extent": {
         "start": 144176,
         "end": 144320,
@@ -2358,7 +2358,7 @@
       "evidence": [
         "layout/manifest.json:seg012_draw_unknown_lines_group [0x23330,0x233c0)",
         "recipes/seg012_draw_unknown_lines_group.json",
-        "asm/seg012_draw_unknown_lines_group.ASM",
+        "asm/linedisp.ASM",
         "seg012_draw_unknown_lines_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2366,7 +2366,7 @@
     {
       "owner_id": "asm_load_233c0",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/putpixel_line1_maybe.ASM",
+      "module": "asm/pixline.ASM",
       "target_extent": {
         "start": 144320,
         "end": 144760,
@@ -2387,7 +2387,7 @@
       "evidence": [
         "layout/manifest.json:asm_load_233c0 [0x233c0,0x23578)",
         "recipes/putpixel_line1_maybe.json",
-        "asm/putpixel_line1_maybe.ASM",
+        "asm/pixline.ASM",
         "putpixel_line1_maybe",
         "mixed-family summary from renderer inventory"
       ]
@@ -2395,7 +2395,7 @@
     {
       "owner_id": "seg012_sprite_1_unk_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_sprite_1_unk_group.ASM",
+      "module": "asm/sprrects.ASM",
       "target_extent": {
         "start": 144760,
         "end": 145218,
@@ -2420,7 +2420,7 @@
       "evidence": [
         "layout/manifest.json:seg012_sprite_1_unk_group [0x23578,0x23742)",
         "recipes/seg012_sprite_1_unk_group.json",
-        "asm/seg012_sprite_1_unk_group.ASM",
+        "asm/sprrects.ASM",
         "seg012_sprite_1_unk_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2428,7 +2428,7 @@
     {
       "owner_id": "load_23742",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/font_draw_text.ASM",
+      "module": "asm/fontdraw.ASM",
       "target_extent": {
         "start": 145218,
         "end": 145430,
@@ -2449,7 +2449,7 @@
       "evidence": [
         "layout/manifest.json:load_23742 [0x23742,0x23816)",
         "recipes/font_draw_text.json",
-        "asm/font_draw_text.ASM",
+        "asm/fontdraw.ASM",
         "font_draw_text",
         "mixed-family summary from renderer inventory"
       ]
@@ -2457,7 +2457,7 @@
     {
       "owner_id": "load_23816",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/video_set_mode_13h.ASM",
+      "module": "asm/mode13h.ASM",
       "target_extent": {
         "start": 145430,
         "end": 145480,
@@ -2478,8 +2478,8 @@
       "evidence": [
         "layout/manifest.json:load_23816 [0x23816,0x23848)",
         "recipes/video_set_mode_13h.json",
-        "asm/video_set_mode_13h.ASM",
-        "asm/video_set_mode_13h.ASM module-level inventory",
+        "asm/mode13h.ASM",
+        "asm/mode13h.ASM module-level inventory",
         "video_set_mode_13h",
         "mixed-family summary from renderer inventory"
       ]
@@ -2487,7 +2487,7 @@
     {
       "owner_id": "file_load_shape2d_thunks",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_load_shape2d_thunks.ASM",
+      "module": "asm/shpthunk.ASM",
       "target_extent": {
         "start": 145480,
         "end": 145516,
@@ -2512,14 +2512,14 @@
       "evidence": [
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)",
         "recipes/file_load_shape2d_thunks.json",
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM module-level inventory"
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "seg012_putimage_and_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_putimage_and_group.ASM",
+      "module": "asm/maskblit.ASM",
       "target_extent": {
         "start": 145516,
         "end": 145914,
@@ -2544,7 +2544,7 @@
       "evidence": [
         "layout/manifest.json:seg012_putimage_and_group [0x2386c,0x239fa)",
         "recipes/seg012_putimage_and_group.json",
-        "asm/seg012_putimage_and_group.ASM",
+        "asm/maskblit.ASM",
         "seg012_putimage_and_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2552,7 +2552,7 @@
     {
       "owner_id": "seg012_nopsub339fa_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_nopsub339fa_group.ASM",
+      "module": "asm/iconmask.ASM",
       "target_extent": {
         "start": 145914,
         "end": 146112,
@@ -2573,7 +2573,7 @@
       "evidence": [
         "layout/manifest.json:seg012_nopsub339fa_group [0x239fa,0x23ac0)",
         "recipes/seg012_nopsub339fa_group.json",
-        "asm/seg012_nopsub339fa_group.ASM",
+        "asm/iconmask.ASM",
         "seg012_nopsub339fa_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2581,7 +2581,7 @@
     {
       "owner_id": "seg012_nopsub33ac0_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_nopsub33ac0_group.ASM",
+      "module": "asm/bmpmask.ASM",
       "target_extent": {
         "start": 146112,
         "end": 146328,
@@ -2602,7 +2602,7 @@
       "evidence": [
         "layout/manifest.json:seg012_nopsub33ac0_group [0x23ac0,0x23b98)",
         "recipes/seg012_nopsub33ac0_group.json",
-        "asm/seg012_nopsub33ac0_group.ASM",
+        "asm/bmpmask.ASM",
         "seg012_nopsub33ac0_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2610,7 +2610,7 @@
     {
       "owner_id": "seg012_putimage_shared_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_putimage_shared_group.ASM",
+      "module": "asm/copyblit.ASM",
       "target_extent": {
         "start": 146328,
         "end": 146700,
@@ -2635,7 +2635,7 @@
       "evidence": [
         "layout/manifest.json:seg012_putimage_shared_group [0x23b98,0x23d0c)",
         "recipes/seg012_putimage_shared_group.json",
-        "asm/seg012_putimage_shared_group.ASM",
+        "asm/copyblit.ASM",
         "seg012_putimage_shared_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2643,7 +2643,7 @@
     {
       "owner_id": "seg012_shape_to_1_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_shape_to_1_group.ASM",
+      "module": "asm/shpcopy.ASM",
       "target_extent": {
         "start": 146700,
         "end": 146878,
@@ -2668,7 +2668,7 @@
       "evidence": [
         "layout/manifest.json:seg012_shape_to_1_group [0x23d0c,0x23dbe)",
         "recipes/seg012_shape_to_1_group.json",
-        "asm/seg012_shape_to_1_group.ASM",
+        "asm/shpcopy.ASM",
         "seg012_shape_to_1_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2676,7 +2676,7 @@
     {
       "owner_id": "seg012_shape2d_extended_group",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/seg012_shape2d_extended_group.ASM",
+      "module": "asm/shp2ops.ASM",
       "target_extent": {
         "start": 146878,
         "end": 147552,
@@ -2701,7 +2701,7 @@
       "evidence": [
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)",
         "recipes/seg012_shape2d_extended_group.json",
-        "asm/seg012_shape2d_extended_group.ASM",
+        "asm/shp2ops.ASM",
         "seg012_shape2d_extended_group",
         "mixed-family summary from renderer inventory"
       ]
@@ -2709,7 +2709,7 @@
     {
       "owner_id": "sprite_shape_video_ops",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/sprite_shape_video_ops.ASM",
+      "module": "asm/sprvideo.ASM",
       "target_extent": {
         "start": 147552,
         "end": 149180,
@@ -2735,7 +2735,7 @@
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)",
-        "asm/sprite_shape_video_ops.ASM",
+        "asm/sprvideo.ASM",
         "sprite_shape_video_ops",
         "mixed-family summary from renderer inventory"
       ]
@@ -2743,7 +2743,7 @@
     {
       "owner_id": "line_sprite_shape_render",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/line_sprite_shape_render.ASM",
+      "module": "asm/linerend.ASM",
       "target_extent": {
         "start": 149180,
         "end": 150408,
@@ -2768,7 +2768,7 @@
       "evidence": [
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)",
         "recipes/line_sprite_shape_render.json",
-        "asm/line_sprite_shape_render.ASM",
+        "asm/linerend.ASM",
         "line_sprite_shape_render",
         "mixed-family summary from renderer inventory"
       ]
@@ -2776,7 +2776,7 @@
     {
       "owner_id": "patterned_lines_windows",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/patterned_lines_windows.ASM",
+      "module": "asm/patlines.ASM",
       "target_extent": {
         "start": 150408,
         "end": 154406,
@@ -2802,7 +2802,7 @@
         "layout/manifest.json:patterned_lines_windows [0x24b88,0x25b26)",
         "recipes/patterned_lines_windows.json",
         "layout/manifest.json:patterned_lines_windows _DATA [0x30b8c,0x30bbc)",
-        "asm/patterned_lines_windows.ASM",
+        "asm/patlines.ASM",
         "patterned_lines_windows",
         "mixed-family summary from renderer inventory"
       ]
@@ -2810,7 +2810,7 @@
     {
       "owner_id": "asm_load_25b26",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/putpixel_single_maybe.ASM",
+      "module": "asm/putpixel.ASM",
       "target_extent": {
         "start": 154406,
         "end": 154486,
@@ -2831,7 +2831,7 @@
       "evidence": [
         "layout/manifest.json:asm_load_25b26 [0x25b26,0x25b76)",
         "recipes/putpixel_single_maybe.json",
-        "asm/putpixel_single_maybe.ASM",
+        "asm/putpixel.ASM",
         "putpixel_single_maybe",
         "mixed-family summary from renderer inventory"
       ]
@@ -2839,7 +2839,7 @@
     {
       "owner_id": "sprite_rectangle_scaled_blitters",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/sprite_rectangle_scaled_blitters.ASM",
+      "module": "asm/scalblit.ASM",
       "target_extent": {
         "start": 154486,
         "end": 155464,
@@ -2867,7 +2867,7 @@
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)",
-        "asm/sprite_rectangle_scaled_blitters.ASM",
+        "asm/scalblit.ASM",
         "sprite_rectangle_scaled_blitters",
         "mixed-family summary from renderer inventory"
       ]
@@ -2875,7 +2875,7 @@
     {
       "owner_id": "asm_load_25f48",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_load_shape2d_palmap_apply.ASM",
+      "module": "asm/shppal.ASM",
       "target_extent": {
         "start": 155464,
         "end": 155554,
@@ -2896,14 +2896,14 @@
       "evidence": [
         "layout/manifest.json:asm_load_25f48 [0x25f48,0x25fa2)",
         "recipes/file_load_shape2d_palmap_apply.json",
-        "asm/file_load_shape2d_palmap_apply.ASM",
-        "asm/file_load_shape2d_palmap_apply.ASM module-level inventory"
+        "asm/shppal.ASM",
+        "asm/shppal.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "asm_load_25fa2",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_load_shape2d_expand.ASM",
+      "module": "asm/shpexpnd.ASM",
       "target_extent": {
         "start": 155554,
         "end": 155894,
@@ -2924,14 +2924,14 @@
       "evidence": [
         "layout/manifest.json:asm_load_25fa2 [0x25fa2,0x260f6)",
         "recipes/file_load_shape2d_expand.json",
-        "asm/file_load_shape2d_expand.ASM",
-        "asm/file_load_shape2d_expand.ASM module-level inventory"
+        "asm/shpexpnd.ASM",
+        "asm/shpexpnd.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "load_260f6",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/file_unflip_shape2d_pes.ASM",
+      "module": "asm/unflip.ASM",
       "target_extent": {
         "start": 155894,
         "end": 156092,
@@ -2952,14 +2952,14 @@
       "evidence": [
         "layout/manifest.json:load_260f6 [0x260f6,0x261bc)",
         "recipes/file_unflip_shape2d_pes.json",
-        "asm/file_unflip_shape2d_pes.ASM",
-        "asm/file_unflip_shape2d_pes.ASM module-level inventory"
+        "asm/unflip.ASM",
+        "asm/unflip.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "load_26af4",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/kb_shift_checking1.ASM",
+      "module": "asm/kbshift1.ASM",
       "target_extent": {
         "start": 158452,
         "end": 158469,
@@ -2980,14 +2980,14 @@
       "evidence": [
         "layout/manifest.json:load_26af4 [0x26af4,0x26b05)",
         "recipes/kb_shift_checking1.json",
-        "asm/kb_shift_checking1.ASM",
-        "asm/kb_shift_checking1.ASM module-level inventory"
+        "asm/kbshift1.ASM",
+        "asm/kbshift1.ASM module-level inventory"
       ]
     },
     {
       "owner_id": "load_26b05",
       "manifest_kind": "MATCHING_ASM",
-      "module": "asm/kb_shift_checking2.ASM",
+      "module": "asm/kbshift2.ASM",
       "target_extent": {
         "start": 158469,
         "end": 158486,
@@ -3008,8 +3008,8 @@
       "evidence": [
         "layout/manifest.json:load_26b05 [0x26b05,0x26b16)",
         "recipes/kb_shift_checking2.json",
-        "asm/kb_shift_checking2.ASM",
-        "asm/kb_shift_checking2.ASM module-level inventory"
+        "asm/kbshift2.ASM",
+        "asm/kbshift2.ASM module-level inventory"
       ]
     }
   ],
@@ -3018,7 +3018,7 @@
       "owner_id": "obj_seg002:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "obj_seg002",
-      "module": "asm/obj_seg002.ASM",
+      "module": "asm/rpmrand.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 179756,
@@ -3041,7 +3041,7 @@
         "_divide0_fault_ip"
       ],
       "evidence": [
-        "asm/obj_seg002.ASM",
+        "asm/rpmrand.ASM",
         "layout/manifest.json:obj_seg002:_DATA",
         "recipes/obj_seg002.json"
       ]
@@ -3050,7 +3050,7 @@
       "owner_id": "graphics_resource_runtime:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "graphics_resource_runtime",
-      "module": "asm/graphics_resource_runtime.ASM",
+      "module": "asm/gfxres.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 192704,
@@ -3130,7 +3130,7 @@
         "video_mode4_register_values"
       ],
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
+        "asm/gfxres.ASM",
         "layout/manifest.json:graphics_resource_runtime:_DATA",
         "recipes/graphics_resource_runtime.json"
       ]
@@ -3139,7 +3139,7 @@
       "owner_id": "timer_video_interrupt_runtime:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "timer_video_interrupt_runtime",
-      "module": "asm/timer_video_interrupt_runtime.ASM",
+      "module": "asm/timerint.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 194664,
@@ -3175,7 +3175,7 @@
         "_adderr"
       ],
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
+        "asm/timerint.ASM",
         "layout/manifest.json:timer_video_interrupt_runtime:_DATA",
         "recipes/timer_video_interrupt_runtime.json"
       ]
@@ -3184,7 +3184,7 @@
       "owner_id": "input_keyboard_joystick_services:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "input_keyboard_joystick_services",
-      "module": "asm/input_keyboard_joystick_services.ASM",
+      "module": "asm/kbjoy.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 194778,
@@ -3234,7 +3234,7 @@
         "joystick_flags_to_axis_table"
       ],
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
+        "asm/kbjoy.ASM",
         "layout/manifest.json:input_keyboard_joystick_services:_DATA",
         "recipes/input_keyboard_joystick_services.json"
       ]
@@ -3243,7 +3243,7 @@
       "owner_id": "keyboard_interrupt_runtime:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "keyboard_interrupt_runtime",
-      "module": "asm/keyboard_interrupt_runtime.ASM",
+      "module": "asm/kbint.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 195400,
@@ -3279,7 +3279,7 @@
         "keymap5"
       ],
       "evidence": [
-        "asm/keyboard_interrupt_runtime.ASM",
+        "asm/kbint.ASM",
         "layout/manifest.json:keyboard_interrupt_runtime:_DATA",
         "recipes/keyboard_interrupt_runtime.json"
       ]
@@ -3288,7 +3288,7 @@
       "owner_id": "keyboard_input_callbacks:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "keyboard_input_callbacks",
-      "module": "asm/keyboard_input_callbacks.ASM",
+      "module": "asm/kbcalls.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 196092,
@@ -3311,7 +3311,7 @@
         "_joystick_enabled"
       ],
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
+        "asm/kbcalls.ASM",
         "layout/manifest.json:keyboard_input_callbacks:_DATA",
         "recipes/keyboard_input_callbacks.json"
       ]
@@ -3320,7 +3320,7 @@
       "owner_id": "resource_file_io_decompression:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "resource_file_io_decompression",
-      "module": "asm/resource_file_io_decompression.ASM",
+      "module": "asm/fileio.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 196098,
@@ -3345,7 +3345,7 @@
         "aLocatesound4_4sSoundNotF"
       ],
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
+        "asm/fileio.ASM",
         "layout/manifest.json:resource_file_io_decompression:_DATA",
         "recipes/resource_file_io_decompression.json"
       ]
@@ -3354,7 +3354,7 @@
       "owner_id": "resource_memory_manager:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "resource_memory_manager",
-      "module": "asm/resource_memory_manager.ASM",
+      "module": "asm/memmgr.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 196232,
@@ -3389,7 +3389,7 @@
         "_resendptr2"
       ],
       "evidence": [
-        "asm/resource_memory_manager.ASM",
+        "asm/memmgr.ASM",
         "layout/manifest.json:resource_memory_manager:_DATA",
         "recipes/resource_memory_manager.json"
       ]
@@ -3398,7 +3398,7 @@
       "owner_id": "prerender_wheel_raster:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "prerender_wheel_raster",
-      "module": "asm/prerender_wheel_raster.ASM",
+      "module": "asm/whlrast.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197406,
@@ -3424,7 +3424,7 @@
         "_imagefunc"
       ],
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
+        "asm/whlrast.ASM",
         "layout/manifest.json:prerender_wheel_raster:_DATA",
         "recipes/prerender_wheel_raster.json"
       ]
@@ -3433,7 +3433,7 @@
       "owner_id": "textmode_debug_console:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "textmode_debug_console",
-      "module": "asm/textmode_debug_console.ASM",
+      "module": "asm/textcon.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197418,
@@ -3461,7 +3461,7 @@
         "_output_buffer"
       ],
       "evidence": [
-        "asm/textmode_debug_console.ASM",
+        "asm/textcon.ASM",
         "layout/manifest.json:textmode_debug_console:_DATA",
         "recipes/textmode_debug_console.json"
       ]
@@ -3470,7 +3470,7 @@
       "owner_id": "projection_vector_window:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "projection_vector_window",
-      "module": "asm/projection_vector_window.ASM",
+      "module": "asm/project.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197550,
@@ -3505,7 +3505,7 @@
         "_window_release_order_error_msg"
       ],
       "evidence": [
-        "asm/projection_vector_window.ASM",
+        "asm/project.ASM",
         "layout/manifest.json:projection_vector_window:_DATA",
         "recipes/projection_vector_window.json"
       ]
@@ -3514,7 +3514,7 @@
       "owner_id": "file_write_entries:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "file_write_entries",
-      "module": "asm/file_write_entries.ASM",
+      "module": "asm/filewrit.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197602,
@@ -3535,7 +3535,7 @@
         "aSFileError_0"
       ],
       "evidence": [
-        "asm/file_write_entries.ASM",
+        "asm/filewrit.ASM",
         "layout/manifest.json:file_write_entries:_DATA",
         "recipes/file_write_entries.json"
       ]
@@ -3544,7 +3544,7 @@
       "owner_id": "video_mode_restore_handlers:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "video_mode_restore_handlers",
-      "module": "asm/video_mode_restore_handlers.ASM",
+      "module": "asm/vidmode.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197618,
@@ -3566,7 +3566,7 @@
         "saved_video_control_register"
       ],
       "evidence": [
-        "asm/video_mode_restore_handlers.ASM",
+        "asm/vidmode.ASM",
         "layout/manifest.json:video_mode_restore_handlers:_DATA",
         "recipes/video_mode_restore_handlers.json"
       ]
@@ -3575,7 +3575,7 @@
       "owner_id": "math_resource_helpers:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "math_resource_helpers",
-      "module": "asm/math_resource_helpers.ASM",
+      "module": "asm/mathres.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 197620,
@@ -3596,7 +3596,7 @@
         "_sinetable"
       ],
       "evidence": [
-        "asm/math_resource_helpers.ASM",
+        "asm/mathres.ASM",
         "layout/manifest.json:math_resource_helpers:_DATA",
         "recipes/math_resource_helpers.json"
       ]
@@ -3605,7 +3605,7 @@
       "owner_id": "timer_counter_deadline_helpers:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "timer_counter_deadline_helpers",
-      "module": "asm/timer_counter_deadline_helpers.ASM",
+      "module": "asm/timerhlp.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 198134,
@@ -3630,7 +3630,7 @@
         "_line_input_font_header"
       ],
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
+        "asm/timerhlp.ASM",
         "layout/manifest.json:timer_counter_deadline_helpers:_DATA",
         "recipes/timer_counter_deadline_helpers.json"
       ]
@@ -3639,7 +3639,7 @@
       "owner_id": "font_matrix_shape_decode:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "font_matrix_shape_decode",
-      "module": "asm/font_matrix_shape_decode.ASM",
+      "module": "asm/fontmat.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 198144,
@@ -3665,7 +3665,7 @@
         "_vector_op_base_z"
       ],
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
+        "asm/fontmat.ASM",
         "layout/manifest.json:font_matrix_shape_decode:_DATA",
         "recipes/font_matrix_shape_decode.json"
       ]
@@ -3674,7 +3674,7 @@
       "owner_id": "sprite_shape_video_ops:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "sprite_shape_video_ops",
-      "module": "asm/sprite_shape_video_ops.ASM",
+      "module": "asm/sprvideo.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 199484,
@@ -3695,7 +3695,7 @@
         "_aCopyrightCUnlimitedSoftwareInc_198"
       ],
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
+        "asm/sprvideo.ASM",
         "layout/manifest.json:sprite_shape_video_ops:_DATA",
         "recipes/sprite_shape_video_ops.json"
       ]
@@ -3704,7 +3704,7 @@
       "owner_id": "patterned_lines_windows:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "patterned_lines_windows",
-      "module": "asm/patterned_lines_windows.ASM",
+      "module": "asm/patlines.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 199564,
@@ -3726,7 +3726,7 @@
         "aWindowdefOutOfRowTableSpa"
       ],
       "evidence": [
-        "asm/patterned_lines_windows.ASM",
+        "asm/patlines.ASM",
         "layout/manifest.json:patterned_lines_windows:_DATA",
         "recipes/patterned_lines_windows.json"
       ]
@@ -3735,7 +3735,7 @@
       "owner_id": "sprite_rectangle_scaled_blitters:_DATA",
       "manifest_kind": "MATCHING_ASM_DATA",
       "parent_owner": "sprite_rectangle_scaled_blitters",
-      "module": "asm/sprite_rectangle_scaled_blitters.ASM",
+      "module": "asm/scalblit.ASM",
       "segment": "_DATA",
       "target_extent": {
         "start": 199706,
@@ -3756,7 +3756,7 @@
         "source_row_fraction_accumulator"
       ],
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM",
+        "asm/scalblit.ASM",
         "layout/manifest.json:sprite_rectangle_scaled_blitters:_DATA",
         "recipes/sprite_rectangle_scaled_blitters.json"
       ]
@@ -5468,8 +5468,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_palmap_apply.ASM",
-        "asm/file_load_shape2d_palmap_apply.ASM:16",
+        "asm/shppal.ASM",
+        "asm/shppal.ASM:16",
         "recipes/file_load_shape2d_palmap_apply.json",
         "layout/manifest.json:asm_load_25f48 [0x25f48,0x25fa2)"
       ],
@@ -5495,8 +5495,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_expand.ASM",
-        "asm/file_load_shape2d_expand.ASM:18",
+        "asm/shpexpnd.ASM",
+        "asm/shpexpnd.ASM:18",
         "recipes/file_load_shape2d_expand.json",
         "layout/manifest.json:asm_load_25fa2 [0x25fa2,0x260f6)"
       ],
@@ -5522,8 +5522,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:73",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:73",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5549,8 +5549,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:84",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:84",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5576,8 +5576,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:29",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:29",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5599,10 +5599,10 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM:29",
+        "asm/shpthunk.ASM:29",
         "layout/manifest.json owner file_load_shape2d_thunks [0x23848,0x2386c)",
         "docs/porting/formats.md",
-        "asm/file_load_shape2d_thunks.ASM",
+        "asm/shpthunk.ASM",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)",
         "recipes/file_load_shape2d_thunks.json"
       ],
@@ -5626,8 +5626,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:40",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:40",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5653,8 +5653,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:51",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:51",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5680,8 +5680,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:95",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:95",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5707,8 +5707,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/file_load_shape2d_thunks.ASM",
-        "asm/file_load_shape2d_thunks.ASM:62",
+        "asm/shpthunk.ASM",
+        "asm/shpthunk.ASM:62",
         "recipes/file_load_shape2d_thunks.json",
         "layout/manifest.json:file_load_shape2d_thunks [0x23848,0x2386c)"
       ],
@@ -5734,8 +5734,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_write_entries.ASM",
-        "asm/file_write_entries.ASM:67",
+        "asm/filewrit.ASM",
+        "asm/filewrit.ASM:67",
         "recipes/file_write_entries.json",
         "layout/manifest.json:file_write_entries [0x224fa,0x225ae)",
         "layout/manifest.json:file_write_entries _DATA [0x303e2,0x303f2)"
@@ -5762,8 +5762,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/file_write_entries.ASM",
-        "asm/file_write_entries.ASM:41",
+        "asm/filewrit.ASM",
+        "asm/filewrit.ASM:41",
         "recipes/file_write_entries.json",
         "layout/manifest.json:file_write_entries [0x224fa,0x225ae)",
         "layout/manifest.json:file_write_entries _DATA [0x303e2,0x303f2)"
@@ -5790,8 +5790,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:1032",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:1032",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -5818,8 +5818,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:534",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:534",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -5846,8 +5846,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2867",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2867",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -5874,8 +5874,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2907",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2907",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -5902,8 +5902,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2933",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2933",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -5930,8 +5930,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1486",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1486",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -5958,8 +5958,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1412",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1412",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -5986,8 +5986,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:233",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:233",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6014,8 +6014,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3084",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3084",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6042,8 +6042,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3135",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3135",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6070,8 +6070,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3111",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3111",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6098,8 +6098,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3239",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3239",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6126,8 +6126,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3304",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3304",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6154,8 +6154,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2947",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2947",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6182,8 +6182,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2997",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2997",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6210,8 +6210,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2973",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2973",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6238,8 +6238,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1348",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1348",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6266,8 +6266,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1377",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1377",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6294,8 +6294,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:364",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:364",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6322,8 +6322,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1444",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1444",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6350,8 +6350,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "medium",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:348",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:348",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6378,8 +6378,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:399",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:399",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6406,8 +6406,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:418",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:418",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -6434,8 +6434,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:421",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:421",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6463,8 +6463,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:313",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:313",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6491,8 +6491,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:286",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:286",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6519,8 +6519,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:94",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:94",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6547,8 +6547,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:149",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:149",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6575,8 +6575,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:207",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:207",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6603,8 +6603,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:225",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:225",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6631,8 +6631,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:381",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:381",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6659,8 +6659,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:679",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:679",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6687,8 +6687,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:67",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:67",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6715,8 +6715,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:621",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:621",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6743,8 +6743,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:636",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:636",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6771,8 +6771,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/input_keyboard_joystick_services.ASM",
-        "asm/input_keyboard_joystick_services.ASM:659",
+        "asm/kbjoy.ASM",
+        "asm/kbjoy.ASM:659",
         "recipes/input_keyboard_joystick_services.json",
         "layout/manifest.json:input_keyboard_joystick_services [0x203d8,0x20812)",
         "layout/manifest.json:input_keyboard_joystick_services _DATA [0x2f8da,0x2fb48)"
@@ -6799,8 +6799,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:121",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:121",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6827,8 +6827,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:37",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:37",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6855,8 +6855,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:135",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:135",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6883,8 +6883,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:73",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:73",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6911,8 +6911,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:49",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:49",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6939,8 +6939,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:154",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:154",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6967,8 +6967,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:176",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:176",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -6995,8 +6995,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:109",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:109",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -7019,11 +7019,11 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM:109",
+        "asm/kbcalls.ASM:109",
         "layout/manifest.json owner keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "docs/porting/platform-boundary.md",
         "docs/porting/runtime-model.md",
-        "asm/keyboard_input_callbacks.ASM",
+        "asm/kbcalls.ASM",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -7048,8 +7048,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM",
-        "asm/keyboard_input_callbacks.ASM:92",
+        "asm/kbcalls.ASM",
+        "asm/kbcalls.ASM:92",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -7072,11 +7072,11 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/keyboard_input_callbacks.ASM:92",
+        "asm/kbcalls.ASM:92",
         "layout/manifest.json owner keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "docs/porting/platform-boundary.md",
         "docs/porting/runtime-model.md",
-        "asm/keyboard_input_callbacks.ASM",
+        "asm/kbcalls.ASM",
         "layout/manifest.json:keyboard_input_callbacks [0x20a1c,0x20ad0)",
         "recipes/keyboard_input_callbacks.json",
         "layout/manifest.json:keyboard_input_callbacks _DATA [0x2fdfc,0x2fe01)"
@@ -7101,8 +7101,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_interrupt_runtime.ASM",
-        "asm/keyboard_interrupt_runtime.ASM:122",
+        "asm/kbint.ASM",
+        "asm/kbint.ASM:122",
         "recipes/keyboard_interrupt_runtime.json",
         "layout/manifest.json:keyboard_interrupt_runtime [0x20812,0x20a1c)",
         "layout/manifest.json:keyboard_interrupt_runtime _DATA [0x2fb48,0x2fdfc)"
@@ -7129,8 +7129,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_interrupt_runtime.ASM",
-        "asm/keyboard_interrupt_runtime.ASM:326",
+        "asm/kbint.ASM",
+        "asm/kbint.ASM:326",
         "recipes/keyboard_interrupt_runtime.json",
         "layout/manifest.json:keyboard_interrupt_runtime [0x20812,0x20a1c)",
         "layout/manifest.json:keyboard_interrupt_runtime _DATA [0x2fb48,0x2fdfc)"
@@ -7157,8 +7157,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_interrupt_runtime.ASM",
-        "asm/keyboard_interrupt_runtime.ASM:73",
+        "asm/kbint.ASM",
+        "asm/kbint.ASM:73",
         "recipes/keyboard_interrupt_runtime.json",
         "layout/manifest.json:keyboard_interrupt_runtime [0x20812,0x20a1c)",
         "layout/manifest.json:keyboard_interrupt_runtime _DATA [0x2fb48,0x2fdfc)"
@@ -7185,8 +7185,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_interrupt_runtime.ASM",
-        "asm/keyboard_interrupt_runtime.ASM:271",
+        "asm/kbint.ASM",
+        "asm/kbint.ASM:271",
         "recipes/keyboard_interrupt_runtime.json",
         "layout/manifest.json:keyboard_interrupt_runtime [0x20812,0x20a1c)",
         "layout/manifest.json:keyboard_interrupt_runtime _DATA [0x2fb48,0x2fdfc)"
@@ -7213,8 +7213,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/keyboard_interrupt_runtime.ASM",
-        "asm/keyboard_interrupt_runtime.ASM:157",
+        "asm/kbint.ASM",
+        "asm/kbint.ASM:157",
         "recipes/keyboard_interrupt_runtime.json",
         "layout/manifest.json:keyboard_interrupt_runtime [0x20812,0x20a1c)",
         "layout/manifest.json:keyboard_interrupt_runtime _DATA [0x2fb48,0x2fdfc)"
@@ -7241,8 +7241,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:354",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:354",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x2264a,0x2265b)"
       ],
@@ -7268,8 +7268,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:377",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:377",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x2265b,0x226ba)"
       ],
@@ -7295,8 +7295,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:650",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:650",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x22778,0x22782)"
       ],
@@ -7322,8 +7322,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:669",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:669",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x22782,0x2279a)"
       ],
@@ -7349,8 +7349,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/file_unflip_shape2d_pes.ASM",
-        "asm/file_unflip_shape2d_pes.ASM:17",
+        "asm/unflip.ASM",
+        "asm/unflip.ASM:17",
         "recipes/file_unflip_shape2d_pes.json",
         "layout/manifest.json:load_260f6 [0x260f6,0x261bc)"
       ],
@@ -7376,7 +7376,7 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "medium",
       "evidence": [
-        "asm/kb_shift_checking1.ASM",
+        "asm/kbshift1.ASM",
         "recipes/kb_shift_checking1.json",
         "layout/manifest.json:load_26af4 [0x26af4,0x26b05)"
       ],
@@ -7402,8 +7402,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/kb_shift_checking2.ASM",
-        "asm/kb_shift_checking2.ASM:14",
+        "asm/kbshift2.ASM",
+        "asm/kbshift2.ASM:14",
         "recipes/kb_shift_checking2.json",
         "layout/manifest.json:load_26b05 [0x26b05,0x26b16)"
       ],
@@ -7429,8 +7429,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:337",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:337",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -7457,8 +7457,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:301",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:301",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -7485,8 +7485,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:113",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:113",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -7513,8 +7513,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:137",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:137",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -7541,8 +7541,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:159",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:159",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -7567,11 +7567,11 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/obj_seg002.ASM:363",
+        "asm/rpmrand.ASM:363",
         "layout/manifest.json owner obj_seg002 [0x9dc6,0x9f14)",
         "docs/porting/platform-boundary.md",
         "docs/porting/README.md",
-        "asm/obj_seg002.ASM",
+        "asm/rpmrand.ASM",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -7596,8 +7596,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/projection_vector_window.ASM",
-        "asm/projection_vector_window.ASM:385",
+        "asm/project.ASM",
+        "asm/project.ASM:385",
         "recipes/projection_vector_window.json",
         "layout/manifest.json:projection_vector_window [0x222c0,0x224fa)",
         "layout/manifest.json:projection_vector_window _DATA [0x303ae,0x303e2)"
@@ -7624,8 +7624,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:543",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:543",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7652,8 +7652,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:588",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:588",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7680,8 +7680,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:566",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:566",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7708,8 +7708,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:167",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:167",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7736,8 +7736,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:374",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:374",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7764,8 +7764,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:257",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:257",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7792,8 +7792,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:476",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:476",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7820,8 +7820,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:492",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:492",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7848,8 +7848,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:43",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:43",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7876,8 +7876,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:90",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:90",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7904,8 +7904,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:67",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:67",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7932,8 +7932,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:805",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:805",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7960,8 +7960,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:785",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:785",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -7988,8 +7988,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_file_io_decompression.ASM",
-        "asm/resource_file_io_decompression.ASM:828",
+        "asm/fileio.ASM",
+        "asm/fileio.ASM:828",
         "recipes/resource_file_io_decompression.json",
         "layout/manifest.json:resource_file_io_decompression [0x20ad0,0x2107a)",
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
@@ -8016,8 +8016,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:293",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:293",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8044,8 +8044,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:113",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:113",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8072,8 +8072,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:391",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:391",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8100,8 +8100,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:49",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:49",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8128,8 +8128,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:239",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:239",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8156,8 +8156,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:480",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:480",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8184,8 +8184,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:699",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:699",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8212,8 +8212,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:542",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:542",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8240,8 +8240,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:957",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:957",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8268,8 +8268,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:223",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:223",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8296,8 +8296,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:1072",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:1072",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8324,8 +8324,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:355",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:355",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8352,8 +8352,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:915",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:915",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8380,8 +8380,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:992",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:992",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8408,8 +8408,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:129",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:129",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8436,8 +8436,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:155",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:155",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8464,8 +8464,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:191",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:191",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8492,8 +8492,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:207",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:207",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8520,8 +8520,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:638",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:638",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8548,8 +8548,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/resource_memory_manager.ASM",
-        "asm/resource_memory_manager.ASM:783",
+        "asm/memmgr.ASM",
+        "asm/memmgr.ASM:783",
         "recipes/resource_memory_manager.json",
         "layout/manifest.json:resource_memory_manager [0x2107a,0x217b2)",
         "layout/manifest.json:resource_memory_manager _DATA [0x2fe88,0x30318)"
@@ -8576,8 +8576,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "medium",
       "evidence": [
-        "asm/textmode_debug_console.ASM",
-        "asm/textmode_debug_console.ASM:36",
+        "asm/textcon.ASM",
+        "asm/textcon.ASM:36",
         "recipes/textmode_debug_console.json",
         "layout/manifest.json:textmode_debug_console [0x2215a,0x222c0)",
         "layout/manifest.json:textmode_debug_console _DATA [0x3032a,0x303ae)"
@@ -8604,8 +8604,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "medium",
       "evidence": [
-        "asm/textmode_debug_console.ASM",
-        "asm/textmode_debug_console.ASM:57",
+        "asm/textcon.ASM",
+        "asm/textcon.ASM:57",
         "recipes/textmode_debug_console.json",
         "layout/manifest.json:textmode_debug_console [0x2215a,0x222c0)",
         "layout/manifest.json:textmode_debug_console _DATA [0x3032a,0x303ae)"
@@ -8632,8 +8632,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/textmode_debug_console.ASM",
-        "asm/textmode_debug_console.ASM:97",
+        "asm/textcon.ASM",
+        "asm/textcon.ASM:97",
         "recipes/textmode_debug_console.json",
         "layout/manifest.json:textmode_debug_console [0x2215a,0x222c0)",
         "layout/manifest.json:textmode_debug_console _DATA [0x3032a,0x303ae)"
@@ -8660,8 +8660,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/textmode_debug_console.ASM",
-        "asm/textmode_debug_console.ASM:223",
+        "asm/textcon.ASM",
+        "asm/textcon.ASM:223",
         "recipes/textmode_debug_console.json",
         "layout/manifest.json:textmode_debug_console [0x2215a,0x222c0)",
         "layout/manifest.json:textmode_debug_console _DATA [0x3032a,0x303ae)"
@@ -8688,8 +8688,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM:116",
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM:116",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)"
@@ -8716,8 +8716,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM:74",
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM:74",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)"
@@ -8744,8 +8744,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM:138",
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM:138",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)"
@@ -8772,8 +8772,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM:39",
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM:39",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)"
@@ -8800,8 +8800,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM:60",
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM:60",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)"
@@ -8828,8 +8828,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_counter_deadline_helpers.ASM",
-        "asm/timer_counter_deadline_helpers.ASM:98",
+        "asm/timerhlp.ASM",
+        "asm/timerhlp.ASM:98",
         "recipes/timer_counter_deadline_helpers.json",
         "layout/manifest.json:timer_counter_deadline_helpers [0x2279a,0x22832)",
         "layout/manifest.json:timer_counter_deadline_helpers _DATA [0x305f6,0x30600)"
@@ -8856,8 +8856,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:311",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:311",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -8885,8 +8885,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:448",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:448",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -8913,8 +8913,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:194",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:194",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -8942,8 +8942,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:556",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:556",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -8971,8 +8971,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:474",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:474",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -8999,8 +8999,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:360",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:360",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -9027,8 +9027,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:399",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:399",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -9055,8 +9055,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:223",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:223",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -9084,8 +9084,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/putpixel_line1_maybe.ASM",
-        "asm/putpixel_line1_maybe.ASM:33",
+        "asm/pixline.ASM",
+        "asm/pixline.ASM:33",
         "recipes/putpixel_line1_maybe.json",
         "layout/manifest.json:asm_load_233c0 [0x233c0,0x23578)"
       ],
@@ -9111,8 +9111,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/putpixel_single_maybe.ASM",
-        "asm/putpixel_single_maybe.ASM:15",
+        "asm/putpixel.ASM",
+        "asm/putpixel.ASM:15",
         "recipes/putpixel_single_maybe.json",
         "layout/manifest.json:asm_load_25b26 [0x25b26,0x25b76)"
       ],
@@ -9138,8 +9138,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:77",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:77",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9166,8 +9166,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:101",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:101",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9194,8 +9194,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:195",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:195",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9222,8 +9222,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:217",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:217",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9250,8 +9250,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:1366",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:1366",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9278,8 +9278,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:151",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:151",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9306,8 +9306,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:1387",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:1387",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -9334,8 +9334,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:470",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:470",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -9362,8 +9362,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:450",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:450",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -9390,8 +9390,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3358",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3358",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -9418,8 +9418,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:50",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:50",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9445,8 +9445,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:660",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:660",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9472,8 +9472,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:133",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:133",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9499,8 +9499,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:729",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:729",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9526,8 +9526,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:267",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:267",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9553,8 +9553,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:205",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:205",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9580,8 +9580,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/line_sprite_shape_render.ASM",
-        "asm/line_sprite_shape_render.ASM:169",
+        "asm/linerend.ASM",
+        "asm/linerend.ASM:169",
         "recipes/line_sprite_shape_render.json",
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
@@ -9607,8 +9607,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:289",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:289",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x2260e,0x2262e)"
       ],
@@ -9634,8 +9634,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:323",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:323",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x2262e,0x2264a)"
       ],
@@ -9661,8 +9661,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_clear_1_color.ASM",
-        "asm/sprite_clear_1_color.ASM:16",
+        "asm/sprclear.ASM",
+        "asm/sprclear.ASM:16",
         "recipes/sprite_clear_1_color.json",
         "layout/manifest.json:load_232c0 [0x232c0,0x23330)"
       ],
@@ -9688,8 +9688,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_draw_text.ASM",
-        "asm/font_draw_text.ASM:58",
+        "asm/fontdraw.ASM",
+        "asm/fontdraw.ASM:58",
         "recipes/font_draw_text.json",
         "layout/manifest.json:load_23742 [0x23742,0x23816)"
       ],
@@ -9715,8 +9715,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/video_set_mode_13h.ASM",
-        "asm/video_set_mode_13h.ASM:17",
+        "asm/mode13h.ASM",
+        "asm/mode13h.ASM:17",
         "recipes/video_set_mode_13h.json",
         "layout/manifest.json:load_23816 [0x23816,0x23848)"
       ],
@@ -9742,8 +9742,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/patterned_lines_windows.ASM",
-        "asm/patterned_lines_windows.ASM:73",
+        "asm/patlines.ASM",
+        "asm/patlines.ASM:73",
         "recipes/patterned_lines_windows.json",
         "layout/manifest.json:patterned_lines_windows [0x24b88,0x25b26)",
         "layout/manifest.json:patterned_lines_windows _DATA [0x30b8c,0x30bbc)"
@@ -9770,8 +9770,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/patterned_lines_windows.ASM",
-        "asm/patterned_lines_windows.ASM:3889",
+        "asm/patlines.ASM",
+        "asm/patlines.ASM:3889",
         "recipes/patterned_lines_windows.json",
         "layout/manifest.json:patterned_lines_windows [0x24b88,0x25b26)",
         "layout/manifest.json:patterned_lines_windows _DATA [0x30b8c,0x30bbc)"
@@ -9794,8 +9794,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/patterned_lines_windows.ASM",
-        "asm/patterned_lines_windows.ASM:151",
+        "asm/patlines.ASM",
+        "asm/patlines.ASM:151",
         "recipes/patterned_lines_windows.json",
         "layout/manifest.json:patterned_lines_windows [0x24b88,0x25b26)",
         "layout/manifest.json:patterned_lines_windows _DATA [0x30b8c,0x30bbc)"
@@ -9822,11 +9822,11 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/patterned_lines_windows.ASM:3846-3879",
+        "asm/patlines.ASM:3846-3879",
         "layout/manifest.json owner patterned_lines_windows [150408,154406)",
         "docs/porting/platform-boundary.md (cross-cutting host boundary)",
         "evidence/functions.json symbol sprite_setup1_from_arg_pointer (source_semantic_only)",
-        "asm/patterned_lines_windows.ASM",
+        "asm/patlines.ASM",
         "layout/manifest.json:patterned_lines_windows [0x24b88,0x25b26)",
         "recipes/patterned_lines_windows.json",
         "layout/manifest.json:patterned_lines_windows _DATA [0x30b8c,0x30bbc)"
@@ -9851,11 +9851,11 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM:170-376",
+        "asm/whlrast.ASM:170-376",
         "layout/manifest.json owner prerender_wheel_raster [137138,139609)",
         "docs/porting/platform-boundary.md (cross-cutting host boundary)",
         "evidence/functions.json symbol prerender_shared_setup (source_semantic_only)",
-        "asm/prerender_wheel_raster.ASM",
+        "asm/whlrast.ASM",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -9880,8 +9880,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_draw_unknown_lines_group.ASM",
-        "asm/seg012_draw_unknown_lines_group.ASM:54",
+        "asm/linedisp.ASM",
+        "asm/linedisp.ASM:54",
         "recipes/seg012_draw_unknown_lines_group.json",
         "layout/manifest.json:seg012_draw_unknown_lines_group [0x23330,0x233c0)"
       ],
@@ -9907,8 +9907,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_draw_unknown_lines_group.ASM",
-        "asm/seg012_draw_unknown_lines_group.ASM:26",
+        "asm/linedisp.ASM",
+        "asm/linedisp.ASM:26",
         "recipes/seg012_draw_unknown_lines_group.json",
         "layout/manifest.json:seg012_draw_unknown_lines_group [0x23330,0x233c0)"
       ],
@@ -9934,8 +9934,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_nopsub339fa_group.ASM",
-        "asm/seg012_nopsub339fa_group.ASM:16",
+        "asm/iconmask.ASM",
+        "asm/iconmask.ASM:16",
         "recipes/seg012_nopsub339fa_group.json",
         "layout/manifest.json:seg012_nopsub339fa_group [0x239fa,0x23ac0)"
       ],
@@ -9961,8 +9961,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_nopsub339fa_group.ASM",
-        "asm/seg012_nopsub339fa_group.ASM:53",
+        "asm/iconmask.ASM",
+        "asm/iconmask.ASM:53",
         "recipes/seg012_nopsub339fa_group.json",
         "layout/manifest.json:seg012_nopsub339fa_group [0x239fa,0x23ac0)"
       ],
@@ -9988,8 +9988,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_nopsub33ac0_group.ASM",
-        "asm/seg012_nopsub33ac0_group.ASM:17",
+        "asm/bmpmask.ASM",
+        "asm/bmpmask.ASM:17",
         "recipes/seg012_nopsub33ac0_group.json",
         "layout/manifest.json:seg012_nopsub33ac0_group [0x23ac0,0x23b98)"
       ],
@@ -10015,8 +10015,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_nopsub33ac0_group.ASM",
-        "asm/seg012_nopsub33ac0_group.ASM:53",
+        "asm/bmpmask.ASM",
+        "asm/bmpmask.ASM:53",
         "recipes/seg012_nopsub33ac0_group.json",
         "layout/manifest.json:seg012_nopsub33ac0_group [0x23ac0,0x23b98)"
       ],
@@ -10042,8 +10042,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_nopsub33ac0_group.ASM",
-        "asm/seg012_nopsub33ac0_group.ASM:88",
+        "asm/bmpmask.ASM",
+        "asm/bmpmask.ASM:88",
         "recipes/seg012_nopsub33ac0_group.json",
         "layout/manifest.json:seg012_nopsub33ac0_group [0x23ac0,0x23b98)"
       ],
@@ -10069,8 +10069,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_putimage_and_group.ASM",
-        "asm/seg012_putimage_and_group.ASM:53",
+        "asm/maskblit.ASM",
+        "asm/maskblit.ASM:53",
         "recipes/seg012_putimage_and_group.json",
         "layout/manifest.json:seg012_putimage_and_group [0x2386c,0x239fa)"
       ],
@@ -10096,8 +10096,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_putimage_and_group.ASM",
-        "asm/seg012_putimage_and_group.ASM:16",
+        "asm/maskblit.ASM",
+        "asm/maskblit.ASM:16",
         "recipes/seg012_putimage_and_group.json",
         "layout/manifest.json:seg012_putimage_and_group [0x2386c,0x239fa)"
       ],
@@ -10123,8 +10123,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_putimage_shared_group.ASM",
-        "asm/seg012_putimage_shared_group.ASM:17",
+        "asm/copyblit.ASM",
+        "asm/copyblit.ASM:17",
         "recipes/seg012_putimage_shared_group.json",
         "layout/manifest.json:seg012_putimage_shared_group [0x23b98,0x23d0c)"
       ],
@@ -10150,8 +10150,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_putimage_shared_group.ASM",
-        "asm/seg012_putimage_shared_group.ASM:87",
+        "asm/copyblit.ASM",
+        "asm/copyblit.ASM:87",
         "recipes/seg012_putimage_shared_group.json",
         "layout/manifest.json:seg012_putimage_shared_group [0x23b98,0x23d0c)"
       ],
@@ -10177,8 +10177,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_putimage_shared_group.ASM",
-        "asm/seg012_putimage_shared_group.ASM:53",
+        "asm/copyblit.ASM",
+        "asm/copyblit.ASM:53",
         "recipes/seg012_putimage_shared_group.json",
         "layout/manifest.json:seg012_putimage_shared_group [0x23b98,0x23d0c)"
       ],
@@ -10204,8 +10204,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_shape2d_extended_group.ASM",
-        "asm/seg012_shape2d_extended_group.ASM:20",
+        "asm/shp2ops.ASM",
+        "asm/shp2ops.ASM:20",
         "recipes/seg012_shape2d_extended_group.json",
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)"
       ],
@@ -10231,8 +10231,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_shape2d_extended_group.ASM",
-        "asm/seg012_shape2d_extended_group.ASM:185",
+        "asm/shp2ops.ASM",
+        "asm/shp2ops.ASM:185",
         "recipes/seg012_shape2d_extended_group.json",
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)"
       ],
@@ -10258,8 +10258,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_shape2d_extended_group.ASM",
-        "asm/seg012_shape2d_extended_group.ASM:91",
+        "asm/shp2ops.ASM",
+        "asm/shp2ops.ASM:91",
         "recipes/seg012_shape2d_extended_group.json",
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)"
       ],
@@ -10285,8 +10285,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_shape2d_extended_group.ASM",
-        "asm/seg012_shape2d_extended_group.ASM:221",
+        "asm/shp2ops.ASM",
+        "asm/shp2ops.ASM:221",
         "recipes/seg012_shape2d_extended_group.json",
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)"
       ],
@@ -10312,8 +10312,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_shape2d_extended_group.ASM",
-        "asm/seg012_shape2d_extended_group.ASM:256",
+        "asm/shp2ops.ASM",
+        "asm/shp2ops.ASM:256",
         "recipes/seg012_shape2d_extended_group.json",
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)"
       ],
@@ -10339,8 +10339,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_shape2d_extended_group.ASM",
-        "asm/seg012_shape2d_extended_group.ASM:56",
+        "asm/shp2ops.ASM",
+        "asm/shp2ops.ASM:56",
         "recipes/seg012_shape2d_extended_group.json",
         "layout/manifest.json:seg012_shape2d_extended_group [0x23dbe,0x24060)"
       ],
@@ -10366,8 +10366,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/seg012_shape_to_1_group.ASM",
-        "asm/seg012_shape_to_1_group.ASM:17",
+        "asm/shpcopy.ASM",
+        "asm/shpcopy.ASM:17",
         "recipes/seg012_shape_to_1_group.json",
         "layout/manifest.json:seg012_shape_to_1_group [0x23d0c,0x23dbe)"
       ],
@@ -10393,8 +10393,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_shape_to_1_group.ASM",
-        "asm/seg012_shape_to_1_group.ASM:53",
+        "asm/shpcopy.ASM",
+        "asm/shpcopy.ASM:53",
         "recipes/seg012_shape_to_1_group.json",
         "layout/manifest.json:seg012_shape_to_1_group [0x23d0c,0x23dbe)"
       ],
@@ -10420,8 +10420,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_shape_to_1_group.ASM",
-        "asm/seg012_shape_to_1_group.ASM:87",
+        "asm/shpcopy.ASM",
+        "asm/shpcopy.ASM:87",
         "recipes/seg012_shape_to_1_group.json",
         "layout/manifest.json:seg012_shape_to_1_group [0x23d0c,0x23dbe)"
       ],
@@ -10447,8 +10447,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_sprite_1_unk_group.ASM",
-        "asm/seg012_sprite_1_unk_group.ASM:77",
+        "asm/sprrects.ASM",
+        "asm/sprrects.ASM:77",
         "recipes/seg012_sprite_1_unk_group.json",
         "layout/manifest.json:seg012_sprite_1_unk_group [0x23578,0x23742)"
       ],
@@ -10474,8 +10474,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_sprite_1_unk_group.ASM",
-        "asm/seg012_sprite_1_unk_group.ASM:17",
+        "asm/sprrects.ASM",
+        "asm/sprrects.ASM:17",
         "recipes/seg012_sprite_1_unk_group.json",
         "layout/manifest.json:seg012_sprite_1_unk_group [0x23578,0x23742)"
       ],
@@ -10501,8 +10501,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/seg012_sprite_1_unk_group.ASM",
-        "asm/seg012_sprite_1_unk_group.ASM:191",
+        "asm/sprrects.ASM",
+        "asm/sprrects.ASM:191",
         "recipes/seg012_sprite_1_unk_group.json",
         "layout/manifest.json:seg012_sprite_1_unk_group [0x23578,0x23742)"
       ],
@@ -10528,11 +10528,11 @@
       "confidence": "low; entry appears in a family inventory but its end boundary is not cross-verified",
       "boundary_status": "public entry listed; complete routine extent unresolved",
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM:713-764",
+        "asm/scalblit.ASM:713-764",
         "layout/manifest.json owner sprite_rectangle_scaled_blitters [154486,155464)",
         "docs/porting/platform-boundary.md (cross-cutting host boundary)",
         "evidence/functions.json symbol loc_35ED9 (source_semantic_only)",
-        "asm/sprite_rectangle_scaled_blitters.ASM",
+        "asm/scalblit.ASM",
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)"
@@ -10557,8 +10557,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM",
-        "asm/sprite_rectangle_scaled_blitters.ASM:47",
+        "asm/scalblit.ASM",
+        "asm/scalblit.ASM:47",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)"
@@ -10585,8 +10585,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM",
-        "asm/sprite_rectangle_scaled_blitters.ASM:175",
+        "asm/scalblit.ASM",
+        "asm/scalblit.ASM:175",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)"
@@ -10613,8 +10613,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM",
-        "asm/sprite_rectangle_scaled_blitters.ASM:509",
+        "asm/scalblit.ASM",
+        "asm/scalblit.ASM:509",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)"
@@ -10641,8 +10641,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM",
-        "asm/sprite_rectangle_scaled_blitters.ASM:540",
+        "asm/scalblit.ASM",
+        "asm/scalblit.ASM:540",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)"
@@ -10669,8 +10669,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/sprite_rectangle_scaled_blitters.ASM",
-        "asm/sprite_rectangle_scaled_blitters.ASM:578",
+        "asm/scalblit.ASM",
+        "asm/scalblit.ASM:578",
         "recipes/sprite_rectangle_scaled_blitters.json",
         "layout/manifest.json:sprite_rectangle_scaled_blitters [0x25b76,0x25f48)",
         "layout/manifest.json:sprite_rectangle_scaled_blitters _DATA [0x30c1a,0x30c1c)"
@@ -10697,8 +10697,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:334",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:334",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10725,8 +10725,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:475",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:475",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10753,8 +10753,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:115",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:115",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10781,8 +10781,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:78",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:78",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10809,8 +10809,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:587",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:587",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10837,8 +10837,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:790",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:790",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10865,8 +10865,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:882",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:882",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10893,8 +10893,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/sprite_shape_video_ops.ASM",
-        "asm/sprite_shape_video_ops.ASM:1014",
+        "asm/sprvideo.ASM",
+        "asm/sprvideo.ASM:1014",
         "recipes/sprite_shape_video_ops.json",
         "layout/manifest.json:sprite_shape_video_ops [0x24060,0x246bc)",
         "layout/manifest.json:sprite_shape_video_ops _DATA [0x30b3c,0x30b8c)"
@@ -10921,8 +10921,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:137",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:137",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -10949,8 +10949,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/vector_sphere_sprite_ops.ASM",
-        "asm/vector_sphere_sprite_ops.ASM:303",
+        "asm/vecspr.ASM",
+        "asm/vecspr.ASM:303",
         "recipes/vector_sphere_sprite_ops.json",
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],
@@ -10976,8 +10976,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/vector_sphere_sprite_ops.ASM",
-        "asm/vector_sphere_sprite_ops.ASM:365",
+        "asm/vecspr.ASM",
+        "asm/vecspr.ASM:365",
         "recipes/vector_sphere_sprite_ops.json",
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],
@@ -11003,8 +11003,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/vector_sphere_sprite_ops.ASM",
-        "asm/vector_sphere_sprite_ops.ASM:397",
+        "asm/vecspr.ASM",
+        "asm/vecspr.ASM:397",
         "recipes/vector_sphere_sprite_ops.json",
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],
@@ -11030,8 +11030,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/video_mode_restore_handlers.ASM",
-        "asm/video_mode_restore_handlers.ASM:32",
+        "asm/vidmode.ASM",
+        "asm/vidmode.ASM:32",
         "recipes/video_mode_restore_handlers.json",
         "layout/manifest.json:video_mode_restore_handlers [0x225ae,0x2260e)",
         "layout/manifest.json:video_mode_restore_handlers _DATA [0x303f2,0x303f4)"
@@ -11058,8 +11058,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "high",
       "evidence": [
-        "asm/video_mode_restore_handlers.ASM",
-        "asm/video_mode_restore_handlers.ASM:62",
+        "asm/vidmode.ASM",
+        "asm/vidmode.ASM:62",
         "recipes/video_mode_restore_handlers.json",
         "layout/manifest.json:video_mode_restore_handlers [0x225ae,0x2260e)",
         "layout/manifest.json:video_mode_restore_handlers _DATA [0x303f2,0x303f4)"
@@ -11082,8 +11082,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:467",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:467",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -11110,8 +11110,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:241",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:241",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -11138,8 +11138,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/font_matrix_shape_decode.ASM",
-        "asm/font_matrix_shape_decode.ASM:387",
+        "asm/fontmat.ASM",
+        "asm/fontmat.ASM:387",
         "recipes/font_matrix_shape_decode.json",
         "layout/manifest.json:font_matrix_shape_decode [0x22832,0x23006)",
         "layout/manifest.json:font_matrix_shape_decode _DATA [0x30600,0x30604)"
@@ -11166,8 +11166,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:3328",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:3328",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -11194,8 +11194,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1554",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1554",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -11223,8 +11223,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:259",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:259",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -11251,8 +11251,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:2824",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:2824",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -11279,8 +11279,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/graphics_resource_runtime.ASM",
-        "asm/graphics_resource_runtime.ASM:1508",
+        "asm/gfxres.ASM",
+        "asm/gfxres.ASM:1508",
         "recipes/graphics_resource_runtime.json",
         "layout/manifest.json:graphics_resource_runtime [0x1ea2a,0x200b6)",
         "layout/manifest.json:graphics_resource_runtime _DATA [0x2f0c0,0x2f868)"
@@ -11307,8 +11307,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium-low",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:434",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:434",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x226ba,0x226de)"
       ],
@@ -11335,8 +11335,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:542",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:542",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x22738,0x22746)"
       ],
@@ -11362,8 +11362,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:561",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:561",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x22746,0x22751)"
       ],
@@ -11389,8 +11389,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:583",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:583",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x22751,0x2275c)"
       ],
@@ -11416,8 +11416,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:605",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:605",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x2275c,0x2276a)"
       ],
@@ -11443,8 +11443,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:624",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:624",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x2276a,0x22778)"
       ],
@@ -11470,8 +11470,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:257",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:257",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -11498,8 +11498,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:224",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:224",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -11526,8 +11526,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:186",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:186",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -11554,8 +11554,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:71",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:71",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -11582,8 +11582,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/obj_seg002.ASM",
-        "asm/obj_seg002.ASM:36",
+        "asm/rpmrand.ASM",
+        "asm/rpmrand.ASM:36",
         "recipes/obj_seg002.json",
         "layout/manifest.json:obj_seg002 [0x09dc6,0x09f14)",
         "layout/manifest.json:obj_seg002 _DATA [0x2be2c,0x2be34)"
@@ -11610,8 +11610,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:1112",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:1112",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11638,8 +11638,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:1155",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:1155",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11666,8 +11666,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:69",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:69",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11694,8 +11694,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:89",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:89",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11722,8 +11722,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:385",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:385",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11750,8 +11750,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:471",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:471",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11778,8 +11778,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:607",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:607",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11806,8 +11806,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:137",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:137",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11834,8 +11834,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/prerender_wheel_raster.ASM",
-        "asm/prerender_wheel_raster.ASM:116",
+        "asm/whlrast.ASM",
+        "asm/whlrast.ASM:116",
         "recipes/prerender_wheel_raster.json",
         "layout/manifest.json:prerender_wheel_raster [0x217b2,0x22159)",
         "layout/manifest.json:prerender_wheel_raster _DATA [0x3031e,0x3032a)"
@@ -11862,8 +11862,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/projection_vector_window.ASM",
-        "asm/projection_vector_window.ASM:91",
+        "asm/project.ASM",
+        "asm/project.ASM:91",
         "recipes/projection_vector_window.json",
         "layout/manifest.json:projection_vector_window [0x222c0,0x224fa)",
         "layout/manifest.json:projection_vector_window _DATA [0x303ae,0x303e2)"
@@ -11890,8 +11890,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/projection_vector_window.ASM",
-        "asm/projection_vector_window.ASM:117",
+        "asm/project.ASM",
+        "asm/project.ASM:117",
         "recipes/projection_vector_window.json",
         "layout/manifest.json:projection_vector_window [0x222c0,0x224fa)",
         "layout/manifest.json:projection_vector_window _DATA [0x303ae,0x303e2)"
@@ -11918,8 +11918,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/projection_vector_window.ASM",
-        "asm/projection_vector_window.ASM:142",
+        "asm/project.ASM",
+        "asm/project.ASM:142",
         "recipes/projection_vector_window.json",
         "layout/manifest.json:projection_vector_window [0x222c0,0x224fa)",
         "layout/manifest.json:projection_vector_window _DATA [0x303ae,0x303e2)"
@@ -11946,8 +11946,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/projection_vector_window.ASM",
-        "asm/projection_vector_window.ASM:254",
+        "asm/project.ASM",
+        "asm/project.ASM:254",
         "recipes/projection_vector_window.json",
         "layout/manifest.json:projection_vector_window [0x222c0,0x224fa)",
         "layout/manifest.json:projection_vector_window _DATA [0x303ae,0x303e2)"
@@ -11974,8 +11974,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:518",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:518",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x226de,0x22738)",
         "layout/manifest.json:math_resource_helpers _DATA [0x303f4,0x305f6)"
@@ -12002,8 +12002,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/math_resource_helpers.ASM",
-        "asm/math_resource_helpers.ASM:464",
+        "asm/mathres.ASM",
+        "asm/mathres.ASM:464",
         "recipes/math_resource_helpers.json",
         "layout/manifest.json:math_resource_helpers [0x226de,0x22738)",
         "layout/manifest.json:math_resource_helpers _DATA [0x303f4,0x305f6)"
@@ -12030,8 +12030,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/timer_video_interrupt_runtime.ASM",
-        "asm/timer_video_interrupt_runtime.ASM:67",
+        "asm/timerint.ASM",
+        "asm/timerint.ASM:67",
         "recipes/timer_video_interrupt_runtime.json",
         "layout/manifest.json:timer_video_interrupt_runtime [0x200b6,0x203d8)",
         "layout/manifest.json:timer_video_interrupt_runtime _DATA [0x2f868,0x2f8da)"
@@ -12058,8 +12058,8 @@
       "translation_before_first_link": "UNRESOLVED: no direct caller lead; indirect/far callback entry remains possible",
       "confidence": "medium",
       "evidence": [
-        "asm/vector_sphere_sprite_ops.ASM",
-        "asm/vector_sphere_sprite_ops.ASM:32",
+        "asm/vecspr.ASM",
+        "asm/vecspr.ASM:32",
         "recipes/vector_sphere_sprite_ops.json",
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],
@@ -12085,8 +12085,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "high",
       "evidence": [
-        "asm/vector_sphere_sprite_ops.ASM",
-        "asm/vector_sphere_sprite_ops.ASM:114",
+        "asm/vecspr.ASM",
+        "asm/vecspr.ASM:114",
         "recipes/vector_sphere_sprite_ops.json",
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],
@@ -12112,8 +12112,8 @@
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
       "confidence": "medium-low",
       "evidence": [
-        "asm/vector_sphere_sprite_ops.ASM",
-        "asm/vector_sphere_sprite_ops.ASM:53",
+        "asm/vecspr.ASM",
+        "asm/vecspr.ASM:53",
         "recipes/vector_sphere_sprite_ops.json",
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],

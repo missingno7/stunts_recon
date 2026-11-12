@@ -21,7 +21,7 @@ static const uint8_t atantable[257] = {
 };
 
 /* _atantable[0..256] and the register-width division/quadrant dispatch in
-   asm/graphics_resource_runtime.ASM::_polang. */
+   asm/gfxres.ASM::_polang. */
 
 static uint16_t negate_word(uint16_t value)
 {
@@ -108,7 +108,7 @@ static uint16_t polradius2d_divide(uint16_t component, uint16_t scale)
     return (uint16_t)quotient;
 }
 
-/* Semantic translation of asm/timer_video_interrupt_runtime.ASM. Its `polang`, sinfast, and
+/* Semantic translation of asm/timerint.ASM. Its `polang`, sinfast, and
    cosfast calls retain the recovered word ABI; context.py does not currently
    index this name as a strict historical function extent. */
 uint16_t inthypot(int16_t z_arg, int16_t y_arg)

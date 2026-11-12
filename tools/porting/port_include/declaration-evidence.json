@@ -230,8 +230,8 @@
       "evidence": [
         "evidence/functions.json:load_190bc",
         "recipes/obj_seg008.json",
-        "src/obj_seg000.c:115,1328,2774",
-        "src/obj_seg008.c:1180"
+        "src/frontend.c:115,1328,2774",
+        "src/uires.c:1180"
       ]
     },
     "draw3dbutton": {
@@ -446,8 +446,8 @@
       "evidence": [
         "evidence/functions.json:load_20f9d",
         "recipes/obj_seg012.json",
-        "src/obj_seg000.c:716,2412-2418,2531-2650",
-        "src/obj_seg004.c:993,1026-1101"
+        "src/frontend.c:716,2412-2418,2531-2650",
+        "src/trkscene.c:993,1026-1101"
       ]
     },
     "purgememory": {
@@ -722,8 +722,8 @@
       "evidence": [
         "evidence/functions.json:load_19a86",
         "recipes/obj_seg008.json",
-        "src/obj_seg000.c:1150",
-        "src/obj_seg008.c:1548"
+        "src/frontend.c:1150",
+        "src/uires.c:1548"
       ]
     },
     "debug_printf_text": {
@@ -1184,8 +1184,8 @@
       "evidence": [
         "evidence/functions.json:load_190bc",
         "recipes/obj_seg008.json",
-        "src/obj_seg000.c:115,1328,2774",
-        "src/obj_seg008.c:1180"
+        "src/frontend.c:115,1328,2774",
+        "src/uires.c:1180"
       ]
     },
     "doshock": {
@@ -2047,8 +2047,8 @@
       "evidence": [
         "evidence/functions.json:load_20f9d",
         "recipes/obj_seg012.json",
-        "src/obj_seg000.c:716,2412-2418,2531-2650",
-        "src/obj_seg004.c:993,1026-1101"
+        "src/frontend.c:716,2412-2418,2531-2650",
+        "src/trkscene.c:993,1026-1101"
       ]
     },
     "locateshapez": {
@@ -2546,7 +2546,7 @@
       "evidence": [
         "evidence/functions.json:load_29e54",
         "recipes/obj_seg031.json",
-        "src/obj_seg000.c:1514,1665,1885-1906"
+        "src/frontend.c:1514,1665,1885-1906"
       ]
     },
     "moveopponent": {
@@ -2796,8 +2796,8 @@
       "evidence": [
         "evidence/functions.json:load_19a86",
         "recipes/obj_seg008.json",
-        "src/obj_seg000.c:1150",
-        "src/obj_seg008.c:1548"
+        "src/frontend.c:1150",
+        "src/uires.c:1548"
       ]
     },
     "get_pstring": {
@@ -2979,8 +2979,8 @@
       "evidence": [
         "evidence/functions.json:load_29050",
         "recipes/obj_seg028.json",
-        "src/obj_seg028.c:489",
-        "src/obj_seg007.c:52,158"
+        "src/audioply.c:489",
+        "src/audioeng.c:52,158"
       ]
     },
     "setbiosticks": {
@@ -3780,7 +3780,7 @@
     },
     "nullsub_2": {
       "prototype": "void far nullsub_2(void far *resource, int16_t selector);",
-      "evidence": "evidence/functions.json:load_29e54; recipes/obj_seg031.json; accepted call sites in src/obj_seg000.c"
+      "evidence": "evidence/functions.json:load_29e54; recipes/obj_seg031.json; accepted call sites in src/frontend.c"
     },
     "savereplay": {
       "prototype": "int16_t far savereplay(const char *filename);",

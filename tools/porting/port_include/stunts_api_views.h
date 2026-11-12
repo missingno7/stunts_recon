@@ -5,7 +5,7 @@
 /* These adapters are for the host probe's strict-central overlay only. */
 #if defined(PORT_BUILD) && defined(STUNTS_PROBE_STRICT_CENTRAL)
 
-#if defined(STUNTS_TU_obj_seg000)
+#if defined(STUNTS_TU_frontend)
 /* Port dispatch boundary. The machine contract is three source arguments over four stack words; see declaration-evidence.json. */
 extern void *stunts_port_read_file_with_retry_dispatch(I16 type, I8 *name, void *destination);
 static inline void *stunts_port_read_file_with_retry_view(I16 type, I8 *name, void *destination)
@@ -26,7 +26,7 @@ static inline struct SHAPE2D *stunts_port_locate_shape_fatal_shape_view(void *re
 }
 #endif
 
-#if defined(STUNTS_TU_obj_seg008)
+#if defined(STUNTS_TU_uires)
 static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 second, I16 third, I32 final_words)
 {
     /* Split the legacy caller's final I32 into the definition's last two words. */
@@ -36,7 +36,7 @@ static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 sec
 }
 #endif
 
-#if defined(STUNTS_TU_obj_seg032_group)
+#if defined(STUNTS_TU_lineedit)
 static inline void stunts_port_timer_copy_counter_split_view(I16 low_word, I16 high_word)
 {
     /* load_227c0 adds BP+6/BP+8 into DX:AX; preserve that two-word input. */
@@ -44,7 +44,7 @@ static inline void stunts_port_timer_copy_counter_split_view(I16 low_word, I16 h
 }
 #endif
 
-#if defined(STUNTS_TU_obj_seg028)
+#if defined(STUNTS_TU_audioply)
 extern void *stunts_port_resolve_far_data_pointer(U16 offset, U16 segment);
 static inline void stunts_port_audio_init_chunk_7_view(I16 first, I16 last,
                                                         U16 resource_offset, U16 resource_segment,
@@ -58,7 +58,7 @@ static inline void stunts_port_audio_init_chunk_7_view(I16 first, I16 last,
 }
 #endif
 
-#if defined(STUNTS_TU_obj_seg007)
+#if defined(STUNTS_TU_audioeng)
 /* PORT_BUILD host dispatch policy. The historical I16 result is proven and
    consumed by obj_seg007; the host implementation remains an integration hook. */
 extern I16 stunts_port_send_audio_stop_event_dispatch(U16 rate, I16 chunk_index);
@@ -68,10 +68,10 @@ static inline I16 stunts_port_send_audio_stop_event_value_view(U16 rate, I16 chu
 }
 #endif
 
-#if defined(STUNTS_TU_obj_seg001_complete)
-#define plan_memres (&plan_memres) /* PORT_BUILD view: one PLANE object; source use at obj_seg001_complete.c:3101. */
+#if defined(STUNTS_TU_carsim)
+#define plan_memres (&plan_memres) /* PORT_BUILD view: one PLANE object; source use at carsim.c:3101. */
 #endif
-#if defined(STUNTS_TU_obj_seg004)
+#if defined(STUNTS_TU_trkscene)
 #define aCar0 ((I8 (*)[5])(&aCar0)) /* PORT_BUILD byte-matrix view of the 76-byte aggregate; see aggregate map. */
 #endif
 

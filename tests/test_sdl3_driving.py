@@ -104,11 +104,11 @@ def assert_build_ready() -> None:
     # A complete report is only useful when it postdates the code paths this
     # smoke test exercises. The report is written after the executable links.
     required_inputs = (
-        ROOT / "src" / "track_constants_module.c",
-        ROOT / "src" / "obj_seg003.c",
-        ROOT / "src" / "obj_seg004.c",
-        ROOT / "src" / "obj_seg005.c",
-        ROOT / "src" / "obj_seg001_complete.c",
+        ROOT / "src" / "trkconst.c",
+        ROOT / "src" / "render.c",
+        ROOT / "src" / "trkscene.c",
+        ROOT / "src" / "race.c",
+        ROOT / "src" / "carsim.c",
         ROOT / "port" / "main.c",
         ROOT / "port" / "diagnostics.c",
         ROOT / "port" / "config.c",

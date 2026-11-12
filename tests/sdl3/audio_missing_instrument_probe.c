@@ -15,7 +15,7 @@
 #error "the Python regression supplies generated overlay record layouts"
 #endif
 
-/* The layouts are extracted verbatim from generated obj_seg028.c. */
+/* The layouts are extracted verbatim from generated audioply.c. */
 /* GENERATED_AUDIO_TYPES */
 
 struct AudioChunk audiochunktable[24];

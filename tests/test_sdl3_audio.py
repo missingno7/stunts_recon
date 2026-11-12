@@ -223,9 +223,9 @@ class SDL3AudioTests(unittest.TestCase):
         self.assertNotIn("KEYS", {chunk.name.upper() for chunk in voices.chunks})
 
         overlay_dir = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "src"
-        overlay_027 = overlay_dir / "obj_seg027.c"
-        overlay_028 = overlay_dir / "obj_seg028.c"
-        overlay_029 = overlay_dir / "obj_seg029.c"
+        overlay_027 = overlay_dir / "audiores.c"
+        overlay_028 = overlay_dir / "audioply.c"
+        overlay_029 = overlay_dir / "audiochk.c"
         if not all(path.is_file() for path in (overlay_027, overlay_028, overlay_029)):
             self.skipTest("build the SDL3 host overlay to execute its generated audio functions")
         compiler = host_compiler()

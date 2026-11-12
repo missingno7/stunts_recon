@@ -6,7 +6,7 @@
       "allocated_extent_bytes": 18,
       "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
       "evidence": [
-        "src/obj_seg005.c:1915",
+        "src/race.c:1915",
         "recipes/obj_seg005.json",
         "layout/manifest.json owner obj_seg005 _DATA",
         "layout/oracle.lock.json:locked obj_seg005 contribution"
@@ -30,7 +30,7 @@
       "allocated_extent_bytes": 18,
       "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
       "evidence": [
-        "src/obj_seg005.c:1916",
+        "src/race.c:1916",
         "recipes/obj_seg005.json",
         "layout/manifest.json owner obj_seg005 _DATA",
         "layout/oracle.lock.json:locked obj_seg005 contribution"
@@ -54,7 +54,7 @@
       "allocated_extent_bytes": 18,
       "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
       "evidence": [
-        "src/obj_seg005.c:1917",
+        "src/race.c:1917",
         "recipes/obj_seg005.json",
         "layout/manifest.json owner obj_seg005 _DATA",
         "layout/oracle.lock.json:locked obj_seg005 contribution"
@@ -78,7 +78,7 @@
       "allocated_extent_bytes": 18,
       "allocation_basis": "accepted obj_seg005 array definition paired with its full-OMF-identical locked contribution; source initializer and target payload agree, and the next start is 18 bytes later",
       "evidence": [
-        "src/obj_seg005.c:1918",
+        "src/race.c:1918",
         "recipes/obj_seg005.json",
         "layout/manifest.json owner obj_seg005 _DATA",
         "layout/oracle.lock.json:locked obj_seg005 contribution"
@@ -102,7 +102,7 @@
       "allocated_extent_bytes": 4,
       "allocation_basis": "accepted initialized C array definition paired with exact locked obj_seg027 contribution",
       "evidence": [
-        "src/obj_seg027.c:audio_driver_volume_command[4]",
+        "src/audiores.c:audio_driver_volume_command[4]",
         "recipes/obj_seg027.json",
         "layout/manifest.json:obj_seg027 _DATA interval"
       ],
@@ -113,7 +113,7 @@
       "allocated_extent_bytes": 9,
       "allocation_basis": "accepted static C array definition paired with exact locked obj_seg005 contribution",
       "evidence": [
-        "src/obj_seg005.c:1871",
+        "src/race.c:1871",
         "recipes/obj_seg005.json",
         "layout/manifest.json:obj_seg005 contribution"
       ],
@@ -124,7 +124,7 @@
       "allocated_extent_bytes": 12,
       "allocation_basis": "accepted static C struct definition paired with exact locked obj_seg028 contribution and the accepted AUDIOEVENT layout",
       "evidence": [
-        "src/obj_seg028.c:audio_event_send_buffer",
+        "src/audioply.c:audio_event_send_buffer",
         "recipes/obj_seg028.json",
         "layout/manifest.json:obj_seg028 contribution",
         "tools/porting/port_include/stunts_structs.h:AudioEvent size"
@@ -137,7 +137,7 @@
       "allocation_basis": "LINK communal declaration names a seven-element short array; exact communal extent is independently recorded in layout/manifest.json",
       "evidence": [
         "layout/manifest.json:bss_owners c_common communal scrorder_idxs",
-        "src/obj_seg000.c:scrorder_idxs[7]"
+        "src/frontend.c:scrorder_idxs[7]"
       ],
       "source_view": "scrorder_idxs[7]"
     },
@@ -147,7 +147,7 @@
       "allocation_basis": "LINK communal declaration names an 80-byte char array; exact communal extent is independently recorded in layout/manifest.json",
       "evidence": [
         "layout/manifest.json:bss_owners c_common communal resbuftext",
-        "src/obj_seg000.c:resbuftext[80]"
+        "src/frontend.c:resbuftext[80]"
       ],
       "source_view": "resbuftext[80]"
     },
@@ -157,7 +157,7 @@
       "allocation_basis": "LINK communal declaration names a five-element int array; exact communal extent is independently recorded in layout/manifest.json",
       "evidence": [
         "layout/manifest.json:bss_owners c_common communal g_mouseyposstacktable",
-        "src/obj_seg008.c:g_mouseyposstacktable[5]"
+        "src/uires.c:g_mouseyposstacktable[5]"
       ],
       "source_view": "g_mouseyposstacktable[5]"
     }
