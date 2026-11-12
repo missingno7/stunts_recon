@@ -123,12 +123,34 @@ def nonsemantic_records(compiled, debug_policy=None):
     return result
 
 
-def compare_objects(before, after, mapping, *, debug_policy=None, declarations=False):
+def compare_objects(before, after, mapping, *, debug_policy=None, declarations=False,
+                    communal_additions=None):
     # These objects have passed the strict production decoder, with no unknown
     # OMF records or unsupported fixups. Decoded bytes and fixups replace record
     # encoding equality, not proof coverage. Non-semantic records stay exact.
     old_view, new_view = object_view(before[0], mapping), object_view(after[0])
     old_records, new_records = declaration_records(before[1], mapping), declaration_records(after[1], {})
+    if communal_additions:
+        # Caller validates these exact additions against accepted storage and
+        # MUST prove the executable and real BSS placement. Existing records,
+        # payloads, extents and named fixups retain their complete obligations.
+        expected = [{'name': n, 'kind': 'near', 'type_index': 0, 'length': size}
+                    for n, size in sorted(communal_additions.items())]
+        actual = [c for c in new_view['communals'] if c['name'] in communal_additions]
+        require(sorted(actual, key=lambda c: c['name']) == expected, 'Added COMDEF records differ')
+        require(not any(c['name'] in communal_additions for c in old_view['communals']),
+                'Added COMDEF already defined by this unit')
+        new_view['communals'] = [c for c in new_view['communals'] if c['name'] not in communal_additions]
+        for name in communal_additions:
+            prior = [e for e in old_view['externals'] if e[0] == name]
+            require(all(scope == 'external' for _, scope in prior), 'Added communal has local scope')
+            require(all(r[6] == 0 for r in old_records if r[0] == 0x8C and r[4] == name),
+                    'Added communal changes its external type')
+            entries = [e for e in new_view['externals'] if e[0] == name]
+            require(entries == [(name, 'communal')], 'Added communal external scope differs')
+            new_view['externals'] = [e for e in new_view['externals'] if e[0] != name] + prior
+        new_view['externals'].sort(key=lambda v: json.dumps(v, sort_keys=True))
+        old_records = [r for r in old_records if not (r[0] == 0x8C and r[4] in communal_additions)]
     if declarations:
         # A conventional API header can declare unused services. Their EXTDEFs
         # may be added/removed; every emitted fixup still resolves by name and

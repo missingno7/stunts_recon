@@ -18,6 +18,16 @@ module rows use kind=asm-module, old/new owner IDs, source/new_source paths.
 Moves update full path references in recipes/manifest/tools/tests/layout/evidence;
 the oracle lock and port side are immutable to this tool. Inventory member and
 mapped_target names stay historical facts. Reports list old-name port occurrences.
+
+--with-declarations OWNER=CANDIDATE stages a C source (in current spellings)
+and the requested renames atomically; this mode cannot bisect. A unit may gain
+only tentative definitions of existing accepted communals of the same name and
+size with an accepted declarer elsewhere. No new communal, size change or lost
+declarer is permitted. Every segment byte, extent, declaration and named fixup
+otherwise stays exact under the name map. Publication additionally requires
+HYBRID_EXACT, real-link BSS PLACED at every accepted address and historical
+BUILT_EXACT with unchanged module selection. Manifest declarers are derived
+from linked objects; provisional compilation-derived lists must agree with them.
 """
 from __future__ import annotations
 
@@ -204,7 +214,8 @@ def make_changes(files, rows):
             # Only decorated OMF names globally: plain names often identify
             # immutable inventory facts (recipe members and mapped_target).
             document = json.loads(raw)
-            updated = renamed(document, {**omf, **moves})
+            historical = name.startswith(('evidence/', 'tests/fixtures/')) or name == 'layout/function-evidence.json'
+            updated = renamed(document, {**({} if historical else omf), **moves})
             updated = renamed_owners(updated, owners)
             if name == 'layout/code-symbols.json':
                 for old, new in omf.items():
@@ -767,13 +778,93 @@ class RegistryFailure(ValueError):
     """Candidate names do not preserve the repository's grounded registry."""
 
 
+def allowed_communal_additions(before, after, mapping, manifest, owners):
+    """Validate only monotone, same-size additions to already accepted storage."""
+    old = {c['name']: c for c in renamed(before.communals, mapping)}
+    new = {c['name']: c for c in after.communals}
+    require(old.keys() <= new.keys(), 'Cannot drop a communal declarer')
+    require(all(new[n] == c for n, c in old.items()), 'Cannot change an existing COMDEF size or kind')
+    accepted = {c['name']: c for row in manifest.get('bss_owners', [])
+                if row.get('kind') == 'LINK_COMMUNAL' for c in row['communals']}
+    accepted_owners = {o['id'] for o in manifest['owners'] if o['kind'] != 'UNRESOLVED_RAW'}
+    additions = {}
+    for name in new.keys() - old.keys():
+        cm = new[name]
+        require(name in accepted, 'Cannot introduce a new communal: ' + name)
+        item = accepted[name]
+        require(cm == {'name': name, 'kind': 'near', 'type_index': 0, 'length': item['size']},
+                'Added communal size or kind differs: ' + name)
+        require(bool((set(item['declarers']) - set(owners)) & accepted_owners),
+                'Added communal needs an accepted declarer elsewhere: ' + name)
+        additions[name] = item['size']
+    return additions
+
+
+def linked_communal_declarers(report_path):
+    """Read actual explicit BSS LINK inputs, resolving unit IDs to source owners."""
+    from omf import OmfReader
+    report_path = Path(report_path)
+    report = json.loads(report_path.read_bytes())
+    owners = {}
+    for row in report['accepted_objects']:
+        owners.setdefault(row['unit'], set()).add(row['piece'])
+    link = report_path.parent / 'link'
+    declared = {}
+    for row in json.loads((link / 'objects.json').read_bytes()):
+        raw = (link / row['file']).read_bytes()
+        require(hashlib.sha256(raw).hexdigest() == row['sha256'], 'Linked object identity differs')
+        obj = OmfReader(communals=True).read(raw)
+        if not obj.communals:
+            continue
+        providers = owners.get(row['unit'], set())
+        require(len(providers) == 1 and None not in providers, 'Ambiguous linked communal provider')
+        owner = next(iter(providers))
+        for cm in obj.communals:
+            declared.setdefault(cm['name'], []).append((owner, cm['length']))
+    return declared
+
+
+def manifest_with_linked_declarers(manifest, declared):
+    """Only declarer lists are derived; names, sizes, addresses and bases stay fixed."""
+    import copy
+    result = copy.deepcopy(manifest)
+    items = [c for row in result.get('bss_owners', []) if row['kind'] == 'LINK_COMMUNAL'
+             for c in row['communals']]
+    require(set(declared) == {c['name'] for c in items}, 'Linked communal inventory differs')
+    for item in items:
+        rows = declared[item['name']]
+        require(rows and max(s for _, s in rows) == item['size'], 'Linked communal size differs')
+        providers = sorted({o for o, _ in rows})
+        require(set(item['declarers']) <= set(providers), 'Cannot drop a linked declarer')
+        item['declarers'] = providers
+    return result
+
+
+def declaration_candidates(files, values):
+    active = active_recipes(files)
+    sources = {}
+    for value in values:
+        target, sep, path = value.partition('=')
+        require(sep, '--with-declarations requires OWNER=CANDIDATE_SOURCE')
+        matches = {v['recipe']['source'] for v in active.values()
+                   if target in (v['recipe']['source'], *v['owners'])}
+        require(len(matches) == 1, 'Select one accepted C owner for declarations: ' + target)
+        source = matches.pop()
+        require(source.startswith('src/') and source.endswith('.c') and source not in sources,
+                'Declaration candidates must select distinct C sources')
+        sources[source] = Path(path).read_bytes()
+    return sources
+
+
 class ProofEngine:
     """One scratch copy, cached fresh baselines, deterministic subset trials."""
     def __init__(self, root, files, compiler=compile_object, image=None, *,
-                 changes_factory=make_changes, comparator=compare_objects, post_compare=None):
+                 changes_factory=make_changes, comparator=compare_objects, post_compare=None,
+                 declarations=None):
         self.root, self.files, self.compiler = root, files, compiler
         self.changes_factory, self.comparator = changes_factory, comparator
         self.post_compare = post_compare
+        self.declarations = declarations or {}
         self.recipes = active_recipes(files)
         self.baselines, self.cache, self.trials = {}, {}, []
         self.current = {}
@@ -802,14 +893,15 @@ class ProofEngine:
             atomic_bytes(self.root / f'build/rename-trials/{len(self.trials):04d}.json', json_bytes(result))
             print(f"Trial {len(self.trials)}: reused frozen-input whole proof from trial {ordinal}", flush=True)
             return result
-        changes = self.changes_factory(self.files, rows)
+        changes = {**self.declarations,
+                   **self.changes_factory({**self.files, **self.declarations}, rows)}
         affected = [key for key, r in self.recipes.items()
                     if key in changes or r['recipe']['source'] in changes or
                     any(c['path'] in changes for c in r['recipe'].get('preprocessor_closure', []) +
                         r['recipe'].get('include_closure', []) if 'path' in c)]
         if any(key not in self.baselines for key in affected):
             self.stage({})
-        failures, communal_reorders = [], []
+        failures, communal_reorders, communal_additions = [], [], []
         for key in affected:
             if key not in self.baselines:
                 recipe = self.recipes[key]['recipe']
@@ -863,11 +955,26 @@ class ProofEngine:
                 except ValueError as error:
                     failures.append({'owner': self.recipes[key]['owners'], 'recipe': key,
                                      'record': 'renamed-MASM-listing', 'error': str(error), 'category': 'refused'})
-                diff = self.comparator(self.baselines[key], after, symbol_map(rows))
+                additions = {}
+                if recipe['source'] in self.declarations:
+                    try:
+                        manifest = renamed(json.loads(self.files['layout/manifest.json']), symbol_map(rows))
+                        additions = allowed_communal_additions(self.baselines[key][0], after[0],
+                            symbol_map(rows), manifest, self.recipes[key]['owners'])
+                        diff = compare_objects(self.baselines[key], after, symbol_map(rows),
+                                               communal_additions=additions)
+                    except ValueError as error:
+                        diff = {'semantic': {'record': 'communal-policy', 'error': str(error)},
+                                'omf': {'record': 'communal-policy', 'error': str(error)}}
+                else:
+                    diff = self.comparator(self.baselines[key], after, symbol_map(rows))
                 if diff:
                     failures.append({'owner': self.recipes[key]['owners'], 'recipe': key,
                                      'category': 'name-sensitive', **diff})
                 else:
+                    if additions:
+                        communal_additions.append({'recipe': key, 'owners': self.recipes[key]['owners'],
+                                                   'definitions': additions})
                     before_communals = renamed(getattr(self.baselines[key][0], 'communals', []), symbol_map(rows))
                     if before_communals != getattr(after[0], 'communals', []):
                         communal_reorders.append({'recipe': key, 'before': before_communals,
@@ -876,6 +983,15 @@ class ProofEngine:
                     updated = refresh_expectations(recipe, after[0])
                     if updated != recipe:
                         changes[key] = json_bytes(updated)
+        if not failures and communal_additions:
+            manifest = json.loads(changes.get('layout/manifest.json', self.files['layout/manifest.json']))
+            for row in manifest['bss_owners']:
+                if row['kind'] == 'LINK_COMMUNAL':
+                    for item in row['communals']:
+                        item['declarers'] = sorted(set(item['declarers']) | {
+                            owner for addition in communal_additions if item['name'] in addition['definitions']
+                            for owner in addition['owners']})
+            changes['layout/manifest.json'] = json_bytes(manifest)
         if not failures and self.post_compare:
             self.post_compare(self, changes, affected)
         self.stage(dict(changes))
@@ -921,6 +1037,19 @@ class ProofEngine:
                     if registry.returncode:
                         raise RegistryFailure('Grounded registry consistency failed; see ' + str(registry_log))
                     image_result['registry_check'] = {'status': 'PASS', 'log': str(registry_log)}
+                if communal_additions:
+                    require(image_result.get('status') == 'HYBRID_EXACT', 'Combined transaction image is not exact')
+                    require((image_result.get('bss_real_link') or {}).get('status') == 'PLACED',
+                            'Combined transaction requires BSS PLACED')
+                    require((image_result.get('historical') or {}).get('status') == 'BUILT_EXACT',
+                            'Combined transaction requires historical BUILT_EXACT')
+                    if not self.image:
+                        linked = linked_communal_declarers(self.root / image_result['bss_real_link']['report'])
+                        manifest = json.loads(self.current['layout/manifest.json'])
+                        derived = manifest_with_linked_declarers(manifest, linked)
+                        require(derived == manifest, 'Linked declarers differ from staged objects')
+                        changes['layout/manifest.json'] = json_bytes(derived)
+                        self.stage(dict(changes))
             except Exception as error:
                 failures.append({'owner': getattr(error, 'owner_id', None),
                                  'recipe': getattr(error, 'owner_recipe', None),
@@ -930,7 +1059,8 @@ class ProofEngine:
                                  'category': proof_failure_category(error)})
         result = {'names': [r['old'] for r in rows], 'affected_recipes': affected,
                   'failures': failures, 'seconds': round(time.monotonic() - started, 3),
-                  'whole_image': image_result, 'communal_reorders': communal_reorders}
+                  'whole_image': image_result, 'communal_reorders': communal_reorders,
+                  'communal_additions': communal_additions}
         self.trials.append(result)
         if whole and all(f['category'] != 'proof-error' for f in failures):
             self.whole_cache[cache_key] = (dict(self.current), len(self.trials), result)
@@ -1070,7 +1200,10 @@ def check_applied(rows, files):
 def worker(request):
     rows, bisect = request['rows'], request['bisect']
     files = canonical_files(ROOT)
-    engine = ProofEngine(ROOT, files)
+    declarations = {n: base64.b64decode(v, validate=True) for n, v in request.get('declarations', {}).items()}
+    require(not declarations or (not bisect and not request.get('check')),
+            'Combined declarations require an atomic non-bisected rename batch')
+    engine = ProofEngine(ROOT, files, declarations=declarations)
     if request.get('check'):
         check_applied(rows, files)
         clean, failed = rows, []
@@ -1126,6 +1259,10 @@ def run(args):
     rows = [r for r in rows if CONFIDENCE.get(r.get('confidence', 'high'), -1) >= CONFIDENCE[args.min_confidence]]
     require(rows, 'No selected renames')
     expected = canonical_files(ROOT)
+    values = getattr(args, 'with_declarations', [])
+    require(not values or (not args.bisect and not args.check),
+            '--with-declarations requires an atomic non-bisected rename batch')
+    declarations = declaration_candidates(expected, values)
     tracked = tracked_snapshot(ROOT)
     # Untracked tool/tests are copied too, without any git index operation.
     for folder in ('tools', 'tests'):
@@ -1155,7 +1292,9 @@ def run(args):
     output = work / 'worker.json'
     request = work / 'request.json'
     atomic_bytes(request, json_bytes({'rows': good if (args.bisect or not refused or args.check) else [],
-                                     'bisect': args.bisect, 'check': args.check, 'output': str(output)}))
+                                     'bisect': args.bisect, 'check': args.check, 'output': str(output),
+                                     'declarations': {n: base64.b64encode(v).decode('ascii')
+                                                      for n, v in declarations.items()}}))
     with (work / 'proof.log').open('wb') as log:
         result = subprocess.run([sys.executable, str(stage / 'tools/rename.py'), '--_worker', str(request)],
                                 cwd=stage, env=env, stdin=subprocess.DEVNULL,
@@ -1173,6 +1312,7 @@ def run(args):
     current = canonical_files(ROOT)
     changed = [n for n in current.keys() | expected.keys() if current.get(n) != expected.get(n)]
     require(not changed, 'Canonical files changed during proof; discard this run: ' + ', '.join(sorted(changed)))
+    require(declaration_candidates(expected, values) == declarations, 'Declaration candidates changed during proof')
     require(all((ROOT / name).read_bytes() == raw for name, raw in tracked.items()),
             'Tracked inputs changed during proof')
     clean = [r for r in report['results'] if r['status'] == 'clean']
@@ -1215,6 +1355,8 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--bisect', action='store_true', help='isolate failures and re-prove the retained union')
+    parser.add_argument('--with-declarations', action='append', default=[], metavar='OWNER=CANDIDATE_SOURCE',
+                        help='Atomically stage C declarations with the complete rename batch (no --bisect)')
     parser.add_argument('--report', type=Path)
     parser.add_argument('--recover', action='store_true', help='recover the shared publication journal')
     parser.add_argument('--_worker', type=Path, help=argparse.SUPPRESS)
