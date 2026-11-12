@@ -1,9 +1,35 @@
 """Resolve historical C includes to a small, hash-checked source closure."""
 import re
 import subprocess
+from contextlib import contextmanager
+from contextvars import ContextVar
 from pathlib import Path
 
 from common import ROOT, git_tracked, identity, read_json, require
+
+_STAGED_HEADERS = ContextVar('staged_project_headers', default={})
+
+
+@contextmanager
+def staged_headers(headers):
+    """Authorize exact candidate header bytes, without touching the git index."""
+    token = _STAGED_HEADERS.set({name: identity(raw) for name, raw in headers.items()})
+    try:
+        yield
+    finally:
+        _STAGED_HEADERS.reset(token)
+
+
+def project_header_authorized(relative, data, *, root=None, tracked=None):
+    root = ROOT if root is None else root
+    tracked = git_tracked if tracked is None else tracked
+    if tracked(relative) or _STAGED_HEADERS.get().get(relative) == identity(data):
+        return True
+    # Publication may precede the supervisor's commit. An untracked header is
+    # usable only at its exact accepted closure identity, never merely by name.
+    expected = {'path': relative, **identity(data)}
+    return any(expected in (recipe.get('preprocessor_closure', []) + recipe.get('include_closure', []))
+               for path in (root / 'recipes').glob('*.json') for recipe in [read_json(path)])
 
 _DIRECTIVE = re.compile(r'^\s*#\s*([A-Za-z_]+)\b(.*)$')
 _INCLUDE = re.compile(r'^\s*([<"])([^>"]+)[>"]\s*(?:/\*.*\*/\s*)?$')
@@ -105,7 +131,8 @@ def prepare(source, profile):
                 require(path.is_relative_to(project_root) and path.suffix.lower() == '.h' and path.is_file(),
                         'Quoted include must resolve to a project header under include/')
                 relative = path.relative_to(ROOT).as_posix()
-                require(git_tracked(relative), f'Project header is not tracked: {relative}')
+                require(project_header_authorized(relative, path.read_bytes()),
+                        f'Project header is not tracked or frozen in an accepted closure: {relative}')
                 entry = None
             data = path.read_bytes()
             # Pinned headers keep their logical profile path in the closure.

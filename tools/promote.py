@@ -1141,12 +1141,27 @@ def main():
     p.add_argument('--verify-only', action='store_true'); p.add_argument('--recover', action='store_true')
     p.add_argument('--cosmetic', action='store_true',
                    help='Republish an owner or canonical source path only when every full pinned-tool OMF OBJ matches')
+    p.add_argument('--declarations', action='store_true',
+                   help='Prove complete segment bytes, named fixups, BSS placement and historical executable')
+    p.add_argument('--header', action='append', default=[], metavar='include/NAME.h=CANDIDATE',
+                   help='New or changed header staged atomically with --declarations (repeatable)')
+    p.add_argument('--object-exact', action='store_true',
+                   help='With --declarations, additionally require complete raw OBJ identity (literal-to-macro edits)')
     p.add_argument('--batch', type=Path, help='Batch file (NAME CANDIDATE [RECIPE] per line; integ39: one '
                    '`COMMUNAL UNIT.json` line makes it an atomic communal transaction): one journaled '
                    'publication; each candidate verified individually, one fresh union whole-image build')
     p.add_argument('--no-independent', action='store_true',
                    help='Batch research runs only: omit the per-candidate DOSBox-X check (never for publication)')
     a = p.parse_args()
+    if a.declarations:
+        if not a.function or not a.candidate or a.cosmetic or a.recipe or a.batch or a.recover or a.no_independent:
+            p.error('--declarations takes OWNER_OR_SOURCE CANDIDATE [--header include/NAME.h=FILE] [--verify-only]')
+        from declaration_proof import promote_declarations
+        report = promote_declarations(a.function, a.candidate, a.header, a.verify_only, object_exact=a.object_exact)
+        print(report['status'], report['source'], 'complete objects; HYBRID_EXACT; PLACED; BUILT_EXACT')
+        return
+    if a.header or a.object_exact:
+        p.error('--header and --object-exact require --declarations')
     if a.recover:
         if a.function or a.candidate or a.recipe or a.batch or a.cosmetic or a.verify_only:
             p.error('--recover takes no candidate or mode')

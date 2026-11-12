@@ -42,8 +42,10 @@ def prepare_asm(source):
             require(path.is_relative_to(include_root) and path.is_file(),
                     'ASM INCLUDE must resolve to a file under include/')
             relative = path.relative_to(ROOT).as_posix()
-            require(git_tracked(relative), f'ASM include is not tracked: {relative}')
             data = path.read_bytes()
+            from preprocessor import project_header_authorized
+            require(project_header_authorized(relative, data, root=ROOT, tracked=git_tracked),
+                    f'ASM include is not tracked or frozen: {relative}')
             value = {'path': relative, **identity(data)}
             previous = closure.setdefault(relative, value)
             require(previous == value, f'ASM include changed during closure: {relative}')

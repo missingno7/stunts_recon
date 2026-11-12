@@ -37,6 +37,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import atomic_bytes, json_bytes, require
+from object_equivalence import first_difference, object_view, declaration_records, compare_objects, refresh_expectations
 
 IDENT = re.compile(r'[A-Za-z_][A-Za-z_0-9]*\Z')
 WORDS = re.compile(r'[A-Za-z_$@?][A-Za-z_0-9$@?]*')
@@ -651,114 +652,6 @@ def preflight(rows, files, namespace=None):
     return good, refused
 
 
-def first_difference(before, after, path=''):
-    """Keep list order and full extents; diagnostics never decide acceptance."""
-    if type(before) is not type(after):
-        return {'record': path, 'before': repr(before)[:300], 'after': repr(after)[:300]}
-    if isinstance(before, dict):
-        if before.keys() != after.keys():
-            return {'record': path + '.keys', 'before': list(before), 'after': list(after)}
-        for key in before:
-            diff = first_difference(before[key], after[key], path + '.' + str(key))
-            if diff:
-                return diff
-    elif isinstance(before, (list, tuple, bytes, bytearray)):
-        for index, (a, b) in enumerate(zip(before, after)):
-            diff = first_difference(a, b, f'{path}[{index}]')
-            if diff:
-                return diff
-        if len(before) != len(after):
-            return {'record': path + '.length', 'before': len(before), 'after': len(after)}
-    elif before != after:
-        return {'record': path, 'before': before, 'after': after}
-    return None
-
-
-def object_view(obj, mapping=None):
-    """Complete extents and ordered semantic fixups; declaration multisets.
-
-    Only external table indexes are replaceable. Segment/group indexes and
-    fixup methods, widths, addends, locations and order remain obligations.
-    COMDEF order is deferred to the mandatory whole-image and BSS LINK gates.
-    CodeView segments remain byte-exact (including their diagnostic records).
-    """
-    mapping = mapping or {}
-    fields = ('segments', 'segment_lengths', 'segment_defs', 'groups', 'publics',
-              'linker_fixups', 'local_publics', 'local_externals', 'communals', 'comments')
-    view = renamed({key: getattr(obj, key, None) for key in fields}, mapping)
-    sort = lambda values: sorted(values, key=lambda v: json.dumps(v, sort_keys=True))
-    for key in ('publics', 'local_publics', 'local_externals', 'communals'):
-        view[key] = sort(view[key] or [])
-    view['externals'] = sort([(mapping.get(n, n), scope) for n, scope in
-                              zip(obj.externals, obj.external_scopes)])
-    require(len(obj.externals) == len(obj.external_scopes), 'Incomplete external scope table')
-    for f in view['linker_fixups'] or []:
-        for prefix in ('target', 'frame'):
-            if f.get(prefix + '_kind') == 'external':
-                f.pop(prefix + '_index', None)
-    return view
-
-
-def declaration_records(raw, mapping):
-    """Retain PUBDEF group/frame/type and EXTDEF type data the reader omits."""
-    from omf import OmfReader
-    result = []
-    for kind, body in OmfReader.records(raw):
-        if kind not in (0x90, 0xB6, 0x8C, 0xB4):
-            continue
-        at, group, segment, frame = 0, None, None, None
-        if kind in (0x90, 0xB6):
-            group, at = OmfReader._index(body, at)
-            segment, at = OmfReader._index(body, at)
-            if segment == 0:
-                frame = int.from_bytes(body[at:at+2], 'little'); at += 2
-        while at < len(body):
-            size = body[at]
-            name = body[at+1:at+1+size].decode('ascii'); at += size + 1
-            offset = None
-            if kind in (0x90, 0xB6):
-                offset = int.from_bytes(body[at:at+2], 'little'); at += 2
-            type_index, at = OmfReader._index(body, at)
-            result.append((kind, group, segment, frame, mapping.get(name, name), offset, type_index))
-    return sorted(result, key=repr)
-
-
-def compare_objects(before, after, mapping):
-    # These objects have passed the strict production decoder, with no unknown
-    # OMF records or unsupported fixups. Decoded bytes and fixups replace record
-    # encoding equality, not proof coverage. Non-semantic records stay exact.
-    diff = first_difference(object_view(before[0], mapping), object_view(after[0]), 'object')
-    declaration_diff = first_difference(declaration_records(before[1], mapping),
-                                        declaration_records(after[1], {}), 'declarations')
-    from omf import OmfReader
-    debug_names = lambda obj: [d['name'] for d in getattr(obj, 'debug_segments', [])]
-    debug = lambda compiled: {n: OmfReader(communals=True).read(compiled[1]).segments.get(n, b'')
-                              for n in debug_names(compiled[0])}
-    debug_diff = first_difference(debug(before), debug(after), 'object.debug_bytes')
-    represented = {0x8C, 0xB4, 0x90, 0xB6, 0xB0, 0x9C, 0xA0, 0xA2}
-    remainder = lambda raw: [(kind, body) for kind, body in OmfReader.records(raw) if kind not in represented]
-    record_diff = first_difference(remainder(before[1]), remainder(after[1]), 'records')
-    if diff or declaration_diff or record_diff or debug_diff:
-        return {'semantic': diff or declaration_diff or debug_diff,
-                'omf': record_diff or declaration_diff or diff or debug_diff}
-    return None
-
-
-def refresh_expectations(recipe, obj):
-    """Record the fresh emitted order/indexes only after semantic equivalence."""
-    import copy
-    recipe = copy.deepcopy(recipe)
-    declarations = {'segments': obj.segment_defs, 'groups': obj.groups,
-                    'publics': obj.publics, 'externals': obj.externals}
-    if 'object_declarations' in recipe:
-        recipe['object_declarations'] = declarations
-    if 'declarations' in recipe.get('binding', {}):
-        recipe['binding']['declarations'] = declarations
-    if 'expected_fixups' in recipe:
-        recipe['expected_fixups'] = obj.linker_fixups
-    if 'communal_declarations' in recipe:
-        recipe['communal_declarations'] = [{'name': c['name'], 'size': c['length']} for c in obj.communals]
-    return recipe
 
 
 class ExactnessFailure(ValueError):
@@ -876,8 +769,11 @@ class RegistryFailure(ValueError):
 
 class ProofEngine:
     """One scratch copy, cached fresh baselines, deterministic subset trials."""
-    def __init__(self, root, files, compiler=compile_object, image=None):
+    def __init__(self, root, files, compiler=compile_object, image=None, *,
+                 changes_factory=make_changes, comparator=compare_objects, post_compare=None):
         self.root, self.files, self.compiler = root, files, compiler
+        self.changes_factory, self.comparator = changes_factory, comparator
+        self.post_compare = post_compare
         self.recipes = active_recipes(files)
         self.baselines, self.cache, self.trials = {}, {}, []
         self.current = {}
@@ -906,7 +802,7 @@ class ProofEngine:
             atomic_bytes(self.root / f'build/rename-trials/{len(self.trials):04d}.json', json_bytes(result))
             print(f"Trial {len(self.trials)}: reused frozen-input whole proof from trial {ordinal}", flush=True)
             return result
-        changes = make_changes(self.files, rows)
+        changes = self.changes_factory(self.files, rows)
         affected = [key for key, r in self.recipes.items()
                     if key in changes or r['recipe']['source'] in changes or
                     any(c['path'] in changes for c in r['recipe'].get('preprocessor_closure', []) +
@@ -967,7 +863,7 @@ class ProofEngine:
                 except ValueError as error:
                     failures.append({'owner': self.recipes[key]['owners'], 'recipe': key,
                                      'record': 'renamed-MASM-listing', 'error': str(error), 'category': 'refused'})
-                diff = compare_objects(self.baselines[key], after, symbol_map(rows))
+                diff = self.comparator(self.baselines[key], after, symbol_map(rows))
                 if diff:
                     failures.append({'owner': self.recipes[key]['owners'], 'recipe': key,
                                      'category': 'name-sensitive', **diff})
@@ -980,6 +876,8 @@ class ProofEngine:
                     updated = refresh_expectations(recipe, after[0])
                     if updated != recipe:
                         changes[key] = json_bytes(updated)
+        if not failures and self.post_compare:
+            self.post_compare(self, changes, affected)
         self.stage(dict(changes))
         image_result = None
         if whole and not failures:

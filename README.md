@@ -15,7 +15,7 @@ The native SDL3 game lives in `port/`. Build with
 `python port/build.py run --no-build`. The executable finds its copied assets
 next to itself. See the [SDL3 handoff](docs/porting/HANDOFF.md) for toolchain,
 runtime coverage and validation details.
-The resizable window defaults to 960×720: the original 320×200 grid is presented
+The resizable window defaults to 960Ă—720: the original 320Ă—200 grid is presented
 at its intended 4:3 display aspect. Alt+Enter toggles borderless fullscreen on
 the current monitor and restores the previous window size and position on exit.
 Run with `--renderer=modern` for native world
@@ -155,6 +155,38 @@ python tools/linkorder.py --run
 python tools/commfit.py solve --inventory INVENTORY.json
 python tools/stage_link.py --solution build/commfit/out/solution.json --tag TAG
 ```
+
+Declaration/header changes have a separate proof from `--cosmetic`:
+
+```powershell
+python tools/promote.py --declarations src/polarRadius3D.c build/workers/NAME/unit.c --header include/vec3.h=build/workers/NAME/vec3.h --verify-only
+# Omit --verify-only to publish the same proven source/header/recipe transaction.
+```
+
+Repeat `--header` for new or changed DOS 8.3 header basenames. MASM sources can
+stage `.inc` files through the same command; those always require raw OBJ equality.
+Add
+`--object-exact` to require the entire raw OBJ explicitly. The tool also selects
+raw OBJ equality automatically when function signatures, body tokens/directives,
+or their preprocessing dependencies change; this includes literal-to-macro edits.
+Block-scope extern moves remain declaration edits. The tool stages
+an isolated tree, derives every affected recipe's include closure and OMF
+indexes, compares complete segment bytes/extents and ordered fixups by target
+name, and requires exact BSS placement, identical historical loaded modules,
+`BUILT_EXACT`, and the independent `HYBRID_EXACT` proof. Unused ordinary EXTDEF
+imports may change as an API header grows; public, local and communal declarations
+remain equal. Shared external scopes and type indexes stay equal. Every change
+in imported names is recorded in the receipt. The rename command retains its
+stricter complete external-declaration multiset comparison.
+
+For the pinned MSC 6 `/Zi` unit, declaration proof explicitly permits LINNUM
+records and the contents and lengths of the reviewed private `$$SYMBOLS` and
+`$$TYPES` segments to differ. Their other declarations stay exact; linked code,
+data, fixups, relocations and the packed executable do too. The strict production
+OMF decoder still rejects unsupported records and image references into debug
+segments. `--cosmetic` continues to compare the entire raw object, including
+debug records. New untracked project headers require explicit staging, then an
+exact hash in a published recipe closure; the tool never changes the git index.
 
 For a reviewed assembly extent, use a self-contained MASM source and an explicit recipe with `"kind": "asm"`, `"profile": "masm510-game"`, `"assembler_flags": ["/Mx", "/I."]`, complete OMF declarations, FIXUPPs, and ordered relocations:
 
